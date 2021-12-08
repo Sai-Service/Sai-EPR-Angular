@@ -61,7 +61,8 @@ export class WsVehicleMasterComponent implements OnInit {
   public colorCodeList: Array<string> = [];
   public FuelTypeList: Array<string> = [];
   public statusList: Array<string> = [];
-  public dealerCodeList :Array<string>=[];
+  // public dealerCodeList :Array<string>=[];
+  dealerCodeList:any;
 
   pipe = new DatePipe('en-US');
   public minDate = new Date()  ;
@@ -541,9 +542,20 @@ export class WsVehicleMasterComponent implements OnInit {
 
   }
 
+  transeData(val) {
+
+    delete val.loginArray;
+    delete val.loginName;
+    delete val.ouName;
+    delete val.locName;
+    // delete val.invLine;
+
+    return val;
+  }
+
   newMast() {
 
-    const formValue: IWsVehicleMaster = this.wsVehicleMasterForm.value;
+    const formValue: IWsVehicleMaster =this.transeData( this.wsVehicleMasterForm.value);
     this.CreateItemCode();
     this.CheckDataValidations()
 
@@ -578,17 +590,17 @@ export class WsVehicleMasterComponent implements OnInit {
 
     if (this.checkValidation) {
       alert("Data Validation Sucessfull....\Updating  WS Customer Master")
-      this.service.UpdateSaiEwCustomer(formValue).subscribe((res: any) => {
-        if (res.code === 200) {
-          alert('RECORD UPDATED SUCCESSFUILY');
-          window.location.reload();
-        } else {
-          if (res.code === 400) {
-            alert('ERROR OCCOURED IN PROCEESS');
-            this.wsVehicleMasterForm.reset();
-          }
-        }
-      });
+      // this.service.UpdateSaiEwCustomer(formValue).subscribe((res: any) => {
+      //   if (res.code === 200) {
+      //     alert('RECORD UPDATED SUCCESSFUILY');
+      //     window.location.reload();
+      //   } else {
+      //     if (res.code === 400) {
+      //       alert('ERROR OCCOURED IN PROCEESS');
+      //       this.wsVehicleMasterForm.reset();
+      //     }
+      //   }
+      // });
     } else { alert("Data Validation Not Sucessfull....\Updation Not Done...") }
   }
 
@@ -608,6 +620,7 @@ export class WsVehicleMasterComponent implements OnInit {
 
   SearchByRegNo(mReg: string) {
     // alert ("Search Vehicle by RegNo..... wip :"+mReg);
+    mReg=mReg.toUpperCase();
     this.service.getVehRegDetails(mReg)
       .subscribe(
         data => {
@@ -674,9 +687,9 @@ export class WsVehicleMasterComponent implements OnInit {
               city: this.CustomerDetailsList.city,
               state: this.CustomerDetailsList.state,
               pinCd: this.CustomerDetailsList.pinCd,
-              custPhone1: this.CustomerDetailsList.mobile1,
-              custPhone2: this.CustomerDetailsList.mobile2,
-              custPhone3: this.CustomerDetailsList.mobile3,
+              mobile1: this.CustomerDetailsList.mobile1,
+              mobile2: this.CustomerDetailsList.mobile2,
+              contactNo: this.CustomerDetailsList.contactNo,
               emailId1: this.CustomerDetailsList.emailId,
               custType: this.CustomerDetailsList.custType,
               custTaxCategoryName:this.CustomerDetailsList.customerSiteMasterList.taxCategoryName,
@@ -754,7 +767,7 @@ export class WsVehicleMasterComponent implements OnInit {
 
 
   searchMast(regNo: string) {
-    regNo = 'MH12EM6011';
+    // regNo = 'MH12EM6011';
     this.service.getWsVehRegDetails(regNo)
       .subscribe(
         data => {
@@ -766,7 +779,7 @@ export class WsVehicleMasterComponent implements OnInit {
   }
 
   SearchByCustPhone(contactNo) {
-    alert("Search by Cust Phone..... wip :" + contactNo);
+    // alert("Search by Cust Phone..... wip :" + contactNo);
     this.service.searchCustomerByContact(contactNo)
       .subscribe(
         data => {
@@ -853,14 +866,16 @@ export class WsVehicleMasterComponent implements OnInit {
   }
 
 
-  // onSelectedDealer(dlrCode) {
-  //   if(dlrCode != undefined){
-  //     let select = this.dealerCodeList.find(d=>d.dealerCode === dlrCode);
-  //     if (select) {
+  onSelectedDealer(dlrCode) {
+    // alert ("dlrCode:" +dlrCode);
+    if(dlrCode != undefined){
+      let select = this.dealerCodeList.find(d=>d.dealerCode === dlrCode);
+      if (select) {
+        this.dealerName=select.dealerDesc
 
-  //     }
-  //   }
-  // }
+      }
+    }
+  }
 
 
 
@@ -898,8 +913,8 @@ export class WsVehicleMasterComponent implements OnInit {
     var regDate =new Date(mRegDate);
     var delDate=new Date(this.deliveryDate);
 
-    if(regDate >delDate || this.deliveryDate===undefined) {
-      alert ("REGISTRATION DATE :" + "Should not be above Sale Date");
+    if(regDate < delDate || this.deliveryDate===undefined) {
+      alert ("REGISTRATION DATE :" + "Should not be below Sale Date");
       this.regDate = this.deliveryDate;
       return;
     }

@@ -137,9 +137,9 @@
             
               <!-- <div class="tab-pane fade" id="panel101" role="tabpanel"> -->
 
-                <!-- <fieldset class="RFS">
+                <fieldset class="RFS">
                     <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Vehicle Details</legend>
-               -->
+              
                     <table class="center">
                           
                 <tr>
@@ -304,29 +304,29 @@
                         <input   type="text"  formControlName="dealerCode"  id="dealerCode" [(ngModel)]="dealerCode" class="form-control" >
                     </td> -->
 
-                    <td>
-                        <select   formControlName="dealerCode" id="dealerCode" [ngModel]="dealerCode" class="form-control">
+                    <td >
+                        <select  formControlName="dealerCode" id="dealerCode" [ngModel]="dealerCode" class="form-control"
                             (ngModelChange)='onSelectedDealer($event)'>
                             <!-- style="width:fit-content"  -->
                             <option>--Select--</option>
-                            <option *ngFor="let sc of dealerCodeList"
-                                [ngValue]="sc.dealerCode">
-                                {{sc.dealerCode}}-{{sc.dealerDesc}}
+                            <option *ngFor="let sc of dealerCodeList"  [ngValue]="sc.dealerCode">
+                                {{sc.dealerCode}}
+                                <!-- -{{sc.dealerDesc}} -->
                             </option>
                         </select>
                     </td>
 
                     <td style="width: 12%" class="LabelFontStyle">Dealer&nbsp;Name:&nbsp;</td>
 
-                    <td>
-                        <input    disabled   type="text"  formControlName="dealerName"  id="dealerName" [(ngModel)]="dealerName" class="form-control" >
+                    <td colspan="4">
+                        <input  style="width: 100%"  disabled   type="text"  formControlName="dealerName"  id="dealerName" [(ngModel)]="dealerName" class="form-control" >
                     </td>
 
-                    <td style="width: 12%" class="LabelFontStyle">Dealer&nbsp;Site:&nbsp;</td>
+                    <!-- <td style="width: 12%" class="LabelFontStyle">Dealer&nbsp;Site:&nbsp;</td>
 
                     <td>
                         <input    type="text"  formControlName="dealerSite"  id="dealerSite" [(ngModel)]="dealerSite" class="form-control" >
-                    </td>
+                    </td> -->
 
                 </tr>
 
@@ -425,10 +425,10 @@
               
                
             </table>
-            <!-- </fieldset> -->
-          <!-- </div> -->
+            </fieldset>
+          </div> 
 
-          </div>
+          <!-- </div> -->
 
             <!--           
           <div class="tab-pane fade" id="panel103" role="tabpanel">
@@ -443,8 +443,8 @@
           <div class="tab-pane fade" id="panel103" role="tabpanel">
            
             <!-- <fieldset class="RFS"> -->
-                <!-- <fieldset class="RFS"> -->
-                <!-- <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Vehicle Additional Details</legend> -->
+                <fieldset class="RFS">
+                <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Vehicle Additional Details</legend>
            
             <table class="center">
 
@@ -579,7 +579,7 @@
            
             </table>
 
-            <!-- </fieldset> -->
+            </fieldset>
 
             
             <div *ngIf="showTvDetails; then TvYes; else TvNo"></div>
@@ -726,11 +726,11 @@
                                       <td style="width: 12%" class="LabelFontStyle">&nbsp;Name:&nbsp;</td>
               
                                       <td>
-                                          <input disabled type="text"  formControlName="custName"  id="custName" [(ngModel)]="custName" class="form-control" >
+                                          <input readonly type="text"  formControlName="custName"  id="custName" [(ngModel)]="custName" class="form-control" >
                                       </td>
                                           <td style="width: 12%" class="LabelFontStyle">Cust&nbsp;No:&nbsp;</td>
                                       <td>
-                                          <input   disabled  type="text"  formControlName="custAccountNo"  id="custAccountNo" [(ngModel)]="custAccountNo" class="form-control" style="width: 130px;background-color: greenyellow;" >
+                                          <input   readonly  type="text"  formControlName="custAccountNo"  id="custAccountNo" [(ngModel)]="custAccountNo" class="form-control" style="width: 130px;background-color: greenyellow;" >
                                       </td>
               
                                   </tr>
@@ -738,13 +738,13 @@
                                       <td style="width: 12%" class="LabelFontStyle">Address1&nbsp;:&nbsp;</td>
                           
                                       <td>
-                                          <input  disabled  type="text"  formControlName="address1"  id="address1" [(ngModel)]="address1" class="form-control"  >
+                                          <input  readonly  type="text"  formControlName="address1"  id="address1" [(ngModel)]="address1" class="form-control"  >
                                       </td>
               
                                       <td style="width: 12%" class="LabelFontStyle">DMS&nbsp;No:&nbsp;</td>
               
                                       <td>
-                                          <input disabled  type="text"  formControlName="dmsCustNo"  id="dmsCustNo" [(ngModel)]="dmsCustNo" class="form-control" style="width: 130px;" >
+                                          <input readonly  type="text"  formControlName="dmsCustNo"  id="dmsCustNo" [(ngModel)]="dmsCustNo" class="form-control" style="width: 130px;" >
                                       </td>
               
                                   </tr>
@@ -754,12 +754,12 @@
                                           <td style="width: 12%" class="LabelFontStyle">Address2&nbsp;:&nbsp;</td>
                           
                                           <td>
-                                              <input disabled  type="text"  formControlName="address2"  id="address2" [(ngModel)]="address2" class="form-control"  >
+                                              <input readonly  type="text"  formControlName="address2"  id="address2" [(ngModel)]="address2" class="form-control"  >
                                           </td>
                                           <td style="width: 12%" class="LabelFontStyle">City&nbsp;:&nbsp;</td>
               
                                           <td>
-                                              <input  disabled  type="text"  formControlName="city"  id="city" [(ngModel)]="city" class="form-control" style="width: 130px;">
+                                              <input  readonly  type="text"  formControlName="city"  id="city" [(ngModel)]="city" class="form-control" style="width: 130px;">
                                           </td>
               
                                       </tr>
@@ -767,13 +767,13 @@
                                           <td style="width: 12%" class="LabelFontStyle">Address3&nbsp;:&nbsp;</td>
                           
                                           <td>
-                                              <input disabled type="text"  formControlName="address3"  id="address3" [(ngModel)]="address3" class="form-control"  >
+                                              <input readonly type="text"  formControlName="address3"  id="address3" [(ngModel)]="address3" class="form-control"  >
                                           </td>
                                       
                                           <td style="width: 12%" class="LabelFontStyle">State&nbsp;:&nbsp;</td>
                           
                                           <td>
-                                              <input  disabled  type="text"  formControlName="state"  id="state" [(ngModel)]="state" class="form-control" style="width: 130px;">
+                                              <input  readonly  type="text"  formControlName="state"  id="state" [(ngModel)]="state" class="form-control" style="width: 130px;">
                                           </td>
                                          
                                       </tr>
@@ -781,12 +781,12 @@
                                           <td style="width: 12%" class="LabelFontStyle">Address4&nbsp;:&nbsp;</td>
                           
                                           <td>
-                                              <input disabled  type="text"  formControlName="custAddress4"  id="custAddress4" [(ngModel)]="custAddress4" class="form-control" >
+                                              <input readonly  type="text"  formControlName="custAddress4"  id="custAddress4" [(ngModel)]="custAddress4" class="form-control" >
                                           </td>
                                           <td style="width: 12%" class="LabelFontStyle">PIN&nbsp;:&nbsp;</td>
               
                                           <td>
-                                              <input  disabled  type="text"  formControlName="pinCd"  id="pinCd" [(ngModel)]="pinCd" class="form-control" style="width: 130px;" >
+                                              <input  readonly  type="text"  formControlName="pinCd"  id="pinCd" [(ngModel)]="pinCd" class="form-control" style="width: 130px;" >
                                           </td>
                                           
                                       </tr>
@@ -796,12 +796,12 @@
                                           <td style="width: 12%" class="LabelFontStyle">E-mail&nbsp;:&nbsp;</td>
                           
                                           <td>
-                                              <input  disabled  type="text"  formControlName="emailId1"  id="emailId1" [(ngModel)]="emailId1" class="form-control" >
+                                              <input  readonly  type="text"  formControlName="emailId1"  id="emailId1" [(ngModel)]="emailId1" class="form-control" >
                                           </td>
                                           <td style="width: 12%" class="LabelFontStyle">Phone1&nbsp;:&nbsp;</td>
               
                                           <td>
-                                              <input disabled   type="text"  formControlName="mobile1"  id="mobile1" [(ngModel)]="mobile1" class="form-control" style="width: 130px;background-color: greenyellow;">
+                                              <input readonly   type="text"  formControlName="mobile1"  id="mobile1" [(ngModel)]="mobile1" class="form-control" style="width: 130px;background-color: greenyellow;">
                                           </td>
                                       </tr>
               
@@ -813,13 +813,13 @@
                                           <td style="width: 12%" class="LabelFontStyle">Cust&nbsp;Type:&nbsp;</td>
                           
                                           <td>
-                                              <input disabled    type="text"  formControlName="custType"  id="custType" [(ngModel)]="custType" class="form-control" >
+                                              <input readonly    type="text"  formControlName="custType"  id="custType" [(ngModel)]="custType" class="form-control" >
                                           </td>
               
                                           <td style="width: 12%" class="LabelFontStyle">Phone2&nbsp;:&nbsp;</td>
               
                                           <td>
-                                              <input  disabled  type="text"  formControlName="mobile2"  id="mobile2" [(ngModel)]="mobile2" class="form-control" style="width: 130px;" >
+                                              <input  readonly  type="text"  formControlName="mobile2"  id="mobile2" [(ngModel)]="mobile2" class="form-control" style="width: 130px;" >
                                           </td>
                                          
                                     </tr>
@@ -827,30 +827,30 @@
                                       <td style="width: 12%" class="LabelFontStyle">Tax&nbsp;Category:&nbsp;</td>
                               
                                       <td>
-                                          <input disabled    type="text"  formControlName="custTaxCategoryName"  id="custTaxCategoryName" [(ngModel)]="custTaxCategoryName" class="form-control" >
+                                          <input readonly    type="text"  formControlName="custTaxCategoryName"  id="custTaxCategoryName" [(ngModel)]="custTaxCategoryName" class="form-control" >
                                       </td>
               
                                       <td style="width: 12%" class="LabelFontStyle">Phone3&nbsp;:&nbsp;</td>
               
                                           <td>
-                                              <input  disabled  type="text"  formControlName="contactNo"  id="contactNo" [(ngModel)]="contactNo" class="form-control" style="width: 130px;">
+                                              <input  readonly  type="text"  formControlName="contactNo"  id="contactNo" [(ngModel)]="contactNo" class="form-control" style="width: 130px;">
                                           </td>
                           
                                     </tr>
                                     <tr>
                                       <td style="width: 12%" class="LabelFontStyle">Govt.&nbsp;Vehicle:&nbsp;</td>
-                                      <td> <input disabled  type="checkbox"  name="govtVehicleYn" formControlName="govtVehicleYn"  [(ngModel)]="govtVehicleYn"  (change)="GovtVehicle($event)"></td>
+                                      <td> <input readonly  type="checkbox"  name="govtVehicleYn" formControlName="govtVehicleYn"  [(ngModel)]="govtVehicleYn"  (change)="GovtVehicle($event)"></td>
                            
                                     <td style="width: 12%" class="LabelFontStyle">VIP&nbsp;:&nbsp;</td>
                         
-                                    <td><input disabled type="checkbox"  name="vipYn" formControlName="vipYn"  [(ngModel)]="vipYn"  (change)="VipVehicle($event)"> </td>
+                                    <td><input readonly type="checkbox"  name="vipYn" formControlName="vipYn"  [(ngModel)]="vipYn"  (change)="VipVehicle($event)"> </td>
                                     </tr>
               
                                     <tr>
                                       <td style="width: 12%" class="LabelFontStyle">Site&nbsp;Addr&nbsp;:&nbsp;</td>
                   
                                       <td >
-                                          <input style="width: 195%;"    type="text" disabled formControlName="billToAddress"
+                                          <input  readonly   style="width: 195%;"    type="text"  formControlName="billToAddress"
                                           class="form-control" [(ngModel)]="billToAddress" placeholder="">
                   
                                       </td>
@@ -882,11 +882,11 @@
                                       <td style="width: 12%" class="LabelFontStyle">&nbsp;Name:&nbsp;</td>
               
                                       <td>
-                                          <input disabled type="text"  formControlName="custName"  id="custName" [(ngModel)]="custName" class="form-control" >
+                                          <input readonly type="text"  formControlName="custName"  id="custName" [(ngModel)]="custName" class="form-control" >
                                       </td>
                                           <td style="width: 12%" class="LabelFontStyle">Cust&nbsp;No:&nbsp;</td>
                                       <td>
-                                          <input   disabled  type="text"  formControlName="custAccountNo"  id="custAccountNo" [(ngModel)]="custAccountNo" class="form-control" style="width: 130px;background-color: greenyellow;" >
+                                          <input   readonly  type="text"  formControlName="custAccountNo"  id="custAccountNo" [(ngModel)]="custAccountNo" class="form-control" style="width: 130px;background-color: greenyellow;" >
                                       </td>
               
                                   </tr>
@@ -894,13 +894,13 @@
                                       <td style="width: 12%" class="LabelFontStyle">Address1&nbsp;:&nbsp;</td>
                           
                                       <td>
-                                          <input  disabled  type="text"  formControlName="address1"  id="address1" [(ngModel)]="address1" class="form-control"  >
+                                          <input  readonly  type="text"  formControlName="address1"  id="address1" [(ngModel)]="address1" class="form-control"  >
                                       </td>
               
                                       <td style="width: 12%" class="LabelFontStyle">DMS&nbsp;No:&nbsp;</td>
               
                                       <td>
-                                          <input disabled  type="text"  formControlName="dmsCustNo"  id="dmsCustNo" [(ngModel)]="dmsCustNo" class="form-control" style="width: 130px;" >
+                                          <input readonly  type="text"  formControlName="dmsCustNo"  id="dmsCustNo" [(ngModel)]="dmsCustNo" class="form-control" style="width: 130px;" >
                                       </td>
               
                                   </tr>
@@ -910,12 +910,12 @@
                                           <td style="width: 12%" class="LabelFontStyle">Address2&nbsp;:&nbsp;</td>
                           
                                           <td>
-                                              <input disabled  type="text"  formControlName="address2"  id="address2" [(ngModel)]="address2" class="form-control"  >
+                                              <input readonly  type="text"  formControlName="address2"  id="address2" [(ngModel)]="address2" class="form-control"  >
                                           </td>
                                           <td style="width: 12%" class="LabelFontStyle">City&nbsp;:&nbsp;</td>
               
                                           <td>
-                                              <input  disabled  type="text"  formControlName="city"  id="city" [(ngModel)]="city" class="form-control" style="width: 130px;">
+                                              <input  readonly  type="text"  formControlName="city"  id="city" [(ngModel)]="city" class="form-control" style="width: 130px;">
                                           </td>
               
                                       </tr>
@@ -923,13 +923,13 @@
                                           <td style="width: 12%" class="LabelFontStyle">Address3&nbsp;:&nbsp;</td>
                           
                                           <td>
-                                              <input disabled type="text"  formControlName="address3"  id="address3" [(ngModel)]="address3" class="form-control" >
+                                              <input readonly type="text"  formControlName="address3"  id="address3" [(ngModel)]="address3" class="form-control" >
                                           </td>
                                       
                                           <td style="width: 12%" class="LabelFontStyle">State&nbsp;:&nbsp;</td>
                           
                                           <td>
-                                              <input  disabled  type="text"  formControlName="state"  id="state" [(ngModel)]="state" class="form-control" style="width: 130px;">
+                                              <input  readonly  type="text"  formControlName="state"  id="state" [(ngModel)]="state" class="form-control" style="width: 130px;">
                                           </td>
                                          
                                       </tr>
@@ -937,12 +937,12 @@
                                           <td style="width: 12%" class="LabelFontStyle">Address4&nbsp;:&nbsp;</td>
                           
                                           <td>
-                                              <input disabled  type="text"  formControlName="custAddress4"  id="custAddress4" [(ngModel)]="custAddress4" class="form-control" >
+                                              <input readonly  type="text"  formControlName="custAddress4"  id="custAddress4" [(ngModel)]="custAddress4" class="form-control" >
                                           </td>
                                           <td style="width: 12%" class="LabelFontStyle">PIN&nbsp;:&nbsp;</td>
               
                                           <td>
-                                              <input  disabled  type="text"  formControlName="pinCd"  id="pinCd" [(ngModel)]="pinCd" class="form-control" style="width: 130px;" >
+                                              <input  readonly  type="text"  formControlName="pinCd"  id="pinCd" [(ngModel)]="pinCd" class="form-control" style="width: 130px;" >
                                           </td>
                                           
                                       </tr>
@@ -952,12 +952,12 @@
                                           <td style="width: 12%" class="LabelFontStyle">E-mail&nbsp;:&nbsp;</td>
                           
                                           <td>
-                                              <input  disabled  type="text"  formControlName="emailId1"  id="emailId1" [(ngModel)]="emailId1" class="form-control" >
+                                              <input  readonly  type="text"  formControlName="emailId1"  id="emailId1" [(ngModel)]="emailId1" class="form-control" >
                                           </td>
                                           <td style="width: 12%" class="LabelFontStyle">Phone1&nbsp;:&nbsp;</td>
               
                                           <td>
-                                              <input disabled   type="text"  formControlName="mobile1"  id="mobile1" [(ngModel)]="mobile1" class="form-control" style="width: 130px;background-color: greenyellow;">
+                                              <input readonly   type="text"  formControlName="mobile1"  id="mobile1" [(ngModel)]="mobile1" class="form-control" style="width: 130px;background-color: greenyellow;">
                                           </td>
                                       </tr>
               
@@ -969,13 +969,13 @@
                                           <td style="width: 12%" class="LabelFontStyle">Cust&nbsp;Type:&nbsp;</td>
                           
                                           <td>
-                                              <input disabled    type="text"  formControlName="custType"  id="custType" [(ngModel)]="custType" class="form-control" >
+                                              <input readonly    type="text"  formControlName="custType"  id="custType" [(ngModel)]="custType" class="form-control" >
                                           </td>
               
                                           <td style="width: 12%" class="LabelFontStyle">Phone2&nbsp;:&nbsp;</td>
               
                                           <td>
-                                              <input  disabled  type="text"  formControlName="mobile2"  id="mobile2" [(ngModel)]="mobile2" class="form-control" style="width: 130px;" >
+                                              <input  readonly  type="text"  formControlName="mobile2"  id="mobile2" [(ngModel)]="mobile2" class="form-control" style="width: 130px;" >
                                           </td>
                                          
                                     </tr>
@@ -983,27 +983,27 @@
                                       <td style="width: 12%" class="LabelFontStyle">Tax&nbsp;Category:&nbsp;</td>
                               
                                       <td>
-                                          <input disabled    type="text"  formControlName="custTaxCategoryName"  id="custTaxCategoryName" [(ngModel)]="custTaxCategoryName" class="form-control" >
+                                          <input readonly    type="text"  formControlName="custTaxCategoryName"  id="custTaxCategoryName" [(ngModel)]="custTaxCategoryName" class="form-control" >
                                       </td>
               
                                       <td style="width: 12%" class="LabelFontStyle">Phone3&nbsp;:&nbsp;</td>
               
                                           <td>
-                                              <input  disabled  type="text"  formControlName="contactNo"  id="contactNo" [(ngModel)]="contactNo" class="form-control" style="width: 130px;">
+                                              <input  readonly  type="text"  formControlName="contactNo"  id="contactNo" [(ngModel)]="contactNo" class="form-control" style="width: 130px;">
                                           </td>
                           
                                     </tr>
               
                                     <tr>
                                       <td style="width: 12%" class="LabelFontStyle">&nbsp;Valid&nbsp;Upto:&nbsp;</td>
-                                      <td> <input  disabled type="date"  name="contractEndDate" formControlName="contractEndDate"  [(ngModel)]="contractEndDate" class="form-control"  style="height: 25px;"></td>
+                                      <td> <input  readonly type="date"  name="contractEndDate" formControlName="contractEndDate"  [(ngModel)]="contractEndDate" class="form-control"  style="height: 25px;"></td>
                                   </tr>
               
                                   <tr>
                                       <td style="width: 12%" class="LabelFontStyle">Site&nbsp;Addr&nbsp;:&nbsp;</td>
                   
                                       <td >
-                                          <input style="width: 195%;"    type="text" disabled formControlName="billToAddress"
+                                          <input readonly  style="width: 195%;"    type="text"  formControlName="billToAddress"
                                           class="form-control" [(ngModel)]="billToAddress" placeholder="">
                   
                                       </td>

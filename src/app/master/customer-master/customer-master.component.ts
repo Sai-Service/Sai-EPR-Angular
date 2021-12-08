@@ -850,13 +850,13 @@ export class CustomerMasterComponent implements OnInit {
 
     var isvaliddata = this.validation();
     if (isvaliddata === false) {
-      // alert('In Validation (v)');
+      alert('In Validation (v)');
       return;
     }
 
     this.submitted = true;
     if (this.customerMasterForm.invalid) {
-      // alert('In Validation(d) ');
+      alert('In Validation(d) ');
       return;
     }
     const formValue: IcustomerMaster = this.transDataUppdateCustomer(this.customerMasterForm.getRawValue());
@@ -1198,6 +1198,27 @@ export class CustomerMasterComponent implements OnInit {
       this.message = "Do you want to SAVE the changes(Yes/No)?"
 
     }
+
+    if (msgType.includes("Update")) {
+
+      var isvaliddata = this.validation();
+      if (isvaliddata === false) {
+        alert('Validation Errors !!');
+        this.msgType ='Error';
+        (document.getElementById('updateBtn') as HTMLInputElement).setAttribute('data-target', '');
+        return;
+      }
+      this.submitted = true;
+      (document.getElementById('updateBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
+      if (this.customerMasterForm.invalid) {
+        //this.submitted = false;
+        (document.getElementById('updateBtn') as HTMLInputElement).setAttribute('data-target', '');
+        return;
+      }
+      this.message = "Do you want to Update the changes(Yes/No)?"
+
+    }
+
 
     if (msgType.includes("NewSite")) {
       var isvaliddata = this.validation();
