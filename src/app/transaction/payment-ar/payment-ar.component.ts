@@ -1692,7 +1692,7 @@ export class PaymentArComponent implements OnInit {
       return;
     }
 
-    if (formValue.refType != 'Advance' && (formValue.referenceNo == null || formValue.referenceNo.trim() == '')) {
+    if (formValue.refType != 'Advance' &&  (formValue.referenceNo == null || formValue.referenceNo.trim() == '')) {
       alert("REFERENCE NO\nRef.number to be entered for Non-Advance Receipts");
       return;
     }
