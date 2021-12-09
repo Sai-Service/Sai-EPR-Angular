@@ -771,7 +771,6 @@ export class CustomerMasterComponent implements OnInit {
     }
 
     this.submitted = true;
-
     if (this.customerMasterForm.invalid) {
       alert("Please fix the errors!!");
       return;
@@ -1191,6 +1190,7 @@ export class CustomerMasterComponent implements OnInit {
       this.submitted = true;
       (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
       if (this.customerMasterForm.invalid) {
+        alert('Please enter all mandatory fields');
         //this.submitted = false;
         (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '');
         return;

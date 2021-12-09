@@ -843,6 +843,9 @@
                         </td>&nbsp;&nbsp;
                         <td>
                             <input disabled type="number" style="width: 50px;" class="form-control" formControlName="tcsPer" value={{tcsPer}}>
+                        </td> &nbsp;&nbsp;
+                        <td>
+                            <input disabled type="number" style="width: 50px;" class="form-control" formControlName="tcsAmt" value={{tcsAmt}}>
                         </td>
                     </ng-template>
                     </tr>
@@ -972,7 +975,7 @@
                                                         </td>
                                                       
                                                         <td>
-                                                            <input type="number" formControlName="pricingQty" name="pricingQty"
+                                                            <input type="number" formControlName="pricingQty" name="pricingQty{{i}}"
                                                                 class="form-control" (change)="onKey(i,'prc')"
                                                                 style="height: 20px;width:50px;" min="0"
                                                                 oninput="this.value = Math.abs(this.value)">
@@ -1071,7 +1074,7 @@
                                                         </td>
                                                         <td>
                                                             <input disabled type="text" formControlName="invType"
-                                                                value="invType" [ngValue]="invType" class="form-control"
+                                                                value="invType" [ngValue]="invType" class="form-control" 
                                                                 style="height: 20px;width: 120px">
                                                         </td>
                                                         <td>
@@ -1166,6 +1169,7 @@
                                                             <select formControlName="flowStatusCode"
                                                                 id="flowStatusCode1" class="form-control"
                                                                 style="width: fit-content;height: 25px;font-size: 10px;"
+                                                                (ngModelChange)="updateLineOnCancel(i)"
                                                                 #flowStatusCode1>
                                                                 <option [disabled]="isDisabled">--Select--</option>
                                                                 <option value="BOOKED" hidden>BOOKED</option>
@@ -1493,19 +1497,21 @@
                     </td>
                     <div *ngIf="displaytcsBuuton; then thentcsBuuton; else elsetcsBuuton"> </div>
                     <ng-template #thentcsBuuton>
+                        <!-- <td>
+                            <button type="submit" class="btn btn-primary" id="register" style="width: 5rem;"
+                            (click)="tcsCalculationAdd()">Add TCS</button>
+                        </td> -->
                     </ng-template>
                     <ng-template #elsetcsBuuton>
-                    <td>
-                        <button type="submit" class="btn btn-primary" id="register" style="width: 5rem;"
-                        (click)="tcsCalculationAdd()">Add TCS</button>
-                    </td>
+                   
                     </ng-template>
                     <td>
                         <div
                             *ngIf="displaycounterSaleOrderSave; then thencounterSaleOrderSave; else elsecounterSaleOrderSave">
                         </div>
                         <ng-template #thencounterSaleOrderSave>
-                            <button type="submit" [disabled]="isDisabled" class="btn btn-primary" id="register" style="width: fit-content;"
+                            <!-- [disabled]="isDisabled" -->
+                            <button type="submit"  class="btn btn-primary" id="register" style="width: fit-content;"
                                 (click)="counterSaleOrderSave()">Create Order</button>
                         </ng-template>
                         <ng-template #elsecounterSaleOrderSave>
