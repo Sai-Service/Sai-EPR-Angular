@@ -340,11 +340,11 @@
 
                             </ng-template>
 
-                             <td>
+                             <!-- <td>
                                 <button type="button"  class="btn btn-primary" 
                                 data-toggle="modal" data-target="#showpListData" style="width: 5rem;color: black;"  (click)="LoadPList()">
                                 Show&nbsp;List</button>
-                            </td>
+                            </td> -->
                  
                                 
                                
@@ -370,9 +370,9 @@
                                                 <tr class="GridHeader">
                                                       <th style="width:4rem" scope="col">Srl No.</th>
                                                       <!-- <th style="width:5rem" scope="col">Item Id</th> -->
-                                                      <th style="width:15rem" scope="col">Item Code</th>
-                                                      <th style="width:20rem" scope="col">Item Description</th>
-                                                      <th style="width:6rem" scope="col">Item Category</th>
+                                                      <th style="width:13rem" scope="col">Item Code</th>
+                                                      <th style="width:25rem" scope="col">Item Description</th>
+                                                      <th style="width:8rem" scope="col">Item Category</th>
                                                       <th style="width:3rem" scope="col">UOM</th>
                                                       <th style="width:6rem" scope="col">Batch Code</th>
                                                       <th style="width:6rem" scope="col">Price</th>
@@ -429,8 +429,9 @@
                                                         </datalist> 
                                                     </td>  -->
                                                 <td>
-                                                    <input  style="width:22rem;background-color: yellow; text-transform: uppercase;"  type="text" formControlName="segment" class="form-control"  
-                                                                     (change)="onOptioninvItemIdSelectedNew(segment,i)"  placeholder="Enter Item Code"  >
+                                                    <input  style="width:13rem;background-color: yellow; "  type="text" formControlName="segment" class="form-control"  
+                                                                     (change)="validateitemWithBatchCode(i)" placeholder="Enter Item Code"  >
+                                                                     <!-- "onOptioninvItemIdSelectedNew(segment,i)" -->
                                                 </td>
 
                                                 <!-- <td><input style="text-align: right;width:6rem;"  type="number" formControlName="priceValue"  class="form-control" (change)="validatePrice(i)" placeholder="Price "  > </td> -->
@@ -438,7 +439,7 @@
 
                                                 </ng-template>
                                                 <ng-template #B2>
-                                                 <td><input disabled style="width:16rem;" type="text" formControlName="segment" class="form-control"  /></td> 
+                                                 <td><input disabled style="width:15rem;" type="text" formControlName="segment" class="form-control"  /></td> 
                                                 </ng-template>
                                               
                                                 <td>
@@ -446,13 +447,13 @@
                                                 </td>
 
                                                 <td>
-                                                    <input style="width:7rem;" disabled  type="text" formControlName="itemCategory"  class="form-control" placeholder="Item Category "  >
+                                                    <input style="width:8rem;" disabled  type="text" formControlName="itemCategory"  class="form-control" placeholder="Item Category "  >
                                                 </td>
                                                 <td>
                                                     <input style="width: 3rem;" disabled  type="text" formControlName="uom"  class="form-control" placeholder="Uom "  >
                                                 </td>
                                                 <td>
-                                                    <input style="width:6rem;"  type="text" formControlName="batchCode"  class="form-control" placeholder="Batch Code "  (change)="onOptioninvItemIdSelectedNew(segment,i)" >
+                                                    <input style="width:6rem;"  type="text" formControlName="batchCode"  class="form-control" placeholder="Batch Code"  (change)="validateitemWithBatchCode(i)"  >
                                                 </td>
                                                 <td>
                                                     <input style="text-align: right;width:6rem;"  type="number" formControlName="priceValue"  class="form-control" (change)="validatePrice(i)" placeholder="Price "  >
@@ -486,24 +487,28 @@
                                     <td>
                                         <button type="button" class="btn btn-info" (click)="newMast()" [disabled]="!priceListMasterForm">Save</button>
                                     </td>
-                                    
+
                                     <td>
-                                        <button type="button" class="btn btn-info" (click)="searchMast()">Search</button>
+                                        <button type="button" class="btn btn-info" (click)="resetMast()" >Reset</button>
                                     </td>
+                                    
+                                    <!-- <td>
+                                        <button type="button" class="btn btn-info" (click)="searchMast()">Search</button>
+                                    </td> -->
 
                                         <!-- ====================Reset Dialog ======================== -->
 
-                                                    <td>
+                                                    <!-- <td>
                                                     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button>
-                                                    </td>
+                                                    </td> -->
+
                                                     <!-- Modal -->
                                                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 500px;">
                                                     <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                     <div class="modal-body">
                                                     <label style="font-size: small; color: black;font-weight: bold; text-align:center;vertical-align: middle;">
-                                                        <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
-                                                        Want&nbsp;to&nbsp;Reset. &nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
+                                                            Want&nbsp;to&nbsp;Reset. &nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
                                                     </label>
                                                     </div>
                                                     <div class="modal-footer">
@@ -521,6 +526,8 @@
                                                     </div>
                                                     </div>
                                                     </div>
+
+
 
                                                         <!-- =====================Close Dialog Box====================== -->
                                                         <td>
@@ -586,15 +593,19 @@
 
 
 
-                                <td>
+                                <!-- <td>
                                     <button type="button" class="btn btn-info" (click)="searchMast()">Search</button>
-                                </td>
+                                </td> -->
                                     
                                         <!-- ====================Reset Dialog ======================== -->
 
                                                         <td>
-                                                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button>
+                                                            <button type="button" class="btn btn-info" (click)="resetMast()" >Reset</button>
                                                         </td>
+<!-- 
+                                                        <td>
+                                                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button>
+                                                        </td> -->
                                                         <!-- Modal -->
                                                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 500px;">
                                                     <div class="modal-dialog" role="document">

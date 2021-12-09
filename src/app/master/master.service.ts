@@ -2220,7 +2220,7 @@ PriceListIdList(mOuId,mDivId): Observable<any> {
     }
 
     getLineDetailsWithItemBatchCode(plName,itmId,bCode): Observable<any> {
-      alert("Pl,itmid,bcode : "+plName+" , "+itmId +" , "+bCode);
+      // alert("Pl,itmid,bcode : "+plName+" , "+itmId +" , "+bCode);
       return this.http.get(this.ServerUrl + `/pricelist/ItmPrcBatch/?priceListName=${plName}&itemId=${itmId}&batchCode=${bCode}`);
       // http://localhost:8081/pricelist/ItmPrcBatch/?priceListName=Bajaj%20Regular%20MRP&itemId=3382&batchCode=
     }
@@ -3332,6 +3332,13 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
           return this.http.get(this.ServerUrl + `/empCust?emplId=${empId}&page=${p1}&size=${s1}`);
        // http://localhost:8081/empCust?emplId=334&page=0&size=1
      }
+
+    customerEmpMapSearch(custNo,locId): Observable<any> {
+      return this.http.get(this.ServerUrl + `/empCust/exeDtls?accountNo=${custNo}&locId=${locId}`);
+   // http://localhost:8081/empCust/exeDtls?accountNo=1931&locId=2102
+    }
+
+
 
      public custRelationPostSubmit(custRelationRecord) {
       const options = {

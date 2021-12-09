@@ -36,6 +36,7 @@ export class CustomerRelationMasterComponent implements OnInit {
     public PriceListIdList : Array<string> = [];
     EmployeeList : any=[];
     CustomerMapList :any[];
+    CustomerEmpMapList :any;
     lstcomments: any[];
     lstCustDetails: any;
 
@@ -180,9 +181,30 @@ export class CustomerRelationMasterComponent implements OnInit {
     //   });
     }
 
-  SearchByCust (cust){
-    alert("Search Cust...TktNo :"+cust);
-  }
+  SearchByCust (custNo){
+    this.service.customerEmpMapSearch(custNo,this.locId)
+    .subscribe(
+      data => {
+        this.CustomerEmpMapList = data.obj;
+        if(this.CustomerEmpMapList !=null) {
+         console.log(this.CustomerEmpMapList);
+         this.custRelationMasterForm.patchValue({
+          empTktNo: this.CustomerEmpMapList.ticketNo,
+          emplName: this.CustomerEmpMapList.fullName,
+          empDesig: this.CustomerEmpMapList.designation,
+          empStatus: this.CustomerEmpMapList.status,
+          startDate: this.CustomerEmpMapList.startDate,
+          endDate: this.CustomerEmpMapList.endDate,
+
+        });  }  else {
+
+        (this.custRelationMasterForm.patchValue(
+          {
+            empTktNo:  '',  emplName:'', empDesig:  '', empStatus: '',  startDate: '',  endDate:'', }));
+            alert ("Customer No : "+custNo + " Not Mapped to  any Ticket No.");
+      }
+      });
+    }
 
         newMast()  {
       
@@ -254,9 +276,7 @@ export class CustomerRelationMasterComponent implements OnInit {
       patch.controls[index].patchValue({custAccountNo: '' });return;}
   
     var custLineArr = this.custRelationMasterForm.get('custList').value;
-    
     var custAcNo = custLineArr[index].custAccountNo;
-    // alert("Customer AcNo :" +custAcNo +" , "+index)
     this.service.searchCustomerByAccount(custAcNo)
       .subscribe(
         data => {
@@ -282,26 +302,42 @@ export class CustomerRelationMasterComponent implements OnInit {
           if(data.code===200 && data.obj !=null){
           console.log(this.lstCustDetails);
 
-          // this.duplicateLineCheck(this.lstCustDetails.customerId,index,this.lstCustDetails.custAccountNo)
-          this.duplicateLineCheck(this.lstCustDetails.customerId,index,this.lstCustDetails.custAccountNo);
-            
-          (patch.controls[index]).patchValue(
-            {
-              customerId:  this.lstCustDetails.customerId,
-              custName:  this.lstCustDetails.custName,
-              address1: this.lstCustDetails.address1,
-              contactNo: this.lstCustDetails.contactNo,
-              startDate: this.lstCustDetails.startDate,
-              endDate:this.lstCustDetails.endDate,
-              emplId:this.employeeId,
-              locId:this.locId,
-            }
-          );
-          if (this.lineItemRepeated){ this.lineDetailsArray().removeAt(index);}
+          this.service.customerEmpMapSearch(custAcNo,this.locId)
+          .subscribe(
+            data1 => {
+              this.CustomerEmpMapList = data1.obj;
+              // alert ("this.CustomerEmpMapList :"+this.CustomerEmpMapList + " ,"+data1.obj);
 
-          } 
+              if(this.CustomerEmpMapList !=null) {
+                alert (custAcNo+" - Customer  Already Mapped to this Ticket No.");return; }
+
+              else {
+
+
+                this.duplicateLineCheck(this.lstCustDetails.customerId,index,this.lstCustDetails.custAccountNo);
+                if (this.lineItemRepeated){ this.lineDetailsArray().removeAt(index);}
+                (patch.controls[index]).patchValue(
+                  {
+                    customerId:  this.lstCustDetails.customerId,
+                    custName:  this.lstCustDetails.custName,
+                    address1: this.lstCustDetails.address1,
+                    contactNo: this.lstCustDetails.contactNo,
+                    startDate: this.lstCustDetails.startDate,
+                    endDate:this.lstCustDetails.endDate,
+                    emplId:this.employeeId,
+                    locId:this.locId,
+                  }
+                );
+
+              }  
+
+            });
+
+          }
+
+
         }
-      ); 
+      );  
   }
 
 
