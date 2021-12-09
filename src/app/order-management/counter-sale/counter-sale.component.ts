@@ -1819,6 +1819,7 @@ export class CounterSaleComponent implements OnInit {
                             else {
                               // alert('2');
                               // alert(selLocator[0].segmentName);
+                              alert('Please check Item has old stock with price');
                               controlinv.controls[k].patchValue({ frmLocatorId: selLocator[0].ROWNUM });
                               controlinv.controls[k].patchValue({ frmLocator: selLocator[0].segmentName });
                               // controlinv.controls[k].patchValue({ frmLocatorId: selLocator[0].locatorId });
@@ -1917,6 +1918,7 @@ export class CounterSaleComponent implements OnInit {
                             else {
                               // alert('2');
                               // alert(selLocator[0].segmentName);
+                              alert('Please check Item has old stock with price');
                               controlinv.controls[k].patchValue({ frmLocatorId: selLocator[0].ROWNUM });
                               controlinv.controls[k].patchValue({ frmLocator: selLocator[0].segmentName });
                               // controlinv.controls[k].patchValue({ frmLocatorId: selLocator[0].locatorId });
@@ -2158,7 +2160,10 @@ export class CounterSaleComponent implements OnInit {
     var ordTotAmt = this.CounterSaleOrderBookingForm.get('totAmt').value;
     var tcsCal = Math.round((ordTotAmt * tcsPer / 100 + Number.EPSILON) * 100) / 100;
     this.CounterSaleOrderBookingForm.patchValue({ 'tcsAmt': tcsCal });
-    alert('Added TCS' + tcsCal);
+    if(tcsCal>0){
+    alert('Added TCS-->' + tcsCal);
+
+    }
     this.dataDisplay = 'Invoice Genration in progress....Do not refresh the Page';
     const formValue: ISalesBookingForm = this.transData(this.CounterSaleOrderBookingForm.value);
     var orderLines = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
