@@ -200,6 +200,7 @@
           <thead>
               <tr class="GridHeader">
                       <th scope="col">Srl No.</th>
+                      <!-- <th scope="col">Item Search</th> -->
                       <th scope="col">Item Code</th>
                       <th scope="col">Item Description</th>
                       <th scope="col">UOM</th>
@@ -226,7 +227,7 @@
                </td>
                <input hidden formControlName="compileId" [(ngModel)]="compileId">
                <input hidden formControlName="compileLineId">
-                         <td>
+                <td>
                            <input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 100px;" (ngModelChange)="onOptiongetItem($event,trxLineIndex)" #Item/>
                 <datalist id="dynmicUserIds1">
                   <option *ngFor="let item of ItemIdList" [ngValue]="item.invItemId">{{item.SEGMENT}}
