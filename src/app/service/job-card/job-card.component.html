@@ -182,7 +182,7 @@
                                                                                 class="LabelFontStyle1">
                                                                                 Registration&nbsp;No&nbsp;:</td>
                                                                             <td>
-                                                                                <input type="text"
+                                                                                <input type="text" style="text-transform: uppercase;"
                                                                                     formControlName="regNo"
                                                                                     [(ngModel)]="regNo"
                                                                                     (change)="serchByRegNo(regNo)"
@@ -363,7 +363,7 @@
                                                                                     <option
                                                                                         *ngFor="let sc of  TechnicianList"
                                                                                         [ngValue]="sc.teamId">
-                                                                                        {{sc.description}}
+                                                                                         {{sc.ticketNo}}-{{sc.description}}
                                                                                     </option>
                                                                                 </select>
                                                                             </td>

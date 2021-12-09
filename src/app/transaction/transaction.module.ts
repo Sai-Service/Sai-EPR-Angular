@@ -39,6 +39,7 @@ import { PoUploadListComponent } from './po-upload-list/po-upload-list.component
 import { RelatedItemPartComponent } from './related-item-part/related-item-part.component';
 import { BulkUploadPricelistComponent } from './bulk-upload-pricelist/bulk-upload-pricelist.component';
 import { BankReconcillationComponent } from './bank-reconcillation/bank-reconcillation.component';
+// import { OrderGenerationComponent } from './order-generation/order-generation.component';
 // import { CounterSaleReturnComponent } from './counter-sale-return/counter-sale-return.component';
 
 
@@ -82,6 +83,7 @@ import { BankReconcillationComponent } from './bank-reconcillation/bank-reconcil
     RelatedItemPartComponent,
     BulkUploadPricelistComponent,
     BankReconcillationComponent,
+    // OrderGenerationComponent,
     // CounterSaleReturnComponent
   ],
   

@@ -488,8 +488,11 @@ export class JobCardComponent implements OnInit {
     this.jobStatus = 'Opened';
     this.emplId=Number(sessionStorage.getItem('emplId'));
     this.deptName=sessionStorage.getItem('deptName');
-    alert(this.emplId);
+    // alert(this.emplId);
+    // alert ("Location Id :" +Number(sessionStorage.getItem('locId')));
+    // alert ("Location Code :" +sessionStorage.getItem('locCode'));
     // this.jobCardDate=Date.now();
+
     this.service.taxCategoryListForSALES()
       .subscribe(
         data1 => {
@@ -908,6 +911,7 @@ export class JobCardComponent implements OnInit {
       actualBasicAmt: sum + sumMat,
     })
   }
+  
   Search(jonCardNo) {
     this.jobcardForm.reset();
     this.serviceService.getJonCardNoSearch(jonCardNo)

@@ -240,7 +240,8 @@ export class PricelistMasterComponent implements OnInit {
         itemDescription: ['', [Validators.required]],
         itemCategory: ['', [Validators.required]],
         uom: ['', [Validators.required]],
-        batchCode: ['', [Validators.required]],
+        // batchCode: ['', [Validators.required]],
+        batchCode: ['', [Validators.required,Validators.minLength(1),Validators.maxLength(10),Validators.pattern('[A-Z0-9.-]*')]],
         priceValue: ['', [Validators.required]],
         // startDate: ['', [Validators.required]],
         // endDate: ['', [Validators.required]],
@@ -275,6 +276,16 @@ export class PricelistMasterComponent implements OnInit {
     this.orgId=this.ouId;
     console.log(this.loginArray);
     console.log(this.locId);
+
+
+
+    this.service.getPriceListSearchNew(sessionStorage.getItem('ouId'),sessionStorage.getItem('divisionId'))
+    .subscribe(
+      data => {
+        this.lstcomments = data;
+        console.log(this.lstcomments);
+      }
+    );
     
     //  this.service.invItemList1()
     //   .subscribe(
@@ -494,7 +505,8 @@ export class PricelistMasterComponent implements OnInit {
         this.lineItemRepeated=false;
         var mItemId =prcLineArr[index].itemId;
         var mSegment=prcLineArr[index].segment;
-        this.duplicateLineCheck(mItemId,index,mSegment)
+        var bCode=prcLineArr[index].batchCode;
+        this.duplicateLineCheck(index,mItemId,mSegment,bCode);
         if(this.lineItemRepeated) { 
             this.lineDetailsArray().removeAt(index);
         } else {
@@ -503,13 +515,15 @@ export class PricelistMasterComponent implements OnInit {
       }
   }
 
-  duplicateLineCheck(mItem,index,itemSeg) {
+  duplicateLineCheck(index,mItem,itemSeg,bCode) {
     // alert ("index/itemid/segment,this.lineDetailsArray().length :" +index +","+mItem+","+itemSeg +","+this.lineDetailsArray().length);
     var varLineArr = this.priceListMasterForm.get('priceListDetailList').value;
     for (let i = 0; i <  this.lineDetailsArray().length ; i++) 
     {
        var x=varLineArr[i].itemId;
-       if( i !=index && x===mItem) {
+       var y=varLineArr[i].batchCode;
+
+       if( i !=index && (x===mItem && y===bCode)) {
         alert(itemSeg+" - Item Already in the List .Check Line :"+(i+1));
         this.lineItemRepeated=true;
         this.lineValidation=false;
@@ -610,20 +624,28 @@ export class PricelistMasterComponent implements OnInit {
       for (let i = 0; i < len1 ; i++) 
         {
           this.CheckLineValidations(i);
+          if(this.lineValidation===false) {break;}
         }
 
+       
+        if (this.lineValidation ) 
+        {
         for (let i = 0; i < len1 ; i++) 
         {
           var prcLineArr = this.priceListMasterForm.get('priceListDetailList').value;
           this.lineItemRepeated=false;
           var mItemId =prcLineArr[i].itemId;
           var mSegment=prcLineArr[i].segment;
-          this.duplicateLineCheck(mItemId,i,mSegment)
+          var mBatchCode=prcLineArr[i].batchCode;
+          this.duplicateLineCheck(i,mItemId,mSegment,mBatchCode)
         }
+       }
 
- 
+       alert ("Line Validation :" +this.lineValidation);
+       
         if(this.lineValidation===false) { 
           alert("Line Validation Failed...\nPlease check all  line data fields are updated properly..\nCheck for Duplicate line items.")
+          this.updateButton=true;
           return;
         }
 
@@ -735,16 +757,16 @@ export class PricelistMasterComponent implements OnInit {
 
 
   
-  searchMast() {
+  // searchMast() {
   
-    this.service.getPriceListSearchNew(sessionStorage.getItem('ouId'),sessionStorage.getItem('divisionId'))
-      .subscribe(
-        data => {
-          this.lstcomments = data;
-          console.log(this.lstcomments);
-        }
-      );
-  }
+  //   this.service.getPriceListSearchNew(sessionStorage.getItem('ouId'),sessionStorage.getItem('divisionId'))
+  //     .subscribe(
+  //       data => {
+  //         this.lstcomments = data;
+  //         console.log(this.lstcomments);
+  //       }
+  //     );
+  // }
 
 
   loadHistModal() {
@@ -842,7 +864,10 @@ export class PricelistMasterComponent implements OnInit {
   };
 
 
-  onOptioninvItemIdSelectedNew(mSegment,index){  
+
+
+
+  onOptioninvItemIdSelectedNew(itemSeg,index){  
 
     this.CheckHeaderValidations();
     if (this.headerValidation ==false) {
@@ -856,7 +881,7 @@ export class PricelistMasterComponent implements OnInit {
     var mSegment = priceLineArr[index].segment;
     mSegment=mSegment.toUpperCase();
     var plName =this.priceListMasterForm.get("priceListName").value
-    
+    // alert ("Item Code :"+mSegment);
 
     if(mSegment==null || mSegment==undefined  || mSegment.trim() == '') {
        alert("Please Enter Item Code");
@@ -884,32 +909,123 @@ export class PricelistMasterComponent implements OnInit {
                 itemCategory: data.categoryId.description,
                 itemId: data.itemId,
                 itemName:data.segment,
+                segment : mSegment,
               }
             );
 
            
 
             var mbCode = this.lineDetailsArray().controls[index].get('batchCode').value;
+
+            // mbCode=mbCode.toUpperCase();
+            // patch.controls[index].patchValue({batchCode:mbCode});
             // if(mbCode ===null || mbCode ===undefined || mbCode.trim()==='') {mbCode='';}
-            alert("Pl,itmid,bcode : "+plName+" , "+segId +" , "+mbCode);
-             this.service.getLineDetailsSingleItem(plName,segId)  .subscribe(
-              // this.service.getLineDetailsWithItemBatchCode(plName,segId,mbCode)  .subscribe(
+            // alert("Pl,itmid ,bcode : "+plName+" , "+segId +" , "+mbCode);
+            //  this.service.getLineDetailsSingleItem(plName,segId)  .subscribe(
+              this.service.getLineDetailsWithItemBatchCode(plName,segId,mbCode)  .subscribe(
               data1 => {
                 console.log(data1);
                 if(data1.length>0){
                   this.itemFoundInPLmaster =true;
 
-                  alert (mSegment +"(" +segId + ") - Item Already exists in the Price List Master.\nBatch Code : "+data1[0].batchCode) ;
+                  alert (mSegment +"(" +segId + ") - Item Already exists in the Price List Master with Batch Code : "+data1[0].batchCode) ;
                    x=1;
-                   this.lineDetailsArray().controls[index].get('batchCode').disable();
-                   this.lineDetailsArray().controls[index].get('priceValue').disable();
-
+                   patch.controls[index].patchValue({batchCode:''})
                   return;
               }  else 
               {
                 this.lineDetailsArray().controls[index].get('batchCode').enable();
                 this.lineDetailsArray().controls[index].get('priceValue').enable();
+
+                
+
               }
+              });
+
+
+        } else {
+            alert (mSegment + " - Item Not Found in Master"); 
+            this.lineDetailsArray().controls[index].get('batchCode').disable();
+            this.lineDetailsArray().controls[index].get('priceValue').disable();
+            this.lineDetailsArray().controls[index].get('itemDescription').reset();
+            this.lineDetailsArray().controls[index].get('itemCategory').reset();
+            this.lineDetailsArray().controls[index].get('uom').reset();
+
+           return;}
+        }
+      );
+  }
+
+
+
+
+  validateitemWithBatchCode(index){  
+
+    this.CheckHeaderValidations();
+    if (this.headerValidation ==false) {
+      alert('Please Select Header Deatils !');
+      return;
+    }
+
+    this.itemFoundInPLmaster=false;
+    var priceLineArr = this.priceListMasterForm.get('priceListDetailList').value;
+    var mSegment = priceLineArr[index].segment;mSegment=mSegment.toUpperCase();
+    var plName =this.priceListMasterForm.get("priceListName").value
+    // alert ("Item Code :"+mSegment + " Batchcode :"+priceLineArr[index].batchCode +" index :"+index);
+
+    if(mSegment===null || mSegment===undefined  || mSegment.trim() === '') {
+       alert("Please Enter Item Code");
+        this.lineDetailsArray().controls[index].get('batchCode').disable();
+        this.lineDetailsArray().controls[index].get('priceValue').disable();
+        this.lineDetailsArray().controls[index].get('itemDescription').reset();
+        this.lineDetailsArray().controls[index].get('itemCategory').reset();
+        this.lineDetailsArray().controls[index].get('uom').reset();
+      return; 
+    }
+
+   
+    var segId ; var bCode; var x;
+    var patch = this.priceListMasterForm.get('priceListDetailList') as FormArray;
+     this.service.getItemDetailsByCode(mSegment)
+      .subscribe(
+        data => {
+           if (data !=null){
+             segId =data.itemId;
+             (patch.controls[index]).patchValue(
+              {
+                uom: data.uom,
+                itemDescription: data.description,
+                itemCategory: data.categoryId.description,
+                itemId: data.itemId,
+                itemName:data.segment,
+                segment : mSegment,
+
+              }
+            );
+
+           
+
+            var mbCode = this.lineDetailsArray().controls[index].get('batchCode').value;
+            mbCode=mbCode.toUpperCase();
+            patch.controls[index].patchValue({batchCode:mbCode});
+              //  this.service.getLineDetailsSingleItem(plName,segId)  .subscribe(
+              this.service.getLineDetailsWithItemBatchCode(plName,segId,mbCode)  .subscribe(
+              data1 => {
+                console.log(data1);
+                if(data1.length>0){
+                  this.itemFoundInPLmaster =true;
+
+                  alert (mSegment +"(" +segId + ") - Item Already exists in the Price List Master with Batch Code : "+data1[0].batchCode) ;
+                   x=1;
+                   patch.controls[index].patchValue({batchCode:''})
+                   this.lineDetailsArray().controls[index].get('priceValue').disable();
+
+                  return;
+              }  else 
+              {
+                
+                this.lineDetailsArray().controls[index].get('priceValue').enable();
+               }
               });
 
 
@@ -1195,11 +1311,11 @@ export class PricelistMasterComponent implements OnInit {
       return;
     } 
   
-    // if(lineValue2===undefined || lineValue2===null || lineValue2.trim()===''){
-    //   alert("Line-"+j+ " BATCH CODE :  should not be null value");
-    //   this.lineValidation=false;
-    //   return;
-    // } 
+    if(lineValue2===undefined || lineValue2===null || lineValue2.trim()===''){
+      alert("Line-"+j+ " BATCH CODE :  should not be null value");
+      this.lineValidation=false;
+      return;
+    } 
   
     if(lineValue3===undefined || lineValue3===null  || lineValue3 <=0){
       alert("Line-"+j+ " PRICE :  should be above Zero");
@@ -1233,7 +1349,9 @@ export class PricelistMasterComponent implements OnInit {
     SelectPL(priceListHeaderId: number) {
       // alert ("priceListHeaderId :"+priceListHeaderId);
       // this.addNew=false;
-      this.priceListMasterForm.reset();
+      // this.priceListMasterForm.reset();
+      this.searchBy='ITEM NUMBER';
+     
       this.updateHeaderButton=true;
       this.display1= false;
       this.displayLineDetails=false;
@@ -1241,13 +1359,17 @@ export class PricelistMasterComponent implements OnInit {
       this.addNew=true;
       let select = this.lstcomments.find(d => d.priceListHeaderId === priceListHeaderId);
       this.priceListMasterForm.patchValue(select);
+      this.lineDetailsArray().clear();
+      this.lineDetailsArray().push(this.lineDetailsGroup());
+      this.priceListMasterForm.get('searchByItemDesc').reset();
+      this.priceListMasterForm.get('searchByItemCode').reset();
 
-      this.service.getLineDetails(priceListHeaderId)  .subscribe(
-        data => {
-          console.log(data);
-          this.priceListLineDetails1=data;
-          console.log(this.priceListLineDetails1);
-       });
+      // this.service.getLineDetails(priceListHeaderId)  .subscribe(
+      //   data => {
+      //     console.log(data);
+      //     this.priceListLineDetails1=data;
+      //     console.log(this.priceListLineDetails1);
+      //  });
        
         this.displayButton = false;
         this.display = false;
@@ -1260,7 +1382,9 @@ export class PricelistMasterComponent implements OnInit {
         this.lstcomments1=null;
         this.addNew=false;
         var sType=this.priceListMasterForm.get('searchBy').value
-       
+        if(sType===null || sType ===undefined) { 
+          alert("Please select Search Parameters.");return;}
+        
         if(sType =='ITEM NUMBER') { this.F9SearchItemCodeNew("itmCode");}
         if(sType =='ITEM DESCRIPTION') { this.F9SearchItemDesc();}
       }
@@ -1281,12 +1405,10 @@ export class PricelistMasterComponent implements OnInit {
             mSegment=itemSeg;
             this.selectItemName=mSegment;
           }
-    
-      
-         mSegment=mSegment.toUpperCase();
-    
+          
+        mSegment=mSegment.toUpperCase();
         var plName =this.priceListMasterForm.get("priceListName").value
-        if(mSegment==null || mSegment==undefined  || mSegment.trim() == '') {
+        if(mSegment===null || mSegment===undefined  || mSegment.trim() === '') {
           alert("Please Enter valid Item Code");
           return; 
        }

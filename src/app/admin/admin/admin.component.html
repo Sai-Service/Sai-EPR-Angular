@@ -99,7 +99,8 @@
             <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/CounterSaleOrder']">Counter Sale Order</a></li>  
             <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/CounterSaleWithCSV']">Counter Sale With CSV</a></li>     
             <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/CounterSaleReturn']">Counter Sale Return</a></li>    
-          </ul>
+            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/OrderGeneration']">Order Generation</a></li>    
+         </ul>
         </li>
         <div [style.display]="isVisible1 ? 'block' : 'none'">
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Sales Order</a>
@@ -347,7 +348,7 @@
                   <table class="center" style="width: 100%;">
                     <tr style="background-color: rgb(224, 224, 231); border:1px">
                       <td  style="font-size: 11px;color: black;font-weight: bold;">&nbsp;{{loginArray}}</td>
-                      <td style="font-size: 10px;color: blue;">&nbsp;{{locName}}&nbsp;-&nbsp;{{deptName}} -[&nbsp;{{ouName}}&nbsp;]&nbsp;</td>
+                      <td style="font-size: 10px;color: blue;">&nbsp;{{locName}}&nbsp;-&nbsp;{{deptName}} -[&nbsp;{{ouName}}&nbsp;]&nbsp;&nbsp;&nbsp;{{locCode}}</td>
                       <td style="font-size: 10px;color: black; font-weight: bold;">User&nbsp;Name&nbsp;&nbsp;:
                       </td>
                       <td style="font-size: 10px;color: blue;">{{fullName}}</td>&nbsp;&nbsp;
