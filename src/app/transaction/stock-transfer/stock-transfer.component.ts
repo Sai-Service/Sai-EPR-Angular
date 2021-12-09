@@ -240,8 +240,7 @@ export class StockTransferComponent implements OnInit {
        var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
     var itemid=trxLnArr1[trxLineIndex].segment;
     // alert(itemid+'Delete');
-    if(itemid!=null)
-    {
+    if(itemid!=null){
     this.deleteReserveLinewise(trxLineIndex);
     this.itemMap.delete(itemid);
     }
