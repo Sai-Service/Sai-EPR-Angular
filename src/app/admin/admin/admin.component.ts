@@ -51,6 +51,7 @@ declare var $: any;
   isVisible2: boolean = true;
   fullName:string;
   deptName:string;
+  locCode:string;
   locName:string;
   ouName:string;
   loginArray:string;
@@ -138,6 +139,7 @@ declare var $: any;
    
     this.ouId=Number(sessionStorage.getItem('ouId'));
     this.locId=Number(sessionStorage.getItem('locId'));
+    this.locCode=sessionStorage.getItem('locCode');
     // $('[data-submenu]').submenupicker();
 // alert('In admin');
     // this.service.ItemIdDivisionList(this.divisionId).subscribe(

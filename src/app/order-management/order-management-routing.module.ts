@@ -13,6 +13,7 @@ import { SalesOrderBookingComponent } from './sales-order-booking/sales-order-bo
 import { SalesOrderFormComponent } from './sales-order-form/sales-order-form.component';
 import { CounterSaleReturnComponent } from './counter-sale-return/counter-sale-return.component';
 import { AllOrderListComponent } from './all-order-list/all-order-list.component';
+import { OrderGenerationComponent } from './order-generation/order-generation.component';
 
 const routes: Routes = [
   {path:'salesOrderBooking', component:SalesOrderBookingComponent},
@@ -30,6 +31,7 @@ const routes: Routes = [
   {path:'CounterSaleWithCSV',component:CounterSaleWithCSVModuleComponent},
   {path:'CounterSaleReturn',component:CounterSaleReturnComponent},
   {path:'orderList',component:AllOrderListComponent},
+  {path:'OrderGeneration',component:OrderGenerationComponent},
   // {path:'GatePass/:orderNumber',component:SalesGatePassComponent},
   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];
