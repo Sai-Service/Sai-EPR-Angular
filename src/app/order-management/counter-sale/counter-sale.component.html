@@ -127,6 +127,12 @@
             </div>
         </legend>
         <table class="center" style="width: 100%;">
+           <tr>
+            <td colspan="4">
+                <input disabled type="text" class="form-control" formControlName="uuidRef"
+                 value={{uuidRef}} style="width: 100%;">
+            </td>
+        </tr>
             <tr>
                 <td style="width: 15%" class="LabelFontStyle1">
                     Customer&nbsp;No&nbsp;:&nbsp;
@@ -327,7 +333,8 @@
                 <td colspan="5">
                     <input disabled type="text" class="form-control" formControlName="custAddress"
                         [(ngModel)]='custAddress' value={{custAddress}} style="width:100%;">
-                </td>
+              
+                    </td>
             </tr>
             <!--  ******* Additional Details FOR WALKING Customer********   -->
             <div *ngIf="displaywalkingCustomer; then thenwalkingCustomer; else elsewalkingCustomer"></div>
@@ -1433,7 +1440,7 @@
           </ng-template>
           <ng-template #hList1> </ng-template>
 
-           <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">&nbsp;{{dataDisplay }}&nbsp; </td>
+           <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">&nbsp;{{dataDisplay}}&nbsp; </td>
         </tr>
     </table>
 
@@ -1675,10 +1682,7 @@
 
 
 <!-- Confirmation Message -->
-
-
-
-<div class="modal" id="confirmAlert" tabindex="-1" role="dialog" [ngStyle]="{'display':display}" aria-hidden="true">
+ <div class="modal" id="confirmAlert" tabindex="-1" role="dialog" [ngStyle]="{'display':display}" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -1705,5 +1709,5 @@
             </div>
         </div>
     </div>
-</div>
+</div> 
 

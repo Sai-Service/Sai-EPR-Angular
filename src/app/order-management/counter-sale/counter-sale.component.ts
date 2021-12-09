@@ -123,8 +123,12 @@ interface CustomerCreationInterface {
 }
 
 
-var require: any;
+export  class StockTransferRow {
+  segment:string;
+  Locator:string;
+  quantity:number;
 
+}
 
 @Component({
   selector: 'app-counter-sale',
@@ -137,12 +141,14 @@ var require: any;
 })
 
 
+
 export class CounterSaleComponent implements OnInit {
   itemSeg: string = "";
   CounterSaleOrderBookingForm: FormGroup;
   lnflowStatusCode: 'BOOKED';
   refCustNo: string;
   lineNumber: number;
+  uuidRef:string;
   private allLineTotalAmt = 0;
   tcsYN: string;
   tcsPer:number;
@@ -403,6 +409,7 @@ export class CounterSaleComponent implements OnInit {
   constructor(private fb: FormBuilder, private location1: Location, private router1: ActivatedRoute, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService,) {
     this.CounterSaleOrderBookingForm = fb.group({
       emplId: [''],
+      uuidRef:[''],
       taxCategoryName: [''],
       disPer: [''],
       refCustNo: [''],
@@ -578,7 +585,7 @@ export class CounterSaleComponent implements OnInit {
 
 
   ngOnInit(): void {
-    // this.CounterSaleOrderBookingForm.patchValue({refCustNo:uuidv4()});
+    this.CounterSaleOrderBookingForm.patchValue({uuidRef:uuidv4()});
     // console.log(uuidv4());
     // alert(uuidv4())
     $("#wrapper").toggleClass("toggled");
@@ -1129,10 +1136,12 @@ export class CounterSaleComponent implements OnInit {
 
   close() {
     this.router.navigate(['admin']);
+    this.deleteReserve();
   }
 
   refresh() {
     window.location.reload();
+    this.deleteReserve();
   }
 
 
@@ -1163,6 +1172,8 @@ export class CounterSaleComponent implements OnInit {
 
 
   public itemMap2 = new Map<number, any[]>();
+
+  public itemMap3 = new Map<string, StockTransferRow >();
 
   // *******  old code *******
   // onOptionsSelectedCategory(itemType: string, lnNo: number) {
@@ -1668,6 +1679,8 @@ export class CounterSaleComponent implements OnInit {
         });
 
     var itemId1 = arrayControl[index].itemId;
+    var item=arrayControl[index].segment;
+    var pricingQty = arrayControl[index].pricingQty;
     // alert(itemId1)
     if (itemId1 != null && fldName!="locator") {
       this.addRow(index + 1);
@@ -2207,12 +2220,35 @@ export class CounterSaleComponent implements OnInit {
 
 
   addRow(i) {
-    // if (i > -1) {
-    //   this.reservePos(i);
-    // }
-    // this.displaysegmentInvType.push(true);
-    this.itemSeg='';
-    this.setFocus('itemSeg' + i);
+    // var fildName='addNewRow';
+    // alert(i+'---'+ fildName)
+    if(i>-1){
+      var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
+      console.log(trxLnArr1); 
+      var len=i-1;  
+      alert(len)
+      console.log(trxLnArr1[len].pricingQty);
+      var itemqty=trxLnArr1[len].pricingQty;
+      var item=trxLnArr1[len].segment;
+      // if (fildName==='addNewRow'){
+      //   alert(i)
+      //   var itemqty=trxLnArr1[i].pricingQty;
+      //   var item=trxLnArr1[i].segment;
+      // }
+      if(item===''|| itemqty==='' )
+     { alert('Please enter data in blank field');
+     return;
+    }
+    if(!this.itemMap2.has(item))
+    {
+      this.reservePos(i);
+    }
+    else{
+      // debugger;
+      this.deleteReserveLinewise(i);
+      this.reservePos(i);
+    }
+    }
     var disPer = this.CounterSaleOrderBookingForm.get('disPer').value;
     // this.itemSeg='';
     // this.setFocus('itemSeg'+i);
@@ -2248,6 +2284,7 @@ export class CounterSaleComponent implements OnInit {
     this.setFocus('itemSeg' + i);
     // this.updateTotAmtPerline(i)
     this.op=''
+
   }
 
   public tempTotMap = new Map<string, number>();
@@ -2303,6 +2340,15 @@ export class CounterSaleComponent implements OnInit {
 
 
   RemoveRow(OrderLineIndex) {
+    alert(OrderLineIndex)
+    var len =OrderLineIndex+1
+    var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
+    var itemid=trxLnArr1[OrderLineIndex].segment;
+    if(itemid!=null || itemid!=undefined )
+    {
+    this.deleteReserveLinewise(OrderLineIndex);
+    this.itemMap.delete(itemid);
+    }
     this.orderlineDetailsArray().removeAt(OrderLineIndex);
     this.TaxDetailsArray().removeAt(OrderLineIndex);
 
@@ -2690,34 +2736,7 @@ export class CounterSaleComponent implements OnInit {
 
 
 
-  reservePos(i) {
-    // alert("Hello");
-    var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
-    let variants = <FormArray>this.orderlineDetailsArray();
-    var transtypeid = this.CounterSaleOrderBookingForm.get('transactionTypeId').value;
-    console.log(transtypeid);
-    var locId1 = sessionStorage.getItem('locId');
-    let variantFormGroup = <FormGroup>variants.controls[i];
-    variantFormGroup.addControl('transactionTypeId', new FormControl(transtypeid, Validators.required));
-    variantFormGroup.addControl('locId', new FormControl(locId1, Validators.required));
-    variantFormGroup.addControl('reservedQty', new FormControl(trxLnArr1[i].pricingQty, Validators.required));
-    variantFormGroup.addControl('onHandId', new FormControl(trxLnArr1[i].id, []));
-    this.service.reservePost(variants.value[i]).subscribe((res: any) => {
-      if (res.code === 200) {
-        // alert("Record inserted Successfully");
-      }
-      else {
-        if (res.code === 400) {
-          window.location.reload();
-        }
-      }
-    }
-    );
-  }
-
-
-
-
+ 
   onOptionsSelectedTransactionType(transactionTypeName: string) {
     if (transactionTypeName != undefined) {
       // alert(transactionTypeName)
@@ -2850,23 +2869,71 @@ export class CounterSaleComponent implements OnInit {
     this.isDisabled = false;
   }
 
-  deleteReserveLinewise(i)
-{
+  
+
+
+
+  reservePos(i){
+    // alert(i+'reservPos')
+   var len =i-1;
   var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
-  var orderNumber=this.orderNumber;
-  // alert(orderNumber);
-  var itemid=trxLnArr1[i].itemId;
-  this.service.reserveDeleteLine(orderNumber,Number(sessionStorage.getItem('locId')),itemid).subscribe((res:any)=>{
-    //  var obj=res.obj;
+  var variants = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+  console.log(trxLnArr1);  
+      var transtypeid = this.CounterSaleOrderBookingForm.get('uuidRef').value;
+      var locId1=this.CounterSaleOrderBookingForm.get('locId').value;
+      var prqty=trxLnArr1[len].pricingQty;
+      var itemId=trxLnArr1[len].itemId;
+      // let variants = <FormArray>this.orderlineDetailsArray();
+        let variantFormGroup = <FormGroup>variants.controls[len];
+        variantFormGroup.addControl(transtypeid, new FormControl(transtypeid,[]));
+        variantFormGroup.addControl('locId', new FormControl(locId1, []));
+        variantFormGroup.addControl('reservedQty', new FormControl(prqty, []));
+         variantFormGroup.addControl('invItemId', new FormControl(itemId, []));
+         console.log(variants);
+        let formData = new FormData();
+        console.log(formData);   
+    this.service.reservePost(variants.value[len]).subscribe((res:any)=>{
      if(res.code===200)
      {
-      // alert(res.message);
-     }});
-}
+      var stkRow:StockTransferRow=new StockTransferRow();
+      stkRow.segment=(trxLnArr1[i-1].segment);
+      stkRow.Locator=(trxLnArr1[i-1].frmLocator);
+      stkRow.quantity=(trxLnArr1[i-1].quantity);
+      this.itemMap3.set(trxLnArr1[i-1].segment,stkRow);
+     }
+     else{
+      if(res.code === 400) {
+        alert(res.message);
+        this.CounterSaleOrderBookingForm.reset();
+      }
+     }
+    }
+    );
+  }
 
+  deleteReserve()
+  {
+    var transferId=this.CounterSaleOrderBookingForm.get('uuidRef').value;
+    this.service.reserveDelete(transferId,Number(sessionStorage.getItem('locId'))).subscribe((res:any)=>{
+       if(res.code===200)
+       {
+       }});
+  }
 
-
-
+  deleteReserveLinewise(i) {
+    var transferId= this.CounterSaleOrderBookingForm.get('uuidRef').value;
+    var     trxLnArr1 =this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
+    console.log(trxLnArr1);
+    
+    var itemid=trxLnArr1[i].itemId;
+    if (itemid !=null){
+    this.service.reserveDeleteLine(transferId,Number(sessionStorage.getItem('locId')),itemid).subscribe((res:any)=>{
+      //  var obj=res.obj;
+       if(res.code===200)
+       {
+       }});
+      }
+  }
 
 
 }
