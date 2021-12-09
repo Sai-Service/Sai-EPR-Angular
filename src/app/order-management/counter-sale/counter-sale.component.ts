@@ -1563,6 +1563,7 @@ export class CounterSaleComponent implements OnInit {
       if (qty1 <= 0) {
         alert("Please enter quantity more than zero");
         trxLnArr1.controls[index].patchValue({ quantity: '' });
+        this.setFocus('pricingQty');
         // (<any>trxLnArr[index].get('pricingQty')).nativeElement.focus();
         return false;
       }
@@ -1593,7 +1594,11 @@ export class CounterSaleComponent implements OnInit {
     var arrayControl = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     var pricingQty = arrayControl[index].pricingQty;
     // alert(pricingQty)
-    if (pricingQty === null || pricingQty === undefined || pricingQty === 0 || pricingQty === '') {
+    if (pricingQty === null || pricingQty === undefined ||  pricingQty === '') {
+     return;
+    }
+    if ( pricingQty <= 0){
+      alert("Please enter quantity more than zero");
       return;
     }
     var isvalidqty = this.validate(index, pricingQty);
@@ -2152,7 +2157,7 @@ export class CounterSaleComponent implements OnInit {
     formValue.ouId = Number(sessionStorage.getItem('ouId'));
     formValue.emplId = Number(sessionStorage.getItem('emplId'));
     formValue.divisionId = Number(sessionStorage.getItem('divisionId'));
-    debugger;
+    // debugger;
     this.orderManagementService.pickTicketInvoiceFun(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         this.dataDisplay = ''
@@ -2191,10 +2196,19 @@ export class CounterSaleComponent implements OnInit {
     for (let j = 0; j < orderLines.length; j++) {
       if (orderLines[j].segment === '' && orderLines[j].taxCategoryName === '' && orderLines[j].pricingQty === '') {
         alert('First Select Line Details..!');
+        this.closeResetButton = true;
+        this.dataDisplay = ''
         return;
       }
       if (orderLines[j].unitSellingPrice === '') {
         alert('Line No' + j + 'Amount is Zero please confirm')
+      }
+      if (orderLines[j].pricingQty ===0){
+        alert('Line No'+' ' + j +' '+ 'Quantity is Zero please confirm');
+        this.closeResetButton = true;
+        this.dataDisplay = ''
+        return;
+        
       }
     }
     for (let i = 0; i < orderLines.length; i++) {
@@ -2242,14 +2256,13 @@ export class CounterSaleComponent implements OnInit {
   }
 
   addRow(i) {
-    alert(i +'uyuuyy')
+   
     // var fildName='addNewRow';
     // alert(i+'---'+ fildName)
     if (i > -1) {
       var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
       console.log(trxLnArr1);
        var len1 = i;
-      alert(len1)
       console.log(trxLnArr1[len1].pricingQty);
       var itemqty = trxLnArr1[len1].pricingQty;
       var item = trxLnArr1[len1].segment;
@@ -2962,7 +2975,7 @@ export class CounterSaleComponent implements OnInit {
   }
 
   deleteReserveLinewise(i,itemid) {
-    alert(i+'----'+itemid)
+    // alert(i+'----'+itemid)
     // var transferId = this.CounterSaleOrderBookingForm.get('uuidRef').value;
     var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     console.log(trxLnArr1);
