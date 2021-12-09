@@ -1156,7 +1156,7 @@ export class CounterSaleComponent implements OnInit {
   refresh() {
     this.deleteReserve();
     window.location.reload();
-    
+
   }
 
 
@@ -1593,6 +1593,7 @@ export class CounterSaleComponent implements OnInit {
 
     var arrayControl = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     var pricingQty = arrayControl[index].pricingQty;
+    var Avalqty = arrayControl[index].Avalqty;
     // alert(pricingQty)
     if (pricingQty === null || pricingQty === undefined ||  pricingQty === '') {
      return;
@@ -1602,9 +1603,16 @@ export class CounterSaleComponent implements OnInit {
       return;
     }
     var isvalidqty = this.validate(index, pricingQty);
-    if (isvalidqty == false) {
+
+     if (isvalidqty == false) {
       return;
     }
+
+    if (pricingQty > Avalqty) {
+      var bckOrd = pricingQty - Avalqty;
+      pricingQty=0;
+    }
+
     console.log(index);
     var patch = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     console.log(arrayControl);
@@ -1631,7 +1639,7 @@ export class CounterSaleComponent implements OnInit {
     }
 
     patch.controls[index].patchValue({ disAmt: 0 });
-    var baseAmt = arrayControl[index].unitSellingPrice * arrayControl[index].pricingQty;
+    var baseAmt = arrayControl[index].unitSellingPrice * pricingQty;
 
     var disAmt1 = arrayControl[index].disAmt;
     var disPer = arrayControl[index].disPer;
@@ -2208,7 +2216,7 @@ export class CounterSaleComponent implements OnInit {
         this.closeResetButton = true;
         this.dataDisplay = ''
         return;
-        
+
       }
     }
     for (let i = 0; i < orderLines.length; i++) {
@@ -2256,7 +2264,7 @@ export class CounterSaleComponent implements OnInit {
   }
 
   addRow(i) {
-   
+
     // var fildName='addNewRow';
     // alert(i+'---'+ fildName)
     if (i > -1) {
@@ -2934,7 +2942,7 @@ export class CounterSaleComponent implements OnInit {
     var locatorId = trxLnArr1[len].frmLocatorName;
     var rate = trxLnArr1[len].unitSellingPrice;
     var transactionType=this.CounterSaleOrderBookingForm.get('transactionTypeName').value;
-    
+
     var resLn : reserveLine = new reserveLine();
     resLn.transactionType=transactionType;
     resLn.transactionNumber=transactionNumber;
@@ -2981,7 +2989,7 @@ export class CounterSaleComponent implements OnInit {
     console.log(trxLnArr1);
     var transferId = trxLnArr1[i].transferId;
     console.log(transferId);
-    
+
     if (itemid != null) {
       this.service.reserveDeleteLine(transferId, Number(sessionStorage.getItem('locId')), itemid).subscribe((res: any) => {
         //  var obj=res.obj;
