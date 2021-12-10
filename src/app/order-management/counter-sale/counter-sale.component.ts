@@ -2285,7 +2285,7 @@ export class CounterSaleComponent implements OnInit {
       }
       else {
         // debugger;
-        this.deleteReserveLinewise(i,itemid);
+        // this.deleteReserveLinewise(i,itemid);COMMENT BY VINITA
         this.reservePos(i);
       }
     }
@@ -2394,18 +2394,19 @@ export class CounterSaleComponent implements OnInit {
     var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     var itemid = trxLnArr1[OrderLineIndex].segment;
     var itemid1 = trxLnArr1[OrderLineIndex].itemId;
+    var uuidref = trxLnArr1[OrderLineIndex].uuidRef;
     var locatorId = trxLnArr1[OrderLineIndex].frmLocatorName;
     var prc = trxLnArr1[OrderLineIndex].unitSellingPrice;
     this.orderlineDetailsArray().removeAt(OrderLineIndex);
     this.TaxDetailsArray().removeAt(OrderLineIndex);
     if (itemid != null || itemid != undefined) {
-      this.deleteReserveLinewise(OrderLineIndex,itemid1);
+      this.deleteReserveLinewise(OrderLineIndex,itemid1,uuidref);
       this.itemMap3.delete(itemid);
-      for (let x = 0; x < trxLnArr1.length; x++) {
-        if (itemid1 === trxLnArr1[x].itemId || itemid1 != null || itemid1 !=undefined) {
-          this.resverQty(x, itemid1, locatorId, prc);
-        }
-      }
+      // for (let x = 0; x < trxLnArr1.length; x++) {
+      //   if (itemid1 === trxLnArr1[x].itemId || itemid1 != null || itemid1 !=undefined) {
+      //     this.resverQty(x, itemid1, locatorId, prc);
+      //   }
+      // }
     }
     var formVal = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     var formArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
@@ -2433,7 +2434,7 @@ export class CounterSaleComponent implements OnInit {
       trxArr.controls[i].patchValue({ 'baseAmt': 0, 'disAmt': 0, 'taxAmt': 0, 'totAmt': 0 });
     }
     this.updateTotAmtPerline(i)
-    this.deleteReserveLinewise(i,trxArrVal[i].itemid)
+    this.deleteReserveLinewise(i,trxArrVal[i].itemid,trxArrVal[i].uuidRef)
   }
 
 
@@ -2958,15 +2959,16 @@ export class CounterSaleComponent implements OnInit {
   }
   }
 
-  deleteReserveLinewise(i,itemid) {
-    // alert(i+'----'+itemid)
-    // var transferId = this.CounterSaleOrderBookingForm.get('uuidRef').value;
-    var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
-    console.log(trxLnArr1);
-    var transferId = trxLnArr1[i].transferId;
-    console.log(transferId);
+  deleteReserveLinewise(i,itemid, transferId) {
+    alert(i+'----'+itemid)
+    //var transferId = this.CounterSaleOrderBookingForm.get('uuidRef').value;
+    // var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
+    // console.log(trxLnArr1);
+    // var transferId = trxLnArr1[i].uuidRef;
+    // console.log(transferId);
 
     if (itemid != null) {
+      alert(i+'----'+itemid+'---'+transferId);
       this.service.reserveDeleteLine(transferId, Number(sessionStorage.getItem('locId')), itemid).subscribe((res: any) => {
         //  var obj=res.obj;
         if (res.code === 200) {

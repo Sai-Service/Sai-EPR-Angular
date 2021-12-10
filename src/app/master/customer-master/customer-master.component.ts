@@ -9,6 +9,7 @@ import { formatDate } from '@angular/common';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 import { data } from 'jquery';
 
+
 interface IcustomerMaster {
   custType: string;
   customerId: number;
@@ -230,6 +231,7 @@ export class CustomerMasterComponent implements OnInit {
   tdsApplDate:Date;
   staxCategoryName:string;
   tcsPer:number;
+  displayTcsPer: boolean;
 
   constructor(private fb: FormBuilder, private router: Router,private orderManagementService: OrderManagementService, private location1: Location, private service: MasterService) {
     this.customerMasterForm = fb.group({
@@ -1067,9 +1069,11 @@ export class CustomerMasterComponent implements OnInit {
   tcssel(e) {
     if (e.target.checked === true) {
       this.tcsYN = 'Y'
+      this.displayTcsPer=true;
     }
     if (e.target.checked === false) {
       this.tcsYN = 'N'
+      this.displayTcsPer=false;
     }
   }
   onOptionSelOuLimit(event) {
@@ -1300,6 +1304,14 @@ export class CustomerMasterComponent implements OnInit {
       );
   }
 
+  now=new Date();
+
+  onTdsPerSel(event){
+    alert(event);
+    if(event>0){
+      this.customerMasterForm.patchValue({tdsApplDate:this.pipe.transform(this.now,'dd-MM-yyyy')});
+    }
+  }
 
 }
 

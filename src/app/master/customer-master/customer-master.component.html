@@ -833,11 +833,24 @@
                                             <td style="border: none;color: black;">
                                                     <input type="checkbox" formControlName="tcsYN" [(ngModel)]="tcsYN"  (change)="tcssel($event)">
                                                 </td>
+                                                <div *ngIf="displayTcsPer;then showdispY;else showdispN"></div>
+                                <ng-template #showdispY>
                                                 <td style="width: 15%" class="LabelFontStyle">TCS&nbsp;Percentage&nbsp;:&nbsp;</td>
                                     <!-- <td> -->
+
                                             <td>
                                                     <input type="text" class="form-control" formControlName="tcsPer" [(ngModel)]="tcsPer">
                                                 </td>
+                                                </ng-template>
+                                                <ng-template #showdispN>
+                                                  <td style="width: 15%" class="LabelFontStyle">TCS&nbsp;Percentage&nbsp;:&nbsp;</td>
+                                      <!-- <td> -->
+
+                                              <td>
+                                                      <input disabled type="text" class="form-control" formControlName="tcsPer" [(ngModel)]="tcsPer">
+                                                  </td>
+                                                  </ng-template>
+
                                     <!-- </td> -->
                                     <td style="width: 15%" class="LabelFontStyle">Tds&nbsp;Percentage&nbsp;:&nbsp;</td>
                                     <td>
@@ -846,7 +859,7 @@
                                             [ngClass]="{ 'is-invalid': submitted && f.disPer.errors }"
                                             placeholder="Enter Tds Percentage" > -->
                                             <select formControlName="tdsPer" value={{tdsPer}} [(ngModel)]='tdsPer'
-                                            class="form-control" >
+                                            class="form-control" (ngModelChange)="onTdsPerSel($event)"  >
                                             <option *ngFor="let per of tdsPercentage">{{per.code}}</option>
                                               </select>
                                         </td>
@@ -855,7 +868,7 @@
                                         <tr>
                                     <td style="width: 15%" class="LabelFontStyle">Tds&nbsp;Applicable&nbsp;:&nbsp;</td>
                                       <td>
-                                         <input type="date" formControlName="tdsApplDate" value={{tdsApplDate}} [(ngModel)]='tdsApplDate'
+                                         <input disabled type="date" formControlName="tdsApplDate" value={{tdsApplDate}} [(ngModel)]='tdsApplDate'
                                               class="form-control"
                                               [ngClass]="{ 'is-invalid': submitted && f.tdsApplDate.errors }">
                                     </td>
