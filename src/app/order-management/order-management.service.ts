@@ -452,6 +452,10 @@ public pickTicketInvoiceFun(pickTicketInvDels) {
     return this.http.get(this.ServerUrl + `/arCashReceipts/receipt/${rcptNumber}`);
   }
 
+  getOmReceiptSearchByRcptNoByloc(rcptNumber): Observable<any> {
+    alert("MS>>Receipt number :" + rcptNumber);
+    return this.http.get(this.ServerUrl + `/arCashReceipts/receipt/${rcptNumber}?locId=`+sessionStorage.getItem('locId'));
+  }
   getOmReceiptSearchByCustAcNo(custAcNumber): Observable<any> {
     alert("MS>>Customer Accunt number :" + custAcNumber);
     return this.http.get(this.ServerUrl + `/arCashReceipts/custmst/${custAcNumber}`);

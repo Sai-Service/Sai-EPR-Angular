@@ -410,13 +410,13 @@ userCheck(roleId: number): boolean {
     //alert("else");
   if (Number(sessionStorage.getItem('roleId')) === roleId ){
   //  alert("role -true");
-    return true;
+    return false;
   }
   
 
  if (Number(sessionStorage.getItem('roleId')) != roleId) {
   //  alert("role -false");
-    return false;
+    return true;
   }
 }
 }
