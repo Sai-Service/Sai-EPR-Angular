@@ -1235,14 +1235,14 @@
                                                                                 <select formControlName="billableTyId"
                                                                                     id="billableTyId"
                                                                                     style="width: fit-content;"
-                                                                                    class="form-control">
-                                                                                    <!-- <option disabled>--Select--</option> -->
-                                                                                    <option
+                                                                                    class="form-control"  >
+                                                                                     <option
                                                                                         *ngFor="let sc of  billableTyIdList"
                                                                                         [selected]="sc.billableTyName===Customer" [ngValue]=sc.billableTyId>
                                                                                         {{sc.billableTyName}}
                                                                                     </option>
                                                                                 </select>
+
                                                                                 <input hidden type="number" formControlName="billableTyId" class="form-control"  style="height: 25px;">
                                                                             </td>
                                                                              
@@ -1326,7 +1326,7 @@
                                                                                     id="splitRatio" style="width: 3rem;"
                                                                                     (ngModelChange)='onOptionsplitRatioSelect(i, $event)'
                                                                                     class="form-control">
-                                                                                    <option>--Select--</option>
+                                                                                    <option disabled>--Select--</option>
                                                                                     <option
                                                                                         *ngFor="let sc of  splitRatioList"
                                                                                         [ngValue]="sc.splitCateId">

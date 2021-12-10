@@ -866,6 +866,13 @@ export class JobCardComponent implements OnInit {
         }
       );
   }
+
+  onSelectBillType(evnt,index) {
+
+    // alert("Bill type :"+evnt +" , "+index);
+  }
+
+
   addRow(index) {
 
     var arrayControl = this.jobcardForm.get('jobCardLabLines').value
@@ -884,11 +891,13 @@ export class JobCardComponent implements OnInit {
       var no = this.lineDetailsArray.length;
       let selectbilTy = this.billableTyIdList.find(d => d.billableTyName === 'Customer');
       
-
+      
       (patch.controls[no - 1]).patchValue(
         {
           lineNum: no,
           billableTyId: selectbilTy.billableTyId,
+          splitRatio: 1,
+          custPer:100,
         }
       );
       

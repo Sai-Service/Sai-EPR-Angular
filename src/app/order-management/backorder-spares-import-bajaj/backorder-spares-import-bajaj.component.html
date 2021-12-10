@@ -12,10 +12,16 @@
         <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
            Back Order Upload</legend>
     <table class="center">
-        <tr>
-            <td class="LabelFontStyle"> &nbsp;&nbsp;Location&nbsp;&nbsp;Id:&nbsp;</td>
-            <td> <input  readonly style="width:60px ;"   type="text" formControlName="locId"  [(ngModel)]="locId" class="form-control"  ></td>
+
+        <input  hidden style="width:60px ;"   type="text" formControlName="locId"  [(ngModel)]="locId" class="form-control"  >
            
+        <tr>
+            <td class="LabelFontStyle"> &nbsp;&nbsp;Location&nbsp;&nbsp;Code:&nbsp;</td>
+            <td> <input  readonly style="width:100px ;"   type="text" formControlName="locCode"  [(ngModel)]="locCode" class="form-control"  ></td>
+        </tr>
+        <tr>
+            <td class="LabelFontStyle"> &nbsp;&nbsp;Back&nbsp;Order&nbsp;&nbsp;Status:&nbsp;</td>
+            <td> <input  readonly style="width:200px ;"   type="text" formControlName="msg"  [(ngModel)]="msg" class="form-control"  ></td>
         </tr>
 
         <tr>
@@ -83,8 +89,15 @@
                 <button type="submit" class="btn btn-primary" (click)="progressBarTesting()">Test</button>
               </td> -->
 
-              <td> <button type="submit" class="btn btn-primary" id="register" (click)="clearBackOrder()" style="width: 11rem;">Clear Back Order/In-Transit</button></td>
-            <div *ngIf="closeResetButton; then showB1; else showB2"></div>
+              <div *ngIf ="backorderStatus;then boYes;else boNo"></div>
+              <ng-template #boYes> 
+                  <td> <button type="submit" class="btn btn-primary" id="register" (click)="clearBackOrder()" style="width: 11rem;">Clear Back Order/In-Transit</button></td>
+              </ng-template>
+              <ng-template #boNo> 
+                 <td> <button disabled type="submit" class="btn btn-primary" id="register" (click)="clearBackOrder()" style="width: 11rem;">Clear Back Order/In-Transit</button></td>
+              </ng-template>
+
+              <div *ngIf="closeResetButton; then showB1; else showB2"></div>
             <ng-template #showB1> 
            
             <td>

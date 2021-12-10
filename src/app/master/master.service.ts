@@ -3366,6 +3366,12 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
       return this.http.delete(url, options);
     }
 
+    getBackOrderStatusBajaj(locId): Observable<any> {
+      return this.http.get(this.ServerUrl + `/SparesBackOrder/location?locId=${locId}`);
+   // http://localhost:8081/SparesBackOrder/location?locId=2102
+    }
+
+
     
 
 }
