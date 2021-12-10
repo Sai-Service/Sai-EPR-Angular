@@ -86,43 +86,10 @@ interface ISalesBookingForm {
   cntrOrdCustName: string;
   tcsAmt: number;
   tcsPer: number;
+  salesRepId:string;
 }
 
-interface CustomerCreationInterface {
-  ouName: string;
-  loginArray: string;
-  custType: string;
-  classCodeType: string;
-  custAccountNo: number;
-  title: string;
-  fName: string;
-  mName: string;
-  lName: string;
-  custName: string;
-  customerId1: number;
-  address1: string;
-  address2: string;
-  cmnTypeId: number;
-  address3: string;
-  address4: string;
-  city: string;
-  pinCd: number;
-  state: string;
-  mobile1: number;
-  mobile2: number;
-  mobile3: number;
-  emailId: string;
-  emailId1: string;
-  contactPerson: string;
-  contactNo: number;
-  birthDate: Date;
-  weddingDate: Date;
-  startDate: Date;
-  gstNo: string;
-  panNo: string;
-  tanNo: string;
-  location: string;
-}
+
 
 
 export class StockTransferRow {
@@ -159,6 +126,7 @@ export class CounterSaleComponent implements OnInit {
   CounterSaleOrderBookingForm: FormGroup;
   lnflowStatusCode: 'BOOKED';
   refCustNo: string;
+  salesRepId:string;
   lineNumber: number;
   uuidRef: string;
   private allLineTotalAmt = 0;
@@ -216,6 +184,7 @@ export class CounterSaleComponent implements OnInit {
   public currentCS: string;
   customerNameSearch: any[];
   accountNoSearchdata: any[];
+  exicutiveNameByCustNameList:any=[];
   public op: string;
   // divisionName: string;
   submitted = false;
@@ -422,6 +391,7 @@ export class CounterSaleComponent implements OnInit {
   constructor(private fb: FormBuilder, private location1: Location, private router1: ActivatedRoute, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService,) {
     this.CounterSaleOrderBookingForm = fb.group({
       emplId: [''],
+      salesRepId:[''],
       // uuidRef: [''],
       taxCategoryName: [''],
       disPer: [''],
@@ -1240,12 +1210,29 @@ export class CounterSaleComponent implements OnInit {
       .subscribe(
         data => {
           this.orderedItem = data.description;
+          console.log(data.description);
+          // alert(data.length)
           this.itemMap.set(itemDesc, data);
-
           this.itemMap2.set(lnNo, this.itemMap.get(itemDesc));
-
           if (data.length == 1) {
             (controlinv.controls[lnNo]).patchValue({ 'segment': data[0].segment });
+          }
+          if (data.length===0){
+            (controlinv.controls[lnNo]).patchValue({ 'segment': '' });
+            (controlinv.controls[lnNo]).patchValue({ 'frmLocatorId': '' });
+            (controlinv.controls[lnNo]).patchValue({ 'Avalqty': '' });
+            (controlinv.controls[lnNo]).patchValue({ 'pricingQty': '' });
+            (controlinv.controls[lnNo]).patchValue({ 'orderedItem': '' });
+            (controlinv.controls[lnNo]).patchValue({ 'unitSellingPrice': '' });           
+            (controlinv.controls[lnNo]).patchValue({ 'baseAmt': '' });
+            (controlinv.controls[lnNo]).patchValue({ 'taxCategoryName': '' });
+            (controlinv.controls[lnNo]).patchValue({ 'taxAmt': '' });
+            (controlinv.controls[lnNo]).patchValue({ 'totAmt': '' });
+            (controlinv.controls[lnNo]).patchValue({ 'hsnSacCode': '' });
+            (controlinv.controls[lnNo]).patchValue({ 'disAmt': '' });
+            alert('Please Enter Proper Item Code.!')
+            this.setFocus('itemSeg' + lnNo);
+            return;
           }
         }
       );
@@ -1306,14 +1293,11 @@ export class CounterSaleComponent implements OnInit {
             this.CounterSaleOrderBookingForm.patchValue({ tcsYN: data.obj.tcsYN });
             this.CounterSaleOrderBookingForm.patchValue({ tcsPer: data.obj.tcsPer });
             this.CounterSaleOrderBookingForm.patchValue({ custAccountNo: custAccountNo });
-            // alert(data.obj.tcsPer)
-            // this.CounterSaleOrderBookingForm.patchValue({ name: this.custSiteList[0].siteName });
             let select = this.payTermDescList.find(d => d.lookupValueId === this.selCustomer.termId);
             this.paymentType = select.lookupValue;
             this.CounterSaleOrderBookingForm.get('custName').disable();
             this.CounterSaleOrderBookingForm.get('mobile1').disable();
             if (this.custSiteList.length === 1) {
-              // alert('hi')
               this.CounterSaleOrderBookingForm.patchValue({ name: this.custSiteList[0].siteName });
               this.onOptionsSelectedcustSiteName(this.custSiteList[0].siteName);
             }
@@ -1340,6 +1324,16 @@ export class CounterSaleComponent implements OnInit {
             }
           }
         });
+
+        this.service.exicutiveNameByCustName(custAccountNo,sessionStorage.getItem('locId'))
+        .subscribe(
+          data => {
+            if (data.code === 200) {
+              this.exicutiveNameByCustNameList=data.obj;
+            var salesExicustive= data.obj.ticketNo+'--'+data.obj.fullName;
+              this.CounterSaleOrderBookingForm.patchValue({salesRepId:data.obj.emplId});
+              this.CounterSaleOrderBookingForm.patchValue({salesRepName:salesExicustive})
+           } })
   }
 
   onOptionsSelecteddisPer() {
@@ -1796,7 +1790,7 @@ export class CounterSaleComponent implements OnInit {
                           console.log(data);
                           if (data.length === 0) {
                             // alert('1')
-                            alert('Locator Not Found!.');
+                            alert('Item Not Found In Stock!.');
                             var lotList = [{ locatorId: 0, segmentName: 'Not Found' }]
                             controlinv.controls[k].patchValue({ frmLocatorId: lotList });
                             controlinv.controls[k].patchValue({ onHandQty: 0 });
@@ -1881,6 +1875,12 @@ export class CounterSaleComponent implements OnInit {
                             }
                           );
 
+                          if (this.CounterSaleOrderBookingForm.get('issueCodeType').value.includes('Only Oil Part') && data.obj[i].uom==='LTR' && Number(sessionStorage.getItem('divisionId'))===2 ){
+                            (controlinv.controls[k]).patchValue({
+                              disPer:0,
+                              disAmt:0
+                            })
+                          }
                       }
                     }
                     if (select.itemId != null) {
@@ -1893,7 +1893,7 @@ export class CounterSaleComponent implements OnInit {
                           console.log(data);
                           if (data.length === 0) {
                             // alert('1')
-                            alert('Locator Not Found!.');
+                            alert('Item Not Found In Stock!.');
                             var lotList = [{ locatorId: 0, segmentName: 'Not Found' }]
                             controlinv.controls[k].patchValue({ frmLocatorId: lotList });
                             controlinv.controls[k].patchValue({ onHandQty: 0 });
@@ -2051,15 +2051,11 @@ export class CounterSaleComponent implements OnInit {
   }
 
   AvailQty(i, itemId, calledFrom) {
-    // alert('Hi***' + i);
     var trxLnArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     var trxLnFormArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     if (itemId === undefined) {
       itemId = trxLnArr[i].itemId;
     }
-    // var itemid=trxLnArr[i].itemId;
-    // var locId = trxLnArr[i].frmLocatorId.locatorId;
-    // alert( locId+'locId');
     var locId;
     if (calledFrom === 'Item') {
       var linLocData = this.locData[i];
@@ -2683,32 +2679,7 @@ export class CounterSaleComponent implements OnInit {
 
 
 
-  newMast() {
-    // const formValue: CustomerCreationInterface = this.transDataWithSite(this.CounterSaleOrderBookingForm.value);
-    const formValue: CustomerCreationInterface = this.transData(this.CounterSaleOrderBookingForm.value);
-    formValue.customerId1 = this.custAccountNo;
-    this.service.CustMasterSubmit(formValue).subscribe((res: any) => {
-      if (res.code === 200) {
-        alert(res.message);
-        if (this.custAccountNo != null) {
-          this.accountNoSearch1(this.custAccountNo);
-        }
-        else if (this.mobile1 != null) {
-          this.contactNoSearch(this.mobile1);
-        }
-        else {
-          this.custNameSearch(this.custName);
-        }
 
-        // this.CounterSaleOrderBookingForm.reset();
-      } else {
-        if (res.code === 400) {
-          alert(res.message);
-          // this.CounterSaleOrderBookingForm.reset();
-        }
-      }
-    });
-  }
 
 
 

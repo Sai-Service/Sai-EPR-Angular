@@ -113,8 +113,14 @@
                     
                                     <td style="width: 12%" class="LabelFontStyle">Chassis&nbsp;No&nbsp;:&nbsp;</td>
                                     <td>
-                                        <input   type="text"  formControlName="chassisNo"  id="chassisNo" [(ngModel)]="chassisNo" class="form-control" style="text-transform:uppercase;" >
+                                        <input   type="text"  formControlName="chassisNo"  id="chassisNo" 
+                                        [ngClass]="{ 'is-invalid': submitted && f.chassisNo.errors }" 
+                                        [(ngModel)]="chassisNo" class="form-control" style="text-transform:uppercase;" >
+                                        <div *ngIf="submitted && f.chassisNo.errors" class="invalid-feedback">
+                                            <div *ngIf="f.chassisNo.errors.required">Chassis No. cannot be</div>
+                                        </div>
                                     </td>
+                                  
                                                       
                                     <td style="background-color: #FFE4B5;">
                                         <button type="button" class="btn-primary" (click)="SearchByModelChas(mainModel,chassisNo)"><i class="fa fa-search"

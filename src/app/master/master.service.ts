@@ -993,6 +993,10 @@ searchCustomerByAccount(accountNo): Observable<any>{
   return this.http.get(this.ServerUrl+`/Customer/getByCustAcctNo?accountNo=${accountNo}`);
 }
 
+exicutiveNameByCustName(accountNo,locId): Observable<any>{
+  return this.http.get(this.ServerUrl+`/empCust/exeDtls?accountNo=${accountNo}&locId=${locId}`);
+}
+
 crediteLimitFn(customerId,customerSiteId): Observable<any>{
   return this.http.get(this.ServerUrl+`/Customer/getCreditAmt?customerId=${customerId}&customerSiteId=${customerSiteId}`);
 }
