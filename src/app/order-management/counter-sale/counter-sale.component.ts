@@ -1223,7 +1223,7 @@ export class CounterSaleComponent implements OnInit {
             (controlinv.controls[lnNo]).patchValue({ 'Avalqty': '' });
             (controlinv.controls[lnNo]).patchValue({ 'pricingQty': '' });
             (controlinv.controls[lnNo]).patchValue({ 'orderedItem': '' });
-            (controlinv.controls[lnNo]).patchValue({ 'unitSellingPrice': '' });           
+            (controlinv.controls[lnNo]).patchValue({ 'unitSellingPrice': '' });
             (controlinv.controls[lnNo]).patchValue({ 'baseAmt': '' });
             (controlinv.controls[lnNo]).patchValue({ 'taxCategoryName': '' });
             (controlinv.controls[lnNo]).patchValue({ 'taxAmt': '' });
@@ -1604,7 +1604,7 @@ export class CounterSaleComponent implements OnInit {
 
     if (pricingQty > Avalqty) {
       var bckOrd = pricingQty - Avalqty;
-      pricingQty=0;
+      pricingQty=Avalqty;
     }
 
     console.log(index);

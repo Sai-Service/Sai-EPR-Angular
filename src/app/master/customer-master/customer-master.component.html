@@ -1370,11 +1370,11 @@
                                               [ngClass]="{ 'is-invalid': submitted && f.screditAmt.errors }"
                                               placeholder="Enter  Credit Amount" oninput="this.value = Math.abs(this.value)"
                                               >
-                                          <div *ngIf="submitted && f.screditAmt.errors" class="invalid-feedback">
+                                          <!-- <div *ngIf="submitted && f.screditAmt.errors" class="invalid-feedback">
                                               <div *ngIf="f.creditAmt.errors.required">Enter Credit Amount </div>
                                               <div *ngIf="f.creditAmt.errors.maxlength">Enter Credit Amount
                                               </div>
-                                          </div>
+                                          </div> -->
                                           <!-- <span
                                               *ngIf="!customerMasterForm.get('smobile1').valid && customerMasterForm.get('smobile1').touched">Please
                                               Enter mobile1 </span> -->

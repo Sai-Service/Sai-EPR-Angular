@@ -285,7 +285,7 @@ export class CustomerMasterComponent implements OnInit {
       scity: ['', [Validators.minLength(3), Validators.maxLength(50), Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
       spinCd: ['', [Validators.minLength(6), Validators.maxLength(6), Validators.pattern('[0-9]*')]],
       sstate: [''],
-      smobile1: ['', [, Validators.pattern('[0-9]*'), Validators.minLength(10), Validators.maxLength(10)]],
+      smobile1: ['', [Validators.pattern('[0-9]*'), Validators.minLength(10), Validators.maxLength(10)]],
       smobile2: ['', [Validators.minLength(10), Validators.maxLength(10), Validators.pattern('[0-9]*')]],
       smobile3: ['', [Validators.minLength(10), Validators.maxLength(10), Validators.pattern('[0-9]*')]],
       semailId: ['', [Validators.email, Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')]],
