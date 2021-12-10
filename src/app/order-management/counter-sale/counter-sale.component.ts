@@ -1240,12 +1240,29 @@ export class CounterSaleComponent implements OnInit {
       .subscribe(
         data => {
           this.orderedItem = data.description;
+          console.log(data.description);
+          // alert(data.length)
           this.itemMap.set(itemDesc, data);
-
           this.itemMap2.set(lnNo, this.itemMap.get(itemDesc));
-
           if (data.length == 1) {
             (controlinv.controls[lnNo]).patchValue({ 'segment': data[0].segment });
+          }
+          if (data.length===0){
+            (controlinv.controls[lnNo]).patchValue({ 'segment': '' });
+            (controlinv.controls[lnNo]).patchValue({ 'frmLocatorId': '' });
+            (controlinv.controls[lnNo]).patchValue({ 'Avalqty': '' });
+            (controlinv.controls[lnNo]).patchValue({ 'pricingQty': '' });
+            (controlinv.controls[lnNo]).patchValue({ 'orderedItem': '' });
+            (controlinv.controls[lnNo]).patchValue({ 'unitSellingPrice': '' });           
+            (controlinv.controls[lnNo]).patchValue({ 'baseAmt': '' });
+            (controlinv.controls[lnNo]).patchValue({ 'taxCategoryName': '' });
+            (controlinv.controls[lnNo]).patchValue({ 'taxAmt': '' });
+            (controlinv.controls[lnNo]).patchValue({ 'totAmt': '' });
+            (controlinv.controls[lnNo]).patchValue({ 'hsnSacCode': '' });
+            (controlinv.controls[lnNo]).patchValue({ 'disAmt': '' });
+            alert('Please Enter Proper Item Code.!')
+            this.setFocus('itemSeg' + lnNo);
+            return;
           }
         }
       );
