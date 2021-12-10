@@ -400,4 +400,25 @@ if(sessionStorage.getItem('ticketNo')===undefined||sessionStorage.getItem('ticke
       return;
     }
 }
+
+userCheck(roleId: number): boolean {
+  alert(sessionStorage.getItem('roleId') +'--'+roleId );
+  if(sessionStorage.getItem('roleId') === 'undefined') { 
+    
+    return true;
+  }else{
+    alert("else");
+  if (Number(sessionStorage.getItem('roleId')) === roleId ){
+    alert("role -true");
+    return true;
+  }
+  
+
+ if (Number(sessionStorage.getItem('roleId')) != roleId) {
+    alert("role -false");
+    return false;
+  }
+}
+}
+
   }
