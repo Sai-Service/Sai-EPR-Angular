@@ -829,13 +829,13 @@ export class PaymentArComponent implements OnInit {
 
   SearchByRcptNo(rcptNo: any) {
     this.status = null;
-    this.service.getArReceiptSearchByRcptNo(rcptNo,sessionStorage.getItem('ouId'))
+    this.service.getArReceiptSearchByRcptNoByloc(rcptNo,sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
       .subscribe(
         data => {
           this.lstcomments = data.obj;
           console.log(this.lstcomments);
-          if (data.message === "Record Not Found ") {
-            alert("No Receipt Found for this date...")
+          if (data.code === 400) {
+            alert(data.obj)
             this.lstcomments = null;
           }
 
@@ -847,7 +847,7 @@ export class PaymentArComponent implements OnInit {
     // alert("SearchByRcptNo-Receipt No : "+ rcptNo+","+custActNo +","+ rcptdate );
     this.status = null;
     var mDate = this.pipe.transform(rcptdate, 'dd-MMM-y');
-    this.service.SearchRcptByCustNoDate(custActNo, mDate,sessionStorage.getItem('ouId'))
+    this.service.SearchRcptByCustNoDate(custActNo, mDate,sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
       .subscribe(
         data => {
           this.lstcomments = data.obj;
@@ -871,7 +871,7 @@ export class PaymentArComponent implements OnInit {
     this.displayButton = false;
     this.display = false;
 
-    this.service.getArReceiptDetailsByRcptNo(receiptNumber)
+    this.service.getArReceiptDetailsByRcptNoAndloc(receiptNumber)
       .subscribe(
         data => {
           this.receiptDetails = data.obj.oePayList[0];

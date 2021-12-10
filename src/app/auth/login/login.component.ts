@@ -96,7 +96,8 @@ export class LoginComponent implements OnInit {
           sessionStorage.setItem('deptId',users.deptId);
           sessionStorage.setItem('fullName',users.fullName);
           sessionStorage.setItem('locName',users.locName);
-          
+          sessionStorage.setItem('roleId',users.roleId);
+
 console.log(users.ouId);
 console.log(users.locId);
 console.log(users.ouName);
