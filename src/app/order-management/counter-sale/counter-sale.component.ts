@@ -1876,7 +1876,6 @@ export class CounterSaleComponent implements OnInit {
                           );
 
                           if (this.CounterSaleOrderBookingForm.get('issueCodeType').value.includes('Only Oil Part') && data.obj[i].uom==='LTR' && Number(sessionStorage.getItem('divisionId'))===2 ){
-                             alert('This Is Oil Part.!') ;
                             (controlinv.controls[k]).patchValue({
                               disPer:0,
                               disAmt:0
