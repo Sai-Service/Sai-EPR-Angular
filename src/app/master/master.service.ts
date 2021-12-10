@@ -2313,19 +2313,23 @@ OrderCategoryList(): Observable<any> {
      return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}&divisionId=${divId}`);
   }
 
-  getArReceiptSearchByRcptNo(rcptNumber,custActNo,rcptDate,ouId): Observable<any>
+  getArReceiptSearchByRcptNo(rcptNumber,ouId): Observable<any>
   {
-    // alert("MS>>RCPT NO -getArReceiptSearchByRcptNo: RcptNo ,CustNo,RcptDate :" +rcptNumber +','+custActNo +','+rcptDate  );
+    if( rcptNumber !=undefined || rcptNumber !=null ) {
+    return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptNumber=${rcptNumber}&orgId=${ouId}`);
+    }
+
+  }
+
+  SearchRcptByCustNoDate(custActNo,rcptDate,ouId): Observable<any>
+  {
+    // alert("MS>>RCPT NO -getArReceiptSearchByRcptNo: CustNo,RcptDate :" +custActNo +','+rcptDate  );
 
     if(rcptDate !=undefined || rcptDate !=null){
       // alert ("receipt date only");
         return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptDate='${rcptDate}'&orgId=${ouId}`)
       }
-      if( rcptNumber !=undefined || rcptNumber !=null) {
-        // alert ("receipt number only");
-      return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptNumber=${rcptNumber}&orgId=${ouId}`);
-      }
-
+  
       if(custActNo !=undefined || custActNo !=null){
         // alert("cust account no");
          return this.http.get(this.ServerUrl + `/arCashReceipts/Search?accountNo=${custActNo}&orgId=${ouId}`);}
@@ -3318,7 +3322,7 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
         getCustomerEmpMapList(empId,p1,s1): Observable<any> {
           return this.http.get(this.ServerUrl + `/empCust?emplId=${empId}&page=${p1}&size=${s1}`);
        // http://localhost:8081/empCust?emplId=334&page=0&size=1
-     }
+        }
 
     customerEmpMapSearch(custNo,locId): Observable<any> {
       return this.http.get(this.ServerUrl + `/empCust/exeDtls?accountNo=${custNo}&locId=${locId}`);
@@ -3333,6 +3337,16 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
       };
       const url = this.ServerUrl + '/empCust';
       return this.http.post(url, custRelationRecord, options);
+    }
+
+    //////////////////////////// ORDER GENERATION /
+   
+    clearBakcOrder(locId) {
+      const options = {
+        headers: this.headers
+      };
+      const url = (this.ServerUrl + `/SparesBackOrder/clearBackOrder?locId=${locId}`);
+      return this.http.delete(url, options);
     }
 
     

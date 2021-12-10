@@ -58,6 +58,8 @@ export class PaymentArComponent implements OnInit {
   paymentArForm: FormGroup;
   applyRcptFlag1: boolean
   pipe = new DatePipe('en-US');
+  now = Date.now();
+  public minDate = new Date();
   
   message: string = "Please Fix the Errors !";
   msgType:string ="Close";
@@ -156,8 +158,7 @@ export class PaymentArComponent implements OnInit {
   mobileNo: string;
 
   // glDate:Date;
-  now = Date.now();
-  public minDate = new Date();
+ 
   // checkDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   checkDate :string;
   receiptDate = this.pipe.transform(Date.now(), 'y-MM-dd');
@@ -825,13 +826,9 @@ export class PaymentArComponent implements OnInit {
   resetSection1() { }
 
 
-
-
-  SearchByRcptNo(rcptNo: any, custActNo: any, rcptdate: any) {
-    // alert("SearchByRcptNo-Receipt No : "+ rcptNo+","+custActNo +","+ rcptdate );
+  SearchByRcptNo(rcptNo: any) {
     this.status = null;
-    var mDate = this.pipe.transform(rcptdate, 'dd-MMM-y');
-    this.service.getArReceiptSearchByRcptNo(rcptNo, custActNo, mDate,sessionStorage.getItem('ouId'))
+    this.service.getArReceiptSearchByRcptNo(rcptNo,sessionStorage.getItem('ouId'))
       .subscribe(
         data => {
           this.lstcomments = data.obj;
@@ -844,6 +841,26 @@ export class PaymentArComponent implements OnInit {
         }
       );
   }
+
+  SearchRcptByCustNoDate( custActNo: any, rcptdate: any) {
+    // alert("SearchByRcptNo-Receipt No : "+ rcptNo+","+custActNo +","+ rcptdate );
+    this.status = null;
+    var mDate = this.pipe.transform(rcptdate, 'dd-MMM-y');
+    this.service.SearchRcptByCustNoDate(custActNo, mDate,sessionStorage.getItem('ouId'))
+      .subscribe(
+        data => {
+          this.lstcomments = data.obj;
+          console.log(this.lstcomments);
+          if (data.message === "Record Not Found ") {
+            alert("No Receipt Found for this date...")
+            this.lstcomments = null;
+          }
+
+        }
+      );
+  }
+
+
 
 
 
@@ -2072,16 +2089,16 @@ export class PaymentArComponent implements OnInit {
   }
 
 
-  ReceiptArApplication(rcptNumber: any, custActNo: any, rcptDate: any,ouId:any) {
-    alert(this.receiptNumber);
-    this.service.getArReceiptSearchByRcptNo(rcptNumber, custActNo, rcptDate,ouId)
-      .subscribe(
-        data => {
-          this.lstcomments = data.obj;
-          console.log(this.lstcomments);
-        }
-      );
-  }
+  // ReceiptArApplication(rcptNumber: any, custActNo: any, rcptDate: any,ouId:any) {
+  //   alert(this.receiptNumber);
+  //   this.service.getArReceiptSearchByRcptNo(rcptNumber, custActNo, rcptDate,ouId)
+  //     .subscribe(
+  //       data => {
+  //         this.lstcomments = data.obj;
+  //         console.log(this.lstcomments);
+  //       }
+  //     );
+  // }
 
 
   OnApplyTypeSelected(applType: any) {
