@@ -42,6 +42,8 @@ interface IWsVehicleMaster {
   styleUrls: ['./ws-vehicle-master.component.css']
 })
 export class WsVehicleMasterComponent implements OnInit {
+  
+  submitted = false;
 
   wsVehicleMasterForm: FormGroup;
 
@@ -280,15 +282,10 @@ export class WsVehicleMasterComponent implements OnInit {
 
 
       /////////////////////SEARCH/////
-      mainModelName: [],
-      chassisNum: [],
+      mainModelName: [Validators.required],
+      chassisNum: [[Validators.required,Validators.pattern('[A-Z,0-9]*')]],
       //emailId1:['', [Validators.email,Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')]],
       vehRegNo: [[Validators.required,Validators.pattern('^[A-Z]{2}[0-9]{2}[A-Z]{2}[0-9]{4}')]],
-      ///////////////////////////////
-
-      ////////////////////////////////////
-
-
       regNo: [],
       ewId: [],
       ewSchemeId: [],
