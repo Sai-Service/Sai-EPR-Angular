@@ -25,6 +25,8 @@ export class OrderGenerationComponent implements OnInit {
   pipe = new DatePipe('en-US');
   public minDate = new Date();
 
+  lstClearBackOrder:any;
+
   loginName:string;
   loginArray:string;
   divisionId:number;
@@ -131,9 +133,33 @@ lineDetailsArray() :FormArray{
     alert("Search by Date..."+dt1 +","+dt2);
   }
 
-  clearBackOrder(){
-    alert("Clear Back Order...");
-  }
+  // clearBackOrder1(){
+    
+  //     this.service.clearBakcOrder(this.locId)
+  //       .subscribe(
+  //         data => {
+  //           this.lstClearBackOrder = data;
+  //           console.log(this.lstClearBackOrder);
+  //         }
+  //       );
+  //    }
+
+
+     clearBackOrder() {
+       this.service.clearBakcOrder(this.locId).subscribe((res: any) => {
+        if (res.code === 200) {
+          // alert('RECORD UPDATED SUCCESSFULLY');
+          alert(res.message);
+          // window.location.reload();
+        } else {
+          if (res.code === 400) {
+            // alert('ERROR OCCOURED IN PROCEESS');
+            alert(res.message);
+          }
+        }
+      });
+    }
+
 
   newMast() {alert("Create/Update/Cancel/Print order....");}
 

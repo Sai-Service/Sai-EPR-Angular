@@ -19,12 +19,13 @@ import { HttpClient } from '@angular/common/http';
 
 
 @Component({
-  selector: 'app-bulk-upload-pricelist',
-  templateUrl: './bulk-upload-pricelist.component.html',
-  styleUrls: ['./bulk-upload-pricelist.component.css']
+  selector: 'app-backorder-spares-import-bajaj',
+  templateUrl: './backorder-spares-import-bajaj.component.html',
+  styleUrls: ['./backorder-spares-import-bajaj.component.css']
 })
-export class BulkUploadPricelistComponent implements OnInit {
-  bulkUploadPriceListForm: FormGroup;
+
+export class BackorderSparesImportBajajComponent implements OnInit {
+  backorderSparesImportBajajForm: FormGroup;
 
   @ViewChild('epltable', { static: false }) epltable: ElementRef;
   @ViewChild('epltable1', { static: false }) epltable1: ElementRef;
@@ -40,6 +41,7 @@ export class BulkUploadPricelistComponent implements OnInit {
   deptId:number;
   locId: number;
   locName : string;
+  locCode:string;
   emplId :number;
   orgId:number;
   divisionId : number;
@@ -67,7 +69,7 @@ export class BulkUploadPricelistComponent implements OnInit {
   @ViewChild('fileInput') fileInput;
 
   constructor(private fb: FormBuilder, private router: Router, private location1: Location, private router1: ActivatedRoute, private service: MasterService,private http: HttpClient) {
-    this.bulkUploadPriceListForm = this.fb.group({
+    this.backorderSparesImportBajajForm = this.fb.group({
 
      
       loginArray:[''],
@@ -77,6 +79,7 @@ export class BulkUploadPricelistComponent implements OnInit {
       deptId:[],
       locId:[''],
       locName :[''],
+      locCode:[],
       emplId:[''],
       divisionId :[''],
       divisionName:[''],
@@ -92,8 +95,8 @@ export class BulkUploadPricelistComponent implements OnInit {
   }
 
   
-  bulkUploadPriceList(bulkUploadPriceListForm:any){}
-  get f() { return this.bulkUploadPriceListForm.controls; }
+  backorderSparesImportBajaj(backorderSparesImportBajajForm:any){}
+  get f() { return this.backorderSparesImportBajajForm.controls; }
   
   ngOnInit(): void {
 
@@ -106,6 +109,7 @@ export class BulkUploadPricelistComponent implements OnInit {
     this.ouId=Number(sessionStorage.getItem('ouId'));
     this.locId=Number(sessionStorage.getItem('locId'));
     this.locName=(sessionStorage.getItem('locName'));
+    this.locCode=(sessionStorage.getItem('locCode'));  
     this.deptId=Number(sessionStorage.getItem('dept'));
     // this.emplId= Number(sessionStorage.getItem('emplId'));
    
@@ -124,14 +128,12 @@ export class BulkUploadPricelistComponent implements OnInit {
 
     // ---------------------------------------Spinner----------------------------
    
-          
-          // ---------------------------------------------------------------------------
-
+  
   }
 
   CheckValidations() {
 
-    var upldPlName =this.bulkUploadPriceListForm.get('upldPricelistName').value;
+    var upldPlName =this.backorderSparesImportBajajForm.get('upldPricelistName').value;
     var csvFileName=this.fileInput.nativeElement.files[0];
 
     if(upldPlName==null || upldPlName==undefined) {
@@ -158,38 +160,25 @@ export class BulkUploadPricelistComponent implements OnInit {
       this.progress = 0;
       this.dataDisplay ='File Upload in progress....Do not refresh the Page'
 
-    var upldPlName =this.bulkUploadPriceListForm.get('upldPricelistName').value;
+    var upldPlName =this.backorderSparesImportBajajForm.get('upldPricelistName').value;
     var event=this.fileInput.nativeElement.files[0];
     console.log('doctype-check'+this.docType)
     let formData = new FormData();
+    // formData.append('file', this.fileInput.nativeElement.files[0])
     formData.append('file', event)
-
-      // this.service.UploadExcel(formData,this.docType,upldPlName).subscribe(result => {
-      // this.message = result.toString();
-
-      // if (event.type === HttpEventType.UploadProgress) {
-      // this.progress = Math.round(100 * event.loaded / event.total);
-      // } else if (event instanceof HttpResponse) {
-      //   this.message = event.body.message;
-      // }
-
-      // alert ( "this.message :" + this.message);
 
        this.service.UploadExcel(formData,this.docType,upldPlName).subscribe((res: any) => {
    
         if (res.code === 200) {
-          // alert('FILE UPLOADED SUCCESSFULLY');
-           this.resMsg = res.message+",  Code : "+res.code;;
+             this.resMsg = res.message+",  Code : "+res.code;;
            this.lstMessage=res.obj.priceListDetailList;
-          //  this.updStatus=false;
-           this.dataDisplay ='File Uploaded Sucessfully....'
+            this.dataDisplay ='File Uploaded Sucessfully....'
            this.closeResetButton=true;
            this.viewLogFile=true;
              
         } else {
           if (res.code === 400) {
-            // alert('FILE UPLOAD FAILED');
-            this.resMsg = res.message +",  Code : "+res.code;
+             this.resMsg = res.message +",  Code : "+res.code;
             this.lstMessage=res.obj.priceListDetailList;
             this.updStatus=false;
             this.dataDisplay ='File Uploading Failed....'
@@ -197,14 +186,11 @@ export class BulkUploadPricelistComponent implements OnInit {
             this.viewLogFile=false;
           }
 
-         
-
         }
       });
-    // } );
-    } 
+     } 
    
-  }
+     }
 
   exportToExcel() {
     const ws: xlsx.WorkSheet =   
@@ -222,84 +208,33 @@ export class BulkUploadPricelistComponent implements OnInit {
     this.location1.back();
   }
 
-message1:string="PleaseFixtheErrors!";
-msgType:string="Close";
-getMessage(msgType:string){
-this.msgType=msgType;
-if(msgType.includes("Reset")){
-this.message="DoyouwanttoResettheForm(Yes/No)?"
-}
 
-if(msgType.includes("Close")){
-this.message="DoyouwanttoClosetheForm(Yes/No)?"
-}
-return;
-}
-
-
-executeAction(){
-
-if(this.msgType.includes("Reset")){
-window.location.reload();
-}
-
-if(this.msgType.includes("Close")){
-this.router.navigate(['admin']);
-}
-return;
-}
-
-progressBarTesting(){
-
-  // for (let i = 0; i <=100; i++) {
-  //   var x=0;
-  //   this.progress=i;
-  //  }
-
-  // this.updStatus=true;
-  // var upldPlName =this.bulkUploadPriceListForm.get('upldPricelistName').value;
-  // var event=this.fileInput.nativeElement.files[0];
-  // console.log('doctype-check'+this.docType)
-  // let formData = new FormData();
-  //  formData.append('file', event)
-
-  // this.service.UploadExcel(formData,this.docType,upldPlName).subscribe((res: any) => {
-   
-
-  //   if (res.code === 200) {
-  //     alert('FILE UPLOADED SUCCESSFULLY');
-  //      this.resMsg = res.message+",  Code : "+res.code;;
-  //      this.lstMessage=res.obj.priceListDetailList;
-  //     this.updStatus=false;
-         
-  //   } else {
-  //     if (res.code === 400) {
-  //       alert('FILE UPLOAD FAILED');
-  //       this.resMsg = res.message +",  Code : "+res.code;
-  //       this.lstMessage=res.obj.priceListDetailList;
-  //       this.updStatus=false;
-  //     }
-  //   }
-  // });
-
-//  this.updStatus=true;
-//   this.http.get('http://www.mocky.io/v2/5ec6a61b3200005e00d75058')
-//   .subscribe(Response => {
-        
-//       if (Response) {
-//           hideloader();
-//       }
-//       console.log(Response)
-//       this.dt = Response;
-//       this.dataDisplay = this.dt.data;
-//   });
-
-//       function hideloader() {
-//         alert("in hide loader...")
-//        document.getElementById('loading') .style.display = 'none';
-//       }
-
-}
+  message1:string="PleaseFixtheErrors!";
+  msgType:string="Close";
+  getMessage(msgType:string){
+  this.msgType=msgType;
+  if(msgType.includes("Reset")){
+  this.message="DoyouwanttoResettheForm(Yes/No)?"
+  }
+  
+  if(msgType.includes("Close")){
+  this.message="DoyouwanttoClosetheForm(Yes/No)?"
+  }
+  return;
+  }
+  
+  
+  executeAction(){
+  
+  if(this.msgType.includes("Reset")){
+  window.location.reload();
+  }
+  
+  if(this.msgType.includes("Close")){
+  this.router.navigate(['admin']);
+  }
+  return;
+  }
 
 // ------------------------------------------------------
 
@@ -310,5 +245,18 @@ exportToExcel1() {
   xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
   xlsx.writeFile(wb, 'epltable1.xlsx');
  }
+
+
+ clearBackOrder() {
+  this.service.clearBakcOrder(this.locId).subscribe((res: any) => {
+   if (res.code === 200) {
+      alert(res.message);
+   } else {
+     if (res.code === 400) {
+       alert(res.message);
+     }
+   }
+ });
+}
 
 }

@@ -58,10 +58,11 @@ export class PaymentArComponent implements OnInit {
   paymentArForm: FormGroup;
   applyRcptFlag1: boolean
   pipe = new DatePipe('en-US');
-  customerNameSearch: any[];
+  now = Date.now();
+  public minDate = new Date();
   
-  message: string = "Please Fix the Errors !";
-  msgType:string ="Close";
+  message:string="PleaseFixtheErrors!";
+  msgType:string="Close";
   // public DivisionIDList : Array<string>=[];
   // public OUIdList: Array<string> = [];
 
@@ -81,6 +82,7 @@ export class PaymentArComponent implements OnInit {
   viewAccountingLines: Array<string> = [];
 
   receiptDetails: Array<string> = [];
+  customerNameSearch:any;
   accountNoSearch: any;
   getVehRegDetails: any;
   CustomerDetailsList: any;
@@ -157,8 +159,7 @@ export class PaymentArComponent implements OnInit {
   mobileNo: string;
 
   // glDate:Date;
-  now = Date.now();
-  public minDate = new Date();
+ 
   // checkDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   checkDate :string;
   receiptDate = this.pipe.transform(Date.now(), 'y-MM-dd');
@@ -826,13 +827,9 @@ export class PaymentArComponent implements OnInit {
   resetSection1() { }
 
 
-
-
-  SearchByRcptNo(rcptNo: any, custActNo: any, rcptdate: any) {
-    // alert("SearchByRcptNo-Receipt No : "+ rcptNo+","+custActNo +","+ rcptdate );
+  SearchByRcptNo(rcptNo: any) {
     this.status = null;
-    var mDate = this.pipe.transform(rcptdate, 'dd-MMM-y');
-    this.service.getArReceiptSearchByRcptNo(rcptNo, custActNo, mDate,sessionStorage.getItem('ouId'))
+    this.service.getArReceiptSearchByRcptNo(rcptNo,sessionStorage.getItem('ouId'))
       .subscribe(
         data => {
           this.lstcomments = data.obj;
@@ -845,6 +842,26 @@ export class PaymentArComponent implements OnInit {
         }
       );
   }
+
+  SearchRcptByCustNoDate( custActNo: any, rcptdate: any) {
+    // alert("SearchByRcptNo-Receipt No : "+ rcptNo+","+custActNo +","+ rcptdate );
+    this.status = null;
+    var mDate = this.pipe.transform(rcptdate, 'dd-MMM-y');
+    this.service.SearchRcptByCustNoDate(custActNo, mDate,sessionStorage.getItem('ouId'))
+      .subscribe(
+        data => {
+          this.lstcomments = data.obj;
+          console.log(this.lstcomments);
+          if (data.message === "Record Not Found ") {
+            alert("No Receipt Found for this date...")
+            this.lstcomments = null;
+          }
+
+        }
+      );
+  }
+
+
 
 
 
@@ -2073,16 +2090,16 @@ export class PaymentArComponent implements OnInit {
   }
 
 
-  ReceiptArApplication(rcptNumber: any, custActNo: any, rcptDate: any,ouId:any) {
-    alert(this.receiptNumber);
-    this.service.getArReceiptSearchByRcptNo(rcptNumber, custActNo, rcptDate,ouId)
-      .subscribe(
-        data => {
-          this.lstcomments = data.obj;
-          console.log(this.lstcomments);
-        }
-      );
-  }
+  // ReceiptArApplication(rcptNumber: any, custActNo: any, rcptDate: any,ouId:any) {
+  //   alert(this.receiptNumber);
+  //   this.service.getArReceiptSearchByRcptNo(rcptNumber, custActNo, rcptDate,ouId)
+  //     .subscribe(
+  //       data => {
+  //         this.lstcomments = data.obj;
+  //         console.log(this.lstcomments);
+  //       }
+  //     );
+  // }
 
 
   OnApplyTypeSelected(applType: any) {
@@ -2104,7 +2121,7 @@ export class PaymentArComponent implements OnInit {
 
   }
 
-   
+  
 
   CheckDataValidations() {
 
@@ -2119,9 +2136,9 @@ export class PaymentArComponent implements OnInit {
       msg1 ='GL PERIOD is null. Please update GL period.';
       // this.executeAlertMsg(msg1);
       alert(msg1);
-      // (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
-      //  this.message = "GL PERIOD is null. Please update GL period."
-       return;
+      // (document.getElementById('saveBtn')asHTMLInputElement).setAttribute('data-target','#confirmAlert');
+      // this.message="GL PERIOD is null. Please update GL period."
+      return;
     }
    
 
@@ -2244,8 +2261,8 @@ export class PaymentArComponent implements OnInit {
 
   executeAlertMsg(msg1) {
     if (this.checkValidation==false){
-      (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
-       this.message = msg1;
+      (document.getElementById('saveBtn')as HTMLInputElement).setAttribute('data-target','#confirmAlert');
+      this.message=msg1;
     }
   }
 
@@ -2349,40 +2366,40 @@ export class PaymentArComponent implements OnInit {
     }
 
     
-      getMessage(msgType: string) {
-          this.msgType = msgType;
+    getMessage(msgType:string){
+      this.msgType=msgType;
 
-       if (msgType.includes("Save")) {
-              this.message = "Do you want to Save(Yes/No)?"
+      if(msgType.includes("Save")){
+        this.message="DoyouwanttoSave(Yes/No)?"
         }
 
-          if (msgType.includes("Reset")) {
-            this.message = "Do you want to Reset the Form(Yes/No)?"
-          }
-          
-          if (msgType.includes("Close")) {
-            this.message = "Do you want to Close the Form(Yes/No)?"
-          }
-          return;
-        }
+      if(msgType.includes("Reset")){
+      this.message="DoyouwanttoResettheForm(Yes/No)?"
+      }
+      
+      if(msgType.includes("Close")){
+      this.message="DoyouwanttoClosetheForm(Yes/No)?"
+      }
+      return;
+      }
 
 
       
-       executeAction() {
+      executeAction(){
         
-          if(this.msgType.includes("Save")) {
-              this.newMast();
-            }
+      if(this.msgType.includes("Save")){
+        this.newMast();
+        }
       
-          if (this.msgType.includes("Reset")) {
-            window.location.reload();
-          }
-          
-          if (this.msgType.includes("Close")) {
-            this.router.navigate(['admin']);
-        }
-          return;
-        }
+      if(this.msgType.includes("Reset")){
+      window.location.reload();
+      }
+      
+      if(this.msgType.includes("Close")){
+      this.router.navigate(['admin']);
+      }
+      return;
+      }
 
       viewAccounting(receiptNo: any) {
 

@@ -96,6 +96,15 @@
             </li>
           </ul>
         </li>
+
+        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Order Generation</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/BackorderSparesImportBajaj']">Pending Order Import</a></li>  
+            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/OrderGeneration']">Create Order </a></li>    
+          
+          </ul>
+        </li>
+
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Counter Sale Order</a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/orderList']">Order List</a></li>
@@ -105,6 +114,7 @@
             <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/OrderGeneration']">Order Generation</a></li>
          </ul>
         </li>
+
         <div [style.display]="isVisible1 ? 'block' : 'none'">
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Sales Order</a>
           <ul class="dropdown-menu">
