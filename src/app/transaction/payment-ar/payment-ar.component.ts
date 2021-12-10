@@ -58,6 +58,7 @@ export class PaymentArComponent implements OnInit {
   paymentArForm: FormGroup;
   applyRcptFlag1: boolean
   pipe = new DatePipe('en-US');
+  customerNameSearch: any[];
   
   message: string = "Please Fix the Errors !";
   msgType:string ="Close";
@@ -1484,7 +1485,7 @@ export class PaymentArComponent implements OnInit {
         .subscribe(
           data => {
             this.accountNoSearch = data.obj;
-
+            this.paymentArForm.patchValue({custAccountNo:data.obj.accountNo});
             if (this.accountNoSearch === null) {
               this.custName = null;
               this.custSiteAddress = null;
@@ -2430,7 +2431,24 @@ export class PaymentArComponent implements OnInit {
        
       }
 
-
+      custNameSearch(custName) {
+        // alert(custName)
+        this.orderManagementService.custNameSearchFn1(custName, sessionStorage.getItem('divisionId'))
+          .subscribe(
+            data => {
+              if (data.code === 200) {
+                this.customerNameSearch = data.obj;
+                console.log(this.accountNoSearch);
+              }
+              else {
+                if (data.code === 400) {
+                  alert(data.message);
+                  // this.display = 'block';
+                }
+              }
+            }
+          );
+      }
 
 }
 

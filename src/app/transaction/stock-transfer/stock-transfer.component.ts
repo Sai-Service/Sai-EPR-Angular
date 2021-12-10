@@ -240,8 +240,7 @@ export class StockTransferComponent implements OnInit {
        var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
     var itemid=trxLnArr1[trxLineIndex].segment;
     // alert(itemid+'Delete');
-    if(itemid!=null)
-    {
+    if(itemid!=null){
     this.deleteReserveLinewise(trxLineIndex);
     this.itemMap.delete(itemid);
     }
@@ -517,7 +516,6 @@ validate(i:number,qty1)
 }
 reservePos(i)
 {
-  // alert("Hello");
 
 var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
   // var trxLnArr2 = this.moveOrderForm.get('trxLinesList') as FormArray;
@@ -529,14 +527,7 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
     let todesc=this.locIdList.find(d=>d.toLocationId===toorg);
     var locId1=this.stockTranferForm.get('locId').value;
     var prqty=trxLnArr1[i].primaryQty
-    // alert(prqty+'QTY');
-    // if(variants.controls[i].get('reservedQty')!=undefined)
-    // {
-    //   alert('In if');
-    //   variants.controls[i].get('reservedQty').reset();
-
-    // }
-
+  
       let variantFormGroup = <FormGroup>variants.controls[i];
       variantFormGroup.removeControl('reservedQty');
       variantFormGroup.removeControl('invItemId');

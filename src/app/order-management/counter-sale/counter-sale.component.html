@@ -225,9 +225,7 @@
                                                                     <td style="width: 195px;">{{com.gstNo}}</td>
                                                                     <td style="width: 195px;">{{com.panNo}}</td>
                                                                     <td style="width: 195px;">{{com.mobile1}}</td>
-                                                                    <td><button class="btn-primary"
-                                                                            (click)="accountNoSearch(com.accountNo)"
-                                                                            data-dismiss="modal">Select</button></td>
+                                                                    <td><button class="btn-primary" style="width: fit-content;"  (click)="accountNoSearch(com.accountNo)" data-dismiss="modal">Select</button></td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
@@ -329,7 +327,8 @@
                 <td colspan="5">
                     <input disabled type="text" class="form-control" formControlName="custAddress"
                         [(ngModel)]='custAddress' value={{custAddress}} style="width:100%;">
-                </td>
+              
+                    </td>
             </tr>
             <!--  ******* Additional Details FOR WALKING Customer********   -->
             <div *ngIf="displaywalkingCustomer; then thenwalkingCustomer; else elsewalkingCustomer"></div>
@@ -501,6 +500,15 @@
                         <td>
                             <input disabled type="text" formControlName="issuedBy" [(ngModel)]='issuedBy'
                                 value={{issuedBy}} class="form-control" style="width: 160px;">
+                        </td>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            Executive&nbsp;Name&nbsp;:&nbsp;
+                        </td>
+                        <td>
+                            <input disabled type="text" formControlName="salesRepName" [(ngModel)]='salesRepName'
+                                value={{salesRepName}} class="form-control" style="width: 160px;">
+                                <input disabled hidden type="number" formControlName="salesRepId" [(ngModel)]='salesRepId'
+                                value={{salesRepId}} class="form-control" style="width: 160px;">
                         </td>
                     </ng-template>
                     <ng-template #elsesalesRepName>
@@ -686,6 +694,15 @@
                         <td>
                             <input disabled type="text" formControlName="issuedBy" [(ngModel)]='issuedBy'
                                 value={{issuedBy}} class="form-control" style="width: 160px;">
+                        </td>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            Executive&nbsp;Name&nbsp;:&nbsp;
+                        </td>
+                        <td>
+                            <input disabled type="text" formControlName="salesRepName" [(ngModel)]='salesRepName'
+                                value={{salesRepName}} class="form-control" style="width: 160px;">
+                                <input disabled type="number" hidden formControlName="salesRepId" [(ngModel)]='salesRepId'
+                                value={{salesRepId}} class="form-control" style="width: 160px;">
                         </td>
                     </ng-template>
                     <ng-template #elsesalesRepName>
@@ -913,7 +930,12 @@
                                                                 (click)="taxDetails('insert', i, taxCategoryId)">
                                                                 {{i+1}}
                                                             </a>
+                                                            <input disabled hidden type="text" class="form-control" formControlName="uuidRef"
+                                                                 value={{uuidRef}} style="width: 100%;">
                                                         </td>
+                                                            <!-- <td> -->
+                                                                
+                                                            <!-- </td> -->
                                                         <td>
                                                             <!-- <input disabled type="text" formControlName="invType" value="invType"
                                             [(ngModel)]='invType'    class="form-control" style="height: 20px;width: 160px;"> -->
@@ -946,8 +968,6 @@
                                                                     {{item.segment}}
                                                                 </option>
                                                             </datalist>
-
-
                                                         <input hidden type="number" formControlName="itemId">
                                                         </td>
                                                         <input hidden type="number" formControlName="onHandQty">
@@ -1062,12 +1082,8 @@
                                                             <a id="line{{i}}" data-toggle="tab" href="#panel1006" style="width: fit-content;"
                                                                 [value]="i+1"
                                                                 (click)="taxDetails('Search', i, taxCategoryId)">{{i+1}}</a>
-                                                                <!-- <a id="lineNumber" data-toggle="tab" href="#panel1006" style="width: fit-content;"
-                                                                formControlName="lineNumber"
-                                                                (click)="taxDetails('Search', i, taxCategoryId)">{{i+1}}</a> -->
-                                                                <!-- <input disabled type="number" formControlName="lineNumber"
-                                                                value="lineNumber" class="form-control"
-                                                                style="height: 20px;width: fit-content">   -->
+                                                                <input hidden type="text" class="form-control" formControlName="uuidRef"
+                                                                value={{uuidRef}} style="width: 100%;">
                                                         </td>
                                                         <td>
                                                             <input disabled type="text" formControlName="invType"
@@ -1163,10 +1179,10 @@
                                                                 class="form-control" style="height: 20px;width: 120px;">
                                                         </td>
                                                         <td>
-                                                            <select formControlName="flowStatusCode"
+                                                            <select formControlName="flowStatusCode" 
                                                                 id="flowStatusCode1" class="form-control"
                                                                 style="width: fit-content;height: 25px;font-size: 10px;"
-                                                                (ngModelChange)="updateLineOnCancel(i)"
+                                                                (ngModelChange)="updateLineOnCancel(i,flowStatusCode)"
                                                                 #flowStatusCode1>
                                                                 <option [disabled]="isDisabled">--Select--</option>
                                                                 <option value="BOOKED" hidden>BOOKED</option>
@@ -1441,7 +1457,7 @@
           </ng-template>
           <ng-template #hList1> </ng-template>
 
-           <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">&nbsp;{{dataDisplay }}&nbsp; </td>
+           <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">&nbsp;{{dataDisplay}}&nbsp; </td>
         </tr>
     </table>
 
@@ -1685,10 +1701,7 @@
 
 
 <!-- Confirmation Message -->
-
-
-
-<div class="modal" id="confirmAlert" tabindex="-1" role="dialog" [ngStyle]="{'display':display}" aria-hidden="true">
+ <div class="modal" id="confirmAlert" tabindex="-1" role="dialog" [ngStyle]="{'display':display}" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -1715,4 +1728,5 @@
             </div>
         </div>
     </div>
-</div>
+</div> 
+

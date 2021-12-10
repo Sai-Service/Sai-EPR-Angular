@@ -134,7 +134,6 @@
                                             <input  hidden style="width:5rem;"  type="number" formControlName="customerId" class="form-control">
                                             <input  hidden style="width:5rem;"  type="number" formControlName="emplId" class="form-control">
                                             <input  hidden style="width:5rem;"  type="number" formControlName="locId" class="form-control">    
-
                                             <td style="text-align: center;width: 4rem;">{{i+1}}</td>
                                             <td><input   style="width:6rem;"  type="number" formControlName="custAccountNo" (change)="searchCustomer(i)" class="form-control"></td>
                                             <td><input   disabled style="width:15rem;"  type="text" formControlName="custName" class="form-control"></td>
@@ -142,14 +141,10 @@
                                             <td> <input  disabled style="width:8rem;"  type="text" formControlName="contactNo" class="form-control"></td>
                                             <td> <input  disabled style="width:10rem;"  type="date" formControlName="startDate" class="form-control"></td>
                                             <td> <input  disabled style="width:10rem;"  type="date" formControlName="endDate" class="form-control"></td>
-                                           
                                             <td><button  type="submit" class="btn btn-info" (click)="addRow(i)"  style="width: min-content;"><i class="fa fa-plus"></i></button>  </td>
                                             <td><button  type="submit" class="btn btn-info" (click)="RemoveRow(i)"  style="width: min-content;"><i class="fa fa-trash"></i></button>  </td>
                                             <!-- (keydown.shift.arrowdown)="addRow(i)" -->
                                         </tr>
-
-
-
                              </table>
                             </div>
                        </div>
