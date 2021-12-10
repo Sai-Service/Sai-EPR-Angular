@@ -2960,7 +2960,7 @@ export class CounterSaleComponent implements OnInit {
   }
 
   deleteReserveLinewise(i,itemid, transferId) {
-    alert(i+'----'+itemid)
+    // alert(i+'----'+itemid)
     //var transferId = this.CounterSaleOrderBookingForm.get('uuidRef').value;
     // var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     // console.log(trxLnArr1);
@@ -2968,7 +2968,7 @@ export class CounterSaleComponent implements OnInit {
     // console.log(transferId);
 
     if (itemid != null) {
-      alert(i+'----'+itemid+'---'+transferId);
+      // alert(i+'----'+itemid+'---'+transferId);
       this.service.reserveDeleteLine(transferId, Number(sessionStorage.getItem('locId')), itemid).subscribe((res: any) => {
         //  var obj=res.obj;
         if (res.code === 200) {
