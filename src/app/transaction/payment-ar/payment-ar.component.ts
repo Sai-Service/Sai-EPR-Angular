@@ -61,8 +61,8 @@ export class PaymentArComponent implements OnInit {
   now = Date.now();
   public minDate = new Date();
   
-  message: string = "Please Fix the Errors !";
-  msgType:string ="Close";
+  message:string="PleaseFixtheErrors!";
+  msgType:string="Close";
   // public DivisionIDList : Array<string>=[];
   // public OUIdList: Array<string> = [];
 
@@ -82,6 +82,7 @@ export class PaymentArComponent implements OnInit {
   viewAccountingLines: Array<string> = [];
 
   receiptDetails: Array<string> = [];
+  customerNameSearch:any;
   accountNoSearch: any;
   getVehRegDetails: any;
   CustomerDetailsList: any;
@@ -1501,7 +1502,7 @@ export class PaymentArComponent implements OnInit {
         .subscribe(
           data => {
             this.accountNoSearch = data.obj;
-
+            this.paymentArForm.patchValue({custAccountNo:data.obj.accountNo});
             if (this.accountNoSearch === null) {
               this.custName = null;
               this.custSiteAddress = null;
@@ -2120,7 +2121,7 @@ export class PaymentArComponent implements OnInit {
 
   }
 
-   
+  
 
   CheckDataValidations() {
 
@@ -2135,9 +2136,9 @@ export class PaymentArComponent implements OnInit {
       msg1 ='GL PERIOD is null. Please update GL period.';
       // this.executeAlertMsg(msg1);
       alert(msg1);
-      // (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
-      //  this.message = "GL PERIOD is null. Please update GL period."
-       return;
+      // (document.getElementById('saveBtn')asHTMLInputElement).setAttribute('data-target','#confirmAlert');
+      // this.message="GL PERIOD is null. Please update GL period."
+      return;
     }
    
 
@@ -2260,8 +2261,8 @@ export class PaymentArComponent implements OnInit {
 
   executeAlertMsg(msg1) {
     if (this.checkValidation==false){
-      (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
-       this.message = msg1;
+      (document.getElementById('saveBtn')as HTMLInputElement).setAttribute('data-target','#confirmAlert');
+      this.message=msg1;
     }
   }
 
@@ -2365,40 +2366,40 @@ export class PaymentArComponent implements OnInit {
     }
 
     
-      getMessage(msgType: string) {
-          this.msgType = msgType;
+    getMessage(msgType:string){
+      this.msgType=msgType;
 
-       if (msgType.includes("Save")) {
-              this.message = "Do you want to Save(Yes/No)?"
+      if(msgType.includes("Save")){
+        this.message="DoyouwanttoSave(Yes/No)?"
         }
 
-          if (msgType.includes("Reset")) {
-            this.message = "Do you want to Reset the Form(Yes/No)?"
-          }
-          
-          if (msgType.includes("Close")) {
-            this.message = "Do you want to Close the Form(Yes/No)?"
-          }
-          return;
-        }
+      if(msgType.includes("Reset")){
+      this.message="DoyouwanttoResettheForm(Yes/No)?"
+      }
+      
+      if(msgType.includes("Close")){
+      this.message="DoyouwanttoClosetheForm(Yes/No)?"
+      }
+      return;
+      }
 
 
       
-       executeAction() {
+      executeAction(){
         
-          if(this.msgType.includes("Save")) {
-              this.newMast();
-            }
+      if(this.msgType.includes("Save")){
+        this.newMast();
+        }
       
-          if (this.msgType.includes("Reset")) {
-            window.location.reload();
-          }
-          
-          if (this.msgType.includes("Close")) {
-            this.router.navigate(['admin']);
-        }
-          return;
-        }
+      if(this.msgType.includes("Reset")){
+      window.location.reload();
+      }
+      
+      if(this.msgType.includes("Close")){
+      this.router.navigate(['admin']);
+      }
+      return;
+      }
 
       viewAccounting(receiptNo: any) {
 
@@ -2447,7 +2448,24 @@ export class PaymentArComponent implements OnInit {
        
       }
 
-
+      custNameSearch(custName) {
+        // alert(custName)
+        this.orderManagementService.custNameSearchFn1(custName, sessionStorage.getItem('divisionId'))
+          .subscribe(
+            data => {
+              if (data.code === 200) {
+                this.customerNameSearch = data.obj;
+                console.log(this.accountNoSearch);
+              }
+              else {
+                if (data.code === 400) {
+                  alert(data.message);
+                  // this.display = 'block';
+                }
+              }
+            }
+          );
+      }
 
 }
 

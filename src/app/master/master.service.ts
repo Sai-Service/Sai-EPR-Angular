@@ -993,6 +993,10 @@ searchCustomerByAccount(accountNo): Observable<any>{
   return this.http.get(this.ServerUrl+`/Customer/getByCustAcctNo?accountNo=${accountNo}`);
 }
 
+exicutiveNameByCustName(accountNo,locId): Observable<any>{
+  return this.http.get(this.ServerUrl+`/empCust/exeDtls?accountNo=${accountNo}&locId=${locId}`);
+}
+
 crediteLimitFn(customerId,customerSiteId): Observable<any>{
   return this.http.get(this.ServerUrl+`/Customer/getCreditAmt?customerId=${customerId}&customerSiteId=${customerSiteId}`);
 }
@@ -1380,6 +1384,19 @@ public reservePost(reserverecord)
   const url=this.ServerUrl+`/reserveQty/insResrv`;
   return this.http.post(url,reserverecord,options);
 }
+
+public reservePostNew(formData: FormData,transtypeid,locId,prqty,itemId){
+  formData.append('transtypeid', transtypeid);
+  formData.append('locId', locId);
+  formData.append('prqty', prqty);
+  formData.append('itemId', itemId);
+  const options={
+    headers:this.headers
+  };
+  const url=this.ServerUrl+`/reserveQty/insResrv`;
+  return this.http.post(url,formData,options);
+}
+
 public reserveDelete(transno,locId)
 {
     return this.http.delete(this.ServerUrl+`/reserveQty/remove/?transactionNumber=${transno}&locId=${locId}`);

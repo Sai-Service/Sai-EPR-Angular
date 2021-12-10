@@ -162,7 +162,6 @@ export class BulkUploadPricelistComponent implements OnInit {
     var event=this.fileInput.nativeElement.files[0];
     console.log('doctype-check'+this.docType)
     let formData = new FormData();
-    // formData.append('file', this.fileInput.nativeElement.files[0])
     formData.append('file', event)
 
       // this.service.UploadExcel(formData,this.docType,upldPlName).subscribe(result => {
