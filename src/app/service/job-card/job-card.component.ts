@@ -63,6 +63,7 @@ interface IjobCard {
   techId: number;
   regDate: Date;
   pickupDate: Date;
+ 
   promiseDate: Date;
   lastRunKms: string;
   itemId: number;
@@ -90,6 +91,12 @@ interface IjobCard {
 
 export class JobCardComponent implements OnInit {
   jobcardForm: FormGroup;
+
+  pipe = new DatePipe('en-US');
+  now = Date.now();
+  public minDate = new Date();
+  pickupDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+
   regNo: string;
   labTotTaxAmt: number;
   matTaxableAmt: number;
@@ -210,17 +217,19 @@ export class JobCardComponent implements OnInit {
   dispReadyInvoice = false;
   dispButtonStatus = false;
   dispfreezeDetail = true;
+  labLineValidation =false;
 
   // public minDatetime = new Date();
-  promiseDate = new Date();
-  minDate=new Date();
-  pipe = new DatePipe('en-US');
-  now = Date.now();
+  // promiseDate = new Date();
+ 
+  // minDate=new Date();
+  // pipe = new DatePipe('en-US');
+  // now = Date.now();
+
   jobCardDate = this.pipe.transform(this.now, 'd-M-y h:mm:ss');
   //public minDatetime=this.pipe.transform(this.promiseDate, 'yyyy-MM-ddThh:mm')
-
   public minDatetime = moment(new Date()).format('YYYY-MM-DDTHH:mm')
-
+  promiseDate = this.minDatetime;
   @ViewChild("myinput") myInputField: ElementRef;
   arInvNum: string;
   ngAfterViewInit() {
@@ -360,7 +369,6 @@ export class JobCardComponent implements OnInit {
       splitAmounts: this.fb.array([this.splitDetailsGroup()])
     })
 
-
   }
 
   lineDetailsGroup() {
@@ -370,6 +378,7 @@ export class JobCardComponent implements OnInit {
       billableTyId: [],
       billableTyName: [],
       taxCategoryName: [],
+      segment:[],
       itemId: [],
       qty: [],
       description: [],
@@ -669,10 +678,35 @@ export class JobCardComponent implements OnInit {
         }
       );
   }
+
+  serchitemId(index){ //// not in use
+    var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
+    var jclLineArr = this.jobcardForm.get('jobCardLabLines').value;
+    var itemSeg=this.jobcardForm.get('segment').value;
+
+    this.service.getItemDetailsByCode(itemSeg)
+    .subscribe(
+      data1 => {
+        if (data1 ===null){
+        alert ("Item segment not found in item master")
+        } else {
+        console.log(data1); }
+
+      })
+  }
+
+
   serchByitemId(event, i) {
-    let select = this.LaborItemList.find(d => d.itemId === event);
+    // alert ("event : "+event + " index :"+i);
+    // let select = this.LaborItemList.find(d => d.itemId === event);
     var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
     var serModel=this.jobcardForm.get('serviceModel').value;
+    let select = this.LaborItemList.find(d => d.segment === event);
+    // alert ("event : "+event + " index :"+i + ","+select.description);
+    if(select) {
+   
+   
+    (patch.controls[i]).patchValue({ itemId: select.itemId });
     (patch.controls[i]).patchValue({ description: select.description });
     if(serModel===null)
       {
@@ -694,7 +728,22 @@ export class JobCardComponent implements OnInit {
           // alert(this.taxCategoryName);
         }
       );
+    } else { 
+      // alert (event + "-  Labor Item Not found...");
+      (patch.controls[i]).patchValue({ itemId: '' });
+      (patch.controls[i]).patchValue({ description:''});
+      (patch.controls[i]).patchValue({ unitPrice: 0 });
+      (patch.controls[i]).patchValue({ qty:0});
+      (patch.controls[i]).patchValue({ basicAmt:''});
+      (patch.controls[i]).patchValue({ taxCategoryName:''});
+      (patch.controls[i]).patchValue({ laborAmt:''});
+     return;
+       }
   }
+
+
+
+
   getUserIdsFirstWay($event) {
     let userId = (<HTMLInputElement>document.getElementById('userIdFirstWay')).value;
     this.userList1 = [];
@@ -817,30 +866,44 @@ export class JobCardComponent implements OnInit {
         }
       );
   }
+
+  onSelectBillType(evnt,index) {
+
+    // alert("Bill type :"+evnt +" , "+index);
+  }
+
+
   addRow(index) {
 
     var arrayControl = this.jobcardForm.get('jobCardLabLines').value
 
     var invItemId = arrayControl[index].itemId;
+    // alert("Item Id Jc lab line : "+invItemId +" , "+index);
 
-    if (invItemId != null) {
+    this.checkLabLineValidation(index);
+
+    if(this.labLineValidation) {
+
+    // if (invItemId != null ) {
+
       this.lineDetailsArray.push(this.lineDetailsGroup());
       var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
       var no = this.lineDetailsArray.length;
       let selectbilTy = this.billableTyIdList.find(d => d.billableTyName === 'Customer');
-
-
+      
+      
       (patch.controls[no - 1]).patchValue(
         {
           lineNum: no,
-          billableTyId: selectbilTy,
+          billableTyId: selectbilTy.billableTyId,
+          splitRatio: 1,
+          custPer:100,
         }
       );
-      // arrayControl[index].itemType.focus();
-      //  alert
-    } else { ('Kindly Insert the line-Details first'); }
-    var index = index + 1
+      
+    } else { alert('Incomplete Line.Please update line details and proceed.'); }
 
+    var index = index + 1
     var aa = index + 1;
     var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
     (patch.controls[index]).patchValue(
@@ -848,16 +911,51 @@ export class JobCardComponent implements OnInit {
         // polineNum: aa,
       }
     );
+
   }
+
+  checkLabLineValidation(index){
+    var arrayControl = this.jobcardForm.get('jobCardLabLines').value
+    var invItemId = arrayControl[index].itemId;
+    this.labLineValidation=false
+
+    // alert ("arrayControl[index].billableTyId :"+arrayControl[index].billableTyId);
+
+    if(Number(arrayControl[index].billableTyId)<=0)
+    { this.labLineValidation=false;return; }
+
+    if(invItemId===null || invItemId==undefined || invItemId<=0)
+    { this.labLineValidation=false;return; }
+
+    if(Number(arrayControl[index].qty)<=0 ||arrayControl[index].qty===null || arrayControl[index].qty===undefined )
+     { this.labLineValidation=false;return; }
+     if(Number(arrayControl[index].unitPrice)<=0 ||arrayControl[index].unitPrice===null || arrayControl[index].unitPrice===undefined )
+     { this.labLineValidation=false;return; }
+
+    this.labLineValidation=true;
+
+  }
+
+
+
+  // RemoveRow(index) {
+  //   if (index === 0) {
+
+  //   } else {
+  //     this.lineDetailsArray.removeAt(index);
+  //   }
+  //   this.lineDetailsArray.removeAt(index);
+  // }
 
   RemoveRow(index) {
-    if (index === 0) {
-
-    } else {
-      this.lineDetailsArray.removeAt(index);
+    if (index===0){ }
+    else {
+       this.lineDetailsArray.removeAt(index);
     }
-    this.lineDetailsArray.removeAt(index);
+  
   }
+
+
   serchByRegNo(RegNo) {
     // alert(RegNo);
     this.serviceService.getByRegNo(RegNo, sessionStorage.getItem('ouId'))
@@ -913,8 +1011,12 @@ export class JobCardComponent implements OnInit {
   }
   
   Search(jonCardNo) {
+    var jcNum=this.jobcardForm.get('jobCardNum1').value
+    jcNum=jcNum.toUpperCase();
+   
     this.jobcardForm.reset();
-    this.serviceService.getJonCardNoSearch(jonCardNo)
+   
+    this.serviceService.getJonCardNoSearch(jcNum)
       .subscribe(
         data => {
           this.lstcomments = data;
@@ -1498,4 +1600,32 @@ export class JobCardComponent implements OnInit {
 
 });
 }
+
+onOptioninvItemIdSelectedNew(itemSeg,index){ 
+
+  // alert ( "Datalist Labor :" +itemSeg + " index :"+index);
+}
+
+getInvItemId($event)
+{
+  // alert('in getInvItemId')
+   let userId=(<HTMLInputElement>document.getElementById('invItemIdFirstWay')).value;
+   this.userList2=[];
+   if (userId.length > 2) {
+    if ($event.timeStamp - this.lastkeydown1 > 200) {
+      this.userList2 = this.searchFromArray1(this.LaborItemList, userId);
+    }
+  }
+}
+searchFromArray1(arr, regex) {
+  let matches = [], i;
+  for (i = 0; i < arr.length; i++) {
+    if (arr[i].match(regex)) {
+      matches.push(arr[i]);
+    }
+  }
+  return matches;
+};
+
+
 }

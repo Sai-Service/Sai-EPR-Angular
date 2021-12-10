@@ -1396,6 +1396,11 @@
                                         value={{searchByRcptNo}}>
                                 </td>
 
+                                <td style="background-color: #FFE4B5;">
+                                    <button type="button" class="btn-primary" (click)="SearchByRcptNo(searchByRcptNo)"><i class="fa fa-search"
+                                            aria-hidden="true"></i></button>
+                                </td>
+
                                 
                                 <td style="width: 15%" class="LabelFontStyle">&nbsp;Customer&nbsp;No:&nbsp;</td>
                     
@@ -1411,7 +1416,8 @@
                                 </td>
 
                                 <td style="background-color: #FFE4B5;">
-                                    <button type="button" class="btn-primary" (click)="SearchByRcptNo(searchByRcptNo,searchByCustNo,searchByDate)"><i class="fa fa-search"
+                                    <button type="button" class="btn-primary" (click)="SearchRcptByCustNoDate(searchByCustNo,searchByDate)">
+                                        <i class="fa fa-search"
                                             aria-hidden="true"></i></button>
                                 </td>
 

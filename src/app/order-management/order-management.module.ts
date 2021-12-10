@@ -16,6 +16,7 @@ import { CounterSaleWithCSVModuleComponent } from './counter-sale-with-csvmodule
 import { CounterSaleReturnComponent } from './counter-sale-return/counter-sale-return.component';
 import { AllOrderListComponent } from './all-order-list/all-order-list.component';
 import { OrderGenerationComponent } from './order-generation/order-generation.component';
+import { BackorderSparesImportBajajComponent } from './backorder-spares-import-bajaj/backorder-spares-import-bajaj.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { OrderGenerationComponent } from './order-generation/order-generation.co
      CounterSaleWithCSVModuleComponent,
      CounterSaleReturnComponent, 
      AllOrderListComponent,
-     OrderGenerationComponent ],
+     OrderGenerationComponent,
+     BackorderSparesImportBajajComponent ],
   imports: [
     CommonModule,
     OrderManagementRoutingModule,
