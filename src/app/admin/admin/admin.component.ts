@@ -140,13 +140,7 @@ declare var $: any;
     this.ouId=Number(sessionStorage.getItem('ouId'));
     this.locId=Number(sessionStorage.getItem('locId'));
     this.locCode=sessionStorage.getItem('locCode');
-    // $('[data-submenu]').submenupicker();
-// alert('In admin');
-    // this.service.ItemIdDivisionList(this.divisionId).subscribe(
-    //       data =>{ this.ItemIdList = data;
-    //         console.log(this.ItemIdList);
 
-    //   });
 
     $('.dropdown-menu a.dropdown-toggle').on('click', function(e) {
       if (!$(this).next().hasClass('show')) {
