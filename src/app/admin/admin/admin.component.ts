@@ -174,15 +174,11 @@ export class AdminComponent implements OnInit {
 
     if (Number(sessionStorage.getItem('divisionId')) === 2) {
       this.isVisible1 = false;
-      this.isVisible2 = false;
-      this.isVisible3 = true;
-      this.displayUserIdwiseAccess = true;
+      this.isVisible2 = false;  
     }
     else if (Number(sessionStorage.getItem('divisionId')) === 1) {
       this.isVisible1 = true;
-      this.isVisible2 = false;
-      this.isVisible3 = true;
-      // this.isVisible4=true;
+      this.isVisible2 = false;    
     }
 
     if (sessionStorage.getItem('ticketNo') === undefined || sessionStorage.getItem('ticketNo') === null || sessionStorage.getItem('ticketNo') === '') {
@@ -192,13 +188,19 @@ export class AdminComponent implements OnInit {
 
 
     if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId')) === 1) {
-      // alert(sessionStorage.getItem('divisionId')+'---'+sessionStorage.getItem('roleId'))
       this.isVisible2 = true;
     }
 
-    if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId')) === 2)
-      // alert(sessionStorage.getItem('divisionId')+'---'+sessionStorage.getItem('roleId'))
-      this.displayUserIdwiseAccess = false
+    if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId')) === 2){
+    this.isVisible1 = true;
+    this.isVisible2 = false; 
+  }
+
+  if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId')) === 3){
+  this.isVisible1 = true;
+  this.isVisible2 = false; 
+}
+  
   }
 
 
@@ -420,43 +422,31 @@ export class AdminComponent implements OnInit {
       alert("Please Enter full item number!!")
       return;
     }
-<<<<<<< HEAD
-=======
 }
 
 userCheck(roleId: number): boolean {
   //alert(sessionStorage.getItem('roleId') +'--'+roleId );
   if(sessionStorage.getItem('roleId') === 'undefined') { 
-    
+    // this.isVisible1 = false;
     return true;
+   
   }else{
     //alert("else");
   if (Number(sessionStorage.getItem('roleId')) === roleId ){
   //  alert("role -true");
-    return true;
+    return false;
   }
   
 
  if (Number(sessionStorage.getItem('roleId')) != roleId) {
   //  alert("role -false");
-    return false;
+    return true;
   }
 }
 }
 
->>>>>>> 9b175b44a51357ba6df4bb44dfa1a68297845a68
   }
 
-  userCheck(roleId: number): boolean {
-    alert(sessionStorage.getItem('roleId'));
-    if (Number(sessionStorage.getItem('roleId')) === roleId || Number(sessionStorage.getItem('roleId')) != undefined ) {
-     
-      return false;
-    }
-    else if (Number(sessionStorage.getItem('roleId')) != undefined) {
-      alert('hi')
-      return true;
-    }
-  }
+ 
 
-}
+
