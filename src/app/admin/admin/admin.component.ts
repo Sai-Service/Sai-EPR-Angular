@@ -420,6 +420,31 @@ export class AdminComponent implements OnInit {
       alert("Please Enter full item number!!")
       return;
     }
+<<<<<<< HEAD
+=======
+}
+
+userCheck(roleId: number): boolean {
+  //alert(sessionStorage.getItem('roleId') +'--'+roleId );
+  if(sessionStorage.getItem('roleId') === 'undefined') { 
+    
+    return true;
+  }else{
+    //alert("else");
+  if (Number(sessionStorage.getItem('roleId')) === roleId ){
+  //  alert("role -true");
+    return true;
+  }
+  
+
+ if (Number(sessionStorage.getItem('roleId')) != roleId) {
+  //  alert("role -false");
+    return false;
+  }
+}
+}
+
+>>>>>>> 9b175b44a51357ba6df4bb44dfa1a68297845a68
   }
 
   userCheck(roleId: number): boolean {
