@@ -58,13 +58,15 @@ export class BackorderSparesImportBajajComponent implements OnInit {
 
   fileName :string; 
   docType :string;
-  public PriceListIdList : Array<string> = [];
+  lstBackOrder : any;
   upldPricelistName : string;
   
   updStatus =false;
   closeResetButton =true;
   fileValidation=false;
   viewLogFile=false;
+  backorderStatus=false;
+  msg:string;
   
   @ViewChild('fileInput') fileInput;
 
@@ -84,6 +86,7 @@ export class BackorderSparesImportBajajComponent implements OnInit {
       divisionId :[''],
       divisionName:[''],
 
+      msg:[],
       fileName:['',Validators.required],
       docType:['',Validators.required],
       upldPricelistName :[],
@@ -118,13 +121,17 @@ export class BackorderSparesImportBajajComponent implements OnInit {
     console.log(this.locId);
     
     
-    this.service.PriceListIdList(this.ouId,this.divisionId)
+    this.service.getBackOrderStatusBajaj(this.locId)
     .subscribe(
       data => {
-        this.PriceListIdList = data;
-        console.log(this.PriceListIdList);
+        console.log(data);
+        // alert ("data.obj :"+ data.obj);
+        if(data.obj===null) { this.backorderStatus =false; this.msg=data.message;} 
+        else {this.backorderStatus=true;this.msg="Back order Found."}
       }
     );
+
+  // alert ("Bakc order Status :" +this.backorderStatus);
 
     // ---------------------------------------Spinner----------------------------
    
