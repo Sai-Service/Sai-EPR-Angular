@@ -342,12 +342,22 @@
                                                                                     placeholder=""
                                                                                     formControlName="bayTyId">
                                                                             </td>
-                                                                            <td style="width: 15%"
+                                                                            <td></td>
+
+                                                                            <td>
+                                                                                <button data-toggle="modal"
+                                                                                    class="btn btn-primary"
+                                                                                    data-target="#exampleModalScrollable"
+                                                                                    style="width: 140px">Additional
+                                                                                    Details</button>
+                                                                            </td>
+
+                                                                            <!-- <td style="width: 15%"
                                                                                 class="LabelFontStyle">&nbsp;</td>
                                                                             <td>
                                                                                 <input type="text" hidden
                                                                                     class="form-control" placeholder="">
-                                                                            </td>
+                                                                            </td> -->
                                                                             <td style="width: 15%"
                                                                                 class="LabelFontStyle1">Technician&nbsp;:
                                                                             </td>
@@ -448,24 +458,24 @@
                                                                                 class="LabelFontStyle">
                                                                                 &nbsp;Demanded&nbsp;Job&nbsp;:
                                                                             </td>
-                                                                            <td>
+                                                                            <td colspan="3" >
                                                                                 <input type="text" class="form-control"
-                                                                                    placeholder="">
-                                                                            </td>
+                                                                                formControlName="demandJob" placeholder="" style="width: 100%;">
+                                                                            </td> 
                                                                             <td style="width: 15%"
                                                                                 class="LabelFontStyle">
                                                                                 Recommendation&nbsp;:</td>
-                                                                            <td>
+                                                                            <td colspan="3"> 
                                                                                 <input type="text" class="form-control"
-                                                                                    placeholder="">
+                                                                                formControlName="recomJob" placeholder="" style="width: 100%;">
                                                                             </td>
-                                                                            <td>
+                                                                            <!-- <td>
                                                                                 <button data-toggle="modal"
                                                                                     class="btn btn-primary"
                                                                                     data-target="#exampleModalScrollable"
-                                                                                    style="width: fit-content;">Additional
+                                                                                    style="width: fit-content;">
                                                                                     Details</button>
-                                                                            </td>
+                                                                            </td> -->
                                                                         </tr>
 
                                                                     </fieldset>
@@ -618,12 +628,21 @@
                                                                                                 placeholder=""
                                                                                                 formControlName="bayTyId">
                                                                                         </td>
-                                                                                        <td style="width: 15%"
+                                                                                        <td></td>
+                                                                                        <td>
+                                                                                            <button data-toggle="modal"
+                                                                                                class="btn btn-primary"
+                                                                                                data-target="#exampleModalScrollable"
+                                                                                                style="width: 140px;">Additional
+                                                                                                Details</button>
+                                                                                        </td>
+
+                                                                                        <!-- <td style="width: 15%"
                                                                                             class="LabelFontStyle">&nbsp;</td>
                                                                                         <td>
                                                                                             <input type="text" hidden
                                                                                                 class="form-control" placeholder="">
-                                                                                        </td>
+                                                                                        </td> -->
                                                                                         <td style="width: 15%"
                                                                                             class="LabelFontStyle">Technician&nbsp;:
                                                                                         </td>
@@ -724,24 +743,25 @@
                                                                                             class="LabelFontStyle">
                                                                                             &nbsp;Demanded&nbsp;Job&nbsp;:
                                                                                         </td>
-                                                                                        <td>
+                                                                                        <td colspan="3">
                                                                                             <input type="text" class="form-control"
-                                                                                                placeholder="">
+                                                                                            formControlName="demandJob" placeholder="">
                                                                                         </td>
                                                                                         <td style="width: 15%"
                                                                                             class="LabelFontStyle">
                                                                                             Recommendation&nbsp;:</td>
-                                                                                        <td>
+                                                                                        <td colspan="3">
                                                                                             <input type="text" class="form-control"
-                                                                                                placeholder="">
+                                                                                            formControlName="recomJob" placeholder="">
                                                                                         </td>
-                                                                                        <td>
+
+                                                                                        <!-- <td>
                                                                                             <button data-toggle="modal"
                                                                                                 class="btn btn-primary"
                                                                                                 data-target="#exampleModalScrollable"
-                                                                                                style="width: fit-content;">Additional
+                                                                                                style="width: fit-content;">
                                                                                                 Details</button>
-                                                                                        </td>
+                                                                                        </td> -->
                                                                                     </tr>
 
                                                                                 </fieldset>
@@ -1201,6 +1221,7 @@
                                                                     <th scope="col">Billable Type</th>
                                                                     <th scope="col">Labor Item</th>
                                                                     <th scope="col">Item Id</th>
+                                                                    <!-- <th scope="col">Uom</th> -->
                                                                     <th scope="col">Description</th>
                                                                     <th scope="col">Quantity</th>
                                                                     <th scope="col">Price</th>
@@ -1208,7 +1229,7 @@
                                                                     <th scope="col">Tax Category</th>
                                                                     <th scope="col">Split Ratio</th>
                                                                     <th scope="col">Customer</th>
-                                                                    <th scope="col">Insualer</th>
+                                                                    <th scope="col">Insurer</th>
                                                                     <th scope="col">Dealer</th>
                                                                     <th scope="col">OEM</th>
                                                                     <th scope="col">Labor Amount</th>
@@ -1226,7 +1247,7 @@
                                                                     [formGroupName]="i" class="auto-style5">
                                                                     <tbody>
                                                                         <tr>
-                                                                            <td><input type="text"
+                                                                            <td><input disabled type="text"
                                                                                     formControlName="lineNum"
                                                                                     class="form-control"
                                                                                     style="width:2rem"> </td>
@@ -1274,7 +1295,8 @@
                                                                             </td>  
 
                                                                             <td><input disabled  type="number"  formControlName="itemId"  class="form-control" style="width: 50px;"  ></td>
-                                                                           
+                                                                            <!-- <td><input disabled  type="text"  formControlName="uom"  class="form-control" style="width: 50px;"  ></td> -->
+                                                                          
                                                                             <input hidden formControlName="taxPer">
                                                                             <td>
                                                                                 <input disabled type="text"
@@ -1284,11 +1306,13 @@
                                                                             </td>
                                                                             <td>
                                                                                 <input type="number" min="0"
-                                                                                    formControlName="qty"
+                                                                                    formControlName="qty" 
                                                                                     (change)="onKey(i)"
                                                                                     class="form-control"
                                                                                     style="width: 3rem; height: 25px; text-align: right;">
                                                                             </td>
+
+                                                                          
                                                                             <td>
                                                                                 <input type="number" min="0"
                                                                                     class="form-control" disabled

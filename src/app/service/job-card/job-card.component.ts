@@ -173,6 +173,9 @@ export class JobCardComponent implements OnInit {
   insurerSite: string;
   insurerCompName: string;
   insurerCompNo: number;
+  demandJob:string;
+  recomJob:string;
+
   public labDiscountPerList: Array<string> = [];
   public matDiscountPerList: Array<string> = [];
   public jobCarStatusList: Array<string> = [];
@@ -270,6 +273,10 @@ export class JobCardComponent implements OnInit {
       mainModel: [],
       dealerName: [],
       dealerSite: [],
+
+      demandJob:[],
+      recomJob:[],
+      
       dmsCustId: [],
       ewStartDate: [],
       ewStatus: [],
@@ -380,6 +387,7 @@ export class JobCardComponent implements OnInit {
       taxCategoryName: [],
       segment:[],
       itemId: [],
+      uom:[],
       qty: [],
       description: [],
       unitPrice: [],
@@ -774,15 +782,9 @@ export class JobCardComponent implements OnInit {
     var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
     (patch.controls[0]).patchValue({ techName: select.description })
   }
-  onKey(index) {
-    console.log(index);
-    // alert(index+ ' index')
-    var arrayControl = this.jobcardForm.get('jobCardLabLines').value
-    var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
-    var baseAmtLineWise = arrayControl[index].unitPrice * arrayControl[index].qty;
-    // alert(arrayControl[index].unitPrice);
-    (patch.controls[index]).patchValue({ basicAmt: baseAmtLineWise, laborAmt: baseAmtLineWise })
-  }
+
+ 
+
   onOptionsplitRatioSelect(i, splitCateId) {
     let select = this.splitRatioList.find(d => d.splitCateId === splitCateId);
     var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
@@ -820,6 +822,8 @@ export class JobCardComponent implements OnInit {
   }
 
   onOptionBillableSelected(event, jcStatus: string) {
+    // alert ( "onOptionBillableSelected :" +event + " , "+jcStatus);
+    if(event !=null) {
     this.serviceService.srTypeIdstFN(event)
       .subscribe(
         data1 => {
@@ -865,7 +869,7 @@ export class JobCardComponent implements OnInit {
           console.log(this.srvAdvisorList);
         }
       );
-  }
+  } }
 
   onSelectBillType(evnt,index) {
 
@@ -932,6 +936,12 @@ export class JobCardComponent implements OnInit {
      if(Number(arrayControl[index].unitPrice)<=0 ||arrayControl[index].unitPrice===null || arrayControl[index].unitPrice===undefined )
      { this.labLineValidation=false;return; }
 
+     if(Number(arrayControl[index].basicAmt)<=0 ||arrayControl[index].basicAmt===null || arrayControl[index].basicAmt===undefined )
+     { this.labLineValidation=false;return; }
+
+     if(Number(arrayControl[index].laborAmt)<=0 ||arrayControl[index].laborAmt===null || arrayControl[index].laborAmt===undefined )
+     { this.labLineValidation=false;return; }
+
     this.labLineValidation=true;
 
   }
@@ -977,7 +987,8 @@ export class JobCardComponent implements OnInit {
       );
   }
   onOptionsSelectedsrTypeId(srTypeId) {
-    // alert(srTypeId)
+    // alert( "srTypeId :"+ srTypeId);
+    if(srTypeId !=null){
     this.serviceService.getSubSrTypeIdList(srTypeId)
       .subscribe(
         data => {
@@ -991,7 +1002,8 @@ export class JobCardComponent implements OnInit {
       this.displayInsheader = false;
       this.displayInslinedetails = false;
     }
-  }
+  }}
+
   totalActualLabMat() {
     var sum = 0;
     var arrayControl = this.jobcardForm.get('jobCardLabLines').value   // jobCardLabLines jobCardMatLines  lineDetailsArray lineDistributionArray
@@ -1015,6 +1027,7 @@ export class JobCardComponent implements OnInit {
     jcNum=jcNum.toUpperCase();
    
     this.jobcardForm.reset();
+    this.jobCardNum1=jcNum;
    
     this.serviceService.getJonCardNoSearch(jcNum)
       .subscribe(
@@ -1229,8 +1242,11 @@ export class JobCardComponent implements OnInit {
     this.serviceService.lineWISESubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
+        // this.lineDetailsArray.clear();
+        
+
         // alert('LINE WISE RECORD INSERTED SUCCESSFUILY');
-        this.lineDetailsArray.clear();
+       
         // alert(this.lineDetailsArray.length+ " length")
         //Following comment by vinita///
         // var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
@@ -1266,7 +1282,7 @@ export class JobCardComponent implements OnInit {
     this.serviceService.saveMaterialSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);   //
-        this.lineDistributionArray().clear();
+        // this.lineDistributionArray().clear();
         console.log(res.obj.jobCardLinesList);
         var patch = this.jobcardForm.get('jobCardMatLines') as FormArray;
         console.log(res.obj.jobCardLinesList.lenght);
@@ -1625,7 +1641,96 @@ searchFromArray1(arr, regex) {
     }
   }
   return matches;
-};
+}
+
+onKey(index) {
+  
+    console.log(index);
+    var arrayControl = this.jobcardForm.get('jobCardLabLines').value
+    var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
+
+    var mQty =arrayControl[index].qty;
+    // alert ("Lab qty index ,qty:"+index + " , "+mQty);
+
+    if(mQty <=0 || Number.isInteger(mQty)==false )
+    { 
+      alert ("Please Enter a Valid Qty.");
+      (patch.controls[index]).patchValue({ qty:'',basicAmt:0,laborAmt:0});return;
+    }
+
+    var baseAmtLineWise = arrayControl[index].unitPrice * arrayControl[index].qty;
+    (patch.controls[index]).patchValue({ basicAmt: baseAmtLineWise, laborAmt: baseAmtLineWise })
+}
+
+validateLabQty(index: any){
+  var arrayControl = this.jobcardForm.get('jobCardLabLines').value
+  var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
+
+  var baseAmtLineWise = arrayControl[index].unitPrice * arrayControl[index].qty;
+
+ var x= arrayControl[index].qty
+ alert(x);
+
+  (patch.controls[index]).patchValue({ basicAmt: baseAmtLineWise, laborAmt: baseAmtLineWise })
+
+}
+
+
+validateMatQty(index: any){
+
+  var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
+  var qtyLineArr = this.jobcardForm.get('jobCardLabLines').value;
+  var lineRtnQty = qtyLineArr[index].cancelledQty;
+  var lineIssQty  = qtyLineArr[index].pricingQty;
+  var uPrice= qtyLineArr[index].unitSellingPrice;
+  var dPer = qtyLineArr[index].disPer;
+  var taxP=qtyLineArr[index].taxPer;
+  var  mUom = qtyLineArr[index].uom;
+ 
+  if ((mUom==='NO' && Number.isInteger(lineRtnQty)==false ) || lineRtnQty<=0 || lineRtnQty>lineIssQty  ) 
+  {
+    alert ("Invalid Quantity.\n[RETURN QTY] should be as per UOM  Or \nShould not be grater than [ISSUED QTY] ")
+
+    patch.controls[index].patchValue({cancelledQty:''})
+    patch.controls[index].patchValue({baseAmt:0})
+    patch.controls[index].patchValue({taxAmt:0})
+    patch.controls[index].patchValue({totAmt:0})
+    patch.controls[index].patchValue({disAmt:0})
+    patch.controls[index].patchValue({selectFlag:''})
+
+    this.lineDetailsArray.controls[index].get('cancelledQty').disable();
+      // this.validateStatus=true;
+      // this.saveButton=false;
+      // this.validateStatus=true;
+      // this.saveButton=false;
+    } 
+    else 
+    {
+      var baseAmt =lineRtnQty *uPrice;
+      var lineDisAmt =baseAmt*dPer/100; lineDisAmt.toFixed(2);
+      var txbleAmt  =baseAmt-lineDisAmt; txbleAmt.toFixed(2);
+      var taxAmt   =(txbleAmt * taxP/100); taxAmt.toFixed(2);
+      var totAmt   =txbleAmt+taxAmt; totAmt.toFixed(2);
+
+      
+      baseAmt=Math.round((baseAmt + Number.EPSILON) * 100) / 100;
+      lineDisAmt=Math.round((lineDisAmt + Number.EPSILON) * 100) / 100;
+      txbleAmt=Math.round((txbleAmt + Number.EPSILON) * 100) / 100;
+      taxAmt=Math.round((taxAmt + Number.EPSILON) * 100) / 100;
+      totAmt=Math.round((totAmt + Number.EPSILON) * 100) / 100;
+
+    patch.controls[index].patchValue({baseAmt:baseAmt})
+    patch.controls[index].patchValue({disAmt:lineDisAmt})
+    patch.controls[index].patchValue({taxAmt:taxAmt})
+    patch.controls[index].patchValue({totAmt:totAmt})
+    
+    }
+    
+    // this.CalculateTotal()
+
+      
+}
+
 
 
 }
