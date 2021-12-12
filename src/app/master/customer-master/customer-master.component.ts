@@ -87,7 +87,7 @@ interface IcustomerMaster {
   tcsYN: string;
   tcsPer:number;
   aadharNo: number;
-  tdsApplDate:Date;
+  tdsApplDate:string;
   staxCategoryName:string;
 }
 
@@ -228,7 +228,7 @@ export class CustomerMasterComponent implements OnInit {
   // startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   customerNameSearch: any[];
   tdsPercentage: any;
-  tdsApplDate:Date;
+  tdsApplDate:string;
   staxCategoryName:string;
   tcsPer:number;
   displayTcsPer: boolean;
@@ -755,7 +755,7 @@ export class CustomerMasterComponent implements OnInit {
         var acctNo = this.customerMasterForm.get('custAccountNo').value;
         this.searchByAccount1(acctNo);
         // this.customerMasterForm.disable();
-        this.displayNewButton1=false;
+
         // this.customerMasterForm.reset();
       } else {
         if (res.code === 400) {
@@ -819,6 +819,7 @@ export class CustomerMasterComponent implements OnInit {
       if (res.code === 200) {
         alert('RECORD UPDATED SUCCESSFULLY');
         // window.location.reload();
+        (document.getElementById('updregister') as HTMLInputElement).disabled = true;
       } else {
         if (res.code === 400) {
           alert('ERROR OCCOURED IN PROCEESS');
@@ -1020,7 +1021,7 @@ export class CustomerMasterComponent implements OnInit {
       this.saddress2 = select.address2
       this.saddress3 = select.address3
       this.scity = select.city
-      this.spinCd = select.pinCd
+      // this.spinCd = select.pinCd
       this.sstate = select.state
       this.contactNo = select.contactNo
       this.contactPerson = select.contactPerson
@@ -1039,6 +1040,7 @@ export class CustomerMasterComponent implements OnInit {
       this.customerMasterForm.patchValue({ shighAmt: select.highAmt });
       this.customerMasterForm.patchValue({ sdisPer: select.disPer });
       this.customerMasterForm.patchValue({staxCatName:select.taxCategoryName});
+      this.customerMasterForm.patchValue({spinCd : select.pinCd});
       // this.sstatus=select.status
       // ticketNo not in  json
       let selstatus = this.statusList.find(d => d.codeDesc === select.status);
@@ -1078,12 +1080,14 @@ export class CustomerMasterComponent implements OnInit {
   }
   onOptionSelOuLimit(event) {
     var custId = this.customerMasterForm.get('customerId').value;
-    if (custId != null) {
+    if (custId != null &&  this.customerSiteId ===undefined) {
       this.service.Limitdata(event, custId).subscribe((res: any) => {
         if (res.code === 200) {
           // alert(res.message);
           this.limitData = res.obj
           this.customerMasterForm.patchValue({ 'screditAmt': this.limitData.creditAmt, 'shighAmt': this.limitData.highAmt, 'sdisPer': this.limitData.disPer });
+          this.customerMasterForm.patchValue({ spanNo: this.customerMasterForm.get('panNo').value });
+          this.customerMasterForm.patchValue({ sGstNo: this.customerMasterForm.get('gstNo').value });
         }
         else {
           if (res.code === 400) {
@@ -1309,7 +1313,8 @@ export class CustomerMasterComponent implements OnInit {
   onTdsPerSel(event){
     alert(event);
     if(event>0){
-      this.customerMasterForm.patchValue({tdsApplDate:this.pipe.transform(this.now,'dd-MM-yyyy')});
+      this.tdsApplDate= this.pipe.transform(this.now,'dd-MM-yyyy')
+      // this.customerMasterForm.patchValue({tdsApplDate:this.pipe.transform(this.now,'dd-MM-yyyy')});
     }
   }
 
