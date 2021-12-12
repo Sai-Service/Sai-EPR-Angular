@@ -149,4 +149,26 @@ saveMaterialSubmit(Record) {
   const url = this.ServerUrl + `/jobCard/matInsert`;
   return this.http.post(url, Record, options);
 }
+
+
+printWsPreInvdocument(jcNumber){
+  const REQUEST_URI = this.ServerUrl +`/jobCard/wsPreInvoicePrint/${jcNumber}`;  
+  // http://localhost:8081/jobCard/wsPreInvoicePrint/12PU.101-3
+  return this.http.get(REQUEST_URI, {
+    // params: REQUEST_PARAMS,
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
+}
+
+printWsInvoicedocument(jcNumber){
+  const REQUEST_URI = this.ServerUrl +`/jobCard/wsInvoicePrint/${jcNumber}`;  
+  // http://localhost:8081/jobCard/wsInvoicePrint/12PU.101-3
+  return this.http.get(REQUEST_URI, {
+    // params: REQUEST_PARAMS,
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
+}
+
 }
