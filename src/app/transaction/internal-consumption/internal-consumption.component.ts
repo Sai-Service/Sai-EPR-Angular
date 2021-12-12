@@ -321,7 +321,7 @@ export class InternalConsumptionComponent implements OnInit {
     this.InternalConsumptionForm.get('compileType').disable();
     this.InternalConsumptionForm.get('reason').disable();
     // this.Item[i+1].nativeElement.focus();
-    // (document.getElementById('btnrm'+i+1) as HTMLInputElement).disabled = true;
+    // (document.getElementById('btnrm'+i+1) as InputElement).disabled = true;
     }
     }
 

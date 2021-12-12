@@ -868,7 +868,7 @@
                                         <tr>
                                     <td style="width: 15%" class="LabelFontStyle">Tds&nbsp;Applicable&nbsp;:&nbsp;</td>
                                       <td>
-                                         <input disabled type="date" formControlName="tdsApplDate" value={{tdsApplDate}} [(ngModel)]='tdsApplDate'
+                                         <input disabled type="text" formControlName="tdsApplDate" value={{tdsApplDate}} [(ngModel)]='tdsApplDate'
                                               class="form-control"
                                               [ngClass]="{ 'is-invalid': submitted && f.tdsApplDate.errors }">
                                     </td>
@@ -1434,7 +1434,7 @@
                                         <div *ngIf="displayNewButton1; then thenBlock1; else elseBlock1"></div>
                                         <ng-template #thenBlock1>
                                             <td>
-                                                <button type="submit" disabled class="btn btn-primary" id="register"
+                                                <button type="submit" disabled class="btn btn-primary" id="updregister"
                                                     style="width: fit-content;" (click)="UpdateSiteCustMastExeSite()">Update
                                                     EX Site</button>
                                             </td>
@@ -1453,7 +1453,7 @@
                                         </ng-template>
                                         <ng-template #elseBlock1>
                                             <td>
-                                                <button type="submit" class="btn btn-primary" id="register"
+                                                <button type="submit" class="btn btn-primary" id="updregister"
                                                     style="width: fit-content;" (click)="UpdateSiteCustMastExeSite()">Update
                                                     EXSite</button>
                                             </td>
