@@ -100,6 +100,15 @@ public jobcardHeaderSubmit(Record) {
   const url = this.ServerUrl + '/jobCard/jobHeader';
   return this.http.post(url, Record, options);
 }
+
+public jobcardUpdateSubmit(jobcardId) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/jobCard/jobHeader';
+  return this.http.put(url, options);
+}
+
 public ReopenMaterialIssue(jobcardNo, matStatus){
   const options = {
     headers: this.headers
@@ -107,6 +116,7 @@ public ReopenMaterialIssue(jobcardNo, matStatus){
   const url = this.ServerUrl + `/jobCard/matStatus?jobNum=${jobcardNo}&matStatus=${matStatus}`;
   return this.http.put(url, options);
 }
+
 public jobCardStatusCancel(jobcardNo){
   const options = {
     headers: this.headers

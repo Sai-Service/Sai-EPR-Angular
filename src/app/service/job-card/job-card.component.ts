@@ -95,7 +95,7 @@ export class JobCardComponent implements OnInit {
   pipe = new DatePipe('en-US');
   now = Date.now();
   public minDate = new Date();
-  pickupDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+  
 
   regNo: string;
   labTotTaxAmt: number;
@@ -229,13 +229,17 @@ export class JobCardComponent implements OnInit {
   // minDate=new Date();
   // pipe = new DatePipe('en-US');
   // now = Date.now();
+  pickupDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+  jobCardDate = this.pipe.transform(this.now, 'd-MM-y h:mm:ss');
 
-  jobCardDate = this.pipe.transform(this.now, 'd-M-y h:mm:ss');
+  // jobCardDate = this.pipe.transform(this.now, 'y-MM-d');
+  
   //public minDatetime=this.pipe.transform(this.promiseDate, 'yyyy-MM-ddThh:mm')
   public minDatetime = moment(new Date()).format('YYYY-MM-DDTHH:mm')
   promiseDate = this.minDatetime;
+ 
   @ViewChild("myinput") myInputField: ElementRef;
-  arInvNum: string;
+  arInvNum: string;d
   ngAfterViewInit() {
     this.myInputField.nativeElement.focus();
   }
@@ -1040,6 +1044,7 @@ export class JobCardComponent implements OnInit {
 
           if (this.lstcomments.lineCnt > 0) {
             this.dispReadyInvoice = true;
+            
           }
           // alert('status' + ' ' + this.lstcomments.matStatus + ' ' + this.jobStatus)
           // // || this.lstcomments.matStatus === 'Compeleted'
@@ -1051,6 +1056,10 @@ export class JobCardComponent implements OnInit {
           if (this.lstcomments.jobCardNum != undefined) {
             this.displaylabMatTab = false;
           }
+          if (this.lstcomments.jobStatus == 'Opened' && (this.lstcomments.jobCardMatLines.length >0  || this.lstcomments.jobCardLabLines.length >0 )) 
+          {  this.dispReadyInvoice = true; this.dispButtonStatus=false; }
+         
+         
           if (this.lstcomments.jobStatus == 'Invoiced' || this.lstcomments.matStatus == 'Compeleted') {
             this.jobcardForm.disable();
             this.jobcardForm.get('jobCardLabLines').disable();
@@ -1063,8 +1072,9 @@ export class JobCardComponent implements OnInit {
           if (this.lstcomments.matStatus == 'Compeleted' || this.lstcomments.jobStatus == 'Ready for Invoice') {
 
             this.displaybilling = false;
-            this.dispButtonStatus = true;
+            this.dispButtonStatus = false;
             this.dispReadyInvoice = false;
+            this.printInvoiceButton=false;
           }
 
           this.jobcardForm.patchValue({regNo : data.regNo});
@@ -1310,6 +1320,21 @@ export class JobCardComponent implements OnInit {
       }
     });
   }
+
+      updateArInvoice() {
+      var jcId =this.jobcardForm.get("jobCardId").value
+      
+      {alert("Update Jcard....wip..."+jcId); 
+
+      this.serviceService.jobcardUpdateSubmit(jcId).subscribe((res: any) => {
+        if (res.code === 200) { alert(res.message);  } else  {
+        if (res.code === 400) { alert(res.message); }
+        }
+
+      });
+      } }
+
+
   saveArInvoice() {
     const formValue: IjobCard = this.tranceFun(this.jobcardForm.value);
     formValue.emplId = Number(sessionStorage.getItem('emplId'));
@@ -1337,6 +1362,8 @@ export class JobCardComponent implements OnInit {
       }
     });
   }
+
+
   openCodeComb(i) {
     this.displayModal = false;
     this.showModal = true; // Show-Hide Modal Check
