@@ -218,9 +218,10 @@ export class JobCardComponent implements OnInit {
   serviceModel:string;
 
   dispReadyInvoice = false;
-  dispButtonStatus = false;
+  dispButtonStatus = true;
   dispfreezeDetail = true;
   labLineValidation =false;
+  printInvoiceButton=false;
 
   // public minDatetime = new Date();
   // promiseDate = new Date();
@@ -1056,11 +1057,14 @@ export class JobCardComponent implements OnInit {
             this.jobcardForm.get('jobCardMatLines').disable();
             this.displaybilling = false;
             this.dispButtonStatus = false;
+            this.dispReadyInvoice = false;
+            this.printInvoiceButton=true;
           }
           if (this.lstcomments.matStatus == 'Compeleted' || this.lstcomments.jobStatus == 'Ready for Invoice') {
 
             this.displaybilling = false;
             this.dispButtonStatus = true;
+            this.dispReadyInvoice = false;
           }
 
           this.jobcardForm.patchValue({regNo : data.regNo});
@@ -1729,6 +1733,38 @@ validateMatQty(index: any){
     // this.CalculateTotal()
 
       
+}
+
+printPreInvoice(){
+  var jcNum=this.jobcardForm.get('jobCardNum').value
+  
+  const fileName = 'download.pdf';
+  const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+  this.serviceService.printWsPreInvdocument(jcNum)
+    .subscribe(data => {
+      var blob = new Blob([data], { type: 'application/pdf' });
+      var url = URL.createObjectURL(blob);
+      var printWindow = window.open(url, '', 'width=800,height=500');
+      printWindow.open
+      
+    });
+}
+
+
+
+printWSInvoice(){
+  var jcNum=this.jobcardForm.get('jobCardNum').value
+  
+  const fileName = 'download.pdf';
+  const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+  this.serviceService.printWsInvoicedocument(jcNum)
+    .subscribe(data => {
+      var blob = new Blob([data], { type: 'application/pdf' });
+      var url = URL.createObjectURL(blob);
+      var printWindow = window.open(url, '', 'width=800,height=500');
+      printWindow.open
+      
+    });
 }
 
 

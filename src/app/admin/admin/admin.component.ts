@@ -1,7 +1,7 @@
-import { Component, OnInit,HostListener ,ViewChild } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
 // import * as $ from 'jquery';
 import { Router } from '@angular/router';
-import {formatDate } from '@angular/common';
+import { formatDate } from '@angular/common';
 import { MasterService } from 'src/app/master/master.service';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
@@ -11,15 +11,15 @@ import { identifierModuleUrl } from '@angular/compiler';
 export enum KEY_CODE {
   RIGHT_ARROW = 39,
   LEFT_ARROW = 37,
-  F9_KEY=120
+  F9_KEY = 120
 
 }
 
 interface IAdmin {
-  searchItemId  :number;
+  searchItemId: number;
   searchItemCode: string;
   searchItemName: string;
-  searchByItemDesc:string;
+  searchByItemDesc: string;
 }
 
 declare var $: any;
@@ -30,79 +30,84 @@ declare var $: any;
   styleUrls: ['./admin.component.css']
 })
 // export class AdminComponent  {
-  export class AdminComponent implements OnInit {
-    adminForm1:FormGroup;
+export class AdminComponent implements OnInit {
+  adminForm1: FormGroup;
 
-    // @ViewChild('partSearch') partSearch: any;
+  // @ViewChild('partSearch') partSearch: any;
 
   public itemMap = new Map<string, any[]>();
   public itemMap2 = new Map<number, any[]>();
   itemSeg: string = "";
 
-  public ItemIdList:any[];
+  public ItemIdList: any[];
   lstcomments: any;
-  lstcomments1: any =[];
-  ticketNo:string;
-  today= new Date();
+  lstcomments1: any = [];
+  ticketNo: string;
+  today = new Date();
   todaysDataTime = '';
-  divisionId:number;
+  divisionId: number;
   displayMaruti: boolean;
   isVisible1: boolean = true;
   isVisible2: boolean = true;
-  fullName:string;
-  deptName:string;
-  locCode:string;
-  locName:string;
-  ouName:string;
-  loginArray:string;
-  locId:number;
-  ouId:number;
-  searchBy:string='ITEM NUMBER';
-  searchItemId  :number;
+  isVisible3: boolean = true;
+  isVisible5: boolean = true;
+  public show: boolean = false;
+  isShown: boolean = false;
+  displayUserIdwiseAccess: boolean = true;
+  fullName: string;
+  deptName: string;
+  locCode: string;
+  locName: string;
+  ouName: string;
+  loginArray: string;
+  locId: number;
+  ouId: number;
+  searchBy: string = 'ITEM NUMBER';
+  searchItemId: number;
   searchItemCode: string;
   searchItemName: string;
-  searchByItemDesc:string;
+  searchByItemDesc: string;
   userList2: any[] = [];
   lastkeydown1: number = 0;
-  displayMarutiMenu:Boolean;
+  displayMarutiMenu: Boolean;
 
-  segment:string;
-  desc:string;
-  uom:string;
-  hsnSacCode :string;
-  gstPer:number;
-  salePrice:number;
-  purchPrice:number;
-  mrp:number;
-  principleItem:number;
+  segment: string;
+  desc: string;
+  uom: string;
+  hsnSacCode: string;
+  gstPer: number;
+  salePrice: number;
+  purchPrice: number;
+  mrp: number;
+  principleItem: number;
 
-  searchByItem =true;
-  searchByDesc=false;
+  searchByItem = true;
+  searchByDesc = false;
 
 
 
-  constructor(private fb: FormBuilder, private router: Router, private service: MasterService){
-  // constructor(private router: Router ) {
+  constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
+    // constructor(private router: Router ) {
     this.todaysDataTime = formatDate(this.today, 'dd-MM-yyyy hh:mm:ss a', 'en-US', '+0530');
 
     this.adminForm1 = fb.group({
-      searchBy:[],
-      searchItemCode:[],
-      searchItemName:[],
-      searchByItemDesc:[],
+      searchBy: [],
+      searchItemCode: [],
+      searchItemName: [],
+      searchByItemDesc: [],
 
-      segment:[],
-      onHandQty:[''],
-      subInventoryCode:[''],
-      description:[''],
-      desc:[],
-      uom:[],
-      hsnSacCode:[],
-      gstPer:[],
-      salePrice:[],
-      purchPrice:[],
-      mrp:[],
-      principleItem:[],
+      segment: [],
+      onHandQty: [''],
+      subInventoryCode: [''],
+      description: [''],
+      desc: [],
+      uom: [],
+      hsnSacCode: [],
+      gstPer: [],
+      salePrice: [],
+      purchPrice: [],
+      mrp: [],
+      principleItem: [],
 
     });
   }
@@ -120,29 +125,29 @@ declare var $: any;
 
 
   get f() { return this.adminForm1.controls; }
-  admin(adminForm1:any) {  }
+  admin(adminForm1: any) { }
 
   ngOnInit(): void {
-    $("#menu-toggle").click(function(e) {
+    $("#menu-toggle").click(function (e) {
       e.preventDefault();
       $("#wrapper").toggleClass("toggled");
     });
 
-    this.ticketNo=sessionStorage.getItem('ticketNo');
-    this.divisionId=Number(sessionStorage.getItem('divisionId'));
-    this.fullName=(sessionStorage.getItem('fullName'));
-    this.deptName=(sessionStorage.getItem('deptName'));
-    this.locName=(sessionStorage.getItem('locName'));
-    this.ouName=(sessionStorage.getItem('ouName'));
-   //
-   this.loginArray=sessionStorage.getItem('CompName');
+    this.ticketNo = sessionStorage.getItem('ticketNo');
+    this.divisionId = Number(sessionStorage.getItem('divisionId'));
+    this.fullName = (sessionStorage.getItem('fullName'));
+    this.deptName = (sessionStorage.getItem('deptName'));
+    this.locName = (sessionStorage.getItem('locName'));
+    this.ouName = (sessionStorage.getItem('ouName'));
+    //
+    this.loginArray = sessionStorage.getItem('CompName');
 
-    this.ouId=Number(sessionStorage.getItem('ouId'));
-    this.locId=Number(sessionStorage.getItem('locId'));
-    this.locCode=sessionStorage.getItem('locCode');
+    this.ouId = Number(sessionStorage.getItem('ouId'));
+    this.locId = Number(sessionStorage.getItem('locId'));
+    this.locCode = sessionStorage.getItem('locCode');
 
 
-    $('.dropdown-menu a.dropdown-toggle').on('click', function(e) {
+    $('.dropdown-menu a.dropdown-toggle').on('click', function (e) {
       if (!$(this).next().hasClass('show')) {
         $(this).parents('.dropdown-menu').first().find('.show').removeClass("show");
       }
@@ -150,7 +155,7 @@ declare var $: any;
       $subMenu.toggleClass('show');
 
 
-      $(this).parents('li.nav-item.dropdown.show').on('hidden.bs.dropdown', function(e) {
+      $(this).parents('li.nav-item.dropdown.show').on('hidden.bs.dropdown', function (e) {
         $('.dropdown-submenu .show').removeClass("show");
       });
 
@@ -160,43 +165,61 @@ declare var $: any;
 
 
 
-    if (this.divisionId===1){
+    if (this.divisionId === 1) {
 
     }
-   else if (this.divisionId===2){
-      this.displayMaruti=false;
+    else if (this.divisionId === 2) {
+      this.displayMaruti = false;
     }
 
-if (Number(sessionStorage.getItem('divisionId'))===2){
-this.isVisible1=false;
-}
-else if (Number(sessionStorage.getItem('divisionId'))===1){
-this.isVisible1=true;
-}
+    if (Number(sessionStorage.getItem('divisionId')) === 2) {
+      this.isVisible1 = false;
+      this.isVisible2 = false;  
+    }
+    else if (Number(sessionStorage.getItem('divisionId')) === 1) {
+      this.isVisible1 = true;
+      this.isVisible2 = false;    
+    }
 
-if(sessionStorage.getItem('ticketNo')===undefined||sessionStorage.getItem('ticketNo')===null||sessionStorage.getItem('ticketNo')==='')
-{
-  this.router.navigate(['login']);
+    if (sessionStorage.getItem('ticketNo') === undefined || sessionStorage.getItem('ticketNo') === null || sessionStorage.getItem('ticketNo') === '') {
+      this.router.navigate(['login']);
+    }
+
+
+
+    if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId')) === 1) {
+      this.isVisible2 = true;
+    }
+
+    if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId')) === 2){
+    this.isVisible1 = true;
+    this.isVisible2 = false; 
+  }
+
+  if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId')) === 3){
+  this.isVisible1 = true;
+  this.isVisible2 = false; 
 }
+  
   }
 
 
 
 
-  close(){
+
+  close() {
     this.router.navigate(['login']);
   }
 
-  dashboard(){
+  dashboard() {
     this.router.navigate(['/admin']);
   }
 
-  getInvItemId($event)
-  {
+  getInvItemId($event) {
     // alert('in getInvItemId')
-     let userId=(<HTMLInputElement>document.getElementById('invItemIdFirstWay')).value;
-     this.userList2=[];
-     if (userId.length > 2) {
+    let userId = (<HTMLInputElement>document.getElementById('invItemIdFirstWay')).value;
+    this.userList2 = [];
+    if (userId.length > 2) {
       if ($event.timeStamp - this.lastkeydown1 > 200) {
         this.userList2 = this.searchFromArray1(this.ItemIdList, userId);
       }
@@ -212,40 +235,40 @@ if(sessionStorage.getItem('ticketNo')===undefined||sessionStorage.getItem('ticke
     return matches;
   };
 
-  LoadModal(){
+  LoadModal() {
     this.adminForm1.get('searchItemCode').reset();
     this.resetDet();
-    this.searchBy='ITEM NUMBER';
+    this.searchBy = 'ITEM NUMBER';
   }
 
   resetDet() {
-    this.searchItemId=null;
-    this.searchByItemDesc=null;
-    this.searchItemName=null;
-    this.segment=null;
-    this.desc=null;
-    this.uom=null;
-    this.mrp=null;
-    this.hsnSacCode=null;
-    this.purchPrice=null;
-    this.gstPer=null;
-    this.principleItem =null;
-    this.lstcomments=null;
-    this.lstcomments1=null;
+    this.searchItemId = null;
+    this.searchByItemDesc = null;
+    this.searchItemName = null;
+    this.segment = null;
+    this.desc = null;
+    this.uom = null;
+    this.mrp = null;
+    this.hsnSacCode = null;
+    this.purchPrice = null;
+    this.gstPer = null;
+    this.principleItem = null;
+    this.lstcomments = null;
+    this.lstcomments1 = null;
   }
 
   f9Key() {
     // alert( "Key F9 pressed");
     // this.router.navigate(['/admin/transaction/OnHandDetails']);
-     // this.partSearch.open();
-     this.LoadModal();
+    // this.partSearch.open();
+    this.LoadModal();
     $("#partSearch").modal('show');
   }
 
   F9Search(itemDesc) {
-    var sType=this.adminForm1.get('searchBy').value
-    if(sType =='ITEM NUMBER') { this.searchByItemSegmentDiv(itemDesc) }
-    if(sType =='ITEM DESCRIPTION') { this.F9SearchItemDesc(itemDesc)}
+    var sType = this.adminForm1.get('searchBy').value
+    if (sType == 'ITEM NUMBER') { this.searchByItemSegmentDiv(itemDesc) }
+    if (sType == 'ITEM DESCRIPTION') { this.F9SearchItemDesc(itemDesc) }
   }
 
 
@@ -254,37 +277,37 @@ if(sessionStorage.getItem('ticketNo')===undefined||sessionStorage.getItem('ticke
     // const formValue: IAdmin = this.adminForm1.value;
     // alert ("WIP...." + this.adminForm1.get('searchItemName').value);
 
-    var segment1=this.adminForm1.get('searchItemCode').value
-    segment1=segment1.toUpperCase();
+    var segment1 = this.adminForm1.get('searchItemCode').value
+    segment1 = segment1.toUpperCase();
 
     // alert("Segment :" +segment1);
 
-    if(segment1 ==undefined || segment1==null) {
-      alert ("Please select Item Code ....") ;return;
-     }
-    let select1=this.ItemIdList.find(d=>d.SEGMENT===segment1);
+    if (segment1 == undefined || segment1 == null) {
+      alert("Please select Item Code ...."); return;
+    }
+    let select1 = this.ItemIdList.find(d => d.SEGMENT === segment1);
 
-    if (select1==undefined) {
-      alert ("Please select valid Item Code ....") ;return;
-     }
+    if (select1 == undefined) {
+      alert("Please select valid Item Code ...."); return;
+    }
 
-    this.service.searchByItemf9(select1.itemId,this.locId, this.ouId,this.divisionId).subscribe(
-      data =>{
-        this.lstcomments= data;
+    this.service.searchByItemf9(select1.itemId, this.locId, this.ouId, this.divisionId).subscribe(
+      data => {
+        this.lstcomments = data;
         console.log(data);
         // alert("Length :"+this.lstcomments.length);
         // if(this.lstcomments !=null){
-          if(this.lstcomments.length>0){
-          this.segment=this.lstcomments[0].SEGMENT;
-          this.desc=this.lstcomments[0].DESCRIPTION;
-          this.uom=this.lstcomments[0].UOM;
-          this.mrp=this.lstcomments[0].MRP;
-          this.hsnSacCode=this.lstcomments[0].HSNSACCODE;
-          this.purchPrice=this.lstcomments[0].NDP;
-          this.gstPer=this.lstcomments[0].GSTPERCENTAGE;
-          this.principleItem =this.lstcomments[0].PRINCPLEITEM;
+        if (this.lstcomments.length > 0) {
+          this.segment = this.lstcomments[0].SEGMENT;
+          this.desc = this.lstcomments[0].DESCRIPTION;
+          this.uom = this.lstcomments[0].UOM;
+          this.mrp = this.lstcomments[0].MRP;
+          this.hsnSacCode = this.lstcomments[0].HSNSACCODE;
+          this.purchPrice = this.lstcomments[0].NDP;
+          this.gstPer = this.lstcomments[0].GSTPERCENTAGE;
+          this.principleItem = this.lstcomments[0].PRINCPLEITEM;
           this.adminForm1.patchValue(data);
-        }else { alert ( "Stock Details not availabe for item - "+segment1);}
+        } else { alert("Stock Details not availabe for item - " + segment1); }
       })
 
   }
@@ -292,19 +315,19 @@ if(sessionStorage.getItem('ticketNo')===undefined||sessionStorage.getItem('ticke
 
 
 
-  F9SearchItemDesc(itemDesc){
+  F9SearchItemDesc(itemDesc) {
 
-   //var itemDesc=this.adminForm1.get('searchByItemDesc').value
-    itemDesc=itemDesc.toUpperCase();
-//alert("Segment :" +itemDesc);
+    //var itemDesc=this.adminForm1.get('searchByItemDesc').value
+    itemDesc = itemDesc.toUpperCase();
+    //alert("Segment :" +itemDesc);
 
-    if(itemDesc ==undefined || itemDesc==null) {
-      alert ("Enter Item Description ....") ;return;
-     }
+    if (itemDesc == undefined || itemDesc == null) {
+      alert("Enter Item Description ...."); return;
+    }
 
-    this.service.searchByItemDescf9(this.divisionId,itemDesc).subscribe(
-      data =>{
-        this.lstcomments1= data;
+    this.service.searchByItemDescf9(this.divisionId, itemDesc).subscribe(
+      data => {
+        this.lstcomments1 = data;
         console.log(data);
 
       });
@@ -315,42 +338,42 @@ if(sessionStorage.getItem('ticketNo')===undefined||sessionStorage.getItem('ticke
 
 
 
-    onOptioninvItemIdSelectedSingle(mItem) {
-      // alert ("in fn onOptioninvItemIdSelectedSingle "+mItem);
+  onOptioninvItemIdSelectedSingle(mItem) {
+    // alert ("in fn onOptioninvItemIdSelectedSingle "+mItem);
 
-      let selectedValue = this.ItemIdList.find(v => v.SEGMENT == mItem);
-        if( selectedValue != undefined){
-         console.log(selectedValue);
-        this.searchItemId=selectedValue.itemId;
-        this.searchItemName=selectedValue.DESCRIPTION;
-        this.searchItemCode=selectedValue.SEGMENT;
-      }
-      // alert(selectedValue.itemId+","+selectedValue.DESCRIPTION+","+selectedValue.SEGMENT);
-
+    let selectedValue = this.ItemIdList.find(v => v.SEGMENT == mItem);
+    if (selectedValue != undefined) {
+      console.log(selectedValue);
+      this.searchItemId = selectedValue.itemId;
+      this.searchItemName = selectedValue.DESCRIPTION;
+      this.searchItemCode = selectedValue.SEGMENT;
     }
+    // alert(selectedValue.itemId+","+selectedValue.DESCRIPTION+","+selectedValue.SEGMENT);
 
-    onSearchTypeSelected(evnt) {
-      // alert ("in onSearchTypeSelected ")
+  }
+
+  onSearchTypeSelected(evnt) {
+    // alert ("in onSearchTypeSelected ")
     //  this.LoadModal();
     // this.resetDet();
-    this.lstcomments=null;
-    this.lstcomments1=null;
-    this.searchByItemDesc=null;
+    this.lstcomments = null;
+    this.lstcomments1 = null;
+    this.searchByItemDesc = null;
 
-      if(evnt=='ITEM NUMBER') {this.searchByItem=false;this.searchByDesc=true;}
-      if(evnt=='ITEM DESCRIPTION') {this.searchByDesc=true; this.searchByItem=false;}
-    }
+    if (evnt == 'ITEM NUMBER') { this.searchByItem = false; this.searchByDesc = true; }
+    if (evnt == 'ITEM DESCRIPTION') { this.searchByDesc = true; this.searchByItem = false; }
+  }
 
 
-    Select(itemNumber: any) {
+  Select(itemNumber: any) {
 
-      // alert ("Item Number :" +itemNumber);
+    // alert ("Item Number :" +itemNumber);
 
 
     //   let select1=this.ItemIdList.find(d=>d.segment===itemNumber);
     //   // this.searchBy='ITEM DESCRIPTION';
-      this.searchByItem=true;
-      this.searchByDesc=true;
+    this.searchByItem = true;
+    this.searchByDesc = true;
     //   // this.searchBy='ITEM NUMBER';
     //   // this.searchItemCode=itemNumber;
     //  // this.searchItemName=select1.DESCRIPTION;
@@ -362,40 +385,40 @@ if(sessionStorage.getItem('ticketNo')===undefined||sessionStorage.getItem('ticke
 
 
 
-      this.service.searchByItemf9(itemNumber,this.locId, this.ouId,this.divisionId).subscribe(
-        data =>{
-          this.lstcomments= data;
-          console.log(data);
-          // alert("Length :"+this.lstcomments.length);
-          if(this.lstcomments.length>0){
-            this.segment=this.lstcomments[0].SEGMENT;
-            this.desc=this.lstcomments[0].DESCRIPTION;
-            this.uom=this.lstcomments[0].UOM;
-            this.mrp=this.lstcomments[0].MRP;
-            this.hsnSacCode=this.lstcomments[0].HSNSACCODE;
-            this.purchPrice=this.lstcomments[0].NDP;
-            this.gstPer=this.lstcomments[0].GSTPERCENTAGE;
-            this.principleItem =this.lstcomments[0].PRINCPLEITEM;
-            this.adminForm1.patchValue(data);
-          } else { alert ( "Stock Details not availabe for item - "+itemNumber);}
-         })
+    this.service.searchByItemf9(itemNumber, this.locId, this.ouId, this.divisionId).subscribe(
+      data => {
+        this.lstcomments = data;
+        console.log(data);
+        // alert("Length :"+this.lstcomments.length);
+        if (this.lstcomments.length > 0) {
+          this.segment = this.lstcomments[0].SEGMENT;
+          this.desc = this.lstcomments[0].DESCRIPTION;
+          this.uom = this.lstcomments[0].UOM;
+          this.mrp = this.lstcomments[0].MRP;
+          this.hsnSacCode = this.lstcomments[0].HSNSACCODE;
+          this.purchPrice = this.lstcomments[0].NDP;
+          this.gstPer = this.lstcomments[0].GSTPERCENTAGE;
+          this.principleItem = this.lstcomments[0].PRINCPLEITEM;
+          this.adminForm1.patchValue(data);
+        } else { alert("Stock Details not availabe for item - " + itemNumber); }
+      })
 
 
-    }
+  }
 
-    searchByItemSegmentDiv(itemDesc: string) {
+  searchByItemSegmentDiv(itemDesc: string) {
 
-      if(itemDesc.length == 8){
+    if (itemDesc.length == 8) {
       this.service.searchByItemSegmentDiv(this.divisionId, itemDesc.toUpperCase())
         .subscribe(
           data => {
             var desc = data[0].description;
-            this.ItemIdList =data;
-            this.Select( data[0].itemId);
-               }
+            this.ItemIdList = data;
+            this.Select(data[0].itemId);
+          }
         );
 
-    }else{
+    } else {
       alert("Please Enter full item number!!")
       return;
     }
@@ -404,8 +427,9 @@ if(sessionStorage.getItem('ticketNo')===undefined||sessionStorage.getItem('ticke
 userCheck(roleId: number): boolean {
   //alert(sessionStorage.getItem('roleId') +'--'+roleId );
   if(sessionStorage.getItem('roleId') === 'undefined') { 
-    
+    // this.isVisible1 = false;
     return true;
+   
   }else{
     //alert("else");
   if (Number(sessionStorage.getItem('roleId')) === roleId ){
@@ -422,3 +446,7 @@ userCheck(roleId: number): boolean {
 }
 
   }
+
+ 
+
+
