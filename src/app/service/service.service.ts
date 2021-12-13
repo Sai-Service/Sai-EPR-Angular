@@ -151,6 +151,14 @@ saveMaterialSubmit(Record) {
 }
 
 
+public jobcardUpdateSubmit(jobcardId) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/jobCard/jobHeader';
+  return this.http.put(url, options);
+}
+
 printWsPreInvdocument(jcNumber){
   const REQUEST_URI = this.ServerUrl +`/jobCard/wsPreInvoicePrint/${jcNumber}`;  
   // http://localhost:8081/jobCard/wsPreInvoicePrint/12PU.101-3

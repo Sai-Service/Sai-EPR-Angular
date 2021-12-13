@@ -597,7 +597,7 @@ export class SalesOrderFormComponent implements OnInit {
     } else {
     }
     this.invItemList1 = this.itemMap.get(orderType);
-    this.orderManagementService.getItemByCatType(orderType, 1)
+    this.orderManagementService.getItemByCatType(orderType, sessionStorage.getItem('divisionId'))
       .subscribe(
         data => {
           this.invItemList1 = data;
