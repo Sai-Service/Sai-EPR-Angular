@@ -1276,7 +1276,6 @@ export class CounterSaleComponent implements OnInit {
   };
 
   accountNoSearch(custAccountNo) {
-    // alert(custAccountNo);
     this.service.searchCustomerByAccount(custAccountNo)
       .subscribe(
         data => {

@@ -5,11 +5,11 @@
       <a class="list-group-item list-group-item-action bg-light"
         (click)="dashboard()">&nbsp;&nbsp;Dashboard&nbsp;&nbsp;</a>
     </li>
-    <!-- <div *ngIf="userCheck(2)"> -->
+ 
     <li class="nav-item dropdown">
       <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-expanded="false" aria-haspopup="true"  data-toggle="dropdown" (click)="LoadModal()" data-toggle="modal" data-target="#partSearch">Search</a>
     </li>
-  <!-- </div> -->
+
     <li class="nav-item dropdown">
       <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
         aria-haspopup="true"  [routerLink]="['/admin/master/customerMaster']" aria-expanded="false">
@@ -23,7 +23,6 @@
       </a>
      
       <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-        <!-- <div *ngIf="userCheck(2)"> -->
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Purchase</a>
           <ul class="dropdown-menu">
            
@@ -34,9 +33,7 @@
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/ReturnToVendor']">Return To Vendor</a></li>
           
           </ul>
-        <!-- </div> -->
         </li>
-        <!-- </div> -->
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Payable</a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/PoInvoice']">AP Invoice</a></li>
@@ -82,7 +79,7 @@
             <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/OrderGeneration']">Order Generation</a></li>    
          </ul>
         </li>
-        <div [style.display]="isVisible1 ? 'block' : 'none'">
+        <!-- <div [style.display]="isVisible1 ? 'block' : 'none'"> -->
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Sales Order</a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/allotment']">Allotment</a></li>
@@ -92,7 +89,7 @@
             <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/GatePass']">Sales Gate Pass</a></li>
           </ul>
         </li>
-        </div>
+        <!-- </div> -->
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Receipts</a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/PaymentReceipt']">OM-Payment Receipt</a>
@@ -140,12 +137,12 @@
       </ul>
     </li>
 
-    <!-- <li class="nav-item dropdown">
+    <li class="nav-item dropdown">
       <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
         aria-haspopup="true"  [routerLink]="['/admin/master/WsVehicleMaster']" aria-expanded="false">
         Vehicle Master WS
       </a>
-    </li> -->
+    </li>
 
       <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"

@@ -624,6 +624,11 @@ mainModelList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/cmnLookup/MulModel');
 }
 
+mainModelListDivisionWise(divisionId): Observable<any> {
+  return this.http.get(this.ServerUrl +`/cmnLookup/Catgtype?cmnType=Model&divisionId=${divisionId}`);
+}
+
+
 mainModelListByDivisionId(): Observable<any> {
 
   //http://localhost:8081/cmnLookup/Catgtype?cmnType=Model&divisionId=2
@@ -658,6 +663,10 @@ colorCodeListByVariant(variant): Observable<any> {
 
 transactionTypeNameList(deptId,locId,ouId): Observable<any> {
   return this.http.get(this.ServerUrl +`/OrderTrnType/otList?deptId=${deptId}&locId=${locId}&ouId=${ouId}`);
+}
+
+transactionTypeNameListNew(deptId,ouId): Observable<any> {
+  return this.http.get(this.ServerUrl +`/OrderTrnType/otList?deptId=${deptId}&ouId=${ouId}`);
 }
 
 payTermDescList(): Observable<any> {

@@ -232,6 +232,10 @@ export class OrderManagementService {
     return this.http.get(this.ServerUrl + `/pricelist`);
   }
 
+  priceListNameListDeptWise(divisionId,ouId,deptId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/pricelist/prinHeader?divisionId=${divisionId}&ouId=${ouId}&deptId=${deptId}`);
+  }
+
   priceListNameList1(ouId,divisionId): Observable<any> {
     return this.http.get(this.ServerUrl + `/pricelist/priceHdr?ouId=${ouId}&divisionId=${divisionId}`);
   }
