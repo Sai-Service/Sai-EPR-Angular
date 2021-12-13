@@ -342,12 +342,22 @@
                                                                                     placeholder=""
                                                                                     formControlName="bayTyId">
                                                                             </td>
-                                                                            <td style="width: 15%"
+                                                                            <td></td>
+
+                                                                            <td>
+                                                                                <button data-toggle="modal"
+                                                                                    class="btn btn-primary"
+                                                                                    data-target="#exampleModalScrollable"
+                                                                                    style="width: 140px">Additional
+                                                                                    Details</button>
+                                                                            </td>
+
+                                                                            <!-- <td style="width: 15%"
                                                                                 class="LabelFontStyle">&nbsp;</td>
                                                                             <td>
                                                                                 <input type="text" hidden
                                                                                     class="form-control" placeholder="">
-                                                                            </td>
+                                                                            </td> -->
                                                                             <td style="width: 15%"
                                                                                 class="LabelFontStyle1">Technician&nbsp;:
                                                                             </td>
@@ -448,24 +458,24 @@
                                                                                 class="LabelFontStyle">
                                                                                 &nbsp;Demanded&nbsp;Job&nbsp;:
                                                                             </td>
-                                                                            <td>
+                                                                            <td colspan="3" >
                                                                                 <input type="text" class="form-control"
-                                                                                    placeholder="">
-                                                                            </td>
+                                                                                formControlName="demandJob" placeholder="" style="width: 100%;">
+                                                                            </td> 
                                                                             <td style="width: 15%"
                                                                                 class="LabelFontStyle">
                                                                                 Recommendation&nbsp;:</td>
-                                                                            <td>
+                                                                            <td colspan="3"> 
                                                                                 <input type="text" class="form-control"
-                                                                                    placeholder="">
+                                                                                formControlName="recomJob" placeholder="" style="width: 100%;">
                                                                             </td>
-                                                                            <td>
+                                                                            <!-- <td>
                                                                                 <button data-toggle="modal"
                                                                                     class="btn btn-primary"
                                                                                     data-target="#exampleModalScrollable"
-                                                                                    style="width: fit-content;">Additional
+                                                                                    style="width: fit-content;">
                                                                                     Details</button>
-                                                                            </td>
+                                                                            </td> -->
                                                                         </tr>
 
                                                                     </fieldset>
@@ -618,12 +628,21 @@
                                                                                                 placeholder=""
                                                                                                 formControlName="bayTyId">
                                                                                         </td>
-                                                                                        <td style="width: 15%"
+                                                                                        <td></td>
+                                                                                        <td>
+                                                                                            <button data-toggle="modal"
+                                                                                                class="btn btn-primary"
+                                                                                                data-target="#exampleModalScrollable"
+                                                                                                style="width: 140px;">Additional
+                                                                                                Details</button>
+                                                                                        </td>
+
+                                                                                        <!-- <td style="width: 15%"
                                                                                             class="LabelFontStyle">&nbsp;</td>
                                                                                         <td>
                                                                                             <input type="text" hidden
                                                                                                 class="form-control" placeholder="">
-                                                                                        </td>
+                                                                                        </td> -->
                                                                                         <td style="width: 15%"
                                                                                             class="LabelFontStyle">Technician&nbsp;:
                                                                                         </td>
@@ -724,24 +743,25 @@
                                                                                             class="LabelFontStyle">
                                                                                             &nbsp;Demanded&nbsp;Job&nbsp;:
                                                                                         </td>
-                                                                                        <td>
+                                                                                        <td colspan="3">
                                                                                             <input type="text" class="form-control"
-                                                                                                placeholder="">
+                                                                                            formControlName="demandJob" placeholder="">
                                                                                         </td>
                                                                                         <td style="width: 15%"
                                                                                             class="LabelFontStyle">
                                                                                             Recommendation&nbsp;:</td>
-                                                                                        <td>
+                                                                                        <td colspan="3">
                                                                                             <input type="text" class="form-control"
-                                                                                                placeholder="">
+                                                                                            formControlName="recomJob" placeholder="">
                                                                                         </td>
-                                                                                        <td>
+
+                                                                                        <!-- <td>
                                                                                             <button data-toggle="modal"
                                                                                                 class="btn btn-primary"
                                                                                                 data-target="#exampleModalScrollable"
-                                                                                                style="width: fit-content;">Additional
+                                                                                                style="width: fit-content;">
                                                                                                 Details</button>
-                                                                                        </td>
+                                                                                        </td> -->
                                                                                     </tr>
 
                                                                                 </fieldset>
@@ -1117,14 +1137,20 @@
                                                                 </table>
                                                                 <table class="center">
                                                                     <tr>
+                                                                    <div *ngIf="dispButtonStatus; then B1; else B2"></div>
+                                                                    <ng-template #B1>
                                                                         <td> <button type="butt on"
                                                                                 class="btn btn-primary"
                                                                                 (click)="saveArInvoice()"
                                                                                 style="width: 8rem;">Save</button></td>
-                                                                        <!-- <td> <button type="butt on"
-                                                                                class="btn btn-primary" (click)="saveArInvoice()"
-                                                                                style="width: 8rem;">Update</button>
-                                                                        </td> -->
+                                                                    </ng-template>
+                                                                    <ng-template #B2>
+                                                                        <td> <button disabled type="butt on"
+                                                                                class="btn btn-primary"
+                                                                                (click)="saveArInvoice()"
+                                                                                style="width: 8rem;">Save</button></td>
+                                                                    </ng-template>
+                                                                                                                                             
                                                                         <td>
                                                                             <button type="button"
                                                                                 class="btn btn-primary"
@@ -1162,11 +1188,13 @@
                                                                                 id="register">Ready for invoice</button>
                                                                         </td>
                                                                     </ng-template>
+
                                                                     <td>
                                                                         <button type="submit" class="btn btn-primary"
                                                                             style="width: fit-content;"
-                                                                            id="register">Pre-Invoice</button>
+                                                                            id="register" (click)="printPreInvoice()" >Pre-Invoice</button>
                                                                     </td>
+
                                                                     </tr>
                                                                 </table>
                                                             </div>
@@ -1201,6 +1229,7 @@
                                                                     <th scope="col">Billable Type</th>
                                                                     <th scope="col">Labor Item</th>
                                                                     <th scope="col">Item Id</th>
+                                                                    <!-- <th scope="col">Uom</th> -->
                                                                     <th scope="col">Description</th>
                                                                     <th scope="col">Quantity</th>
                                                                     <th scope="col">Price</th>
@@ -1208,7 +1237,7 @@
                                                                     <th scope="col">Tax Category</th>
                                                                     <th scope="col">Split Ratio</th>
                                                                     <th scope="col">Customer</th>
-                                                                    <th scope="col">Insualer</th>
+                                                                    <th scope="col">Insurer</th>
                                                                     <th scope="col">Dealer</th>
                                                                     <th scope="col">OEM</th>
                                                                     <th scope="col">Labor Amount</th>
@@ -1226,7 +1255,7 @@
                                                                     [formGroupName]="i" class="auto-style5">
                                                                     <tbody>
                                                                         <tr>
-                                                                            <td><input type="text"
+                                                                            <td><input disabled type="text"
                                                                                     formControlName="lineNum"
                                                                                     class="form-control"
                                                                                     style="width:2rem"> </td>
@@ -1274,7 +1303,8 @@
                                                                             </td>  
 
                                                                             <td><input disabled  type="number"  formControlName="itemId"  class="form-control" style="width: 50px;"  ></td>
-                                                                           
+                                                                            <!-- <td><input disabled  type="text"  formControlName="uom"  class="form-control" style="width: 50px;"  ></td> -->
+                                                                          
                                                                             <input hidden formControlName="taxPer">
                                                                             <td>
                                                                                 <input disabled type="text"
@@ -1284,11 +1314,13 @@
                                                                             </td>
                                                                             <td>
                                                                                 <input type="number" min="0"
-                                                                                    formControlName="qty"
+                                                                                    formControlName="qty" 
                                                                                     (change)="onKey(i)"
                                                                                     class="form-control"
                                                                                     style="width: 3rem; height: 25px; text-align: right;">
                                                                             </td>
+
+                                                                          
                                                                             <td>
                                                                                 <input type="number" min="0"
                                                                                     class="form-control" disabled
@@ -2364,11 +2396,8 @@
 
                                                 <table class="center">
                                                     <tr>
-                                                        <td>
-                                                            <button type="butt on" class="btn btn-primary"
-                                                                style="width: fit-content;"
-                                                                (click)="BillingCal()">Save</button>
-                                                        </td>
+                                                       
+
                                                         <!-- <td>
                                                             <button type="button" class="btn btn-primary"
                                                                 style="width: fit-content;"
@@ -2376,6 +2405,13 @@
                                                         </td> -->
                                                         <div *ngIf="dispButtonStatus; then ButtonEnablehenBlock; else ButtonDisableelseBlock"></div>
                                                             <ng-template #ButtonEnablehenBlock>
+
+                                                        <td>
+                                                            <button type="butt on" class="btn btn-primary"
+                                                                style="width: fit-content;"
+                                                                (click)="BillingCal()">Save</button>
+                                                        </td>
+
 
                                                         <td>
                                                             <button type="submit" class="btn btn-primary"
@@ -2398,6 +2434,12 @@
                                                     <ng-template #ButtonDisableelseBlock>
 
                                                         <td>
+                                                            <button disabled type="butt on" class="btn btn-primary"
+                                                                style="width: fit-content;"
+                                                                (click)="BillingCal()">Save</button>
+                                                        </td>
+
+                                                        <td>
                                                             <button disabled type="submit" class="btn btn-primary"
                                                                 style="width: fit-content;"
                                                                 (click)="ReopenMaterialIssue()"
@@ -2415,10 +2457,21 @@
                                                                 style="width: fit-content;">Generate Invoice</button>
                                                         </td>
                                                     </ng-template>
+
+                                                    <!-- <div *ngIf="printInvoiceButton; then P1; else P2"></div>
+                                                    <ng-template #P1> -->
                                                         <td>
                                                             <button type="submit" class="btn btn-primary" id="register"
-                                                                style="width: fit-content;">Print invoice</button>
+                                                                style="width: fit-content;" (click)="printWSInvoice()">Print invoice</button>
                                                         </td>
+                                                    <!-- </ng-template>
+                                                    <ng-template #P2>
+                                                        <td>
+                                                            <button disabled type="submit" class="btn btn-primary" id="register"
+                                                                style="width: fit-content;" (click)="printWSInvoice()">Print invoice</button>
+                                                        </td>
+                                                    </ng-template> -->
+
                                                         <td>
                                                                 <button type="submit" class="btn btn-primary" id="register"
                                                                     style="width: fit-content;">Close</button>

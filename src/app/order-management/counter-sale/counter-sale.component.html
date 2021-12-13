@@ -133,12 +133,14 @@
                 </td>
                 <td>
                     <input type="number" style="width: 120px;" class="form-control" formControlName="custAccountNo"
-                        [(ngModel)]='custAccountNo' value={{custAccountNo}}
+                        value={{custAccountNo}} [(ngModel)]='custAccountNo'
                         [ngClass]="{ 'is-invalid': submitted && f.custAccountNo.errors }"
                         (keydown.tab)="accountNoSearch(custAccountNo)" #myinput>
                     <div *ngIf="submitted && f.custAccountNo.errors" class="invalid-feedback">
                         <div *ngIf="f.custAccountNo.errors.required">Code cannot be blank</div>
                     </div> 
+                    <input type="number" hidden formControlName="creditAmt"  [(ngModel)]='creditAmt' value={{creditAmt}}
+                    class="form-control"style="width: 120px;">
                 </td>
                 <td style="width: 15%" class="LabelFontStyle">
                     Customer&nbsp;Site&nbsp;:&nbsp;
@@ -186,7 +188,7 @@
                                     data-bs-target="#customerNameSearchModel">
                             </td>
                             <td>
-                                <button type="button" class="btn btn-primary" (click)="custNameSearch(custName)"
+                                <button type="button" [disabled]="isDisabled3"  class="btn btn-primary" (click)="custNameSearch(custName)"
                                     data-toggle="modal" data-target="#customerNameSearchModel"
                                     style="width: 2rem;color: white;">
                                     <i class="fa fa-search"></i> </button>
@@ -994,7 +996,7 @@
                                                       
                                                         <td>
                                                             <input type="number" formControlName="pricingQty" name="pricingQty{{i}}"
-                                                                class="form-control" (change)="onKey(i,'prc')"
+                                                                class="form-control" (change)="onKey(i,'prc')" (keydown.enter)="enterKeyLock(i)"
                                                                 style="height: 20px;width:50px;" min="0"
                                                                 oninput="this.value = Math.abs(this.value)">
                                                             <input hidden type="text" formControlName="uom"
@@ -1114,7 +1116,7 @@
                                                         </td>
                                                         <td>
                                                             <input disabled type="number" formControlName="pricingQty"
-                                                                class="form-control" (change)="onKey(i)"
+                                                                class="form-control" (change)="onKey(i)" 
                                                                 style="height: 20px;width: 50px;">
                                                         </td>
                                                         <td>
@@ -1195,6 +1197,7 @@
                                                     <td>
                                                         <div *ngIf="displayaddRow; then thenaddRow; else elseaddRow">
                                                         </div>
+                                                        <!-- type="button" -->
                                                         <ng-template #thenaddRow>
                                                             <button type="submit" class="btn btn-primary"
                                                                 (click)="addRow(i)" style="width: min-content;"><i
@@ -1525,7 +1528,7 @@
                         </div>
                         <ng-template #thencounterSaleOrderSave>
                             <!-- [disabled]="isDisabled" -->
-                            <button type="submit"  class="btn btn-primary" id="register" style="width: fit-content;"
+                            <button type="submit" [disabled]="isDisabled"  class="btn btn-primary" id="register" style="width: fit-content;"
                                 (click)="counterSaleOrderSave()">Create Order</button>
                         </ng-template>
                         <ng-template #elsecounterSaleOrderSave>
