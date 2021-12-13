@@ -124,6 +124,9 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
   CounterSaleOrderBookingForm: FormGroup;
   lnflowStatusCode: 'BOOKED';
   refCustNo: string;
+  isDisabled3=false;
+  creditAmt:number;
+  displaywalkingCustomer = true;
   transactionTypeId: number;
   customerSiteId: number;
   reservedQty: number;
@@ -382,6 +385,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
       taxCategoryName:[''],
       transactionTypeId: [''],
       InvoiceNumber: [''],
+      creditAmt:[''],
       name: ['', [Validators.required]],
       customerSiteId: [''],
       id: [''],
@@ -900,6 +904,14 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
                 this.displaysalesRepName = true;
               }
             }
+            if (data.obj.custName.includes(('CSCash Customer')) && Number(sessionStorage.getItem('divisionId')) === 2) {
+              // alert(data.obj.custName);
+              this.displaywalkingCustomer = false;
+              var temp = data.obj.cntrOrdCustName.split('#');
+              this.CounterSaleOrderBookingForm.patchValue({ walkCustName: temp[0] });
+              this.CounterSaleOrderBookingForm.patchValue({ walkCustPan: temp[1] });
+              this.CounterSaleOrderBookingForm.patchValue({ walkCustaddres: temp[2] });
+            }
             if (data.obj.orderStatus === 'INVOICED' && data.obj.gatePassYN === 'Y') {
 
               this.displayAfterGatePass = false;
@@ -1185,12 +1197,25 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
             this.CounterSaleOrderBookingForm.patchValue(data.obj);
             this.CounterSaleOrderBookingForm.patchValue({ name: this.custSiteList[0].siteName });
             let select = this.payTermDescList.find(d => d.lookupValueId === this.selCustomer.termId);
+            this.CounterSaleOrderBookingForm.patchValue({ custAccountNo: custAccountNo });
             this.paymentType = select.lookupValue;
             this.CounterSaleOrderBookingForm.get('custName').disable();
             this.CounterSaleOrderBookingForm.get('mobile1').disable();
             if (this.custSiteList.length === 1) {
               this.onOptionsSelectedcustSiteName(this.custSiteList[0].siteName);
             }
+            var custName = data.obj.custName;
+            if (custName.includes(('CSCash Customer')) && Number(sessionStorage.getItem('divisionId')) === 2) {
+              this.displaywalkingCustomer = false;
+              this.CounterSaleOrderBookingForm.patchValue({ discType: 'Header Level Discount' });
+              this.displaydisPer = false;
+            }
+            else {
+              this.CounterSaleOrderBookingForm.get('disPer').disable();
+            }
+            this.CounterSaleOrderBookingForm.get('custAccountNo').disable();
+            this.isDisabled3=true;
+            this.customerNameSearch.splice(0,this.customerNameSearch.length);
           }
           else {
             if (data.code === 400) {
@@ -1376,37 +1401,26 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
     this.accountNoSearch(this.custAccountNo);
   }
 
+ 
+
   custNameSearch(custName) {
     // alert(custName)
-    this.orderManagementService.custNameSearchFn(custName, this.ouId)
+    this.orderManagementService.custNameSearchFn1(custName, sessionStorage.getItem('divisionId'))
       .subscribe(
         data => {
           if (data.code === 200) {
             this.customerNameSearch = data.obj;
-            console.log(this.accountNoSearch);
-            // alert(data.obj.length);
-            for (let i = 0; data.obj.length; i++) {
-              // alert(data.obj.length);
-              this.CounterSaleOrderBookingForm.patchValue(data.obj[i]);
-              this.custAddress = data.obj[i].billToAddress;
-              this.custAccountNo = data.obj[i].accountNo;
-              this.CounterSaleOrderBookingForm.get('custAccountNo').disable();
-              this.CounterSaleOrderBookingForm.get('mobile1').disable();
-            }
-
           }
           else {
             if (data.code === 400) {
               alert(data.message);
-              this.displaycreateCustomer = false;
-              this.CounterSaleOrderBookingForm.get('custAccountNo').disable();
-              this.CounterSaleOrderBookingForm.get('custName').disable();
-              this.CounterSaleOrderBookingForm.get('mobile1').disable();
+              this.display = 'block';
             }
           }
         }
       );
   }
+
 
 
   validate(index: number, qty1, Avalqty) {
