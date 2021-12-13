@@ -181,25 +181,28 @@ export class AdminComponent implements OnInit {
       this.isVisible2 = false;    
     }
 
+   
+    if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId')) === 1) {
+      this.isVisible2 = true;
+    }
+
     if (sessionStorage.getItem('ticketNo') === undefined || sessionStorage.getItem('ticketNo') === null || sessionStorage.getItem('ticketNo') === '') {
       this.router.navigate(['login']);
     }
 
 
 
-    if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId')) === 1) {
-      this.isVisible2 = true;
-    }
+  
 
-    if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId')) === 2){
-    this.isVisible1 = true;
-    this.isVisible2 = false; 
-  }
+//     if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId')) === 2){
+//     this.isVisible1 = true;
+//     this.isVisible2 = false; 
+//   }
 
-  if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId')) === 3){
-  this.isVisible1 = true;
-  this.isVisible2 = false; 
-}
+//   if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId')) === 3){
+//   this.isVisible1 = true;
+//   this.isVisible2 = false; 
+// }
   
   }
 
