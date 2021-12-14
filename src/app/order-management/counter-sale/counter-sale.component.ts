@@ -1114,14 +1114,13 @@ export class CounterSaleComponent implements OnInit {
   // }
 
   close() {
-    this.router.navigate(['admin']);
     this.deleteReserve();
+    this.router.navigate(['admin']);
   }
 
   refresh() {
     this.deleteReserve();
     window.location.reload();
-
   }
 
 
@@ -2201,6 +2200,7 @@ export class CounterSaleComponent implements OnInit {
         alert('First Select Line Details..!');
         this.closeResetButton = true;
         this.dataDisplay = ''
+        this.isDisabled = false;
         return;
       }
       if (orderLines[j].unitSellingPrice === '') {
@@ -2210,6 +2210,7 @@ export class CounterSaleComponent implements OnInit {
         alert('Line No'+' ' + j +' '+ 'Quantity is Zero please confirm');
         this.closeResetButton = true;
         this.dataDisplay = ''
+        this.isDisabled = false;
         return;
 
       }
