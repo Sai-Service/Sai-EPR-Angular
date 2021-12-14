@@ -216,12 +216,21 @@ export class JobCardComponent implements OnInit {
   emplId:number;
   deptName:string;
   serviceModel:string;
-
+  jcOpenDate=this.pipe.transform(Date.now(), 'y-MM-dd');
+  vehRegNo:string;
+  jcStatus:string;
   dispReadyInvoice = false;
   dispButtonStatus = true;
   dispfreezeDetail = true;
   labLineValidation =false;
+  matLineValidation=false;
+  preInvButton=false;
   printInvoiceButton=false;
+  saveLabButton=true;
+  saveMatButton=true;
+  saveBillButton=false;
+  genBillButton=false;
+  reopenButton=false;
 
   // public minDatetime = new Date();
   // promiseDate = new Date();
@@ -248,6 +257,9 @@ export class JobCardComponent implements OnInit {
   // @ViewChild('jobcardForm') public createJobcardForm: NgForm;
   constructor(private fb: FormBuilder, private router: Router, private orderManagementService: OrderManagementService, private service: MasterService, private serviceService: ServiceService) {
     this.jobcardForm = fb.group({
+      jcOpenDate:[],
+      vehRegNo:[],
+      jcStatus:[],
       jobCardNum: [],
       jobCardNum1: [],
       jcType: [],
@@ -663,8 +675,14 @@ export class JobCardComponent implements OnInit {
   //     }
   //     return true;
   // }
+
+  LoadMatLines(jcn) {
+  // alert ("Loading Material Lines...");
+  // this.MatImptWip(jcn);
+}
+
   MatImptWip(jobCardNum) {
-    // alert(jobCardNum);
+    alert(jobCardNum);
     var len = this.lineDistributionArray().length;
     this.serviceService.MatImptWipFn(jobCardNum, sessionStorage.getItem('locId'))
       .subscribe(
@@ -952,6 +970,39 @@ export class JobCardComponent implements OnInit {
   }
 
 
+  checkMatLineValidation(index){
+    var arrayControl = this.jobcardForm.get('jobCardMatLines').value
+    var invItemId = arrayControl[index].itemId;
+    this.matLineValidation=false
+
+    // alert ("arrayControl[index].billableTyId :"+arrayControl[index].billableTyId);
+
+    if(Number(arrayControl[index].billableTyId)<=0)
+    { this.labLineValidation=false;return; }
+
+    if(invItemId===null || invItemId==undefined || invItemId<=0)
+    { this.labLineValidation=false;return; }
+
+    if(Number(arrayControl[index].qty)<=0 ||arrayControl[index].qty===null || arrayControl[index].qty===undefined )
+     { this.labLineValidation=false;return; }
+     if(Number(arrayControl[index].unitPrice)<=0 ||arrayControl[index].unitPrice===null || arrayControl[index].unitPrice===undefined )
+     { this.labLineValidation=false;return; }
+
+     if(Number(arrayControl[index].basicAmt)<=0 ||arrayControl[index].basicAmt===null || arrayControl[index].basicAmt===undefined )
+     { this.labLineValidation=false;return; }
+
+     if(Number(arrayControl[index].taxCategoryId)<=0 ||arrayControl[index].taxCategoryId===null || arrayControl[index].taxCategoryId===undefined )
+     { this.labLineValidation=false;return; }
+
+     if(Number(arrayControl[index].splitRatio)<=0 ||arrayControl[index].splitRatio===null || arrayControl[index].splitRatio===undefined )
+     { this.labLineValidation=false;return; }
+
+
+    this.labLineValidation=true;
+
+  }
+
+
 
   // RemoveRow(index) {
   //   if (index === 0) {
@@ -1031,7 +1082,7 @@ export class JobCardComponent implements OnInit {
     var jcNum=this.jobcardForm.get('jobCardNum1').value
     jcNum=jcNum.toUpperCase();
    
-    this.jobcardForm.reset();
+    // this.jobcardForm.reset();
     this.jobCardNum1=jcNum;
    
     this.serviceService.getJonCardNoSearch(jcNum)
@@ -1039,43 +1090,19 @@ export class JobCardComponent implements OnInit {
         data => {
           this.lstcomments = data;
           console.log(this.lstcomments);
-          this.jobStatus = data.jobStatus;
+          if (this.lstcomments !=null) {    
+            this.dispButtonStatus = false; 
+            this.jobStatus = data.jobStatus;
 
+          }  else { alert (jcNum + " Job Card Not Found...")}
 
-          if (this.lstcomments.lineCnt > 0) {
-            this.dispReadyInvoice = true;
-            
-          }
-          // alert('status' + ' ' + this.lstcomments.matStatus + ' ' + this.jobStatus)
-          // // || this.lstcomments.matStatus === 'Compeleted'
-          // if(this.jobStatus ==='Ready for Invoice'){
-          //   alert('In If');
-          //   alert( this.dispButtonStatus);
-          //   this.dispButtonStatus=true;
-          // }
-          if (this.lstcomments.jobCardNum != undefined) {
-            this.displaylabMatTab = false;
-          }
-          if (this.lstcomments.jobStatus == 'Opened' && (this.lstcomments.jobCardMatLines.length >0  || this.lstcomments.jobCardLabLines.length >0 )) 
-          {  this.dispReadyInvoice = true; this.dispButtonStatus=false; }
-         
-         
-          if (this.lstcomments.jobStatus == 'Invoiced' || this.lstcomments.matStatus == 'Compeleted') {
-            this.jobcardForm.disable();
-            this.jobcardForm.get('jobCardLabLines').disable();
-            this.jobcardForm.get('jobCardMatLines').disable();
-            this.displaybilling = false;
-            this.dispButtonStatus = false;
-            this.dispReadyInvoice = false;
-            this.printInvoiceButton=true;
-          }
-          if (this.lstcomments.matStatus == 'Compeleted' || this.lstcomments.jobStatus == 'Ready for Invoice') {
-
-            this.displaybilling = false;
-            this.dispButtonStatus = false;
-            this.dispReadyInvoice = false;
-            this.printInvoiceButton=false;
-          }
+          // if(this.lstcomments.jobCardLabLines.length >0) {
+          //   this.saveLabButton =true;
+          // } else {this.saveLabButton =false; }
+          
+          // if(this.lstcomments.jobCardMatLines.length >0) {
+          //   this.saveMatButton =true;
+          // } else {this.saveMatButton =false; }
 
           this.jobcardForm.patchValue({regNo : data.regNo});
           var len = this.lineDistributionArray().length;
@@ -1092,6 +1119,57 @@ export class JobCardComponent implements OnInit {
             this.lineDetailsArray.push(payInvGrp);
 
           }
+          
+         
+
+          if (this.lstcomments.lineCnt > 0) {
+            this.dispReadyInvoice = true;
+            this.dispButtonStatus = false; 
+            
+          }
+         
+          if (this.lstcomments.jobCardNum != undefined) {
+            this.displaylabMatTab = false;
+          }
+
+          if (this.lstcomments.jobStatus == 'Opened'  )
+          {  this.dispReadyInvoice = true; this.dispButtonStatus=false;this.preInvButton=true; }
+         
+         
+          if (this.lstcomments.jobStatus == 'Invoiced' || this.lstcomments.matStatus == 'Compeleted') {
+            this.jobcardForm.disable();
+            this.jobcardForm.get('jobCardLabLines').disable();
+            this.jobcardForm.get('jobCardMatLines').disable();
+            this.displaybilling = false;
+            this.dispButtonStatus = false;
+            this.dispReadyInvoice = false;
+            this.printInvoiceButton=true;
+            this.genBillButton=false;
+            this.saveBillButton=false;
+            this.reopenButton=false;
+            this.saveLabButton=false;
+            this.saveMatButton=false;
+            this.preInvButton=false;
+            
+          }
+          if (this.lstcomments.matStatus == 'Compeleted' || this.lstcomments.jobStatus == 'Ready for Invoice') {
+
+            this.jobcardForm.disable();
+            this.jobcardForm.get('jobCardLabLines').disable();
+            this.jobcardForm.get('jobCardMatLines').disable();
+            this.displaybilling = false;
+            this.dispButtonStatus = false;
+            this.dispReadyInvoice = false;
+            this.printInvoiceButton=false;
+            this.saveBillButton=true;
+            this.genBillButton=false;
+            this.reopenButton=true;
+            this.saveLabButton=false;
+            this.saveMatButton=false;
+            this.preInvButton=true;
+          }
+
+      
 
           this.jobcardForm.patchValue(this.lstcomments);
 
@@ -1158,7 +1236,7 @@ export class JobCardComponent implements OnInit {
 
 
     // this.totalActualLabMat();
-  }
+  } 
   // onOptionTaxCatSelected(i, taxCategoryName) {
   //   let select = this.taxCategoryList.find(d => d.taxCategoryName === taxCategoryName);
   //   this.taxCategoryId= select.taxCategoryId;
@@ -1250,7 +1328,33 @@ export class JobCardComponent implements OnInit {
     delete val.lineDetailsArray;
     return val;
   }
+
+  // var prcLineArr = this.priceListMasterForm.get('priceListDetailList').value;
+  // var len1=prcLineArr.length;
+  
+  // for (let i = 0; i < len1 ; i++) 
+  //   {
+  //     this.CheckLineValidations(i);
+  //     if(this.lineValidation===false) {break;}
+  //   }
+
+  
+
   saveLine() {
+
+    if( this.dispReadyInvoice ===false) { alert (" JC status is 'Ready For Invoice'\nLabour add/update not allowed ...");return;}
+
+  var jclArr = this.jobcardForm.get('jobCardLabLines').value;
+  var len1=jclArr.length;
+   
+  for (let i = 0; i < len1 ; i++) 
+    {
+      this.checkLabLineValidation(i);
+      if(this.labLineValidation===false) {break;}
+    }
+
+   if(this.labLineValidation) {
+
     const formValue: IjobCard = this.tranceFun(this.jobcardForm.value);
     formValue.emplId = Number(sessionStorage.getItem('emplId'));
     this.serviceService.lineWISESubmit(formValue).subscribe((res: any) => {
@@ -1289,8 +1393,22 @@ export class JobCardComponent implements OnInit {
         }
       }
     });
-  }
+    } else { alert ("Please add Labor details and Proceed...");}
+ }
+
   saveMaterial() {
+
+    var jcmArr = this.jobcardForm.get('jobCardMatLines').value;
+    var len1=jcmArr.length;
+     
+    for (let i = 0; i < len1 ; i++) 
+      {
+        this.checkMatLineValidation(i);
+        if(this.matLineValidation===false) {break;}
+      }
+
+      if(this.matLineValidation) {
+
     const formValue: IjobCard = this.tranceFun(this.jobcardForm.value);
     formValue.emplId = Number(sessionStorage.getItem('emplId'));
     this.serviceService.saveMaterialSubmit(formValue).subscribe((res: any) => {
@@ -1319,11 +1437,14 @@ export class JobCardComponent implements OnInit {
         }
       }
     });
+  } else  { alert ("Please add Material details and Proceed...");}
   }
 
       updateArInvoice() {
+    
+      if(this.dispReadyInvoice===false) {alert( "Updation Not allowed...");  return;}
+
       var jcId =this.jobcardForm.get("jobCardId").value
-      
       {alert("Update Jcard....wip..."+jcId); 
 
       this.serviceService.jobcardUpdateSubmit(jcId).subscribe((res: any) => {
@@ -1342,9 +1463,11 @@ export class JobCardComponent implements OnInit {
     //  this.jobStatus='Opened';
     formValue.jobStatus = 'Opened';
     formValue.matStatus = 'No Material';
+    this.dispButtonStatus=false;
     //  formValue.matStatus= (this.jobcardForm.get('matStatus').value);
     this.serviceService.jobcardHeaderSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
+        this.preInvButton=true;
         alert(res.message);
         this.jobcardForm.patchValue({ jobCardNum: res.obj.jobCardNum, jobCardId: res.obj.jobCardId })
         if (res.obj.jobCardNum != undefined) {
@@ -1398,11 +1521,12 @@ export class JobCardComponent implements OnInit {
   }
   clearlabLineFormArray() {
     this.splitDetailsArray().clear();
-    this.lineDetailsArray.clear();
+    this.lineDetailsArray.reset();
 
   }
   clearMatLineFormArray() {
-    this.lineDetailsArray.clear();
+    // this.lineDetailsArray.clear();
+    this.lineDetailsArray.reset();
   }
 
   onOptionsDisTypeMatSelected(event) {
@@ -1449,27 +1573,36 @@ export class JobCardComponent implements OnInit {
       alert("Material status not completed")
     }
   }
+
+
   GenerateInvoice(jobCardNum) {
+    this.genBillButton=false;
     this.serviceService.GenerateInvoiceFN(jobCardNum).subscribe((res: any) => {
       if (res.code === 200) {
+        this.printInvoiceButton=true;
         alert(res.message);
         this.arInvNum = res.obj;
-
       } else {
         if (res.code === 400) {
+          this.genBillButton=true;
           alert(res.message);
         }
       }
     });
   }
+
   BillingCal() {
+
+    this.saveBillButton=false;
     const formValue: IjobCard = this.tranceFun(this.jobcardForm.value);
     this.serviceService.BillingCal(formValue).subscribe((res: any) => {
       if (res.code === 200) {
+        this.genBillButton=true;this.reopenButton=false;
         alert(res.message);
         this.jobcardForm.disable();
       } else {
         if (res.code === 400) {
+          this.saveBillButton=true;this.reopenButton=true;
           alert(res.message);
         }
       }
@@ -1486,16 +1619,17 @@ export class JobCardComponent implements OnInit {
     var jobcardNo = this.jobcardForm.get('jobCardNum').value;
     // alert(matStatus+' '+jobcardNo);
     // if(matStatus == 'Compeleted'){
+      this.dispReadyInvoice=false;  this.saveBillButton=true;
 
     this.serviceService.jobCardStatusReadyInvoice(jobcardNo, status).subscribe((res: any) => {
       if (res.code === 200) {
         // alert(res.message);
         this.jobcardForm.patchValue({ jobStatus: 'Ready for Invoice' })
-        this.displaybilling = false;
-        this.dispButtonStatus = false;
+        this.displaybilling = false;  this.dispButtonStatus = false;this.reopenButton=true;
         // this.jobcardForm.patchValue({jobCardNum:res.obj.jobCardNum})
       } else {
         if (res.code === 400) {
+          this.dispReadyInvoice=true; this.saveBillButton=false;this.reopenButton=false;
           alert(res.message);
         }
       }
@@ -1707,60 +1841,6 @@ validateLabQty(index: any){
 }
 
 
-validateMatQty(index: any){
-
-  var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
-  var qtyLineArr = this.jobcardForm.get('jobCardLabLines').value;
-  var lineRtnQty = qtyLineArr[index].cancelledQty;
-  var lineIssQty  = qtyLineArr[index].pricingQty;
-  var uPrice= qtyLineArr[index].unitSellingPrice;
-  var dPer = qtyLineArr[index].disPer;
-  var taxP=qtyLineArr[index].taxPer;
-  var  mUom = qtyLineArr[index].uom;
- 
-  if ((mUom==='NO' && Number.isInteger(lineRtnQty)==false ) || lineRtnQty<=0 || lineRtnQty>lineIssQty  ) 
-  {
-    alert ("Invalid Quantity.\n[RETURN QTY] should be as per UOM  Or \nShould not be grater than [ISSUED QTY] ")
-
-    patch.controls[index].patchValue({cancelledQty:''})
-    patch.controls[index].patchValue({baseAmt:0})
-    patch.controls[index].patchValue({taxAmt:0})
-    patch.controls[index].patchValue({totAmt:0})
-    patch.controls[index].patchValue({disAmt:0})
-    patch.controls[index].patchValue({selectFlag:''})
-
-    this.lineDetailsArray.controls[index].get('cancelledQty').disable();
-      // this.validateStatus=true;
-      // this.saveButton=false;
-      // this.validateStatus=true;
-      // this.saveButton=false;
-    } 
-    else 
-    {
-      var baseAmt =lineRtnQty *uPrice;
-      var lineDisAmt =baseAmt*dPer/100; lineDisAmt.toFixed(2);
-      var txbleAmt  =baseAmt-lineDisAmt; txbleAmt.toFixed(2);
-      var taxAmt   =(txbleAmt * taxP/100); taxAmt.toFixed(2);
-      var totAmt   =txbleAmt+taxAmt; totAmt.toFixed(2);
-
-      
-      baseAmt=Math.round((baseAmt + Number.EPSILON) * 100) / 100;
-      lineDisAmt=Math.round((lineDisAmt + Number.EPSILON) * 100) / 100;
-      txbleAmt=Math.round((txbleAmt + Number.EPSILON) * 100) / 100;
-      taxAmt=Math.round((taxAmt + Number.EPSILON) * 100) / 100;
-      totAmt=Math.round((totAmt + Number.EPSILON) * 100) / 100;
-
-    patch.controls[index].patchValue({baseAmt:baseAmt})
-    patch.controls[index].patchValue({disAmt:lineDisAmt})
-    patch.controls[index].patchValue({taxAmt:taxAmt})
-    patch.controls[index].patchValue({totAmt:totAmt})
-    
-    }
-    
-    // this.CalculateTotal()
-
-      
-}
 
 printPreInvoice(){
   var jcNum=this.jobcardForm.get('jobCardNum').value
