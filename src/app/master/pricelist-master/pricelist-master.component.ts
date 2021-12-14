@@ -1327,6 +1327,8 @@ export class PricelistMasterComponent implements OnInit {
   
     }
 
+    
+
 
 
     exportToExcel(plHeader){

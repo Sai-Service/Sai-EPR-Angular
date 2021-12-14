@@ -1,0 +1,151 @@
+<form [formGroup]="jobcardOpeningForm" (ngSubmit)="jobcardOpening(jobcardOpeningForm.value)">
+
+    <div class="center">
+        <table style="width: 100%;background-color: white;">
+            <tr>
+                <td class="PageHeader">
+                    &nbsp;&nbsp;JOBCARD&nbsp;OPENING&nbsp;
+                </td>
+            </tr>
+        </table>
+    
+        <div class="center" style="width: 100%;">
+            <div class="form-bg">
+                <div class="center" style="width: 100%;">
+                  
+                    <fieldset class="RFS">
+                    <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Find Job Card</legend>
+                    <table class="center" style="width: 100%;background-color: #FFE4B5;">
+                      
+                                <tr>
+                                <td  style="background-color: #FFE4B5;" class="LabelFontStyle">&nbsp;JC&nbsp;Number&nbsp;:&nbsp;</td>
+                                
+                                <td style="background-color: #FFE4B5;" >
+                                    <input type="text" class="form-control" formControlName="jcNumber" [(ngModel)]='jcNumber'
+                                        value={{jcNumber}} >
+                                </td>
+                               
+    
+                                <td  style="background-color: #FFE4B5;" class="LabelFontStyle">&nbsp;JC&nbsp;&nbsp;Date:&nbsp;</td>
+                                
+                                <td style="background-color: #FFE4B5;" >
+                                    <input type="date" class="form-control" formControlName="jcDate" [(ngModel)]='jcDate'
+                                        value={{jcDate}} >
+                                </td>
+    
+                                <td  style="background-color: #FFE4B5;" class="LabelFontStyle">&nbsp;Reg&nbsp;&nbsp;Number:&nbsp;</td>
+                                
+                                <td style="background-color: #FFE4B5;" >
+                                    <input type="number" class="form-control" formControlName="regNum" [(ngModel)]='regNum'
+                                        value={{regNum}} >
+                                </td>
+    
+                                <td> <button type="button" class="btn btn-info" (click)="jobcardFind()" >Find</button> </td> 
+                               
+                               
+                                </tr>
+                                <tr>
+    
+                                <td  style="background-color: #FFE4B5;" class="LabelFontStyle">&nbsp;Status&nbsp;&nbsp;:&nbsp;</td>
+                                <td>
+                                    <select formControlName="jStatus" id="jStatus" class="form-control"  [(ngModel)]="jStatus"  >
+                                    <!-- (ngModelChange)="onSelectionRevStatus($event)" -->
+                                    <option value="Opened">Opened</option>
+                                    <option value="Ready for Invoice">Ready for Invoice</option>
+                                    <option value="Invoiced">Invoiced</option>
+                                    <option value="Closed">Closed</option>
+                                    </select>
+                                </td>
+                                   
+    
+                                <td  style="background-color: #FFE4B5;" class="LabelFontStyle">&nbsp;Cust&nbsp;&nbsp;Account:&nbsp;</td>
+                                
+                                <td style="background-color: #FFE4B5;">
+                                    <input type="number" class="form-control" formControlName="custAccount" [(ngModel)]='custAccount'
+                                        value={{custAccount}}  >
+                                </td>
+    
+                                <td  style="background-color: #FFE4B5;" class="LabelFontStyle">&nbsp;Cust&nbsp;&nbsp;Name:&nbsp;</td>
+                                
+                                <td style="background-color: #FFE4B5;">
+                                    <input type="text" class="form-control" formControlName="custName" [(ngModel)]='custName'
+                                        value={{custName}} >
+                                </td> 
+                               
+    
+                                 <td> <button type="button" class="btn btn-info" (click)="newJob()" >New</button> </td> 
+                       
+                            </tr>
+                            <tr>
+                                <td  style="background-color: #FFE4B5;" class="LabelFontStyle">&nbsp;Contact&nbsp;&nbsp;No:&nbsp;</td>
+                                
+                                <td style="background-color: #FFE4B5;">
+                                    <input type="number" class="form-control" formControlName="contactNo" [(ngModel)]='contactNo'
+                                        value={{contactNo}} >
+                                </td> 
+
+                                <td></td><td></td><td></td><td></td>
+
+                                <td> <button type="button" class="btn btn-info" (click)="clearSearch()" >Clear</button> </td> 
+
+                            </tr>
+                    </table>
+    
+                    </fieldset>
+    
+                    
+                    <fieldset class="RFS">
+                    <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Jobcard List</legend>
+                  
+                    <div class="container1">
+                            <div class="grid_scroll">
+                            <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+                                <tbody>
+                                        <tr class="GridHeader">
+                                        <th style="width:5rem" scope="col">Srl&nbsp;No&nbsp;</th> 
+                                        <th style="width:10rem" scope="col">Job&nbsp;No&nbsp;</th>
+                                        <th style="width:10rem" scope="col">Job&nbsp;Date</th>
+                                        <th style="width:10rem" scope="col">Job&nbsp;Type</th>
+                                        <th style="width:10rem" scope="col">Status&nbsp;</th>
+                                        <th style="width:10rem" scope="col">Service&nbsp;Advisor</th>
+                                        <th style="width:10rem" scope="col">Customer&nbsp;No&nbsp;</th>
+                                        <th style="width:7rem" scope="col"> Customer&nbsp;Name</th>
+                                        <th style="width:7rem" scope="col"> Conatct&nbsp;No</th>
+                                        <th style="width:6rem" scope="col">Select</th>
+                                    </tr>
+                                </tbody>
+                                <tr *ngFor="let com of lstJobcardList let i=index" class="ItemStyle" style="text-decoration:none;font-size: small;">
+                                        <td style="text-align: center;">{{i+1}}</td>
+                                        <td style="text-align: center;">{{com.jobCardNum}}</td>
+                                        <td style="text-align: center;">{{com.jobCardDate}}</td>
+                                        <td style="text-align: center;">{{com.jcType}}</td>
+                                        <td style="text-align: center;">{{com.jobStatus}}</td>
+                                        <td style="text-align: center;">{{com.srvAdvisorName}}</td>
+                                        <td style="text-align: center;">{{com.accountNo}}</td> 
+                                        <td style="text-align: center;">{{com.custName }}</td>
+                                        <td style="text-align: center;">{{com.contact1}}</td>
+                                       
+                                        <!-- <td>
+                                            <button  type="button"  class="btn btn-primary" 
+                                            data-toggle="modal" data-target="#bankStatement1"  (click)="Select(com.statementHeaderId)" style="width: 5rem;color: black;text-align: center;">
+                                            &nbsp;Select</button>
+                                        </td>  -->
+                                </tr> 
+                            </table>
+                        </div>
+                        </div>
+                    
+                    </fieldset>
+                
+    
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ------------------------------------------------------------------ -->
+    </form>
+    
+    
+    
+    
