@@ -920,7 +920,15 @@ export class CounterSaleComponent implements OnInit {
               this.displayAfterGatePass = false;
               this.isVisible = false;
               this.CounterSaleOrderBookingForm.disable();
-            } else {
+            } 
+           else if (data.obj.orderStatus === 'INVOICED' && data.obj.gatePassYN === 'N'){
+            //  alert(data.obj.orderStatus +'---'+data.obj.gatePassYN )
+            this.displayAfterGatePass = true;
+            this.isVisible = true;
+            this.displaypickTicketUpdate=true;
+            this.displaycounterSaleAllButtons=false;
+           }
+            else {
               this.displayAfterGatePass = true;
               this.isVisible = true;
             }
@@ -1181,6 +1189,7 @@ export class CounterSaleComponent implements OnInit {
 
   searchByItemSegmentDiv(itemDesc: string, lnNo: number) {
     // alert(itemDesc)
+    var itemDesc = itemDesc.toUpperCase();
     if (itemDesc === '' || itemDesc === undefined || itemDesc === null) {
       alert('Please Enter Proper Item Code.!')
       this.setFocus('itemSeg' + lnNo);
