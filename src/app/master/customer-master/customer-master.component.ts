@@ -266,7 +266,7 @@ export class CustomerMasterComponent implements OnInit {
       emailId: ['', [Validators.required, Validators.email, Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')]],
       emailId1: ['', [Validators.email, Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')]],
       // contactPerson: ['', [Validators.required,Validators.pattern('[a-zA-Z ]*')]],
-      contactPerson: ['', [Validators.pattern('^[a-z A-Z ]*')]],
+      contactPerson: ['', [Validators.pattern('[a-zA-Z ]*'), Validators.minLength(1), Validators.maxLength(50)]],
       contactNo: [''],
       // contactNo: ['', [Validators.pattern('[0-9]*'), Validators.minLength(10),Validators.maxLength(10)]],
       birthDate: [''],
@@ -1318,5 +1318,12 @@ export class CustomerMasterComponent implements OnInit {
     }
   }
 
+  onSelectPan(event){
+    alert(event);
+    if(event==='')
+    {
+
+    }
+  }
 }
 

@@ -627,7 +627,7 @@
                                         [ngClass]="{ 'is-invalid': submitted && f.contactPerson.errors }"
                                         placeholder="Enter contact Person" >
                                     <div *ngIf="submitted && f.contactPerson.errors" class="invalid-feedback">
-                                        <!-- <div *ngIf="f.contactPerson.errors.required">contactPerson must</div> -->
+                                        <div *ngIf="f.contactPerson.errors?.pattern">Please enter correct data</div>
                                         <!-- <div *ngIf="f.contactPerson.errors.maxLength">contactPerson must -->
                                         <!-- </div> -->
                                     </div>

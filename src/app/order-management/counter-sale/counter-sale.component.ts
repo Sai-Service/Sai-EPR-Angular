@@ -1114,14 +1114,13 @@ export class CounterSaleComponent implements OnInit {
   // }
 
   close() {
-    this.router.navigate(['admin']);
     this.deleteReserve();
+    this.router.navigate(['admin']);
   }
 
   refresh() {
     this.deleteReserve();
     window.location.reload();
-
   }
 
 
@@ -1311,7 +1310,7 @@ export class CounterSaleComponent implements OnInit {
             this.CounterSaleOrderBookingForm.get('custAccountNo').disable();
             this.isDisabled3=true;
             this.customerNameSearch.splice(0,this.customerNameSearch.length);
-            console.log(this.customerNameSearch);  
+            console.log(this.customerNameSearch);
           }
           else {
             if (data.code === 400) {
@@ -2201,6 +2200,7 @@ export class CounterSaleComponent implements OnInit {
         alert('First Select Line Details..!');
         this.closeResetButton = true;
         this.dataDisplay = ''
+        this.isDisabled = false;
         return;
       }
       if (orderLines[j].unitSellingPrice === '') {
@@ -2210,6 +2210,7 @@ export class CounterSaleComponent implements OnInit {
         alert('Line No'+' ' + j +' '+ 'Quantity is Zero please confirm');
         this.closeResetButton = true;
         this.dataDisplay = ''
+        this.isDisabled = false;
         return;
 
       }
@@ -2259,10 +2260,14 @@ export class CounterSaleComponent implements OnInit {
   }
 
   addRow(i) {
+    var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
+
+    if (this.op == 'Search') {
+      i = trxLnArr1.length;
+    }
     if (i > -1) {
-      var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
-      console.log(trxLnArr1);
-       var len1 = i;
+      var len1 = i;
+      if(trxLnArr1[len1] != undefined){
       console.log(trxLnArr1[len1].pricingQty);
       var itemqty = trxLnArr1[len1].pricingQty;
       var item = trxLnArr1[len1].segment;
@@ -2280,43 +2285,48 @@ export class CounterSaleComponent implements OnInit {
         // this.deleteReserveLinewise(i,itemid);COMMENT BY VINITA
         this.reservePos(i);
       }
+      this.displayRemoveRow.push(true);
+      this.displayCounterSaleLine.push(true);
+      this.displayLineflowStatusCode.push(true);
     }
+  }
     var disPer = this.CounterSaleOrderBookingForm.get('disPer').value;
-    this.displayRemoveRow.push(true);
-    this.displayCounterSaleLine.push(true);
-    this.displayLineflowStatusCode.push(true);
+
+
     this.orderlineDetailsArray().push(this.orderlineDetailsGroup());
     var len = this.orderlineDetailsArray().length;
     var patch = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     // var currentLn = patch.controls[i].get('lineNumber').value;
     // alert(currentLn);
-    var refId=uuidv4();
-    (patch.controls[len-1]).patchValue(
+    var refId = uuidv4();
+    (patch.controls[len - 1]).patchValue(
       {
         lineNumber: len,
         flowStatusCode: 'BOOKED',
         disPer: disPer,
         invType: 'SS_SPARES',
-        uuidRef:refId
+        uuidRef: refId
       }
     );
     if (disPer === null) {
-      (patch.controls[len-1]).patchValue(
+      (patch.controls[len - 1]).patchValue(
         {
           disPer: 0,
         }
       );
     }
     this.displaysegmentInvType.push(true);
-    this.displayRemoveRow.push(true);
+    this.displayRemoveRow[len - 1] = true;
     this.displayCounterSaleLine.push(true);
     this.displayLineflowStatusCode.push(true);
     this.taxCategoryList = this.allTaxCategoryList;
     this.itemSeg = '';
     var ln = len - 1;
+
     this.setFocus('itemSeg' + ln);
 
   }
+
 
 
   enterKeyLock(i){
