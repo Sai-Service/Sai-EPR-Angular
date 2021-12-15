@@ -1386,6 +1386,7 @@ export class CounterSaleComponent implements OnInit {
       this.birthDate = this.selCustomer.birthDate;
       this.weddingDate = this.selCustomer.weddingDate;
       this.taxCategoryName = this.selCustomer.taxCategoryName;
+      this.CounterSaleOrderBookingForm.patchValue({creditAmt: selSite.creditAmt});
       if (selSite.disPer != null) {
         // alert(selSite.disPer)
         this.CounterSaleOrderBookingForm.patchValue({ discType: 'Header Level Discount' })
@@ -1408,7 +1409,11 @@ export class CounterSaleComponent implements OnInit {
           data => {
             if (data.code === 200) {
               // alert(data.obj);
-              this.CounterSaleOrderBookingForm.patchValue({creditAmt:data.obj})
+
+              var credAmt=this.CounterSaleOrderBookingForm.get('creditAmt').value;
+              var newCrAmt=Number(credAmt)-Number(data.obj);
+              this.CounterSaleOrderBookingForm.patchValue({creditAmt:newCrAmt});
+
             }
           })
     }
