@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild, OnDestroy } from '@angular/core';
 // import * as $ from 'jquery';
 import { Router } from '@angular/router';
 import { formatDate } from '@angular/common';
@@ -30,7 +30,7 @@ declare var $: any;
   styleUrls: ['./admin.component.css']
 })
 // export class AdminComponent  {
-export class AdminComponent implements OnInit {
+export class AdminComponent implements OnInit, OnDestroy {
   adminForm1: FormGroup;
 
   // @ViewChild('partSearch') partSearch: any;
@@ -116,11 +116,23 @@ export class AdminComponent implements OnInit {
   keyEvent(event: KeyboardEvent) {
     console.log(event);
 
-
     if (event.keyCode === KEY_CODE.F9_KEY) {
       this.f9Key();
     }
+  }
 
+  @HostListener('window:beforeunload', ['$event'])
+  unloadHandler(event: Event) {
+   // this.ngOnDestroy();
+    console.log("closing the window!")
+    return true;
+  }
+  
+  @HostListener('window:unload', ['$event'])
+  unloadHandler2(event: Event) {
+   // this.ngOnDestroy();
+    console.log("closing the window!")
+    return true;
   }
 
 
@@ -174,11 +186,11 @@ export class AdminComponent implements OnInit {
 
     if (Number(sessionStorage.getItem('divisionId')) === 2) {
       this.isVisible1 = false;
-      this.isVisible2 = false;  
+      this.isVisible2 = false;
     }
     else if (Number(sessionStorage.getItem('divisionId')) === 1) {
       this.isVisible1 = true;
-      this.isVisible2 = false;    
+      this.isVisible2 = false;
     }
 
     if (sessionStorage.getItem('ticketNo') === undefined || sessionStorage.getItem('ticketNo') === null || sessionStorage.getItem('ticketNo') === '') {
@@ -191,16 +203,16 @@ export class AdminComponent implements OnInit {
       this.isVisible2 = true;
     }
 
-    if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId')) === 2){
-    this.isVisible1 = true;
-    this.isVisible2 = false; 
-  }
+    if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId')) === 2) {
+      this.isVisible1 = true;
+      this.isVisible2 = false;
+    }
 
-  if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId')) === 3){
-  this.isVisible1 = true;
-  this.isVisible2 = false; 
-}
-  
+    if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId')) === 3) {
+      this.isVisible1 = true;
+      this.isVisible2 = false;
+    }
+
   }
 
 
@@ -422,31 +434,43 @@ export class AdminComponent implements OnInit {
       alert("Please Enter full item number!!")
       return;
     }
-}
-
-userCheck(roleId: number): boolean {
-  //alert(sessionStorage.getItem('roleId') +'--'+roleId );
-  if(sessionStorage.getItem('roleId') === 'undefined') { 
-    // this.isVisible1 = false;
-    return true;
-   
-  }else{
-    //alert("else");
-  if (Number(sessionStorage.getItem('roleId')) === roleId ){
-  //  alert("role -true");
-    return false;
-  }
-  
-
- if (Number(sessionStorage.getItem('roleId')) != roleId) {
-  //  alert("role -false");
-    return true;
-  }
-}
-}
-
   }
 
- 
+  userCheck(roleId: number): boolean {
+    //alert(sessionStorage.getItem('roleId') +'--'+roleId );
+    if (sessionStorage.getItem('roleId') === 'undefined') {
+      // this.isVisible1 = false;
+      return true;
+
+    } else {
+      //alert("else");
+      if (Number(sessionStorage.getItem('roleId')) === roleId) {
+        //  alert("role -true");
+        return false;
+      }
+
+
+      if (Number(sessionStorage.getItem('roleId')) != roleId) {
+        //  alert("role -false");
+        return true;
+      }
+    }
+  }
+
+  ConfirmClose() {
+    alert("Confirm Close ?")
+  }
+
+  HandleOnClose() {
+    alert("HandleOn Close ?")
+  }
+
+  ngOnDestroy() {
+    alert("Confirm Close ?")
+  }
+
+}
+
+
 
 
