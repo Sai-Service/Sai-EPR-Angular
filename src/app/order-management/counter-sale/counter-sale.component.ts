@@ -118,6 +118,8 @@ export class CounterSaleComponent implements OnInit {
   CounterSaleOrderBookingForm: FormGroup;
   lnflowStatusCode: 'BOOKED';
   refCustNo: string;
+  custPoNumber:string;
+  custPoDate:Date;
   salesRepId:string;
   creditAmt:number;
   lineNumber: number;
@@ -227,7 +229,6 @@ export class CounterSaleComponent implements OnInit {
   orderTypeId: string;
   transactionTypeName: string;
   createOrderType: string;
-  custPoNumber: number;
   // orderedDate: Date;
   priceListId: number;
   priceListName: string;
@@ -391,6 +392,7 @@ export class CounterSaleComponent implements OnInit {
       disPer: [''],
       creditAmt:[''],
       refCustNo: [''],
+      custPoDate:[''],
       discAmt: [''],
       tcsYN: [''],
       tcsPer: [''],
@@ -839,6 +841,8 @@ export class CounterSaleComponent implements OnInit {
               this.CounterSaleOrderBookingForm.get('custName').disable();
               this.CounterSaleOrderBookingForm.get('mobile1').disable();
               this.CounterSaleOrderBookingForm.get('refCustNo').disable();
+              this.CounterSaleOrderBookingForm.get('custPoDate').disable();
+              this.CounterSaleOrderBookingForm.get('custPoNumber').disable();
               this.CounterSaleOrderBookingForm.get('custAccountNo').disable();
               this.displayorderHedaerDetails = false;
               this.displaycounterSaleOrderSave = false;
@@ -898,6 +902,8 @@ export class CounterSaleComponent implements OnInit {
               this.CounterSaleOrderBookingForm.get('custName').disable();
               this.CounterSaleOrderBookingForm.get('mobile1').disable();
               this.CounterSaleOrderBookingForm.get('refCustNo').disable();
+              this.CounterSaleOrderBookingForm.get('custPoDate').disable();
+              this.CounterSaleOrderBookingForm.get('custPoNumber').disable();
               this.CounterSaleOrderBookingForm.get('custAccountNo').disable();
               this.CounterSaleOrderBookingForm.get('custAddress').disable();
               if (this.createOrderType === 'Sales Order') {
@@ -1011,6 +1017,8 @@ export class CounterSaleComponent implements OnInit {
 
     jsonData.orderedDate = this.pipe.transform(this.now, 'yyyy-MM-dd');
     jsonData.refCustNo = this.CounterSaleOrderBookingForm.get('refCustNo').value;
+    jsonData.custPoNumber=this.CounterSaleOrderBookingForm.get('custPoNumber').value;
+    jsonData.custPoDate=this.CounterSaleOrderBookingForm.get('custPoDate').value;
     jsonData.ouId = Number(sessionStorage.getItem('ouId'));
     let salesObj = Object.assign(new SalesOrderobj(), jsonData);
     salesObj.setoeOrderLinesAllList(orderLines);
@@ -1418,7 +1426,6 @@ export class CounterSaleComponent implements OnInit {
           data => {
             if (data.code === 200) {
               // alert(data.obj);
-
               var credAmt=this.CounterSaleOrderBookingForm.get('creditAmt').value;
               var newCrAmt=Number(credAmt)-Number(data.obj);
               this.CounterSaleOrderBookingForm.patchValue({creditAmt:newCrAmt});
@@ -1732,6 +1739,8 @@ export class CounterSaleComponent implements OnInit {
       this.CounterSaleOrderBookingForm.get('custName').disable();
       this.CounterSaleOrderBookingForm.get('mobile1').disable();
       this.CounterSaleOrderBookingForm.get('refCustNo').disable();
+      this.CounterSaleOrderBookingForm.get('custPoDate').disable();
+      this.CounterSaleOrderBookingForm.get('custPoNumber').disable();
       if (this.CounterSaleOrderBookingForm.get('createOrderType').value === 'Sales Order' && this.CounterSaleOrderBookingForm.get('othRefNo').value === undefined) {
         alert('Please Enter Reference Number First !');
         this.CounterSaleOrderBookingForm.get('segment').disable();
@@ -2237,6 +2246,8 @@ export class CounterSaleComponent implements OnInit {
 
     jsonData.orderedDate = this.pipe.transform(this.now, 'yyyy-MM-dd');
     jsonData.refCustNo = this.CounterSaleOrderBookingForm.get('refCustNo').value;
+    jsonData.custPoNumber=this.CounterSaleOrderBookingForm.get('custPoNumber').value;
+    jsonData.custPoDate=this.CounterSaleOrderBookingForm.get('custPoDate').value;
     jsonData.ouId = Number(sessionStorage.getItem('ouId'));
     let salesObj = Object.assign(new SalesOrderobj(), jsonData);
     salesObj.setoeOrderLinesAllList(orderLines);

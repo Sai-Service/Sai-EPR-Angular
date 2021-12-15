@@ -167,20 +167,20 @@
                                 Customer&nbsp;No&nbsp;:&nbsp;
                             </td>
                             <td>
-                                <input type="number" style="width: 120px;" class="form-control" formControlName="custAccountNo"
-                                    value={{custAccountNo}} [(ngModel)]='custAccountNo'
+                                <input type="number" style="width: 120px;" class="form-control"
+                                    formControlName="custAccountNo" value={{custAccountNo}} [(ngModel)]='custAccountNo'
                                     [ngClass]="{ 'is-invalid': submitted && f.custAccountNo.errors }"
                                     (keydown.tab)="accountNoSearch(custAccountNo)" #myinput>
                                 <div *ngIf="submitted && f.custAccountNo.errors" class="invalid-feedback">
                                     <div *ngIf="f.custAccountNo.errors.required">Code cannot be blank</div>
-                                </div> 
-                                <input type="number" hidden formControlName="creditAmt"  [(ngModel)]='creditAmt' value={{creditAmt}}
-                                class="form-control"style="width: 120px;">
+                                </div>
+                                <input type="number" hidden formControlName="creditAmt" [(ngModel)]='creditAmt'
+                                    value={{creditAmt}} class="form-control" style="width: 120px;">
                             </td>
                             <td style="width: 15%" class="LabelFontStyle">
                                 Customer&nbsp;Site&nbsp;:&nbsp;
                             </td>
-            
+
                             <div *ngIf="displayCustomerSite; then thenCustomerSite; else elseCustomerSite"></div>
                             <ng-template #thenCustomerSite>
                                 <td>
@@ -195,19 +195,22 @@
                                     <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
                                         <div *ngIf="f.name.errors.required">Site Code cannot be blank</div>
                                     </div>
-                                    <input hidden disabled type="number" class="form-control" formControlName="customerSiteId"
-                                        [(ngModel)]='customerSiteId' value={{customerSiteId}} style="width: 160px;">
-                                        <input hidden disabled type="text" class="form-control" formControlName="taxCategoryName"
-                                        [(ngModel)]='taxCategoryName' value={{taxCategoryName}} style="width: 160px;">
-            
+                                    <input hidden disabled type="number" class="form-control"
+                                        formControlName="customerSiteId" [(ngModel)]='customerSiteId'
+                                        value={{customerSiteId}} style="width: 160px;">
+                                    <input hidden disabled type="text" class="form-control"
+                                        formControlName="taxCategoryName" [(ngModel)]='taxCategoryName'
+                                        value={{taxCategoryName}} style="width: 160px;">
+
                                 </td>
                             </ng-template>
                             <ng-template #elseCustomerSite>
                                 <td>
                                     <input disabled type="text" class="form-control" formControlName="name"
                                         value={{name}} style="width: 160px;">
-                                        <input hidden disabled type="text" class="form-control" formControlName="taxCategoryName"
-                                        [(ngModel)]='taxCategoryName' value={{taxCategoryName}} style="width: 160px;">
+                                    <input hidden disabled type="text" class="form-control"
+                                        formControlName="taxCategoryName" [(ngModel)]='taxCategoryName'
+                                        value={{taxCategoryName}} style="width: 160px;">
                                 </td>
                             </ng-template>
                             <!-- </td> -->
@@ -218,17 +221,19 @@
                                 <table>
                                     <tr>
                                         <td>
-                                            <input type="text" formControlName="custName" [(ngModel)]='custName' value={{custName}}
-                                                class="form-control" style="width: 170px;" data-bs-toggle="modal"
-                                                data-bs-target="#customerNameSearchModel">
+                                            <input type="text" formControlName="custName" [(ngModel)]='custName'
+                                                value={{custName}} class="form-control" style="width: 170px;"
+                                                data-bs-toggle="modal" data-bs-target="#customerNameSearchModel">
                                         </td>
                                         <td>
-                                            <button type="button" [disabled]="isDisabled3"  class="btn btn-primary" (click)="custNameSearch(custName)"
-                                                data-toggle="modal" data-target="#customerNameSearchModel"
+                                            <button type="button" [disabled]="isDisabled3" class="btn btn-primary"
+                                                (click)="custNameSearch(custName)" data-toggle="modal"
+                                                data-target="#customerNameSearchModel"
                                                 style="width: 2rem;color: white;">
                                                 <i class="fa fa-search"></i> </button>
-                                            <div class="modal fade" id="customerNameSearchModel" tabindex="-1" role="dialog"
-                                                aria-labelledby="customerNameSearchModel" aria-hidden="true">
+                                            <div class="modal fade" id="customerNameSearchModel" tabindex="-1"
+                                                role="dialog" aria-labelledby="customerNameSearchModel"
+                                                aria-hidden="true">
                                                 <div class="modal-dialog modal-xl" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
@@ -242,8 +247,8 @@
                                                         <div class="modal-body">
                                                             <table>
                                                                 <tr>
-                                                                    <table class="GridFont" id="excel-table" cellspacing="0"
-                                                                        cellpadding="4">
+                                                                    <table class="GridFont" id="excel-table"
+                                                                        cellspacing="0" cellpadding="4">
                                                                         <tbody>
                                                                             <tr class="GridHeader">
                                                                                 <th scope="col">Customer No</th>
@@ -255,14 +260,25 @@
                                                                                 <th scope="col">Select</th>
                                                                             </tr>
                                                                             <tr *ngFor="let com of customerNameSearch"
-                                                                                class="ItemStyle" style="text-decoration:none;">
-                                                                                <td style="width: 195px;">{{com.accountNo}}</td>
-                                                                                <td style="width: 195px;">{{com.custName}}</td>
-                                                                                <td style="width: 195px;">{{com.billToAddress}}</td>
-                                                                                <td style="width: 195px;">{{com.gstNo}}</td>
-                                                                                <td style="width: 195px;">{{com.panNo}}</td>
-                                                                                <td style="width: 195px;">{{com.mobile1}}</td>
-                                                                                <td><button class="btn-primary" style="width: fit-content;"  (click)="accountNoSearch(com.accountNo)" data-dismiss="modal">Select</button></td>
+                                                                                class="ItemStyle"
+                                                                                style="text-decoration:none;">
+                                                                                <td style="width: 195px;">
+                                                                                    {{com.accountNo}}</td>
+                                                                                <td style="width: 195px;">
+                                                                                    {{com.custName}}</td>
+                                                                                <td style="width: 195px;">
+                                                                                    {{com.billToAddress}}</td>
+                                                                                <td style="width: 195px;">{{com.gstNo}}
+                                                                                </td>
+                                                                                <td style="width: 195px;">{{com.panNo}}
+                                                                                </td>
+                                                                                <td style="width: 195px;">
+                                                                                    {{com.mobile1}}</td>
+                                                                                <td><button class="btn-primary"
+                                                                                        style="width: fit-content;"
+                                                                                        (click)="accountNoSearch(com.accountNo)"
+                                                                                        data-dismiss="modal">Select</button>
+                                                                                </td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -276,7 +292,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-            
+
                                         </td>
                                     </tr>
                                 </table>
@@ -290,23 +306,27 @@
                                     style="width: 120px;" data-bs-toggle="modal" data-bs-target="#contactNoSearchModel">
                             </td>
                             <td>
-                                <button type="button" class="btn btn-primary" (click)="searchByContact(mobile1)" data-toggle="modal"
-                                    data-target="#contactNoSearchModel" style="width: 2rem;color: white;">
+                                <button type="button" class="btn btn-primary" (click)="searchByContact(mobile1)"
+                                    data-toggle="modal" data-target="#contactNoSearchModel"
+                                    style="width: 2rem;color: white;">
                                     <i class="fa fa-search"></i> </button>
                                 <div class="modal fade" id="contactNoSearchModel" tabindex="-1" role="dialog"
                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-xl" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Additional&nbsp;Details</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <h5 class="modal-title" id="exampleModalLabel">Additional&nbsp;Details
+                                                </h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
                                             <div class="modal-body">
                                                 <table>
                                                     <tr>
-                                                        <table class="GridFont" id="excel-table" cellspacing="0" cellpadding="4">
+                                                        <table class="GridFont" id="excel-table" cellspacing="0"
+                                                            cellpadding="4">
                                                             <tbody>
                                                                 <tr class="GridHeader">
                                                                     <th scope="col">Customer No</th>
@@ -324,8 +344,8 @@
                                                                     <th scope="col">Email ID2</th>
                                                                     <th scope="col">Select</th>
                                                                 </tr>
-                                                                <tr *ngFor="let com of accountNoSearchdata" class="ItemStyle"
-                                                                    style="text-decoration:none;">
+                                                                <tr *ngFor="let com of accountNoSearchdata"
+                                                                    class="ItemStyle" style="text-decoration:none;">
                                                                     <td style="width: 195px;">{{com.custAccountNo}}</td>
                                                                     <td style="width: 195px;">{{com.custName}}</td>
                                                                     <td style="width: 195px;">{{com.address1}}</td>
@@ -349,12 +369,13 @@
                                                 </table>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-primary"
+                                                    data-dismiss="modal">Close</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-            
+
                             </td>
                         </tr>
                         <tr>
@@ -374,22 +395,24 @@
                                     Customer&nbsp;Name&nbsp;:&nbsp;
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control" formControlName="walkCustName" value={{walkCustName}}
-                                        style="width:100%;" (keydown.tab)="panCardWalding($event)">
+                                    <input type="text" class="form-control" formControlName="walkCustName"
+                                        value={{walkCustName}} style="width:100%;"
+                                        (keydown.tab)="panCardWalding($event)">
                                 </td>
                                 <td style="width: 15%" class="LabelFontStyle">
                                     Customer&nbsp;Pan&nbsp;:&nbsp;
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control" formControlName="walkCustPan" value={{walkCustPan}}
-                                        style="width:100%;">
+                                    <input type="text" class="form-control" formControlName="walkCustPan"
+                                        value={{walkCustPan}} style="width:100%;">
                                 </td>
                                 <td style="width: 15%" class="LabelFontStyle">
                                     Customer&nbsp;Address&nbsp;:&nbsp;
                                 </td>
                                 <td colspan="3">
                                     <input type="text" class="form-control" formControlName="walkCustaddres"
-                                        value={{walkCustaddres}} style="width:100%;" (keyup)="walkcustomermerge($event)">
+                                        value={{walkCustaddres}} style="width:100%;"
+                                        (keyup)="walkcustomermerge($event)">
                                 </td>
                             </tr>
                             <tr hidden>
@@ -607,7 +630,7 @@
                                         style="width: 160px;">
                                         <option>--Select--</option>
                                         <option *ngFor="let issueCodeType of issueCodeTypeList"
-                                            [value]="issueCodeType.codeDesc" >
+                                            [value]="issueCodeType.codeDesc">
                                             {{issueCodeType.code}}--{{issueCodeType.codeDesc}}
                                         </option>
                                     </select>
@@ -868,7 +891,7 @@
                     </tr>
                 </table>
                 <!-- </fieldset> -->
-                <fieldset class="RFS">
+                <!-- <fieldset class="RFS">
                     <div
                         *ngIf="displaycounterSaleAllButtons; then thencounterSaleAllButtons; else elsecounterSaleAllButtons">
                     </div>
@@ -1099,7 +1122,27 @@
                             </tr>
                         </table>
                     </ng-template>
+                </fieldset> -->
+
+                <fieldset class="RFS">
+                    <table class="center">
+                        <tr>
+                            <td>
+                                <button type="submit" [disabled]="isDisabled5" class="btn btn-primary" id="register" style="width: fit-content;"
+                                    (click)="counterSaleOrderSave()">Create
+                                    Order</button>
+                            </td>
+                            <td>
+                                <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-primary" id="register"
+                                    (click)="refresh()">Clear</button>
+                            </td>
+                        </tr>
+                    </table>
                 </fieldset>
+
             </div>
             <div class="tab-pane fade" id="lineDetails-md" role="tabpanel" aria-labelledby="lineDetails-tab-md">
                 <fieldset class="RFS">
@@ -1126,23 +1169,24 @@
                             </td>
                         </tr>
                         <tr>
-                            
-                                <div *ngIf="closeResetButton; then hList1; else hList2"></div>
-                                <ng-template #hList2>
-                                    <div class="d-flex justify-content-center">
-                                        <div class="spinner-border text-primary" role="status">
-                                            <span class="sr-only" id="loading"></span>
 
-                                        </div>
+                            <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                            <ng-template #hList2>
+                                <div class="d-flex justify-content-center">
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="sr-only" id="loading"></span>
                                     </div>
-                                </ng-template>
-                                <ng-template #hList1> </ng-template>
-                           
-                            <td class="LabelFontStyle" style="color: blue;width: fit-content; text-align: center;" colspan="6">
+                                </div>
+                            </ng-template>
+                            <ng-template #hList1> </ng-template>
+
+                            <td class="LabelFontStyle" style="color: blue;width: fit-content; text-align: center;"
+                                colspan="6">
                                 &nbsp;{{dataDisplay }}&nbsp; </td>
                         </tr>
-                        <tr *ngFor="let com of errList" style="background-color:#E3EAEB; color: red; text-align: center;">
-                            <td colspan="6" >{{com}}</td>
+                        <tr *ngFor="let com of errList"
+                            style="background-color:#E3EAEB; color: red; text-align: center;">
+                            <td colspan="6">{{com}}</td>
                         </tr>
                     </table>
                 </fieldset>
@@ -1341,8 +1385,7 @@
                                         </td> -->
                                                             <!-- (keydown.tab)="qtyvalidation(i,uom,pricingQty)" (keypress)="validateNumber($event)"-->
                                                             <td>
-                                                                <input  type="number"
-                                                                    formControlName="unitSellingPrice"
+                                                                <input type="number" formControlName="unitSellingPrice"
                                                                     class="form-control"
                                                                     style="height: 20px;width: 90px;"
                                                                     (change)="onKey(i)">
@@ -1778,6 +1821,11 @@
                         </div>
                     </div>
                 </fieldset>
+                <!-- <tr>
+                    <td class="LabelFontStyle" style="color: blue;width: fit-content; text-align: center;"
+                    colspan="6">
+                    &nbsp;{{errorList}}&nbsp; </td>
+                </tr> -->
             </div>
         </div>
     </section>
