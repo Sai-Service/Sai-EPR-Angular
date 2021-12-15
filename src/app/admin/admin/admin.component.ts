@@ -270,12 +270,13 @@ export class AdminComponent implements OnInit {
 
   F9Search(itemDesc) {
     var sType = this.adminForm1.get('searchBy').value
-    if (sType == 'ITEM NUMBER') { this.searchByItemSegmentDiv(itemDesc) }
+    // if (sType == 'ITEM NUMBER') { this.searchByItemSegmentDiv(itemDesc) }
+    if (sType == 'ITEM NUMBER') { this.F9SearchItemCode('itm') }
     if (sType == 'ITEM DESCRIPTION') { this.F9SearchItemDesc(itemDesc) }
   }
 
 
-  F9SearchItemCode() {
+  F9SearchItemCode(abc) {
 
     // const formValue: IAdmin = this.adminForm1.value;
     // alert ("WIP...." + this.adminForm1.get('searchItemName').value);
@@ -288,19 +289,25 @@ export class AdminComponent implements OnInit {
     if (segment1 == undefined || segment1 == null) {
       alert("Please select Item Code ...."); return;
     }
-    let select1 = this.ItemIdList.find(d => d.SEGMENT === segment1);
 
-    if (select1 == undefined) {
-      alert("Please select valid Item Code ...."); return;
-    }
+    // let select1 = this.ItemIdList.find(d => d.SEGMENT === segment1);
 
-    this.service.searchByItemf9(select1.itemId, this.locId, this.ouId, this.divisionId).subscribe(
+    // if (select1 == undefined) {
+    //   alert("Please select valid Item Code ...."); return;
+    // }
+
+  
+    this.service.getItemDetailsByCode(segment1)
+    .subscribe(
+    data1 => {
+    if (data1 !=null)
+    {
+    
+    this.service.searchByItemf9(data1.itemId, this.locId, this.ouId, this.divisionId).subscribe(
       data => {
         this.lstcomments = data;
         console.log(data);
-        // alert("Length :"+this.lstcomments.length);
-        // if(this.lstcomments !=null){
-        if (this.lstcomments.length > 0) {
+          if (this.lstcomments.length > 0) {
           this.segment = this.lstcomments[0].SEGMENT;
           this.desc = this.lstcomments[0].DESCRIPTION;
           this.uom = this.lstcomments[0].UOM;
@@ -312,6 +319,9 @@ export class AdminComponent implements OnInit {
           this.adminForm1.patchValue(data);
         } else { alert("Stock Details not availabe for item - " + segment1); }
       })
+    } else {alert ("Item Code not found/Invalid Item Code")}
+  });
+
 
   }
 
@@ -363,7 +373,7 @@ export class AdminComponent implements OnInit {
     this.lstcomments1 = null;
     this.searchByItemDesc = null;
 
-    if (evnt == 'ITEM NUMBER') { this.searchByItem = false; this.searchByDesc = true; }
+    if (evnt == 'ITEM NUMBER') { this.searchByItem = true; this.searchByDesc = false; }
     if (evnt == 'ITEM DESCRIPTION') { this.searchByDesc = true; this.searchByItem = false; }
   }
 
