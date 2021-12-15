@@ -178,16 +178,21 @@ export class JobcardOpeningComponent implements OnInit {
           this.serviceService.getJonCardNoSearch(jcNum)
             .subscribe(
               data => {
-                this.lstJobcardList = data;
+                this.lstJobcardList = data.obj;
                 console.log(this.lstJobcardList); 
-                alert(data.driverName);
-                alert( "this.lstJobcardList.driverName :"+ this.lstJobcardList.driverName);
+                // alert(data.driverName);
+                // alert( "this.lstJobcardList.driverName :"+ this.lstJobcardList.driverName);
                 // if (this.lstJobcardList !=null) {    
                         
                 // }  else { alert (jcNum + " Job Card Not Found...")}
               });
             
             }
+
+            goToJobCardScreen(){
+              this.router.navigate(['/admin/service/JobCard']);
+            }
+            
 
         
             

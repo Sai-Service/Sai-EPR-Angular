@@ -30,7 +30,7 @@
                                 
                                 <td style="background-color: #FFE4B5;" >
                                     <input type="date" class="form-control" formControlName="jcDate" [(ngModel)]='jcDate'
-                                        value={{jcDate}} >
+                                        value={{jcDate}} max="{{minDate | date:'yyyy-MM-dd'}}">
                                 </td>
     
                                 <td  style="background-color: #FFE4B5;" class="LabelFontStyle">&nbsp;Reg&nbsp;&nbsp;Number:&nbsp;</td>
@@ -39,13 +39,10 @@
                                     <input type="number" class="form-control" formControlName="regNum" [(ngModel)]='regNum'
                                         value={{regNum}} >
                                 </td>
-    
-                                <td> <button type="button" class="btn btn-info" (click)="jobcardFind()" >Find</button> </td> 
-                               
-                               
-                                </tr>
+                                <!-- <td> <button type="button" class="btn btn-info" (click)="jobcardFind()" >Find</button> </td>  -->
+                          
+        
                                 <tr>
-    
                                 <td  style="background-color: #FFE4B5;" class="LabelFontStyle">&nbsp;Status&nbsp;&nbsp;:&nbsp;</td>
                                 <td>
                                     <select formControlName="jStatus" id="jStatus" class="form-control"  [(ngModel)]="jStatus"  >
@@ -56,41 +53,51 @@
                                     <option value="Closed">Closed</option>
                                     </select>
                                 </td>
-                                   
+                                
+                           
     
                                 <td  style="background-color: #FFE4B5;" class="LabelFontStyle">&nbsp;Cust&nbsp;&nbsp;Account:&nbsp;</td>
                                 
                                 <td style="background-color: #FFE4B5;">
-                                    <input type="number" class="form-control" formControlName="custAccount" [(ngModel)]='custAccount'
+                                    <input disabled type="text" class="form-control" formControlName="custAccount" [(ngModel)]='custAccount'
                                         value={{custAccount}}  >
                                 </td>
     
                                 <td  style="background-color: #FFE4B5;" class="LabelFontStyle">&nbsp;Cust&nbsp;&nbsp;Name:&nbsp;</td>
                                 
                                 <td style="background-color: #FFE4B5;">
-                                    <input type="text" class="form-control" formControlName="custName" [(ngModel)]='custName'
+                                    <input disabled type="text" class="form-control" formControlName="custName" [(ngModel)]='custName'
                                         value={{custName}} >
                                 </td> 
+                                <!-- <td> <button type="button" class="btn btn-info" (click)="goToJobCardScreen()" >New</button> </td>  -->
+                              
                                
-    
-                                 <td> <button type="button" class="btn btn-info" (click)="newJob()" >New</button> </td> 
-                       
-                            </tr>
+                            </tr>  
                             <tr>
                                 <td  style="background-color: #FFE4B5;" class="LabelFontStyle">&nbsp;Contact&nbsp;&nbsp;No:&nbsp;</td>
                                 
                                 <td style="background-color: #FFE4B5;">
-                                    <input type="number" class="form-control" formControlName="contactNo" [(ngModel)]='contactNo'
+                                    <input disabled type="text" class="form-control" formControlName="contactNo" [(ngModel)]='contactNo'
                                         value={{contactNo}} >
                                 </td> 
 
-                                <td></td><td></td><td></td><td></td>
-
-                                <td> <button type="button" class="btn btn-info" (click)="clearSearch()" >Clear</button> </td> 
-
+                                <!-- <td></td><td></td><td></td><td></td>
+                                <td> <button type="button" class="btn btn-info" (click)="clearSearch()" >Clear</button> </td> -->
+                              
                             </tr>
                     </table>
-    
+
+                    <!-- <table class="center"> -->
+                        <table class="center" style="width: 100%;background-color: #FFE4B5;">
+                            <table class="center">
+                                <tr>
+                                    <td> <button type="button" class="btn btn-info" (click)="jobcardFind()" >Find</button> </td> 
+                                    <td> <button type="button" class="btn btn-info" (click)="goToJobCardScreen()" >New</button> </td> 
+                                    <td> <button type="button" class="btn btn-info" (click)="clearSearch()" >Clear</button> </td>
+                                </tr>
+                            </table>
+                       </table>
+
                     </fieldset>
     
                     

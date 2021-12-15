@@ -101,13 +101,15 @@ public jobcardHeaderSubmit(Record) {
   return this.http.post(url, Record, options);
 }
 
-public jobcardUpdateSubmit(jobcardId) {
+public jobcardUpdateSubmit(Record) {
   const options = {
     headers: this.headers
   };
-  const url = this.ServerUrl + '/jobCard/jobHeader';
-  return this.http.put(url, options);
+  const url = this.ServerUrl + '/jobCard/jobHdrUpdate';
+  return this.http.put(url, Record, options);
 }
+
+
 
 public ReopenMaterialIssue(jobcardNo, matStatus){
   const options = {
