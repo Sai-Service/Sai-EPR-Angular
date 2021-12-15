@@ -381,6 +381,7 @@ export class CounterSaleComponent implements OnInit {
   progress = 0;
   isDisabled = false;
   isDisabled3=false;
+  isDisabled10=false;
 
 
   constructor(private fb: FormBuilder, private location1: Location, private router1: ActivatedRoute, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService,) {
@@ -759,6 +760,7 @@ export class CounterSaleComponent implements OnInit {
 
   OrderFind(orderNumber) {
     this.op = 'Search';
+    this.isDisabled10=false;
     this.displayCSOrderAndLineDt = false;
     this.emplId = Number(sessionStorage.getItem('emplId'))
     this.orderlineDetailsArray().clear();
@@ -795,6 +797,8 @@ export class CounterSaleComponent implements OnInit {
             this.salesRepName = data.obj.salesRepName;
             this.createOrderType = data.obj.createOrderType;
             this.priceListName = data.obj.priceListName;
+            this.paymentType=data.obj.paymentType;
+            this.paymentTermId=data.obj.paymentTermId;
             this.CounterSaleOrderBookingForm.patchValue({ trxNumber: data.obj.trxNumber })
             this.totTax = Math.round((data.obj.totTax + Number.EPSILON) * 100) / 100;
             this.totAmt = Math.round((data.obj.totAmt + Number.EPSILON) * 100) / 100;
@@ -1304,7 +1308,8 @@ export class CounterSaleComponent implements OnInit {
             this.CounterSaleOrderBookingForm.patchValue({ tcsPer: data.obj.tcsPer });
             this.CounterSaleOrderBookingForm.patchValue({ custAccountNo: custAccountNo });
             let select = this.payTermDescList.find(d => d.lookupValueId === this.selCustomer.termId);
-            this.paymentType = select.lookupValue;
+            // this.paymentType = select.lookupValue;
+            this.CounterSaleOrderBookingForm.patchValue({paymentType:select.lookupValue})
             this.CounterSaleOrderBookingForm.get('custName').disable();
             this.CounterSaleOrderBookingForm.get('mobile1').disable();
             if (this.custSiteList.length === 1) {
@@ -1732,6 +1737,10 @@ export class CounterSaleComponent implements OnInit {
   onOptionsSelectedDescription(segment: string, k) {
     if (segment != undefined && segment != "") {
       this.displayorderHedaerDetails = false;
+      if (this.op !='Search'){
+      let selPayTerm = this.payTermDescList.find(d => d.lookupValueId === this.selCustomer.termId);
+      this.paymentType = selPayTerm.lookupValue;
+    }
       var orderedDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
       this.CounterSaleOrderBookingForm.patchValue({ orderedDate: orderedDate });
       this.CounterSaleOrderBookingForm.get('custAccountNo').disable();
@@ -2110,6 +2119,11 @@ export class CounterSaleComponent implements OnInit {
 
           var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
           trxLnArr1.controls[i].patchValue({ Avalqty: avlqty1 });
+          alert(avlqty1);
+          if (avlqty1 <0){
+            // alert(avlqty1);
+            trxLnArr1.controls[i].patchValue({ Avalqty: 0 });
+          }
           this.setFocus('pricingQty' + i);
         })
     }
@@ -2230,7 +2244,7 @@ export class CounterSaleComponent implements OnInit {
         alert('Line No' + j + 'Amount is Zero please confirm')
       }
       if (orderLines[j].pricingQty ===0){
-        alert('Line No'+' ' + j +' '+ 'Quantity is Zero please confirm');
+        alert('Line No'+' ' + j+1 +' '+ 'Quantity is Zero please confirm');
         this.closeResetButton = true;
         this.dataDisplay = ''
         this.isDisabled = false;
@@ -2289,10 +2303,12 @@ export class CounterSaleComponent implements OnInit {
 
     if (this.op == 'Search') {
       i = trxLnArr1.length;
+      this.isDisabled10=true;
     }
     if (i > -1) {
       var len1 = i;
       if(trxLnArr1[len1] != undefined){
+        // this.isDisabled10=false;
       console.log(trxLnArr1[len1].pricingQty);
       var itemqty = trxLnArr1[len1].pricingQty;
       var item = trxLnArr1[len1].segment;

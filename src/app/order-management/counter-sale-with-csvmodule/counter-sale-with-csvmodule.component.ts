@@ -1201,6 +1201,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
             this.CounterSaleOrderBookingForm.patchValue({ name: this.custSiteList[0].siteName });
             let select = this.payTermDescList.find(d => d.lookupValueId === this.selCustomer.termId);
             this.CounterSaleOrderBookingForm.patchValue({ custAccountNo: custAccountNo });
+            this.CounterSaleOrderBookingForm.patchValue({paymentType:select.lookupValue})
             this.paymentType = select.lookupValue;
             this.CounterSaleOrderBookingForm.get('custName').disable();
             this.CounterSaleOrderBookingForm.get('mobile1').disable();
@@ -1434,10 +1435,9 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
     let segment = trxLnArr[index].segment;
     if (qty1 > Avalqty) {
       // alert("Order Quantity is more than Available quantity for item "+ segment);
-      var errList ="Order Quantity is more than Available quantity for item "+ segment;
-      this.CounterSaleOrderBookingForm.patchValue({errorList:errList});
-      console.log(errList);
-      
+      this.errList ="Order Quantity is more than Available quantity for item "+ segment;
+      // this.CounterSaleOrderBookingForm.patchValue({errorList:errList});
+      console.log( this.errList);
       trxLnArr1.controls[index].patchValue({ pricingQty: '0' });
       return false;
     }
@@ -2404,6 +2404,9 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
           this.displayRemoveRow[i] = true;
           this.displayLineflowStatusCode.push(true);
           this.displayCounterSaleLine.push(false);
+          if (res.obj[i].onhandList.length ===0){
+            this.errList.push("Locator Not Available for item "+' '+res.obj[i].segment);
+          }
         }
         this.CounterSaleOrderBookingForm.patchValue(res.obj);
         for (let k = 0; k < res.obj.length; k++) {
