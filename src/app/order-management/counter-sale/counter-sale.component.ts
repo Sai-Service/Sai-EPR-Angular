@@ -1551,6 +1551,9 @@ export class CounterSaleComponent implements OnInit {
   validate(index: number, qty1) {
     var trxLnArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray
+
+    var locator  = trxLnArr[index].frmLocatorId;
+
     var Avalqty = trxLnArr[index].Avalqty;
     let uomCode = trxLnArr[index].uom;
     let unitSellingPrice = trxLnArr[index].unitSellingPrice;
@@ -1559,6 +1562,15 @@ export class CounterSaleComponent implements OnInit {
       var bckOrd = qty1 - Avalqty;
       trxLnArr1.controls[index].patchValue({ orderedQty: bckOrd });
       trxLnArr1.controls[index].patchValue({ pricingQty: Avalqty });
+    }
+    let selloc = this.locData[index].find(d => Number(d.ROWNUM) === Number(locator));
+    //alert(selloc.segmentName +'--'+selloc.onHandQty);
+    if(qty1 > selloc.onHandQty ){
+      alert("Item available with multiple price , Please check price and available quntity!!")
+      qty1= selloc.onHandQty;
+      //trxLnArr1.controls[index].patchValue({ orderedQty: bckOrd });
+      trxLnArr1.controls[index].patchValue({ pricingQty: selloc.onHandQty });
+    
     }
     //     alert("You can not enter more than available quantity!..");
     //     trxLnArr1.controls[index].patchValue({ pricingQty: '' });
