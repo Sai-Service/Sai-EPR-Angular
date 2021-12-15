@@ -5,7 +5,7 @@
                 <td class="PageHeader" style="width: 100%;">
                     &nbsp;&nbsp;JOBCARD&nbsp;OPENING
                 </td>
-
+<!-- 
                 <table style="width: 100%; background-color: #FFE4B5;">
                     <tr>
                         <td style="width: 15%" class="LabelFontStyle">Job&nbsp;Card&nbsp;Number&nbsp;:</td>
@@ -19,9 +19,67 @@
 
                         </td>
                     </tr>
-                </table>
+                </table> -->
+
             </tr>
         </table>
+
+        <fieldset class="RFS">
+            <!-- <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">SEARCH</legend> -->
+            <table class="center" style="width: 100%;background-color: #FFE4B5;">
+              
+                        <tr>
+
+                         
+                        <td  style="background-color: #FFE4B5;" class="LabelFontStyle" >&nbsp;JC&nbsp;Number&nbsp;:&nbsp;</td>
+                   
+                        <td>
+                            <input type="text" formControlName="jobCardNum1" [(ngModel)]="jobCardNum1"
+                                class="form-control" #myinput>
+                        </td>
+
+                        <td  style="background-color: #FFE4B5;" class="LabelFontStyle">&nbsp;Opened&nbsp;&nbsp;Date:&nbsp;</td>
+                        
+                        <td style="background-color: #FFE4B5;">
+                            <input type="date" class="form-control" formControlName="jobCardDate" [(ngModel)]='jobCardDate'
+                                value={{jobCardDate}}  >
+                        </td>
+
+                        <td  style="background-color: #FFE4B5;" class="LabelFontStyle">&nbsp;Reg&nbsp;&nbsp;Number:&nbsp;</td>
+                        
+                        <td style="background-color: #FFE4B5;">
+                            <input type="text" class="form-control" formControlName="regNo" [(ngModel)]='regNo'
+                                value={{regNo}} >
+                        </td>
+
+                        <td  style="background-color: #FFE4B5;" class="LabelFontStyle">&nbsp;JC&nbsp;&nbsp;Status:&nbsp;</td>
+                        
+                        <!-- <td style="background-color: #FFE4B5;">
+                            <input type="text" class="form-control" formControlName="jobStatus" [(ngModel)]='jobStatus'
+                                value={{jobStatus}} >
+                        </td> -->
+
+                        <td>
+                            <select formControlName="jobStatus" id="jobStatus" class="form-control"  [(ngModel)]="jobStatus"  >
+                            <!-- (ngModelChange)="onSelectionRevStatus($event)" -->
+                            <option value="Opened">Opened</option>
+                            <option value="Ready for Invoice">Ready for Invoice</option>
+                            <option value="Invoiced">Invoiced</option>
+                            <option value="Closed">Closed</option>
+                            </select>
+                        </td>
+
+                        <td> <button type="button" class="btn btn-primary" (click)="Search(jobCardNum1)" >Find</button> </td> 
+                       
+                       
+                        </tr>
+                       
+            </table>
+
+            </fieldset>
+
+
+
         <div class="center" style="width: 100%;">
             <div class="form-bg">
                 <div class="center" style="width: 100%;">
@@ -49,7 +107,7 @@
                                         </li>
                                         <li class="nav-item waves-effect waves-light">
                                             <a class="nav-link" id="contact-tab-md" data-toggle="tab" href="#contact-md"
-                                                role="tab" aria-controls="contact-md" aria-selected="false">Part
+                                                role="tab" aria-controls="contact-md" aria-selected="false" (click)="LoadMatLines(jobCardNum)"  >Part
                                                 Details</a>
                                         </li>
                                     </ng-template>
@@ -98,10 +156,10 @@
                                                                                 class="LabelFontStyle">
                                                                                 Job&nbsp;Card&nbsp;Date&nbsp;:</td>
                                                                             <td>
-                                                                                <input  disabled
+                                                                                <input  disabled type="date"
                                                                                     class="form-control" placeholder=""
                                                                                     [(ngModel)]="jobCardDate"
-                                                                                    formControlName="jobCardDate"  min="{{minDate | date:'yyyy-MM-dd'}}">
+                                                                                    formControlName="jobCardDate"  >
                                                                             </td>
                                                                             <td style="width: 15%"
                                                                                 class="LabelFontStyle">
@@ -337,11 +395,23 @@
                                                                             <td style="width: 15%"
                                                                                 class="LabelFontStyle">
                                                                                 Bay&nbsp;Code&nbsp;:</td>
+
                                                                             <td>
                                                                                 <input type="text" class="form-control"
                                                                                     placeholder=""
                                                                                     formControlName="bayTyId">
                                                                             </td>
+
+                                                                            <!-- <td>
+                                                                                <select formControlName="bayTyId" id="bayTyId" class="form-control"  [(ngModel)]="bayTyId"  >
+                                                                                <option value="Opened">Opened</option>
+                                                                                <option value="Ready for Invoice">Ready for Invoice</option>
+                                                                                <option value="Invoiced">Invoiced</option>
+                                                                                <option value="Closed">Closed</option>
+                                                                                </select>
+                                                                            </td> -->
+
+
                                                                             <td></td>
 
                                                                             <td>
@@ -379,10 +449,10 @@
                                                                             </td>
                                                                             <td style="width: 15%"
                                                                                 class="LabelFontStyle">
-                                                                                Tech&nbsp;Adivsor&nbsp;:</td>
+                                                                                Tech&nbsp;Advisor&nbsp;:</td>
                                                                             <td>
                                                                                 <input type="text" class="form-control"
-                                                                                    placeholder="">
+                                                                                    placeholder="" formControlName="techAdvisor" >
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
@@ -664,10 +734,10 @@
                                                                                         </td>
                                                                                         <td style="width: 15%"
                                                                                             class="LabelFontStyle">
-                                                                                            Technical&nbsp;Adivsor&nbsp;:</td>
+                                                                                            Tech&nbsp;Adivsor&nbsp;:</td>
                                                                                         <td>
                                                                                             <input disabled type="text" class="form-control"
-                                                                                                placeholder="">
+                                                                                                placeholder="" formControlName="techAdvisor">
                                                                                         </td>
                                                                                     </tr>
                                                                                     <tr>
@@ -1074,7 +1144,7 @@
                                                                         </tr>
                                                                         <tr>
                                                                             <td style="width: 15%"
-                                                                                class="LabelFontStyle">Diver&nbsp;:</td>
+                                                                                class="LabelFontStyle">Driver&nbsp;:</td>
                                                                             <td>
                                                                                 <input type="text" class="form-control"
                                                                                     placeholder=""
@@ -1145,28 +1215,50 @@
                                                                                 style="width: 8rem;">Save</button></td>
                                                                     </ng-template>
                                                                     <ng-template #B2>
-                                                                        <td> <button disabled type="butt on"
+
+                                                                        <div *ngIf="dispReadyInvoice; then UR1; else UR2"></div>
+                                                                        <ng-template #UR1>
+                                                                        <td> <button  type="butt on"
                                                                                 class="btn btn-primary"
-                                                                                (click)="saveArInvoice()"
-                                                                                style="width: 8rem;">Save</button></td>
+                                                                                (click)="updateArInvoice()">Update</button></td>
+                                                                              
+                                                                        </ng-template>
+                                                                        <ng-template #UR2>
+                                                                            <td> <button disabled  type="butt on"
+                                                                                    class="btn btn-primary"
+                                                                                    (click)="updateArInvoice()">Update</button></td>
+                                                                                    
+                                                                        </ng-template>
+
+
                                                                     </ng-template>
                                                                                                                                              
                                                                         <td>
                                                                             <button type="button"
                                                                                 class="btn btn-primary"
-                                                                                (click)="clearFormArray()"
-                                                                                style="width: 8rem;">Reset</button>
+                                                                                (click)="clearFormArray()">Reset</button>
+                                                                                
                                                                         </td>
                                                                         <td>
                                                                             <button type="submit"
                                                                                 class="btn btn-primary" id="register"
                                                                                 (click)="closeMast()">Close</button>
                                                                         </td>
+
+                                                                        <div *ngIf="cancelButton; then CancelYes; else CancelNo"></div>
+                                                                        <ng-template #CancelYes>
                                                                         <td>
-                                                                            <button type="submit"
-                                                                                class="btn btn-primary" id="register"
-                                                                                (click)="cancelJobNo()">Cancel</button>
+                                                                            <button type="submit"  class="btn btn-primary" id="register" (click)="cancelJobNo()">Cancel</button>
                                                                         </td>
+                                                                        </ng-template>
+                                                                        <ng-template #CancelNo>
+                                                                        <td>
+                                                                            <button  type="submit"  class="btn btn-primary" id="register" (click)="cancelJobNo()">Cancel</button>
+                                                                        </td>
+                                                                        </ng-template>
+
+
+
                                                                         <div
                                                                         *ngIf="dispReadyInvoice; then thenBlockRFI; else elseBlockRFI">
                                                                     </div>
@@ -1189,11 +1281,23 @@
                                                                         </td>
                                                                     </ng-template>
 
+                                                                    <div *ngIf="preInvButton; then Pre1; else Pre2"></div>
+                                                                    <ng-template #Pre1>
                                                                     <td>
-                                                                        <button type="submit" class="btn btn-primary"
+                                                                        <button  type="submit" class="btn btn-primary"
                                                                             style="width: fit-content;"
                                                                             id="register" (click)="printPreInvoice()" >Pre-Invoice</button>
                                                                     </td>
+                                                                    </ng-template>
+                                                                    <ng-template #Pre2>
+                                                                        <td>
+                                                                            <button disabled type="submit" class="btn btn-primary"
+                                                                                style="width: fit-content;"
+                                                                                id="register" (click)="printPreInvoice()" >Pre-Invoice</button>
+                                                                        </td>
+                                                                    </ng-template>
+
+
 
                                                                     </tr>
                                                                 </table>
@@ -1218,8 +1322,26 @@
                                                             </td>
                                                         </tr>
                                                     </table>
+                                                    <table class="center">
+                                                        <tr>
+
+                                                            <div *ngIf="saveLabButton; then L1; else L2"></div>
+                                                            <ng-template #L1>
+                                                                <td>
+                                                                <button type="button" class="btn btn-primary" (click)="saveLine()" style="width: 8rem;">Save Labour</button>
+                                                                </td>
+                                                            </ng-template>
+                                                            <ng-template #L2>
+                                                                <td>
+                                                                <button disabled type="button" class="btn btn-primary" (click)="saveLine()" style="width: 8rem;">Save Labour</button>
+                                                                </td>
+                                                            </ng-template>
+                                                        </tr>
+                                                    </table>
                                                     <!-- <div class="center" style="width: 100%;"> -->
                                                     <!-- <div formArrayName="jobCardLabLines"> -->
+                                                    <fieldset class="RFS">
+                                                    <!-- <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Find Job Card</legend> -->
                                                     <div class="grid_scroll">
                                                         <table class="GridFont" cellspacing="0" cellpadding="4"
                                                             border="0" style="width:100%; border-collapse:collapse;">
@@ -1410,9 +1532,8 @@
                                                                                     (change)="splitFlagFlagFn($event)">
                                                                             </td>
                                                                             <td>
-                                                                                <div
-                                                                                    *ngIf="displaySplit; then thenBlockSplit; else elseBlockSplit">
-                                                                                </div>
+                                                                                <div *ngIf="displaySplit; then thenBlockSplit; else elseBlockSplit"></div>
+                                                                                
                                                                                 <ng-template #thenBlockSplit>
                                                                                     <button type="submit"
                                                                                         class="btn btn-primary"
@@ -1433,22 +1554,26 @@
                                                                                 </ng-template>
                                                                             </td>
 
+                                                                            <div *ngIf="saveLabButton; then AD1; else AD2"></div>
+                                                                            <ng-template #AD1>
+                                                                            <td><button type="submit" class="btn btn-primary"  (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)"
+                                                                                    style="width: min-content;"><i class="fa fa-plus"></i></button>
+                                                                            </td>
+                                                                            <td><button type="submit"  class="btn btn-primary" (click)="RemoveRow(i)"
+                                                                                    style="width: min-content;"><i class="fa fa-trash"></i></button>
+                                                                            </td>
+                                                                            </ng-template>
+                                                                            <ng-template #AD2>
+                                                                                <td><button disabled type="submit" class="btn btn-primary"  (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)"
+                                                                                        style="width: min-content;"><i class="fa fa-plus"></i></button>
+                                                                                </td>
+                                                                                <td><button disabled type="submit"  class="btn btn-primary" (click)="RemoveRow(i)"
+                                                                                        style="width: min-content;"><i class="fa fa-trash"></i></button>
+                                                                                </td>
+                                                                            </ng-template>
 
-                                                                            <td>
-                                                                                <button type="submit"
-                                                                                    class="btn btn-primary"
-                                                                                    (click)="addRow(i)"
-                                                                                    (keydown.shift.arrowdown)="addRow(i)"
-                                                                                    style="width: min-content;"><i
-                                                                                        class="fa fa-plus"></i></button>
-                                                                            </td>
-                                                                            <td>
-                                                                                <button type="submit"
-                                                                                    class="btn btn-primary"
-                                                                                    (click)="RemoveRow(i)"
-                                                                                    style="width: min-content;"><i
-                                                                                        class="fa fa-trash"></i></button>
-                                                                            </td>
+
+
                                                                         </tr>
 
                                                                     </tbody>
@@ -1456,12 +1581,26 @@
                                                             </ng-container>
                                                         </table>
                                                     </div>
-                                                    <table class="center">
+                                                    </fieldset>
+                                                    <!-- <table class="center">
                                                         <tr>
-                                                            <button type="butt on" class="btn btn-primary"
-                                                                (click)="saveLine()" style="width: 8rem;">Save
-                                                                Line</button>
-                                                            <td>
+
+                                                            <div *ngIf="saveLabButton; then L1; else L2"></div>
+                                                            <ng-template #L1>
+                                                                <td>
+                                                                <button type="button" class="btn btn-primary" (click)="saveLine()" style="width: 8rem;">Save Labour</button>
+                                                                </td>
+                                                            </ng-template>
+                                                            <ng-template #L2>
+                                                                <td>
+                                                                <button disabled type="button" class="btn btn-primary" (click)="saveLine()" style="width: 8rem;">Save Labour</button>
+                                                                </td>
+                                                            </ng-template> -->
+
+                                                           
+
+
+                                                            <!-- <td>
                                                                 <button type="button" class="btn btn-primary"
                                                                     (click)="clearlabLineFormArray()"
                                                                     style="width: 8rem;">Reset</button>
@@ -1469,13 +1608,13 @@
                                                             <td>
                                                                 <button type="submit" class="btn btn-primary"
                                                                     id="register" (click)="closeMast()">Close</button>
-                                                            </td>
-                                                            <td>
+                                                            </td> -->
+                                                            <!-- <td>
                                                                 <button type="submit" class="btn btn-primary"
                                                                     id="register" (click)="cancelJobNo()">Cancel</button>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
+                                                            </td> -->
+                                                        <!-- </tr>
+                                                    </table> -->
 
 
                                                     <!-- </div> -->
@@ -1501,15 +1640,36 @@
                                                 </table>
                                                 <table class="center">
                                                     <tr>
+
+                                                        <div *ngIf="saveMatButton; then MI1; else MI2"></div>
+                                                        <ng-template #MI1>
+
                                                         <td>
                                                             <button type="butt on" class="btn btn-primary"
                                                                 (click)="MatImptWip(jobCardNum)"
                                                                 style="width: fit-content; text-align: center;">Import
                                                                 Material from WIP</button>
                                                         </td>
+                                                        </ng-template>
+                                                        <ng-template #MI2></ng-template>
+
+                                                        <div *ngIf="saveMatButton; then M1; else M2"></div>
+                                                        <ng-template #M1>
+                                                            <td>
+                                                                <button type="butt on" class="btn btn-primary" (click)="saveMaterial()" style="width: 8rem;">Save  Material</button>
+                                                            </td>
+                                                        </ng-template>
+                                                        <ng-template #M2>
+                                                            <td>
+                                                                <button disabled type="butt on" class="btn btn-primary" (click)="saveMaterial()" style="width: 8rem;">Save  Material</button>
+                                                            </td>
+                                                        </ng-template>
+
+
                                                     </tr>
                                                 </table>
 
+                                                <fieldset class="RFS">
                                                 <div class="grid_scroll">
                                                     <table class="GridFont" cellspacing="0" cellpadding="4" border="0"
                                                         style="width:100%;border-collapse:collapse;">
@@ -1672,14 +1832,22 @@
 
 
                                                 </div>
-                                                <table class="center">
+                                                </fieldset>
+                                                <!-- <table class="center">
                                                     <tr>
-                                                        <td>
-                                                            <button type="butt on" class="btn btn-primary"
-                                                                (click)="saveMaterial()" style="width: 8rem;">Save
-                                                                Material</button>
-                                                        </td>
-                                                        <td>
+                                                     <div *ngIf="saveMatButton; then M1; else M2"></div>
+                                                        <ng-template #M1>
+                                                            <td>
+                                                                <button type="butt on" class="btn btn-primary" (click)="saveMaterial()" style="width: 8rem;">Save  Material</button>
+                                                            </td>
+                                                        </ng-template>
+                                                        <ng-template #M2>
+                                                            <td>
+                                                                <button disabled type="butt on" class="btn btn-primary" (click)="saveMaterial()" style="width: 8rem;">Save  Material</button>
+                                                            </td>
+                                                        </ng-template> -->
+                                                    
+                                                        <!-- <td>
                                                             <button type="button" class="btn btn-primary"
                                                                 (click)="clearMatLineFormArray()"
                                                                 style="width: 8rem;">Reset</button>
@@ -1691,9 +1859,9 @@
                                                         <td>
                                                             <button type="submit" class="btn btn-primary" id="register"
                                                                 (click)="closeMast()">Cancel</button>
-                                                        </td>
-                                                    </tr>
-                                                </table>
+                                                        </td> -->
+                                                    <!-- </tr>
+                                                </table> -->
                                             </div>
                                         </div>
                                     </div>
@@ -2396,88 +2564,83 @@
 
                                                 <table class="center">
                                                     <tr>
-                                                       
-
                                                         <!-- <td>
                                                             <button type="button" class="btn btn-primary"
                                                                 style="width: fit-content;"
                                                                 (click)="clearMatLineFormArray()">Reset</button>
                                                         </td> -->
-                                                        <div *ngIf="dispButtonStatus; then ButtonEnablehenBlock; else ButtonDisableelseBlock"></div>
-                                                            <ng-template #ButtonEnablehenBlock>
-
+                                                        <div *ngIf="saveBillButton; then SB1; else SB2"></div>
+                                                        <ng-template #SB1>
                                                         <td>
                                                             <button type="butt on" class="btn btn-primary"
-                                                                style="width: fit-content;"
-                                                                (click)="BillingCal()">Save</button>
+                                                                style="width: fit-content;" (click)="BillingCal()">Save Bill</button>
                                                         </td>
-
-
-                                                        <td>
-                                                            <button type="submit" class="btn btn-primary"
-                                                                style="width: fit-content;"
-                                                                (click)="ReopenMaterialIssue()"
-                                                                id="register">Reopen-Material Issue</button>
-                                                        </td>
-                                                        <!-- <td>
-                                                            <button type="submit" class="btn btn-primary"
-                                                                style="width: fit-content;"
-                                                                id="register">Pre-Invoice</button>
-                                                        </td> -->
-
-                                                        <td>
-                                                            <button type="submit" class="btn btn-primary"
-                                                                (click)="GenerateInvoice(jobCardNum)" id="register"
-                                                                style="width: fit-content;">Generate Invoice</button>
-                                                        </td>
-                                                    </ng-template>
-                                                    <ng-template #ButtonDisableelseBlock>
-
+                                                       </ng-template>
+                                                        <ng-template #SB2>
                                                         <td>
                                                             <button disabled type="butt on" class="btn btn-primary"
-                                                                style="width: fit-content;"
-                                                                (click)="BillingCal()">Save</button>
+                                                                style="width: fit-content;" (click)="BillingCal()">Save Bill</button>
                                                         </td>
+                                                         </ng-template>
 
+
+
+                                                         <div *ngIf="saveBillButton; then RE1; else RE2"></div>
+                                                         <ng-template #RE1>
+                                                            <td>
+                                                                <button type="submit" class="btn btn-primary"
+                                                                style="width: fit-content;" (click)="ReopenMaterialIssue()"  id="register">Reopen-Material Issue</button>
+                                                           </td>
+                                                        </ng-template>
+                                                         <ng-template #RE2>
+                                                                <td>
+                                                                    <button disabled  type="submit" class="btn btn-primary"
+                                                                    style="width: fit-content;" (click)="ReopenMaterialIssue()"  id="register">Reopen-Material Issue</button>
+                                                            </td>
+
+
+                                                          </ng-template>
+
+                                                      
+
+                                                        <div *ngIf="genBillButton; then G1; else G2"></div>
+                                                        <ng-template #G1>
                                                         <td>
-                                                            <button disabled type="submit" class="btn btn-primary"
-                                                                style="width: fit-content;"
-                                                                (click)="ReopenMaterialIssue()"
-                                                                id="register">Reopen-Material Issue</button>
-                                                        </td>
-                                                        <!-- <td>
                                                             <button type="submit" class="btn btn-primary"
-                                                                style="width: fit-content;"
-                                                                id="register">Pre-Invoice</button>
-                                                        </td> -->
-
-                                                        <td>
-                                                            <button disabled type="submit" class="btn btn-primary"
-                                                                (click)="GenerateInvoice(jobCardNum)" id="register"
-                                                                style="width: fit-content;">Generate Invoice</button>
+                                                                (click)="GenerateInvoice(jobCardNum)" id="register" style="width: fit-content;">Generate Invoice</button>
                                                         </td>
-                                                    </ng-template>
-
-                                                    <!-- <div *ngIf="printInvoiceButton; then P1; else P2"></div>
-                                                    <ng-template #P1> -->
+                                                        </ng-template>
+                                                        <ng-template #G2>
+                                                            <td>
+                                                                <button disabled  type="submit" class="btn btn-primary"
+                                                                    (click)="GenerateInvoice(jobCardNum)" id="register" style="width: fit-content;">Generate Invoice</button>
+                                                            </td>
+                                                        </ng-template>
+                                                       
+                                                       
+                                                    
+                                             
+                                                    <div *ngIf="printInvoiceButton; then P1; else P2"></div>
+                                                    <ng-template #P1>
                                                         <td>
                                                             <button type="submit" class="btn btn-primary" id="register"
                                                                 style="width: fit-content;" (click)="printWSInvoice()">Print invoice</button>
                                                         </td>
-                                                    <!-- </ng-template>
+
+                                                        <td>
+                                                            <button type="submit" class="btn btn-primary" id="register"
+                                                                style="width: fit-content;" (click)="showReceiptScreen()">Receipt</button>
+                                                        </td>
+                                                    </ng-template>
+
                                                     <ng-template #P2>
                                                         <td>
                                                             <button disabled type="submit" class="btn btn-primary" id="register"
                                                                 style="width: fit-content;" (click)="printWSInvoice()">Print invoice</button>
                                                         </td>
-                                                    </ng-template> -->
+                                                    </ng-template>
 
-                                                        <td>
-                                                                <button type="submit" class="btn btn-primary" id="register"
-                                                                    style="width: fit-content;">Close</button>
-                                                            </td>
-
-
+                                                      
                                                     </tr>
                                                 </table>
                                             </div>

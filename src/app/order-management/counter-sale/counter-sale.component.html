@@ -382,6 +382,22 @@
             <ng-template #elseDMSCDMS>
                 <tr>
                     <td style="width: 15%" class="LabelFontStyle">
+                        Customer&nbsp;PO&nbsp;Number:&nbsp;
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" formControlName="custPoNumber" value={{custPoNumber}}
+                        [ngClass]="{ 'is-invalid': submitted && f.custPoNumber.errors }" style="width:100%;">
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        Customer&nbsp;PO&nbsp;Date&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <input type="date" class="form-control" formControlName="custPoDate" value={{custPoDate}}
+                            [ngClass]="{ 'is-invalid': submitted && f.custPoDate.errors }" style="width:100%;">
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle">
                         CDMS&nbsp;Customer&nbsp;Number:&nbsp;
                     </td>
                     <td>
@@ -841,8 +857,15 @@
                             <td>
                                 <input type="number" formControlName="disPer" value={{disPer}}
                                     (keydown.tab)='onOptionsSelecteddisPer()' class="form-control"
-                                    style="width: 160px;font-weight: bold;">
+                                    style="width: 50px;font-weight: bold;">
                             </td>&nbsp;&nbsp;
+                            <td style="width: 15%;font-weight: bold;" class="LabelFontStyle">
+                                Credit&nbsp;Amount&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                <input type="number" disabled formControlName="creditAmt"  [(ngModel)]='creditAmt' value={{creditAmt}}
+                                class="form-control"style="width: 80px;">
+                            </td>
                         </ng-template>
                         <div *ngIf="displaytcsYN; then thentcsYN; else elsetcsYN"> </div>
                         <ng-template #thentcsYN>
@@ -953,7 +976,7 @@
                                                         </td>
                                                         <td>
 
-                                                            <input type="text" style="height: 20px;width: 100px;" class="form-control"
+                                                            <input type="text" style="height: 20px;width: 100px;text-transform: uppercase;" class="form-control"
                                                                 formControlName="itemSeg" [(ngModel)]='itemSeg' name="itemSeg{{i}}"
                                                                 (keydown.tab)="searchByItemSegmentDiv(itemSeg,i)" />
 

@@ -2005,8 +2005,13 @@ export class PaymentArComponent implements OnInit {
 
   CheckCancelValidation() {
 
-    const formValue: IPaymentRcptAr = this.paymentArForm.value;
+    // let latest_date =this.pipe.transform(new Date(), 'yyyy-MM-dd')
+    // let rcptDate=this.pipe.transform(this.receiptDate, 'yyyy-MM-dd')
 
+    // alert("Receipt date : "+rcptDate + " mtoday :" +latest_date)
+    // this.cancelValidation = false;
+
+    const formValue: IPaymentRcptAr = this.paymentArForm.value;
 
     if (formValue.reversalReasonCode === undefined || formValue.reversalReasonCode === null || formValue.reversalReasonCode <= 0) {
       this.cancelValidation = false;
