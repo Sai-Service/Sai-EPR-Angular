@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, ViewChild, ElementRef ,NgModule} from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild, ElementRef ,NgModule, OnDestroy} from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, FormControlName,NgForm,Validators, FormArray,FormsModule } from '@angular/forms';
 import { from } from 'rxjs';
 import { Url } from 'url';
@@ -119,7 +119,7 @@ export class CounterSaleComponent implements OnInit {
   lnflowStatusCode: 'BOOKED';
   refCustNo: string;
   custPoNumber:string;
-  custPoDate:Date;
+  // custPoDate:Date;
   salesRepId:string;
   creditAmt:number;
   lineNumber: number;
@@ -375,6 +375,7 @@ export class CounterSaleComponent implements OnInit {
   pipe = new DatePipe('en-US');
   now = new Date();
   orderedDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
+  custPoDate= this.pipe.transform(this.now, 'dd-MM-yyyy');
 
   closeResetButton = true;
   dataDisplay: any;
@@ -768,7 +769,7 @@ export class CounterSaleComponent implements OnInit {
     this.displaycustAccountNo = false;
     this.displaycreateOrderType = false;
     this.displayCustomerSite = false;
-    this.orderManagementService.counterSaleOrderSearch(orderNumber)
+    this.orderManagementService.counterSaleOrderSearchNew(orderNumber,sessionStorage.getItem('locId'))
       .subscribe(
         data => {
           if (data.code === 200) {
@@ -2260,7 +2261,15 @@ export class CounterSaleComponent implements OnInit {
         this.dataDisplay = ''
         this.isDisabled = false;
         return;
+      }
 
+      // alert(orderLines[j].segment.length)
+      if (orderLines[j].segment.length >8){
+        alert('Line No'+' ' + orderLines[j].segment +' '+ 'Select Item Is Wrong... Please confirm');
+        this.closeResetButton = true;
+        this.dataDisplay = ''
+        this.isDisabled = false;
+        return;
       }
     }
     for (let i = 0; i < orderLines.length; i++) {
@@ -2268,11 +2277,11 @@ export class CounterSaleComponent implements OnInit {
       orderLines[i].frmLocatorId = orderLines[i].frmLocatorName;
     }
     let jsonData = this.CounterSaleOrderBookingForm.getRawValue();
-
+    var custPoDate=this.CounterSaleOrderBookingForm.get('custPoDate').value;
     jsonData.orderedDate = this.pipe.transform(this.now, 'yyyy-MM-dd');
     jsonData.refCustNo = this.CounterSaleOrderBookingForm.get('refCustNo').value;
     jsonData.custPoNumber=this.CounterSaleOrderBookingForm.get('custPoNumber').value;
-    jsonData.custPoDate=this.CounterSaleOrderBookingForm.get('custPoDate').value;
+    jsonData.custPoDate=this.pipe.transform(custPoDate, 'yyyy-MM-dd');
     jsonData.ouId = Number(sessionStorage.getItem('ouId'));
     let salesObj = Object.assign(new SalesOrderobj(), jsonData);
     salesObj.setoeOrderLinesAllList(orderLines);
@@ -3017,5 +3026,9 @@ export class CounterSaleComponent implements OnInit {
     }
   }
 
-
+// ngOnDestroy(): void {
+// alert('Window Closed Directely.!');
+// return;
+// this.deleteReserve();    
+// }
 }

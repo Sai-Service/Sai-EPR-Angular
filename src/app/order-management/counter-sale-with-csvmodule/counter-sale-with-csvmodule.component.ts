@@ -771,7 +771,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
     this.displaycreateOrderType = false;
     this.displayCustomerSite = false;
     // alert(this.displayCustomerSite);
-    this.orderManagementService.counterSaleOrderSearch(orderNumber)
+    this.orderManagementService.counterSaleOrderSearchNew(orderNumber,sessionStorage.getItem('locId'))
       .subscribe(
         data => {
           if (data.code === 200) {
