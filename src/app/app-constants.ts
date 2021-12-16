@@ -4,5 +4,3 @@ export class AppConstants {
     // public static get ServerUrl(): string { return "http://saidev.horizon.org:8080/ErpReplica"; }
     // public static get ServerUrl(): string { return "http://saierp.horizon.org:8080/ErpReplica"; }
 }
-
-
