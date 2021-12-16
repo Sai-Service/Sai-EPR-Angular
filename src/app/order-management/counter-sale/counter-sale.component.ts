@@ -2116,10 +2116,9 @@ export class CounterSaleComponent implements OnInit {
           // alert(reserve+'reserve');
           let avlqty1 = 0;
           avlqty1 = onHand - reserve;
-
           var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
           trxLnArr1.controls[i].patchValue({ Avalqty: avlqty1 });
-          alert(avlqty1);
+          // alert(avlqty1);
           if (avlqty1 <0){
             // alert(avlqty1);
             trxLnArr1.controls[i].patchValue({ Avalqty: 0 });
