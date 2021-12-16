@@ -1851,6 +1851,24 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
       alert('First Select Line Details..!');
       return;
     }
+    if (orderLines[j].unitSellingPrice === '') {
+      alert('Line No' + j + 'Amount is Zero please confirm')
+    }
+    if (orderLines[j].pricingQty ===0){
+      alert('Line No'+' ' + j+1 +' '+ 'Quantity is Zero please confirm');
+      this.closeResetButton = true;
+      this.dataDisplay = ''
+      this.isDisabled = false;
+      return;
+    }
+    // alert(orderLines[j].segment.length)
+    if (orderLines[j].segment.length >8){
+      alert('Line No'+' ' + orderLines[j].segment +' '+ 'Select Item Is Wrong... Please confirm');
+      this.closeResetButton = true;
+      this.dataDisplay = ''
+      this.isDisabled = false;
+      return;
+    }
   }
   this.closeResetButton=false;
   this.progress = 0;

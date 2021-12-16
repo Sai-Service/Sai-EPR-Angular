@@ -123,6 +123,15 @@ export class AllReportsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+
+    $('.link').click(function(){
+      var id = $(this).attr("rel");
+      
+       $('#'+id).slideToggle('slow') ;
+  });
+  
+
    this.decimal_value=100.8999777789; 
   //  this.reportForm.patchValue({ location: sessionStorage.getItem('locId') });
    this.reportForm.patchValue({ deptId: sessionStorage.getItem('deptName') });
@@ -157,219 +166,7 @@ this.service.getLocationSearch1(sessionStorage.getItem('ouId'))
   }
 );
   }
-  SPdebtorsReport(){
-    var invcDt2 = this.reportForm.get('invcDt1').value;
-    var invcDt1 = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
-    const fileName = 'download.pdf';
-    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.SPDebtorReport(invcDt1,sessionStorage.getItem('locId'))
-      .subscribe(data => {
-        var blob = new Blob([data], { type: 'application/pdf' });
-        var url = URL.createObjectURL(blob);
-        var printWindow = window.open(url, '', 'width=800,height=500');
-        printWindow.open
-      })
-  }
 
-
-  spReceiptRegister(){
-    var spreceiptfromDate2 = this.reportForm.get('spreceiptfromDate').value;
-    var fromDate = this.pipe.transform(spreceiptfromDate2, 'dd-MMM-yyyy');
-    var spreceipttoDate2 = this.reportForm.get('spreceipttoDate').value;
-    var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
-    const fileName = 'download.pdf';
-    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.spReceiptRegisterReport(fromDate,toDate,sessionStorage.getItem('locId'),sessionStorage.getItem('deptId'))
-      .subscribe(data => {
-        var blob = new Blob([data], { type: 'application/pdf' });
-        var url = URL.createObjectURL(blob);
-        var printWindow = window.open(url, '', 'width=800,height=500');
-        printWindow.open
-      })
-  }
-
-
-
-  spIssueDetails(){
-    var invcDt2 = this.reportForm.get('sidfromDate').value;
-    var invcDt1 = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
-    var invcDt3 = this.reportForm.get('sidtoDate').value;
-    var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');
-    const fileName = 'download.pdf';
-    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.spIssueDetailsReport(invcDt1,invcDt4,sessionStorage.getItem('locId'))
-      .subscribe(data => {
-        var blob = new Blob([data], { type: 'application/pdf' });
-        var url = URL.createObjectURL(blob);
-        var printWindow = window.open(url, '', 'width=800,height=500');
-        printWindow.open
-      })
-  }
-
-  spIssueSummary(){
-    var invcDt2 = this.reportForm.get('spIssueSummfromDate').value;
-    var invcDt1 = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
-    var invcDt3 = this.reportForm.get('spIssueSummtoDate').value;
-    var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');
-    const fileName = 'download.pdf';
-    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.spIssueSummaryReport(invcDt1,invcDt4,sessionStorage.getItem('locId'))
-      .subscribe(data => {
-        var blob = new Blob([data], { type: 'application/pdf' });
-        var url = URL.createObjectURL(blob);
-        var printWindow = window.open(url, '', 'width=800,height=500');
-        printWindow.open
-      })
-  }
-
-
-  performaReg(){
-    var invcDt2 = this.reportForm.get('performafromDate').value;
-    var invcDt1 = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
-    var invcDt3 = this.reportForm.get('performatoDate').value;
-    var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');
-    const fileName = 'download.pdf';
-    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.performaRegister(invcDt1,invcDt4,sessionStorage.getItem('locId'))
-      .subscribe(data => {
-        var blob = new Blob([data], { type: 'application/pdf' });
-        var url = URL.createObjectURL(blob);
-        var printWindow = window.open(url, '', 'width=800,height=500');
-        printWindow.open
-      })
-  }
-
-
-  spstktrfMd(spstktrfMdToLoc){
-    var invcDt2 = this.reportForm.get('spstktrfMdfromDate').value;
-    var invcDt1 = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
-    var invcDt3 = this.reportForm.get('spstktrfMdtoDate').value;
-    var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');
-    // var spstktrfMdToLoc=this.reportForm.get('spstktrfMdToLoc');
-    const fileName = 'download.pdf';
-    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.spstktrfMdReport(invcDt1,invcDt4,sessionStorage.getItem('locId'),spstktrfMdToLoc)
-      .subscribe(data => {
-        var blob = new Blob([data], { type: 'application/pdf' });
-        var url = URL.createObjectURL(blob);
-        var printWindow = window.open(url, '', 'width=800,height=500');
-        printWindow.open
-      })
-  }
-
-
-
-  spstktrfMdSummary(spstktrfMdSumToLoc){
-    var invcDt2 = this.reportForm.get('spstktrfMdSumfromDate').value;
-    var invcDt1 = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
-    var invcDt3 = this.reportForm.get('spstktrfMdSumtoDate').value;
-    var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');
-    // var spstktrfMdToLoc=this.reportForm.get('spstktrfMdSumToLoc');
-    const fileName = 'download.pdf';
-    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.spstktrfMdSummaryReport(invcDt1,invcDt4,sessionStorage.getItem('locId'),spstktrfMdSumToLoc)
-      .subscribe(data => {
-        var blob = new Blob([data], { type: 'application/pdf' });
-        var url = URL.createObjectURL(blob);
-        var printWindow = window.open(url, '', 'width=800,height=500');
-        printWindow.open
-      })
-  }
-
-
-  getInvItemId($event)
-  {
-    // alert('in getInvItemId')
-     let userId=(<HTMLInputElement>document.getElementById('invItemIdFirstWay')).value;
-     this.userList2=[];
-     if (userId.length > 2) {
-      if ($event.timeStamp - this.lastkeydown1 > 200) {
-        this.userList2 = this.searchFromArray1(this.ItemIdList, userId);
-      }
-    }
-  }
-  searchFromArray1(arr, regex) {
-    let matches = [], i;
-    for (i = 0; i < arr.length; i++) {
-      if (arr[i].match(regex)) {
-        matches.push(arr[i]);
-      }
-    }
-    return matches;
-  };
-
-
-  onOptioninvItemIdSelectedSingle(mItem) {
-    // alert ("in fn onOptioninvItemIdSelectedSingle "+mItem);
-
-    let selectedValue = this.ItemIdList.find(v => v.SEGMENT == mItem);
-      if( selectedValue != undefined){
-       console.log(selectedValue);
-      this.searchItemId=selectedValue.itemId;
-      this.searchItemName=selectedValue.DESCRIPTION;
-      this.searchItemCode=selectedValue.SEGMENT;
-    }
-    // alert(selectedValue.itemId+","+selectedValue.DESCRIPTION+","+selectedValue.SEGMENT);
-
-  }
-
-
-
-
-  stklgrt(stklgrsubInv,searchItemCode,stkLgrUserName){
-    // alert(stklgrsubInv,searchItemCode,stkLgrUserName);
-    var invcDt2 = this.reportForm.get('stockLegfromDate').value;
-    var invcDt1 = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
-    var invcDt3 = this.reportForm.get('stockLegtoDate').value;
-    var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');
-    // var subInv =this.reportForm.get('stklgrsubInv');
-//  var segment=this.reportForm.get('searchItemCode');
-    // alert(stklgrsubInv+'----'+searchItemCode+'----'+stkLgrUserName)
-    // var spstktrfMdToLoc=this.reportForm.get('spstktrfMdSumToLoc');
-    const fileName = 'download.pdf';
-    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.stklgrtReport(invcDt1,invcDt4,stklgrsubInv,searchItemCode,sessionStorage.getItem('locId'),stkLgrUserName)
-      .subscribe(data => {
-        var blob = new Blob([data], { type: 'application/pdf' });
-        var url = URL.createObjectURL(blob);
-        var printWindow = window.open(url, '', 'width=800,height=500');
-        printWindow.open
-      })
-  }
-
-
-  spIssSmry(){
-    var spreceiptfromDate2 = this.reportForm.get('spIssSmryfromDate').value;
-    var fromDate = this.pipe.transform(spreceiptfromDate2, 'dd-MMM-yyyy');
-    var spreceipttoDate2 = this.reportForm.get('spIssSmrytoDate').value;
-    var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
-    const fileName = 'download.pdf';
-    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.spIssSmryReport(fromDate,toDate,sessionStorage.getItem('locId'))
-      .subscribe(data => {
-        var blob = new Blob([data], { type: 'application/pdf' });
-        var url = URL.createObjectURL(blob);
-        var printWindow = window.open(url, '', 'width=800,height=500');
-        printWindow.open
-      })
-  }
-
-
-  spproforma(){
-    var spreceiptfromDate2 = this.reportForm.get('spproformafromDate').value;
-    var fromDate = this.pipe.transform(spreceiptfromDate2, 'dd-MMM-yyyy');
-    var spreceipttoDate2 = this.reportForm.get('spproformatoDate').value;
-    var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
-    const fileName = 'download.pdf';
-    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.spproformaReport(fromDate,toDate,sessionStorage.getItem('locId'))
-      .subscribe(data => {
-        var blob = new Blob([data], { type: 'application/pdf' });
-        var url = URL.createObjectURL(blob);
-        var printWindow = window.open(url, '', 'width=800,height=500');
-        printWindow.open
-      })
-  }
 
 
   spcreditnotreg(){
@@ -406,14 +203,14 @@ this.service.getLocationSearch1(sessionStorage.getItem('ouId'))
   }
 
 
-  sppurRegidetail(){
-    var spreceiptfromDate2 = this.reportForm.get('sppurRegidetailfromDate').value;
-    var fromDate = this.pipe.transform(spreceiptfromDate2, 'dd-MMM-yyyy');
-    var spreceipttoDate2 = this.reportForm.get('sppurRegidetailtoDate').value;
-    var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
+  spIssueDetails(){
+    var invcDt2 = this.reportForm.get('sidfromDate').value;
+    var invcDt1 = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
+    var invcDt3 = this.reportForm.get('sidtoDate').value;
+    var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');
     const fileName = 'download.pdf';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.sppurRegidetailReport(fromDate,toDate,sessionStorage.getItem('locId'),sessionStorage.getItem('deptId'))
+    this.reportService.spIssueDetailsReport(invcDt1,invcDt4,sessionStorage.getItem('locId'))
       .subscribe(data => {
         var blob = new Blob([data], { type: 'application/pdf' });
         var url = URL.createObjectURL(blob);
@@ -421,6 +218,24 @@ this.service.getLocationSearch1(sessionStorage.getItem('ouId'))
         printWindow.open
       })
   }
+
+
+  spIssueSummary(){
+    var invcDt2 = this.reportForm.get('spIssueSummfromDate').value;
+    var invcDt1 = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
+    var invcDt3 = this.reportForm.get('spIssueSummtoDate').value;
+    var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');
+    const fileName = 'download.pdf';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.spIssueSummaryReport(invcDt1,invcDt4,sessionStorage.getItem('locId'))
+      .subscribe(data => {
+        var blob = new Blob([data], { type: 'application/pdf' });
+        var url = URL.createObjectURL(blob);
+        var printWindow = window.open(url, '', 'width=800,height=500');
+        printWindow.open
+      })
+  }
+
 
 
   spclosstrock(){
@@ -438,6 +253,59 @@ this.service.getLocationSearch1(sessionStorage.getItem('ouId'))
         printWindow.open
       })
   }
+
+  spReceiptRegister(){
+    var spreceiptfromDate2 = this.reportForm.get('spreceiptfromDate').value;
+    var fromDate = this.pipe.transform(spreceiptfromDate2, 'dd-MMM-yyyy');
+    var spreceipttoDate2 = this.reportForm.get('spreceipttoDate').value;
+    var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
+    const fileName = 'download.pdf';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.spReceiptRegisterReport(fromDate,toDate,sessionStorage.getItem('locId'),sessionStorage.getItem('deptId'))
+      .subscribe(data => {
+        var blob = new Blob([data], { type: 'application/pdf' });
+        var url = URL.createObjectURL(blob);
+        var printWindow = window.open(url, '', 'width=800,height=500');
+        printWindow.open
+      })
+  }
+
+
+
+
+  SPdebtorsReport(){
+    var invcDt2 = this.reportForm.get('invcDt1').value;
+    var invcDt1 = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
+    const fileName = 'download.pdf';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.SPDebtorReport(invcDt1,sessionStorage.getItem('locId'))
+      .subscribe(data => {
+        var blob = new Blob([data], { type: 'application/pdf' });
+        var url = URL.createObjectURL(blob);
+        var printWindow = window.open(url, '', 'width=800,height=500');
+        printWindow.open
+      })
+  }
+
+
+
+  spstktrfMd(spstktrfMdToLoc){
+    var invcDt2 = this.reportForm.get('spstktrfMdfromDate').value;
+    var invcDt1 = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
+    var invcDt3 = this.reportForm.get('spstktrfMdtoDate').value;
+    var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');
+    // var spstktrfMdToLoc=this.reportForm.get('spstktrfMdToLoc');
+    const fileName = 'download.pdf';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.spstktrfMdReport(invcDt1,invcDt4,sessionStorage.getItem('locId'),spstktrfMdToLoc)
+      .subscribe(data => {
+        var blob = new Blob([data], { type: 'application/pdf' });
+        var url = URL.createObjectURL(blob);
+        var printWindow = window.open(url, '', 'width=800,height=500');
+        printWindow.open
+      })
+  }
+
 
 
   spstktrfRecived(){
@@ -457,6 +325,8 @@ this.service.getLocationSearch1(sessionStorage.getItem('ouId'))
         printWindow.open
       })
   }
+
+
 
 
   spstktrfRecivedSum(){
@@ -484,4 +354,163 @@ this.service.getLocationSearch1(sessionStorage.getItem('ouId'))
   close() {
     this.location1.back();
   }
+
+
+// old //////
+
+
+  // performaReg(){
+  //   var invcDt2 = this.reportForm.get('performafromDate').value;
+  //   var invcDt1 = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
+  //   var invcDt3 = this.reportForm.get('performatoDate').value;
+  //   var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');
+  //   const fileName = 'download.pdf';
+  //   const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+  //   this.reportService.performaRegister(invcDt1,invcDt4,sessionStorage.getItem('locId'))
+  //     .subscribe(data => {
+  //       var blob = new Blob([data], { type: 'application/pdf' });
+  //       var url = URL.createObjectURL(blob);
+  //       var printWindow = window.open(url, '', 'width=800,height=500');
+  //       printWindow.open
+  //     })
+  // }
+
+
+
+
+
+
+  // spstktrfMdSummary(spstktrfMdSumToLoc){
+  //   var invcDt2 = this.reportForm.get('spstktrfMdSumfromDate').value;
+  //   var invcDt1 = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
+  //   var invcDt3 = this.reportForm.get('spstktrfMdSumtoDate').value;
+  //   var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');
+  //   const fileName = 'download.pdf';
+  //   const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+  //   this.reportService.spstktrfMdSummaryReport(invcDt1,invcDt4,sessionStorage.getItem('locId'),spstktrfMdSumToLoc)
+  //     .subscribe(data => {
+  //       var blob = new Blob([data], { type: 'application/pdf' });
+  //       var url = URL.createObjectURL(blob);
+  //       var printWindow = window.open(url, '', 'width=800,height=500');
+  //       printWindow.open
+  //     })
+  // }
+
+
+  // getInvItemId($event)
+  // {
+  //    let userId=(<HTMLInputElement>document.getElementById('invItemIdFirstWay')).value;
+  //    this.userList2=[];
+  //    if (userId.length > 2) {
+  //     if ($event.timeStamp - this.lastkeydown1 > 200) {
+  //       this.userList2 = this.searchFromArray1(this.ItemIdList, userId);
+  //     }
+  //   }
+  // }
+  // searchFromArray1(arr, regex) {
+  //   let matches = [], i;
+  //   for (i = 0; i < arr.length; i++) {
+  //     if (arr[i].match(regex)) {
+  //       matches.push(arr[i]);
+  //     }
+  //   }
+  //   return matches;
+  // };
+
+
+  // onOptioninvItemIdSelectedSingle(mItem) {
+  //   let selectedValue = this.ItemIdList.find(v => v.SEGMENT == mItem);
+  //     if( selectedValue != undefined){
+  //      console.log(selectedValue);
+  //     this.searchItemId=selectedValue.itemId;
+  //     this.searchItemName=selectedValue.DESCRIPTION;
+  //     this.searchItemCode=selectedValue.SEGMENT;
+  //   }
+
+  // }
+
+
+
+
+  // stklgrt(stklgrsubInv,searchItemCode,stkLgrUserName){
+  //   var invcDt2 = this.reportForm.get('stockLegfromDate').value;
+  //   var invcDt1 = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
+  //   var invcDt3 = this.reportForm.get('stockLegtoDate').value;
+  //   var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');
+  //   const fileName = 'download.pdf';
+  //   const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+  //   this.reportService.stklgrtReport(invcDt1,invcDt4,stklgrsubInv,searchItemCode,sessionStorage.getItem('locId'),stkLgrUserName)
+  //     .subscribe(data => {
+  //       var blob = new Blob([data], { type: 'application/pdf' });
+  //       var url = URL.createObjectURL(blob);
+  //       var printWindow = window.open(url, '', 'width=800,height=500');
+  //       printWindow.open
+  //     })
+  // }
+
+
+  // spIssSmry(){
+  //   var spreceiptfromDate2 = this.reportForm.get('spIssSmryfromDate').value;
+  //   var fromDate = this.pipe.transform(spreceiptfromDate2, 'dd-MMM-yyyy');
+  //   var spreceipttoDate2 = this.reportForm.get('spIssSmrytoDate').value;
+  //   var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
+  //   const fileName = 'download.pdf';
+  //   const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+  //   this.reportService.spIssSmryReport(fromDate,toDate,sessionStorage.getItem('locId'))
+  //     .subscribe(data => {
+  //       var blob = new Blob([data], { type: 'application/pdf' });
+  //       var url = URL.createObjectURL(blob);
+  //       var printWindow = window.open(url, '', 'width=800,height=500');
+  //       printWindow.open
+  //     })
+  // }
+
+
+  // spproforma(){
+  //   var spreceiptfromDate2 = this.reportForm.get('spproformafromDate').value;
+  //   var fromDate = this.pipe.transform(spreceiptfromDate2, 'dd-MMM-yyyy');
+  //   var spreceipttoDate2 = this.reportForm.get('spproformatoDate').value;
+  //   var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
+  //   const fileName = 'download.pdf';
+  //   const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+  //   this.reportService.spproformaReport(fromDate,toDate,sessionStorage.getItem('locId'))
+  //     .subscribe(data => {
+  //       var blob = new Blob([data], { type: 'application/pdf' });
+  //       var url = URL.createObjectURL(blob);
+  //       var printWindow = window.open(url, '', 'width=800,height=500');
+  //       printWindow.open
+  //     })
+  // }
+
+
+ 
+
+
+
+
+
+  // sppurRegidetail(){
+  //   var spreceiptfromDate2 = this.reportForm.get('sppurRegidetailfromDate').value;
+  //   var fromDate = this.pipe.transform(spreceiptfromDate2, 'dd-MMM-yyyy');
+  //   var spreceipttoDate2 = this.reportForm.get('sppurRegidetailtoDate').value;
+  //   var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
+  //   const fileName = 'download.pdf';
+  //   const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+  //   this.reportService.sppurRegidetailReport(fromDate,toDate,sessionStorage.getItem('locId'),sessionStorage.getItem('deptId'))
+  //     .subscribe(data => {
+  //       var blob = new Blob([data], { type: 'application/pdf' });
+  //       var url = URL.createObjectURL(blob);
+  //       var printWindow = window.open(url, '', 'width=800,height=500');
+  //       printWindow.open
+  //     })
+  // }
+
+
+
+
+
+
+
+
+
 }

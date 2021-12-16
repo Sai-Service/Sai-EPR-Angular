@@ -1936,6 +1936,15 @@ export class CounterSaleComponent implements OnInit {
                             controlinv.controls[k].patchValue({ frmLocatorId: lotList });
                             controlinv.controls[k].patchValue({ onHandQty: 0 });
                             controlinv.controls[k].get('frmLocatorId').disable()
+                            var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+                            controlinv.controls[k].patchValue({ Avalqty: '' });             
+                            controlinv.controls[k].patchValue({ pricingQty: '' }); 
+                            controlinv.controls[k].patchValue({ orderedItem: '' }); 
+                            controlinv.controls[k].patchValue({ orderedItem: '' }); 
+                            controlinv.controls[k].patchValue({ unitSellingPrice: '' }); 
+                            controlinv.controls[k].patchValue({ taxCategoryName: '' }); 
+                            controlinv.controls[k].patchValue({hsnSacCode:''});
+                            this.setFocus('itemSeg' + k);
                             return;
                           } else {
                             this.getfrmSubLoc = data;
@@ -2137,10 +2146,19 @@ export class CounterSaleComponent implements OnInit {
             trxLnArr1.controls[i].patchValue({ Avalqty: 0 });
           }
           this.setFocus('pricingQty' + i);
+          
         })
     }
     else {
-      alert('Locator Not Found!.')
+      alert('Locator Not Found!.');
+      var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+      trxLnArr1.controls[i].patchValue({ Avalqty: '' });             
+      trxLnArr1.controls[i].patchValue({ pricingQty: '' }); 
+      trxLnArr1.controls[i].patchValue({ orderedItem: '' }); 
+      trxLnArr1.controls[i].patchValue({ orderedItem: '' }); 
+      trxLnArr1.controls[i].patchValue({ unitSellingPrice: '' }); 
+      trxLnArr1.controls[i].patchValue({ taxCategoryName: '' }); 
+      this.setFocus('itemSeg' + i);
     }
   }
 

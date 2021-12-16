@@ -14,14 +14,50 @@
                 <th scope="col">Parameters</th>
                 <th scope="col">View Report</th>
             </tr>
-            <tr class="ItemStyle" style="text-decoration:none;font-size: 14px;">
-                <td style="border: 1px solid black;padding-left: 5px;">Sai Debtors</td>
+            <tr>
+                <td style="border: 1px solid black;padding-left: 5px;">Purachase Register Details </td>
                 <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
                     <table style="width: 100%;">
                         <tr>
+                            <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="spcreditnotregfromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
                             <td>To&nbsp;Date&nbsp;</td>&nbsp;
                             <td>
-                                <input type="date" class="form-control"  formControlName="invcDt1"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                                <input type="date" class="form-control"  formControlName="spcreditnotregtoDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Location&nbsp;Id&nbsp;</td>&nbsp;
+                               <td>
+                                <input disabled type="text" class="form-control"  formControlName="location" >
+                            </td> 
+
+                        </tr>
+                    </table>
+                </td>
+                <td style="border: 1px solid black;padding-left: 5px;">
+                    <button class="btn-primary" (click)="spcreditnotreg()">View Report</button>
+                </td>
+            </tr>
+
+            <tr>
+                <td style="border: 1px solid black;padding-left: 5px;">Spares Purchase Register - Summary</td>
+                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="sppurRegiSummfromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="sppurRegiSummtoDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
                             </td>
                         </tr>
                         <tr>
@@ -30,19 +66,102 @@
                                 <input disabled type="text" class="form-control"  formControlName="location" >
                             </td>
                         </tr>
+                        <tr>
+                            <td>Department&nbsp;Id&nbsp;</td>&nbsp; 
+                            <td>
+                                <input disabled type="text" class="form-control"  formControlName="deptId" >
+                            </td>
+                        </tr>
                     </table>
                 </td>
                 <td style="border: 1px solid black;padding-left: 5px;">
-                    <!-- <a   (click)="SPdebtorsReport()" href="ViewReport">View Report</a> -->
-                    <button class="btn-primary" (click)="SPdebtorsReport()">View Report</button>
+                    <button class="btn-primary" (click)="sppurRegiSumm()">View Report</button>
                 </td>
             </tr>
+
+
+            <tr>
+                <td style="border: 1px solid black;padding-left: 5px;">Spares Issue Details Report</td>
+                <td style="width: 50%;border: 1px solid black;padding-left: 5px;">
+                    <table style="width: 100%;">
+                    <tr>
+                        <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
+                        <td>
+                            <input type="date" class="form-control"  formControlName="sidfromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>To&nbsp;Date&nbsp;</td>&nbsp;
+                        <td>
+                            <input type="date" class="form-control"  formControlName="sidtoDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Location&nbsp;Id&nbsp;</td>&nbsp;
+                        <td>
+                         <input disabled type="text" class="form-control"  formControlName="location" >
+                     </td>
+                    </tr>
+                    </table>
+                </td>
+                <td style="border: 1px solid black;padding-left: 5px;">
+                    <button class="btn-primary" (click)="spIssueDetails()">View Report</button>
+                </td>
+            </tr>
+
+            <tr>
+                <td style="border: 1px solid black;padding-left: 5px;">Spares Issue Summary</td>
+                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="spIssueSummfromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="spIssueSummtoDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Location&nbsp;Id&nbsp;</td>&nbsp;
+                               <td>
+                                <input disabled type="text" class="form-control"  formControlName="location" >
+                            </td>
+                        </tr>
+                       
+                    </table>
+                </td>
+                <td style="border: 1px solid black;padding-left: 5px;">
+                    <button class="btn-primary" (click)="spIssueSummary()">View Report</button>
+                </td>
+            </tr>
+
+            <tr>
+                <td style="border: 1px solid black;padding-left: 5px;">Spares Closing Stock Report</td>
+                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>Location&nbsp;Id&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
+                               <td>
+                                <input disabled type="text" class="form-control"  formControlName="location" >
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="border: 1px solid black;padding-left: 5px;">
+                    <button class="btn-primary" (click)="spclosstrock()">View Report</button>
+                </td>
+            </tr>
+
             <tr>
                 <td style="border: 1px solid black;padding-left: 5px;">Spares Receipt Register</td>
                 <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
                     <table style="width: 100%;">
                         <tr>
-                            <td>From&nbsp;Date&nbsp;</td>&nbsp;
+                            <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
                             <td>
                                 <input type="date" class="form-control"  formControlName="spreceiptfromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
                             </td>
@@ -71,77 +190,16 @@
                     <button class="btn-primary" (click)="spReceiptRegister()">View Report</button>
                 </td>
             </tr>
-            <tr>
-                <td style="border: 1px solid black;padding-left: 5px;">Spares Issue Details Report</td>
-                <td style="width: 50%;border: 1px solid black;padding-left: 5px;">
-                    <table style="width: 100%;">
-                    <tr>
-                        <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
-                        <td>
-                            <input type="date" class="form-control"  formControlName="sidfromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>To&nbsp;Date&nbsp;</td>&nbsp;
-                        <td>
-                            <input type="date" class="form-control"  formControlName="sidtoDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Location&nbsp;Id&nbsp;</td>&nbsp;
-                        <td>
-                         <input disabled type="text" class="form-control"  formControlName="location" >
-                     </td>
-                    </tr>
-                    </table>
-                </td>
-                <td style="border: 1px solid black;padding-left: 5px;">
-                    <button class="btn-primary" (click)="spIssueDetails()">View Report</button>
-                </td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black;padding-left: 5px;">Spares Issue Summary</td>
+
+
+            <tr class="ItemStyle" style="text-decoration:none;font-size: 14px;">
+                <td style="border: 1px solid black;padding-left: 5px;">Sai Debtors</td>
                 <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
                     <table style="width: 100%;">
                         <tr>
-                            <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
+                            <td>To&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
                             <td>
-                                <input type="date" class="form-control"  formControlName="spIssueSummfromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
-                            <td>
-                                <input type="date" class="form-control"  formControlName="spIssueSummtoDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Location&nbsp;Id&nbsp;</td>&nbsp;
-                               <td>
-                                <input disabled type="text" class="form-control"  formControlName="location" >
-                            </td>
-                        </tr>
-                       
-                    </table>
-                </td>
-                <td style="border: 1px solid black;padding-left: 5px;">
-                    <button class="btn-primary" (click)="spIssueSummary()">View Report</button>
-                </td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black;padding-left: 5px;">Proforma Register</td>
-                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
-                    <table style="width: 100%;">
-                        <tr>
-                            <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
-                            <td>
-                                <input type="date" class="form-control"  formControlName="performafromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
-                            <td>
-                                <input type="date" class="form-control"  formControlName="performatoDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                                <input type="date" class="form-control"  formControlName="invcDt1"  max="{{minDate | date:'yyyy-MM-dd'}}" >
                             </td>
                         </tr>
                         <tr>
@@ -153,15 +211,19 @@
                     </table>
                 </td>
                 <td style="border: 1px solid black;padding-left: 5px;">
-                    <button class="btn-primary" (click)="performaReg()">View Report</button>
+                    <!-- <a   (click)="SPdebtorsReport()" href="ViewReport">View Report</a> -->
+                    <button class="btn-primary" (click)="SPdebtorsReport()">View Report</button>
                 </td>
             </tr>
+          
+           
+
             <tr>
                 <td style="border: 1px solid black;padding-left: 5px;">Spares Stock Transfer Made Report - Details</td>
                 <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
                     <table style="width: 100%;">
                         <tr>
-                            <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
+                            <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
                             <td>
                                 <input type="date" class="form-control"  formControlName="spstktrfMdfromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
                             </td>
@@ -195,345 +257,10 @@
                     <button class="btn-primary" (click)="spstktrfMd(spstktrfMdToLoc)">View Report</button>
                 </td>
             </tr>
-            <tr>
-                <td style="border: 1px solid black;padding-left: 5px;">Spares Stock Transfer Made Report - Summary</td>
-                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
-                    <table style="width: 100%;">
-                        <tr>
-                            <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
-                            <td>
-                                <input type="date" class="form-control"  formControlName="spstktrfMdSumfromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
-                            <td>
-                                <input type="date" class="form-control"  formControlName="spstktrfMdSumtoDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>From&nbsp;Location&nbsp;</td>&nbsp;
-                               <td>
-                                <input disabled type="text" class="form-control"  formControlName="location" >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>To&nbsp;Location&nbsp;</td>&nbsp;
-                            <td>
-                                <select formControlName="spstktrfMdSumToLoc" id="spstktrfMdSumToLoc" [(ngModel)]="spstktrfMdSumToLoc" class="form-control">
-                                    <option>--Select--</option>
-                                    <option *ngFor="let sc of  BillShipList" [ngValue]="sc.locId">
-                                        {{sc.locCode}}
-                                    </option>
-                                </select>
-                         </td>
-                        </tr>
-                    </table>
-                </td>
-                <td style="border: 1px solid black;padding-left: 5px;">
-                    <button class="btn-primary" (click)="spstktrfMdSummary(spstktrfMdSumToLoc)">View Report</button>
-                </td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black;padding-left: 5px;">Stock Ledger</td>
-                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
-                    <table style="width: 100%;">
-                        <tr>
-                            <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
-                            <td>
-                                <input type="date" class="form-control"  formControlName="stockLegfromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
-                            <td>
-                                <input type="date" class="form-control"  formControlName="stockLegtoDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>SubInventory&nbsp;</td>&nbsp;
-                            <td>
-                                <select formControlName="stklgrsubInv" id="stklgrsubInv" [(ngModel)]="stklgrsubInv" class="form-control">
-                                    <option>--Select--</option>
-                                    <option value="SP">SP</option>
-                                    <option value="AC">AC</option>
-                                </select>
-                         </td>
-                        </tr>
-                        <tr>
-                            <td>Item&nbsp;</td>&nbsp;
-                            <td>
-                                <input class="form-control" type="text" (keyup)="getInvItemId($event)" formControlName="searchItemCode" 
-                   id="invItemIdFirstWay"  list="dynmicUserIds1" 
-                   class="form-control"    (ngModelChange)="onOptioninvItemIdSelectedSingle($event)"
-                   style="background-color: yellow;"  />
-                  <datalist id="dynmicUserIds1" >
-                    <option *ngFor="let item of ItemIdList"  [ngValue]="item.SEGMENT">
-                      {{item.SEGMENT}} 
-                  </datalist>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>From&nbsp;Location&nbsp;</td>&nbsp;
-                               <td>
-                                <input disabled type="text" class="form-control"  formControlName="location" >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>User&nbsp;Name&nbsp;</td>&nbsp;
-                               <td>
-                                <input  type="text" class="form-control"  formControlName="stkLgrUserName" [(ngModel)]="stkLgrUserName" >
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-                <td style="border: 1px solid black;padding-left: 5px;">
-                    Currentaly Not Avaiable
-                    <!-- <button class="btn-primary" (click)="stklgrt(stklgrsubInv,searchItemCode,stkLgrUserName)">View Report</button> -->
-                </td>
-            </tr>   
-            <tr>
-                <td style="border: 1px solid black;padding-left: 5px;">Spares Receipt Register</td>
-                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
-                    <table style="width: 100%;">
-                        <tr>
-                            <td>From&nbsp;Date&nbsp;</td>&nbsp;
-                            <td>
-                                <input type="date" class="form-control"  formControlName="spreceiptfromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
-                            <td>
-                                <input type="date" class="form-control"  formControlName="spreceipttoDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Location&nbsp;Id&nbsp;</td>&nbsp;
-                               <td>
-                                <input disabled type="text" class="form-control"  formControlName="location" >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Department&nbsp;Id&nbsp;</td>&nbsp; 
-                            <td>
-                                <input disabled type="text" class="form-control"  formControlName="deptId" >
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-                <td style="border: 1px solid black;padding-left: 5px;">
-                    <button class="btn-primary" (click)="spReceiptRegister()">View Report</button>
-                </td>
-            </tr>
-      
-            <tr>
-                <td style="border: 1px solid black;padding-left: 5px;">Spares Issue Summary Report</td>
-                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
-                    <table style="width: 100%;">
-                        <tr>
-                            <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
-                            <td>
-                                <input type="date" class="form-control"  formControlName="spIssSmryfromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
-                            <td>
-                                <input type="date" class="form-control"  formControlName="spIssSmrytoDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Location&nbsp;Id&nbsp;</td>&nbsp;
-                               <td>
-                                <input disabled type="text" class="form-control"  formControlName="location" >
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-                <td style="border: 1px solid black;padding-left: 5px;">
-                    <button class="btn-primary" (click)="spIssSmry()">View Report</button>
-                </td>
-            </tr>
-
-            
-            <tr>
-                <td style="border: 1px solid black;padding-left: 5px;">Spares Proforma Register</td>
-                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
-                    <table style="width: 100%;">
-                        <tr>
-                            <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
-                            <td>
-                                <input type="date" class="form-control"  formControlName="spproformafromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
-                            <td>
-                                <input type="date" class="form-control"  formControlName="spproformatoDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Location&nbsp;Id&nbsp;</td>&nbsp;
-                               <td>
-                                <input disabled type="text" class="form-control"  formControlName="location" >
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-                <td style="border: 1px solid black;padding-left: 5px;">
-                    <button class="btn-primary" (click)="spproforma()">View Report</button>
-                </td>
-            </tr>
-        
-            <tr>
-                <td style="border: 1px solid black;padding-left: 5px;">Spares Credit Note Register </td>
-                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
-                    <table style="width: 100%;">
-                        <tr>
-                            <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
-                            <td>
-                                <input type="date" class="form-control"  formControlName="spcreditnotregfromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
-                            <td>
-                                <input type="date" class="form-control"  formControlName="spcreditnotregtoDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Location&nbsp;Id&nbsp;</td>&nbsp;
-                               <td>
-                                <input disabled type="text" class="form-control"  formControlName="location" >
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-                <td style="border: 1px solid black;padding-left: 5px;">
-                    <button class="btn-primary" (click)="spcreditnotreg()">View Report</button>
-                </td>
-            </tr>
-      
-            <tr>
-                <td style="border: 1px solid black;padding-left: 5px;">Spares Purchase Register - Summary</td>
-                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
-                    <table style="width: 100%;">
-                        <tr>
-                            <td>From&nbsp;Date&nbsp;</td>&nbsp;
-                            <td>
-                                <input type="date" class="form-control"  formControlName="sppurRegiSummfromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
-                            <td>
-                                <input type="date" class="form-control"  formControlName="sppurRegiSummtoDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Location&nbsp;Id&nbsp;</td>&nbsp;
-                               <td>
-                                <input disabled type="text" class="form-control"  formControlName="location" >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Department&nbsp;Id&nbsp;</td>&nbsp; 
-                            <td>
-                                <input disabled type="text" class="form-control"  formControlName="deptId" >
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-                <td style="border: 1px solid black;padding-left: 5px;">
-                    <button class="btn-primary" (click)="sppurRegiSumm()">View Report</button>
-                </td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black;padding-left: 5px;">Spares Purchase Reister - Details</td>
-                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
-                    <table style="width: 100%;">
-                        <tr>
-                            <td>From&nbsp;Date&nbsp;</td>&nbsp;
-                            <td>
-                                <input type="date" class="form-control"  formControlName="sppurRegidetailfromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
-                            <td>
-                                <input type="date" class="form-control"  formControlName="sppurRegidetailtoDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Location&nbsp;Id&nbsp;</td>&nbsp;
-                               <td>
-                                <input disabled type="text" class="form-control"  formControlName="location" >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Department&nbsp;Id&nbsp;</td>&nbsp; 
-                            <td>
-                                <input disabled type="text" class="form-control"  formControlName="deptId" >
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-                <td style="border: 1px solid black;padding-left: 5px;">
-                    <button class="btn-primary" (click)="sppurRegidetail()">View Report</button>
-                </td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black;padding-left: 5px;">Spares Purchase Reister - Details</td>
-                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
-                    <table style="width: 100%;">
-                        <tr>
-                            <td>From&nbsp;Date&nbsp;</td>&nbsp;
-                            <td>
-                                <input type="date" class="form-control"  formControlName="sppurRegidetailfromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
-                            <td>
-                                <input type="date" class="form-control"  formControlName="sppurRegidetailtoDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Location&nbsp;Id&nbsp;</td>&nbsp;
-                               <td>
-                                <input disabled type="text" class="form-control"  formControlName="location" >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Department&nbsp;Id&nbsp;</td>&nbsp; 
-                            <td>
-                                <input disabled type="text" class="form-control"  formControlName="deptId" >
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-                <td style="border: 1px solid black;padding-left: 5px;">
-                    <button class="btn-primary" (click)="sppurRegidetail()">View Report</button>
-                </td>
-            </tr>
-       
-            <tr>
-                <td style="border: 1px solid black;padding-left: 5px;">Spares Closing Stock Report</td>
-                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
-                    <table style="width: 100%;">
-                        <tr>
-                            <td>Location&nbsp;Id&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
-                               <td>
-                                <input disabled type="text" class="form-control"  formControlName="location" >
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-                <td style="border: 1px solid black;padding-left: 5px;">
-                    <button class="btn-primary" (click)="spclosstrock()">View Report</button>
-                </td>
-            </tr>
+          
+         
+         
+         
             <tr>
                 <td style="border: 1px solid black;padding-left: 5px;">Spares Stock Transfer Received Report - Details                </td>
                 <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
@@ -578,6 +305,8 @@
                     <button class="btn-primary" (click)="spstktrfRecived()">View Report</button>
                 </td>
             </tr>
+         
+         
             <tr>
                 <td style="border: 1px solid black;padding-left: 5px;">Spares Stock Transfer Received Report - Summary</td>
                 <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
@@ -622,6 +351,13 @@
                     <button class="btn-primary" (click)="spstktrfRecivedSum()">View Report</button>
                 </td>
             </tr>
+
+
+       
+       
+          
+         
+         
         </table>
     </div>
         <table class="center">
@@ -638,4 +374,14 @@
         </table>
 </form>
 
+
+
+
+
+<!-- <a href="#b0" id="b0-link" class="link" rel="b0">link b0</a>
+
+<a href="#b1" id="b1-link" class="link" rel="b1">link b1</a>
+
+<div class='box' id='b0'> abstract content </div>
+<div class='box' id='b1'> introduction content </div> -->
 
