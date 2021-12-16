@@ -1482,6 +1482,7 @@ getSearchByTrans(reqNo):Observable<any>{
   return this.http.get(this.ServerUrl+`/mtrlIssue/reqNum/${reqNo}`)
 
 }
+kkkkk
 getItemDetail(itemid):Observable<any>{
   return this.http.get(this.ServerUrl +`/itemMst/${itemid}`)
 }
