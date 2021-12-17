@@ -1536,6 +1536,12 @@
                                             </button>
                                         </div>
                                     </td>
+                                    <td>
+                                        <button type="submit" class="btn btn-primary" id="register" (click)="refresh()">Clear</button>
+                                    </td>
+                                    <td>
+                                        <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
+                                    </td>
                                 </tr>
                             </table>
 
@@ -1551,19 +1557,15 @@
                     <ng-template #elsetcsBuuton>
                    
                     </ng-template>
-                    <td>
-                        <div
-                            *ngIf="displaycounterSaleOrderSave; then thencounterSaleOrderSave; else elsecounterSaleOrderSave">
-                        </div>
+                    <div *ngIf="displaycounterSaleOrderSave; then thencounterSaleOrderSave; else elsecounterSaleOrderSave"> </div>
                         <ng-template #thencounterSaleOrderSave>
-                            <!-- [disabled]="isDisabled" -->
+                    <td>
                             <button type="submit" [disabled]="isDisabled"  class="btn btn-primary" id="register" style="width: fit-content;"
                                 (click)="counterSaleOrderSave()">Create Order</button>
-                        </ng-template>
-                        <ng-template #elsecounterSaleOrderSave>
-                            <button disabled type="submit" class="btn btn-primary" id="register"
-                                (click)="counterSaleOrderSave()">Save</button>
-                        </ng-template>
+                       
+                            <!-- <button disabled type="submit" class="btn btn-primary" id="register"
+                                (click)="counterSaleOrderSave()">Save</button> -->
+                       
                     </td>
                     <td>
                         <button type="submit" class="btn btn-primary" id="register" (click)="refresh()">Clear</button>
@@ -1580,6 +1582,10 @@
                                 [routerLink]="['/admin/transaction/PaymentReceipt',orderNumber]">Payment</button>
                         </ng-template>
                     </td>
+                </ng-template>
+                <ng-template #elsecounterSaleOrderSave>
+                </ng-template>
+                   
                 </tr>
             </table>
         </ng-template>

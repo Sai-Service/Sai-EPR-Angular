@@ -929,7 +929,10 @@ export class CounterSaleComponent implements OnInit {
             }
             if (data.obj.orderStatus === 'INVOICED' && data.obj.gatePassYN === 'Y') {
               this.displayAfterGatePass = false;
-              this.isVisible = false;
+              // this.isVisible = false;
+              this.displaypickTicketUpdate=true;
+              this.displaypickTicketInvoice=true;
+              this.PaymentButton=true;
               this.CounterSaleOrderBookingForm.disable();
             } 
            else if (data.obj.orderStatus === 'INVOICED' && data.obj.gatePassYN === 'N'){
@@ -938,6 +941,9 @@ export class CounterSaleComponent implements OnInit {
             this.isVisible = true;
             this.displaypickTicketUpdate=true;
             this.displaycounterSaleAllButtons=false;
+            this.CounterSaleOrderBookingForm.get('boxQty').enable();
+            this.CounterSaleOrderBookingForm.get('driverName').enable();
+            this.CounterSaleOrderBookingForm.get('vehNo').enable();
            }
             else {
               this.displayAfterGatePass = true;
