@@ -1068,6 +1068,7 @@ export class CounterSaleComponent implements OnInit {
     this.orderManagementService.genrateGatePass(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
+        this.CounterSaleOrderBookingForm.reset();
         this.OrderFind(this.orderNumber);
         // this.displayViewGatePass=false;
         // window.location.reload();
