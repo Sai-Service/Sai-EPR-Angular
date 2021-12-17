@@ -88,7 +88,6 @@ export class StockTransferRow {
   segment: string;
   Locator: string;
   quantity: number;
-
 }
 
 export class reserveLine {
@@ -100,6 +99,9 @@ invItemId:number;
 locatorId:number;
 rate:number;
 }
+
+
+
 
 @Component({
   selector: 'app-counter-sale',
@@ -113,7 +115,7 @@ rate:number;
 
 
 
-export class CounterSaleComponent implements OnInit {
+export class CounterSaleComponent implements OnInit,OnDestroy {
   itemSeg: string = "";
   CounterSaleOrderBookingForm: FormGroup;
   lnflowStatusCode: 'BOOKED';
@@ -128,6 +130,9 @@ export class CounterSaleComponent implements OnInit {
   tcsYN: string;
   tcsPer: number;
   tcsAmt: number;
+  creditDays:number;
+  daysMsg:string;
+  amountMsg:string;
   transactionTypeId: number;
   customerSiteId: number;
   reservedQty: number;
@@ -393,6 +398,9 @@ export class CounterSaleComponent implements OnInit {
       taxCategoryName: [''],
       disPer: [''],
       creditAmt:[''],
+      creditDays:[''],
+      daysMsg:[''],
+      amountMsg:[''],
       refCustNo: [''],
       custPoDate:[''],
       discAmt: [''],
@@ -487,6 +495,20 @@ export class CounterSaleComponent implements OnInit {
   }
 
 
+  @HostListener('window:beforeunload', ['$event'])
+  unloadHandler(event: Event) {
+ 
+    console.log("closing the window!")
+    return true;
+  }
+  
+  @HostListener('window:unload', ['$event'])
+  unloadHandler2(event: Event) {
+   
+    console.log("closing the window!")
+    return true;
+  }
+
 
   orderlineDetailsArray(): FormArray {
     return <FormArray>this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList')
@@ -509,7 +531,7 @@ export class CounterSaleComponent implements OnInit {
       itemId: [],
       orderedItem: [''],
       pricingQty: ['', [Validators.required]],
-      orderedQty: [''],
+      orderedQty: ['0'],
       unitSellingPrice: ['0'],
       taxCategoryName: ['', [Validators.required]],
       baseAmt: ['0'],
@@ -927,6 +949,19 @@ export class CounterSaleComponent implements OnInit {
               this.CounterSaleOrderBookingForm.patchValue({ walkCustPan: temp[1] });
               this.CounterSaleOrderBookingForm.patchValue({ walkCustaddres: temp[2] });
             }
+            if (data.obj.orderStatus != 'INVOICED' && data.obj.trxNumber != null || data.obj.trxNumber !=''){
+              if (this.allDatastore.crdAmt != undefined && this.allDatastore.crdAmt != null  && this.allDatastore.crdAmt !=''){
+                if (this.allDatastore.totAmt >= this.allDatastore.crdAmt){
+                  alert('Credit Amount is exceeded.! ... Credit Amount is' +' '+ this.allDatastore.crdAmt +' '+ 'Total Amount is' +' '+ this.allDatastore.totAmt+'.!');
+                  // this.setFocus('itemSeg'+lineIndex);
+                  this.isDisabled10 = true;
+                  return;
+                }
+                else{
+                  this.isDisabled10 = false;
+                }
+              }
+            }
             if (data.obj.orderStatus === 'INVOICED' && data.obj.gatePassYN === 'Y') {
               this.displayAfterGatePass = false;
               // this.isVisible = false;
@@ -1215,13 +1250,23 @@ export class CounterSaleComponent implements OnInit {
       this.setFocus('itemSeg' + lnNo);
       return;
     }
+  
     let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     var itemType = (controlinv.controls[lnNo]).get('invType').value;
     (controlinv.controls[lnNo]).patchValue({ 'segment': '' });
+   
     //var itemType = "SS_SPARES";
     // if (this.itemMap2.get(lnNo) != undefined) {
     //   return;
     // }
+  
+    let controlinvArray = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
+    console.log(controlinvArray);
+    for (let j=0; j<controlinvArray.length; j++){
+      if (itemDesc === controlinvArray[j].segment) {
+        alert('Item Already Present.!'+' '+ 'Line Number'+' '+(j+1)+'.!')
+      }
+    }
     if (this.itemMap.has(itemDesc)) {
       var itemsList = this.itemMap.get(itemDesc);
       this.itemMap2.set(lnNo, this.itemMap.get(itemDesc));
@@ -1440,13 +1485,14 @@ export class CounterSaleComponent implements OnInit {
             if (data.code === 200) {
               // alert(data.obj);
               var credAmt=this.CounterSaleOrderBookingForm.get('creditAmt').value;
-              var newCrAmt=Number(credAmt)-Number(data.obj);
+              var newCrAmt=Number(credAmt)-Number(data.obj.outStandingAmt);
               this.CounterSaleOrderBookingForm.patchValue({creditAmt:newCrAmt});
-
+              this.CounterSaleOrderBookingForm.patchValue({creditDays:data.obj.creditDays});
+              this.CounterSaleOrderBookingForm.patchValue({daysMsg:data.obj.daysMsg});
             }
           })
     }
-
+  
   }
   // onOptionsSelectedcustSiteName(siteName) {
   //   // alert(siteName);
@@ -1576,8 +1622,19 @@ export class CounterSaleComponent implements OnInit {
       trxLnArr1.controls[index].patchValue({ orderedQty: bckOrd });
       trxLnArr1.controls[index].patchValue({ pricingQty: Avalqty });
     }
+    var transactionTypeName= this.CounterSaleOrderBookingForm.get('transactionTypeName').value;
+    var createOrderType= this.CounterSaleOrderBookingForm.get('createOrderType').value;
+    
     let selloc = this.locData[index].find(d => Number(d.ROWNUM) === Number(locator));
     //alert(selloc.segmentName +'--'+selloc.onHandQty);
+      // alert(createOrderType+'---'+ transactionTypeName.includes('Credit')+'---'+Avalqty)
+    if (createOrderType==='Pick Ticket' && transactionTypeName.includes('Credit') && Avalqty===0  ){
+      // alert(Avalqty);
+      var bckOrd = qty1 - Avalqty;
+      trxLnArr1.controls[index].patchValue({ orderedQty: bckOrd });
+      trxLnArr1.controls[index].patchValue({ pricingQty: 0 });
+      alert("Select Item not in Stock!!")
+    }
     if(qty1 > selloc.onHandQty ){
       alert("Item available with multiple price , Please check price and available quntity!!")
       qty1= selloc.onHandQty;
@@ -1585,6 +1642,8 @@ export class CounterSaleComponent implements OnInit {
       trxLnArr1.controls[index].patchValue({ pricingQty: selloc.onHandQty });
     
     }
+
+  
     //     alert("You can not enter more than available quantity!..");
     //     trxLnArr1.controls[index].patchValue({ pricingQty: '' });
     //     // (<any>trxLnArr1.controls[index].get('pricingQty')).nativeElement.focus();
@@ -2280,7 +2339,7 @@ export class CounterSaleComponent implements OnInit {
       if (orderLines[j].unitSellingPrice === '') {
         alert('Line No' + j + 'Amount is Zero please confirm')
       }
-      if (orderLines[j].pricingQty ===0){
+      if (orderLines[j].pricingQty ===0 && orderLines[j].orderedQty===0){
         alert('Line No'+' ' + j+1 +' '+ 'Quantity is Zero please confirm');
         this.closeResetButton = true;
         this.dataDisplay = ''
@@ -2476,11 +2535,11 @@ export class CounterSaleComponent implements OnInit {
       if (totAmt >= crdAmt){
         alert('Credit Amount is exceeded.! ... Credit Amount is' +' '+ crdAmt +' '+ 'Total Amount is' +' '+ totAmt+'.!');
         this.setFocus('itemSeg'+lineIndex);
-        this.isDisabled = true;
+        this.isDisabled10 = true;
         return;
       }
       else{
-        this.isDisabled = false;
+        this.isDisabled10 = false;
       }
     }
   }
@@ -2824,16 +2883,7 @@ export class CounterSaleComponent implements OnInit {
   }
 
 
-  qtyvalidation(i, uom, pricingQty) {
-    // alert(i + ' ' + uom + ' ' + pricingQty);
-    if (uom === 'NO') {
-      // alert(pricingQty);
-      pricingQty: [0 - 9]
-    }
-    else {
-      pricingQty: '[0-9\.\,]'
-    }
-  }
+ 
 
   hideloader() {
     document.getElementById('loading')
@@ -3051,9 +3101,9 @@ export class CounterSaleComponent implements OnInit {
     }
   }
 
-// ngOnDestroy(): void {
-// alert('Window Closed Directely.!');
-// return;
-// this.deleteReserve();    
-// }
+ngOnDestroy(): void {
+alert('Window Closed Directely.!');
+this.deleteReserve();  
+return;  
+}
 }
