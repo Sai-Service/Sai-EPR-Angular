@@ -228,15 +228,19 @@
                <input hidden formControlName="compileId" [(ngModel)]="compileId">
                <input hidden formControlName="compileLineId">
                 <td>
-                           <input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 100px;" (ngModelChange)="onOptiongetItem($event,trxLineIndex)" #Item/>
+                           <!-- <input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay" 
+                             list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 100px;" 
+                             (ngModelChange)="onOptiongetItem($event,trxLineIndex)" #Item/>
                 <datalist id="dynmicUserIds1">
                   <option *ngFor="let item of ItemIdList" [ngValue]="item.invItemId">{{item.SEGMENT}}
-                    </option>
-                   </datalist>
-                   <!-- <input list="dynmicUserIds1" (keyup)="filterRecord( $event,trxLineIndex)" type="text" formControlName="segment" (ngModelChange)="onOptiongetItem($event,trxLineIndex)" />
+                    </option> 
+                   </datalist>-->
+                   <input type="text"  list="dynmicUserIds1" (keyup)="filterRecord( $event,trxLineIndex)" 
+                   formControlName="segment"  />
+                   <!-- (ngModelChange)="onOptiongetItem($event,trxLineIndex)" -->
                   <datalist id="dynmicUserIds1">
                     <option  *ngFor="let item of ItemIdList">{{item.SEGMENT}}</option>
-                  </datalist> -->
+                  </datalist>
                    <span
                    *ngIf="getGroupControllinewise(trxLineIndex,'segment').touched && getGroupControllinewise(trxLineIndex,'segment').invalid" class="error">Valid Item
                   </span>
