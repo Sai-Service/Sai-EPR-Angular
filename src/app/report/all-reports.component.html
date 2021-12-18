@@ -21,13 +21,13 @@
                         <tr>
                             <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
                             <td>
-                                <input type="date" class="form-control"  formControlName="spcreditnotregfromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                                <input type="date" class="form-control"  formControlName="purRegFromDt"  max="{{minDate | date:'yyyy-MM-dd'}}" >
                             </td>
                         </tr>
                         <tr>
                             <td>To&nbsp;Date&nbsp;</td>&nbsp;
                             <td>
-                                <input type="date" class="form-control"  formControlName="spcreditnotregtoDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                                <input type="date" class="form-control"  formControlName="purRegToDt"  max="{{minDate | date:'yyyy-MM-dd'}}" >
                             </td>
                         </tr>
                         <tr>
@@ -40,7 +40,7 @@
                     </table>
                 </td>
                 <td style="border: 1px solid black;padding-left: 5px;">
-                    <button class="btn-primary" (click)="spcreditnotreg()">View Report</button>
+                    <button class="btn-primary" (click)="spPurReg()">View Report</button>
                 </td>
             </tr>
 
@@ -152,7 +152,7 @@
                     </table>
                 </td>
                 <td style="border: 1px solid black;padding-left: 5px;">
-                    <button class="btn-primary" (click)="spclosstrock()">View Report</button>
+                    <button class="btn-primary" (click)="spclosStock()">View Report</button>
                 </td>
             </tr>
 
