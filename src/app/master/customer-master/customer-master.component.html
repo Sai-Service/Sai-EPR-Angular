@@ -404,7 +404,8 @@
                                     <input formControlName="address1" value={{address1}}
                                         (keyup)="onKey($event)" class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.address1.errors }"
-                                        placeholder="Enter address (Miminum 10 characters)" style="width: 250px;">
+                                        placeholder="(Miminum 10 characters)" >
+                                        <!-- style="width: 250px;"> -->
                                     <div *ngIf="submitted && f.address1.errors" class="invalid-feedback">
                                         <div *ngIf="f.address1.errors.required">Address 1 cannot be blank</div>
                                         <div *ngIf="f.address1.errors.maxlength">Maximum 100 characters allowed</div>
@@ -420,7 +421,7 @@
                                     <input formControlName="address2" [(ngModel)]='address2' value={{address2}}
                                         (keyup)="onKey($event)" class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.address2.errors }"
-                                        placeholder="Enter address (Miminum 3 characters)">
+                                        placeholder="(Miminum 3 characters)">
                                     <div *ngIf="submitted && f.address2.errors" class="invalid-feedback">
                                         <div *ngIf="f.address2.errors.required">Address 2 cannot be blank</div>
                                        <div *ngIf="f.address2.errors.maxlength">Maximum 100 characters allowed</div>
@@ -580,7 +581,7 @@
                                         *ngIf="!customerMasterForm.get('mobile2').valid && customerMasterForm.get('mobile2').touched">Please
                                         Enter mobile must be 10 digit</span> -->
                                 </td>
-                                <td style="width: 10%" class="LabelFontStyle">&nbsp;Mobile&nbsp;3&nbsp;:&nbsp;</td>
+                                <td style="width: 10%" class="LabelFontStyle">&nbsp;WhatsApp&nbsp;No&nbsp;:&nbsp;</td>
                                 <td>
                                     <input  formControlName="mobile3" value={{mobile3}} class="form-control"
                                     [ngClass]="{ 'is-invalid': submitted && f.mobile3.errors }" placeholder="Enter Mobile 3"
