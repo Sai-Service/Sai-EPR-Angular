@@ -32,8 +32,8 @@
                                 value={{endDt}} max="{{minDate | date:'yyyy-MM-dd'}}">
                             </td>
                             <td>
-                                <button type="submit" class="btn btn-primary" id="search" (click)="getPO()">
-                                    Get&nbsp;PO&nbsp;List
+                                <button type="submit" class="btn btn-primary" id="search" (click)="getPO()" style="width:fit-content">
+                                    Get&nbsp;Order&nbsp;List
                                 </button>
                             </td>
                         </tr>
@@ -42,11 +42,17 @@
             </tr>
         </table>
         <br>
+        <table  class="GridFont"  style="font-size: 14px;border-color:#1f1e1e;border-collapse:collapse;width: 100%;text-align: center;">
+            <tr>
+                <td ><b>Total Order Count : {{orderListDetails.length}}</b></td>
+        </table>
         <div class="grid_scroll">
-        <table  class="GridFont"  style="border-color:#959595;border-collapse:collapse;width: 100%;">
-            <tr class="GridHeader" style="font-size: 14px;">
+        <table  class="GridFont"  style="border-color:#494949;border-collapse:collapse;width: 100%;">
+           
+            <tr class="GridHeader" style="font-size: 11px;">
                 <th >Order No.</th>
                 <th >Order Date</th>
+                <th >Customer Name</th>
                 <th >Invoice No.</th>
                 <th >Invoice Date</th>
                 <th >Receipt No.</th>
@@ -57,12 +63,13 @@
                 <th>Invoice Status</th>
 
             </tr>
-            <tr *ngFor="let com of orderListDetails ; let i= index" class="ItemStyle" style="text-decoration:none;font-size: 14px;">
-                <td style="border: 1px solid #000000;padding-left: 5px;padding-top: 10px;">
+            <tr *ngFor="let com of orderListDetails ; let i= index" class="ItemStyle" style="text-decoration:none;font-size: 11px;">
+                <td style="padding-left: 5px;padding-top: 10px;">
                     <a [routerLink]="['/admin/OrderManagement/CounterSaleOrder',com.orNum]"
                         href="{{orNum}}">{{com.orNum}}</a>
                 </td>
                 <td style="padding-left: 5px; text-align: center;">{{com.orDate}}</td>
+                <td style="padding-left: 5px; text-align: left;">{{com.custName}}</td>
                 <td style="padding-left: 5px; text-align: center;">{{com.invNum}}</td>
                 <td style="padding-left: 5px; text-align: center;">{{com.invDate}}</td>
                 <td *ngIf="isPending[i]" style="padding-left: 5px; text-align: center; background-color:orangered ;" >
