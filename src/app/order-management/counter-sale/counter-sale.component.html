@@ -877,12 +877,12 @@
                                 Credit&nbsp;Days&nbsp;:&nbsp;
                             </td>
                             <td>
-                                <input type="number" disabled formControlName="creditDays"  [(ngModel)]='creditDays' value={{creditDays}}
+                                <input type="number" disabled formControlName="creditDays"   value={{creditDays}}
                                 class="form-control"style="width: 80px;">
                             </td>
                             <td>
-                                <input type="text" disabled formControlName="daysMsg"  [(ngModel)]='daysMsg' value={{daysMsg}}
-                                class="form-control"style="width: 80px;">
+                                <input type="text" disabled formControlName="daysMsg"  value={{daysMsg}}
+                                class="form-control"style="width: 150px;">
                             </td>
                         </ng-template>
                         <div *ngIf="displaytcsYN; then thentcsYN; else elsetcsYN"> </div>
