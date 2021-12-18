@@ -123,15 +123,14 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   @HostListener('window:beforeunload', ['$event'])
   unloadHandler(event: Event) {
-   // this.ngOnDestroy();
-   this.service.getVariantList();
+ 
     console.log("closing the window!")
     return true;
   }
   
   @HostListener('window:unload', ['$event'])
   unloadHandler2(event: Event) {
-   // this.ngOnDestroy();
+   
     console.log("closing the window!")
     return true;
   }
@@ -215,6 +214,9 @@ export class AdminComponent implements OnInit, OnDestroy {
       this.isVisible2 = false;
     }
 
+    window.onbeforeunload = function(){
+      alert("You are now leaving, are you sure?") 
+    }
   }
 
 
@@ -469,9 +471,7 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     alert("Confirm Close please ?")
-    window.onbeforeunload = function(){
-    alert("You are now leaving, are you sure?")
-  }
+   
   }
 
   
