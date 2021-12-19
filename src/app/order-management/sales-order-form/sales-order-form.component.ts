@@ -1203,7 +1203,7 @@ onKey(index, fldName) {
             this.SalesOrderBookingForm.patchValue({ shipToAddress: data.obj.custAddress });
             this.SalesOrderBookingForm.patchValue({ priceListHeaderId: data.obj.priceListId })
             let control = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
-            let control1 = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
+           
             if (this.lstgetOrderLineDetails.length === 0 && this.lstgetOrderTaxDetails.length === 0) {
               this.orderlineDetailsArray().push(this.orderlineDetailsGroup());
               this.TaxDetailsArray().push(this.TaxDetailsGroup());
@@ -1259,12 +1259,13 @@ onKey(index, fldName) {
                 }
               }
             }
-            this.SalesOrderBookingForm.patchValue(data.obj);
+            let control1 = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
             for (let x=0; x< this.lstgetOrderTaxDetails.length;x++){
-              this.TaxDetailsArray().push(this.TaxDetailsGroup());
-              this.SalesOrderBookingForm.patchValue({taxAmounts:this.lstgetOrderTaxDetails[x]})
+              control1.push(this.TaxDetailsGroup());
+             
+              //this.SalesOrderBookingForm.patchValue({taxAmounts:this.lstgetOrderTaxDetails[x]})
             }
-
+            this.SalesOrderBookingForm.patchValue(data.obj);
             this.salesRepName = data.obj.salesRepName;
             console.log(Number(sessionStorage.getItem('ouId')));
             var controlinv1 = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value;
@@ -1287,10 +1288,27 @@ onKey(index, fldName) {
     this.displayCreateOrderButton = true;
   }
 
- lineTaxdetails : any;
+ lineTaxdetails : any =[];
+
   openTaxDetails(i:number){
-    alert('----'+i);
-    this.lineTaxdetails =this.TaxDetailsArray().controls[i];
+
+    debugger;
+  //  this.lineTaxdetails = this.fb.array([this.TaxDetailsGroup()]);
+    var controlTax1 = this.SalesOrderBookingForm.get('taxAmounts').value;
+    var controlTax2 = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
+    
+    // let controlinv = this.CounterSaleOrderBookingForm.get('taxAmounts') as FormArray;
+    //           (controlinv.controls[k]).patchValue({
+    //             totTaxAmt: data.obj.taxAmounts[k].totTaxAmt,
+              // });
+    for (let x = 0; x < controlTax1.length; x++) {
+      if(controlTax1[x].invLineNo == i+1){
+        this.lineTaxdetails.push(this.TaxDetailsGroup());
+        }
+    }
+    this.lineTaxdetails.patchValue(controlTax1);
+    alert('----'+this.lineTaxdetails.length);
+    
   }
 
 

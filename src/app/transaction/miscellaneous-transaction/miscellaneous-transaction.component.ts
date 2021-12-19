@@ -202,6 +202,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
   @ViewChild("input6") input6: ElementRef;
   @ViewChild("Item") Item: ElementRef;
   @ViewChild("desc") desc: ElementRef;
+  @ViewChild('stkAdjForm') stkAdjForm: ElementRef;
   // @ViewChild("suppCode1") suppCode1: ElementRef;
   ngAfterViewInit() {
     this.myinput.nativeElement.focus();
@@ -489,13 +490,13 @@ export class MiscellaneousTransactionComponent implements OnInit {
         console.log(this.issueByList);
       });
 
-      this.service.searchByItemSegmentDiv(this.divisionId, "36DH1601")
+    this.service.searchByItemSegmentDiv(this.divisionId, "36DH1601")
       .subscribe(
         data => {
-         
+
           this.ItemIdList = data;
-         // this.Select(data[0].itemId);
-       //  this.onOptiongetItem(itemCode, i);
+          // this.Select(data[0].itemId);
+          //  this.onOptiongetItem(itemCode, i);
         }
       );
 
@@ -568,12 +569,12 @@ export class MiscellaneousTransactionComponent implements OnInit {
     //     });
     // }
     var patch = this.miscellaneousForm.get('trxLinesList') as FormArray
-    if(patch != null){
-    (patch.controls[0]).patchValue(
-      {
-        lineNumber: 1,
-      })
-    this.displayRemoveRow[0] = false;
+    if (patch != null) {
+      (patch.controls[0]).patchValue(
+        {
+          lineNumber: 1,
+        })
+      this.displayRemoveRow[0] = false;
     }
   }
 
@@ -610,29 +611,30 @@ export class MiscellaneousTransactionComponent implements OnInit {
   }
   filterRecord(event, i) {
     var itemCode = event.target.value;
-    if (event.keyCode == 13) { 
+    if (event.keyCode == 13) {
       // enter keycode
-      if (itemCode.length == 4) {
+      if (itemCode.length == 8) {
+        this.onOptiongetItem(itemCode, i);
+       
+        return;
+      } else if (itemCode.length >= 4) {
         this.service.searchByItemSegmentDiv(this.divisionId, itemCode.toUpperCase())
           .subscribe(
             data => {
-             
+
               this.ItemIdList = data;
-             // this.Select(data[0].itemId);
-           //  this.onOptiongetItem(itemCode, i);
+              // this.Select(data[0].itemId);
+              //  this.onOptiongetItem(itemCode, i);
             }
           );
-  
-     }else{
-      alert("Please Enter 4 characters of item number!!")
-      return;
-     }
-     if (itemCode.length == 8) {
-      this.onOptiongetItem(itemCode, i);
-     }
+
+      } else {
+        alert("Please Enter 4 characters of item number!!")
+        return;
+      }
     }
     else if (event.keyCode == 9) {
-    
+
       // onOptiongetItem($event,trxLineIndex);
     }
   }
@@ -717,12 +719,12 @@ export class MiscellaneousTransactionComponent implements OnInit {
     if (this.currentOp === 'SEARCH') {
       return;
     }
-     alert("onOptiongetItem" + event);
+    alert("onOptiongetItem" + event);
     var trxLnArr1 = this.miscellaneousForm.get('cycleLinesList') as FormArray;
     var trxLnArr = this.miscellaneousForm.get('cycleLinesList').value;
     // trxLnArr1.controls[i].get('LocatorSegment').disable();
-   // let select1 = this.ItemIdList.find(d => d.SEGMENT === event);
-   let select1 = this.ItemIdList.find(d => d.segment === event);
+    // let select1 = this.ItemIdList.find(d => d.SEGMENT === event);
+    let select1 = this.ItemIdList.find(d => d.segment === event);
     if (select1 != undefined) {
       // var trxLnArr1 = this.miscellaneousForm.get('cycleLinesList') as FormArray;
       // var trxLnArr = this.miscellaneousForm.get('cycleLinesList').value;
@@ -747,7 +749,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
             trxLnArr1.controls[i].patchValue({ locId: Number(sessionStorage.getItem('locId')) })
             this.cycleLinesList().controls[i].get('LocatorSegment').enable();
             this.cycleLinesList().controls[i].get('physicalQty').enable();
-
+            this.setFocus('physicalQty');
           }
         });
       this.service.getCostDetail(Number(sessionStorage.getItem('locId')), select1.itemId).subscribe
@@ -813,14 +815,11 @@ export class MiscellaneousTransactionComponent implements OnInit {
               }
               );
           }
-
+          this.setFocus('physicalQty');
         });
-      // if(event!=null)
-      // {
-      //   // this.displayaddButton=true;
-      //   (document.getElementById("btnrm"+i) as HTMLInputElement).disabled = true;
-      // }
-      this.desc.nativeElement.focus();
+
+   
+      
     }
   }
   AvailQty(event: any, i) {
@@ -1371,4 +1370,13 @@ export class MiscellaneousTransactionComponent implements OnInit {
     });
   }
 
+
+  
+  setFocus(name) {
+    alert(name)
+    const ele = this.stkAdjForm.nativeElement[name];
+    if (ele) {
+      ele.focus();
+    }
+  }
 }
