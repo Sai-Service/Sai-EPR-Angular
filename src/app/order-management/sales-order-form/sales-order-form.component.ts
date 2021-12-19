@@ -1290,8 +1290,8 @@ onKey(index, fldName) {
 
   openTaxDetails(i:number){
 
-    debugger;
-  //  this.lineTaxdetails = this.fb.array([this.TaxDetailsGroup()]);
+  
+    this.lineTaxdetails = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
     var controlTax1 = this.SalesOrderBookingForm.get('taxAmounts').value;
     var controlTax2 = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
     
@@ -1300,12 +1300,16 @@ onKey(index, fldName) {
     //             totTaxAmt: data.obj.taxAmounts[k].totTaxAmt,
               // });
     for (let x = 0; x < controlTax1.length; x++) {
-      if(controlTax1[x].invLineNo == i+1){
-        this.lineTaxdetails.push(this.TaxDetailsGroup());
+      if(controlTax1[x].invLineNo != i+1){
+        this.lineTaxdetails.removeAt(x);
         }
     }
-    this.lineTaxdetails.patchValue(controlTax1);
+    
+    debugger;
+    console.log(this.lineTaxdetails)
+  //  this.lineTaxdetails.controls.patchValue(controlTax1);
     alert('----'+this.lineTaxdetails.length);
+    
     
   }
 

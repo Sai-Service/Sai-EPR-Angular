@@ -1487,8 +1487,8 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <!-- <ng-container class="center" formArrayName="taxAmounts"> -->
-                                                <ng-container  *ngFor="let taxDet of lineTaxdetails; let j= index"
+                                             <ng-container class="center" formArrayName="taxAmounts"> 
+                                                <ng-container  *ngFor="let taxDet of lineTaxdetails.controls; let j= index"
                                                     [formGroupName]="j" class="auto-style5">
                                                     <tr class="ItemStyle" style="text-decoration:none;">
                                                         <!-- <td> <input disabled formControlName="invLineNo"
@@ -1637,7 +1637,7 @@
                                                             style="width: 4rem; text-align: right; height: 25px;font-size: 10px;">
                                                     </tr>
                                                 </ng-container>
-                                            <!-- </ng-container> -->
+                                            </ng-container>
                                         </tbody>
 
                                     </table>
