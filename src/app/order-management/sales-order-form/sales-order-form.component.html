@@ -1295,7 +1295,7 @@
                                                         </td>
                                                         <td>
                                                             <input disabled type="number" formControlName="pricingQty"
-                                                                class="form-control" (change)="onKey(i,'pricingQty')"
+                                                                class="form-control" (change)="onKey(i)"
                                                                 style="height: 20px;width: 70px;">
 
                                                         </td>
@@ -1318,7 +1318,7 @@
                                                         <div *ngIf="displaytaxCategoryName[i]; then thentaxCategoryName; else elsetaxCategoryName"></div>
                                                         <ng-template #thentaxCategoryName>
                                                             <!-- (ngModelChange)="ontaxCateChange(i,event)" -->
-                                                            <select formControlName="taxCategoryName" (ngModelChange)="onOptionTaxCatSelected($event,i)"
+                                                            <select formControlName="taxCategoryName" (change)="onOptionTaxCatSelected($event,i)"
                                                                 id="taxCategoryName" 
                                                                 class="form-control"
                                                                 style="width: 160px;height: 25px;font-size: 10px;">
@@ -1328,7 +1328,7 @@
                                                                     {{sc.taxCategoryName}}
                                                                 </option>
                                                             </select>
-                                                            <input  type="number" formControlName="taxCategoryId" value="taxCategoryId"
+                                                            <input hidden type="number" formControlName="taxCategoryId" value="taxCategoryId"
                                                                 class="form-control" style="height: 20px;width: 160px;">
                                                         </ng-template>
 
@@ -1389,6 +1389,7 @@
                                                             <option value="CANCELLED">CANCELLED</option>
                                                             <option value="INVOICED" hidden>INVOICED</option>
                                                             <option value="ALLOTED" hidden>ALLOTED</option>
+                                                            <option value="READY FOR INVOICE" >READY FOR INVOICE</option>
                                                         </select>
                                                         </ng-template>
                                                     </td>
