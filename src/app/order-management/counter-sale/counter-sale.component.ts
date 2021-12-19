@@ -1725,20 +1725,15 @@ export class CounterSaleComponent implements OnInit {
         (<any>this.CounterSaleOrderBookingForm.get('othRefNo')).nativeElement.focus();
       }
       else {
-        //let select = this.invItemList1.find(d => d.segment === segment);
         let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
         var itemType = (controlinv.controls[k]).get('invType').value;
-        // alert(itemType)
-        // debugger;
         let select = (this.itemMap2.get(k)).find(d => d.segment === segment);
-        //this.CounterSaleOrderBookingForm.patchValue({ itemId: select.itemId })
         if (segment != undefined) {
           this.itemId = select.itemId;
           var custtaxCategoryName = this.CounterSaleOrderBookingForm.get('taxCategoryName').value;
           var priceListId = this.CounterSaleOrderBookingForm.get('priceListId').value;
           console.log(priceListId);
           if (custtaxCategoryName === 'Sales-IGST') {
-            // alert(custtaxCategoryName);
             this.orderManagementService.addonDescList1(segment, custtaxCategoryName, priceListId)
               .subscribe(
                 data => {
@@ -1747,13 +1742,11 @@ export class CounterSaleComponent implements OnInit {
                     for (let i = 0; i < data.obj.length; i++) {
                       var itemtaxCatNm: string = data.obj[i].taxCategoryName;
                       if (itemtaxCatNm.includes('Sale-I-GST')) {
-                        // alert(itemtaxCatNm);
                         (controlinv.controls[k]).patchValue({
                           itemId: data.obj[i].itemId,
                           orderedItem: data.obj[i].description,
                           hsnSacCode: data.obj[i].hsnSacCode,
                           uom: data.obj[i].uom,
-                          // unitSellingPrice: data.obj[0].priceValue,by vinita
                         });
                         this.orderManagementService.getTaxCategoriesForSales(custtaxCategoryName, data.obj[i].taxPercentage)
                           .subscribe(
@@ -2314,7 +2307,6 @@ export class CounterSaleComponent implements OnInit {
     this.itemSeg = '';
     var ln = len - 1;
     this.setFocus('itemSeg' + ln);
-
   }
 
 

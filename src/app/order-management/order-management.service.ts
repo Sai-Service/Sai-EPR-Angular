@@ -22,6 +22,8 @@ export class OrderManagementService {
     return this.http.get(this.ServerUrl + `/orderHeader/${orderNumber}`);
   }
 
+  
+
   categoryList(): Observable<any> {
     return this.http.get(this.ServerUrl + `/itemCategory/type`);
   }

@@ -494,7 +494,7 @@
                                 </option>
                             </select> -->
                             <input type="text" disabled formControlName="priceListName"   class="form-control" style="width: 100%;">
-                            <input hidden type="number" disabled formControlName="priceListHeaderId"   class="form-control" style="width: 100%;">
+                            <input hidden  type="number" disabled formControlName="priceListHeaderId"   class="form-control" style="width: 100%;">
                             </td>
                             <td style="width: 15%" class="LabelFontStyle">
                                 Remark&nbsp;:&nbsp;
@@ -611,6 +611,7 @@
                             <td>
                                 <input disabled type="text" class="form-control" formControlName="priceListName"
                                     [(ngModel)]='priceListName' value={{priceListName}} style="width: 170px;">
+                                    <input  type="number" disabled formControlName="priceListHeaderId"   class="form-control" style="width: 100%;">
                             </td>
                             <td style="width: 15%" class="LabelFontStyle">
                                 Remark&nbsp;:&nbsp;
@@ -1199,29 +1200,7 @@
                                                 *ngFor="let group of orderlineDetailsArray().controls; let i= index"
                                                 [formGroupName]="i" class="auto-style5">
                                                 <tr>
-                                                    <!-- <td>
-                                                      
-                                                            <div  *ngIf="displayCounterSaleLine[i]; then thenBlockPoLine; else elseBlockPoLine"></div>
-                                            <ng-template #thenBlockPoLine> 
-                                                insert
-                                                <input hidden type="number"  Value={{lineNumber}}  formControlName="lineNumber" class="form-control"
-                                                style="height: 20px;width: 40px;"> 
-                                                <a class="nav-link waves-light"  value="{{lineNumber}}" data-toggle="tab" href="#panel1006+{{i}}" role="tab"  (click)="taxDetails('insert', i, taxCategoryId)">
-                                                    {{i+1}}
-                                                </a> 
-                                            </ng-template>
-                                            <ng-template #elseBlockPoLine>
-                                                search
-                                                <input hidden type="number"  Value={{lineNumber}}  formControlName="lineNumber" class="form-control"
-                                                style="height: 20px;width: 40px;"> 
-                                                <a class="nav-link waves-light"  value="{{lineNumber}}" data-toggle="tab" href="#panel1006+{{i}}" role="tab"  (click)="taxDetails('Search', i, taxCategoryId)">
-                                                    {{i+1}}
-                                                </a> 
-                                            </ng-template>
-                                                    </td> -->
-                                                    <div
-                                                        *ngIf="displaysegmentInvType[i]; then thensegmentInvType; else elsesegmentInvType">
-                                                    </div>
+                                                    <div  *ngIf="displaysegmentInvType[i]; then thensegmentInvType; else elsesegmentInvType">  </div>
                                                     <ng-template #thensegmentInvType>
                                                         <td>
                                                             <!-- insert -->
@@ -1275,31 +1254,6 @@
                                                                 formControlName="unitSellingPrice" class="form-control"
                                                                 style="height: 20px;width: 90px;" (change)="onKey(i)">
                                                         </td>
-                                                        <!-- <td>
-                                                <div *ngIf="displaytaxCategoryName[i]; then thentaxCategoryName; else elsetaxCategoryName"> </div>
-                                                <ng-template #thentaxCategoryName>
-                                                    <input hidden type="text" formControlName="taxCategoryName"
-                                                    [(ngModel)]='taxCategoryName' class="form-control"
-                                                    style="height: 20px;width: 160px;">
-                                                    <input hidden type="number" formControlName="taxCategoryId"
-                                            [(ngModel)]='taxCategoryId' class="form-control"
-                                            style="height: 20px;width: 160px;">
-                                                </ng-template>
-                                                <ng-template #elsetaxCategoryName>
-                                                <select formControlName="taxCategoryName" id="taxCategoryName"
-                                                (ngModelChange)='onOptionTaxCatSelected($event,i)'
-                                                (change)="onKey(i)" class="form-control"
-                                                style="width: 160px;height: 25px;font-size: 10px;">
-                                                <option>--Select--</option>
-                                                <option *ngFor="let sc of  taxCategoryList"   [value]="sc.taxCategoryName">
-                                                    {{sc.taxCategoryName}}
-                                                </option>
-                                            </select>
-                                            <input hidden type="number" formControlName="taxCategoryId"
-                                            [(ngModel)]='taxCategoryId' class="form-control"
-                                            style="height: 20px;width: 160px;">
-                                                </ng-template>
-                                               </td> -->
                                                     </ng-template>
                                                     <ng-template #elsesegmentInvType>
                                                         <td>
@@ -1330,14 +1284,14 @@
                                                         </td>
                                                         <td>
                                                             <input disabled type="number" formControlName="pricingQty"
-                                                                class="form-control" (change)="onKey(i)"
+                                                                class="form-control" (change)="onKey(i,'pricingQty')"
                                                                 style="height: 20px;width: 70px;">
 
                                                         </td>
                                                         <td>
                                                             <input disabled type="number"
                                                                 formControlName="unitSellingPrice" class="form-control"
-                                                                style="height: 20px;width: 90px;" (change)="onKey(i)">
+                                                                style="height: 20px;width: 90px;" (change)="onKey(i,'unitSellingPrice')">
                                                         </td>
                                                         <!-- <td>
                                                         <input disabled  type="text" formControlName="taxCategoryName"   class="form-control" style="height: 20px;width: 160px;">
@@ -1350,21 +1304,20 @@
                                                     </td> -->
                                                     </ng-template>
                                                     <td>
-                                                        <div
-                                                            *ngIf="displaytaxCategoryName[i]; then thentaxCategoryName; else elsetaxCategoryName">
-                                                        </div>
+                                                        <div *ngIf="displaytaxCategoryName[i]; then thentaxCategoryName; else elsetaxCategoryName"></div>
                                                         <ng-template #thentaxCategoryName>
-                                                            <select formControlName="taxCategoryName"
-                                                                id="taxCategoryName" (change)="onKey(i)"
+                                                            <!-- (ngModelChange)="ontaxCateChange(i,event)" -->
+                                                            <select formControlName="taxCategoryName" (change)="onKey(i)"
+                                                                id="taxCategoryName" 
                                                                 class="form-control"
                                                                 style="width: 160px;height: 25px;font-size: 10px;">
                                                                 <option>--Select--</option>
-                                                                <option *ngFor="let sc of  taxCategoryList"
+                                                                <option *ngFor="let sc of  taxCategoryList[i]"
                                                                     [value]="sc.taxCategoryName">
                                                                     {{sc.taxCategoryName}}
                                                                 </option>
                                                             </select>
-                                                            <input hidden type="number" formControlName="taxCategoryId"
+                                                            <input  type="number" formControlName="taxCategoryId"
                                                                 class="form-control" style="height: 20px;width: 160px;">
                                                         </ng-template>
 
@@ -1410,16 +1363,22 @@
                                                                 class="form-control" style="height: 20px;width:120px;">
                                                         </ng-template>
                                                         <ng-template #elseLineflowStatusCode>
-                                                            <select formControlName="flowStatusCode" id="flowStatusCode"
+                                                            <!-- <select formControlName="flowStatusCode" id="flowStatusCode"
                                                                 class="form-control"
                                                                 style="width: 120px;height: 25px;font-size: 10px;">
                                                                 <option>--Select--</option>
-                                                                <option
-                                                                    *ngFor="let lineLevelOrderStatus of  lineLevelOrderStatusList"
-                                                                    [value]="lineLevelOrderStatus.codeDesc">
-                                                                    {{lineLevelOrderStatus.codeDesc}}
+                                                                <option *ngFor="let lineLevelOrderStatus of  lineLevelOrderStatusList" [value]="lineLevelOrderStatus.code">
+                                                                    {{lineLevelOrderStatus.code}}
                                                                 </option>
-                                                            </select>
+                                                            </select> -->
+
+                                                            <select formControlName="flowStatusCode" class="form-control"
+                                                            style="width: fit-content;height: 25px;font-size: 10px;">
+                                                            <option value="BOOKED">BOOKED</option>
+                                                            <option value="CANCELLED">CANCELLED</option>
+                                                            <option value="INVOICED" hidden>INVOICED</option>
+                                                            <option value="ALLOTED" hidden>ALLOTED</option>
+                                                        </select>
                                                         </ng-template>
                                                     </td>
                                                     <td>

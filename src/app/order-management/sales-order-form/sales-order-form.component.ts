@@ -212,16 +212,17 @@ export class SalesOrderFormComponent implements OnInit {
   public transactionTypeNameList: any;
   public payTermDescList: any;
   public salesRepNameList: any;
-  public taxCategoryList: any[];
+  public taxCategoryList: any=[];
   public viewAllInvoiceData: any[];
   public ticketNoSearch: any;
   priceListNameList: Array<string>[];
   public mainModelList: Array<string>[];
   public VariantSearch: Array<string>[];
+  public allTaxCategoryList: any = [];
   public ColourSearch: any;
   public financeTypeList: any;
   public financerNameList: any;
-  public lineLevelOrderStatusList: any;
+  public lineLevelOrderStatusList: any=[];
   invItemList1: any[];
   public taxCalforItem: any;
   categoryList: any[];
@@ -423,32 +424,37 @@ export class SalesOrderFormComponent implements OnInit {
     this.deptName = (sessionStorage.getItem('deptName'));
     this.loginOuId1 = Number(sessionStorage.getItem('loginOuId1'));
     this.divisionId=Number(sessionStorage.getItem('divisionId'))
-
+    this.orderlineDetailsArray().controls[0].patchValue({ flowStatusCode: 'BOOKED' });
 
     this.orderlineDetailsGroup();
     var patch = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray
     (patch.controls[0]).patchValue(
       {
         lineNumber: 1,
+        flowStatusCode:'BOOKED'
       }
     );
 
 
-    this.service.taxCategoryListForSALES()
-      .subscribe(
-        data1 => {
-          this.taxCategoryList = data1;
-        }
-      );
+    // this.service.taxCategoryListForSALES()
+    //   .subscribe(
+    //     data1 => {
+    //       this.taxCategoryList = data1;
+    //     }
+    //   );
 
 
-    this.orderManagementService.lineLevelOrderStatus()
-      .subscribe(
-        data1 => {
-          this.lineLevelOrderStatusList = data1;
-          console.log(this.lineLevelOrderStatusList);
-        }
-      );
+    // this.orderManagementService.lineLevelOrderStatus()
+    //   .subscribe(
+    //     data1 => {
+    //       this.lineLevelOrderStatusList = data1;
+    //       console.log(this.lineLevelOrderStatusList);
+    //       for (let i=0; i< data1.length;i++){
+    //         let select = this.lineLevelOrderStatusList.find(d => d.code === 'BOOKED');
+    //         this.orderlineDetailsArray().controls[0].patchValue({ flowStatusCode: 'BOOKED' });
+    //       }
+    //     }
+    //   );
 
 
 
@@ -544,46 +550,184 @@ export class SalesOrderFormComponent implements OnInit {
   }
 
 
-  onOptionsSelectedDescription(segment: any, k) {
-    // alert('HII Item Desc')
-    let select = this.invItemList1.find(d => d.segment === segment);
-    this.SalesOrderBookingForm.patchValue({ itemId: select.itemId })
-    this.itemId = select.itemId;
-    this.orderManagementService.addonDescList(segment)
-      .subscribe(
-        data => {
-          this.addonDescList = data;
-          let controlinv = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
-          for (let i = 0; i < data.length; i++) {
-            var taxCatNm: string = data[i].taxCategoryName;
-            // alert('FOR LOOP ENTER'+' '+ taxCatNm);
-            if (taxCatNm === null) {
-              // alert(taxCatNm);
-              (controlinv.controls[k]).patchValue({
-                itemId: data[i].itemId,
-                orderedItem: data[i].description,
-                hsnSacCode: data[i].hsnSacCode,
-                // taxCategoryId: data[i].taxCategoryId,
-                // taxCategoryName: data[i].taxCategoryName,
-                unitSellingPrice: data[i].priceValue,
-                flowStatusCode: 'BOOKED',
-              });
-            }
-            if (taxCatNm.includes('Sale')) {
-              (controlinv.controls[k]).patchValue({
-                itemId: data[i].itemId,
-                orderedItem: data[i].description,
-                hsnSacCode: data[i].hsnSacCode,
-                taxCategoryId: data[i].taxCategoryId,
-                taxCategoryName: data[i].taxCategoryName,
-                unitSellingPrice: data[i].priceValue,
-                flowStatusCode: 'BOOKED',
-              });
-            }
-          }
-        }
-      );
+  // onOptionsSelectedDescription(segment: any, k) {
+  //   // alert('HII Item Desc')
+  //   let select = this.invItemList1.find(d => d.segment === segment);
+  //   this.SalesOrderBookingForm.patchValue({ itemId: select.itemId })
+  //   this.itemId = select.itemId;
+  //   this.orderManagementService.addonDescList(segment)
+  //     .subscribe(
+  //       data => {
+  //         this.addonDescList = data;
+  //         let controlinv = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+  //         for (let i = 0; i < data.length; i++) {
+  //           var taxCatNm: string = data[i].taxCategoryName;
+  //           // alert('FOR LOOP ENTER'+' '+ taxCatNm);
+  //           if (taxCatNm === null) {
+  //             // alert(taxCatNm);
+  //             (controlinv.controls[k]).patchValue({
+  //               itemId: data[i].itemId,
+  //               orderedItem: data[i].description,
+  //               hsnSacCode: data[i].hsnSacCode,
+  //               // taxCategoryId: data[i].taxCategoryId,
+  //               // taxCategoryName: data[i].taxCategoryName,
+  //               unitSellingPrice: data[i].priceValue,
+  //               flowStatusCode: 'BOOKED',
+  //             });
+  //           }
+  //           if (taxCatNm.includes('Sale')) {
+  //             (controlinv.controls[k]).patchValue({
+  //               itemId: data[i].itemId,
+  //               orderedItem: data[i].description,
+  //               hsnSacCode: data[i].hsnSacCode,
+  //               taxCategoryId: data[i].taxCategoryId,
+  //               taxCategoryName: data[i].taxCategoryName,
+  //               unitSellingPrice: data[i].priceValue,
+  //               flowStatusCode: 'BOOKED',
+  //             });
+  //           }
+  //         }
+  //       }
+  //     );
+  // }
+ 
+  // this.lstgetOrderLineDetails[i].segment,,this.allDatastore.taxCategoryName,this.allDatastore.priceListId,i
+   onGstPersantage(custtaxCategoryName,taxPercentage,itemtaxCategotyName,k){
+     alert(custtaxCategoryName+'----'+taxPercentage+'----'+itemtaxCategotyName+'---'+k)
+    let controlinv = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+    this.orderManagementService.getTaxCategoriesForSales(custtaxCategoryName, taxPercentage)
+    .subscribe(
+      data1 => {
+        console.log(data1);
+        this.taxCategoryList[k] = data1;
+        this.allTaxCategoryList = data1;
+        let itemCateNameList = this.taxCategoryList[k].find(d => d.taxCategoryName === itemtaxCategotyName);
+        console.log(itemCateNameList);
+        
+        (controlinv.controls[k]).patchValue({
+          taxCategoryId: itemCateNameList.taxCategoryId,
+          taxCategoryName: itemCateNameList,
+        })
+      }
+    );
   }
+
+
+  onOptionsSelectedDescription(segment: string, k) {
+    // alert(segment +'---'+ k)
+      // alert('HI')
+        let controlinv = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+        var itemType = (controlinv.controls[k]).get('invType').value;
+        console.log(this.invItemList1);
+        let select = this.invItemList1.find(d => d.segment === segment);
+        console.log(select);   
+          this.SalesOrderBookingForm.patchValue({ itemId: select.itemId })
+          this.itemId = select.itemId;
+          var custtaxCategoryName = this.SalesOrderBookingForm.get('taxCategoryName').value;
+          var priceListId = this.SalesOrderBookingForm.get('priceListHeaderId').value;
+          // alert(segment +'---'+ custtaxCategoryName+'---'+priceListId)
+          console.log(priceListId);
+          if (custtaxCategoryName === 'Sales-IGST') {
+            this.orderManagementService.addonDescList1(segment, custtaxCategoryName, priceListId)
+              .subscribe(
+                data => {
+                  if (data.code === 200) {
+                    this.addonDescList = data.obj;
+                    for (let i = 0; i < data.obj.length; i++) {
+                      var itemtaxCatNm: string = data.obj[i].taxCategoryName;
+                      if (itemtaxCatNm.includes('Sale-I-GST')) {
+                        (controlinv.controls[k]).patchValue({
+                          itemId: data.obj[i].itemId,
+                          orderedItem: data.obj[i].description,
+                          hsnSacCode: data.obj[i].hsnSacCode,
+                          uom: data.obj[i].uom,
+                        });
+                        this.orderManagementService.getTaxCategoriesForSales(custtaxCategoryName, data.obj[i].taxPercentage)
+                          .subscribe(
+                            data1 => {
+                              this.taxCategoryList[k] = data1;
+                              console.log(this.taxCategoryList[k]);
+                              console.log(data.obj[i].taxCategoryName);
+                              this.allTaxCategoryList[k] = data1;
+                              let itemCateNameList = this.taxCategoryList[k].find(d => d.taxCategoryName === data.obj[i].taxCategoryName);
+                              console.log(itemCateNameList);
+
+                              (controlinv.controls[k]).patchValue({
+                                taxCategoryId: itemCateNameList.taxCategoryId,
+                                taxCategoryName: itemCateNameList,
+                              })
+                            }
+                          );
+                      }
+                    }
+                  }
+                  else if (data.code === 400) {
+                    alert(data.message)
+                  }
+                })
+              ;
+          }
+         else  {
+            this.orderManagementService.addonDescList1(segment, custtaxCategoryName, priceListId)
+              .subscribe(
+                data => {
+                  if (data.code === 200) {
+                    this.addonDescList = data.obj; //// item iformation
+                    for (let i = 0; i < data.obj.length; i++) {
+                      var taxCatNm: string = data.obj[i].taxCategoryName;
+                      alert(taxCatNm);
+                      if (taxCatNm != '' && taxCatNm !=null){
+                      if (taxCatNm.includes('Sale-S&C')) {
+                        (controlinv.controls[k]).patchValue({
+                          itemId: data.obj[i].itemId,
+                          orderedItem: data.obj[i].description,
+                          hsnSacCode: data.obj[i].hsnSacCode,
+                          uom: data.obj[i].uom,
+                          flowStatusCode:'BOOKED'
+                          // unitSellingPrice: data.obj[0].priceValue,by vinita
+                        });
+
+                        this.orderManagementService.getTaxCategoriesForSales(custtaxCategoryName, data.obj[i].taxPercentage)
+                          .subscribe(
+                            data1 => {
+                              this.taxCategoryList[k] = data1;
+                              this.allTaxCategoryList[k] = data1;
+                              let itemCateNameList = this.taxCategoryList[k].find(d => d.taxCategoryName === data.obj[i].taxCategoryName);
+                              (controlinv.controls[k]).patchValue({
+                                taxCategoryId: itemCateNameList.taxCategoryId,
+                                taxCategoryName: itemCateNameList,
+                              })
+                            }
+                          );
+                      }
+                    }
+                    else if(data.obj[i].isTaxable='N' && taxCatNm===null){
+                        (controlinv.controls[k]).patchValue({
+                          itemId: data.obj[i].itemId,
+                          orderedItem: data.obj[i].description,
+                          hsnSacCode: data.obj[i].hsnSacCode,
+                          uom: data.obj[i].uom,
+                          unitSellingPrice: data.obj[i].priceValue
+                        });
+                      }
+                    }
+                  }
+                  else if (data.code === 400) {
+                    alert(data.message);
+                  }
+                }
+
+              );
+          }
+       
+     
+  }
+ 
+ 
+ 
+
+
+ 
   public itemMap2 = new Map<number, any[]>();
 
 
@@ -761,73 +905,196 @@ export class SalesOrderFormComponent implements OnInit {
     console.log(control);
   }
 
+selTaxCatNm : string ='';
+//   onKey(index , src:string ) {
+//     console.log(index);
+//     var arrayControl = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value
+//     var patch = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+//     var taxcatName = arrayControl[index].taxCategoryName;
+   
+//     this.selTaxCatNm=taxcatName;
+//     if (taxcatName != undefined && taxcatName != null && taxcatName != '' ){
+//      if (this.op === 'Search'){
+//       var taxCategoryId = arrayControl[index].taxCategoryId;
+//       alert(taxCategoryId);
+//      }
+//      else if (this.op != 'Search'){
+//     let select = this.taxCategoryList.find(d => d.taxCategoryName === taxcatName);
+//     var taxCategoryId = select.taxCategoryId;
+//     }
+//     patch.controls[index].patchValue({ taxCategoryId: taxCategoryId });
+//     console.log(arrayControl);
+//     var itemId = arrayControl[index].itemId;
+//     var baseAmt = arrayControl[index].unitSellingPrice * arrayControl[index].pricingQty;
+//     var diss = 0;
+//     var sum = 0;
+//     if (taxcatName != null && taxcatName.length > 0) {
+//       this.service.taxCalforItem(itemId, taxCategoryId, diss, baseAmt)
+//         .subscribe(
+//           (data: any[]) => {
+//             this.taxCalforItem = data;
+//             console.log(this.taxCalforItem);
 
-  onKey(index) {
-    console.log(index);
-    // alert('call')
-    var arrayControl = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value
-    var patch = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
-    var taxcatName = arrayControl[index].taxCategoryName;
-    let select = this.taxCategoryList.find(d => d.taxCategoryName === taxcatName);
-    var taxCategoryId = select.taxCategoryId;
-    patch.controls[index].patchValue({ taxCategoryId: taxCategoryId });
-    console.log(arrayControl);
-    var itemId = arrayControl[index].itemId;
-    var baseAmt = arrayControl[index].unitSellingPrice * arrayControl[index].pricingQty;
-    var diss = 0;
-    var sum = 0;
-    if (taxcatName != null && taxcatName.length > 0) {
-      this.service.taxCalforItem(itemId, taxCategoryId, diss, baseAmt)
-        .subscribe(
-          (data: any[]) => {
-            this.taxCalforItem = data;
-            console.log(this.taxCalforItem);
+//             for (let i = 0; i < this.taxCalforItem.length; i++) {
 
-            for (let i = 0; i < this.taxCalforItem.length; i++) {
+//               if (this.taxCalforItem[i].totTaxPer != 0) {
+//                 sum = sum + this.taxCalforItem[i].totTaxAmt
+//               }
+//             }
+//             (patch.controls[index]).patchValue({
+//               baseAmt: baseAmt,
+//               taxAmt: sum,
+//               totAmt: baseAmt + sum,
+//             });
 
-              if (this.taxCalforItem[i].totTaxPer != 0) {
-                sum = sum + this.taxCalforItem[i].totTaxAmt
-              }
-            }
-            (patch.controls[index]).patchValue({
-              baseAmt: baseAmt,
-              taxAmt: sum,
-              totAmt: baseAmt + sum,
-            });
+//             let controlinv1 = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
+//             var invLineNo1 = index + 1;
+//             console.log(invLineNo1);
 
-            let controlinv1 = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
-            var invLineNo1 = index + 1;
-            console.log(invLineNo1);
+//             this.TaxDetailsArray().clear();
 
-            this.TaxDetailsArray().clear();
+//             for (let i = 0; i < data.length; i++) {
+//               var invLnGrp: FormGroup = this.TaxDetailsGroup();
+//               controlinv1.push(invLnGrp);
+//               (controlinv1.controls[i]).patchValue({
+//                 invLineNo: index + 1,
+//               });
+//               data[i].invLineNo = invLineNo1;
+//             }
+//             this.SalesOrderBookingForm.get('taxAmounts').patchValue(data);
+//             this.taxMap.set(index, data);
+//             // alert('map'+''+ this.taxMap.size)
+//           });
+//     }
+//     else {
+//       // alert(taxCatNm+ ' '+ 'NULL CON');
+//       this.displaysegmentInvType[index] = false;
+//       (patch.controls[index]).patchValue({
+//         baseAmt: baseAmt,
+//         taxAmt: sum,
+//         totAmt: baseAmt + sum,
+//       });
+//       (patch.controls[index]).patchValue({
+//         flowStatusCode:'BOOKED'
+//       });
+//       console.log(arrayControl[index].flowStatusCode);
+      
+//     }
+//   }
+//   else {
+//     var baseAmt = arrayControl[index].unitSellingPrice * arrayControl[index].pricingQty; 
+//     (patch.controls[index]).patchValue({
+//       baseAmt: baseAmt,
+//       taxAmt: 0,
+//       totAmt: baseAmt,
+//     });
+//     (patch.controls[index]).patchValue({
+//       flowStatusCode:'BOOKED'
+//     });
+//   }
+// // }
+//   }
 
-            for (let i = 0; i < data.length; i++) {
-              var invLnGrp: FormGroup = this.TaxDetailsGroup();
-              controlinv1.push(invLnGrp);
-              (controlinv1.controls[i]).patchValue({
-                invLineNo: index + 1,
-              });
-              data[i].invLineNo = invLineNo1;
-            }
-            this.SalesOrderBookingForm.get('taxAmounts').patchValue(data);
-            this.taxMap.set(index, data);
-            // alert('map'+''+ this.taxMap.size)
+
+
+onKey(index, fldName) {
+  // alert(index +'Onkey Alert' +'---'+fldName)
+  var arrayControl = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value;
+  var pricingQty = arrayControl[index].pricingQty;
+  console.log(pricingQty);
+  var patch = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+  console.log(arrayControl);
+  var itemId = arrayControl[index].itemId;
+  var taxcatName = arrayControl[index].taxCategoryName;
+  // alert(taxcatName)
+  console.log(taxcatName);
+  let select;
+  var taxCategoryId = arrayControl[index].taxCategoryId;
+  // alert(taxCategoryId);
+  // if (taxCategoryId === null) {
+  //   select = this.taxCategoryList[index].find(d => d.taxCategoryName === taxcatName.taxCategoryName);
+  //   taxCategoryId = select.taxCategoryId;
+  //   patch.controls[index].patchValue({ taxCategoryId: taxCategoryId });
+  //   patch.controls[index].patchValue({ taxCategoryName: select });
+  // } else {
+  //   patch.controls[index].patchValue({ taxCategoryId: taxCategoryId });
+  //   patch.controls[index].patchValue({ taxCategoryName: taxcatName });
+  // }
+
+  patch.controls[index].patchValue({ disAmt: 0 });
+  var baseAmt = arrayControl[index].unitSellingPrice * pricingQty;
+  var disAmt1 = 0;
+  var invLineNo1 = index + 1;
+  console.log(invLineNo1);
+  var sum = 0;
+  var lineTotAmt = 0;
+  // alert(itemId+'---'+ taxCategoryId+'----'+disAmt1+'----'+baseAmt);
+  this.service.taxCalforItem(itemId, taxCategoryId, disAmt1, baseAmt)
+    .subscribe(
+      (data: any[]) => {
+        this.taxCalforItem = data;
+        console.log(this.taxCalforItem);
+
+        for (let i = 0; i < this.taxCalforItem.length; i++) {
+
+          if (this.taxCalforItem[i].totTaxPer != 0) {
+            sum = sum + this.taxCalforItem[i].totTaxAmt
+          }
+        }
+        lineTotAmt = Math.round(((baseAmt + sum - disAmt1) + Number.EPSILON) * 100) / 100;
+        (patch.controls[index]).patchValue({
+          baseAmt: Math.round((baseAmt + Number.EPSILON) * 100) / 100,
+          taxAmt: Math.round((sum + Number.EPSILON) * 100) / 100,
+          totAmt: Math.round(((baseAmt + sum - disAmt1) + Number.EPSILON) * 100) / 100,
+        });
+        let controlinv1 = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
+        let distAmtArray = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+        console.log(controlinv1);
+        this.TaxDetailsArray().clear();
+        for (let i = 0; i < data.length; i++) {
+          var invLnGrp: FormGroup = this.TaxDetailsGroup();
+          controlinv1.push(invLnGrp);
+          (controlinv1.controls[i]).patchValue({
+            invLineNo: index + 1,
           });
-    }
-    else {
-      // alert(taxCatNm+ ' '+ 'NULL CON');
-      this.displaysegmentInvType[index] = false;
-      (patch.controls[index]).patchValue({
-        baseAmt: baseAmt,
-        taxAmt: sum,
-        totAmt: baseAmt + sum,
+        }
+        this.SalesOrderBookingForm.get('taxAmounts').patchValue(data);
+        var disValue = data[0].totTaxAmt;
+        if (disValue > 0 && data[0].taxTypeName.includes('Discount')) {
+          patch.controls[index].patchValue({ disAmt: data[0].totTaxAmt });
+        }
+        else {
+          patch.controls[index].patchValue({ disAmt: 0 });
+        }
+        let taxMapData = this.SalesOrderBookingForm.get('taxAmounts').value;
+        this.taxMap.set(index, taxMapData);
+        // this.updateTotAmtPerline(index);
+
       });
+
+  var itemId1 = arrayControl[index].itemId;
+  var item = arrayControl[index].segment;
+  var pricingQty = arrayControl[index].pricingQty;
+  // alert(itemId1)
+
+}
+
+
+  ontaxCateChange (i,event){
+    alert ('in tax Catgeory' + event)
+    if (event===this.selTaxCatNm){
+      alert ('same tax Catgeory')
     }
+    else{
+      this.onKey(i,'tax');
+    }
+
   }
+
 
   addRow() {
     this.displaysegmentInvType.push(true);
-    this.displayRemoveRow.push(true);
+    this.displaytaxCategoryName.push(true);
     this.orderlineDetailsArray().push(this.orderlineDetailsGroup());
     var len = this.orderlineDetailsArray().length;
     // alert(len);
@@ -835,15 +1102,14 @@ export class SalesOrderFormComponent implements OnInit {
     (patch.controls[len - 1]).patchValue(
       {
         lineNumber: len,
-
+        flowStatusCode:'BOOKED'
       }
-    );
+    ); 
     this.displayCounterSaleLine.push(true);
     this.displaysegmentInvType.push(true);
     this.displayLineflowStatusCode.push(false);
-
     this.displaytaxCategoryName.push(true);
-    // this.displayTaxCategoryupdate.push(true);
+    this.displayRemoveRow.push(true);
   }
 
   // RemoveRow(OrderLineIndex){
@@ -933,7 +1199,8 @@ export class SalesOrderFormComponent implements OnInit {
             this.lstgetOrderTaxDetails = data.obj.taxAmounts;
             this.allDatastore = data.obj;
             this.SalesOrderBookingForm.patchValue({ billToAddress: data.obj.custAddress });
-            this.SalesOrderBookingForm.patchValue({ shipToAddress: data.obj.custAddress })
+            this.SalesOrderBookingForm.patchValue({ shipToAddress: data.obj.custAddress });
+            this.SalesOrderBookingForm.patchValue({ priceListHeaderId: data.obj.priceListId })
             let control = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
             let control1 = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
             if (this.lstgetOrderLineDetails.length === 0 && this.lstgetOrderTaxDetails.length === 0) {
@@ -967,6 +1234,10 @@ export class SalesOrderFormComponent implements OnInit {
                   this.displaytaxCategoryName[i] = true;
                   this.displayLineflowStatusCode[i] = false;
                 }
+                if (this.lstgetOrderLineDetails[i].flowStatusCode === 'ALLOTED' && this.lstgetOrderLineDetails[i].invType==='SS_VEHICLE' ){
+                //  this.onOptionsSelectedDescription(this.lstgetOrderLineDetails[i].segment,i)
+                 this.onGstPersantage(this.allDatastore.taxCategoryName,this.lstgetOrderLineDetails[i].gstPercentage,this.lstgetOrderLineDetails[i].taxCategoryName,i)
+                }
                 if (this.lstgetOrderLineDetails[i].flowStatusCode === 'INVOICED' || this.lstgetOrderLineDetails[i].flowStatusCode === 'CANCELLED') {
                   this.displayLineflowStatusCode[i] = true;
                   this.displayRemoveRow[i] = false;
@@ -996,38 +1267,17 @@ export class SalesOrderFormComponent implements OnInit {
             var controlinv2 = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
             for (let i = 0; i < controlinv1.length; i++) {
               if (controlinv1[i].invType === 'SS_VEHICLE' && controlinv1[i].flowStatusCode === 'ALLOTED') {
-                this.onKey(i)
-                // alert(controlinv1[i].segment + '--' + i);
-                // this.orderManagementService.addonDescList(controlinv1[i].segment)
-                //   .subscribe(
-                //     data1 => {
-                //       this.addonDescList = data1;
-                //       for (let j = 0; j < data1.length; j++) {
-                //         var taxCatNm: string = data1[j].taxCategoryName;
-                //         if (taxCatNm.includes('Sale')) {
-                //           // alert(taxCatNm);
-                //           (controlinv2.controls[i]).patchValue({
-                //             taxCategoryId: data1[j].taxCategoryId,
-                //             taxCategoryName: data1[j].taxCategoryName,
-                //           });
-                //           alert('ONKEY')
-                //           this.onKey(i)
-                //         }
-                //         // this.onKey(i)
-                //       }
-                //     //   if (controlinv1[i].flowStatusCode === 'ALLOTED') {
-                //     //  alert('hi')
-                        
-                //       // }
-                //     }
-                //   );
+                this.onKey(i,'Search');  
               }
-              else {
-                (controlinv2.controls[i]).patchValue({
-                  taxCategoryId: data[i].taxCategoryId,
-                  taxCategoryName: data[i].taxCategoryName,
-                });
-              }
+              // else {
+                // alert(controlinv1.length +'---'+ controlinv1[i].invType)
+                // if (controlinv1.length !=0 && controlinv1[i].invType !='' && controlinv1[i].invType!=null && controlinv1[i].invType != undefined){
+                // (controlinv2.controls[i]).patchValue({
+                //   taxCategoryId: data[i].taxCategoryId,
+                //   taxCategoryName: data[i].taxCategoryName,
+                // });
+                // }
+              // }
             }
          
           }
@@ -1078,21 +1328,24 @@ export class SalesOrderFormComponent implements OnInit {
     }
   }
 
-  onOptionTaxCatSelected(taxCategoryName, i) {
+  onOptionTaxCatSelected(event:any, i) {
+   console.log(event);
+   
     this.indexVal = i;
     var arrayControl = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value;
 
-    var amount = arrayControl[i].unitSellingPrice;
+    var baseAmt = arrayControl[i].baseAmt;
+    alert(baseAmt +'---'+'baseAmt')
 
-    let select = this.taxCategoryList.find(d => d.taxCategoryName === taxCategoryName);
+    // let select = this.taxCategoryList[i].find(d => d.taxCategoryName === taxCategoryName);
 
-    this.taxCategoryId = select.taxCategoryId;
+    // this.taxCategoryId = select.taxCategoryId;
     console.log(this.taxCategoryId);
 
     let controlinv = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
     var diss = 0;
-    if (this.baseAmt != undefined) {
-      this.service.taxCalforItem(this.itemId, this.taxCategoryId, diss, this.baseAmt)
+    if (baseAmt != undefined) {
+      this.service.taxCalforItem(this.itemId, this.taxCategoryId, diss, baseAmt)
         .subscribe(
           (data: any[]) => {
             this.lstInvLineDeatails1 = data;
