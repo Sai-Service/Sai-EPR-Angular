@@ -77,9 +77,17 @@ LaborItemListDivisionFN(divisionId,deptname) : Observable<any> {
 splitRatioListFN() : Observable<any> {
   return this.http.get(this.ServerUrl +`/billableTy/splitRatio`);
 } 
+
 disCategoryListFn() : Observable<any> {
   return this.http.get(this.ServerUrl +`/cmnLookup/type/srvDisType`);
 } 
+
+bayTypeLst() : Observable<any> {
+  return this.http.get(this.ServerUrl +`/byCodeMst`);
+  // http://localhost:8081/byCodeMst
+} 
+
+
 
 TechnicianListFN(locId) : Observable<any> {
   return this.http.get(this.ServerUrl +`/teamMaster/techDtls/${locId}`);
