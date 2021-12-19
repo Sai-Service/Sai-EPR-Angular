@@ -285,7 +285,7 @@
                                                                                 class="LabelFontStyle1">
                                                                                 Vehicle&nbsp;ID&nbsp;(VIN)&nbsp;:</td>
                                                                             <td>
-                                                                                <input type="text" class="form-control"
+                                                                                <input disabled type="text" class="form-control"
                                                                                     placeholder=""
                                                                                     formControlName="vin">
                                                                             </td>
@@ -380,7 +380,7 @@
                                                                             <td>
                                                                                 <!-- <input type="text" class="form-control" placeholder="" formControlName="groupId">
                                                                             <input type="text" class="form-control" placeholder="" formControlName="groupName"> -->
-                                                                                <select formControlName="groupId"
+                                                                                <select formControlName="groupId" [(ngModel)]="groupId" 
                                                                                     id="groupId" class="form-control">
                                                                                     <option>--Select--</option>
                                                                                     <option
@@ -593,11 +593,18 @@
                                                                                         <td style="width: 15%"
                                                                                             class="LabelFontStyle1">
                                                                                             OMR&nbsp;/Current&nbsp;KMS&nbsp;:</td>
-                                                                                        <td>
+                                                                                        <!-- <td>
                                                                                             <input disabled type="number"
                                                                                                 class="form-control" placeholder=""
                                                                                                 formControlName="lastRunKms">
+                                                                                        </td> -->
+
+                                                                                        <td>
+                                                                                            <input type="number" min="0"
+                                                                                                class="form-control" placeholder=""
+                                                                                                formControlName="lastRunKms" (change)="validateKm()">
                                                                                         </td>
+
                                                                                         <td style="width: 15%"
                                                                                             class="LabelFontStyle">JC Type&nbsp;:
                                                                                         </td>
@@ -1163,31 +1170,43 @@
                                                                             <b> Estimated&nbsp;</b>
                                                                         </legend>
                                                                         <tr>
-                                                                            <td>
+
+                                                                            <!-- <td>
                                                                                 <button type="butt on"
                                                                                     class="btn btn-primary"
                                                                                     style="width: 8rem;">Estimated
                                                                                     Labor</button>
+                                                                            </td> -->
+
+                                                                            <td style="width: 15%"  class="LabelFontStyle1">
+                                                                                Estimated&nbsp;Labour:&nbsp;
                                                                             </td>
+
                                                                             <td>
-                                                                                <input type="text" disabled
-                                                                                    class="form-control" placeholder="">
+                                                                                <input type="number"  formControlName="estLabor" [(ngModel)]="estLabor"
+                                                                                    class="form-control" placeholder="" (change) ="validateEstAmt()">
                                                                             </td>
-                                                                            <td>
+
+                                                                            <!-- <td>
                                                                                 <button type="butt on"
                                                                                     class="btn btn-primary"
                                                                                     style="width: 8rem;">Estimated
                                                                                     Material</button>
+                                                                            </td> -->
+
+                                                                            <td style="width: 15%"  class="LabelFontStyle1">
+                                                                                Estimated&nbsp;Material:&nbsp;
                                                                             </td>
+
                                                                             <td>
-                                                                                <input type="text" disabled
-                                                                                    class="form-control" placeholder="">
+                                                                                <input type="number"  formControlName="estMaterial" [(ngModel)]="estMaterial"
+                                                                                    class="form-control" placeholder="" (change) ="validateEstAmt()">
                                                                             </td>
                                                                             <td style="width: 15%"
                                                                                 class="LabelFontStyle">
                                                                                 Total&nbsp;:</td>
                                                                             <td>
-                                                                                <input type="text" disabled
+                                                                                <input type="number" disabled formControlName="estTotal" [(ngModel)]="estTotal"
                                                                                     class="form-control" placeholder="">
                                                                             </td>
                                                                             <td style="width: 15%"
@@ -1478,7 +1497,7 @@
 
                                                                             <td>
                                                                                 <input type="number" min="0"
-                                                                                formControlName="labTaxAmt"
+                                                                                formControlName="taxAmt"
                                                                                 class="form-control" disabled
                                                                                 style="width: 4rem;height: 25px; text-align: right;">
                                                                             </td>
@@ -2007,54 +2026,57 @@
                                                                         <b>Customer&nbsp;Details&nbsp;</b>
                                                                     </legend>
                                                                     <table>
-                                                                       <tr>
-                                                                                <table>
-                                                                                    <tr>
-                                                                                            <td style="width: 15%" class="LabelFontStyle">
-                                                                                                    Cust&nbsp;Name&nbsp;:</td>
-
-                                                                                                    <td>
-                                                                                                        <input type="text" disabled class="form-control"
-                                                                                                            formControlName="custName" [(ngModel)]="custName"
-                                                                                                            placeholder="">
-                                                                                                    </td>
-
-                                                                                                    <td style="width: 15%" class="LabelFontStyle">
-                                                                                                        Cust&nbsp;No&nbsp;:</td>
-
-                                                                                                <td>
-                                                                                                    <input type="text" class="form-control" placeholder=""
-                                                                                                        formControlName="accountNo" [(ngModel)]="accountNo"
-                                                                                                        (keydown.tab)="accountNoSearchfn1(accountNo)" >
-                                                                                                      
-                                                                                                    <input type="text" hidden formControlName="customerId">
-                                                                                                </td>
-                                                                                               
-                                                                                               
-                                                                                    </tr>
-                                                                               </table>
-                                                                           <!-- </td> -->
-                                                                       </tr>
+                                                                     
                                                                          <tr>
                                                                              <table>
-                                                                                    <tr>
+
+                                                                                <tr>
+                                                                                    <td style="width: 15%" class="LabelFontStyle">
+                                                                                        &nbsp;Name:&nbsp;</td>
+
+                                                                                        <td>
+                                                                                            <input type="text" disabled class="form-control"
+                                                                                                formControlName="custName" [(ngModel)]="custName"
+                                                                                                placeholder="" style="width: 375px;">
+                                                                                        </td>
 
                                                                                         <td style="width: 15%" class="LabelFontStyle">
-                                                                                            Cust&nbsp;Type&nbsp;:</td>
-                                                                                        <td><input type="text" disabled formControlName="custType"
-                                                                                                [(ngModel)]="custType" class="form-control">
-                                                                                       </td>
+                                                                                            Act&nbsp;No:&nbsp;</td>
 
-                                                                                                <td style="width: 15%"
+                                                                                    <td>
+                                                                                        <input type="text" class="form-control" placeholder=""
+                                                                                            formControlName="accountNo" [(ngModel)]="accountNo"
+                                                                                            (keydown.tab)="accountNoSearchfn1(accountNo)"  >
+                                                                                          
+                                                                                        <input type="text" hidden formControlName="customerId">
+                                                                                    </td>
+                                                                                </tr>
+
+
+
+                                                                                    <tr>
+
+                                                                                        <td style="width: 15%"
                                                                                                 class="LabelFontStyle">
-                                                                                                Cont&nbsp;No1:&nbsp;
+                                                                                                Bill&nbsp;To:&nbsp;
                                                                                             </td>
                                                                                             <td>
                                                                                                 <input type="text"
                                                                                                     disabled
                                                                                                     class="form-control"
                                                                                                     placeholder=""
-                                                                                                    formControlName="contact1">
+                                                                                                    formControlName="billToAddress" style="width: 375px;">
+                                                                                            </td>
+                                                                                            <td style="width: 15%"
+                                                                                                class="LabelFontStyle">
+                                                                                                Mobile:&nbsp;
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <input type="text"
+                                                                                                    disabled
+                                                                                                    class="form-control"
+                                                                                                    placeholder=""
+                                                                                                    formControlName="contact1" >
                                                                                             </td>
                                                                                             <!-- <td style="width: 15%"
                                                                                                 class="LabelFontStyle">
@@ -2068,28 +2090,24 @@
                                                                                             </td> -->
                                                                                     </tr>
                                                                                     <tr>
+                                                                                       <td style="width: 15%"
+                                                                                            class="LabelFontStyle">
+                                                                                            Ship&nbsp;To:&nbsp;
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <input type="text"
+                                                                                                disabled
+                                                                                                class="form-control"
+                                                                                                placeholder=""
+                                                                                                formControlName="shipToAddress" style="width: 375px;">
+                                                                                        </td>
                                                                                            
-                                                                                            <td style="width: 15%"
-                                                                                                class="LabelFontStyle">
-                                                                                                Bill&nbsp;To&nbsp;:
-                                                                                            </td>
-                                                                                            <td>
-                                                                                                <input type="text"
-                                                                                                    disabled
-                                                                                                    class="form-control"
-                                                                                                    placeholder=""
-                                                                                                    formControlName="billToAddress">
-                                                                                            </td>
-                                                                                            <td style="width: 15%"
-                                                                                                class="LabelFontStyle">
-                                                                                                Email&nbsp;:</td>
-                                                                                            <td>
-                                                                                                <input type="text"
-                                                                                                    disabled
-                                                                                                    class="form-control"
-                                                                                                    placeholder=""
-                                                                                                    formControlName="emailId">
-                                                                                            </td>
+
+                                                                                            <td style="width: 15%" class="LabelFontStyle">
+                                                                                                &nbsp;Type:&nbsp;</td>
+                                                                                            <td><input type="text" disabled formControlName="custType"
+                                                                                                    [(ngModel)]="custType" class="form-control" >
+                                                                                           </td>
                                                                                         </tr>
 
                                                                                         <tr>
@@ -2107,17 +2125,18 @@
                                                                                             </td> -->
                                                                                         </tr>
                                                                                         <tr>
+                                                                                           
+
                                                                                             <td style="width: 15%"
-                                                                                                class="LabelFontStyle">
-                                                                                                Ship&nbsp;To&nbsp;:
-                                                                                            </td>
-                                                                                            <td>
-                                                                                                <input type="text"
-                                                                                                    disabled
-                                                                                                    class="form-control"
-                                                                                                    placeholder=""
-                                                                                                    formControlName="shipToAddress">
-                                                                                            </td>
+                                                                                            class="LabelFontStyle">
+                                                                                            Email:&nbsp;</td>
+                                                                                        <td>
+                                                                                            <input type="text"
+                                                                                                disabled
+                                                                                                class="form-control"
+                                                                                                placeholder=""
+                                                                                                formControlName="emailId" style="width: 250px;">
+                                                                                        </td>
                                                                                         </tr>
                                                                              </table>
                                                                          </tr>
@@ -2136,67 +2155,67 @@
                                                                     <table>
                                                                         <tr>
                                                                             
-                                                                            <td style="width: 15%" class="LabelFontStyle"> Ins&nbsp;Comp&nbsp;:</td>
+                                                                            <td style="width: 15%" class="LabelFontStyle"> Name:&nbsp;</td>
                                                                                 
                                                                             <td> <input type="text"  class="form-control"
-                                                                            placeholder=""   formControlName="insurerCompName" > </td>
-                                                                            <td style="width: 15%" class="LabelFontStyle"> Ins&nbsp;Act&nbsp;:</td>
-                                                                            <td><input type="number" min="0" class="form-control"  placeholder=""  formControlName="insurerCompNo"  >  </td>
+                                                                            placeholder=""   formControlName="insurerCompName" style="width: 375px;" > </td>
+                                                                            <td style="width: 15%" class="LabelFontStyle"> Act&nbsp;No:&nbsp;</td>
+                                                                            <td><input type="number" min="0" class="form-control"   placeholder=""  formControlName="insurerCompNo"  >  </td>
                                                                         </tr>
 
                                                                         <tr>
-                                                                            <td style="width: 15%" class="LabelFontStyle"> Site&nbsp;:</td>
+                                                                            <td style="width: 15%" class="LabelFontStyle"> Site:&nbsp;</td>
                                                                             <td> <input type="text" disabled formControlName="insurerSite" 
-                                                                                class="form-control" placeholder=""></td>
-                                                                           <td style="width: 15%" class="LabelFontStyle"> GSTIN&nbsp;:</td>
+                                                                                class="form-control" placeholder="" style="width: 375px;"></td>
+                                                                           <td style="width: 15%" class="LabelFontStyle"> GSTN:&nbsp;</td>
                                                                                 
                                                                                
                                                                             <td>
                                                                                 <input type="text"   disabled
-                                                                                    formControlName="bGstNo" class="form-control"  placeholder=""> </td>
+                                                                                    formControlName="bGstNo" class="form-control"  placeholder=""  > </td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td style="width: 15%"  class="LabelFontStyle">  Address&nbsp;:</td>
-                                                                            <td> <input type="text" disabled formControlName="bAdd"   class="form-control" placeholder=""   > </td>
-                                                                        
+                                                                            <td style="width: 15%"  class="LabelFontStyle">  Address:&nbsp;</td>
+                                                                            <td> <input type="text" disabled formControlName="bAdd"   class="form-control" placeholder="" 
+                                                                                style="width: 375px;"  > </td>
                                                                             <td style="width: 15%"
                                                                             class="LabelFontStyle">
-                                                                            Email&nbsp;:</td>
+                                                                            Mobile:&nbsp;
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text"
+                                                                                disabled
+                                                                                formControlName="bContNo"
+                                                                                class="form-control"
+                                                                                placeholder="" >
+                                                                              
+                                                                        </td>
+                                                                           
+                                                                        </tr>
+
+                                                                        <tr>
+                                                                            <td style="width: 15%"
+                                                                            class="LabelFontStyle">
+                                                                            Email:&nbsp;</td>
                                                                         <td>
                                                                             <input type="text"
                                                                                 disabled
                                                                                 formControlName="bEmail"
                                                                                 class="form-control"
-                                                                                placeholder=""
-                                                                               >
+                                                                                placeholder="" style="width: 250px;" >
+                                                                              
                                                                         </td>
-                                                                        </tr>
-
-                                                                        <tr>
-
                                                                           
-                                                                            <td style="width: 15%"
-                                                                                class="LabelFontStyle">
-                                                                                Contact&nbsp;No&nbsp;:
-                                                                            </td>
-                                                                            <td>
-                                                                                <input type="text"
-                                                                                    disabled
-                                                                                    formControlName="bContNo"
-                                                                                    class="form-control"
-                                                                                    placeholder="" >
-                                                                                  
-                                                                            </td>
+                                                                           
                                                                             <td style="width: 15%"
                                                                             class="LabelFontStyle">
-                                                                            Valid
-                                                                            Upto&nbsp;&nbsp;:
+                                                                            Valid&nbsp;Upto:&nbsp;
                                                                         </td>
                                                                         <td>
                                                                             <input type="date"
                                                                                 class="form-control"
                                                                                 placeholder=""
-                                                                                formControlName="validTillDt">
+                                                                                formControlName="validTillDt" >
                                                                         </td>
 
 
@@ -2232,7 +2251,7 @@
                                                                     </thead>
                                                                     <tbody>
                                                                         <tr class="ItemStyle" style="text-decoration:none;">
-                                                                            <td>Estimated</td>
+                                                                            <td style="width: 160px;text-align: left;" >Estimated</td>
                                                                             <td><input type="text" formControlName="estLabor" style="width: 8em;font-weight: bold;font-size: small;text-align: right;"></td>
                                                                             <td><input type="text" formControlName="estMaterial" style="width: 8em;font-weight: bold;font-size: small;text-align: right;">
                                                                             </td>
@@ -2243,7 +2262,7 @@
                                                                         </div>
                                                                         <ng-template #CustthenBlock2>
                                                                         <tr class="ItemStyle" style="text-decoration:none;">
-                                                                            <td>Actual</td>
+                                                                            <td style="width: 160px;text-align: left;" class="LabelFontStyle">Actual</td>
                                                                             <td><input type="text" formControlName="labBasicAmt" style="width: 8em;font-weight: bold;font-size: small;text-align: right;"
                                                                                     disabled></td>
                                                                             <td><input type="text" formControlName="matBasicAmt" style="width: 8em;font-weight: bold;font-size: small;text-align: right;"
@@ -2252,7 +2271,7 @@
                                                                             </td>
                                                                         </tr>
                                                                         <tr class="ItemStyle" style="text-decoration:none;">
-                                                                            <td>Rount off</td>
+                                                                            <td style="width: 160px;text-align: left;" >Rount off</td>
                                                                             <td><input type="text" formControlName="rountOffLab" style="width: 8em;font-weight: bold;font-size: small;text-align: right;">
                                                                             </td>
                                                                             <td><input type="text" formControlName="rountOffMat" style="width: 8em;font-weight: bold;font-size: small;text-align: right;">
@@ -2265,7 +2284,7 @@
 
                                                                         <ng-template #InsCustelseBlock2>
                                                                             <tr class="ItemStyle" style="text-decoration:none;">
-                                                                                <td>Customer</td>
+                                                                                <td style="width: 160px;text-align: left;" class="LabelFontStyle">Customer</td>
                                                                                 <td><input type="text" formControlName="labBasicAmt" style="width: 8em;font-weight: bold;font-size: small;text-align: right;"
                                                                                         disabled></td>
                                                                                 <td><input type="text" formControlName="matBasicAmt" style="width: 8em;font-weight: bold;font-size: small;text-align: right;"
@@ -2275,7 +2294,7 @@
                                                                         </tr>
 
                                                                         <tr class="ItemStyle" style="text-decoration:none;">
-                                                                            <td>Insurance</td>
+                                                                            <td style="width: 160px;text-align: left;" class="LabelFontStyle">Insurance</td>
                                                                             <td><input type="text" formControlName="insLabBasicAmt" style="width: 8em;font-weight: bold;font-size: small;text-align: right;">
                                                                             </td>
                                                                             <td><input type="text" formControlName="insMatBasicAmt" style="width: 8em;font-weight: bold;font-size: small;text-align: right;">
@@ -2286,7 +2305,7 @@
                                                                         </tr>
                                                                             </ng-template>
                                                                             <tr class="ItemStyle" style="text-decoration:none;">
-                                                                                <td>Variation Reason</td>
+                                                                                <td style="width: 160px;text-align: left;" >Variation&nbsp;Reason</td>
                                                                             
                                                                                 <td colspan="2">
                                                                                     <select class="form-control" formControlName="variReason" style="width: 8em;font-weight: bold;font-size: small;">

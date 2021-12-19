@@ -91,6 +91,10 @@ interface IjobCard {
   insTotAmt: number;
   emplId:number;
   itemTypeLab: string;
+
+  estLabor:number;
+  estMaterial:number;
+  estTotal:number;
 }
 
 @Component({
@@ -107,6 +111,10 @@ export class JobCardComponent implements OnInit {
   pipe = new DatePipe('en-US');
   now = Date.now();
   public minDate = new Date();
+
+  estLabor:number=0;
+  estMaterial:number=0;
+  estTotal:number=0;
   
   techAdvisor:string;
   regNo: string;
@@ -136,6 +144,7 @@ export class JobCardComponent implements OnInit {
   lstcomments: any;
   RegNoList: any;
   RegNoList1: any[];
+  RegNoList2: any;
   userList1: any[] = [];
   userList2: any[] = [];
   deductibles: number = 0;
@@ -433,7 +442,7 @@ export class JobCardComponent implements OnInit {
       description: [],
       unitPrice: [],
       basicAmt: [],
-      labTaxAmt:[],
+      taxAmt:[],
       taxCategoryId: [],
       splitRatio: [],
       custPer: [],
@@ -1084,6 +1093,10 @@ export class JobCardComponent implements OnInit {
         }
       );
   }
+
+ 
+
+
   onOptionsSelectedsrTypeId(srTypeId) {
     // alert( "srTypeId :"+ srTypeId);
     if(srTypeId !=null){
@@ -1186,8 +1199,25 @@ export class JobCardComponent implements OnInit {
           var y=tdate.toDateString();
           // if(x === y) {this.cancelButton=true;} else {this.cancelButton=false;}
 
-          if (this.lstcomments.jobStatus === 'Opened'  &&  x===y )
-          {  this.dispReadyInvoice = true; this.dispButtonStatus=false;this.preInvButton=true;this.cancelButton=true; }
+          if (this.lstcomments.jobStatus === 'Opened' )
+          {  this.dispReadyInvoice = true; this.dispButtonStatus=false;this.preInvButton=true; 
+              if(x===y) { this.cancelButton=true;}else {this.cancelButton=false;}
+              // this.jobcardForm.disable();
+              // this.jobcardForm.get('bayTyId').enable()
+              // this.jobcardForm.get('techId').enable()
+              // this.jobcardForm.get('techAdvisor').enable()
+              // this.jobcardForm.get('freePickup').enable()
+              // this.jobcardForm.get('pickupType').enable()
+              // this.jobcardForm.get('pickupDate').enable()
+              // this.jobcardForm.get('driverName').enable()
+              // this.jobcardForm.get('promiseDate').enable()
+
+               this.jobcardForm.get('regNo').disable()
+               this.jobcardForm.get('jcType').disable()
+              //  this.jobcardForm.get('srTypeId').disable()
+          }
+          
+        
          
        
           if (this.lstcomments.jobStatus == 'Cancelled'  )
@@ -1558,6 +1588,8 @@ export class JobCardComponent implements OnInit {
       msg1="OMR: Should be above zero....";alert(msg1);return;
     }
 
+    this.validateKm()
+
     if (formValue.jcType === undefined || formValue.jcType === null ) {this.jobHeaderValidation = false;
       msg1="JOB TYPE: Should not be null....";alert(msg1);return;
     }
@@ -1588,8 +1620,17 @@ export class JobCardComponent implements OnInit {
 
     if(formValue.freePickup=='Yes' && (formValue.pickupType==null || formValue.pickupType==undefined)){this.jobHeaderValidation = false;
       msg1="PICKUP TYPE : Should not be null....";alert(msg1);return;}
-
-    this.jobHeaderValidation=true;
+    
+      if(formValue.estLabor <0 ){this.jobHeaderValidation = false;
+      msg1="ESTIMATED  LABOUR : Enter Valid Est.Labour Amt....";alert(msg1);return;}
+    
+      if(formValue.estMaterial <0 ){this.jobHeaderValidation = false;
+        msg1="ESTIMATED  MATERIAL : Enter Valid Est.Material Amt....";alert(msg1);return;}
+      
+       
+    
+    
+      this.jobHeaderValidation=true;
 
   }
 
@@ -2030,12 +2071,29 @@ export class JobCardComponent implements OnInit {
   }
 
 
-  validateKm(event) {
-    var storeKm = this.RegNoList.lastRunKms;
-    if (event.target.value < storeKm) {
-      alert("You can not enter Km less than Actual Km");
-      this.jobcardForm.patchValue({ lastRunKms: this.RegNoList.lastRunKms });
+  validateKm() {
+    var vehRegno=this.jobcardForm.get('regNo').value;
+    this.getLastRunKms(vehRegno);
+    var storeKm = this.RegNoList2.lastRunKms;
+    var kmEmtered=this.jobcardForm.get('lastRunKms').value;
+
+    if (kmEmtered < storeKm || kmEmtered<=0) {
+      alert("Please Enter a Valid KMR .It should not be less than Last run KMR.\nLst Run KMR :"+storeKm);
+      this.jobcardForm.patchValue({ lastRunKms: this.RegNoList2.lastRunKms });
+      this.jobHeaderValidation=false;
     }
+  }
+
+  getLastRunKms(RegNo) {
+    // alert(RegNo);
+    this.serviceService.getByRegNo(RegNo, sessionStorage.getItem('ouId'))
+      .subscribe(
+        data => {
+          this.RegNoList2 = data;
+          console.log(this.RegNoList2);
+          // this.jobcardForm.patchValue(this.RegNoList);
+        }
+      );
   }
 
   cancelJobNo(){
@@ -2104,6 +2162,26 @@ searchFromArray1(arr, regex) {
   return matches;
 }
 
+    validateEstAmt() {
+        var estLab=this.jobcardForm.get('estLabor').value;
+        var estMat=this.jobcardForm.get('estMaterial').value;
+    
+        if(estLab <0)
+        { 
+          alert ("Please Enter a Valid Estimated Labour value.");
+          this.jobcardForm.patchValue({estLabor :0}); 
+        }
+        if(estMat <0)
+        { 
+          alert ("Please Enter a Valid Estimated Material value.");
+          this.jobcardForm.patchValue({estMaterial :0});
+        }
+
+        this.estTotal=estLab+estMat;
+      
+      }
+
+
 onKey(index) {
   
     console.log(index);
@@ -2118,12 +2196,12 @@ onKey(index) {
     if(mQty <=0 || Number.isInteger(mQty)==false )
     { 
       alert ("Please Enter a Valid Qty.");
-      (patch.controls[index]).patchValue({ qty:'',basicAmt:0,labTaxAmt:0,laborAmt:0});return;
+      (patch.controls[index]).patchValue({ qty:'',basicAmt:0,taxAmt:0,laborAmt:0});return;
     }
 
     var baseAmtLineWise = arrayControl[index].unitPrice * arrayControl[index].qty;
     var txAmt =baseAmtLineWise *taxP/100;
-    (patch.controls[index]).patchValue({ basicAmt: baseAmtLineWise,labTaxAmt:txAmt, laborAmt: baseAmtLineWise+txAmt, })
+    (patch.controls[index]).patchValue({ basicAmt: baseAmtLineWise,taxAmt:txAmt, laborAmt: baseAmtLineWise+txAmt, })
 }
 
 validateLabQty(index: any){
