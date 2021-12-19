@@ -596,8 +596,15 @@
                                 </td>
 
                                 <td>
-                                    <input disabled type="text" formControlName="paymentType" [(ngModel)]='paymentType'
-                                        value={{paymentType}} class="form-control" style="width: 160px;">
+                                    <select formControlName="paymentType" id="paymentType" 
+                                    class="form-control" style="width: 160px;">
+                                    <option>--Select--</option>
+                                    <option *ngFor="let pt of payTermDescList" [value]="pt.lookupValue">
+                                        {{pt.lookupValue}}
+                                    </option>
+                                </select>
+                                    <!-- <input disabled type="text" formControlName="paymentType" [(ngModel)]='paymentType'
+                                        value={{paymentType}} class="form-control" style="width: 160px;"> -->
                                     <input hidden disabled type="text" formControlName="paymentTermId"
                                         [(ngModel)]='paymentTermId' value={{paymentTermId}} class="form-control"
                                         style="width: 160px;">
@@ -794,6 +801,13 @@
                                     Payment&nbsp;Term&nbsp;:&nbsp;
                                 </td>
                                 <td>
+                                    <!-- <select formControlName="paymentType" id="paymentType" 
+                                    class="form-control" style="width: 160px;">
+                                    <option>--Select--</option>
+                                    <option *ngFor="let pt of payTermDescList" [value]="pt.lookupValue">
+                                        {{pt.lookupValue}}
+                                    </option>
+                                </select> -->
                                     <input disabled type="text" formControlName="paymentType" [(ngModel)]='paymentType'
                                         value={{paymentType}} class="form-control" style="width: 160px;">
                                     <input hidden disabled type="text" formControlName="paymentTermId"
@@ -1819,13 +1833,10 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- </div> -->
                     </div>
                 </fieldset>
-                <!-- <tr>
-                    <td class="LabelFontStyle" style="color: blue;width: fit-content; text-align: center;"
-                    colspan="6">
-                    &nbsp;{{errorList}}&nbsp; </td>
-                </tr> -->
+               
             </div>
         </div>
     </section>

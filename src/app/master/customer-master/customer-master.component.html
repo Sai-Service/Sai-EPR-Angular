@@ -102,8 +102,8 @@
                                                 Customer&nbsp;Account&nbsp;No:&nbsp;</td>
                                             <td>
                                                 <input type="number" formControlName="customerAcc1" [(ngModel)]="customerAcc1" value={{customerAcc1}}
-                                                     class="form-control"
-                                                    placeholder="Enter Account number" style="width: 150px;">
+                                                     class="form-control" 
+                                                    placeholder="Enter Account number" style="width: 150px ;">
                                             </td>
                                             <td>
                                                 <button type="submit" class="btn btn-primary" (click)="searchByAccount1(customerAcc1)" style="width: 2rem;color: white;"><i
@@ -114,7 +114,8 @@
                                                     <tr>
                                                 <td>
                                                         <input type="text" formControlName="custName" [(ngModel)]='custName' value={{custName}}
-                                                        class="form-control" style="width: 170px;" data-bs-toggle="modal" data-bs-target="#customerNameSearchModel">
+                                                        class="form-control" style="width: 170px;" data-bs-toggle="modal" data-bs-target="#customerNameSearchModel"
+                                                        placeholder="Enter Customer Name" style="text-transform: uppercase;">
                                                     </td>
                                                     <td>
                                                         <button type="button" class="btn btn-primary" (click)="custNameSearch(custName)"
@@ -328,10 +329,11 @@
                                         <input formControlName="fName"
                                             (keyup)="onKey($event)" class="form-control"
                                             [ngClass]="{ 'is-invalid': submitted && f.fName.errors }"
-                                            placeholder="Enter first name">
+                                            placeholder="Enter first name" style="text-transform: uppercase;" >
                                         <div *ngIf="submitted && f.fName.errors" class="invalid-feedback">
                                             <div *ngIf="f.fName.errors.required">First Name cannot be blank</div>
                                             <div *ngIf="f.fName.errors.maxlength">Maximum 50 Characters allowed </div>
+                                            <div *ngIf="f.fName.errors.minlength">Minimum 1 Character required</div>
                                         </div>
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle">Middle&nbsp;Name&nbsp;:&nbsp;</td>
@@ -339,7 +341,7 @@
                                         <input formControlName="mName"
                                             (keyup)="onKey($event)" class="form-control"
                                             [ngClass]="{ 'is-invalid': submitted && f.mName.errors }"
-                                            placeholder="Enter Middle name">
+                                            placeholder="Enter Middle name" style="text-transform: uppercase;" >
                                             <div *ngIf="submitted && f.mName.errors" class="invalid-feedback">
                                               <div *ngIf="f.mName.errors.maxlength">Maximum 50 Characters allowed</div>
                                             </div>
@@ -349,7 +351,7 @@
                                         <input formControlName="lName"
                                             (keyup)="onKey($event)" class="form-control"
                                             [ngClass]="{ 'is-invalid': submitted && f.lName.errors }"
-                                            placeholder="Enter last name">
+                                            placeholder="Enter last name" style="text-transform: uppercase;" >
                                         <div *ngIf="submitted && f.lName.errors" class="invalid-feedback">
                                             <div *ngIf="f.lName.errors.required">Last Name cannot be blank</div>
                                             <!-- <div *ngIf="f.divisionCode.errors.pattern">orgId must be a valid for 3 digit
@@ -367,9 +369,9 @@
                                 <td colspan="8">
                                     <input  formControlName="custName" value="custName" [(ngModel)]='custName'
                                         (keyup)="onKey($event)" class="form-control" placeholder="Enter Full name"
-                                        style="width: 60%;"
+                                        style="text-transform: uppercase;"
                                         [ngClass]="{ 'is-invalid': submitted && f.custName.errors }">
-
+                                        <!-- style="width: 60%;" -->
                                         <!-- (keyup)="onKey($event)"  (keyup)="onKey($event)"-->
                                     <div *ngIf="submitted && f.custName.errors" class="invalid-feedback">
                                         <div *ngIf="f.custName.errors.required">Full Name cannot be blank</div>
@@ -402,7 +404,8 @@
                                     <input formControlName="address1" value={{address1}}
                                         (keyup)="onKey($event)" class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.address1.errors }"
-                                        placeholder="Enter address" style="width: 250px;">
+                                        placeholder="(Miminum 10 characters)" >
+                                        <!-- style="width: 250px;"> -->
                                     <div *ngIf="submitted && f.address1.errors" class="invalid-feedback">
                                         <div *ngIf="f.address1.errors.required">Address 1 cannot be blank</div>
                                         <div *ngIf="f.address1.errors.maxlength">Maximum 100 characters allowed</div>
@@ -418,7 +421,7 @@
                                     <input formControlName="address2" [(ngModel)]='address2' value={{address2}}
                                         (keyup)="onKey($event)" class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.address2.errors }"
-                                        placeholder="Enter address">
+                                        placeholder="(Miminum 3 characters)">
                                     <div *ngIf="submitted && f.address2.errors" class="invalid-feedback">
                                         <div *ngIf="f.address2.errors.required">Address 2 cannot be blank</div>
                                        <div *ngIf="f.address2.errors.maxlength">Maximum 100 characters allowed</div>
@@ -516,7 +519,7 @@
                                     </div>
 
                                   </td>
-                                <td style="width: 10%" class="LabelFontStyle">&nbsp;State&nbsp;:&nbsp;</td>
+                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;State&nbsp;:&nbsp;</td>
                                 <td>
                                     <!-- <input type="text" disabled formControlName="state" [ngModel]="state"
                                         class="form-control"> -->
@@ -578,11 +581,11 @@
                                         *ngIf="!customerMasterForm.get('mobile2').valid && customerMasterForm.get('mobile2').touched">Please
                                         Enter mobile must be 10 digit</span> -->
                                 </td>
-                                <td style="width: 10%" class="LabelFontStyle">&nbsp;Mobile&nbsp;3&nbsp;:&nbsp;</td>
+                                <td style="width: 10%" class="LabelFontStyle">&nbsp;WhatsApp&nbsp;No&nbsp;:&nbsp;</td>
                                 <td>
                                     <input  formControlName="mobile3" value={{mobile3}} class="form-control"
                                     [ngClass]="{ 'is-invalid': submitted && f.mobile3.errors }" placeholder="Enter Mobile 3"
-                                    onKeyPress="if(this.value.length==6) return false;">
+                                    onKeyPress="if(this.value.length==10) return false;">
                                     <div *ngIf="submitted && f.mobile3.errors" class="invalid-feedback">
                                         <!-- <div *ngIf="f.mobile2.errors.required">mobile must be 10 digit</div> -->
                                         <div *ngIf="f.mobile3.errors.maxlength">Please enter 10 digit mobile no</div>
@@ -593,7 +596,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td style="width: 10%" class="LabelFontStyle">&nbsp;Email&nbsp;ID&nbsp;1&nbsp;:&nbsp;
+                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;Email&nbsp;ID&nbsp;1&nbsp;:&nbsp;
                                 </td>
                                 <td>
                                     <input type="emailId" formControlName="emailId" value={{emailId}} class="form-control"
@@ -1288,12 +1291,12 @@
                                                 *ngIf="!customerMasterForm.get('smobile2').valid && customerMasterForm.get('smobile2').touched">Please
                                                 Enter mobile2 </span> -->
                                         </td>
-                                        <td style="width: 15%" class="LabelFontStyle">Mobile3&nbsp;:&nbsp;</td>
+                                        <td style="width: 15%" class="LabelFontStyle">WhatsApp No&nbsp;:&nbsp;</td>
                                         <td>
                                             <input formControlName="smobile3" value={{smobile3}} [(ngModel)]='smobile3'
                                                 class="form-control"
                                                 [ngClass]="{ 'is-invalid': submitted && f.smobile3.errors }"
-                                                placeholder="Enter mobile3" onKeyPress="if(this.value.length==6) return false;"
+                                                placeholder="Enter mobile3" onKeyPress="if(this.value.length==10) return false;"
                                                 oninput="this.value = Math.abs(this.value)">
                                                 <div *ngIf="submitted && f.smobile3.errors" class="invalid-feedback">
                                                     <!-- <div *ngIf="f.smobile2.errors.required">mobile must be 10 digit</div> -->

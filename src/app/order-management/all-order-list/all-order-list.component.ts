@@ -75,14 +75,15 @@ export class AllOrderListComponent implements OnInit {
 
   getPO() {
     var stDt = this.orderListForm.get('startDt').value;
-    this.startDt = this.pipe.transform(stDt, 'dd-MMM-yyyy');
+   // this.startDt = this.pipe.transform(stDt, 'dd-MMM-yyyy');
+    var stDate = this.pipe.transform(stDt, 'dd-MMM-yyyy');
 
     var endDtSt = this.orderListForm.get('endDt').value;
     var endDt1 = new Date(endDtSt);
     endDt1.setDate(endDt1.getDate() + 1);
     this.endDt = this.pipe.transform(endDt1, 'dd-MMM-yyyy');
 
-    this.service.getOrderByUser(Number(sessionStorage.getItem('locId')), this.startDt, this.endDt).subscribe((res: any) => {
+    this.service.getOrderByUser(Number(sessionStorage.getItem('locId')), stDate, this.endDt).subscribe((res: any) => {
       if (res.code === 200) {
         this.orderListDetails = res.obj;
         // for (let i = 0; i < res.obj.length; i++) {
@@ -123,6 +124,6 @@ export class AllOrderListComponent implements OnInit {
       xlsx.utils.table_to_sheet(this.epltable.nativeElement);
     const wb: xlsx.WorkBook = xlsx.utils.book_new();
     xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
-    xlsx.writeFile(wb, 'epltable.xlsx');
+    xlsx.writeFile(wb, 'CounterSaleOrderList.xlsx');
   }
 }

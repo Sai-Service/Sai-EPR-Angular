@@ -997,8 +997,12 @@ exicutiveNameByCustName(accountNo,locId): Observable<any>{
   return this.http.get(this.ServerUrl+`/empCust/exeDtls?accountNo=${accountNo}&locId=${locId}`);
 }
 
-crediteLimitFn(customerId,customerSiteId): Observable<any>{
-  return this.http.get(this.ServerUrl+`/Customer/getCreditAmt?customerId=${customerId}&customerSiteId=${customerSiteId}`);
+// crediteLimitFn(customerId,customerSiteId): Observable<any>{
+//   return this.http.get(this.ServerUrl+`/Customer/getCreditAmt?customerId=${customerId}&customerSiteId=${customerSiteId}`);
+// }
+
+crediteLimitFn(customerId,locId): Observable<any>{
+  return this.http.get(this.ServerUrl+`/Customer/getOutStandingDetails?billToCustId=${customerId}&locId=${locId}`);
 }
 /////////AccountEnquiry////////////////////
 public FinancialPeriod():Observable<any>{
@@ -1482,6 +1486,7 @@ getSearchByTrans(reqNo):Observable<any>{
   return this.http.get(this.ServerUrl+`/mtrlIssue/reqNum/${reqNo}`)
 
 }
+kkkkk
 getItemDetail(itemid):Observable<any>{
   return this.http.get(this.ServerUrl +`/itemMst/${itemid}`)
 }
