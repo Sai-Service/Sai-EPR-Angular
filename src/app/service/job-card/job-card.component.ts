@@ -7,6 +7,8 @@ import { OrderManagementService } from 'src/app/order-management/order-managemen
 import { observable, Observable } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import * as moment from 'moment';
+import { DecimalPipe,formatNumber } from '@angular/common';
+import {  Inject, LOCALE_ID } from '@angular/core';
 // import { of } from 'rxjs/observable/of';
 // import 'rxjs/add/observable/of';
 
@@ -287,7 +289,7 @@ export class JobCardComponent implements OnInit {
   unSaved: boolean = true;
   taxPer: number;
   // @ViewChild('jobcardForm') public createJobcardForm: NgForm;
-  constructor(private fb: FormBuilder, private router: Router, private orderManagementService: OrderManagementService, private service: MasterService, private serviceService: ServiceService) {
+  constructor(private fb: FormBuilder, private router: Router, private orderManagementService: OrderManagementService, private service: MasterService, private serviceService: ServiceService,@Inject(LOCALE_ID) private locale: string) {
     this.jobcardForm = fb.group({
       jcOpenDate:[],
       vehRegNo:[],
@@ -1291,7 +1293,7 @@ export class JobCardComponent implements OnInit {
 
           }
 
-          
+          var matTotTaxAmtx=this.lstcomments.matTotTaxAmt;
 
           this.jobcardForm.patchValue({
             // labTaxableAmt: this.lstcomments.labTaxableAmt,
@@ -1299,6 +1301,7 @@ export class JobCardComponent implements OnInit {
             labTaxableAmt: this.lstcomments.labTaxableAmt,
             matTaxableAmt: this.lstcomments.matTaxableAmt,
             matTotTaxAmt: this.lstcomments.matTotTaxAmt,
+          
             matTotAmt: Number(this.lstcomments.matTotAmt),
             // billableTyId:selectbilTy.billableTyName,
             actualBasicAmt: this.lstcomments.totBasicAmt,
@@ -1345,7 +1348,7 @@ export class JobCardComponent implements OnInit {
          
           var itotTxble=Number(this.lstcomments.matTaxableAmt)+Number(this.lstcomments.labTaxableAmt);
           var itotTaxAmt=totmattaxamt+totlabtaxamt
-          var totInvAmt=(this.matTotAmt+this.labTotAmt);
+          var totInvAmt=this.matTotAmt+this.labTotAmt;
           this.jobcardForm.patchValue({totTaxableAmt: Math.round(itotTxble)});
           this.jobcardForm.patchValue({totTaxAmt: Math.round(itotTaxAmt)});
           this.jobcardForm.patchValue({invTotAmt: Math.round(totInvAmt)});
@@ -1731,7 +1734,7 @@ export class JobCardComponent implements OnInit {
       this.displayMatDiscount1 = false;
       this.jobcardForm.get('matDiscountPer').enable();
       this.jobcardForm.patchValue({matDiscout:0});
-      this.matDiscountAmtCal(0);
+      // this.matDiscountAmtCal(0);
       //   this.endDate = new Date();
     }
     else if (event === 'Amount') {
@@ -1764,15 +1767,19 @@ export class JobCardComponent implements OnInit {
     if (event === 'Percentage') {
       this.displayLabDiscount = false;
       this.jobcardForm.get('labDiscountPer').enable();
-      this.jobcardForm.patchValue({labDiscount:0});
-      this.labDiscountAmtCal(0)
+      this.jobcardForm.patchValue({labDiscount:0})
+      this.jobcardForm.patchValue({labDiscountPer:0})
+      this.labDiscountPerCal(0) ;
+        
      
     }
     if (event === 'Amount') {
       this.displayLabDiscount = true;
       this.jobcardForm.get('labDiscount').enable();
+      this.jobcardForm.patchValue({labDiscount:0})
       this.jobcardForm.patchValue({labDiscountPer:0})
 
+      this.labDiscountAmtCal(0);
     }
 
     if (event === '--Select--') {
@@ -1941,16 +1948,15 @@ export class JobCardComponent implements OnInit {
     var netAmt=((totlabtaxamt + aaa) +matTotAt);
     netAmt=Math.round(netAmt);
 
+    var labLineTot=totlabtaxamt + aaa;
 
     this.jobcardForm.patchValue({
-      labDiscount: perValueLab,
-      labTaxableAmt: (labBasicAmt - perValueLab),
-      labTotTaxAmt: totlabtaxamt,
-      // labTotTaxAmt:basictax,
-      labTotAmt: (totlabtaxamt + aaa),
-      // invTotAmt: ((totlabtaxamt + aaa) +matTotAt),
-      // invTotAmt:netAmt,
-    });
+      labDiscount: formatNumber(perValueLab,this.locale,'1.2-2'),
+      labTaxableAmt: formatNumber(labBasicAmt - perValueLab,this.locale,'1.2-2'),
+      labTotTaxAmt: formatNumber(totlabtaxamt,this.locale,'1.2-2'),
+      //  labTotAmt: formatNumber(labLineTot,this.locale,'1.2-2'),
+      labTotAmt:Math.round(labLineTot),
+     });
     this.CalculateTotal();
   }
 
@@ -1981,16 +1987,15 @@ export class JobCardComponent implements OnInit {
       // alert("labDisAmt : "+labDisAmt);
       var netAmt=((totlabtaxamt + labTaxAmt) +matTotAt);
       netAmt=(netAmt);
+      var labLineTot=totlabtaxamt + labTaxAmt;
 
       this.jobcardForm.patchValue({
-      labDiscount: labDisAmt,
-      labTaxableAmt: labTaxAmt,
-      labTotTaxAmt: totlabtaxamt,
-      labTotAmt: (totlabtaxamt + labTaxAmt),
-      // invTotAmt: ((totlabtaxamt + labTaxAmt) +matTotAt),
-      // invTotAmt:Math.round(netAmt),
-
-    });
+      labDiscount: formatNumber(labDisAmt,this.locale,'1.2-2'),
+      labTaxableAmt: formatNumber(labTaxAmt,this.locale,'1.2-2'),
+      labTotTaxAmt: formatNumber(totlabtaxamt,this.locale,'1.2-2'),
+      // labTotAmt: formatNumber(labLineTot,this.locale,'1.2-2'),
+      labTotAmt:Math.round(labLineTot),
+       });
     this.CalculateTotal();
   }
 
@@ -2020,11 +2025,11 @@ export class JobCardComponent implements OnInit {
     netAmt=netAmt;
       
     this.jobcardForm.patchValue({
-      matDiscout: (perValuePart),
-      matTaxableAmt: (matBasicAmt - perValuePart),
-      matTotTaxAmt: ((totmattaxamt-temp)),
-      matTotAmt :(matBasicAmt - perValuePart)+(totmattaxamt-temp),
-      // invTotAmt:Math.round(netAmt),
+      matDiscout: formatNumber(perValuePart,this.locale,'1.2-2'),
+      matTaxableAmt: formatNumber(matBasicAmt - perValuePart,this.locale,'1.2-2'),
+      matTotTaxAmt: formatNumber(totmattaxamt-temp,this.locale,'1.2-2'),
+      // matTotAmt :formatNumber((matBasicAmt - perValuePart)+(totmattaxamt-temp),this.locale,'1.2-2'),
+      matTotAmt:Math.round((matBasicAmt - perValuePart)+(totmattaxamt-temp)),
 
     });
     this.CalculateTotal();
@@ -2076,9 +2081,11 @@ export class JobCardComponent implements OnInit {
     // netAmt=(netAmt);
 
     this.jobcardForm.patchValue({
-      matTaxableAmt: (totalMatTaxableAmt),
-      matTotTaxAmt: (totmattaxamt),
-      matTotAmt: totalMatTaxableAmt + totmattaxamt,
+      matDiscout: formatNumber (matDisAmt,this.locale,'1.2-2'),
+      matTaxableAmt: formatNumber (totalMatTaxableAmt,this.locale,'1.2-2'),
+      matTotTaxAmt: formatNumber(totmattaxamt,this.locale,'1.2-2'),
+      // matTotAmt: formatNumber(totalMatTaxableAmt + totmattaxamt,this.locale,'1.2-2'),
+      matTotAmt:Math.round((totalMatTaxableAmt + totmattaxamt)),
       // invTotAmt:Math.round(netAmt),
       // totTaxableAmt:Math.round(txblTot),
       // totTaxAmt:txTot,
@@ -2087,18 +2094,20 @@ export class JobCardComponent implements OnInit {
   }
 
   CalculateTotal() {
-    var ltot = (this.jobcardForm.get('labTotAmt').value)
-    var ltaxable= (this.jobcardForm.get('labTaxableAmt').value)
-    var ltax= (this.jobcardForm.get('labTotTaxAmt').value)
+    var ltot =Number (this.jobcardForm.get('labTotAmt').value);
+    var ltaxable= Number(this.jobcardForm.get('labTaxableAmt').value)
+    var ltax= Number(this.jobcardForm.get('labTotTaxAmt').value)
 
-    var mtot = (this.jobcardForm.get('matTotAmt').value)
-    var mtaxable= (this.jobcardForm.get('matTaxableAmt').value)
-    var mtax= (this.jobcardForm.get('matTotTaxAmt').value);
+    var mtot = Number(this.jobcardForm.get('matTotAmt').value)
+    var mtaxable= Number(this.jobcardForm.get('matTaxableAmt').value)
+    var mtax= Number(this.jobcardForm.get('matTotTaxAmt').value);
 
     this.jobcardForm.patchValue({
-      invTotAmt:ltot+mtot,
-      totTaxableAmt:ltaxable+mtaxable,
-      totTaxAmt:ltax+mtax,});
+      totTaxableAmt:formatNumber((ltaxable+mtaxable),this.locale,'1.2-2'),
+      totTaxAmt:formatNumber((ltax+mtax),this.locale,'1.2-2'),
+      // invTotAmt:formatNumber((ltot+mtot),this.locale,'1.2-2'),
+      invTotAmt:Math.round(ltot+mtot),
+    });
 
   }
 
