@@ -81,6 +81,7 @@ interface ISalesBookingForm {
   shipToAddress:string;
   gstNo: string;
   panNo: string;
+  custTaxCat :string;
   invType: string;
   taxAmounts: IterableIterator<any[]>;
 }
@@ -274,6 +275,7 @@ export class SalesOrderFormComponent implements OnInit {
       weddingDate:[''],
       name:[''],
       customerSiteId:[''],
+      custTaxCat:[''],
       taxCategoryName:[''],
       birthDate:[''],
       emailId1:[''],
@@ -623,7 +625,7 @@ export class SalesOrderFormComponent implements OnInit {
         console.log(select);   
           this.SalesOrderBookingForm.patchValue({ itemId: select.itemId })
           this.itemId = select.itemId;
-          var custtaxCategoryName = this.SalesOrderBookingForm.get('taxCategoryName').value;
+          var custtaxCategoryName = this.SalesOrderBookingForm.get('custTaxCat').value;
           var priceListId = this.SalesOrderBookingForm.get('priceListHeaderId').value;
           // alert(segment +'---'+ custtaxCategoryName+'---'+priceListId)
           console.log(priceListId);
@@ -1274,6 +1276,9 @@ onKey(index, fldName) {
               if (controlinv1[i].invType === 'SS_VEHICLE' && controlinv1[i].flowStatusCode === 'ALLOTED'  ) {
                 this.onKey(i,'Search');  
               }
+              let itemTaxCat = this.taxCategoryList.find(d => d.taxCategoryId === controlinv1[i].taxCategoryId);
+             alert(itemTaxCat);
+              controlinv2.controls[i].patchValue({taxCategoryName:itemTaxCat});
             }
           }
           }
@@ -1670,11 +1675,12 @@ onKey(index, fldName) {
         this.shipToAddress=this.billToAddress;
       this.birthDate = this.selCustomer.birthDate;
       this.weddingDate = this.selCustomer.weddingDate;
-      this.taxCategoryName = this.selCustomer.taxCategoryName;
+     // this.taxCategoryName = this.selCustomer.taxCategoryName;
       if (selSite.disPer != null) {
         // alert(selSite.disPer)
         this.SalesOrderBookingForm.patchValue({ discType: 'Header Level Discount' })
-        this.SalesOrderBookingForm.patchValue({ disPer: selSite.disPer })
+        this.SalesOrderBookingForm.patchValue({ disPer: selSite.disPer });
+        this.SalesOrderBookingForm.patchValue({ custTaxCat: selSite.taxCategoryName })
         this.orderlineDetailsGroup().patchValue({ disPer: selSite.disPer })
         // this.displaydisPer = false;
         var patch = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
