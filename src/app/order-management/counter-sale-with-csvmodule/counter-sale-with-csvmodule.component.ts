@@ -1271,7 +1271,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
     }
     if (Number(sessionStorage.getItem('divisionId')) === 2) {
       // alert(this.selCustomer.customerId+'----'+selSite.customerSiteId)
-      this.service.crediteLimitFn(this.selCustomer.customerId, selSite.customerSiteId)
+      this.service.crediteLimitFn(this.selCustomer.customerId, sessionStorage.getItem('locId'),selSite.customerSiteId)
         .subscribe(
           data => {
             if (data.code === 200) {
