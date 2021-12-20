@@ -77,9 +77,17 @@ LaborItemListDivisionFN(divisionId,deptname) : Observable<any> {
 splitRatioListFN() : Observable<any> {
   return this.http.get(this.ServerUrl +`/billableTy/splitRatio`);
 } 
+
 disCategoryListFn() : Observable<any> {
   return this.http.get(this.ServerUrl +`/cmnLookup/type/srvDisType`);
 } 
+
+bayTypeLst() : Observable<any> {
+  return this.http.get(this.ServerUrl +`/byCodeMst`);
+  // http://localhost:8081/byCodeMst
+} 
+
+
 
 TechnicianListFN(locId) : Observable<any> {
   return this.http.get(this.ServerUrl +`/teamMaster/techDtls/${locId}`);
@@ -101,13 +109,15 @@ public jobcardHeaderSubmit(Record) {
   return this.http.post(url, Record, options);
 }
 
-public jobcardUpdateSubmit(jobcardId) {
+public jobcardUpdateSubmit(Record) {
   const options = {
     headers: this.headers
   };
-  const url = this.ServerUrl + '/jobCard/jobHeader';
-  return this.http.put(url, options);
+  const url = this.ServerUrl + '/jobCard/jobHdrUpdate';
+  return this.http.put(url, Record, options);
 }
+
+
 
 public ReopenMaterialIssue(jobcardNo, matStatus){
   const options = {

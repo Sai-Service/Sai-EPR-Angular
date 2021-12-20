@@ -295,7 +295,6 @@ export class CustomerMasterComponent implements OnInit {
       sstartDate: [''],
       sendDate: [''],
       sstatus: [''],
-      //derina - customerSiteId
       customerSiteId: [''],
       // custAccountNo:['', [Validators.required,Validators.pattern('[0-9]*')]],
       custAccountNo: [''],
@@ -776,7 +775,7 @@ export class CustomerMasterComponent implements OnInit {
 
     this.service.CustMasterOnlySitSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert(res.message);
+        alert(res.message); 
         var acctNo = this.customerMasterForm.get('custAccountNo').value;
         // this.searchByAccount1(acctNo);
         (document.getElementById('newSiteBtn') as HTMLInputElement).disabled = true;
@@ -1124,6 +1123,7 @@ export class CustomerMasterComponent implements OnInit {
         else {
           if (res.code === 400) {
             alert(res.message);
+           
           }
         }
 
@@ -1334,7 +1334,7 @@ export class CustomerMasterComponent implements OnInit {
           else {
             if (data.code === 400) {
               alert(data.message);
-              // this.display='block';
+              // this.display='block'; 
             }
           }
         }
@@ -1344,7 +1344,7 @@ export class CustomerMasterComponent implements OnInit {
   now=new Date();
 
   onTdsPerSel(event){
-    alert(event);
+    // alert(event);
     if(event>0){
       this.tdsApplDate= this.pipe.transform(this.now,'dd-MM-yyyy')
       // this.customerMasterForm.patchValue({tdsApplDate:this.pipe.transform(this.now,'dd-MM-yyyy')});

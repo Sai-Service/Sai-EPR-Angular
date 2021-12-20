@@ -453,6 +453,7 @@
 
           
             <td></td> <td></td>
+            
             <div *ngIf="searchByItem; then itemYes; else descYes"> </div>
             <ng-template #itemYes>
               <td style="width: 15%" class="LabelFontStyle">&nbsp;&nbsp;&nbsp;&nbsp;Item&nbsp;Number&nbsp;:</td>
@@ -492,11 +493,15 @@
                 <input hidden type="number" formControlName="itemId">
                 </td> -->
 
+
+
                 <td>
-                  <input   type="text"  formControlName="searchByItemDesc"  id="searchByItemDesc" 
-                           [(ngModel)]="searchByItemDesc" class="form-control"  placeholder="Enter Item Description"
+                  <input   type="text"  formControlName="searchItemCode"  id="searchItemCode" 
+                           [(ngModel)]="searchItemCode" class="form-control"  placeholder="Enter Item Code"
                            style="width: 300px; background-color: rgb(240, 240, 166); text-transform: uppercase;"  >
                </td>
+
+               
 
             </ng-template>
             <ng-template #descYes>

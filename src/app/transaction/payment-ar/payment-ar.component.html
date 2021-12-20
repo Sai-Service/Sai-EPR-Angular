@@ -712,11 +712,11 @@
                                     <td>
                                         <input    type="text" formControlName="bankBranch"  id="bankBranch" [(ngModel)] ="bankBranch" class="form-control" style="background-color: yellow;">
                                     </td>
-                                    <td style="width: 15%" class="LabelFontStyle1">&nbsp;DD/Chq.&nbsp;No:&nbsp;</td>
+                                    <td style="width: 15%" class="LabelFontStyle1">&nbsp;Tran.&nbsp;No:&nbsp;</td>
                                     <td>
                                         <input     type="text" formControlName="checkNo"  id="checkNo"  [(ngModel)] ="checkNo"  class="form-control" style="background-color: yellow;">
                                     </td>
-                                    <td style="width: 15%" class="LabelFontStyle">DD/Chq.&nbsp;Date:&nbsp;</td>
+                                    <td style="width: 15%" class="LabelFontStyle">Tran.&nbsp;Date:&nbsp;</td>
                                     <td>
                                         <input    type="date" formControlName="checkDate"  id="checkDate"  [(ngModel)] ="checkDate" class="form-control"  style="background-color: yellow;"
                                         placeholder="" max="{{minDate | date:'yyyy-MM-dd'}}"  (change)="validateChqDate(checkDate)">
@@ -726,19 +726,19 @@
                                     </ng-template>
                                     <ng-template #elseBlock3>
 
-                                    <td style="width: 15%" class="LabelFontStyle1">Bank&nbsp;Name:&nbsp;</td>
+                                    <td style="width: 15%" class="LabelFontStyle">Bank&nbsp;Name:&nbsp;</td>
                                      <td>
                                         <input  disabled  type="text" formControlName="bankName"  id="bankName" [(ngModel)] ="bankName" class="form-control"  placeholder="">
                                     </td>
-                                    <td style="width: 15%" class="LabelFontStyle1">Branch&nbsp;:&nbsp;</td>
+                                    <td style="width: 15%" class="LabelFontStyle">Branch&nbsp;:&nbsp;</td>
                                     <td>
                                         <input  disabled  type="text" formControlName="bankBranch"  id="bankBranch" [(ngModel)] ="bankBranch" class="form-control" placeholder="">
                                     </td>
-                                    <td style="width: 15%" class="LabelFontStyle1">&nbsp;DD/Chq.&nbsp;No:&nbsp;</td>
+                                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Tran.&nbsp;No:&nbsp;</td>
                                     <td>
                                         <input  disabled   type="text" formControlName="checkNo"  id="checkNo"  [(ngModel)] ="checkNo"  class="form-control"  placeholder="">
                                     </td>
-                                    <td style="width: 15%" class="LabelFontStyle">DD/Chq.&nbsp;Date:&nbsp;</td>
+                                    <td style="width: 15%" class="LabelFontStyle">Tran.&nbsp;Date:&nbsp;</td>
                                     <td>
                                         <input disabled   type="date" formControlName="checkDate"  id="checkDate"  [(ngModel)] ="checkDate" class="form-control"  placeholder="">
                                     </td>

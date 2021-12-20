@@ -62,9 +62,12 @@ export class OrderManagementService {
 
 
   counterSaleOrderSearch(orderNumber): Observable<any> {
-    return this.http.get(this.ServerUrl +`/orderHeader/ACSP/${orderNumber}`);
+    return this.http.get(this.ServerUrl +`/orderHeader/ACSP/orderNumber=${orderNumber}`);
   }
-
+ 
+  counterSaleOrderSearchNew(orderNumber,locId): Observable<any> {
+    return this.http.get(this.ServerUrl +`/orderHeader/ACSPLoc?orderNumber=${orderNumber}&locationId=${locId}`);
+  }
 
   UpdateCounterSaleInv(UpdateCounterSaleInvRecord) {
     const options = {

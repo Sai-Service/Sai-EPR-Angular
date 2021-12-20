@@ -125,7 +125,9 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
   lnflowStatusCode: 'BOOKED';
   refCustNo: string;
   isDisabled3=false;
+  isDisabled5=false;
   creditAmt:number;
+  errorList:string;
   displaywalkingCustomer = true;
   transactionTypeId: number;
   customerSiteId: number;
@@ -759,6 +761,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
     this.isVisible=true;
     this.isDisabled = true;
     this.isDisabled=true;
+    this.isDisabled5=true;
     // alert(this.isDisabled)
     // alert(this.op)
     this.emplId = Number(sessionStorage.getItem('emplId'))
@@ -768,7 +771,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
     this.displaycreateOrderType = false;
     this.displayCustomerSite = false;
     // alert(this.displayCustomerSite);
-    this.orderManagementService.counterSaleOrderSearch(orderNumber)
+    this.orderManagementService.counterSaleOrderSearchNew(orderNumber,sessionStorage.getItem('locId'))
       .subscribe(
         data => {
           if (data.code === 200) {
@@ -1198,6 +1201,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
             this.CounterSaleOrderBookingForm.patchValue({ name: this.custSiteList[0].siteName });
             let select = this.payTermDescList.find(d => d.lookupValueId === this.selCustomer.termId);
             this.CounterSaleOrderBookingForm.patchValue({ custAccountNo: custAccountNo });
+            this.CounterSaleOrderBookingForm.patchValue({paymentType:select.lookupValue})
             this.paymentType = select.lookupValue;
             this.CounterSaleOrderBookingForm.get('custName').disable();
             this.CounterSaleOrderBookingForm.get('mobile1').disable();
@@ -1267,7 +1271,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
     }
     if (Number(sessionStorage.getItem('divisionId')) === 2) {
       // alert(this.selCustomer.customerId+'----'+selSite.customerSiteId)
-      this.service.crediteLimitFn(this.selCustomer.customerId, selSite.customerSiteId)
+      this.service.crediteLimitFn(this.selCustomer.customerId, sessionStorage.getItem('locId'),selSite.customerSiteId)
         .subscribe(
           data => {
             if (data.code === 200) {
@@ -1430,7 +1434,10 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
     let uomCode = trxLnArr[index].uom;
     let segment = trxLnArr[index].segment;
     if (qty1 > Avalqty) {
-      alert("Order Quantity is more than Available quantity for item "+ segment);
+      // alert("Order Quantity is more than Available quantity for item "+ segment);
+      this.errList ="Order Quantity is more than Available quantity for item "+ segment;
+      // this.CounterSaleOrderBookingForm.patchValue({errorList:errList});
+      console.log( this.errList);
       trxLnArr1.controls[index].patchValue({ pricingQty: '0' });
       return false;
     }
@@ -1604,7 +1611,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
                     data => {
                       console.log(data);
                       if (data.length === 0) {
-                        alert('Locator Not Found!.');
+                        // alert('Locator Not Found!.');
                         var lotList = [{ locatorId: 0, segmentName: 'Not Found' }]
                         controlinv.controls[k].patchValue({ frmLocatorId: lotList });
                         controlinv.controls[k].patchValue({ onHandQty: 0 });
@@ -1686,7 +1693,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
                   data => {
                     console.log(data);
                     if (data.length === 0) {
-                      alert('Locator Not Found!.');
+                      // alert('Locator Not Found!.');
                       var lotList = [{ locatorId: 0, segmentName: 'Not Found' }]
                       controlinv.controls[k].patchValue({ frmLocatorId: lotList });
                       controlinv.controls[k].patchValue({ onHandQty: 0 });
@@ -1759,7 +1766,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
 
     }
     else {
-      alert('Locator Not Found!.')
+      // alert('Locator Not Found!.')
     }
   }
 
@@ -1838,15 +1845,28 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
 
 
   counterSaleOrderSave() {
-    // this.submitted = false;
-    // if(this.CounterSaleOrderBookingForm.invalid){
-    // return;
-    // } 
-
     var orderLines = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     for (let j=0 ;j<orderLines.length;j++){
     if ( orderLines[j].segment ==='' && orderLines[j].taxCategoryName==='' && orderLines[j].pricingQty===''){
       alert('First Select Line Details..!');
+      return;
+    }
+    if (orderLines[j].unitSellingPrice === '') {
+      alert('Line No' + j + 'Amount is Zero please confirm')
+    }
+    if (orderLines[j].pricingQty ===0){
+      alert('Line No'+' ' + j+1 +' '+ 'Quantity is Zero please confirm');
+      this.closeResetButton = true;
+      this.dataDisplay = ''
+      this.isDisabled = false;
+      return;
+    }
+    // alert(orderLines[j].segment.length)
+    if (orderLines[j].segment.length >8){
+      alert('Line No'+' ' + orderLines[j].segment +' '+ 'Select Item Is Wrong... Please confirm');
+      this.closeResetButton = true;
+      this.dataDisplay = ''
+      this.isDisabled = false;
       return;
     }
   }
@@ -1877,6 +1897,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
         this.orderNumber = res.obj;
         this.dataDisplay =''
         this.closeResetButton=true;
+        this.isDisabled5=true;
         console.log(this.orderNumber);
         alert(res.message);
         this.orderNumber = res.obj;
@@ -2401,6 +2422,9 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
           this.displayRemoveRow[i] = true;
           this.displayLineflowStatusCode.push(true);
           this.displayCounterSaleLine.push(false);
+          if (res.obj[i].onhandList.length ===0){
+            this.errList.push("Locator Not Available for item "+' '+res.obj[i].segment);
+          }
         }
         this.CounterSaleOrderBookingForm.patchValue(res.obj);
         for (let k = 0; k < res.obj.length; k++) {
@@ -2535,7 +2559,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
                     data => {
                       console.log(data);
                       if (data.length === 0) {
-                        alert('Locator Not Found!.');
+                        // alert('Locator Not Found!.');
                         var lotList = [{ locatorId: 0, segmentName: 'Not Found' }]
                         controlinv.controls[k].patchValue({ frmLocatorId: lotList });
                         controlinv.controls[k].patchValue({ onHandQty: 0 });
@@ -2604,7 +2628,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
                   data => {
                     console.log(data);
                     if (data.length === 0) {
-                      alert('Locator Not Found!.');
+                      // alert('Locator Not Found!.');
                       var lotList = [{ locatorId: 0, segmentName: 'Not Found' }]
                       controlinv.controls[k].patchValue({ frmLocatorId: lotList });
                       controlinv.controls[k].patchValue({ onHandQty: 0 });

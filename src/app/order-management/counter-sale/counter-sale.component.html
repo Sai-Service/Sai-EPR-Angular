@@ -382,6 +382,22 @@
             <ng-template #elseDMSCDMS>
                 <tr>
                     <td style="width: 15%" class="LabelFontStyle">
+                        Customer&nbsp;PO&nbsp;Number:&nbsp;
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" formControlName="custPoNumber" value={{custPoNumber}}
+                        [ngClass]="{ 'is-invalid': submitted && f.custPoNumber.errors }" style="width:100%;">
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        Customer&nbsp;PO&nbsp;Date&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <input type="date" class="form-control" formControlName="custPoDate" value={{custPoDate}}
+                            [ngClass]="{ 'is-invalid': submitted && f.custPoDate.errors }" style="width:100%;">
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle">
                         CDMS&nbsp;Customer&nbsp;Number:&nbsp;
                     </td>
                     <td>
@@ -537,8 +553,15 @@
                     </td>
 
                     <td>
-                        <input disabled type="text" formControlName="paymentType" [(ngModel)]='paymentType'
-                            value={{paymentType}} class="form-control" style="width: 160px;">
+                        <select formControlName="paymentType" id="paymentType" 
+                        class="form-control" style="width: 160px;">
+                        <option>--Select--</option>
+                        <option *ngFor="let pt of payTermDescList" [value]="pt.lookupValue">
+                            {{pt.lookupValue}}
+                        </option>
+                    </select>
+                        <!-- <input disabled type="text" formControlName="paymentType" [(ngModel)]='paymentType'
+                            value={{paymentType}} class="form-control" style="width: 160px;"> -->
                         <input hidden disabled type="text" formControlName="paymentTermId" [(ngModel)]='paymentTermId'
                             value={{paymentTermId}} class="form-control" style="width: 160px;">
                     </td>
@@ -841,8 +864,26 @@
                             <td>
                                 <input type="number" formControlName="disPer" value={{disPer}}
                                     (keydown.tab)='onOptionsSelecteddisPer()' class="form-control"
-                                    style="width: 160px;font-weight: bold;">
+                                    style="width: 50px;font-weight: bold;">
                             </td>&nbsp;&nbsp;
+                            <td style="width: 15%;font-weight: bold;" class="LabelFontStyle">
+                                Credit&nbsp;Amount&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                <input type="number" disabled formControlName="creditAmt"  [(ngModel)]='creditAmt' value={{creditAmt}}
+                                class="form-control"style="width: 80px;">
+                            </td>
+                            <td style="width: 15%;font-weight: bold;" class="LabelFontStyle">
+                                Credit&nbsp;Days&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                <input type="number" disabled formControlName="creditDays"   value={{creditDays}}
+                                class="form-control"style="width: 80px;">
+                            </td>
+                            <td>
+                                <input type="text" disabled formControlName="daysMsg"  value={{daysMsg}}
+                                class="form-control"style="width: 150px;">
+                            </td>
                         </ng-template>
                         <div *ngIf="displaytcsYN; then thentcsYN; else elsetcsYN"> </div>
                         <ng-template #thentcsYN>
@@ -1493,7 +1534,7 @@
                                             (click)="pickTicketupdateFunction()" style="width: 6rem;">Update</button>
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-primary"
+                                        <button type="button" class="btn btn-primary" [disabled]="isDisabled10"
                                             (click)=" pickTicketInvoiceFunction()">
                                             Invoice
                                         </button>
@@ -1505,6 +1546,12 @@
                                                 Generate&nbsp;Gate&nbsp;Pass
                                             </button>
                                         </div>
+                                    </td>
+                                    <td>
+                                        <button type="submit" class="btn btn-primary" id="register" (click)="refresh()">Clear</button>
+                                    </td>
+                                    <td>
+                                        <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
                                     </td>
                                 </tr>
                             </table>
@@ -1521,19 +1568,15 @@
                     <ng-template #elsetcsBuuton>
                    
                     </ng-template>
-                    <td>
-                        <div
-                            *ngIf="displaycounterSaleOrderSave; then thencounterSaleOrderSave; else elsecounterSaleOrderSave">
-                        </div>
+                    <div *ngIf="displaycounterSaleOrderSave; then thencounterSaleOrderSave; else elsecounterSaleOrderSave"> </div>
                         <ng-template #thencounterSaleOrderSave>
-                            <!-- [disabled]="isDisabled" -->
+                    <td>
                             <button type="submit" [disabled]="isDisabled"  class="btn btn-primary" id="register" style="width: fit-content;"
                                 (click)="counterSaleOrderSave()">Create Order</button>
-                        </ng-template>
-                        <ng-template #elsecounterSaleOrderSave>
-                            <button disabled type="submit" class="btn btn-primary" id="register"
-                                (click)="counterSaleOrderSave()">Save</button>
-                        </ng-template>
+                       
+                            <!-- <button disabled type="submit" class="btn btn-primary" id="register"
+                                (click)="counterSaleOrderSave()">Save</button> -->
+                       
                     </td>
                     <td>
                         <button type="submit" class="btn btn-primary" id="register" (click)="refresh()">Clear</button>
@@ -1550,6 +1593,10 @@
                                 [routerLink]="['/admin/transaction/PaymentReceipt',orderNumber]">Payment</button>
                         </ng-template>
                     </td>
+                </ng-template>
+                <ng-template #elsecounterSaleOrderSave>
+                </ng-template>
+                   
                 </tr>
             </table>
         </ng-template>
