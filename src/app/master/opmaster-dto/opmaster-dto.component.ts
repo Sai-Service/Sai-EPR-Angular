@@ -350,7 +350,7 @@ export class OPMasterDtoComponent implements OnInit {
     message: string;
     allUsers: Observable<OPMasterDtoComponent[]>;
 
-// buttons display 
+// buttons display
 displayFirstButtonDisplay=true;
 displaySecondButtonDisplay=true;
 displayThirdButtonDisplay=true;
@@ -498,7 +498,7 @@ displaypoCancel=true;
       // );
 
 
-      
+
 
     this.service.DepartmentList()
       .subscribe(
@@ -526,7 +526,7 @@ displaypoCancel=true;
     //     }
     //   );
 
-    
+
     // this.service.taxCategoryList()
     //   .subscribe(
     //     data1 => {
@@ -677,7 +677,7 @@ displaypoCancel=true;
          if (this.poNo != undefined){
         this.Search(this.poNo);
        }
-      
+
         });
 
     // // this.onChanges();
@@ -929,7 +929,7 @@ displaypoCancel=true;
             var poDate2 = this.pipe.transform(poDate1, 'dd-MM-yyyy');
             this.poMasterDtoForm.patchValue({poDate: poDate2});
             // alert(approveDate2);
-            const status = this.lstcomments1.authorizationStatus; 
+            const status = this.lstcomments1.authorizationStatus;
             if (status === 'Inprogress') {
               this.displayFirstButtonDisplay=true;
               this.displaySecondButtonDisplay=false;
@@ -941,7 +941,7 @@ displaypoCancel=true;
               var control = this.poMasterDtoForm.get('poLines') as FormArray;
               var taxcatecontrol = this.poMasterDtoForm.get('poLines') as FormArray;
               console.log(control);
-              
+
               for (let i = 0; i <= this.lstcomments1.poLines.length - lenC; i++) {
                 var poLine: FormGroup = this.lineDetailsGroup();
                 let control1 = this.lineDetailsArray.controls[i].get('taxAmounts') as FormArray
@@ -973,7 +973,7 @@ displaypoCancel=true;
                   );
                   if (data.obj.poLines[j].itemType==='GOODS'){
                     this.displayHSN[j]=true;
-                    this.lineDetailsArray.controls[j].get('segmentName').disable();     
+                    this.lineDetailsArray.controls[j].get('segmentName').disable();
                   }
                   else{
                     this.displayHSN[j]=false;
@@ -1013,7 +1013,7 @@ displaypoCancel=true;
                   }));
                 });
               }
-             
+
             }
             if (status === "APPROVED") {
               this.displaySecondButtonDisplay=true;
@@ -1027,7 +1027,7 @@ displaypoCancel=true;
               this.displaygoReceiptForm = false;
               this.approvedArray = this.lstcomments1.poLines;
               console.log(this.approvedArray);
-           
+
               if (data.obj.rcvLines.length >0){
                 // alert(data.obj.rcvLines.length);
                 this.isVisible=false;
@@ -1084,7 +1084,7 @@ displaypoCancel=true;
                 });
                 // this.taxDetails('Search',i, 'taxCategoryId');
               }
-             
+
             }
             if (status === "CANCELLED") {
               this.displaySecondButtonDisplay=true;
@@ -1147,7 +1147,7 @@ displaypoCancel=true;
                 });
                 // this.taxDetails('Search',i, 'taxCategoryId');
               }
-             
+
             }
           }
         }
@@ -1160,7 +1160,7 @@ displaypoCancel=true;
 //   alert(invItemId +'----' + index);
 //   console.log(this.supplierCodeList);
 //   console.log(this.supplierCodeList[index].supplierSiteMasterList);
-  
+
 //   let selectedValue = this.supplierCodeList[index].supplierSiteMasterList.find(v => v.suppSiteId == supplierSiteId);
 //   console.log(selectedValue);
 //  this.service.ItemDetailsList(invItemId, selectedValue.taxCategoryName, this.billToLoc).subscribe((res: any) => {
@@ -1423,7 +1423,7 @@ displaypoCancel=true;
    var taxCategoryName=tacCategoryControl[i].taxCategoryName;
    let selectedTaxCatId = this.taxCategoryList[i].find(v => v.taxCategoryName == taxCategoryName);
    console.log(selectedTaxCatId);
-   
+
    var taxCategoryId =selectedTaxCatId.taxCategoryId;
     // var taxCategoryName=this.poMasterDtoForm.get('taxCategoryName').value;
     // alert('******'+ i+'----'+ taxCategoryName);
@@ -1470,11 +1470,11 @@ displaypoCancel=true;
     }
   }
   onOptioninvItemIdSelected(itemId, index) {
-    
+
     if (itemId != null) {
       let selectedValue = this.invItemList.find(v => v.segment == itemId);
       console.log(selectedValue);
-      
+
       if (selectedValue != undefined) {
         console.log(selectedValue);
         this.selectedInvItem.push(selectedValue);
@@ -1483,7 +1483,7 @@ displaypoCancel=true;
         this.itemType = arrayControl[index].itemType
         this.invItemId = selectedValue.itemId;
         console.log(this.invItemId, this.taxCat);
-        this.lineDetailsArray.controls[index].get('taxCategoryName').enable(); 
+        this.lineDetailsArray.controls[index].get('taxCategoryName').enable();
         this.lineDetailsArray.controls[index].get('orderedQty').enable();
         this.lineDetailsArray.controls[index].get('unitPrice').enable();
         if (this.itemType === "GOODS") {
@@ -1491,7 +1491,7 @@ displaypoCancel=true;
             if (res.code === 200) {
               if (res.obj.itemId===null){
                 alert('Item Or PO Charge Account Not Found in Master !')
-                var patch = this.poMasterDtoForm.get('poLines') as FormArray;  
+                var patch = this.poMasterDtoForm.get('poLines') as FormArray;
                 (patch.controls[index]).patchValue({
                   segment:' ',
                 }) ;
@@ -1500,7 +1500,7 @@ displaypoCancel=true;
                 this.lineDetailsArray.controls[index].get('uom').reset();
                 this.lineDetailsArray.controls[index].get('hsnSacCode').reset();
                 this.lineDetailsArray.controls[index].get('taxCategoryName').reset();
-                this.lineDetailsArray.controls[index].get('segmentName').reset(); 
+                this.lineDetailsArray.controls[index].get('segmentName').reset();
                 this.lineDetailsArray.controls[index].get('hsnSacCode').disable();
                 this.lineDetailsArray.controls[index].get('taxCategoryName').disable();
                 return;
@@ -1515,7 +1515,7 @@ displaypoCancel=true;
               var gstPercentage=this.ItemDetailsList.gstPercentage;
               // alert(gstPercentage)
               var supplierSiteId = this.poMasterDtoForm.get('supplierSiteId').value;
-              console.log(this.suppIdList);   
+              console.log(this.suppIdList);
             let selectedValue = this.suppIdList.find(v => v.suppSiteId == supplierSiteId);
               console.log(selectedValue);
               if (selectedValue.taxCategoryName != null && gstPercentage != null){
@@ -1632,13 +1632,13 @@ displaypoCancel=true;
     this.lineDetailsArray.controls[index].get('uom').reset();
     this.lineDetailsArray.controls[index].get('hsnSacCode').reset();
     this.lineDetailsArray.controls[index].get('taxCategoryName').reset();
-    this.lineDetailsArray.controls[index].get('segmentName').reset(); 
-        this.lineDetailsArray.controls[index].get('taxCategoryName').disable(); 
+    this.lineDetailsArray.controls[index].get('segmentName').reset();
+        this.lineDetailsArray.controls[index].get('taxCategoryName').disable();
         this.lineDetailsArray.controls[index].get('orderedQty').disable();
         this.lineDetailsArray.controls[index].get('unitPrice').disable();
       }
     }
-   
+
     // alert(supplierSiteId +'----'+ selectedValue.taxCategoryName)
   }
   onContextValueSelected(contextValue: any) {
@@ -1666,7 +1666,7 @@ displaypoCancel=true;
             }
             // if (taxCategoryName.includes('Purchase-S&CGST')){
             //   // alert(taxCategoryName);
-            //   this.taxCategoryList = this.taxCategoryList.filter(taxCategoryName.includes('Purchase-S&CGST'));
+            //   this.taxCategoryList = this.taxCategoryList.(taxCategoryName.includes('Purchase-S&CGST'));
             // }
             // else if (taxCategoryName.includes('Purchase-I&CGST')){
             //   alert(taxCategoryName);
@@ -2052,7 +2052,7 @@ displaypoCancel=true;
   onOptioninvitemTypeSelected(e: any, lineNum) {
     var itemType = e.target.value;
     // alert(itemType)
-    
+
     if (this.itemMap.has(itemType)){
       this.invItemList = this.itemMap.get(itemType);
     }
@@ -2086,7 +2086,7 @@ displaypoCancel=true;
                 this.lineDetailsArray.controls[lineNum].get('segment').enable();
                 // this.displaysegmentList[lineNum]=true;
               }
-            );    
+            );
         // }
         // alert(this.invItemList.length)
             this.lineDetailsArray.controls[lineNum].get('invDescription').disable();
@@ -2531,7 +2531,7 @@ displaypoCancel=true;
           return;
         }
         this.message1 = "Do you want to SAVE the changes(Yes/No)?"
-        
+
       }
       if (msgType.includes("Update")) {
           this.message1 = "Do you want to Update the Form(Yes/No)?"
@@ -2548,13 +2548,13 @@ displaypoCancel=true;
      if (msgType.includes("Reset")) {
         this.message1 = "Do you want to Reset the changes(Yes/No)?"
       }
-      
+
       if (msgType.includes("Close")) {
         this.message1 = "Do you want to Close the Form(Yes/No)?"
       }
       return;
     }
-  
+
    executeAction() {
       if(this.msgType.includes("Save")) {
         this.newPOMast();
@@ -2573,37 +2573,37 @@ displaypoCancel=true;
      if (this.msgType.includes("goReceiptForm")) {
                this.goReceiptForm(this.segment1);
       }
-  
+
       if (this.msgType.includes("Reset")) {
     //       alert("reset clicked");
         this.clearFormArray();
       }
-      
+
       if (this.msgType.includes("Close")) {
         this.router.navigate(['admin']);
       }
       return;
     }
-  
-  
-  
 
 
-  onHsnCodeSelected(event,index){ 
-    // alert(event);  
+
+
+
+  onHsnCodeSelected(event,index){
+    // alert(event);
     console.log(event);
-    
+
     let selectgstPercentage = this.hsnSacCodeList.find(v => v.hsnsaccode == event);
     if (event != null && event !='NA'){
       if (this.currentOp != 'Search' ) {
-    var gstPercentage = selectgstPercentage.gstPercentage;  
+    var gstPercentage = selectgstPercentage.gstPercentage;
     let control = this.poMasterDtoForm.get('poLines') as FormArray;
     (control.controls[index]).patchValue(
       {
         gstPercentage: selectgstPercentage.gstPercentage,
-      }); 
+      });
   var supplierSiteId = this.poMasterDtoForm.get('supplierSiteId').value;
-  console.log(this.suppIdList);   
+  console.log(this.suppIdList);
 let selectedValue = this.suppIdList.find(v => v.suppSiteId == supplierSiteId);
   console.log(selectedValue);
   if (selectedValue.taxCategoryName != null && this.itemType === "EXPENCE"){

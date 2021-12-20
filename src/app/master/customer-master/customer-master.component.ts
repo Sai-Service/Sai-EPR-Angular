@@ -266,7 +266,7 @@ export class CustomerMasterComponent implements OnInit {
       emailId: ['', [Validators.required, Validators.email, Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')]],
       emailId1: ['', [Validators.email, Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')]],
       // contactPerson: ['', [Validators.required,Validators.pattern('[a-zA-Z ]*')]],
-      contactPerson: ['', [Validators.pattern('[a-zA-Z ]*'), Validators.minLength(1), Validators.maxLength(50)]],
+      contactPerson: ['', [Validators.pattern('[a-zA-Z. ]*'), Validators.minLength(1), Validators.maxLength(50)]],
       contactNo: [''],
       // contactNo: ['', [Validators.pattern('[0-9]*'), Validators.minLength(10),Validators.maxLength(10)]],
       birthDate: [''],
@@ -308,7 +308,8 @@ export class CustomerMasterComponent implements OnInit {
       staxCatName: [],
       stanNo: [],
       spanNo: ['', [Validators.pattern("^[A-Z]{5}[0-9]{4}[A-Z]{1}$"), Validators.minLength(10), Validators.maxLength(10)]],
-      sGstNo: ['', [Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{1}[A-Z0-9]{1}$"), Validators.minLength(15), Validators.maxLength(15)]],
+      // sGstNo: ['', [Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{1}[A-Z0-9]{1}$"), Validators.minLength(15), Validators.maxLength(15)]],
+      sGstNo:['', [Validators.minLength(15), Validators.maxLength(15)]],
       // sGstNo: ['', [Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"), Validators.minLength(15), Validators.maxLength(15)]],
       souId: [],
       souName: [],
@@ -442,12 +443,13 @@ export class CustomerMasterComponent implements OnInit {
       this.service.getTDSPercentage().subscribe(
         data=>{
           this.tdsPercentage=data;
+          this.originalTdsPer=data;
         }
 
       )
     // this.PersonType='Person';
   }
-
+  originalTdsPer : any;
   customerMaster(customerMaster: any) {
   }
 
@@ -640,12 +642,32 @@ export class CustomerMasterComponent implements OnInit {
   }
 
   gstVerification2(event: any) {
-    var sGstno = this.customerMasterForm.get('sGstNo').value
-    const sGstNo1 = sGstno.substr(2, 10);
+
+    var sGstnoVal = this.customerMasterForm.get('sGstNo').value
+    if(sGstnoVal===''){
+      this.customerMasterForm.patchValue({'sGstNo':'GSTUNREGISTERED'});
+      return;
+    }
+    else{
+    var regex: string = "{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}";
+       var p = new PatternValidator();
+       var patt = new RegExp('{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}');
+      let validgst = patt.test(sGstnoVal);
+      if (validgst === false) {
+        alert('Please enter valid GST Number');
+      }
+
+    else{
+      alert('Please enter valid PAN Number');
+      return false;
+    }
+    // return validgst;
+    }
+    const sGstNo1 = sGstnoVal.substr(2, 10);
     this.panNo = sGstNo1;
     //  alert('Gst verificaition2');
     this.customerMasterForm.patchValue({'spanNo':sGstNo1});
-    var res = sGstno.substr(0, 2);
+    var res = sGstnoVal.substr(0, 2);
     console.log(res);
     const state = this.customerMasterForm.get('sstate').value;
     console.log(state);
@@ -748,12 +770,16 @@ export class CustomerMasterComponent implements OnInit {
       return;
     }
     const formValue: IcustomerMaster = this.transDataForSite(this.customerMasterForm.value);
+    if(this.sGstNo===''){
+      formValue.sGstNo='GSTUNREGISTERED';
+    }
 
     this.service.CustMasterOnlySitSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
         var acctNo = this.customerMasterForm.get('custAccountNo').value;
-        this.searchByAccount1(acctNo);
+        // this.searchByAccount1(acctNo);
+        (document.getElementById('newSiteBtn') as HTMLInputElement).disabled = true;
         // this.customerMasterForm.disable();
 
         // this.customerMasterForm.reset();
@@ -784,6 +810,9 @@ export class CustomerMasterComponent implements OnInit {
 
     if (formValue.custType === 'Organization') {
       formValue.title = 'M/S';
+    }
+    if(this.gstNo===''){
+      formValue.gstNo='GSTUNREGISTERED';
     }
     this.service.CustMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
@@ -1010,6 +1039,7 @@ export class CustomerMasterComponent implements OnInit {
     this.displaystatus = false;
 
     this.lstcomments2 = this.lstcomments.customerSiteMasterList;
+
     console.log(this.lstcomments2);
     let select = this.lstcomments2.find(d => d.customerSiteId === customerSiteId);
     console.log(select);
@@ -1046,6 +1076,8 @@ export class CustomerMasterComponent implements OnInit {
       let selstatus = this.statusList.find(d => d.codeDesc === select.status);
 
       this.customerMasterForm.patchValue({ sstatus: selstatus.codeDesc, slocation: select.location });
+      this.customerMasterForm.patchValue({ contactPerson: this.lstcomments.contactPerson,
+                                           contactNo:this.lstcomments.contactNo });
 
       // this.displayButton = false;
     }
@@ -1220,6 +1252,7 @@ export class CustomerMasterComponent implements OnInit {
       this.submitted = true;
       (document.getElementById('updateBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
       if (this.customerMasterForm.invalid) {
+        alert('Invalid Validation Errors !!');
         //this.submitted = false;
         (document.getElementById('updateBtn') as HTMLInputElement).setAttribute('data-target', '');
         return;
@@ -1319,10 +1352,16 @@ export class CustomerMasterComponent implements OnInit {
   }
 
   onSelectPan(event){
-    alert(event);
-    if(event==='')
-    {
 
+    event=event.target.value;
+    if(event===''|| event==='APPLIEDFOR')
+    {
+      alert("INSIDE IF ")
+      let currTdsList = this.tdsPercentage.filter((tdscode) => (tdscode.code!=20));
+      this.tdsPercentage=currTdsList;
+    }else{
+     // let currTdsList = this.tdsPercentage.filter((tdscode) => (tdscode.code===20));
+      this.tdsPercentage=this.originalTdsPer;
     }
   }
 }
