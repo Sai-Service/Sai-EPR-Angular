@@ -1277,7 +1277,7 @@ onKey(index, fldName) {
                 this.onKey(i,'Search');  
               }
               let itemTaxCat = this.taxCategoryList.find(d => d.taxCategoryId === controlinv1[i].taxCategoryId);
-             alert(itemTaxCat);
+            
               controlinv2.controls[i].patchValue({taxCategoryName:itemTaxCat});
               controlinv2.controls[i].patchValue({taxCategoryId:itemTaxCat.taxCategoryId});
             }
