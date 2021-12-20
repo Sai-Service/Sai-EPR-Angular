@@ -1309,13 +1309,9 @@ onKey(index, fldName) {
         this.lineTaxdetails.removeAt(x);
         }
     }
-    
-    debugger;
     console.log(this.lineTaxdetails)
   //  this.lineTaxdetails.controls.patchValue(controlTax1);
-    alert('----'+this.lineTaxdetails.length);
-    
-    
+  
   }
 
 
