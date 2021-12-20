@@ -951,7 +951,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
             }
             // alert(data.obj.orderStatus);
             if (data.obj.orderStatus === 'BOOKED' && Number(sessionStorage.getItem('divisionId')) === 2) {
-              this.service.crediteLimitFn(this.allDatastore.customerId, sessionStorage.getItem('locId'),this.allDatastore.customerSiteId)
+              this.service.crediteLimitFn(this.allDatastore.customerId, sessionStorage.getItem('locId'))
                 .subscribe(
                   data => {
                     if (data.code === 200) {
@@ -1495,15 +1495,14 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     if (Number(sessionStorage.getItem('divisionId')) === 2) {
       // alert(this.selCustomer.customerId+'----'+selSite.customerSiteId)
       // this.service.crediteLimitFn(this.selCustomer.customerId, selSite.customerSiteId)
-      this.service.crediteLimitFn(this.selCustomer.customerId, sessionStorage.getItem('locId'),selSite.customerSiteId)
+      this.service.crediteLimitFn(this.selCustomer.customerId, sessionStorage.getItem('locId'))
         .subscribe(
           data => {
             if (data.code === 200) {
               // alert(data.obj);
               var credAmt = this.CounterSaleOrderBookingForm.get('creditAmt').value;
               var newCrAmt = Number(credAmt) - Number(data.obj.outStandingAmt);
-              var newCrmAmt1=   Math.round(((newCrAmt) + Number.EPSILON) * 100) / 100;
-              this.CounterSaleOrderBookingForm.patchValue({ creditAmt: newCrmAmt1 });
+              this.CounterSaleOrderBookingForm.patchValue({ creditAmt: newCrAmt });
               this.CounterSaleOrderBookingForm.patchValue({ creditDays: data.obj.creditDays });
               this.CounterSaleOrderBookingForm.patchValue({ daysMsg: data.obj.daysMsg });
             }

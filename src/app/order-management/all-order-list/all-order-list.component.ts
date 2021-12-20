@@ -43,7 +43,7 @@ export class AllOrderListComponent implements OnInit {
     var endDt1 = new Date(this.today);
     endDt1.setDate(endDt1.getDate() + 1);
     this.endDt = this.pipe.transform(endDt1, 'dd-MMM-yyyy');
-      this.service.getOrderByUser(Number(sessionStorage.getItem('locId')), this.startDt, this.endDt,sessionStorage.getItem('deptId')).subscribe((res: any) => {
+      this.service.getOrderByUser(Number(sessionStorage.getItem('locId')), this.startDt, this.endDt).subscribe((res: any) => {
         if (res.code === 200) {
           this.orderListDetails = res.obj;
           // for (let i = 0; i < res.obj.length; i++) {
@@ -83,7 +83,7 @@ export class AllOrderListComponent implements OnInit {
     endDt1.setDate(endDt1.getDate() + 1);
     this.endDt = this.pipe.transform(endDt1, 'dd-MMM-yyyy');
 
-    this.service.getOrderByUser(Number(sessionStorage.getItem('locId')), stDate, this.endDt,sessionStorage.getItem('deptId')).subscribe((res: any) => {
+    this.service.getOrderByUser(Number(sessionStorage.getItem('locId')), stDate, this.endDt).subscribe((res: any) => {
       if (res.code === 200) {
         this.orderListDetails = res.obj;
         // for (let i = 0; i < res.obj.length; i++) {

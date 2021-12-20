@@ -1001,8 +1001,8 @@ exicutiveNameByCustName(accountNo,locId): Observable<any>{
 //   return this.http.get(this.ServerUrl+`/Customer/getCreditAmt?customerId=${customerId}&customerSiteId=${customerSiteId}`);
 // }
 
-crediteLimitFn(customerId,locId,customerSiteId): Observable<any>{
-  return this.http.get(this.ServerUrl+`/Customer/getOutStandingDetails?billToCustId=${customerId}&locId=${locId}&customerSiteId=${customerSiteId}`);
+crediteLimitFn(customerId,locId): Observable<any>{
+  return this.http.get(this.ServerUrl+`/Customer/getOutStandingDetails?billToCustId=${customerId}&locId=${locId}`);
 }
 /////////AccountEnquiry////////////////////
 public FinancialPeriod():Observable<any>{
@@ -2467,8 +2467,8 @@ bulkpouploadSales(formData: FormData) {
   }
 
 
-  getOrderByUser(locId, startDt, endDt,deptId){
-    return this.http.get(this.ServerUrl + `/orderHeader/getByDate?locId=${locId}&startDt=${startDt}&endDt=${endDt}&dept=${deptId}`)
+  getOrderByUser(locId, startDt, endDt){
+    return this.http.get(this.ServerUrl + `/orderHeader/getByDate?locId=${locId}&startDt=${startDt}&endDt=${endDt}`)
   }
 
   bulkpouploadSpares(formData: FormData) {
