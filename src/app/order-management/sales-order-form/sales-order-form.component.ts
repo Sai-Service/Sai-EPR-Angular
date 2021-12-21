@@ -250,17 +250,11 @@ export class SalesOrderFormComponent implements OnInit {
   accountNoSearchdata: any[];
   displayCustomerSite = true;
   customerNameSearch: any[];
-<<<<<<< HEAD
   name:string;
   customerSiteId:number;
   custPoNumber:string;
   custPoDate:Date;
   refCustNo:string;
-=======
-  name: string;
-  customerSiteId: number;
-
->>>>>>> 712ccb5d92bfb3ba8e67a3b5c8f631ac7fa4d514
 
   displaysegmentInvType: Array<boolean> = [];
   displayLineflowStatusCode: Array<boolean> = [];
@@ -282,13 +276,8 @@ export class SalesOrderFormComponent implements OnInit {
     this.SalesOrderBookingForm = fb.group({
       divisionName: [''],
       ouName: [''],
-<<<<<<< HEAD
       exchange: ['',[Validators.required]],
       priceListHeaderId:[''],
-=======
-      exchange: [''],
-      priceListHeaderId: [''],
->>>>>>> 712ccb5d92bfb3ba8e67a3b5c8f631ac7fa4d514
       taxiYN: [''],
       weddingDate: [''],
       name: [''],
@@ -303,11 +292,7 @@ export class SalesOrderFormComponent implements OnInit {
       exRegNo: [''],
       insCharges: [''],
       offerPrice: [''],
-<<<<<<< HEAD
       mobile1:['',[Validators.required]],
-=======
-      mobile1: [''],
->>>>>>> 712ccb5d92bfb3ba8e67a3b5c8f631ac7fa4d514
       paymentTermId: [],
       locCode: [''],
       locId: [''],
@@ -344,14 +329,10 @@ export class SalesOrderFormComponent implements OnInit {
       ouId: [''],
       customerId: [''],
       billToAddress: [''],
-<<<<<<< HEAD
       shipToAddress:[''],
       custPoNumber:[''],
       custPoDate:[''],
       refCustNo:[''],
-=======
-      shipToAddress: [''],
->>>>>>> 712ccb5d92bfb3ba8e67a3b5c8f631ac7fa4d514
       gstNo: [''],
       panNo: [''],
       tcs: [''],
