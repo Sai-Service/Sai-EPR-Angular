@@ -1276,7 +1276,7 @@ export class SalesOrderFormComponent implements OnInit {
                   this.onKey(i, 'Search');
                 }
                 let itemTaxCat = this.taxCategoryList.find(d => d.taxCategoryId === controlinv1[i].taxCategoryId);
-
+                console.log(itemTaxCat);
                 controlinv2.controls[i].patchValue({ taxCategoryName: itemTaxCat });
                 controlinv2.controls[i].patchValue({ taxCategoryId: itemTaxCat.taxCategoryId });
               }
