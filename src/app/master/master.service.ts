@@ -683,6 +683,14 @@ salesRepNameList(ouId,locId,dept): Observable<any> {
   return this.http.get(this.ServerUrl +`/teamMaster/StatusOuswise?ouId=${ouId}&locId=${locId}&dept=${dept}`);
 }
 
+mainModelListDivisionWise(divisionId): Observable<any> {
+  return this.http.get(this.ServerUrl +`/cmnLookup/Catgtype?cmnType=Model&divisionId=${divisionId}`);
+}
+
+
+transactionTypeNameListNew(deptId,ouId): Observable<any> {
+  return this.http.get(this.ServerUrl +`/OrderTrnType/otList?deptId=${deptId}&ouId=${ouId}`);
+}
 
 variantCodeList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
