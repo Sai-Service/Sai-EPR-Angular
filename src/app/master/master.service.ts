@@ -1306,6 +1306,13 @@ ItemIdListDept(deptId,locId,subId):Observable<any>
 {
   return this.http.get(this.ServerUrl+`/itemMst/itemDepartent?deptId=${deptId}&locationId=${locId}&subInventoryId=${subId}`)
 }
+
+ItemIdListDeptByCode(deptId,locId,subId,itemCode):Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/itemMst/itemDepartent?deptId=${deptId}&locationId=${locId}&subInventoryId=${subId}&segment=${itemCode}`)
+}
+
+
 Shipmentdue(frmLoc,toLoc,subInvCode):Observable<any>
 {
   return this.http.get(this.ServerUrl+`/rcvShipment/overDueList?fromLoc=${frmLoc}&toLoc=${toLoc}&subInventoryCode=${subInvCode}`)
@@ -1439,7 +1446,7 @@ getreserqty(locId,itemID):Observable<any>{
 }
 
 getreserqtyNew(locId,itemID,locatorId,rate):Observable<any>{
-  
+
   return this.http.get(this.ServerUrl+`/reserveQty/locResQty?locId=${locId}&invItemId=${itemID}&locatorId=${locatorId}&rate=${rate}`)
 }
 
@@ -2367,7 +2374,7 @@ OrderCategoryList(): Observable<any> {
       // alert ("receipt date only");
         return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptDate='${rcptDate}'&orgId=${ouId}&locId=${locId}`)
       }
-  
+
       if(custActNo !=undefined || custActNo !=null){
         // alert("cust account no");
          return this.http.get(this.ServerUrl + `/arCashReceipts/Search?accountNo=${custActNo}&orgId=${ouId}&locId=${locId}`);
@@ -3383,7 +3390,7 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
     }
 
     //////////////////////////// ORDER GENERATION /
-   
+
     clearBakcOrder(locId) {
       const options = {
         headers: this.headers
@@ -3398,6 +3405,6 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
     }
 
 
-    
+
 
 }
