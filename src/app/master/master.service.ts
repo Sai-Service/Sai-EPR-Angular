@@ -683,6 +683,14 @@ salesRepNameList(ouId,locId,dept): Observable<any> {
   return this.http.get(this.ServerUrl +`/teamMaster/StatusOuswise?ouId=${ouId}&locId=${locId}&dept=${dept}`);
 }
 
+mainModelListDivisionWise(divisionId): Observable<any> {
+  return this.http.get(this.ServerUrl +`/cmnLookup/Catgtype?cmnType=Model&divisionId=${divisionId}`);
+}
+
+
+transactionTypeNameListNew(deptId,ouId): Observable<any> {
+  return this.http.get(this.ServerUrl +`/OrderTrnType/otList?deptId=${deptId}&ouId=${ouId}`);
+}
 
 variantCodeList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
@@ -1001,8 +1009,8 @@ exicutiveNameByCustName(accountNo,locId): Observable<any>{
 //   return this.http.get(this.ServerUrl+`/Customer/getCreditAmt?customerId=${customerId}&customerSiteId=${customerSiteId}`);
 // }
 
-crediteLimitFn(customerId,locId): Observable<any>{
-  return this.http.get(this.ServerUrl+`/Customer/getOutStandingDetails?billToCustId=${customerId}&locId=${locId}`);
+crediteLimitFn(customerId,locId,customerSiteId): Observable<any>{
+  return this.http.get(this.ServerUrl+`/Customer/getOutStandingDetails?billToCustId=${customerId}&locId=${locId}&customerSiteId=${customerSiteId}`);
 }
 /////////AccountEnquiry////////////////////
 public FinancialPeriod():Observable<any>{
@@ -2467,8 +2475,8 @@ bulkpouploadSales(formData: FormData) {
   }
 
 
-  getOrderByUser(locId, startDt, endDt){
-    return this.http.get(this.ServerUrl + `/orderHeader/getByDate?locId=${locId}&startDt=${startDt}&endDt=${endDt}`)
+  getOrderByUser(locId, startDt, endDt,deptId){
+    return this.http.get(this.ServerUrl + `/orderHeader/getByDate?locId=${locId}&startDt=${startDt}&endDt=${endDt}&dept=${deptId}`)
   }
 
   bulkpouploadSpares(formData: FormData) {

@@ -60,6 +60,10 @@ export class OrderManagementService {
     return this.http.get(this.ServerUrl +`/OrderTrnType/otAccSpList?deptId=${deptId}&ouId=${ouId}`);
   }
 
+  priceListNameListDeptWise(divisionId,ouId,deptId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/pricelist/prinHeader?divisionId=${divisionId}&ouId=${ouId}&deptId=${deptId}`);
+  }
+
 
   counterSaleOrderSearch(orderNumber): Observable<any> {
     return this.http.get(this.ServerUrl +`/orderHeader/ACSP/orderNumber=${orderNumber}`);

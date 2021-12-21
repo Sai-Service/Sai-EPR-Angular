@@ -1297,8 +1297,7 @@ export class JobCardComponent implements OnInit {
             // this.jobcardForm.get('jcType').disable()
             // this.jobcardForm.get('srTypeId').disable()
             // this.jobcardForm.get('subTypeId').disable()
-            this.jobcardForm.patchValue({labDiscountPer:data.obj.labDiscountPer})
-              // let selectLabPer = this.labDiscountPerList.find(d => d.code === String(data.obj.labDiscountPer));
+            
 
           }
 
@@ -1714,7 +1713,7 @@ export class JobCardComponent implements OnInit {
         this.dispButtonStatus=false
         this.cancelButton=true;
         this.saveMatButton=false;
-        this.saveMatButton=false;
+        this.saveLabButton=false;
         this.jobcardForm.disable();
         alert(res.message);
         this.jobcardForm.patchValue({ jobCardNum: res.obj.jobCardNum, jobCardId: res.obj.jobCardId })
