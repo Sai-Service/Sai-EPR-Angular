@@ -1434,7 +1434,7 @@
                                   
                                     <div class="modal-header">
                                       <h4 class="modal-title">Modal Heading</h4>
-                                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                      <button type="button" class="close" data-dismiss="modal" (click)="closeTaxModal()">&times;</button>
                                     </div>
                                 
                                     <div class="modal-body">
@@ -1488,7 +1488,7 @@
                                         </thead>
                                         <tbody>
                                              <ng-container class="center" formArrayName="taxAmounts"> 
-                                                <ng-container  *ngFor="let taxDet of lineTaxdetails.controls; let j= index"
+                                                <ng-container  *ngFor="let taxDet of TaxDetailsArray().controls; let j= index"
                                                     [formGroupName]="j" class="auto-style5">
                                                     <tr class="ItemStyle" style="text-decoration:none;">
                                                         <!-- <td> <input disabled formControlName="invLineNo"
