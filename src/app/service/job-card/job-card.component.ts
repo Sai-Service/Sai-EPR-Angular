@@ -7,6 +7,8 @@ import { OrderManagementService } from 'src/app/order-management/order-managemen
 import { observable, Observable } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import * as moment from 'moment';
+import { DecimalPipe,formatNumber } from '@angular/common';
+import {  Inject, LOCALE_ID } from '@angular/core';
 // import { of } from 'rxjs/observable/of';
 // import 'rxjs/add/observable/of';
 
@@ -115,7 +117,7 @@ export class JobCardComponent implements OnInit {
   estLabor:number=0;
   estMaterial:number=0;
   estTotal:number=0;
-  
+  splitRatio :string
   techAdvisor:string;
   regNo: string;
   labTotTaxAmt: number;
@@ -189,6 +191,7 @@ export class JobCardComponent implements OnInit {
   displayCustInsDetails = true;
   displayInslinedetails = true;
   displayInsheader = true;
+  dispSplitRatio =false;
   insurerCompId: number;
   insurerSiteId: number;
   insurerSite: string;
@@ -287,7 +290,7 @@ export class JobCardComponent implements OnInit {
   unSaved: boolean = true;
   taxPer: number;
   // @ViewChild('jobcardForm') public createJobcardForm: NgForm;
-  constructor(private fb: FormBuilder, private router: Router, private orderManagementService: OrderManagementService, private service: MasterService, private serviceService: ServiceService) {
+  constructor(private fb: FormBuilder, private router: Router, private orderManagementService: OrderManagementService, private service: MasterService, private serviceService: ServiceService,@Inject(LOCALE_ID) private locale: string) {
     this.jobcardForm = fb.group({
       jcOpenDate:[],
       vehRegNo:[],
@@ -894,6 +897,9 @@ export class JobCardComponent implements OnInit {
   onOptionBillableSelected(event, jcStatus: string) {
     // alert ( "onOptionBillableSelected :" +event + " , "+jcStatus);
     if(event !=null) {
+
+    if (event=='Service') { this.dispSplitRatio=false;}else {this.dispSplitRatio=true;}
+
     this.serviceService.srTypeIdstFN(event)
       .subscribe(
         data1 => {
@@ -1013,6 +1019,11 @@ export class JobCardComponent implements OnInit {
     //  if(Number(arrayControl[index].laborAmt)<=0 ||arrayControl[index].laborAmt===null || arrayControl[index].laborAmt===undefined )
     //  { this.labLineValidation=false;return; }
 
+    if(this.dispSplitRatio) {
+      if(Number(arrayControl[index].splitRatio)<=0 ||arrayControl[index].splitRatio===null || arrayControl[index].splitRatio===undefined )
+      { this.matLineValidation=false;alert ("Check SPLIT RATIO");return; }
+      }
+
     this.labLineValidation=true;
 
   }
@@ -1046,9 +1057,10 @@ export class JobCardComponent implements OnInit {
      if(Number(arrayControl[index].taxAmt)<=0 ||arrayControl[index].taxAmt===null || arrayControl[index].taxAmt===undefined )
      { this.matLineValidation=false;alert ("Check TAX AMT");return; }
 
+     if(this.dispSplitRatio) {
      if(Number(arrayControl[index].splitRatio)<=0 ||arrayControl[index].splitRatio===null || arrayControl[index].splitRatio===undefined )
      { this.matLineValidation=false;alert ("Check SPLIT RATIO");return; }
-
+     }
 
     this.matLineValidation=true;
 
@@ -1160,7 +1172,14 @@ export class JobCardComponent implements OnInit {
          
         
 
+          if(this.lstcomments.jcType='Service') {this.dispSplitRatio=false;}else {this.dispSplitRatio=true;}
 
+          this.jobcardForm.get('matDiscout').disable();
+          this.jobcardForm.get('labDiscount').disable();
+
+          this.jobcardForm.get('regNo').disable()
+          this.jobcardForm.get('jcType').disable()
+          //  this.jobcardForm.get('srTypeId').disable();
          
           this.jobcardForm.patchValue({regNo : data.obj.regNo});
           var promdate= this.pipe.transform(data.obj.promiseDate,  'yyyy-MM-ddThh:mm')
@@ -1213,9 +1232,10 @@ export class JobCardComponent implements OnInit {
               // this.jobcardForm.get('driverName').enable()
               // this.jobcardForm.get('promiseDate').enable()
 
-               this.jobcardForm.get('regNo').disable()
-               this.jobcardForm.get('jcType').disable()
-              //  this.jobcardForm.get('srTypeId').disable()
+              //  this.jobcardForm.get('regNo').disable()
+              //  this.jobcardForm.get('jcType').disable()
+
+              //  this.jobcardForm.get('srTypeId')
           }
           
         
@@ -1244,12 +1264,13 @@ export class JobCardComponent implements OnInit {
             this.saveMatButton=false;
             this.preInvButton=false;
             this.cancelButton=false;
+            
            
             
           }
           if (this.lstcomments.matStatus == 'Compeleted' || this.lstcomments.jobStatus == 'Ready for Invoice') {
 
-            this.jobcardForm.disable();
+            // this.jobcardForm.disable();
             this.jobcardForm.get('jobCardLabLines').disable();
             this.jobcardForm.get('jobCardMatLines').disable();
             this.displaybilling = false;
@@ -1263,21 +1284,26 @@ export class JobCardComponent implements OnInit {
             this.saveMatButton=false;
             this.preInvButton=true;
             this.cancelButton=false;
-            this.jobcardForm.get('variReason').enable();
-            this.jobcardForm.get('disTypeMat').enable();
-            this.jobcardForm.get('disTypeLab').enable();
-            this.jobcardForm.get('deductibles').enable();
-            this.jobcardForm.get('salvage').enable();
-            this.jobcardForm.get('disCategory').enable();
-            this.jobcardForm.get('disAuthBy').enable();
-          
+            // this.jobcardForm.get('variReason').enable();
+            // this.jobcardForm.get('disTypeMat').enable();
+            // this.jobcardForm.get('disTypeLab').enable();
+            // this.jobcardForm.get('deductibles').enable();
+            // this.jobcardForm.get('salvage').enable();
+            // this.jobcardForm.get('disCategory').enable();
+            // this.jobcardForm.get('disAuthBy').enable();
+
+            // this.jobcardForm.get('regNo').disable()
+            // this.jobcardForm.get('jcType').disable()
+            // this.jobcardForm.get('srTypeId').disable()
+            // this.jobcardForm.get('subTypeId').disable()
+            
 
           }
 
       
 
           this.jobcardForm.patchValue(this.lstcomments);
-
+         
           var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
           // alert('jobCardLabLines length---'+data.jobCardLabLines.length)
 
@@ -1291,22 +1317,23 @@ export class JobCardComponent implements OnInit {
 
           }
 
-          
+          var matTotTaxAmtx=this.lstcomments.matTotTaxAmt;
 
           this.jobcardForm.patchValue({
             // labTaxableAmt: this.lstcomments.labTaxableAmt,
-            labTotTaxAmt: this.lstcomments.labTotTaxAmt,
-            labTaxableAmt: this.lstcomments.labTaxableAmt,
-            matTaxableAmt: this.lstcomments.matTaxableAmt,
-            matTotTaxAmt: this.lstcomments.matTotTaxAmt,
-            matTotAmt: Number(this.lstcomments.matTotAmt),
+            labTotTaxAmt: Math.round(this.lstcomments.labTotTaxAmt),
+            labTaxableAmt: Math.round(this.lstcomments.labTaxableAmt),
+            matTaxableAmt: Math.round(this.lstcomments.matTaxableAmt),
+            matTotTaxAmt: Math.round(this.lstcomments.matTotTaxAmt),
+          
+            matTotAmt: Math.round(this.lstcomments.matTotAmt),
             // billableTyId:selectbilTy.billableTyName,
-            actualBasicAmt: this.lstcomments.totBasicAmt,
-            actualInsAmt: this.lstcomments.insTotBasicAmt,
+            actualBasicAmt: Math.round(this.lstcomments.totBasicAmt),
+            actualInsAmt: Math.round(this.lstcomments.insTotBasicAmt),
 
-            insTaxableAmt:(this.lstcomments.insMatTaxableAmt + this.lstcomments.insLabTaxableAmt),
-            insTotTaxAmt: (this.lstcomments.insLabTotTaxAmt + this.lstcomments.insMatTotTaxAmt),
-            insTotAmt: this.lstcomments.insInvTotAmt
+            insTaxableAmt:Math.round(this.lstcomments.insMatTaxableAmt + this.lstcomments.insLabTaxableAmt),
+            insTotTaxAmt: Math.round(this.lstcomments.insLabTotTaxAmt + this.lstcomments.insMatTotTaxAmt),
+            insTotAmt: Math.round(this.lstcomments.insInvTotAmt),
 
 
 
@@ -1325,8 +1352,8 @@ export class JobCardComponent implements OnInit {
           }
           this.labTotAmt=this.labTaxableAmt + totlabtaxamt
           this.jobcardForm.patchValue({
-            labTotTaxAmt: totlabtaxamt,
-            labTotAmt: this.labTotAmt,
+            labTotTaxAmt: Math.round(totlabtaxamt),
+            labTotAmt: Math.round(this.labTotAmt),
           })
           var control = this.jobcardForm.get('jobCardMatLines').value;
           var totmattaxamt = 0;
@@ -1335,20 +1362,24 @@ export class JobCardComponent implements OnInit {
           }
           this.matTotAmt= this.matTaxableAmt + totmattaxamt;
           this.jobcardForm.patchValue({
-            matTotTaxAmt: totmattaxamt,
+            matTotTaxAmt: Math.round(totmattaxamt),
             // labTotAmt:this.labTaxableAmt+totlabtaxamt
-            matTotAmt:this.matTotAmt,
+            matTotAmt:Math.round(this.matTotAmt),
           })
           // var laborAmt = this.jobcardForm.get('labTotAmt').value;
           // alert(this.matTotAmt+'Material Amt'+this.labTotAmt+'Labor Amt');
-          
-         
+        
           var itotTxble=Number(this.lstcomments.matTaxableAmt)+Number(this.lstcomments.labTaxableAmt);
           var itotTaxAmt=totmattaxamt+totlabtaxamt
-          var totInvAmt=(this.matTotAmt+this.labTotAmt);
+          var totInvAmt=this.matTotAmt+this.labTotAmt;
           this.jobcardForm.patchValue({totTaxableAmt: Math.round(itotTxble)});
           this.jobcardForm.patchValue({totTaxAmt: Math.round(itotTaxAmt)});
           this.jobcardForm.patchValue({invTotAmt: Math.round(totInvAmt)});
+
+          this.jobcardForm.patchValue({labBasicAmt: Math.round(this.lstcomments.labBasicAmt)});
+          this.jobcardForm.patchValue({matBasicAmt: Math.round(this.lstcomments.matBasicAmt)});
+          this.jobcardForm.patchValue({actualBasicAmt: Math.round(this.lstcomments.totBasicAmt)});
+
           // alert(perValueLab);
 
           // this.billableTyId= selectbilTy.billableTyName;
@@ -1661,6 +1692,7 @@ export class JobCardComponent implements OnInit {
         this.preInvButton=true;
         this.dispButtonStatus=false
         this.cancelButton=true;
+        this.jobcardForm.disable();
         alert(res.message);
         this.jobcardForm.patchValue({ jobCardNum: res.obj.jobCardNum, jobCardId: res.obj.jobCardId })
         if (res.obj.jobCardNum != undefined) {
@@ -1731,7 +1763,7 @@ export class JobCardComponent implements OnInit {
       this.displayMatDiscount1 = false;
       this.jobcardForm.get('matDiscountPer').enable();
       this.jobcardForm.patchValue({matDiscout:0});
-      this.matDiscountAmtCal(0);
+      // this.matDiscountAmtCal(0);
       //   this.endDate = new Date();
     }
     else if (event === 'Amount') {
@@ -1764,15 +1796,19 @@ export class JobCardComponent implements OnInit {
     if (event === 'Percentage') {
       this.displayLabDiscount = false;
       this.jobcardForm.get('labDiscountPer').enable();
-      this.jobcardForm.patchValue({labDiscount:0});
-      this.labDiscountAmtCal(0)
+      this.jobcardForm.patchValue({labDiscount:0})
+      this.jobcardForm.patchValue({labDiscountPer:0})
+      this.labDiscountPerCal(0) ;
+        
      
     }
     if (event === 'Amount') {
       this.displayLabDiscount = true;
       this.jobcardForm.get('labDiscount').enable();
+      this.jobcardForm.patchValue({labDiscount:0})
       this.jobcardForm.patchValue({labDiscountPer:0})
 
+      this.labDiscountAmtCal(0);
     }
 
     if (event === '--Select--') {
@@ -1787,7 +1823,7 @@ export class JobCardComponent implements OnInit {
   
     var labBasicAmt = Number(this.jobcardForm.get('labBasicAmt').value);
     var matBasicAmt = Number(this.jobcardForm.get('matBasicAmt').value)
-    this.jobcardForm.patchValue({ actualBasicAmt: (labBasicAmt + matBasicAmt) })
+    this.jobcardForm.patchValue({ actualBasicAmt: Math.round(labBasicAmt + matBasicAmt) })
   }
 
     // if(this.lstcomments.jobStatus == 'Invoiced') {
@@ -1838,9 +1874,9 @@ export class JobCardComponent implements OnInit {
   CheckSaveBillValidation() {
     const formValue: IjobCard = this.jobcardForm.value;
     var msg1;
-    if(formValue.disTypeLab=='Percentage' && (formValue.labDiscountPer<=0 )){this.saveBillValidation = false;
+    if(formValue.disTypeLab=='Percentage' && (formValue.labDiscountPer <=0 )){this.saveBillValidation = false;
       msg1="DISCOUNT : Should not be null....";alert(msg1);return;}
-    if(formValue.disTypeLab=='Amount' && (formValue.labDiscount<=0 )){this.saveBillValidation = false;
+    if(formValue.disTypeLab=='Amount' && (formValue.labDiscount<=0)){this.saveBillValidation = false;
         msg1="DISCOUNT AMT: Enter Valid Discount Amt...";alert(msg1);return;}
 
     if(formValue.disTypeMat=='Percentage' && (formValue.matDiscountPer<=0 )){this.saveBillValidation = false;
@@ -1856,7 +1892,7 @@ export class JobCardComponent implements OnInit {
   BillingCal() {
    this.CheckSaveBillValidation()
     if(this.saveBillValidation) {
-    this.saveBillButton=false;
+    // this.saveBillButton=false;
     const formValue: IjobCard = this.tranceFun(this.jobcardForm.value);
     this.serviceService.BillingCal(formValue).subscribe((res: any) => {
       if (res.code === 200) {
@@ -1896,6 +1932,8 @@ export class JobCardComponent implements OnInit {
     // var matStatus= this.jobcardForm.get('matStatus').value;
     var status = 'Ready for Invoice';
     var jobcardNo = this.jobcardForm.get('jobCardNum').value;
+    // this.jobcardForm.get('matDiscout').disable();
+    // this.jobcardForm.get('labDiscount').disable();
     // alert(matStatus+' '+jobcardNo);
     // if(matStatus == 'Compeleted'){
       this.dispReadyInvoice=false;  this.saveBillButton=true;
@@ -1903,7 +1941,7 @@ export class JobCardComponent implements OnInit {
     this.serviceService.jobCardStatusReadyInvoice(jobcardNo, status).subscribe((res: any) => {
       if (res.code === 200) {
         // alert(res.message);
-        this.jobcardForm.patchValue({ jobStatus: 'Ready for Invoice' })
+        this.jobcardForm.patchValue({ jobStatus: 'Ready for Invoice' });
         this.displaybilling = false;  this.dispButtonStatus = false;this.reopenButton=true;
         // this.jobcardForm.patchValue({jobCardNum:res.obj.jobCardNum})
       } else {
@@ -1941,16 +1979,15 @@ export class JobCardComponent implements OnInit {
     var netAmt=((totlabtaxamt + aaa) +matTotAt);
     netAmt=Math.round(netAmt);
 
+    var labLineTot=totlabtaxamt + aaa;
 
     this.jobcardForm.patchValue({
-      labDiscount: perValueLab,
-      labTaxableAmt: (labBasicAmt - perValueLab),
-      labTotTaxAmt: totlabtaxamt,
-      // labTotTaxAmt:basictax,
-      labTotAmt: (totlabtaxamt + aaa),
-      // invTotAmt: ((totlabtaxamt + aaa) +matTotAt),
-      // invTotAmt:netAmt,
-    });
+      labDiscount: Math.round(perValueLab),
+      labTaxableAmt: Math.round(labBasicAmt - perValueLab),
+      labTotTaxAmt: Math.round(totlabtaxamt),
+      //  labTotAmt: formatNumber(labLineTot,this.locale,'1.2-2'),
+      labTotAmt:Math.round(labLineTot),
+     });
     this.CalculateTotal();
   }
 
@@ -1981,16 +2018,15 @@ export class JobCardComponent implements OnInit {
       // alert("labDisAmt : "+labDisAmt);
       var netAmt=((totlabtaxamt + labTaxAmt) +matTotAt);
       netAmt=(netAmt);
+      var labLineTot=totlabtaxamt + labTaxAmt;
 
       this.jobcardForm.patchValue({
-      labDiscount: labDisAmt,
-      labTaxableAmt: labTaxAmt,
-      labTotTaxAmt: totlabtaxamt,
-      labTotAmt: (totlabtaxamt + labTaxAmt),
-      // invTotAmt: ((totlabtaxamt + labTaxAmt) +matTotAt),
-      // invTotAmt:Math.round(netAmt),
-
-    });
+      labDiscount: Math.round(labDisAmt),
+      labTaxableAmt: Math.round(labTaxAmt),
+      labTotTaxAmt:Math.round(totlabtaxamt),
+      // labTotAmt: formatNumber(labLineTot,this.locale,'1.2-2'),
+      labTotAmt:Math.round(labLineTot),
+       });
     this.CalculateTotal();
   }
 
@@ -2020,11 +2056,11 @@ export class JobCardComponent implements OnInit {
     netAmt=netAmt;
       
     this.jobcardForm.patchValue({
-      matDiscout: (perValuePart),
-      matTaxableAmt: (matBasicAmt - perValuePart),
-      matTotTaxAmt: ((totmattaxamt-temp)),
-      matTotAmt :(matBasicAmt - perValuePart)+(totmattaxamt-temp),
-      // invTotAmt:Math.round(netAmt),
+      matDiscout: Math.round(perValuePart),
+      matTaxableAmt: Math.round(matBasicAmt - perValuePart),
+      matTotTaxAmt: Math.round((totmattaxamt-temp)),
+      // matTotAmt :formatNumber((matBasicAmt - perValuePart)+(totmattaxamt-temp),this.locale,'1.2-2'),
+      matTotAmt:Math.round((matBasicAmt - perValuePart)+(totmattaxamt-temp)),
 
     });
     this.CalculateTotal();
@@ -2076,9 +2112,11 @@ export class JobCardComponent implements OnInit {
     // netAmt=(netAmt);
 
     this.jobcardForm.patchValue({
-      matTaxableAmt: (totalMatTaxableAmt),
-      matTotTaxAmt: (totmattaxamt),
-      matTotAmt: totalMatTaxableAmt + totmattaxamt,
+      matDiscout: Math.round(matDisAmt),
+      matTaxableAmt: Math.round(totalMatTaxableAmt),
+      matTotTaxAmt: Math.round(totmattaxamt),
+      // matTotAmt: formatNumber(totalMatTaxableAmt + totmattaxamt,this.locale,'1.2-2'),
+      matTotAmt:Math.round((totalMatTaxableAmt + totmattaxamt)),
       // invTotAmt:Math.round(netAmt),
       // totTaxableAmt:Math.round(txblTot),
       // totTaxAmt:txTot,
@@ -2087,18 +2125,20 @@ export class JobCardComponent implements OnInit {
   }
 
   CalculateTotal() {
-    var ltot = (this.jobcardForm.get('labTotAmt').value)
-    var ltaxable= (this.jobcardForm.get('labTaxableAmt').value)
-    var ltax= (this.jobcardForm.get('labTotTaxAmt').value)
+    var ltot =Number (this.jobcardForm.get('labTotAmt').value);
+    var ltaxable= Number(this.jobcardForm.get('labTaxableAmt').value)
+    var ltax= Number(this.jobcardForm.get('labTotTaxAmt').value)
 
-    var mtot = (this.jobcardForm.get('matTotAmt').value)
-    var mtaxable= (this.jobcardForm.get('matTaxableAmt').value)
-    var mtax= (this.jobcardForm.get('matTotTaxAmt').value);
+    var mtot = Number(this.jobcardForm.get('matTotAmt').value)
+    var mtaxable= Number(this.jobcardForm.get('matTaxableAmt').value)
+    var mtax= Number(this.jobcardForm.get('matTotTaxAmt').value);
 
     this.jobcardForm.patchValue({
-      invTotAmt:ltot+mtot,
-      totTaxableAmt:ltaxable+mtaxable,
-      totTaxAmt:ltax+mtax,});
+      totTaxableAmt:Math.round(ltaxable+mtaxable),
+      totTaxAmt:Math.round(ltax+mtax),
+      // invTotAmt:formatNumber((ltot+mtot),this.locale,'1.2-2'),
+      invTotAmt:Math.round(ltot+mtot),
+    });
 
   }
 

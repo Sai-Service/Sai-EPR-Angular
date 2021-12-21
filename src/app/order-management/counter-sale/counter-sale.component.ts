@@ -965,16 +965,16 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                       this.CounterSaleOrderBookingForm.patchValue({ daysMsg: data.obj.daysMsg });
                       if (this.CounterSaleOrderBookingForm.get('daysMsg').value.includes('Exceeded')) {
                         alert('Credit Days is exceeded.!');
-                        this.isDisabled10 = true;
+                        // this.isDisabled10 = true;
                       }
                       else if (this.allDatastore.totAmt >= data.obj.outStandingAmt) {
                         alert('Credit Amount is exceeded.! ... Credit Amount is' + ' ' + this.allDatastore.crdAmt + ' ' + 'Total Amount is' + ' ' + this.allDatastore.totAmt + '.!')
-                        this.isDisabled10 = true;
+                        // this.isDisabled10 = true;
                         return;
                       }
-                      else {
-                        this.isDisabled10 = false;
-                      }
+                      // else {
+                      //   this.isDisabled10 = false;
+                      // }
                     }
                   })
             }
@@ -2554,12 +2554,12 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       if (totAmt >= crdAmt) {
         alert('Credit Amount is exceeded.! ... Credit Amount is' + ' ' + crdAmt + ' ' + 'Total Amount is' + ' ' + totAmt + '.!');
         this.setFocus('itemSeg' + lineIndex);
-        this.isDisabled10 = true;
+        // this.isDisabled10 = true;
         return;
       }
-      else {
-        this.isDisabled10 = false;
-      }
+      // else {
+      //   this.isDisabled10 = false;
+      // }
     }
   }
 
