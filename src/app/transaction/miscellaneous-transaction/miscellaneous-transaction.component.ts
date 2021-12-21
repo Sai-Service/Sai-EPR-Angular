@@ -202,6 +202,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
   @ViewChild("input6") input6: ElementRef;
   @ViewChild("Item") Item: ElementRef;
   @ViewChild("desc") desc: ElementRef;
+  @ViewChild('stkAdjForm') stkAdjForm: ElementRef;
   // @ViewChild("suppCode1") suppCode1: ElementRef;
   ngAfterViewInit() {
     this.myinput.nativeElement.focus();
@@ -483,16 +484,21 @@ export class MiscellaneousTransactionComponent implements OnInit {
       }
     )
 
-    // this.service.ItemIdDivisionList(this.divisionId).subscribe(
-    //       data =>{ this.ItemIdList = data;
-    //         console.log(this.ItemIdList);
-
-    //    });
     this.service.issueByList(this.locId, this.deptId, this.divisionId).subscribe
       (data => {
         this.issueByList = data;
         console.log(this.issueByList);
       });
+
+    this.service.searchByItemSegmentDiv(this.divisionId, "36DH1601")
+      .subscribe(
+        data => {
+
+          this.ItemIdList = data;
+          // this.Select(data[0].itemId);
+          //  this.onOptiongetItem(itemCode, i);
+        }
+      );
 
 
     //   this.addnewcycleLinesList(-1);
@@ -546,29 +552,30 @@ export class MiscellaneousTransactionComponent implements OnInit {
 
 
     // alert(event);
-    if (event === 13) {
-      // this.service.ItemIdDivisionList(this.divisionId).subscribe(
-      //   data => {
-      //     this.ItemIdList = data;
-      //     console.log(this.ItemIdList);
+    // if (event === 13) {
+    //   this.service.ItemIdDivisionList(this.divisionId).subscribe(
+    //     data => {
+    //     this.ItemIdList = data;
+    //       console.log(this.ItemIdList);
 
-      //   });
-    }
-    if (event === 4) {
-      // this.service.ItemIdListDept(this.deptId, Number(sessionStorage.getItem('locId')), this.subInvCode.subInventoryId).subscribe(
-      //   data => {
-      //     this.ItemIdList = data;
+    //     });
+    // }
+    // if (event === 4) {
+    //   this.service.ItemIdListDept(this.deptId, Number(sessionStorage.getItem('locId')), this.subInvCode.subInventoryId).subscribe(
+    //     data => {
+    //       this.ItemIdList = data;
 
-      //     // console.log(this.invItemId);
-      //   });
-    }
+    //       // console.log(this.invItemId);
+    //     });
+    // }
     var patch = this.miscellaneousForm.get('trxLinesList') as FormArray
-
-    (patch.controls[0]).patchValue(
-      {
-        lineNumber: 1,
-      })
-    this.displayRemoveRow[0] = false;
+    if (patch != null) {
+      (patch.controls[0]).patchValue(
+        {
+          lineNumber: 1,
+        })
+      this.displayRemoveRow[0] = false;
+    }
   }
 
   keytab(event, maxLength, nxtEle) {
@@ -603,11 +610,31 @@ export class MiscellaneousTransactionComponent implements OnInit {
 
   }
   filterRecord(event, i) {
+    var itemCode = event.target.value;
     if (event.keyCode == 13) {
       // enter keycode
+      if (itemCode.length == 8) {
+        this.onOptiongetItem(itemCode, i);
+       
+        return;
+      } else if (itemCode.length >= 4) {
+        this.service.searchByItemSegmentDiv(this.divisionId, itemCode.toUpperCase())
+          .subscribe(
+            data => {
+
+              this.ItemIdList = data;
+              // this.Select(data[0].itemId);
+              //  this.onOptiongetItem(itemCode, i);
+            }
+          );
+
+      } else {
+        alert("Please Enter 4 characters of item number!!")
+        return;
+      }
     }
     else if (event.keyCode == 9) {
-      this.onOptiongetItem(event, i);
+
       // onOptiongetItem($event,trxLineIndex);
     }
   }
@@ -622,7 +649,6 @@ export class MiscellaneousTransactionComponent implements OnInit {
       }
     }
   }
-
   searchFromArray1(arr, regex) {
     let matches = [], i;
     for (i = 0; i < arr.length; i++) {
@@ -650,8 +676,8 @@ export class MiscellaneousTransactionComponent implements OnInit {
   //   // alert(select1.itemId+"itemId")
   //   var itemId= select1.itemId
   //   var trxLnArr1=this.miscellaneousForm.get('cycleLinesList')as FormArray;
-  //   trxLnArr1.controls[i].patchValue({iknvItemId:select1.itemId});
-  //   var subcode=this.miscellaneousFkkkkorm.get('subInventory').value;
+  //   trxLnArr1.controls[i].patchValue({invItemId:select1.itemId});
+  //   var subcode=this.miscellaneousForm.get('subInventory').value;
   //   // alert(subcode+'Subcode');
   //  this.service.getItemDetail(select1.itemId).subscribe
   // (data => {this.getItemDetail = data;
@@ -693,38 +719,12 @@ export class MiscellaneousTransactionComponent implements OnInit {
     if (this.currentOp === 'SEARCH') {
       return;
     }
-    var trxLnArr = this.miscellaneousForm.get('cycleLinesList').value;
-    
-     var segment = trxLnArr[i].segment;
-    
-    if (segment.length < 4) {
-      //alert("Please enter atleast 4 character");
-      return;
-    }
-    if (segment.length == 4) {
-      ///alert(segment.length);
-      // trxLnArr1.controls[i].get('LocatorSegment').disable();
-
-      this.service.searchByItemSegmentDiv(this.divisionId, segment.toUpperCase())
-        .subscribe(
-          data => {
-            var desc = data[0].description;
-            this.ItemIdList = data;
-            alert(this.ItemIdList.length);
-          });
-    }
-
-  }
-
-
-
-  onTabKeyOfItem(event, i) {
-  
-    if(this.ItemIdList != undefined && this.ItemIdList.length >0){
+    alert("onOptiongetItem" + event);
     var trxLnArr1 = this.miscellaneousForm.get('cycleLinesList') as FormArray;
     var trxLnArr = this.miscellaneousForm.get('cycleLinesList').value;
-    var segment = trxLnArr[i].segment;
-    let select1 = this.ItemIdList.find(d => d.segment === segment);
+    // trxLnArr1.controls[i].get('LocatorSegment').disable();
+    // let select1 = this.ItemIdList.find(d => d.SEGMENT === event);
+    let select1 = this.ItemIdList.find(d => d.segment === event);
     if (select1 != undefined) {
       // var trxLnArr1 = this.miscellaneousForm.get('cycleLinesList') as FormArray;
       // var trxLnArr = this.miscellaneousForm.get('cycleLinesList').value;
@@ -735,14 +735,11 @@ export class MiscellaneousTransactionComponent implements OnInit {
       // let select2= this.subInvCode.find(d=>d.subInventoryCode===subcode);
       //  alert(select2.subInventoryId+'Subcode');
       // alert(compId);
-      // alert(compLnIdkk+'CompilekLineId')
+      // alert(compLnId+'CompileLineId')
       this.displayheader = false;
-
       this.service.getItemDetail(select1.itemId).subscribe
         (data => {
-          
           this.getItemDetail = data;
-          alert('get item');
           // alert("this.getItemDetail.description" + this.getItemDetail.description);
           if (this.getItemDetail.description != undefined) {
             trxLnArr1.controls[i].patchValue({ description: this.getItemDetail.description });
@@ -752,14 +749,12 @@ export class MiscellaneousTransactionComponent implements OnInit {
             trxLnArr1.controls[i].patchValue({ locId: Number(sessionStorage.getItem('locId')) })
             this.cycleLinesList().controls[i].get('LocatorSegment').enable();
             this.cycleLinesList().controls[i].get('physicalQty').enable();
-
+            this.setFocus('physicalQty');
           }
         });
-       
       this.service.getCostDetail(Number(sessionStorage.getItem('locId')), select1.itemId).subscribe
         (data => {
           this.CostDetail = data;
-          alert('get avg')
           trxLnArr1.controls[i].patchValue({ itemUnitCost: this.CostDetail.rate });
           if (this.CostDetail.rate === 0.0) {
             alert(this.CostDetail.segment);
@@ -820,18 +815,13 @@ export class MiscellaneousTransactionComponent implements OnInit {
               }
               );
           }
-
+          this.setFocus('physicalQty');
         });
-      // if(event!=null)
-      // {
-      //   // this.displayaddButton=true;
-      //   (document.getElementById("btnrm"+i) as HTMLInputElement).disabled = true;
-      // }
-      this.desc.nativeElement.focus();
+
+   
+      
     }
   }
-  }
-
   AvailQty(event: any, i) {
 
     // alert(event.target.value);
@@ -1380,4 +1370,13 @@ export class MiscellaneousTransactionComponent implements OnInit {
     });
   }
 
+
+  
+  setFocus(name) {
+    alert(name)
+    const ele = this.stkAdjForm.nativeElement[name];
+    if (ele) {
+      ele.focus();
+    }
+  }
 }

@@ -1,5 +1,5 @@
 <div class="center">
-  <form [formGroup]="miscellaneousForm" (ngSubmit)="miscellaneous(miscellaneousForm.value)">
+  <form [formGroup]="miscellaneousForm" (ngSubmit)="miscellaneous(miscellaneousForm.value)" #stkAdjForm>
     <table style="width: 100%;background-color: white;">
       <tr>
         <td class="PageHeader">
@@ -206,13 +206,14 @@
                       <th scope="col">Srl No.</th>
                       <!-- <th scope="col">Item Search</th> -->
                       <th scope="col">Item Code</th>
+                      <th scope="col" rowspan="2">Available Quantity</th>
+                      <th scope="col">Transaction Quantity</th>
                       <th scope="col">Item Description</th>
                       <th scope="col">UOM</th>
                       <th scope="col">Average Rate</th>
                       <th scope="col">Subinventory</th>
                       <th scope="col">Locator</th>
-                      <th scope="col" rowspan="2">Available Quantity</th>
-                      <th scope="col">Transaction Quantity</th>
+                    
                       <!-- <div *ngIf="dispRow; then thenBlockRow; else elsedispRow"></div> -->
                       <!-- <ng-template #thenBlockRow> -->
                       <!-- </ng-template> -->
@@ -235,31 +236,23 @@
                         <input hidden formControlName="compileId" [(ngModel)]="compileId">
                         <input hidden formControlName="compileLineId">
                         <td>
-                          <input type="text"  formControlName="segment"
-                            id="invItemIdFirstWay" list="dynmicUserIds1" class="form-control"
-                            style="height: 20px;width: 100px;" (keydown.tab)="onOptiongetItem($event,trxLineIndex)"
-                            (keydown.enter)="onTabKeyOfItem($event,trxLineIndex)"
-                            #Item />  
-                          <datalist id="dynmicUserIds1">
-                            <option *ngFor="let item of ItemIdList" [ngValue]="item.invItemId">{{item.segment}}
-                            </option>
-                          </datalist>
-                          <!-- <input list="dynmicUserIds1" (keyup)="filterRecord( $event,trxLineIndex)" type="text" formControlName="segment" (ngModelChange)="onOptiongetItem($event,trxLineIndex)" />
-                  <datalist id="dynmicUserIds1">
-                    <option  *ngFor="let item of ItemIdList">{{item.SEGMENT}}</option>
-                  </datalist> -->
-                          <!-- <select class="form-control" formControlName="segment" [(ngModel)]="segment"
-                          (ngModelChange)="onOptiongetItem($event,trxLineIndex)">
-                            <option>--Select--</option>
-                            <option *ngFor="let item of ItemIdList">
-                              {{item.segment}}
-                            </option>
-                          </select> -->
-                          <!-- <input type="text" (keyup)="getInvItemId($event)" formControlName="segment"
-                            id="invItemIdFirstWay" list="dynmicUserIds1" class="form-control"
-                            style="height: 20px;width: 100px;" (ngModelChange)="onOptiongetItem($event,trxLineIndex)"
-                            #Item /> -->
+                          <!-- <input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay" 
+                             list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 100px;" 
+                             (ngModelChange)="onOptiongetItem($event,trxLineIndex)" #Item/>
+                <datalist id="dynmicUserIds1">
+                  <option *ngFor="let item of ItemIdList" [ngValue]="item.invItemId">{{item.SEGMENT}}
+                    </option> 
+                   </datalist>-->
 
+
+
+                          <input type="text" list="dynmicUserIds1" (keyup)="filterRecord( $event,trxLineIndex)"
+                            formControlName="segment" id="invItemIdFirstWay" class="form-control"
+                            style="height: 20px;width:120px;" />
+                          <!-- (ngModelChange)="onOptiongetItem($event,trxLineIndex)" -->
+                          <datalist id="dynmicUserIds1">
+                            <option *ngFor="let item of ItemIdList" [value]="item.segment">{{item.segment}}</option>
+                          </datalist>
                           <span
                             *ngIf="getGroupControllinewise(trxLineIndex,'segment').touched && getGroupControllinewise(trxLineIndex,'segment').invalid"
                             class="error">Valid Item
@@ -267,9 +260,19 @@
                         </td>
                         <input hidden type="number" formControlName="itemId">
                         <input hidden type="number" formControlName="invItemId">
-                        <!-- </td> -->
-                        <!-- <td> -->
+
                         <input hidden type='number' formControlName="locId" [(ngModel)]="locId">
+                        <input hidden type="number" formControlName="onHandQty">
+                        <td><input disabled type="number" class="form-control" style="height: 20px;width: 100%;"
+                            formControlName="avlqty"></td>
+                        <input hidden type="number" formControlName="resveQty">
+                        <td><input type="number" min="0" class="form-control" style="height: 20px;width: 100%;"
+                            formControlName="physicalQty" (change)="validate(trxLineIndex,qty)" name="physicalQty" #qty>
+                          <span
+                            *ngIf="getGroupControllinewise(trxLineIndex,'physicalQty').touched && getGroupControllinewise(trxLineIndex,'physicalQty').invalid"
+                            class="error">Valid Item
+                          </span>
+                        </td>
                         <!-- </td> -->
                         <td><input disabled type="text" class="form-control" style="height: 20px;"
                             formControlName="description" #desc></td>
@@ -322,17 +325,7 @@
                           </td>
                         </ng-template>
                         <!-- </td> -->
-                        <input hidden type="number" formControlName="onHandQty">
-                        <td><input disabled type="number" class="form-control" style="height: 20px;width: 100%;"
-                            formControlName="avlqty"></td>
-                        <input hidden type="number" formControlName="resveQty">
-                        <td><input type="number" min="0" class="form-control" style="height: 20px;width: 100%;"
-                            formControlName="physicalQty" (change)="validate(trxLineIndex,qty)" #qty>
-                          <span
-                            *ngIf="getGroupControllinewise(trxLineIndex,'physicalQty').touched && getGroupControllinewise(trxLineIndex,'physicalQty').invalid"
-                            class="error">Valid Item
-                          </span>
-                        </td>
+
 
                         <div *ngIf="displayaddButton; then thenBlockopen; else elseBlockfreeze"> </div>
                         <ng-template #thenBlockopen>
