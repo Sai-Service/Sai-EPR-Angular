@@ -1285,7 +1285,12 @@ export class SalesOrderFormComponent implements OnInit {
                 if (controlinv1[i].invType === 'SS_VEHICLE' && controlinv1[i].flowStatusCode === 'ALLOTED') {
                   this.onKey(i, 'Search');
                 }
-              }
+            
+              let itemTaxCat = this.taxCategoryList.find(d => d.taxCategoryId === controlinv1[i].taxCategoryId);
+            
+              controlinv2.controls[i].patchValue({taxCategoryName:itemTaxCat});
+              controlinv2.controls[i].patchValue({taxCategoryId:itemTaxCat.taxCategoryId});
+            }
             }
           }
         }
