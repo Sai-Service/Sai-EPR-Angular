@@ -601,37 +601,37 @@ export class CustomerMasterComponent implements OnInit {
       case 'MAHARASHTRA':
         if (res != 27) {
           alert('Kindly entered correct GST No Start with 27');
-          this.customerMasterForm.get('gstnNo').reset();
+          this.customerMasterForm.get('gstNo').reset();
         }
         break;
       case 'GOA':
         if (res != 30) {
           alert('Kindly entered correct GST No Start with 30');
-          this.customerMasterForm.get('gstnNo').reset();
+          this.customerMasterForm.get('gstNo').reset();
         }
         break;
       case 'ANDHRA PRADESH':
         if (res != 28) {
           alert('Kindly entered correct GST No Start with 28');
-          this.customerMasterForm.get('gstnNo').reset();
+          this.customerMasterForm.get('gstNo').reset();
         }
         break;
       case 'KARNATAKA':
         if (res != 29) {
           alert('Kindly entered correct GST No Start with 29');
-          this.customerMasterForm.get('gstnNo').reset();
+          this.customerMasterForm.get('gstNo').reset();
         }
         break;
       case 'KERALA':
         if (res != 32) {
           alert('Kindly entered correct GST No Start with 32');
-          this.customerMasterForm.get('gstnNo').reset();
+          this.customerMasterForm.get('gstNo').reset();
         }
         break;
       case 'TELANGANA':
         if (res != 36) {
           alert('Kindly entered correct GST No Start with 36');
-          this.customerMasterForm.get('gstnNo').reset();
+          this.customerMasterForm.get('gstNo').reset();
         }
         break;
     }
@@ -675,37 +675,37 @@ export class CustomerMasterComponent implements OnInit {
       case 'MAHARASHTRA':
         if (res != 27) {
           alert('Kindly entered correct GST No Start with 27');
-          this.customerMasterForm.get('sGstnNo').reset();
+          this.customerMasterForm.get('sGstNo').reset();
         }
         break;
       case 'GOA':
         if (res != 30) {
           alert('Kindly entered correct GST No Start with 30');
-          this.customerMasterForm.get('sGstnNo').reset();
+          this.customerMasterForm.get('sGstNo').reset();
         }
         break;
       case 'ANDHRA PRADESH':
         if (res != 28) {
           alert('Kindly entered correct GST No Start with 28');
-          this.customerMasterForm.get('sGstnNo').reset();
+          this.customerMasterForm.get('sGstNo').reset();
         }
         break;
       case 'KARNATAKA':
         if (res != 29) {
           alert('Kindly entered correct GST No Start with 29');
-          this.customerMasterForm.get('sGstnNo').reset();
+          this.customerMasterForm.get('sGstNo').reset();
         }
         break;
       case 'KERALA':
         if (res != 32) {
           alert('Kindly entered correct GST No Start with 32');
-          this.customerMasterForm.get('sGstnNo').reset();
+          this.customerMasterForm.get('sGstNo').reset();
         }
         break;
       case 'TELANGANA':
         if (res != 36) {
           alert('Kindly entered correct GST No Start with 36');
-          this.customerMasterForm.get('sGstnNo').reset();
+          this.customerMasterForm.get('sGstNo').reset();
         }
         break;
     }
@@ -769,13 +769,13 @@ export class CustomerMasterComponent implements OnInit {
       return;
     }
     const formValue: IcustomerMaster = this.transDataForSite(this.customerMasterForm.value);
-    if(this.sGstNo===''){
+    if(formValue.sGstNo===''){
       formValue.sGstNo='GSTUNREGISTERED';
     }
 
     this.service.CustMasterOnlySitSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert(res.message); 
+        alert(res.message);
         var acctNo = this.customerMasterForm.get('custAccountNo').value;
         // this.searchByAccount1(acctNo);
         (document.getElementById('newSiteBtn') as HTMLInputElement).disabled = true;
@@ -810,8 +810,13 @@ export class CustomerMasterComponent implements OnInit {
     if (formValue.custType === 'Organization') {
       formValue.title = 'M/S';
     }
-    if(this.gstNo===''){
+    if(formValue.gstNo===''){
+      formValue.sGstNo='GSTUNREGISTERED';
       formValue.gstNo='GSTUNREGISTERED';
+    }
+    else{
+      formValue.sGstNo=formValue.gstNo;
+
     }
     this.service.CustMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
@@ -820,6 +825,8 @@ export class CustomerMasterComponent implements OnInit {
         this.searchByAccount1(res.obj);
         this.customerMasterForm.disable();
         this.displayadditional = false;
+        (document.getElementById('newSiteBtn') as HTMLInputElement).disabled = true;
+        (document.getElementById('updateBtn') as HTMLInputElement).disabled = true;
         //  this.customerMasterForm.reset();
       } else {
         if (res.code === 400) {
@@ -1123,7 +1130,7 @@ export class CustomerMasterComponent implements OnInit {
         else {
           if (res.code === 400) {
             alert(res.message);
-           
+
           }
         }
 
@@ -1334,7 +1341,7 @@ export class CustomerMasterComponent implements OnInit {
           else {
             if (data.code === 400) {
               alert(data.message);
-              // this.display='block'; 
+              // this.display='block';
             }
           }
         }
