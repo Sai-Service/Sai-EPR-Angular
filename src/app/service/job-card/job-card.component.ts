@@ -1323,23 +1323,23 @@ export class JobCardComponent implements OnInit {
 
           this.jobcardForm.patchValue({
             // labTaxableAmt: this.lstcomments.labTaxableAmt,
-            labTotTaxAmt: Math.round(this.lstcomments.labTotTaxAmt),
-            labTaxableAmt: Math.round(this.lstcomments.labTaxableAmt),
-            matTaxableAmt: Math.round(this.lstcomments.matTaxableAmt),
-            matTotTaxAmt: Math.round(this.lstcomments.matTotTaxAmt),
+            labTotTaxAmt: Math.round((this.lstcomments.labTotTaxAmt+Number.EPSILON)*100)/100, 
+            labTaxableAmt: Math.round((this.lstcomments.labTaxableAmt+Number.EPSILON)*100)/100, 
+            matTaxableAmt: Math.round((this.lstcomments.matTaxableAmt+Number.EPSILON)*100)/100, 
+            matTotTaxAmt: Math.round((this.lstcomments.matTotTaxAmt+Number.EPSILON)*100)/100, 
 
-            labDiscount: Math.round(this.lstcomments.labDiscount),
-            matDiscout: Math.round(this.lstcomments.matDiscout),
+            labDiscount: Math.round((this.lstcomments.labDiscount+Number.EPSILON)*100)/100, 
+            matDiscout: Math.round((this.lstcomments.matDiscout+Number.EPSILON)*100)/100, 
 
           
             matTotAmt: Math.round(this.lstcomments.matTotAmt),
             // billableTyId:selectbilTy.billableTyName,
-            actualBasicAmt: Math.round(this.lstcomments.totBasicAmt),
-            actualInsAmt: Math.round(this.lstcomments.insTotBasicAmt),
+            actualBasicAmt: Math.round((this.lstcomments.totBasicAmt+Number.EPSILON)*100)/100, 
+            actualInsAmt: Math.round((this.lstcomments.insTotBasicAmt+Number.EPSILON)*100)/100, 
 
-            insTaxableAmt:Math.round(this.lstcomments.insMatTaxableAmt + this.lstcomments.insLabTaxableAmt),
-            insTotTaxAmt: Math.round(this.lstcomments.insLabTotTaxAmt + this.lstcomments.insMatTotTaxAmt),
-            insTotAmt: Math.round(this.lstcomments.insInvTotAmt),
+            insTaxableAmt:Math.round(((this.lstcomments.insMatTaxableAmt + this.lstcomments.insLabTaxableAmt)+Number.EPSILON)*100)/100, 
+            insTotTaxAmt: Math.round(((this.lstcomments.insLabTotTaxAmt + this.lstcomments.insMatTotTaxAmt)+Number.EPSILON)*100)/100, 
+            insTotAmt: Math.round((this.lstcomments.insInvTotAmt+Number.EPSILON)*100)/100, 
 
           })
 
@@ -1361,49 +1361,36 @@ export class JobCardComponent implements OnInit {
 
           this.labTotAmt=this.labTaxableAmt + totlabtaxamt
           this.jobcardForm.patchValue({
-            labTotTaxAmt: Math.round(totlabtaxamt),
-            labTotAmt: Math.round(this.labTotAmt),
-            // labDiscount:Math.round(totlabDiscAmt),
+            labTotTaxAmt: Math.round((totlabtaxamt+Number.EPSILON)*100)/100,
+            labTotAmt: Math.round((this.labTotAmt+Number.EPSILON)*100)/100, 
           })
 
-          // alert ("labDiscount :" +totlabDiscAmt  +" ," +this.jobcardForm.get('labDiscount').value);
-
+        
           var control = this.jobcardForm.get('jobCardMatLines').value;
           var totmattaxamt = 0;var totMatDiscAmt=0
-          // alert("control.lengthAmt :"+control.length);
-          for (var i = 0; i < control.length; i++) {
+           for (var i = 0; i < control.length; i++) {
             totmattaxamt = totmattaxamt + (control[i].basicAmt * control[i].taxPer) / 100;
-            // totMatDiscAmt=totMatDiscAmt+control[i].disAmt;
-          }
+              }
 
           this.matTotAmt= this.matTaxableAmt + totmattaxamt;
           this.jobcardForm.patchValue({
-            matTotTaxAmt: Math.round(totmattaxamt),
-            // labTotAmt:this.labTaxableAmt+totlabtaxamt
-            matTotAmt:Math.round(this.matTotAmt),
-            // matDiscout:Math.round(totMatDiscAmt),
-          });
+            matTotTaxAmt: Math.round((this.matTotAmt+Number.EPSILON)*100)/100,
+            matTotAmt: Math.round((this.matTotAmt+Number.EPSILON)*100)/100
+           });
 
-          // alert ("Mat tax amt2 :" +this.jobcardForm.get('matTotTaxAmt').value);
-          // alert ("totmattaxamt:" +totmattaxamt);
-          // var laborAmt = this.jobcardForm.get('labTotAmt').value;
-          // alert(this.matTotAmt+'Material Amt'+this.labTotAmt+'Labor Amt');
-        
+               
           var itotTxble=Number(this.lstcomments.matTaxableAmt)+Number(this.lstcomments.labTaxableAmt);
           var itotTaxAmt=totmattaxamt+totlabtaxamt
           var totInvAmt=this.matTotAmt+this.labTotAmt;
-          this.jobcardForm.patchValue({totTaxableAmt: Math.round(itotTxble)});
-          this.jobcardForm.patchValue({totTaxAmt: Math.round(itotTaxAmt)});
-          this.jobcardForm.patchValue({invTotAmt: Math.round(totInvAmt)});
 
-          this.jobcardForm.patchValue({labBasicAmt: Math.round(this.lstcomments.labBasicAmt)});
-          this.jobcardForm.patchValue({matBasicAmt: Math.round(this.lstcomments.matBasicAmt)});
-          this.jobcardForm.patchValue({actualBasicAmt: Math.round(this.lstcomments.totBasicAmt)});
+          this.jobcardForm.patchValue({totTaxableAmt: Math.round((itotTxble+Number.EPSILON)*100)/100}); 
+          this.jobcardForm.patchValue({totTaxAmt: Math.round((itotTaxAmt+Number.EPSILON)*100)/100});
+          this.jobcardForm.patchValue({invTotAmt: Math.round((totInvAmt+Number.EPSILON)*100)/100}); 
 
-          // alert(perValueLab);
-
-          // this.billableTyId= selectbilTy.billableTyName;
-
+          this.jobcardForm.patchValue({labBasicAmt: this.lstcomments.labBasicAmt});
+          this.jobcardForm.patchValue({matBasicAmt: this.lstcomments.matBasicAmt});
+          this.jobcardForm.patchValue({actualBasicAmt: Math.round((Number(this.lstcomments.totBasicAmt)+Number.EPSILON)*100)/100});
+         
         }
       );
 
@@ -1973,7 +1960,7 @@ export class JobCardComponent implements OnInit {
     // alert(matStatus+' '+jobcardNo);
     // if(matStatus == 'Compeleted'){
       this.dispReadyInvoice=false;  this.saveBillButton=true;
-
+      this.cancelButton=false;
     this.serviceService.jobCardStatusReadyInvoice(jobcardNo, status).subscribe((res: any) => {
       if (res.code === 200) {
         // alert(res.message);
@@ -1981,6 +1968,7 @@ export class JobCardComponent implements OnInit {
         this.displaybilling = false;  this.dispButtonStatus = false;this.reopenButton=true;
         this.saveLabButton=false;
         this.saveMatButton=false;
+      
         // this.jobcardForm.patchValue({jobCardNum:res.obj.jobCardNum})
       } else {
         if (res.code === 400) {
@@ -2098,10 +2086,9 @@ export class JobCardComponent implements OnInit {
     netAmt=netAmt;
       
     this.jobcardForm.patchValue({
-      matDiscout: Math.round(perValuePart),
-      matTaxableAmt: Math.round(matBasicAmt - perValuePart),
-      matTotTaxAmt: Math.round(totmattaxamt-temp),
-      // matTotAmt :formatNumber((matBasicAmt - perValuePart)+(totmattaxamt-temp),this.locale,'1.2-2'),
+      matDiscout: Math.round((perValuePart+Number.EPSILON)*100)/100, 
+      matTaxableAmt: Math.round(((matBasicAmt - perValuePart)+Number.EPSILON)*100)/100, 
+      matTotTaxAmt: Math.round(((totmattaxamt-temp)+Number.EPSILON)*100)/100, 
       matTotAmt:Math.round((matBasicAmt - perValuePart)+(totmattaxamt-temp)),
 
     });
@@ -2114,7 +2101,6 @@ export class JobCardComponent implements OnInit {
     // if(this.lstcomments.jobStatus == 'Invoiced') { return;}
   
     var matBasicAmt = (this.jobcardForm.get('matBasicAmt').value)
-    // var perValueLab= (matBasicAmt* event)/100;
     var matDisAmt = (this.jobcardForm.get('matDiscout').value)
 
     if(matDisAmt>matBasicAmt || matDisAmt <0 ) {
@@ -2126,8 +2112,6 @@ export class JobCardComponent implements OnInit {
     var labTotTxble= (this.jobcardForm.get('labTaxableAmt').value)
     var labTotTx= (this.jobcardForm.get('labTotTaxAmt').value)
     
-
-    // var totalBasicAmt=matBasicAmt-matDisAmt;
     var perValueMat = (matDisAmt * 100) / matBasicAmt;
     var control = this.jobcardForm.get('jobCardMatLines').value;
     var totmattaxamt = 0;
@@ -2138,31 +2122,18 @@ export class JobCardComponent implements OnInit {
       totmattaxamt = totmattaxamt + (pervalMat * control[i].taxPer) / 100;
       totalMatTaxableAmt = totalMatTaxableAmt + pervalMat;
     }
-
-    // alert(perValueLab);
-    var temp = (totmattaxamt * event) / 100;
-
-
    
+    var temp = (totmattaxamt * event) / 100;
     var txblTot=totalMatTaxableAmt+labTotTxble
     var txTot=totmattaxamt+labTotTx
-
-    // alert ("txTot :"+txTot);
-
     var netAmt=(totalMatTaxableAmt + totmattaxamt + labTotAt)
 
-    // netAmt=(netAmt);
-
     this.jobcardForm.patchValue({
-      matDiscout: Math.round(matDisAmt),
-      matTaxableAmt: Math.round(totalMatTaxableAmt),
-      matTotTaxAmt: Math.round(totmattaxamt),
-      // matTotAmt: formatNumber(totalMatTaxableAmt + totmattaxamt,this.locale,'1.2-2'),
-      matTotAmt:Math.round((totalMatTaxableAmt + totmattaxamt)),
-      // invTotAmt:Math.round(netAmt),
-      // totTaxableAmt:Math.round(txblTot),
-      // totTaxAmt:txTot,
-    });
+      matDiscout: Math.round(((matDisAmt)+Number.EPSILON)*100)/100,
+      matTaxableAmt: Math.round(((totalMatTaxableAmt)+Number.EPSILON)*100)/100, 
+      matTotTaxAmt: Math.round(((totmattaxamt)+Number.EPSILON)*100)/100,  
+       matTotAmt: Math.round((((totalMatTaxableAmt + totmattaxamt))+Number.EPSILON)*100)/100,  
+       });
     this.CalculateTotal();
   }
 
@@ -2170,16 +2141,13 @@ export class JobCardComponent implements OnInit {
     var ltot =Number (this.jobcardForm.get('labTotAmt').value);
     var ltaxable= Number(this.jobcardForm.get('labTaxableAmt').value)
     var ltax= Number(this.jobcardForm.get('labTotTaxAmt').value)
-
     var mtot = Number(this.jobcardForm.get('matTotAmt').value)
     var mtaxable= Number(this.jobcardForm.get('matTaxableAmt').value)
     var mtax= Number(this.jobcardForm.get('matTotTaxAmt').value);
-
     this.jobcardForm.patchValue({
-      totTaxableAmt:Math.round(ltaxable+mtaxable),
-      totTaxAmt:Math.round(ltax+mtax),
-      // invTotAmt:formatNumber((ltot+mtot),this.locale,'1.2-2'),
-      invTotAmt:Math.round(ltot+mtot),
+      totTaxableAmt:Math.round(((ltaxable+mtaxable)+Number.EPSILON)*100)/100,
+      totTaxAmt:Math.round(((ltax+mtax)+Number.EPSILON)*100)/100,
+      invTotAmt:Math.round(((ltot+mtot)+Number.EPSILON)*100)/100,
     });
 
   }
