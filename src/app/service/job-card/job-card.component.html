@@ -2453,7 +2453,7 @@
                                                                                 (ngModelChange)="labDiscountPerCal($event)">
                                                                                 <option>--Select--</option>
                                                                                 <option
-                                                                                    *ngFor="let sc of  labDiscountPerList" [(ngValue)]="sc.code"  >
+                                                                                    *ngFor="let sc of  labDiscountPerList" [value]="sc.code"  >
                                                                                     {{sc.code}}
                                                                                 </option>
                                                                             </select></td>
@@ -2503,7 +2503,7 @@
                                                                             (ngModelChange)="matDiscountPerCal($event)">
                                                                             <option>--Select--</option>
                                                                             <option
-                                                                                *ngFor="let sc of  matDiscountPerList" >
+                                                                                *ngFor="let sc of  matDiscountPerList" [value]="sc.code" >
                                                                                 {{sc.code}}
                                                                             </option> 
                                                                           </select></td>
