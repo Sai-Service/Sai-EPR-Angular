@@ -951,7 +951,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
             }
             // alert(data.obj.orderStatus);
             if (data.obj.orderStatus === 'BOOKED' && Number(sessionStorage.getItem('divisionId')) === 2) {
-              this.service.crediteLimitFn(this.allDatastore.customerId, sessionStorage.getItem('locId'),this.allDatastore.customerSiteId)
+              this.service.crediteLimitFn(this.allDatastore.customerId, sessionStorage.getItem('locId'), this.allDatastore.customerSiteId)
                 .subscribe(
                   data => {
                     if (data.code === 200) {
@@ -959,7 +959,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                       // var credAmt = this.CounterSaleOrderBookingForm.get('creditAmt').value;
                       // var newCrAmt = Number(this.allDatastore.creditAmt) - Number(data.obj.outStandingAmt);
                       // this.CounterSaleOrderBookingForm.patchValue({ creditAmt: newCrAmt });
-                      var newCrmAmt1=   Math.round(((data.obj.outStandingAmt) + Number.EPSILON) * 100) / 100;
+                      var newCrmAmt1 = Math.round(((data.obj.outStandingAmt) + Number.EPSILON) * 100) / 100;
                       this.CounterSaleOrderBookingForm.patchValue({ creditAmt: newCrmAmt1 });
                       this.CounterSaleOrderBookingForm.patchValue({ creditDays: data.obj.creditDays });
                       this.CounterSaleOrderBookingForm.patchValue({ daysMsg: data.obj.daysMsg });
@@ -1497,14 +1497,14 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     if (Number(sessionStorage.getItem('divisionId')) === 2) {
       // alert(this.selCustomer.customerId+'----'+selSite.customerSiteId)
       // this.service.crediteLimitFn(this.selCustomer.customerId, selSite.customerSiteId)
-      this.service.crediteLimitFn(this.selCustomer.customerId, sessionStorage.getItem('locId'),selSite.customerSiteId)
+      this.service.crediteLimitFn(this.selCustomer.customerId, sessionStorage.getItem('locId'), selSite.customerSiteId)
         .subscribe(
           data => {
             if (data.code === 200) {
               // alert(data.obj);
               var credAmt = this.CounterSaleOrderBookingForm.get('creditAmt').value;
               // var newCrAmt = Number(credAmt) - Number(data.obj.outStandingAmt);
-              var newCrmAmt1=   Math.round(((data.obj.outStandingAmt) + Number.EPSILON) * 100) / 100;
+              var newCrmAmt1 = Math.round(((data.obj.outStandingAmt) + Number.EPSILON) * 100) / 100;
               this.CounterSaleOrderBookingForm.patchValue({ creditAmt: newCrmAmt1 });
               this.CounterSaleOrderBookingForm.patchValue({ creditDays: data.obj.creditDays });
               this.CounterSaleOrderBookingForm.patchValue({ daysMsg: data.obj.daysMsg });
@@ -2292,8 +2292,10 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
   pickTicketInvoiceFunction() {
     //this.tcsCalculationAdd();
+
     this.closeResetButton = false;
     this.progress = 0;
+
     // var formLinVal = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     // var formLinArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
 
@@ -2306,6 +2308,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
     }
     this.dataDisplay = 'Invoice Genration in progress....Do not refresh the Page';
+    this.isDisabled10 = true;
     const formValue: ISalesBookingForm = this.transData(this.CounterSaleOrderBookingForm.value);
     var orderLines = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     formValue.ouId = Number(sessionStorage.getItem('ouId'));
@@ -2330,6 +2333,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
           alert(res.message);
           this.dataDisplay = ''
           this.closeResetButton = true;
+          this.isDisabled10 = false;
           // this.SalesOrderBookingForm.reset();
         }
       }
@@ -2976,33 +2980,6 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       //   this.CounterSaleOrderBookingForm.patchValue({disPer: this.custSiteList[0].disPer })    }
     }
   }
-  message1: string = "Customer Not Found !  Do you want to create new Customer?";
-  msgType: string = "Navigate";
-  getMessage(msgType: string) {
-    if (msgType.includes("Navigate")) {
-      this.message1 = "Do you want to Navigate the Form(Yes/No)?"
-    }
-  }
-
-  executeAction() {
-    if (this.msgType.includes("Navigate")) {
-      this.router.navigate(['/admin/master/customerMaster'])
-    }
-  }
-
-
-  closeModalDialog() {
-    this.display = 'none'; //set none css after close dialog
-    this.myInputField.nativeElement.focus();
-  }
-
-  setFocus(name) {
-    // alert(name)
-    const ele = this.aForm.nativeElement[name];
-    if (ele) {
-      ele.focus();
-    }
-  }
 
 
   tcsCalculationAdd() {
@@ -3046,10 +3023,6 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     this.displaytcsBuuton = true;
     this.isDisabled = false;
   }
-
-
-
-
 
   reservePos(i) {
     var len = i;
@@ -3118,6 +3091,52 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
         }
       });
     }
+  }
+
+  setFocus(name) {
+    
+    const ele = this.aForm.nativeElement[name];
+    if (ele) {
+      ele.focus();
+    }
+  }
+
+  message: string = "Please Fix the Errors!";
+  cnfMsgType: string = "Close";
+
+  getMessage(msgType: string) {
+
+    this.cnfMsgType = msgType;
+    if (msgType.includes("INVOICE")) {
+      this.submitted = true;
+      (document.getElementById('invoiceBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
+
+      // if(this.CounterSaleOrderBookingForm.invalid){
+      // (document.getElementById('invoiceBtn') as HTMLInputElement).setAttribute('data-target','');
+      // return;
+      // }
+      this.message = "Do you want to Generate INVOICE the changes (Yes/No)?"
+
+    }
+
+    if (msgType.includes("Reset")) { this.message = "Do you want to Reset the changes(Yes/No)?" }
+
+    if (msgType.includes("Close")) { this.message = "Do you want to Close the Form(Yes/No)?" }
+    return;
+  }
+
+  executeAction() {
+   
+    if (this.cnfMsgType.includes("INVOICE")) {
+      this.pickTicketInvoiceFunction();
+    }
+
+    // if(this.msgType.includes("Reset")){ this./.reset();  }
+
+    // if(this.msgType.includes("Close")){ this.router.navigate(['admin']); }
+    // return;
+    // }
+
   }
 
   ngOnDestroy(): void {
