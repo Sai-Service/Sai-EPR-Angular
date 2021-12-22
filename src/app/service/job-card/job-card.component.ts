@@ -1264,7 +1264,10 @@ export class JobCardComponent implements OnInit {
             this.saveLabButton=false;
             this.saveMatButton=false;
             this.preInvButton=false;
-            this.cancelButton=false;   
+            this.cancelButton=false;
+            
+           
+            
           }
           if (this.lstcomments.matStatus == 'Compeleted' || this.lstcomments.jobStatus == 'Ready for Invoice') {
 
@@ -1280,12 +1283,8 @@ export class JobCardComponent implements OnInit {
             this.reopenButton=true;
             this.saveLabButton=false;
             this.saveMatButton=false;
-            this.displayLabDiscount=false;
             this.preInvButton=true;
             this.cancelButton=false;
-            this.jobcardForm.patchValue({labDiscountPer:Number(data.obj.labDiscountPer)});
-            this.jobcardForm.patchValue({matDiscountPer: Number(data.obj.matDiscountPer)});
-            // alert(data.obj.matDiscountPer +'Mat Per' + data.obj.labDiscountPer+ 'Lab Per')
             // this.jobcardForm.get('variReason').enable();
             // this.jobcardForm.get('disTypeMat').enable();
             // this.jobcardForm.get('disTypeLab').enable();
@@ -1909,8 +1908,8 @@ export class JobCardComponent implements OnInit {
   CheckSaveBillValidation() {
     const formValue: IjobCard = this.jobcardForm.value;
     var msg1;
-    // alert ("formValue.labDiscountPer :"+formValue.labDiscountPer);
-    // alert ("formValue.matDiscountPer :"+formValue.matDiscountPer);
+    alert ("formValue.labDiscountPer :"+formValue.labDiscountPer);
+    alert ("formValue.matDiscountPer :"+formValue.matDiscountPer);
     if(formValue.disTypeLab=='Percentage' && (formValue.labDiscountPer <=0 )){this.saveBillValidation = false;
       msg1="DISCOUNT : Should not be null....";alert(msg1);return;}
     if(formValue.disTypeLab=='Amount' && (formValue.labDiscount<=0)){this.saveBillValidation = false;

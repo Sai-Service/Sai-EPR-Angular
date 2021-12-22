@@ -2447,13 +2447,13 @@
                                                                        
                                                                     </ng-template>
                                                                     <ng-template #LabDiscoutelseBlock>
-                                                                        <!-- [(ngValue)]="sc.code" -->
-                                                                        <td><select  formControlName="labDiscountPer" 
+
+                                                                        <td><select formControlName="labDiscountPer" 
                                                                                 id="labDiscountPer" class="form-control" style="width: 110px;"
                                                                                 (ngModelChange)="labDiscountPerCal($event)">
                                                                                 <option>--Select--</option>
                                                                                 <option
-                                                                                    *ngFor="let sc of  labDiscountPerList"  [value]="sc.code" >
+                                                                                    *ngFor="let sc of  labDiscountPerList" [(ngValue)]="sc.code"  >
                                                                                     {{sc.code}}
                                                                                 </option>
                                                                             </select></td>
@@ -2513,13 +2513,12 @@
 
                                                                     </ng-template>
                                                                     <ng-template #matDiscoutelseBlock>
-                                                                        <!-- [(ngValue)]="sc.code" -->
                                                                         <td><select formControlName="matDiscountPer" style="width: 110px;" class="form-control" 
                                                                                 id="matDiscountPer" class="form-control"
                                                                                 (ngModelChange)="matDiscountPerCal($event)">
                                                                                 <option>--Select--</option>
                                                                                 <option
-                                                                                    *ngFor="let sc of  matDiscountPerList" [value]="sc.code"  >
+                                                                                    *ngFor="let sc of  matDiscountPerList"  [(ngValue)]="sc.code" >
                                                                                    {{sc.code}}
                                                                                 </option>
                                                                             </select></td>
