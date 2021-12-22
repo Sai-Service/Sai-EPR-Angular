@@ -1534,8 +1534,9 @@
                                             (click)="pickTicketupdateFunction()" style="width: 6rem;">Update</button>
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-primary" [disabled]="isDisabled10"
-                                            (click)=" pickTicketInvoiceFunction()">
+                                        <button type="button" class="btn btn-primary" id="invoiceBtn" [disabled]="isDisabled10"
+                                        data-toggle="modal" 
+                                        data-target="#confirmAlert" (click)=" getMessage('INVOICE')">
                                             Invoice
                                         </button>
                                     </td>
@@ -1759,8 +1760,8 @@
             </div>
             <div class="modal-body">
                 <label
-                    style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
-                    {{message1}}
+                    style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle; margin-left: 35%">
+                    {{message}}
                 </label>
             </div>
             <div class="modal-footer">
@@ -1771,7 +1772,7 @@
                                 (click)="executeAction()">Yes</button>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-info" (click)="closeModalDialog()">No</button>
+                            <button type="button" class="btn btn-info"  data-dismiss="modal">No</button>
                         </td>
                     </tr>
                 </table>
