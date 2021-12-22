@@ -299,6 +299,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
   }
 
   addnewcycleLinesList(i: number) {
+    // alert(i);
     if (i > -1) {
       var trxLnArr1 = this.miscellaneousForm.get('cycleLinesList').value;
       var itemqty = trxLnArr1[i].physicalQty;
@@ -362,8 +363,13 @@ export class MiscellaneousTransactionComponent implements OnInit {
       // this.miscellaneousForm.get('cycleLinesList').at(0).get('physicalQty').disable()
       this.cycleLinesList().controls[len - 1].get('physicalQty').disable();
       this.cycleLinesList().controls[len - 1].get('LocatorSegment').disable();
-    }
 
+
+    }
+    var len1 = this.cycleLinesList().length;
+    var  ln = i+1
+    alert(ln+'line')
+      this.setFocus('segment' + ln )
     // this.displayRemoveRow[i]=true;
     // alert(i);
   }
@@ -380,12 +386,16 @@ export class MiscellaneousTransactionComponent implements OnInit {
       this.deleteReserveLinewise(trxLineIndex);
       this.itemMap.delete(itemid);
     }
-    this.cycleLinesList().removeAt(trxLineIndex);
+    this.cycleLinesList().removeAt(trxLineIndex+1);
+    var formVal = this.miscellaneousForm.get('cycleLinesList').value;
     var patch = this.miscellaneousForm.get('cycleLinesList') as FormArray;
     var len = this.cycleLinesList().length;
-    patch.controls[len - 1].patchValue({
-      lineNumber: len,
-    });
+    for (let x=0; x<formVal.length; x++){
+      patch.controls[x].patchValue({
+        lineNumber: x+1,
+      });
+    }
+
 
     var btnrm = document.getElementById(
       'btnrm' + (trxLineIndex - 1)
@@ -399,7 +409,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
       // (document.getElementById('btnrm'+i+1) as HTMLInputElement).disabled = true;
     }
 
-    this.displayLocator[trxLineIndex] = true;
+    this.displayLocator[trxLineIndex] = false;
   }
   ngOnInit(): void {
     // alert(this.route1.queryParams+'hell')
@@ -598,7 +608,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
       if (itemCode.length == 8) {
         if (this.ItemIdList.length <= 1) {
           if (trxType === 4) {
-            alert('inside if--');
+            // alert('inside if--');
             this.service
               .ItemIdListDeptByCode(
                 this.deptId,
@@ -775,7 +785,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
           });
           this.cycleLinesList().controls[i].get('LocatorSegment').enable();
           this.cycleLinesList().controls[i].get('physicalQty').enable();
-          this.setFocus('physicalQty');
+          this.setFocus('physicalQty'+(i));
         }
       });
       this.service
@@ -857,8 +867,9 @@ export class MiscellaneousTransactionComponent implements OnInit {
                 });
               });
           }
-          this.setFocus('physicalQty');
+          this.setFocus('physicalQty'+(i+1));
         });
+        // this.setFocus('physicalQty'+(i+1));
     } else {
       alert('item not found');
     }
@@ -1172,6 +1183,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
 
   validate(i: number, qty1) {
     //alert("Validate");
+
     var trxLnArr = this.miscellaneousForm.get('cycleLinesList').value;
     var trxLnArr1 = this.miscellaneousForm.get('cycleLinesList') as FormArray;
     let avalqty = trxLnArr[i].avlqty;
@@ -1199,6 +1211,9 @@ export class MiscellaneousTransactionComponent implements OnInit {
         trxLnArr1.controls[i].patchValue({ physicalQty: '' });
       }
     }
+
+    this.addnewcycleLinesList(i);
+    this.setFocus('segment' +(i+1)  )
   }
 
   searchByCompileID(itemId) {
@@ -1443,8 +1458,9 @@ export class MiscellaneousTransactionComponent implements OnInit {
   }
 
   setFocus(name) {
-    // alert(name)
+    alert(name)
     const ele = this.stkAdjForm.nativeElement[name];
+
     if (ele) {
       ele.focus();
     }
