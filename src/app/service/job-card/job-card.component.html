@@ -2344,20 +2344,32 @@
                                                                                         disabled></td>
                                                                                 <td><input type="text" formControlName="matBasicAmt" style="width: 8em;font-weight: bold;font-size: small;text-align: right;"
                                                                                         disabled></td>
-                                                                                <td><input type="text" formControlName="actualBasicAmt" style="width: 8em;font-weight: bold;font-size: small;text-align: right;">
+                                                                                <td><input disabled type="text" formControlName="actualBasicAmt" style="width: 8em;font-weight: bold;font-size: small;text-align: right;">
                                                                                 </td>
                                                                         </tr>
 
                                                                         <tr class="ItemStyle" style="text-decoration:none;">
                                                                             <td style="width: 160px;text-align: left;" class="LabelFontStyle">Insurance</td>
-                                                                            <td><input type="text" formControlName="insLabBasicAmt" style="width: 8em;font-weight: bold;font-size: small;text-align: right;">
+                                                                            <td><input disabled type="text" formControlName="insLabBasicAmt" style="width: 8em;font-weight: bold;font-size: small;text-align: right;">
                                                                             </td>
-                                                                            <td><input type="text" formControlName="insMatBasicAmt" style="width: 8em;font-weight: bold;font-size: small;text-align: right;">
+                                                                            <td><input disabled type="text" formControlName="insMatBasicAmt" style="width: 8em;font-weight: bold;font-size: small;text-align: right;">
                                                                             </td>
-                                                                            <td><input type="text" formControlName="actualInsAmt" style="width: 8em;font-weight: bold;font-size: small;text-align: right;">
+                                                                            <td><input  disabled type="text" formControlName="actualInsAmt" style="width: 8em;font-weight: bold;font-size: small;text-align: right;">
                                                                             </td>
                                                                             <td></td>
                                                                         </tr>
+
+                                                                        <tr class="ItemStyle" style="text-decoration:none;">
+                                                                            <td style="width: 160px;text-align: left;" >Total</td>
+                                                                            <td><input disabled type="text" formControlName="insLabBasicAmt" style="width: 8em;font-weight: bold;font-size: small;text-align: right;">
+                                                                            </td>
+                                                                            <td><input disabled type="text" formControlName="insMatBasicAmt" style="width: 8em;font-weight: bold;font-size: small;text-align: right;">
+                                                                            </td>
+                                                                            <td><input disabled type="text" formControlName="actualInsAmt" style="width: 8em;font-weight: bold;font-size: small;text-align: right;">
+                                                                            </td>
+                                                                            <td></td>
+                                                                        </tr>
+
                                                                             </ng-template>
                                                                             <tr class="ItemStyle" style="text-decoration:none;">
                                                                                 <td style="width: 160px;text-align: left;" >Variation&nbsp;Reason</td>
@@ -2392,7 +2404,7 @@
                                                             <thead>
                                                                 <tr class="GridHeader">
                                                                     <th scope="col"></th>
-                                                                    <th scope="col">Discount Type</th>
+                                                                    <th scope="col">Discount Mode</th>
                                                                     <th scope="col">Item Type </th>
                                                                     <!-- <div *ngIf="displayMatDiscount1; then matDiscoutthenBlock1; else matDiscoutelseBlock1"></div>
                                                                     <ng-template #matDiscoutthenBlock1> -->
@@ -2536,7 +2548,7 @@
 
                                                                 <tr class="ItemStyle" style="text-decoration:none;">
                                                                     
-                                                                    <div *ngIf="dispSplitRatio; then y1; else y2">  </div>
+                                                                    <!-- <div *ngIf="dispSplitRatio; then y1; else y2">  </div>
                                                                     <ng-template #y1>
 
                                                                         <td style="width: 15%" class="LabelFontStyle">
@@ -2568,7 +2580,7 @@
                                                                             <input disabled type="number" min="0"   style="width: 110px;font-weight: bold;font-size: small;"
                                                                                 placeholder="" formControlName="salvage" class="form-control">
                                                                        </td>
-                                                                    </ng-template>
+                                                                    </ng-template> -->
 
 
 
@@ -2579,8 +2591,9 @@
                                                                     <div *ngIf="displayInsheader; then InsheaderthenBlock; else InsheaderelseBlock"></div>
                                                                     <ng-template #InsheaderthenBlock></ng-template>
                                                                     <ng-template #InsheaderelseBlock>
-                                                                        <!-- <td></td><td></td><td></td><td></td> -->
+                                                                        
                                                                         <td style="font-size: small;font-weight: bold;text-align: right;">Insurance&nbsp;Amt:&nbsp;</td>
+                                                                        <td></td><td></td><td></td> <td></td>
                                                                     </ng-template>
 
 
@@ -2640,16 +2653,12 @@
                                                                     </td>
                                                                     <!-- <td></td><td></td><td></td><td></td> -->
 
-                                                                    <td style="font-size: small;font-weight: bold;text-align: right;">Total&nbsp;Amt&nbsp;</td>
+                                                                    <!-- <td style="font-size: small;font-weight: bold;text-align: right;">Total&nbsp;Amt&nbsp;</td> -->
+                                                                    <td><input disabled type="number" min="0"  formControlName="totDis" class="form-control" style="width: 8em;font-weight: bold;font-size: small;"></td>
+                                                                    <td><input disabled type="number" min="0"  formControlName="totTaxableAmt"  class="form-control" style="width: 8em;font-weight: bold;font-size: small;"></td>
+                                                                    <td><input disabled type="number" min="0"  formControlName="totTaxAmt" class="form-control" style="width: 8em;font-weight: bold;font-size: small;"></td>
+                                                                    <td><input disabled type="number" min="0"  formControlName="invTotAmt" class="form-control"  style="width: 8em;font-weight: bold;font-size: small;"></td>
                                                                     
-                                                                    <!-- <td><input type="number" min="0"  formControlName="totDis" style="width: 8em;font-weight: bold;font-size: small;">
-                                                                    </td> -->
-                                                                    <td><input disabled type="number" min="0"  formControlName="totTaxableAmt" style="width: 8em;font-weight: bold;font-size: small;">
-                                                                    </td>
-                                                                    <td><input disabled type="number" min="0"  formControlName="totTaxAmt" style="width: 8em;font-weight: bold;font-size: small;">
-                                                                    </td>
-                                                                    <td><input disabled type="number" min="0"  formControlName="invTotAmt" style="width: 8em;font-weight: bold;font-size: small;">
-                                                                    </td>
                                                                 </tr>
 
 
