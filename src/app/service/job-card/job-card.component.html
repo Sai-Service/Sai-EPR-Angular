@@ -156,7 +156,8 @@
                                                                                 class="LabelFontStyle">
                                                                                 Job&nbsp;Card&nbsp;Date&nbsp;:</td>
                                                                             <td>
-                                                                                <input  disabled type="date"
+                                                                                <!-- type="date" /// com JyotiK-->
+                                                                                <input  disabled 
                                                                                     class="form-control" placeholder=""
                                                                                     [(ngModel)]="jobCardDate"
                                                                                     formControlName="jobCardDate"  >
@@ -1208,9 +1209,18 @@
                                                                                 Promise&nbsp;Date&nbsp;&&nbsp;Time&nbsp;:
                                                                             </td>
                                                                             <td>
-                                                                                <input type="datetime-local" class="form-control" style="width: fit-content;"
-                                                                                    placeholder="" formControlName="promiseDate" [(ngModel)]="promiseDate" min="{{minDatetime}}">
-                                                                            </td>
+                                                                                <!-- <input type="datetime-local" class="form-control" style="width: fit-content;"
+                                                                                    placeholder="" formControlName="promiseDate" [(ngModel)]="promiseDate" min="{{minDatetime}}"> comm JyotiK -->
+                                                                                    <div *ngIf="disppromiseDate; then thenpromiseDate; else elsepromiseDate"></div>
+                                                                                    <ng-template #thenpromiseDate>
+                                                                                    <input type="date" class="form-control" style="width: fit-content;"
+                                                                                    placeholder="" formControlName="promiseDate">
+                                                                                    </ng-template>
+                                                                                    <ng-template #elsepromiseDate>
+                                                                                        <input disabled class="form-control" style="width: fit-content;"
+                                                                                        placeholder="" formControlName="promiseDate">
+                                                                                    </ng-template>
+                                                                                </td>
                                                                         </tr>
                                                                     </fieldset>
 
@@ -1789,9 +1799,10 @@
                                                                                 style="width: 160px;height: 25px;">
                                                                         </td>
 
+                                                                        <!-- (ngModelChange)='onOptionTaxCatSelected(i, $event)'  JyotiL -->
                                                                         <td> <select formControlName="taxCategoryId"
                                                                             id="taxCategoryId" disabled
-                                                                            (ngModelChange)='onOptionTaxCatSelected(i, $event)'
+                                                                            
                                                                             class="form-control">
                                                                             <option>--Select--</option>
                                                                             <option
@@ -1815,10 +1826,10 @@
                                                                             </td>
                                                                         
                                                                        
-
+                                                                            <!-- (ngModelChange)='onOptionTaxCatSelected(i, $event)'  Jyotik -->
                                                                         <td> <select formControlName="taxCategoryId"
                                                                                 id="taxCategoryId" disabled style="width: 250px;"
-                                                                                (ngModelChange)='onOptionTaxCatSelected(i, $event)'
+                                                                               
                                                                                 class="form-control">
                                                                                 <option>--Select--</option>
                                                                                 <option
@@ -2447,13 +2458,13 @@
                                                                        
                                                                     </ng-template>
                                                                     <ng-template #LabDiscoutelseBlock>
-
-                                                                        <td><select formControlName="labDiscountPer" 
+                                                                        <!-- [(ngValue)]="sc.code" -->
+                                                                        <td><select  formControlName="labDiscountPer" 
                                                                                 id="labDiscountPer" class="form-control" style="width: 110px;"
                                                                                 (ngModelChange)="labDiscountPerCal($event)">
                                                                                 <option>--Select--</option>
                                                                                 <option
-                                                                                    *ngFor="let sc of  labDiscountPerList" [value]="sc.code"  >
+                                                                                    *ngFor="let sc of  labDiscountPerList"  [value]="sc.code" >
                                                                                     {{sc.code}}
                                                                                 </option>
                                                                             </select></td>
@@ -2503,7 +2514,7 @@
                                                                             (ngModelChange)="matDiscountPerCal($event)">
                                                                             <option>--Select--</option>
                                                                             <option
-                                                                                *ngFor="let sc of  matDiscountPerList" [value]="sc.code" >
+                                                                                *ngFor="let sc of  matDiscountPerList" >
                                                                                 {{sc.code}}
                                                                             </option> 
                                                                           </select></td>
@@ -2513,12 +2524,13 @@
 
                                                                     </ng-template>
                                                                     <ng-template #matDiscoutelseBlock>
+                                                                        <!-- [(ngValue)]="sc.code" -->
                                                                         <td><select formControlName="matDiscountPer" style="width: 110px;" class="form-control" 
                                                                                 id="matDiscountPer" class="form-control"
                                                                                 (ngModelChange)="matDiscountPerCal($event)">
                                                                                 <option>--Select--</option>
                                                                                 <option
-                                                                                    *ngFor="let sc of  matDiscountPerList"  [(ngValue)]="sc.code" >
+                                                                                    *ngFor="let sc of  matDiscountPerList" [value]="sc.code"  >
                                                                                    {{sc.code}}
                                                                                 </option>
                                                                             </select></td>
