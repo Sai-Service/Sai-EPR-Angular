@@ -1301,7 +1301,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
           this.itemMap2.set(lnNo, this.itemMap.get(itemDesc));
           if (data.length == 1) {
             (controlinv.controls[lnNo]).patchValue({ 'segment': data[0].segment });
-            controlinv.controls[lnNo].get('itemSeg').disable();
+            // controlinv.controls[lnNo].get('itemSeg').disable();
           }
           if (data.length === 0) {
             (controlinv.controls[lnNo]).patchValue({ 'segment': '' });
