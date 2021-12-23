@@ -2997,7 +2997,16 @@ getCostDetail(locId,ItemId):Observable<any>
   return this.http.get(this.ServerUrl+`/averageCost/avgLocItem?locationId=${locId}&itemId=${ItemId}`)
 }
 
-
+viewMiscnote(stkAdjustNumber){
+  // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/rcvShipment/StkTransferNote/${shipmentNumber}`;
+  // local
+  const REQUEST_URI = this.ServerUrl +`/stockadj/stockAdjustVoucher/${stkAdjustNumber}`;
+  return this.http.get(REQUEST_URI, {
+    // params: REQUEST_PARAMS,
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
+}
 
 
 getonhandqtySubinvLoc(locId,subId,Itemid):Observable<any>
