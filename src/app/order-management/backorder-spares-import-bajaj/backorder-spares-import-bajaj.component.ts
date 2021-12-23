@@ -59,7 +59,7 @@ export class BackorderSparesImportBajajComponent implements OnInit {
   fileName :string; 
   docType :string;
   lstBackOrder : any;
-  upldPricelistName : string;
+  
   
   updStatus =false;
   closeResetButton =true;
@@ -89,7 +89,7 @@ export class BackorderSparesImportBajajComponent implements OnInit {
       msg:[],
       fileName:['',Validators.required],
       docType:['',Validators.required],
-      upldPricelistName :[],
+      
       
 
 
@@ -140,14 +140,9 @@ export class BackorderSparesImportBajajComponent implements OnInit {
 
   CheckValidations() {
 
-    var upldPlName =this.backorderSparesImportBajajForm.get('upldPricelistName').value;
+    
     var csvFileName=this.fileInput.nativeElement.files[0];
 
-    if(upldPlName==null || upldPlName==undefined) {
-      alert ("Select Price List Name..."+upldPlName)  ;
-      this.fileValidation=false;
-      return;
-    }
     if(csvFileName==null || csvFileName==undefined) {
       alert ("Select CSV File Name..."+csvFileName );
       this.fileValidation=false;

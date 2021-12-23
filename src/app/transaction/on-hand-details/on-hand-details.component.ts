@@ -49,7 +49,7 @@ onhandDetailsForm:FormGroup;
   subInventoryCode:string;
   description:string;
   itemId:number;
-  
+
   userList2: any[] = [];
   lastkeydown1: number = 0;
 
@@ -66,7 +66,7 @@ onhandDetailsForm:FormGroup;
   searchItemName:string;
 
   showOrg = false;
-  
+
 
 
 
@@ -101,7 +101,7 @@ onhandDetailsForm:FormGroup;
 
     })
    }
-   
+
   ngOnInit(): void {
     this.loadDefaultValues();
     // this.locId=Number(sessionStorage.getItem('locId'));
@@ -138,7 +138,7 @@ onhandDetailsForm:FormGroup;
      }
    );
 
-   
+
 
 //  this.service.locationIdList()
 //  .subscribe(
@@ -156,7 +156,7 @@ onhandDetailsForm:FormGroup;
 
     }
      );
-     
+
   }
 
   OnHandDetails(onhandDetailsForm:any){}
@@ -181,11 +181,11 @@ onhandDetailsForm:FormGroup;
     }
     return matches;
   };
- 
+
 
  searchByItem(segment)
  {
-   
+
   //  alert(this.onhandDetailsForm.get('segment').value);
    var segment1=this.onhandDetailsForm.get('segment').value
    segment1=segment1.toUpperCase();
@@ -193,15 +193,15 @@ onhandDetailsForm:FormGroup;
     alert ("Please select Item Code ....") ;return;
    }
    let select1=this.ItemIdList.find(d=>d.SEGMENT===segment1);
-  
+
 
    if (select1==undefined) {
     alert ("Please select valid Item Code ....") ;return;
    }
-  
+
   //  alert("select1.itemId  :"+select1.itemId +","+segment1 );
-   
- 
+
+
   this.service.searchByItemByLoc(this.locId,select1.itemId,this.ouId,this.divisionId).subscribe(
     data =>{
       this.Itemdata= data.obj;
@@ -242,7 +242,7 @@ onhandDetailsForm:FormGroup;
 
     this.service.searchByItemf9(select1.itemId,this.locId, this.ouId,this.divisionId).subscribe(
       data =>{
-       
+
         this.Itemdata= data;
         console.log(this.Itemdata);
         this.segment=this.Itemdata[0].SEGMENT;
@@ -256,17 +256,17 @@ onhandDetailsForm:FormGroup;
 
       });
 
-    
+
 
   }
-  
+
       onOptioninvItemIdSelectedSingle(searchItemCode) {
         // alert ("in fn onOptioninvItemIdSelectedSingle "+searchItemCode);
           let selectedValue = this.ItemIdList.find(v => v.SEGMENT == searchItemCode);
           if( selectedValue != undefined){
            console.log(selectedValue);
           // alert(selectedValue.itemId+","+selectedValue.DESCRIPTION+","+selectedValue.SEGMENT);
-          
+
           this.searchItemId = selectedValue.itemId;
           this.searchItemName=selectedValue.DESCRIPTION;
           this.searchItemCode=selectedValue.SEGMENT;
@@ -278,21 +278,21 @@ onhandDetailsForm:FormGroup;
         // alert("OUID :"+ouId);
 
         // if(ouId===sessionStorage.getItem('ouId')) {this.locId=Number(sessionStorage.getItem('locId'));return;}
-    
+
         if(ouId=='ALL') {this.locIdList=null;}
 
         if (ouId > 0) {
           this.showOrg = true;
           var mOuId =ouId;
             // alert("OUID :"+mOuId);
-    
+
           this.service.getLocationSearch1(mOuId)
             .subscribe(
               data => {
                 this.locIdList = data;
                 console.log(this.locIdList);
-              
-               if(this.locIdList.length <=0) {this.showOrg=false;this.locIdList=null;} 
+
+               if(this.locIdList.length <=0) {this.showOrg=false;this.locIdList=null;}
                else {  this.locId=data[0].locId ;
 
                 if(ouId===Number(sessionStorage.getItem('ouId'))) {
@@ -300,10 +300,10 @@ onhandDetailsForm:FormGroup;
                   this.locId=Number(sessionStorage.getItem('locId'));
                 }
               }
-    
+
               }
             );}else {this.showOrg = false;}
-          
+
       }
 
       loadDefaultValues() {
@@ -315,15 +315,39 @@ onhandDetailsForm:FormGroup;
         this.divisionId=Number(sessionStorage.getItem('divisionId'));
         this.locId=Number(sessionStorage.getItem('locId'));
         this.locName=(sessionStorage.getItem('locName'));
-      
+
        }
+
+       filterRecord(event) {
+
+        var itemCode = event.target.value;
+        if (event.keyCode == 13) {
+          // enter keycode
+          if (itemCode.length == 8) {
+            if (this.ItemIdList.length <= 4) {
+                  this.service
+                  .searchByItemSegmentDiv(this.divisionId, itemCode.toUpperCase())
+                  .subscribe((data) => {
+                    this.ItemIdList = data;
+                    // this.Select(data[0].itemId);
+                  });
+              }
+            }
+
+            else {
+            alert('Please Enter 4 characters of item number!!');
+            return;
+          }
+        }
+      }
+
 
        resetMast() {
         window.location.reload();
       }
 
       closeMast(){
-        this.router.navigate(['admin']); 
+        this.router.navigate(['admin']);
       }
 
 }

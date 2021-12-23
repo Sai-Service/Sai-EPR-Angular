@@ -174,14 +174,14 @@ export class AdminComponent implements OnInit {
 
     if (Number(sessionStorage.getItem('divisionId')) === 2) {
       this.isVisible1 = false;
-      this.isVisible2 = false;  
+      this.isVisible2 = false;
     }
     else if (Number(sessionStorage.getItem('divisionId')) === 1) {
       this.isVisible1 = true;
-      this.isVisible2 = false;    
+      this.isVisible2 = false;
     }
 
-   
+
     if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId')) === 1) {
       this.isVisible2 = true;
     }
@@ -192,18 +192,25 @@ export class AdminComponent implements OnInit {
 
 
 
-  
+
 
 //     if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId')) === 2){
 //     this.isVisible1 = true;
-//     this.isVisible2 = false; 
+//     this.isVisible2 = false;
 //   }
 
 //   if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId')) === 3){
 //   this.isVisible1 = true;
-//   this.isVisible2 = false; 
+//   this.isVisible2 = false;
 // }
-  
+
+this.service
+        .searchByItemSegmentDiv(this.divisionId, '36DH1601')
+        .subscribe((data) => {
+          this.ItemIdList = data;
+
+        });
+
   }
 
 
@@ -270,8 +277,9 @@ export class AdminComponent implements OnInit {
 
   F9Search(itemDesc) {
     var sType = this.adminForm1.get('searchBy').value
-    // if (sType == 'ITEM NUMBER') { this.searchByItemSegmentDiv(itemDesc) }
-    if (sType == 'ITEM NUMBER') { this.F9SearchItemCode('itm') }
+
+
+  //  if (sType == 'ITEM NUMBER') { this.F9SearchItemCode('itm') }
     if (sType == 'ITEM DESCRIPTION') { this.F9SearchItemDesc(itemDesc) }
   }
 
@@ -296,13 +304,13 @@ export class AdminComponent implements OnInit {
     //   alert("Please select valid Item Code ...."); return;
     // }
 
-  
+
     this.service.getItemDetailsByCode(segment1)
     .subscribe(
     data1 => {
     if (data1 !=null)
     {
-    
+
     this.service.searchByItemf9(data1.itemId, this.locId, this.ouId, this.divisionId).subscribe(
       data => {
         this.lstcomments = data;
@@ -317,9 +325,13 @@ export class AdminComponent implements OnInit {
           this.gstPer = this.lstcomments[0].GSTPERCENTAGE;
           this.principleItem = this.lstcomments[0].PRINCPLEITEM;
           this.adminForm1.patchValue(data);
-        } else { alert("Stock Details not availabe for item - " + segment1); }
+        } else
+        {
+          alert("Stock Details not availabe for item - " + segment1);
+         }
       })
-    } else {alert ("Item Code not found/Invalid Item Code")}
+    }
+    // else {alert ("Item Code not found/Invalid Item Code")}
   });
 
 
@@ -413,7 +425,7 @@ export class AdminComponent implements OnInit {
           this.gstPer = this.lstcomments[0].GSTPERCENTAGE;
           this.principleItem = this.lstcomments[0].PRINCPLEITEM;
           this.adminForm1.patchValue(data);
-        } else { alert("Stock Details not availabe for item - " + itemNumber); }
+        } else { alert("333Stock Details not availabe for item - " + itemNumber); }
       })
 
 
@@ -436,20 +448,59 @@ export class AdminComponent implements OnInit {
       return;
     }
 }
+filterRecord(event) {
+  var itemCode = event.target.value;
+  if (event.keyCode == 13) {
+    // enter keycode
+    if (itemCode.length == 8) {
+      let select1=this.ItemIdList.find(d=>d.segment===itemCode);
+        if(select1!=undefined){
+      this.service.searchByItemf9(select1.itemId, this.locId, this.ouId, this.divisionId).subscribe(
+        data => {
+          this.lstcomments = data;
+          console.log(data);
+            if (this.lstcomments.length > 0) {
+            this.segment = this.lstcomments[0].SEGMENT;
+            this.desc = this.lstcomments[0].DESCRIPTION;
+            this.uom = this.lstcomments[0].UOM;
+            this.mrp = this.lstcomments[0].MRP;
+            this.hsnSacCode = this.lstcomments[0].HSNSACCODE;
+            this.purchPrice = this.lstcomments[0].NDP;
+            this.gstPer = this.lstcomments[0].GSTPERCENTAGE;
+            this.principleItem = this.lstcomments[0].PRINCPLEITEM;
+            this.adminForm1.patchValue(data);
+          } else { alert("Stock Details not availabe for item - " + itemCode); }
+        })}
+    }else
+      if (this.ItemIdList.length <= 4) {
+            this.service
+            .searchByItemSegmentDiv(this.divisionId, itemCode.toUpperCase())
+            .subscribe((data) => {
+              this.ItemIdList = data;
+              // this.Select(data[0].itemId);
+            });
+        }
+      else {
+      alert('Please Enter 4 characters of item number!!');
+      return;
+
+    }
+  }
+}
 
 userCheck(roleId: number): boolean {
   //alert(sessionStorage.getItem('roleId') +'--'+roleId );
-  if(sessionStorage.getItem('roleId') === 'undefined') { 
+  if(sessionStorage.getItem('roleId') === 'undefined') {
     // this.isVisible1 = false;
     return true;
-   
+
   }else{
     //alert("else");
   if (Number(sessionStorage.getItem('roleId')) === roleId ){
   //  alert("role -true");
     return false;
   }
-  
+
 
  if (Number(sessionStorage.getItem('roleId')) != roleId) {
   //  alert("role -false");
@@ -460,6 +511,6 @@ userCheck(roleId: number): boolean {
 
   }
 
- 
+
 
 
