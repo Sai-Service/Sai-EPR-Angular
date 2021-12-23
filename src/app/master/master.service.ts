@@ -1304,7 +1304,7 @@ getsearchByShipmentNo(shipNo):Observable<any>
 }
 ItemIdListDept(deptId,locId,subId):Observable<any>
 {
-  return this.http.get(this.ServerUrl+`/itemMst/itemDepartent?deptId=${deptId}&locationId=${locId}&subInventoryId=${subId}`)
+  return this.http.get(this.ServerUrl+`/itemMst/itemDepartent1?deptId=${deptId}&locationId=${locId}&subInventoryId=${subId}`)
 }
 
 ItemIdListDeptByCode(deptId,locId,subId,itemCode):Observable<any>
