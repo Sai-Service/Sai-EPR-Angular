@@ -115,6 +115,7 @@ export class JobCardComponent implements OnInit {
   public minDate = new Date();
 
   jobCardNum1: string;
+  jobCardNum2 : string;
   jobCardDate1 :string;
   regNo1:string;
   jobStatus1:string;
@@ -328,6 +329,7 @@ export class JobCardComponent implements OnInit {
       orgId:[''],
 
       jobCardNum1: [],
+      jobCardNum2:[],
       jobCardDate1 :[],
       regNo1:[],
       jobStatus1:[],
@@ -2387,25 +2389,29 @@ getMessage(msgType:string){
   if(this.msgType.includes("Cancel")){ this.cancelJobNo();   }
    }
 
-   jobcardFind() {
+   jobcardFind(jobCardNum2) {
+     alert(jobCardNum2)
      alert ("in job card Find...");
-    var jcNum=this.jobcardForm.get('jobCardNum1').value
-    var jRegNo=this.jobcardForm.get('regNo1').value
-    var jDate=this.jobcardForm.get('jobCardDate1').value
-    var jStatus=this.jobcardForm.get('jobStatus1').value
-    var jLocId=this.locId;
+    //  debugger;
+    var jcNum=this.jobcardForm.get('jobCardNum2').value;
+    var jRegNo=this.jobcardForm.get('regNo1').value;
+    var jDate=this.jobcardForm.get('jobCardDate1').value;
+    var jStatus=this.jobcardForm.get('jobStatus1').value;
+    // var jLocId=this.locId;
 
-    if(jcNum==undefined || jcNum==null || jcNum.trim()=='') {jcNum=null}
-    if(jRegNo==undefined || jRegNo==null || jRegNo.trim()=='') {jRegNo=null}
-    if(jDate==undefined || jDate==null  ) {jDate=null}
-    if(jStatus==undefined || jStatus==null || jStatus.trim()=='') {jStatus=null}
+    alert(this.jobcardForm.get('jobCardNum2').value);
+  
+    // if(jcNum==undefined || jcNum==null || jcNum.trim()=='') {jcNum=null}
+    // if(jRegNo==undefined || jRegNo==null || jRegNo.trim()=='') {jRegNo=null}
+    // if(jDate==undefined || jDate==null  ) {jDate=null}
+    // if(jStatus==undefined || jStatus==null || jStatus.trim()=='') {jStatus=null}
 
     // jcNum=jcNum.toUpperCase();jRegNo=jRegNo.toUpperCase()
     // getJonCardNoSearchLoc(jcNo,jobDate,jStatus,jRegNo,jLocId)    
 
-    alert (jcNum +","+jRegNo +","+jDate +","+jStatus +","+jLocId);
+    alert (jcNum +","+jRegNo +","+jDate +","+jStatus);
 
-     this.serviceService.getJonCardNoSearchLoc(this.jobCardNum,this.jobCardDate,this.jobStatus,this.regNo,this.locId)
+     this.serviceService.getJonCardNoSearchLoc(jcNum,this.jobCardDate,this.jobStatus,this.regNo,sessionStorage.getItem('locId'))
       .subscribe(
         data => {
           this.lstJobcardList = data.obj;
