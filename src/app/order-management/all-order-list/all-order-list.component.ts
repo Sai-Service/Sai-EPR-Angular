@@ -90,9 +90,11 @@ export class AllOrderListComponent implements OnInit {
       if (res.code === 200) {
         this.orderListDetails = res.obj;
         this.storeAllOrderData =res.obj;
+        console.log(this.storeAllOrderData);
+        
         for (let x=0; x<this.orderListDetails.length; x++){
           if (this.orderListDetails[x].orStatus==='INVOICED'){
-          this.totInvAmt = Math.round(((this.totInvAmt += (this.orderListDetails[x].orAmt)) + Number.EPSILON) * 100) / 100;
+          this.totInvAmt = Math.round(((this.totInvAmt += (this.orderListDetails[x].invAmt)) + Number.EPSILON) * 100) / 100;
           console.log(this.totInvAmt);
         }
         else{
@@ -119,7 +121,7 @@ onSelectStatus(event:any){
   for (let x=0; x<currCustomer.length; x++){
     if (currCustomer[x].orStatus==='INVOICED'){
     console.log(this.totInvAmt);
-    this.totInvAmt = Math.round((( this.totInvAmt += (currCustomer[x].orAmt)) + Number.EPSILON) * 100) / 100;
+    this.totInvAmt = Math.round((( this.totInvAmt += (currCustomer[x].invAmt)) + Number.EPSILON) * 100) / 100;
   }
   else{
     this.totInvAmt=0;
