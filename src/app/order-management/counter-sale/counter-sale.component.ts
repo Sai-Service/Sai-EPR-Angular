@@ -17,6 +17,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { enableDebugTools } from '@angular/platform-browser';
 
 
+
 const MIME_TYPES = {
   pdf: 'application/pdf',
   xls: 'application/vnd.ms-excel',
@@ -804,6 +805,17 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
               this.CounterSaleOrderBookingForm.patchValue({ disPer: data.obj.disPer });
               this.CounterSaleOrderBookingForm.get('disPer').disable();
             }
+            if (this.allDatastore.tcsYN === 'Y') {
+              this.displaytcsYN = false;
+              this.isDisabled = false;
+              // this.displaytcsBuuton = true;
+              // this.tcsAmt = Math.round(((data.obj.totAmt * this.tcsPer) + Number.EPSILON) * 100) / 100;
+            }
+            else {
+              this.displaytcsYN = true;
+              // this.displaytcsBuuton = false;
+              // this.isDisabled = false;
+            }
             let control = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
             let control1 = this.CounterSaleOrderBookingForm.get('taxAmounts') as FormArray;
             for (let i = 0; i <= this.lstgetOrderLineDetails.length - 1; i++) {
@@ -877,18 +889,6 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
               this.displaypickTicketInvoice = false;
               this.displaypickTicketUpdate = false;
               this.displayViewGatePass = true;
-
-              if (this.allDatastore.tcsYN === 'Y') {
-                this.displaytcsYN = false;
-                this.isDisabled = false;
-                this.displaytcsBuuton = true;
-                this.tcsAmt = Math.round(((data.obj.totAmt * this.tcsPer) + Number.EPSILON) * 100) / 100;
-              }
-              else {
-                this.displaytcsYN = true;
-                this.displaytcsBuuton = false;
-                // this.isDisabled = false;
-              }
               // for (let i = 0; this.allDatastore.oeOrderLinesAllList.length; i++) {
               // if (data.obj.oeOrderLinesAllList[i].flowStatusCode === 'BOOKED') {
               //   this.displayLineflowStatusCode[i] = false;
@@ -1195,7 +1195,8 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
   close() {
     this.deleteReserve();
-    this.router.navigate(['admin']);
+    // this.router.navigate(['admin']);
+    this.location1.back();
   }
 
   refresh() {
