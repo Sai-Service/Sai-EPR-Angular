@@ -114,6 +114,23 @@ export class JobCardComponent implements OnInit {
   now = Date.now();
   public minDate = new Date();
 
+  jobCardNum1: string;
+  jobCardDate1 :string;
+  regNo1:string;
+  jobStatus1:string;
+
+  loginName:string;
+  divisionId:number;
+  loginArray:string;
+  name:string;
+  ouName : string;
+  locId: number;
+  locName : string;
+  orgId:number;
+  ouId :number;
+  deptId:number; 
+  emplId :number;
+
   estLabor:number=0;
   estMaterial:number=0;
   estTotal:number=0;
@@ -137,12 +154,13 @@ export class JobCardComponent implements OnInit {
   // public jobStatus : 'Opened';
   matStatus: string;
   // public matStatus :'No Material';
-  jobCardNum1: string;
+  
+
   // jobCardNum: string='0';
   contact1: string;
   jobCardNum: string;
   divisionName: string;
-  divisionId: number;
+ 
   lstcomments: any;
   RegNoList: any;
   RegNoList1: any[];
@@ -203,6 +221,8 @@ export class JobCardComponent implements OnInit {
   demandJob:string;
   recomJob:string;
 
+  lstJobcardList :any
+
   public labDiscountPerList: Array<string> = [];
   public matDiscountPerList: Array<string> = [];
   public jobCarStatusList: Array<string> = [];
@@ -246,7 +266,7 @@ export class JobCardComponent implements OnInit {
   insTotAmt: number;
 
   trxLineId: number;
-  emplId:number;
+ 
   deptName:string;
   serviceModel:string;
   jcOpenDate=this.pipe.transform(Date.now(), 'y-MM-dd');
@@ -276,9 +296,10 @@ export class JobCardComponent implements OnInit {
   // minDate=new Date();
   // pipe = new DatePipe('en-US');
   // now = Date.now();
-  pickupDate = this.pipe.transform(Date.now(), 'y-MM-dd');
-  // jobCardDate = this.pipe.transform(Date.now(), 'y-MM-dd');
-  jobCardDate:Date;
+  // pickupDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+  pickupDate:Date;
+  jobCardDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+
   // jobCardDate = this.pipe.transform(this.now, 'y-MM-d');
   
   //public minDatetime=this.pipe.transform(this.promiseDate, 'yyyy-MM-ddThh:mm')
@@ -295,11 +316,26 @@ export class JobCardComponent implements OnInit {
   // @ViewChild('jobcardForm') public createJobcardForm: NgForm;
   constructor(private fb: FormBuilder, private router: Router, private orderManagementService: OrderManagementService, private service: MasterService, private serviceService: ServiceService,@Inject(LOCALE_ID) private locale: string) {
     this.jobcardForm = fb.group({
+      loginArray:[''],
+      loginName:[''],
+      ouName :[''],
+      divisionId:[],
+      locId:[''],
+      locName :[''],
+      ouId :[],
+      deptId :[],
+      emplId:[''],
+      orgId:[''],
+
+      jobCardNum1: [],
+      jobCardDate1 :[],
+      regNo1:[],
+      jobStatus1:[],
+
       jcOpenDate:[],
       vehRegNo:[],
       jcStatus:[],
       jobCardNum: [],
-      jobCardNum1: [],
       jcType: [],
       jobCardId: [],
       matStatus: [],
@@ -348,7 +384,7 @@ export class JobCardComponent implements OnInit {
       cngKitNumber: [],
       cngCylinderNo: [],
       divisionName: [],
-      divisionId: [],
+    
       jobStatus: [''],
       jobCardDate: [],
       vin: [],
@@ -361,9 +397,7 @@ export class JobCardComponent implements OnInit {
       promiseDate: [],
       lastRunKms: [],
       itemId: [],
-      ouId: [],
-      deptId: [],
-      locId: [],
+
       customerId: [],
       customerSiteId: [],
       dmsJcNo: [],
@@ -425,7 +459,7 @@ export class JobCardComponent implements OnInit {
       balanceAmt: [],
       advAmt: [],
       labDiscountPer: [],
-      emplId:[],
+      insInvTotAmt:[],
       deptName:[],
       serviceModel:[],
       jobCardLabLines: this.fb.array([this.lineDetailsGroup()]),
@@ -556,13 +590,16 @@ export class JobCardComponent implements OnInit {
     return <FormArray>this.jobcardForm.get('jobCardMatLines')
   }
   ngOnInit(): void {
-
+    $("#wrapper").toggleClass("toggled");
     this.owner = sessionStorage.getItem('name')
     this.divisionName = sessionStorage.getItem('divisionName');
     this.divisionId = Number(sessionStorage.getItem('divisionId'));
     this.jobStatus = 'Opened';
     this.emplId=Number(sessionStorage.getItem('emplId'));
     this.deptName=sessionStorage.getItem('deptName');
+    this.ouId=Number(sessionStorage.getItem('ouId'));
+    this.locId=Number(sessionStorage.getItem('locId'));
+
     // alert(this.emplId);
     // alert ("Location Id :" +Number(sessionStorage.getItem('locId')));
     // alert ("Location Code :" +sessionStorage.getItem('locCode'));
@@ -859,6 +896,7 @@ export class JobCardComponent implements OnInit {
     var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
     (patch.controls[0]).patchValue({ techName: select.description });
   }
+  
   }
 
  
@@ -1179,8 +1217,7 @@ export class JobCardComponent implements OnInit {
           this.jobcardForm.get('jcType').disable();
         
           this.jobcardForm.patchValue({regNo : data.obj.regNo});
-          // var promdate= this.pipe.transform(data.obj.promiseDate,  'yyyy-MM-ddThh:mm') com Jyotik
-          // var promdate=data.obj.promiseDate;
+          // var promdate= this.pipe.transform(data.obj.promiseDate,  'yyyy-MM-ddThh:mm');
           var promdate=data.obj.promiseDate;
           this.jobcardForm.patchValue({promiseDate : promdate});
         
@@ -2309,9 +2346,21 @@ validatePickupDate() {
   var pDt = new Date(pDate);
   if (pDt > currDate) {
     alert("PICKUP  DATE :" + "Should not be above Today's Date");
-    this.pickupDate = this.pipe.transform(this.now, 'y-MM-dd');
+    // this.pickupDate = this.pipe.transform(this.now, 'y-MM-dd'); ///  comi old date
   }
 }
+
+validatePromisedDate() {
+  var promDate=this.jobcardForm.get('promiseDate').value;
+  var currDate = new Date();
+  var pDt = new Date(promDate);
+  if (pDt < currDate) {
+    alert("PROMISED  DATE :" + "Should not be below Today's Date");
+    this.promiseDate = this.pipe.transform(this.now, 'y-MM-dd');
+  }
+}
+
+
 
 onFreePickupSelected(xyz){
   // alert(xyz);
@@ -2337,6 +2386,38 @@ getMessage(msgType:string){
   executeAction(){
   if(this.msgType.includes("Cancel")){ this.cancelJobNo();   }
    }
+
+   jobcardFind() {
+     alert ("in job card Find...");
+    var jcNum=this.jobcardForm.get('jobCardNum1').value
+    var jRegNo=this.jobcardForm.get('regNo1').value
+    var jDate=this.jobcardForm.get('jobCardDate1').value
+    var jStatus=this.jobcardForm.get('jobStatus1').value
+    var jLocId=this.locId;
+
+    if(jcNum==undefined || jcNum==null || jcNum.trim()=='') {jcNum=null}
+    if(jRegNo==undefined || jRegNo==null || jRegNo.trim()=='') {jRegNo=null}
+    if(jDate==undefined || jDate==null  ) {jDate=null}
+    if(jStatus==undefined || jStatus==null || jStatus.trim()=='') {jStatus=null}
+
+    // jcNum=jcNum.toUpperCase();jRegNo=jRegNo.toUpperCase()
+    // getJonCardNoSearchLoc(jcNo,jobDate,jStatus,jRegNo,jLocId)    
+
+    alert (jcNum +","+jRegNo +","+jDate +","+jStatus +","+jLocId);
+
+     this.serviceService.getJonCardNoSearchLoc(this.jobCardNum,this.jobCardDate,this.jobStatus,this.regNo,this.locId)
+      .subscribe(
+        data => {
+          this.lstJobcardList = data.obj;
+          console.log(this.lstJobcardList); 
+          // alert(data.driverName);
+          // alert( "this.lstJobcardList.driverName :"+ this.lstJobcardList.driverName);
+          // if (this.lstJobcardList !=null) {    
+                  
+          // }  else { alert (jcNum + " Job Card Not Found...")}
+        });
+      
+      }
 
 
 }
