@@ -430,7 +430,7 @@ this.service
           this.gstPer = this.lstcomments[0].GSTPERCENTAGE;
           this.principleItem = this.lstcomments[0].PRINCPLEITEM;
           this.adminForm1.patchValue(data);
-        } else { alert("333Stock Details not availabe for item - " + itemNumber); }
+        } else { alert("Stock Details not availabe for item - " + itemNumber); }
       })
 
 

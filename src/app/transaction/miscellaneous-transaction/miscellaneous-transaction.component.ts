@@ -1461,7 +1461,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
   }
 
   setFocus(name) {
-    alert(name)
+    // alert(name)
     const ele = this.stkAdjForm.nativeElement[name];
 
     if (ele) {
