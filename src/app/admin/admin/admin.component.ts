@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild, ElementRef } from '@angular/core';
 // import * as $ from 'jquery';
 import { Router } from '@angular/router';
 import { formatDate } from '@angular/common';
@@ -84,7 +84,12 @@ export class AdminComponent implements OnInit {
   searchByItem = true;
   searchByDesc = false;
 
-
+  @ViewChild("myinput") myInputField: ElementRef;
+  emplId: number;
+  // @ViewChild("segment") segment: ElementRef;
+  ngAfterViewInit() {
+    this.myInputField.nativeElement.focus();
+  }
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     // constructor(private router: Router ) {

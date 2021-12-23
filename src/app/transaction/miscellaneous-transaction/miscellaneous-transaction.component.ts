@@ -159,6 +159,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
   segmentNameList: any;
   codeCombinationId: number;
   compileType: number;
+  displayOp=true;
   reason: string;
   reasonlist: any;
   compileStatus: string = 'OPEN';
@@ -389,7 +390,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
       this.deleteReserveLinewise(trxLineIndex);
       this.itemMap.delete(itemid);
     }
-    this.cycleLinesList().removeAt(trxLineIndex+1);
+    this.cycleLinesList().removeAt(trxLineIndex);
     var formVal = this.miscellaneousForm.get('cycleLinesList').value;
     var patch = this.miscellaneousForm.get('cycleLinesList') as FormArray;
     var len = this.cycleLinesList().length;
@@ -1358,6 +1359,8 @@ export class MiscellaneousTransactionComponent implements OnInit {
           this.miscellaneousForm.disable();
           this.displayButton = false;
           this.displayaddButton = false;
+          this.displayOp=false;
+
           // (document.getElementById("btnrm") as HTMLInputElement).disabled = false;
         } else {
           if (res.code === 400) {
@@ -1468,4 +1471,17 @@ export class MiscellaneousTransactionComponent implements OnInit {
       ele.focus();
     }
   }
+  viewMiscnote() {
+    var shipNumber = this.miscellaneousForm.get('compileName').value;
+    const fileName = 'download.pdf';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.service.viewMiscnote(shipNumber)
+      .subscribe(data => {
+        var blob = new Blob([data], { type: 'application/pdf' });
+        var url = URL.createObjectURL(blob);
+        var printWindow = window.open(url, '', 'width=800,height=500');
+        printWindow.open
+      })
+  }
+
 }
