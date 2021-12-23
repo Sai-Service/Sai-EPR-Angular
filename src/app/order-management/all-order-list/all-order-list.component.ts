@@ -20,11 +20,14 @@ export class AllOrderListComponent implements OnInit {
   poPendingListForm: FormGroup;
   pipe = new DatePipe('en-US');
   orderListDetails: any = [];
+  storeAllOrderData:any = [];
+  totInvAmt=0;
   today = new Date();
   startDt = this.pipe.transform(this.today, 'dd-MMM-yyyy');
   minDate = new Date();
   endDt = this.pipe.transform(this.today, 'dd-MMM-yyyy');
   isPending : Array<boolean> = [];
+  status:string;
 
   @ViewChild('epltable', { static: false }) epltable: ElementRef;
 
@@ -32,6 +35,7 @@ export class AllOrderListComponent implements OnInit {
     this.orderListForm = this.fb.group({
       startDt: [],
       endDt: [],
+      status:[],
     })
   }
 
@@ -80,28 +84,23 @@ export class AllOrderListComponent implements OnInit {
 
     var endDtSt = this.orderListForm.get('endDt').value;
     var endDt1 = new Date(endDtSt);
-    endDt1.setDate(endDt1.getDate() + 1);
-    this.endDt = this.pipe.transform(endDt1, 'dd-MMM-yyyy');
-
-    this.service.getOrderByUser(Number(sessionStorage.getItem('locId')), stDate, this.endDt,sessionStorage.getItem('deptId')).subscribe((res: any) => {
+    // endDt1.setDate(endDt1.getDate() + 1);
+   var endDt = this.pipe.transform(endDt1, 'dd-MMM-yyyy');
+    this.service.getOrderByUser(Number(sessionStorage.getItem('locId')), stDate, endDt,sessionStorage.getItem('deptId')).subscribe((res: any) => {
       if (res.code === 200) {
         this.orderListDetails = res.obj;
-        // for (let i = 0; i < res.obj.length; i++) {
-        //   var poDt = this.orderListDetails[i].orDate;
-        //   var supInvDt = this.orderListDetails[i].invDate;
-        //   this.orderListDetails[i].orDate = this.pipe.transform(poDt, 'dd-MM-yyyy');
-        //   this.orderListDetails[i].invDate = this.pipe.transform(supInvDt, 'dd-MM-yyyy');
-        //   if (this.orderListDetails[i].length > 0) {
-        //     var recDt = this.orderListDetails[i].reDate;
-        //     this.orderListDetails[i].reDate = this.pipe.transform(recDt, 'dd-MM-yyyy');
-        //     this.orderListDetails[i] = false;
-        //   }else{
-        //       this.orderListDetails[i].push({reNum : "Pending"});
-        //       this.isPending[i] = true;
-        //   }
-
-        // }
-        // console.log(this.orderListDetails);
+        this.storeAllOrderData =res.obj;
+        console.log(this.storeAllOrderData);
+        
+        for (let x=0; x<this.orderListDetails.length; x++){
+          if (this.orderListDetails[x].orStatus==='INVOICED'){
+          this.totInvAmt = Math.round(((this.totInvAmt += (this.orderListDetails[x].invAmt)) + Number.EPSILON) * 100) / 100;
+          console.log(this.totInvAmt);
+        }
+        else{
+          this.totInvAmt=0;
+        }
+      }
       }
       else {
         if (res.code === 400) {
@@ -111,6 +110,26 @@ export class AllOrderListComponent implements OnInit {
     })
 
   }
+  
+onSelectStatus(event:any){
+  // alert(event);
+  console.log(this.orderListDetails);
+  var orderList = this.orderListDetails;
+  let currCustomer = this.storeAllOrderData.filter((orderList) => (orderList.orStatus === event));
+  console.log(currCustomer);
+  this.orderListDetails=currCustomer;
+  for (let x=0; x<currCustomer.length; x++){
+    if (currCustomer[x].orStatus==='INVOICED'){
+    console.log(this.totInvAmt);
+    this.totInvAmt = Math.round((( this.totInvAmt += (currCustomer[x].invAmt)) + Number.EPSILON) * 100) / 100;
+  }
+  else{
+    this.totInvAmt=0;
+  }
+}
+}
+
+
   refresh() {
     window.location.reload();
   }

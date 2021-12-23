@@ -463,7 +463,7 @@
                 <td ><input class="form-control" type="text" (keyup)="filterRecord($event)" formControlName="searchItemCode"
                    id="invItemIdFirstWay"  list="dynmicUserIds1"
                    class="form-control"
-                   style="width: 300px; background-color: rgb(240, 240, 166); text-transform: uppercase;" #myinput />
+                   style="width: 300px; background-color: rgb(240, 240, 166); text-transform: uppercase;"  />
 
                   <datalist id="dynmicUserIds1" >
                     <option *ngFor="let item of ItemIdList"  [ngValue]="item.itemId">
@@ -657,7 +657,7 @@
                         <th style="width:5rem"  scope="col">Tax%&nbsp;</th>
                         <th style="width:8rem"  scope="col">Quantity&nbsp;</th>
                         <th style="width:8rem"  scope="col">Reserve Qty&nbsp;</th>
-                        <th style="width:8rem"  scope="col">MRP&nbsp;Rate&nbsp;</th>
+                        <th style="width:8rem"  scope="col">Unit Rate&nbsp;</th>
                         <th style="width:8rem"  scope="col">NDP&nbsp;</th>
                         <th style="width:8rem"  scope="col">Principle&nbsp;Item</th>
 

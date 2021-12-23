@@ -115,6 +115,7 @@ export class JobCardComponent implements OnInit {
   public minDate = new Date();
 
   jobCardNum1: string;
+  jobCardNum2 : string;
   jobCardDate1 :string;
   regNo1:string;
   jobStatus1:string;
@@ -177,6 +178,7 @@ export class JobCardComponent implements OnInit {
   displayLabDiscount = true;
   displayMatDiscount = true;
   displayMatDiscount1 = true;
+  disppromiseDate=true;
   subscription: any;
   showModal: boolean;
   content: number;
@@ -327,6 +329,7 @@ export class JobCardComponent implements OnInit {
       orgId:[''],
 
       jobCardNum1: [],
+      jobCardNum2:[],
       jobCardDate1 :[],
       regNo1:[],
       jobStatus1:[],
@@ -893,8 +896,9 @@ export class JobCardComponent implements OnInit {
     // alert(select.description);
     if (select != undefined){
     var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
-    (patch.controls[0]).patchValue({ techName: select.description })
+    (patch.controls[0]).patchValue({ techName: select.description });
   }
+  
   }
 
  
@@ -930,9 +934,9 @@ export class JobCardComponent implements OnInit {
   }
   onOptionsrvAdvisorSelected(srvAdvisor) {
     let select = this.srvAdvisorList.find(d => d.srvAdvisor === srvAdvisor);
-    // alert(select.groupId);
-    //  this.jobcardForm.patchValue(select)
+    if (select != undefined){
     this.jobcardForm.patchValue({ groupId: select.groupId })
+  }
   }
 
   onOptionBillableSelected(event, jcStatus: string) {
@@ -1188,7 +1192,8 @@ export class JobCardComponent implements OnInit {
   }
   
   Search(jonCardNo) {
-    var jcNum=this.jobcardForm.get('jobCardNum').value
+    var jcNum=this.jobcardForm.get('jobCardNum').value;
+    this.disppromiseDate=false;
     jcNum=jcNum.toUpperCase();
    
     this.jobcardForm.reset();
@@ -1205,8 +1210,6 @@ export class JobCardComponent implements OnInit {
             this.jobCardDate= data.obj.jobCardDate;
             this.jobCardNum1=data.obj.jobCardNum;
           } else { alert (jcNum + " Job Card Not Found...");return;}
-
-
           // let mToday =this.pipe.transform(new Date(), 'yyyy-MM-dd');
           // let jobDate=this.pipe.transform(this.jobCardDate, 'yyyy-MM-dd');
 
@@ -1293,6 +1296,7 @@ export class JobCardComponent implements OnInit {
             this.reopenButton=true;
             this.saveLabButton=false;
             this.saveMatButton=false;
+            this.displayLabDiscount=false;
             this.preInvButton=true;
             this.cancelButton=false;
            
@@ -1882,8 +1886,8 @@ export class JobCardComponent implements OnInit {
   CheckSaveBillValidation() {
     const formValue: IjobCard = this.jobcardForm.value;
     var msg1;
-    alert ("formValue.labDiscountPer :"+formValue.labDiscountPer);
-    alert ("formValue.matDiscountPer :"+formValue.matDiscountPer);
+    // alert ("formValue.labDiscountPer :"+formValue.labDiscountPer);
+    // alert ("formValue.matDiscountPer :"+formValue.matDiscountPer);
     if(formValue.disTypeLab=='Percentage' && (formValue.labDiscountPer <=0 )){this.saveBillValidation = false;
       msg1="DISCOUNT : Should not be null....";alert(msg1);return;}
     if(formValue.disTypeLab=='Amount' && (formValue.labDiscount<=0)){this.saveBillValidation = false;
@@ -1947,7 +1951,7 @@ export class JobCardComponent implements OnInit {
     // alert(matStatus+' '+jobcardNo);
     // if(matStatus == 'Compeleted'){
       this.dispReadyInvoice=false;  this.saveBillButton=true;
-      this.cancelButton=false;
+
     this.serviceService.jobCardStatusReadyInvoice(jobcardNo, status).subscribe((res: any) => {
       if (res.code === 200) {
         // alert(res.message);
@@ -1955,7 +1959,6 @@ export class JobCardComponent implements OnInit {
         this.displaybilling = false;  this.dispButtonStatus = false;this.reopenButton=true;
         this.saveLabButton=false;
         this.saveMatButton=false;
-      
         // this.jobcardForm.patchValue({jobCardNum:res.obj.jobCardNum})
       } else {
         if (res.code === 400) {
@@ -2084,6 +2087,7 @@ export class JobCardComponent implements OnInit {
     // if(this.lstcomments.jobStatus == 'Invoiced') { return;}
   
     var matBasicAmt = (this.jobcardForm.get('matBasicAmt').value)
+    // var perValueLab= (matBasicAmt* event)/100;
     var matDisAmt = (this.jobcardForm.get('matDiscout').value)
 
     if(matDisAmt>matBasicAmt || matDisAmt <0 ) {
@@ -2095,6 +2099,8 @@ export class JobCardComponent implements OnInit {
     var labTotTxble= (this.jobcardForm.get('labTaxableAmt').value)
     var labTotTx= (this.jobcardForm.get('labTotTaxAmt').value)
     
+
+    // var totalBasicAmt=matBasicAmt-matDisAmt;
     var perValueMat = (matDisAmt * 100) / matBasicAmt;
     var control = this.jobcardForm.get('jobCardMatLines').value;
     var totmattaxamt = 0;
@@ -2105,18 +2111,31 @@ export class JobCardComponent implements OnInit {
       totmattaxamt = totmattaxamt + (pervalMat * control[i].taxPer) / 100;
       totalMatTaxableAmt = totalMatTaxableAmt + pervalMat;
     }
-   
+
+    // alert(perValueLab);
     var temp = (totmattaxamt * event) / 100;
+
+
+   
     var txblTot=totalMatTaxableAmt+labTotTxble
     var txTot=totmattaxamt+labTotTx
+
+    // alert ("txTot :"+txTot);
+
     var netAmt=(totalMatTaxableAmt + totmattaxamt + labTotAt)
 
+    // netAmt=(netAmt);
+
     this.jobcardForm.patchValue({
-      matDiscout: Math.round(((matDisAmt)+Number.EPSILON)*100)/100,
-      matTaxableAmt: Math.round(((totalMatTaxableAmt)+Number.EPSILON)*100)/100, 
-      matTotTaxAmt: Math.round(((totmattaxamt)+Number.EPSILON)*100)/100,  
-       matTotAmt: Math.round((((totalMatTaxableAmt + totmattaxamt))+Number.EPSILON)*100)/100,  
-       });
+      matDiscout: Math.round(matDisAmt),
+      matTaxableAmt: Math.round(totalMatTaxableAmt),
+      matTotTaxAmt: Math.round(totmattaxamt),
+      // matTotAmt: formatNumber(totalMatTaxableAmt + totmattaxamt,this.locale,'1.2-2'),
+      matTotAmt:Math.round((totalMatTaxableAmt + totmattaxamt)),
+      // invTotAmt:Math.round(netAmt),
+      // totTaxableAmt:Math.round(txblTot),
+      // totTaxAmt:txTot,
+    });
     this.CalculateTotal();
   }
 
@@ -2124,13 +2143,16 @@ export class JobCardComponent implements OnInit {
     var ltot =Number (this.jobcardForm.get('labTotAmt').value);
     var ltaxable= Number(this.jobcardForm.get('labTaxableAmt').value)
     var ltax= Number(this.jobcardForm.get('labTotTaxAmt').value)
+
     var mtot = Number(this.jobcardForm.get('matTotAmt').value)
     var mtaxable= Number(this.jobcardForm.get('matTaxableAmt').value)
     var mtax= Number(this.jobcardForm.get('matTotTaxAmt').value);
+
     this.jobcardForm.patchValue({
-      totTaxableAmt:Math.round(((ltaxable+mtaxable)+Number.EPSILON)*100)/100,
-      totTaxAmt:Math.round(((ltax+mtax)+Number.EPSILON)*100)/100,
-      invTotAmt:Math.round(((ltot+mtot)+Number.EPSILON)*100)/100,
+      totTaxableAmt:Math.round(ltaxable+mtaxable),
+      totTaxAmt:Math.round(ltax+mtax),
+      // invTotAmt:formatNumber((ltot+mtot),this.locale,'1.2-2'),
+      invTotAmt:Math.round(ltot+mtot),
     });
 
   }
@@ -2367,25 +2389,29 @@ getMessage(msgType:string){
   if(this.msgType.includes("Cancel")){ this.cancelJobNo();   }
    }
 
-   jobcardFind() {
+   jobcardFind(jobCardNum2) {
+     alert(jobCardNum2)
      alert ("in job card Find...");
-    var jcNum=this.jobcardForm.get('jobCardNum1').value
-    var jRegNo=this.jobcardForm.get('regNo1').value
-    var jDate=this.jobcardForm.get('jobCardDate1').value
-    var jStatus=this.jobcardForm.get('jobStatus1').value
-    var jLocId=this.locId;
+    //  debugger;
+    var jcNum=this.jobcardForm.get('jobCardNum2').value;
+    var jRegNo=this.jobcardForm.get('regNo1').value;
+    var jDate=this.jobcardForm.get('jobCardDate1').value;
+    var jStatus=this.jobcardForm.get('jobStatus1').value;
+    // var jLocId=this.locId;
 
-    if(jcNum==undefined || jcNum==null || jcNum.trim()=='') {jcNum=null}
-    if(jRegNo==undefined || jRegNo==null || jRegNo.trim()=='') {jRegNo=null}
-    if(jDate==undefined || jDate==null  ) {jDate=null}
-    if(jStatus==undefined || jStatus==null || jStatus.trim()=='') {jStatus=null}
+    alert(this.jobcardForm.get('jobCardNum2').value);
+  
+    // if(jcNum==undefined || jcNum==null || jcNum.trim()=='') {jcNum=null}
+    // if(jRegNo==undefined || jRegNo==null || jRegNo.trim()=='') {jRegNo=null}
+    // if(jDate==undefined || jDate==null  ) {jDate=null}
+    // if(jStatus==undefined || jStatus==null || jStatus.trim()=='') {jStatus=null}
 
     // jcNum=jcNum.toUpperCase();jRegNo=jRegNo.toUpperCase()
     // getJonCardNoSearchLoc(jcNo,jobDate,jStatus,jRegNo,jLocId)    
 
-    alert (jcNum +","+jRegNo +","+jDate +","+jStatus +","+jLocId);
+    alert (jcNum +","+jRegNo +","+jDate +","+jStatus);
 
-     this.serviceService.getJonCardNoSearchLoc(this.jobCardNum,this.jobCardDate,this.jobStatus,this.regNo,this.locId)
+     this.serviceService.getJonCardNoSearchLoc(jcNum,this.jobCardDate,this.jobStatus,this.regNo,sessionStorage.getItem('locId'))
       .subscribe(
         data => {
           this.lstJobcardList = data.obj;

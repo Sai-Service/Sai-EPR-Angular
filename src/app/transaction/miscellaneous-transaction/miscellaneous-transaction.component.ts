@@ -375,6 +375,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
     // alert(i);
   }
   removenewcycleLinesList(trxLineIndex) {
+    alert(trxLineIndex);
     var len1 = this.cycleLinesList().length;
     if (len1 === 1) {
       alert('You can not delete the line');
@@ -382,8 +383,10 @@ export class MiscellaneousTransactionComponent implements OnInit {
     }
     var trxLnArr1 = this.miscellaneousForm.get('cycleLinesList').value;
     var itemid = trxLnArr1[trxLineIndex].segment;
+    // debugger;
+    this.cycleLinesList().removeAt(trxLineIndex);
     // alert(itemid+'Delete');
-    if (itemid != null) {
+    if (itemid != null || itemid !=' ' || itemid !=undefined) {
       this.deleteReserveLinewise(trxLineIndex);
       this.itemMap.delete(itemid);
     }
