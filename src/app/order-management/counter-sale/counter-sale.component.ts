@@ -14,6 +14,7 @@ import { saveAs } from 'file-saver';
 import { SelectorMatcher } from '@angular/compiler';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { v4 as uuidv4 } from 'uuid';
+import { enableDebugTools } from '@angular/platform-browser';
 
 
 const MIME_TYPES = {
@@ -1300,6 +1301,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
           this.itemMap2.set(lnNo, this.itemMap.get(itemDesc));
           if (data.length == 1) {
             (controlinv.controls[lnNo]).patchValue({ 'segment': data[0].segment });
+            controlinv.controls[lnNo].get('itemSeg').disable();
           }
           if (data.length === 0) {
             (controlinv.controls[lnNo]).patchValue({ 'segment': '' });
@@ -1821,6 +1823,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     // alert(itemId1)
     if (itemId1 != null && fldName != "locator") {
       this.addRow(index);
+      
     }
     else {
       this.displayRemoveRow.push(true);
@@ -2427,7 +2430,6 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
   addRow(i) {
     var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
-
     if (this.op == 'Search') {
       i = trxLnArr1.length;
       this.isDisabled10 = true;
@@ -2490,9 +2492,10 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     this.taxCategoryList = this.allTaxCategoryList;
     this.itemSeg = '';
     var ln = len - 1;
-
     this.setFocus('itemSeg' + ln);
-
+    var arrayControl = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
+   
+    
   }
 
 

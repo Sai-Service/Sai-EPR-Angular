@@ -36,6 +36,18 @@
                                     Get&nbsp;Order&nbsp;List
                                 </button>
                             </td>
+                            <td>Status&nbsp;</td>&nbsp;
+                            <td>
+                                <select formControlName="status" 
+                                id="status" class="form-control"
+                                style="width: fit-content;height: 25px;font-size: 10px;"
+                                (ngModelChange)="onSelectStatus($event)">
+                                <option value="--Select--">--Select--</option>
+                                <option value="BOOKED" >BOOKED</option>
+                                <option value="CANCELLED">CANCELLED</option>
+                                <option value="INVOICED" >INVOICED</option>
+                            </select>
+                            </td>
                         </tr>
                     </table>
                 </td>
@@ -45,6 +57,7 @@
         <table  class="GridFont"  style="font-size: 14px;border-color:#1f1e1e;border-collapse:collapse;width: 100%;text-align: center;">
             <tr>
                 <td ><b>Total Order Count : {{orderListDetails.length}}</b></td>
+                <td ><b>Total Invoice Amount : {{totInvAmt}}</b></td>
         </table>
         <div class="grid_scroll">
         <table  class="GridFont"  style="border-color:#494949;border-collapse:collapse;width: 100%;">

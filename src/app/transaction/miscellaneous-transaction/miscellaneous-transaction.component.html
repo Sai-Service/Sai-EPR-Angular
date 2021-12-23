@@ -299,6 +299,8 @@
                         <!-- <!- <option *ngFor="let locId of getfrmSubLoc" [ngValue]="locId.id">{{locId.segmentName}}--{{locId.onHandQty}}</option> -->
                         <!-- </select> -->
 
+                          
+
                         <div *ngIf="displayLocator[trxLineIndex]; then thenBlock; else elseBlock">
                         </div>
                         <ng-template #thenBlock>

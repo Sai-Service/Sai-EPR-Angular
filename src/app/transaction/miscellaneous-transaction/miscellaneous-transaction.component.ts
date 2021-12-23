@@ -368,6 +368,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
     // alert(i);
   }
   removenewcycleLinesList(trxLineIndex) {
+    alert(trxLineIndex);
     var len1 = this.cycleLinesList().length;
     if (len1 === 1) {
       alert('You can not delete the line');
@@ -375,18 +376,22 @@ export class MiscellaneousTransactionComponent implements OnInit {
     }
     var trxLnArr1 = this.miscellaneousForm.get('cycleLinesList').value;
     var itemid = trxLnArr1[trxLineIndex].segment;
+    // debugger;
+    this.cycleLinesList().removeAt(trxLineIndex);
     // alert(itemid+'Delete');
-    if (itemid != null) {
+    if (itemid != null || itemid !=' ' || itemid !=undefined) {
       this.deleteReserveLinewise(trxLineIndex);
       this.itemMap.delete(itemid);
     }
-    this.cycleLinesList().removeAt(trxLineIndex);
+    var formVal = this.miscellaneousForm.get('cycleLinesList').value;
     var patch = this.miscellaneousForm.get('cycleLinesList') as FormArray;
     var len = this.cycleLinesList().length;
-    patch.controls[len - 1].patchValue({
-      lineNumber: len,
+    // alert(formVal.length);
+    for (let x=0; x<formVal.length; x++){
+    patch.controls[x].patchValue({
+      lineNumber: x+1,
     });
-
+  }
     var btnrm = document.getElementById(
       'btnrm' + (trxLineIndex - 1)
     ) as HTMLInputElement;
@@ -399,7 +404,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
       // (document.getElementById('btnrm'+i+1) as HTMLInputElement).disabled = true;
     }
 
-    this.displayLocator[trxLineIndex] = true;
+    this.displayLocator[trxLineIndex] = false;   
   }
   ngOnInit(): void {
     // alert(this.route1.queryParams+'hell')
