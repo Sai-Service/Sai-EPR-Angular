@@ -246,7 +246,7 @@
                     <div *ngIf ="compileType==4">
                       <input type="text" list="dynmicUserIds1" (keyup)="filterRecord( $event,trxLineIndex)"
                       formControlName="segment" id="invItemIdFirstWay" class="form-control"
-                      style="height: 20px;width:120px;" />
+                      style="height: 20px;width:120px;" name="segment{{trxLineIndex}}"/>
                     <!-- (ngModelChange)="onOptiongetItem($event,trxLineIndex)" -->
                     <datalist id="dynmicUserIds1">
                       <option *ngFor="let item of ItemIdList" [value]="item.SEGMENT">{{item.SEGMENT}}</option>
