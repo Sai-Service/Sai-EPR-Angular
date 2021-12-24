@@ -80,12 +80,7 @@ export class StockTransferComponent implements OnInit {
   public issueByList: Array<string> = [];
   public locIdList: any[];
   onHandId:number;
-  locData =[ {
-    "locatorId": 999,
-    "segmentName": "D.U.01.D.01",
-    "id": 7,
-    "onHandQty": 40
-  }];
+  locData:any = [];
   itemId: number;
   onHandQty:number;
   issueTo: string;
@@ -393,20 +388,23 @@ export class StockTransferComponent implements OnInit {
           console.log(data);
           var getfrmSubLoc =data;
             this.locData[i] = data;
+            var selLocator = this.locData[i]
+
             if(getfrmSubLoc.length==1)
             {
-            trxLnArr1.controls[i].patchValue({frmLocator:getfrmSubLoc[0].segmentName});
-            trxLnArr1.controls[i].patchValue({locatorId:getfrmSubLoc[0].locatorId});
-            trxLnArr1.controls[i].patchValue({onHandQty:getfrmSubLoc[0].onHandQty});
-            trxLnArr1.controls[i].patchValue({onHandId:getfrmSubLoc[0].id});
+              // alert('if---------');
+            trxLnArr1.controls[i].patchValue({frmLocator:selLocator[0].segmentName});
+            trxLnArr1.controls[i].patchValue({locatorId:selLocator[0].locatorId});
+            trxLnArr1.controls[i].patchValue({onHandQty:selLocator[0].onHandQty});
+            trxLnArr1.controls[i].patchValue({onHandId:selLocator[0].id});
             }
             else
             {
              // this.getfrmSubLoc=data;;
            //  trxLnArr2.controls[i].patchValue({onHandId:getfrmSubLoc});
-           trxLnArr1.controls[i].patchValue({frmLocator:getfrmSubLoc[0].segmentName});
-           trxLnArr1.controls[i].patchValue({onHandQty:getfrmSubLoc[0].onHandQty})
-           trxLnArr1.controls[i].patchValue({onHandId:getfrmSubLoc[0].id});
+           trxLnArr1.controls[i].patchValue({frmLocator:selLocator[0].segmentName});
+           trxLnArr1.controls[i].patchValue({onHandQty:selLocator[0].onHandQty})
+           trxLnArr1.controls[i].patchValue({onHandId:selLocator[0].id});
             }
 
         });
@@ -527,7 +525,7 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
     let todesc=this.locIdList.find(d=>d.toLocationId===toorg);
     var locId1=this.stockTranferForm.get('locId').value;
     var prqty=trxLnArr1[i].primaryQty
-  
+
       let variantFormGroup = <FormGroup>variants.controls[i];
       variantFormGroup.removeControl('reservedQty');
       variantFormGroup.removeControl('invItemId');

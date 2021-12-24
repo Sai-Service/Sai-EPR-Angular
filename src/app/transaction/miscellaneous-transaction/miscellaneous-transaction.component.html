@@ -74,7 +74,7 @@
           <td>
             <select class="form-control" formControlName="compileType"  (ngModelChange)="onOptionTypeSelect($event)"
               #myinput>
-              <option>--Select--</option>
+              <!-- <option>--Select--</option> -->
               <option *ngFor="let tt of transType" [ngValue]="tt.transactionTypeId"> {{tt.transactionTypeName}}</option>
             </select>
             <span *ngIf="getGroupControl('compileType').touched && getGroupControl('compileType').invalid">Valid
@@ -254,7 +254,7 @@
                     <div *ngIf ="compileType==13">
                           <input type="text" list="dynmicUserIds1" (keyup)="filterRecord( $event,trxLineIndex)"
                             formControlName="segment" id="invItemIdFirstWay" class="form-control"
-                            style="height: 20px;width:120px;" />
+                            style="height: 20px;width:120px;"  name="segment{{trxLineIndex}}"/>
                           <!-- (ngModelChange)="onOptiongetItem($event,trxLineIndex)" -->
                           <datalist id="dynmicUserIds1">
                             <option *ngFor="let item of ItemIdList" [value]="item.segment">{{item.segment}}</option>
@@ -274,7 +274,7 @@
                             formControlName="avlqty"></td>
                         <input hidden type="number" formControlName="resveQty">
                         <td><input type="number" min="0" class="form-control" style="height: 20px;width: 100%;"
-                            formControlName="physicalQty" (change)="validate(trxLineIndex,qty)" name="physicalQty" #qty>
+                            formControlName="physicalQty" (change)="validate(trxLineIndex,qty)" name="physicalQty{{trxLineIndex}}" #qty>
                           <span
                             *ngIf="getGroupControllinewise(trxLineIndex,'physicalQty').touched && getGroupControllinewise(trxLineIndex,'physicalQty').invalid"
                             class="error">Valid Item
@@ -298,6 +298,8 @@
                         <!-- <option>--Select--</option> -->
                         <!-- <!- <option *ngFor="let locId of getfrmSubLoc" [ngValue]="locId.id">{{locId.segmentName}}--{{locId.onHandQty}}</option> -->
                         <!-- </select> -->
+
+
 
                         <div *ngIf="displayLocator[trxLineIndex]; then thenBlock; else elseBlock">
                         </div>
@@ -377,7 +379,19 @@
         <ng-template #elseBlock2>
           <button disabled type="submit" class="btn btn-primary" (click)="saveMisc()">Save</button>
         </ng-template>
+        <td>
+        <div *ngIf="displayOp; then thenBlockOp; else elseBlockOp">
+        </div>
+        <ng-template #thenBlockOp>
 
+  <button disabled  type="submit" class="btn btn-primary" (click)="viewMiscnote()">View&nbsp;Note</button>
+</ng-template>
+<ng-template #elseBlockOp>
+
+    <button   type="submit" class="btn btn-primary" (click)="viewMiscnote()">View&nbsp;Note</button>
+
+  </ng-template>
+</td>
       </tr>
     </table>
     <div class="modal fade" id="myModal1" role="dialog" [style.display]="showModal" tabindex="-1" aria-hidden="true">

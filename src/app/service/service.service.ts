@@ -20,6 +20,15 @@ export class ServiceService {
 getJonCardNoSearch(jonCardNo): Observable<any> {
   return this.http.get(this.ServerUrl +`/jobCard/jobDtls/${jonCardNo}`);
 }
+
+getJonCardNoSearchLoc(jobDate,jStatus,jLocId,jcNo,jRegNo): Observable<any> {
+  return this.http.get(this.ServerUrl +`/jobCard/jobList?jobDate=${jobDate}&status=${jStatus}&locId=${jLocId}&jobCardNum=${jcNo}&regNo=${jRegNo}`);
+  // http://localhost:8081/jobCard/jobList?jobDate=&status=&locId=121&jobCardNum=12PU.101-28&regNo
+}
+
+
+
+
 getByRegNo(RegNo, ouId): Observable<any> {
   return this.http.get(this.ServerUrl +`/jobCard/regDtls?regNo=${RegNo}&ouId=${ouId}`);
 }

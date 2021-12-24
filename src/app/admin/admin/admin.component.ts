@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild, ElementRef } from '@angular/core';
 // import * as $ from 'jquery';
 import { Router } from '@angular/router';
 import { formatDate } from '@angular/common';
@@ -84,8 +84,13 @@ export class AdminComponent implements OnInit {
   searchByItem = true;
   searchByDesc = false;
 
-
-
+  @ViewChild("myinput") myInputField: ElementRef;
+  emplId: number;
+  // @ViewChild("segment") segment: ElementRef;
+  // ngAfterViewInit() {
+  //   this.myInputField.nativeElement.focus();
+  // }
+  @ViewChild('input2') input2: ElementRef;
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     // constructor(private router: Router ) {
     this.todaysDataTime = formatDate(this.today, 'dd-MM-yyyy hh:mm:ss a', 'en-US', '+0530');
@@ -174,14 +179,14 @@ export class AdminComponent implements OnInit {
 
     if (Number(sessionStorage.getItem('divisionId')) === 2) {
       this.isVisible1 = false;
-      this.isVisible2 = false;  
+      this.isVisible2 = false;
     }
     else if (Number(sessionStorage.getItem('divisionId')) === 1) {
       this.isVisible1 = true;
-      this.isVisible2 = false;    
+      this.isVisible2 = false;
     }
 
-   
+
     if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId')) === 1) {
       this.isVisible2 = true;
     }
@@ -192,18 +197,32 @@ export class AdminComponent implements OnInit {
 
 
 
-  
+
 
 //     if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId')) === 2){
 //     this.isVisible1 = true;
-//     this.isVisible2 = false; 
+//     this.isVisible2 = false;
 //   }
 
 //   if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId')) === 3){
 //   this.isVisible1 = true;
-//   this.isVisible2 = false; 
+//   this.isVisible2 = false;
 // }
-  
+
+this.service
+        .searchByItemSegmentDiv(this.divisionId, '36DH1601')
+        .subscribe((data) => {
+          this.ItemIdList = data;
+
+        });
+
+        // const ele = this.adminForm1.controls.nativeElement['searchItemCode'];
+        // this.searchItemCode..Focus();
+        // this.input2.nativeElement.Focus();
+        // partSearch.on('shown', function () {
+        //   $('searchItemCode', this).focus();
+        //   });
+
   }
 
 
@@ -242,7 +261,7 @@ export class AdminComponent implements OnInit {
     this.adminForm1.get('searchItemCode').reset();
     this.resetDet();
     this.searchBy = 'ITEM NUMBER';
-  }
+  } 
 
   resetDet() {
     this.searchItemId = null;
@@ -266,15 +285,19 @@ export class AdminComponent implements OnInit {
     // this.partSearch.open();
     this.LoadModal();
     $("#partSearch").modal('show');
+    // this.input2.nativeElement.focus();
     $("#partSearch").on('shown.bs.modal', function () {
-      $('#input2').focus();
-  })  
+      $('#invItemIdFirstWay').focus();
+  })
+
+
   }
 
   F9Search(itemDesc) {
     var sType = this.adminForm1.get('searchBy').value
-    // if (sType == 'ITEM NUMBER') { this.searchByItemSegmentDiv(itemDesc) }
-    if (sType == 'ITEM NUMBER') { this.F9SearchItemCode('itm') }
+
+
+  //  if (sType == 'ITEM NUMBER') { this.F9SearchItemCode('itm') }
     if (sType == 'ITEM DESCRIPTION') { this.F9SearchItemDesc(itemDesc) }
   }
 
@@ -299,13 +322,13 @@ export class AdminComponent implements OnInit {
     //   alert("Please select valid Item Code ...."); return;
     // }
 
-  
+
     this.service.getItemDetailsByCode(segment1)
     .subscribe(
     data1 => {
     if (data1 !=null)
     {
-    
+
     this.service.searchByItemf9(data1.itemId, this.locId, this.ouId, this.divisionId).subscribe(
       data => {
         this.lstcomments = data;
@@ -320,9 +343,13 @@ export class AdminComponent implements OnInit {
           this.gstPer = this.lstcomments[0].GSTPERCENTAGE;
           this.principleItem = this.lstcomments[0].PRINCPLEITEM;
           this.adminForm1.patchValue(data);
-        } else { alert("Stock Details not availabe for item - " + segment1); }
+        } else
+        {
+          alert("Stock Details not availabe for item - " + segment1);
+         }
       })
-    } else {alert ("Item Code not found/Invalid Item Code")}
+    }
+    // else {alert ("Item Code not found/Invalid Item Code")}
   });
 
 
@@ -439,20 +466,65 @@ export class AdminComponent implements OnInit {
       return;
     }
 }
+filterRecord(event) {
+  var itemCode1 = event.target.value;
+  var itemCode2=itemCode1.split('--');
+  var itemCode=itemCode2[0];
+  // alert(itemCode+'Item');
+  if (event.keyCode == 13) {
+    // enter keycode
+    if (itemCode.length == 8) {
+      let select1=this.ItemIdList.find(d=>d.segment===itemCode);
+        if(select1!=undefined){
+      this.service.searchByItemf9(select1.itemId, this.locId, this.ouId, this.divisionId).subscribe(
+        data => {
+          this.lstcomments = data;
+          console.log(data);
+            if (this.lstcomments.length > 0) {
+            this.segment = this.lstcomments[0].SEGMENT;
+            this.desc = this.lstcomments[0].DESCRIPTION;
+            this.uom = this.lstcomments[0].UOM;
+            this.mrp = this.lstcomments[0].MRP;
+            this.hsnSacCode = this.lstcomments[0].HSNSACCODE;
+            this.purchPrice = this.lstcomments[0].NDP;
+            this.gstPer = this.lstcomments[0].GSTPERCENTAGE;
+            this.principleItem = this.lstcomments[0].PRINCPLEITEM;
+            this.adminForm1.patchValue(data);
+          } else { alert("Stock Details not availabe for item - " + itemCode); }
+        })}
+    }else
+      if (itemCode.length <= 4) {
+            this.service
+            .searchByItemSegmentDiv(this.divisionId, itemCode.toUpperCase())
+            .subscribe((data) => {
+              this.ItemIdList = data;
+              // this.Select(data[0].itemId);
+            });
+        }
+      else {
+      alert('Please Enter 4 characters of item number!!');
+      return;
+
+    }
+
+  }
+}
+
+
 
 userCheck(roleId: number): boolean {
   //alert(sessionStorage.getItem('roleId') +'--'+roleId );
-  if(sessionStorage.getItem('roleId') === 'undefined') { 
+  if(sessionStorage.getItem('roleId') === 'undefined') {
     // this.isVisible1 = false;
     return true;
-   
+
   }else{
     //alert("else");
   if (Number(sessionStorage.getItem('roleId')) === roleId ){
   //  alert("role -true");
     return false;
   }
-  
+
 
  if (Number(sessionStorage.getItem('roleId')) != roleId) {
   //  alert("role -false");
@@ -463,6 +535,6 @@ userCheck(roleId: number): boolean {
 
   }
 
- 
+
 
 
