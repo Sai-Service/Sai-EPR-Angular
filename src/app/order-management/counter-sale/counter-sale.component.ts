@@ -122,6 +122,8 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   CounterSaleOrderBookingForm: FormGroup;
   lnflowStatusCode: 'BOOKED';
   refCustNo: string;
+  issueCodeType1: string;
+  issueCode: string;
   custPoNumber: string;
   // custPoDate:Date;
   salesRepId: string;
@@ -399,6 +401,8 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       // uuidRef: [''],
       taxCategoryName: [''],
       disPer: [''],
+      issueCodeType1: [''],
+      issueCode: [''],
       creditAmt: [''],
       creditDays: [''],
       daysMsg: [''],
@@ -604,7 +608,10 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     else if (Number(sessionStorage.getItem('divisionId')) === 2) {
       this.displayDMSCDMS = false;
       this.showApplyDiscount = true;
-      this.CounterSaleOrderBookingForm.patchValue({ issueCodeType: 'Regular Sales' });
+      this.CounterSaleOrderBookingForm.patchValue({ issueCodeType1: 'Regular Sales' });
+      this.CounterSaleOrderBookingForm.patchValue({ issueCode: 'CM03' });
+      var concatissuetypecode = this.CounterSaleOrderBookingForm.get('issueCode').value + '-' + this.CounterSaleOrderBookingForm.get('issueCodeType1').value
+      this.CounterSaleOrderBookingForm.patchValue({ issueCodeType: concatissuetypecode });
     }
 
     this.orderlineDetailsArray().controls[0].patchValue({ invType: 'SS_SPARES' });
@@ -1824,7 +1831,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     // alert(itemId1)
     if (itemId1 != null && fldName != "locator") {
       this.addRow(index);
-      
+
     }
     else {
       this.displayRemoveRow.push(true);
@@ -2024,7 +2031,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                             var lotList = [{ locatorId: 0, segmentName: 'Not Found' }]
                             controlinv.controls[k].patchValue({ frmLocatorId: lotList });
                             controlinv.controls[k].patchValue({ onHandQty: 0 });
-                            controlinv.controls[k].get('frmLocatorId').disable()
+                            controlinv.controls[k].get('frmLocatorId').disable();                      
                             var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
                             controlinv.controls[k].patchValue({ Avalqty: '' });
                             controlinv.controls[k].patchValue({ pricingQty: '' });
@@ -2044,6 +2051,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                             // alert(selLocator[0].id );
                             controlinv.controls[k].get('frmLocatorId').enable();
                             if (this.getfrmSubLoc.length == 1) {
+                             
                               controlinv.controls[k].patchValue({ onHandId: selLocator[0].segmentName });
                               controlinv.controls[k].patchValue({ frmLocatorId: selLocator[0].ROWNUM });
                               controlinv.controls[k].patchValue({ frmLocator: selLocator[0].segmentName });
@@ -2051,8 +2059,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                               controlinv.controls[k].patchValue({ id: selLocator[0].id });
                               controlinv.controls[k].patchValue({ unitSellingPrice: selLocator[0].prc });
                             }
-                            else {
-                              // alert('2');
+                            else {       
                               // alert(selLocator[0].segmentName);
                               alert('Please check Item has old stock with price');
                               controlinv.controls[k].patchValue({ frmLocatorId: selLocator[0].ROWNUM });
@@ -2495,8 +2502,8 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     var ln = len - 1;
     this.setFocus('itemSeg' + ln);
     var arrayControl = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
-   
-    
+
+
   }
 
 
@@ -2542,7 +2549,15 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
           tcsAmt1 = Math.round((totAmt * tcsPer / 100 + Number.EPSILON) * 100) / 100;
           //totAmt = totAmt + tcsAmt1;
         }
+      
       }
+      console.log(formArr);
+      var ln = i
+      if (ln < formArr.length-1){
+      formArr.controls[i].disable();
+      formArr.controls[i].get('pricingQty').enable();
+    }
+      // formArr.controls[0].get.pricingQty.enable();
     }
 
     basicAmt = Math.round(((basicAmt) + Number.EPSILON) * 100) / 100;
@@ -3098,7 +3113,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   }
 
   setFocus(name) {
-    
+
     const ele = this.aForm.nativeElement[name];
     if (ele) {
       ele.focus();
@@ -3130,7 +3145,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   }
 
   executeAction() {
-   
+
     if (this.cnfMsgType.includes("INVOICE")) {
       this.pickTicketInvoiceFunction();
     }
@@ -3147,5 +3162,13 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     alert('Window Closed Directely.!');
     this.deleteReserve();
     return;
+  }
+
+
+  onOptionsSelectedissueTypeCode(event: any) {
+    let selectIssueCode = this.issueCodeTypeList.find(d => d.codeDesc === event);
+    this.CounterSaleOrderBookingForm.patchValue({ issueCode: selectIssueCode.code })
+    var concatissuetypecode = this.CounterSaleOrderBookingForm.get('issueCode').value + '-' + this.CounterSaleOrderBookingForm.get('issueCodeType1').value
+    this.CounterSaleOrderBookingForm.patchValue({ issueCodeType: concatissuetypecode });
   }
 }

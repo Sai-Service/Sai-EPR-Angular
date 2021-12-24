@@ -2389,8 +2389,7 @@ getMessage(msgType:string){
   if(this.msgType.includes("Cancel")){ this.cancelJobNo();   }
    }
 
-   jobcardFind(jobCardNum2) {
-     alert(jobCardNum2)
+   jobcardFind() {
      alert ("in job card Find...");
     //  debugger;
     var jcNum=this.jobcardForm.get('jobCardNum2').value;

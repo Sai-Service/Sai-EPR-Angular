@@ -3277,7 +3277,7 @@
                     <td  style="background-color: #FFE4B5;" class="LabelFontStyle" >&nbsp;JC&nbsp;Number&nbsp;:&nbsp;</td>
                     <!-- [(ngModel)]="jobCardNum1" -->
                     <td>
-                        <input type="text" formControlName="jobCardNum2" (ngModel)]="jobCardNum2"
+                        <input type="text" formControlName="jobCardNum2" [(ngModel)]="jobCardNum2"
                             class="form-control" #myinput>
                     </td>
 
@@ -3307,7 +3307,7 @@
                         </select>
                     </td>
 
-                    <td> <button type="button" class="btn btn-primary" (click)="jobcardFind(jobCardNum2)" >Find</button> </td> 
+                    <td> <button type="button" class="btn btn-primary" (click)="jobcardFind()" >Find</button> </td> 
                    
                    
                     </tr>

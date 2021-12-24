@@ -369,13 +369,13 @@ export class MiscellaneousTransactionComponent implements OnInit {
     }
     var len1 = this.cycleLinesList().length;
     var  ln = i+1
-    alert(ln+'line')
+    // alert(ln+'line')
       this.setFocus('segment' + ln )
     // this.displayRemoveRow[i]=true;
     // alert(i);
   }
   removenewcycleLinesList(trxLineIndex) {
-    alert(trxLineIndex);
+    // alert(trxLineIndex);
     var len1 = this.cycleLinesList().length;
     if (len1 === 1) {
       alert('You can not delete the line');
@@ -390,7 +390,6 @@ export class MiscellaneousTransactionComponent implements OnInit {
       this.deleteReserveLinewise(trxLineIndex);
       this.itemMap.delete(itemid);
     }
-    this.cycleLinesList().removeAt(trxLineIndex);
     var formVal = this.miscellaneousForm.get('cycleLinesList').value;
     var patch = this.miscellaneousForm.get('cycleLinesList') as FormArray;
     var len = this.cycleLinesList().length;
@@ -639,7 +638,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
 
         return;
       } else if (itemCode.length >= 4) {
-        alert(trxType);
+        // alert(trxType);
         if (trxType === 4) {
           // alert('inside if');
           this.service
