@@ -497,11 +497,11 @@
                 <td ><input class="form-control" type="text" (keyup)="filterRecord($event)" formControlName="searchItemCode"
                    id="invItemIdFirstWay"  list="dynmicUserIds1"
                    class="form-control"
-                   style="width: 300px; background-color: rgb(240, 240, 166); text-transform: uppercase;"  />
+                   style="width: 300px; background-color: rgb(240, 240, 166); text-transform: uppercase;" />
 
-                  <datalist id="dynmicUserIds1" >
+                  <datalist id="dynmicUserIds1" #input2  >
                     <option *ngFor="let item of ItemIdList"  [ngValue]="item.itemId">
-                      {{item.segment}}
+                      {{item.segment}}--{{item.description}}
                       </datalist>
                   </td>
 <!--

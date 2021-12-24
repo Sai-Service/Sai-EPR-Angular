@@ -1327,6 +1327,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
           // this.dispRow=false;
           this.displayaddButton = false;
           this.displayButton = false;
+          this.displayOp=false;
           // this.miscellaneousForm.get('cycleLinesList').disable();
         }
       });

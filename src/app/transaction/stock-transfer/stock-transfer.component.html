@@ -46,7 +46,7 @@
           </td>
           <td>
              <select id="transferOrgId" class="form-control" formControlName="transferOrgId" [(ngModel)]="transferOrgId" (ngModelChange)="onlocationissueselect($event)" #myinput>
-                  <option>--Select--</option>
+                  <!-- <option>--Select--</option> -->
                   <option *ngFor="let sc of  locIdList" [ngValue]="sc.toLocationId" >
                       {{sc.toLocationId}}-{{sc.toLocation}}
                   </option>
@@ -184,8 +184,8 @@
 
                 <td><input disabled type="number" class="form-control" style="height: 20px;width: 100%;" formControlName="transCost"  value="{{ transCost | number:'1.2-2' }}" ></td>
                 <td><select class=" form-control" style="height: 20px; width: 100%;" formControlName="frmLocator" (ngModelChange)="AvailQty($event,trxLineIndex)">
-                <option>--Select--</option>
-                <option *ngFor="let locId of  locData[trxLineIndex]" [ngValue]="locId.locatorId">{{locId.segmentName}}--{{locId.onHandQty}}</option>
+                <!-- <option>--Select--</option> -->
+                <option *ngFor="let locId of  locData[trxLineIndex]" [value]="locId.locatorId">{{locId.segmentName}}--{{locId.onHandQty}}</option>
                 </select>
                 <span *ngIf="getGroupControllinewise(trxLineIndex,'frmLocator').touched && getGroupControllinewise(trxLineIndex,'frmLocator').invalid" class="error">Valid Item
                </span>
