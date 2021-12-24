@@ -20,6 +20,7 @@ import { data } from 'jquery';
 import { MasterService } from 'src/app/master/master.service';
 import {} from 'rxjs';
 import { listenerCount } from 'events';
+import { first } from 'rxjs/operators';
 
 interface Imiscellaneous {
   invItemId: number;
@@ -298,6 +299,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
     });
   }
 
+  newRow : FormGroup;
   addnewcycleLinesList(i: number) {
     if (i > -1) {
       var trxLnArr1 = this.miscellaneousForm.get('cycleLinesList').value;
@@ -334,7 +336,8 @@ export class MiscellaneousTransactionComponent implements OnInit {
     var len1 = this.cycleLinesList().length;
     // alert(len1+'Length'+i);
     if (len1 == i + 1) {
-      this.cycleLinesList().push(this.newcycleLinesList());
+      this.newRow = this.newcycleLinesList();
+      this.cycleLinesList().push(this.newRow);
 
       // (<any>this.stockTranferForm.get('segment')).nativeElement.focus();
       var patch = this.miscellaneousForm.get('cycleLinesList') as FormArray;
@@ -354,16 +357,13 @@ export class MiscellaneousTransactionComponent implements OnInit {
         // this.Item[i+1].nativeElement.focus();
         // (document.getElementById('btnrm'+i+1) as HTMLInputElement).disabled = true;`
       }
-      var cylArr = this.miscellaneousForm.get('cycleLinesList') as FormArray;
-      // alert(cylArr)/
-      // debugger;
-      // cylArr.controls[i].get('LocatorSegment').disable();
-      // cylArr.controls[0].get('physicalQty').disable();
-      // this.miscellaneousForm.get('cycleLinesList').at(0).get('physicalQty').disable()
+     
       this.cycleLinesList().controls[len - 1].get('physicalQty').disable();
       this.cycleLinesList().controls[len - 1].get('LocatorSegment').disable();
+      
     }
-
+   
+   
     // this.displayRemoveRow[i]=true;
     // alert(i);
   }
@@ -531,14 +531,13 @@ export class MiscellaneousTransactionComponent implements OnInit {
   onOptionTypeSelect(event) {
     this.addnewcycleLinesList(-1);
     this.compileType = event;
-    // alert(event);
+    debugger;
     if (event === 13) {
       this.service
         .searchByItemSegmentDiv(this.divisionId, '36DH1601')
         .subscribe((data) => {
           this.ItemIdList = data;
-          // this.Select(data[0].itemId);
-          //  this.onOptiongetItem(itemCode, i);
+          
         });
     }
     if (event === 4) {
@@ -546,8 +545,9 @@ export class MiscellaneousTransactionComponent implements OnInit {
         .searchByItemSegmentDiv(this.divisionId, '36DH1601')
         .subscribe((data) => {
           this.ItemIdList = data;
-          // this.Select(data[0].itemId);
-          //  this.onOptiongetItem(itemCode, i);
+          console.log(this.newRow.controls.segment);
+        
+          //(<any>this.newRow.controls.segment).nativeElement.focus();
         });
     }
     var patch = this.miscellaneousForm.get('trxLinesList') as FormArray;
@@ -556,6 +556,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
         lineNumber: 1,
       });
       this.displayRemoveRow[0] = false;
+     
     }
   }
 
@@ -1199,6 +1200,8 @@ export class MiscellaneousTransactionComponent implements OnInit {
         trxLnArr1.controls[i].patchValue({ physicalQty: '' });
       }
     }
+    this.addnewcycleLinesList(i);
+    this.setFocus('segment'+(i+1));
   }
 
   searchByCompileID(itemId) {
@@ -1449,4 +1452,5 @@ export class MiscellaneousTransactionComponent implements OnInit {
       ele.focus();
     }
   }
+
 }

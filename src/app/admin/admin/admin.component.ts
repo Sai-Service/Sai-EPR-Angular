@@ -266,6 +266,9 @@ export class AdminComponent implements OnInit {
     // this.partSearch.open();
     this.LoadModal();
     $("#partSearch").modal('show');
+    $("#partSearch").on('shown.bs.modal', function () {
+      $('#input2').focus();
+  })  
   }
 
   F9Search(itemDesc) {
