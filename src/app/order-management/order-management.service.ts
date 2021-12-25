@@ -37,6 +37,10 @@ export class OrderManagementService {
     return this.http.get(this.ServerUrl + `/cmnLookup/FinanceType`);
   }
 
+  getFinNameSearchNew(divisionId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/cmnLookup/Catgtype?cmnType=FinCmpny&divisionId=${divisionId}`);
+  }
+
   ItemIdList(): Observable<any> {
     return this.http.get(this.ServerUrl + `/itemMst/category`);
   }

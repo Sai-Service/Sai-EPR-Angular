@@ -167,6 +167,20 @@
             <option *ngFor="let ib of issueByList">{{ib.name}}</option>
             </select> -->
         </td>
+        <td style="width: 15%" class="LabelFontStyle">
+          Claim No.:
+        </td>
+        <td>
+          <input  type="text" class="form-control" formControlName="attribute1" [(ngModel)]="attribute1">
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 15%" class="LabelFontStyle">
+          Claim Date:
+        </td>
+        <td>
+          <input  type="date" class="form-control" formControlName="attribute2" [(ngModel)]="attribute2" onkeydown="return false">
+        </td>
         <!-- (click)="process()" -->
         <td>
 

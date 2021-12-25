@@ -175,6 +175,18 @@ export class MasterService {
       params: REQUEST_PARAMS,
     });
   }
+
+
+  invItemList2New(itemType,deptName,divisionId,segment):Observable<any> {
+    const REQUEST_PARAMS = new HttpParams().set('itemType', itemType)
+    .set('dept', deptName)
+    .set('divisionId',divisionId)
+    .set('segment',segment)
+    const REQUEST_URI = this.ServerUrl +'/itemMst/ItemType';
+    return this.http.get(REQUEST_URI, {
+      params: REQUEST_PARAMS,
+    });
+  }
   supplierCodeList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/supp');
   }
@@ -1133,11 +1145,11 @@ expenceItemDetailsList(invItemId):Observable<any>{
 }
 
 
-taxCalforItemWithVOR(itemId,taxCatId,diss,baseAmount,vorAmt,drfAmt) {
+taxCalforItemWithVOR(itemId,taxCatId,diss1,baseAmount,vorAmt,drfAmt) {
   const REQUEST_PARAMS = new HttpParams().set('itemId', itemId)
   .set('baseAmt', baseAmount)
   .set('taxCateId', taxCatId)
-  .set('disAmt', diss)
+  .set('disAmt1', diss1)
   .set('vorAmt',vorAmt)
   .set('drfAmt',drfAmt)
   const REQUEST_URI = this.ServerUrl +'/poHdr/potaxcal';
@@ -1501,7 +1513,7 @@ getSearchByTrans(reqNo):Observable<any>{
   return this.http.get(this.ServerUrl+`/mtrlIssue/reqNum/${reqNo}`)
 
 }
-kkkkk
+
 getItemDetail(itemid):Observable<any>{
   return this.http.get(this.ServerUrl +`/itemMst/${itemid}`)
 }
@@ -2468,7 +2480,38 @@ OrderCategoryList(): Observable<any> {
     return this.http.post(this.ServerUrl + `/fileImport/uploadBJprc`,formData)
     }
 
-////////////////////////////// bulk po upload /////////
+////////////////////////////// Price list File upload /////////
+
+ ///////////////////Back order File upload/////////////////////
+ UploadExcelBackOrderBajaj(formData: FormData,docType:string,mlocId) {
+  let headers1 = new HttpHeaders();
+  var userId1=sessionStorage.getItem('userId');
+  console.log(docType);
+  var docType1=formData.get('docType');
+  formData.append('locId', mlocId);
+  return this.http.post(this.ServerUrl + `/fileImport/uploadbkord`,formData)
+  // http://localhost:8081/fileImport/uploadbkord 
+  }
+////////////////////////////// Back order File upload /////////
+
+  public orderGenBajaj(ordeGenRecord,mLocId,mths) {
+    alert (  "MS>> Loc Id :" +mLocId + " ," +mths);
+      const options = {
+        headers: this.headers
+      };
+      const url = this.ServerUrl + `/spareOrder?locId=${mLocId}&months=${mths}`;
+      return this.http.post(url, ordeGenRecord, options);
+      }
+
+
+
+      getOrderListBajaj (ordNumber): Observable<any> {
+        return this.http.get(this.ServerUrl + `/spareOrder/ByOrderNumber/${ordNumber}`);
+      }
+
+
+
+  ///////////////////////////////////////////////////////////////////////////////////
 bulkpouploadSales(formData: FormData) {
     return this.http.post(this.ServerUrl + `/fileImport/uploadVhPO`, formData)
   }

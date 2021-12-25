@@ -1591,8 +1591,7 @@
                     <ng-template #elsetcsBuuton>
 
                     </ng-template>
-                    <div
-                        *ngIf="displaycounterSaleOrderSave; then thencounterSaleOrderSave; else elsecounterSaleOrderSave">
+                    <div  *ngIf="displaycounterSaleOrderSave; then thencounterSaleOrderSave; else elsecounterSaleOrderSave">
                     </div>
                     <ng-template #thencounterSaleOrderSave>
                         <td>
@@ -1786,7 +1785,7 @@
             </div>
             <div class="modal-body">
                 <label
-                    style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle; margin-left: 35%">
+                    style="font-size: small; color: black; font-weight: bold; text-align: left; vertical-align: middle; margin-left: 35%">
                     {{message}}
                 </label>
             </div>
@@ -1798,7 +1797,7 @@
                                 (click)="executeAction()">Yes</button>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                            <button type="button" class="btn btn-info" data-dismiss="modal" (click)="closeModalDialog()">No</button>
                         </td>
                     </tr>
                 </table>

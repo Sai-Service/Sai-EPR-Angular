@@ -1,18 +1,29 @@
-import { Component, OnInit, HostListener, ViewChild, ElementRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  HostListener,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 // import * as $ from 'jquery';
 import { Router } from '@angular/router';
 import { formatDate } from '@angular/common';
 import { MasterService } from 'src/app/master/master.service';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { identifierModuleUrl } from '@angular/compiler';
-
+import { contains } from 'jquery';
 
 export enum KEY_CODE {
   RIGHT_ARROW = 39,
   LEFT_ARROW = 37,
-  F9_KEY = 120
-
+  F9_KEY = 120,
 }
 
 interface IAdmin {
@@ -27,7 +38,7 @@ declare var $: any;
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.css']
+  styleUrls: ['./admin.component.css'],
 })
 // export class AdminComponent  {
 export class AdminComponent implements OnInit {
@@ -37,7 +48,7 @@ export class AdminComponent implements OnInit {
 
   public itemMap = new Map<string, any[]>();
   public itemMap2 = new Map<number, any[]>();
-  itemSeg: string = "";
+  itemSeg: string = '';
 
   public ItemIdList: any[];
   lstcomments: any;
@@ -84,16 +95,25 @@ export class AdminComponent implements OnInit {
   searchByItem = true;
   searchByDesc = false;
 
-  @ViewChild("myinput") myInputField: ElementRef;
+  @ViewChild('myinput') myInputField: ElementRef;
   emplId: number;
   // @ViewChild("segment") segment: ElementRef;
   // ngAfterViewInit() {
   //   this.myInputField.nativeElement.focus();
   // }
   @ViewChild('input2') input2: ElementRef;
-  constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private service: MasterService
+  ) {
     // constructor(private router: Router ) {
-    this.todaysDataTime = formatDate(this.today, 'dd-MM-yyyy hh:mm:ss a', 'en-US', '+0530');
+    this.todaysDataTime = formatDate(
+      this.today,
+      'dd-MM-yyyy hh:mm:ss a',
+      'en-US',
+      '+0530'
+    );
 
     this.adminForm1 = fb.group({
       searchBy: [],
@@ -113,7 +133,6 @@ export class AdminComponent implements OnInit {
       purchPrice: [],
       mrp: [],
       principleItem: [],
-
     });
   }
 
@@ -121,29 +140,33 @@ export class AdminComponent implements OnInit {
   keyEvent(event: KeyboardEvent) {
     console.log(event);
 
-
     if (event.keyCode === KEY_CODE.F9_KEY) {
       this.f9Key();
     }
-
   }
 
+  @HostListener('window:unload', ['$event'])
+  keyEvent1(event: KeyboardEvent) {
+    console.log(event);
+  }
 
-  get f() { return this.adminForm1.controls; }
-  admin(adminForm1: any) { }
+  get f() {
+    return this.adminForm1.controls;
+  }
+  admin(adminForm1: any) {}
 
   ngOnInit(): void {
-    $("#menu-toggle").click(function (e) {
+    $('#menu-toggle').click(function (e) {
       e.preventDefault();
-      $("#wrapper").toggleClass("toggled");
+      $('#wrapper').toggleClass('toggled');
     });
 
     this.ticketNo = sessionStorage.getItem('ticketNo');
     this.divisionId = Number(sessionStorage.getItem('divisionId'));
-    this.fullName = (sessionStorage.getItem('fullName'));
-    this.deptName = (sessionStorage.getItem('deptName'));
-    this.locName = (sessionStorage.getItem('locName'));
-    this.ouName = (sessionStorage.getItem('ouName'));
+    this.fullName = sessionStorage.getItem('fullName');
+    this.deptName = sessionStorage.getItem('deptName');
+    this.locName = sessionStorage.getItem('locName');
+    this.ouName = sessionStorage.getItem('ouName');
     //
     this.loginArray = sessionStorage.getItem('CompName');
 
@@ -151,83 +174,77 @@ export class AdminComponent implements OnInit {
     this.locId = Number(sessionStorage.getItem('locId'));
     this.locCode = sessionStorage.getItem('locCode');
 
-
     $('.dropdown-menu a.dropdown-toggle').on('click', function (e) {
       if (!$(this).next().hasClass('show')) {
-        $(this).parents('.dropdown-menu').first().find('.show').removeClass("show");
+        $(this)
+          .parents('.dropdown-menu')
+          .first()
+          .find('.show')
+          .removeClass('show');
       }
-      var $subMenu = $(this).next(".dropdown-menu");
+      var $subMenu = $(this).next('.dropdown-menu');
       $subMenu.toggleClass('show');
 
-
-      $(this).parents('li.nav-item.dropdown.show').on('hidden.bs.dropdown', function (e) {
-        $('.dropdown-submenu .show').removeClass("show");
-      });
-
+      $(this)
+        .parents('li.nav-item.dropdown.show')
+        .on('hidden.bs.dropdown', function (e) {
+          $('.dropdown-submenu .show').removeClass('show');
+        });
 
       return false;
     });
 
-
-
     if (this.divisionId === 1) {
-
-    }
-    else if (this.divisionId === 2) {
+    } else if (this.divisionId === 2) {
       this.displayMaruti = false;
     }
 
     if (Number(sessionStorage.getItem('divisionId')) === 2) {
       this.isVisible1 = false;
       this.isVisible2 = false;
-    }
-    else if (Number(sessionStorage.getItem('divisionId')) === 1) {
+    } else if (Number(sessionStorage.getItem('divisionId')) === 1) {
       this.isVisible1 = true;
       this.isVisible2 = false;
     }
 
-
-    if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId')) === 1) {
+    if (
+      Number(sessionStorage.getItem('divisionId')) === 2 &&
+      Number(sessionStorage.getItem('roleId')) === 1
+    ) {
       this.isVisible2 = true;
     }
 
-    if (sessionStorage.getItem('ticketNo') === undefined || sessionStorage.getItem('ticketNo') === null || sessionStorage.getItem('ticketNo') === '') {
+    if (
+      sessionStorage.getItem('ticketNo') === undefined ||
+      sessionStorage.getItem('ticketNo') === null ||
+      sessionStorage.getItem('ticketNo') === ''
+    ) {
       this.router.navigate(['login']);
     }
 
+    //     if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId')) === 2){
+    //     this.isVisible1 = true;
+    //     this.isVisible2 = false;
+    //   }
 
+    //   if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId')) === 3){
+    //   this.isVisible1 = true;
+    //   this.isVisible2 = false;
+    // }
 
+    this.service
+      .searchByItemSegmentDiv(this.divisionId, '36DH1601')
+      .subscribe((data) => {
+        this.ItemIdList = data;
+      });
 
-
-//     if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId')) === 2){
-//     this.isVisible1 = true;
-//     this.isVisible2 = false;
-//   }
-
-//   if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId')) === 3){
-//   this.isVisible1 = true;
-//   this.isVisible2 = false;
-// }
-
-this.service
-        .searchByItemSegmentDiv(this.divisionId, '36DH1601')
-        .subscribe((data) => {
-          this.ItemIdList = data;
-
-        });
-
-        // const ele = this.adminForm1.controls.nativeElement['searchItemCode'];
-        // this.searchItemCode..Focus();
-        // this.input2.nativeElement.Focus();
-        // partSearch.on('shown', function () {
-        //   $('searchItemCode', this).focus();
-        //   });
-
+    // const ele = this.adminForm1.controls.nativeElement['searchItemCode'];
+    // this.searchItemCode..Focus();
+    // this.input2.nativeElement.Focus();
+    // partSearch.on('shown', function () {
+    //   $('searchItemCode', this).focus();
+    //   });
   }
-
-
-
-
 
   close() {
     this.router.navigate(['login']);
@@ -239,7 +256,9 @@ this.service
 
   getInvItemId($event) {
     // alert('in getInvItemId')
-    let userId = (<HTMLInputElement>document.getElementById('invItemIdFirstWay')).value;
+    let userId = (<HTMLInputElement>(
+      document.getElementById('invItemIdFirstWay')
+    )).value;
     this.userList2 = [];
     if (userId.length > 2) {
       if ($event.timeStamp - this.lastkeydown1 > 200) {
@@ -248,14 +267,15 @@ this.service
     }
   }
   searchFromArray1(arr, regex) {
-    let matches = [], i;
+    let matches = [],
+      i;
     for (i = 0; i < arr.length; i++) {
       if (arr[i].match(regex)) {
         matches.push(arr[i]);
       }
     }
     return matches;
-  };
+  }
 
   LoadModal() {
     this.adminForm1.get('searchItemCode').reset();
@@ -284,36 +304,34 @@ this.service
     // this.router.navigate(['/admin/transaction/OnHandDetails']);
     // this.partSearch.open();
     this.LoadModal();
-    $("#partSearch").modal('show');
+    $('#partSearch').modal('show');
     // this.input2.nativeElement.focus();
-    $("#partSearch").on('shown.bs.modal', function () {
+    $('#partSearch').on('shown.bs.modal', function () {
       $('#invItemIdFirstWay').focus();
-  })
-
-
+    });
   }
 
   F9Search(itemDesc) {
-    var sType = this.adminForm1.get('searchBy').value
+    var sType = this.adminForm1.get('searchBy').value;
 
-
-  //  if (sType == 'ITEM NUMBER') { this.F9SearchItemCode('itm') }
-    if (sType == 'ITEM DESCRIPTION') { this.F9SearchItemDesc(itemDesc) }
+    //  if (sType == 'ITEM NUMBER') { this.F9SearchItemCode('itm') }
+    if (sType == 'ITEM DESCRIPTION') {
+      this.F9SearchItemDesc(itemDesc);
+    }
   }
 
-
   F9SearchItemCode(abc) {
-
     // const formValue: IAdmin = this.adminForm1.value;
     // alert ("WIP...." + this.adminForm1.get('searchItemName').value);
 
-    var segment1 = this.adminForm1.get('searchItemCode').value
+    var segment1 = this.adminForm1.get('searchItemCode').value;
     segment1 = segment1.toUpperCase();
 
     // alert("Segment :" +segment1);
 
     if (segment1 == undefined || segment1 == null) {
-      alert("Please select Item Code ...."); return;
+      alert('Please select Item Code ....');
+      return;
     }
 
     // let select1 = this.ItemIdList.find(d => d.SEGMENT === segment1);
@@ -322,69 +340,54 @@ this.service
     //   alert("Please select valid Item Code ...."); return;
     // }
 
-
-    this.service.getItemDetailsByCode(segment1)
-    .subscribe(
-    data1 => {
-    if (data1 !=null)
-    {
-
-    this.service.searchByItemf9(data1.itemId, this.locId, this.ouId, this.divisionId).subscribe(
-      data => {
-        this.lstcomments = data;
-        console.log(data);
-          if (this.lstcomments.length > 0) {
-          this.segment = this.lstcomments[0].SEGMENT;
-          this.desc = this.lstcomments[0].DESCRIPTION;
-          this.uom = this.lstcomments[0].UOM;
-          this.mrp = this.lstcomments[0].MRP;
-          this.hsnSacCode = this.lstcomments[0].HSNSACCODE;
-          this.purchPrice = this.lstcomments[0].NDP;
-          this.gstPer = this.lstcomments[0].GSTPERCENTAGE;
-          this.principleItem = this.lstcomments[0].PRINCPLEITEM;
-          this.adminForm1.patchValue(data);
-        } else
-        {
-          alert("Stock Details not availabe for item - " + segment1);
-         }
-      })
-    }
-    // else {alert ("Item Code not found/Invalid Item Code")}
-  });
-
-
+    this.service.getItemDetailsByCode(segment1).subscribe((data1) => {
+      if (data1 != null) {
+        this.service
+          .searchByItemf9(data1.itemId, this.locId, this.ouId, this.divisionId)
+          .subscribe((data) => {
+            this.lstcomments = data;
+            console.log(data);
+            if (this.lstcomments.length > 0) {
+              this.segment = this.lstcomments[0].SEGMENT;
+              this.desc = this.lstcomments[0].DESCRIPTION;
+              this.uom = this.lstcomments[0].UOM;
+              this.mrp = this.lstcomments[0].MRP;
+              this.hsnSacCode = this.lstcomments[0].HSNSACCODE;
+              this.purchPrice = this.lstcomments[0].NDP;
+              this.gstPer = this.lstcomments[0].GSTPERCENTAGE;
+              this.principleItem = this.lstcomments[0].PRINCPLEITEM;
+              this.adminForm1.patchValue(data);
+            } else {
+              alert('Stock Details not availabe for item - ' + segment1);
+            }
+          });
+      }
+      // else {alert ("Item Code not found/Invalid Item Code")}
+    });
   }
 
-
-
-
   F9SearchItemDesc(itemDesc) {
-
     //var itemDesc=this.adminForm1.get('searchByItemDesc').value
     itemDesc = itemDesc.toUpperCase();
     //alert("Segment :" +itemDesc);
 
     if (itemDesc == undefined || itemDesc == null) {
-      alert("Enter Item Description ...."); return;
+      alert('Enter Item Description ....');
+      return;
     }
 
-    this.service.searchByItemDescf9(this.divisionId, itemDesc).subscribe(
-      data => {
+    this.service
+      .searchByItemDescf9(this.divisionId, itemDesc)
+      .subscribe((data) => {
         this.lstcomments1 = data;
         console.log(data);
-
       });
-
   }
-
-
-
-
 
   onOptioninvItemIdSelectedSingle(mItem) {
     // alert ("in fn onOptioninvItemIdSelectedSingle "+mItem);
 
-    let selectedValue = this.ItemIdList.find(v => v.SEGMENT == mItem);
+    let selectedValue = this.ItemIdList.find((v) => v.SEGMENT == mItem);
     if (selectedValue != undefined) {
       console.log(selectedValue);
       this.searchItemId = selectedValue.itemId;
@@ -392,7 +395,6 @@ this.service
       this.searchItemCode = selectedValue.SEGMENT;
     }
     // alert(selectedValue.itemId+","+selectedValue.DESCRIPTION+","+selectedValue.SEGMENT);
-
   }
 
   onSearchTypeSelected(evnt) {
@@ -403,15 +405,18 @@ this.service
     this.lstcomments1 = null;
     this.searchByItemDesc = null;
 
-    if (evnt == 'ITEM NUMBER') { this.searchByItem = true; this.searchByDesc = false; }
-    if (evnt == 'ITEM DESCRIPTION') { this.searchByDesc = true; this.searchByItem = false; }
+    if (evnt == 'ITEM NUMBER') {
+      this.searchByItem = true;
+      this.searchByDesc = false;
+    }
+    if (evnt == 'ITEM DESCRIPTION') {
+      this.searchByDesc = true;
+      this.searchByItem = false;
+    }
   }
 
-
   Select(itemNumber: any) {
-
     // alert ("Item Number :" +itemNumber);
-
 
     //   let select1=this.ItemIdList.find(d=>d.segment===itemNumber);
     //   // this.searchBy='ITEM DESCRIPTION';
@@ -426,10 +431,9 @@ this.service
     //     alert ("Please select valid Item Code ....") ;return;
     //    }
 
-
-
-    this.service.searchByItemf9(itemNumber, this.locId, this.ouId, this.divisionId).subscribe(
-      data => {
+    this.service
+      .searchByItemf9(itemNumber, this.locId, this.ouId, this.divisionId)
+      .subscribe((data) => {
         this.lstcomments = data;
         console.log(data);
         // alert("Length :"+this.lstcomments.length);
@@ -443,98 +447,117 @@ this.service
           this.gstPer = this.lstcomments[0].GSTPERCENTAGE;
           this.principleItem = this.lstcomments[0].PRINCPLEITEM;
           this.adminForm1.patchValue(data);
-        } else { alert("Stock Details not availabe for item - " + itemNumber); }
-      })
-
-
+        } else {
+          alert('Stock Details not availabe for item - ' + itemNumber);
+        }
+      });
   }
 
   searchByItemSegmentDiv(itemDesc: string) {
-
     if (itemDesc.length == 8) {
-      this.service.searchByItemSegmentDiv(this.divisionId, itemDesc.toUpperCase())
-        .subscribe(
-          data => {
-            var desc = data[0].description;
-            this.ItemIdList = data;
-            this.Select(data[0].itemId);
-          }
-        );
-
+      this.service
+        .searchByItemSegmentDiv(this.divisionId, itemDesc.toUpperCase())
+        .subscribe((data) => {
+          var desc = data[0].description;
+          this.ItemIdList = data;
+          this.Select(data[0].itemId);
+        });
     } else {
-      alert("Please Enter full item number!!")
+      alert('Please Enter full item number!!');
       return;
     }
-}
-filterRecord(event) {
-  var itemCode1 = event.target.value;
-  var itemCode2=itemCode1.split('--');
-  var itemCode=itemCode2[0];
-  // alert(itemCode+'Item');
-  if (event.keyCode == 13) {
-    // enter keycode
-    if (itemCode.length == 8) {
-      let select1=this.ItemIdList.find(d=>d.segment===itemCode);
-        if(select1!=undefined){
-      this.service.searchByItemf9(select1.itemId, this.locId, this.ouId, this.divisionId).subscribe(
-        data => {
-          this.lstcomments = data;
-          console.log(data);
-            if (this.lstcomments.length > 0) {
-            this.segment = this.lstcomments[0].SEGMENT;
-            this.desc = this.lstcomments[0].DESCRIPTION;
-            this.uom = this.lstcomments[0].UOM;
-            this.mrp = this.lstcomments[0].MRP;
-            this.hsnSacCode = this.lstcomments[0].HSNSACCODE;
-            this.purchPrice = this.lstcomments[0].NDP;
-            this.gstPer = this.lstcomments[0].GSTPERCENTAGE;
-            this.principleItem = this.lstcomments[0].PRINCPLEITEM;
-            this.adminForm1.patchValue(data);
-          } else { alert("Stock Details not availabe for item - " + itemCode); }
-        })}
-    }else
-      if (itemCode.length <= 4) {
-            this.service
-            .searchByItemSegmentDiv(this.divisionId, itemCode.toUpperCase())
-            .subscribe((data) => {
-              this.ItemIdList = data;
-              // this.Select(data[0].itemId);
-            });
+  }
+  filterRecord(event) {
+    var itemCode1 = event.target.value;
+
+    // alert(itemCode1 + 'event');
+    if (event.keyCode == 13) {
+      var itemCode = '';
+      if (itemCode1.includes('--')) {
+        var itemCode2 = itemCode1.split('--');
+        itemCode = itemCode2[0];
+        // alert(itemCode + 'item in if');
+      } else {
+        itemCode = itemCode1;
+        // alert(itemCode + 'item in else');
+      }
+      // alert(itemCode.length + 'length');
+      // enter keycode
+      if (itemCode.length >= 4 && this.ItemIdList.length <= 1) {
+        this.service
+          .searchByItemSegmentDiv(this.divisionId, itemCode.toUpperCase())
+          .subscribe((data) => {
+            this.ItemIdList = data;
+            // this.Select(data[0].itemId);
+          });
+      } else {
+        alert('Please Enter 4 characters of item number!!');
+        return;
+      }
+      if (itemCode.length === 8 ) {
+        // alert('in len if' + itemCode.toUpperCase());
+        console.log(this.ItemIdList);
+        let select1 = this.ItemIdList.find(
+          (d) => d.segment === itemCode.toUpperCase()
+        );
+        // alert(select1.itemId + 'In len');
+        if (select1 != undefined) {
+          this.getF9Data(select1.itemId);
+        }else{
+          this.service
+          .searchByItemSegmentDiv(this.divisionId, itemCode.toUpperCase())
+          .subscribe((data) => {
+            this.ItemIdList = data;
+            this.getF9Data(select1.itemId);
+          });
+
         }
-      else {
-      alert('Please Enter 4 characters of item number!!');
-      return;
-
+      }
     }
+  }
 
+  getF9Data(itemId){
+    this.service
+    .searchByItemf9(
+      itemId,
+      this.locId,
+      this.ouId,
+      this.divisionId
+    )
+    .subscribe((data) => {
+      this.lstcomments = data;
+      console.log(data);
+      if (this.lstcomments.length > 0) {
+        this.segment = this.lstcomments[0].SEGMENT;
+        this.desc = this.lstcomments[0].DESCRIPTION;
+        this.uom = this.lstcomments[0].UOM;
+        this.mrp = this.lstcomments[0].MRP;
+        this.hsnSacCode = this.lstcomments[0].HSNSACCODE;
+        this.purchPrice = this.lstcomments[0].NDP;
+        this.gstPer = this.lstcomments[0].GSTPERCENTAGE;
+        this.principleItem = this.lstcomments[0].PRINCPLEITEM;
+        this.adminForm1.patchValue(data);
+      } else {
+        alert('Stock Details not availabe for item - ' + itemId);
+      }
+    });
+  }
+  userCheck(roleId: number): boolean {
+    //alert(sessionStorage.getItem('roleId') +'--'+roleId );
+    if (sessionStorage.getItem('roleId') === 'undefined') {
+      // this.isVisible1 = false;
+      return true;
+    } else {
+      //alert("else");
+      if (Number(sessionStorage.getItem('roleId')) === roleId) {
+        //  alert("role -true");
+        return false;
+      }
+
+      if (Number(sessionStorage.getItem('roleId')) != roleId) {
+        //  alert("role -false");
+        return true;
+      }
+    }
   }
 }
-
-
-
-userCheck(roleId: number): boolean {
-  //alert(sessionStorage.getItem('roleId') +'--'+roleId );
-  if(sessionStorage.getItem('roleId') === 'undefined') {
-    // this.isVisible1 = false;
-    return true;
-
-  }else{
-    //alert("else");
-  if (Number(sessionStorage.getItem('roleId')) === roleId ){
-  //  alert("role -true");
-    return false;
-  }
-
-
- if (Number(sessionStorage.getItem('roleId')) != roleId) {
-  //  alert("role -false");
-    return true;
-  }
-}
-}
-
-  }
-
-
-
-

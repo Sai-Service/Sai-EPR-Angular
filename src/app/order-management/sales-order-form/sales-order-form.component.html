@@ -882,7 +882,7 @@
                                                 <select type="text" formControlName="financerName" id="financerName"
                                                     class="form-control" style="width: 170px;">
                                                     <option>--Select--</option>
-                                                    <option *ngFor="let sc of  financerNameList">{{sc.codeDesc}}
+                                                    <option *ngFor="let sc of  financerNameList"  [value]="sc.codeDesc">{{sc.codeDesc}}
                                                     </option>
                                                 </select>
                                             </td>
@@ -890,14 +890,14 @@
                                                 Finance&nbsp;Amount&nbsp;:&nbsp;
                                             </td>
                                             <td>
-                                                <input type="text" formControlName="financeAmt" [(ngModel)]='financeAmt'
+                                                <input type="text" formControlName="financeAmt" 
                                                     value={{financeAmt}} class="form-control" style="width: 150px;">
                                             </td>
                                             <td style="width: 15%" class="LabelFontStyle">
                                                 EMI&nbsp;:&nbsp;
                                             </td>
                                             <td>
-                                                <input type="text" formControlName="emi" [(ngModel)]='emi' value={{emi}}
+                                                <input type="text" formControlName="emi"  value={{emi}}
                                                     class="form-control" style="width: 150px;">
                                             </td>
                                         </ng-template>
@@ -911,7 +911,7 @@
                                                 Tenure&nbsp;:&nbsp;
                                             </td>
                                             <td>
-                                                <input type="text" formControlName="tenure" [(ngModel)]='tenure'
+                                                <input type="text" formControlName="tenure" 
                                                     value={{tenure}} class="form-control" style="width: 170px;">
                                             </td>
                                             <td style="width: 15%" class="LabelFontStyle">
@@ -919,7 +919,7 @@
                                             </td>
                                             <td>
                                                 <input type="text" formControlName="downPayment"
-                                                    [(ngModel)]='downPayment' value={{downPayment}} class="form-control"
+                                                   value={{downPayment}} class="form-control"
                                                     style="width: 170px;">
                                             </td>
                                         </tr>
@@ -938,10 +938,10 @@
                                             </td>
                                             <td>
                                                 <!-- <input  type="text"  formControlName="exchange"  class="form-control" style="width: 120px;"> -->
-                                                <select type="text" formControlName="exchange" id="exchange"
+                                                <select type="text" formControlName="exchangeYN" id="exchangeYN"
                                                     class="form-control" style="width: 120px;" (change)="exchangeYes($event)">
                                                     <option>--Select--</option>
-                                                    <option *ngFor="let sc of  YesNoList">
+                                                    <option *ngFor="let sc of  YesNoList" [value]="sc.cmnDesc">
                                                         {{sc.cmnDesc}}
                                                     </option>
                                                 </select>
@@ -1432,8 +1432,7 @@
                                                                 id="taxCategoryName" class="form-control"
                                                                 style="width: 160px;height: 25px;font-size: 10px;">
                                                                 <option>--Select--</option>
-                                                                <option *ngFor="let sc of  taxCategoryList[i]"
-                                                                    [value]="sc">
+                                                                <option *ngFor="let sc of  taxCategoryList[i]"[value]="sc.taxCategoryName">
                                                                     {{sc.taxCategoryName}}
                                                                 </option>
                                                             </select>
@@ -1720,9 +1719,7 @@
                                                                             style="width: 4rem; text-align: right; height: 25px;font-size: 10px;">
                                                                     </td>
                                                                 </ng-template>
-                                                                <div
-                                                                    *ngIf="SalesOrderBookingForm.controls['taxAmounts'].controls[j].controls.recoverableFlag.value === 'Y'; then thenBlockRecFlag; else elseBlockRecFlag">
-                                                                </div>
+                                                                <div   *ngIf="SalesOrderBookingForm.controls['taxAmounts'].controls[j].controls.recoverableFlag.value === 'Y'; then thenBlockRecFlag; else elseBlockRecFlag">   </div>
                                                                 <ng-template #thenBlockRecFlag>
                                                                     <td><input type="checkbox" disabled
                                                                             name="recoverableFlag"
@@ -1782,8 +1779,7 @@
 
 
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-danger"
-                                                data-dismiss="modal">Close</button>
+                                            <button type="button" class="close" class="btn btn-primary" data-dismiss="modal" aria-hidden="true"  (click)="closeTaxModal()">Close</button>
                                         </div>
 
                                     </div>
