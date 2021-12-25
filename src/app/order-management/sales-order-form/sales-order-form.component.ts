@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild ,ElementRef} from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { NgForm } from '@angular/forms';
 import { from } from 'rxjs';
@@ -272,6 +272,7 @@ export class SalesOrderFormComponent implements OnInit {
   DisplayfinanceSelectionYes1=true;
   Displayexchange=true;
 
+  @ViewChild("myinput") myInputField: ElementRef;
   constructor(private fb: FormBuilder, private router1: ActivatedRoute, private location: Location, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService) {
     this.SalesOrderBookingForm = fb.group({
       divisionName: [''],
@@ -1344,11 +1345,13 @@ export class SalesOrderFormComponent implements OnInit {
 
   }
 
-  saveTaxDetails(){}
+  saveTaxDetails(){
+  
+  }
 
   closeTaxModal() {
-    //this.lineTaxdetails =[];
-
+    this.display='none'; //set none css after close dialog
+  this.myInputField.nativeElement.focus();
   }
   TaxCategoryupdate(index) {
     // alert(this.orderNumber)
