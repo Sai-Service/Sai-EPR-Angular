@@ -1465,11 +1465,11 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
 
   onOptionsSelectedcustSiteName(siteName) {
-    //  alert(siteName);
+      alert(siteName);
     //  alert(sessionStorage.getItem('ouId'));
     let selSite = this.custSiteList.find(d => d.siteName === siteName);
     console.log(selSite);
-    // alert(selSite.ouId);
+     alert(selSite.ouId);
 
     if (selSite.ouId != (sessionStorage.getItem('ouId'))) {
       alert('First Create OU wise Site to continue process!')

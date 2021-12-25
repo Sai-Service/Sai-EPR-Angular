@@ -6,6 +6,7 @@ import {
   ViewEncapsulation,
   HostListener,
   ElementRef,
+  ViewChildren,
 } from '@angular/core';
 import {
   FormArray,
@@ -90,6 +91,9 @@ export class ItemLocator {
   templateUrl: './miscellaneous-transaction.component.html',
   styleUrls: ['./miscellaneous-transaction.component.css'],
 })
+
+
+
 export class MiscellaneousTransactionComponent implements OnInit {
   miscellaneousForm: FormGroup;
   public ItemIdList: any[];
@@ -217,6 +221,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
   @ViewChild('Item') Item: ElementRef;
   @ViewChild('desc') desc: ElementRef;
   @ViewChild('stkAdjForm') stkAdjForm: ElementRef;
+
   // @ViewChild("suppCode1") suppCode1: ElementRef;
   ngAfterViewInit() {
     this.myinput.nativeElement.focus();
@@ -301,6 +306,8 @@ export class MiscellaneousTransactionComponent implements OnInit {
   }
 
   newRow : FormGroup;
+  @ViewChildren('formRow') x1: ElementRef;
+
   addnewcycleLinesList(i: number) {
     // alert(i);
     if (i > -1) {
@@ -1216,6 +1223,11 @@ export class MiscellaneousTransactionComponent implements OnInit {
 
     this.addnewcycleLinesList(i);
     this.setFocus('segment' +(i+1)  )
+   ;
+  }
+
+  itemLoad(trxLineIndex){
+    alert("i m loaded")
   }
 
   searchByCompileID(itemId) {
@@ -1470,7 +1482,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
       ele.focus();
     }
   }
-  
+
   viewMiscnote() {
     var shipNumber = this.miscellaneousForm.get('compileName').value;
     const fileName = 'download.pdf';
