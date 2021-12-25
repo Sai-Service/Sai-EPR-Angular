@@ -10,12 +10,46 @@
       <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-expanded="false" aria-haspopup="true"  data-toggle="dropdown" (click)="LoadModal()" data-toggle="modal" data-target="#partSearch">Search</a>
     </li>
 
-    <li class="nav-item dropdown">
+     <li class="nav-item dropdown">
       <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
         aria-haspopup="true"  [routerLink]="['/admin/master/customerMaster']" aria-expanded="false">
         Customer Master
       </a>
+    </li> 
+     <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+      Order  Transactions
+      </a>
+      <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Counter Sale Order</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/orderList']">Order List</a></li> 
+            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/CounterSaleOrder']">Counter Sale Order</a></li>  
+            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/CounterSaleWithCSV']">Counter Sale With CSV</a></li>     
+            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/CounterSaleReturn']">Counter Sale Return</a></li>    
+            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/OrderGeneration']">Order Generation</a></li>  
+            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/BackorderSparesImportBajaj']">CS Back Order</a></li>      
+         </ul>
+        </li>
+        
+        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Sales Order</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/allotment']">Allotment</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/Deallotment']">De Allotment</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/SalesOrderForm']">Sales Order-New</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/ReversalOrder']">Reversal Order</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/GatePass']">Sales Gate Pass</a></li>
+          </ul>
+        </li>
+      </ul>
     </li>
+    <li class="nav-item dropdown">
+      <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+        aria-haspopup="true"  [routerLink]="['/admin/service/JobCard']" aria-expanded="false">
+        JobCard
+      </a>
+    </li> 
     <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
         aria-haspopup="true" aria-expanded="false">
@@ -463,11 +497,11 @@
                 <td ><input class="form-control" type="text" (keyup)="filterRecord($event)" formControlName="searchItemCode"
                    id="invItemIdFirstWay"  list="dynmicUserIds1"
                    class="form-control"
-                   style="width: 300px; background-color: rgb(240, 240, 166); text-transform: uppercase;"  />
+                   style="width: 300px; background-color: rgb(240, 240, 166); text-transform: uppercase;" />
 
-                  <datalist id="dynmicUserIds1" >
+                  <datalist id="dynmicUserIds1" #input2  >
                     <option *ngFor="let item of ItemIdList"  [ngValue]="item.itemId">
-                      {{item.segment}}
+                      {{item.segment}}--{{item.description}}
                       </datalist>
                   </td>
 <!--
@@ -657,7 +691,7 @@
                         <th style="width:5rem"  scope="col">Tax%&nbsp;</th>
                         <th style="width:8rem"  scope="col">Quantity&nbsp;</th>
                         <th style="width:8rem"  scope="col">Reserve Qty&nbsp;</th>
-                        <th style="width:8rem"  scope="col">Unit Rate&nbsp;</th>
+                        <th style="width:8rem"  scope="col">MRP&nbsp;</th>
                         <th style="width:8rem"  scope="col">NDP&nbsp;</th>
                         <th style="width:8rem"  scope="col">Principle&nbsp;Item</th>
 

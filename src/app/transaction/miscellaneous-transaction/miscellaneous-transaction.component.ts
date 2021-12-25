@@ -159,6 +159,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
   segmentNameList: any;
   codeCombinationId: number;
   compileType: number;
+  displayOp=true;
   reason: string;
   reasonlist: any;
   compileStatus: string = 'OPEN';
@@ -368,12 +369,13 @@ export class MiscellaneousTransactionComponent implements OnInit {
     }
     var len1 = this.cycleLinesList().length;
     var  ln = i+1
-    alert(ln+'line')
+    // alert(ln+'line')
       this.setFocus('segment' + ln )
     // this.displayRemoveRow[i]=true;
     // alert(i);
   }
   removenewcycleLinesList(trxLineIndex) {
+    // alert(trxLineIndex);
     var len1 = this.cycleLinesList().length;
     if (len1 === 1) {
       alert('You can not delete the line');
@@ -381,12 +383,13 @@ export class MiscellaneousTransactionComponent implements OnInit {
     }
     var trxLnArr1 = this.miscellaneousForm.get('cycleLinesList').value;
     var itemid = trxLnArr1[trxLineIndex].segment;
+    // debugger;
+    this.cycleLinesList().removeAt(trxLineIndex);
     // alert(itemid+'Delete');
-    if (itemid != null) {
+    if (itemid != null || itemid !=' ' || itemid !=undefined) {
       this.deleteReserveLinewise(trxLineIndex);
       this.itemMap.delete(itemid);
     }
-    this.cycleLinesList().removeAt(trxLineIndex+1);
     var formVal = this.miscellaneousForm.get('cycleLinesList').value;
     var patch = this.miscellaneousForm.get('cycleLinesList') as FormArray;
     var len = this.cycleLinesList().length;
@@ -635,7 +638,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
 
         return;
       } else if (itemCode.length >= 4) {
-        alert(trxType);
+        // alert(trxType);
         if (trxType === 4) {
           // alert('inside if');
           this.service
@@ -1324,6 +1327,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
           // this.dispRow=false;
           this.displayaddButton = false;
           this.displayButton = false;
+          this.displayOp=false;
           // this.miscellaneousForm.get('cycleLinesList').disable();
         }
       });
@@ -1355,6 +1359,8 @@ export class MiscellaneousTransactionComponent implements OnInit {
           this.miscellaneousForm.disable();
           this.displayButton = false;
           this.displayaddButton = false;
+          this.displayOp=false;
+
           // (document.getElementById("btnrm") as HTMLInputElement).disabled = false;
         } else {
           if (res.code === 400) {
@@ -1458,11 +1464,24 @@ export class MiscellaneousTransactionComponent implements OnInit {
   }
 
   setFocus(name) {
-    alert(name)
+    // alert(name)
     const ele = this.stkAdjForm.nativeElement[name];
 
     if (ele) {
       ele.focus();
     }
   }
+  viewMiscnote() {
+    var shipNumber = this.miscellaneousForm.get('compileName').value;
+    const fileName = 'download.pdf';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.service.viewMiscnote(shipNumber)
+      .subscribe(data => {
+        var blob = new Blob([data], { type: 'application/pdf' });
+        var url = URL.createObjectURL(blob);
+        var printWindow = window.open(url, '', 'width=800,height=500');
+        printWindow.open
+      })
+  }
+
 }

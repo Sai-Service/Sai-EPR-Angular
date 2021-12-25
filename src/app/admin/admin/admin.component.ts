@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild, ElementRef } from '@angular/core';
 // import * as $ from 'jquery';
 import { Router } from '@angular/router';
 import { formatDate } from '@angular/common';
@@ -84,8 +84,13 @@ export class AdminComponent implements OnInit {
   searchByItem = true;
   searchByDesc = false;
 
-
-
+  @ViewChild("myinput") myInputField: ElementRef;
+  emplId: number;
+  // @ViewChild("segment") segment: ElementRef;
+  // ngAfterViewInit() {
+  //   this.myInputField.nativeElement.focus();
+  // }
+  @ViewChild('input2') input2: ElementRef;
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     // constructor(private router: Router ) {
     this.todaysDataTime = formatDate(this.today, 'dd-MM-yyyy hh:mm:ss a', 'en-US', '+0530');
@@ -211,6 +216,13 @@ this.service
 
         });
 
+        // const ele = this.adminForm1.controls.nativeElement['searchItemCode'];
+        // this.searchItemCode..Focus();
+        // this.input2.nativeElement.Focus();
+        // partSearch.on('shown', function () {
+        //   $('searchItemCode', this).focus();
+        //   });
+
   }
 
 
@@ -273,6 +285,12 @@ this.service
     // this.partSearch.open();
     this.LoadModal();
     $("#partSearch").modal('show');
+    // this.input2.nativeElement.focus();
+    $("#partSearch").on('shown.bs.modal', function () {
+      $('#invItemIdFirstWay').focus();
+  })
+
+
   }
 
   F9Search(itemDesc) {
@@ -425,7 +443,7 @@ this.service
           this.gstPer = this.lstcomments[0].GSTPERCENTAGE;
           this.principleItem = this.lstcomments[0].PRINCPLEITEM;
           this.adminForm1.patchValue(data);
-        } else { alert("333Stock Details not availabe for item - " + itemNumber); }
+        } else { alert("Stock Details not availabe for item - " + itemNumber); }
       })
 
 
@@ -449,7 +467,10 @@ this.service
     }
 }
 filterRecord(event) {
-  var itemCode = event.target.value;
+  var itemCode1 = event.target.value;
+  var itemCode2=itemCode1.split('--');
+  var itemCode=itemCode2[0];
+  // alert(itemCode+'Item');
   if (event.keyCode == 13) {
     // enter keycode
     if (itemCode.length == 8) {
@@ -472,7 +493,7 @@ filterRecord(event) {
           } else { alert("Stock Details not availabe for item - " + itemCode); }
         })}
     }else
-      if (this.ItemIdList.length <= 4) {
+      if (itemCode.length <= 4) {
             this.service
             .searchByItemSegmentDiv(this.divisionId, itemCode.toUpperCase())
             .subscribe((data) => {
@@ -485,8 +506,11 @@ filterRecord(event) {
       return;
 
     }
+
   }
 }
+
+
 
 userCheck(roleId: number): boolean {
   //alert(sessionStorage.getItem('roleId') +'--'+roleId );

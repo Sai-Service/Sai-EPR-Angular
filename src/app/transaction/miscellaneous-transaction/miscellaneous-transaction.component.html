@@ -74,7 +74,7 @@
           <td>
             <select class="form-control" formControlName="compileType"  (ngModelChange)="onOptionTypeSelect($event)"
               #myinput>
-              <option>--Select--</option>
+              <!-- <option>--Select--</option> -->
               <option *ngFor="let tt of transType" [ngValue]="tt.transactionTypeId"> {{tt.transactionTypeName}}</option>
             </select>
             <span *ngIf="getGroupControl('compileType').touched && getGroupControl('compileType').invalid">Valid
@@ -299,6 +299,8 @@
                         <!-- <!- <option *ngFor="let locId of getfrmSubLoc" [ngValue]="locId.id">{{locId.segmentName}}--{{locId.onHandQty}}</option> -->
                         <!-- </select> -->
 
+
+
                         <div *ngIf="displayLocator[trxLineIndex]; then thenBlock; else elseBlock">
                         </div>
                         <ng-template #thenBlock>
@@ -377,7 +379,19 @@
         <ng-template #elseBlock2>
           <button disabled type="submit" class="btn btn-primary" (click)="saveMisc()">Save</button>
         </ng-template>
+        <td>
+        <div *ngIf="displayOp; then thenBlockOp; else elseBlockOp">
+        </div>
+        <ng-template #thenBlockOp>
 
+  <button disabled  type="submit" class="btn btn-primary" (click)="viewMiscnote()">View&nbsp;Note</button>
+</ng-template>
+<ng-template #elseBlockOp>
+
+    <button   type="submit" class="btn btn-primary" (click)="viewMiscnote()">View&nbsp;Note</button>
+
+  </ng-template>
+</td>
       </tr>
     </table>
     <div class="modal fade" id="myModal1" role="dialog" [style.display]="showModal" tabindex="-1" aria-hidden="true">
