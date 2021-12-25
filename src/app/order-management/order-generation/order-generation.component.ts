@@ -54,7 +54,8 @@ export class OrderGenerationComponent implements OnInit {
 
   displayButton=true;
   spinIcon=false;
-
+  dispGenOrdButton=true;
+  dispShowOrdButton=true;
 
   constructor(private service: MasterService,private orderManagementService:OrderManagementService,private transactionService: TransactionService , private  fb: FormBuilder, private router: Router) {
     this.orderGenerationForm = fb.group({
@@ -237,7 +238,8 @@ CreateOrder() {
     const formValue: IOrderGen = this.transeData(this.orderGenerationForm.value);
     var ordMonths =this.orderGenerationForm.get('noMonths').value
 
-    alert (  "ts>> Loc Id :" +this.locId + " ," +ordMonths);
+    // alert (  "ts>> Loc Id :" +this.locId + " ," +ordMonths);
+    this.dispGenOrdButton=false;
 
     this.service.orderGenBajaj(formValue,this.locId,ordMonths).subscribe((res: any) => {
       if (res.code === 200) {
@@ -247,6 +249,7 @@ CreateOrder() {
          this.displayButton = false;
       } else {
         if (res.code === 400) {
+          
           alert('Error While Saving Record:-' + res.obj);
            }
       }
@@ -255,6 +258,7 @@ CreateOrder() {
 
   ShowOrder(){
     this.spinIcon=true;
+    this.dispShowOrdButton=false;
     var mOrderNumber =this.orderGenerationForm.get('orderNumber').value
     this.service.getOrderListBajaj(mOrderNumber)
     .subscribe(
@@ -271,27 +275,30 @@ CreateOrder() {
         for (let i = 0; i < this.lstOrderList.length - len; i++) {
           var ordLnGrp: FormGroup = this.lineDetailsGroup();
           this.lineDetailsArray().push(ordLnGrp);
+
         }
         this.orderGenerationForm.get('orderList').patchValue(this.lstOrderList);
-       } else { this.spinIcon=false;}
+       } 
         });
 
-        this.spinIcon=false;
+        
+        
+      }
 
-        var len1 = this.lstOrderList.length;
+
+      UpdateTotalConsumption() {
+
+        var len1 = this.lineDetailsArray().length;
         var ordArr =this.orderGenerationForm.get('orderList').value;
         var patch = this.orderGenerationForm.get('orderList') as FormArray;
-        alert ("len1 :"+len1);
         for (let i = 0; i < len1; i++) { 
           // alert ("in for :"+ordArr[i].mth1ConWsQty);
           var wsTotCons1=ordArr[i].mth1ConWsQty+ordArr[i].mth2ConWsQty+ordArr[i].mth3ConWsQty+ordArr[i].currWsQty
           var csTotCons1=ordArr[i].mth1ConsSaleQty+ordArr[i].mth1ConsSaleQty+ordArr[i].mth1ConsSaleQty+ordArr[i].currSaleQty
-          patch.controls[i].patchValue({ wsTotCons: wsTotCons1 })
-          patch.controls[i].patchValue({ csTotCons: csTotCons1 })
+                  
+          patch.controls[i].patchValue({wsTotCons:wsTotCons1});
+          patch.controls[i].patchValue({csTotCons:csTotCons1});
         }
-
-     
-     
       }
       
 

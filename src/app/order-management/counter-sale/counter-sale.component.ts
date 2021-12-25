@@ -1369,10 +1369,6 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     return matches;
   };
 
-
-
-
-
   accountNoSearch(custAccountNo) {
     // alert(custAccountNo);
     this.service.searchCustomerByAccount(custAccountNo)
@@ -3134,27 +3130,40 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     }
   }
 
-  
-
-  message1: string = "Customer Not Found !  Do you want to create new Customer?";
-  msgType:string ="Navigate";
- getMessage(msgType: string) {
-   if (msgType.includes("Navigate")) {
-    this.message1 = "Do you want to Navigate the Form(Yes/No)?"
+  message: string = "Please Fix the Errors!";
+  cnfMsgType: string = "Close";
+  // msgType:string ="Navigate";
+  getMessage(msgType: string) {
+    this.cnfMsgType = msgType;
+    if (msgType.includes("INVOICE")) {
+      this.submitted = true;
+      (document.getElementById('invoiceBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
+      this.message = "Do you want to Generate INVOICE the changes (Yes/No)?"
     }
-}
+    if (msgType.includes("Navigate")) {
+      this.message = "Do you want to Navigate the Form(Yes/No)?"
+      }
 
- executeAction() { 
-   if(this.msgType.includes("Navigate")) {
-       this.router.navigate(['/admin/master/customerMaster'])
+    if (msgType.includes("Reset")) { this.message = "Do you want to Reset the changes(Yes/No)?" }
+
+    if (msgType.includes("Close")) { this.message = "Do you want to Close the Form(Yes/No)?" }
+    return;
   }
-}
-closeModalDialog(){
-  this.display='none'; //set none css after close dialog
-  this.myInputField.nativeElement.focus();
- }
 
 
+  executeAction() {
+    if (this.cnfMsgType.includes("INVOICE")) {
+      this.pickTicketInvoiceFunction();
+    }
+//     if(this.msgType.includes("Navigate")) {
+//       this.router.navigate(['/admin/master/customerMaster'])
+//  }
+  }
+
+  closeModalDialog(){
+    this.display='none'; //set none css after close dialog
+    this.myInputField.nativeElement.focus();
+   }
   ngOnDestroy(): void {
     alert('Window Closed Directely.!');
     this.deleteReserve();

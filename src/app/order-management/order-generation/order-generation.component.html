@@ -15,8 +15,8 @@
         <div class="center" style="width: 100%;">
 
         <fieldset class="RFS">
-            <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
-               Search Order </legend>
+            <!-- <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;"> -->
+               <!-- Search Order </legend> -->
 
          <table class="center" style="width: 100%;background-color: #FFE4B5;">
             <!-- <table> -->
@@ -68,8 +68,8 @@
         </fieldset>
 
         <fieldset class="RFS">
-            <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
-                Order Details </legend>
+            <!-- <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
+                Order Details </legend> -->
 
                 <table class="center">
 
@@ -137,9 +137,23 @@
 
                                 <td></td>
 
-                                <td> <button style="width:170px;" type="submit" class="btn btn-info" id="register" (click)="CreateOrder()">Generate Order</button></td>
-                               <td></td>
-                                <td> <button style="width: fit-content;"  type="submit" class="btn btn-info" id="register" (click)="ShowOrder()">Show Order List</button></td>
+                                <div *ngIf="dispGenOrdButton; then G1; else G2;"></div>
+                                <ng-template #G1>
+                                     <td> <button style="width:170px;" type="submit" class="btn btn-info" id="register" (click)="CreateOrder()">Generate Order</button></td>
+                                </ng-template>
+                                <ng-template #G2>
+                                     <td> <button disabled style="width:170px;" type="submit" class="btn btn-info" id="register" (click)="CreateOrder()">Generate Order</button></td>
+                                </ng-template>
+
+                                <div *ngIf="dispShowOrdButton; then S1; else S2;"></div>
+                                <ng-template #S1>
+                                     <td> <button style="width: fit-content;"  type="submit" class="btn btn-info" id="register" (click)="ShowOrder()">Show Order List</button></td>
+                                </ng-template>
+                                <ng-template #S2>
+                                    <td> <button disabled style="width: fit-content;"  type="submit" class="btn btn-info" id="register" (click)="ShowOrder()">Show Order List</button></td>
+                               </ng-template>
+                               
+                                <td> <button style="width: fit-content;"  type="submit" class="btn btn-info" id="register" (click)="UpdateTotalConsumption()">Calc Tot Cons</button></td>
                
                                 <td></td>
 
@@ -180,7 +194,7 @@
                               <thead>
                                 <tr class="GridHeader">
                                       <th style="width:4rem" scope="col">Srl&nbsp;No.</th>
-                                      <th style="width:8rem" scope="col">Item&nbsp;Id</th>
+                                      <!-- <th style="width:8rem" scope="col">Item&nbsp;Id</th> -->
                                       <th style="width:8rem" scope="col">Part&nbsp;No</th>
                                       <th style="width:13rem" scope="col">Description</th>
                                       <th style="width:15rem" scope="col">Unit&nbsp;Price</th>
@@ -214,7 +228,7 @@
                                 <input  hidden style="width:5rem;"  type="number" formControlName="itemId" class="form-control">
                                
                                 <td style="text-align: center;width: 4rem;">{{i+1}}</td>
-                                <td> <input  disabled style="width:3rem;"   type="text" formControlName="itemId"  class="form-control"></td>
+                                <!-- <td> <input  disabled style="width:3rem;"   type="text" formControlName="itemId"  class="form-control"></td> -->
                                 <td> <input  disabled style="width:8rem;"   type="text" formControlName="segment"  class="form-control"></td>
                                 <td> <input  disabled style="width:15rem;"  type="text" formControlName="description" class="form-control"></td>
                                 <td> <input  disabled style="width:3rem;"   type="number" formControlName="unitPrice" class="form-control"></td>
