@@ -128,6 +128,9 @@ export class AdminComponent implements OnInit {
 
   }
 
+  @HostListener('window:unload', ['$event'])
+  keyEvent1(event: KeyboardEvent) {
+    console.log(event);}
 
   get f() { return this.adminForm1.controls; }
   admin(adminForm1: any) { }

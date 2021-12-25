@@ -175,6 +175,18 @@ export class MasterService {
       params: REQUEST_PARAMS,
     });
   }
+
+
+  invItemList2New(itemType,deptName,divisionId,segment):Observable<any> {
+    const REQUEST_PARAMS = new HttpParams().set('itemType', itemType)
+    .set('dept', deptName)
+    .set('divisionId',divisionId)
+    .set('segment',segment)
+    const REQUEST_URI = this.ServerUrl +'/itemMst/ItemType';
+    return this.http.get(REQUEST_URI, {
+      params: REQUEST_PARAMS,
+    });
+  }
   supplierCodeList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/supp');
   }
@@ -1133,11 +1145,11 @@ expenceItemDetailsList(invItemId):Observable<any>{
 }
 
 
-taxCalforItemWithVOR(itemId,taxCatId,diss,baseAmount,vorAmt,drfAmt) {
+taxCalforItemWithVOR(itemId,taxCatId,diss1,baseAmount,vorAmt,drfAmt) {
   const REQUEST_PARAMS = new HttpParams().set('itemId', itemId)
   .set('baseAmt', baseAmount)
   .set('taxCateId', taxCatId)
-  .set('disAmt', diss)
+  .set('disAmt1', diss1)
   .set('vorAmt',vorAmt)
   .set('drfAmt',drfAmt)
   const REQUEST_URI = this.ServerUrl +'/poHdr/potaxcal';
