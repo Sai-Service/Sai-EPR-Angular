@@ -250,9 +250,11 @@ export class SalesOrderFormComponent implements OnInit {
   accountNoSearchdata: any[];
   displayCustomerSite = true;
   customerNameSearch: any[];
-  name: string;
-  customerSiteId: number;
-
+  name:string;
+  customerSiteId:number;
+  custPoNumber:string;
+  custPoDate:Date;
+  refCustNo:string;
 
   displaysegmentInvType: Array<boolean> = [];
   displayLineflowStatusCode: Array<boolean> = [];
@@ -264,13 +266,18 @@ export class SalesOrderFormComponent implements OnInit {
   public taxMap = new Map<string, any>();
 
   isDisabled = true;
+  displayDMSCDMS: boolean;
+  isVisible1: boolean = false;
+  DisplayfinanceSelectionYes=true;
+  DisplayfinanceSelectionYes1=true;
+  Displayexchange=true;
 
   constructor(private fb: FormBuilder, private router1: ActivatedRoute, private location: Location, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService) {
     this.SalesOrderBookingForm = fb.group({
       divisionName: [''],
       ouName: [''],
-      exchange: [''],
-      priceListHeaderId: [''],
+      exchange: ['',[Validators.required]],
+      priceListHeaderId:[''],
       taxiYN: [''],
       weddingDate: [''],
       name: [''],
@@ -285,20 +292,20 @@ export class SalesOrderFormComponent implements OnInit {
       exRegNo: [''],
       insCharges: [''],
       offerPrice: [''],
-      mobile1: [''],
+      mobile1:['',[Validators.required]],
       paymentTermId: [],
       locCode: [''],
       locId: [''],
       locationId: [''],
       ticketNo: [''],
       orderNumber: [''],
-      accountNo: [''],
-      custName: [''],
+      accountNo: ['',[Validators.required]],
+      custName: ['',[Validators.required]],
       orderedDate: [''],
-      transactionTypeName: [''],
+      transactionTypeName: ['',[Validators.required]],
       flowStatusCode: [''],
-      payTermDesc: [''],
-      salesRepName: [''],
+      payTermDesc: ['',[Validators.required]],
+      salesRepName: ['',[Validators.required]],
       tlName: [''],
       remarks: [''],
       subtotal: [''],
@@ -306,10 +313,10 @@ export class SalesOrderFormComponent implements OnInit {
       totTax: [''],
       totAmt: [''],
       custAddress: [''],
-      model: [''],
-      variant: [''],
-      color: [''],
-      financeType: [''],
+      model: ['',[Validators.required]],
+      variant: ['',[Validators.required]],
+      color: ['',[Validators.required]],
+      financeType: ['',[Validators.required]],
       financerName: [''],
       financeAmt: [''],
       emi: [''],
@@ -322,7 +329,10 @@ export class SalesOrderFormComponent implements OnInit {
       ouId: [''],
       customerId: [''],
       billToAddress: [''],
-      shipToAddress: [''],
+      shipToAddress:[''],
+      custPoNumber:[''],
+      custPoDate:[''],
+      refCustNo:[''],
       gstNo: [''],
       panNo: [''],
       tcs: [''],
@@ -427,6 +437,15 @@ export class SalesOrderFormComponent implements OnInit {
     this.loginOuId1 = Number(sessionStorage.getItem('loginOuId1'));
     this.divisionId = Number(sessionStorage.getItem('divisionId'))
     this.orderlineDetailsArray().controls[0].patchValue({ flowStatusCode: 'BOOKED' });
+
+    if (Number(sessionStorage.getItem('divisionId')) === 1) {
+      this.displayDMSCDMS = true;
+      this.isVisible1=true;
+    }
+    else if (Number(sessionStorage.getItem('divisionId')) === 2) {
+      this.displayDMSCDMS = false;
+      this.isVisible1=false;
+    }
 
     this.orderlineDetailsGroup();
     var patch = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray
@@ -1716,4 +1735,27 @@ export class SalesOrderFormComponent implements OnInit {
         }
       );
   }
+
+  financeSelectionYes(event:any){
+    // alert(event.target.value)
+    if (event.target.value==='Sai Service' || event.target.value==='Self'){
+      this.DisplayfinanceSelectionYes=false;
+      this.DisplayfinanceSelectionYes1=false;
+    }
+    else{
+      this.DisplayfinanceSelectionYes=true;
+      this.DisplayfinanceSelectionYes1=true;
+    }
+  }
+
+  exchangeYes(event:any){
+    //  alert(event.target.value);
+     if (event.target.value==='Y'){
+       this.Displayexchange=false;
+     }
+     else{
+       this.Displayexchange=true;
+     }
+  }
+
 }
