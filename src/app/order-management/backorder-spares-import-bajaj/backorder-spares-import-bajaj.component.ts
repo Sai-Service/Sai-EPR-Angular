@@ -148,9 +148,7 @@ export class BackorderSparesImportBajajComponent implements OnInit {
       this.fileValidation=false;
       return;
     }
-    
       this.fileValidation=true;
-
   }
 
   uploadFile() {
@@ -162,33 +160,31 @@ export class BackorderSparesImportBajajComponent implements OnInit {
       this.progress = 0;
       this.dataDisplay ='File Upload in progress....Do not refresh the Page'
 
-    var upldPlName =this.backorderSparesImportBajajForm.get('upldPricelistName').value;
     var event=this.fileInput.nativeElement.files[0];
     console.log('doctype-check'+this.docType)
     let formData = new FormData();
-    // formData.append('file', this.fileInput.nativeElement.files[0])
     formData.append('file', event)
 
-       this.service.UploadExcel(formData,this.docType,upldPlName).subscribe((res: any) => {
+       this.service.UploadExcelBackOrderBajaj(formData,this.docType,this.locId).subscribe((res: any) => {
    
         if (res.code === 200) {
-             this.resMsg = res.message+",  Code : "+res.code;;
+            this.resMsg = res.message+",  Code : "+res.code;;
            this.lstMessage=res.obj.priceListDetailList;
             this.dataDisplay ='File Uploaded Sucessfully....'
            this.closeResetButton=true;
            this.viewLogFile=true;
              
         } else {
-          if (res.code === 400) {
+          // if (res.code === 400) {
              this.resMsg = res.message +",  Code : "+res.code;
             this.lstMessage=res.obj.priceListDetailList;
             this.updStatus=false;
             this.dataDisplay ='File Uploading Failed....'
             this.closeResetButton=true;
             this.viewLogFile=false;
-          }
+          // }
 
-        }
+        } 
       });
      } 
    

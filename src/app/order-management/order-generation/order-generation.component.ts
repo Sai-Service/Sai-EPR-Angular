@@ -26,6 +26,8 @@ export class OrderGenerationComponent implements OnInit {
   public minDate = new Date();
 
   lstClearBackOrder:any;
+  lstOrderList:any;
+  lstItemDetails:any;
 
   loginName:string;
   loginArray:string;
@@ -40,16 +42,18 @@ export class OrderGenerationComponent implements OnInit {
   deptId:number; 
   emplId :number;
 
-  orderNumber:number;
+  orderNumber='TestOrder'
   fromDate=this.pipe.transform(Date.now(), 'y-MM-dd');
   toDate=this.pipe.transform(Date.now(), 'y-MM-dd');
 
-  orderDate:Date;
+  orderDate=this.pipe.transform(Date.now(), 'y-MM-dd');
   orderStatus:string;
-  noMonths:number;
-  currMonthYN:string;
+  noMonths:number=3;
+  currMonthYN:string='Yes';
+  orderValue:number;
 
   displayButton=true;
+  spinIcon=false;
 
 
   constructor(private service: MasterService,private orderManagementService:OrderManagementService,private transactionService: TransactionService , private  fb: FormBuilder, private router: Router) {
@@ -75,6 +79,8 @@ export class OrderGenerationComponent implements OnInit {
     orderDate:[],
     noMonths:[],
     currMonthYN:[],
+    orderValue:[],
+
 
 
     orderList: this.fb.array([this.lineDetailsGroup()])   
@@ -85,15 +91,32 @@ export class OrderGenerationComponent implements OnInit {
 lineDetailsGroup() {
   return this.fb.group({ 
     itemId:[''],
-    // custAccountNo:[],
     segment :['', [Validators.required]],    
     description:['', [Validators.required]],
-    currQty: ['', [Validators.required]],
+    unitPrice:['', [Validators.required]],
+
+    mth1ConWsQty:['', [Validators.required]],
+    mth2ConWsQty:['', [Validators.required]],
+    mth3ConWsQty:['', [Validators.required]],
+    mth1ConsSaleQty:['', [Validators.required]],
+    mth2ConsSaleQty:['', [Validators.required]],
+    mth3ConsSaleQty:['', [Validators.required]],
+    currWsQty:['', [Validators.required]],
+    currSaleQty:['', [Validators.required]],
+    wsTotCons:['', [Validators.required]],
+    csTotCons:['', [Validators.required]],
+ 
+    currentStock: ['', [Validators.required]],
+    backOrderQty: ['', [Validators.required]],
+    intransitQty: ['', [Validators.required]],
+    custBackOrder:['', [Validators.required]],
+
     orderQty: ['', [Validators.required]],
-    ordValue: ['', [Validators.required]],
-    consumption: ['', [Validators.required]],
-    avgConsumption:[],
-    deadStock:[],
+    totalValue: ['', [Validators.required]],
+
+    // consumption: ['', [Validators.required]],
+    // avgConsumption:[],
+    // deadStock:[],
    });
 }
 
@@ -107,7 +130,7 @@ lineDetailsArray() :FormArray{
   orderGeneration(orderGenerationForm:any) {  }
 
   ngOnInit(): void {
-
+    $("#wrapper").toggleClass("toggled");
     this.name=  sessionStorage.getItem('name');
     this.loginArray=sessionStorage.getItem('divisionName');
     this.loginName=sessionStorage.getItem('name');
@@ -184,5 +207,102 @@ else {
 }
 
 }
+
+transeData(val) {
+  delete val.loginArray;
+  delete val.loginName;
+  delete val.divisionId;
+  delete val.division;
+  delete val.ouName;
+  delete val.locName;
+  delete val.locationId;
+  delete val.orgId;
+
+  delete val.fromDate;
+  delete val.toDate;
+  delete val.orderDate;
+ 
+ 
+ 
+  delete val.orderList;
+
+  return val;
+}
+
+
+CreateOrder() {
+  // this.CheckDataValidations();
+  // if (this.checkValidation === true) {
+  
+    const formValue: IOrderGen = this.transeData(this.orderGenerationForm.value);
+    var ordMonths =this.orderGenerationForm.get('noMonths').value
+
+    alert (  "ts>> Loc Id :" +this.locId + " ," +ordMonths);
+
+    this.service.orderGenBajaj(formValue,this.locId,ordMonths).subscribe((res: any) => {
+      if (res.code === 200) {
+        alert('RECORD INSERTED SUCCESSFUILY');
+        this.orderNumber = res.obj;
+        this.orderGenerationForm.disable();
+         this.displayButton = false;
+      } else {
+        if (res.code === 400) {
+          alert('Error While Saving Record:-' + res.obj);
+           }
+      }
+    });
+  } 
+
+  ShowOrder(){
+    this.spinIcon=true;
+    var mOrderNumber =this.orderGenerationForm.get('orderNumber').value
+    this.service.getOrderListBajaj(mOrderNumber)
+    .subscribe(
+      data => {
+        this.lstOrderList = data;
+        alert ("Total order lines :" +data.length);
+        if(data.length >0) {
+         
+        console.log(this.lstOrderList);
+        var len = this.lineDetailsArray().length;
+        var y = 0;
+        // alert("this.lstinvoices.length  >>" +this.lstinvoices.length);
+       
+        for (let i = 0; i < this.lstOrderList.length - len; i++) {
+          var ordLnGrp: FormGroup = this.lineDetailsGroup();
+          this.lineDetailsArray().push(ordLnGrp);
+        }
+        this.orderGenerationForm.get('orderList').patchValue(this.lstOrderList);
+       } else { this.spinIcon=false;}
+        });
+
+        this.spinIcon=false;
+
+        var len1 = this.lstOrderList.length;
+        var ordArr =this.orderGenerationForm.get('orderList').value;
+        var patch = this.orderGenerationForm.get('orderList') as FormArray;
+        alert ("len1 :"+len1);
+        for (let i = 0; i < len1; i++) { 
+          // alert ("in for :"+ordArr[i].mth1ConWsQty);
+          var wsTotCons1=ordArr[i].mth1ConWsQty+ordArr[i].mth2ConWsQty+ordArr[i].mth3ConWsQty+ordArr[i].currWsQty
+          var csTotCons1=ordArr[i].mth1ConsSaleQty+ordArr[i].mth1ConsSaleQty+ordArr[i].mth1ConsSaleQty+ordArr[i].currSaleQty
+          patch.controls[i].patchValue({ wsTotCons: wsTotCons1 })
+          patch.controls[i].patchValue({ csTotCons: csTotCons1 })
+        }
+
+     
+     
+      }
+      
+
+      getItemDetails(itmId){
+         this.service.getItemDetail(itmId)
+        .subscribe(
+          data => {
+            this.lstItemDetails = data;
+            console.log(this.lstItemDetails);
+          });
+        }
+      
 
 }
