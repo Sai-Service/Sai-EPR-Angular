@@ -1,5 +1,7 @@
-<div class="center">
+
     <form [formGroup]="jobcardForm" (ngSubmit)="jobcard(jobcardForm.value)">
+    
+        <div class="center">
         <table style="width: 100%;background-color: white;">
             <tr>
                 <td class="PageHeader" style="width: 100%;">
@@ -9,9 +11,8 @@
                 <td>
                     <table>
                         <tr>
-                            <!-- <input hidden formControlName="emplId" class="form-control"> -->
-                            <td colspan="2" style="width: 100%;text-align: center;margin-left: 10px;">
-                                <button class="btn btn-info" data-toggle="modal" data-target="#jobCardSearch"
+                               <td colspan="2" style="width: 100%;text-align: center;margin-left: 10px;">
+                                <button class="btn btn-info" data-toggle="modal" data-target="#jobCardSearch" (click)='LoadSearchForm()'
                                     style="text-align: center; margin-right: 90%;">Find</button>
                             </td>
                         </tr>
@@ -19,32 +20,14 @@
                 </td>
 
 
-<!-- 
-                <table style="width: 100%; background-color: #FFE4B5;">
-                    <tr>
-                        <td style="width: 15%" class="LabelFontStyle">Job&nbsp;Card&nbsp;Number&nbsp;:</td>
-                        <td>
-                            <input type="text" formControlName="jobCardNum1" [(ngModel)]="jobCardNum1"
-                                class="form-control" #myinput>
-                        </td>
-                        <td colspan="8" style="text-align: left; width: 100%;">
-                            <button type="submit" [disabled]="!jobCardNum1" (click)="Search(jobCardNum1)"
-                                class="btn btn-primary"><i class="fa fa-search"></i></button>
-
-                        </td>
-                    </tr>
-                </table> -->
 
             </tr>
         </table>
 
         <fieldset class="RFS">
-            <!-- <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">SEARCH</legend> -->
-            <table class="center" style="width: 100%;background-color: #FFE4B5;">
-              
+                <table class="center" style="width: 100%;background-color: #FFE4B5;">
                         <tr>
-
-                         
+           
                         <td  style="background-color: #FFE4B5;" class="LabelFontStyle" >&nbsp;JC&nbsp;Number&nbsp;:&nbsp;</td>
                    
                         <td>
@@ -67,15 +50,8 @@
                         </td>
 
                         <td  style="background-color: #FFE4B5;" class="LabelFontStyle">&nbsp;JC&nbsp;&nbsp;Status:&nbsp;</td>
-                        
-                        <!-- <td style="background-color: #FFE4B5;">
-                            <input type="text" class="form-control" formControlName="jobStatus" [(ngModel)]='jobStatus'
-                                value={{jobStatus}} >
-                        </td> -->
-                        <!-- [(ngModel)]="jobStatus" comminted -->
                         <td>
                             <select formControlName="jobStatus" id="jobStatus" class="form-control"    >
-                            <!-- (ngModelChange)="onSelectionRevStatus($event)" -->
                             <option value="Opened">Opened</option>
                             <option value="Ready for Invoice">Ready for Invoice</option>
                             <option value="Invoiced">Invoiced</option>
@@ -1523,6 +1499,10 @@
                                                                                     style="width: 4rem; height: 25px; text-align: right;">
                                                                             </td>
 
+                                                                           
+                                                                                <input type="number" min="0"  hidden formControlName="custBasicAmt">
+                                                                                <input type="number" min="0"  hidden formControlName="insBasicAmt">
+
                                                                             <td>
                                                                                 <input type="number" min="0"
                                                                                 formControlName="taxAmt"
@@ -1878,6 +1858,10 @@
                                                                                 class="form-control"
                                                                                 style="width: 5rem;height: 25px; text-align: right;">
                                                                         </td>
+
+                                                                        <input type="number" min="0"  hidden formControlName="custBasicAmt">
+                                                                        <input type="number" min="0"  hidden formControlName="insBasicAmt">
+
                                                                         <td>
                                                                             <input type="number" min="0"
                                                                                 formControlName="taxAmt" disabled
@@ -2124,7 +2108,7 @@
                                                                                             Act&nbsp;No:&nbsp;</td>
 
                                                                                     <td>
-                                                                                        <input type="text" class="form-control" placeholder=""
+                                                                                        <input disabled type="text" class="form-control" placeholder=""
                                                                                             formControlName="accountNo" [(ngModel)]="accountNo"
                                                                                             (keydown.tab)="accountNoSearchfn1(accountNo)"  >
                                                                                           
@@ -2241,10 +2225,10 @@
                                                                             
                                                                             <td style="width: 15%" class="LabelFontStyle"> Name:&nbsp;</td>
                                                                                 
-                                                                            <td> <input type="text"  class="form-control"
+                                                                            <td> <input disabled type="text"  class="form-control"
                                                                             placeholder=""   formControlName="insurerCompName" style="width: 375px;" > </td>
                                                                             <td style="width: 15%" class="LabelFontStyle"> Act&nbsp;No:&nbsp;</td>
-                                                                            <td><input type="number" min="0" class="form-control"   placeholder=""  formControlName="insurerCompNo"  >  </td>
+                                                                            <td><input disabled type="number" min="0" class="form-control"   placeholder=""  formControlName="insurerCompNo"  >  </td>
                                                                         </tr>
 
                                                                         <tr>
@@ -2296,7 +2280,7 @@
                                                                             Valid&nbsp;Upto:&nbsp;
                                                                         </td>
                                                                         <td>
-                                                                            <input type="date"
+                                                                            <input disabled type="date"
                                                                                 class="form-control"
                                                                                 placeholder=""
                                                                                 formControlName="validTillDt" >
@@ -2336,10 +2320,10 @@
                                                                     <tbody>
                                                                         <tr class="ItemStyle" style="text-decoration:none;">
                                                                             <td style="width: 160px;text-align: left;" >Estimated</td>
-                                                                            <td><input type="text" formControlName="estLabor" style="width: 8em;font-weight: bold;font-size: small;text-align: right;"></td>
-                                                                            <td><input type="text" formControlName="estMaterial" style="width: 8em;font-weight: bold;font-size: small;text-align: right;">
+                                                                            <td><input disabled type="text" formControlName="estLabor" style="width: 8em;font-weight: bold;font-size: small;text-align: right;"></td>
+                                                                            <td><input disabled type="text" formControlName="estMaterial" style="width: 8em;font-weight: bold;font-size: small;text-align: right;">
                                                                             </td>
-                                                                            <td><input type="text" formControlName="estTotal" style="width: 8em;font-weight: bold;font-size: small;text-align: right;"></td>
+                                                                            <td><input disabled  type="text" formControlName="estTotal" style="width: 8em;font-weight: bold;font-size: small;text-align: right;"></td>
                                                                         </tr>
                                                                         <div *ngIf="displayCustInsDetails; then CustthenBlock2; else InsCustelseBlock2"> </div>
                                                                         <ng-template #CustthenBlock2>
@@ -2354,11 +2338,11 @@
                                                                         </tr>
                                                                         <tr class="ItemStyle" style="text-decoration:none;">
                                                                             <td style="width: 160px;text-align: left;" >Rount off</td>
-                                                                            <td><input type="text" formControlName="rountOffLab" style="width: 8em;font-weight: bold;font-size: small;text-align: right;">
+                                                                            <td><input disabled type="text" formControlName="rountOffLab" style="width: 8em;font-weight: bold;font-size: small;text-align: right;">
                                                                             </td>
-                                                                            <td><input type="text" formControlName="rountOffMat" style="width: 8em;font-weight: bold;font-size: small;text-align: right;">
+                                                                            <td><input disabled type="text" formControlName="rountOffMat" style="width: 8em;font-weight: bold;font-size: small;text-align: right;">
                                                                             </td>
-                                                                            <td><input type="text" formControlName="rountOffTotl" style="width: 8em;font-weight: bold;font-size: small;text-align: right;">
+                                                                            <td><input disabled  type="text" formControlName="rountOffTotl" style="width: 8em;font-weight: bold;font-size: small;text-align: right;">
                                                                             </td>
                                                                             <td></td>
                                                                         </tr>
@@ -2388,11 +2372,11 @@
 
                                                                         <tr class="ItemStyle" style="text-decoration:none;">
                                                                             <td style="width: 160px;text-align: left;" >Total</td>
-                                                                            <td><input disabled type="text" formControlName="insLabBasicAmt" style="width: 8em;font-weight: bold;font-size: small;text-align: right;">
+                                                                            <td><input disabled type="text" formControlName="gTotLabEstAmt" style="width: 8em;font-weight: bold;font-size: small;text-align: right;">
                                                                             </td>
-                                                                            <td><input disabled type="text" formControlName="insMatBasicAmt" style="width: 8em;font-weight: bold;font-size: small;text-align: right;">
+                                                                            <td><input disabled type="text" formControlName="gTotMatEstAmt" style="width: 8em;font-weight: bold;font-size: small;text-align: right;">
                                                                             </td>
-                                                                            <td><input disabled type="text" formControlName="actualInsAmt" style="width: 8em;font-weight: bold;font-size: small;text-align: right;">
+                                                                            <td><input disabled type="text" formControlName="gTotEstAmt" style="width: 8em;font-weight: bold;font-size: small;text-align: right;">
                                                                             </td>
                                                                             <td></td>
                                                                         </tr>
@@ -2455,6 +2439,10 @@
                                                                         <input type="text" class="form-control" disabled style="width: 10em;"
                                                                              value="{{itemTypeLab}}">
                                                                     </td>
+
+                                                                    <div *ngIf="dispSplitRatio; then DTL1; else DTL2">  </div>
+                                                                    <ng-template #DTL2>
+
                                                                     <td>
                                                                         <select formControlName="disTypeLab"  style="width: 10em;"
                                                                             id="disTypeLab" class="form-control"
@@ -2466,6 +2454,23 @@
                                                                         </select>
                                                                       
                                                                     </td>
+                                                                   </ng-template>
+                                                                   <ng-template #DTL1>
+
+                                                                    <td>
+                                                                        <select disabled formControlName="disTypeLab"  style="width: 10em;"
+                                                                            id="disTypeLab" class="form-control"
+                                                                            (ngModelChange)='onOptionsDisTypeLabSelected($event)'>
+                                                                            <option >--Select--</option>
+                                                                            <option *ngFor="let sc of  DisTypeMatList">
+                                                                                {{sc.model}}
+                                                                            </option>
+                                                                        </select>
+                                                                      
+                                                                    </td>
+                                                                   </ng-template>
+
+
                                                                    
                                                                     
                                                                     <div *ngIf="displayLabDiscount; then LabDiscoutthenBlock; else LabDiscoutelseBlock"></div>
@@ -2498,8 +2503,9 @@
                                                                             </select></td>
                                                                        
 
-                                                                    <td><input disabled type="number" min="0" formControlName="labDiscount"  class="form-control" style="width: 8em;font-weight: bold;font-size: small;"></td>
+                                                                     <td><input disabled type="number" min="0" formControlName="labDiscount"  class="form-control" style="width: 8em;font-weight: bold;font-size: small;"></td>
                                                                    
+
                                                                     </ng-template>
                                                                     <!-- <td><input type="text"  formControlName="labDiscount"></td> -->
                                                                     <td><input disabled type="number" min="0"  [(ngModel)]="labTaxableAmt" style="width: 8em;font-weight: bold;font-size: small;"
@@ -2512,12 +2518,16 @@
                                                                 <tr class="ItemStyle" style="text-decoration:none;">
                                                                     <!-- <td></td> -->
                                                                     
-                                                                    <td style="width: 15%;text-align: center;" class="LabelFontStyle">Customer&nbsp;</td>
+                                                                    <!-- <td style="width: 15%;text-align: center;" class="LabelFontStyle">Customer&nbsp;</td> -->
+                                                                    <td></td>
                                                                     <td>
                                                                         <input type="text" class="form-control" disabled style="width: 110px;font-weight: bold;font-size: small;"
                                                                             value="{{itemTypeMat}}">
                                                                       
                                                                     </td>
+
+                                                                    <div *ngIf="dispSplitRatio; then DTM1; else DTM2">  </div>
+                                                                    <ng-template #DTM2>
                                                                     <td>
                                                                        
                                                                         <select formControlName="disTypeMat" style="width: 110px;"
@@ -2529,6 +2539,21 @@
                                                                             </option>
                                                                         </select>
                                                                     </td>
+                                                                    </ng-template>
+                                                                    <ng-template #DTM1>
+                                                                        <td>
+                                                                           
+                                                                            <select disabled formControlName="disTypeMat" style="width: 110px;"
+                                                                                id="disTypeMat" class="form-control"
+                                                                                (ngModelChange)='onOptionsDisTypeMatSelected($event)'>
+                                                                                <option>--Select--</option>
+                                                                                <option *ngFor="let sc of  DisTypeMatList">
+                                                                                    {{sc.model}}
+                                                                                </option>
+                                                                            </select>
+                                                                        </td>
+                                                                        </ng-template>
+
                                                                    
                                                                     <div
                                                                         *ngIf="displayMatDiscount; then matDiscoutthenBlock; else matDiscoutelseBlock">
@@ -2598,9 +2623,9 @@
                                                                             </td> -->
                                                                             <td></td><td></td><td></td>
                                                                                  
-                                                                            <td><input disabled type="number" min="0"  [(ngModel)]="insLabTaxableAmt" style="width: 8em;font-weight: bold;font-size: small;"
+                                                                            <td><input disabled type="number" min="0"   style="width: 8em;font-weight: bold;font-size: small;"
                                                                                     formControlName="insLabTaxableAmt"></td>
-                                                                            <td><input disabled type="number" min="0"  [(ngModel)]="insLabTotTaxAmt" style="width: 8em;font-weight: bold;font-size: small;"
+                                                                            <td><input disabled type="number" min="0"   style="width: 8em;font-weight: bold;font-size: small;"
                                                                                     formControlName="insLabTotTaxAmt"></td>
                                                                             <td><input disabled type="number" min="0"  formControlName="insLabTotAmt" style="width: 8em;font-weight: bold;font-size: small;"
                                                                                     formControlName="insLabTotAmt"></td>
@@ -2608,15 +2633,16 @@
 
                                                                             <tr class="ItemStyle" style="text-decoration:none;">
 
-                                                                                <td style="width: 15%;text-align: center;" class="LabelFontStyle">Insurance&nbsp;</td>
+                                                                                <!-- <td style="width: 15%;text-align: center;" class="LabelFontStyle">Insurance&nbsp;</td> -->
+                                                                               <td></td>
                                                                                 <td><input type="text" class="form-control" disabled style="width: 110px;font-weight: bold;font-size: small;"
                                                                                         value="{{itemTypeMat}}"> </td>
 
                                                                                 <td></td><td></td><td></td>
                                                                                  
-                                                                            <td><input disabled type="number" min="0"  [(ngModel)]="insMatTaxableAmt" style="width: 8em;font-weight: bold;font-size: small;"
+                                                                            <td><input disabled type="number" min="0"   style="width: 8em;font-weight: bold;font-size: small;"
                                                                                     formControlName="insMatTaxableAmt"></td>
-                                                                            <td><input disabled type="number" min="0"  [(ngModel)]="insMatTotTaxAmt" style="width: 8em;font-weight: bold;font-size: small;"
+                                                                            <td><input disabled type="number" min="0"   style="width: 8em;font-weight: bold;font-size: small;"
                                                                                     formControlName="insMatTotTaxAmt"></td>
                                                                             <td><input disabled type="number" min="0"  formControlName="insMatTotAmt" style="width: 8em;font-weight: bold;font-size: small;"
                                                                                     formControlName="insMatTotAmt"></td>
@@ -2635,23 +2661,28 @@
 
                                                               
                                                                    <!-- <td></td> -->
-                                                                    <td style="width: 15%;text-align: center;" class="LabelFontStyle">
-                                                                        Deductibles&nbsp;</td>
+                                                                   <div *ngIf="dispSplitRatio ; then salv1; else salv2"></div>
+                                                                   <ng-template #salv1>
+                                                                    <td style="width: 15%;text-align: center;" class="LabelFontStyle"> Deductibles&nbsp;</td>
+                                                                       
                                                                     <td>
                                                                         <input type="number" min="0"   style="width:110px;font-weight: bold;font-size: small;"
                                                                             placeholder="" [(ngModel)]="deductibles"
                                                                             formControlName="deductibles" class="form-control">
                                                                     </td>
-                                                                    <td style="width: 15%" class="LabelFontStyle">
-                                                                        Salvage&nbsp;</td>
+                                                                    <td style="width: 15%" class="LabelFontStyle"> Salvage&nbsp;</td>
+                                                                       
                                                                     <td>
                                                                         <input type="number" min="0"   style="width: 110px;font-weight: bold;font-size: small;"
                                                                             placeholder="" formControlName="salvage" class="form-control">
                                                                     </td>
 
-                                                                    <!-- <td style="font-size: small;font-weight: bold;text-align: right;">Total&nbsp;Amt&nbsp;</td> -->
-                                                                   
-                                                                    <!-- <td><input disabled type="number" min="0"  formControlName="totDis" class="form-control" style="width: 8em;font-weight: bold;font-size: small;"></td> -->
+                                                                </ng-template>
+                                                                 <ng-template #salv2>
+                                                                     <td></td><td></td><td></td><td></td>
+                                                                 </ng-template>
+
+                                                                  
                                                                     <td></td> 
                                                                     <td style="width: 15%" class="LabelFontStyle">
                                                                         Cust&nbsp;Total:&nbsp;</td>
@@ -2666,6 +2697,9 @@
                                                                
                                                                 <tr class="ItemStyle" style="text-decoration:none;">
 
+                                                                    <div *ngIf = "dispSplitRatio ; then auth1; else auth2"></div>
+                                                                    <ng-template #auth1> </ng-template>
+                                                                    <ng-template #auth2> 
                                                                     <td style="width: 15%;text-align: center;" class="LabelFontStyle">Discount&nbsp;Type&nbsp;</td>
                                                                     <td>
                                                                         <select formControlName="disCategory" style="width: 10em;"
@@ -2687,14 +2721,18 @@
                                                                             <option value="AGM">AGM</option>
                                                                         </select>
                                                                     </td>
-                                                                    <!-- <td></td><td></td> -->
+                                                                    </ng-template>
 
-                                                                    <td></td> 
-                                                                    <td style="width: 15%" class="LabelFontStyle">
-                                                                        Ins&nbsp;Total:&nbsp;</td>
-                                                                    <td>
-                                                                      <td><input disabled type="number" min="0"  formControlName="insInvTotAmt" class="form-control"  style="width: 8em;font-weight: bold;font-size: small;"></td>
-                                                                    
+                                              
+
+                                                                   <div *ngIf = "dispSplitRatio ; then a1; else b1"></div>
+                                                                    <ng-template #a1>
+                                                                        <td></td> <td></td> <td></td> <td></td> <td></td> 
+                                                                        <td style="width: 15%" class="LabelFontStyle">Ins&nbsp;Total:&nbsp;</td>
+                                                                        <td></td>
+                                                                        <td><input disabled type="number" min="0"  formControlName="insInvTotAmt" class="form-control"  style="width: 8em;font-weight: bold;font-size: small;"></td>
+                                                                    </ng-template>
+                                                                    <ng-template #b1></ng-template>
 
                                                                       
 
@@ -3221,8 +3259,7 @@
             </div>
         </div>
 
-    </form>
-</div>
+    
 
 
 <div class="modal" id="confirmAlert" tabindex="-1" role="dialog" aria-hidden="true" style="width: 500px; text-align: center;">
@@ -3235,6 +3272,13 @@
             <label style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
                 {{message}}
             </label>
+
+            <td> <input  type="text"
+                formControlName="regNo1" value={{regNo1}} class="form-control">
+           </td>
+
+         
+
         </div>
         <div class="modal-footer">
             <table class="center">
@@ -3252,129 +3296,130 @@
         </div>
 </div>
 
+
 <div class="modal fade" id="jobCardSearch" tabindex="-1" role="dialog" aria-labelledby="jobCardSearchLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
          <div class="modal-header" >
-            <!-- style="background-color: darkcyan;" -->
-          <!-- <h5 class="modal-title" id="exampleModal2Label">AR&nbsp;Receipt&nbsp;Application&nbsp;-&nbsp;Receipt&nbsp;No:&nbsp;{{this.receiptNumber}}&nbsp;BillToSite:&nbsp;{{this.billToSiteId}} </h5> -->
-          <h5 class="modal-title" id="jobCardSearchLabel" style="text-align: center;color:blue">Jobcard&nbsp;Search&nbsp; </h5>
-         
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-         </div>
-        
-         <div class="modal-body">
-             <fieldset class="RFS">
+            <h5 class="modal-title" id="jobCardSearchLabel" style="text-align: center;color:blue">Jobcard&nbsp;Search&nbsp; </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+        </div>
+        <div class="modal-body">
+            <fieldset class="RFS">
                 <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Search Criteria</legend>
-             
+         
+          
             <table class="center" style="width: 100%;">
                 <tr>
 
-                         
-                    <td  style="background-color: #FFE4B5;" class="LabelFontStyle" >&nbsp;JC&nbsp;Number&nbsp;:&nbsp;</td>
-               
-                    <td>
-                        <input type="text" formControlName="jobCardNum1" [(ngModel)]="jobCardNum1"
-                            class="form-control" #myinput>
-                    </td>
-
-                    <td  style="background-color: #FFE4B5;" class="LabelFontStyle">&nbsp;Opened&nbsp;&nbsp;Date:&nbsp;</td>
+                    <td  style="background-color: #FFE4B5;" class="LabelFontStyle">&nbsp;Job&nbsp;&nbsp;Number:&nbsp;</td>
                     
                     <td style="background-color: #FFE4B5;">
-                        <input type="date" class="form-control" formControlName="jobCardDate1" [(ngModel)]='jobCardDate1'
-                            value={{jobCardDate1}}  >
+                        <input type="text" class="form-control" formControlName="jobCardNum2"  value={{jobCardNum2}} [(ngModel)]="jobCardNum2" >
                     </td>
 
                     <td  style="background-color: #FFE4B5;" class="LabelFontStyle">&nbsp;Reg&nbsp;&nbsp;Number:&nbsp;</td>
                     
                     <td style="background-color: #FFE4B5;">
-                        <input type="text" class="form-control" formControlName="regNo1" [(ngModel)]='regNo1'
-                            value={{regNo1}} >
+                        <input type="text" class="form-control" formControlName="regNo1"  value={{regNo1}} [(ngModel)]="regNo1" >
                     </td>
 
-                    <td  style="background-color: #FFE4B5;" class="LabelFontStyle">&nbsp;JC&nbsp;&nbsp;Status:&nbsp;</td>
                    
+                    <td  style="background-color: #FFE4B5;" class="LabelFontStyle">&nbsp;Job&nbsp;&nbsp;Date:&nbsp;</td>
+                    
+                    <td style="background-color: #FFE4B5;">
+                        <input type="date" class="form-control" formControlName="JobOpenDt"  value={{JobOpenDt}} [(ngModel)]="JobOpenDt"  >
+                    </td>
+
+                    <td  style="background-color: #FFE4B5;" class="LabelFontStyle">&nbsp;Job&nbsp;&nbsp;Status:&nbsp;</td>
+                    
+                    <!-- <td style="background-color: #FFE4B5;">
+                        <input type="text" class="form-control" formControlName="jobStatus1"  value={{jobStatus1}} [(ngModel)]="jobStatus1"  >
+                    </td> -->
+
                     <td>
-                        <select formControlName="jobStatus1" id="jobStatus1" class="form-control"  >
+                        <select formControlName="jobStatus1" id="jobStatus1" value={{jobStatus1}} class="form-control"  >
                         <!-- (ngModelChange)="onSelectionRevStatus($event)"  [(ngModel)]="jobStatus1"  -->
+                        <option></option>
                         <option value="Opened">Opened</option>
                         <option value="Ready for Invoice">Ready for Invoice</option>
                         <option value="Invoiced">Invoiced</option>
                         <option value="Closed">Closed</option>
                         </select>
                     </td>
-
-                    <td> <button type="button" class="btn btn-primary" (click)="jobcardFind()" >Find</button> </td> 
                    
+
+                     <td>
+                        <button  type="button" class="btn btn-primary"  id="register"   (click)="jobcardFindNew()">Find</button>
+                   </td>
                    
                     </tr>
-                   
+                                     
 
-            </table>
-            </fieldset>
-
-
-            <!-- ------------------------------------------------ -->
-            <fieldset class="RFS">
-                <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Jobcard List</legend>
-              
-                <div class="container1">
-                        <div class="grid_scroll">
-                        <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
-                            <tbody>
-                                    <tr class="GridHeader">
-                                    <th style="width:5rem" scope="col">Srl&nbsp;No&nbsp;</th> 
-                                    <th style="width:10rem" scope="col">Job&nbsp;No&nbsp;</th>
-                                    <th style="width:10rem" scope="col">Job&nbsp;Date</th>
-                                    <th style="width:10rem" scope="col">Job&nbsp;Type</th>
-                                    <th style="width:10rem" scope="col">Status&nbsp;</th>
-                                    <th style="width:10rem" scope="col">Service&nbsp;Advisor</th>
-                                    <th style="width:10rem" scope="col">Customer&nbsp;No&nbsp;</th>
-                                    <th style="width:7rem" scope="col"> Customer&nbsp;Name</th>
-                                    <th style="width:7rem" scope="col"> Conatct&nbsp;No</th>
-                                    <th style="width:6rem" scope="col">Select</th>
-                                </tr>
-                            </tbody>
-                            <tr *ngFor="let com of lstJobcardList let i=index" class="ItemStyle" style="text-decoration:none;font-size: small;">
-                                    <td style="text-align: center;">{{i+1}}</td>
-                                    <td style="text-align: center;">{{com.jobCardNum}}</td>
-                                    <td style="text-align: center;">{{com.jobCardDate}}</td>
-                                    <td style="text-align: center;">{{com.jcType}}</td>
-                                    <td style="text-align: center;">{{com.jobStatus}}</td>
-                                    <td style="text-align: center;">{{com.srvAdvisorName}}</td>
-                                    <td style="text-align: center;">{{com.accountNo}}</td> 
-                                    <td style="text-align: center;">{{com.custName }}</td>
-                                    <td style="text-align: center;">{{com.contact1}}</td>
-                                   
-                                    <!-- <td>
-                                        <button  type="button"  class="btn btn-primary" 
-                                        data-toggle="modal" data-target="#bankStatement1"  (click)="Select(com.statementHeaderId)" style="width: 5rem;color: black;text-align: center;">
-                                        &nbsp;Select</button>
-                                    </td>  -->
-                            </tr> 
-                        </table>
-                    </div>
-                    </div>
-                
+                </table>
                 </fieldset>
 
+                <fieldset class="RFS">
+                    <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Jobcard List</legend>
+                  
+                    <div class="container1">
+                            <div class="grid_scroll">
+                            <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+                                <tbody>
+                                        <tr class="GridHeader">
+                                        <th  scope="col">Srl&nbsp;No&nbsp;</th> 
+                                        <th  scope="col">Reg&nbsp;No&nbsp;</th>
+                                        <th  scope="col">Job&nbsp;No&nbsp;</th>
+                                        <th  scope="col">Job&nbsp;Date</th>
+                                        <th  scope="col">Job&nbsp;Type</th>
+                                        <th  scope="col">Status&nbsp;</th>
+                                        <th  scope="col">Service&nbsp;Advisor</th>
+                                        <th  scope="col">Cust&nbsp;Name</th>
+                                        <th  scope="col">Cust&nbsp;No&nbsp;</th>
 
-            <!-- ----------------------------------------------------- -->
-         </div>
+                                        <!-- <th style="width:7rem" scope="col"> Conatct&nbsp;No</th> -->
+                                        <th style="width:6rem" scope="col">Select</th>
+                                    </tr>
+                                </tbody>
+                                <tr *ngFor="let com of lstJobcardList let i=index" class="ItemStyle" style="text-decoration:none;font-size:small;">
+                                        <td style="text-align: center;width: 2rem;">{{i+1}}</td>
+                                        <td style="text-align: center;width: 5rem;">{{com.regNo}}</td>
+                                        <td style="text-align: center;width: 5rem;">{{com.jobCardNum}}</td>
+                                        <td style="text-align: center;width: 5rem;">{{com.jobCardDate |date:'dd-MM-y' }}</td>
+                                        <td style="text-align: center;width: 5rem;">{{com.attribute1}}</td>
+                                        <td style="text-align: center;width: 8rem;">{{com.status}}</td>
+                                        <td style="text-align: left;width: 16rem;">{{com.fullName}}</td>
+                                        <td style="text-align: left;width: 16rem;">{{com.custName}}</td>
+                                        <td style="text-align: center;width: 2rem;">{{com.custAccountNo}}</td> 
+                                        <button  type="submit" class="btn btn-secondary" data-dismiss="modal" id="register"   (click)="Search(com.jobCardNum)">Select</button>
+                                </tr> 
+                            </table>
+                        </div>
+                        </div>
+                    
+                    </fieldset>
 
-         <div class="modal-footer">
-            <!-- <button  style="width: 8em;" type="button" class="btn btn-info" (click)="reconciledBnk()">Reconciled</button> -->
-            <!-- <button  style="width: 8em;" type="button" class="btn btn-info" (click)="availableBnk()">Available</button> -->
-            <!-- <td>
-                <button  type="button"  class="btn btn-primary" 
-                data-toggle="modal" data-target="#bankStmtAvailable"  (click)="avlTrans()" style="width: 5rem;color: black;text-align: center;">
-                &nbsp;Available</button>
-            </td>  -->
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                
+
+
+         
+
+        </div>
+        <div class="modal-footer">
+
+            
+            
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+
         </div>
         </div>
-    </div>
 </div>
+
+
+
+</div>
+</form>
 

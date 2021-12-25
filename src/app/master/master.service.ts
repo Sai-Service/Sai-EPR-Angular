@@ -1501,7 +1501,7 @@ getSearchByTrans(reqNo):Observable<any>{
   return this.http.get(this.ServerUrl+`/mtrlIssue/reqNum/${reqNo}`)
 
 }
-kkkkk
+
 getItemDetail(itemid):Observable<any>{
   return this.http.get(this.ServerUrl +`/itemMst/${itemid}`)
 }
@@ -2468,7 +2468,38 @@ OrderCategoryList(): Observable<any> {
     return this.http.post(this.ServerUrl + `/fileImport/uploadBJprc`,formData)
     }
 
-////////////////////////////// bulk po upload /////////
+////////////////////////////// Price list File upload /////////
+
+ ///////////////////Back order File upload/////////////////////
+ UploadExcelBackOrderBajaj(formData: FormData,docType:string,mlocId) {
+  let headers1 = new HttpHeaders();
+  var userId1=sessionStorage.getItem('userId');
+  console.log(docType);
+  var docType1=formData.get('docType');
+  formData.append('locId', mlocId);
+  return this.http.post(this.ServerUrl + `/fileImport/uploadbkord`,formData)
+  // http://localhost:8081/fileImport/uploadbkord 
+  }
+////////////////////////////// Back order File upload /////////
+
+  public orderGenBajaj(ordeGenRecord,mLocId,mths) {
+    alert (  "MS>> Loc Id :" +mLocId + " ," +mths);
+      const options = {
+        headers: this.headers
+      };
+      const url = this.ServerUrl + `/spareOrder?locId=${mLocId}&months=${mths}`;
+      return this.http.post(url, ordeGenRecord, options);
+      }
+
+
+
+      getOrderListBajaj (ordNumber): Observable<any> {
+        return this.http.get(this.ServerUrl + `/spareOrder/ByOrderNumber/${ordNumber}`);
+      }
+
+
+
+  ///////////////////////////////////////////////////////////////////////////////////
 bulkpouploadSales(formData: FormData) {
     return this.http.post(this.ServerUrl + `/fileImport/uploadVhPO`, formData)
   }
