@@ -924,14 +924,16 @@
                                                             <td>
                                                                 <!-- <div  *ngIf="displaysegmentList[i]; then thensegmentList; else elsesegmentList"> </div>
                                                                 <ng-template #thensegmentList> -->
+                                                                    <!-- <div *ngIf ="compileType==13"> -->
                                                                 <input type="text" formControlName="segment"
-                                                                    list="dynmicUserIds1" class="form-control"
+                                                                    list="dynmicUserIds1" class="form-control" (keyup)="filterRecord( $event,i)"
                                                                     (ngModelChange)="onOptioninvItemIdSelected($event,i)" />
                                                                 <datalist id="dynmicUserIds1">
                                                                     <option *ngFor="let item of invItemList"
                                                                         [ngValue]="item.itemId">{{item.segment}}
                                                                     </option>
                                                                 </datalist>
+                                                                    <!-- </div> -->
                                                                 <!-- </ng-template>
                                                                 <ng-template #elsesegmentList>
                                                                     <input disabled type="text" formControlName="segment" class="form-control">

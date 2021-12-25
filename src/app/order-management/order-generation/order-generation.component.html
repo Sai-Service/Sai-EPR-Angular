@@ -73,6 +73,19 @@
 
                 <table class="center">
 
+
+                    <table class="center">
+                        <tr>
+
+                        <td> <input hidden  style="width:30px ;"   type="number" formControlName="divisionId" class="form-control" [(ngModel)]="divisionId" > </td>
+                        <td> <input hidden  style="width:30px ;"  type="number" formControlName="locId"  [(ngModel)]="locId" class="form-control"  placeholder="Location Name"> </td>
+                        <td> <input hidden disabled style="width:50px ;"  type="number"  formControlName="emplId" class="form-control" [(ngModel)]="emplId" placeholder=""></td>
+                        <td> <input hidden disabled style="width:30px ;" type="number"  formControlName="ouId"  id="ouId" [(ngModel)]="ouId" class="form-control" ></td>
+                        <td> <input hidden disabled style="width:30px ;" type="number"  formControlName="deptId"  id="deptId" [(ngModel)]="deptId" class="form-control" ></td>
+                                 
+                      </tr>
+                    </table>
+
                     <tr>
 
                         <td>&nbsp;Consumption(No&nbsp;of&nbsp;Months)&nbsp;:&nbsp;</td>
@@ -84,7 +97,7 @@
                         <td>&nbsp;Order&nbsp;No:&nbsp;</td>
 
                             <td>
-                                <input disabled type ="number" class="form-control" formControlName="orderNumber" [(ngModel)]='orderNumber'
+                                <input disabled type ="text" class="form-control" formControlName="orderNumber" 
                                     value={{orderNumber}}  >
                                  
                             </td>
@@ -97,10 +110,11 @@
                                  
                             </td>
 
-
-                           
-
-                            
+                            <td>&nbsp;Order&nbsp;Value:&nbsp;</td>
+                            <td>
+                                <input disabled type ="number" class="form-control" formControlName="orderValue" [(ngModel)]='orderValue'
+                                    value={{orderValue}}>
+                           </td>
                     </tr>
 
                     <tr>
@@ -121,19 +135,36 @@
                                      
                                 </td>
 
-                                <!-- <td>
-                                    <select formControlName="orderStatus" id="orderStatus" class="form-control"  [(ngModel)]="orderStatus"  style="background-color: yellow;">
-                                    <option value="Yes">Yes</option>
-                                    <option value="No">No</option>
-                                    </select>
-                                </td> -->
-
-
                                 <td></td>
 
-                                <!-- <td> <button type="submit" class="btn btn-info" id="register" (click)="clearBackOrder()" style="width: 11rem;">Clear Back Order/In-Transit</button></td> -->
+                                <td> <button style="width:170px;" type="submit" class="btn btn-info" id="register" (click)="CreateOrder()">Generate Order</button></td>
+                               <td></td>
+                                <td> <button style="width: fit-content;"  type="submit" class="btn btn-info" id="register" (click)="ShowOrder()">Show Order List</button></td>
                
+                                <td></td>
+
+
+                               
                     </tr>
+
+                    <!-- <tr>
+
+                        <div *ngIf="spinIcon; then hList1; else hList2"></div>
+                        <ng-template #hList1> 
+                            <div class="d-flex justify-content-center">
+                                <div class="spinner-border text-primary" role="status" >
+                                    <span class="sr-only" id="loading"></span>
+                            
+                                </div>
+                                </div>
+                        </ng-template>
+                        <ng-template #hList2> </ng-template>
+
+                         <td class="LabelFontStyle" style="color: blue;">&nbsp;{{dataDisplay }}&nbsp; </td>
+                    </tr> -->
+
+                  
+                    
                 </table>
         </fieldset>
 
@@ -149,14 +180,30 @@
                               <thead>
                                 <tr class="GridHeader">
                                       <th style="width:4rem" scope="col">Srl&nbsp;No.</th>
+                                      <th style="width:8rem" scope="col">Item&nbsp;Id</th>
                                       <th style="width:8rem" scope="col">Part&nbsp;No</th>
-                                      <th style="width:15rem" scope="col">Description</th>
-                                      <th style="width:6rem" scope="col">Curr Qty</th>
-                                      <th style="width:6rem" scope="col">Order Qty</th>
-                                      <th style="width:8rem" scope="col">Order Value</th>
-                                      <th style="width:8rem" scope="col">Consumption</th>
-                                      <th style="width:8rem" scope="col">Avg Consumption</th>
-                                      <th style="width:8rem" scope="col">Dead Stock</th>
+                                      <th style="width:13rem" scope="col">Description</th>
+                                      <th style="width:15rem" scope="col">Unit&nbsp;Price</th>
+                                      <th style="width:6rem" scope="col">WS-Cons-Mth1</th>
+                                      <th style="width:6rem" scope="col">CS-Cons-Mth1</th>
+                                      <th style="width:6rem" scope="col">WS-Cons-Mth2</th>
+                                      <th style="width:6rem" scope="col">CS-Cons-Mth2</th>
+                                      <th style="width:6rem" scope="col">WS-Cons-Mth3</th>
+                                      <th style="width:6rem" scope="col">CS-Cons-Mth3</th>
+                                      <th style="width:6rem" scope="col">WS-Cons-Curr</th>
+                                      <th style="width:6rem" scope="col">CS-Cons-Curr</th>
+
+                                      <th style="width:6rem" scope="col">WS-Cons-Tot</th>
+                                      <th style="width:6rem" scope="col">CS-Cons-Tot</th>
+
+                                      <th style="width:6rem" scope="col">Curr&nbsp;Qty</th>
+                                      <th style="width:6rem" scope="col">BOrd&nbsp;Qty</th>
+                                      <th style="width:6rem" scope="col">L-Ord-T-Qty</th>
+                                    
+                                      <th style="width:8rem" scope="col">Cust-BOrder</th>
+                                      <th style="width:8rem" scope="col">Order&nbsp;Qty</th>
+                                      <th style="width:8rem" scope="col">Order&nbsp;Value</th>
+                                      
                                      <th style="width:2rem" scope="col">Add+</th>
                                       <th style="width:2rem" scope="col">Del-</th>
                                   </tr>
@@ -167,19 +214,39 @@
                                 <input  hidden style="width:5rem;"  type="number" formControlName="itemId" class="form-control">
                                
                                 <td style="text-align: center;width: 4rem;">{{i+1}}</td>
+                                <td> <input  disabled style="width:3rem;"   type="text" formControlName="itemId"  class="form-control"></td>
                                 <td> <input  disabled style="width:8rem;"   type="text" formControlName="segment"  class="form-control"></td>
                                 <td> <input  disabled style="width:15rem;"  type="text" formControlName="description" class="form-control"></td>
-                                <td> <input  disabled style="width:6rem;"  type="number" formControlName="currQty" class="form-control"></td>
-                                <td> <input   style="width:6rem;background-color: yellow;"   type="number" formControlName="orderQty" class="form-control"></td>
-                                <td> <input  disabled style="width:8rem;"  type="number" formControlName="orderValue" class="form-control"></td>
-                                <td> <input  disabled style="width:8rem;"  type="number" formControlName="consumption" class="form-control"></td>
-                                <td> <input  disabled style="width:8rem;"  type="number" formControlName="avgConsumption" class="form-control"></td>
-                                <td> <input  disabled style="width:8rem;"  type="number" formControlName="deadStock" class="form-control"></td>
+                                <td> <input  disabled style="width:3rem;"   type="number" formControlName="unitPrice" class="form-control"></td>
+                               
+                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="mth1ConWsQty" class="form-control"></td>
+                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="mth1ConsSaleQty" class="form-control"></td>
+                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="mth2ConWsQty" class="form-control"></td>
+                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="mth2ConsSaleQty" class="form-control"></td>
+                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="mth3ConWsQty" class="form-control"></td>
+                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="mth3ConsSaleQty" class="form-control"></td>
+                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="currWsQty" class="form-control"></td>
+                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="currSaleQty" class="form-control"></td>
+                               
+                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="wsTotCons" class="form-control"></td>
+                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="csTotCons" class="form-control"></td>
+                  
+                                
+                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="currentStock" class="form-control"></td>
+                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="backOrderQty" class="form-control"></td>
+                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="intransitQty" class="form-control"></td>
+                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="custBackOrder" class="form-control"></td>
+                               
+                               
+                                <td> <input   style="width:3rem;background-color: yellow;"   type="number" formControlName="orderQty" class="form-control"></td>
+                                <td> <input  disabled style="width:5rem;"  type="number" formControlName="totalValue" class="form-control"></td>
                                
                                 <td><button  type="submit" class="btn btn-info" (click)="addRow(i)"  style="width: min-content;"><i class="fa fa-plus"></i></button>  </td>
                                 <td><button  type="submit" class="btn btn-info" (click)="RemoveRow(i)"  style="width: min-content;"><i class="fa fa-trash"></i></button>  </td>
                                 <!-- (keydown.shift.arrowdown)="addRow(i)" -->
                             </tr>
+
+                          
 
 
 
@@ -192,7 +259,7 @@
             <tr>
                 <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
                 <ng-template #thenBlock1>
-                <td> <button type="submit" class="btn btn-info" id="register" (click)="newMast()">Create</button></td>
+                <!-- <td> <button type="submit" class="btn btn-info" id="register" (click)="CreateOrder()">Create</button></td> -->
                 <td> <button type="submit" class="btn btn-info" id="register" (click)="newMast()">Update</button></td>
                 <td> <button type="submit" class="btn btn-info" id="register" (click)="newMast()">Cancel</button></td>
                 <td> <button type="submit" class="btn btn-info" id="register" (click)="newMast()">Print</button></td>
