@@ -1309,7 +1309,7 @@ export class SalesOrderFormComponent implements OnInit {
                   this.onKey(i, 'Search');
                 }
                 console.log(this.taxCategoryList);
-                  alert(controlinv1[i].taxCategoryId)
+                  // alert(controlinv1[i].taxCategoryId)
                 // let itemTaxCat = this.taxCategoryList.find(d => d.taxCategoryId === controlinv1[i].taxCategoryId);
                 // console.log(itemTaxCat);
                 let itemCateNameList = this.taxCategoryList.find(d => d.taxCategoryId === controlinv1[i].taxCategoryId);
