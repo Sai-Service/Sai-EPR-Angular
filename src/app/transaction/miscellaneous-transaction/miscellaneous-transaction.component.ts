@@ -73,6 +73,8 @@ interface Imiscellaneous {
   View1: string;
   trans: string;
   CostDetail: number;
+  attribute1:string;
+  attribute2:Date;
 }
 export class miscTrans {
   segment: string;
@@ -195,6 +197,9 @@ export class MiscellaneousTransactionComponent implements OnInit {
   title: string;
   sub: string;
 
+  attribute1:string;
+  attribute2:Date;
+
   type1: string;
   dispheader: boolean = false;
   displable: boolean = false;
@@ -264,6 +269,8 @@ export class MiscellaneousTransactionComponent implements OnInit {
       RackNo: [''],
       Row: [''],
       RowNo: [''],
+      attribute1:[''],
+      attribute2:[''],
       cycleLinesList: this.fb.array([]),
     });
   }
@@ -390,6 +397,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
       this.deleteReserveLinewise(trxLineIndex);
       this.itemMap.delete(itemid);
     }
+    // this.cycleLinesList().removeAt(trxLineIndex);
     var formVal = this.miscellaneousForm.get('cycleLinesList').value;
     var patch = this.miscellaneousForm.get('cycleLinesList') as FormArray;
     var len = this.cycleLinesList().length;
