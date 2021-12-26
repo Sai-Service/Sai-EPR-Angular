@@ -201,6 +201,12 @@ export class JobCardComponent implements OnInit {
   bgstType: string;
   bcustomerId: string;
   customerId: string;
+
+  matDiscountPerIns: number=0;
+  labDiscountPerIns: number=0;
+  labDiscountIns:number=0;
+  matDiscoutIns:number=0;
+
   matDiscountPer: number;
   labDiscountPer: number;
   labDiscount:number;
@@ -480,6 +486,12 @@ export class JobCardComponent implements OnInit {
       insInvTotAmt:[],
       deptName:[],
       serviceModel:[],
+
+      matDiscountPerIns: [],
+      labDiscountPerIns: [],
+      labDiscountIns:[],
+      matDiscoutIns:[],
+
       jobCardLabLines: this.fb.array([this.lineDetailsGroup()]),
       jobCardMatLines: this.fb.array([this.distLineDetails()]),
       splitAmounts: this.fb.array([this.splitDetailsGroup()])
@@ -1820,6 +1832,7 @@ export class JobCardComponent implements OnInit {
       this.displayMatDiscount = false;
       this.displayMatDiscount1 = false;
       this.jobcardForm.get('matDiscountPer').enable();
+      this.jobcardForm.get('matDiscout').disable();
       this.jobcardForm.patchValue({matDiscout:0});
       // this.matDiscountAmtCal(0);
       //   this.endDate = new Date();
@@ -1828,6 +1841,7 @@ export class JobCardComponent implements OnInit {
       this.displayMatDiscount = true;
       this.displayMatDiscount1 = true;
       this.jobcardForm.get('matDiscout').enable();
+      this.jobcardForm.get('matDiscountPer').disable();
       this.jobcardForm.patchValue({matDiscountPer:0})
       //   this.LocationMasterForm.get('endDate').reset();
     }
@@ -1854,6 +1868,7 @@ export class JobCardComponent implements OnInit {
     if (event === 'Percentage') {
       this.displayLabDiscount = false;
       this.jobcardForm.get('labDiscountPer').enable();
+      this.jobcardForm.get('labDiscount').disable();
       this.jobcardForm.patchValue({labDiscount:0})
       this.jobcardForm.patchValue({labDiscountPer:0})
       this.labDiscountPerCal(0) ;
@@ -1863,6 +1878,7 @@ export class JobCardComponent implements OnInit {
     if (event === 'Amount') {
       this.displayLabDiscount = true;
       this.jobcardForm.get('labDiscount').enable();
+      this.jobcardForm.get('labDiscountPer').disable();
       this.jobcardForm.patchValue({labDiscount:0})
       this.jobcardForm.patchValue({labDiscountPer:0})
 
