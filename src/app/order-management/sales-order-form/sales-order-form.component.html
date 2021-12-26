@@ -794,11 +794,11 @@
                         </tr>
                         <tr>
                             <td style="width: 15%" class="LabelFontStyle1">
-                                Ex&nbsp;Showrrom&nbsp;Price&nbsp;:&nbsp;
+                                Ex-Showroom&nbsp;Price:&nbsp;
                             </td>
                             <td>
                                 <input disabled type="number" formControlName="basicValue" class="form-control"
-                                    style="width: 150px;">
+                                style="width: 150px;">
                             </td>
                         </tr>
                     </table>
@@ -891,7 +891,7 @@
                                                 <select type="text" formControlName="financerName" id="financerName"
                                                     class="form-control" style="width: 170px;">
                                                     <option>--Select--</option>
-                                                    <option *ngFor="let sc of  financerNameList"  [value]="sc.codeDesc">{{sc.codeDesc}}
+                                                    <option *ngFor="let sc of  financerNameList">{{sc.codeDesc}}
                                                     </option>
                                                 </select>
                                             </td>
@@ -899,14 +899,14 @@
                                                 Finance&nbsp;Amount&nbsp;:&nbsp;
                                             </td>
                                             <td>
-                                                <input type="text" formControlName="financeAmt" 
+                                                <input type="text" formControlName="financeAmt" [(ngModel)]='financeAmt'
                                                     value={{financeAmt}} class="form-control" style="width: 150px;">
                                             </td>
                                             <td style="width: 15%" class="LabelFontStyle">
                                                 EMI&nbsp;:&nbsp;
                                             </td>
                                             <td>
-                                                <input type="text" formControlName="emi"  value={{emi}}
+                                                <input type="text" formControlName="emi" [(ngModel)]='emi' value={{emi}}
                                                     class="form-control" style="width: 150px;">
                                             </td>
                                         </ng-template>
@@ -920,7 +920,7 @@
                                                 Tenure&nbsp;:&nbsp;
                                             </td>
                                             <td>
-                                                <input type="text" formControlName="tenure" 
+                                                <input type="text" formControlName="tenure" [(ngModel)]='tenure'
                                                     value={{tenure}} class="form-control" style="width: 170px;">
                                             </td>
                                             <td style="width: 15%" class="LabelFontStyle">
@@ -928,7 +928,7 @@
                                             </td>
                                             <td>
                                                 <input type="text" formControlName="downPayment"
-                                                   value={{downPayment}} class="form-control"
+                                                    [(ngModel)]='downPayment' value={{downPayment}} class="form-control"
                                                     style="width: 170px;">
                                             </td>
                                         </tr>
@@ -947,10 +947,10 @@
                                             </td>
                                             <td>
                                                 <!-- <input  type="text"  formControlName="exchange"  class="form-control" style="width: 120px;"> -->
-                                                <select type="text" formControlName="exchangeYN" id="exchangeYN"
+                                                <select type="text" formControlName="exchange" id="exchange"
                                                     class="form-control" style="width: 120px;" (change)="exchangeYes($event)">
                                                     <option>--Select--</option>
-                                                    <option *ngFor="let sc of  YesNoList" [value]="sc.cmnDesc">
+                                                    <option *ngFor="let sc of  YesNoList">
                                                         {{sc.cmnDesc}}
                                                     </option>
                                                 </select>
@@ -1315,17 +1315,17 @@
                                                     </div>
                                                     <ng-template #thensegmentInvType>
                                                         <td>
-                                                            <!-- insert   (click)="taxDetails('insert', i, taxCategoryId)" -->
+                                                            <!-- insert    (click)="taxDetails('insert', i, taxCategoryId)"-->
                                                             <input hidden type="number" Value={{lineNumber}}
                                                                 formControlName="lineNumber" class="form-control"
                                                                 style="height: 20px;width: 40px;">
                                                             <a class="nav-link waves-light" value="{{lineNumber}}"
-                                                                data-toggle="tab" href="#panel1006" role="tab">
+                                                                data-toggle="tab" href="#panel1006" role="tab" >
                                                                 {{i+1}}
                                                             </a>
                                                         </td>
                                                         <td>
-                                                            <button type="button" class="btn btn-primary" style="width: fit-content;height: fit-content;"
+                                                            <button type="button" class="btn btn-primary"
                                                                 data-toggle="modal" (click)="openTaxDetails(i)"
                                                                 data-target="#taxDetails">
                                                                 Tax Details
@@ -1375,17 +1375,17 @@
                                                     </ng-template>
                                                     <ng-template #elsesegmentInvType>
                                                         <td>
-                                                            <!-- search  (click)="taxDetails('Search', i, taxCategoryId)"-->
+                                                            <!-- search   (click)="taxDetails('Search', i, taxCategoryId)"-->
                                                             <input hidden type="number" Value={{lineNumber}}
                                                                 formControlName="lineNumber" class="form-control"
                                                                 style="height: 20px;width: 40px;">
                                                             <a class="nav-link waves-light" value="{{lineNumber}}"
-                                                                data-toggle="tab" href="#panel1006" role="tab">
+                                                                data-toggle="tab" href="#panel1006" role="tab" >
                                                                 {{i+1}}
                                                             </a>
                                                         </td>
                                                         <td>
-                                                            <button type="button" class="btn btn-primary" style="width: fit-content;height: fit-content;"
+                                                            <button type="button" class="btn btn-primary"
                                                                 data-toggle="modal" (click)="openTaxDetails(i)"
                                                                 data-target="#taxDetails">
                                                                 Tax Details
@@ -1439,11 +1439,11 @@
                                                                 id="taxCategoryName" class="form-control"
                                                                 style="width: 160px;height: 25px;font-size: 10px;">
                                                                 <option>--Select--</option>
-                                                                <option *ngFor="let sc of  taxCategoryList[i]"  [ngValue]="sc">
+                                                                <option *ngFor="let sc of  taxCategoryList[i]" [ngValue]="sc">
                                                                     {{sc.taxCategoryName}}
                                                                 </option>
                                                             </select>
-                                                            <input hidden type="number" formControlName="taxCategoryId"
+                                                            <input  type="number" formControlName="taxCategoryId"
                                                                 value="taxCategoryId" class="form-control"
                                                                 style="height: 20px;width: 160px;">
                                                         </ng-template>
@@ -1547,12 +1547,11 @@
                                 </table>
                             </div>
                             <!-- <div class="modal" id="taxDetails"> -->
-                           
                                 <div class="modal fade" id="taxDetails" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                     <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
                                       <div class="modal-content">
                                         <div class="modal-header">
-                                          <h5 class="modal-title" id="taxDetails">Tax Details</h5>
+                                          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
                                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                           </button>
@@ -1728,7 +1727,9 @@
                                                                                 style="width: 4rem; text-align: right; height: 25px;font-size: 10px;">
                                                                         </td>
                                                                     </ng-template>
-                                                                    <div   *ngIf="SalesOrderBookingForm.controls['taxAmounts'].controls[j].controls.recoverableFlag.value === 'Y'; then thenBlockRecFlag; else elseBlockRecFlag">   </div>
+                                                                    <div
+                                                                        *ngIf="SalesOrderBookingForm.controls['taxAmounts'].controls[j].controls.recoverableFlag.value === 'Y'; then thenBlockRecFlag; else elseBlockRecFlag">
+                                                                    </div>
                                                                     <ng-template #thenBlockRecFlag>
                                                                         <td><input type="checkbox" disabled
                                                                                 name="recoverableFlag"
@@ -1786,12 +1787,13 @@
                                                     Discount</button>
                                         </div>
                                         <div class="modal-footer">
-                                          <button type="button" class="btn btn-secondary"  (click)="closeTaxModal()" data-dismiss="modal">Close</button>
-                                          
+                                            <button type="button" class="close" class="btn btn-primary" data-dismiss="modal" aria-hidden="true"  (click)="closeTaxModal()">Close</button>
+                                         
                                         </div>
                                       </div>
                                     </div>
                                   </div>
+
 
                             <!-- second panel start here tax details -->
                             <!-- <div class="tab-pane fade" id="panel1006" role="tabpanel">
@@ -2026,7 +2028,7 @@
                             </td>
 
                             <td>
-                                <button type="submit" class="btn btn-primary" (click)="orderLineUpdate()">Update</button>
+                                <button type="submit" class="btn btn-primary" (click)="orderLineUpdate()">Save</button>
                             </td>
                             <td>
                                 <button type="submit" class="btn btn-primary" (click)="createInvoice()"

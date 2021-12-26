@@ -1123,7 +1123,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   }
 
   generateGatePass() {
-    const formValue: IGatePass = this.CounterSaleOrderBookingForm.value();
+    const formValue: IGatePass = this.CounterSaleOrderBookingForm.value;
     formValue.orderNumber = this.orderNumber;
     formValue.emplId = Number(sessionStorage.getItem('emplId'));
     // alert(formValue.orderNumber);
