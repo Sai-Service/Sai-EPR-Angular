@@ -1433,7 +1433,7 @@
                                                                 style="width: 160px;height: 25px;font-size: 10px;">
                                                                 <option>--Select--</option>
                                                                 <option *ngFor="let sc of  taxCategoryList[i]"
-                                                                    [value]="sc">
+                                                                    [value]="sc.taxCategoryName">
                                                                     {{sc.taxCategoryName}}
                                                                 </option>
                                                             </select>
@@ -1783,7 +1783,7 @@
 
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-danger"
-                                                data-dismiss="modal">Close</button>
+                                                data-dismiss="modal"  (click)="processTaxLine(selectedLine)">Close</button>
                                         </div>
 
                                     </div>

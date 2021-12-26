@@ -627,7 +627,7 @@ export class SalesOrderFormComponent implements OnInit {
 
           (controlinv.controls[k]).patchValue({
             taxCategoryId: itemCateNameList.taxCategoryId,
-            taxCategoryName: itemCateNameList,
+            taxCategoryName: itemCateNameList.taxCategoryName,
           })
         }
       );
@@ -675,7 +675,7 @@ export class SalesOrderFormComponent implements OnInit {
 
                         (controlinv.controls[k]).patchValue({
                           taxCategoryId: itemCateNameList.taxCategoryId,
-                          taxCategoryName: itemCateNameList,
+                          taxCategoryName: itemCateNameList.taxCategoryName,
                         })
                       }
                     );
@@ -716,7 +716,7 @@ export class SalesOrderFormComponent implements OnInit {
                           let itemCateNameList = this.taxCategoryList[k].find(d => d.taxCategoryName === data.obj[i].taxCategoryName);
                           (controlinv.controls[k]).patchValue({
                             taxCategoryId: itemCateNameList.taxCategoryId,
-                            taxCategoryName: itemCateNameList,
+                            taxCategoryName: itemCateNameList.taxCategoryName,
                           })
                         }
                       );
@@ -1296,7 +1296,7 @@ export class SalesOrderFormComponent implements OnInit {
                 }
                 let itemTaxCat = this.taxCategoryList.find(d => d.taxCategoryId === controlinv1[i].taxCategoryId);
                 console.log(itemTaxCat);
-                controlinv2.controls[i].patchValue({ taxCategoryName: itemTaxCat });
+                controlinv2.controls[i].patchValue({ taxCategoryName: itemTaxCat.taxCategoryName });
                 controlinv2.controls[i].patchValue({ taxCategoryId: itemTaxCat.taxCategoryId });
               }
             }
@@ -1427,6 +1427,7 @@ export class SalesOrderFormComponent implements OnInit {
   orderLineUpdate() {
     // const formValue: ISalesBookingForm = (this.SalesOrderBookingForm.value);
     var orderLines = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value;
+    
     let jsonData = this.SalesOrderBookingForm.value;
     let salesObj = Object.assign(new SalesOrderobj(), jsonData);
     salesObj.setoeOrderLinesAllList(orderLines);
