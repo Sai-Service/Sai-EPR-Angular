@@ -207,10 +207,10 @@ export class JobCardComponent implements OnInit {
   labDiscountIns:number=0;
   matDiscoutIns:number=0;
 
-  matDiscountPer: number;
-  labDiscountPer: number;
-  labDiscount:number;
-  matDiscout:number;
+  matDiscountPer: number=0;;
+  labDiscountPer: number=0;;
+  labDiscount:number=0;;
+  matDiscout:number=0;
   accountNo: number;
   custName: string;
   displaylabMatTab = true;
@@ -296,6 +296,8 @@ export class JobCardComponent implements OnInit {
   reopenButton=false;
   cancelButton=false;
   cancellationStatus=false;
+  showMatDisCol=false;
+  showLabDisCol=false;
 
   // public minDatetime = new Date();
   // promiseDate = new Date();
@@ -1254,8 +1256,8 @@ export class JobCardComponent implements OnInit {
             this.dispSplitRatio=false;}
            else {
              this.dispSplitRatio=true;
-             this.jobcardForm.get('labDiscount').disable();
-             this.jobcardForm.get('matDiscout').disable();
+            //  this.jobcardForm.get('labDiscount').disable();
+            //  this.jobcardForm.get('matDiscout').disable();
             }
             
 
@@ -1654,24 +1656,18 @@ export class JobCardComponent implements OnInit {
   } else  { alert ("Please add Material details and Proceed...");}
   }
 
-      updateArInvoice() {
-    
-
-        const formValue: IjobCard = this.tranceFun(this.jobcardForm.value);
+  updateArInvoice() {
+       const formValue: IjobCard = this.tranceFun(this.jobcardForm.value);
         formValue.emplId = Number(sessionStorage.getItem('emplId'));
         formValue.dmsCustId = Number(this.jobcardForm.get('dmsCustId').value);
+      var matDis=this.jobcardForm.get('matDiscout').value;
+      var labDis=this.jobcardForm.get('labDiscount').value;
+        alert ( "matDis,labDis :" +matDis +","+labDis);
       if(this.dispReadyInvoice===false) {alert( "Updation Not allowed...");  return;}
 
         var jcId =this.jobcardForm.get("jobCardId").value
-
         var jtype =this.jobcardForm.get('jcType').value
-        if(jtype==='BS') {
-          this.labDiscount=0;
-          this.labDiscountPer=0;
-          this.matDiscout=0;
-          this.matDiscountPer=0;
-        }
-        
+             
       // {alert("Update Jcard....wip..."+jcId); 
 
       this.serviceService.jobcardUpdateSubmit(formValue).subscribe((res: any) => {
@@ -1829,27 +1825,22 @@ export class JobCardComponent implements OnInit {
    
     if(this.saveBillButton) {
     if (event === 'Percentage') {
-      this.displayMatDiscount = false;
-      this.displayMatDiscount1 = false;
-      this.jobcardForm.get('matDiscountPer').enable();
-      this.jobcardForm.get('matDiscout').disable();
+        this.showMatDisCol=false;
       this.jobcardForm.patchValue({matDiscout:0});
-      // this.matDiscountAmtCal(0);
-      //   this.endDate = new Date();
+      
     }
     else if (event === 'Amount') {
-      this.displayMatDiscount = true;
-      this.displayMatDiscount1 = true;
-      this.jobcardForm.get('matDiscout').enable();
-      this.jobcardForm.get('matDiscountPer').disable();
+   
+      this.showMatDisCol=true;
       this.jobcardForm.patchValue({matDiscountPer:0})
-      //   this.LocationMasterForm.get('endDate').reset();
+     
     }
 
     if (event === '--Select--') {
       this.displayMatDiscount = false;
-      this.jobcardForm.get('matDiscout').disable();
-      this.jobcardForm.get('matDiscountPer').disable();
+      this.showMatDisCol=false;
+      // this.jobcardForm.get('matDiscout').disable();
+      // this.jobcardForm.get('matDiscountPer').disable();
       this.jobcardForm.patchValue({matDiscout:0})
       this.jobcardForm.patchValue({matDiscountPer:0})
     }
@@ -1866,29 +1857,25 @@ export class JobCardComponent implements OnInit {
   onOptionsDisTypeLabSelected(event) {
     if(this.saveBillButton) {
     if (event === 'Percentage') {
-      this.displayLabDiscount = false;
-      this.jobcardForm.get('labDiscountPer').enable();
-      this.jobcardForm.get('labDiscount').disable();
+      this.showLabDisCol=false;
       this.jobcardForm.patchValue({labDiscount:0})
       this.jobcardForm.patchValue({labDiscountPer:0})
-      this.labDiscountPerCal(0) ;
+       this.labDiscountPerCal(0) ;
         
      
     }
     if (event === 'Amount') {
-      this.displayLabDiscount = true;
-      this.jobcardForm.get('labDiscount').enable();
-      this.jobcardForm.get('labDiscountPer').disable();
+      this.showLabDisCol=true;
       this.jobcardForm.patchValue({labDiscount:0})
       this.jobcardForm.patchValue({labDiscountPer:0})
-
       this.labDiscountAmtCal(0);
     }
 
     if (event === '--Select--') {
       this.displayLabDiscount = true;
-      this.jobcardForm.get('labDiscount').disable();
-      this.jobcardForm.get('labDiscountPer').disable();
+      // this.jobcardForm.get('labDiscount').disable();
+      // this.jobcardForm.get('labDiscountPer').disable();
+      this.showLabDisCol=false;
       this.jobcardForm.patchValue({labDiscount:0})
       this.jobcardForm.patchValue({labDiscountPer:0})
     }
@@ -1963,8 +1950,8 @@ export class JobCardComponent implements OnInit {
     // alert ("formValue.labDiscountPer :"+formValue.labDiscountPer);
     // alert ("formValue.matDiscountPer :"+formValue.matDiscountPer);
 
-    var jtype =this.jobcardForm.get('jcType').value;
-    if(jtype==='Service') {
+    // var jtype =this.jobcardForm.get('jcType').value;
+    // if(jtype==='Service') {
      
     if(formValue.disTypeLab=='Percentage' && (formValue.labDiscountPer <=0 )){this.saveBillValidation = false;
       msg1="DISCOUNT : Should not be null....";alert(msg1);return;}
@@ -1975,14 +1962,6 @@ export class JobCardComponent implements OnInit {
       msg1="DISCOUNT : Should not be null....";alert(msg1);return;}
     if(formValue.disTypeMat=='Amount' && (formValue.matDiscout<=0 )){this.saveBillValidation = false;
         msg1="DISCOUNT AMT: Enter Valid Discount Amt...";alert(msg1);return;}
-
-    } else {
-      this.labDiscount=0;
-      this.labDiscountPer=0;
-      this.matDiscout=0;
-      this.matDiscountPer=0;
-    }
-    
 
     this.saveBillValidation=true;
   
@@ -2065,6 +2044,8 @@ export class JobCardComponent implements OnInit {
 
   labDiscountPerCal(event) {
     // if(this.lstcomments.jobStatus == 'Invoiced') { return;}
+
+    // alert("labDiscountPerCal :"+ event);
     if(event==='--Select--') {event=0;}
 
     var labBasicAmt = (this.jobcardForm.get('labBasicAmt').value)
@@ -2089,27 +2070,26 @@ export class JobCardComponent implements OnInit {
       }
     }
 
-   
-
-
-
     var perValueLab = (labBasicAmt * event) / 100;
     var aaa = labBasicAmt - perValueLab;
     var netAmt=((totlabtaxamt + aaa) +matTotAt);
     netAmt=Math.round(netAmt);
 
     var labLineTot=totlabtaxamt + aaa;
-
+   
     this.jobcardForm.patchValue({
       labDiscount: Math.round((perValueLab+Number.EPSILON)*100)/100, 
       labTaxableAmt: Math.round((labBasicAmt - perValueLab+Number.EPSILON)*100)/100, 
       labTotTaxAmt: Math.round((totlabtaxamt+Number.EPSILON)*100)/100, 
       labTotAmt:Math.round((labLineTot+Number.EPSILON)*100)/100, 
      });
+
+     
     this.CalculateTotal();
   }
 
   labDiscountAmtCal(event) {
+    // alert("labDiscountAmtCal :"+ event);
     // if(this.lstcomments.jobStatus == 'Invoiced') { return;}
     // alert(event);
     // var l=event;
@@ -2153,6 +2133,7 @@ export class JobCardComponent implements OnInit {
 
   
   matDiscountPerCal(event) {
+    // alert("matDiscountPerCal :"+ event);
 
   //  if(this.lstcomments.jobStatus == 'Invoiced') { return;}
     
@@ -2188,6 +2169,7 @@ export class JobCardComponent implements OnInit {
 
   
   matDiscountAmtCal(event) {
+    // alert("matDiscountAmtCal :"+ event);
     // if(this.lstcomments.jobStatus == 'Invoiced') { return;}
   
     var matBasicAmt = (this.jobcardForm.get('matBasicAmt').value)
