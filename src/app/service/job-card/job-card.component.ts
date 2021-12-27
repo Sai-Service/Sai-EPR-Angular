@@ -169,7 +169,7 @@ export class JobCardComponent implements OnInit {
   RegNoList2: any;
   userList1: any[] = [];
   userList2: any[] = [];
-  deductibles: number = 0;
+  ecaAmt: number = 0;
   lastkeydown1: number = 0;
   itemTypeLab: string = 'Labor';
   itemTypeMat: string = 'Parts';
@@ -296,8 +296,12 @@ export class JobCardComponent implements OnInit {
   reopenButton=false;
   cancelButton=false;
   cancellationStatus=false;
+  showLabdisP=false;
   showMatDisCol=false;
+  showMatDisP=false;
   showLabDisCol=false;
+ 
+  
 
   // public minDatetime = new Date();
   // promiseDate = new Date();
@@ -472,7 +476,7 @@ export class JobCardComponent implements OnInit {
       totTaxableAmt:[],
       totTaxAmt: [],
       invTotAmt: [],
-      deductibles: [],
+      ecaAmt: [],
       salvage: [],
       disCategory: [],
       disAuthBy: [],
@@ -1826,11 +1830,12 @@ export class JobCardComponent implements OnInit {
     if(this.saveBillButton) {
     if (event === 'Percentage') {
         this.showMatDisCol=false;
+        this.showMatDisP=true;
       this.jobcardForm.patchValue({matDiscout:0});
       
     }
     else if (event === 'Amount') {
-   
+      this.showMatDisP=false;
       this.showMatDisCol=true;
       this.jobcardForm.patchValue({matDiscountPer:0})
      
@@ -1839,6 +1844,9 @@ export class JobCardComponent implements OnInit {
     if (event === '--Select--') {
       this.displayMatDiscount = false;
       this.showMatDisCol=false;
+      this.showMatDisP=false;
+      this.showLabdisP=false;
+      this.showLabDisCol=false;
       // this.jobcardForm.get('matDiscout').disable();
       // this.jobcardForm.get('matDiscountPer').disable();
       this.jobcardForm.patchValue({matDiscout:0})
@@ -1858,6 +1866,7 @@ export class JobCardComponent implements OnInit {
     if(this.saveBillButton) {
     if (event === 'Percentage') {
       this.showLabDisCol=false;
+      this.showLabdisP=true;
       this.jobcardForm.patchValue({labDiscount:0})
       this.jobcardForm.patchValue({labDiscountPer:0})
        this.labDiscountPerCal(0) ;
@@ -1866,6 +1875,7 @@ export class JobCardComponent implements OnInit {
     }
     if (event === 'Amount') {
       this.showLabDisCol=true;
+      this.showLabdisP=false;
       this.jobcardForm.patchValue({labDiscount:0})
       this.jobcardForm.patchValue({labDiscountPer:0})
       this.labDiscountAmtCal(0);
