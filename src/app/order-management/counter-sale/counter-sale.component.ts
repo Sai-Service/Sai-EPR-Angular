@@ -1123,7 +1123,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   }
 
   generateGatePass() {
-    const formValue: IGatePass = this.CounterSaleOrderBookingForm.value();
+    const formValue: IGatePass = this.CounterSaleOrderBookingForm.value;
     formValue.orderNumber = this.orderNumber;
     formValue.emplId = Number(sessionStorage.getItem('emplId'));
     // alert(formValue.orderNumber);
@@ -1391,7 +1391,12 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
             this.CounterSaleOrderBookingForm.patchValue({ paymentType: select.lookupValue })
             this.CounterSaleOrderBookingForm.get('custName').disable();
             this.CounterSaleOrderBookingForm.get('mobile1').disable();
+            // alert(this.custSiteList.length)
             if (this.custSiteList.length === 1) {
+              this.CounterSaleOrderBookingForm.patchValue({ name: this.custSiteList[0].siteName });
+              this.onOptionsSelectedcustSiteName(this.custSiteList[0].siteName);
+            }
+            else{
               this.CounterSaleOrderBookingForm.patchValue({ name: this.custSiteList[0].siteName });
               this.onOptionsSelectedcustSiteName(this.custSiteList[0].siteName);
             }
@@ -1475,6 +1480,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       alert('First Create OU wise Site to continue process!')
     }
     else {
+      // alert(this.selCustomer.customerId)
       this.CounterSaleOrderBookingForm.patchValue(selSite);
       this.custName = this.selCustomer.custName;
       this.customerId = this.selCustomer.customerId;
