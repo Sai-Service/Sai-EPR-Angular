@@ -353,7 +353,61 @@
             </tr>
 
 
-       
+            <tr>
+                <td style="border: 1px solid black;padding-left: 5px;">Stock Ledger</td>
+                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>From&nbsp;Date&nbsp;</td>&nbsp;&nbsp;&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="stockLedgerfromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="stockLedgerToDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>SubInventory&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="text" class="form-control"  formControlName="stockLedgerSubInv" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Segment&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="text" formControlName="segment"
+                                list="dynmicUserIds1" class="form-control" (keydown.tab)="filterRecord($event)" />
+                            <datalist id="dynmicUserIds1">
+                                <option *ngFor="let item of invItemList" [ngValue]="item.segment" >{{item.segment}}</option>
+                            </datalist>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Ship&nbsp;To&nbsp;Location&nbsp;</td>&nbsp;
+                            <td>
+                                <select formControlName="stockLedgerToLoc" id="stockLedgerToLoc" class="form-control">
+                                    <option>--Select--</option>
+                                    <option *ngFor="let sc of  BillShipToList" [ngValue]="sc.locId">
+                                        {{sc.locCode}}
+                                    </option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>User&nbsp;Name&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="text" class="form-control"  formControlName="stockLedgerUserName">
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="border: 1px solid black;padding-left: 5px;">
+                    <button class="btn-primary" (click)="stockLedger()">View Report</button>
+                </td>
+            </tr>
        
           
          

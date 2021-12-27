@@ -137,6 +137,14 @@ export class ReportServiceService {
     });
   }
 
+  stockLedgerReport(fromDate, toDate, subInvCode, partNo,locId,userName){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/StockLedger?fromDate=${fromDate}&toDate=${toDate}&subInvCode=${subInvCode}&partNo=${partNo}&locId=${locId}&userName=${userName}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
   spstktrfMdSummaryReport(invcDt1,invcDt4,locId,tolocId){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/SprStkTrfMade?fromDate=${invcDt1}&toDate=${invcDt4}&fromLoc=${locId}&toLoc=${tolocId}`;
     return this.http.get(REQUEST_URI, {

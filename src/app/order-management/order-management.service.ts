@@ -370,6 +370,11 @@ public pickTicketInvoiceFun(pickTicketInvDels) {
     }
   }
 
+  dealerShipBaseAmt(model,variant): Observable<any> {
+    if(variant !=null &&  variant!=null) {
+     return this.http.get(this.ServerUrl + `/orderHeader/getVehiclePrice?code=${model}&variant=${variant}`);
+    }
+  }
 
 
   // ////////////////************Order Payment Receipt **************//////////////////

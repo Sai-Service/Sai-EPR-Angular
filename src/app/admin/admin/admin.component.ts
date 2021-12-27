@@ -481,18 +481,21 @@ export class AdminComponent implements OnInit {
         itemCode = itemCode1;
         // alert(itemCode + 'item in else');
       }
-      // alert(itemCode.length + 'length');
+       alert(itemCode.length + 'length'+this.ItemIdList.length);
       // enter keycode
       if (itemCode.length >= 4 && this.ItemIdList.length <= 1) {
         this.service
           .searchByItemSegmentDiv(this.divisionId, itemCode.toUpperCase())
           .subscribe((data) => {
             this.ItemIdList = data;
+            
             // this.Select(data[0].itemId);
           });
       } else {
+        if(this.ItemIdList.length<=2){
         alert('Please Enter 4 characters of item number!!');
         return;
+        }
       }
       if (itemCode.length === 8 ) {
         // alert('in len if' + itemCode.toUpperCase());
@@ -540,6 +543,7 @@ export class AdminComponent implements OnInit {
       } else {
         alert('Stock Details not availabe for item - ' + itemId);
       }
+      this.ItemIdList =[];
     });
   }
   userCheck(roleId: number): boolean {

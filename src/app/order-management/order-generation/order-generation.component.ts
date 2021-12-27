@@ -104,8 +104,8 @@ lineDetailsGroup() {
     mth3ConsSaleQty:['', [Validators.required]],
     currWsQty:['', [Validators.required]],
     currSaleQty:['', [Validators.required]],
-    wsTotCons:['', [Validators.required]],
-    csTotCons:['', [Validators.required]],
+    conWsQty:['', [Validators.required]],
+    consSaleQty:['', [Validators.required]],
  
     currentStock: ['', [Validators.required]],
     backOrderQty: ['', [Validators.required]],
@@ -286,20 +286,20 @@ CreateOrder() {
       }
 
 
-      UpdateTotalConsumption() {
+      // UpdateTotalConsumption() {
 
-        var len1 = this.lineDetailsArray().length;
-        var ordArr =this.orderGenerationForm.get('orderList').value;
-        var patch = this.orderGenerationForm.get('orderList') as FormArray;
-        for (let i = 0; i < len1; i++) { 
-          // alert ("in for :"+ordArr[i].mth1ConWsQty);
-          var wsTotCons1=ordArr[i].mth1ConWsQty+ordArr[i].mth2ConWsQty+ordArr[i].mth3ConWsQty+ordArr[i].currWsQty
-          var csTotCons1=ordArr[i].mth1ConsSaleQty+ordArr[i].mth1ConsSaleQty+ordArr[i].mth1ConsSaleQty+ordArr[i].currSaleQty
+      //   var len1 = this.lineDetailsArray().length;
+      //   var ordArr =this.orderGenerationForm.get('orderList').value;
+      //   var patch = this.orderGenerationForm.get('orderList') as FormArray;
+      //   for (let i = 0; i < len1; i++) { 
+      //     // alert ("in for :"+ordArr[i].mth1ConWsQty);
+      //     var wsTotCons1=ordArr[i].mth1ConWsQty+ordArr[i].mth2ConWsQty+ordArr[i].mth3ConWsQty+ordArr[i].currWsQty
+      //     var csTotCons1=ordArr[i].mth1ConsSaleQty+ordArr[i].mth1ConsSaleQty+ordArr[i].mth1ConsSaleQty+ordArr[i].currSaleQty
                   
-          patch.controls[i].patchValue({wsTotCons:wsTotCons1});
-          patch.controls[i].patchValue({csTotCons:csTotCons1});
-        }
-      }
+      //     patch.controls[i].patchValue({wsTotCons:wsTotCons1});
+      //     patch.controls[i].patchValue({csTotCons:csTotCons1});
+      //   }
+      // }
       
 
       getItemDetails(itmId){

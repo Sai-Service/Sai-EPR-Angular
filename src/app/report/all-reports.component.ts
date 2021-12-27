@@ -40,7 +40,10 @@ export class AllReportsComponent implements OnInit {
   decimal_value: number;
   sidfromDate: Date;
   sidtoDate: Date;
+  invItemList = new Array();
+  subInvCode: any;
   spIssueSummfromDate: Date;
+  stockLedgerSubInv:string;
   spstktrfMdSumToLoc: number;
   spIssueSummtoDate: Date;
   spstktrfMdToLoc: number;
@@ -82,6 +85,12 @@ export class AllReportsComponent implements OnInit {
   spstktrfRecivedSumToDate: Date;
   spstktrfRecivedSumToLoc: number;
   spstktrfRecivedSumFromLoc: number;
+
+  stockLedgerfromDate: Date;
+  stockLedgerToDate: Date;
+  segment: string;
+  stockLedgerToLoc: string;
+  stockLedgerUserName: string;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) {
     this.reportForm = this.fb.group({
@@ -127,6 +136,12 @@ export class AllReportsComponent implements OnInit {
       spstktrfRecivedSumToDate: [],
       spstktrfRecivedSumToLoc: [],
       spstktrfRecivedSumFromLoc: [],
+      stockLedgerfromDate: [],
+      stockLedgerToDate: [],
+      segment: [],
+      stockLedgerToLoc: [],
+      stockLedgerUserName: [],
+      stockLedgerSubInv:[],
     })
   }
 
@@ -179,6 +194,25 @@ export class AllReportsComponent implements OnInit {
           this.BillShipFromList = data;
         }
       );
+
+
+    this.service.invItemList2New('GOODS', (sessionStorage.getItem('deptName')), (sessionStorage.getItem('divisionId')), '36DH1601')
+      .subscribe(
+        data => {
+          this.invItemList = data;
+          console.log(this.invItemList);
+        }
+      );
+
+
+      this.service.subInvCode2(sessionStorage.getItem('deptId'), sessionStorage.getItem('divisionId')).subscribe(
+        data => {
+          this.subInvCode = data;
+          console.log(this.subInvCode);
+          this.stockLedgerSubInv = this.subInvCode.subInventoryCode;
+          this.reportForm.patchValue({stockLedgerSubInv:this.subInvCode.subInventoryCode})
+        });
+
   }
 
 
@@ -189,7 +223,7 @@ export class AllReportsComponent implements OnInit {
     var spreceipttoDate2 = this.reportForm.get('purRegToDt').value;
     var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
     const fileName = 'Purchase-Register-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
-  
+
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.sppurRegidetailReport(fromDate, toDate, sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
       .subscribe(data => {
@@ -206,9 +240,9 @@ export class AllReportsComponent implements OnInit {
     var fromDate = this.pipe.transform(spreceiptfromDate2, 'dd-MMM-yyyy');
     var spreceipttoDate2 = this.reportForm.get('sppurRegiSummtoDate').value;
     var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
-    const fileName = 'Purchase-Register-Summary-' + sessionStorage.getItem('locName').replace(' ','') + '-' + fromDate + '-TO-' + toDate + '.xls';
+    const fileName = 'Purchase-Register-Summary-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    
+
     this.reportService.sppurRegiSummReport(fromDate, toDate, sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
       .subscribe(data => {
         // var blob = new Blob([data], { type: 'application/pdf' });
@@ -242,7 +276,7 @@ export class AllReportsComponent implements OnInit {
     var invcDt3 = this.reportForm.get('sidtoDate').value;
     var toDate = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');
     const fileName = 'SP-Issue-Details' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
-  
+
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.spIssueDetailsReport(fromDate, toDate, sessionStorage.getItem('locId'))
       .subscribe(data => {
@@ -315,7 +349,7 @@ export class AllReportsComponent implements OnInit {
     var invcDt2 = this.reportForm.get('invcDt1').value;
     var fromDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
     //const fileName = 'download.pdf';
-    const fileName = 'SP-Debtors-' + sessionStorage.getItem('locName').trim() + '-' + fromDate +'.xls';
+    const fileName = 'SP-Debtors-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.SPDebtorReport(fromDate, sessionStorage.getItem('locId'))
       .subscribe(data => {
@@ -324,7 +358,7 @@ export class AllReportsComponent implements OnInit {
         // var printWindow = window.open(url, '', 'width=800,height=500');
         // printWindow.open
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-      
+
       })
   }
 
@@ -387,6 +421,50 @@ export class AllReportsComponent implements OnInit {
         printWindow.open
       })
   }
+
+  stockLedger(){
+    var spreceiptfromDate2 = this.reportForm.get('stockLedgerfromDate').value;
+    var fromDate = this.pipe.transform(spreceiptfromDate2, 'dd-MMM-yyyy');
+    var spreceipttoDate2 = this.reportForm.get('stockLedgerToDate').value;
+    var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
+    var subInvCode = this.reportForm.get('stockLedgerSubInv').value;
+    var partNo= this.reportForm.get('segment').value;
+    var locId=this.reportForm.get('stockLedgerToLoc').value;
+    var userName=this.reportForm.get('stockLedgerUserName').value;
+    this.reportService.stockLedgerReport(fromDate, toDate, subInvCode, partNo,locId,userName)
+    .subscribe(data => {
+      var blob = new Blob([data], { type: 'application/pdf' });
+      var url = URL.createObjectURL(blob);
+      var printWindow = window.open(url, '', 'width=800,height=500');
+      printWindow.open
+    })
+  }
+
+
+  filterRecord(event) {
+    var itemCode = event.target.value;
+    if (itemCode.length === 4) {
+      // if (event.keyCode == 13) {
+        this.service.invItemList2New('GOODS', (sessionStorage.getItem('deptName')), (sessionStorage.getItem('divisionId')), itemCode.toUpperCase())
+          .subscribe((data) => {
+            if (data.length === 0) {
+              alert('Item Not Present in Master');
+              return;
+            }
+            else {
+              this.invItemList = data;
+            }
+          });
+      // }
+    }
+    else if (itemCode.length === 3) {
+      alert('Please Enter 4 characters of item number!!');
+      return;
+    }
+  }
+
+  onOptioninvItemIdSelected(event) { }
+
 
   refresh() {
     window.location.reload();
