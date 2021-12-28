@@ -13,8 +13,9 @@
                         <tr>
                                <td colspan="2" style="width: 100%;text-align: center;margin-left: 10px;">
                                 <button class="btn btn-info" data-toggle="modal" data-target="#jobCardSearch" (click)='LoadSearchForm()'
-                                    style="text-align: center; margin-right: 90%;">Find</button>
+                                    style="text-align: center; font-size: small;font-weight: bolder; margin-right: 90%;">Find</button>
                             </td>
+
                         </tr>
                     </table>
                 </td>
@@ -24,7 +25,7 @@
             </tr>
         </table>
 
-        <fieldset class="RFS">
+                <!-- <fieldset class="RFS">
                 <table class="center" style="width: 100%;background-color: #FFE4B5;">
                         <tr>
            
@@ -66,7 +67,7 @@
                        
             </table>
 
-            </fieldset>
+            </fieldset> -->
 
 
 
@@ -3285,13 +3286,13 @@
                     <td  style="background-color: #FFE4B5;" class="LabelFontStyle">&nbsp;Job&nbsp;&nbsp;Number:&nbsp;</td>
                     
                     <td style="background-color: #FFE4B5;">
-                        <input type="text" class="form-control" formControlName="jobCardNum2"  value={{jobCardNum2}} [(ngModel)]="jobCardNum2" >
+                        <input type="text" class="form-control" formControlName="jobCardNum2"  value={{jobCardNum2}} [(ngModel)]="jobCardNum2" style="text-transform:uppercase;"  >
                     </td>
 
                     <td  style="background-color: #FFE4B5;" class="LabelFontStyle">&nbsp;Reg&nbsp;&nbsp;Number:&nbsp;</td>
                     
                     <td style="background-color: #FFE4B5;">
-                        <input type="text" class="form-control" formControlName="regNo1"  value={{regNo1}} [(ngModel)]="regNo1" >
+                        <input type="text" class="form-control" formControlName="regNo1"  value={{regNo1}} [(ngModel)]="regNo1" style="text-transform:uppercase;" >
                     </td>
 
                    
@@ -3321,6 +3322,10 @@
 
                      <td>
                         <button  type="button" class="btn btn-primary"  id="register"   (click)="jobcardFindNew()">Find</button>
+                   </td>
+                   
+                   <td>
+                    <button style="width:fit-content" type="button" class="btn btn-primary" (click)="clearSearch()">Reset</button>
                    </td>
                    
                     </tr>

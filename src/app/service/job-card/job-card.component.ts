@@ -116,8 +116,8 @@ export class JobCardComponent implements OnInit {
 
   jobCardNum1: string;
   jobCardNum2: string  //='12PU.101-28';
-  // JobOpenDt:Date;
-  JobOpenDt=this.pipe.transform(Date.now(), 'y-MM-dd');
+  JobOpenDt:Date;
+  // JobOpenDt=this.pipe.transform(Date.now(), 'y-MM-dd');
   regNo1:string   //='MH12EM6088';
   jobStatus1:string //='Invoiced';
 
@@ -2476,13 +2476,17 @@ getMessage(msgType:string){
         var jStatus=this.jobcardForm.get('jobStatus1').value;
         var jLocId=this.locId;
 
-        if(jcNum==undefined || jcNum==null || jcNum.trim()=='') {jcNum=null;}
-        if(jRegNo==undefined || jRegNo==null || jRegNo.trim()=='') {jRegNo=null}
+         
+
+  
+
+        if(jcNum==undefined || jcNum==null || jcNum.trim()=='') {jcNum=null;} else{jcNum=jcNum.toUpperCase();}
+        if(jRegNo==undefined || jRegNo==null || jRegNo.trim()=='') {jRegNo=null} else {jRegNo=jRegNo.toUpperCase();}
         if(jDate==undefined || jDate==null || jDate=='' ) {jDate=null}
         if(jStatus==undefined || jStatus==null || jStatus.trim()=='') {jStatus=null}
 
         // this.jobcardForm.reset();
-        alert (jcNum +","+jRegNo +","+jDate +","+jStatus +","+jLocId);
+        // alert (jcNum +","+jRegNo +","+jDate +","+jStatus +","+jLocId);
 
         this.serviceService.getJonCardNoSearchLoc(jcNum,jDate,jStatus,jRegNo,jLocId)
         .subscribe(
@@ -2493,6 +2497,14 @@ getMessage(msgType:string){
         
         }
 
+        clearSearch() {
+          this.jobcardForm.get('jobCardNum2').reset();
+          this.jobcardForm.get('regNo1').reset();
+          this.jobcardForm.get('JobOpenDt').reset();
+          this.jobcardForm.get('jobStatus1').enable();
+          
+          this.lstJobcardList = null;
+        }
 
 
         LoadSearchForm(){
