@@ -2485,23 +2485,55 @@
                                                                     <td style="width: 10em;text-align: center;" class="LabelFontStyle" >Customer&nbsp;</td>
                                                                     <td><input disabled type="number" formControlName="labBasicAmt" style="width: 7em;font-weight: bold;font-size: small;text-align: right;" ></td>
                                                                     
-                                                                    <td><select formControlName="labDiscountPer" disabled
-                                                                        id="labDiscountPer" class="form-control" style="width: 4em;font-weight: bold;font-size: small;"
-                                                                        (ngModelChange)="labDiscountPerCal($event)">
-                                                                        <option>--Select--</option>
-                                                                        <option
-                                                                            *ngFor="let sc of  labDiscountPerList" [value]="sc.code" >
-                                                                            {{sc.code}}
-                                                                        </option>
-                                                                    </select></td>
+                                                                    <div *ngIf="displayCustInsDetails ;then sr1; else sr2"></div>
+                                                                    <ng-template #sr1>
+
+                                                                    <div *ngIf="showLabdisP ;then sdp1; else sdp2"></div>
+                                                                    <ng-template #sdp1>
+                                                                    <td><select formControlName="labDiscountPer" 
+                                                                            id="labDiscountPer" class="form-control" style="width: 4em;font-weight: bold;font-size: small;"
+                                                                            (ngModelChange)="labDiscountPerCal($event)">
+                                                                            <option>--Select--</option>
+                                                                            <option
+                                                                                *ngFor="let sc of  labDiscountPerList" [value]="sc.code" >
+                                                                                {{sc.code}}
+                                                                            </option>
+                                                                        </select></td>
+                                                                    </ng-template>
+                                                                    <ng-template #sdp2>
+                                                                        <td><input  disabled type="number"   min="0"     formControlName="labDiscountPer" class="form-control"  style="width: 7em;font-weight: bold;font-size: small;"></td>
+                                                                    </ng-template>
+
+
+
+                                                                    <div *ngIf="showLabDisCol ;then sd1; else sd2"></div>
+                                                                    <ng-template #sd1>
+                                                                         <td><input  type="number"   min="0"     formControlName="labDiscount" class="form-control" (change)="labDiscountAmtCal($event)" style="width: 7em;font-weight: bold;font-size: small;"></td>
+                                                                    </ng-template>
+                                                                    <ng-template #sd2>
+                                                                         <td><input disabled type="number"   min="0"  formControlName="labDiscount" class="form-control"  style="width: 7em;font-weight: bold;font-size: small;"></td>
+                                                                    </ng-template>
+
+                                                                </ng-template>
+                                                                <ng-template #sr2>
+                                                                    <td><input disabled type="number"   min="0"  formControlName="labDiscountPer" class="form-control"  style="width: 4em;font-weight: bold;font-size: small;"></td>
+                                                                    <td><input disabled type="number"   min="0"  formControlName="labDiscount" class="form-control"  style="width: 7em;font-weight: bold;font-size: small;"></td>
+                                                                
+                                                                </ng-template>
+
                                                                     
-                                                                    <td><input type="number"   min="0"     formControlName="labDiscount" class="form-control" (change)="labDiscountAmtCal($event)" style="width: 7em;font-weight: bold;font-size: small;"></td>
+
                                                                     <td><input disabled type="number" min="0" formControlName="labTaxableAmt" [(ngModel)]="labTaxableAmt" style="width: 7em;font-weight: bold;font-size: small;"    ></td>
                                                                     <td><input disabled type="number" min="0" formControlName="labTotTaxAmt" [(ngModel)]="labTotTaxAmt" style="width: 7em;font-weight: bold;font-size: small;" ></td>
                                                                     <td><input disabled type="number" min="0"  formControlName="labTotAmt" style="width: 7em;font-weight: bold;font-size: small;"></td>
                                                                     <td><input disabled type="number" formControlName="matBasicAmt" style="width: 7em;font-weight: bold;font-size: small;text-align: right;"></td>
                                                                     
-                                                                    <td><select disabled  formControlName="matDiscountPer"  class="form-control" style="width: 4em;font-weight: bold;font-size: small;"
+                                                                    <div *ngIf="displayCustInsDetails ;then sr11; else sr21"></div>
+                                                                    <ng-template #sr11>
+
+                                                                    <div *ngIf="showMatDisP ;then mdp1; else mdp2"></div>
+                                                                    <ng-template #mdp1>
+                                                                    <td><select   formControlName="matDiscountPer"  class="form-control" style="width: 4em;font-weight: bold;font-size: small;"
                                                                         id="matDiscountPer" class="form-control"
                                                                         (ngModelChange)="matDiscountPerCal($event)">
                                                                         <option>--Select--</option>
@@ -2510,8 +2542,24 @@
                                                                             {{sc.code}}
                                                                         </option> 
                                                                       </select></td>
+                                                                    </ng-template>
+                                                                    <ng-template #mdp2>
+                                                                        <td><input disabled type="number" min="0" formControlName="matDiscountPer"  style="width: 7em;font-weight: bold;font-size: small;" class="form-control"  ></td>
+                                                                    </ng-template>
 
-                                                                    <td><input type="number" min="0" formControlName="matDiscout"  style="width: 7em;font-weight: bold;font-size: small;" class="form-control"  (change)="matDiscountAmtCal($event)"></td>
+                                                                      <div *ngIf="showMatDisCol ;then md1; else md2"></div>
+                                                                      <ng-template #md1>
+                                                                        <td><input type="number" min="0" formControlName="matDiscout"  style="width: 7em;font-weight: bold;font-size: small;" class="form-control"  (change)="matDiscountAmtCal($event)"></td>
+                                                                      </ng-template>
+                                                                      <ng-template #md2>
+                                                                        <td><input disabled type="number" min="0" formControlName="matDiscout"  style="width: 7em;font-weight: bold;font-size: small;" class="form-control"  ></td>
+                                                                     </ng-template>
+                                                                    </ng-template>
+                                                                    <ng-template #sr21> 
+                                                                        <td><input disabled type="number"   min="0"  formControlName="matDiscountPer" class="form-control"  style="width: 4em;font-weight: bold;font-size: small;"></td>
+                                                                        <td><input disabled type="number" min="0" formControlName="matDiscout"  style="width: 7em;font-weight: bold;font-size: small;" class="form-control"  ></td>
+                                                                    </ng-template>
+
                                                                     <td><input disabled type="number" min="0" formControlName="matTaxableAmt" [(ngModel)]="matTaxableAmt" style="width: 7em;font-weight: bold;font-size: small;" ></td>
                                                                     <td><input disabled type="number" min="0" formControlName="matTotTaxAmt" [(ngModel)]="matTotTaxAmt" style="width: 7em;font-weight: bold;font-size: small;" ></td>
                                                                     <td><input disabled type="number" min="0"  formControlName="matTotAmt" style="width: 7em;font-weight: bold;font-size: small;">  </td>
@@ -2527,6 +2575,9 @@
                                                                             <ng-template #InslinedetailsthenBlock></ng-template>
                                                                             <ng-template #InslinedetailselseBlock>
                                                                          
+                                                                            <!-- <input hidden type="number" min="0" formControlName="labDiscount" value ="{{labDiscount}}" class="form-control" >
+                                                                            <input hidden type="number" min="0" formControlName="matDiscout" value ="{{matDiscout}}" class="form-control"  >
+                                                                   -->
                                                                             <td style="width: 15%;text-align: center;" class="LabelFontStyle">Insurance&nbsp;</td>
                                                                            
                                                                             <td><input disabled type="number" min="0"   style="width: 7em;font-weight: bold;font-size: small;"
@@ -2567,8 +2618,7 @@
                                                                        
                                                                     <td>
                                                                         <input type="number" min="0"   style="width:7em;font-weight: bold;font-size: small;"
-                                                                            placeholder="" [(ngModel)]="deductibles"
-                                                                            formControlName="deductibles" class="form-control">
+                                                                            placeholder="" formControlName="ecaAmt" class="form-control">
                                                                     </td>
                                                                 </tr>
                                                                 <tr class="ItemStyle" style="text-decoration:none;">
@@ -2587,6 +2637,9 @@
                                                             </tbody>
                                                         </table>
                                                     </fieldset>
+
+                                                    <div *ngIf="displayCustInsDetails ;then sr111; else sr211"></div>
+                                                    <ng-template #sr111>
 
                                                     <fieldset class="RFS">
                                                         <legend id="FormsPH_LGAadhaar" class="RFSL"
@@ -2652,6 +2705,10 @@
                                                         </tr>
     
                                                     </fieldset>
+                                                    </ng-template>
+                                                    <ng-template #sr211></ng-template>
+
+
                                             
 
                                                 <br>

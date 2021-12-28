@@ -15,6 +15,7 @@ import { SelectorMatcher } from '@angular/compiler';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { v4 as uuidv4 } from 'uuid';
 import { enableDebugTools } from '@angular/platform-browser';
+import { ReturnToVendorComponent } from 'src/app/transaction/return-to-vendor/return-to-vendor.component';
 
 
 
@@ -1477,7 +1478,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
 
   onOptionsSelectedcustSiteName(siteName) {
-    //  alert(siteName);
+     // alert(siteName);
     //  alert(sessionStorage.getItem('ouId'));
     let selSite = this.custSiteList.find(d => d.siteName === siteName);
     console.log(selSite);
@@ -2964,7 +2965,12 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
   onOptionsSelectedTransactionType(transactionTypeName: string) {
     if (transactionTypeName != undefined) {
-      // alert(transactionTypeName)
+      // alert(transactionTypeName)'
+      if(this.CounterSaleOrderBookingForm.get('custName').value == undefined){
+        alert("Please Enter Customer Proper Site Name ")
+        return;
+      }
+
       this.displayCSOrderAndLineDt = false;
       let select = this.orderTypeList.find(d => d.transactionTypeName === this.transactionTypeName);
       console.log(select);

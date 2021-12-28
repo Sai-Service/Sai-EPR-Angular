@@ -6,6 +6,7 @@ import {
   ViewEncapsulation,
   HostListener,
   ElementRef,
+  ViewChildren,
 } from '@angular/core';
 import {
   FormArray,
@@ -20,6 +21,7 @@ import { data } from 'jquery';
 import { MasterService } from 'src/app/master/master.service';
 import {} from 'rxjs';
 import { listenerCount } from 'events';
+import { first } from 'rxjs/operators';
 
 interface Imiscellaneous {
   invItemId: number;
@@ -91,6 +93,9 @@ export class ItemLocator {
   templateUrl: './miscellaneous-transaction.component.html',
   styleUrls: ['./miscellaneous-transaction.component.css'],
 })
+
+
+
 export class MiscellaneousTransactionComponent implements OnInit {
   miscellaneousForm: FormGroup;
   public ItemIdList: any[];
@@ -221,6 +226,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
   @ViewChild('Item') Item: ElementRef;
   @ViewChild('desc') desc: ElementRef;
   @ViewChild('stkAdjForm') stkAdjForm: ElementRef;
+
   // @ViewChild("suppCode1") suppCode1: ElementRef;
   ngAfterViewInit() {
     this.myinput.nativeElement.focus();
@@ -306,6 +312,9 @@ export class MiscellaneousTransactionComponent implements OnInit {
     });
   }
 
+  newRow : FormGroup;
+  @ViewChildren('formRow') x1: ElementRef;
+
   addnewcycleLinesList(i: number) {
     // alert(i);
     if (i > -1) {
@@ -343,7 +352,8 @@ export class MiscellaneousTransactionComponent implements OnInit {
     var len1 = this.cycleLinesList().length;
     // alert(len1+'Length'+i);
     if (len1 == i + 1) {
-      this.cycleLinesList().push(this.newcycleLinesList());
+      this.newRow = this.newcycleLinesList();
+      this.cycleLinesList().push(this.newRow);
 
       // (<any>this.stockTranferForm.get('segment')).nativeElement.focus();
       var patch = this.miscellaneousForm.get('cycleLinesList') as FormArray;
@@ -363,12 +373,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
         // this.Item[i+1].nativeElement.focus();
         // (document.getElementById('btnrm'+i+1) as HTMLInputElement).disabled = true;`
       }
-      var cylArr = this.miscellaneousForm.get('cycleLinesList') as FormArray;
-      // alert(cylArr)/
-      // debugger;
-      // cylArr.controls[i].get('LocatorSegment').disable();
-      // cylArr.controls[0].get('physicalQty').disable();
-      // this.miscellaneousForm.get('cycleLinesList').at(0).get('physicalQty').disable()
+     
       this.cycleLinesList().controls[len - 1].get('physicalQty').disable();
       this.cycleLinesList().controls[len - 1].get('LocatorSegment').disable();
 
@@ -552,14 +557,13 @@ export class MiscellaneousTransactionComponent implements OnInit {
   onOptionTypeSelect(event) {
     this.addnewcycleLinesList(-1);
     this.compileType = event;
-    // alert(event);
+    debugger;
     if (event === 13) {
       this.service
         .searchByItemSegmentDiv(this.divisionId, '36DH1601')
         .subscribe((data) => {
           this.ItemIdList = data;
-          // this.Select(data[0].itemId);
-          //  this.onOptiongetItem(itemCode, i);
+          
         });
     }
     if (event === 4) {
@@ -567,8 +571,9 @@ export class MiscellaneousTransactionComponent implements OnInit {
         .searchByItemSegmentDiv(this.divisionId, '36DH1601')
         .subscribe((data) => {
           this.ItemIdList = data;
-          // this.Select(data[0].itemId);
-          //  this.onOptiongetItem(itemCode, i);
+          console.log(this.newRow.controls.segment);
+        
+          //(<any>this.newRow.controls.segment).nativeElement.focus();
         });
     }
     var patch = this.miscellaneousForm.get('trxLinesList') as FormArray;
@@ -577,6 +582,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
         lineNumber: 1,
       });
       this.displayRemoveRow[0] = false;
+     
     }
   }
 
@@ -1225,6 +1231,11 @@ export class MiscellaneousTransactionComponent implements OnInit {
 
     this.addnewcycleLinesList(i);
     this.setFocus('segment' +(i+1)  )
+   ;
+  }
+
+  itemLoad(trxLineIndex){
+    alert("i m loaded")
   }
 
   searchByCompileID(itemId) {
@@ -1479,6 +1490,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
       ele.focus();
     }
   }
+
   viewMiscnote() {
     var shipNumber = this.miscellaneousForm.get('compileName').value;
     const fileName = 'download.pdf';

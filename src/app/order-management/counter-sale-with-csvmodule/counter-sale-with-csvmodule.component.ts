@@ -2423,10 +2423,11 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
           this.displayLineflowStatusCode.push(true);
           this.displayCounterSaleLine.push(false);
           if (res.obj[i].onhandList.length ===0){
-            this.errList.push("Locator Not Available for item "+' '+res.obj[i].segment);
+            this.errList.push("Stock Not avaliable for - "+res.obj[i].segment);
           }
         }
         this.CounterSaleOrderBookingForm.patchValue(res.obj);
+        debugger;
         for (let k = 0; k < res.obj.length; k++) {
           let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
           (controlinv.controls[k]).patchValue({
@@ -2435,7 +2436,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
             invType: res.obj[k].invType,
             segment: res.obj[k].segment,
             orderedItem: res.obj[k].orderedItem,
-            pricingQty: res.obj[k].orderedQty,
+            pricingQty: res.obj[k].pricingQty,
             // taxCategoryName:res.obj[k].taxCategoryName,
             // taxCategoryId:res.obj[k].taxCategoryId,
             unitSellingPrice: res.obj[k].unitSellingPrice,
@@ -2446,7 +2447,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
             frmLocatorId: res.obj[k].onhandList,
           })
           this.locData[k] = res.obj[k].onhandList;
-          this.onOptionsSelectedDescriptionNew(res.obj[k].segment, res.obj[k].itemId,k)
+         // this.onOptionsSelectedDescriptionNew(res.obj[k].segment, res.obj[k].itemId,k)
         }
       }
       else {
