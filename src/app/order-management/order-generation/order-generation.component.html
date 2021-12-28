@@ -229,7 +229,8 @@
                               <tr *ngFor="let group of lineDetailsArray().controls; let i= index" [formGroupName]="i" >
 
                                 <input  hidden style="width:5rem;"  type="number" formControlName="itemId" class="form-control">
-                               
+                                <input  hidden style="width:5rem;"  type="number" formControlName="sprOrderId" class="form-control">
+                                
                                 <td style="text-align: center;width: 4rem;">{{i+1}}</td>
                                 <td> <input  disabled style="width:4rem;"   type="text" formControlName="itemId"  class="form-control"></td>
                               

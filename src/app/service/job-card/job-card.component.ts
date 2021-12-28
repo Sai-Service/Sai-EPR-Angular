@@ -2476,13 +2476,13 @@ getMessage(msgType:string){
         var jStatus=this.jobcardForm.get('jobStatus1').value;
         var jLocId=this.locId;
 
-        // if(jcNum==undefined || jcNum==null || jcNum.trim()=='') {jcNum=null;}
-        // if(jRegNo==undefined || jRegNo==null || jRegNo.trim()=='') {jRegNo=null}
-        // if(jDate==undefined || jDate==null  ) {jDate=null}
-        // if(jStatus==undefined || jStatus==null || jStatus.trim()=='') {jStatus=null}
+        if(jcNum==undefined || jcNum==null || jcNum.trim()=='') {jcNum=null;}
+        if(jRegNo==undefined || jRegNo==null || jRegNo.trim()=='') {jRegNo=null}
+        if(jDate==undefined || jDate==null || jDate=='' ) {jDate=null}
+        if(jStatus==undefined || jStatus==null || jStatus.trim()=='') {jStatus=null}
 
         // this.jobcardForm.reset();
-        // alert (jcNum +","+jRegNo +","+jDate +","+jStatus +","+jLocId);
+        alert (jcNum +","+jRegNo +","+jDate +","+jStatus +","+jLocId);
 
         this.serviceService.getJonCardNoSearchLoc(jcNum,jDate,jStatus,jRegNo,jLocId)
         .subscribe(

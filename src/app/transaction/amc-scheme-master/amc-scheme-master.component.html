@@ -1,0 +1,219 @@
+<form [formGroup]="amcSchemeMasterForm" (ngSubmit)="amcSchemeMaster(amcSchemeMasterForm.value)">
+
+    <div class="center">
+
+        <table style="width: 100%;background-color: white;">
+            <tr>
+                <td class="PageHeader">
+                    &nbsp;&nbsp;AMC&nbsp;Scheme&nbsp;Master
+                </td>
+            </tr>
+        </table>
+
+        <div class="form-bg">
+            <div class="center" style="width: 100%;">
+
+            <table class="center">
+                <tr>
+
+                <td> <input hidden  style="width:30px ;"   type="number" formControlName="divisionId" class="form-control" [(ngModel)]="divisionId" > </td>
+                <td> <input hidden  style="width:30px ;"  type="number" formControlName="locId"  [(ngModel)]="locId" class="form-control"  placeholder="Location Name"> </td>
+                <td> <input hidden disabled style="width:50px ;"  type="number"  formControlName="emplId" class="form-control" [(ngModel)]="emplId" placeholder=""></td>
+                <td> <input hidden disabled style="width:30px ;" type="number"  formControlName="ouId"  id="ouId" [(ngModel)]="ouId" class="form-control" ></td>
+                <td> <input hidden disabled style="width:30px ;" type="number"  formControlName="deptId"  id="deptId" [(ngModel)]="deptId" class="form-control" ></td>
+                         
+              </tr>
+            </table>
+        
+
+        <fieldset class="RFS">
+            <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">AMC Scheme Details </legend>
+               
+            <table class="center" >
+                <tr>
+                    <td>&nbsp;Scheme&nbsp;No:&nbsp;</td>
+                    <td> <input  type ="text" class="form-control" formControlName="schemeNumber"  value={{schemeNumber}} style="background-color: yellow;" > </td>
+                    <td>&nbsp;Scheme&nbsp;Name:&nbsp;</td>
+                    <td colspan="3"> <input  type ="text" class="form-control" formControlName="schemeName"  value={{schemeName}} style="background-color: yellow;width: 100%;"  > </td>
+                    <td>&nbsp;Scheme&nbsp;Group:&nbsp;</td>
+                    <td> <input  type ="text" class="form-control" formControlName="schemeGrp"  value={{schemeGrp}} style="background-color: yellow;" > </td>
+                    
+                </tr>
+              
+
+                <tr>
+                   <td>&nbsp;Scheme&nbsp;Period:&nbsp;</td>
+                    <td> <input  type ="number" class="form-control" formControlName="schemePrd" [(ngModel)]='schemePrd'  
+                        value={{schemePrd}} style="background-color: yellow;" > </td>
+                    <td>&nbsp;Grace&nbsp;Period:&nbsp;</td>
+                    <td> <input  type ="number" class="form-control" formControlName="gracePrd" [(ngModel)]='gracePrd'
+                            value={{gracePrd}} style="background-color: yellow;"> </td>
+                    <td>&nbsp;Total&nbsp;Period:&nbsp;</td>
+                    <td> <input  type ="number" class="form-control" formControlName="totalPrd" [(ngModel)]='totalPrd'
+                        value={{totalPrd}} style="background-color: yellow;"> </td>
+
+                        <td>&nbsp;Scheme&nbsp;Kms:&nbsp;</td>
+                        <td> <input  type ="number" class="form-control" formControlName="schemeKms" [(ngModel)]='schemeKms'
+                            value={{schemeKms}} style="background-color: yellow;"> </td>
+                </tr>
+
+                <tr>
+                    <td>&nbsp;Material&nbsp;Dis(%):&nbsp;</td>
+                    <td> <input  type ="number" class="form-control" formControlName="schMatDisPer" [(ngModel)]='schMatDisPer'  
+                        value={{schMatDisPer}} style="background-color: yellow;" > </td>
+    
+                    <td>&nbsp;Labour&nbsp;Dis(%):&nbsp;</td>
+                    <td> <input  type ="number" class="form-control" formControlName="schLabDisPer" [(ngModel)]='schLabDisPer'  
+                        value={{schLabDisPer}} style="background-color: yellow;"> </td>
+                    <td>&nbsp;Start&nbsp;Date:&nbsp;</td>
+                    <td> <input  type ="date" class="form-control" formControlName="startDate" [(ngModel)]='startDate'  
+                        value={{startDate}} max="{{minDate | date:'yyyy-MM-dd'}}" style="background-color: yellow;"> </td>
+                    <td>&nbsp;End&nbsp;Date:&nbsp;</td>
+                    <td> <input  type ="date" class="form-control" formControlName="endDate" [(ngModel)]='startDate'
+                            value={{endDate}} max="{{minDate | date:'yyyy-MM-dd'}}" > </td>
+                </tr>
+
+            </table>
+        </fieldset>
+
+        <fieldset class="RFS">
+         <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">AMC Scheme Components </legend>
+
+        <div class="center">
+            <!-- <br> -->
+           <div class="center" formArrayName="amcItemList">
+
+                <div class="grid_scroll">
+
+                    <table style="width: 100%; border: solid 1px Gray" class="auto-style4"
+                              cellspacing="0" cellpadding="4" rules="all" class="center">
+                              <thead>
+                                <tr class="GridHeader">
+                                      <th style="width:4rem" scope="col">Srl No</th>
+                                      <th style="width:10rem" scope="col">Coupon Number</th>
+                                      <th style="width:20rem" scope="col">Coupon Description</th>
+                                      <th style="width:8rem" scope="col">Quantity</th>
+                                      <th style="width:8rem"  scope="col">Unit Price</th>
+                                      <th style="width:8rem"  scope="col">Amount</th>
+                                      <th style="width:3rem"  scope="col">Add+</th>
+                                      <th style="width:3rem"  scope="col">Del-</th>
+                                  </tr>
+                              </thead>
+
+                            <tr *ngFor="let group of lineDetailsArray().controls; let i= index" [formGroupName]="i">
+
+                                <!-- <input type="text" hidden formControlName="packageDtlsId"> -->
+                                <!-- <input hidden  type="text" formControlName="packageNumber" [(ngModel)]="packageNumber" class="form-control" >
+                                <input hidden  type="text" formControlName="fuelType" [(ngModel)]="fuelType" class="form-control" >
+                                <input hidden  type="text" formControlName="ouId" [(ngModel)]="ouId" class="form-control" >
+                                 -->
+                               
+                                <!-- <td>
+
+                                    <input type="text" formControlName="cpnNumber"
+                                    (keyup)="getInvItemId($event)" id="invItemIdFirstWay"
+                                    list="dynamicUserIds1" class="form-control"
+                                    (ngModelChange)="onOptionmcpItemIdSelected($event,i)" />
+                             
+                                <datalist id="dynamicUserIds1">
+                                    <option *ngFor="let mc of mcpItemList"  [ngValue]="mc.itemId">
+                                        {{mc.itemNumber}}
+                                    </option>
+                                </datalist>
+                                </td>  -->
+                                <input hidden type="text" formControlName="cpnId"  class="form-control"  >
+                                
+                                <td style="text-align: center;width: 4rem;">{{i+1}}</td>
+                                <td><input disabled style="width: 15rem;"  type="text" formControlName="cpnNumber"  class="form-control" placeholder="Coupon Number" ></td>
+                                <td><input disabled style="width: 30rem;" type="text" formControlName="cpnDesc"  class="form-control" placeholder="Coupon Description"  ></td>
+                                <td><input disabled  style="width: 8rem;text-align: right;" type="text" formControlName="cpnQty"  class="form-control" placeholder="Quantity "  ></td>
+                                <td><input disabled style="width: 8rem;"  type="text" formControlName="cpnPrice"  class="form-control" placeholder="Price " ></td>
+                                <td><input disabled style="width: 8rem;" type="text" formControlName="cpnAmount"  class="form-control" placeholder="Coupon Amount"  ></td>
+                                <td>
+                                    <button type="submit" class="btn btn-info" (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i
+                                    class="fa fa-plus"></i></button>
+                                </td>
+
+                                <td>
+                                    <button type="submit" class="btn btn-info" (click)="RemoveRow(i)" style="width: min-content;"><i
+                                    class="fa fa-trash"></i></button>
+                                </td>
+
+                              </tr>
+                    </table>
+
+                   
+                </div>
+           </div>
+        </div>
+
+        </fieldset>
+
+        <fieldset class="RFS">
+            <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">AMC Scheme Value Details </legend>
+               <table class="auto-style4" class="GridFont" cellspacing="0"
+                    cellpadding="4" border="0" id="ctl00_cpForm_grdActions"
+                    style="border-color:#959595;width:100%;border-collapse:collapse;">
+                    <thead>
+                        <tr class="GridHeader">
+                            <th scope="col" style="text-align: right;">Labour&nbsp;Amt&nbsp;</th>
+                            <th scope="col" style="text-align: right;">Labour Discount&nbsp;</th>
+                            <th scope="col" style="text-align: right;">Labour Tax Amt&nbsp;</th>
+                            <th scope="col" style="text-align: right;">Labour Total Amt&nbsp;</th>
+                            <th scope="col" style="text-align: right;">Material Amt&nbsp;</th>
+                            <th scope="col" style="text-align: right;">Material Discount&nbsp;</th>
+                            <th scope="col" style="text-align: right;">Material Tax Amt&nbsp;</th>
+                            <th scope="col" style="text-align: right;">Material Total Amt&nbsp;</th>
+                            <th scope="col" style="text-align: right;">Scheme TotalAmt&nbsp;</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr class="ItemStyle" style="text-decoration:none;">
+                        <td><input disabled type="number" formControlName="amcLabBasicAmt" style="width: 11em;font-weight: bold;font-size: small;text-align: right;" ></td>
+                        <td><input disabled type="number" formControlName="amcLabDiscount" style="width: 11em;font-weight: bold;font-size: small;text-align: right;" ></td>
+                        <td><input disabled type="number" formControlName="amdLabTax" style="width: 11em;font-weight: bold;font-size: small;text-align: right;" ></td>
+                        <td><input disabled type="number" formControlName="amcLabToal" style="width: 11em;font-weight: bold;font-size: small;text-align: right;" ></td>
+                        <td><input disabled type="number" formControlName="amcMatBasicAmt" style="width: 11em;font-weight: bold;font-size: small;text-align: right;" ></td>
+                        <td><input disabled type="number" formControlName="amcMatDiscount" style="width: 11em;font-weight: bold;font-size: small;text-align: right;" ></td>
+                        <td><input disabled type="number" formControlName="amdMatTax" style="width: 11em;font-weight: bold;font-size: small;text-align: right;" ></td>
+                        <td><input disabled type="number" formControlName="amcMatToal" style="width: 11em;font-weight: bold;font-size: small;text-align: right;" ></td>
+                        <td><input disabled type="number" formControlName="amcSchemeTotal" style="width: 11em;font-weight: bold;font-size: small;text-align: right;" ></td>
+                    </tr>
+
+                    </tbody>
+               </table>
+        </fieldset> 
+
+
+        <br>
+        <table class="center">
+            <tr>
+                <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
+                <ng-template #thenBlock1>
+                <td> <button type="submit" class="btn btn-info" id="register" (click)="newMast()">Save</button></td>
+                <td> <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>
+                <td> <button type="submit" class="btn btn-info" id="register" (click)="closeMast()">Close</button></td>
+               
+                </ng-template>
+                <ng-template #elseBlock1>
+                    <td> <button type="submit" class="btn btn-info" id="register" (click)="updateMast()">Update</button></td>
+                    <td> <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>
+                    <td> <button type="submit" class="btn btn-info" id="register" (click)="closeMast()">Close</button></td>
+                </ng-template>
+                
+            </tr>
+        </table>
+
+
+
+
+   <!-- ============================================================================================= -->
+    </div>
+    </div>
+    </div>
+</form>
+        
+
+

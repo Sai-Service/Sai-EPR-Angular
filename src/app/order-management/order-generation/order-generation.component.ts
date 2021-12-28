@@ -94,6 +94,7 @@ export class OrderGenerationComponent implements OnInit {
 
 lineDetailsGroup() {
   return this.fb.group({ 
+    sprOrderId:[''],
     itemId:[''],
     segment :['', [Validators.required]],    
     description:['', [Validators.required]],
@@ -471,7 +472,9 @@ CreateOrder() {
                 totalValue: 0,
 
               }
-            );} else {this.lineDetailsArray().controls[index].get('orderQty').disable();}
+            );} else {this.lineDetailsArray().controls[index].get('orderQty').disable();
+                      this.lineDetailsArray().removeAt(index);
+                      }
 
         } else {
             alert (mSegment + " - Item Not Found in Master"); 
