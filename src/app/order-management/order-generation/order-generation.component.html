@@ -191,9 +191,9 @@
                               <thead>
                                 <tr class="GridHeader">
                                       <th style="width:4rem" scope="col">Srl&nbsp;No.</th>
-                                      <!-- <th style="width:8rem" scope="col">Item&nbsp;Id</th> -->
+                                      <th style="width:8rem" scope="col">Item&nbsp;Id</th>
                                       <th style="width:6rem" scope="col">Part&nbsp;No</th>
-                                      <th style="width:13rem" scope="col">Description</th>
+                                      <!-- <th style="width:10rem" scope="col">Description</th> -->
                                       <th style="width:12rem" scope="col">Unit&nbsp;Price</th>
 
                                       
@@ -204,8 +204,6 @@
                                       <th style="width:6rem" scope="col">WS-Cons-Tot</th>
                                       <th style="width:6rem" scope="col">CS-Cons-Tot</th>
 
-                                      <th style="width:8rem" scope="col">Order&nbsp;Qty</th>
-                                      <th style="width:8rem" scope="col">Order&nbsp;Value</th>
 
                                       <th style="width:6rem" scope="col">WS-Cons-Curr</th>
                                       <th style="width:6rem" scope="col">CS-Cons-Curr</th>
@@ -215,6 +213,9 @@
                                       <th style="width:6rem" scope="col">CS-Cons-Mth2</th>
                                       <th style="width:6rem" scope="col">WS-Cons-Mth3</th>
                                       <th style="width:6rem" scope="col">CS-Cons-Mth3</th>
+                                      
+                                      <th style="width:8rem" scope="col">Order&nbsp;Qty</th>
+                                      <th style="width:8rem" scope="col">Order&nbsp;Value</th>
                                      
                                      
 
@@ -230,10 +231,13 @@
                                 <input  hidden style="width:5rem;"  type="number" formControlName="itemId" class="form-control">
                                
                                 <td style="text-align: center;width: 4rem;">{{i+1}}</td>
-                                <!-- <td> <input  disabled style="width:3rem;"   type="text" formControlName="itemId"  class="form-control"></td> -->
-                                <td> <input  disabled style="width:6rem;"   type="text" formControlName="segment"  class="form-control"></td>
-                                <td> <input  disabled style="width:12rem;"  type="text" formControlName="description" class="form-control"></td>
-                                <td> <input  disabled style="width:3rem;"   type="number" formControlName="unitPrice" class="form-control"></td>
+                                <td> <input  disabled style="width:4rem;"   type="text" formControlName="itemId"  class="form-control"></td>
+                              
+                                 <td> <input   style="width:3rem;background-color: yellow;width:6rem;text-transform: uppercase;"    type="text" formControlName="segment"  class="form-control"  (change)="validateItem(i)"></td>
+                               
+
+                                <!-- <td> <input  disabled style="width:10rem;"  type="text" formControlName="description" class="form-control"></td> -->
+                                <td> <input  disabled style="width:5rem;"   type="number" formControlName="unitPrice" class="form-control"></td>
                                
                                 <td> <input  disabled style="width:3rem;"  type="number" formControlName="currentStock" class="form-control"></td>
                                 <td> <input  disabled style="width:3rem;"  type="number" formControlName="backOrderQty" class="form-control"></td>
@@ -242,10 +246,7 @@
                                 <td> <input  disabled style="width:3rem;"  type="number" formControlName="conWsQty" class="form-control"></td>
                                 <td> <input  disabled style="width:3rem;"  type="number" formControlName="consSaleQty" class="form-control"></td>
                   
-                                
-                                <td> <input   style="width:3rem;background-color: yellow;"   type="number" formControlName="orderQty" class="form-control"></td>
-                                <td> <input  disabled style="width:5rem;"  type="number" formControlName="totalValue" class="form-control"></td>
-                               
+                              
                                 <td> <input  disabled style="width:3rem;"  type="number" formControlName="currWsQty" class="form-control"></td>
                                 <td> <input  disabled style="width:3rem;"  type="number" formControlName="currSaleQty" class="form-control"></td>
                                 <td> <input  disabled style="width:3rem;"  type="number" formControlName="mth1ConWsQty" class="form-control"></td>
@@ -254,6 +255,10 @@
                                 <td> <input  disabled style="width:3rem;"  type="number" formControlName="mth2ConsSaleQty" class="form-control"></td>
                                 <td> <input  disabled style="width:3rem;"  type="number" formControlName="mth3ConWsQty" class="form-control"></td>
                                 <td> <input  disabled style="width:3rem;"  type="number" formControlName="mth3ConsSaleQty" class="form-control"></td>
+                               
+                                  
+                                <td> <input   style="width:3rem;background-color: yellow;"   type="number" formControlName="orderQty" (change)="validateOrdQty(i)" class="form-control"></td>
+                                <td> <input  disabled style="width:5rem;"  type="number" formControlName="totalValue" class="form-control"></td>
                                
                                 <td><button  type="submit" class="btn btn-info" (click)="addRow(i)"  style="width: min-content;"><i class="fa fa-plus"></i></button>  </td>
                                 <td><button  type="submit" class="btn btn-info" (click)="RemoveRow(i)"  style="width: min-content;"><i class="fa fa-trash"></i></button>  </td>
@@ -273,18 +278,14 @@
             <tr>
                 <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
                 <ng-template #thenBlock1>
-                <!-- <td> <button type="submit" class="btn btn-info" id="register" (click)="CreateOrder()">Create</button></td> -->
-                <td> <button type="submit" class="btn btn-info" id="register" (click)="newMast()">Update</button></td>
+                 <td> <button type="submit" class="btn btn-info" id="register" (click)="updateOrder()">Save</button></td>
                 <td> <button type="submit" class="btn btn-info" id="register" (click)="newMast()">Cancel</button></td>
                 <td> <button type="submit" class="btn btn-info" id="register" (click)="newMast()">Print</button></td>
-                <!-- <td> <button type="submit" class="btn btn-info" id="register" (click)="searchMast(0)">Search</button></td> -->
                 <td> <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>
                 <td> <button type="submit" class="btn btn-info" id="register" (click)="closeMast()">Close</button></td>
                
                 </ng-template>
                 <ng-template #elseBlock1>
-                    <td> <button disabled type="submit" class="btn btn-info" id="register" (click)="newMast()">Save</button></td>
-                    <!-- <td> <button type="submit" class="btn btn-info" id="register" (click)="searchMast(0)">Search</button></td> -->
                     <td> <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>
                     <td> <button type="submit" class="btn btn-info" id="register" (click)="closeMast()">Close</button></td>
                 </ng-template>

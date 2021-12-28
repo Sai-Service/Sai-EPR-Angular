@@ -2510,6 +2510,24 @@ OrderCategoryList(): Observable<any> {
       }
 
 
+      orderLineDelete(ordNumber,itemId)
+      {
+          return this.http.delete(this.ServerUrl+`/spareOrder/removeLine?OrderNumber=${ordNumber}&itemId=${itemId}`);
+      }
+
+      OrderLineAddUpdate(orderLineRecord) {
+        const options = {
+          headers: this.headers
+        };
+        const url = (this.ServerUrl + `/spareOrder/addLine`);
+        return this.http.post(url, orderLineRecord, options);
+
+        // http://localhost:8081/spareOrder/addLine
+      }
+
+     
+
+
 
   ///////////////////////////////////////////////////////////////////////////////////
 bulkpouploadSales(formData: FormData) {

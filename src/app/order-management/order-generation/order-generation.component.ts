@@ -27,7 +27,7 @@ export class OrderGenerationComponent implements OnInit {
 
   lstClearBackOrder:any;
   lstOrderList:any;
-  lstItemDetails:any;
+  public lstItemDetails:any;
 
   loginName:string;
   loginArray:string;
@@ -52,11 +52,14 @@ export class OrderGenerationComponent implements OnInit {
   currMonthYN:string='Yes';
   orderValue:number;
 
-  displayButton=true;
+  displayButton=false;
   spinIcon=false;
   dispGenOrdButton=true;
   dispShowOrdButton=true;
-
+  addNewLine=false;
+  lineItemRepeated=false;
+  lineValidation=false;
+ 
   constructor(private service: MasterService,private orderManagementService:OrderManagementService,private transactionService: TransactionService , private  fb: FormBuilder, private router: Router) {
     this.orderGenerationForm = fb.group({
 
@@ -185,7 +188,7 @@ lineDetailsArray() :FormArray{
     }
 
 
-  newMast() {alert("Create/Update/Cancel/Print order....");}
+ 
 
   resetMast() {
     window.location.reload();
@@ -195,18 +198,42 @@ lineDetailsArray() :FormArray{
     this.router.navigate(['admin']);
   }
   addRow(index) {
+    this.addNewLine=true;
    var ordLineArr = this.orderGenerationForm.get('orderList').value;
-   if( ordLineArr[index].itemId>0) {
+   var len = this.lineDetailsArray().length;
+    if( ordLineArr[index].itemId>0  &&  ordLineArr[index].orderQty>0 ) {
+   
     this.lineDetailsArray().push(this.lineDetailsGroup()); 
-   }else {alert ("Incomplete Line ");}
+    
+   }else {alert ("Incomplete Line - Check Order Part No , Order Qty .... ");}
+   
 }
 
 RemoveRow(index) {
 if (index===0){ }
 else {
    this.lineDetailsArray().removeAt(index);
+   this.deleteOrderLine(index)
+
 }
 
+}
+
+deleteOrderLine(i) {
+  var ordArr = this.orderGenerationForm.get('orderList').value;
+  var orderItemId = ordArr[i].itemId;
+  var ordNum = this.orderGenerationForm.get('orderNumber').value;
+  alert (orderItemId +","+ordNum);
+
+  this.service.orderLineDelete(ordNum,orderItemId).subscribe((res: any) => {
+   if (res.code === 200) {
+      alert(res.message);
+   } else {
+     if (res.code === 400) {
+       alert(res.message);
+     }
+   }
+ });
 }
 
 transeData(val) {
@@ -227,6 +254,21 @@ transeData(val) {
  
   delete val.orderList;
 
+  return val;
+}
+
+transeData1(val) {
+  delete val.loginArray;
+  delete val.loginName;
+  delete val.divisionId;
+  delete val.division;
+  delete val.ouName;
+  delete val.locName;
+  delete val.locationId;
+  delete val.orgId;
+  delete val.fromDate;
+  delete val.toDate;
+  delete val.orderDate;
   return val;
 }
 
@@ -259,14 +301,15 @@ CreateOrder() {
   ShowOrder(){
     this.spinIcon=true;
     this.dispShowOrdButton=false;
+    this.dispGenOrdButton=false;
     var mOrderNumber =this.orderGenerationForm.get('orderNumber').value
     this.service.getOrderListBajaj(mOrderNumber)
     .subscribe(
       data => {
         this.lstOrderList = data;
-        alert ("Total order lines :" +data.length);
+        // alert ("Total order lines :" +data.length);
         if(data.length >0) {
-         
+         this.displayButton=true;
         console.log(this.lstOrderList);
         var len = this.lineDetailsArray().length;
         var y = 0;
@@ -308,8 +351,190 @@ CreateOrder() {
           data => {
             this.lstItemDetails = data;
             console.log(this.lstItemDetails);
+            // alert ("this.lstItemDetails.segment :"+this.lstItemDetails.segment);
           });
         }
+
+        validateOrdQty(index: any){
+          var patch = this.orderGenerationForm.get('orderList') as FormArray;
+          var orderLineArr = this.orderGenerationForm.get('orderList').value;
+          var lineQty = orderLineArr[index].orderQty;
+          if (lineQty <=0 ) 
+          {
+             alert (lineQty+" << Invalid Order Qty.Order Qty should be above 0")
+             patch.controls[index].patchValue({orderQty:0})
+          } else {
+
+           var lineValue =orderLineArr[index].orderQty * orderLineArr[index].unitPrice;
+          //  alert (index+"-index :"+  lineValue);
+           patch.controls[index].patchValue({totalValue:lineValue})
+            this.CalculateOrdValue();
+
+          }
+                    
+        }
+
+        updateOrder() {
+          const formValue: IOrderGen = this.transeData1(this.orderGenerationForm.value);
+
+          this.lineValidation=false;
+          var orderLineArr = this.orderGenerationForm.get('orderList').value;
+          var len1=orderLineArr.length;
+          
+          for (let i = 0; i < len1 ; i++) 
+            {
+              this.CheckLineValidations(i);
+              if(this.lineValidation===false) {break;}
+            }
+            
+          if(this.lineValidation){
+          let variants = <FormArray>this.lineDetailsArray();
+          var orderNum = this.orderGenerationForm.get('orderNumber').value;
+          for (let i = 0; i < this.lineDetailsArray().length; i++) {
+            let variantFormGroup = <FormGroup>variants.controls[i];
+            variantFormGroup.addControl('orderNumber', new FormControl(orderNum, Validators.required));
+          } 
+          console.log(variants.value);
+
+          // this.service.OrderLineAddUpdate(formValue).subscribe((res: any) => {
+          this.service.OrderLineAddUpdate(variants.value).subscribe((res: any) => {
+           if (res.code === 200) { alert(res.message);  } else  {
+           if (res.code === 400) { alert(res.message); }
+           }
+   
+         });
+         }  else {alert ("Incomplete line details. Save Failed....")}
+        }
+
+         CalculateOrdValue(){
+          // var patch = this.orderGenerationForm.get('orderList') as FormArray;
+          var orderLineArr = this.orderGenerationForm.get('orderList').value;
+          var len = this.lineDetailsArray().length;
+          var orderTotal = 0;
+        
+          for (let i = 0; i < len; i++) {
+            var lineValue =orderLineArr[i].orderQty * orderLineArr[i].unitPrice;
+             orderTotal=orderTotal+lineValue
+           }
+          this.orderGenerationForm.patchValue({orderValue:orderTotal})
+
+         }
+
+         
+
+  validateItem(index){  
+    var ordLineArr = this.orderGenerationForm.get('orderList').value;
+    var patch = this.orderGenerationForm.get('orderList') as FormArray;
+    var mSegment = ordLineArr[index].segment;
+    mSegment=mSegment.toUpperCase();
+    this.lineDetailsArray().controls[index].get('orderQty').disable();
+  
+    // alert (index+" << in validate itemcode.."+mSegment);
+    if(mSegment===null || mSegment===undefined  || mSegment.trim() === '') {
+       alert("Please Enter Item Code");
+          this.lineDetailsArray().controls[index].get('orderQty').reset();
+      return; 
+    }
+
+   
+    var segId ; 
+  
+     this.service.getItemDetailsByCode(mSegment)
+      .subscribe(
+        data => {
+           if (data !=null){
+            this.lineDetailsArray().controls[index].get('orderQty').enable();
+             segId =data.itemId;
+             this.duplicateLineCheck(index,segId,mSegment);
+             if(this.lineItemRepeated===false) {
+             (patch.controls[index]).patchValue(
+              {
+               
+                itemId: data.itemId,
+                segment : mSegment,
+                description: data.description,
+                unitPrice: 1,
+                mth1ConWsQty: 0,
+                mth2ConWsQty: 0,
+                mth3ConWsQty: 0,
+                mth1ConsSaleQty: 0,
+                mth2ConsSaleQty: 0,
+                mth3ConsSaleQty: 0,
+                currWsQty: 0,
+                currSaleQty: 0,
+                conWsQty: 0,
+                consSaleQty: 0,
+                currentStock: 0,
+                backOrderQty: 0,
+                intransitQty: 0,
+                custBackOrder: 0,
+                totalValue: 0,
+
+              }
+            );} else {this.lineDetailsArray().controls[index].get('orderQty').disable();}
+
+        } else {
+            alert (mSegment + " - Item Not Found in Master"); 
+            // this.lineDetailsArray().controls[index].get('itemId').reset();
+             var mItemId = ordLineArr[index].itemId;
+           
+            if(mItemId>0) {
+              var segment1;
+              this.service.getItemDetail(mItemId) .subscribe( data => { segment1= data.segment;
+              patch.controls[index].patchValue({segment:segment1})
+            });
+            this.lineDetailsArray().controls[index].get('orderQty').enable();
+
+            } else {
+            this.lineDetailsArray().controls[index].reset();}
+            return;}
+        }
+      );
+  }
+
+  duplicateLineCheck(index,mItem,itemSeg) {
+    this.lineItemRepeated=false;
+    var ordLineArr = this.orderGenerationForm.get('orderList').value;
+    for (let i = 0; i <  this.lineDetailsArray().length ; i++) 
+    {
+       var x=ordLineArr[i].itemId;
+     
+       if( i !=index && (x===mItem)) {
+        alert(itemSeg+" - Item Already in the List .Check Line :"+(i+1));
+        this.lineItemRepeated=true;
+        break;
+      } 
+      }
+    }
+
+    CheckLineValidations(i) {
+     
+      var ordLineArr1 = this.orderGenerationForm.get('orderList').value;
+      var lineValue1=ordLineArr1[i].itemId;
+      var lineValue2=ordLineArr1[i].segment;
+      var lineValue3=ordLineArr1[i].orderQty;
+       
+     var j=i+1;
+      if(lineValue1===undefined || lineValue1===null || lineValue1==='' ){
+         this.lineValidation=false;
+        return;
+      } 
+    
+      if(lineValue2===undefined || lineValue2===null || lineValue2.trim()===''){
+        alert("Line-"+j+ " ITEM CODE :  Enter valid Item Code");
+        this.lineValidation=false;
+        return;
+      } 
+    
+      if(lineValue3===undefined || lineValue3===null  || lineValue3 <=0){
+        alert("Line-"+j+ " ORDER QTY :  should be above Zero");
+        this.lineValidation=false;
+        return;
+      } 
+       
+      this.lineValidation=true;
+    
+      }
       
 
 }
