@@ -124,11 +124,21 @@
                                 <input hidden type="text" formControlName="cpnId"  class="form-control"  >
                                 
                                 <td style="text-align: center;width: 4rem;">{{i+1}}</td>
-                                <td><input disabled style="width: 15rem;"  type="text" formControlName="cpnNumber"  class="form-control" placeholder="Coupon Number" ></td>
-                                <td><input disabled style="width: 30rem;" type="text" formControlName="cpnDesc"  class="form-control" placeholder="Coupon Description"  ></td>
-                                <td><input disabled  style="width: 8rem;text-align: right;" type="text" formControlName="cpnQty"  class="form-control" placeholder="Quantity "  ></td>
-                                <td><input disabled style="width: 8rem;"  type="text" formControlName="cpnPrice"  class="form-control" placeholder="Price " ></td>
-                                <td><input disabled style="width: 8rem;" type="text" formControlName="cpnAmount"  class="form-control" placeholder="Coupon Amount"  ></td>
+                                <!-- <td><input disabled style="width: 10rem;"  type="text" formControlName="cpnNumber"  class="form-control" placeholder="Coupon Number" ></td> -->
+                                
+                                <td>  
+                                    <select   formControlName="fuelType" id="couponId"  class="form-control">
+                                        <option disabled>--Select--</option>
+                                        <option *ngFor="let sc of  AmcCouponLst" [ngValue]="sc.couponId">
+                                             {{sc.couponNumber}}-{{sc.couponDesc}}
+                                        </option>
+                                    </select>
+                                </td>
+                                
+                                <td><input disabled style="width: 25rem;" type="text" formControlName="couponDesc"  class="form-control" placeholder="Coupon Description"  ></td>
+                                <td><input disabled  style="width: 8rem;text-align: right;" type="text" formControlName="quantity"  class="form-control" placeholder="Quantity "  ></td>
+                                <td><input disabled style="width: 8rem;"  type="text" formControlName="value"  class="form-control" placeholder="Price " ></td>
+                                <td><input disabled style="width: 8rem;" type="text" formControlName="total"  class="form-control" placeholder="Coupon Amount"  ></td>
                                 <td>
                                     <button type="submit" class="btn btn-info" (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i
                                     class="fa fa-plus"></i></button>
@@ -171,15 +181,15 @@
                     <tbody>
 
                     <tr class="ItemStyle" style="text-decoration:none;">
-                        <td><input disabled type="number" formControlName="amcLabBasicAmt" style="width: 11em;font-weight: bold;font-size: small;text-align: right;" ></td>
-                        <td><input disabled type="number" formControlName="amcLabDiscount" style="width: 11em;font-weight: bold;font-size: small;text-align: right;" ></td>
-                        <td><input disabled type="number" formControlName="amdLabTax" style="width: 11em;font-weight: bold;font-size: small;text-align: right;" ></td>
-                        <td><input disabled type="number" formControlName="amcLabToal" style="width: 11em;font-weight: bold;font-size: small;text-align: right;" ></td>
-                        <td><input disabled type="number" formControlName="amcMatBasicAmt" style="width: 11em;font-weight: bold;font-size: small;text-align: right;" ></td>
-                        <td><input disabled type="number" formControlName="amcMatDiscount" style="width: 11em;font-weight: bold;font-size: small;text-align: right;" ></td>
-                        <td><input disabled type="number" formControlName="amdMatTax" style="width: 11em;font-weight: bold;font-size: small;text-align: right;" ></td>
-                        <td><input disabled type="number" formControlName="amcMatToal" style="width: 11em;font-weight: bold;font-size: small;text-align: right;" ></td>
-                        <td><input disabled type="number" formControlName="amcSchemeTotal" style="width: 11em;font-weight: bold;font-size: small;text-align: right;" ></td>
+                        <td><input disabled type="number" formControlName="amcLabBasicAmt" style="width: 7rem;font-weight: bold;font-size: small;text-align: right;" ></td>
+                        <td><input disabled type="number" formControlName="amcLabDiscount" style="width: 7rem;font-weight: bold;font-size: small;text-align: right;" ></td>
+                        <td><input disabled type="number" formControlName="amdLabTax" style="width: 7rem;font-weight: bold;font-size: small;text-align: right;" ></td>
+                        <td><input disabled type="number" formControlName="amcLabToal" style="width: 7rem;font-weight: bold;font-size: small;text-align: right;" ></td>
+                        <td><input disabled type="number" formControlName="amcMatBasicAmt" style="width: 7rem;font-weight: bold;font-size: small;text-align: right;" ></td>
+                        <td><input disabled type="number" formControlName="amcMatDiscount" style="width: 7rem;font-weight: bold;font-size: small;text-align: right;" ></td>
+                        <td><input disabled type="number" formControlName="amdMatTax" style="width: 7rem;font-weight: bold;font-size: small;text-align: right;" ></td>
+                        <td><input disabled type="number" formControlName="amcMatToal" style="width: 7rem;font-weight: bold;font-size: small;text-align: right;" ></td>
+                        <td><input disabled type="number" formControlName="amcSchemeTotal" style="width: 10rem;font-weight: bold;font-size: small;text-align: right;" ></td>
                     </tr>
 
                     </tbody>

@@ -25,9 +25,12 @@ export class AmcSchemeMasterComponent implements OnInit {
   pipe = new DatePipe('en-US');
   public minDate = new Date();
 
-  lstClearBackOrder:any;
-  lstOrderList:any;
-  public lstItemDetails:any;
+  public AmcCouponLst :Array<string> = [];
+
+  public McpPackageCategoryList :Array<string> = [];
+  public McpPackageList:Array<string> = [];
+
+
 
   loginName:string;
   loginArray:string;
@@ -53,6 +56,8 @@ export class AmcSchemeMasterComponent implements OnInit {
   schemeGrp:string;
   schMatDisPer:number;
   schLabDisPer:number;
+
+  
 
   amcLabBasicAmt:number=0;
   amcLabDiscount:number=0;
@@ -111,12 +116,15 @@ export class AmcSchemeMasterComponent implements OnInit {
 
 lineDetailsGroup() {
   return this.fb.group({ 
-    cpnId:[],
-    cpnNumber:[''],
-    cpnDesc :['', [Validators.required]],    
-    cpnQty:['', [Validators.required]],
-    cpnPrice:['', [Validators.required]],
-    cpnAmount:['', [Validators.required]],
+    itemId:[],
+    couponId:[],
+    couponNumber:[''],
+    couponDesc :['', [Validators.required]],    
+    quantity:['', [Validators.required]],
+    value:['', [Validators.required]],
+    total:['', [Validators.required]],
+    couponCode:[],
+    gstpercentage:[],
    });
 }
 
@@ -144,6 +152,15 @@ ngOnInit(): void {
   this.orgId=this.ouId;
   console.log(this.loginArray);
   console.log(this.locId);
+
+
+  this.service.AmcCouponList()
+  .subscribe(
+  data => {
+    this.AmcCouponLst = data;
+    console.log(this.AmcCouponLst);
+  }
+);
 }
 
 

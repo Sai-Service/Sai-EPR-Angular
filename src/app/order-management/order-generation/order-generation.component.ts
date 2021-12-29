@@ -213,18 +213,19 @@ lineDetailsArray() :FormArray{
 RemoveRow(index) {
 if (index===0){ }
 else {
-   this.lineDetailsArray().removeAt(index);
+  
    this.deleteOrderLine(index)
-
+   this.lineDetailsArray().removeAt(index);
 }
 
 }
 
 deleteOrderLine(i) {
+  // alert ("Deleting line")
   var ordArr = this.orderGenerationForm.get('orderList').value;
   var orderItemId = ordArr[i].itemId;
   var ordNum = this.orderGenerationForm.get('orderNumber').value;
-  alert (orderItemId +","+ordNum);
+  // alert (orderItemId +","+ordNum);
 
   this.service.orderLineDelete(ordNum,orderItemId).subscribe((res: any) => {
    if (res.code === 200) {
