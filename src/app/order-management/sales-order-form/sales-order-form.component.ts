@@ -499,7 +499,7 @@ export class SalesOrderFormComponent implements OnInit {
         }
       );
 
-    this.service.salesRepNameList(this.ouId, this.locId, this.deptId)
+    this.service.salesRepNameList(this.ouId, this.locId, sessionStorage.getItem('deptId'))
       .subscribe(
         data => {
           this.salesRepNameList = data.obj;
@@ -875,6 +875,11 @@ export class SalesOrderFormComponent implements OnInit {
     this.activeLineNo = invLineNo;
     var baseAmt = controlinv1[i].baseAmt;
     // alert(baseAmt);
+    // diss1=0;
+    // diss2=0;
+    // diss3=0;
+    // diss4=0;
+    // diss5=0;
     var patch = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
     var arrayControlTax = this.SalesOrderBookingForm.get('taxAmounts').value;
     var index = Number(arrayControlTax[1].invLineNo);
@@ -1109,6 +1114,9 @@ export class SalesOrderFormComponent implements OnInit {
             // this.updateTotAmtPerline(index);
 
           });
+          if (this.op==='Search' && this.lstgetOrderLineDetails[index]==='SS_VEHICLE'){
+            this.openTaxDetails[index]
+          }
     }
 
 
@@ -1314,7 +1322,7 @@ export class SalesOrderFormComponent implements OnInit {
                 if (controlinv1[i].invType === 'SS_VEHICLE' && controlinv1[i].flowStatusCode === 'ALLOTED') {
                   this.onKey(i, 'Search');
                 }
-                let itemTaxCat = this.taxCategoryList.find(d => d.taxCategoryId === controlinv1[i].taxCategoryId);
+                // let itemTaxCat = this.taxCategoryList.find(d => d.taxCategoryId === controlinv1[i].taxCategoryId);
 
                 // controlinv2.controls[i].patchValue({ taxCategoryName: itemTaxCat.taxCategoryName }); --- minal madam code
                 // controlinv2.controls[i].patchValue({ taxCategoryId: itemTaxCat.taxCategoryId }); --- minal madam code
@@ -1339,13 +1347,16 @@ export class SalesOrderFormComponent implements OnInit {
     this.lineTaxdetails = this.TaxDetailsArray() as FormArray;
     this.lineTaxdetails.clear();
     var controlTax1 = this.SalesOrderBookingForm.get('taxAmounts').value;
+    console.log(this.lstgetOrderTaxDetails);
+    
+    // debugger;
     for (let x = 0; x < this.lstgetOrderTaxDetails.length; x++) {
       if (this.lstgetOrderTaxDetails[x].invLineNo === i) {
         this.lineTaxdetails.push(this.TaxDetailsGroup());
         this.lineTaxdetails.controls[x].patchValue(this.lstgetOrderTaxDetails[x]);
       }
-      
     }
+    // this.SalesOrderBookingForm.get('taxAmounts').patchValue(data);
 
     // for (let x = controlTax1.length - 1; x >= 0; x--) {
 
@@ -1475,7 +1486,7 @@ export class SalesOrderFormComponent implements OnInit {
     let salesObj = Object.assign(new SalesOrderobj(), jsonData);
     salesObj.setoeOrderLinesAllList(orderLines);
     var taxStr = [];
-    debugger;
+    // debugger;
     var exLines = this.lstgetOrderLineDetails.length;
     for (let k=0 ; k < orderLines.length ; k++){
       orderLines[k].taxCategoryName = orderLines[k].taxCategoryName.taxCategoryName;
@@ -1575,7 +1586,7 @@ export class SalesOrderFormComponent implements OnInit {
       var arrayControl = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value
       var dissAmt1 = 0;
       var taxCatNm: string = arrayControl[i].taxCategoryName;
-      const taxCategoryId: number = arrayControl[i].taxCategoryId;
+      var taxCategoryId = arrayControl[i].taxCategoryId;
       // alert(taxCatNm);
       console.log(arrayControl);
       var itemId = arrayControl[i].itemId;
