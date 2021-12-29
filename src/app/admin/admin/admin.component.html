@@ -57,9 +57,17 @@
       </a>
 
       <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Amc</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/AmcSchemeMaster']">Amc Scheme Master</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/AmcEnrollment']">Amc Enrollment</a></li>
+           
+          </ul>
+        </li>
+
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Purchase</a>
           <ul class="dropdown-menu">
-
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/pendingPoList']">PO List</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/master/OPMasterDto']">Purchase Order</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/BulkUploadWithCsv']">Bulk Upload PO</a></li>
@@ -68,6 +76,7 @@
 
           </ul>
         </li>
+
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Payable</a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/PoInvoice']">AP Invoice</a></li>
@@ -133,7 +142,7 @@
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/PaymentAr']">AR-Payment Receipt</a></li>
           </ul>
         </li>
-        <div [style.display]="isVisible1 ? 'block' : 'none'">
+        <!-- <div [style.display]="isVisible1 ? 'block' : 'none'"> -->
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Extended Warranty</a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/SaiEwSchemeMaster']">Sai EW Scheme Master</a></li>
@@ -159,7 +168,7 @@
             <li><a class="dropdown-item" [routerLink]="['/admin/service/JobCard']">JobCard</a></li>
           </ul>
         </li>
-        </div>
+        <!-- </div> -->
 
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">General Ledger</a>
           <ul class="dropdown-menu">
@@ -744,7 +753,7 @@
                           <td style="width:8rem;text-align: center;">{{com.itemCategory}}</td>
                           <td style="width:8rem;text-align: center;">{{com.uom}}</td>
                           <td><button class="btn btn-secondary" (click)="Select(com.itemId)">Select</button></td>
-
+                        
 
                          </tr>
               </table>

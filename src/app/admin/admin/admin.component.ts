@@ -281,7 +281,7 @@ export class AdminComponent implements OnInit {
     this.adminForm1.get('searchItemCode').reset();
     this.resetDet();
     this.searchBy = 'ITEM NUMBER';
-  }
+  } 
 
   resetDet() {
     this.searchItemId = null;
@@ -470,7 +470,7 @@ export class AdminComponent implements OnInit {
   filterRecord(event) {
     var itemCode1 = event.target.value;
 
-    // alert(itemCode1 + 'event');
+    
     if (event.keyCode == 13) {
       var itemCode = '';
       if (itemCode1.includes('--')) {
@@ -481,7 +481,7 @@ export class AdminComponent implements OnInit {
         itemCode = itemCode1;
         // alert(itemCode + 'item in else');
       }
-       alert(itemCode.length + 'length'+this.ItemIdList.length);
+       //alert(itemCode.length + 'length'+this.ItemIdList.length);
       // enter keycode
       if (itemCode.length >= 4 && this.ItemIdList.length <= 1) {
         this.service
@@ -492,8 +492,9 @@ export class AdminComponent implements OnInit {
             // this.Select(data[0].itemId);
           });
       } else {
-        if(this.ItemIdList.length<=2){
+        if(this.ItemIdList.length<=1){
         alert('Please Enter 4 characters of item number!!');
+       
         return;
         }
       }

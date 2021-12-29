@@ -241,7 +241,7 @@
                     <!-- <tr>
                 <input type="number" min="0"  hidden formControlName="trxLineId">
               </tr> -->
-                    <ng-container *ngFor="let cycleLinesLists of cycleLinesList().controls; let trxLineIndex=index"
+                    <ng-container  *ngFor="let cycleLinesLists of cycleLinesList().controls; let trxLineIndex=index"
                       [formGroupName]="trxLineIndex">
                       <tr>
                         <td><input disabled type="text" class="form-control" style="height: 20px;width: 50px;"
@@ -260,7 +260,7 @@
                     <div *ngIf ="compileType==4">
                       <input type="text" list="dynmicUserIds1" (keyup)="filterRecord( $event,trxLineIndex)"
                       formControlName="segment" id="invItemIdFirstWay" class="form-control"
-                      style="height: 20px;width:120px;" name="segment{{trxLineIndex}}"/>
+                      style="height: 20px;width:120px;" name="segment{{trxLineIndex}}" />
                     <!-- (ngModelChange)="onOptiongetItem($event,trxLineIndex)" -->
                     <datalist id="dynmicUserIds1">
                       <option *ngFor="let item of ItemIdList" [value]="item.SEGMENT">{{item.SEGMENT}}</option>
@@ -268,7 +268,7 @@
                     <div *ngIf ="compileType==13">
                           <input type="text" list="dynmicUserIds1" (keyup)="filterRecord( $event,trxLineIndex)"
                             formControlName="segment" id="invItemIdFirstWay" class="form-control"
-                            style="height: 20px;width:120px;"  name="segment{{trxLineIndex}}"/>
+                            style="height: 20px;width:120px;"  name="segment{{trxLineIndex}}" />
                           <!-- (ngModelChange)="onOptiongetItem($event,trxLineIndex)" -->
                           <datalist id="dynmicUserIds1">
                             <option *ngFor="let item of ItemIdList" [value]="item.segment">{{item.segment}}</option>

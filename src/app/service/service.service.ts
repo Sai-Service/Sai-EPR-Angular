@@ -21,8 +21,8 @@ getJonCardNoSearch(jonCardNo): Observable<any> {
   return this.http.get(this.ServerUrl +`/jobCard/jobDtls/${jonCardNo}`);
 }
 
-getJonCardNoSearchLoc(jobDate,jStatus,jLocId,jcNo,jRegNo): Observable<any> {
-  return this.http.get(this.ServerUrl +`/jobCard/jobList?jobDate=${jobDate}&status=${jStatus}&locId=${jLocId}&jobCardNum=${jcNo}&regNo=${jRegNo}`);
+getJonCardNoSearchLoc(jcNum,jDate,jStatus,jRegNo,jLocId): Observable<any> {
+  return this.http.get(this.ServerUrl +`/jobCard/jobList?jobDate=${jDate}&status=${jStatus}&locId=${jLocId}&jobCardNum=${jcNum}&regNo=${jRegNo}`);
 
   // return this.http.get(this.ServerUrl +`/jobCard/jobList?jobDate=${jobDate}&status=&locId=${jLocId}&jobCardNum&regNo`);
   // http://localhost:8081/jobCard/jobList?jobDate=2021-12-21&status=Invoiced&locId=121&jobCardNum&regNo 

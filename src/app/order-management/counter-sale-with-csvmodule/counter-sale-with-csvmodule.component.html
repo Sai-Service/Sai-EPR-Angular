@@ -1327,11 +1327,12 @@
                                                                 </select>
                                                             </td>
                                                             <td>
+                                                                <!-- (ngModelChange)='onOptionsSelectedDescription($event,i)' -->
                                                                 <input type="text" formControlName="segment"
                                                                     id="invItemIdFirstWay" list="dynmicUserIds1"
                                                                     class="form-control"
                                                                     style="height: 20px;width: 160px;"
-                                                                    (ngModelChange)='onOptionsSelectedDescription($event,i)'>
+                                                                   >
                                                                 <datalist id="dynmicUserIds1">
                                                                     <option>--Select--</option>
                                                                     <option

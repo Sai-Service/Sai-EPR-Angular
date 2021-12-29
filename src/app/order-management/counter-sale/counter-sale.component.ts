@@ -15,6 +15,7 @@ import { SelectorMatcher } from '@angular/compiler';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { v4 as uuidv4 } from 'uuid';
 import { enableDebugTools } from '@angular/platform-browser';
+import { ReturnToVendorComponent } from 'src/app/transaction/return-to-vendor/return-to-vendor.component';
 
 
 
@@ -1470,7 +1471,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
 
   onOptionsSelectedcustSiteName(siteName) {
-    //  alert(siteName);
+     // alert(siteName);
     //  alert(sessionStorage.getItem('ouId'));
     let selSite = this.custSiteList.find(d => d.siteName === siteName);
     console.log(selSite);
@@ -1484,13 +1485,13 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       this.CounterSaleOrderBookingForm.patchValue(selSite);
       this.custName = this.selCustomer.custName;
       this.customerId = this.selCustomer.customerId;
-      this.custAddress = (this.selCustomer.address1 + ', '
-        + this.selCustomer.address2 + ', '
-        + this.selCustomer.address3 + ', '
-        + this.selCustomer.address4 + ', '
-        + this.selCustomer.city + ', '
-        + this.selCustomer.pinCd + ', '
-        + this.selCustomer.state);
+      this.custAddress = (selSite.address1 + ', '
+      + selSite.address2 + ', '
+      + selSite.address3 + ', '
+      + selSite.address4 + ', '
+      + selSite.city + ', '
+      + selSite.pinCd + ', '
+      + selSite.state);
       this.birthDate = this.selCustomer.birthDate;
       this.weddingDate = this.selCustomer.weddingDate;
       this.taxCategoryName = this.selCustomer.taxCategoryName;
@@ -2952,7 +2953,12 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
   onOptionsSelectedTransactionType(transactionTypeName: string) {
     if (transactionTypeName != undefined) {
-      // alert(transactionTypeName)
+      // alert(transactionTypeName)'
+      if(this.CounterSaleOrderBookingForm.get('custName').value == undefined){
+        alert("Please Enter Customer Proper Site Name ")
+        return;
+      }
+
       this.displayCSOrderAndLineDt = false;
       let select = this.orderTypeList.find(d => d.transactionTypeName === this.transactionTypeName);
       console.log(select);

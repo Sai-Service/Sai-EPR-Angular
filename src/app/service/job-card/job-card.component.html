@@ -13,8 +13,9 @@
                         <tr>
                                <td colspan="2" style="width: 100%;text-align: center;margin-left: 10px;">
                                 <button class="btn btn-info" data-toggle="modal" data-target="#jobCardSearch" (click)='LoadSearchForm()'
-                                    style="text-align: center; margin-right: 90%;">Find</button>
+                                    style="text-align: center; font-size: small;font-weight: bolder; margin-right: 90%;">Find</button>
                             </td>
+
                         </tr>
                     </table>
                 </td>
@@ -24,7 +25,7 @@
             </tr>
         </table>
 
-        <fieldset class="RFS">
+                <!-- <fieldset class="RFS">
                 <table class="center" style="width: 100%;background-color: #FFE4B5;">
                         <tr>
            
@@ -66,7 +67,7 @@
                        
             </table>
 
-            </fieldset>
+            </fieldset> -->
 
 
 
@@ -2461,20 +2462,20 @@
                                                                 <tr class="GridHeader">
                                                                    <th scope="col">Billable Type</th>
                                                                   
-                                                                    <th scope="col" style="text-align: right;">Actual Labor </th>
+                                                                    <th scope="col" style="text-align: right;">Actual Labor&nbsp;&nbsp;</th>
                                                                     <th scope="col" style="text-align: right;">Lab Dis%</th>
-                                                                    <th scope="col" style="text-align: right;">Labor Disount</th>
-                                                                    <th scope="col" style="text-align: right;">Labor Taxable</th>
-                                                                    <th scope="col" style="text-align: right;">Labor Tax Amt</th>
-                                                                    <th scope="col" style="text-align: right;">Labor Total</th>
+                                                                    <th scope="col" style="text-align: right;">Labor Disount&nbsp;&nbsp;</th>
+                                                                    <th scope="col" style="text-align: right;">Labor Taxable&nbsp;&nbsp;</th>
+                                                                    <th scope="col" style="text-align: right;">Labor Tax Amt&nbsp;&nbsp;</th>
+                                                                    <th scope="col" style="text-align: right;">Labor Total&nbsp;&nbsp;</th>
 
-                                                                    <th scope="col" style="text-align: right;">Actual Material </th>
+                                                                    <th scope="col" style="text-align: right;">Actual Material&nbsp;&nbsp;</th>
                                                                     <th scope="col" style="text-align: right;">Mat Dis%</th>
-                                                                    <th scope="col" style="text-align: right;">Material Disount</th>
-                                                                    <th scope="col" style="text-align: right;">Material Taxable</th>
-                                                                    <th scope="col" style="text-align: right;">Material Tax </th>
-                                                                    <th scope="col" style="text-align: right;">Material Total </th>
-                                                                    <th scope="col" style="text-align: right;">Total Amount</th>
+                                                                    <th scope="col" style="text-align: right;">Material Disount&nbsp;&nbsp;</th>
+                                                                    <th scope="col" style="text-align: right;">Material Taxable&nbsp;&nbsp;</th>
+                                                                    <th scope="col" style="text-align: right;">Material Tax&nbsp;&nbsp;</th>
+                                                                    <th scope="col" style="text-align: right;">Material Total&nbsp;&nbsp;</th>
+                                                                    <th scope="col" style="text-align: right;">Total Amount&nbsp;&nbsp;</th>
                                                                     
                                                                 </tr>
                                                             </thead>
@@ -3285,13 +3286,13 @@
                     <td  style="background-color: #FFE4B5;" class="LabelFontStyle">&nbsp;Job&nbsp;&nbsp;Number:&nbsp;</td>
                     
                     <td style="background-color: #FFE4B5;">
-                        <input type="text" class="form-control" formControlName="jobCardNum2"  value={{jobCardNum2}} [(ngModel)]="jobCardNum2" >
+                        <input type="text" class="form-control" formControlName="jobCardNum2"  value={{jobCardNum2}} [(ngModel)]="jobCardNum2" style="text-transform:uppercase;"  >
                     </td>
 
                     <td  style="background-color: #FFE4B5;" class="LabelFontStyle">&nbsp;Reg&nbsp;&nbsp;Number:&nbsp;</td>
                     
                     <td style="background-color: #FFE4B5;">
-                        <input type="text" class="form-control" formControlName="regNo1"  value={{regNo1}} [(ngModel)]="regNo1" >
+                        <input type="text" class="form-control" formControlName="regNo1"  value={{regNo1}} [(ngModel)]="regNo1" style="text-transform:uppercase;" >
                     </td>
 
                    
@@ -3321,6 +3322,10 @@
 
                      <td>
                         <button  type="button" class="btn btn-primary"  id="register"   (click)="jobcardFindNew()">Find</button>
+                   </td>
+                   
+                   <td>
+                    <button style="width:fit-content" type="button" class="btn btn-primary" (click)="clearSearch()">Reset</button>
                    </td>
                    
                     </tr>
