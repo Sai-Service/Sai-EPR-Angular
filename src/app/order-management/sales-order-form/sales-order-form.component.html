@@ -693,7 +693,7 @@
                             <td>
                                 <input disabled type="text" class="form-control" formControlName="priceListName"
                                     [(ngModel)]='priceListName' value={{priceListName}} style="width: 170px;">
-                                <input type="number" disabled formControlName="priceListHeaderId" class="form-control"
+                                <input hidden type="number" disabled formControlName="priceListHeaderId" class="form-control"
                                     style="width: 100%;">
                             </td>
                             <td style="width: 15%" class="LabelFontStyle">
@@ -1186,7 +1186,7 @@
                     <table class="center">
                         <tr>
                             <td>
-                                <button type="submit" class="btn btn-primary" (click)=" OrderBooked()"
+                                <button type="submit" class="btn btn-primary" (click)="OrderBooked()"
                                     style="width: 10rem;">Create Sales Order</button>
                             </td>
                             <td>
@@ -1325,7 +1325,7 @@
                                                             </a>
                                                         </td>
                                                         <td>
-                                                            1
+                                                        
                                                             <button type="button" class="btn btn-primary"
                                                                 data-toggle="modal" (click)="openTaxDetails(i)"
                                                                 data-target="#taxDetails">
@@ -1386,7 +1386,7 @@
                                                             </a>
                                                         </td>
                                                         <td>
-                                                            1
+                                                            
                                                             <button type="button" class="btn btn-primary"
                                                                 data-toggle="modal" (click)="openTaxDetails(i)"
                                                                 data-target="#taxDetails">
@@ -1553,10 +1553,10 @@
                                     <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
                                       <div class="modal-content">
                                         <div class="modal-header">
-                                          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <h5 class="modal-title" id="exampleModalLongTitle">Tax Details Of Line-{{selTaxLn}}</h5>
+                                          <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
-                                          </button>
+                                          </button> -->
                                         </div>
                                         <div class="modal-body">
                                             <table class="GridFont" cellspacing="0" cellpadding="4" border="0"
@@ -1608,9 +1608,12 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                
                                                  <ng-container class="center" formArrayName="taxAmounts"> 
                                                     <ng-container  *ngFor="let taxDet of TaxDetailsArray().controls; let j= index"
                                                         [formGroupName]="j" class="auto-style5">
+                                                        <!-- <ng-container  *ngFor="let taxDet of taxMap.get(selTaxLn); let j= index"
+                                                        [formGroupName]="j" class="auto-style5"> -->
                                                         <tr class="ItemStyle" style="text-decoration:none;">
                                                             <!-- <td> <input disabled formControlName="invLineNo"
                                                                 class="form-control"
@@ -1790,7 +1793,6 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="close" class="btn btn-primary" data-dismiss="modal" aria-hidden="true"  (click)="closeTaxModal()">Close</button>
-                                         
                                         </div>
                                       </div>
                                     </div>
