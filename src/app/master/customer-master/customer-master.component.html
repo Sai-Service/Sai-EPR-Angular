@@ -102,7 +102,7 @@
                                                 Customer&nbsp;Account&nbsp;No:&nbsp;</td>
                                             <td>
                                                 <input type="number" formControlName="customerAcc1" [(ngModel)]="customerAcc1" value={{customerAcc1}}
-                                                     class="form-control" 
+                                                     class="form-control"
                                                     placeholder="Enter Account number" style="width: 150px ;">
                                             </td>
                                             <td>
@@ -697,21 +697,30 @@
                                     Enter start Date </span> -->
                                 <!-- </td> -->
                                 <td style="width: 15%" class="LabelFontStyle">Status&nbsp;:&nbsp;</td>
-                                <td>
-                                    <input disabled type="text" [ngModel]="status" formControlName="status"
+                                <div *ngIf="dispstatus; then thenBlockdispStatus; else elseBlockdispStatus"></div>
+                                <ng-template #thenBlockdispStatus>
+                                    <td>
+                                        <input disabled type="text" [ngModel]="status" formControlName="status"
                                         class="form-control">
-                                    <!-- <select formControlName="status" id="status"  [ngModel]="status" (ngModelChange)='onOptionsSelected($event)' class="form-control">
+                                    </td>
+                                </ng-template>
+                                <ng-template #elseBlockdispStatus>
+
+                            <td>
+                                <select formControlName="status" id="status"
+                                    (ngModelChange)='onOptionsSelected($event)' class="form-control">
                                     <option>--Select--</option>
-                                    <option *ngFor="let sc of statusList">
+                                    <option *ngFor="let sc of statusList" [value]="sc.codeDesc">
                                         {{sc.codeDesc}}
                                     </option>
                                 </select>
-                                <span
-                                    *ngIf="!customerMasterForm.get('status').valid && customerMasterForm.get('status').touched">Please
+                                <!-- <span
+                                    *ngIf="!customerMasterForm.get('sstatus').valid && customerMasterForm.get('sstatus').touched">Please
                                     Enter Status </span> -->
-                                </td>
+                            </td>
+                        </ng-template>
+                        </tr>
 
-                            </tr>
                             <tr>
                                 <div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
                                 <ng-template #thenBlockInactive>

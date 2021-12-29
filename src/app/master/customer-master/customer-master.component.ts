@@ -164,6 +164,7 @@ export class CustomerMasterComponent implements OnInit {
   public status = "Active";
   displayInactive = true;
   displaystatus = true;
+  dispstatus=true;
   displayNewButton = true;
   displayNewButton1 = true;
   displayNewButtonWithSite = false;
@@ -1034,8 +1035,12 @@ export class CustomerMasterComponent implements OnInit {
           this.customerMasterForm.get('creditAmt').disable();
           this.customerMasterForm.get('highAmt').disable();
           this.customerMasterForm.get('disPer').disable();
-        }
-      );
+          this.dispstatus=false;
+
+           }   );
+
+
+
   }
 
 
@@ -1062,7 +1067,7 @@ export class CustomerMasterComponent implements OnInit {
       this.contactNo = select.contactNo
       this.contactPerson = select.contactPerson
       this.semailId = select.emailId
-      this.gstNo = select.gstNo
+      this.sGstNo = select.gstNo
       this.smobile1 = select.mobile1
       this.smobile2 = select.mobile2
       this.ouId = select.ouId
