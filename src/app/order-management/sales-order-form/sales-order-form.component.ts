@@ -728,7 +728,7 @@ export class SalesOrderFormComponent implements OnInit {
                   }
                 }
                 else if (data.obj[i].isTaxable = 'N' && taxCatNm === null) {
-                  alert(data.obj[i].isTaxable);
+                  // alert(data.obj[i].isTaxable);
                   (controlinv.controls[k]).patchValue({
                     itemId: data.obj[i].itemId,
                     orderedItem: data.obj[i].description,
@@ -1061,9 +1061,9 @@ export class SalesOrderFormComponent implements OnInit {
     var itemId = arrayControl[index].itemId;
     var taxcatName = arrayControl[index].taxCategoryName;
     // alert(arrayControl[index].invType);
-    alert(arrayControl[index].invType.includes('ADDON_INS'))
+    // alert(arrayControl[index].invType.includes('ADDON_INS'))
     if (arrayControl[index].invType.includes('ADDON_INS')) {
-      alert('addon')
+      // alert('addon')
       var baseAmt = arrayControl[index].unitSellingPrice * arrayControl[index].pricingQty;
       (patch.controls[index]).patchValue({
         baseAmt: baseAmt,
@@ -1516,9 +1516,9 @@ export class SalesOrderFormComponent implements OnInit {
     // debugger;
   
     for (let k = 0; k < orderLines.length; k++) {
-      if (orderLines[k].invType != 'SS_ADDON_INS'){
+      // if (orderLines[k].invType != 'SS_ADDON_INS'){
       orderLines[k].taxCategoryName = orderLines[k].taxCategoryName.taxCategoryName;
-    }
+    // }
     }
     console.log(this.taxMap.values());
     
