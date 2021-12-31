@@ -78,15 +78,14 @@
                              style="width: 200px;background-color: yellow; text-transform: uppercase;" />
                             <datalist id="dynmicUserIds1">
                               <option *ngFor="let item of ItemIdList" [ngValue]="item.itemId">
-                                {{item.SEGMENT}}
-                                <!-- - {{item.DESCRIPTION}} -->
+                                {{item.segment}}--{{item.description}}
                                 </option>
                                </datalist>
                           </td>
 
-                          <td  colspan="8" style="text-align: left; width: 100%;">
+                          <!-- <td  colspan="8" style="text-align: left; width: 100%;">
                             <button type="submit" class="btn btn-primary" (click)="searchByItem(segment)" ><i class="fa fa-search"></i></button>
-                          </td>
+                          </td>  by vinita-->
                          <!-- <td  colspan="8" style="text-align: left; width: 100%;">
                           <button  type="submit" class="btn btn-primary" (click)="loadDefaultValues()">Reset</button>
                          </td> -->
@@ -222,11 +221,11 @@
           <table class="center">
               <tr>
                   <td>
-                    <button type="submit" class="btn btn-primary" (click)="closeMast()">Close</button>
+                    <button type="button" class="btn btn-primary" (click)="closeMast()">Close</button>
                   </td>
 
                   <td>
-                    <button type="submit" class="btn btn-primary" (click)="resetMast()" >Reset</button>
+                    <button type="button" class="btn btn-primary" (click)="resetMast()" >Reset</button>
                  </td>
 
 
