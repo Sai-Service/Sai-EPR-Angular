@@ -21,8 +21,8 @@ getJonCardNoSearch(jonCardNo): Observable<any> {
   return this.http.get(this.ServerUrl +`/jobCard/jobDtls/${jonCardNo}`);
 }
 
-getJonCardNoSearchLoc(jobDate,jStatus,jLocId,jcNo,jRegNo): Observable<any> {
-  return this.http.get(this.ServerUrl +`/jobCard/jobList?jobDate=${jobDate}&status=${jStatus}&locId=${jLocId}&jobCardNum=${jcNo}&regNo=${jRegNo}`);
+getJonCardNoSearchLoc(jcNum,jDate,jStatus,jRegNo,jLocId): Observable<any> {
+  return this.http.get(this.ServerUrl +`/jobCard/jobList?jobDate=${jDate}&status=${jStatus}&locId=${jLocId}&jobCardNum=${jcNum}&regNo=${jRegNo}`);
 
   // return this.http.get(this.ServerUrl +`/jobCard/jobList?jobDate=${jobDate}&status=&locId=${jLocId}&jobCardNum&regNo`);
   // http://localhost:8081/jobCard/jobList?jobDate=2021-12-21&status=Invoiced&locId=121&jobCardNum&regNo 
@@ -83,7 +83,8 @@ LaborItemListFN() : Observable<any> {
   return this.http.get(this.ServerUrl +`/itemMst/ItemType?itemType=Labor&dept=Service`);
 } 
 LaborItemListDivisionFN(divisionId,deptname) : Observable<any> {
-  return this.http.get(this.ServerUrl +`/itemMst/ItemType?itemType=Labor&divisionId=${divisionId}&dept=${deptname}`);
+  return this.http.get(this.ServerUrl +`/itemMst/ItemTypeNew?itemType=Labor&divisionId=${divisionId}&dept=${deptname}`);
+  // http://localhost:8081/itemMst/ItemTypeNew?itemType=Labor&divisionId=2&dept=Service
 } 
 splitRatioListFN() : Observable<any> {
   return this.http.get(this.ServerUrl +`/billableTy/splitRatio`);
@@ -182,24 +183,49 @@ saveMaterialSubmit(Record) {
 }
 
 
-printWsPreInvdocument(jcNumber){
-  const REQUEST_URI = this.ServerUrl +`/jobCard/wsPreInvoicePrint/${jcNumber}`;  
-  // http://localhost:8081/jobCard/wsPreInvoicePrint/12PU.101-3
-  return this.http.get(REQUEST_URI, {
-    // params: REQUEST_PARAMS,
-    responseType: 'arraybuffer',
-    headers: this.headers,
-  });
+printWsPreInvdocument(jcNumber,jtype){
+ // http://localhost:8081/jobCard/wsPreInvoicePrint/12PU.101-3
+  // http://localhost:8081/jobCard/dpPreInv/12PU.101-24
+
+  if (jtype==='BS') {
+    const REQUEST_URI = this.ServerUrl +`/jobCard/dpPreInv/${jcNumber}`;
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    }); 
+  }
+  if (jtype==='Service') {
+    const REQUEST_URI = this.ServerUrl +`/jobCard/wsPreInvoicePrint/${jcNumber}`;
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+  
+ 
 }
 
-printWsInvoicedocument(jcNumber){
-  const REQUEST_URI = this.ServerUrl +`/jobCard/wsInvoicePrint/${jcNumber}`;  
-  // http://localhost:8081/jobCard/wsInvoicePrint/12PU.101-3
-  return this.http.get(REQUEST_URI, {
-    // params: REQUEST_PARAMS,
+printWsInvoicedocument(jcNumber,jtype){
+   // http://localhost:8081/jobCard/wsInvoicePrint/12PU.101-3
+  //  http://localhost:8081/jobCard/dpInvoice/12PU.101-24
+
+   if (jtype==='Service') {
+    const REQUEST_URI = this.ServerUrl +`/jobCard/wsInvoicePrint/${jcNumber}`;  
+    return this.http.get(REQUEST_URI, {
     responseType: 'arraybuffer',
     headers: this.headers,
   });
+  }  
+
+  if (jtype==='BS') {
+    const REQUEST_URI = this.ServerUrl +`/jobCard/dpInvoice/${jcNumber}`;  
+    return this.http.get(REQUEST_URI, {
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
+  }  
 }
 
 }

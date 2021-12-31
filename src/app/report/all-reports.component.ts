@@ -40,6 +40,7 @@ export class AllReportsComponent implements OnInit {
   decimal_value: number;
   sidfromDate: Date;
   sidtoDate: Date;
+  stockLedgerToLocName:string;
   invItemList = new Array();
   subInvCode: any;
   spIssueSummfromDate: Date;
@@ -99,6 +100,7 @@ export class AllReportsComponent implements OnInit {
       deptId: [],
       purRegFromDt: [],
       purRegToDt: [],
+      stockLedgerToLocName:[],
       spreceiptfromDate: [],
       spreceipttoDate: [],
       sidfromDate: [],
@@ -164,7 +166,9 @@ export class AllReportsComponent implements OnInit {
     //  this.reportForm.patchValue({ location: sessionStorage.getItem('locId') });
     this.reportForm.patchValue({ deptId: sessionStorage.getItem('deptName') });
     this.reportForm.patchValue({ location: sessionStorage.getItem('locCode') });
-
+    this.reportForm.patchValue({stockLedgerToLocName: sessionStorage.getItem('locCode')});
+    this.reportForm.patchValue({stockLedgerToLoc: sessionStorage.getItem('locId')});
+    this.reportForm.patchValue({stockLedgerUserName:sessionStorage.getItem('ticketNo')});
 
     this.reportService.getLocationSearch1(sessionStorage.getItem('ouId'))
       .subscribe(

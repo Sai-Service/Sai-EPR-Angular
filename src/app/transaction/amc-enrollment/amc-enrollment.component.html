@@ -1,0 +1,204 @@
+<form [formGroup]="amcEnrollmentForm" (ngSubmit)="amcEnrollment(amcEnrollmentForm.value)">
+
+    <div class="center">
+
+        <table style="width: 100%;background-color: white;">
+            <tr>
+                <td class="PageHeader">
+                    &nbsp;&nbsp;AMC&nbsp;Enrollment&nbsp;
+                </td>
+            </tr>
+        </table>
+
+        <div class="form-bg">
+            <div class="center" style="width: 100%;">
+
+            <table class="center">
+                <tr>
+
+                <td> <input hidden  style="width:30px ;"   type="number" formControlName="divisionId" class="form-control" [(ngModel)]="divisionId" > </td>
+                <td> <input hidden  style="width:30px ;"  type="number" formControlName="locId"  [(ngModel)]="locId" class="form-control"  placeholder="Location Name"> </td>
+                <td> <input hidden disabled style="width:50px ;"  type="number"  formControlName="emplId" class="form-control" [(ngModel)]="emplId" placeholder=""></td>
+                <td> <input hidden disabled style="width:30px ;" type="number"  formControlName="ouId"  id="ouId" [(ngModel)]="ouId" class="form-control" ></td>
+                <td> <input hidden disabled style="width:30px ;" type="number"  formControlName="deptId"  id="deptId" [(ngModel)]="deptId" class="form-control" ></td>
+                         
+              </tr>
+            </table>
+        
+
+        <fieldset class="RFS">
+            <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">AMC Vehicle|Customer Details </legend>
+               
+            <table class="center" >
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Reg&nbsp;No:&nbsp;</td>
+                    <td> <input  type ="text" class="form-control" formControlName="regNo"  value={{regNo}} style="background-color: yellow;" placeholder="Enter/Select Regno"> </td>
+                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Service&nbsp;Advisor:&nbsp;</td>
+                    <td> <input  type ="text" class="form-control" formControlName="saName" [(ngModel)]='saName' placeholder="LOV"
+                        value={{saName}} style="background-color: yellow;" > </td>
+                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Amc&nbsp;No:&nbsp;</td>
+                    <td> <input  disabled type ="text" class="form-control" formControlName="amcNumber"  value={{amcNumber}}  > </td>
+                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Amc&nbsp;Date:&nbsp;</td>
+                    <td> <input  disabled type ="date" class="form-control" formControlName="amcDate" [(ngModel)]='amcDate'  
+                        value={{amcDate}} > </td>
+                   
+                    
+                </tr>
+
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Customer&nbsp;No:&nbsp;</td>
+                    <td> <input disabled type ="text" class="form-control" formControlName="custNo"  value={{custNo}}  > </td>
+                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Customer&nbsp;Name:&nbsp;</td>
+                    <td colspan="3"> <input disabled style="width: 100%;"  type ="text" class="form-control" formControlName="custName"  value={{custName}}  > </td>
+                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Contact&nbsp;No:&nbsp;</td>
+                    <td> <input  disabled type ="text" class="form-control" formControlName="contactNo"  value={{contactNo}}  > </td>
+                  
+                </tr>
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Address&nbsp;:&nbsp;</td>
+                    <td colspan="7"> <input disabled  style="width: 100%;" type ="text" class="form-control" formControlName="custAddress"  value={{custAddress}}  > </td>
+                </tr>
+
+            </table>
+        </fieldset>
+
+        <fieldset class="RFS">
+            <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Scheme & Contract Details</legend>
+               
+            <table class="center" >
+                <tr>
+                    <!-- <td>&nbsp;Group&nbsp;Name:&nbsp;</td>
+                    <td> <input  type ="text" class="form-control" formControlName="schemeGrp"  value={{schemeGrp}} style="background-color: yellow;"  > </td>
+                     -->
+                    <td>&nbsp;Scheme&nbsp;Name:&nbsp;</td>
+                    <td colspan="3"> <input   type ="text" class="form-control" formControlName="schemeNo"  value={{schemeNo}} style="background-color: yellow;width: 100%;" placeholder="LOV" > </td>
+                </tr>
+                <tr>
+                    <td>&nbsp;Start&nbsp;Kms:&nbsp;</td>
+                    <td> <input disabled type ="number" class="form-control" formControlName="startKms"  value={{startKms}}   > </td>
+                    <td>&nbsp;End&nbsp;Kms:&nbsp;</td>
+                    <td> <input disabled type ="number" class="form-control" formControlName="endKms"  value={{endKms}}   > </td>
+                    <td>&nbsp;Start&nbsp;Date:&nbsp;</td>
+                    <td> <input disabled type ="date" class="form-control" formControlName="startDate"  value={{startDate}}   > </td>
+                    <td>&nbsp;End&nbsp;Date:&nbsp;</td>
+                    <td> <input  disabled type ="date" class="form-control" formControlName="endDate"  value={{endDate}}   > </td>
+                   
+
+                </tr>
+            </table>
+        <!-- </fieldset>
+
+          <fieldset class="RFS">
+            <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">AMC Scheme Value Details </legend> -->
+               <table class="auto-style4" class="GridFont" cellspacing="0"
+                    cellpadding="4" border="0" id="ctl00_cpForm_grdActions"
+                    style="border-color:#959595;width:100%;border-collapse:collapse;">
+                    <thead>
+                        <tr class="GridHeader">
+                            <th scope="col" style="text-align: center;">Labour&nbsp;Amt&nbsp;</th>
+                            <th scope="col" style="text-align: center;">Labour Discount&nbsp;</th>
+                            <th scope="col" style="text-align: center;">Labour Tax Amt&nbsp;</th>
+                            <th scope="col" style="text-align: center;">Labour Total Amt&nbsp;</th>
+                            <th scope="col" style="text-align: center;">Material Amt&nbsp;</th>
+                            <th scope="col" style="text-align: center;">Material Discount&nbsp;</th>
+                            <th scope="col" style="text-align: center;">Material Tax Amt&nbsp;</th>
+                            <th scope="col" style="text-align: center;">Material Total Amt&nbsp;</th>
+                            <th scope="col" style="text-align: center;">Scheme TotalAmt&nbsp;</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr class="ItemStyle" style="text-decoration:none;">
+                        <td><input disabled type="number" formControlName="amcLabBasicAmt" style="width: 9em;font-weight: bold;font-size: small;text-align: center;" ></td>
+                        <td><input disabled type="number" formControlName="amcLabDiscount" style="width: 9em;font-weight: bold;font-size: small;text-align: center;" ></td>
+                        <td><input disabled type="number" formControlName="amdLabTax" style="width: 9em;font-weight: bold;font-size: small;text-align: center;" ></td>
+                        <td><input disabled type="number" formControlName="amcLabToal" style="width: 9em;font-weight: bold;font-size: small;text-align: center;" ></td>
+                        <td><input disabled type="number" formControlName="amcMatBasicAmt" style="width: 9em;font-weight: bold;font-size: small;text-align: center;" ></td>
+                        <td><input disabled type="number" formControlName="amcMatDiscount" style="width: 9em;font-weight: bold;font-size: small;text-align: center;" ></td>
+                        <td><input disabled type="number" formControlName="amdMatTax" style="width: 9em;font-weight: bold;font-size: small;text-align: center;" ></td>
+                        <td><input disabled type="number" formControlName="amcMatToal" style="width: 9em;font-weight: bold;font-size: small;text-align: center;" ></td>
+                        <td><input disabled type="number" formControlName="amcSchemeTotal" style="width: 10em;font-weight: bold;font-size: small;text-align: center;" ></td>
+                    </tr>
+
+                    </tbody>
+               </table>
+        </fieldset> 
+
+        <fieldset class="RFS">
+         <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">AMC Coupon Details</legend>
+
+        <div class="center">
+            <!-- <br> -->
+           <div class="center" formArrayName="amcItemList">
+
+                <div class="grid_scroll">
+
+                    <table style="width: 100%; border: solid 1px Gray" class="auto-style4"
+                              cellspacing="0" cellpadding="4" rules="all" class="center">
+                              <thead>
+                                <tr class="GridHeader">
+                                      <th style="width:4rem" scope="col">Srl No</th>
+                                      <th style="width:10rem" scope="col">Coupon Number</th>
+                                      <th style="width:20rem" scope="col">Coupon Description</th>
+                                      <th style="width:8rem" scope="col">Quantity</th>
+                                      <th style="width:8rem"  scope="col">Price</th>
+                                      <th style="width:8rem" scope="col">Utilized Qty</th>
+                                      <th style="width:8rem" scope="col">Balance Qty</th>
+                                      <th style="width:8rem"  scope="col">Total Amount</th>
+                                   </tr>
+                              </thead>
+
+                            <tr *ngFor="let group of lineDetailsArray().controls; let i= index" [formGroupName]="i">
+                                
+                                <input hidden type="text" formControlName="cpnId"  class="form-control"  >
+                                
+                                <td style="text-align: center;width: 4rem;">{{i+1}}</td>
+                                <td><input disabled style="width: 15rem;"  type="text" formControlName="cpnNumber"  class="form-control" placeholder="Coupon Number" ></td>
+                                <td><input disabled style="width: 20rem;" type="text" formControlName="cpnDesc"  class="form-control" placeholder="Coupon Description"  ></td>
+                                <td><input disabled  style="width: 8rem;text-align: right;" type="text" formControlName="cpnQty"  class="form-control" placeholder="Quantity "  ></td>
+                                <td><input disabled style="width: 8rem;"  type="text" formControlName="cpnPrice"  class="form-control" placeholder="Price " ></td>
+                                <td><input disabled style="width: 8rem;" type="text" formControlName="cpnUtilQty"  class="form-control" placeholder="Coupon Amount"  ></td>
+                                <td><input disabled style="width: 8rem;"  type="text" formControlName="cpnBalQty"  class="form-control" placeholder="Price " ></td>
+                                <td><input disabled style="width: 8rem;" type="text" formControlName="cpnAmount"  class="form-control" placeholder="Coupon Amount"  ></td>
+                            </tr>
+                    </table>
+
+                   
+                </div>
+           </div>
+        </div>
+
+        </fieldset>
+
+        <br>
+
+        <table class="center">
+            <tr>
+                <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
+                <ng-template #thenBlock1>
+                <td> <button type="submit" class="btn btn-info" id="register" (click)="newMast()">Save</button></td>
+                <td> <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>
+                <td> <button type="submit" class="btn btn-info" id="register" (click)="closeMast()">Close</button></td>
+               
+                </ng-template>
+                <ng-template #elseBlock1>
+                    <td> <button type="submit" class="btn btn-info" id="register" (click)="updateMast()">Update</button></td>
+                    <td> <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>
+                    <td> <button type="submit" class="btn btn-info" id="register" (click)="closeMast()">Close</button></td>
+                </ng-template>
+                
+            </tr>
+        </table>
+
+
+
+
+   <!-- ============================================================================================= -->
+    </div>
+    </div>
+    </div>
+</form>
+        
+
+

@@ -95,6 +95,9 @@ export class BulkUploadWithCsvComponent implements OnInit {
   closeResetButton =true;
   dataDisplay: any;
   progress = 0;
+  isVisible1: boolean = false;
+  displayParamter : boolean=false;
+  displaySalesErrorList=true;
 
   constructor(private fb: FormBuilder, private router: Router, private location1: Location, private router1: ActivatedRoute, private service: MasterService) {
     this.bulkUploadCSVForm = this.fb.group({
@@ -123,6 +126,14 @@ export class BulkUploadWithCsvComponent implements OnInit {
     this.bulkUploadCSVForm.patchValue({ location: sessionStorage.getItem('locCode') });
     this.bulkUploadCSVForm.patchValue({ userName: sessionStorage.getItem('ticketNo') })
     console.log(sessionStorage.getItem('locCode'));
+    this.displaySalesErrorList=true;
+
+    if (sessionStorage.getItem('deptName')==='Sales'){
+      this.displayParamter = true;
+    }
+    else{
+      this.displayParamter = false; 
+    }
 
     this.service.supplierCodeList()
       .subscribe(
@@ -165,16 +176,14 @@ export class BulkUploadWithCsvComponent implements OnInit {
       this.service.bulkpouploadSales(formData).subscribe((res: any) => {  
        if (res.code === 200) {        
           this.poDetails = res.obj;
-          // for (let i = 0; i < res.obj; i++) {
-          //   this.bulkUploadCSVForm.patchValue({ segment1: res[i].obj.segment1 })
-          // }
           this.dataDisplay ='File Uploaded Sucessfully....'
           this.closeResetButton=true;
         } else {
           if (res.code === 400) {
-            alert('Error In File : \n' + res.obj);
+            alert('Error In File : \n' + res.message);
             this.dataDisplay ='File Uploading Failed....'
             this.closeResetButton=true;
+            this.displaySalesErrorList=false
           }
         }
       });

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { controllers } from 'chart.js';
 import { data } from 'jquery';
 import { MasterService } from 'src/app/master/master.service';
+import { AllOrderListComponent } from 'src/app/order-management/all-order-list/all-order-list.component';
 
 interface IOnhanddetails {
   segment: string;
@@ -114,12 +115,16 @@ onhandDetailsForm:FormGroup;
     // this.locName=(sessionStorage.getItem('locName'));
 
 
-    this.service.ItemIdDivisionList(this.divisionId).subscribe(
-      data =>{ this.ItemIdList = data;
-        console.log(this.ItemIdList);
+  //   this.service.ItemIdDivisionList(this.divisionId).subscribe(
+  //     data =>{ this.ItemIdList = data;
+  //       console.log(this.ItemIdList);
 
+  //  });
+   this.service
+   .searchByItemSegmentDiv(this.divisionId, '36DH1601')
+   .subscribe((data) => {
+     this.ItemIdList = data;
    });
-
 
 
   //  this.service.OUIdList()
@@ -185,14 +190,25 @@ onhandDetailsForm:FormGroup;
 
  searchByItem(segment)
  {
+alert('In call by item');
+   alert(this.onhandDetailsForm.get('segment').value);
+   var segmentl=this.onhandDetailsForm.get('segment').value
+ var segment1 = '';
+   if (segmentl.includes('--')) {
+    var segmentln = segmentl.split('--');
+    segment1 = segmentln[0];
+    alert(segment1 + 'item in if');
+  } else {
+    segment1 = segmentl;
+    alert(segment1 + 'item in else');
+  }
 
-  //  alert(this.onhandDetailsForm.get('segment').value);
-   var segment1=this.onhandDetailsForm.get('segment').value
+
    segment1=segment1.toUpperCase();
    if(segment1 ==undefined || segment1==null) {
     alert ("Please select Item Code ....") ;return;
    }
-   let select1=this.ItemIdList.find(d=>d.SEGMENT===segment1);
+   let select1=this.ItemIdList.find(d=>d.segment===segment1);
 
 
    if (select1==undefined) {
@@ -221,6 +237,7 @@ onhandDetailsForm:FormGroup;
 
       } else { alert(segment1+" - Stock not Available...");}
    })
+   this.ItemIdList =[];
   }
 
   searchByItemF9(xyz) {
@@ -232,7 +249,7 @@ onhandDetailsForm:FormGroup;
       return;
      }
 
-    let select1=this.ItemIdList.find(d=>d.SEGMENT===segment1);
+    let select1=this.ItemIdList.find(d=>d.segment===segment1);
 
     if (select1==undefined) {
       alert ("Please select valid Item Code ....") ;
@@ -262,14 +279,14 @@ onhandDetailsForm:FormGroup;
 
       onOptioninvItemIdSelectedSingle(searchItemCode) {
         // alert ("in fn onOptioninvItemIdSelectedSingle "+searchItemCode);
-          let selectedValue = this.ItemIdList.find(v => v.SEGMENT == searchItemCode);
+          let selectedValue = this.ItemIdList.find(v => v.segment == searchItemCode);
           if( selectedValue != undefined){
            console.log(selectedValue);
           // alert(selectedValue.itemId+","+selectedValue.DESCRIPTION+","+selectedValue.SEGMENT);
 
           this.searchItemId = selectedValue.itemId;
-          this.searchItemName=selectedValue.DESCRIPTION;
-          this.searchItemCode=selectedValue.SEGMENT;
+          this.searchItemName=selectedValue.description;
+          this.searchItemCode=selectedValue.segment;
         }
       }
 
@@ -318,25 +335,58 @@ onhandDetailsForm:FormGroup;
 
        }
 
-       filterRecord(event) {
 
-        var itemCode = event.target.value;
-        if (event.keyCode == 13) {
+
+      filterRecord(event) {
+        var itemCode1 = event.target.value;
+        alert(itemCode1+'---'+event.keyCode);
+        // debugger;
+        if (event.keyCode === 13) {
+
+          var itemCode = '';
+          if (itemCode1.includes('--')) {
+            var itemCode2 = itemCode1.split('--');
+            itemCode = itemCode2[0];
+            alert(itemCode + 'item in if');
+          } else {
+            itemCode = itemCode1;
+            alert(itemCode + 'item in else');
+          }
+           alert(itemCode.length + 'length'+this.ItemIdList.length);
           // enter keycode
-          if (itemCode.length == 8) {
-            if (this.ItemIdList.length <= 4) {
-                  this.service
-                  .searchByItemSegmentDiv(this.divisionId, itemCode.toUpperCase())
-                  .subscribe((data) => {
-                    this.ItemIdList = data;
-                    // this.Select(data[0].itemId);
-                  });
-              }
-            }
+          if (itemCode.length >= 4 && this.ItemIdList.length <= 1) {
+            this.service
+              .searchByItemSegmentDiv(this.divisionId, itemCode.toUpperCase())
+              .subscribe((data) => {
+                this.ItemIdList = data;
 
-            else {
+                // this.Select(data[0].itemId);
+              });
+          } else {
+            if(this.ItemIdList.length<=1){
             alert('Please Enter 4 characters of item number!!');
+
             return;
+            }
+          }
+          if (itemCode.length === 8 ) {
+            alert('in len if' + itemCode.toUpperCase());
+            console.log(this.ItemIdList);
+            let select1 = this.ItemIdList.find(
+              (d) => d.segment === itemCode.toUpperCase()
+            );
+            alert(select1.itemId + 'In len');
+            if (select1 != undefined) {
+              this.searchByItem(select1.segment);
+            }else{
+              this.service
+              .searchByItemSegmentDiv(this.divisionId, itemCode.toUpperCase())
+              .subscribe((data) => {
+                this.ItemIdList = data;
+                this.searchByItem(select1.segment);
+              });
+
+            }
           }
         }
       }
@@ -347,6 +397,7 @@ onhandDetailsForm:FormGroup;
       }
 
       closeMast(){
+        // alert('In Close')
         this.router.navigate(['admin']);
       }
 

@@ -197,6 +197,9 @@ export class MasterService {
   supplierCodeList1(): Observable<any> {
     return this.http.get(this.ServerUrl +'/supp');
   }
+  supplierName(supName):Observable<any>{
+    return this.http.get(this.ServerUrl+`/supp/suppName?name=${supName}`);
+  }
 
   taxCategoryList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate/PURCHASE');
@@ -763,6 +766,34 @@ McpPackageTypeList(): Observable<any> {
 McpPackageCategoryList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/cmnLookup/type/McpPackageCatg');
 }
+
+
+AmcCouponList(): Observable<any> {
+  return this.http.get(this.ServerUrl +'/schHdr/couponLst');
+  // http://localhost:8081/schHdr/couponLst
+}
+
+AmcSchemeList(): Observable<any> {
+  return this.http.get(this.ServerUrl +'/schHdr');
+  // http://localhost:8081/schHdr
+}
+
+AmcSchemeDetails(schNo): Observable<any> {
+  return this.http.get(this.ServerUrl +`/schHdr/schemeName/${schNo}`);
+  // http://localhost:8081/schHdr/schemeName/AM10
+}
+
+
+
+
+public AmcSchemeMasterSubmit(AmcSchemeMasterRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/AmcSchemeMst';
+  return this.http.post(url, AmcSchemeMasterRecord, options);
+}
+
 
 insNameList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/Customer/ClassCode/INSURER');
@@ -2490,7 +2521,7 @@ OrderCategoryList(): Observable<any> {
   var docType1=formData.get('docType');
   formData.append('locId', mlocId);
   return this.http.post(this.ServerUrl + `/fileImport/uploadbkord`,formData)
-  // http://localhost:8081/fileImport/uploadbkord 
+  // http://localhost:8081/fileImport/uploadbkord
   }
 ////////////////////////////// Back order File upload /////////
 
@@ -2525,7 +2556,7 @@ OrderCategoryList(): Observable<any> {
         // http://localhost:8081/spareOrder/addLine
       }
 
-     
+
 
 
 

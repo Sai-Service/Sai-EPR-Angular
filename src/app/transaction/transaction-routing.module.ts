@@ -35,6 +35,8 @@ import { InternalConsumptionComponent } from './internal-consumption/internal-co
 import { PoUploadListComponent } from './po-upload-list/po-upload-list.component';
 import { BulkUploadPricelistComponent } from './bulk-upload-pricelist/bulk-upload-pricelist.component';
 import { BankReconcillationComponent } from './bank-reconcillation/bank-reconcillation.component';
+import { AmcSchemeMasterComponent } from './amc-scheme-master/amc-scheme-master.component';
+import { AmcEnrollmentComponent } from './amc-enrollment/amc-enrollment.component';
 // import { CounterSaleReturnComponent } from './counter-sale-return/counter-sale-return.component';
 
 const routes: Routes = [
@@ -74,7 +76,8 @@ const routes: Routes = [
 {path:'pendingPoList',component:PoUploadListComponent},
 {path:'BulkUploadPricelist',component:BulkUploadPricelistComponent},
 {path :'BankReconcillation',component:BankReconcillationComponent},
-
+{path:'AmcSchemeMaster',component:AmcSchemeMasterComponent},
+{path :'AmcEnrollment',component:AmcEnrollmentComponent},
 // {path:'CounterSaleReturn',component:CounterSaleReturnComponent},
  {path : '' ,redirectTo: 'Dashboard', pathMatch: 'full'}
 ];

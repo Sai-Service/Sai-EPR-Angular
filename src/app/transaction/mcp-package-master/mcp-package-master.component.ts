@@ -596,6 +596,8 @@ RemoveRow(index) {
           }else{ alert("Data Validation Not Sucessfull....\nPosting Not Done...")  }
     }
 
+    
+
     //  ------------------------Line updattion..........................
     updateMastLine() {
       alert ("Putting data  to MCP PACKAGE LINE item......")
