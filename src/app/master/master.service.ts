@@ -197,6 +197,9 @@ export class MasterService {
   supplierCodeList1(): Observable<any> {
     return this.http.get(this.ServerUrl +'/supp');
   }
+  supplierName(supName):Observable<any>{
+    return this.http.get(this.ServerUrl+`/supp/suppName?name=${supName}`);
+  }
 
   taxCategoryList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate/PURCHASE');
@@ -780,6 +783,16 @@ AmcSchemeDetails(schNo): Observable<any> {
   // http://localhost:8081/schHdr/schemeName/AM10
 }
 
+
+
+
+public AmcSchemeMasterSubmit(AmcSchemeMasterRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/AmcSchemeMst';
+  return this.http.post(url, AmcSchemeMasterRecord, options);
+}
 
 
 insNameList(): Observable<any> {
@@ -2508,7 +2521,7 @@ OrderCategoryList(): Observable<any> {
   var docType1=formData.get('docType');
   formData.append('locId', mlocId);
   return this.http.post(this.ServerUrl + `/fileImport/uploadbkord`,formData)
-  // http://localhost:8081/fileImport/uploadbkord 
+  // http://localhost:8081/fileImport/uploadbkord
   }
 ////////////////////////////// Back order File upload /////////
 
@@ -2543,7 +2556,7 @@ OrderCategoryList(): Observable<any> {
         // http://localhost:8081/spareOrder/addLine
       }
 
-     
+
 
 
 

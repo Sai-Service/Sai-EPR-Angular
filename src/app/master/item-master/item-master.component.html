@@ -35,7 +35,7 @@
                                 <td>
                          
                                     <select style="width:fit-content" formControlName="itemTypeForCat"
-                                        id="itemTypeForCat" class="form-control"
+                                        id="itemTypeForCat" class="form-control" [ngModel]="itemTypeForCat"
                                          [ngClass]="{ 'is-invalid': submitted && f.itemTypeForCat.errors }"
                                          (ngModelChange)='onOptionsSelectedItemType($event)'>
                                         <option></option>
@@ -44,7 +44,7 @@
                                         </option>
                                     </select>
                                     <div *ngIf="submitted && f.itemTypeForCat.errors" class="invalid-feedback">
-                                        <div *ngIf="f.itemTypeForCat.errors.required">Please select Item type</div>
+                                        <div *ngIf="f.itemTypeForCat.errors.required">Please enter Item type </div>
                                     </div>
                                 </td>
                                 <td style="width: 12%" class="LabelFontStyle">Item&nbsp;Category&nbsp;:&nbsp;</td>
@@ -74,6 +74,9 @@
                                             {{sc.hsnsaccode}}-{{sc.description}}
                                         </option>
                                     </select>
+                                    <div *ngIf="submitted && f.hsnSacCode.errors" class="invalid-feedback">
+                                        <div *ngIf="f.hsnSacCode.errors.required">HSN / SAC code cannot be blank </div>
+                                      </div>
               
                                     <!-- <input type="text" formControlName="hsnSacCode"
                                     (keyup)="getHSCSACCODE($event)" id="invItemIdFirstWay"
@@ -84,13 +87,7 @@
                                     [ngValue]="sc.hsnsaccode">{{sc.hsnsaccode}}-{{sc.description}}
                                     </option>
                                 </datalist> -->
-                                    <div *ngIf="submitted && f.hsnSacCode.errors" class="invalid-feedback">
-                                        <div *ngIf="f.hsnSacCode.errors.required">HSN / SAC code cannot be blank </div>
-                                        <!-- <div *ngIf="f.hsnSacCode.errors?.maxLength">Enter hsn/sac</div> -->
-                                    </div>
-                                    <!--<span
-                                        *ngIf="!itemMasterForm.get('hsnSacCode').valid && itemMasterForm.get('hsnSacCode').touched">Please
-                                        Enter hsn/sac </span>-->
+
                                 </td>
                                 <td style="width: 12%" class="LabelFontStyle">UOM&nbsp;:&nbsp;</td>
                                 <td>
@@ -105,7 +102,7 @@
                                     </select>
                                     <div *ngIf="submitted && f.uom.errors" class="invalid-feedback">
                                         <div *ngIf="f.uom.errors.required">Please enter UOM </div>
-                                        <!-- <div *ngIf="f.uom.errors?.maxLength">Enter UOM</div> -->
+                                        <!-- <div *ngIf="f.uom.errors?.maxlength">Enter UOM</div> -->
                                     </div>
                                     <!--<span
                                         *ngIf="!itemMasterForm.get('uom').valid && itemMasterForm.get('uom').touched">Please
@@ -138,11 +135,11 @@
                                         <input formControlName="segment" value={{segment}} [(ngModel)]='segment'
                                             class="form-control"
                                             [ngClass]="{ 'is-invalid': submitted && f.segment.errors }"
-                                            placeholder="Enter Item code" style="width: 100%;">
+                                            placeholder="Enter Item code" style="text-transform: uppercase;">
                                         <div *ngIf="submitted && f.segment.errors" class="invalid-feedback">
                                             <div *ngIf="f.segment.errors.required">Item code cannot be blank </div>
-                                            <div *ngIf="f.segment.errors.maxLength">Maximum 20 characters allowed</div>
-                                            <div *ngIf="f.segment.errors.minLength">Maximum 4 characters required</div>
+                                            <div *ngIf="f.segment.errors.maxlength">Maximum 20 characters allowed</div>
+                                            <div *ngIf="f.segment.errors.minlength">Maximum 4 characters required</div>
                                         </div>
                                         <!--<span
                                             *ngIf="!itemMasterForm.get('segment').valid && itemMasterForm.get('segment').touched">Please
@@ -161,11 +158,11 @@
                                 <td colspan="2">
                                     <input formControlName="description" value={{description}} class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.description.errors }"
-                                        placeholder="Enter Item Description" style="width: 100%;">
+                                        placeholder="Enter Item Description" style="text-transform: uppercase;" >
                                     <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
                                         <div *ngIf="f.description.errors.required">Enter Item Description </div>
-                                        <div *ngIf="f.description.errors.maxLength">Maximum 150 characters allowed</div>
-                                        <div *ngIf="f.description.errors.minLength">Maximum 4 characters required</div>
+                                        <div *ngIf="f.description.errors.maxlength">Maximum 150 characters allowed</div>
+                                        <div *ngIf="f.description.errors.minlength">Maximum 4 characters required</div>
                                     </div>
                                     <!--<span
                                         *ngIf="!itemMasterForm.get('description').valid && itemMasterForm.get('description').touched">Please
@@ -718,7 +715,7 @@
                                                         </select>
                                                         <div *ngIf="submitted && f.mainModel.errors" class="invalid-feedback">
                                                             <div *ngIf="f.mainModel.errors.required">Please enter Main Model</div>
-                                                            <!-- <div *ngIf="f.mainModel.errors?.maxLength">Enter main model</div> -->
+                                                            <!-- <div *ngIf="f.mainModel.errors?.maxlength">Enter main model</div> -->
                                                         </div>
                                                         <!--<span
                                                             *ngIf="!itemMasterForm.get('mainModel').valid && itemMasterForm.get('mainModel').touched">Please
@@ -750,7 +747,7 @@
                                                     <div *ngIf="f.variantCode.errors.required">Enter variant
                                                         code
                                                     </div>
-                                                    <div *ngIf="f.variantCode.errors?.maxLength">Enter variant
+                                                    <div *ngIf="f.variantCode.errors?.maxlength">Enter variant
                                                         code
                                                     </div>
                                                 </div>
@@ -761,7 +758,7 @@
                                                     <td style="width: 15;  " class="LabelFontStyle1">
                                                         Color&nbsp;Code&nbsp;:&nbsp;</td>
                                                     <select  formControlName="colorCode" (keyup)="onKey($event)"
-                                                        [(ngModel)]="colorCode" id="colorCode" class="form-control"
+                                                        [(ngModel)]="colorCode" id="colorCode" class="form-control" 
                                                         [ngClass]="{ 'is-invalid': submitted && f.colorCode.errors }"
                                                       uppercase
                                                         style="text-transform: uppercase;">
@@ -785,7 +782,7 @@
                                                     class="invalid-feedback">
                                                     <div *ngIf="f.colorCode.errors.required">Enter color code
                                                     </div>
-                                                    <div *ngIf="f.colorCode.errors?.maxLength">Enter color code
+                                                    <div *ngIf="f.colorCode.errors?.maxlength">Enter color code
                                                     </div>
                                                 </div> -->
                                                 <!--<span
@@ -793,17 +790,17 @@
                                                     Enter color code</span>-->
                                             <!-- </td> --> 
 
-                                                    <td style="width: 12%" class="LabelFontStyle">
+                                                    <td style="width: 12%" class="LabelFontStyle1">
                                                         Engine&nbsp;No&nbsp;:&nbsp;</td>
                                                     <td>
                                                         <input formControlName="engineNo" value={{engineNo}}
                                                             class="form-control"
                                                             [ngClass]="{ 'is-invalid': submitted && f.engineNo.errors }"
-                                                            placeholder="Enter engine no">
+                                                            placeholder="Enter engine no" style="text-transform: uppercase;" >
                                                         <div *ngIf="submitted && f.engineNo.errors"
                                                             class="invalid-feedback">
                                                             <div *ngIf="f.engineNo.errors.required">Please engine no </div>
-                                                            <!-- <div *ngIf="f.engineNo.errors?.maxLength">Enter engine no </div> -->
+                                                            <!-- <div *ngIf="f.engineNo.errors?.maxlength">Enter engine no </div> -->
                                                         </div>
                                                         <!--  <span
                                                             *ngIf="!itemMasterForm.get('engineNo').valid && itemMasterForm.get('engineNo').touched">Please
@@ -811,7 +808,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td style="width: 12%" class="LabelFontStyle">
+                                                    <td style="width: 12%" class="LabelFontStyle1">
                                                         Chassis&nbsp;No&nbsp;:&nbsp;</td>
                                                     <td>
                                                         <input formControlName="chassisNo" (keyup)="onKey($event)"
@@ -824,7 +821,7 @@
                                                             class="invalid-feedback">
                                                             <div *ngIf="f.chassisNo.errors.required">Enter chasis no
                                                             </div>
-                                                            <div *ngIf="f.chassisNo.errors?.maxLength">Enter chasis no
+                                                            <div *ngIf="f.chassisNo.errors?.maxlength">Enter chasis no
                                                             </div>
                                                         </div>
                                                          <span
@@ -845,7 +842,7 @@
                                                             <div *ngIf="f.vehicleDelvDate.errors.required">Enter vehicle
                                                                 sale date
                                                             </div>
-                                                            <div *ngIf="f.vehicleDelvDate.errors?.maxLength">Enter
+                                                            <div *ngIf="f.vehicleDelvDate.errors?.maxlength">Enter
                                                                 vehicle sale
                                                                 date
                                                             </div>
@@ -898,7 +895,7 @@
                                                         <div *ngIf="submitted && f.insurerCompId.errors"
                                                             class="invalid-feedback">
                                                             <div *ngIf="f.insurerCompId.errors.required">Enter insurer name </div>
-                                                            <div *ngIf="f.insurerCompId.errors?.maxLength">Enter insurer name </div>
+                                                            <div *ngIf="f.insurerCompId.errors?.maxlength">Enter insurer name </div>
                                                         </div>
                                                         <!--<span
                                                             *ngIf="!itemMasterForm.get('insurerCompId').valid && itemMasterForm.get('insurerCompId').touched">Please
@@ -918,7 +915,7 @@
                                                         <div *ngIf="submitted && f.insurerSiteId.errors"
                                                             class="invalid-feedback">
                                                             <div *ngIf="f.insurerSiteId.errors.required">Enter insurer site </div>
-                                                            <div *ngIf="f.insurerSiteId.errors?.maxLength">Enter insurer site </div>
+                                                            <div *ngIf="f.insurerSiteId.errors?.maxlength">Enter insurer site </div>
                                                         </div>
                                                         <!--<span
                                                             *ngIf="!itemMasterForm.get('insurerSiteId').valid && itemMasterForm.get('insurerSiteId').touched">Please
@@ -951,14 +948,14 @@
                                                     <td>
                                                         <input type="ewBookletNo" formControlName="ewBookletNo"
                                                             value={{ewBookletNo}} class="form-control"
-                                                            [ngClass]="{ 'is-invalid': submitted && f.date.errors }"
+                                                            [ngClass]="{ 'is-invalid': submitted && f.ewBookletNo.errors }"
                                                             placeholder="Enter EW Booklet No">
                                                         <div *ngIf="submitted && f.ewBookletNo.errors"
                                                             class="invalid-feedback">
                                                             <div *ngIf="f.ewBookletNo.errors.required">Enter EW booklet
                                                                 no
                                                             </div>
-                                                            <div *ngIf="f.ewBookletNo.errors?.maxLength">Enter EW
+                                                            <div *ngIf="f.ewBookletNo.errors?.maxlength">Enter EW
                                                                 booklet no
                                                             </div>
                                                         </div>
@@ -981,7 +978,7 @@
                                                             class="invalid-feedback">
                                                             <div *ngIf="f.ewPeriod.errors.required">Enter EW period
                                                             </div>
-                                                            <div *ngIf="f.ewPeriod.errors?.maxLength">Enter EW period
+                                                            <div *ngIf="f.ewPeriod.errors?.maxlength">Enter EW period
                                                             </div>
                                                         </div>
                                                         <!--<span
@@ -1000,7 +997,7 @@
                                                             class="invalid-feedback">
                                                             <div *ngIf="f.ewStartDate.errors.required">Enter EW date
                                                             </div>
-                                                            <div *ngIf="f.ewStartDate.errors?.maxLength">Enter EW date
+                                                            <div *ngIf="f.ewStartDate.errors?.maxlength">Enter EW date
                                                             </div>
                                                         </div>
                                                         <!--<span
@@ -1019,7 +1016,7 @@
                                                             class="invalid-feedback">
                                                             <div *ngIf="f.ewEndDate.errors.required">Enter EW end date
                                                             </div>
-                                                            <div *ngIf="f.ewEndDate.errors?.maxLength">Enter end EW date
+                                                            <div *ngIf="f.ewEndDate.errors?.maxlength">Enter end EW date
                                                             </div>
                                                         </div>
                                                         <!--<span
@@ -1045,7 +1042,7 @@
                                                             <div *ngIf="f.ewInsurerId.errors.required">Enter EW insurer
                                                                 name
                                                             </div>
-                                                            <div *ngIf="f.ewInsurerId.errors?.maxLength">Enter EW
+                                                            <div *ngIf="f.ewInsurerId.errors?.maxlength">Enter EW
                                                                 insurer
                                                                 name
                                                             </div>
@@ -1070,7 +1067,7 @@
                                                                 insurer
                                                                 site
                                                             </div>
-                                                            <div *ngIf="f.ewInsurerSite.errors?.maxLength">Enter EW
+                                                            <div *ngIf="f.ewInsurerSite.errors?.maxlength">Enter EW
                                                                 insurer
                                                                 site
                                                             </div>
@@ -1099,14 +1096,14 @@
                                                     <td>
                                                         <input type="number" min="0" formControlName="smartCardNumber"
                                                             value={{smartCardNumber}} class="form-control"
-                                                            [ngClass]="{ 'is-invalid': submitted && f.date.errors }"
+                                                            [ngClass]="{ 'is-invalid': submitted && f.smartCardNumber.errors }"
                                                             placeholder="Enter smart card number">
                                                         <div *ngIf="submitted && f.smartCardNumber.errors"
                                                             class="invalid-feedback">
                                                             <div *ngIf="f.smartCardNumber.errors.required">Enter smart
                                                                 card
                                                                 number </div>
-                                                            <div *ngIf="f.smartCardNumber.errors?.maxLength">Enter smart
+                                                            <div *ngIf="f.smartCardNumber.errors?.maxlength">Enter smart
                                                                 card number
                                                             </div>
                                                         </div>
@@ -1266,7 +1263,7 @@
                                                         <div *ngIf="submitted && f.rips.errors"
                                                             class="invalid-feedback">
                                                             <div *ngIf="f.rips.errors.required">Enter RIPS </div>
-                                                            <div *ngIf="f.rips.errors?.maxLength">Enter RIPS
+                                                            <div *ngIf="f.rips.errors?.maxlength">Enter RIPS
                                                             </div>
                                                         </div>
                                                         <!--<span
@@ -1290,7 +1287,7 @@
                                                         <div *ngIf="submitted && f.twoTone.errors"
                                                             class="invalid-feedback">
                                                             <div *ngIf="f.twoTone.errors.required">Enter two tone</div>
-                                                            <div *ngIf="f.twoTone.errors?.maxLength">Enter two tone
+                                                            <div *ngIf="f.twoTone.errors?.maxlength">Enter two tone
                                                             </div>
                                                         </div>
                                                         <!--<span
@@ -1310,7 +1307,7 @@
                                                         <div *ngIf="submitted && f.hold.errors"
                                                             class="invalid-feedback">
                                                             <div *ngIf="f.hold.errors.required">Enter hold</div>
-                                                            <div *ngIf="f.hold.errors?.maxLength">Enter hold
+                                                            <div *ngIf="f.hold.errors?.maxlength">Enter hold
                                                             </div>
                                                         </div>
                                                         <!--<span
@@ -1341,7 +1338,7 @@
                                                                 <div *ngIf="f.holdReason.errors.required">Enter hold
                                                                     reason
                                                                 </div>
-                                                                <div *ngIf="f.holdReason.errors?.maxLength">Enter hold
+                                                                <div *ngIf="f.holdReason.errors?.maxlength">Enter hold
                                                                     reason
                                                                 </div>
                                                             </div>
@@ -1459,10 +1456,10 @@
                 <td>
                     <button type="submit" class="btn btn-primary" id="register" (click)="closeItemMast()">Close</button>
                 </td> -->
-                <td>
+                <!-- <td>
                     <button type="submit" class="btn btn-primary" id="register"
                         (click)="searchItemMast()">Search</button>
-                </td>
+                </td> -->
             </tr>
         </table>
     </form>

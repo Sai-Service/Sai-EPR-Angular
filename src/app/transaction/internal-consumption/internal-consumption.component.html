@@ -40,7 +40,7 @@
       </td>
       <input hidden formControlName="compileId" [(ngModel)]="compileId" >
       <td>
-        <select class="form-control" formControlName="compileType" [(ngModel)]=compileType #myinput> 
+        <select class="form-control" formControlName="compileType" [(ngModel)]=compileType #myinput>
           <option></option>
           <option *ngFor="let tt of transType" [ngValue]="tt.transactionTypeId" > {{tt.transactionTypeName}}</option>
         </select>
@@ -291,7 +291,7 @@
             *ngIf="getGroupControllinewise(trxLineIndex,'physicalQty').touched && getGroupControllinewise(trxLineIndex,'physicalQty').invalid" class="error">Valid Item
            </span>
             </td>
-            
+
             <div *ngIf="displayaddButton; then thenBlockopen; else elseBlockfreeze">
               </div>
               <ng-template #thenBlockopen>

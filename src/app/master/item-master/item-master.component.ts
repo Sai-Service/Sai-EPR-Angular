@@ -293,23 +293,28 @@ export class ItemMasterComponent implements OnInit {
       orgId:[],
       divisionId:[],
 
-      itemType:['', [Validators.required]],
+      // itemType:['', [Validators.required]],
+      itemType:[''],
       segment:['', [Validators.required,Validators.minLength(4),Validators.maxLength(20),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
       description:['', [Validators.required,Validators.minLength(4),Validators.maxLength(150),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
       categoryId:['', [Validators.required]],
       itemTypeForCat:['', [Validators.required]],
       uom:['', [Validators.required]],
-      costing:['', [Validators.required]],
-      stockable:['', [Validators.required]],
+      costing:[''],
+      // stockable:['', [Validators.required]],
+      stockable:[''],
       segment1:[],
       tyreMake:[],
       materialType:[],
       oemWarrentyEndDate:[],
-      purchasable:['', [Validators.required]],
-      costCenter:['', [Validators.required]],
+      // purchasable:['', [Validators.required]],
+      // costCenter:['', [Validators.required]],
+      purchasable:[''],
+      costCenter:[''],
       hsnSacCode:['', [Validators.required]],
-      hsnGstPer:[],
-      internalOrder:['', [Validators.required]],
+      hsnGstPer:[''],
+      // internalOrder:['', [Validators.required]],
+      internalOrder:[''],
       marginCategory:[],
       assetItem:[],
       lotSize:[],
@@ -359,14 +364,14 @@ export class ItemMasterComponent implements OnInit {
       keyNo:[''],
       batteryMake:[''],
       batteryNo:[''],
-loyaltyCardNumber:[''],
-fastTagIssueDate:[],
-fastTagNo:[],
-smartCardIssueDate:[],
-tempRegNo:[],
-tempRegDate:[],
-poChargeAccount:[],
-monthYrManf:[],
+      loyaltyCardNumber:[''],
+      fastTagIssueDate:[],
+      fastTagNo:[],
+      smartCardIssueDate:[],
+      tempRegNo:[],
+      tempRegDate:[],
+      poChargeAccount:[],
+      monthYrManf:[],
       dealerCode:[],
       startDate:[],
       segmentName:[],
@@ -382,7 +387,7 @@ monthYrManf:[],
       lookupValueDesc5: [],
       vin :[],
       taxCategoryPur:[],
-taxCategorySale:[],
+      taxCategorySale:[],
     })
    }
 
@@ -1092,7 +1097,7 @@ else{
   }
   resetItemMast() { window.location.reload();}
   closeItemMast(){this.router.navigate(['admin']);}
-  searchItemMast(){}
+  // searchItemMast(){}
   updateItemMast(){
     const formValue: IItemMaster = this.itemMasterForm.value;
     this.service.UpdateItemMasterById(formValue).subscribe((res: any) => {
@@ -1286,7 +1291,7 @@ else{
         this.submitted = true;
         (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
         if (this.itemMasterForm.invalid) {
-          
+           alert('Some fields validation error (D)');
           //this.submitted = false;
           (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '');
           return;
