@@ -785,6 +785,16 @@ AmcSchemeDetails(schNo): Observable<any> {
 
 
 
+
+public AmcSchemeMasterSubmit(AmcSchemeMasterRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/AmcSchemeMst';
+  return this.http.post(url, AmcSchemeMasterRecord, options);
+}
+
+
 insNameList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/Customer/ClassCode/INSURER');
 }

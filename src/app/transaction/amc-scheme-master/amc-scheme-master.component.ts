@@ -25,8 +25,8 @@ export class AmcSchemeMasterComponent implements OnInit {
   pipe = new DatePipe('en-US');
   public minDate = new Date();
 
-  public AmcCouponLst :Array<string> = [];
-
+  // public AmcCouponLst :Array<string> = [];
+  AmcCouponLst:any[];
   public McpPackageCategoryList :Array<string> = [];
   public McpPackageList:Array<string> = [];
 
@@ -45,24 +45,27 @@ export class AmcSchemeMasterComponent implements OnInit {
   deptId:number; 
   emplId :number;
 
+  schemeId:number;
   schemeNumber:string;
-  startDate:Date;
+  // startDate:Date;
+  startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+  
   endDate:Date;
-  schemeName:string;
+  schemeDesc:string;
   schemePrd:number;
   gracePrd:number;
   totalPrd:number;
-  schemeKms:number;
+  schemeValidKm:number;
   schemeGrp:string;
-  schMatDisPer:number;
-  schLabDisPer:number;
+  discOnMatrl:number;
+  discOnLabour:number;
 
   
 
   amcLabBasicAmt:number=0;
   amcLabDiscount:number=0;
-  amdLabTax:number=0;
-  amcLabToal:number=0;
+  amcLabTax:number=0;
+  amcLabTotal:number=0;
   amcMatBasicAmt:number=0;
   amcMatDiscount:number=0;
   amdMatTax:number=0;
@@ -70,6 +73,10 @@ export class AmcSchemeMasterComponent implements OnInit {
   amcSchemeTotal:number=0;
 
   displayButton=true;
+  duplicateLineItem=false;
+
+  userList2: any[] = [];
+  lastkeydown1: number = 0;
 
   constructor(private service: MasterService,private orderManagementService:OrderManagementService,private transactionService: TransactionService , private  fb: FormBuilder, private router: Router) {
     this.amcSchemeMasterForm = fb.group({
@@ -86,22 +93,23 @@ export class AmcSchemeMasterComponent implements OnInit {
     emplId:[''],
     orgId:[''],
 
+    schemeId:[],
     schemeNumber:[],
     startDate:[],
     endDate:[],
-    schemeName:[],
+    schemeDesc:[],
     schemePrd:[],
     gracePrd:[],
     totalPrd:[],
-    schemeKms:[],
+    schemeValidKm:[],
     schemeGrp:[],
-    schMatDisPer:[],
-    schLabDisPer:[],
+    discOnMatrl:[],
+    discOnLabour:[],
 
     amcLabBasicAmt:[],
     amcLabDiscount:[],
-    amdLabTax:[],
-    amcLabToal:[],
+    amcLabTax:[],
+    amcLabTotal:[],
     amcMatBasicAmt:[],
     amcMatDiscount:[],
     amdMatTax:[],
@@ -115,9 +123,9 @@ export class AmcSchemeMasterComponent implements OnInit {
 }
 
 lineDetailsGroup() {
-  return this.fb.group({ 
-    itemId:[],
-    couponId:[],
+    return this.fb.group({ 
+    itemId:[''],
+    couponId:[''],
     couponNumber:[''],
     couponDesc :['', [Validators.required]],    
     quantity:['', [Validators.required]],
@@ -125,6 +133,12 @@ lineDetailsGroup() {
     total:['', [Validators.required]],
     couponCode:[],
     gstpercentage:[],
+    couponActualCode:[],
+    discount:[],
+    taxableAmt:[],
+    taxAmt:[],
+    netAmt:[],
+
    });
 }
 
@@ -186,8 +200,8 @@ RemoveRow(index) {
 addRow(index) {
   var amcLineArr = this.amcSchemeMasterForm.get('amcItemList').value;
  var len = this.lineDetailsArray().length;
-  if( amcLineArr[index].cpnId>0  &&  amcLineArr[index].cpnQty>0 &&  
-    amcLineArr[index].cpnPrice>0  &&  amcLineArr[index].cpnAmount>0  ) {
+//  alert(amcLineArr[index].couponId);
+  if( amcLineArr[index].couponId>0) {
  
   this.lineDetailsArray().push(this.lineDetailsGroup()); 
   
@@ -195,9 +209,205 @@ addRow(index) {
  
 }
 
-newMast(){alert("Save ....wip");}
+transeData(val) {
+
+  delete val.loginArray;
+  delete val.loginName;
+  delete val.locName;
+  delete val.ouName;
+  delete val.locId;
+  delete val.ouId;
+  delete val.deptId;
+  delete val.emplId;
+  delete val.orgId;
+
+ return val;
+}
+
+  newMast() {
+    
+      const formValue: IAmcScheme =this.transeData(this.amcSchemeMasterForm.value);
+  
+      this.service.AmcSchemeMasterSubmit(formValue).subscribe((res: any) => {
+        if (res.code === 200) {
+          alert('RECORD INSERTED SUCCESSFUILY');
+          // this.mcpPackageMasterForm.reset();
+          this.displayButton=false;
+          this.amcSchemeMasterForm.disable();
+        } else {
+          if (res.code === 400) {
+            alert('ERROR WHILE INSERTING');
+            // this.amcSchemeMasterForm.reset();
+          }
+        }
+      });
+    }
+  
+
 
 updateMast(){alert("Save ....wip");}
 
+
+    onOptionAmcCoupenSelected(cpnNumber :any, index) {
+    
+      let selectedValue = this.AmcCouponLst.find(v => v.couponNumber === cpnNumber);
+      if( selectedValue != undefined){
+
+      console.log(selectedValue);
+      // alert (selectedValue.couponNumber);
+      var arrayControl = this.amcSchemeMasterForm.get('amcItemList').value
+      var patch = this.amcSchemeMasterForm.get('amcItemList') as FormArray;
+      
+      this.CheckForDuplicateLineItem(selectedValue.couponId,index)
+      if(this.duplicateLineItem ==false) {
+            // this.itemId = selectedValue.itemId;
+            (patch.controls[index]).patchValue(
+              {
+                couponId: selectedValue.couponId,
+                couponNumber: selectedValue.couponNumber,
+                couponDesc: selectedValue.couponDesc,
+                couponCode: selectedValue.couponCode,
+                quantity: selectedValue.quantity,
+                value: selectedValue.value,
+                total: selectedValue.total,
+                itemId:selectedValue.itemId,
+                couponActualCode:selectedValue.couponActualCode,
+                gstpercentage:selectedValue.gstpercentage,
+               
+              });
+
+              }
+              this.CalculateAmcLineValues();
+        }
+    }
+
+
+
+      CheckForDuplicateLineItem(mCpnId,mIndex){
+        var cpnLineArr = this.amcSchemeMasterForm.get('amcItemList').value;
+        var patch = this.amcSchemeMasterForm.get('amcItemList') as FormArray;
+        var len1=cpnLineArr.length;
+        // alert("line item array length :"+len1 + "," +mItemId);
+
+        for (let i = 0; i < len1 ; i++)
+          {
+            // alert("inside for loop");
+            var lineItemId=cpnLineArr[i].couponId;
+            if(mIndex != i) {
+            if (lineItemId===mCpnId) {
+              this.duplicateLineItem=true;
+               alert(lineItemId+" DUPLICATE line item. Please check item in Line - " +(i+1));
+               break;
+              }
+
+              }else{this.duplicateLineItem=false;}
+
+              this.duplicateLineItem=false;
+          }
+
+      }
+
+      validateDisM(){
+        var mDis =this.amcSchemeMasterForm.get('discOnMatrl').value;
+        if(mDis<0) { alert ("MATERIAL DISCOUNT : Enter Valid Discount Percentage.."); this.amcSchemeMasterForm.patchValue({schMatDisPer:0})}
+         this.CalculateAmcLineValues();
+      }
+
+      validateDisL(){
+        var lDis =this.amcSchemeMasterForm.get('discOnLabour').value;
+        if(lDis<0) { alert ("LABOUR DISCOUNT : Enter Valid Discount Percentage.."); this.amcSchemeMasterForm.patchValue({schLabDisPer:0})}
+        this.CalculateAmcLineValues(); 
+      }
+
+      CalculateAmcLineValues(){
+        var arrayControl = this.amcSchemeMasterForm.get('amcItemList').value
+        var patch = this.amcSchemeMasterForm.get('amcItemList') as FormArray;
+
+        var len1=arrayControl.length;
+     
+        var lineDiscountp=0
+
+        for (let i = 0; i < len1 ; i++)
+          {
+           
+             var lineTotal=(arrayControl[i].quantity * arrayControl[i].value);
+            
+             if(arrayControl[i].couponCode==='Labor') { lineDiscountp= this.discOnLabour;}
+             if(arrayControl[i].couponCode==='Material') {lineDiscountp=this.discOnMatrl;}
+
+             var lineDisAmt =lineTotal *lineDiscountp/100;
+             var lineTaxable =lineTotal-lineDisAmt;
+             var lineTax=(lineTotal-lineDisAmt)* arrayControl[i].gstpercentage/100;
+             var lineNetTotal  =lineTaxable+lineTax;
+
+            (patch.controls[i]).patchValue(
+              {
+                discount: lineDisAmt,
+                taxableAmt : lineTaxable,
+                taxAmt: lineTax,
+                netAmt: lineNetTotal,
+            });
+      }
+      this.CalculateAmcTotalValues();
+    }
+
+    CalculateAmcTotalValues(){
+
+      var arrayControl = this.amcSchemeMasterForm.get('amcItemList').value
+      var patch = this.amcSchemeMasterForm.get('amcItemList') as FormArray;
+      var len2=arrayControl.length;
+      var labTotal=0; var labDisc=0;var labTax=0;var glabTotal=0;
+      var matTotal=0; var matDisc=0;var matTax=0;var gmatTotal=0;
+      for (let i = 0; i < len2 ; i++)
+      { 
+        if(arrayControl[i].couponCode==='Labor') {
+
+          labTotal=labTotal+(arrayControl[i].quantity * arrayControl[i].value);
+          labDisc=labDisc+arrayControl[i].discount;
+          labTax=labTax+arrayControl[i].taxAmt;
+          glabTotal=glabTotal+arrayControl[i].netAmt;
+         
+        }
+        if(arrayControl[i].couponCode==='Material') {
+          matTotal=matTotal+(arrayControl[i].quantity * arrayControl[i].value);
+          matDisc=matDisc+arrayControl[i].discount;
+          matTax=matTax+arrayControl[i].taxAmt;
+          gmatTotal=gmatTotal+arrayControl[i].netAmt;
+        }
+      }
+//  alert ("labTax :"+labTax);
+          this.amcSchemeMasterForm.patchValue({
+            amcLabBasicAmt:labTotal ,
+            amcLabDiscount: labDisc,
+            amcLabTax:labTax,
+            amcLabTotal:glabTotal,
+            amcSchemeTotal:(glabTotal+gmatTotal),
+          });
+
+    }
+
+      
+  getInvItemId($event) {
+    let userId = (<HTMLInputElement>document.getElementById('invItemIdFirstWay')).value;
+    this.userList2 = [];
+
+    if (userId.length > 2) {
+      if ($event.timeStamp - this.lastkeydown1 > 200) {
+        this.userList2 = this.searchFromArray(this.AmcCouponLst, userId);
+      }
+    }
+  }
+
+  searchFromArray(arr, regex) {
+    let matches = [];
+    // alert("in search array")
+    for (let i = 0; i < arr.length; i++) {
+      // var itemName=arr[i].itemNumber;
+      if (arr[i].match(regex)) {
+        matches.push(arr[i]);
+      }
+    }
+    return matches;
+  };
 
 }
