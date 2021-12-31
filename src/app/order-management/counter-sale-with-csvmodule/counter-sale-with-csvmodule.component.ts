@@ -2497,8 +2497,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
               itemId: res.obj[k].itemId,
               taxCategoryName: itemCateNameList.taxCategoryName,
               taxCategoryId: res.obj[k].taxCategoryId,
-              
-            })
+                          })
             if(res.obj[k].onhandList.length >=1){
               (controlinv.controls[k]).patchValue({frmLocatorId: res.obj[k].onhandList[0].locatorId})
             }
