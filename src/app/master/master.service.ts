@@ -4,6 +4,7 @@ import { from, Observable } from 'rxjs';
 import{OPMasterDtoComponent} from './opmaster-dto/opmaster-dto.component';
 import {} from 'src/app/transaction/bulk-upload-with-csv/bulk-upload-with-csv.component'
 import{ AppConstants} from '../app-constants'
+import { invalid } from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -1417,6 +1418,11 @@ searchByItemBYSegment(divId,itemDesc):Observable<any>
     return this.http.get(this.ServerUrl+`/itemMst/segment/${itemDesc}`)
 
   // http://localhost:8081/itemMst/searchBydesc/2/ring
+}
+
+viewReserveData(locId,invId):Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/reserveQty/reserveDtls?locId=${locId}&invItemId=${invId}`)
 }
 
 //////////Move Order//////////////

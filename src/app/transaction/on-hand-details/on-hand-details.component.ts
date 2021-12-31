@@ -400,5 +400,10 @@ alert('In call by item');
         // alert('In Close')
         this.router.navigate(['admin']);
       }
+      viewReserve(locId,segment){
+        var selinv=this.ItemIdList.find(d=>d.segment===segment)
+        this.service.viewReserveData(locId,selinv.itemId).subscribe((res: any) => {
 
+        });
+      }
 }
