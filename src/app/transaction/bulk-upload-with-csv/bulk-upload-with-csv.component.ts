@@ -96,7 +96,7 @@ export class BulkUploadWithCsvComponent implements OnInit {
   dataDisplay: any;
   progress = 0;
   isVisible1: boolean = false;
-  displayParamter : boolean=false;
+  displayParamter=true;
   displaySalesErrorList=true;
 
   constructor(private fb: FormBuilder, private router: Router, private location1: Location, private router1: ActivatedRoute, private service: MasterService) {

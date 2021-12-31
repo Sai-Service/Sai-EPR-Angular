@@ -728,6 +728,7 @@ export class SalesOrderFormComponent implements OnInit {
                   }
                 }
                 else if (data.obj[i].isTaxable = 'N' && taxCatNm === null) {
+                  alert(data.obj[i].isTaxable);
                   (controlinv.controls[k]).patchValue({
                     itemId: data.obj[i].itemId,
                     orderedItem: data.obj[i].description,
@@ -1059,8 +1060,10 @@ export class SalesOrderFormComponent implements OnInit {
     console.log(arrayControl);
     var itemId = arrayControl[index].itemId;
     var taxcatName = arrayControl[index].taxCategoryName;
-    // alert(arrayControl[index].invType)
-    if (taxcatName === '' || taxcatName != null && arrayControl[index].invType != 'SS_VEHICLE') {
+    // alert(arrayControl[index].invType);
+    alert(arrayControl[index].invType.includes('ADDON_INS'))
+    if (arrayControl[index].invType.includes('ADDON_INS')) {
+      alert('addon')
       var baseAmt = arrayControl[index].unitSellingPrice * arrayControl[index].pricingQty;
       (patch.controls[index]).patchValue({
         baseAmt: baseAmt,
@@ -1071,7 +1074,7 @@ export class SalesOrderFormComponent implements OnInit {
         flowStatusCode: 'BOOKED'
       });
     }
-    else if (taxcatName != '' || taxcatName != null || taxcatName != undefined) {
+    if (arrayControl[index].invType != 'SS_ADDON_INS' && taxcatName != undefined) {
       console.log(taxcatName);
       let select;
       var taxCategoryId = arrayControl[index].taxCategoryId;
@@ -1513,7 +1516,9 @@ export class SalesOrderFormComponent implements OnInit {
     // debugger;
   
     for (let k = 0; k < orderLines.length; k++) {
+      if (orderLines[k].invType != 'SS_ADDON_INS'){
       orderLines[k].taxCategoryName = orderLines[k].taxCategoryName.taxCategoryName;
+    }
     }
     console.log(this.taxMap.values());
     
