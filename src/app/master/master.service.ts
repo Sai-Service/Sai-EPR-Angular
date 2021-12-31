@@ -2591,11 +2591,12 @@ bulkPickTickCSVold(formData: FormData) {
 }
 
 
-bulkPickTickCSV(formData: FormData ,priceListName:string,taxCategoryName:string,subInventoryId,locationId) {
+bulkPickTickCSV(formData: FormData ,priceListName:string,taxCategoryName:string,subInventoryId,locationId,selSite) {
   formData.append('priceListName', priceListName);
   formData.append('taxCategoryName', taxCategoryName);
   formData.append('subInventoryId', subInventoryId);
   formData.append('locationId', locationId);
+  formData.append('custInfo', selSite);
   const REQUEST_URI = this.ServerUrl +`/fileImport/uploadCS`;
   return this.http.post(REQUEST_URI, formData);
 }
