@@ -1353,48 +1353,28 @@ export class SalesOrderFormComponent implements OnInit {
   }
 
   lineTaxdetails: any = [];
- 
- selTaxLn = 'Tax Details Of Line-';
+  selTaxLn = '';
   openTaxDetails(i: number) {
-    
-    //  var i = i + 1;
-     this.lineTaxdetails = this.taxMap.get(String(i));
-      this.selTaxLn= String(i);
-   //this.lineTaxdetails = this.TaxDetailsArray() as FormArray;
-    // this.lineTaxdetails.clear();
-    // var controlTax1 = this.SalesOrderBookingForm.get('taxAmounts').value;
-    // console.log(this.lstgetOrderTaxDetails);
-
-    
-    // for (let x = 0; x < this.lstgetOrderTaxDetails.length; x++) {
-    //   if (this.lstgetOrderTaxDetails[x].invLineNo === i) {
-    //     this.lineTaxdetails.push(this.TaxDetailsGroup());
-    //     this.lineTaxdetails.controls[x].patchValue(this.lstgetOrderTaxDetails[x]);
-    //   }
-    // }
-    
-
-
+    this.selTaxLn= String(i);
+    var i = i + 1;
+    this.lineTaxdetails = this.TaxDetailsArray() as FormArray;
+   // this.lineTaxdetails = this.taxMap.get(String(i));
+    this.lineTaxdetails.clear();
+  
+    for (let x = 0; x < this.lstgetOrderTaxDetails.length; x++) {
+      if (this.lstgetOrderTaxDetails[x].invLineNo === i) {
+        this.lineTaxdetails.push(this.TaxDetailsGroup());
+        this.lineTaxdetails.controls[x].patchValue(this.lstgetOrderTaxDetails[x]);
+      }
+    }
+    //this.lineTaxdetails.controls.patchValue(this.taxMap.get(String(i)));
   }
 
   closeTaxModal() {
-    // this.display = 'none'; //set none css after close dialog
-    // this.myInputField.nativeElement.focus();
-    var controlTax1 = this.SalesOrderBookingForm.get('taxAmounts').value;
-    // for (let x = controlTangx1.length - 1; x >= 0; x--) {
-    //   if (controlTax1[x].invLineNo != i) {
-    //     if (controlTax1[x].taxTypeName === this.lineTaxdetails[x].taxTypeName) {
-    //       controlTax1[x].totTaxAmt = this.lineTaxdetails[x].totTaxAmt;
-    //     }
-    //   }
-
-    // }
-    console.log(this.lineTaxdetails);
-    //var lintaxVal = this.lineTaxdetails.value;
-    this.taxMap.set(this.selTaxLn, this.lineTaxdetails);
-    // this.lineTaxdetails = [];
-    console.log(this.taxMap.values);
-    
+    console.log( this.lineTaxdetails.value);
+    this.taxMap.set(this.selTaxLn, this.lineTaxdetails.value);
+    this.display='none'; //set none css after close dialog
+    this.myInputField.nativeElement.focus();
   }
 
   TaxCategoryupdate(index) {

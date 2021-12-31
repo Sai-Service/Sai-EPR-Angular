@@ -4,6 +4,7 @@ import { from, Observable } from 'rxjs';
 import{OPMasterDtoComponent} from './opmaster-dto/opmaster-dto.component';
 import {} from 'src/app/transaction/bulk-upload-with-csv/bulk-upload-with-csv.component'
 import{ AppConstants} from '../app-constants'
+import { invalid } from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -1429,6 +1430,11 @@ searchByItemBYSegment(divId,itemDesc):Observable<any>
   // http://localhost:8081/itemMst/searchBydesc/2/ring
 }
 
+viewReserveData(locId,invId):Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/reserveQty/reserveDtls?locId=${locId}&invItemId=${invId}`)
+}
+
 //////////Move Order//////////////
 public moveOrderSubmit(MoveOrderRecord)
 {
@@ -2591,11 +2597,12 @@ bulkPickTickCSVold(formData: FormData) {
 }
 
 
-bulkPickTickCSV(formData: FormData ,priceListName:string,taxCategoryName:string,subInventoryId,locationId) {
+bulkPickTickCSV(formData: FormData ,priceListName:string,taxCategoryName:string,subInventoryId,locationId,selSite) {
   formData.append('priceListName', priceListName);
   formData.append('taxCategoryName', taxCategoryName);
   formData.append('subInventoryId', subInventoryId);
   formData.append('locationId', locationId);
+  formData.append('custInfo', selSite);
   const REQUEST_URI = this.ServerUrl +`/fileImport/uploadCS`;
   return this.http.post(REQUEST_URI, formData);
 }

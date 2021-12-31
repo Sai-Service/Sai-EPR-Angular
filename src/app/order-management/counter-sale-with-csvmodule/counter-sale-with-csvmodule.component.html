@@ -199,7 +199,7 @@
                                         formControlName="customerSiteId" [(ngModel)]='customerSiteId'
                                         value={{customerSiteId}} style="width: 160px;">
                                     <input hidden disabled type="text" class="form-control"
-                                        formControlName="taxCategoryName" [(ngModel)]='taxCategoryName'
+                                        formControlName="taxCategoryName" 
                                         value={{taxCategoryName}} style="width: 160px;">
 
                                 </td>
@@ -209,7 +209,7 @@
                                     <input disabled type="text" class="form-control" formControlName="name"
                                         value={{name}} style="width: 160px;">
                                     <input hidden disabled type="text" class="form-control"
-                                        formControlName="taxCategoryName" [(ngModel)]='taxCategoryName'
+                                        formControlName="taxCategoryName" 
                                         value={{taxCategoryName}} style="width: 160px;">
                                 </td>
                             </ng-template>
@@ -1255,7 +1255,7 @@
                             <li class="nav-item"></li>
                             <li class="nav-item"></li>
                             <li class="nav-item"></li>
-                            <li class="nav-item"></li>
+                            <li class="nav-item"></li>  
                             <li class="nav-item"></li>
                         </ul>
 
@@ -1319,7 +1319,7 @@
                                                                 <select formControlName="invType"
                                                                     (ngModelChange)='onOptionsSelectedCategory($event, i)'
                                                                     class="form-control"
-                                                                    style="width: 160px;height: 25px;font-size: 10px;">
+                                                                    style="width:fit-content;height: 25px;font-size: 10px;">
                                                                     <option *ngFor="let cate of  categoryList"
                                                                         [value]="cate.codeDesc">
                                                                         {{cate.codeDesc}}
@@ -1331,7 +1331,7 @@
                                                                 <input type="text" formControlName="segment"
                                                                     id="invItemIdFirstWay" list="dynmicUserIds1"
                                                                     class="form-control"
-                                                                    style="height: 20px;width: 160px;"
+                                                                    style="height: 20px;width:fit-content;"
                                                                    >
                                                                 <datalist id="dynmicUserIds1">
                                                                     <option>--Select--</option>
@@ -1428,7 +1428,7 @@
                                                                     class="form-control"
                                                                     style="width: 160px;height: 25px;font-size: 10px;">
                                                                     <option *ngFor="let sc of  taxCategoryList[i]"
-                                                                        [ngValue]="sc">
+                                                                        [ngValue]="sc.taxCategoryName">
                                                                         {{sc.taxCategoryName}}
                                                                     </option>
                                                                 </select>
@@ -1439,7 +1439,7 @@
 
                                                             <td>
                                                                 <input disabled type="number" formControlName="taxAmt"
-                                                                    class="form-control" [ngModel]="taxAmt"
+                                                                    class="form-control" 
                                                                     style="height: 20px;width: 70px;">
                                                             </td>
                                                             <td>
