@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, NumberValueAccessor } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Validators , FormArray } from '@angular/forms';
@@ -21,7 +21,7 @@ interface IOrderGen {  }
 
 export class OrderGenerationComponent implements OnInit {
   orderGenerationForm : FormGroup;
-
+  @ViewChild('aForm') aForm: ElementRef;
   pipe = new DatePipe('en-US');
   public minDate = new Date();
 
@@ -29,6 +29,7 @@ export class OrderGenerationComponent implements OnInit {
   lstOrderList:any;
   public lstItemDetails:any;
 
+  dataDisplay: any;
   loginName:string;
   loginArray:string;
   divisionId:number;
@@ -42,7 +43,9 @@ export class OrderGenerationComponent implements OnInit {
   deptId:number; 
   emplId :number;
 
-  orderNumber='TestOrder'
+  // orderNumber='TestOrder'
+  orderNumber='BJ-2102100004'
+ 
   fromDate=this.pipe.transform(Date.now(), 'y-MM-dd');
   toDate=this.pipe.transform(Date.now(), 'y-MM-dd');
 
@@ -118,7 +121,8 @@ lineDetailsGroup() {
 
     orderQty: ['', [Validators.required]],
     totalValue: ['', [Validators.required]],
-
+    uom:[],
+    setQty:[],
     // consumption: ['', [Validators.required]],
     // avgConsumption:[],
     // deadStock:[],
@@ -199,7 +203,7 @@ lineDetailsArray() :FormArray{
     this.router.navigate(['admin']);
   }
   addRow(index) {
-    this.addNewLine=true;
+  this.addNewLine=true;
    var ordLineArr = this.orderGenerationForm.get('orderList').value;
    var len = this.lineDetailsArray().length;
     if( ordLineArr[index].itemId>0  &&  ordLineArr[index].orderQty>0 ) {
@@ -216,6 +220,7 @@ else {
   
    this.deleteOrderLine(index)
    this.lineDetailsArray().removeAt(index);
+   this.CalculateOrdValue();
 }
 
 }
@@ -301,7 +306,7 @@ CreateOrder() {
   } 
 
   ShowOrder(){
-    this.spinIcon=true;
+   
     this.dispShowOrdButton=false;
     this.dispGenOrdButton=false;
     var mOrderNumber =this.orderGenerationForm.get('orderNumber').value
@@ -311,7 +316,9 @@ CreateOrder() {
         this.lstOrderList = data;
         // alert ("Total order lines :" +data.length);
         if(data.length >0) {
-         this.displayButton=true;
+          // this.spinIcon=true;
+        // this.dataDisplay ='Loading Order Details in progress....Do not refresh the Page';
+        this.displayButton=true;
         console.log(this.lstOrderList);
         var len = this.lineDetailsArray().length;
         var y = 0;
@@ -320,13 +327,25 @@ CreateOrder() {
         for (let i = 0; i < this.lstOrderList.length - len; i++) {
           var ordLnGrp: FormGroup = this.lineDetailsGroup();
           this.lineDetailsArray().push(ordLnGrp);
+          y=i;
+          // this.dataDisplay=i;
+          // if (i> (this.lstOrderList.length-3))  {
+          //   this.spinIcon=false;
+          //   this.dataDisplay ='';
+            
+          // }
 
+         
+         
         }
+        // alert ("i="+y +" this.lstOrderList.length >> "+this.lstOrderList.length);
         this.orderGenerationForm.get('orderList').patchValue(this.lstOrderList);
+        this.CalculateOrdValue();
+       
        } 
         });
 
-        
+       
         
       }
 
@@ -357,20 +376,31 @@ CreateOrder() {
           });
         }
 
+        validateConsMth(){
+        var conMth=this.orderGenerationForm.get('noMonths').value
+        if (Number.isInteger(conMth)===false  || conMth <0 || conMth >12  )  {
+          alert ("CONSUMPTION MONTHS : Value Range is 1 - 12 .Enter Integer value only")
+          this.orderGenerationForm.patchValue({noMonths :3});
+        }
+
+        }
+
         validateOrdQty(index: any){
           var patch = this.orderGenerationForm.get('orderList') as FormArray;
           var orderLineArr = this.orderGenerationForm.get('orderList').value;
           var lineQty = orderLineArr[index].orderQty;
-          if (lineQty <=0 ) 
+          // if ((mUom=='NO' && Number.isInteger(lineRtnQty)==false ) || lineRtnQty<=0 || lineRtnQty>lineRcdQty || lineRtnQty > avlQty ) 
+          if (Number.isInteger(lineQty)===false  || lineQty <0 ) 
           {
-             alert (lineQty+" << Invalid Order Qty.Order Qty should be above 0")
+             alert (lineQty+" << Invalid Order Qty.Enter Valid Order Qty")
              patch.controls[index].patchValue({orderQty:0})
           } else {
 
            var lineValue =orderLineArr[index].orderQty * orderLineArr[index].unitPrice;
+          //  lineValue=Math.round((lineValue+Number.EPSILON)*100)/100,
           //  alert (index+"-index :"+  lineValue);
-           patch.controls[index].patchValue({totalValue:lineValue})
-            this.CalculateOrdValue();
+          //  patch.controls[index].patchValue({totalValue:lineValue})
+           this.CalculateOrdValue();
 
           }
                     
@@ -409,15 +439,20 @@ CreateOrder() {
         }
 
          CalculateOrdValue(){
-          // var patch = this.orderGenerationForm.get('orderList') as FormArray;
+          var patch = this.orderGenerationForm.get('orderList') as FormArray;
           var orderLineArr = this.orderGenerationForm.get('orderList').value;
           var len = this.lineDetailsArray().length;
           var orderTotal = 0;
         
           for (let i = 0; i < len; i++) {
             var lineValue =orderLineArr[i].orderQty * orderLineArr[i].unitPrice;
-             orderTotal=orderTotal+lineValue
+            patch.controls[i].patchValue({totalValue:lineValue});
+            orderTotal=orderTotal+lineValue
+
            }
+
+           
+          orderTotal=Math.round((orderTotal+Number.EPSILON)*100)/100,
           this.orderGenerationForm.patchValue({orderValue:orderTotal})
 
          }
@@ -455,6 +490,7 @@ CreateOrder() {
                 itemId: data.itemId,
                 segment : mSegment,
                 description: data.description,
+                uom: data.uom,
                 unitPrice: 1,
                 mth1ConWsQty: 0,
                 mth2ConWsQty: 0,
@@ -540,5 +576,18 @@ CreateOrder() {
     
       }
       
+      enterKeyLock(i) {
+        alert('Enter Not Allowed.!');
+        this.setFocus('orderQty' + i);
+        return;
+      }
+
+      setFocus(name) {
+
+        const ele = this.aForm.nativeElement[name];
+        if (ele) {
+          ele.focus();
+        }
+      }
 
 }

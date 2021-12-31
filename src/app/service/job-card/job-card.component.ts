@@ -220,6 +220,10 @@ export class JobCardComponent implements OnInit {
   displayInslinedetails = true;
   displayInsheader = true;
   dispSplitRatio =false;
+
+  showServiceCustomer =true;
+  showBodyshopCustomer=false;
+
   insurerCompId: number;
   insurerSiteId: number;
   insurerSite: string;
@@ -320,7 +324,7 @@ export class JobCardComponent implements OnInit {
   promiseDate = this.minDatetime;
  
   @ViewChild("myinput") myInputField: ElementRef;
-  arInvNum: string;d
+  arInvNum: string;
   ngAfterViewInit() {
     this.myInputField.nativeElement.focus();
   }
@@ -1238,6 +1242,11 @@ export class JobCardComponent implements OnInit {
     // alert (jdate)
    
     this.jobcardForm.reset();
+    // this.lineDetailsArray.clear();
+    this.jobcardForm.get('jobCardLabLines').reset();
+    this.jobcardForm.get('jobCardMatLines').reset();
+
+    
     this.jobCardNum1=jcNum;
    
     this.serviceService.getJonCardNoSearch(jcNum)
@@ -1257,12 +1266,15 @@ export class JobCardComponent implements OnInit {
           // let jobDate=this.pipe.transform(this.jobCardDate, 'yyyy-MM-dd');
 
           if(this.lstcomments.jcType=='Service') {
-            this.dispSplitRatio=false;}
+            this.dispSplitRatio=false; 
+            this.showServiceCustomer=true;
+            this.showBodyshopCustomer=false;
+          }
            else {
              this.dispSplitRatio=true;
-            //  this.jobcardForm.get('labDiscount').disable();
-            //  this.jobcardForm.get('matDiscout').disable();
-            }
+             this.showBodyshopCustomer=true;
+             this.showServiceCustomer=false;
+             }
             
 
           // this.jobcardForm.patchValue({jcType :  this.lstcomments.jcType});
@@ -1275,13 +1287,21 @@ export class JobCardComponent implements OnInit {
           this.jobcardForm.patchValue({promiseDate : promdate});
         
           var len = this.lineDistributionArray().length;
-
+          
           for (let i = 0; i <this.lstcomments.jobCardMatLines.length - len; i++) {
             var payInvGrp: FormGroup = this.distLineDetails();
             this.lineDistributionArray().push(payInvGrp);
           }
 
           var len1 = this.lineDetailsArray.length;
+
+          // alert("lineDetailsArray.length :"+len1);
+
+            if(len>1) {
+              for (let i = 1; i <len1-1; i++) {
+              this.lineDetailsArray.removeAt(i);
+              }
+          }
 
           for (let i = 0; i < this.lstcomments.jobCardLabLines.length - len1; i++) {
             var payInvGrp: FormGroup = this.lineDetailsGroup();
@@ -2385,10 +2405,12 @@ validateLabQty(index: any){
 
 printPreInvoice(){
   var jcNum=this.jobcardForm.get('jobCardNum').value
+  var jctype=this.jobcardForm.get('jcType').value
+
   
   const fileName = 'download.pdf';
   const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-  this.serviceService.printWsPreInvdocument(jcNum)
+  this.serviceService.printWsPreInvdocument(jcNum,jctype)
     .subscribe(data => {
       var blob = new Blob([data], { type: 'application/pdf' });
       var url = URL.createObjectURL(blob);
@@ -2396,16 +2418,17 @@ printPreInvoice(){
       printWindow.open
       
     });
+
 }
 
 
 
 printWSInvoice(){
   var jcNum=this.jobcardForm.get('jobCardNum').value
-  
+  var jctype=this.jobcardForm.get('jcType').value
   const fileName = 'download.pdf';
   const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-  this.serviceService.printWsInvoicedocument(jcNum)
+  this.serviceService.printWsInvoicedocument(jcNum,jctype)
     .subscribe(data => {
       var blob = new Blob([data], { type: 'application/pdf' });
       var url = URL.createObjectURL(blob);
