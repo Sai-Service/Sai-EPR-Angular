@@ -767,6 +767,24 @@ McpPackageCategoryList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/cmnLookup/type/McpPackageCatg');
 }
 
+
+AmcCouponList(): Observable<any> {
+  return this.http.get(this.ServerUrl +'/schHdr/couponLst');
+  // http://localhost:8081/schHdr/couponLst
+}
+
+AmcSchemeList(): Observable<any> {
+  return this.http.get(this.ServerUrl +'/schHdr');
+  // http://localhost:8081/schHdr
+}
+
+AmcSchemeDetails(schNo): Observable<any> {
+  return this.http.get(this.ServerUrl +`/schHdr/schemeName/${schNo}`);
+  // http://localhost:8081/schHdr/schemeName/AM10
+}
+
+
+
 insNameList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/Customer/ClassCode/INSURER');
 }

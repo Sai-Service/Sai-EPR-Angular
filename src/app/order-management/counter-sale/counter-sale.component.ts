@@ -1385,6 +1385,9 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
               // this.isDisabled = true;
             }
             this.CounterSaleOrderBookingForm.patchValue({ tcsYN: data.obj.tcsYN });
+            this.CounterSaleOrderBookingForm.patchValue({ custName: data.obj.custName });
+            this.CounterSaleOrderBookingForm.patchValue({ customerId: data.obj.customerId });
+            
             this.CounterSaleOrderBookingForm.patchValue({ tcsPer: data.obj.tcsPer });
             this.CounterSaleOrderBookingForm.patchValue({ custAccountNo: custAccountNo });
             let select = this.payTermDescList.find(d => d.lookupValueId === this.selCustomer.termId);
@@ -1393,14 +1396,18 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
             this.CounterSaleOrderBookingForm.get('custName').disable();
             this.CounterSaleOrderBookingForm.get('mobile1').disable();
             // alert(this.custSiteList.length)
+            for (let i=0; i < this.custSiteList.length; i++ ){
             if (this.custSiteList.length === 1) {
+              alert(this.custSiteList.length)
               this.CounterSaleOrderBookingForm.patchValue({ name: this.custSiteList[0].siteName });
               this.onOptionsSelectedcustSiteName(this.custSiteList[0].siteName);
             }
-            else{
+            else if (this.custSiteList.length > 1){
+              // alert('hi')
               this.CounterSaleOrderBookingForm.patchValue({ name: this.custSiteList[0].siteName });
               this.onOptionsSelectedcustSiteName(this.custSiteList[0].siteName);
             }
+          }
             var custName = data.obj.custName;
             if (custName.includes(('CSCash Customer')) && Number(sessionStorage.getItem('divisionId')) === 2) {
               this.displaywalkingCustomer = false;
@@ -1475,23 +1482,28 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     //  alert(sessionStorage.getItem('ouId'));
     let selSite = this.custSiteList.find(d => d.siteName === siteName);
     console.log(selSite);
+    console.log(this.custSiteList);
+    
     // alert(selSite.ouId);
 
     if (selSite.ouId != (sessionStorage.getItem('ouId'))) {
       alert('First Create OU wise Site to continue process!')
     }
     else {
+      // alert(this.selCustomer)
+      console.log(this.selCustomer);
+      
       // alert(this.selCustomer.customerId)
       this.CounterSaleOrderBookingForm.patchValue(selSite);
-      this.custName = this.selCustomer.custName;
-      this.customerId = this.selCustomer.customerId;
+      // this.custName = this.custSiteList.custName;
+      // this.customerId = selSite.customerId;
       this.custAddress = (selSite.address1 + ', '
-      + selSite.address2 + ', '
-      + selSite.address3 + ', '
-      + selSite.address4 + ', '
-      + selSite.city + ', '
-      + selSite.pinCd + ', '
-      + selSite.state);
+        + selSite.address2 + ', '
+        + selSite.address3 + ', '
+        + selSite.address4 + ', '
+        + selSite.city + ', '
+        + selSite.pinCd + ', '
+        + this.selCustomer.state);
       this.birthDate = this.selCustomer.birthDate;
       this.weddingDate = this.selCustomer.weddingDate;
       this.taxCategoryName = this.selCustomer.taxCategoryName;
