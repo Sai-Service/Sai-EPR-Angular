@@ -1333,32 +1333,26 @@ export class SalesOrderFormComponent implements OnInit {
   }
 
   lineTaxdetails: any = [];
-  taxLnMap = new Map<number, any[]>();
+  selTaxLn = '';
   openTaxDetails(i: number) {
+    this.selTaxLn= String(i);
     var i = i + 1;
     this.lineTaxdetails = this.TaxDetailsArray() as FormArray;
+   // this.lineTaxdetails = this.taxMap.get(String(i));
     this.lineTaxdetails.clear();
-    var controlTax1 = this.SalesOrderBookingForm.get('taxAmounts').value;
+  
     for (let x = 0; x < this.lstgetOrderTaxDetails.length; x++) {
       if (this.lstgetOrderTaxDetails[x].invLineNo === i) {
         this.lineTaxdetails.push(this.TaxDetailsGroup());
         this.lineTaxdetails.controls[x].patchValue(this.lstgetOrderTaxDetails[x]);
       }
-      
     }
-
-    // for (let x = controlTax1.length - 1; x >= 0; x--) {
-
-    //   if (controlTax1[x].invLineNo != i) {
-    //     this.lineTaxdetails.removeAt(x);
-    //     alert(x + '-removed--')
-    //   }
-    // }
-   
-
+    //this.lineTaxdetails.controls.patchValue(this.taxMap.get(String(i)));
   }
 
   closeTaxModal() {
+    console.log( this.lineTaxdetails.value);
+    this.taxMap.set(this.selTaxLn, this.lineTaxdetails.value);
     this.display='none'; //set none css after close dialog
     this.myInputField.nativeElement.focus();
   }

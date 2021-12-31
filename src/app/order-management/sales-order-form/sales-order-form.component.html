@@ -1607,7 +1607,7 @@
                                             </thead>
                                             <tbody>
                                                  <ng-container class="center" formArrayName="taxAmounts"> 
-                                                    <ng-container  *ngFor="let taxDet of TaxDetailsArray().controls; let j= index"
+                                                    <ng-container  *ngFor="let taxDet of lineTaxdetails.controls; let j= index"
                                                         [formGroupName]="j" class="auto-style5">
                                                         <tr class="ItemStyle" style="text-decoration:none;">
                                                             <!-- <td> <input disabled formControlName="invLineNo"
