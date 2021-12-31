@@ -81,6 +81,7 @@ interface IsupplierMaster {
   sbankName:string;
    sacctNo:string;
    sifscCode:string;
+   supName:string;
 }
 
 
@@ -218,11 +219,14 @@ export class SupplierMasterComponent implements OnInit {
   sbankName:string;
    sacctNo:string;
    sifscCode:string;
+  supNamedata: any;
+  supName:string;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.supplierMasterForm = fb.group({
       suppId: [],
       suppno:[''],
+      supName:[],
       suppNo: ['', [Validators.maxLength(10), Validators.minLength(3), Validators.pattern('[0-9]*')]],
       name: ['', [ Validators.required, Validators.maxLength(150), Validators.pattern('[a-zA-Z ]*')]],
      address1: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(100),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
@@ -307,6 +311,7 @@ export class SupplierMasterComponent implements OnInit {
    sbankName:[],
    sacctNo:[],
    sifscCode:[],
+
     });
   }
 
@@ -1111,6 +1116,13 @@ else{
         }
         return;
 
+      }
+      searchByConName(supName){
+        this.service.supplierName(supName)
+        .subscribe(
+          data => {
+            this.supNamedata=data.obj;
+          });
       }
 
       onMSMESelected(msmeYN : any){

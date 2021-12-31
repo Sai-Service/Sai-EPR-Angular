@@ -1797,6 +1797,7 @@ export class OPMasterDtoComponent implements OnInit {
     formValue.supplierCode = this.supplierCode;
     formValue.ouId = this.ouId;
     formValue.currencyCode = 'INR';
+    formValue.divisionId= Number(sessionStorage.getItem('divisionId'));
     var arrayControl = this.poMasterDtoForm.get('poLines').value
     this.baseAmount = 0;
     this.totTaxAmt = 0;

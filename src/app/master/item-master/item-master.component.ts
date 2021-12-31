@@ -1284,6 +1284,7 @@ else{
       this.msgType = msgType;
       if (msgType.includes("Save")) {
         this.submitted = true;
+        alert('In save');
         (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
         if (this.itemMasterForm.invalid) {
           

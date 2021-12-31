@@ -358,7 +358,7 @@
                 <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
                     <table style="width: 100%;">
                         <tr>
-                            <td>From&nbsp;Date&nbsp;</td>&nbsp;&nbsp;&nbsp;
+                            <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
                             <td>
                                 <input type="date" class="form-control"  formControlName="stockLedgerfromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
                             </td>
@@ -372,7 +372,7 @@
                         <tr>
                             <td>SubInventory&nbsp;</td>&nbsp;
                             <td>
-                                <input type="text" class="form-control"  formControlName="stockLedgerSubInv" >
+                                <input disabled type="text" class="form-control"  formControlName="stockLedgerSubInv" >
                             </td>
                         </tr>
                         <tr>
@@ -388,12 +388,14 @@
                         <tr>
                             <td>Ship&nbsp;To&nbsp;Location&nbsp;</td>&nbsp;
                             <td>
-                                <select formControlName="stockLedgerToLoc" id="stockLedgerToLoc" class="form-control">
+                                <!-- <select formControlName="stockLedgerToLoc" id="stockLedgerToLoc" class="form-control">
                                     <option>--Select--</option>
                                     <option *ngFor="let sc of  BillShipToList" [ngValue]="sc.locId">
                                         {{sc.locCode}}
                                     </option>
-                                </select>
+                                </select> -->
+                                <input disabled type="text" class="form-control"  formControlName="stockLedgerToLocName">
+                                <input disabled hidden type="number" class="form-control"  formControlName="stockLedgerToLoc">
                             </td>
                         </tr>
                         <tr>

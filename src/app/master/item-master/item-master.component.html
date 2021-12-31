@@ -951,7 +951,7 @@
                                                     <td>
                                                         <input type="ewBookletNo" formControlName="ewBookletNo"
                                                             value={{ewBookletNo}} class="form-control"
-                                                            [ngClass]="{ 'is-invalid': submitted && f.date.errors }"
+                                                            [ngClass]="{ 'is-invalid': submitted && f.ewBookletNo.errors }"
                                                             placeholder="Enter EW Booklet No">
                                                         <div *ngIf="submitted && f.ewBookletNo.errors"
                                                             class="invalid-feedback">
@@ -1099,7 +1099,7 @@
                                                     <td>
                                                         <input type="number" min="0" formControlName="smartCardNumber"
                                                             value={{smartCardNumber}} class="form-control"
-                                                            [ngClass]="{ 'is-invalid': submitted && f.date.errors }"
+                                                            [ngClass]="{ 'is-invalid': submitted && f.smartCardNumber.errors }"
                                                             placeholder="Enter smart card number">
                                                         <div *ngIf="submitted && f.smartCardNumber.errors"
                                                             class="invalid-feedback">
