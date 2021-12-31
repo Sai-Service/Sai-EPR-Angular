@@ -995,7 +995,8 @@ export class JobCardComponent implements OnInit {
       );
     var regno = this.jobcardForm.get('regNo').value;
     // alert(regno);
-    if (regno != undefined) {
+
+    // if (regno != undefined) {
       this.serviceService.billableTyIdLstFN(event, regno)
         .subscribe(
           data1 => {
@@ -1020,10 +1021,11 @@ export class JobCardComponent implements OnInit {
             }
           }
         );
-    }
-    else {
-      alert('Please enter correct Registration number');
-    }
+    // }
+    // else {
+    //   alert('Please enter correct Registration number');
+    // }
+
     this.serviceService.srvAdvisorListFN((sessionStorage.getItem('locId')), event)
       .subscribe(
         data1 => {
@@ -1173,12 +1175,17 @@ export class JobCardComponent implements OnInit {
 
 
   serchByRegNo(RegNo) {
-    // alert(RegNo);
-    this.serviceService.getByRegNo(RegNo, sessionStorage.getItem('ouId'))
+    var jcType=this.jobcardForm.get('jcType').value;
+    if(jcType ==='--Select--' || jcType ===null ) {alert ("Please Select Job Card Type...");return;}
+ 
+    this.serviceService.getByRegNo(RegNo, sessionStorage.getItem('ouId'),jcType)
       .subscribe(
         data => {
-          this.RegNoList = data;
+          this.RegNoList = data.obj;
+          if(data.code===400 && data.obj !=null) {alert(data.obj); this.jobcardForm.reset(); return;}
+          if(data.code===400 && data.obj ===null) {alert("Please Enter valid Registration Number..."); this.jobcardForm.reset(); return;}
           console.log(this.RegNoList);
+       
           this.jobcardForm.patchValue(this.RegNoList);
           this.jobcardForm.patchValue({
             itemId: this.RegNoList.regId,
@@ -1188,8 +1195,8 @@ export class JobCardComponent implements OnInit {
             deptId: Number(sessionStorage.getItem('deptId')),
             locId: Number(sessionStorage.getItem('locId')),
             status: 'Opened',
-          })
-        }
+          });
+        } 
       );
   }
 
@@ -1259,6 +1266,7 @@ export class JobCardComponent implements OnInit {
             this.jobStatus = data.obj.jobStatus;
             this.jobCardDate= data.obj.jobCardDate;
             this.jobCardNum1=data.obj.jobCardNum;
+            this.arInvNum=data.obj.invoiceNumber;
           } else { alert (jcNum + " Job Card Not Found...");return;}
 
 
@@ -2270,7 +2278,8 @@ export class JobCardComponent implements OnInit {
 
   getLastRunKms(RegNo) {
     // alert(RegNo);
-    this.serviceService.getByRegNo(RegNo, sessionStorage.getItem('ouId'))
+    var jcType=this.jobcardForm.get('jcType').value;
+    this.serviceService.getByRegNo(RegNo, sessionStorage.getItem('ouId'),jcType)
       .subscribe(
         data => {
           this.RegNoList2 = data;

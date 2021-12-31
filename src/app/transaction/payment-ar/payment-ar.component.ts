@@ -654,10 +654,6 @@ export class PaymentArComponent implements OnInit {
   };
 
   serchByRegNo(mRegNo) {
-
-    // alert(mRegNo);
-
-
     this.service.getVehRegDetails(mRegNo)
       .subscribe(
         data => {
@@ -669,15 +665,12 @@ export class PaymentArComponent implements OnInit {
           this.paymentArForm.patchValue({
             customerId: this.getVehRegDetails.customerId,
           });
-
-          //  alert("customer Id:"+this.customerId);
           this.enableCustAccount = false;
           this.GetCustomerDetails(this.customerId);
           this.GetCustomerSiteDetails(this.customerId);
         }  else { alert("Vehicle Regno. Not Found...."); this.resetMast(); }
 
         });
-        
       
   }
 
