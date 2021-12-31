@@ -2454,6 +2454,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
             if(this.taxCatMap.has(res.obj[k].gstPercentage)){
               this.taxCategoryList[k] =this.taxCatMap.get(res.obj[k].gstPercentage);
             }else{
+              
             this.orderManagementService.getTaxCategoriesForSales(custtaxCategoryName, res.obj[k].gstPercentage)
             .subscribe(
               data1 => {
