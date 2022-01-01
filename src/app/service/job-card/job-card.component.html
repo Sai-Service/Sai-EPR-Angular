@@ -240,10 +240,30 @@
                                                                         </legend>
                                                                         <tr>
                                                                             <td style="width: 15%"
+                                                                            class="LabelFontStyle">JC Type&nbsp;:
+                                                                        </td>
+                                                                            <td>
+                                                                                <input type="text" hidden
+                                                                                    class="form-control" placeholder=""
+                                                                                    [(ngModel)]="divisionId"
+                                                                                    formControlName="divisionId">
+                                                                             
+                                                                                <select formControlName="jcType" style="background-color: yellow;"
+                                                                                    id="jcType" class="form-control" (ngModelChange)='onOptionBillableSelected($event,"New")'>
+                                                                                    <option>--Select--</option>
+                                                                                    <option
+                                                                                        *ngFor="let sc of  jcTypeList">
+                                                                                        {{sc.model}}
+                                                                                    </option>
+                                                                                </select>
+                                                                               
+                                                                            </td>
+
+                                                                            <td style="width: 15%"
                                                                                 class="LabelFontStyle1">
                                                                                 Registration&nbsp;No&nbsp;:</td>
                                                                             <td>
-                                                                                <input type="text" style="text-transform: uppercase;"
+                                                                                <input type="text" style="text-transform: uppercase;background-color: yellow;"
                                                                                     formControlName="regNo"
                                                                                     [(ngModel)]="regNo"
                                                                                     (change)="serchByRegNo(regNo)"
@@ -296,34 +316,12 @@
                                                                                 class="LabelFontStyle1">
                                                                                 OMR&nbsp;/Current&nbsp;KMS&nbsp;:</td>
                                                                             <td>
-                                                                                <input type="number" min="0"
+                                                                                <input type="number" min="0" style="background-color: yellow;"
                                                                                     class="form-control" placeholder=""
                                                                                     formControlName="lastRunKms" (change)="validateKm($event)">
                                                                             </td>
-                                                                            <td style="width: 15%"
-                                                                                class="LabelFontStyle">JC Type&nbsp;:
-                                                                            </td>
-                                                                            <td>
-                                                                                <input type="text" hidden
-                                                                                    class="form-control" placeholder=""
-                                                                                    [(ngModel)]="divisionId"
-                                                                                    formControlName="divisionId">
-                                                                                <!-- <input type="text" disabled
-                                                                                    class="form-control" placeholder=""
-                                                                                    [(ngModel)]="divisionName"
-                                                                                    formControlName="divisionName"> -->
-                                                                                <select formControlName="jcType"
-                                                                                    id="jcType" class="form-control" (ngModelChange)='onOptionBillableSelected($event,"New")'>
-                                                                                    <option>--Select--</option>
-                                                                                    <option
-                                                                                        *ngFor="let sc of  jcTypeList">
-                                                                                        {{sc.model}}
-                                                                                    </option>
-                                                                                </select>
-                                                                                <!-- <select formControlName="jcType">
-                                                                                    <option ng-repeat="x in jcTypeList" value="{{x.model}}">{{x.model}}</option>
-                                                                                  </select> -->
-                                                                            </td>
+                                                                          
+                                                                           
                                                                         </tr>
 
                                                                        
@@ -334,7 +332,7 @@
                                                                             <td>
 
                                                                                 <!-- <input type="text" class="form-control" placeholder="" formControlName="srTypeId"> -->
-                                                                                <select formControlName="srTypeId"
+                                                                                <select formControlName="srTypeId" style="background-color: yellow;"
                                                                                     id="srTypeId"
                                                                                     (ngModelChange)="onOptionsSelectedsrTypeId($event)"
                                                                                     class="form-control">
@@ -351,7 +349,7 @@
                                                                                 Sub&nbsp;Service&nbsp;Type&nbsp;:</td>
                                                                             <td>
                                                                                 <!-- <input type="text" class="form-control" placeholder=""> -->
-                                                                                <select formControlName="subTypeId"
+                                                                                <select formControlName="subTypeId" style="background-color: yellow;"
                                                                                     id="subTypeId" class="form-control">
                                                                                     <option>--Select--</option>
                                                                                     <option
@@ -368,7 +366,7 @@
                                                                                 <!-- (ngModelChange)='onOptionsrvAdvisorSelected($event)' -->
                                                                                 <!-- <input type="text" class="form-control" placeholder="" formControlName="srvAdvisor"> -->
                                                                                 <!-- (ngModelChange)='onOptionsrvAdvisorSelected($event)' commited  -->
-                                                                                <select formControlName="srvAdvisor"
+                                                                                <select formControlName="srvAdvisor" style="background-color: yellow;"
                                                                                    
                                                                                     id="srvAdvisor"
                                                                                     class="form-control">
@@ -386,7 +384,7 @@
                                                                             <td>
                                                                                 <!-- <input type="text" class="form-control" placeholder="" formControlName="groupId">
                                                                             <input type="text" class="form-control" placeholder="" formControlName="groupName"> -->
-                                                                                <select formControlName="groupId" [(ngModel)]="groupId" 
+                                                                                <select formControlName="groupId" [(ngModel)]="groupId"  style="background-color: yellow;"
                                                                                     id="groupId" class="form-control">
                                                                                     <option>--Select--</option>
                                                                                     <option
@@ -408,7 +406,7 @@
                                                                           
                                                                             <td>
                                                                            
-                                                                            <select formControlName="bayTyId"
+                                                                            <select formControlName="bayTyId" style="background-color: yellow;"
                                                                             id="bayTyId" class="form-control">
                                                                             <option>--Select--</option>
                                                                             <option
@@ -443,7 +441,7 @@
                                                                                 <!-- <input type="text" class="form-control"
                                                                                     placeholder=""
                                                                                     formControlName="techId"> -->
-                                                                                <select formControlName="techId"
+                                                                                <select formControlName="techId" style="background-color: yellow;"
                                                                                     id="techId"
                                                                                     (ngModelChange)="technician($event)"
                                                                                     class="form-control">
@@ -2554,7 +2552,7 @@
                                                         <td style="width: 15%" class="LabelFontStyle">
                                                             Outstanding&nbsp;Amount&nbsp;:</td>
                                                         <td>
-                                                            <input ty pe="text" disabled class="form-control"
+                                                            <input type="number" disabled class="form-control"
                                                                 placeholder="" formControlName="balanceAmt">
                                                         </td>
                                                         <td>
@@ -2564,7 +2562,7 @@
                                                         <td style="width: 15%" class="LabelFontStyle">
                                                             Advance&nbsp;Amount&nbsp;:</td>
                                                         <td>
-                                                            <input type="text" disabled class="form-control"
+                                                            <input type="number" disabled class="form-control"
                                                                 placeholder="" formControlName="advAmt">
                                                         </td>
                                                         <td>

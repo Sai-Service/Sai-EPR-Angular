@@ -28,6 +28,12 @@ export class AmcEnrollmentComponent implements OnInit {
   lstClearBackOrder:any;
   lstOrderList:any;
   public lstItemDetails:any;
+  getVehRegDetails: any;
+  CustomerDetailsList: any;
+  CustomerSiteDetails: any;
+   
+  lstAmcSchemeList:any[];
+  lstAmcSchLineDetails:any[];
 
   loginName:string;
   loginArray:string;
@@ -47,16 +53,33 @@ export class AmcEnrollmentComponent implements OnInit {
   saName:string;
   regNo:string;
   custNo :string;
-  custName:string;
   contactNo:string;
   custAddress:string;
 
   schemeGrp:string;
-  schemeNo :string;
+  schemeId:number;
+  schemeNumber :string;
   startDate:Date;
   endDate :Date;
   startKms:number;
   endKms:number;
+
+  customerId: number;
+  dmsCustNo: number;
+  custName: string;
+  customerSiteId: number;
+  customerSiteAddress: string;
+  custCity: string;
+  custState: String;
+  custPincode: string;
+  CustomerGstNo: string
+  customerPanNo: string
+  customerTanNo: string
+  custAccountNo: number;
+  custPhone: string;
+  customerType: string;
+  custTaxCategoryName: string;
+  custTdsPer:number;
 
   
 
@@ -83,36 +106,58 @@ export class AmcEnrollmentComponent implements OnInit {
     regNo:[],
 
     custNo :[],
-    custName:[],
     contactNo:[],
     custAddress:[],
 
+    schemeId:[],
     schemeGrp:[],
-    schemeNo :[],
+    schemeNumber :[],
     startDate:[],
     endDate :[],
     startKms:[],
     endKms:[],
+
+    customerId:[],
+    dmsCustNo:[],
+    custName:[],
+    customerSiteId:[],
+    customerSiteAddress:[],
+    custCity:[],
+    custState:[],
+    custPincode:[],
+    CustomerGstNo:[],
+    customerPanNo:[],
+    customerTanNo:[],
+    custAccountNo:[],
+    custPhone:[],
+    customerType:[],
+    custTaxCategoryName:[],
+    custTdsPer:[],
   
-
-
-
     amcItemList: this.fb.array([this.lineDetailsGroup()])   
 
   });
 }
 
+
 lineDetailsGroup() {
   return this.fb.group({ 
-    cpnId:[],
-    cpnNumber:[''],
-    cpnDesc :['', [Validators.required]],    
-    cpnQty:['', [Validators.required]],
-    cpnPrice:['', [Validators.required]],
-    cpnUtilQty:['', [Validators.required]],
-    cpnBalQty:['', [Validators.required]],
-    cpnAmount:['', [Validators.required]],
-   });
+  itemId:[''],
+  couponId:[''],
+  couponNumber:[''],
+  couponDesc :['', [Validators.required]],    
+  quantity:['', [Validators.required]],
+  value:['', [Validators.required]],
+  total:['', [Validators.required]],
+  couponCode:[],
+  gstpercentage:[],
+  couponActualCode:[],
+  discount:[],
+  taxableAmt:[],
+  taxAmt:[],
+  netAmt:[],
+
+ });
 }
 
 lineDetailsArray() :FormArray{
@@ -139,6 +184,14 @@ ngOnInit(): void {
   this.orgId=this.ouId;
   console.log(this.loginArray);
   console.log(this.locId);
+
+  this.service.AmcSchemeList()
+  .subscribe(
+  data => {
+    this.lstAmcSchemeList = data
+    console.log(this.lstAmcSchemeList);
+  }
+);
 }
 
 
@@ -151,5 +204,96 @@ closeMast() {
   this.router.navigate(['admin']);
 }
 
+      serchByRegNo(mRegNo) {
+       
+        var mreg=this.amcEnrollmentForm.get('regNo').value
+        alert(mreg);
+        this.service.getVehRegDetails(mreg)
+          .subscribe(
+            data => {
+              this.getVehRegDetails = data;
+
+              if(this.getVehRegDetails !=null){
+              console.log(this.getVehRegDetails);
+
+              this.amcEnrollmentForm.patchValue({
+                customerId: this.getVehRegDetails.customerId,
+              });
+              // this.enableCustAccount = false;
+              this.GetCustomerDetails(this.getVehRegDetails.customerId);
+              this.GetCustomerSiteDetails(this.getVehRegDetails.customerId);
+            }  else { alert("Vehicle Regno. Not Found...."); this.resetMast(); }
+
+            });
+          
+      }
+
+      GetCustomerDetails(mCustId: any) {
+        // alert("Customer Id: "+mCustId);
+        this.service.ewInsSiteList(mCustId)
+          .subscribe(
+            data1 => {
+              this.CustomerDetailsList = data1;
+              console.log(this.CustomerDetailsList);
+              this.amcEnrollmentForm.patchValue({
+                custAccountNo: this.CustomerDetailsList.custAccountNo,
+                custName: this.CustomerDetailsList.custName,
+              });
+            });
+      }
+
+
+        GetCustomerSiteDetails(mCustId: any) {
+          // alert("Customer Id: "+mCustId);
+          this.service.GetCustomerSiteDetails(mCustId, this.ouId)
+            .subscribe(
+              data1 => {
+                this.CustomerSiteDetails = data1;
+
+                if (this.CustomerSiteDetails === null) { alert("Customer Site [" + this.ouId + "] Not Found in Site Master.....\nPlease check and try again...."); this.resetMast(); }
+                else if (this.CustomerSiteDetails.taxCategoryName === null) { alert("Tax Category not attached to  this customer.Pls Update Tax category for this customer."); this.resetMast(); }
+                else {
+                  // this.dispCustButton=true;
+                  console.log(this.CustomerSiteDetails);
+                  // alert("Tds% :"+this.CustomerSiteDetails.customerId.tdsPer);
+                  this.amcEnrollmentForm.patchValue({
+                    customerSiteId: this.CustomerSiteDetails.customerSiteId,
+                    customerSiteAddress: this.CustomerSiteDetails.address1 + "," +
+                      this.CustomerSiteDetails.address2 + "," +
+                      this.CustomerSiteDetails.address3 + "," +
+                      this.CustomerSiteDetails.location,
+                    custCity: this.CustomerSiteDetails.city,
+                    custState: this.CustomerSiteDetails.state,
+                    custPincode: this.CustomerSiteDetails.pinCd,
+                    customerGstNo: this.CustomerSiteDetails.gstNo,
+                    customerPanNo: this.CustomerSiteDetails.panNo,
+                    customerTanNo: this.CustomerSiteDetails.tanNo,
+                    custPhone: this.CustomerSiteDetails.mobile1,
+                    customerType: this.CustomerSiteDetails.customerId.custType,
+                    custTaxCategoryName: this.CustomerSiteDetails.taxCategoryName,
+                    custTdsPer: this.CustomerSiteDetails.customerId.tdsPer,
+                  });
+
+                }
+              });
+        }
+
+
+       
+
+        onSelectAmcScheme(schNo){
+        this.service.AmcSchemeDetails(schNo)
+        .subscribe(
+          data => {
+            this.lstAmcSchLineDetails = data.schCoupLst;
+            console.log(this.lstAmcSchLineDetails);
+            var len = this.lineDetailsArray().length;
+              for (let i = 0; i < this.lstAmcSchLineDetails.length - len; i++) {
+              var invLnGrp: FormGroup = this.lineDetailsGroup();
+              this.lineDetailsArray().push(invLnGrp);
+
+            }
+            this.amcEnrollmentForm.get('amcItemList').patchValue(this.lstAmcSchLineDetails);
+          });}
 
 }
