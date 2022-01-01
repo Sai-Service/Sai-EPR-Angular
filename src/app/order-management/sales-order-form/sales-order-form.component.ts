@@ -1359,10 +1359,8 @@ export class SalesOrderFormComponent implements OnInit {
     this.selTaxLn= String(i);
     var i = i + 1;
     this.lineTaxdetails = this.TaxDetailsArray() as FormArray;
-   // this.lineTaxdetails = this.taxMap.get(String(i));
     this.lineTaxdetails.clear();
-    debugger;
-    var taxValues =  this.taxMap.get(String(i));
+     var taxValues =  this.taxMap.get( this.selTaxLn);
    // for (let x = 0; x < this.lstgetOrderTaxDetails.length; x++) {
       for (let x = 0; x < taxValues.length; x++) {
       if (taxValues[x].invLineNo === i) {
@@ -1378,7 +1376,7 @@ export class SalesOrderFormComponent implements OnInit {
     //alert(this.selTaxLn)
     this.SalesOrderBookingForm.get('taxAmounts').patchValue(this.lineTaxdetails.value);
     this.taxMap.set(this.selTaxLn, this.lineTaxdetails.value);
-    alert('added to map closeTaxModal' + this.selTaxLn)
+    //alert('added to map closeTaxModal..' + this.selTaxLn)
     this.display='none'; //set none css after close dialog
     this.myInputField.nativeElement.focus();
     debugger;
@@ -1500,8 +1498,8 @@ export class SalesOrderFormComponent implements OnInit {
             this.SalesOrderBookingForm.get('taxAmounts').patchValue(data);
             this.invLineNo = i + 1;
             let taxMapData = this.SalesOrderBookingForm.get('taxAmounts').value;
-            this.taxMap.set(String(this.invLineNo), this.lstgetOrderTaxDetails);
-            alert('Added to map key '+String(this.invLineNo)):
+            this.taxMap.set(String(i), this.lstgetOrderTaxDetails);
+            //alert('Added to map key '+String(i));
             //this.openTaxDetails(i)
           }
         )
