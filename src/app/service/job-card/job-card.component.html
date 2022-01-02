@@ -148,7 +148,7 @@
                                                                                 Job&nbsp;Card&nbsp;Date&nbsp;:</td>
                                                                             <td>
                                                                                 <!-- type="date" /// com JyotiK-->
-                                                                                <input  disabled 
+                                                                                <input  disabled  
                                                                                     class="form-control" placeholder=""
                                                                                     [(ngModel)]="jobCardDate"
                                                                                     formControlName="jobCardDate"  >
@@ -1222,7 +1222,7 @@
                                                                             <td>
                                                                                 <input type="date" class="form-control"
                                                                                     placeholder=""
-                                                                                    formControlName="promiseDate" [(ngModel)]="promiseDate" (change)="validatePromisedDate()"  max="{{minDate | date:'yyyy-MM-dd'}}">
+                                                                                    formControlName="promiseDate" [(ngModel)]="promiseDate" (change)="validatePromisedDate()"  min="{{minDate | date:'yyyy-MM-dd'}}">
                                                                             </td>
                                                                         </tr>
                                                                     </fieldset>
