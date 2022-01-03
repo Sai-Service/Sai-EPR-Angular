@@ -1,1 +1,400 @@
-<p>counter-sale-performa-inv works!</p>
+<form [formGroup]="CounterSaleOrderBookingForm" (ngSubmit)="CounterSaleOrderBooking(CounterSaleOrderBookingForm.value)" #aForm>
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <td colspan="4" class="PageHeader" style="width: 100%;">
+                &nbsp;Counter&nbsp;Sale&nbsp;Booking&nbsp;
+            </td>
+            <td colspan="2" align="right" style="background-color: #FFE4B5;text-align: right;width: 100%;">
+                &nbsp;Order&nbsp;No&nbsp;&nbsp;
+            </td>
+            <td style="background-color: #FFE4B5;">
+                <input class="form-control" formControlName="orderNumber" [(ngModel)]='orderNumber'
+                    value={{orderNumber}}>
+            </td>
+            <td style="background-color: #FFE4B5;">
+                <button type="button" class="btn-primary" (click)="OrderFind(orderNumber)"><i class="fa fa-search"
+                        aria-hidden="true"></i></button>
+            </td>
+        </tr>
+    </table>
+    <fieldset class="RFS">
+        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Customer
+            Details&nbsp;/&nbsp;
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+                style="width: 10rem;color: white;">
+                Additional&nbsp;Information
+            </button>
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Additional&nbsp;Details</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <table class="center" style="width: 100%;">
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        State&nbsp;:&nbsp;
+                                    </td>
+                                    <td>
+                                        <input disabled type="text" class="form-control" formControlName="state"
+                                            [(ngModel)]='state' value={{state}} style="width: 150px;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        Email&nbsp;ID&nbsp;:&nbsp;
+                                    </td>
+                                    <td>
+                                        <input disabled type="text" class="form-control" formControlName="emailId"
+                                            [(ngModel)]='emailId' value={{emailId}} style="width: 150px;">
+                                    </td>
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        Email&nbsp;ID&nbsp;1&nbsp;:&nbsp;
+                                    </td>
+                                    <td>
+                                        <input disabled type="text" class="form-control" formControlName="emailId1"
+                                            [(ngModel)]='emailId1' value={{emailId1}} style="width: 150px;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        Date&nbsp;Of&nbsp;Birth&nbsp;:&nbsp;
+                                    </td>
+                                    <td>
+                                        <input disabled type="date" class="form-control" formControlName="birthDate"
+                                            [(ngModel)]='birthDate' value={{birthDate}} style="width: 150px;">
+                                    </td>
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        Wedding&nbsp;Date1&nbsp;:&nbsp;
+                                    </td>
+                                    <td>
+                                        <input disabled type="date" class="form-control" formControlName="weddingDate"
+                                            [(ngModel)]='weddingDate' value={{weddingDate}} style="width: 150px;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        GSTN&nbsp;No&nbsp;:&nbsp;
+                                    </td>
+                                    <td>
+                                        <input disabled type="text" class="form-control" formControlName="gstNo"
+                                            [(ngModel)]='gstNo' value={{gstNo}} style="width: 150px;">
+                                    </td>
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        Pan&nbsp;No&nbsp;:&nbsp;
+                                    </td>
+                                    <td>
+                                        <input disabled type="text" class="form-control" formControlName="panNo"
+                                            [(ngModel)]='panNo' value={{panNo}} style="width: 150px;">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </legend>
+        <table class="center" style="width: 100%;">
+            <tr>
+                <td style="width: 15%" class="LabelFontStyle1">
+                    Customer&nbsp;No&nbsp;:&nbsp;
+                </td>
+                <td>
+                    <input type="number" style="width: 120px;" class="form-control" formControlName="custAccountNo"
+                        value={{custAccountNo}} [(ngModel)]='custAccountNo'
+                        [ngClass]="{ 'is-invalid': submitted && f.custAccountNo.errors }"
+                        (keydown.tab)="accountNoSearch(custAccountNo)" #myinput>
+                    <input type="number" hidden formControlName="creditAmt" [(ngModel)]='creditAmt' value={{creditAmt}}
+                        class="form-control" style="width: 120px;">
+                </td>
+                <td style="width: 15%" class="LabelFontStyle">
+                    Customer&nbsp;Site&nbsp;:&nbsp;
+                </td>
+
+                <div *ngIf="displayCustomerSite; then thenCustomerSite; else elseCustomerSite"></div>
+                <ng-template #thenCustomerSite>
+                    <td>
+                        <select formControlName="name" id="name" class="form-control" style="width: 200px;"
+                            [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
+                            (ngModelChange)='onOptionsSelectedcustSiteName($event)'>
+                            <!-- <option>--Select--</option> -->
+                            <option *ngFor="let custSite of custSiteList" [value]="custSite.siteName">
+                                {{custSite.siteName}}
+                            </option>
+                        </select>
+                        <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                            <div *ngIf="f.name.errors.required">Site Code cannot be blank</div>
+                        </div>
+                        <input hidden disabled type="number" class="form-control" formControlName="customerSiteId"
+                            [(ngModel)]='customerSiteId' value={{customerSiteId}} style="width: 160px;">
+                        <input hidden disabled type="text" class="form-control" formControlName="taxCategoryName"
+                            [(ngModel)]='taxCategoryName' value={{taxCategoryName}} style="width: 160px;">
+
+                    </td>
+                </ng-template>
+                <ng-template #elseCustomerSite>
+                    <td>
+                        <input disabled type="text" class="form-control" formControlName="name" value={{name}}
+                            style="width: 160px;">
+                        <input hidden disabled type="text" class="form-control" formControlName="taxCategoryName"
+                            [(ngModel)]='taxCategoryName' value={{taxCategoryName}} style="width: 160px;">
+                    </td>
+                </ng-template>
+                <!-- </td> -->
+                <td style="width: 15%" class="LabelFontStyle">
+                    Name:&nbsp;
+                </td>
+                <td>
+                    <table>
+                        <tr>
+                            <td>
+                                <input type="text" formControlName="custName" [(ngModel)]='custName' value={{custName}}
+                                    class="form-control" style="width: 170px;" data-bs-toggle="modal"
+                                    data-bs-target="#customerNameSearchModel">
+                            </td>
+                            <td>
+                                <button type="button" [disabled]="isDisabled3" class="btn btn-primary"
+                                    (click)="custNameSearch(custName)" data-toggle="modal"
+                                    data-target="#customerNameSearchModel" style="width: 2rem;color: white;">
+                                    <i class="fa fa-search"></i> </button>
+                                <div class="modal fade" id="customerNameSearchModel" tabindex="-1" role="dialog"
+                                    aria-labelledby="customerNameSearchModel" aria-hidden="true">
+                                    <div class="modal-dialog modal-xl" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="customerNameSearchModel">
+                                                    Additional&nbsp;Details</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <table>
+                                                    <tr>
+                                                        <table class="GridFont" id="excel-table" cellspacing="0"
+                                                            cellpadding="4">
+                                                            <tbody>
+                                                                <tr class="GridHeader">
+                                                                    <th scope="col">Customer No</th>
+                                                                    <th scope="col">Customer Name</th>
+                                                                    <th scope="col">Address</th>
+                                                                    <th scope="col">GST No</th>
+                                                                    <th scope="col">Pan No</th>
+                                                                    <th scope="col">Mobile</th>
+                                                                    <th scope="col">Select</th>
+                                                                </tr>
+                                                                <tr *ngFor="let com of customerNameSearch"
+                                                                    class="ItemStyle" style="text-decoration:none;">
+                                                                    <td style="width: 195px;">{{com.accountNo}}</td>
+                                                                    <td style="width: 195px;">{{com.custName}}</td>
+                                                                    <td style="width: 195px;">{{com.billToAddress}}</td>
+                                                                    <td style="width: 195px;">{{com.gstNo}}</td>
+                                                                    <td style="width: 195px;">{{com.panNo}}</td>
+                                                                    <td style="width: 195px;">{{com.mobile1}}</td>
+                                                                    <td><button class="btn-primary"
+                                                                            style="width: fit-content;"
+                                                                            (click)="accountNoSearch(com.accountNo)"
+                                                                            data-dismiss="modal">Select</button></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary"
+                                                    data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="width: 15%" class="LabelFontStyle">
+                    Contact&nbsp;No&nbsp;:&nbsp;
+                </td>
+                <td>
+                    <input type="number" formControlName="mobile1" [(ngModel)]='mobile1' value={{mobile1}}
+                        [ngClass]="{ 'is-invalid': submitted && f.mobile1.errors }" class="form-control"
+                        style="width: 120px;" data-bs-toggle="modal" data-bs-target="#contactNoSearchModel">
+                </td>
+                <td>
+                    <button type="button" class="btn btn-primary" (click)="searchByContact(mobile1)" data-toggle="modal"
+                        data-target="#contactNoSearchModel" style="width: 2rem;color: white;">
+                        <i class="fa fa-search"></i> </button>
+                    <div class="modal fade" id="contactNoSearchModel" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-xl" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Additional&nbsp;Details</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <table>
+                                        <tr>
+                                            <table class="GridFont" id="excel-table" cellspacing="0" cellpadding="4">
+                                                <tbody>
+                                                    <tr class="GridHeader">
+                                                        <th scope="col">Customer No</th>
+                                                        <th scope="col">Customer Name</th>
+                                                        <th scope="col">Address1</th>
+                                                        <th scope="col">Address2</th>
+                                                        <th scope="col">Address3</th>
+                                                        <th scope="col">Location</th>
+                                                        <th scope="col">City</th>
+                                                        <th scope="col">Pin Code</th>
+                                                        <th scope="col">State</th>
+                                                        <th scope="col">Mobile1</th>
+                                                        <th scope="col">Mobile2</th>
+                                                        <th scope="col">Email ID1</th>
+                                                        <th scope="col">Email ID2</th>
+                                                        <th scope="col">Select</th>
+                                                    </tr>
+                                                    <tr *ngFor="let com of accountNoSearchdata" class="ItemStyle"
+                                                        style="text-decoration:none;">
+                                                        <td style="width: 195px;">{{com.custAccountNo}}</td>
+                                                        <td style="width: 195px;">{{com.custName}}</td>
+                                                        <td style="width: 195px;">{{com.address1}}</td>
+                                                        <td style="width: 195px;">{{com.address2}}</td>
+                                                        <td style="width: 195px;">{{com.address3}}</td>
+                                                        <td style="width: 195px;">{{com.address4}}</td>
+                                                        <td style="width: 195px;">{{com.city}}</td>
+                                                        <td style="width: 195px;">{{com.pinCd}}</td>
+                                                        <td style="width: 195px;">{{com.state}}</td>
+                                                        <td style="width: 195px;">{{com.mobile1}}</td>
+                                                        <td style="width: 195px;">{{com.mobile2}}</td>
+                                                        <td style="width: 195px;">{{com.emailId}}</td>
+                                                        <td style="width: 195px;">{{com.emailId1}}</td>
+                                                        <td><button class="btn-primary"
+                                                                (click)="Select(com.custAccountNo)"
+                                                                data-dismiss="modal">Select</button></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 15%" class="LabelFontStyle">
+                    Address&nbsp;:&nbsp;
+                </td>
+                <td colspan="5">
+                    <input disabled type="text" class="form-control" formControlName="custAddress"
+                        [(ngModel)]='custAddress' value={{custAddress}} style="width:100%;">
+
+                </td>
+            </tr>
+            <!--  ******* Additional Details FOR WALKING Customer********   -->
+            <div *ngIf="displaywalkingCustomer; then thenwalkingCustomer; else elsewalkingCustomer"></div>
+            <ng-template #thenwalkingCustomer></ng-template>
+            <ng-template #elsewalkingCustomer>
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        Customer&nbsp;Name&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" formControlName="walkCustName" value={{walkCustName}}
+                            style="width:100%;" (keydown.tab)="panCardWalding($event)">
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        Customer&nbsp;Pan&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" formControlName="walkCustPan" value={{walkCustPan}}
+                            style="width:100%;">
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        Customer&nbsp;Address&nbsp;:&nbsp;
+                    </td>
+                    <td colspan="3">
+                        <input type="text" class="form-control" formControlName="walkCustaddres"
+                            value={{walkCustaddres}} style="width:100%;" (keyup)="walkcustomermerge($event)">
+                    </td>
+                </tr>
+                <tr hidden>
+                    <td colspan="2">
+                        <input type="text" class="form-control" formControlName="cntrOrdCustName"
+                            [(ngModel)]='cntrOrdCustName' value={{cntrOrdCustName}} style="width:100%;"
+                            (keyup)="walkcustomermerge($event)">
+                    </td>
+                </tr>
+            </ng-template>
+            <div *ngIf="displayDMSCDMS; then thenDMSCDMS; else elseDMSCDMS"></div>
+            <ng-template #thenDMSCDMS>
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        DMS&nbsp;Ref&nbsp;No&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" formControlName="refCustNo" value={{refCustNo}}
+                            [ngClass]="{ 'is-invalid': submitted && f.refCustNo.errors }" style="width:100%;">
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template #elseDMSCDMS>
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        Customer&nbsp;PO&nbsp;Number:&nbsp;
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" formControlName="custPoNumber" value={{custPoNumber}}
+                            [ngClass]="{ 'is-invalid': submitted && f.custPoNumber.errors }" style="width:100%;">
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        Customer&nbsp;PO&nbsp;Date&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <input type="date" class="form-control" formControlName="custPoDate" value={{custPoDate}}
+                            [ngClass]="{ 'is-invalid': submitted && f.custPoDate.errors }" style="width:100%;">
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        CDMS&nbsp;Customer&nbsp;Number:&nbsp;
+                    </td>
+                    <td>
+                        <input type="text" class="form-control">
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        Ref&nbsp;No&nbsp;CDMS&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" formControlName="refCustNo" value={{refCustNo}}
+                            [ngClass]="{ 'is-invalid': submitted && f.refCustNo.errors }" style="width:100%;">
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        CDMS&nbsp;Transaction&nbsp;Number:&nbsp;
+                    </td>
+                    <td>
+                        <input type="text" class="form-control">
+                    </td>
+                </tr>
+            </ng-template>
+
+        </table>
+    </fieldset>
+</form>
