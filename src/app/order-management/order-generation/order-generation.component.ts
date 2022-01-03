@@ -27,6 +27,7 @@ export class OrderGenerationComponent implements OnInit {
 
   lstClearBackOrder:any;
   lstOrderList:any;
+  lstLatestOrder:any;
   public lstItemDetails:any;
 
   dataDisplay: any;
@@ -43,17 +44,20 @@ export class OrderGenerationComponent implements OnInit {
   deptId:number; 
   emplId :number;
 
-  // orderNumber='TestOrder'
-  orderNumber='BJ-2102100004'
+  // orderNumber='BJ-2102100012'
+  orderNumber:string;
  
   fromDate=this.pipe.transform(Date.now(), 'y-MM-dd');
   toDate=this.pipe.transform(Date.now(), 'y-MM-dd');
 
   orderDate=this.pipe.transform(Date.now(), 'y-MM-dd');
-  orderStatus:string;
-  noMonths:number=3;
+  order
+  status:string; //='Active';
+  consCriteria:number=3;
   currMonthYN:string='Yes';
   orderValue:number;
+  dlrCode :string ='15209';
+  cdmsRefNo:string; //='TEST-CDMS-123';
 
   displayButton=false;
   spinIcon=false;
@@ -82,11 +86,13 @@ export class OrderGenerationComponent implements OnInit {
     fromDate:[],
     toDate:[],
 
-    orderStatus:[],
+    status:[],
     orderDate:[],
-    noMonths:[],
+    consCriteria:[],
     currMonthYN:[],
     orderValue:[],
+    dlrCode:[],
+    cdmsRefNo:[],
 
 
 
@@ -281,32 +287,52 @@ transeData1(val) {
 
 
 CreateOrder() {
-  // this.CheckDataValidations();
-  // if (this.checkValidation === true) {
-  
+   
     const formValue: IOrderGen = this.transeData(this.orderGenerationForm.value);
-    var ordMonths =this.orderGenerationForm.get('noMonths').value
+    var ordMonths =this.orderGenerationForm.get('consCriteria').value
+    var dlrCd =this.orderGenerationForm.get('dlrCode').value
 
     // alert (  "ts>> Loc Id :" +this.locId + " ," +ordMonths);
     this.dispGenOrdButton=false;
+       this.spinIcon=true;
+       this.dataDisplay ='Creating Order....Do not refresh the Page';
 
-    this.service.orderGenBajaj(formValue,this.locId,ordMonths).subscribe((res: any) => {
+    this.service.orderGenBajaj(formValue,this.locId,ordMonths,dlrCd,'').subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD INSERTED SUCCESSFUILY');
         this.orderNumber = res.obj;
         this.orderGenerationForm.disable();
          this.displayButton = false;
+         this.getLatestOrderNumber (this.locId);
       } else {
         if (res.code === 400) {
-          
-          alert('Error While Saving Record:-' + res.obj);
+          // alert('Error While Saving Record:-' + res.obj);
+          this.getLatestOrderNumber (this.locId);
+          this.spinIcon=false;
+          this.dataDisplay='';
            }
       }
     });
+
+     
   } 
 
+
+  getLatestOrderNumber(mlocId) {
+    this.service.getOrderNumberLatest(mlocId)
+    .subscribe(
+      data => {
+        alert("Order Number : " +data.obj);
+        // this.lstLatestOrder =data.obj
+        // console.log(this.lstLatestOrder);
+        // alert(this.lstLatestOrder)
+        this.orderNumber=data.obj;
+       });
+  }
+
+
   ShowOrder(){
-   
+      
     this.dispShowOrdButton=false;
     this.dispGenOrdButton=false;
     var mOrderNumber =this.orderGenerationForm.get('orderNumber').value
@@ -318,6 +344,12 @@ CreateOrder() {
         if(data.length >0) {
           // this.spinIcon=true;
         // this.dataDisplay ='Loading Order Details in progress....Do not refresh the Page';
+         this.cdmsRefNo=data[0].cdmsRefNo;
+         this.dlrCode=data[0].dlrCode;
+         this.status=data[0].status;
+         this.orderDate=data[0].orderDate;
+         this.consCriteria=data[0].consCriteria;
+
         this.displayButton=true;
         console.log(this.lstOrderList);
         var len = this.lineDetailsArray().length;
@@ -377,10 +409,10 @@ CreateOrder() {
         }
 
         validateConsMth(){
-        var conMth=this.orderGenerationForm.get('noMonths').value
+        var conMth=this.orderGenerationForm.get('consCriteria').value
         if (Number.isInteger(conMth)===false  || conMth <0 || conMth >12  )  {
           alert ("CONSUMPTION MONTHS : Value Range is 1 - 12 .Enter Integer value only")
-          this.orderGenerationForm.patchValue({noMonths :3});
+          this.orderGenerationForm.patchValue({consCriteria :3});
         }
 
         }
@@ -422,9 +454,15 @@ CreateOrder() {
           if(this.lineValidation){
           let variants = <FormArray>this.lineDetailsArray();
           var orderNum = this.orderGenerationForm.get('orderNumber').value;
+          var dlrCd= this.orderGenerationForm.get('dlrCode').value;
+          var cdmsNo= this.orderGenerationForm.get('cdmsRefNo').value;
+
           for (let i = 0; i < this.lineDetailsArray().length; i++) {
             let variantFormGroup = <FormGroup>variants.controls[i];
             variantFormGroup.addControl('orderNumber', new FormControl(orderNum, Validators.required));
+            variantFormGroup.addControl('dlrCode', new FormControl(dlrCd, Validators.required));
+            variantFormGroup.addControl('cdmsRefNo', new FormControl(cdmsNo, Validators.required));
+         
           } 
           console.log(variants.value);
 
@@ -446,6 +484,8 @@ CreateOrder() {
         
           for (let i = 0; i < len; i++) {
             var lineValue =orderLineArr[i].orderQty * orderLineArr[i].unitPrice;
+            
+            lineValue= Math.round((lineValue+Number.EPSILON)*100)/100, 
             patch.controls[i].patchValue({totalValue:lineValue});
             orderTotal=orderTotal+lineValue
 
@@ -475,7 +515,7 @@ CreateOrder() {
 
    
     var segId ; 
-  
+    var prc;
      this.service.getItemDetailsByCode(mSegment)
       .subscribe(
         data => {
@@ -484,6 +524,12 @@ CreateOrder() {
              segId =data.itemId;
              this.duplicateLineCheck(index,segId,mSegment);
              if(this.lineItemRepeated===false) {
+             
+             
+              this.service.getLineDetailsSingleItem('12MU - Bajaj Distributorship NDP',segId) .subscribe( data => { prc= data[0].priceValue;
+                patch.controls[index].patchValue({ unitPrice: prc})
+              });
+
              (patch.controls[index]).patchValue(
               {
                
@@ -491,7 +537,7 @@ CreateOrder() {
                 segment : mSegment,
                 description: data.description,
                 uom: data.uom,
-                unitPrice: 1,
+                unitPrice: prc,
                 mth1ConWsQty: 0,
                 mth2ConWsQty: 0,
                 mth3ConWsQty: 0,

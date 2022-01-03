@@ -14,58 +14,7 @@
         <div class="form-bg">
         <div class="center" style="width: 100%;">
 
-        <fieldset class="RFS">
-            <!-- <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;"> -->
-               <!-- Search Order </legend> -->
-
-         <table class="center" style="width: 100%;background-color: #FFE4B5;">
-            <!-- <table> -->
-                <tr>
-                  <td >
-                      <table class="center">
-                          <tr> 
-                           <td>&nbsp;Order&nbsp;No:&nbsp;</td>
-                           <td>
-                                <input type ="number" class="form-control" formControlName="orderNumber" [(ngModel)]='orderNumber'
-                                    value={{orderNumber}} >
-                                 
-                            </td>
-
-                            <td>
-                                <button type="button" class="btn-primary" (click)="SearchByOrderNo(orderNumber)"><i class="fa fa-search"
-                                        aria-hidden="true"></i></button>
-                            </td>
-
-                            <td>&nbsp;From&nbsp;Date:&nbsp;</td>
-
-                            <td>
-                                <input type ="date" class="form-control" formControlName="fromDate" [(ngModel)]='fromDate'
-                                    value={{fromDate}} max="{{minDate | date:'yyyy-MM-dd'}}" >
-                                 
-                            </td>
-                            <td>&nbsp;To&nbsp;Date:&nbsp;</td>
-                            <td>
-                                <input type ="date" class="form-control" formControlName="toDate" [(ngModel)]='toDate'
-                                    value={{toDate}} max="{{minDate | date:'yyyy-MM-dd'}}" >
-                                 
-                            </td>
-
-                            <td>
-                                <button type="button" class="btn-primary" (click)="SearchByDate(fromDate,toDate)"><i class="fa fa-search"
-                                        aria-hidden="true"></i></button>
-                            </td>
-
-                                             
-                            
-                           
-                          </tr>
-                      </table>
-                  </td>
-                </tr>
-
-               
-            </table>
-        </fieldset>
+       
 
         <fieldset class="RFS">
             <!-- <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
@@ -88,29 +37,30 @@
 
                     <tr>
 
-                        <td>&nbsp;Consumption(No&nbsp;of&nbsp;Months)&nbsp;:&nbsp;</td>
+
+                         <td style="width: 15%" class="LabelFontStyle">&nbsp;Months&nbsp;:&nbsp;</td>
 
                             <td>
-                                <input  type ="number" class="form-control" formControlName="noMonths" [(ngModel)]='noMonths'
-                                    value={{noMonths}}  (change)="validateConsMth()" min="0" max="12" style="background-color: yellow;" > </td>
+                                <input  type ="number" class="form-control" formControlName="consCriteria" [(ngModel)]='consCriteria'
+                                    value={{consCriteria}}  (change)="validateConsMth()" min="0" max="12" style="background-color: yellow;" > </td>
 
-                        <td>&nbsp;Order&nbsp;No:&nbsp;</td>
+                        <td style="width: 15%" class="LabelFontStyle">&nbsp;Order&nbsp;No:&nbsp;</td>
 
                             <td>
-                                <input  type ="text" class="form-control" formControlName="orderNumber" 
+                                <input  type ="text" class="form-control" formControlName="orderNumber"  [(ngModel)]='orderNumber'
                                     value={{orderNumber}}  >
                                  
                             </td>
 
-                            <td>&nbsp;Order&nbsp;Date:&nbsp;</td>
+                        <td style="width: 15%" class="LabelFontStyle">&nbsp;Order&nbsp;Date:&nbsp;</td>
 
                             <td>
-                                <input disabled type ="date" class="form-control" formControlName="orderDate" [(ngModel)]='orderDate'
+                                <input disabled  type='date' class="form-control" formControlName="orderDate" [(ngModel)]='orderDate'
                                     value={{orderDate}} max="{{minDate | date:'yyyy-MM-dd'}}" >
                                  
                             </td>
 
-                            <td>&nbsp;Order&nbsp;Value:&nbsp;</td>
+                        <td style="width: 15%" class="LabelFontStyle">&nbsp;Order&nbsp;Value:&nbsp;</td>
                             <td>
                                 <input disabled type ="number" class="form-control" formControlName="orderValue" [(ngModel)]='orderValue'
                                     value={{orderValue}}>
@@ -119,7 +69,7 @@
 
                     <tr>
    
-                                <td>&nbsp;Include&nbsp;Current&nbsp;Month&nbsp;Consumption:&nbsp;</td>
+                        <td style="width: 15%" class="LabelFontStyle">&nbsp;&nbsp;Current&nbsp;Mth&nbsp;:&nbsp;</td>
 
                                 <td>
                                     <select formControlName="currMonthYN" id="currMonthYN" class="form-control"  [(ngModel)]="currMonthYN"  style="background-color: yellow;">
@@ -127,33 +77,32 @@
                                     <option value="No">No</option>
                                     </select>
                                 </td>
-                                <td>&nbsp;Order&nbsp;Status:&nbsp;</td>
+                                <td style="width: 15%" class="LabelFontStyle">&nbsp;Order&nbsp;Status:&nbsp;</td>
 
                                 <td>
-                                    <input disabled type ="string" class="form-control" formControlName="orderStatus" [(ngModel)]='orderStatus'
-                                        value={{orderStatus}}  >
+                                    <input disabled type ="string" class="form-control" formControlName="status" [(ngModel)]='status'
+                                        value={{status}}  >
                                      
                                 </td>
+                                <td style="width: 15%" class="LabelFontStyle">&nbsp;Dealer&nbsp;Code:&nbsp;</td>
 
-                                <td></td>
+                                <td>
+                                    <input  type ="string" class="form-control" formControlName="dlrCode" [(ngModel)]='dlrCode'
+                                        value={{dlrCode}} style="background-color: yellow;" >
+                                </td>
 
-                                <div *ngIf="dispGenOrdButton; then G1; else G2;"></div>
-                                <ng-template #G1>
-                                     <td> <button style="width:170px;" type="submit" class="btn btn-info" id="register" (click)="CreateOrder()">Generate Order</button></td>
-                                </ng-template>
-                                <ng-template #G2>
-                                     <td> <button disabled style="width:170px;" type="submit" class="btn btn-info" id="register" (click)="CreateOrder()">Generate Order</button></td>
-                                </ng-template>
+                                <td style="width: 15%" class="LabelFontStyle">&nbsp;CDMS&nbsp;No:&nbsp;</td>
 
-                                <td></td>
+                                <td>
+                                    <input  type ="string" class="form-control" formControlName="cdmsRefNo" [(ngModel)]='cdmsRefNo'
+                                        value={{cdmsRefNo}} >
+                                </td>
 
-                                <div *ngIf="dispShowOrdButton; then S1; else S2;"></div>
-                                <ng-template #S1>
-                                     <td> <button style="width: fit-content;"  type="submit" class="btn btn-info" id="register" (click)="ShowOrder()">Show Order List</button></td>
-                                </ng-template>
-                                <ng-template #S2>
-                                    <td> <button disabled style="width: fit-content;"  type="submit" class="btn btn-info" id="register" (click)="ShowOrder()">Show Order List</button></td>
-                               </ng-template>
+
+
+                                <!-- <td></td> -->
+
+                               
                             </tr>       
                       
 
@@ -302,6 +251,24 @@
 
         <table class="center">
             <tr>
+
+                <div *ngIf="dispGenOrdButton; then G1; else G2;"></div>
+                <ng-template #G1>
+                     <td> <button style="width:fit-content;" type="submit" class="btn btn-info" id="register" (click)="CreateOrder()">Create Order</button></td>
+                </ng-template>
+                <ng-template #G2>
+                     <td> <button disabled style="width:fit-content;" type="submit" class="btn btn-info" id="register" (click)="CreateOrder()">Create Order</button></td>
+                </ng-template>
+
+                <div *ngIf="dispShowOrdButton; then S1; else S2;"></div>
+                <ng-template #S1>
+                     <td> <button style="width: fit-content;"  type="submit" class="btn btn-info" id="register" (click)="ShowOrder()">View/Edit</button></td>
+                </ng-template>
+                <ng-template #S2>
+                    <td> <button disabled style="width: fit-content;"  type="submit" class="btn btn-info" id="register" (click)="ShowOrder()">View/Edit</button></td>
+               </ng-template>
+
+
                 <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
                 <ng-template #thenBlock1>
                  <td> <button type="submit" class="btn btn-info" id="register" (click)="updateOrder()">Save</button></td>
@@ -315,9 +282,78 @@
                     <td> <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>
                     <td> <button type="submit" class="btn btn-info" id="register" (click)="closeMast()">Close</button></td>
                 </ng-template>
+
+              
+
+                        <div *ngIf="spinIcon; then hList1; else hList2"></div>
+                        <ng-template #hList1> 
+                            <div class="d-flex justify-content-center">
+                                <div class="spinner-border text-primary" role="status" >
+                                    <span class="sr-only" id="loading"></span>
+                            
+                                </div>
+                                </div>
+                        </ng-template>
+                        <ng-template #hList2> </ng-template>
+
+                       <td class="LabelFontStyle" style="color: blue;">&nbsp;{{dataDisplay }}&nbsp; </td>
+                  
                 
             </tr>
         </table>
+        <!-- <br> -->
+
+        <fieldset class="RFS">
+            <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
+               Search </legend>
+
+         <table class="center" style="width: 100%;background-color: #FFE4B5;">
+                 <tr>
+                  <td >
+                      <table class="center">
+                          <tr> 
+                           <td>&nbsp;Order&nbsp;No:&nbsp;</td>
+                           <td>
+                                <input type ="number" class="form-control" formControlName="orderNumber" [(ngModel)]='orderNumber'
+                                    value={{orderNumber}} >
+                                 
+                            </td>
+
+                            <td>
+                                <button type="button" class="btn-primary" (click)="SearchByOrderNo(orderNumber)"><i class="fa fa-search"
+                                        aria-hidden="true"></i></button>
+                            </td>
+
+                            <td>&nbsp;From&nbsp;Date:&nbsp;</td>
+
+                            <td>
+                                <input type ="date" class="form-control" formControlName="fromDate" [(ngModel)]='fromDate'
+                                    value={{fromDate}} max="{{minDate | date:'yyyy-MM-dd'}}" >
+                                 
+                            </td>
+                            <td>&nbsp;To&nbsp;Date:&nbsp;</td>
+                            <td>
+                                <input type ="date" class="form-control" formControlName="toDate" [(ngModel)]='toDate'
+                                    value={{toDate}} max="{{minDate | date:'yyyy-MM-dd'}}" >
+                                 
+                            </td>
+
+                            <td>
+                                <button type="button" class="btn-primary" (click)="SearchByDate(fromDate,toDate)"><i class="fa fa-search"
+                                        aria-hidden="true"></i></button>
+                            </td>
+
+                                             
+                            
+                           
+                          </tr>
+                      </table>
+                  </td>
+                </tr>
+
+               
+            </table>
+        </fieldset>
 
 
 
