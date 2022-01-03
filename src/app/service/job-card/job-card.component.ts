@@ -315,8 +315,8 @@ export class JobCardComponent implements OnInit {
   // now = Date.now();
   // pickupDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   pickupDate=Date.now();
-  jobCardDate = this.pipe.transform(Date.now(), 'y-MM-dd');
-
+  jobCardDate = this.pipe.transform(Date.now(), 'dd-MM-y');
+  // jobCardDate = Date.now();
   // jobCardDate = this.pipe.transform(this.now, 'y-MM-d');
   
   //public minDatetime=this.pipe.transform(this.promiseDate, 'yyyy-MM-ddThh:mm')
@@ -1241,18 +1241,21 @@ export class JobCardComponent implements OnInit {
   
   Search(jobCardNo) {
 
-    // alert("modal jobNo :"+jobCardNo);
-    // var jcNum=this.jobcardForm.get('jobCardNum').value
     var  jcNum=jobCardNo.toUpperCase();
 
-    // var jdate=this.jobcardForm.get('jobCardDate').value
-    // alert (jdate)
-   
     this.jobcardForm.reset();
     // this.lineDetailsArray.clear();
     this.jobcardForm.get('jobCardLabLines').reset();
     this.jobcardForm.get('jobCardMatLines').reset();
 
+    var lenLab = this.lineDetailsArray.length;
+    var lenMat = this.lineDistributionArray().length;
+    // alert("lenLab :" +lenLab + " lenMat :"+lenMat);
+
+    if(lenLab>1) {for (let i = lenLab - 1; i > 0; i--) { this.lineDetailsArray.removeAt(i); }}
+    if(lenMat>1) {for (let i = lenMat - 1; i > 0; i--) { this.lineDistributionArray().removeAt(i); }}
+
+  
     
     this.jobCardNum1=jcNum;
    
@@ -1305,11 +1308,6 @@ export class JobCardComponent implements OnInit {
 
           // alert("lineDetailsArray.length :"+len1);
 
-            if(len>1) {
-              for (let i = 1; i <len1-1; i++) {
-              this.lineDetailsArray.removeAt(i);
-              }
-          }
 
           for (let i = 0; i < this.lstcomments.jobCardLabLines.length - len1; i++) {
             var payInvGrp: FormGroup = this.lineDetailsGroup();
@@ -2458,6 +2456,7 @@ validatePickupDate() {
   if (pDt > currDate) {
     alert("PICKUP  DATE :" + "Should not be above Today's Date");
     // this.pickupDate = this.pipe.transform(this.now, 'y-MM-dd'); ///  comi old date
+    this.pickupDate=null;
   }
 }
 
