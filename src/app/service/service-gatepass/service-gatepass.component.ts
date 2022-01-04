@@ -82,8 +82,11 @@ export class ServiceGatepassComponent implements OnInit {
     custPhone: string;
     custEmail: string;
     custContact: string;
+    jobCardNum:string;
 
     checkValidation=false;
+    gpButton=false;
+    printGPbutton=false;
   
 
           
@@ -127,6 +130,8 @@ export class ServiceGatepassComponent implements OnInit {
         custPhone: [],
         custEmail: [],
         custContact: [],
+
+        jobCardNum:[],
         });
     }
   
@@ -164,23 +169,23 @@ export class ServiceGatepassComponent implements OnInit {
     }
 
     
-    clearSearch(){}
-    newJob(){}
+    // clearSearch(){}
+    // newJob(){}
 
-    jobcardFind() {
-      var jcNum=this.serviceGatepassForm.get('jcNumber').value
-      jcNum=jcNum.toUpperCase();
+    // jobcardFind() {
+    //   var jcNum=this.serviceGatepassForm.get('jcNumber').value
+    //   jcNum=jcNum.toUpperCase();
              
-      this.serviceService.getJonCardNoSearch(jcNum)
-        .subscribe(
-          data => {
-            this.lstJobcardList = data.obj;
-            console.log(this.lstJobcardList); 
-            // alert(data.driverName);
+    //   this.serviceService.getJonCardNoSearch(jcNum)
+    //     .subscribe(
+    //       data => {
+    //         this.lstJobcardList = data.obj;
+    //         console.log(this.lstJobcardList); 
+    //         // alert(data.driverName);
        
-          });
+    //       });
         
-        }
+    //     }
 
 
         serchByRegNo(mRegNo) {
@@ -204,8 +209,7 @@ export class ServiceGatepassComponent implements OnInit {
                   customerId: this.getVehRegDetails.customerId,
                   mainModel: this.getVehRegDetails.mainModel,
                   vin: this.getVehRegDetails.vin,
-
-
+                  
                 });
                   this.GetCustomerDetails(this.getVehRegDetails.customerId);
                 // this.GetCustomerSiteDetails(this.getVehRegDetails.customerId);??
@@ -237,6 +241,7 @@ export class ServiceGatepassComponent implements OnInit {
                   custPhone : this.CustomerDetailsList.mobile1,
                   custEmail : this.CustomerDetailsList.emailId,
                   custContact: this.CustomerDetailsList.contactPerson,
+                  delvTakenBy:this.CustomerDetailsList.custName,
                 });
               });
         }
@@ -248,7 +253,6 @@ resetMast() {
 }
           
 GetJobcardList() {
- 
   var jLocId=this.locId;
   var jcNum=null;
   var jDate=null;
@@ -259,40 +263,56 @@ GetJobcardList() {
   this.serviceService.getJonCardNoSearchLoc(jcNum,jDate,jStatus,jRegNo,jLocId)
   .subscribe(
     data => {
+      if(data.length>0) {
+        this.gpButton=true;
       this.lstJobcardList = data;
+      this.jobCardNum=data[0].jobCardNum;
       console.log(this.lstJobcardList); 
+      } else {alert ("No Jobcard available to Gatepass...");this.gpButton=false;}
      });
+    
 }
 
 
 message1:string="PleaseFixtheErrors!";
 msgType:string="Close";
+
 getMessage(msgType:string){
-this.msgType=msgType;
-if(msgType.includes("gPass")){
-this.message="Want to Generate Gatepass for this Vehicle(Yes/No)?"
-}
+// alert ("msgType :"+msgType)
+ this.msgType=msgType;
+if(msgType.includes("gPass")){ this.message="Generate Gatepass for this Vehicle(Yes/No)?"} 
 
 }
 
-executeAction(){
-
-if(this.msgType.includes("gPass")){
- this.GenerateGatePass();
-}
-
-}
+  executeAction(){
+  if(this.msgType.includes("gPass")){
+  this.GenerateGatePass(); }
+  }
 
 
+  GenerateGatePass() { 
+    this.CheckGPvalidation();
+  if(this.checkValidation===false) {
+    return;
+  }
+  this.gpButton=false;
+ var jcNum=this.serviceGatepassForm.get('jobCardNum').value;
+ this.serviceService.generateServiceGatePass(jcNum).subscribe((res: any) => {
+      if (res.code === 200) {
+        this.printGPbutton=true;
+        alert(res.message);
+        this.gpNumber = res.obj.gatepassId;
+        this.serviceGatepassForm.disable();
+      } else {
+        if (res.code === 400) {
+          this.printGPbutton=false;
+           alert(res.message);
+        }
+      }
+    });
+  }
 
-
-
-    GenerateGatePass() { 
-      this.CheckGPvalidation();
-      if(this.CheckGPvalidation) {
-        alert ("Validation ok");
-      } else { alert("Validation Failed...Please check and proceed....");}
-    }
+  
 
 CheckGPvalidation() {
   var msg1;
@@ -325,6 +345,21 @@ CheckGPvalidation() {
 
   this.checkValidation=true;
 
+}
+
+
+printGP(){
+  var jcNum=this.serviceGatepassForm.get('jobCardNum').value
+  const fileName = 'download.pdf';
+  const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+  this.serviceService.printWsGatePass(jcNum)
+    .subscribe(data => {
+      var blob = new Blob([data], { type: 'application/pdf' });
+      var url = URL.createObjectURL(blob);
+      var printWindow = window.open(url, '', 'width=800,height=500');
+      printWindow.open
+      
+    });
 }
 
 

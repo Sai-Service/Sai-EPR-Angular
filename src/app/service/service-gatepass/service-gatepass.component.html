@@ -34,11 +34,11 @@
                                         value={{gpDate}} max="{{minDate | date:'yyyy-MM-dd'}}">
                                 </td>
 
-                                <td class="LabelFontStyle">&nbsp;GP&nbsp;By&nbsp;:&nbsp;</td>
+                                <td class="LabelFontStyle">&nbsp;GP&nbsp;Generated&nbsp;By:&nbsp;</td>
                                 
                                 <td>
                                     <input disabled type="text" class="form-control" formControlName="loginName" [(ngModel)]='loginName'
-                                        value={{loginName}} >
+                                        value={{loginName}} style="width: 250px;">
                                 </td>
 
                                 </tr>
@@ -120,11 +120,13 @@
                                 <td> <input type="text"   class="form-control" placeholder=""  formControlName="driverName" style="background-color: yellow;"> </td>
                              
                                 <td  class="LabelFontStyle1">&nbsp;Delivery&nbsp;&nbsp;Taken&nbsp;By:&nbsp;</td>
-                                <td> <input type="text"   class="form-control" placeholder=""  formControlName="delvTakenBy" style="background-color: yellow;"> </td>
-                             
-   
-
-                            </tr>
+                                <td colspan="3"> <input type="text"   class="form-control" placeholder=""  formControlName="delvTakenBy" style="background-color: yellow;width: 100%;"> </td>
+                              </tr>
+                              <tr>
+                                <td   class="LabelFontStyle">&nbsp;JC&nbsp;&nbsp;No:&nbsp;</td>
+                                <td> <input  type="text"   class="form-control" placeholder=""  formControlName="jobCardNum" value={{jobCardNum}} [(ngModel)]="jobCardNum" > </td>
+                            
+                              </tr>
                            
                     </table>
                     <br>
@@ -132,14 +134,30 @@
                         <table class="center" style="width: 100%;">
                             <table class="center">
                                 <tr>
+                                    <div *ngIf="gpButton; then gpYes; else gpNo"></div>
+                                    <ng-template #gpYes> 
                                     <td>
-                                        <button type="submit" class="btn btn-info" style="width: fit-content;" id="resetBtn" data-toggle="modal" 
+                                        <button type="submit" class="btn btn-info" style="width: fit-content;" id="gPassBtn" data-toggle="modal" 
                                         data-target="#confirmAlert" (click)="getMessage('gPass')">Generate GatePass</button>
-                                            
                                     </td>
+                                    </ng-template>
+                                    <ng-template #gpNo> 
+                                    <td>
+                                        <button disabled type="submit" class="btn btn-info" style="width: fit-content;" id="gPassBtn" data-toggle="modal" 
+                                        data-target="#confirmAlert" (click)="getMessage('gPass')">Generate GatePass</button>
+                                    </td>
+                                    </ng-template>
+
+                                    <div *ngIf="printGPbutton; then gppYes; else gppNo"></div>
+                                    <ng-template #gppYes> 
+                                      <td> <button type="button" class="btn btn-info" (click)="printGP()" >Print GP</button> </td>
+                                    </ng-template>
+                                    <ng-template #gppNo> 
+                                        <td> <button  type="button" class="btn btn-info" (click)="printGP()" >Print GP</button> </td>
+                                    </ng-template>
 
                                     <!-- <td> <button style="width: fit-content;" type="button" class="btn btn-info" (click)="jobcardFind()" >Generate GatePass</button> </td>  -->
-                                    <td> <button type="button" class="btn btn-info" (click)="clearSearch()" >Reset</button> </td>
+                                    <td> <button type="button" class="btn btn-info" (click)="resetMast()" >Reset</button> </td>
                                 </tr>
                             </table>
                        </table>
@@ -156,14 +174,16 @@
                                 <tbody>
                                     <tr class="GridHeader">
                                     <th  scope="col">Srl&nbsp;No&nbsp;</th> 
-                                    <th  scope="col">Reg&nbsp;No&nbsp;</th>
                                     <th  scope="col">Job&nbsp;No&nbsp;</th>
                                     <th  scope="col">Job&nbsp;Date</th>
+                                    <th  scope="col">Reg&nbsp;No&nbsp;</th>
                                     <th  scope="col">Job&nbsp;Type</th>
                                     <th  scope="col">Status&nbsp;</th>
                                     <th  scope="col">Service&nbsp;Advisor</th>
-                                    <th  scope="col">Cust&nbsp;Name</th>
-                                    <th  scope="col">Cust&nbsp;No&nbsp;</th>
+                                    <th  scope="col">Group&nbsp;</th>
+                                    <th  scope="col">Invoice&nbsp;No</th>
+                                    <th  scope="col">Invoice&nbsp;Amt&nbsp;</th>
+                                    <th  scope="col">Balance&nbsp;Amt&nbsp;</th>
 
                                     <!-- <th style="width:7rem" scope="col"> Conatct&nbsp;No</th> -->
                                     <!-- <th style="width:6rem" scope="col">Select</th> -->
@@ -171,14 +191,18 @@
                             </tbody>
                             <tr *ngFor="let com of lstJobcardList let i=index" class="ItemStyle" style="text-decoration:none;font-size:small;">
                                     <td style="text-align: center;width: 2rem;">{{i+1}}</td>
-                                    <td style="text-align: center;width: 5rem;">{{com.regNo}}</td>
                                     <td style="text-align: center;width: 5rem;">{{com.jobCardNum}}</td>
                                     <td style="text-align: center;width: 5rem;">{{com.jobCardDate |date:'dd-MM-y' }}</td>
+                                    <td style="text-align: center;width: 5rem;">{{com.regNo}}</td>
                                     <td style="text-align: center;width: 5rem;">{{com.attribute1}}</td>
                                     <td style="text-align: center;width: 8rem;">{{com.status}}</td>
-                                    <td style="text-align: left;width: 16rem;">{{com.fullName}}</td>
-                                    <td style="text-align: left;width: 16rem;">{{com.custName}}</td>
-                                    <td style="text-align: center;width: 2rem;">{{com.custAccountNo}}</td> 
+                                    <td style="text-align: left;width: 11rem;">{{com.fullName}}</td>
+                                    <td style="text-align: center;width: 2rem;">{{com.custAccountNo}}</td>
+                                    <td style="text-align: center;width: 2rem;">{{com.custAccountNo}}</td>
+                                    <td style="text-align: center;width: 2rem;">{{com.custAccountNo}}</td>
+                                    <td style="text-align: center;width: 2rem;">{{com.custAccountNo}}</td>
+                                    <!-- <td style="text-align: left;width: 16rem;">{{com.custName}}</td>
+                                    <td style="text-align: center;width: 2rem;">{{com.custAccountNo}}</td>  -->
                                     <!-- <button  type="submit" class="btn btn-secondary" data-dismiss="modal" id="register"   (click)="Search(com.jobCardNum)">Select</button> -->
                             </tr> 
                             </table>
