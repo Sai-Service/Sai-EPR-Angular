@@ -1850,11 +1850,9 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     // alert(itemId1)
     if (itemId1 != null && fldName != "locator") {
       this.addRow(index);
-
     }
     else {
       this.displayRemoveRow.push(true);
-      // alert(this.displayRemoveRow)
     }
 
   }
