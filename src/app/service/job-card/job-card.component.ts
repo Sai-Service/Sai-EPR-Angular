@@ -2507,10 +2507,6 @@ getMessage(msgType:string){
         var jStatus=this.jobcardForm.get('jobStatus1').value;
         var jLocId=this.locId;
 
-         
-
-  
-
         if(jcNum==undefined || jcNum==null || jcNum.trim()=='') {jcNum=null;} else{jcNum=jcNum.toUpperCase();}
         if(jRegNo==undefined || jRegNo==null || jRegNo.trim()=='') {jRegNo=null} else {jRegNo=jRegNo.toUpperCase();}
         if(jDate==undefined || jDate==null || jDate=='' ) {jDate=null}

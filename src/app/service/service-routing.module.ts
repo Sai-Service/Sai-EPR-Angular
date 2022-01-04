@@ -2,11 +2,13 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DeActivateGuard } from '../de-activate.guard';
 import { JobCardComponent } from './job-card/job-card.component';
-import { JobcardOpeningComponent } from './jobcard-opening/jobcard-opening.component';
+// import { JobcardOpeningComponent } from './jobcard-opening/jobcard-opening.component';
+import { ServiceGatepassComponent } from './service-gatepass/service-gatepass.component';
 
 const routes: Routes = [
   {path:'JobCard', component:JobCardComponent, canDeactivate: [DeActivateGuard] },
-  {path :'JobcardOpening',component:JobcardOpeningComponent},
+  {path :'ServiceGatepass',component:ServiceGatepassComponent},
+
   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full'}
 ];
 

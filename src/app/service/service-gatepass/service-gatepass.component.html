@@ -1,0 +1,228 @@
+<form [formGroup]="serviceGatepassForm" (ngSubmit)="serviceGatepass(serviceGatepassForm.value)">
+
+    <div class="center">
+        <table style="width: 100%;background-color: white;">
+            <tr>
+                <td class="PageHeader">
+                    &nbsp;&nbsp;Service&nbsp;GatePass&nbsp;
+                </td>
+            </tr>
+        </table>
+    
+        <div class="center" style="width: 100%;">
+            <div class="form-bg">
+                <div class="center" style="width: 100%;">
+                  
+                    <!-- <fieldset class="RFS">
+                    <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Gate Pass Details</legend>
+                   -->
+                    <table class="center" style="width: 100%;background-color: #FFE4B5;">
+                        <!-- <table class="center" style="width: 100%;"> -->
+                                <tr>
+                                <td  class="LabelFontStyle">&nbsp;GP&nbsp;Number&nbsp;:&nbsp;</td>
+                                
+                                <td>
+                                    <input disabled type="text" class="form-control" formControlName="gpNumber" [(ngModel)]='gpNumber'
+                                        value={{gpNumber}} >
+                                </td>
+                               
+    
+                                <td class="LabelFontStyle">&nbsp;GP&nbsp;&nbsp;Date:&nbsp;</td>
+                                
+                                <td>
+                                    <input disabled type="date" class="form-control" formControlName="gpDate" [(ngModel)]='gpDate'
+                                        value={{gpDate}} max="{{minDate | date:'yyyy-MM-dd'}}">
+                                </td>
+
+                                <td class="LabelFontStyle">&nbsp;GP&nbsp;By&nbsp;:&nbsp;</td>
+                                
+                                <td>
+                                    <input disabled type="text" class="form-control" formControlName="loginName" [(ngModel)]='loginName'
+                                        value={{loginName}} >
+                                </td>
+
+                                </tr>
+                    </table>
+                    <!-- </fieldset> -->
+
+                    <fieldset class="RFS">
+                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Vehicle |Customer Details</legend>
+                        <table class="center" style="width: 100%;">
+                          
+                            <tr>
+    
+                                <td class="LabelFontStyle1">&nbsp;Reg&nbsp;&nbsp;Number:&nbsp;</td>
+                                
+                                <td> <input  type ="text" class="form-control" formControlName="regNo"  value={{regNo}} (change)="serchByRegNo(regNo)"
+                                    style="background-color: yellow;text-transform: uppercase;" placeholder="Regno"> </td>
+
+                               <td style="width: 15%"   class="LabelFontStyle">  VIN&nbsp;:</td>
+                               <td> <input disabled type="text" class="form-control" formControlName="vin"> </td>
+
+                               <td style="width: 15%"  class="LabelFontStyle"> Model&nbsp;:</td>
+                               <td> <input type="text" disabled  class="form-control" placeholder=""  formControlName="mainModel"> </td>
+                               <td style="width: 15%" class="LabelFontStyle">Cust&nbsp;No:&nbsp;</td>
+                                <td> <input disabled  type="text"  formControlName="custAccountNo"  id="custAccountNo" [(ngModel)]="custAccountNo" class="form-control" > </td>
+                           
+                               
+                            </tr>  
+
+                            <tr>
+
+                                <td style="width: 15%" class="LabelFontStyle">Cust&nbsp;Name:&nbsp;</td>
+                                <td colspan="3"> <input disabled  style="width: 100%;"   type="text"  formControlName="custName"  id="custName" [(ngModel)]="custName" class="form-control" > </td>
+                               
+                              
+                                <td style="width: 15%" class="LabelFontStyle">Cust&nbsp;Phone:&nbsp;</td>
+                                <td> <input disabled    type="text"  formControlName="custPhone"  id="custPhone" [(ngModel)]="custPhone" class="form-control" > </td>
+                                
+                                <td style="width: 15%" class="LabelFontStyle">Email:&nbsp;</td>
+                                <td> <input disabled  type="text"  formControlName="custEmail"  id="custEmail" [(ngModel)]="custEmail" class="form-control" > </td>
+                            
+                              
+                               
+                            </tr>
+                            <tr>
+
+                                <td style="width: 15%" class="LabelFontStyle">Address:&nbsp;</td>
+                                <td colspan="5"> <input disabled  style="width: 100%;"  type="text"  formControlName="custAddress"  id="custAddress" [(ngModel)]="custAddress" class="form-control" > </td>
+                                <td style="width: 15%" class="LabelFontStyle">City:&nbsp;</td>
+                                <td> <input disabled    type="text"  formControlName="custCity"  id="custCity" [(ngModel)]="custCity" class="form-control" > </td>
+                               
+                            </tr> 
+                            <tr>
+                                 <td style="width: 15%" class="LabelFontStyle">PIN:&nbsp;</td>
+                                <td> <input disabled  type="text"  formControlName="custPincode"  id="custPincode" [(ngModel)]="custPincode" class="form-control" > </td>
+                                <td style="width: 15%" class="LabelFontStyle">Contact&nbsp;Person:&nbsp;</td>
+                                <td> <input disabled  type="text"  formControlName="custContact"  id="custContact" [(ngModel)]="custContact" class="form-control" > </td>
+                        
+                                  <td style="width: 15%" class="LabelFontStyle">&nbsp;Type:&nbsp;</td>
+                                <td> <input disabled    type="text"  formControlName="customerType"  id="customerType" [(ngModel)]="customerType" class="form-control" > </td>
+                                <td style="width: 15%" class="LabelFontStyle">State:&nbsp;</td>
+                                <td> <input disabled  type="text"  formControlName="custState"  id="custState" [(ngModel)]="custState" class="form-control" > </td>
+                             
+                            </tr>
+                          
+
+                            <tr>
+                                <td  class="LabelFontStyle1">&nbsp;Delivery&nbsp;&nbsp;Type:&nbsp;</td>
+                                <!-- <td> <input type="text" disabled  class="form-control" placeholder=""  formControlName="delvType"> </td> -->
+                                <td>
+                                     <select formControlName="delvType" id="delvType" class="form-control" style="background-color: yellow;">
+                                        <option></option>
+                                        <option *ngFor="let sc of  pickupTypeList">
+                                            {{sc.codeDesc}}
+                                        </option>
+                                    </select>
+                                </td>
+
+                                <td   class="LabelFontStyle1">&nbsp;Driver&nbsp;&nbsp;Name:&nbsp;</td>
+                                <td> <input type="text"   class="form-control" placeholder=""  formControlName="driverName" style="background-color: yellow;"> </td>
+                             
+                                <td  class="LabelFontStyle1">&nbsp;Delivery&nbsp;&nbsp;Taken&nbsp;By:&nbsp;</td>
+                                <td> <input type="text"   class="form-control" placeholder=""  formControlName="delvTakenBy" style="background-color: yellow;"> </td>
+                             
+   
+
+                            </tr>
+                           
+                    </table>
+                    <br>
+
+                        <table class="center" style="width: 100%;">
+                            <table class="center">
+                                <tr>
+                                    <td>
+                                        <button type="submit" class="btn btn-info" style="width: fit-content;" id="resetBtn" data-toggle="modal" 
+                                        data-target="#confirmAlert" (click)="getMessage('gPass')">Generate GatePass</button>
+                                            
+                                    </td>
+
+                                    <!-- <td> <button style="width: fit-content;" type="button" class="btn btn-info" (click)="jobcardFind()" >Generate GatePass</button> </td>  -->
+                                    <td> <button type="button" class="btn btn-info" (click)="clearSearch()" >Reset</button> </td>
+                                </tr>
+                            </table>
+                       </table>
+
+                    </fieldset>
+    
+                    
+                    <fieldset class="RFS">
+                    <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Jobcard List</legend>
+                  
+                    <div class="container1">
+                            <div class="grid_scroll">
+                            <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+                                <tbody>
+                                    <tr class="GridHeader">
+                                    <th  scope="col">Srl&nbsp;No&nbsp;</th> 
+                                    <th  scope="col">Reg&nbsp;No&nbsp;</th>
+                                    <th  scope="col">Job&nbsp;No&nbsp;</th>
+                                    <th  scope="col">Job&nbsp;Date</th>
+                                    <th  scope="col">Job&nbsp;Type</th>
+                                    <th  scope="col">Status&nbsp;</th>
+                                    <th  scope="col">Service&nbsp;Advisor</th>
+                                    <th  scope="col">Cust&nbsp;Name</th>
+                                    <th  scope="col">Cust&nbsp;No&nbsp;</th>
+
+                                    <!-- <th style="width:7rem" scope="col"> Conatct&nbsp;No</th> -->
+                                    <!-- <th style="width:6rem" scope="col">Select</th> -->
+                                </tr>
+                            </tbody>
+                            <tr *ngFor="let com of lstJobcardList let i=index" class="ItemStyle" style="text-decoration:none;font-size:small;">
+                                    <td style="text-align: center;width: 2rem;">{{i+1}}</td>
+                                    <td style="text-align: center;width: 5rem;">{{com.regNo}}</td>
+                                    <td style="text-align: center;width: 5rem;">{{com.jobCardNum}}</td>
+                                    <td style="text-align: center;width: 5rem;">{{com.jobCardDate |date:'dd-MM-y' }}</td>
+                                    <td style="text-align: center;width: 5rem;">{{com.attribute1}}</td>
+                                    <td style="text-align: center;width: 8rem;">{{com.status}}</td>
+                                    <td style="text-align: left;width: 16rem;">{{com.fullName}}</td>
+                                    <td style="text-align: left;width: 16rem;">{{com.custName}}</td>
+                                    <td style="text-align: center;width: 2rem;">{{com.custAccountNo}}</td> 
+                                    <!-- <button  type="submit" class="btn btn-secondary" data-dismiss="modal" id="register"   (click)="Search(com.jobCardNum)">Select</button> -->
+                            </tr> 
+                            </table>
+                        </div>
+                        </div>
+                    
+                    </fieldset>
+                
+    
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ------------------------------------------------------------------ -->
+    </form>
+
+    <div class="modal" id="confirmAlert" tabindex="-1" role="dialog" aria-hidden="true" style="width: 500px; text-align: center;">
+        <div class="modal-dialog modal-dialog-centered modal-sm"  role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" >Confirmation!</h5>
+            </div>
+            <div class="modal-body">
+                <label style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
+                    {{message}}
+                </label>
+            </div>
+            <div class="modal-footer">
+                <table class="center">
+            <tr>
+                <td>
+                <button  type="submit" class="btn btn-info" data-dismiss="modal" id="register"   (click)="executeAction()">Yes</button>
+                </td>
+                <td>
+                <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                </td>
+            </tr>
+            </table>
+            </div>
+            </div>
+            </div>
+        </div>
+    
+    
+    
+    

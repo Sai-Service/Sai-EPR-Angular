@@ -151,10 +151,10 @@
                                       <th style="width:10rem" scope="col">Description</th>
                                       <!-- <th style="width:10rem" scope="col">Uom</th> -->
                                       <th style="width:12rem" scope="col">Unit&nbsp;Price</th>
-                                      <th style="width:6rem" scope="col">BOrd&nbsp;Qty</th>
-                                      <th style="width:8rem" scope="col">Cust-BOrder</th>
-                                      <th style="width:6rem" scope="col">WS-Cons-Curr</th>
-                                      <th style="width:6rem" scope="col">CS-Cons-Curr</th>
+                                      <th style="width:6rem" scope="col">Back order&nbsp;Qty</th>
+                                      <th style="width:8rem" scope="col">Cust Backorder</th>
+                                      <th style="width:6rem" scope="col">WS Cons-Curr</th>
+                                      <th style="width:6rem" scope="col">CS Cons-Curr</th>
                                       <!-- <th style="width:6rem" scope="col">WS-Cons-Mth1</th>
                                       <th style="width:6rem" scope="col">CS-Cons-Mth1</th>
                                       <th style="width:6rem" scope="col">WS-Cons-Mth2</th>
@@ -163,9 +163,9 @@
                                       <th style="width:6rem" scope="col">CS-Cons-Mth3</th> -->
 
                                       <th style="width:6rem" scope="col">Curr&nbsp;Qty</th>
-                                      <th style="width:6rem" scope="col">InTrans-Qty</th>
-                                      <th style="width:6rem" scope="col">WS-Cons-Tot</th>
-                                      <th style="width:6rem" scope="col">CS-Cons-Tot</th>
+                                      <th style="width:6rem" scope="col">InTrans Qty</th>
+                                      <th style="width:6rem" scope="col">WS Cons-Tot</th>
+                                      <th style="width:6rem" scope="col">CS Cons-Tot</th>
                                       <th style="width:6rem" scope="col">Cons Details</th>
                                       <th style="width:8rem" scope="col">Set&nbsp;Qty</th>
                                       <th style="width:8rem" scope="col">Order&nbsp;Qty</th>
@@ -338,15 +338,19 @@
             <div class="modal-content">
              <div class="modal-header" >
                 <!-- style="background-color: darkcyan;" -->
-              <!-- <h5 class="modal-title" id="exampleModal2Label">AR&nbsp;Receipt&nbsp;Application&nbsp;-&nbsp;Receipt&nbsp;No:&nbsp;{{this.receiptNumber}}&nbsp;BillToSite:&nbsp;{{this.billToSiteId}} </h5> -->
-              <h5 class="modal-title" id="consumtionDetailsLabel" style="text-align: center;color:blue"  >Consumption&nbsp;Details&nbsp;:&nbsp;{{this.partNumber}}-{{this.partDesc}}</h5>
-             
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <h5 class="modal-title" id="consumtionDetailsLabel" style="text-align: center;color:blue"  >Consumption&nbsp;Details&nbsp;:&nbsp;{{this.partNumber}} - {{this.partDesc}} </h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
              </div>
             
              <div class="modal-body">
+                <!-- <table class="center" style="width: 100%;">
+                    <tr>
+                      <td>Part&nbsp;No:&nbsp;{{this.partNumber}}-{{this.partDesc}}</td>
+                    </tr>
+                        
+                </table> -->
                    
                  <fieldset class="RFS">
                     <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Consumption&nbsp;Details</legend>
