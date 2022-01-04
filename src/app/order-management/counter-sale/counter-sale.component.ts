@@ -2372,10 +2372,6 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
 
   counterSaleOrderSave() {
-    // this.submitted = false;
-    // if(this.CounterSaleOrderBookingForm.invalid){
-    // return;
-    // }
     this.closeResetButton = false;
     this.progress = 0;
     this.dataDisplay = 'Order Save in progress....Do not refresh the Page';

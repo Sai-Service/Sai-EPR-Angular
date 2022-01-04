@@ -74,6 +74,8 @@ interface ISalesBookingForm {
   totAmt: number;
   discType:string;
   disPer:number;
+  creditDays:string;
+  daysMsg:string;
 }
 
 @Component({
@@ -152,6 +154,8 @@ export class CounterSalePerformaInvComponent implements OnInit {
   cgst:number;
   igst:number;
   mrp:number;
+  creditDays:string;
+  daysMsg:string;
 
   // orderedDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
   // custPoDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
@@ -189,7 +193,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
   public op: string;
   displayCounterSaleLine: Array<boolean> = [];
   displayLineflowStatusCode: Array<boolean> = [];
-
+  isDisabled = false;
 
   @ViewChild('aForm') aForm: ElementRef;
 
@@ -245,6 +249,8 @@ export class CounterSalePerformaInvComponent implements OnInit {
       totAmt: [],
       discType:[],
       disPer:[],
+      creditDays:[],
+      daysMsg:[],
       oeOrderLinesAllList: this.fb.array([this.orderlineDetailsGroup()]),
     })
   }
@@ -319,6 +325,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
     this.deptName = (sessionStorage.getItem('deptName'));
     this.invType = 'SS_SPARES';
     this.orderlineDetailsArray().controls[0].patchValue({ invType: 'SS_SPARES' });
+    this.orderlineDetailsArray().controls[0].patchValue({ flowStatusCode: 'BOOKED' });
 
     this.service.payTermDescList()
       .subscribe(
@@ -755,7 +762,16 @@ export class CounterSalePerformaInvComponent implements OnInit {
                           orderedItem: data.obj[i].description,
                           hsnSacCode: data.obj[i].hsnSacCode,
                           uom: data.obj[i].uom,
-                          // unitSellingPrice: data.obj[0].priceValue,by vinita
+                          unitSellingPrice: data.obj[0].priceValue,
+                          taxPer:data.obj[0].taxPercentage,
+                          disPer:0,
+                          disAmt:0,
+                          sgst:0,
+                          cgst:0,
+                          igst:0,
+                          totAmt:0,
+                          mrp:0,
+                          baseAmt:0,
                         });
                      
                       }
@@ -782,7 +798,8 @@ export class CounterSalePerformaInvComponent implements OnInit {
                           orderedItem: data.obj[i].description,
                           hsnSacCode: data.obj[i].hsnSacCode,
                           uom: data.obj[i].uom,
-                          // unitSellingPrice: data.obj[0].priceValue,by vinita
+                          unitSellingPrice: data.obj[0].priceValue,
+                          taxPer:data.obj[0].taxPercentage,
                         });
                         if (this.CounterSaleOrderBookingForm.get('issueCodeType').value.includes('Only Oil Part') && data.obj[i].uom === 'LTR' && Number(sessionStorage.getItem('divisionId')) === 2) {
                           (controlinv.controls[k]).patchValue({
@@ -807,7 +824,39 @@ export class CounterSalePerformaInvComponent implements OnInit {
     }
   }
 
-  onKey(){}
+  onKey(index, fldName){
+    var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
+    var custtaxCategoryName = this.CounterSaleOrderBookingForm.get('taxCategoryName').value;
+    var baseAmt = Math.round(((trxLnArr1[index].pricingQty*trxLnArr1[index].unitSellingPrice) + Number.EPSILON) * 100) / 100;
+    var baseAmtWithoutDisc=Math.round(((baseAmt-trxLnArr1[index].disAmt) + Number.EPSILON) * 100) / 100;
+    var patch = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+    alert(custtaxCategoryName)
+    if (custtaxCategoryName.includes('IGST')){
+      alert(custtaxCategoryName.includes('IGST')+'---'+baseAmtWithoutDisc+'---'+trxLnArr1[index].taxPer);
+    (patch.controls[index]).patchValue(
+      {
+        baseAmt:baseAmt,
+        igst:Math.round(((baseAmtWithoutDisc*trxLnArr1[index].taxPer/100) + Number.EPSILON) * 100) / 100,
+        totAmt:Math.round(((baseAmtWithoutDisc+(baseAmtWithoutDisc*trxLnArr1[index].taxPer/100)) + Number.EPSILON) * 100) / 100,
+        disAmt:  Math.round(((baseAmt/trxLnArr1[index].disPer/100) + Number.EPSILON) * 100) / 100,
+        sgst:0,
+        cgst:0,
+        mrp:0,
+      })    
+    }
+    else{
+      (patch.controls[index]).patchValue(
+        {
+          baseAmt:baseAmt,
+          sgst:Math.round((((baseAmtWithoutDisc*trxLnArr1[index].taxPer/100)/2) + Number.EPSILON) * 100) / 100,
+          cgst:Math.round((((baseAmtWithoutDisc*trxLnArr1[index].taxPer/100)/2) + Number.EPSILON) * 100) / 100,
+          disAmt:Math.round(((baseAmt/trxLnArr1[index].disPer/100) + Number.EPSILON) * 100) / 100,
+          totAmt:Math.round(((baseAmtWithoutDisc+(baseAmtWithoutDisc*trxLnArr1[index].taxPer/100)) + Number.EPSILON) * 100) / 100,
+          igst:0,
+          mrp:0,
+        })  
+    }
+  }
 
   addRow(i) {
     var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
@@ -952,6 +1001,38 @@ export class CounterSalePerformaInvComponent implements OnInit {
       }
     
     }
+  }
+
+
+  close() {
+    this.location1.back();
+  }
+
+  refresh() {
+    window.location.reload();
+  }
+
+  transeData(val) {}
+
+  createProformaOrder(){
+    var formValue =this.transeData(this.CounterSaleOrderBookingForm.value);
+    console.log(this.CounterSaleOrderBookingForm.value);
+    console.log(formValue);
+    let jsonData = this.CounterSaleOrderBookingForm.getRawValue();
+    console.log(jsonData);
+    this.orderManagementService.createProformaOrderFFn(jsonData).subscribe((res: any) => {
+      if (res.code === 200) {
+        alert(res.message);
+        window.location.reload();
+        this.isDisabled = true;
+      } else {
+        if (res.code === 400) {
+          alert(res.message);
+          this.isDisabled = false;
+          // this.paymentReceiptForm.reset();
+        }
+      }
+    });
   }
 
 }
