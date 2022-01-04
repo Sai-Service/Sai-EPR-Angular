@@ -26,7 +26,7 @@ export class OrderGenerationComponent implements OnInit {
 
   @ViewChild('epltable', { static: false }) epltable: ElementRef;
   @ViewChild('epltable1', { static: false }) epltable1: ElementRef;
-  @ViewChild('epltable3', { static: false }) epltable3: ElementRef;
+  @ViewChild('orderList', { static: false }) orderList: ElementRef;
   
 
   pipe = new DatePipe('en-US');
@@ -260,12 +260,12 @@ else {
 }
 
 
-exportToExcel3() {
+orderListExport() {
   const ws: xlsx.WorkSheet =
-    xlsx.utils.table_to_sheet(this.epltable3.nativeElement);
+    xlsx.utils.table_to_sheet(this.orderList.nativeElement);
   const wb: xlsx.WorkBook = xlsx.utils.book_new();
   xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
-  xlsx.writeFile(wb, 'OrderGenerationList.xlsx');
+  xlsx.writeFile(wb, 'CounterSaleOrderList.xlsx');
 }
 
 deleteOrderLine(i) {

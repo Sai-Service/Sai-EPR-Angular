@@ -312,7 +312,13 @@ public pickTicketInvoiceFun(pickTicketInvDels) {
 
 
 
-
+  public createProformaOrderFFn(AccLineRecord1) {
+    const options = {
+      headers: this.headers
+    };
+    const url = this.ServerUrl + '/orderHeader/postAccSPOrders';
+    return this.http.post(url, AccLineRecord1, options);
+  }
 
 
 
