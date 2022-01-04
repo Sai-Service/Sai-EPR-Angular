@@ -54,6 +54,24 @@ interface ISalesBookingForm {
   priceListId: number;
   orderedDate: Date;
   flowStatusCode: string;
+  issuedBy: string;
+  dept: number;
+  loginArray: string;
+  ouName: string;
+  ticketNo: string;
+  divisionId: number;
+  emplId: number;
+  ouId: number;
+  deptId: number;
+  locId: number;
+  locationId: number;
+  deptName: string;
+  invType: string;
+  locCode: string;
+  subtotal:number;
+  discAmt:number;
+  totTax:number;
+  totAmt:number;
 }
 
 @Component({
@@ -94,6 +112,24 @@ export class CounterSalePerformaInvComponent implements OnInit {
   priceListId: number;
   orderedDate: Date;
   flowStatusCode: string;
+  issuedBy: string;
+  dept: number;
+  loginArray: string;
+  ouName: string;
+  ticketNo: string;
+  divisionId: number;
+  emplId: number;
+  ouId: number;
+  deptId: number;
+  locId: number;
+  locationId: number;
+  deptName: string;
+  invType: string;
+  locCode: string;
+  subtotal:number;
+  discAmt:number;
+  totTax:number;
+  totAmt:number;
 
   selCustomer: any;
   custSiteList: any = [];
@@ -125,7 +161,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
       weddingDate: [],
       gstNo: [],
       panNo: [],
-      custAccountNo: [],
+      custAccountNo: ['',[Validators.required]],
       creditAmt: [],
       name: [],
       customerSiteId: [],
@@ -149,6 +185,23 @@ export class CounterSalePerformaInvComponent implements OnInit {
       priceListId: [],
       orderedDate: [],
       flowStatusCode: [],
+      issuedBy: [],
+      dept: [],
+      loginArray: [],
+      ouName: [],
+      ticketNo: [],
+      divisionId: [],
+      emplId: [],
+      ouId: [],
+      deptId: [],
+      locId: [],
+      locationId: [],
+      deptName: [],
+      invType: [],
+      subtotal:[],
+  discAmt:[],
+  totTax:[],
+  totAmt:[],
       oeOrderLinesAllList: this.fb.array([this.orderlineDetailsGroup()]),
     })
   }
@@ -174,6 +227,22 @@ export class CounterSalePerformaInvComponent implements OnInit {
       var concatissuetypecode = this.CounterSaleOrderBookingForm.get('issueCode').value + '-' + this.CounterSaleOrderBookingForm.get('issueCodeType1').value
       this.CounterSaleOrderBookingForm.patchValue({ issueCodeType: concatissuetypecode });
     }
+
+
+    this.dept = Number(sessionStorage.getItem('deptId'));
+    this.loginArray = sessionStorage.getItem('divisionName');
+    this.ouName = (sessionStorage.getItem('ouName'));
+    this.locCode = (sessionStorage.getItem('locCode'));
+    this.ticketNo = (sessionStorage.getItem('ticketNo'));
+    this.issuedBy = (sessionStorage.getItem('ticketNo'));
+    this.divisionId = Number(sessionStorage.getItem('divisionId'))
+    this.emplId = Number(sessionStorage.getItem('emplId'));
+    this.ouId = Number(sessionStorage.getItem('ouId'));
+    this.deptId = Number(sessionStorage.getItem('deptId'));
+    this.locId = Number(sessionStorage.getItem('locId'));
+    this.locationId = Number(sessionStorage.getItem('locId'));
+    this.deptName = (sessionStorage.getItem('deptName'));
+    this.invType = 'SS_SPARES';
 
     this.service.payTermDescList()
       .subscribe(

@@ -421,7 +421,7 @@
             <table class="center">
                 <tr>
                     <td style="width: 15%" class="LabelFontStyle1">
-                        Performa&nbsp;No&nbsp;:&nbsp;
+                        Proforma&nbsp;No&nbsp;:&nbsp;
                     </td>
                     <td>
                         <input disabled type="number" style="width: 160px;font-weight: bold;" class="form-control" formControlName="orderNumber" value={{orderNumber}} [(ngModel)]='orderNumber'>
@@ -467,7 +467,7 @@
                 </tr>
                 <tr>
                     <td style="width: 15%;font-weight: bold;" class="LabelFontStyle">
-                        Performa&nbsp;Status&nbsp;:&nbsp;
+                        Proforma&nbsp;Status&nbsp;:&nbsp;
                     </td>
                     <td>
                         <input disabled type="text" class="form-control" formControlName="flowStatusCode"
@@ -475,15 +475,50 @@
                             style="width: 160px;font-weight: bold;">
                     </td>
                     <td style="width: 15%;font-weight: bold;" class="LabelFontStyle">
-                        Performa&nbsp;Date&nbsp;:&nbsp;
+                        Proforma&nbsp;Date&nbsp;:&nbsp;
                     </td>
                     <td>
                         <input disabled type="text" formControlName="orderedDate" [(ngModel)]='orderedDate'
                             value={{orderedDate}} class="form-control"
-                            style="width: 160px;text-align: left;font-weight: bold;">
+                            style="width: 154px;text-align: left;font-weight: bold;">
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        Issue&nbsp;By&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <input disabled type="text" formControlName="issuedBy" [(ngModel)]='issuedBy'
+                            value={{issuedBy}} class="form-control" style="width: 160px;">
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        Subtotal&nbsp;Amount&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <input disabled type="number" formControlName="subtotal" [(ngModel)]='subtotal'
+                            value={{subtotal}} class="form-control" placeholder="0.00"
+                            style="width: 160px;text-align: right;">
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        Discount&nbsp;Amount&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <input disabled type="number" formControlName="discAmt" [(ngModel)]='discAmt' value={{discAmt}}
+                            class="form-control" placeholder="0.00" style="width: 160px;text-align: right;">
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        Tax&nbsp;Amount&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <input disabled type="number" formControlName="totTax" [(ngModel)]='totTax' value={{totTax}}
+                            class="form-control" placeholder="0.00" style="width: 160px;text-align: right;">
                     </td>
                     <td style="width: 15%;font-weight: bold;" class="LabelFontStyle">
-                        Performa&nbsp;Date&nbsp;:&nbsp;
+                        Total&nbsp;Amount&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <input disabled type="number" formControlName="totAmt" [(ngModel)]='totAmt' value={{totAmt}}
+                            class="form-control" placeholder="0.00" style="width: 160px;font-weight: bold;">
                     </td>
                 </tr>
             </table>
