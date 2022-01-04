@@ -1,4 +1,5 @@
-<form [formGroup]="CounterSaleOrderBookingForm" (ngSubmit)="CounterSaleOrderBooking(CounterSaleOrderBookingForm.value)" #aForm>
+<form [formGroup]="CounterSaleOrderBookingForm" (ngSubmit)="CounterSaleOrderBooking(CounterSaleOrderBookingForm.value)"
+    #aForm>
     <table style="width: 100%;background-color: white;">
         <tr>
             <td colspan="4" class="PageHeader" style="width: 100%;">
@@ -93,6 +94,20 @@
                                             [(ngModel)]='panNo' value={{panNo}} style="width: 150px;">
                                     </td>
                                 </tr>
+                                <!-- <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        DMS&nbsp;INS&nbsp;:&nbsp;
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" style="width: 150px;">
+                                    </td>
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        DMS&nbsp;Transaction&nbsp;No&nbsp;:&nbsp;
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" style="width: 150px;">
+                                    </td>
+                                </tr> -->
                             </table>
                         </div>
                         <div class="modal-footer">
@@ -112,6 +127,9 @@
                         value={{custAccountNo}} [(ngModel)]='custAccountNo'
                         [ngClass]="{ 'is-invalid': submitted && f.custAccountNo.errors }"
                         (keydown.tab)="accountNoSearch(custAccountNo)" #myinput>
+                    <div *ngIf="submitted && f.custAccountNo.errors" class="invalid-feedback">
+                        <div *ngIf="f.custAccountNo.errors.required">Code cannot be blank</div>
+                    </div>
                     <input type="number" hidden formControlName="creditAmt" [(ngModel)]='creditAmt' value={{creditAmt}}
                         class="form-control" style="width: 120px;">
                 </td>
@@ -374,7 +392,7 @@
                 </tr>
                 <tr>
                     <td style="width: 15%" class="LabelFontStyle">
-                        CDMS&nbsp;Customer&nbsp;Number:&nbsp;
+                        CDMS&nbsp;Customer&nbsp;No:&nbsp;
                     </td>
                     <td>
                         <input type="text" class="form-control">
@@ -387,7 +405,7 @@
                             [ngClass]="{ 'is-invalid': submitted && f.refCustNo.errors }" style="width:100%;">
                     </td>
                     <td style="width: 15%" class="LabelFontStyle">
-                        CDMS&nbsp;Transaction&nbsp;Number:&nbsp;
+                        CDMS&nbsp;Trn&nbsp;No:&nbsp;
                     </td>
                     <td>
                         <input type="text" class="form-control">
@@ -396,5 +414,78 @@
             </ng-template>
 
         </table>
+    </fieldset>
+    <fieldset class="RFS">
+        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
+            Order&nbsp;Header&nbsp;Details&nbsp;</legend>
+            <table class="center">
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle1">
+                        Performa&nbsp;No&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <input disabled type="number" style="width: 160px;font-weight: bold;" class="form-control" formControlName="orderNumber" value={{orderNumber}} [(ngModel)]='orderNumber'>
+                    </td>
+                    <td style="width: 12%" class="LabelFontStyle1">
+                        Order&nbsp;Type&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <select formControlName="transactionTypeName" [(ngModel)]="transactionTypeName"
+                        id="transactionTypeName" class="form-control" style="width: fit-content;">
+                        <option>--Select--</option>
+                        <option *ngFor="let orderType of orderTypeList" [value]="orderType.transactionTypeName">
+                            {{orderType.transactionTypeName}}
+                        </option>
+                    </select>
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle1">
+                        Price&nbsp;List&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <input disabled type="text" formControlName="priceListName" [(ngModel)]='priceListName' value={{priceListName}} class="form-control" style="width: 160px;">
+                        <input hidden type="number" formControlName="priceListId" [(ngModel)]='priceListId' value={{priceListId}} class="form-control" style="width: 160px;">
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        Issue&nbsp;Code&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <select formControlName="issueCodeType1" id="issueCodeType1" class="form-control"  (ngModelChange)='onOptionsSelectedissueTypeCode($event)'
+                            style="width: 160px;">
+                            <option>--Select--</option>
+                            <option *ngFor="let issueCodeType of issueCodeTypeList" [value]="issueCodeType.codeDesc">
+                                {{issueCodeType.code}}-{{issueCodeType.codeDesc}}
+                            </option>
+                        </select>
+
+                        <input hidden type="text" formControlName="issueCode" value={{issueCode}} class="form-control"
+                            style="width: 160px;">
+
+                        <input hidden type="text" formControlName="issueCodeType" value={{issueCodeType}} class="form-control"
+                            style="width: 160px;">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 15%;font-weight: bold;" class="LabelFontStyle">
+                        Performa&nbsp;Status&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <input disabled type="text" class="form-control" formControlName="flowStatusCode"
+                            [(ngModel)]='flowStatusCode' value={{flowStatusCode}}
+                            style="width: 160px;font-weight: bold;">
+                    </td>
+                    <td style="width: 15%;font-weight: bold;" class="LabelFontStyle">
+                        Performa&nbsp;Date&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <input disabled type="text" formControlName="orderedDate" [(ngModel)]='orderedDate'
+                            value={{orderedDate}} class="form-control"
+                            style="width: 160px;text-align: left;font-weight: bold;">
+                    </td>
+                    <td style="width: 15%;font-weight: bold;" class="LabelFontStyle">
+                        Performa&nbsp;Date&nbsp;:&nbsp;
+                    </td>
+                </tr>
+            </table>
     </fieldset>
 </form>

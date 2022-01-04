@@ -619,6 +619,7 @@ export class SalesOrderFormComponent implements OnInit {
 
   // this.lstgetOrderLineDetails[i].segment,,this.allDatastore.taxCategoryName,this.allDatastore.priceListId,i
   onGstPersantage(custtaxCategoryName, taxPercentage, itemtaxCategotyName, k) {
+    alert(itemtaxCategotyName)
     //  alert(custtaxCategoryName+'----'+taxPercentage+'----'+itemtaxCategotyName+'---'+k)
     let controlinv = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     this.orderManagementService.getTaxCategoriesForSales(custtaxCategoryName, taxPercentage)
@@ -1326,9 +1327,16 @@ export class SalesOrderFormComponent implements OnInit {
             let control1 = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
             for (let x = 0; x < this.lstgetOrderTaxDetails.length; x++) {
               control1.push(this.TaxDetailsGroup());
+              var invLnNo = (this.lstgetOrderTaxDetails[x].invLineNo);
+              // if (this.taxMap.has(invLnNo)){
+                var lenNo=x+1;
+                let taxes = this.lstgetOrderTaxDetails.filter((customer) => (customer.invLineNo === lenNo));
+                this.taxMap.set(String(x), taxes);
+              // }
               //this.SalesOrderBookingForm.patchValue({taxAmounts:this.lstgetOrderTaxDetails[x]})
             }
             this.SalesOrderBookingForm.patchValue(data.obj);
+
             this.salesRepName = data.obj.salesRepName;
             console.log(Number(sessionStorage.getItem('ouId')));
             var controlinv1 = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value;
@@ -1363,6 +1371,7 @@ export class SalesOrderFormComponent implements OnInit {
     var i = i + 1;
     this.lineTaxdetails = this.TaxDetailsArray() as FormArray;
     this.lineTaxdetails.clear();
+    if ( this.taxMap.has(this.selTaxLn)){
      var taxValues =  this.taxMap.get( this.selTaxLn);
    // for (let x = 0; x < this.lstgetOrderTaxDetails.length; x++) {
       for (let x = 0; x < taxValues.length; x++) {
@@ -1371,6 +1380,7 @@ export class SalesOrderFormComponent implements OnInit {
         this.lineTaxdetails.controls[x].patchValue(taxValues[x]);
       }
     }
+  }
     //this.lineTaxdetails.controls.patchValue(this.taxMap.get(String(i)));
   }
 
@@ -1382,7 +1392,7 @@ export class SalesOrderFormComponent implements OnInit {
     //alert('added to map closeTaxModal..' + this.selTaxLn)
     this.display='none'; //set none css after close dialog
     this.myInputField.nativeElement.focus();
-    debugger;
+    // debugger;
     var taxValues =  this.SalesOrderBookingForm.get('taxAmounts').value;
     var totDisc = 0;
     var totTax =0;
@@ -1446,13 +1456,13 @@ export class SalesOrderFormComponent implements OnInit {
 
 
 
-  onOptionTaxCatSelected(taxCategoryName: any, i) {
-    console.log(taxCategoryName);
+  onOptionTaxCatSelected(event: any, i) {
+    console.log(event.target.value);
 
 
     // alert(taxCategoryName.taxCategoryName)
-    // var taxCateObj=event.target.value;
-    // alert(event.target.value)
+    var taxCateObj=event.target.value;
+    alert(event.target.value)
     // console.log(event[0]);
     //  alert(event.target.value);
     // console.log(taxCateObj[0]);
@@ -1464,7 +1474,7 @@ export class SalesOrderFormComponent implements OnInit {
     var baseAmt = arrayControl[i].baseAmt;
     var itemId = arrayControl[i].itemId
 
-    let select = this.taxCategoryList[i].find(d => d.taxCategoryName === taxCategoryName.taxCategoryName);
+    let select = this.taxCategoryList[i].find(d => d.taxCategoryName === event.taxCategoryName);
 
     var taxCategoryId = select.taxCategoryId;
     console.log(taxCategoryId);
