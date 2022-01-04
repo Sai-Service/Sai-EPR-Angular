@@ -1344,7 +1344,7 @@ export class JobCardComponent implements OnInit {
           }
          
          
-          if (this.lstcomments.jobStatus == 'Invoiced' || this.lstcomments.matStatus == 'Compeleted') {
+          if (this.lstcomments.jobStatus == 'Invoiced' || this.lstcomments.matStatus == 'Compeleted' || this.lstcomments.jobStatus == 'Closed' ) {
             this.jobcardForm.disable();
             this.jobcardForm.get('jobCardLabLines').disable();
             this.jobcardForm.get('jobCardMatLines').disable();
@@ -2506,10 +2506,6 @@ getMessage(msgType:string){
         var jDate=this.jobcardForm.get('JobOpenDt').value;
         var jStatus=this.jobcardForm.get('jobStatus1').value;
         var jLocId=this.locId;
-
-         
-
-  
 
         if(jcNum==undefined || jcNum==null || jcNum.trim()=='') {jcNum=null;} else{jcNum=jcNum.toUpperCase();}
         if(jRegNo==undefined || jRegNo==null || jRegNo.trim()=='') {jRegNo=null} else {jRegNo=jRegNo.toUpperCase();}
