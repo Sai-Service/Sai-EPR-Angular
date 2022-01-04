@@ -10,6 +10,7 @@ import { InteractionModeRegistry } from 'chart.js';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 import { TransactionService } from 'src/app/transaction/transaction.service';
 import { trigger } from '@angular/animations';
+import * as xlsx from 'xlsx';
 
 interface IOrderGen {  }
 
@@ -22,6 +23,12 @@ interface IOrderGen {  }
 export class OrderGenerationComponent implements OnInit {
   orderGenerationForm : FormGroup;
   @ViewChild('aForm') aForm: ElementRef;
+
+  @ViewChild('epltable', { static: false }) epltable: ElementRef;
+  @ViewChild('epltable1', { static: false }) epltable1: ElementRef;
+  @ViewChild('epltable3', { static: false }) epltable3: ElementRef;
+  
+
   pipe = new DatePipe('en-US');
   public minDate = new Date();
 
@@ -59,6 +66,15 @@ export class OrderGenerationComponent implements OnInit {
   dlrCode :string ='15209';
   cdmsRefNo:string; //='TEST-CDMS-123';
 
+  mth1ConWsQty :number;
+  mth2ConWsQty:number;
+  mth3ConWsQty:number;
+  mth1ConsSaleQty:number;
+  mth2ConsSaleQty:number;
+  mth3ConsSaleQty:number;
+  partNumber :string;
+  partDesc:string;
+
   displayButton=false;
   spinIcon=false;
   dispGenOrdButton=true;
@@ -66,6 +82,9 @@ export class OrderGenerationComponent implements OnInit {
   addNewLine=false;
   lineItemRepeated=false;
   lineValidation=false;
+  viewLogFile=false;;
+  
+  // epltable1: any;
  
   constructor(private service: MasterService,private orderManagementService:OrderManagementService,private transactionService: TransactionService , private  fb: FormBuilder, private router: Router) {
     this.orderGenerationForm = fb.group({
@@ -93,6 +112,15 @@ export class OrderGenerationComponent implements OnInit {
     orderValue:[],
     dlrCode:[],
     cdmsRefNo:[],
+
+    mth1ConWsQty:[],
+    mth2ConWsQty:[],
+    mth3ConWsQty:[],
+    mth1ConsSaleQty:[],
+    mth2ConsSaleQty:[],
+    mth3ConsSaleQty:[],
+    partNumber:[],
+    partDesc:[],
 
 
 
@@ -163,9 +191,7 @@ lineDetailsArray() :FormArray{
 
   }
 
-  SearchByOrderNo(ordNo){
-    alert("Search by order number..."+ordNo);
-  }
+ 
 
   SearchByDate(dt1,dt2){
     alert("Search by Date..."+dt1 +","+dt2);
@@ -224,11 +250,22 @@ RemoveRow(index) {
 if (index===0){ }
 else {
   
+
    this.deleteOrderLine(index)
+
    this.lineDetailsArray().removeAt(index);
    this.CalculateOrdValue();
 }
 
+}
+
+
+exportToExcel3() {
+  const ws: xlsx.WorkSheet =
+    xlsx.utils.table_to_sheet(this.epltable3.nativeElement);
+  const wb: xlsx.WorkBook = xlsx.utils.book_new();
+  xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
+  xlsx.writeFile(wb, 'OrderGenerationList.xlsx');
 }
 
 deleteOrderLine(i) {
@@ -236,7 +273,7 @@ deleteOrderLine(i) {
   var ordArr = this.orderGenerationForm.get('orderList').value;
   var orderItemId = ordArr[i].itemId;
   var ordNum = this.orderGenerationForm.get('orderNumber').value;
-  // alert (orderItemId +","+ordNum);
+  if(orderItemId>0) {
 
   this.service.orderLineDelete(ordNum,orderItemId).subscribe((res: any) => {
    if (res.code === 200) {
@@ -247,6 +284,7 @@ deleteOrderLine(i) {
      }
    }
  });
+}
 }
 
 transeData(val) {
@@ -330,9 +368,12 @@ CreateOrder() {
        });
   }
 
+  
+  SearchByOrderNo(ordNo){
+    this.ShowOrder();
+  }
 
   ShowOrder(){
-      
     this.dispShowOrdButton=false;
     this.dispGenOrdButton=false;
     var mOrderNumber =this.orderGenerationForm.get('orderNumber').value
@@ -343,6 +384,7 @@ CreateOrder() {
         // alert ("Total order lines :" +data.length);
         if(data.length >0) {
           // this.spinIcon=true;
+          this.viewLogFile=true;
         // this.dataDisplay ='Loading Order Details in progress....Do not refresh the Page';
          this.cdmsRefNo=data[0].cdmsRefNo;
          this.dlrCode=data[0].dlrCode;
@@ -635,5 +677,35 @@ CreateOrder() {
           ele.focus();
         }
       }
+
+      
+exportToExcel1() {
+  const ws: xlsx.WorkSheet =   
+  xlsx.utils.table_to_sheet(this.epltable1.nativeElement);
+  const wb: xlsx.WorkBook = xlsx.utils.book_new();
+  xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
+  xlsx.writeFile(wb, 'epltable1.xlsx');
+ }
+
+
+
+    getTrans(index: any){
+      var patch = this.orderGenerationForm.get('orderList') as FormArray;
+      var orderLineArr = this.orderGenerationForm.get('orderList').value;
+      var lineSegId = orderLineArr[index].itemId;
+      this.partNumber=orderLineArr[index].segment;
+      this.partDesc=orderLineArr[index].description;
+
+      this.mth1ConWsQty=orderLineArr[index].mth1ConWsQty;
+      this.mth2ConWsQty=orderLineArr[index].mth2ConWsQty;
+      this.mth3ConWsQty=orderLineArr[index].mth3ConWsQty;
+      this.mth1ConsSaleQty=orderLineArr[index].mth1ConsSaleQty;
+      this.mth2ConsSaleQty=orderLineArr[index].mth2ConsSaleQty;
+      this.mth3ConsSaleQty=orderLineArr[index].mth3ConsSaleQty;
+
+
+      // alert (index +"  Item Id : "+lineSegId + "  ItemCode : "+orderLineArr[index].segment + " m3sale :"+orderLineArr[index].mth3ConsSaleQty)
+
+    }
 
 }
