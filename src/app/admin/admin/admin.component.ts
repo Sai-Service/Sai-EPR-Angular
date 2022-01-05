@@ -261,6 +261,7 @@ export class AdminComponent implements OnInit {
       this.isVisible29=true;
       this.isVisible30=false;
       this.isVisible31=true;
+      this.isVisible32=false;
     }
     if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId'))===2 && sessionStorage.getItem('deptName')==='Service'){
       this.isVisible11=false;
@@ -284,6 +285,7 @@ export class AdminComponent implements OnInit {
       this.isVisible29=true;
       this.isVisible30=false;
       this.isVisible31=false;
+      this.isVisible32=true;
     }
 
 
@@ -310,6 +312,7 @@ export class AdminComponent implements OnInit {
       this.isVisible29=true;
       this.isVisible30=true;
       this.isVisible31=true;
+      this.isVisible32=false;
     }
 
     if (Number(sessionStorage.getItem('divisionId')) === 2 && sessionStorage.getItem('deptName')==='Spares' && Number(sessionStorage.getItem('roleId'))===4){
@@ -335,6 +338,7 @@ export class AdminComponent implements OnInit {
       this.isVisible29=true;
       this.isVisible30=true;
       this.isVisible31=true;
+      this.isVisible32=false;
     }
 
     if (
