@@ -1,4 +1,3 @@
-
 <div class="d-flex" id="wrapper">
   <div class="bg-light border-right" id="sidebar-wrapper">
     <li class="nav-item dropdown">
@@ -18,13 +17,14 @@
     </li> 
 
 
-    
+    <div [style.display]="isVisible31 ? 'block' : 'none'">
      <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
         aria-haspopup="true" aria-expanded="false">
-      Order  Transactions
+         Order  Transactions
       </a>
       <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+        <div [style.display]="isVisible11 ? 'block' : 'none'">
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Counter Sale Order</a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/orderList']">Order List</a></li> 
@@ -33,9 +33,11 @@
             <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/CounterSaleReturn']">Counter Sale Return</a></li>    
             <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/OrderGeneration']">Order Generation</a></li>  
             <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/BackorderSparesImportBajaj']">CS Back Order</a></li>      
-         </ul>
+            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/CSPerformaINV']">CS Proforma INV</a></li>
+          </ul>
         </li>
-        
+        </div>
+        <div [style.display]="isVisible12 ? 'block' : 'none'">
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Sales Order</a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/allotment']">Allotment</a></li>
@@ -45,54 +47,18 @@
             <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/GatePass']">Sales Gate Pass</a></li>
           </ul>
         </li>
+      </div>
       </ul>
     </li>
-    <li class="nav-item dropdown">
-      <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-        aria-haspopup="true"  [routerLink]="['/admin/service/JobCard']" aria-expanded="false">
-        JobCard
-      </a>
-    </li> 
+  </div>
+  
     <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
         aria-haspopup="true" aria-expanded="false">
-     MCP
+        Accounts Transactions
       </a>
       <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">MCP Transactions</a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/McpItemMaster']">MCP Item Master</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/McpItemMapping']">MCP Item Mapping</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/McpPackageMaster']">MCP Package Master</a>
-            </li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/McpEnquiry']">MCP Enquiry Generation</a>
-            </li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/McpEnrollment']">MCP Enrollment Form</a>
-            </li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/McpCancellation']">MCP Termination</a></li>
-         </ul>
-        </li>
-      </ul>
-    </li>
-
-
-
-    <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-        aria-haspopup="true" aria-expanded="false">
-        Transactions
-      </a>
-
-      <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-
-        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Amc</a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/AmcSchemeMaster']">Amc Scheme Master</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/AmcEnrollment']">Amc Enrollment</a></li>
-           
-          </ul>
-        </li>
-
+        <div [style.display]="isVisible14 ? 'block' : 'none'">
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Purchase</a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/pendingPoList']">PO List</a></li>
@@ -103,19 +69,70 @@
 
           </ul>
         </li>
-
+        </div>
+        <div [style.display]="isVisible15 ? 'block' : 'none'">
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Payable</a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/PoInvoice']">AP Invoice</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/Payment']">Payment</a></li>
           </ul>
         </li>
+        </div>
+        <div [style.display]="isVisible16 ? 'block' : 'none'">
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Receivable</a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/ARInvoice']">AR Invoice</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/PaymentAr']">AR Payment</a></li>
           </ul>
         </li>
+        </div>
+        <div [style.display]="isVisible17 ? 'block' : 'none'">
+        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Receipts</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/PaymentReceipt']">OM-Payment Receipt</a>
+            </li>
+            <!-- <li><a class="dropdown-item" [routerLink]="['/admin/transaction/PaymentAr']">AR-Payment Receipt</a></li> -->
+          </ul>
+        </li>
+        </div>
+        <div [style.display]="isVisible18 ? 'block' : 'none'">
+        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">General Ledger</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/JournalVoucher']">Journal Voucher</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/AccountEnquiry']">Account Enquiry</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/CashBankTransfer']">Cash Bank Transfer</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/BankReconcillation']">Bank Reconcillation</a> </li>
+          </ul>
+        </li>
+        </div>
+      </ul>
+    </li>
+
+    <div [style.display]="isVisible13 ? 'block' : 'none'">
+     <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        Workshop
+      </a>
+        <ul class="dropdown-menu">
+          <!-- <li><a class="dropdown-item" [routerLink]="['/admin/service/JobcardOpening']">JobCard Opening</a></li> -->
+          <li><a class="dropdown-item" [routerLink]="['/admin/service/JobCard']">JobCard</a></li>
+          <li><a class="dropdown-item" [routerLink]="['/admin/master/WsVehicleMaster']">Vehicle Master WS</a></li>
+          <li><a class="dropdown-item" [routerLink]="['/admin/service/ServiceGatepass']">Gate Pass</a></li>
+        </ul>
+      </li>
+    </div>
+
+
+    
+    <div [style.display]="isVisible19 ? 'block' : 'none'">
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        Inventory Transactions
+      </a>
+
+      <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Inventory</a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/AvgCostUpadte']">Average Cost Update</a></li>
@@ -124,7 +141,7 @@
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/OnHandDetails']">Stock Details</a></li>
             <li class="dropdown-submnu"><a class="dropdown-item dropdown-toggle" href="#">Stock Consumption</a>
               <ul class="dropdown-menu">
-                <div [style.display]="isVisible2 ? 'block' : 'none'">
+                <div [style.display]="isVisible20 ? 'block' : 'none'">
                 <li><a class="dropdown-item" [routerLink]="['/admin/transaction/MoveOrder']">Workshop Issue</a></li>
                 <li><a class="dropdown-item" [routerLink]="['/admin/transaction/WorkshopReturn']">Workshop Return</a>
                 </li>
@@ -140,43 +157,27 @@
             </li>
           </ul>
         </li>
-        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Counter Sale Order</a>
+      </ul>
+    </li>
+    </div>
+
+    <div [style.display]="isVisible32 ? 'block' : 'none'">
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        AMC/MCP/EW
+      </a>
+      <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+        <div [style.display]="isVisible21 ? 'block' : 'none'">
+        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Amc</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/orderList']">Order List</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/CounterSaleOrder']">Counter Sale Order</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/CounterSaleWithCSV']">Counter Sale With CSV</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/CounterSaleReturn']">Counter Sale Return</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/BackorderSparesImportBajaj']">BackOrder Import(Bajaj)</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/OrderGeneration']">Order Generation</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/CSPerformaINV']">CS Performa INV</a></li>
-            
-         </ul>
-        </li>
-        <div [style.display]="isVisible1 ? 'block' : 'none'">
-        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Sales Order</a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/allotment']">Allotment</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/Deallotment']">De Allotment</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/SalesOrderForm']">Sales Order-New</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/ReversalOrder']">Reversal Order</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/GatePass']">Sales Gate Pass</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/AmcSchemeMaster']">Amc Scheme Master</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/AmcEnrollment']">Amc Enrollment</a></li>
+           
           </ul>
         </li>
         </div>
-        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Receipts</a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/PaymentReceipt']">OM-Payment Receipt</a>
-            </li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/PaymentAr']">AR-Payment Receipt</a></li>
-          </ul>
-        </li>
-        <!-- <div [style.display]="isVisible1 ? 'block' : 'none'"> -->
-        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Extended Warranty</a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/SaiEwSchemeMaster']">Sai EW Scheme Master</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/SaiExtendedWarranty']">Sai Extended Warranty</a></li>
-          </ul>
-        </li>
+        <div [style.display]="isVisible22 ? 'block' : 'none'">
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">MCP</a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/McpItemMaster']">MCP Item Master</a></li>
@@ -190,46 +191,37 @@
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/McpCancellation']">MCP Termination</a></li>
           </ul>
         </li>
-        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Workshop</a>
+        </div>
+        <div [style.display]="isVisible23 ? 'block' : 'none'"></div>
+        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Extended Warranty</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" [routerLink]="['/admin/service/ServiceGatepass']">Service Gatepss</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/service/JobCard']">JobCard</a></li>
-          </ul>
-        </li>
-        <!-- </div> -->
-
-        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">General Ledger</a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/JournalVoucher']">Journal Voucher</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/AccountEnquiry']">Account Enquiry</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/CashBankTransfer']">Cash Bank Transfer</a>
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/BankReconcillation']">Bank Reconcillation</a>
-            </li>
-
+            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/SaiEwSchemeMaster']">Sai EW Scheme Master</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/SaiExtendedWarranty']">Sai Extended Warranty</a></li>
           </ul>
         </li>
       </ul>
     </li>
-
-    <li class="nav-item dropdown">
-      <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-        aria-haspopup="true"  [routerLink]="['/admin/master/WsVehicleMaster']" aria-expanded="false">
-        Vehicle Master WS
-      </a>
-    </li>
-
+    </div>
+    
+    <div [style.display]="isVisible24 ? 'block' : 'none'">
       <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
         aria-haspopup="true" aria-expanded="false"> Items Master </a>
       <ul class="dropdown-menu">
+        <div [style.display]="isVisible25 ? 'block' : 'none'">
         <li> <a class="dropdown-item" [routerLink]="['/admin/master/ItemCategory']">Item Category master</a> </li>
-        <li> <a class="dropdown-item" [routerLink]="['/admin/master/ItemMaster']">Item Master</a> </li>
-        <li><a class="dropdown-item" [routerLink]="['/admin/transaction/BulkItemUploadCSV']">Bulk Upload Item</a></li>
         <li> <a class="dropdown-item" [routerLink]="['/admin/master/LocatorMaster']">Locator Master</a> </li>
         <li> <a class="dropdown-item" [routerLink]="['/admin/master/SubinventoryMaster']">Subinventory</a> </li>
         <li> <a class="dropdown-item" [routerLink]="['/admin/master/ItemMasterLocator']">Item Master Locator</a> </li>
+      </div>
+      <div [style.display]="isVisible26 ? 'block' : 'none'">
+        <li> <a class="dropdown-item" [routerLink]="['/admin/master/ItemMaster']">Item Master</a> </li>
+        <li><a class="dropdown-item" [routerLink]="['/admin/transaction/BulkItemUploadCSV']">Bulk Upload Item</a></li>
+      </div>
       </ul>
     </li>
+  </div>
+  <div [style.display]="isVisible27 ? 'block' : 'none'">
     <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle " id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
        Price Master
@@ -239,26 +231,32 @@
         <li><a class="dropdown-item" [routerLink]="['/admin/transaction/BulkUploadPricelist']">Bulk Upload PriceList</a></li>
       </ul>
     </li>
-
+  </div>
+  <div [style.display]="isVisible28 ? 'block' : 'none'">
     <li class="nav-item dropdown">
       <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
         aria-haspopup="true"  [routerLink]="['/admin/master/PendingShipmentList']" aria-expanded="false">
         Pending Shipment List
       </a>
     </li>
+  </div>
+  <div [style.display]="isVisible29 ? 'block' : 'none'">
     <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
         aria-haspopup="true" aria-expanded="false">
         Reports
       </a>
+      <div [style.display]="isVisible30 ? 'block' : 'none'">
       <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Reports</a>
+        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Spares Reports</a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" [routerLink]="['/admin/Report/AllReports']">All Reports</a></li>
           </ul>
         </li>
       </ul>
+      </div>
     </li>
+  </div>
     <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle " id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
         aria-expanded="false">
