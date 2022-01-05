@@ -62,6 +62,31 @@ export class AdminComponent implements OnInit {
   isVisible2: boolean = true;
   isVisible3: boolean = true;
   isVisible5: boolean = true;
+  isVisible11:boolean=true;
+  isVisible12:boolean=true;
+  isVisible13:boolean=true;
+  isVisible14:boolean=true;
+  isVisible15:boolean=true;
+  isVisible16:boolean=true;
+  isVisible17:boolean=true;
+  isVisible18:boolean=true;
+  isVisible19:boolean=true;
+  isVisible20:boolean=true;
+  isVisible21:boolean=true;
+  isVisible22:boolean=true;
+  isVisible23:boolean=true;
+  isVisible24:boolean=true;
+  isVisible25:boolean=true;
+  isVisible26:boolean=true;
+  isVisible27:boolean=true;
+  isVisible28:boolean=true;
+  isVisible29:boolean=true;
+  isVisible30:boolean=true;
+  isVisible31:boolean=true;
+  isVisible32:boolean=true;
+  isVisible33:boolean=true;
+  isVisible34:boolean=true;
+  isVisible35:boolean=true;
   public show: boolean = false;
   isShown: boolean = false;
   displayUserIdwiseAccess: boolean = true;
@@ -199,19 +224,121 @@ export class AdminComponent implements OnInit {
       this.displayMaruti = false;
     }
 
-    if (Number(sessionStorage.getItem('divisionId')) === 2) {
-      this.isVisible1 = false;
-      this.isVisible2 = false;
-    } else if (Number(sessionStorage.getItem('divisionId')) === 1) {
-      this.isVisible1 = true;
-      this.isVisible2 = false;
+    // if (Number(sessionStorage.getItem('divisionId')) === 2) {
+    //   this.isVisible1 = false;
+    //   this.isVisible2 = false;
+    // } else if (Number(sessionStorage.getItem('divisionId')) === 1) {
+    //   this.isVisible1 = true;
+    //   this.isVisible2 = false;
+    // }
+
+    // if (
+    //   Number(sessionStorage.getItem('divisionId')) === 2 &&
+    //   Number(sessionStorage.getItem('roleId')) === 1
+    // ) {
+    //   this.isVisible2 = true;
+    // }
+    // && ((sessionStorage.getItem('roleId'))==='NaN'|| (sessionStorage.getItem('roleId'))===undefined || (sessionStorage.getItem('roleId'))===null|| (sessionStorage.getItem('roleId'))==='')
+    if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId'))===3 && sessionStorage.getItem('deptName')==='Sales'){
+      this.isVisible11=false;
+      this.isVisible12=true;
+      this.isVisible13=false
+      this.isVisible14=true;
+      this.isVisible15=true;
+      this.isVisible16=true;
+      this.isVisible17=true;
+      this.isVisible18=true;
+      this.isVisible19=false;
+      this.isVisible20=false;
+      this.isVisible21=false;
+      this.isVisible22=false;
+      this.isVisible23=false;
+      this.isVisible24=true;
+      this.isVisible25=true;
+      this.isVisible26=true;
+      this.isVisible27=true;
+      this.isVisible28=true;
+      this.isVisible29=true;
+      this.isVisible30=false;
+      this.isVisible31=true;
+      this.isVisible32=false;
+    }
+    if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId'))===2 && sessionStorage.getItem('deptName')==='Service'){
+      this.isVisible11=false;
+      this.isVisible12=false;
+      this.isVisible13=true;
+      this.isVisible14=false;
+      this.isVisible15=false;
+      this.isVisible16=true;
+      this.isVisible17=false;
+      this.isVisible18=false;
+      this.isVisible19=false;
+      this.isVisible20=false;
+      this.isVisible21=true;
+      this.isVisible22=false;
+      this.isVisible23=true;
+      this.isVisible24=true;
+      this.isVisible25=false;
+      this.isVisible26=true;
+      this.isVisible27=true;
+      this.isVisible28=false;
+      this.isVisible29=true;
+      this.isVisible30=false;
+      this.isVisible31=false;
+      this.isVisible32=true;
     }
 
-    if (
-      Number(sessionStorage.getItem('divisionId')) === 2 &&
-      Number(sessionStorage.getItem('roleId')) === 1
-    ) {
-      this.isVisible2 = true;
+
+    if (Number(sessionStorage.getItem('divisionId')) === 2 && sessionStorage.getItem('deptName')==='Spares' && Number(sessionStorage.getItem('roleId'))===1){
+      // alert('roleId  1' + this.isVisible20)
+      this.isVisible11=true;
+      this.isVisible12=false;
+      this.isVisible13=false;
+      this.isVisible14=true;
+      this.isVisible15=true;
+      this.isVisible16=true;
+      this.isVisible17=true;
+      this.isVisible18=true;
+      this.isVisible19=true;
+      this.isVisible20=true;
+      this.isVisible21=false;
+      this.isVisible22=false;
+      this.isVisible23=false;
+      this.isVisible24=true;
+      this.isVisible25=true;
+      this.isVisible26=true;
+      this.isVisible27=true;
+      this.isVisible28=true;
+      this.isVisible29=true;
+      this.isVisible30=true;
+      this.isVisible31=true;
+      this.isVisible32=false;
+    }
+
+    if (Number(sessionStorage.getItem('divisionId')) === 2 && sessionStorage.getItem('deptName')==='Spares' && Number(sessionStorage.getItem('roleId'))===4){
+      // alert((sessionStorage.getItem('roleId')))
+      this.isVisible11=true;
+      this.isVisible12=false;
+      this.isVisible13=false;
+      this.isVisible14=true;
+      this.isVisible15=true;
+      this.isVisible16=true;
+      this.isVisible17=true;
+      this.isVisible18=true;
+      this.isVisible19=true;
+      this.isVisible20=false;
+      this.isVisible21=false;
+      this.isVisible22=false;
+      this.isVisible23=false;
+      this.isVisible24=true;
+      this.isVisible25=true;
+      this.isVisible26=true;
+      this.isVisible27=true;
+      this.isVisible28=true;
+      this.isVisible29=true;
+      this.isVisible30=true;
+      this.isVisible31=true;
+      this.isVisible32=false;
     }
 
     if (

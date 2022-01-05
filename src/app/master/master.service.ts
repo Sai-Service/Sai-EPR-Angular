@@ -791,8 +791,9 @@ public AmcSchemeMasterSubmit(AmcSchemeMasterRecord) {
   const options = {
     headers: this.headers
   };
-  const url = this.ServerUrl + '/AmcSchemeMst';
+  const url = this.ServerUrl + '/schHdr';
   return this.http.post(url, AmcSchemeMasterRecord, options);
+  // http://localhost:8081/schHdr
 }
 
 
@@ -2531,12 +2532,12 @@ OrderCategoryList(): Observable<any> {
   }
 ////////////////////////////// Back order File upload /////////
 
-  public orderGenBajaj(ordeGenRecord,mLocId,mths) {
+  public orderGenBajaj(ordeGenRecord,mLocId,mths,dlrCd,pord) {
     alert (  "MS>> Loc Id :" +mLocId + " ," +mths);
       const options = {
         headers: this.headers
       };
-      const url = this.ServerUrl + `/spareOrder?locId=${mLocId}&months=${mths}`;
+      const url = this.ServerUrl + `/spareOrder?locId=${mLocId}&months=${mths}&dlrCode=${dlrCd}&p_order=${pord}`;
       return this.http.post(url, ordeGenRecord, options);
       }
 
@@ -2545,6 +2546,12 @@ OrderCategoryList(): Observable<any> {
       getOrderListBajaj (ordNumber): Observable<any> {
         return this.http.get(this.ServerUrl + `/spareOrder/ByOrderNumber/${ordNumber}`);
       }
+
+      getOrderNumberLatest (mLocId): Observable<any> {
+        return this.http.get(this.ServerUrl + `/spareOrder/Order?locId=${mLocId}`);
+        // http://localhost:8081/spareOrder/Order?locId=2102
+      }
+
 
 
       orderLineDelete(ordNumber,itemId)

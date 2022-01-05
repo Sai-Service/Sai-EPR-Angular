@@ -30,9 +30,10 @@ getJonCardNoSearchLoc(jcNum,jDate,jStatus,jRegNo,jLocId): Observable<any> {
 
 
 
-
-getByRegNo(RegNo, ouId): Observable<any> {
-  return this.http.get(this.ServerUrl +`/jobCard/regDtls?regNo=${RegNo}&ouId=${ouId}`);
+getByRegNo(RegNo,ouId,jcType): Observable<any> {
+  // alert ("reg,ou,jtype:"+RegNo+","+ouId +","+jcType);
+  return this.http.get(this.ServerUrl +`/jobCard/regDtls?regNo=${RegNo}&ouId=${ouId}&jyType=${jcType}`);
+  // http://localhost:8081/jobCard/regDtls?regNo=MH12EM8970&ouId=101&jyType=Service
 }
 jobCarStatusListFn(): Observable<any> {
   return this.http.get(this.ServerUrl +`/cmnLookup/type/jobCardStatus`);
@@ -160,6 +161,17 @@ public lineWISESubmit(Record) {
   const url = this.ServerUrl + `/jobCard/labInsert`;
   return this.http.post(url, Record, options);
 }
+
+
+generateServiceGatePass(jcNo){
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + `/SRGatepass/postSRVGatepass?jobCardNum=${jcNo}`;
+  return this.http.post(url, options);
+  // http://localhost:8081/SRGatepass/postSRVGatepass?jobCardNum=12PU.101-40
+}
+
 GenerateInvoiceFN(jobCardNum){
   const options = {
     headers: this.headers
@@ -167,6 +179,7 @@ GenerateInvoiceFN(jobCardNum){
   const url = this.ServerUrl + `/arInv/jobInv/${jobCardNum}`;
   return this.http.post(url, options);
 }
+
 public BillingCal(Record) {
   const options = {
     headers: this.headers
@@ -226,6 +239,18 @@ printWsInvoicedocument(jcNumber,jtype){
     headers: this.headers,
   });
   }  
+}
+
+
+printWsGatePass(jcNumber){
+  
+   const REQUEST_URI = this.ServerUrl +`/SRGatepass/print/${jcNumber}`;  
+   return this.http.get(REQUEST_URI, {
+   responseType: 'arraybuffer',
+   headers: this.headers,
+ });
+ 
+//  http://localhost:8081/SRGatepass/print/12PU.101-40
 }
 
 }

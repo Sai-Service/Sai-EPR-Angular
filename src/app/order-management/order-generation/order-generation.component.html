@@ -14,19 +14,282 @@
         <div class="form-bg">
         <div class="center" style="width: 100%;">
 
+       
+
         <fieldset class="RFS">
-            <!-- <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;"> -->
-               <!-- Search Order </legend> -->
+            <!-- <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
+                Order Details </legend> -->
+
+                <table class="center">
+
+
+                    <table class="center">
+                        <tr>
+
+                        <td> <input hidden  style="width:30px ;"   type="number" formControlName="divisionId" class="form-control" [(ngModel)]="divisionId" > </td>
+                        <td> <input hidden  style="width:30px ;"  type="number" formControlName="locId"  [(ngModel)]="locId" class="form-control"  placeholder="Location Name"> </td>
+                        <td> <input hidden disabled style="width:50px ;"  type="number"  formControlName="emplId" class="form-control" [(ngModel)]="emplId" placeholder=""></td>
+                        <td> <input hidden disabled style="width:30px ;" type="number"  formControlName="ouId"  id="ouId" [(ngModel)]="ouId" class="form-control" ></td>
+                        <td> <input hidden disabled style="width:30px ;" type="number"  formControlName="deptId"  id="deptId" [(ngModel)]="deptId" class="form-control" ></td>
+                                 
+                      </tr>
+                    </table>
+
+                    <tr>
+
+
+                         <td style="width: 15%" class="LabelFontStyle">&nbsp;Months&nbsp;:&nbsp;</td>
+
+                            <td>
+                                <input  type ="number" class="form-control" formControlName="consCriteria" [(ngModel)]='consCriteria'
+                                    value={{consCriteria}}  (change)="validateConsMth()" min="0" max="12" style="background-color: yellow;" > </td>
+
+                        <td style="width: 15%" class="LabelFontStyle">&nbsp;Order&nbsp;No:&nbsp;</td>
+
+                            <td>
+                                <input disabled type ="text" class="form-control" formControlName="orderNumber"  [(ngModel)]='orderNumber'
+                                    value={{orderNumber}}  >
+                                 
+                            </td>
+
+                        <td style="width: 15%" class="LabelFontStyle">&nbsp;Order&nbsp;Date:&nbsp;</td>
+
+                            <td>
+                                <input disabled  type='date' class="form-control" formControlName="orderDate" [(ngModel)]='orderDate'
+                                    value={{orderDate}} max="{{minDate | date:'yyyy-MM-dd'}}" >
+                                 
+                            </td>
+
+                        <td style="width: 15%" class="LabelFontStyle">&nbsp;Order&nbsp;Value:&nbsp;</td>
+                            <td>
+                                <input disabled type ="number" class="form-control" formControlName="orderValue" [(ngModel)]='orderValue'
+                                    value={{orderValue}}>
+                           </td>
+                    </tr>
+
+                    <tr>
+   
+                        <td style="width: 15%" class="LabelFontStyle">&nbsp;&nbsp;Current&nbsp;Mth&nbsp;:&nbsp;</td>
+
+                                <td>
+                                    <select formControlName="currMonthYN" id="currMonthYN" class="form-control"  [(ngModel)]="currMonthYN"  style="background-color: yellow;">
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                    </select>
+                                </td>
+                                <td style="width: 15%" class="LabelFontStyle">&nbsp;Order&nbsp;Status:&nbsp;</td>
+
+                                <td>
+                                    <input disabled type ="string" class="form-control" formControlName="status" [(ngModel)]='status'
+                                        value={{status}}  >
+                                     
+                                </td>
+                                <td style="width: 15%" class="LabelFontStyle">&nbsp;Dealer&nbsp;Code:&nbsp;</td>
+
+                                <td>
+                                    <input  type ="string" class="form-control" formControlName="dlrCode" [(ngModel)]='dlrCode'
+                                        value={{dlrCode}} style="background-color: yellow;" >
+                                </td>
+
+                                <td style="width: 15%" class="LabelFontStyle">&nbsp;CDMS&nbsp;No:&nbsp;</td>
+
+                                <td>
+                                    <input  type ="string" class="form-control" formControlName="cdmsRefNo" [(ngModel)]='cdmsRefNo'
+                                        value={{cdmsRefNo}} >
+                                </td>
+
+
+
+                                <!-- <td></td> -->
+
+                               
+                            </tr>       
+                      
+
+                    <!-- <tr>
+
+                        <div *ngIf="spinIcon; then hList1; else hList2"></div>
+                        <ng-template #hList1> 
+                            <div class="d-flex justify-content-center">
+                                <div class="spinner-border text-primary" role="status" >
+                                    <span class="sr-only" id="loading"></span>
+                            
+                                </div>
+                                </div>
+                        </ng-template>
+                        <ng-template #hList2> </ng-template>
+
+                         <td class="LabelFontStyle" style="color: blue;">&nbsp;{{dataDisplay }}&nbsp; </td>
+                    </tr> -->
+
+                  
+                    
+                </table>
+        </fieldset>
+
+
+       
+        <div class="center">
+            <div class="center" formArrayName="orderList">
+                <div class="grid_scroll">
+                  
+                       <table style="border-color:#494949;border-collapse:collapse;width: 100%;">
+                        <div class="col-md-12 table-responsive" #orderList>
+                            <div style="padding-bottom: 10px;padding-top: 10px;">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <button (click)="orderListExport()" class="btn btn-success" style="width: fit-content;">Export To Excel</button>
+                                    </div>
+                                </div>
+                            </div>
+                              <thead>
+
+                                <tr class="GridHeader">
+                                      <th style="width:4rem" scope="col">Srl&nbsp;No.</th>
+                                      <th style="width:6rem" scope="col">Part&nbsp;No</th>
+                                      <th style="width:10rem" scope="col">Description</th>
+                                      <th style="width:12rem" scope="col">Unit&nbsp;Price</th>
+                                      <th style="width:6rem" scope="col">Back order&nbsp;Qty</th>
+                                      <th style="width:8rem" scope="col">Cust Backorder</th>
+                                      <th style="width:6rem" scope="col">WS Cons-Curr</th>
+                                      <th style="width:6rem" scope="col">CS Cons-Curr</th>
+                                      <!-- <th style="width:6rem" scope="col">WS-Cons-Mth1</th>
+                                      <th style="width:6rem" scope="col">CS-Cons-Mth1</th>
+                                      <th style="width:6rem" scope="col">WS-Cons-Mth2</th>
+                                      <th style="width:6rem" scope="col">CS-Cons-Mth2</th>
+                                      <th style="width:6rem" scope="col">WS-Cons-Mth3</th>
+                                      <th style="width:6rem" scope="col">CS-Cons-Mth3</th> -->
+
+                                      <th style="width:6rem" scope="col">Curr&nbsp;Qty</th>
+                                      <th style="width:6rem" scope="col">InTrans Qty</th>
+                                      <th style="width:6rem" scope="col">WS Cons-Tot</th>
+                                      <th style="width:6rem" scope="col">CS Cons-Tot</th>
+                                      <th style="width:6rem" scope="col">Cons Details</th>
+                                      <th style="width:8rem" scope="col">Set&nbsp;Qty</th>
+                                      <th style="width:8rem" scope="col">Order&nbsp;Qty</th>
+                                      <th style="width:8rem" scope="col">Order&nbsp;Value</th>
+                                      <th style="width:2rem" scope="col">Add+</th>
+                                      <th style="width:2rem" scope="col">Del-</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                              <tr *ngFor="let group of lineDetailsArray().controls; let i= index" [formGroupName]="i" >
+                               <td hidden>
+                                <input  hidden style="width:5rem;"  type="number" formControlName="itemId" class="form-control">
+                                <input  hidden style="width:5rem;"  type="number" formControlName="sprOrderId" class="form-control">
+                            </td>
+                                <td style="text-align: center;width: 4rem;">{{i+1}}</td>
+                                <td> <input   style="width:3rem;background-color: yellow;width:6rem;text-transform: uppercase;"    type="text" formControlName="segment"  class="form-control"  (change)="validateItem(i)"></td>
+                                <td> <input  disabled style="width:10rem;"  type="text" formControlName="description" class="form-control"></td>
+                                <!-- <td> <input  disabled style="width:2rem;"  type="text" formControlName="uom" class="form-control"></td> -->
+                                <td> <input  disabled style="width:6rem;"  type="number" formControlName="unitPrice"  class="form-control"></td>
+                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="backOrderQty" class="form-control"></td>
+                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="custBackOrder" class="form-control"></td>
+                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="currWsQty" class="form-control"></td>
+                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="currSaleQty" class="form-control"></td>
+                                <td hidden>
+                                <input hidden disabled style="width:4rem;"  type="number" formControlName="mth1ConWsQty" class="form-control">
+                                <input hidden disabled style="width:4rem;"  type="number" formControlName="mth1ConsSaleQty" class="form-control">
+                                <input hidden disabled style="width:4rem;"  type="number" formControlName="mth2ConWsQty" class="form-control">
+                                <input hidden disabled style="width:4rem;"  type="number" formControlName="mth2ConsSaleQty" class="form-control">
+                                <input hidden disabled style="width:4rem;"  type="number" formControlName="mth3ConWsQty" class="form-control">
+                                <input hidden disabled style="width:4rem;"  type="number" formControlName="mth3ConsSaleQty" class="form-control">
+                            </td>
+                                <!-- <input type="number" formControlName="pricingQty" name="pricingQty{{i}}" class="form-control"
+                                (change)="onKey(i,'prc')" (keydown.enter)="enterKeyLock(i)" style="height: 20px;width:50px;" min="0"
+                                oninput="this.value = Math.abs(this.value)"> -->
+                                      
+                                <td> <input  disabled style="width:4rem;"  type="number" formControlName="currentStock" class="form-control"></td>
+                                <td> <input  disabled style="width:4rem;"  type="number" formControlName="intransitQty" class="form-control"></td>
+                                <td> <input  disabled style="width:4rem;"  type="number" formControlName="conWsQty" class="form-control"></td>
+                                <td> <input  disabled style="width:4rem;"  type="number" formControlName="consSaleQty" class="form-control"></td>
+                  
+                                <td><button  type="button" style="width: fit-content;height: 23px;" class="btn btn-info1" data-toggle="modal" data-target="#consumtionDetails" (click)="getTrans(i)">...</button></td>
+                                <td> <input  disabled style="width:4rem;"  type="number" formControlName="setQty" class="form-control"></td>
+                                <td> <input   style="width:4rem;background-color: yellow;"   type="number" formControlName="orderQty" name="orderQty{{i}}"
+                                    (change)="validateOrdQty(i)" class="form-control" ></td>
+                                <td> <input  disabled style="width:6rem;"  type="number" formControlName="totalValue" class="form-control"></td>
+                               
+                                <td><button  type="submit" class="btn btn-info" (click)="addRow(i)"  style="width: min-content;"><i class="fa fa-plus"></i></button>  </td>
+                                <td><button  type="submit" class="btn btn-info" (click)="RemoveRow(i)"  style="width: min-content;"><i class="fa fa-trash"></i></button>  </td>
+                                <!-- (keydown.shift.arrowdown)="addRow(i)" -->
+                            </tr>
+                        </tbody>
+                        </div>
+                 </table>
+                  
+                </div>
+           </div>
+        </div>
+     
+
+
+        <table class="center">
+            <tr>
+
+                <div *ngIf="dispGenOrdButton; then G1; else G2;"></div>
+                <ng-template #G1>
+                     <td> <button style="width:fit-content;" type="submit" class="btn btn-info" id="register" (click)="CreateOrder()">Create Order</button></td>
+                </ng-template>
+                <ng-template #G2>
+                     <td> <button disabled style="width:fit-content;" type="submit" class="btn btn-info" id="register" (click)="CreateOrder()">Create Order</button></td>
+                </ng-template>
+
+                <!-- <div *ngIf="dispShowOrdButton; then S1; else S2;"></div>
+                <ng-template #S1>
+                     <td> <button style="width: fit-content;"  type="submit" class="btn btn-info" id="register" (click)="ShowOrder()">View/Edit</button></td>
+                </ng-template>
+                <ng-template #S2>
+                    <td> <button disabled style="width: fit-content;"  type="submit" class="btn btn-info" id="register" (click)="ShowOrder()">View/Edit</button></td>
+               </ng-template> -->
+
+
+                <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
+                <ng-template #thenBlock1>
+                 <td> <button type="submit" class="btn btn-info" id="register" (click)="updateOrder()">Save</button></td>
+                <td> <button type="submit" class="btn btn-info" id="register" (click)="newMast()">Cancel</button></td>
+                <td> <button type="submit" class="btn btn-info" id="register" (click)="newMast()">Print</button></td>
+                <td> <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>
+                <td> <button type="submit" class="btn btn-info" id="register" (click)="closeMast()">Close</button></td>
+               
+                </ng-template>
+                <ng-template #elseBlock1>
+                    <td> <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>
+                    <td> <button type="submit" class="btn btn-info" id="register" (click)="closeMast()">Close</button></td>
+                </ng-template>
+
+              
+
+                        <div *ngIf="spinIcon; then hList1; else hList2"></div>
+                        <ng-template #hList1> 
+                            <div class="d-flex justify-content-center">
+                                <div class="spinner-border text-primary" role="status" >
+                                    <span class="sr-only" id="loading"></span>
+                            
+                                </div>
+                                </div>
+                        </ng-template>
+                        <ng-template #hList2> </ng-template>
+
+                       <td class="LabelFontStyle" style="color: blue;">&nbsp;{{dataDisplay }}&nbsp; </td>
+                  
+                
+            </tr>
+        </table>
+        <!-- <br> -->
+
+        <fieldset class="RFS">
+            <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
+               Search </legend>
 
          <table class="center" style="width: 100%;background-color: #FFE4B5;">
-            <!-- <table> -->
-                <tr>
+                 <tr>
                   <td >
                       <table class="center">
                           <tr> 
                            <td>&nbsp;Order&nbsp;No:&nbsp;</td>
                            <td>
-                                <input type ="number" class="form-control" formControlName="orderNumber" [(ngModel)]='orderNumber'
+                                <input type ="text" class="form-control" formControlName="orderNumber" [(ngModel)]='orderNumber'
                                     value={{orderNumber}} >
                                  
                             </td>
@@ -67,266 +330,63 @@
             </table>
         </fieldset>
 
-        <fieldset class="RFS">
-            <!-- <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
-                Order Details </legend> -->
-
-                <table class="center">
-
-
-                    <table class="center">
-                        <tr>
-
-                        <td> <input hidden  style="width:30px ;"   type="number" formControlName="divisionId" class="form-control" [(ngModel)]="divisionId" > </td>
-                        <td> <input hidden  style="width:30px ;"  type="number" formControlName="locId"  [(ngModel)]="locId" class="form-control"  placeholder="Location Name"> </td>
-                        <td> <input hidden disabled style="width:50px ;"  type="number"  formControlName="emplId" class="form-control" [(ngModel)]="emplId" placeholder=""></td>
-                        <td> <input hidden disabled style="width:30px ;" type="number"  formControlName="ouId"  id="ouId" [(ngModel)]="ouId" class="form-control" ></td>
-                        <td> <input hidden disabled style="width:30px ;" type="number"  formControlName="deptId"  id="deptId" [(ngModel)]="deptId" class="form-control" ></td>
-                                 
-                      </tr>
-                    </table>
-
-                    <tr>
-
-                        <td>&nbsp;Consumption(No&nbsp;of&nbsp;Months)&nbsp;:&nbsp;</td>
-
-                            <td>
-                                <input  type ="number" class="form-control" formControlName="noMonths" [(ngModel)]='noMonths'
-                                    value={{noMonths}}  (change)="validateConsMth()" min="0" max="12" style="background-color: yellow;" > </td>
-
-                        <td>&nbsp;Order&nbsp;No:&nbsp;</td>
-
-                            <td>
-                                <input  type ="text" class="form-control" formControlName="orderNumber" 
-                                    value={{orderNumber}}  >
-                                 
-                            </td>
-
-                            <td>&nbsp;Order&nbsp;Date:&nbsp;</td>
-
-                            <td>
-                                <input disabled type ="date" class="form-control" formControlName="orderDate" [(ngModel)]='orderDate'
-                                    value={{orderDate}} max="{{minDate | date:'yyyy-MM-dd'}}" >
-                                 
-                            </td>
-
-                            <td>&nbsp;Order&nbsp;Value:&nbsp;</td>
-                            <td>
-                                <input disabled type ="number" class="form-control" formControlName="orderValue" [(ngModel)]='orderValue'
-                                    value={{orderValue}}>
-                           </td>
-                    </tr>
-
-                    <tr>
-   
-                                <td>&nbsp;Include&nbsp;Current&nbsp;Month&nbsp;Consumption:&nbsp;</td>
-
-                                <td>
-                                    <select formControlName="currMonthYN" id="currMonthYN" class="form-control"  [(ngModel)]="currMonthYN"  style="background-color: yellow;">
-                                    <option value="Yes">Yes</option>
-                                    <option value="No">No</option>
-                                    </select>
-                                </td>
-                                <td>&nbsp;Order&nbsp;Status:&nbsp;</td>
-
-                                <td>
-                                    <input disabled type ="string" class="form-control" formControlName="orderStatus" [(ngModel)]='orderStatus'
-                                        value={{orderStatus}}  >
-                                     
-                                </td>
-
-                                <td></td>
-
-                                <div *ngIf="dispGenOrdButton; then G1; else G2;"></div>
-                                <ng-template #G1>
-                                     <td> <button style="width:170px;" type="submit" class="btn btn-info" id="register" (click)="CreateOrder()">Generate Order</button></td>
-                                </ng-template>
-                                <ng-template #G2>
-                                     <td> <button disabled style="width:170px;" type="submit" class="btn btn-info" id="register" (click)="CreateOrder()">Generate Order</button></td>
-                                </ng-template>
-
-                                <td></td>
-
-                                <div *ngIf="dispShowOrdButton; then S1; else S2;"></div>
-                                <ng-template #S1>
-                                     <td> <button style="width: fit-content;"  type="submit" class="btn btn-info" id="register" (click)="ShowOrder()">Show Order List</button></td>
-                                </ng-template>
-                                <ng-template #S2>
-                                    <td> <button disabled style="width: fit-content;"  type="submit" class="btn btn-info" id="register" (click)="ShowOrder()">Show Order List</button></td>
-                               </ng-template>
-                            </tr>       
-                      
-
-                    <!-- <tr>
-
-                        <div *ngIf="spinIcon; then hList1; else hList2"></div>
-                        <ng-template #hList1> 
-                            <div class="d-flex justify-content-center">
-                                <div class="spinner-border text-primary" role="status" >
-                                    <span class="sr-only" id="loading"></span>
-                            
-                                </div>
-                                </div>
-                        </ng-template>
-                        <ng-template #hList2> </ng-template>
-
-                         <td class="LabelFontStyle" style="color: blue;">&nbsp;{{dataDisplay }}&nbsp; </td>
-                    </tr> -->
-
-                  
-                    
-                </table>
-        </fieldset>
-
-        <div class="center">
-            <!-- <br> -->
-           <div class="center" formArrayName="orderList">
-
-                <div class="grid_scroll">
-
-                 <table style="width: 100%; border: solid 1px Gray" class="auto-style4"
-                              cellspacing="0" cellpadding="4" rules="all" class="center">
-
-                              <thead>
-                                <tr class="GridHeader">
-                                      <th style="width:4rem" scope="col">Srl&nbsp;No.</th>
-                                      <!-- <th style="width:8rem" scope="col">Item&nbsp;Id</th> -->
-                                      <th style="width:6rem" scope="col">Part&nbsp;No</th>
-                                      <th style="width:10rem" scope="col">Description</th>
-                                      <!-- <th style="width:10rem" scope="col">Uom</th> -->
-                                      <th style="width:12rem" scope="col">Unit&nbsp;Price</th>
-
-                                      
-                                   
-                                      <th style="width:6rem" scope="col">BOrd&nbsp;Qty</th>
-                                     
-                                      <th style="width:8rem" scope="col">Cust-BOrder</th>
-                                     
-
-
-                                      <th style="width:6rem" scope="col">WS-Cons-Curr</th>
-                                      <th style="width:6rem" scope="col">CS-Cons-Curr</th>
-                                      <th style="width:6rem" scope="col">WS-Cons-Mth1</th>
-                                      <th style="width:6rem" scope="col">CS-Cons-Mth1</th>
-                                      <th style="width:6rem" scope="col">WS-Cons-Mth2</th>
-                                      <th style="width:6rem" scope="col">CS-Cons-Mth2</th>
-                                      <th style="width:6rem" scope="col">WS-Cons-Mth3</th>
-                                      <th style="width:6rem" scope="col">CS-Cons-Mth3</th>
-                                      <th style="width:6rem" scope="col">Curr&nbsp;Qty</th>
-                                      <th style="width:6rem" scope="col">InTrans-Qty</th>
-                                      <th style="width:6rem" scope="col">WS-Cons-Tot</th>
-                                      <th style="width:6rem" scope="col">CS-Cons-Tot</th>
-                                      <th style="width:8rem" scope="col">Set&nbsp;Qty</th>
-                                      <th style="width:8rem" scope="col">Order&nbsp;Qty</th>
-                                      <th style="width:8rem" scope="col">Order&nbsp;Value</th>
-                                     
-                                     
-
-                                      
-                                      
-                                     <th style="width:2rem" scope="col">Add+</th>
-                                      <th style="width:2rem" scope="col">Del-</th>
-                                  </tr>
-                              </thead>
-
-                              <tr *ngFor="let group of lineDetailsArray().controls; let i= index" [formGroupName]="i" >
-
-                                <input  hidden style="width:5rem;"  type="number" formControlName="itemId" class="form-control">
-                                <input  hidden style="width:5rem;"  type="number" formControlName="sprOrderId" class="form-control">
-                                
-                                <td style="text-align: center;width: 4rem;">{{i+1}}</td>
-                                <!-- <td> <input  disabled style="width:4rem;"   type="text" formControlName="itemId"  class="form-control"></td> -->
-                              
-                                 <td> <input   style="width:3rem;background-color: yellow;width:6rem;text-transform: uppercase;"    type="text" formControlName="segment"  class="form-control"  (change)="validateItem(i)"></td>
-                               
-
-                                <td> <input  disabled style="width:10rem;"  type="text" formControlName="description" class="form-control"></td>
-                                <!-- <td> <input  disabled style="width:2rem;"  type="text" formControlName="uom" class="form-control"></td> -->
-                              
-                                <td> <input  disabled style="width:5rem;"   type="number" formControlName="unitPrice" class="form-control"></td>
-                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="backOrderQty" class="form-control"></td>
-                                 <td> <input  disabled style="width:3rem;"  type="number" formControlName="custBackOrder" class="form-control"></td>
-                               
-                              
-                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="currWsQty" class="form-control"></td>
-                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="currSaleQty" class="form-control"></td>
-                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="mth1ConWsQty" class="form-control"></td>
-                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="mth1ConsSaleQty" class="form-control"></td>
-                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="mth2ConWsQty" class="form-control"></td>
-                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="mth2ConsSaleQty" class="form-control"></td>
-                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="mth3ConWsQty" class="form-control"></td>
-                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="mth3ConsSaleQty" class="form-control"></td>
-                               
-                                <!-- <input type="number" formControlName="pricingQty" name="pricingQty{{i}}" class="form-control"
-                                (change)="onKey(i,'prc')" (keydown.enter)="enterKeyLock(i)" style="height: 20px;width:50px;" min="0"
-                                oninput="this.value = Math.abs(this.value)"> -->
-                                      
-                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="currentStock" class="form-control"></td>
-                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="intransitQty" class="form-control"></td>
-                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="conWsQty" class="form-control"></td>
-                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="consSaleQty" class="form-control"></td>
-                  
-                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="setQty" class="form-control"></td>
-                                <td> <input   style="width:3rem;background-color: yellow;"   type="number" formControlName="orderQty" name="orderQty{{i}}"
-                                    (change)="validateOrdQty(i)" class="form-control" ></td>
-                                <td> <input  disabled style="width:5rem;"  type="number" formControlName="totalValue" class="form-control"></td>
-                               
-                                <td><button  type="submit" class="btn btn-info" (click)="addRow(i)"  style="width: min-content;"><i class="fa fa-plus"></i></button>  </td>
-                                <td><button  type="submit" class="btn btn-info" (click)="RemoveRow(i)"  style="width: min-content;"><i class="fa fa-trash"></i></button>  </td>
-                                <!-- (keydown.shift.arrowdown)="addRow(i)" -->
-                            </tr>
-
-                          
-
-
-
-                 </table>
-                </div>
-           </div>
-        </div>
-
-        <!-- <tr>                                    
-            <div *ngIf="spinIcon; then spin1; else spin2"></div>
-             <ng-template #spin1> 
-                   <div class="d-flex justify-content-center">
-                     <div class="spinner-border text-primary" role="status" >
-                           <span class="sr-only" id="loading"></span>
-                           
-                     </div>
-                 </div>
-           </ng-template>
-           <ng-template #spin2> 
-           </ng-template>
-           <td class="LabelFontStyle" style="color: blue;">&nbsp;{{dataDisplay }}&nbsp;
-         </tr> -->
-
-        <table class="center">
-            <tr>
-                <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
-                <ng-template #thenBlock1>
-                 <td> <button type="submit" class="btn btn-info" id="register" (click)="updateOrder()">Save</button></td>
-                <td> <button type="submit" class="btn btn-info" id="register" (click)="newMast()">Cancel</button></td>
-                <td> <button type="submit" class="btn btn-info" id="register" (click)="newMast()">Print</button></td>
-                <td> <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>
-                <td> <button type="submit" class="btn btn-info" id="register" (click)="closeMast()">Close</button></td>
-               
-                </ng-template>
-                <ng-template #elseBlock1>
-                    <td> <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>
-                    <td> <button type="submit" class="btn btn-info" id="register" (click)="closeMast()">Close</button></td>
-                </ng-template>
-                
-            </tr>
-        </table>
-
-
-
-
         </div>
         </div>
-
-
-
-
     </div>
+
+
+    <div class="modal fade" id="consumtionDetails" tabindex="-1" role="dialog" aria-labelledby="consumtionDetailsLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+             <div class="modal-header" >
+                <!-- style="background-color: darkcyan;" -->
+            <h5 class="modal-title" id="consumtionDetailsLabel" style="text-align: center;color:blue"  >Consumption&nbsp;Details&nbsp;:&nbsp;{{this.partNumber}} - {{this.partDesc}} </h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+             </div>
+            
+             <div class="modal-body">
+                <!-- <table class="center" style="width: 100%;">
+                    <tr>
+                      <td>Part&nbsp;No:&nbsp;{{this.partNumber}}-{{this.partDesc}}</td>
+                    </tr>
+                        
+                </table> -->
+                   
+                 <fieldset class="RFS">
+                    <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Consumption&nbsp;Details</legend>
+                 
+                <table class="center" >
+
+                    <tr>
+                            <td style="width: 15%" class="LabelFontStyle">&nbsp;WS&nbsp;Month1:&nbsp;</td>
+                            <td> <input  disabled style="width:3rem;"  type="number" formControlName="mth1ConWsQty" [(ngModel)]= 'mth1ConWsQty' class="form-control"></td>
+                            <td style="width: 15%" class="LabelFontStyle">&nbsp;WS&nbsp;Month2:&nbsp;</td>
+                            <td> <input  disabled style="width:3rem;"  type="number" formControlName="mth2ConWsQty" [(ngModel)]= 'mth2ConWsQty' class="form-control"></td>
+                            <td style="width: 15%" class="LabelFontStyle">&nbsp;WS&nbsp;Month3:&nbsp;</td>
+                            <td> <input  disabled style="width:3rem;"  type="number" formControlName="mth3ConWsQty" [(ngModel)]= 'mth3ConWsQty' class="form-control"></td>
+                    </tr>
+                    <tr>
+                            <td style="width: 15%" class="LabelFontStyle">&nbsp;CS&nbsp;Month1:&nbsp;</td>
+                            <td> <input  disabled style="width:3rem;"  type="number" formControlName="mth1ConsSaleQty" [(ngModel)]= 'mth1ConsSaleQty' class="form-control"></td>
+                            <td style="width: 15%" class="LabelFontStyle">&nbsp;CS&nbsp;Month2:&nbsp;</td>
+                            <td> <input  disabled style="width:3rem;"  type="number" formControlName="mth2ConsSaleQty" [(ngModel)]= 'mth2ConsSaleQty' class="form-control"></td>
+                            <td style="width: 15%" class="LabelFontStyle">&nbsp;CS&nbsp;Month3:&nbsp;</td>
+                            <td> <input  disabled style="width:3rem;"  type="number" formControlName="mth3ConsSaleQty" [(ngModel)]= 'mth3ConsSaleQty' class="form-control"></td>
+                     
+                    </tr>
+        
+                      
+                </table>
+                </fieldset>
+                    
+             <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
 </form>

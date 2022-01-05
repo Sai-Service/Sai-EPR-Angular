@@ -1436,8 +1436,8 @@
                                                         </div>
                                                         <ng-template #thentaxCategoryName>
                                                             <!-- (ngModelChange)="ontaxCateChange(i,event)" -->
-                                                            <select formControlName="taxCategoryName" [(ngModel)]="taxCategoryName"
-                                                                (change)="onOptionTaxCatSelected(taxCategoryName,i)"
+                                                            <select formControlName="taxCategoryName" 
+                                                                (change)="onOptionTaxCatSelected(event,i)"
                                                                 id="taxCategoryName" class="form-control"
                                                                 style="width: 160px;height: 25px;font-size: 10px;">
                                                                 <option>--Select--</option>
@@ -1783,8 +1783,7 @@
                                                                 </tr>
                                                             </ng-container>
                                                         </ng-container>
-                                                    </tbody>
-    
+                                                    </tbody>    
                                                 </table>
                                                 <button type="button" class="btn btn-primary"
                                                     (click)="addDiscount(selectedLine)"
