@@ -4,7 +4,7 @@
   <input hidden class="form-control" formControlName="locId" [(ngModel)]='locId'>
   <input hidden class="form-control" formControlName="locationId" [(ngModel)]='locationId'>
   <input hidden type="number" class="form-control" formControlName="ouId" [(ngModel)]='ouId'>
-  
+
   <input hidden class="form-control" formControlName="shipLocName" [(ngModel)]='shipLocName'>
   <input hidden class="form-control" formControlName="customerId" [(ngModel)]='customerId'> -->
 <input hidden class="form-control" [(ngModel)]='ouId' formControlName="ouId">
@@ -83,10 +83,11 @@
                   <select formControlName="priceListName" id="priceListName" class="form-control" [(ngModel)]="priceListName"
                       style="width: 160px;"   >
                       <option>--Select--</option>
-                      <option *ngFor="let pl of priceListNameList">
+                      <option *ngFor="let pl of priceListNameList" [value]="pl.priceListName">
                           {{pl.priceListName}}
                       </option>
                   </select>
+                  <input hidden formControlName="custtaxCategoryName">
                   <input hidden disabled type="text" formControlName="priceListId" [(ngModel)]='priceListId' value={{priceListId}}
                       class="form-control" style="width: 160px;">
               </td>
@@ -272,16 +273,18 @@
                                                   </option>
                                                  </datalist>
                                             </td>
-                                                  <input hidden type="number" formControlName="itemId">
+                                                  <input hidden  type="number" formControlName="itemId">
 
                                           <td>
                                               <input disabled type="text" formControlName="orderedItem"
                                                   value="orderedItem"  class="form-control"
                                                   style="height: 20px;width: 160px;">
                                           </td>
-                                          <td><select class="form-control" style="height: 20px; width: 110px;" formControlName="frmLocatorId" (ngModelChange)='AvailQty($event,i)'>
-                                            <option>--Select--</option>
-                                            <option *ngFor="let locId of  locData[i]" [ngValue]="locId.locatorId">{{locId.segmentName}}--{{locId.onHandQty}}</option>
+                                          <td><select class="form-control" style="height: 20px; width: 110px;"
+                                             formControlName="frmLocatorId" (ngModelChange)='AvailQty($event,i)'>
+                                            <!-- <option>--Select--</option> -->
+                                            <option *ngFor="let locId of  locData[i]" [ngValue]="locId.ROWNUM">
+                                              {{locId.segmentName}}--{{locId.onHandQty}}</option>
                                             <input hidden formControlName="frmLocatorId">
                                           </select>
                                           </td>
@@ -303,12 +306,12 @@
                                               style="height: 20px;width: 90px;" (change)="onKey(i)">
                                       </td>
                                       <td>
+                                        <!-- (ngModelChange)='onOptionTaxCatSelected($event,i)' -->
                                           <select formControlName="taxCategoryName" id="taxCategoryName"
-                                          (ngModelChange)='onOptionTaxCatSelected($event,i)'
-                                          (change)="onKey(i)" class="form-control"
+                                           (change)="onKey(i)" class="form-control"
                                           style="width: 160px;height: 25px;font-size: 10px;">
-                                          <option>--Select--</option>
-                                          <option *ngFor="let sc of  taxCategoryList"   [value]="sc.taxCategoryName">
+                                          <!-- <option>--Select--</option> -->
+                                          <option *ngFor="let sc of  taxCategoryList[i]"   [value]="sc">
                                               {{sc.taxCategoryName}}
                                           </option>
                                       </select>
@@ -338,14 +341,16 @@
                                                   style="height: 20px;width: 70px;">
                                           </td>
                                           <td>
-                                               <select formControlName="flowStatusCode" id="flowStatusCode"
+                                               <!-- <select formControlName="flowStatusCode" id="flowStatusCode"
                                                    class="form-control"
                                                   style="width: 120px;height: 25px;font-size: 10px;">
-                                                  <option>--Select--</option>
-                                                  <option value="BOOKED">BOOKED</option>
+                                                   <option>--Select--</option>
+                                                  <option value="BOOKED"[value]="BOOKED" >BOOKED</option>
                                                   <option value="CANCELLED">CANCELLED</option>
                                                   <option value="Invoiced">Invoiced</option>
-                                              </select>
+                                              </select> -->
+                                              <input disabled type="text" formControlName="flowStatusCode" class="form-control"
+                                              style="height: 20px;width: 70px;">
                                              </td>
                                           <td>
                                              <button type="submit" class="btn btn-primary" (click)="addRow(i)"

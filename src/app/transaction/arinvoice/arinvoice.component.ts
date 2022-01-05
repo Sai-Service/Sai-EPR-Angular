@@ -41,6 +41,7 @@ interface IArInvoice {
   shipcontactNo:number;
   // invoiceAmount:number;
   emplId:number;
+  glPrdStartDate: string;
 }
 @Component({
   selector: 'app-arinvoice',
@@ -598,6 +599,13 @@ export class ARInvoiceComponent implements OnInit {
           // this.taxUistatus = false;
         }
       );
+      if(this.lstcomments.invStatus==='Complete'){
+        // this.arInvoiceForm.disable();
+        this.arInvoiceForm.get('taxLines').disable();
+        this.arInvoiceForm.get('invLines').disable();
+        this.arInvoiceForm.get('invDisLines').disable();
+        this.arInvoiceForm.get('invLine').disable();
+      }
 
   };
   onOptionType(event:any){
@@ -630,6 +638,7 @@ export class ARInvoiceComponent implements OnInit {
     window.location.reload();
   }
   onOptioninvItemIdSelected(itemId, index) {
+    if(itemId!=undefined){
     let selectedValue = this.invItemList.find(v => v.segment == itemId);
     // alert(selectedValue.stockable);
     // if(selectedValue.stockable==='Y'){
@@ -651,7 +660,7 @@ export class ARInvoiceComponent implements OnInit {
       diss1: 0,
 
     })
-  // }
+  }
   }
   getInvItemId($event) {
     let userId = (<HTMLInputElement>document.getElementById('invItemIdFirstWay')).value;

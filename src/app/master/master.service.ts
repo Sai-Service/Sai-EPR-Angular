@@ -1507,8 +1507,8 @@ getsearchByJob(jobno):Observable<any>{
 }
 
 
-subInvCode(deptId):Observable<any>{
-  return this.http.get(this.ServerUrl +`/subInvMst/wipissue/${deptId}`);
+subInvCode(deptId,divId):Observable<any>{
+  return this.http.get(this.ServerUrl +`/subInvMst/wipissue?deptId=${deptId}&divisionId=${divId}`);
 }
 
 
