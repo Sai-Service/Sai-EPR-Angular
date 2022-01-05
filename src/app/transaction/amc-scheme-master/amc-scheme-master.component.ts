@@ -225,9 +225,7 @@ transeData(val) {
 }
 
   newMast() {
-    
       const formValue: IAmcScheme =this.transeData(this.amcSchemeMasterForm.value);
-  
       this.service.AmcSchemeMasterSubmit(formValue).subscribe((res: any) => {
         if (res.code === 200) {
           alert('RECORD INSERTED SUCCESSFUILY');
@@ -244,8 +242,10 @@ transeData(val) {
     }
   
 
+    searchMast() { alert ("Search AMC Scheme ...WIP")
 
-updateMast(){alert("Save ....wip");}
+    }
+     updateMast(){alert("Update AMC scheme ....wip");}
 
 
     onOptionAmcCoupenSelected(cpnNumber :any, index) {
@@ -375,15 +375,14 @@ updateMast(){alert("Save ....wip");}
           gmatTotal=gmatTotal+arrayControl[i].netAmt;
         }
       }
-//  alert ("labTax :"+labTax);
-          this.amcSchemeMasterForm.patchValue({
-            amcLabBasicAmt:labTotal ,
-            amcLabDiscount: labDisc,
-            amcLabTax:labTax,
-            amcLabTotal:glabTotal,
-            amcSchemeTotal:(glabTotal+gmatTotal),
+            this.amcSchemeMasterForm.patchValue({
+            amcLabBasicAmt:  Math.round(labTotal+Number.EPSILON*100)/100,
+            amcLabDiscount: Math.round(labDisc+Number.EPSILON*100)/100,
+            amcLabTax: Math.round(labTax+Number.EPSILON*100)/100,
+            amcLabTotal:Math.round(glabTotal+Number.EPSILON*100)/100,
+            amcSchemeTotal:Math.round((glabTotal+gmatTotal)+Number.EPSILON*100)/100,
           });
-
+         
     }
 
       

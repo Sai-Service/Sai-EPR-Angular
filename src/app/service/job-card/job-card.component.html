@@ -1484,7 +1484,7 @@
                                                                                 <input hidden type="text" formControlName="taxCategoryName" [(ngModel)]="taxCategoryName" class="form-control" style="height: 25px;">
                                                                                 <input hidden  type="text"  formControlName="taxCategoryId"  style="width: 170px;"  id="taxCategoryId"  class="form-control">
 
-                                                                                <td> <input  type="number" disabled formControlName="taxPer" [(ngModel)]="taxPer"  class="form-control" style="width: 3rem; height: 25px; text-align: center;"> </td>
+                                                                                <td> <input  type="number" disabled formControlName="taxPer"   class="form-control" style="width: 3rem; height: 25px; text-align: center;"> </td>
 
                                                                             <td>
                                                                                 <input type="number" min="0"
@@ -2832,14 +2832,15 @@
                         </ng-template>
                         <ng-template #elseBlockModal>
                             <div id="myModel" [style.display]="showModal ? 'block' : 'none'" class="modal fade"
-                                tabindex="-1" role="dialog" aria-hidden="true" style="width: 500px; margin-left:350px">
+                                tabindex="-1" role="dialog" aria-hidden="true" style="width: 700px; margin-left:350px">
 
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h4 class="modal-title" id="myModalLabel"
+                                                <h4 class="modal-title" id="myModalLabel"
                                                 style="text-align: center; font-size: medium; margin-left: 20%; font-family: Verdana,Sans-serif, Arial, Helvetica;font-weight: bold;">
-                                                Add more Technician for Line + {{ title }}</h4>
+                                                Add Technician for Line-{{ title }}. Labor Amt : {{this.lineBasicAmt}}</h4>
+                                               
                                             <button type="button" class="close" data-dismiss="modal"
                                                 aria-hidden="true">&times;</button>
                                         </div>
@@ -2852,11 +2853,11 @@
                                                             <!-- <th scope="col">SL. NO.</th> -->
                                                             <th scope="col">Type</th>
                                                             <th scope="col">Technician Name</th>
-                                                            <th scope="col">Percentage</th>
+                                                            <!-- <th scope="col">Percentage</th> -->
                                                             <th scope="col">Amount</th>
                                                             <!-- <th scope="col">Contractor code</th> -->
                                                             <!-- <th scope="col">Percentage</th>
-                                                                                        <th scope="col">Amount</th> -->
+                                                             <th scope="col">Amount</th> -->
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -2866,6 +2867,9 @@
                                                                 [formGroupName]="j">
 
                                                                 <tr>
+                                                                    <input  hidden disabled type="number" min="0"  formControlName="lineBasicAmt" 
+                                                                            class="form-control">
+
                                                                     <td>
                                                                         <select class="form-control"
                                                                             formControlName="type">
@@ -2884,12 +2888,17 @@
                                                                             </option>
                                                                         </select>
                                                                     </td>
-                                                                    <td> <input type="number" min="0"  formControlName="techPer"
+                                                                    <!-- <td> <input disabled type="number" min="0"  formControlName="techPer"
                                                                             class="form-control">
+                                                                    </td> -->
+
+                                                                   
+                                                                    
+
+                                                                    <td> <input type="number" min="0"  formControlName="techAmt" (change) =validateTechAmt(j,content)
+                                                                        class="form-control">
                                                                     </td>
-                                                                    <td> <input type="number" min="0"  formControlName="techAmt"
-                                                                            class="form-control">
-                                                                    </td>
+
                                                                     <!-- <td> <input  type="text"
                                                                             formControlName="contr1" class="form-control">
                                                                     </td>

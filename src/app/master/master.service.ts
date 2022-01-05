@@ -791,8 +791,9 @@ public AmcSchemeMasterSubmit(AmcSchemeMasterRecord) {
   const options = {
     headers: this.headers
   };
-  const url = this.ServerUrl + '/AmcSchemeMst';
+  const url = this.ServerUrl + '/schHdr';
   return this.http.post(url, AmcSchemeMasterRecord, options);
+  // http://localhost:8081/schHdr
 }
 
 
