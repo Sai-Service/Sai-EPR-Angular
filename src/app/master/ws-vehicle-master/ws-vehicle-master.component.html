@@ -457,23 +457,46 @@
                     <input   type="text"  formControlName="policyNo"  id="policyNo" [(ngModel)]="policyNo" class="form-control" >
                 </td>
 
+                
+                
+                <td style="width: 12%" class="LabelFontStyle">Ins&nbsp;Company:&nbsp;</td>
+
+                <!-- <td>
+                    <input   type="text"  formControlName="insCompanyName"  id="insCompanyName" [(ngModel)]="insCompanyName" class="form-control" >
+                </td> -->
+
+                   <td colspan="3">
+                       <select  style="width: 100%;"  formControlName="insurerCompId" id="insurerCompId"
+                             (ngModelChange)='onInsurerNameSelected($event)'  class="form-control">
+                             <option></option>
+                             <option *ngFor="let sc of insNameList"  [ngValue]="sc.customerId">
+                             {{sc.custName}}
+                            </option>
+                       </select>
+                   </td>
+
+
+             </tr>
+             <tr>
                 <td style="width: 12%" class="LabelFontStyle">Policy&nbsp;Expiry:&nbsp;</td>
 
                 <td>
                     <input   type="date"  formControlName="insuDate"  id="insuDate" [(ngModel)]="insuDate" class="form-control" >
                 </td>
-                <td style="width: 12%" class="LabelFontStyle">Ins&nbsp;Company:&nbsp;</td>
-
-                <td>
-                    <input   type="text"  formControlName="insCompanyName"  id="insCompanyName" [(ngModel)]="insCompanyName" class="form-control" >
-                </td>
-             </tr>
-             <tr>
-             
                 <td style="width: 12%" class="LabelFontStyle">Insurance&nbsp;Site:&nbsp;</td>
 
-                <td>
+                <!-- <td>
                     <input   type="text"  formControlName="inscompanySite"  id="inscompanySite" [(ngModel)]="inscompanySite" class="form-control" >
+                </td> -->
+
+                <td colspan="3">
+                    <select style="width: 100%;"   formControlName="insurerSiteId" id="insurerSiteId"
+                        class="form-control">
+                        <option>--Select--</option>
+                        <option *ngFor="let sc of insSiteList"  [ngValue]="sc.customerSiteId">
+                            {{sc.address1}}{{sc.address2}}-{{sc.address3}}-{{sc.location}}-{{sc.city}}-{{sc.pinCd}}-{{sc.state}}
+                        </option>
+                    </select>
                 </td>
              </tr>
 

@@ -494,7 +494,10 @@ export class PricelistMasterComponent implements OnInit {
 
 
   addRow(index) {
-    //  alert('addrow index '+index);
+   
+    var len1=this.lineDetailsArray().length-1;
+  
+    if(len1===index){
 
      this.CheckLineValidations(index);
      if (this.lineValidation==true) 
@@ -513,6 +516,7 @@ export class PricelistMasterComponent implements OnInit {
         this.displayLineDetails=false;
         this.lineDetailsArray().push(this.lineDetailsGroup()); }
       }
+    }
   }
 
   duplicateLineCheck(index,mItem,itemSeg,bCode) {
