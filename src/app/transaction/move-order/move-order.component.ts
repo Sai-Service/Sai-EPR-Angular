@@ -113,7 +113,9 @@ export class MoveOrderComponent implements OnInit {
  public batchdata = [];
  pricedata:any[];
  regNo:string;
- 
+
+ userList2: any[] = [];
+  lastkeydown1: number = 0;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService,private serviceService: ServiceService) {
    this.moveOrderForm=fb.group({
@@ -145,7 +147,7 @@ export class MoveOrderComponent implements OnInit {
    });
   }
   trxLinesList():FormArray{
-   
+
     return this.moveOrderForm.get("trxLinesList") as FormArray
   }
 
@@ -176,13 +178,13 @@ export class MoveOrderComponent implements OnInit {
     });
   }
   addnewtrxLinesList(i:number){
-    
+
     if(i>-1)
     {
     this.reservePos(i);
     }
         this.trxLinesList().push(this.newtrxLinesList());
-      
+
   var len = this.trxLinesList().length;
   var patch = this.moveOrderForm.get('trxLinesList') as FormArray;
   (patch.controls[len - 1]).patchValue(
@@ -204,30 +206,30 @@ export class MoveOrderComponent implements OnInit {
     this.divisionId=Number(sessionStorage.getItem('divisionId'));
     this.issueBy=(sessionStorage.getItem('name'));
     this.deptName=(sessionStorage.getItem('deptName'));
-    
-    
+
+
     // alert(this.issueBy);
     console.log(this.divisionId);
 
- 
-    
+
+
     this.service.transType().subscribe(
       data =>{ this.transType = data;
         console.log(this.transType);
         this.transactionTypeId=this.transType[0].transactionTypeId;
 
        } );
-       
+
 
     this.service.subInvCode2(this.deptId,this.divisionId).subscribe(
       data => {this.subInvCode = data;
         console.log(this.subInventoryId);
         // alert('subInventoryCode');
         this.frmSubInvCode=this.subInvCode.subInventoryCode;
-    
+
        });
 
-    
+
     // this.service.ItemIdList().subscribe(
     //   data =>{ this.ItemIdList = data;
     //     console.log(this.invItemId);
@@ -247,7 +249,7 @@ export class MoveOrderComponent implements OnInit {
       (data => {this.issueByList = data;
           console.log(this.issueByList);
         });
-        
+
    this.addnewtrxLinesList(-1);
    var patch = this.moveOrderForm.get('trxLinesList') as  FormArray
       (patch.controls[0]).patchValue(
@@ -269,16 +271,16 @@ newmoveOrder()
     // alert(this.moveOrderForm.valid+'status');
     // alert(this.trxLinesList().status);
     // (<FormArray>this.moveOrderForm.get('trxLinesList')).controls.forEach((group: FormGroup) => {
-    //   (<any>Object).values(group.controls).forEach((control: FormControl) => { 
+    //   (<any>Object).values(group.controls).forEach((control: FormControl) => {
     //       if(control.valid){
     //       console.log(control.value+'---'+control.valid);
     //       }else{
     //         // debugger;
     //         console.log('invalid ---' +control.value);
     //       }
-    //   }) 
+    //   })
     //   console.log('*******'  );
-    // }); 
+    // });
   if (this.moveOrderForm.valid) {
  var trans=this.transType.find(d=>d.transactionTypeId===this.moveOrderForm.get('transactionTypeId').value);
 //  var loc=this.getfrmSubLoc.find(d=>d.locatorId===this.moveOrderForm.get('frmLocatorId').value);
@@ -303,7 +305,7 @@ newmoveOrder()
       alert("Record inserted Successfully");
       // this.display=false;
       this.moveOrderForm.patchValue({frmSubInvCode:subCode});
-     
+
       for (let i = 1; i < res.obj.trxLinesList.length-1 ; i++) {
         var trxList:FormGroup=this.newtrxLinesList();
         this.trxLinesList().push(trxList);
@@ -313,7 +315,7 @@ newmoveOrder()
       // this.displayButton=false;
       this.moveOrderForm.disable();
       // this.displaytransactionTypeName=false;
-      
+
       // this.moveOrderForm.reset();
     }
     else
@@ -326,10 +328,10 @@ newmoveOrder()
   })
 }
 else{
-  
+
     alert('else');
     this.HeaderValidation();
-  
+
 }
 }
 
@@ -343,7 +345,7 @@ var trxLnArr1 = this.moveOrderForm.get('trxLinesList').value;
     var transtypeid = this.moveOrderForm.get('transactionTypeId').value;
     var jobno1=this.moveOrderForm.get('repairNo').value;
     var locId1=this.moveOrderForm.get('locId').value
-   
+
       let variantFormGroup = <FormGroup>variants.controls[i];
       variantFormGroup.addControl('transactionTypeId', new FormControl(transtypeid, Validators.required));
       variantFormGroup.addControl('locId', new FormControl(locId1, Validators.required));
@@ -352,7 +354,7 @@ var trxLnArr1 = this.moveOrderForm.get('trxLinesList').value;
       // variantFormGroup.addControl('onHandId', new FormControl(trxLnArr1[i].id, Validators.required));
       variantFormGroup.addControl('onHandId', new FormControl(trxLnArr1[i].id,[]));
       variantFormGroup.addControl('transactionNumber', new FormControl(jobno1, Validators.required));
-   
+
   // var reserveinfo=formValue[0];
 
   this.service.reservePost(variants.value[i]).subscribe((res:any)=>{
@@ -373,10 +375,11 @@ var trxLnArr1 = this.moveOrderForm.get('trxLinesList').value;
 onChangeRepairNo(event)
 {
   var selregno=this.workshopIssue.find(d=>d.jobCardNum===event)
+  this.moveOrderForm.patchValue({regNo:selregno.regNo});
   this.serviceService.billableTyIdLstFN(event, selregno.regNo)
   .subscribe(
     data1 => {
-     
+
       this.Billabletype = data1;
       console.log(data1);
       console.log(this.Billabletype);
@@ -392,32 +395,43 @@ onChangeRepairNo(event)
  onOptionSelectedSubInv(event:any,i)
  {
   //  alert('----' + event +'*****');
+  var trxLnArr2 = this.moveOrderForm.get('trxLinesList') as FormArray;
    if(event==='')
-   {return;
+   {
+    trxLnArr2.controls[i].reset();
+    trxLnArr2.controls[i].patchValue({lineNumber:i+1});
+    return;
    }
+   let selItem= this.ItemIdList.find(d=>d.SEGMENT===event);
+   if(selItem!=undefined){
   var subInv=this.subInvCode.subInventoryId;
   var repNo=this.moveOrderForm.get('repairNo').value;
 
   let locId1=this.moveOrderForm.get('locId');
   var trxLnArr1 = this.moveOrderForm.get('trxLinesList').value;
-  var trxLnArr2 = this.moveOrderForm.get('trxLinesList') as FormArray;
-  var itemid=trxLnArr1[i].invItemId;
-  // alert (itemid);
-  // var frmSubCode=trxLnArr1[i].frmSubInvCode;
-  // alert("FromSub"+frmSubCode);
-  // alert(select1);
-  // alert(trxLnArr1.get +"item");
 
-    // alert('Item'+itemid);
+  var itemid =selItem.itemId;
+  trxLnArr2.controls[i].patchValue({invItemId:selItem.itemId})
+
+
   var subInv=this.subInvCode.subInventoryId;
+  this.service.getItemDetail(itemid).subscribe
+  (data => {this.getItemDetail = data;
+    // alert("this.getItemDetail.description" + this.getItemDetail.description);
+    trxLnArr2.controls[i].patchValue({description: this.getItemDetail.description});
+    trxLnArr2.controls[i].patchValue({uom:this.getItemDetail.uom});
+    // trxLnArr2.controls[i].patchValue({segment:this.getItemDetail.segment});
+    // trxLnArr1.controls[i].patchValue({frmSubInvCode:this.subInvCode.subInventoryCode});
+  }
+  );
     this.service.getfrmSubLoc(this.locId,itemid,subInv).subscribe(
       data =>{
         //  this.getfrmSubLoc = data;
         console.log(data);
         var getfrmSubLoc =data;
         //   // alert(getfrmSubLoc.segmentName+'SegmentName')
-  
-  
+
+
           // alert(i +'i');
           this.locData[i] = data;
           if(getfrmSubLoc.length==1)
@@ -437,20 +451,9 @@ onChangeRepairNo(event)
          trxLnArr2.controls[i].patchValue({onHandQty:getfrmSubLoc[0].onHandQty})
          trxLnArr2.controls[i].patchValue({id:getfrmSubLoc[0].id});
           }
-  
-      });
-  
 
-    this.service.getItemDetail(itemid).subscribe
-    (data => {this.getItemDetail = data;
-      // alert("this.getItemDetail.description" + this.getItemDetail.description);
-      trxLnArr2.controls[i].patchValue({description: this.getItemDetail.description});
-      trxLnArr2.controls[i].patchValue({uom:this.getItemDetail.uom});
-      trxLnArr2.controls[i].patchValue({segment:this.getItemDetail.segment});
-      // trxLnArr1.controls[i].patchValue({frmSubInvCode:this.subInvCode.subInventoryCode});
-    }
-    );
-    this.service.getreserqty(this.locId,itemid).subscribe
+      });
+     this.service.getreserqty(this.locId,itemid).subscribe
     (data=>{
       this.resrveqty=data;
       trxLnArr2.controls[i].patchValue({resveQty:this.resrveqty});
@@ -460,19 +463,13 @@ onChangeRepairNo(event)
       if (res.code === 200)
       {
          this.pricedata=res.obj;
-        for(let j=0;j<res.obj.length;j++)
-        { 
-          this.batchdata.push({'batchCode': res.obj[j].batchCode});
-        }
-        // if(this.batchdata.length===1)
+         console.log(this.pricedata);
+        // for(let j=0;j<res.obj.length;j++)
         // {
-        //   alert('hello');
-        //   trxLnArr2.controls[i].patchValue({batchCode:this.batchdata[0]});
+        //   this.batchdata.push({'batchCode': res.obj[j].batchCode});
         // }
-        // else{
-        trxLnArr2.controls[i].patchValue({batchCode:this.batchdata});
-        // }
-        // trxLnArr2.controls[i].patchValue({priceValue:res.obj.priceValue,batchCode:res.obj.batchCode});
+        trxLnArr2.controls[i].patchValue({batchCode:res.obj[0].batchCode});
+        trxLnArr2.controls[i].patchValue({priceValue:res.obj[0].priceValue});;
       }
       else {
         if (res.code === 400) {
@@ -481,17 +478,17 @@ onChangeRepairNo(event)
         }
       }
     });
-    
+  }
  }
 onOptionBatchCode(event,i)
 {
-  // alert(event);
+  alert(event);
   var selbatchCode=this.pricedata.find(d=>d.batchCode===event);
   var trxLnArr2 = this.moveOrderForm.get('trxLinesList') as FormArray;
   // alert(selbatchCode.priceValue+'Price');
   trxLnArr2.controls[i].patchValue({priceValue:selbatchCode.priceValue});;
 }
-AvailQty(event:any,i:number) 
+AvailQty(event:any,i:number)
 {
   var trxLnArr =this.moveOrderForm.get('trxLinesList').value;
   var itemid=trxLnArr[i].invItemId;
@@ -504,7 +501,7 @@ AvailQty(event:any,i:number)
   // let select2= this.subInvCode.find(d=>d.subInventoryCode===subcode.subInventoryCode);
   // alert(select2.subInventoryId+'Id')
   this.service.getonhandqty(Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId,locId,itemid).subscribe
-      (data =>{ 
+      (data =>{
       this.onhand1 = data;
       console.log(this.onhand1);
       var trxLnArr1=this.moveOrderForm.get('trxLinesList')as FormArray;
@@ -527,7 +524,7 @@ validate(i:number,qty1)
   var trxLnArr=this.moveOrderForm.get('trxLinesList').value;
   var trxLnArr1=this.moveOrderForm.get('trxLinesList') as FormArray
   let avalqty=trxLnArr[i].avlqty;
-  let qty=trxLnArr[i].quantity;  
+  let qty=trxLnArr[i].quantity;
 //  alert(avalqty+'avalqty');
 //  alert(trxLnArr[i].quantity +' qty');
   if(qty>avalqty)
@@ -578,7 +575,7 @@ validate(i:number,qty1)
         // this.moveOrderForm.get('trxLinesList').patchValue({invItemId:select1.SEGMENT})
         // // (control.controls[i]).patchValue({ invItemId: select1.SEGMENT });
         // }
-        
+
         this.displayButton=false;
         this.displaySegment=false;
         this.displayLocator=false;
@@ -589,11 +586,11 @@ validate(i:number,qty1)
  }
  searchByJobNo(JobNo)
  {
-   
+
    var jobno=(this.moveOrderForm.get('JobNo').value);
    this.service.getsearchByJob(jobno).subscribe(
      data=>{
-          this.lstcomment1=data;    
+          this.lstcomment1=data;
      }
    )
  }
@@ -618,41 +615,63 @@ validate(i:number,qty1)
   HeaderValidation() {
     var isValid:boolean=false;
   Object.keys(this.moveOrderForm.controls).forEach(
-    (key) => { 
+    (key) => {
       const control=this.moveOrderForm.controls[key] as FormControl|FormArray|FormGroup
-      
+
       if(control instanceof FormControl){
         control.markAsTouched();
       }
       else if (control instanceof FormArray){
-          
+
   (<FormArray>this.moveOrderForm.get('trxLinesList')).controls.forEach((group: FormGroup) => {
-    (<any>Object).values(group.controls).forEach((control: FormControl) => { 
+    (<any>Object).values(group.controls).forEach((control: FormControl) => {
         control.markAsTouched();
-    }) 
+    })
   });
       }
       else if  (control instanceof FormGroup){}
       // isValid=this.hasRequiredField(control);
-      
+
   }) ;
 
   // return isValid;
-   
+
   }
-  
-  
-  
+
+
+
   getGroupControl(fieldName) {
     // alert('nam'+fieldName);
     // return (<FormArray>this.poInvoiceForm.get('obj')).at(index).get(fieldName);
     return(this.moveOrderForm.get(fieldName));
   }
-   
+
   getGroupControllinewise(index,fieldName) {
     // alert('nam'+fieldName);
     return (<FormArray>this.moveOrderForm.get('trxLinesList')).at(index).get(fieldName);
-    
+
   }
+
+  getInvItemId($event)
+{
+  // alert('in getInvItemId')
+   let userId=(<HTMLInputElement>document.getElementById('invItemIdFirstWay')).value;
+   this.userList2=[];
+   if (userId.length > 2) {
+    if ($event.timeStamp - this.lastkeydown1 > 200) {
+      this.userList2 = this.searchFromArray1(this.ItemIdList, userId);
+    }
+  }
+}
+searchFromArray1(arr, regex) {
+  let matches = [], i;
+  for (i = 0; i < arr.length; i++) {
+    if (arr[i].match(regex)) {
+      matches.push(arr[i]);
+    }
+  }
+  return matches;
+};
+
 
 }

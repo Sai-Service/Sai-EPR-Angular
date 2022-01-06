@@ -1305,12 +1305,12 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
         data => {
           this.orderedItem = data.description;
           console.log(data.description);
-         
+
           this.itemMap.set(itemDesc, data);
           this.itemMap2.set(lnNo, this.itemMap.get(itemDesc));
           if (data.length == 1) {
             (controlinv.controls[lnNo]).patchValue({ 'segment': data[0].segment });
-            
+
           }
           if (data.length === 0) {
             (controlinv.controls[lnNo]).patchValue({ 'segment': '' });
@@ -1387,7 +1387,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
             this.CounterSaleOrderBookingForm.patchValue({ tcsYN: data.obj.tcsYN });
             this.CounterSaleOrderBookingForm.patchValue({ custName: data.obj.custName });
             this.CounterSaleOrderBookingForm.patchValue({ customerId: data.obj.customerId });
-            
+
             this.CounterSaleOrderBookingForm.patchValue({ tcsPer: data.obj.tcsPer });
             this.CounterSaleOrderBookingForm.patchValue({ custAccountNo: custAccountNo });
             let select = this.payTermDescList.find(d => d.lookupValueId === this.selCustomer.termId);
@@ -1483,7 +1483,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     let selSite = this.custSiteList.find(d => d.siteName === siteName);
     console.log(selSite);
     console.log(this.custSiteList);
-    
+
     // alert(selSite.ouId);
 
     if (selSite.ouId != (sessionStorage.getItem('ouId'))) {
@@ -1492,7 +1492,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     else {
       // alert(this.selCustomer)
       console.log(this.selCustomer);
-      
+
       // alert(this.selCustomer.customerId)
       this.CounterSaleOrderBookingForm.patchValue(selSite);
       // this.custName = this.custSiteList.custName;
@@ -2048,7 +2048,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                             var lotList = [{ locatorId: 0, segmentName: 'Not Found' }]
                             controlinv.controls[k].patchValue({ frmLocatorId: lotList });
                             controlinv.controls[k].patchValue({ onHandQty: 0 });
-                            controlinv.controls[k].get('frmLocatorId').disable();                      
+                            controlinv.controls[k].get('frmLocatorId').disable();
                             var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
                             controlinv.controls[k].patchValue({ Avalqty: '' });
                             controlinv.controls[k].patchValue({ pricingQty: '' });
@@ -2068,7 +2068,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                             // alert(selLocator[0].id );
                             controlinv.controls[k].get('frmLocatorId').enable();
                             if (this.getfrmSubLoc.length == 1) {
-                             
+
                               controlinv.controls[k].patchValue({ onHandId: selLocator[0].segmentName });
                               controlinv.controls[k].patchValue({ frmLocatorId: selLocator[0].ROWNUM });
                               controlinv.controls[k].patchValue({ frmLocator: selLocator[0].segmentName });
@@ -2076,7 +2076,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                               controlinv.controls[k].patchValue({ id: selLocator[0].id });
                               controlinv.controls[k].patchValue({ unitSellingPrice: selLocator[0].prc });
                             }
-                            else {       
+                            else {
                               // alert(selLocator[0].segmentName);
                               alert('Please check Item has old stock with price');
                               controlinv.controls[k].patchValue({ frmLocatorId: selLocator[0].ROWNUM });
@@ -2568,7 +2568,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
           tcsAmt1 = Math.round((totAmt * tcsPer / 100 + Number.EPSILON) * 100) / 100;
           //totAmt = totAmt + tcsAmt1;
         }
-      
+
       }
       console.log(formArr);
       var ln = i
@@ -2577,7 +2577,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       formArr.controls[i].get('pricingQty').enable();
       formArr.controls[i].get('flowStatusCode').enable();
     }
-      
+
     }
 
     basicAmt = Math.round(((basicAmt) + Number.EPSILON) * 100) / 100;
