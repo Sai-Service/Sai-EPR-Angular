@@ -373,7 +373,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
         // this.Item[i+1].nativeElement.focus();
         // (document.getElementById('btnrm'+i+1) as HTMLInputElement).disabled = true;`
       }
-     
+
       this.cycleLinesList().controls[len - 1].get('physicalQty').disable();
       this.cycleLinesList().controls[len - 1].get('LocatorSegment').disable();
 
@@ -557,13 +557,13 @@ export class MiscellaneousTransactionComponent implements OnInit {
   onOptionTypeSelect(event) {
     this.addnewcycleLinesList(-1);
     this.compileType = event;
-    debugger;
+    // debugger;
     if (event === 13) {
       this.service
         .searchByItemSegmentDiv(this.divisionId, '36DH1601')
         .subscribe((data) => {
           this.ItemIdList = data;
-          
+
         });
     }
     if (event === 4) {
@@ -572,7 +572,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
         .subscribe((data) => {
           this.ItemIdList = data;
           console.log(this.newRow.controls.segment);
-        
+
           //(<any>this.newRow.controls.segment).nativeElement.focus();
         });
     }
@@ -582,7 +582,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
         lineNumber: 1,
       });
       this.displayRemoveRow[0] = false;
-     
+
     }
   }
 
@@ -1235,7 +1235,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
   }
 
   itemLoad(trxLineIndex){
-    alert("i m loaded")
+    // alert("i m loaded")
   }
 
   searchByCompileID(itemId) {
