@@ -608,16 +608,15 @@ export class JobCardComponent implements OnInit {
     return <FormArray>this.jobcardForm.get('jobCardLabLines')
   }
   addTechRow(index) {
-    //  for (let i = 0; i < this.splitDetailsArray().length-1; i++) {
-    //   this.TechSplitValidation(i);
-    // } 
 
+    var len1=this.splitDetailsArray().length-1
+    // alert ("index,len1 :" +index +","+len1);
+    if(len1===index){
     this.TechSplitValidation(index);
     if(this.techLineValidation && this.techTotalValidation===false) {
     this.splitDetailsArray().push(this.splitDetailsGroup()); 
-
-  }
-  }
+    }
+   }}
 
   // RemoveTechRow(index) {
 
@@ -897,6 +896,7 @@ export class JobCardComponent implements OnInit {
     var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
     var serModel=this.jobcardForm.get('serviceModel').value;
     let select = this.LaborItemList.find(d => d.segment === event);
+    // let select = this.LaborItemList.find(d => d.itemId === event);
     // alert ("event : "+event + " index :"+i + ","+select.description);
     if(select) {
 
@@ -904,6 +904,7 @@ export class JobCardComponent implements OnInit {
     if(this.duplicateLabLineItem) { return;}
    
     (patch.controls[i]).patchValue({ itemId: select.itemId });
+    (patch.controls[i]).patchValue({ segment: select.segment });
     (patch.controls[i]).patchValue({ description: select.description });
 
    
@@ -1074,16 +1075,17 @@ export class JobCardComponent implements OnInit {
 
 
   addRow(index) {
-
+   
     var arrayControl = this.jobcardForm.get('jobCardLabLines').value
-
+    var len1= this.lineDetailsArray.length-1;
+    // alert ("Add Row index :"+index  + "  len1:"+len1);
     var invItemId = arrayControl[index].itemId;
     // alert("Item Id Jc lab line : "+invItemId +" , "+index);
 
+    if(len1===index) {
     this.checkLabLineValidation(index);
 
-    if(this.labLineValidation) {
-
+    if(this.labLineValidation ) {
     // if (invItemId != null ) {
 
       this.lineDetailsArray.push(this.lineDetailsGroup());
@@ -1111,7 +1113,7 @@ export class JobCardComponent implements OnInit {
         // polineNum: aa,
       }
     );
-
+    }
   }
 
   checkLabLineValidation(index){

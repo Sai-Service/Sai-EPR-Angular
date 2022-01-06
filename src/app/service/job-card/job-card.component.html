@@ -1445,8 +1445,9 @@
                                                                                 list="dynmicUserIds1" class="form-control"  style="width: 8rem;"
                                                                                 (ngModelChange)="serchByitemId($event,i)" />
                                                                                 <datalist id="dynmicUserIds1">
-                                                                                    <option *ngFor="let item of LaborItemList" [ngValue]="item.itemId">
-                                                                                            {{item.segment}}
+                                                                                    <option *ngFor="let item of LaborItemList" [(ngValue)]="item.itemId">
+                                                                                            {{item.segment}} 
+                                                                                            <!-- - {{item.description}} -->
                                                                                     </option>
                                                                                 </datalist> 
                                                                             </td>  
