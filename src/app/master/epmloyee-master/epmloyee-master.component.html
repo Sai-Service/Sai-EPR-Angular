@@ -19,9 +19,9 @@
                         <td>
                             <input formControlName="ticketNo" [(ngModel)]='ticketNo' value={{ticketNo}} class="form-control"
                             [ngClass]="{ 'is-invalid': submitted && f.ticketNo.errors }"
-                            placeholder="Enter ticket No">
+                            placeholder="Enter ticket No" style="text-transform: uppercase;">
                         <div *ngIf="submitted && f.ticketNo.errors" class="invalid-feedback">
-                            <div *ngIf="f.ticketNo.errors.required">Ticke tNo must be a valid</div>
+                            <div *ngIf="f.ticketNo.errors.required">Ticket No must be a valid</div>
                             <div *ngIf="f.ticketNo.errors.maxlength">Maximum length is 10 Characters</div>
                             <div *ngIf="f.ticketNo.errors.minlength">Minimum length is 5 Characters</div>
                             <div *ngIf="f.ticketNo.errors.pattern">Cannot have special</div>
@@ -98,13 +98,13 @@
                             placeholder="Enter first  name" uppercase  style="text-transform: uppercase;" (keyup)="onKey($event)">
                         <div *ngIf="submitted && f.fname.errors" class="invalid-feedback">
                             <div *ngIf="f.fname.errors.required">First Name must be a valid</div>
-                            <div *ngIf="f.fname.errors.maxLength">Maximum 35 characters allowed </div>
+                            <div *ngIf="f.fname.errors.maxlength">Maximum 35 characters allowed </div>
                         </div>
                         <!-- <span
                             *ngIf="!employeeMasterForm.get('fname').valid && employeeMasterForm.get('fname').touched">Please
                             Enter First Name </span> -->
                         </td>
-                        <td style="width: 10%" class="LabelFontStyle1">
+                        <td style="width: 10%" class="LabelFontStyle">
                             Middle &nbsp;Name&nbsp;:
                         </td>
                         <td>
@@ -113,7 +113,7 @@
                             placeholder="Enter middle  name" uppercase  style="text-transform: uppercase;" (keyup)="onKey($event)">
                         <div *ngIf="submitted && f.mname.errors" class="invalid-feedback">
                             <div *ngIf="f.mname.errors.required">Middle  Name must be a valid</div> 
-                            <div *ngIf="f.mname.errors.maxLength">maximum 35 characters allowed </div>
+                            <div *ngIf="f.mname.errors.maxlength">maximum 35 characters allowed </div>
                         </div>
                         <!-- <span
                             *ngIf="!employeeMasterForm.get('mname').valid && employeeMasterForm.get('mname').touched">Please
@@ -261,7 +261,7 @@
                             placeholder="Please enter contact no">
                         <div *ngIf="submitted && f.contact1.errors" class="invalid-feedback">
                             <div *ngIf="f.contact1.errors.required">Contact no is required</div>
-                            <div *ngIf="f.contact1.errors.maxLength">Contact no must be a valid for 10 digit</div>
+                            <div *ngIf="f.contact1.errors.maxlength">Contact no must be a valid for 10 digit</div>
                             <div *ngIf="f.contact1.errors.pattern">Contact no must be a valid and 10 charecter</div>
                         </div>
                         <!-- <span
@@ -277,7 +277,7 @@
                             placeholder="Please enter contact no">
                         <div *ngIf="submitted && f.contact2.errors" class="invalid-feedback">
                             <div *ngIf="f.contact2.errors.required">Contact no is required</div>
-                            <div *ngIf="f.contact2.errors.maxLength">Contact no must be a valid for 10 digit
+                            <div *ngIf="f.contact2.errors.maxlength">Contact no must be a valid for 10 digit
                             </div>
                             <div *ngIf="f.contact2.errors.pattern">Contact no must be a valid and 10 charecter
                             </div>
@@ -330,7 +330,7 @@
                             <div *ngIf="submitted && f.loginPass.errors" class="invalid-feedback">
                                 <div *ngIf="f.loginPass.errors.required">Please
                                     Enter password upto 10 digits</div>
-                                <div *ngIf="f.loginPass.errors.maxLength">Please
+                                <div *ngIf="f.loginPass.errors.maxlength">Please
                                     Enter password upto 10 digits
                                 </div>
                                
@@ -365,7 +365,7 @@
                             <div *ngIf="f.ticketNo.errors.required">Ticket No must be a valid</div>
                             <!-- <div *ngIf="f.divisionCode.errors.pattern">orgId must be a valid for 3 digit
                     </div> -->
-                            <div *ngIf="f.ticketNo.errors.maxLength">Ticket number must be a valid 
+                            <div *ngIf="f.ticketNo.errors.maxlength">Ticket number must be a valid 
                             </div>
                         </div>
                         <!-- <span
@@ -422,7 +422,7 @@
                             <div *ngIf="f.fname.errors.required">First Name must be a valid</div>
                             <!-- <div *ngIf="f.divisionCode.errors.pattern">orgId must be a valid for 3 digit
                     </div> -->
-                            <div *ngIf="f.fname.errors.maxLength">First Name must be a valid 
+                            <div *ngIf="f.fname.errors.maxlength">First Name must be a valid 
                             </div>
                         </div>
                         <!-- <span
@@ -440,7 +440,7 @@
                             <div *ngIf="f.mname.errors.required">Middle  Name must be a valid</div>
                             <!-- <div *ngIf="f.divisionCode.errors.pattern">orgId must be a valid for 3 digit
                     </div> -->
-                            <div *ngIf="f.mname.errors.maxLength">Middle  Name must be a valid 
+                            <div *ngIf="f.mname.errors.maxlength">Middle  Name must be a valid 
                             </div>
                         </div>
                         <!-- <span
@@ -458,7 +458,7 @@
                             <div *ngIf="f.lname.errors.required">Last Name must be a valid</div>
                             <!-- <div *ngIf="f.divisionCode.errors.pattern">orgId must be a valid for 3 digit
                     </div> -->
-                            <div *ngIf="f.lname.errors.maxLength">Last  Name must be a valid 
+                            <div *ngIf="f.lname.errors.maxlength">Last  Name must be a valid 
                             </div>
                         </div>
                         <!-- <span
@@ -478,7 +478,7 @@
                             <div *ngIf="f.fullName.errors.required">Full Name must be a valid</div>
                             <!-- <div *ngIf="f.divisionCode.errors.pattern">orgId must be a valid for 3 digit
                     </div> -->
-                            <div *ngIf="f.fullName.errors.maxLength">Full  Name must be a valid 
+                            <div *ngIf="f.fullName.errors.maxlength">Full  Name must be a valid 
                             </div>
                         </div>
                         <!-- <span
@@ -572,7 +572,7 @@
                         <div *ngIf="submitted && f.contact1.errors" class="invalid-feedback">
                             <!-- <div *ngIf="submitted && f.mobile1.errors" class="invalid-feedback"> -->
                                 <div *ngIf="f.contact1.errors.required">mobile must be 10 digit</div>
-                                <div *ngIf="f.contact1.errors.maxLength">mobile must be 10 digit
+                                <div *ngIf="f.contact1.errors.maxlength">mobile must be 10 digit
                                 </div>
                             </div>
                         <!-- <span
@@ -588,11 +588,11 @@
                             placeholder="Please enter contact no">
                         <div *ngIf="submitted && f.contact2.errors" class="invalid-feedback">
                             <!-- <div *ngIf="f.contact2.errors.required">Contact no is required</div> -->
-                            <!-- <div *ngIf="f.contact2.errors.maxLength">Contact no must be a valid for 10 digit
+                            <!-- <div *ngIf="f.contact2.errors.maxlength">Contact no must be a valid for 10 digit
                             </div>
                             <div *ngIf="f.contact2.errors.pattern">Contact no must be a valid and 10 charecter
                             </div> -->
-                            <div *ngIf="f.contact2.errors.maxLength">mobile must be 10 digit
+                            <div *ngIf="f.contact2.errors.maxlength">mobile must be 10 digit
                             </div>
                         </div>
                         <!-- <span
