@@ -1,5 +1,5 @@
 <div class="center">
-  <form [formGroup]="moveOrderForm" (ngSubmit)="MoveOrder(moveOrderForm.value)">
+  <form [formGroup]="moveOrderForm" (ngSubmit)="MoveOrder(moveOrderForm.value)" #mvForm>
   <table style="width: 100%;background-color: white;">
       <tr>
           <!-- class="PageHeader" -->
@@ -94,7 +94,7 @@
                     From Subinventory:
                   </td>
                   <td>
-                      <input type="text" class="form-control" formControlName="frmSubInvCode" [(ngModel)]="frmSubInvCode">
+                      <input disabled type="text" class="form-control" formControlName="frmSubInvCode" [(ngModel)]="frmSubInvCode">
                     <!-- <select class="form-control" formControlName="frmSubInvCode">
                       <option>--Select--</option>
                       <option *ngFor="let subCode of subInvCode" [ngValue]="subCode">{{subCode.subInventoryCode}}</option>
@@ -104,26 +104,26 @@
                     To Subinventory:
                   </td>
                   <td>
-                         <input type="text" class="form-control" formControlName="toSubInvCode" [(ngModel)]="toSubInvCode">
+                         <input disabled type="text" class="form-control" formControlName="toSubInvCode" [(ngModel)]="toSubInvCode">
                     <!-- <select type="text" class="form-control" formControlName="toSubInvCode">
                       <option>--Select--</option>
                       <option *ngFor="let subCode of subInvCode">{{subCode.subInventoryCode}}</option>
                     </select> -->
-        
+
                   </td>
                      <!-- <td> -->
             <input type="hidden" formControlName="locId" [(ngModel)]="locId">
           <!-- </td> -->
           <td style="width: 15%" class="LabelFontStyle">
-              Remark:
-            </td> 
+              Registration No:
+            </td>
             <td>
-              <input type="text" class="form-control" formControlName="remarks">
+              <input disabled type="text" class="form-control" formControlName="regNo">
             </td>
         </tr>
-       
-       
-       
+
+
+
         <tr>
           <td style="width: 15%" class="LabelFontStyle">
             Issue By:
@@ -131,7 +131,7 @@
           <td>
               <input disabled type="text" class="form-control" formControlName="issueBy" [(ngModel)]="issueBy">
             </td>
-        
+
           <td style="width: 15%" class="LabelFontStyle1">
             Issue To:
           </td>
@@ -148,12 +148,17 @@
             Status:
           </td>
           <td>
-            <input type="text" class="form-control" formControlName="headerStatus" [(ngModel)]="headerStatus">
+            <input disabled type="text" class="form-control" formControlName="headerStatus" [(ngModel)]="headerStatus">
           </td>
 
         </tr>
         <tr>
-         
+          <td style="width: 15%" class="LabelFontStyle">
+            Remark:
+          </td>
+          <td>
+            <input type="text" class="form-control" formControlName="remarks">
+          </td>
         </tr>
       </table>
       <br>
@@ -192,17 +197,20 @@
                 <tr>
                     <!-- <input type="hidden" formControlName="locId" [(ngModel)]="locId"> -->
                 <td><input type="text" class="form-control"  style="height: 20px;width: 50px;" formControlName="lineNumber">
+                  <input hidden formControlName="uuidref">
                  </td>
                   <div *ngIf="displaySegment; then thenBlock1; else elseBlock1">
                 </div>
             <ng-template #thenBlock1>
-                <td><select  class="form-control" style="height: 20px;" formControlName="invItemId" (ngModelChange)='onOptionSelectedSubInv($event,trxLineIndex)'>
-                  <option>--Select--</option>
-                  <option *ngFor="let invId of ItemIdList" [ngValue]="invId.itemId" [value]="invId.itemId">{{invId.SEGMENT}}--{{invId.description}}</option>
-                </select>
-                <span
+                <td><input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;" (ngModelChange)='onOptionSelectedSubInv($event,trxLineIndex)' />
+                      <datalist id="dynmicUserIds1">
+                        <option *ngFor="let item of ItemIdList" [ngValue]="item.itemId">{{item.SEGMENT}}
+                          </option>
+                         </datalist>
+                         <input hidden formControlName="invItemId">
+                <!-- <span
                 *ngIf="getGroupControllinewise(trxLineIndex,'invItemId').touched && getGroupControllinewise(trxLineIndex,'invItemId').invalid" class="error">Valid Item
-               </span>
+               </span> -->
                 </td>
             </ng-template>
             <ng-template #elseBlock1>
@@ -214,14 +222,14 @@
                 <div *ngIf="displayLocator; then thenBlock2; else elseBlock2">
                   </div>
               <ng-template #thenBlock2>
-                <td><select class="form-control" style="height: 20px; width: 110px;" formControlName="frmLocatorId" (ngModelChange)='AvailQty($event,trxLineIndex)'>
-                  <option>--Select--</option>
+                <td><select class="form-control" style="height: 20px; width: 110px;" formControlName="frmLocatorId" name="frmLocatorId" (ngModelChange)='AvailQty($event,trxLineIndex)'>
+                  <!-- <option>--Select--</option> -->
                   <option *ngFor="let locId of  locData[trxLineIndex]" [ngValue]="locId.locatorId">{{locId.segmentName}}--{{locId.onHandQty}}</option>
                   <input hidden formControlName="frmLocatorId">
                 </select>
-                <span
-                *ngIf="getGroupControllinewise(trxLineIndex,'frmLocatorId').touched && getGroupControllinewise(trxLineIndex,'frmLocatorId').invalid" class="error">Valid Item
-               </span>
+                <!-- <span
+                <! *ngIf="getGroupControllinewise(trxLineIndex,'frmLocatorId').dirty && getGroupControllinewise(trxLineIndex,'frmLocatorId').invalid" class="error">Valid Item -->
+               <!-- </span> -->
                 </td>
               </ng-template>
               <ng-template #elseBlock2>
@@ -231,19 +239,28 @@
                 <input hidden formControlName="onHandQty">
                 <input hidden formControlName="id">
                 <td><select class="form-control" style="height: 20px; width: 70px;" formControlName="batchCode" (ngModelChange)="onOptionBatchCode($event,trxLineIndex)">
-                  <option *ngFor="let batcode of  batchdata" [value]="batcode.batchCode">{{batcode.batchCode}}</option>
+                  <option *ngFor="let batcode of  pricedata" [value]="batcode.batchCode">{{batcode.batchCode}}</option>
                  </select>                </td>
-                <td><input type="number" min="0"  class="form-control" style="height: 20px;width: 70px;" formControlName="priceValue"></td>
+                <td><input disabled type="number" min="0"  class="form-control" style="height: 20px;width: 70px;" formControlName="priceValue"></td>
                 <td><input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="avlqty"></td>
                 <input hidden  type="text"  formControlName="resveQty">
-                <td><input type="text" class="form-control" style="height: 20px;width: 50px;" formControlName="uom"></td>
+                <td><input disabled type="text" class="form-control" style="height: 20px;width: 50px;" formControlName="uom"></td>
                 <td><input type="number" min="0"  class="form-control" style="height: 20px;width: 50px;" formControlName="quantity" (change)="validate(trxLineIndex,qty)" #qty >
-                  <span
+                  <!-- <span
                   *ngIf="getGroupControllinewise(trxLineIndex,'quantity').touched && getGroupControllinewise(trxLineIndex,'quantity').invalid" class="error">Valid Item
-                 </span></td>
+                 </span> -->
+                 </td>
+
                 <td><input type="text" class="form-control" style="height: 20px;" formControlName="reason"></td>
+                <div *ngIf="displayaddButton; then thenBlockopen; else elseBlockfreeze"> </div>
+                 <ng-template #thenBlockopen>
                 <td><button type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;" (click)="addnewtrxLinesList(trxLineIndex)" ></button></td>
                 <td><button type="button" class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removenewtrxLinesList(trxLineIndex)"></button></td>
+                </ng-template>
+                <ng-template #elseBlockfreeze>
+                  <td><button disabled type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;" (click)="addnewtrxLinesList(trxLineIndex)" ></button></td>
+                  <td><button disabled type="button" class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removenewtrxLinesList(trxLineIndex)"></button></td>
+                  </ng-template>
               </tr>
               </ng-container>
               </tbody>
@@ -255,7 +272,7 @@
         </div>
       </div>
       <!-- </ng-template> -->
-    
+
         <table class="center">
           <tr>
             <div *ngIf="display; then thenBlock; else elseBlock">

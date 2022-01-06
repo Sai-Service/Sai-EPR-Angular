@@ -791,8 +791,9 @@ public AmcSchemeMasterSubmit(AmcSchemeMasterRecord) {
   const options = {
     headers: this.headers
   };
-  const url = this.ServerUrl + '/AmcSchemeMst';
+  const url = this.ServerUrl + '/schHdr';
   return this.http.post(url, AmcSchemeMasterRecord, options);
+  // http://localhost:8081/schHdr
 }
 
 
@@ -1507,8 +1508,8 @@ getsearchByJob(jobno):Observable<any>{
 }
 
 
-subInvCode(deptId):Observable<any>{
-  return this.http.get(this.ServerUrl +`/subInvMst/wipissue/${deptId}`);
+subInvCode(deptId,divId):Observable<any>{
+  return this.http.get(this.ServerUrl +`/subInvMst/wipissue?deptId=${deptId}&divisionId=${divId}`);
 }
 
 

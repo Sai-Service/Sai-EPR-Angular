@@ -33,6 +33,8 @@ interface IWsVehicleMaster {
   divisionId:number;
   divisionName:string;
   dealerCode:string;
+  insurerCompId:number;
+  insurerSiteId:number;
 
 
 }
@@ -63,6 +65,11 @@ export class WsVehicleMasterComponent implements OnInit {
   public colorCodeList: Array<string> = [];
   public FuelTypeList: Array<string> = [];
   public statusList: Array<string> = [];
+
+  public insNameList:Array<string>[];
+  public insSiteList:Array<string>[];
+
+
   // public dealerCodeList :Array<string>=[];
   dealerCodeList:any;
 
@@ -143,6 +150,9 @@ export class WsVehicleMasterComponent implements OnInit {
 
   insuDate: string;
   policyNo: string;
+
+  insurerCompId:number;
+  insurerSiteId:number;
   insCompanyName: string;
   inscompanySite: string;
 
@@ -317,6 +327,8 @@ export class WsVehicleMasterComponent implements OnInit {
       policyNo: [],
       insCompanyName: [],
       inscompanySite: [],
+      insurerCompId:[],
+      insurerSiteId:[],
 
       mcpNo: [],
       mcpPackage: [],
@@ -426,7 +438,7 @@ export class WsVehicleMasterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    $("#wrapper").toggleClass("toggled");
     this.name = sessionStorage.getItem('name');
     this.loginArray = sessionStorage.getItem('divisionName');
     this.divisionId = Number(sessionStorage.getItem('divisionId'));
@@ -536,7 +548,29 @@ export class WsVehicleMasterComponent implements OnInit {
         }
       );
 
+      this.service.insNameList()
+      .subscribe(
+        data => {
+          this.insNameList = data;
+          console.log(this.insNameList);
+        }
+      );
 
+
+  }
+
+
+  onInsurerNameSelected(customerId: number) {
+    // alert('in '+ customerId)
+    if(customerId>0) {
+    this.service.insSiteList(customerId)
+     .subscribe(
+      data => {
+        this.insSiteList = data.customerSiteMasterList;
+        console.log(this.insSiteList);
+      }
+    );
+    } else {this.insSiteList=null;}
   }
 
   transeData(val) {
