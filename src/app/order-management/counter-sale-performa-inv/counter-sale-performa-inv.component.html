@@ -3,7 +3,7 @@
     <table style="width: 100%;background-color: white;">
         <tr>
             <td colspan="4" class="PageHeader" style="width: 100%;">
-                &nbsp;Counter&nbsp;Sale&nbsp;Booking&nbsp;
+                &nbsp;Spares&nbsp;Proforma&nbsp;Invoice&nbsp;
             </td>
             <td colspan="2" align="right" style="background-color: #FFE4B5;text-align: right;width: 100%;">
                 &nbsp;Order&nbsp;No&nbsp;&nbsp;
@@ -119,6 +119,8 @@
         </legend>
         <table class="center" style="width: 100%;">
             <tr>
+                <!-- <input type="number" hidden formControlName="emplId" [(ngModel)]='emplId' value={{emplId}}
+                        class="form-control" style="width: 120px;"> -->
                 <td style="width: 15%" class="LabelFontStyle1">
                     Customer&nbsp;No&nbsp;:&nbsp;
                 </td>
@@ -361,7 +363,7 @@
                     </td>
                 </tr>
             </ng-template>
-            <div *ngIf="displayDMSCDMS; then thenDMSCDMS; else elseDMSCDMS"></div>
+            <div *ngIf="displayDMSCDMS; then thenDMSCDMS; "></div>
             <ng-template #thenDMSCDMS>
                 <tr>
                     <td style="width: 15%" class="LabelFontStyle">
@@ -373,7 +375,7 @@
                     </td>
                 </tr>
             </ng-template>
-            <ng-template #elseDMSCDMS>
+          
                 <tr>
                     <td style="width: 15%" class="LabelFontStyle">
                         Customer&nbsp;PO&nbsp;Number:&nbsp;
@@ -411,8 +413,7 @@
                         <input type="text" class="form-control">
                     </td>
                 </tr>
-            </ng-template>
-
+           
         </table>
     </fieldset>
     <fieldset class="RFS">
@@ -629,8 +630,8 @@
                                 <thead>
                                     <tr class="GridHeader">
                                         <th scope="col">Line No</th>
-                                        <th scope="col">Type Category</th>
-                                        <th scope="col">Item Search</th>
+                                        <!-- <th scope="col">Type Category</th> -->
+                                        <!-- <th scope="col">Item Search</th> -->
                                         <th scope="col">Item code</th>
                                         <th scope="col">Description</th>
                                         <th scope="col">HSN/SAC code</th>
@@ -646,7 +647,7 @@
                                         <th scope="col">IGST</th>
                                         <th scope="col">Total Amount</th>
                                         <th scope="col">MRP</th>
-                                        <th scope="col">Status</th>
+                                        <!-- <th scope="col">Status</th> -->
                                         <th scope="col">Add</th>
                                         <th scope="col">Remove</th>
                                     </tr>
@@ -665,7 +666,7 @@
                                                             {{i+1}}
                                                         </a>
                                                     </td>
-                                                    <td>
+                                                    <!-- <td>
                                                         <select formControlName="invType"
                                                             class="form-control"
                                                             style="height: 20px;font-size: 10px;width: 120px;">
@@ -674,19 +675,19 @@
                                                                 {{cate.codeDesc}}
                                                             </option>
                                                         </select>
-                                                    </td>
-                                                    <td>
+                                                    </td> -->
+                                                    <!-- <td>
                                                         <input type="text"
                                                             style="height: 20px;width: 100px;text-transform: uppercase;"
                                                             class="form-control" formControlName="itemSeg"
                                                             [(ngModel)]='itemSeg' name="itemSeg{{i}}"
                                                             (keydown.tab)="searchByItemSegmentDiv(itemSeg,i)" />
-                                                    </td>
+                                                    </td> -->
                                                     <td>
                                                         <input type="text" formControlName="segment"
                                                             id="invItemIdFirstWay" list="dynmicUserIds1"
                                                             class="form-control" style="height: 20px;width:120px;"
-                                                            (ngModelChange)='onOptionsSelectedDescription($event,i)'>
+                                                            (keyup)='filterRecord($event,i)'>
                                                         <datalist id="dynmicUserIds1">
                                                             <!-- <option>--Select--</option> -->
                                                             <option *ngFor="let item of  itemMap2.get(i)"
@@ -713,7 +714,7 @@
                                                     <td>
                                                         <input type="number" formControlName="pricingQty"
                                                             name="pricingQty{{i}}" class="form-control"
-                                                            (change)="onKey(i,'prc')" (keydown.enter)="enterKeyLock(i)"
+                                                            (change)="onKey(i,'prc')" 
                                                             style="height: 20px;width:50px;" min="0"
                                                             oninput="this.value = Math.abs(this.value)">
                                                         <input hidden type="text" formControlName="uom"
@@ -765,10 +766,10 @@
                                                         <input disabled type="number" formControlName="mrp"
                                                             class="form-control" style="height: 20px;width: 80px;">
                                                     </td>
-                                                    <td>
+                                                    <!-- <td>
                                                         <input disabled type="text" formControlName="flowStatusCode"
                                                             class="form-control" style="height: 20px;width: 100px;">
-                                                    </td>
+                                                    </td> -->
                                                 </ng-template>
                                                 <ng-template #elsesegmentInvType>
                                                     <td>
@@ -877,12 +878,12 @@
                                                     </div>
                                                     <!-- type="button" -->
                                                     <ng-template #thenaddRow>
-                                                        <button type="submit" class="btn btn-primary"
+                                                        <button type="button" class="btn btn-primary"
                                                             (click)="addRow(i)" style="width: min-content;"><i
                                                                 class="fa fa-plus"></i></button>
                                                     </ng-template>
                                                     <ng-template #elseaddRow>
-                                                        <button disabled type="submit" class="btn btn-primary"
+                                                        <button disabled type="button" class="btn btn-primary"
                                                             (click)="addRow(i)" style="width: min-content;"><i
                                                                 class="fa fa-plus"></i></button>
                                                     </ng-template>
