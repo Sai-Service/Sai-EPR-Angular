@@ -732,9 +732,13 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
         data => {
           this.priceListNameList = data;
           console.log(this.priceListNameList);
-          this.CounterSaleOrderBookingForm.patchValue({ priceListName: data[0].priceListName })
-          this.CounterSaleOrderBookingForm.patchValue({ priceListId: data[0].priceListHeaderId })
+          for (let i=0; i <data.length ; i++){
+          if (data[i].ouId===999){
+          this.CounterSaleOrderBookingForm.patchValue({ priceListName: data[i].priceListName })
+          this.CounterSaleOrderBookingForm.patchValue({ priceListId: data[i].priceListHeaderId })
         }
+        }
+      }
       );
 
 

@@ -1,12 +1,13 @@
 // import { Component, OnInit } from '@angular/core';
 import { PathLocationStrategy } from '@angular/common';
-import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener, ElementRef } from '@angular/core';
 import { FormArray, FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { data } from 'jquery';
 import { MasterService } from 'src/app/master/master.service';
 import { ServiceService } from 'src/app/service/service.service';
 import { DatePipe } from '@angular/common';
+import { v4 as uuidv4 } from 'uuid';
 
 
 interface ImoveOrder{
@@ -38,6 +39,13 @@ interface ImoveOrder{
     priceValue:number;
     batchCode:string;
     regNo:string;
+}
+
+
+export class wsIssueTrans {
+  segment: string;
+  Locator: string;
+  quantity: number;
 }
 
 @Component({
@@ -113,9 +121,15 @@ export class MoveOrderComponent implements OnInit {
  public batchdata = [];
  pricedata:any[];
  regNo:string;
+ uuidRef: string;
 
  userList2: any[] = [];
   lastkeydown1: number = 0;
+  displayaddButton:boolean=true;
+
+  public itemMap = new Map<string, wsIssueTrans>();
+
+  @ViewChild('mvForm') mvForm: ElementRef;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService,private serviceService: ServiceService) {
    this.moveOrderForm=fb.group({
@@ -154,13 +168,13 @@ export class MoveOrderComponent implements OnInit {
   newtrxLinesList(): FormGroup{
     return this.fb.group({
       lineNumber:[''],
-      invItemId:['',[Validators.required]],
+      invItemId:[''],
       // frmSubInvCode:[''],
-      frmLocatorId:['',[Validators.required]],
+      frmLocatorId:[''],
       uom:[''],
       segmentName:[],
       // quantity:[],
-      quantity:['',[Validators.required,Validators.pattern('[0-9]*')]],
+      quantity:[],
       reason:[''],
       toSubInvCode:[],
       toLocatorId:[],
@@ -175,27 +189,76 @@ export class MoveOrderComponent implements OnInit {
       id:[],
       priceValue:[],
       batchCode:[],
+      uuidRef: [''],
     });
   }
   addnewtrxLinesList(i:number){
 
     if(i>-1)
     {
-    this.reservePos(i);
-    }
-        this.trxLinesList().push(this.newtrxLinesList());
+      var trxLnArr1 = this.moveOrderForm.get('trxLinesList').value;
+      var itemqty = trxLnArr1[i].quantity;
+      var item1 = trxLnArr1[i].segment;
+      var loca = trxLnArr1[i].frmLocatorId;
+      // var uuidref = trxLnArr1[trxLineIndex].uuidRef;
 
+      //  alert(item1+itemqty+loca);
+      if (
+        item1 === '' ||
+        itemqty === undefined ||
+        loca === undefined ||
+        loca === '' ||
+        itemqty === ''
+      ) {
+        alert('Please enter Blank Data');
+        return;
+      }
+      if (!this.itemMap.has(item1)) {
+        this.reservePos(i);
+      }
+      // else {
+      //   // debugger;
+      //   this.deleteReserveLinewise(i);
+      //   this.reservePos(i);
+      // }
+
+     }
+        this.trxLinesList().push(this.newtrxLinesList());
+        var refId = uuidv4();
   var len = this.trxLinesList().length;
   var patch = this.moveOrderForm.get('trxLinesList') as FormArray;
   (patch.controls[len - 1]).patchValue(
     {
       lineNumber: len,
+      uuidRef: refId,
     }
   );
     // this.reservePos();
   }
   removenewtrxLinesList(trxLineIndex){
+    var len1 = this.trxLinesList().length;
+    if (len1 === 1) {
+      alert('You can not delete the line');
+      return;
+    }
+    var trxLnArr1 = this.moveOrderForm.get('trxLinesList').value;
+    var uuidref = trxLnArr1[trxLineIndex].uuidRef;
+    var itemid = trxLnArr1[trxLineIndex].segment;
     this.trxLinesList().removeAt(trxLineIndex);
+
+    if (itemid != null || itemid !=undefined) {
+      this.deleteReserveLinewise(trxLineIndex,itemid,uuidref);
+      this.itemMap.delete(itemid);
+    }
+    var formVal = this.moveOrderForm.get('trxLinesList').value;
+    var patch = this.moveOrderForm.get('trxLinesList') as FormArray;
+    var len = this.trxLinesList().length;
+    for (let x=0; x<formVal.length; x++){
+      patch.controls[x].patchValue({
+        lineNumber: x+1,
+      });
+    }
+
   }
 
 
@@ -255,6 +318,7 @@ export class MoveOrderComponent implements OnInit {
       (patch.controls[0]).patchValue(
      {
        lineNumber: 1,
+       uuidRef: uuidv4()
      }
    );
    this.toSubInvCode="WIP";
@@ -314,6 +378,7 @@ newmoveOrder()
       // this.moveOrderForm.get('trxLinesList').patchValue({fromLocator:'obj.fromLocator'})
       // this.displayButton=false;
       this.moveOrderForm.disable();
+      this.displayaddButton=false;
       // this.displaytransactionTypeName=false;
 
       // this.moveOrderForm.reset();
@@ -329,7 +394,7 @@ newmoveOrder()
 }
 else{
 
-    alert('else');
+    alert('Valedation failed');
     this.HeaderValidation();
 
 }
@@ -338,12 +403,14 @@ else{
 reservePos(i)
 {
   // alert("Hello");
+  var len=i;
 var trxLnArr1 = this.moveOrderForm.get('trxLinesList').value;
   // var trxLnArr2 = this.moveOrderForm.get('trxLinesList') as FormArray;
   const formValue: ImoveOrder = this.moveOrderForm.value;
     let variants = <FormArray>this.trxLinesList();
     var transtypeid = this.moveOrderForm.get('transactionTypeId').value;
     var jobno1=this.moveOrderForm.get('repairNo').value;
+    var transactionNumber = trxLnArr1[len].uuidRef;
     var locId1=this.moveOrderForm.get('locId').value
 
       let variantFormGroup = <FormGroup>variants.controls[i];
@@ -353,7 +420,7 @@ var trxLnArr1 = this.moveOrderForm.get('trxLinesList').value;
       variantFormGroup.addControl('reservedQty', new FormControl(trxLnArr1[i].quantity, Validators.required));
       // variantFormGroup.addControl('onHandId', new FormControl(trxLnArr1[i].id, Validators.required));
       variantFormGroup.addControl('onHandId', new FormControl(trxLnArr1[i].id,[]));
-      variantFormGroup.addControl('transactionNumber', new FormControl(jobno1, Validators.required));
+      variantFormGroup.addControl('transactionNumber', new FormControl(transactionNumber, Validators.required));
 
   // var reserveinfo=formValue[0];
 
@@ -420,6 +487,7 @@ onChangeRepairNo(event)
     // alert("this.getItemDetail.description" + this.getItemDetail.description);
     trxLnArr2.controls[i].patchValue({description: this.getItemDetail.description});
     trxLnArr2.controls[i].patchValue({uom:this.getItemDetail.uom});
+    this.setFocus('frmLocatorId');
     // trxLnArr2.controls[i].patchValue({segment:this.getItemDetail.segment});
     // trxLnArr1.controls[i].patchValue({frmSubInvCode:this.subInvCode.subInventoryCode});
   }
@@ -438,7 +506,7 @@ onChangeRepairNo(event)
           {
           // this.displayLocator[i]=false;
           trxLnArr2.controls[i].patchValue({onHandId:getfrmSubLoc[0].segmentName});
-          trxLnArr2.controls[i].patchValue({locatorId:getfrmSubLoc[0].locatorId});
+          trxLnArr2.controls[i].patchValue({frmLocatorId:getfrmSubLoc[0].locatorId});
           trxLnArr2.controls[i].patchValue({frmLocator:getfrmSubLoc[0].segmentName});
           trxLnArr2.controls[i].patchValue({onHandQty:getfrmSubLoc[0].onHandQty});
           trxLnArr2.controls[i].patchValue({id:getfrmSubLoc[0].id});
@@ -482,24 +550,23 @@ onChangeRepairNo(event)
  }
 onOptionBatchCode(event,i)
 {
-  alert(event);
+  // alert(event);
   var selbatchCode=this.pricedata.find(d=>d.batchCode===event);
   var trxLnArr2 = this.moveOrderForm.get('trxLinesList') as FormArray;
   // alert(selbatchCode.priceValue+'Price');
   trxLnArr2.controls[i].patchValue({priceValue:selbatchCode.priceValue});;
 }
-AvailQty(event:any,i:number)
+AvailQty(event,i:number)
 {
+  // alert(event+'Loca');
   var trxLnArr =this.moveOrderForm.get('trxLinesList').value;
   var itemid=trxLnArr[i].invItemId;
-  var locId=trxLnArr[i].frmLocatorId;
+  // var locId=trxLnArr[i].frmLocatorId;
+  var locId=event;
   var onhandid=trxLnArr[i].id;
   // trxLnArr1.controls[i].patchValue({locatorId:locId});
   // alert(locId+'locatorID');
   var subcode=this.moveOrderForm.get('frmSubInvCode').value;
-  // alert(subcode.subInventoryId);
-  // let select2= this.subInvCode.find(d=>d.subInventoryCode===subcode.subInventoryCode);
-  // alert(select2.subInventoryId+'Id')
   this.service.getonhandqty(Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId,locId,itemid).subscribe
       (data =>{
       this.onhand1 = data;
@@ -569,6 +636,7 @@ validate(i:number,qty1)
         this.moveOrderForm.patchValue(data.obj);
         this.moveOrderForm.patchValue(data.obj.trxLinesList);
         this.moveOrderForm.disable();
+        this.displayaddButton=false;
         // for(var i=0;i<data.obj.trxLinesList.length;i++)
         // {
         // var select1=this.ItemIdList.find(d=>d.itemId===data.obj.trxLinesList[i].invItemId)
@@ -606,11 +674,15 @@ validate(i:number,qty1)
 
  closeMoveOrder()
   {
+    this.deleteReserve();
     this.router.navigate(['admin']);
+
   }
   resetMoveOrder()
   {
+    this.deleteReserve();
     window.location.reload();
+
   }
   HeaderValidation() {
     var isValid:boolean=false;
@@ -672,6 +744,62 @@ searchFromArray1(arr, regex) {
   }
   return matches;
 };
+setFocus(name) {
 
+  const ele = this.mvForm.nativeElement[name];
+  if (ele) {
+    ele.focus();
+  }
+}
 
+deleteReserveLinewise(i ,itemid, transferId) {
+
+  // var transtypeid = this.moveOrderForm.get('transactionTypeId').value;
+  // var seltranstyp = this.transType.find(
+  //   (d) => d.transactionTypeId === transtypeid
+  // );
+  // var trxLnArr1 = this.moveOrderForm.get('trxLinesList').value;
+  // var itemid = trxLnArr1[i].invItemId;
+  // alert(itemid+'Item')
+  this.service
+    .reserveDeleteLine(
+      transferId,
+      Number(sessionStorage.getItem('locId')),
+      itemid
+    )
+    .subscribe((res: any) => {
+      //  var obj=res.obj;
+      if (res.code === 200) {
+        // alert(res.message);
+      }
+    });
+}
+
+deleteReserve() {
+  var transtypeid = this.moveOrderForm.get('transactionTypeId').value;
+  var seltranstyp = this.transType.find(
+    (d) => d.transactionTypeId === transtypeid
+  );
+  this.service
+    .reserveDelete(
+      seltranstyp.transactionTypeName,
+      Number(sessionStorage.getItem('locId'))
+    )
+    .subscribe((res: any) => {
+      //  var obj=res.obj;
+      if (res.code === 200) {
+        // alert(res.message);
+      }
+    });
+}
+
+ngOnDestroy(): void {
+  alert('Window Closed Directely.!');
+  this.deleteReserve();
+  return;
+}
+@HostListener('window:unload', ['$event'])
+keyEvent1(event: KeyboardEvent) {
+  this.deleteReserve();
+  console.log(event);}
 }

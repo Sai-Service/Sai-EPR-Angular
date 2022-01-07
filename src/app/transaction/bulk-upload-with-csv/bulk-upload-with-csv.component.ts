@@ -222,6 +222,7 @@ export class BulkUploadWithCsvComponent implements OnInit {
         var userName = (sessionStorage.getItem('ticketNo'));
         var invcDt2 = this.bulkUploadCSVForm.get('invcDt1').value;
         var invcDt1 = this.pipe.transform(invcDt2, 'dd-MM-yyyy');
+        // alert(invcNo +'----'+ value1);
         if (invcNo != value1){
           alert('Invoice Number & File Name missmatch... Please Confirm..!');
           this.dataDisplay ='Invoice Number & File Name missmatch....'
