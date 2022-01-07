@@ -569,7 +569,7 @@
                 <td style="width: 15%" class="LabelFontStyle">&nbsp;&nbsp;&nbsp;&nbsp;Item&nbsp;Description&nbsp;:</td>
                 <td>
                   <input   type="text"  formControlName="searchItemCode"  id="searchItemCode"
-                           [(ngModel)]="searchItemCode" class="form-control"  placeholder="Enter Item Code"
+                           [(ngModel)]="searchItemCode" class="form-control"  placeholder="Enter Item Description"
                            style="width: 300px; background-color: rgb(240, 240, 166); text-transform: uppercase;"  >
                </td>
 
@@ -792,7 +792,7 @@
 
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="closeF9()" data-dismiss="modal">Close</button>
             </div>
 
         </div>

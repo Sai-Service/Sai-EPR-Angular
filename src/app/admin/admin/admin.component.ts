@@ -402,6 +402,10 @@ export class AdminComponent implements OnInit {
     this.router.navigate(['login']);
   }
 
+  closeF9(){
+    this.ItemIdList = [];
+  }
+
   dashboard() {
     this.router.navigate(['/admin']);
   }
@@ -621,7 +625,6 @@ export class AdminComponent implements OnInit {
   }
   filterRecord(event) {
     var itemCode1 = event.target.value;
-
     
     if (event.keyCode == 13) {
       var itemCode = '';
@@ -633,7 +636,7 @@ export class AdminComponent implements OnInit {
         itemCode = itemCode1;
         // alert(itemCode + 'item in else');
       }
-       //alert(itemCode.length + 'length'+this.ItemIdList.length);
+     // alert(itemCode.length + 'length'+this.ItemIdList.length);
       // enter keycode
       if (itemCode.length >= 4 && this.ItemIdList.length <= 1) {
         this.service
@@ -644,9 +647,10 @@ export class AdminComponent implements OnInit {
             // this.Select(data[0].itemId);
           });
       } else {
-        if(this.ItemIdList.length<=1){
+        if(itemCode.length<4){
         alert('Please Enter 4 characters of item number!!');
-       
+        this.ItemIdList = [];
+  
         return;
         }
       }
@@ -693,10 +697,13 @@ export class AdminComponent implements OnInit {
         this.gstPer = this.lstcomments[0].GSTPERCENTAGE;
         this.principleItem = this.lstcomments[0].PRINCPLEITEM;
         this.adminForm1.patchValue(data);
+      
       } else {
         alert('Stock Details not availabe for item - ' + itemId);
+       
       }
-      this.ItemIdList =[];
+     this.ItemIdList =[]; 
+     this.adminForm1.get('searchItemCode').setValue('') ;
     });
   }
   userCheck(roleId: number): boolean {
