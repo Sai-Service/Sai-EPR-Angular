@@ -1390,6 +1390,14 @@ StockgatePassSubmit(stkGatePass) {
   return this.http.post(url, stkGatePass, options);
 }
 ///////////OnHand////////////
+
+
+searchByItemDescInclude(itemDesc,divId):Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/itemMst/searchBydesc/${divId}?itemDesc=${itemDesc}`)
+ // http://localhost:8081/itemMst/searchBydesc/2?itemDesc=ring
+}
+
 searchByItemByLoc(locId,itemid,ouId,divId):Observable<any>
 {
   //  alert("MS>>> "+ itemid+","+locId+","+ouId+","+divId);
@@ -1508,8 +1516,8 @@ getsearchByJob(jobno):Observable<any>{
 }
 
 
-subInvCode(deptId,divId):Observable<any>{
-  return this.http.get(this.ServerUrl +`/subInvMst/wipissue?deptId=${deptId}&divisionId=${divId}`);
+subInvCode(deptId):Observable<any>{
+  return this.http.get(this.ServerUrl +`/subInvMst/wipissue/${deptId}`);
 }
 
 

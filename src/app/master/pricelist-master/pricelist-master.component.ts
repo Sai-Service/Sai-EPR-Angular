@@ -519,6 +519,8 @@ export class PricelistMasterComponent implements OnInit {
     }
   }
 
+
+
   duplicateLineCheck(index,mItem,itemSeg,bCode) {
     // alert ("index/itemid/segment,this.lineDetailsArray().length :" +index +","+mItem+","+itemSeg +","+this.lineDetailsArray().length);
     var varLineArr = this.priceListMasterForm.get('priceListDetailList').value;

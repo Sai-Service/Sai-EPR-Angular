@@ -137,6 +137,17 @@ export class JobCardComponent implements OnInit {
   deptId:number; 
   emplId :number;
 
+  lstcomments: any;
+  lstcomments1: any = [];
+  searchBy: string = 'ITEM CODE';
+  searchItemId: number;
+  searchByItemCode: string;
+  searchItemName: string;
+  searchByItemDesc: string;
+  searchByItem = true;
+  searchByDesc = false;
+  lineIndex :number;
+
   estLabor:number=0;
   estMaterial:number=0;
   estTotal:number=0;
@@ -167,7 +178,7 @@ export class JobCardComponent implements OnInit {
   jobCardNum: string;
   divisionName: string;
  
-  lstcomments: any;
+  // lstcomments: any;
   RegNoList: any;
   RegNoList1: any[];
   RegNoList2: any;
@@ -357,6 +368,12 @@ export class JobCardComponent implements OnInit {
       deptId :[],
       emplId:[''],
       orgId:[''],
+
+      searchBy: [],
+      searchByItemCode: [],
+      searchItemName: [],
+      searchByItemDesc: [],
+      lineIndex :[],
 
       jobCardNum1: [],
       jobCardNum2: [],
@@ -617,7 +634,6 @@ export class JobCardComponent implements OnInit {
     this.splitDetailsArray().push(this.splitDetailsGroup()); 
     }
    }}
-
   // RemoveTechRow(index) {
 
   //   this.splitDetailsArray().removeAt(index);
@@ -896,7 +912,6 @@ export class JobCardComponent implements OnInit {
     var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
     var serModel=this.jobcardForm.get('serviceModel').value;
     let select = this.LaborItemList.find(d => d.segment === event);
-    // let select = this.LaborItemList.find(d => d.itemId === event);
     // alert ("event : "+event + " index :"+i + ","+select.description);
     if(select) {
 
@@ -904,7 +919,6 @@ export class JobCardComponent implements OnInit {
     if(this.duplicateLabLineItem) { return;}
    
     (patch.controls[i]).patchValue({ itemId: select.itemId });
-    (patch.controls[i]).patchValue({ segment: select.segment });
     (patch.controls[i]).patchValue({ description: select.description });
 
    
@@ -1074,14 +1088,15 @@ export class JobCardComponent implements OnInit {
   }
 
 
+  
   addRow(index) {
    
     var arrayControl = this.jobcardForm.get('jobCardLabLines').value
-    var len1= this.lineDetailsArray.length-1;
+   
     // alert ("Add Row index :"+index  + "  len1:"+len1);
     var invItemId = arrayControl[index].itemId;
     // alert("Item Id Jc lab line : "+invItemId +" , "+index);
-
+    var len1= this.lineDetailsArray.length-1;
     if(len1===index) {
     this.checkLabLineValidation(index);
 
@@ -2687,6 +2702,48 @@ getMessage(msgType:string){
           }
 
       }
+
+      getTrans(i) {
+        this.lineIndex=i;
+        this.searchBy='ITEM CODE';
+        
+    }
+
+    getItem(itemSeg, i){
+      alert ("Segment :" +itemSeg + " index :"+i);
+      this.serchByitemId(itemSeg,i)
+
+  }
+
+   
+onSearchTypeSelected(evnt) {
+  // alert ("in onSearchTypeSelected ")
+  //  this.LoadModal();
+  // this.resetDet();
+  this.lstcomments = null;
+  this.lstcomments1 = null;
+  this.searchByItemDesc = null;
+
+  if (evnt == 'ITEM CODE') {
+    this.searchByItem = true;
+    this.searchByDesc = false;
+  }
+  if (evnt == 'ITEM DESCRIPTION') {
+    this.searchByDesc = true;
+    this.searchByItem = false;
+  }
+}
+
+
+
+SearchPartNum(){
+  var itmDesc=this.jobcardForm.get('searchByItemDesc').value;
+      this.service.searchByItemDescInclude(itmDesc,sessionStorage.getItem('divisionId')).subscribe(
+        data =>{
+          this.lstcomments1= data;
+          console.log(this.lstcomments1);
+    });
+  }
       
 
 

@@ -1,0 +1,363 @@
+<div class="center">
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <!-- class="PageHeader" -->
+            <td class="PageHeader" style="width: 100%;" >
+                &nbsp;&nbsp;Division&nbsp;Master
+            </td>
+        </tr>
+    </table>
+    <div class="center" style="width: 100%;">
+        <div class="form-bg">
+            <form [formGroup]="divisionMasterForm" (ngSubmit)="divisionMaster(divisionMasterForm.value)" id="form_1">
+                <table class="center">
+                    <div *ngIf="display; then thenBlock; else elseBlock"></div>
+                    <ng-template #thenBlock>
+                        <tr>
+                            <td style="width: 18%" class="LabelFontStyle1">
+                                Division&nbsp;Code&nbsp;:
+                            </td>
+                            <td>
+                                <input formControlName="divisionCode" [(ngModel)]='divisionCode' value={{divisionCode}} class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.divisionCode.errors }"
+                                placeholder="Enter division code" style="text-transform: uppercase;" uppercase>
+                            
+                                <div *ngIf="submitted && f.divisionCode.errors" class="invalid-feedback">
+                                    <!-- <div *ngIf="f.divisionCode.errors.required">Division code cannot be blank, have spaces or have special characters.</div> -->
+                                    <div *ngIf="f.divisionCode.errors.pattern">Only 2 characters allowed</div>
+                                    <div *ngIf="f.divisionCode.errors.maxLength">Only 2 characters allowed</div>
+                                    <div *ngIf="f.divisionCode.errors.minLength">Only 2 characters allowed</div>
+                                   
+                                </div>
+                            <!-- <div *ngIf="submitted && f.divisionCode.errors" class="invalid-feedback">
+                                <div *ngIf="f.divisionCode.errors.required">Division code cannot be blank, have spaces or have special characters.</div>
+                                <div *ngIf="f.divisionCode.errors.maxLength">Division code cannot be blank, have spaces or have special characters.</div>
+                                <div *ngIf="f.divisionCode.errors.pattern">Minimum one characters and maximum 10 characters</div>
+                            </div> -->
+                            <!-- <span *ngIf="!divisionMasterForm.get('divisionCode').valid && divisionMasterForm.get('divisionCode').touched">Division code cannot be blank, have spaces or have special characters.</span>     -->
+                            </td>
+                            <td style="width: 18%" class="LabelFontStyle1">
+                                Division&nbsp;Name&nbsp;:
+                            </td>
+                            <td>
+                                <input formControlName="divisionName" value={{divisionName}} class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.divisionName.errors }"
+                                placeholder="Enter division name">
+                            <div *ngIf="submitted && f.divisionName.errors" class="invalid-feedback">
+                                <div *ngIf="f.divisionName.errors.pattern">Division Name cannot be blank</div>
+                                <div *ngIf="f.divisionName.errors.maxLength">Maximum 20 characters allowed</div>
+                                <div *ngIf="f.divisionName.errors.minLength">Minimum 5 characters required</div>
+                            </div>
+                            <!-- <span *ngIf="!divisionMasterForm.get('divisionName').valid && divisionMasterForm.get('divisionName').touched">Division Name cannot be blank or have special characters</span> -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 18%" class="LabelFontStyle1">
+                                Start&nbsp;Date&nbsp;:
+                            </td>
+                            <td>
+                                <input type="date" formControlName="startDate" class="form-control" placeholder="Enter Start date"  min="{{minDate | date:'yyyy-MM-dd'}}"
+                                [ngClass]="{ 'is-invalid': submitted && f.startDate.errors }">
+                                <div *ngIf="submitted && f.startDate.errors" class="invalid-feedback">
+                                    <div *ngIf="f.divisionName.errors.required">Start date cannot be blank</div>
+                                </div>
+                                <!-- <span
+                                    *ngIf="!divisionMasterForm.get('startDate').valid && divisionMasterForm.get('startDate').touched">Please
+                                    Enter start date </span>                 -->
+                            </td>
+                            <td style="width: 18%" class="LabelFontStyle">
+                                Status&nbsp;:
+                            </td>
+                            <td>
+                                <input disabled type="text" [ngModel]="status" formControlName="status" class="form-control" >
+                                <div *ngIf="submitted && f.status.errors" class="invalid-feedback">
+                                    <div *ngIf="f.status.errors.required">status is required</div>
+                                    <!-- <span
+                                        *ngIf="!divisionMasterForm.get('status').valid && divisionMasterForm.get('status').touched">Please
+                                        Enter valid status </span> -->
+                                </div>        
+                            </td> 
+                        </tr>
+                    </ng-template>
+                    <ng-template #elseBlock>
+                        <tr>
+                            <td style="width: 18%" class="LabelFontStyle">
+                                Division&nbsp;Code&nbsp;:
+                            </td>
+                            <td>
+                                <input disabled formControlName="divisionCode" value={{divisionCode}} class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.divisionCode.errors }"
+                                placeholder="Enter division code">
+                            <div *ngIf="submitted && f.divisionCode.errors" class="invalid-feedback">
+                                <div *ngIf="f.divisionCode.errors.required">Division code must be a valid for 1 digit</div>
+                                <div *ngIf="f.divisionCode.errors.maxLength">Division code must be a valid for 1 digit
+                                </div>
+                            </div>
+                            <!-- <span
+                                *ngIf="!divisionMasterForm.get('divisionCode').valid && divisionMasterForm.get('divisionCode').touched">Please
+                                Enter division code </span>     -->
+                            </td>
+                            <td style="width: 18%" class="LabelFontStyle1">
+                                Division&nbsp;Name&nbsp;:
+                            </td>
+                            <td>
+                                <input  formControlName="divisionName" value={{divisionName}} class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.divisionName.errors }"
+                                placeholder="Enter division name">
+                                
+                            <div *ngIf="submitted && f.divisionName.errors" class="invalid-feedback">
+                                <div *ngIf="f.divisionName.errors.required">Division Name cannot be blank or have special characters</div>
+                                <div *ngIf="f.locCode.errors.pattern">Division Name cannot be blank or have special characters</div>
+                           
+                            </div>
+                            <!-- <span
+                                *ngIf="!divisionMasterForm.get('divisionName').valid && divisionMasterForm.get('divisionName').touched">Division Name cannot be blank or have special characters</span>     -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 18%" class="LabelFontStyle">
+                                Start&nbsp;Date&nbsp;:
+                            </td>
+                            <td>
+                                <input type="date" disabled formControlName="startDate" class="form-control" placeholder="Enter Start date">
+                                <!-- <span *ngIf="!divisionMasterForm.get('startDate').valid && divisionMasterForm.get('startDate').touched">Please
+                                    Enter start date </span>         -->
+                            </td>
+                            <td style="width: 18%" class="LabelFontStyle1">
+                                Status&nbsp;:
+                            </td>
+                            <td>
+                                <select formControlName="status" id="status" class="form-control"
+                        [ngModel]="status" (ngModelChange)='onOptionsSelected($event)'>
+                            <option>--Select--</option>
+                            <option *ngFor="let sc of  statusList">
+                                {{sc.codeDesc}}
+                            </option>
+                        </select>
+                        <div *ngIf="submitted && f.status.errors" class="invalid-feedback">
+                            <div *ngIf="f.status.errors.required">status is required</div>
+                            <!-- <span
+                                *ngIf="!divisionMasterForm.get('status').valid && divisionMasterForm.get('status').touched">Please
+                                Enter valid Company status </span> -->
+                        </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
+                    <ng-template #thenBlockInactive>
+                    </ng-template>
+                    <ng-template #elseBlockInactive>
+                        <tr>
+                            <td style="width: 18%" class="LabelFontStyle">
+                                Inactive&nbsp;Date:&nbsp;
+                            </td>
+                            <td>
+                                <input disabled type="text" formControlName="endDate" class="form-control"
+                            [ngModel]="endDate | date:'yyyy-MM-dd'">
+                            </td>
+                        </tr>
+                    </ng-template>
+                </table>
+                <table class="center"> 
+                    <tr>
+                        <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
+                        <ng-template #thenBlock1>
+                            <td class="center">
+                                <button type="submit" class="btn btn-primary" id="saveBtn" data-toggle="modal" 
+                                data-target="#confirmAlert" (click)="getMessage('Save')" >Save</button>
+                                   <!-- [disabled]="!itemCategoryMasterForm.valid"  -->
+                         
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-primary" id="resetBtn" data-toggle="modal" 
+                                data-target="#confirmAlert" (click)="getMessage('Reset')">Reset</button>
+                                    <!-- (click)="resetItemCatMast()" -->
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-primary" id="closeBtn"
+                                data-toggle="modal" data-target="#confirmAlert" (click)="getMessage('Close')">Close</button>
+                            </td>
+
+                        <td>
+
+                        <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                             Reset
+                        </button> -->
+                        <!-- <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="background-color: red;">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+                                <div class="modal-body">
+                                <label style="font-size: small; color: black;font-weight: bold;text-align: center;vertical-align: middle;">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    Please&nbsp;Confirm&nbsp;Do&nbsp;you&nbsp;want&nbsp;to&nbsp;Reset.
+                                </label>
+                                </div>
+                                <div class="modal-footer">
+                                    <table class="center">
+                                        <tr>
+                                            <td>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </td>
+                                            <td>
+                                                <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button> 
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div> 
+                            </div>
+                            </div>
+                        </div> -->
+                        </td>
+                        <!-- <td>
+                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+                                Close
+                         </button>
+                          <div class="modal fade" id="exampleModalLong">
+                                  <div class="modal-dialog">
+                                  <div class="modal-content">
+                                 <div class="modal-body">
+                                        <label style="font-size: small; color: black;font-weight: bold;text-align: center;vertical-align: middle;">
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            Please&nbsp;Confirm&nbsp;Do&nbsp;you&nbsp;want&nbsp;to&nbsp;Close.
+                                        </label>
+                                    </div>
+                                    <div class="modal-footer">
+                                     <table class="center">
+                                         <tr>
+                                             <td>
+                                                <button  type="submit" class="btn btn-primary" data-dismiss="modal" id="register"   (click)="closeMast()">Yes</button>
+                                             </td>
+                                             <td>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                             </td>
+                                         </tr>
+                                     </table>
+                                      
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                        </td> -->
+                        <td>
+                            <button type="submit" class="btn btn-primary" id="register"
+                                (click)="searchMast()">Search</button>
+                        </td>
+                        </ng-template>
+                        <ng-template #elseBlock1>
+                        <td>
+                            <button type="submit" class="btn btn-primary" id="register"
+                                [disabled]="!divisionMasterForm.valid" (click)="updateMast()">Update</button>
+                        </td>
+                        <!-- <td>
+                            <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button>
+                        </td> -->
+                        <td>
+                            <!-- <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button> -->
+                       <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+    Reset
+   </button>
+   <!-- Modal -->
+   <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+     <div class="modal-dialog modal-dialog-centered" role="document">
+       <div class="modal-content">
+         <div class="modal-header">
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="background-color: red;">
+             <span aria-hidden="true">&times;</span>
+           </button>
+         </div>
+         <div class="modal-body">
+           <label style="font-size: small; color: black;font-weight: bold;text-align: center;vertical-align: middle;">
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+             Please&nbsp;Confirm&nbsp;Do&nbsp;you&nbsp;want&nbsp;to&nbsp;Reset.
+         </label>
+         </div>
+         <div class="modal-footer">
+             <table class="center">
+                 <tr>
+                     <td>
+                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                     </td>
+                     <td>
+                         <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button> 
+                     </td>
+                 </tr>
+             </table>
+           </div> 
+       </div>
+     </div>
+   </div>
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close</button>
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-primary" id="register"
+                                (click)="searchMast()">Search</button>
+                        </td>
+                        </ng-template>
+                    </tr>
+                </table>
+    
+            </form>
+        </div>
+    </div>
+</div>
+<br>
+<div class="container1">
+    <div class="grid_scroll">
+    <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+   <tbody>
+        <tr class="GridHeader">
+        <th scope="col" style="width: 4rem;">Division Id</th>
+        <th scope="col" style="width: 4rem;">Division Code</th>
+        <th scope="col" style="width: 14rem;">Division Name</th> 
+        <th scope="col" style="width: 5rem;">Start Date</th>
+        <th scope="col" style="width: 5rem;">Status</th>
+        <th scope="col" style="width: 5rem;">Select one</th>
+    </tr>
+   </tbody>
+   <tr *ngFor="let com of lstcomments" class="ItemStyle" style="text-decoration:none;">
+    <td style="width: 4rem;">{{com.divisionId}}</td>
+            <td style="width: 4rem;">{{com.divisionCode}}</td>
+            <td>{{com.divisionName}}</td>
+            <td>{{com.startDate | date:'dd-MM-yyyy'}}</td>
+            <!-- yyyy-MM-dd -->
+            <td>{{com.status}}</td>
+            <td><button class="btn btn-secondary" (click)="Select(com.divisionId)">Select</button></td>   
+   </tr>
+    </table>
+</div>
+</div>
+
+<div class="modal" id="confirmAlert" tabindex="-1" role="dialog" aria-hidden="true" style="width: 500px; text-align: center;">
+    <div class="modal-dialog modal-dialog-centered modal-sm"  role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" >Confirmation!</h5>
+        </div>
+        <div class="modal-body">
+            <label style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
+                {{message}}
+            </label>
+        </div>
+        <div class="modal-footer">
+            <table class="center">
+        <tr>
+            <td>
+            <button  type="submit" class="btn btn-info" data-dismiss="modal" id="register"   (click)="executeAction()">Yes</button>
+            </td>
+            <td>
+            <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+            </td>
+        </tr>
+        </table>
+        </div>
+        </div>
+        </div>
+    </div>

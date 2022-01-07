@@ -237,16 +237,13 @@ lineDetailsArray() :FormArray{
   addRow(index) {
   this.addNewLine=true;
    var ordLineArr = this.orderGenerationForm.get('orderList').value;
-   var len1 = this.lineDetailsArray().length-1;
-
-   if(len1===index){
-   
+   var len = this.lineDetailsArray().length;
     if( ordLineArr[index].itemId>0  &&  ordLineArr[index].orderQty>0 ) {
    
     this.lineDetailsArray().push(this.lineDetailsGroup()); 
     
    }else {alert ("Incomplete Line - Check Order Part No , Order Qty .... ");}
-  }
+   
 }
 
 RemoveRow(index) {
@@ -674,6 +671,7 @@ CreateOrder() {
       }
 
       setFocus(name) {
+
         const ele = this.aForm.nativeElement[name];
         if (ele) {
           ele.focus();
