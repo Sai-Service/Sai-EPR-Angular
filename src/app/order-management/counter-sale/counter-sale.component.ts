@@ -1402,7 +1402,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
             // alert(this.custSiteList.length)
             for (let i=0; i < this.custSiteList.length; i++ ){
             if (this.custSiteList.length === 1) {
-              alert(this.custSiteList.length)
+              // alert(this.custSiteList.length)
               this.CounterSaleOrderBookingForm.patchValue({ name: this.custSiteList[0].siteName });
               this.onOptionsSelectedcustSiteName(this.custSiteList[0].siteName);
             }

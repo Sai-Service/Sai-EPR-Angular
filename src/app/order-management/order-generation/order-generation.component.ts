@@ -262,14 +262,56 @@ else {
 
 }
 
+orderHedaerList=[[
+  'Srl No',	
+  'Part No',	
+    'Description',	
+    'Unit Price',	
+    'Back order Qty',	
+    'Cust Backorder',	
+    'WS Cons-Curr',	
+    'CS Cons-Curr',	
+    'Curr Qty',	
+    'InTrans Qty',
+    'WS Cons-Tot',
+    'CS Cons-Tot',
+    'Set Qty',
+   'Order Qty	',
+    'Order Value'
+  ]]
+
+  transData(val : any[]){
+    // alert(val.length)
+    var len= val.length-1
+    for (let i =0 ; i <len; i++){
+      // alert(val[i].itemId);
+     delete val[i].sprOrderId;
+     delete val[i].itemId; 
+     return val;
+    }
+  }
 
 orderListExport() {
-  const ws: xlsx.WorkSheet =
-    xlsx.utils.table_to_sheet(this.orderList.nativeElement);
   const wb: xlsx.WorkBook = xlsx.utils.book_new();
+  const ws: xlsx.WorkSheet = xlsx.utils.json_to_sheet([]);
+  xlsx.utils.sheet_add_aoa(ws,this.orderHedaerList); 
+  var formValue= this.transData(this.orderGenerationForm.get('orderList').value);
+  // console.log(formValue);
+  
+  xlsx.utils.sheet_add_json(ws,formValue,{origin:'A2',skipHeader:true}); 
+  
+  // const ws: xlsx.WorkSheet =
+  //  // xlsx.utils.table_to_sheet(document.getElementById('orderListTable')); 
+  //    xlsx.utils.json_to_sheet(this.orderGenerationForm.get('orderList').value);
   xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
   xlsx.writeFile(wb, 'CounterSaleOrderList.xlsx');
 }
+
+
+// const ws2b = XLSX.utils.json_to_sheet([
+//   { A:"S", B:"h", C:"e", D:"e", E:"t", F:"J", G:"S" },
+// ]
+
 
 deleteOrderLine(i) {
   // alert ("Deleting line")
