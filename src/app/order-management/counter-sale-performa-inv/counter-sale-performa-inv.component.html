@@ -645,6 +645,7 @@
                                         <th scope="col">SGST</th>
                                         <th scope="col">CGST</th>
                                         <th scope="col">IGST</th>
+                                        <th scope="col">Total Tax Amount</th>
                                         <th scope="col">Total Amount</th>
                                         <th scope="col">MRP</th>
                                         <!-- <th scope="col">Status</th> -->
@@ -746,6 +747,7 @@
                                                         <input disabled type="number" formControlName="taxPer"
                                                             class="form-control" style="height: 20px;width: 80px;">
                                                     </td>
+                                                    
                                                     <td>
                                                         <input disabled type="number" formControlName="sgst"
                                                             class="form-control" style="height: 20px;width: 80px;">
@@ -754,8 +756,13 @@
                                                         <input disabled type="number" formControlName="cgst"
                                                             class="form-control" style="height: 20px;width: 80px;">
                                                     </td>
+                                                   
                                                     <td>
                                                         <input disabled type="number" formControlName="igst"
+                                                            class="form-control" style="height: 20px;width: 80px;">
+                                                    </td>
+                                                    <td>
+                                                        <input disabled type="number" formControlName="taxAmt"
                                                             class="form-control" style="height: 20px;width: 80px;">
                                                     </td>
                                                     <td>
@@ -777,15 +784,12 @@
                                                             style="width: fit-content;" [value]="i+1" >{{i+1}}</a>
                                                        
                                                     </td>
-                                                    <td>
+                                                    <!-- <td>
                                                         <input disabled type="text" formControlName="invType"
                                                             value="invType" [ngValue]="invType" class="form-control"
                                                             style="height: 20px;width: 120px">
-                                                    </td>
-                                                    <td>
-                                                        <input disabled type="text" class="form-control"
-                                                            style="height: 20px;width: 100px;">
-                                                    </td>
+                                                    </td> -->
+                                        
                                                     <td>
                                                         <input disabled type="text" formControlName="segment"
                                                             value="segment" [ngValue]="segment" class="form-control"
@@ -860,18 +864,7 @@
                                                         <input disabled type="number" formControlName="mrp"
                                                             class="form-control" style="height: 20px;width: 80px;">
                                                     </td>
-                                                    <td>
-                                                        <select formControlName="flowStatusCode" id="flowStatusCode1"
-                                                            class="form-control"
-                                                            style="width: fit-content;height: 25px;font-size: 10px;"
-                                                            (ngModelChange)="updateLineOnCancel(i,flowStatusCode)"
-                                                            #flowStatusCode1>
-                                                            <option [disabled]="isDisabled">--Select--</option>
-                                                            <option value="BOOKED" hidden>BOOKED</option>
-                                                            <option value="CANCELLED">CANCELLED</option>
-                                                            <option value="INVOICED" hidden>INVOICED</option>
-                                                        </select>
-                                                    </td>
+                                                    
                                                 </ng-template>
                                                 <td>
                                                     <div *ngIf="displayaddRow; then thenaddRow; else elseaddRow">
