@@ -109,7 +109,8 @@ export class EpmloyeeMasterComponent implements OnInit {
       fname: ['', [Validators.required,Validators.minLength(1),Validators.maxLength(35)]],
       mname: ['', [Validators.maxLength(35)]],
       lname: ['', [Validators.required,Validators.minLength(1),Validators.maxLength(35)]],
-      fullName: ['', [Validators.required,Validators.maxLength(100)]],
+      // fullName: ['', [Validators.required,Validators.maxLength(100)]],
+      fullName: ['', [Validators.maxLength(100)]],
       fullName1: [''],
       locId: ['', [Validators.required]],
       deptId: ['', [Validators.required]],
@@ -120,7 +121,8 @@ export class EpmloyeeMasterComponent implements OnInit {
       emailId: ['', [Validators.required, Validators.email, Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')]],
       contact1: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern('[0-9]*'), ]],
       contact2: ['', [Validators.minLength(10), Validators.maxLength(10), Validators.pattern('[0-9]*'), ]],
-      loginPass: ['', [Validators.required,Validators.minLength(5),Validators.maxLength(10)]],
+      // loginPass: ['', [Validators.required,Validators.minLength(5),Validators.maxLength(10)]],
+      loginPass: ['', [Validators.minLength(5),Validators.maxLength(10)]],
       status: ['', [Validators.required]],
       endDate:[''],
       loginAccess:[''],
@@ -404,7 +406,7 @@ export class EpmloyeeMasterComponent implements OnInit {
         this.submitted = true;
         (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
         if (this.employeeMasterForm.invalid) {
-          
+          alert('Some fields has validation error (D)');
           //this.submitted = false;
           (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '');
           return;

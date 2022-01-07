@@ -7,6 +7,7 @@ import { OrderManagementService } from 'src/app/order-management/order-managemen
 import { observable, Observable } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import * as moment from 'moment';
+import { ThemeService } from 'ng2-charts';
 // import { DecimalPipe,formatNumber } from '@angular/common';
 // import {  Inject, LOCALE_ID } from '@angular/core';
 // import { of } from 'rxjs/observable/of';
@@ -97,6 +98,9 @@ interface IjobCard {
   estLabor:number;
   estMaterial:number;
   estTotal:number;
+
+  type: string;
+  techAmt:number;
 }
 
 @Component({
@@ -232,6 +236,8 @@ export class JobCardComponent implements OnInit {
   demandJob:string;
   recomJob:string;
 
+  lineBasicAmt:number;
+
   lstJobcardList :any[];
 
   public labDiscountPerList: Array<string> = [];
@@ -304,7 +310,9 @@ export class JobCardComponent implements OnInit {
   showMatDisCol=false;
   showMatDisP=false;
   showLabDisCol=false;
- 
+  techLineValidation=false;
+  techTotalValidation=false;
+  duplicateLabLineItem=false;
   
 
   // public minDatetime = new Date();
@@ -501,6 +509,7 @@ export class JobCardComponent implements OnInit {
       labDiscountPerIns: [],
       labDiscountIns:[],
       matDiscoutIns:[],
+      lineBasicAmt:[],
 
       jobCardLabLines: this.fb.array([this.lineDetailsGroup()]),
       jobCardMatLines: this.fb.array([this.distLineDetails()]),
@@ -579,6 +588,7 @@ export class JobCardComponent implements OnInit {
       // contr2Amt:[],
       // contr3Amt:[],
       // contr4Amt:[],
+      lineBasicAmt:[],
     });
   }
   // splitDetailsArray(i: number): FormArray {
@@ -598,11 +608,31 @@ export class JobCardComponent implements OnInit {
     return <FormArray>this.jobcardForm.get('jobCardLabLines')
   }
   addTechRow(index) {
-    this.splitDetailsArray().push(this.splitDetailsGroup());
-  }
+
+    var len1=this.splitDetailsArray().length-1
+    // alert ("index,len1 :" +index +","+len1);
+    if(len1===index){
+    this.TechSplitValidation(index);
+    if(this.techLineValidation && this.techTotalValidation===false) {
+    this.splitDetailsArray().push(this.splitDetailsGroup()); 
+    }
+   }}
+
+  // RemoveTechRow(index) {
+
+  //   this.splitDetailsArray().removeAt(index);
+  // }
+
   RemoveTechRow(index) {
-    this.splitDetailsArray().removeAt(index);
+    if (index===0){
+    }
+    else {
+      this.splitDetailsArray().removeAt(index);
+    }
+  
   }
+
+
   distLineDetails() {
     return this.fb.group({
       // invDistributionId: [],
@@ -866,19 +896,22 @@ export class JobCardComponent implements OnInit {
     var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
     var serModel=this.jobcardForm.get('serviceModel').value;
     let select = this.LaborItemList.find(d => d.segment === event);
+    // let select = this.LaborItemList.find(d => d.itemId === event);
     // alert ("event : "+event + " index :"+i + ","+select.description);
     if(select) {
-   
+
+    this.CheckForDuplicateLineItem(select.itemId,i)
+    if(this.duplicateLabLineItem) { return;}
    
     (patch.controls[i]).patchValue({ itemId: select.itemId });
+    (patch.controls[i]).patchValue({ segment: select.segment });
     (patch.controls[i]).patchValue({ description: select.description });
-    if(serModel===null)
-      {
-        serModel='';
-      }
-    // alert(select.taxCategoryName);
-    // (patch.controls[i]).patchValue({ taxCategoryName: select.taxCategoryName})
-    this.serviceService.priceListDivisionFN( select.segment,serModel,(sessionStorage.getItem('locId')),(sessionStorage.getItem('ouId')))
+
+   
+    
+    if(serModel===null)  {  serModel=''; }
+
+     this.serviceService.priceListDivisionFN( select.segment,serModel,(sessionStorage.getItem('locId')),(sessionStorage.getItem('ouId')))
       .subscribe(
         data1 => {
           this.LaborPriceList = data1;
@@ -1042,16 +1075,17 @@ export class JobCardComponent implements OnInit {
 
 
   addRow(index) {
-
+   
     var arrayControl = this.jobcardForm.get('jobCardLabLines').value
-
+    var len1= this.lineDetailsArray.length-1;
+    // alert ("Add Row index :"+index  + "  len1:"+len1);
     var invItemId = arrayControl[index].itemId;
     // alert("Item Id Jc lab line : "+invItemId +" , "+index);
 
+    if(len1===index) {
     this.checkLabLineValidation(index);
 
-    if(this.labLineValidation) {
-
+    if(this.labLineValidation ) {
     // if (invItemId != null ) {
 
       this.lineDetailsArray.push(this.lineDetailsGroup());
@@ -1079,7 +1113,7 @@ export class JobCardComponent implements OnInit {
         // polineNum: aa,
       }
     );
-
+    }
   }
 
   checkLabLineValidation(index){
@@ -1313,8 +1347,14 @@ export class JobCardComponent implements OnInit {
             var payInvGrp: FormGroup = this.lineDetailsGroup();
             this.lineDetailsArray.push(payInvGrp);
           }
+
+
+          // for (let i = 0; i < this.lstcomments.jobCardLabLines.splitArr.length - len1; i++) {
+          //   var payInvGrp1: FormGroup = this.splitDetailsGroup();
+          //   this.splitDetailsArray().push(payInvGrp1);
+          // }
+
           
-         
 
           if (this.lstcomments.lineCnt > 0) {
             this.dispReadyInvoice = true;
@@ -1692,7 +1732,7 @@ export class JobCardComponent implements OnInit {
         formValue.dmsCustId = Number(this.jobcardForm.get('dmsCustId').value);
       var matDis=this.jobcardForm.get('matDiscout').value;
       var labDis=this.jobcardForm.get('labDiscount').value;
-        alert ( "matDis,labDis :" +matDis +","+labDis);
+        // alert ( "matDis,labDis :" +matDis +","+labDis);
       if(this.dispReadyInvoice===false) {alert( "Updation Not allowed...");  return;}
 
         var jcId =this.jobcardForm.get("jobCardId").value
@@ -1815,15 +1855,95 @@ export class JobCardComponent implements OnInit {
     this.content = i; // Dynamic Data
     let a = i + 1
     this.title = a;
+    
+    var jobCardLabLinesControl = this.jobcardForm.get('jobCardLabLines').value;
+    var lineTotAmt = jobCardLabLinesControl[i].basicAmt;
+    this.lineBasicAmt=lineTotAmt;
+
   }
+
+  validateTechAmt(t , i) {
+    var jobCardLabLinesControl = this.jobcardForm.get('jobCardLabLines').value;
+    var lineTotAmt = jobCardLabLinesControl[i].basicAmt;
+    var patch = this.jobcardForm.get('splitAmounts') as FormArray;
+   
+    var splitControl = this.jobcardForm.get('splitAmounts').value;
+    var techAmt =splitControl[t].techAmt;
+    var len1=this.splitDetailsArray().length;
+   
+    if(techAmt > lineTotAmt || techAmt <=0 && len1===1) { 
+      this.techTotalValidation=true;
+       patch.controls[0].patchValue({ techAmt: lineTotAmt });
+      alert ("Distrubution Amount Mismatch...");return;
+    } else {this.techTotalValidation=false;}
+
+    var techTotAmt = 0;var techBalAmt=0
+   
+    for (let i = 0; i < this.splitDetailsArray().length-1; i++) {
+      techTotAmt = techTotAmt + splitControl[i].techAmt;
+    } 
+
+     techBalAmt=lineTotAmt-techTotAmt;
+    if(techAmt>techBalAmt || techAmt <=0 || techAmt==null ||techAmt==undefined) {
+      alert ("Distrubution Amount Mismatch...")
+      patch.controls[t].patchValue({ techAmt: techBalAmt });
+      this.techTotalValidation=true;
+    }
+
+  }
+
+  TechSplitValidation (i) {
+
+    const formValue: IjobCard = this.jobcardForm.value;
+     var msg1;
+
+     var splitControl = this.jobcardForm.get('splitAmounts').value;
+     var lineValue1 = splitControl[i].type;
+     var lineValue2 = splitControl[i].techId;
+     var lineValue3 = splitControl[i].techAmt;
+
+     var j = i + 1;
+     
+
+     if (lineValue1 === undefined || lineValue1 === null)  {
+      this.techLineValidation = false;
+      alert("Line-" + j +" TYPE: Should not be null....");
+      return;
+    }
+
+    if (lineValue2 === undefined || lineValue2 === null || lineValue2 <= 0) {
+      this.techLineValidation = false;
+      msg1="Line-" + j +" TECHNICIAN: Should not be null....";
+      alert(msg1);
+      return;
+    }
+
+    if (lineValue3 === undefined || lineValue3 === null || lineValue3 <= 0) {
+      this.techLineValidation = false;
+      msg1="Line-" + j +" TECH AMT: Should be  above zero ....";
+      alert(msg1);
+      return;
+    }
+
+    this.techLineValidation=true;
+    
+  }
+
+
+
   fnCancatination(content) {
+    
     var jobCardLabLinesControl = this.jobcardForm.get('jobCardLabLines').value;
     var lineTotAmt = jobCardLabLinesControl[content].basicAmt;
     var splitControl = this.jobcardForm.get('splitAmounts').value;
     var techTotAmt = 0;
+
+   
     for (let i = 0; i < this.splitDetailsArray().length; i++) {
       techTotAmt = techTotAmt + splitControl[i].techAmt;
     }
+
+
     if (techTotAmt == lineTotAmt) {
       this.splitArr = this.lineDetailsArray.value[0];
       console.log(this.splitDetailsArray());
@@ -2543,6 +2663,30 @@ getMessage(msgType:string){
         }
 
        
+
+        CheckForDuplicateLineItem(mCpnId,mIndex){
+        var cpnLineArr = this.jobcardForm.get('jobCardLabLines').value;
+        var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
+        var len1=cpnLineArr.length;
+        // alert("line item array length :"+len1 + "," +mItemId);
+
+        for (let i = 0; i < len1 ; i++)
+          {
+            // alert("inside for loop");
+            var lineItemId=cpnLineArr[i].itemId;
+            if(mIndex != i) {
+            if (lineItemId===mCpnId) {
+              this.duplicateLabLineItem=true;
+               alert(lineItemId+" DUPLICATE line item. Please check item in Line - " +(i+1));
+               break;
+              }
+
+              }else{this.duplicateLabLineItem=false;}
+
+              this.duplicateLabLineItem=false;
+          }
+
+      }
       
 
 
