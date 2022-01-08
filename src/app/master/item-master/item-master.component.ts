@@ -1299,6 +1299,19 @@ else{
         this.message = "Do you want to SAVE the changes(Yes/No)?"
         
       }
+
+   if (msgType.includes("Update")) {
+          this.submitted = true;
+          (document.getElementById('updateBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
+          if (this.itemMasterForm.invalid) {
+             alert('Some fields validation error (D)');
+            //this.submitted = false;
+            (document.getElementById('updateBtn') as HTMLInputElement).setAttribute('data-target', '');
+            return;
+          }
+          this.message = "Do you want to UPDATE the changes(Yes/No)?"
+          
+        }
   
       if (msgType.includes("Reset")) {
         this.message = "Do you want to Reset the changes(Yes/No)?"
@@ -1312,9 +1325,12 @@ else{
   
    executeAction() {
       if(this.msgType.includes("Save")) {
-       
-        this.newItemMast();
+          this.newItemMast();
       }
+
+      if(this.msgType.includes("Update")) {
+            this.updateItemMast();
+        }
   
       if (this.msgType.includes("Reset")) {
         this.resetItemMast();

@@ -1736,9 +1736,29 @@ export class OPMasterDtoComponent implements OnInit {
     // alert('Hi')
     console.log(index);
 
-    var arrayControl = this.poMasterDtoForm.get('poLines').value
+    var trxLnArr = this.poMasterDtoForm.get('poLines').value;
+    var trxLnArr1 = this.poMasterDtoForm.get('poLines') as FormArray
+    var orderedQty= trxLnArr[index].orderedQty;
+    var uomCode= trxLnArr[index].uom;
+    if (uomCode === 'NO') {
+      // alert(Number.isInteger(qty1)+'Status');
+      if (!(Number.isInteger(orderedQty))) {
+        alert('Please enter correct No');
+        trxLnArr1.controls[index].patchValue({ orderedQty: '' });
+        return;
+      }
+    }
+
+    var arrayControl = this.poMasterDtoForm.get('poLines').value;
+    // var  uomCode= arrayControl[index].uom
+    // var isvalidqty = this.validate(index);
+    // if (isvalidqty == false) {
+    //   return;
+    // }
     var patch = this.poMasterDtoForm.get('poLines') as FormArray;
     console.log(arrayControl);
+    
+   
     arrayControl[index].baseAmtLineWise = arrayControl[index].unitPrice * arrayControl[index].orderedQty;
 
     var baseAmount = arrayControl[index].baseAmtLineWise
@@ -1782,6 +1802,21 @@ export class OPMasterDtoComponent implements OnInit {
       this.baseAmountCal(baseAmount);
     }
   }
+
+
+  validate(index: number){
+    var trxLnArr = this.poMasterDtoForm.get('poLines').value;
+    var orderedQty= trxLnArr[index].orderedQty;
+    var uomCode= trxLnArr[index].uom;
+    if (uomCode === 'NO') {
+      // alert(Number.isInteger(qty1)+'Status');
+      if (!(Number.isInteger(orderedQty))) {
+        alert('Please enter correct No');
+        return;
+      }
+    }
+  }
+
   baseAmountCal(baseAmount) {
 
     this.sum = this.sum + baseAmount;

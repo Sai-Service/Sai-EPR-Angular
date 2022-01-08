@@ -276,6 +276,13 @@ export class SalesOrderFormComponent implements OnInit {
   Displayexchange = true;
   @ViewChild("myinput") myInputField: ElementRef;
 
+  closeResetButton = true;
+  dataDisplay: any;
+  progress = 0;
+  isVisible2: boolean = false;
+  isVisible3: boolean = false;
+  isVisible4: boolean = false;
+
   constructor(private fb: FormBuilder, private router1: ActivatedRoute, private location: Location, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService) {
     this.SalesOrderBookingForm = fb.group({
       divisionName: [''],
@@ -769,6 +776,8 @@ export class SalesOrderFormComponent implements OnInit {
     } else {
     }
     this.invItemList1 = this.itemMap.get(orderType);
+    this.isVisible2=true;
+    // alert(this.isVisible2)
     this.orderManagementService.getItemByCatType(orderType, sessionStorage.getItem('divisionId'))
       .subscribe(
         data => {
@@ -1153,6 +1162,7 @@ export class SalesOrderFormComponent implements OnInit {
 
 
   addRow() {
+    this.isVisible2=true;
     this.displaysegmentInvType.push(true);
     this.displaytaxCategoryName.push(true);
     this.orderlineDetailsArray().push(this.orderlineDetailsGroup());
@@ -1290,6 +1300,16 @@ export class SalesOrderFormComponent implements OnInit {
                 this.displayLineTaxDetails = false;
                 this.displaysegmentInvType[i] = false;
                 this.displayCounterSaleLine.push(false);
+                if (data.obj.flowStatusCode==='ENTERED'){
+                  this.isVisible2=true;
+                  this.isVisible3=true;
+                  this.isVisible3=false;
+                }
+                if (data.obj.flowStatusCode==='BOOKED' && this.lstgetOrderLineDetails.length < 1){
+                  this.isVisible2=false;
+                  this.isVisible3=true;
+                  this.isVisible3=false;
+                }
                 if (this.lstgetOrderLineDetails[i].flowStatusCode === 'BOOKED' || this.lstgetOrderLineDetails[i].flowStatusCode === 'ALLOTED') {
                   this.displaytaxCategoryName[i] = true;
                   this.displayLineflowStatusCode[i] = false;
@@ -1298,11 +1318,17 @@ export class SalesOrderFormComponent implements OnInit {
                   //  this.onOptionsSelectedDescription(this.lstgetOrderLineDetails[i].segment,i)
                   this.onGstPersantage(this.allDatastore.taxCategoryName, this.lstgetOrderLineDetails[i].gstPercentage, this.lstgetOrderLineDetails[i].taxCategoryName, i)
                 }
+                if (this.lstgetOrderLineDetails[i].flowStatusCode === 'BOOKED' ){
+                  this.isVisible2=true;
+                }
                 if (this.lstgetOrderLineDetails[i].flowStatusCode === 'READY FOR INVOICE') {
                   this.displaytaxCategoryName[i] = false;
                   this.displayLineflowStatusCode[i] = true;
+                  this.isVisible3=true;
                 }
                 if (this.lstgetOrderLineDetails[i].flowStatusCode === 'INVOICED' || this.lstgetOrderLineDetails[i].flowStatusCode === 'CANCELLED') {
+                  this.isVisible4=true;
+                  this.isVisible3=false;
                   this.displayLineflowStatusCode[i] = true;
                   this.displayRemoveRow[i] = false;
                   this.displaytaxCategoryName[i] = false;

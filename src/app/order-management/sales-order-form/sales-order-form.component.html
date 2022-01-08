@@ -2029,26 +2029,20 @@
                                 <button class="btn btn-primary"
                                     [routerLink]="['/admin/transaction/PaymentReceipt',orderNumber]">Payment</button>
                             </td>
-
+                            <!-- <div [style.display]="isVisible2 ? 'block' : 'none'" style="display: inline-block;"> -->
                             <td>
-                                <button type="submit" class="btn btn-primary" (click)="orderLineUpdate()">Save</button>
+                                <button type="submit" class="btn btn-primary" (click)="orderLineUpdate()" [style.display]="isVisible2 ? 'block' : 'none'">Update</button>
                             </td>
+                            <!-- </div> -->
+                            <!-- <div [style.display]="isVisible3 ? 'block' : 'none'" > -->
                             <td>
                                 <button type="submit" class="btn btn-primary" (click)="createInvoice()"
-                                    style="width: 8rem;">Create Invoice</button>
+                                    style="width: 8rem;" [style.display]="isVisible3 ? 'block' : 'none'">Create Invoice</button>
                             </td>
-                            <!-- orderLineUpdate -->
-                            <!-- <td>
-                                <button type="button" class="btn btn-primary"  (click)="downloadInvoice()">
-                                   Download Invoice
-                                  </button>
-                               </td> -->
+                            <!-- </div> -->
+                            <!-- <div [style.display]="isVisible4 ? 'block' : 'none'" style="display: inline-block;"> -->
                             <td>
-                                <!-- <button type="button" class="btn btn-primary"  (click)="downloadAddonInvoice()">
-                                   Download Addon Invoice
-                                  </button> -->
-                                <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                <button type="button" class="btn btn-primary" data-toggle="modal" [style.display]="isVisible4 ? 'block' : 'none'"
                                     data-target="#viewInvoice" style="width: 8rem;" (click)="viewAllInvoice()">
                                     View Invoice
                                 </button>
@@ -2056,7 +2050,6 @@
                                     <div class="modal-dialog modal-xl">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <!-- <h4 class="modal-title">Modal Heading</h4> -->
                                                 <button type="button" class="close"
                                                     data-dismiss="modal">&times;</button>
                                             </div>
@@ -2108,7 +2101,7 @@
                                     </div>
                                 </div>
                             </td>
-                            <!-- </ng-template> -->
+                            <!-- </div> -->
                         </tr>
                     </table>
                 </fieldset>

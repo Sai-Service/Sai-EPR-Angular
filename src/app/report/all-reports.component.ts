@@ -93,6 +93,22 @@ export class AllReportsComponent implements OnInit {
   stockLedgerToLoc: string;
   stockLedgerUserName: string;
 
+  closeResetButton = true;
+  dataDisplay: any;
+  progress = 0;
+
+  isDisabled1 = false;
+  isDisabled2 = false;
+  isDisabled3 = false;
+  isDisabled4 = false;
+  isDisabled5 = false;
+  isDisabled6 = false;
+  isDisabled7 = false;
+  isDisabled8 = false;
+  isDisabled9 = false;
+  isDisabled10 = false;
+  isDisabled11 = false;
+
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) {
     this.reportForm = this.fb.group({
       invcDt1: [],
@@ -169,6 +185,8 @@ export class AllReportsComponent implements OnInit {
     this.reportForm.patchValue({stockLedgerToLocName: sessionStorage.getItem('locCode')});
     this.reportForm.patchValue({stockLedgerToLoc: sessionStorage.getItem('locId')});
     this.reportForm.patchValue({stockLedgerUserName:sessionStorage.getItem('ticketNo')});
+    this.reportForm.patchValue({spstktrfRecivedToLoc:sessionStorage.getItem('locCode')});
+    this.reportForm.patchValue({spstktrfRecivedSumToLoc:sessionStorage.getItem('locCode')});
 
     this.reportService.getLocationSearch1(sessionStorage.getItem('ouId'))
       .subscribe(
@@ -222,6 +240,10 @@ export class AllReportsComponent implements OnInit {
 
 
   spPurReg() {
+    this.isDisabled1=true;
+    this.closeResetButton = false;
+    this.progress = 0;
+    this.dataDisplay = 'Report Is Running....Do not refresh the Page';
     var purStDt = this.reportForm.get('purRegFromDt').value;
     var fromDate = this.pipe.transform(purStDt, 'dd-MMM-yyyy');
     var spreceipttoDate2 = this.reportForm.get('purRegToDt').value;
@@ -236,10 +258,17 @@ export class AllReportsComponent implements OnInit {
         // var printWindow = window.open(url, fileName, 'width=800,height=500');
         // printWindow.open
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.dataDisplay = ''
+        this.closeResetButton = true;
+        this.isDisabled1=false;
       })
   }
 
   sppurRegiSumm() {
+    this.isDisabled11=true;
+    this.closeResetButton = false;
+    this.progress = 0;
+    this.dataDisplay = 'Report Is Running....Do not refresh the Page';
     var spreceiptfromDate2 = this.reportForm.get('sppurRegiSummfromDate').value;
     var fromDate = this.pipe.transform(spreceiptfromDate2, 'dd-MMM-yyyy');
     var spreceipttoDate2 = this.reportForm.get('sppurRegiSummtoDate').value;
@@ -254,6 +283,9 @@ export class AllReportsComponent implements OnInit {
         // var printWindow = window.open(url, '', 'width=800,height=500');
         // printWindow.open
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.isDisabled11=false;
+        this.closeResetButton = true;
+        this.dataDisplay=''
       })
   }
 
@@ -275,6 +307,10 @@ export class AllReportsComponent implements OnInit {
 
 
   spIssueDetails() {
+    this.isDisabled2=true;
+    this.closeResetButton = false;
+    this.progress = 0;
+    this.dataDisplay = 'Report Is Running....Do not refresh the Page';
     var invcDt2 = this.reportForm.get('sidfromDate').value;
     var fromDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
     var invcDt3 = this.reportForm.get('sidtoDate').value;
@@ -289,11 +325,18 @@ export class AllReportsComponent implements OnInit {
         // var printWindow = window.open(url, '', 'width=800,height=500');
         // printWindow.open
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.isDisabled2=false;
+        this.closeResetButton = true;
+        this.dataDisplay='';
       })
   }
 
 
   spIssueSummary() {
+    this.isDisabled3=true;
+    this.closeResetButton = false;
+    this.progress = 0;
+    this.dataDisplay = 'Report Is Running....Do not refresh the Page';
     var invcDt2 = this.reportForm.get('spIssueSummfromDate').value;
     var fromDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
     var invcDt3 = this.reportForm.get('spIssueSummtoDate').value;
@@ -308,6 +351,9 @@ export class AllReportsComponent implements OnInit {
         // var printWindow = window.open(url, '', 'width=800,height=500');
         // printWindow.open
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.isDisabled3=false;
+        this.closeResetButton = true;
+        this.dataDisplay=''
       })
   }
 
@@ -316,6 +362,10 @@ export class AllReportsComponent implements OnInit {
     // var fromDate = this.pipe.transform(spreceiptfromDate2, 'dd-MMM-yyyy');
     // var spreceipttoDate2 = this.reportForm.get('sppurRegidetailtoDate').value;
     // var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
+    this.isDisabled4=true;
+    this.closeResetButton = false;
+    this.progress = 0;
+    this.dataDisplay = 'Report Is Running....Do not refresh the Page';
     const fileName = 'SP-Closing-Stock-' + sessionStorage.getItem('locName').trim() + '.xls';
 
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
@@ -326,10 +376,17 @@ export class AllReportsComponent implements OnInit {
         // var printWindow = window.open(url, '', 'width=800,height=500');
         // printWindow.open
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.isDisabled4=false;
+        this.closeResetButton = true;
+        this.dataDisplay=''
       })
   }
 
   spReceiptRegister() {
+    this.isDisabled5=true;
+    this.closeResetButton = false;
+    this.progress = 0;
+    this.dataDisplay = 'Report Is Running....Do not refresh the Page';
     var spreceiptfromDate2 = this.reportForm.get('spreceiptfromDate').value;
     var fromDate = this.pipe.transform(spreceiptfromDate2, 'dd-MMM-yyyy');
     var spreceipttoDate2 = this.reportForm.get('spreceipttoDate').value;
@@ -343,6 +400,9 @@ export class AllReportsComponent implements OnInit {
         // var printWindow = window.open(url, '', 'width=800,height=500');
         // printWindow.open
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.isDisabled5=false;
+        this.closeResetButton = true;
+        this.dataDisplay=''
       })
   }
 
@@ -350,6 +410,10 @@ export class AllReportsComponent implements OnInit {
 
 
   SPdebtorsReport() {
+    this.isDisabled6=true;
+    this.closeResetButton = false;
+    this.progress = 0;
+    this.dataDisplay = 'Report Is Running....Do not refresh the Page';
     var invcDt2 = this.reportForm.get('invcDt1').value;
     var fromDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
     //const fileName = 'download.pdf';
@@ -362,13 +426,19 @@ export class AllReportsComponent implements OnInit {
         // var printWindow = window.open(url, '', 'width=800,height=500');
         // printWindow.open
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-
+        this.isDisabled6=false;
+        this.closeResetButton = true;
+        this.dataDisplay=''
       })
   }
 
 
 
   spstktrfMd(spstktrfMdToLoc) {
+    this.isDisabled7=true;
+    this.closeResetButton = false;
+    this.progress = 0;
+    this.dataDisplay = 'Report Is Running....Do not refresh the Page';
     var invcDt2 = this.reportForm.get('spstktrfMdfromDate').value;
     var invcDt1 = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
     var invcDt3 = this.reportForm.get('spstktrfMdtoDate').value;
@@ -381,19 +451,26 @@ export class AllReportsComponent implements OnInit {
         var blob = new Blob([data], { type: 'application/pdf' });
         var url = URL.createObjectURL(blob);
         var printWindow = window.open(url, '', 'width=800,height=500');
-        printWindow.open
+        printWindow.open;
+        this.isDisabled7=false;
+        this.closeResetButton = true;
+        this.dataDisplay=''
       })
   }
 
 
 
   spstktrfRecived() {
+    this.isDisabled8=true;
+    this.closeResetButton = false;
+    this.progress = 0;
+    this.dataDisplay = 'Report Is Running....Do not refresh the Page';
     var spreceiptfromDate2 = this.reportForm.get('spstktrfRecivedfromDate').value;
     var fromDate = this.pipe.transform(spreceiptfromDate2, 'dd-MMM-yyyy');
     var spreceipttoDate2 = this.reportForm.get('spstktrfRecivedToDate').value;
     var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
     var shipFromLocId = this.reportForm.get('spstktrfRecivedFromLoc').value
-    var shipToLocId = this.reportForm.get('spstktrfRecivedToLoc').value
+    var shipToLocId = sessionStorage.getItem('locId');
     const fileName = 'download.pdf';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.spstktrfRecivedReport(fromDate, toDate, shipFromLocId, shipToLocId)
@@ -401,7 +478,10 @@ export class AllReportsComponent implements OnInit {
         var blob = new Blob([data], { type: 'application/pdf' });
         var url = URL.createObjectURL(blob);
         var printWindow = window.open(url, '', 'width=800,height=500');
-        printWindow.open
+        printWindow.open;
+        this.isDisabled8=false;
+        this.closeResetButton = true;
+        this.dataDisplay=''
       })
   }
 
@@ -409,11 +489,16 @@ export class AllReportsComponent implements OnInit {
 
 
   spstktrfRecivedSum() {
+    this.isDisabled9=true;
+    this.closeResetButton = false;
+    this.progress = 0;
+    this.dataDisplay = 'Report Is Running....Do not refresh the Page';
     var spreceiptfromDate2 = this.reportForm.get('spstktrfRecivedSumfromDate').value;
     var fromDate = this.pipe.transform(spreceiptfromDate2, 'dd-MMM-yyyy');
     var spreceipttoDate2 = this.reportForm.get('spstktrfRecivedSumToDate').value;
     var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
-    var shipFromLocId = this.reportForm.get('spstktrfRecivedSumToLoc').value
+    // var shipFromLocId = this.reportForm.get('spstktrfRecivedSumToLoc').value;
+    var shipFromLocId =sessionStorage.getItem('locId');
     var shipToLocId = this.reportForm.get('spstktrfRecivedSumFromLoc').value
     const fileName = 'download.pdf';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
@@ -422,11 +507,18 @@ export class AllReportsComponent implements OnInit {
         var blob = new Blob([data], { type: 'application/pdf' });
         var url = URL.createObjectURL(blob);
         var printWindow = window.open(url, '', 'width=800,height=500');
-        printWindow.open
+        printWindow.open;
+        this.isDisabled9=false;
+        this.closeResetButton = true;
+        this.dataDisplay=''
       })
   }
 
   stockLedger(){
+    this.isDisabled10=true;
+    this.closeResetButton = false;
+    this.progress = 0;
+    this.dataDisplay = 'Report Is Running....Do not refresh the Page';
     var spreceiptfromDate2 = this.reportForm.get('stockLedgerfromDate').value;
     var fromDate = this.pipe.transform(spreceiptfromDate2, 'dd-MMM-yyyy');
     var spreceipttoDate2 = this.reportForm.get('stockLedgerToDate').value;
@@ -440,7 +532,10 @@ export class AllReportsComponent implements OnInit {
       var blob = new Blob([data], { type: 'application/pdf' });
       var url = URL.createObjectURL(blob);
       var printWindow = window.open(url, '', 'width=800,height=500');
-      printWindow.open
+      printWindow.open;
+      this.isDisabled10=false;
+      this.closeResetButton = true;
+      this.dataDisplay=''
     })
   }
 

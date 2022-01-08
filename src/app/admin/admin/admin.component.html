@@ -42,6 +42,7 @@
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/allotment']">Allotment</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/Deallotment']">De Allotment</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/orderList']">Order List</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/SalesOrderForm']">Sales Order-New</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/ReversalOrder']">Reversal Order</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/GatePass']">Sales Gate Pass</a></li>
@@ -568,7 +569,7 @@
                 <td style="width: 15%" class="LabelFontStyle">&nbsp;&nbsp;&nbsp;&nbsp;Item&nbsp;Description&nbsp;:</td>
                 <td>
                   <input   type="text"  formControlName="searchItemCode"  id="searchItemCode"
-                           [(ngModel)]="searchItemCode" class="form-control"  placeholder="Enter Item Code"
+                           [(ngModel)]="searchItemCode" class="form-control"  placeholder="Enter Item Description"
                            style="width: 300px; background-color: rgb(240, 240, 166); text-transform: uppercase;"  >
                </td>
 
