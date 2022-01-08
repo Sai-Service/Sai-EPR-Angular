@@ -120,8 +120,8 @@ export class JobCardComponent implements OnInit {
 
   jobCardNum1: string;
   jobCardNum2: string  //='12PU.101-28';
-  JobOpenDt:Date;
-  // JobOpenDt=this.pipe.transform(Date.now(), 'y-MM-dd');
+  // JobOpenDt:Date;
+  JobOpenDt=this.pipe.transform(Date.now(), 'y-MM-dd');
   regNo1:string   //='MH12EM6088';
   jobStatus1:string //='Invoiced';
 
@@ -324,6 +324,7 @@ export class JobCardComponent implements OnInit {
   techLineValidation=false;
   techTotalValidation=false;
   duplicateLabLineItem=false;
+  genericItemLab=false;
   
 
   // public minDatetime = new Date();
@@ -564,6 +565,7 @@ export class JobCardComponent implements OnInit {
       splitFlag: [],
       splitAmtArr: [],
       taxPer: [],
+      genericItem:[],
     });
   }
   splitDetailsGroup() {
@@ -905,24 +907,51 @@ export class JobCardComponent implements OnInit {
       })
   }
 
+  serchByitemId(x,index){
+    var arrayControl = this.jobcardForm.get('jobCardLabLines').value
+    var event = arrayControl[index].segment;
+    this.serchByitemIdPrice(event,index)
 
-  serchByitemId(event, i) {
-    // alert ("event : "+event + " index :"+i);
+  }
+
+  serchByitemIdPrice(event, i) {
+   
     // let select = this.LaborItemList.find(d => d.itemId === event);
     var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
+   
+    // alert ("serchByitemId-event : "+event + " index :"+i);
     var serModel=this.jobcardForm.get('serviceModel').value;
+
     let select = this.LaborItemList.find(d => d.segment === event);
-    // alert ("event : "+event + " index :"+i + ","+select.description);
+   
     if(select) {
+      // alert ("SELECT >>event : "+event + " index :"+i + ","+select.description);
+    if(select.genericItem==='Y') {this.genericItemLab=true;} else {this.genericItemLab=false;}
+
+    alert ("select.genericItem : "+select.genericItem);
 
     this.CheckForDuplicateLineItem(select.itemId,i)
     if(this.duplicateLabLineItem) { return;}
    
     (patch.controls[i]).patchValue({ itemId: select.itemId });
+    (patch.controls[i]).patchValue({ segment: select.segment });
     (patch.controls[i]).patchValue({ description: select.description });
+    (patch.controls[i]).patchValue({ genericItem: select.genericItem });
+    (patch.controls[i]).patchValue({ qty: 0,unitPrice: 0,basicAmt: 0,taxAmt:0, laborAmt: 0, })
 
-   
     
+    if(select.genericItem==='Y'){ this.lineDetailsArray.controls[i].get('description').enable();} else
+    {this.lineDetailsArray.controls[i].get('description').disable();} 
+
+    var labArr = this.jobcardForm.get('jobCardLabLines').value
+
+    for(i=0;i< this.lineDetailsArray.length -1;i++) {
+        if(labArr[i].genericItem==='Y') {
+          this.lineDetailsArray.controls[i].get('description').enable();
+        } else {this.lineDetailsArray.controls[i].get('description').disable(); }
+
+    }
+
     if(serModel===null)  {  serModel=''; }
 
      this.serviceService.priceListDivisionFN( select.segment,serModel,(sessionStorage.getItem('locId')),(sessionStorage.getItem('ouId')))
@@ -941,7 +970,7 @@ export class JobCardComponent implements OnInit {
         }
       );
     } else { 
-      // alert (event + "-  Labor Item Not found...");
+      alert (event + "-  Labor Item Not found...");
       (patch.controls[i]).patchValue({ itemId: '' });
       (patch.controls[i]).patchValue({ description:''});
       (patch.controls[i]).patchValue({ unitPrice: 0 });
@@ -949,6 +978,7 @@ export class JobCardComponent implements OnInit {
       (patch.controls[i]).patchValue({ basicAmt:''});
       (patch.controls[i]).patchValue({ taxCategoryName:''});
       (patch.controls[i]).patchValue({ laborAmt:''});
+      (patch.controls[i]).patchValue({ taxPer:''});
      return;
        }
   }
@@ -1147,8 +1177,8 @@ export class JobCardComponent implements OnInit {
     if(Number(arrayControl[index].qty)<=0 ||arrayControl[index].qty===null || arrayControl[index].qty===undefined )
      { this.labLineValidation=false;return; }
 
-    //  if(Number(arrayControl[index].unitPrice)<=0 ||arrayControl[index].unitPrice===null || arrayControl[index].unitPrice===undefined )
-    //  { this.labLineValidation=false;return; }
+     if(Number(arrayControl[index].unitPrice)<=0 ||arrayControl[index].unitPrice===null || arrayControl[index].unitPrice===undefined )
+     { this.labLineValidation=false;return; }
 
     //  if(Number(arrayControl[index].basicAmt)<=0 ||arrayControl[index].basicAmt===null || arrayControl[index].basicAmt===undefined )
     //  { this.labLineValidation=false;return; }
@@ -2516,10 +2546,7 @@ onKey(index) {
 
     var mQty =arrayControl[index].qty;
     var taxP =arrayControl[index].taxPer;
-
-    // alert ("Lab qty index ,qty:"+index + " , "+mQty);
-
-    if(mQty <=0 || Number.isInteger(mQty)==false )
+    if(mQty <=0 )    // || Number.isInteger(mQty)==false 
     { 
       alert ("Please Enter a Valid Qty.");
       (patch.controls[index]).patchValue({ qty:'',basicAmt:0,taxAmt:0,laborAmt:0});return;
@@ -2706,13 +2733,13 @@ getMessage(msgType:string){
       getTrans(i) {
         this.lineIndex=i;
         this.searchBy='ITEM CODE';
-        
-    }
+        this.lstcomments1=null;
+        this.searchByItemCode=null;
+        this.searchByItemDesc=null;
+      }
 
     getItem(itemSeg, i){
-      alert ("Segment :" +itemSeg + " index :"+i);
-      this.serchByitemId(itemSeg,i)
-
+      this.serchByitemIdPrice(itemSeg,i)
   }
 
    
@@ -2737,13 +2764,36 @@ onSearchTypeSelected(evnt) {
 
 
 SearchPartNum(){
-  var itmDesc=this.jobcardForm.get('searchByItemDesc').value;
-      this.service.searchByItemDescInclude(itmDesc,sessionStorage.getItem('divisionId')).subscribe(
+
+  var  sType =this.jobcardForm.get('searchBy').value;
+  alert ("Search by :"+this.searchBy);
+  if(sType ==='ITEM CODE') {
+  var itmCd=this.jobcardForm.get('searchByItemCode').value;
+ 
+  alert (itmCd);
+  if(itmCd ===null || itmCd ===undefined || itmCd.trim()==='') {this.lstcomments1=null;return;}
+  itmCd=itmCd.toUpperCase();
+      this.service.searchByItemCodeInclude(itmCd).subscribe(
         data =>{
           this.lstcomments1= data;
           console.log(this.lstcomments1);
     });
   }
+
+  if(sType ==='ITEM DESCRIPTION') {
+    var itmDesc=this.jobcardForm.get('searchByItemDesc').value;
+    alert (itmDesc);
+    if(itmDesc ===null || itmDesc ===undefined || itmDesc.trim()==='') {this.lstcomments1=null;  return;}
+    itmDesc=itmDesc.toUpperCase();    
+    this.service.searchByItemDescInclude(itmDesc,sessionStorage.getItem('divisionId')).subscribe(
+          data =>{
+            this.lstcomments1= data;
+            console.log(this.lstcomments1);
+      });
+    }
+
+  }
+
       
 
 
