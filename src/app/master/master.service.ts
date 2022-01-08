@@ -1392,10 +1392,17 @@ StockgatePassSubmit(stkGatePass) {
 ///////////OnHand////////////
 
 
+searchByItemCodeInclude(itemCd):Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/itemMst/segment/${itemCd}`)
+  // http://localhost:8081/itemMst/segment/DH
+}
+
 searchByItemDescInclude(itemDesc,divId):Observable<any>
 {
-  return this.http.get(this.ServerUrl+`/itemMst/searchBydesc/${divId}?itemDesc=${itemDesc}`)
+  return this.http.get(this.ServerUrl+`/itemMst/searchByLabdesc/${divId}?itemDesc=${itemDesc}`)
  // http://localhost:8081/itemMst/searchBydesc/2?itemDesc=ring
+//  http://localhost:8081/itemMst/searchByLabdesc/2?itemDesc=ring
 }
 
 searchByItemByLoc(locId,itemid,ouId,divId):Observable<any>

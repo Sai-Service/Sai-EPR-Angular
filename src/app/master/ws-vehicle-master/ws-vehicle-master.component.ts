@@ -21,7 +21,7 @@ interface IWsVehicleMaster {
   categoryId: number;
   itemId: number;
   custAccountNo: number;
-  custPhone1: number;
+  mobile1: number;
   custName: string;
   address1: string;
   address2: string;
@@ -586,7 +586,7 @@ export class WsVehicleMasterComponent implements OnInit {
     this.CheckDataValidations()
 
     if (this.checkValidation) {
-      alert("Data Validation Sucessfull....\Updating  WS Customer Master")
+      alert("Data Validation Sucessfull....\Updating WS Customer Master")
       // this.service.UpdateSaiEwCustomer(formValue).subscribe((res: any) => {
       //   if (res.code === 200) {
       //     alert('RECORD UPDATED SUCCESSFUILY');
@@ -1070,7 +1070,7 @@ export class WsVehicleMasterComponent implements OnInit {
       alert("CUSTOMER NO: Should not be null");
     }
 
-    if (formValue.custPhone1 < 0 || formValue.custPhone1 === undefined || formValue.custPhone1 === null) {
+    if (formValue.mobile1 < 0 || formValue.mobile1 === undefined || formValue.mobile1 === null) {
       this.checkValidation = false;
       alert("CUSTOMER PHONE1: Should not be null");
     }

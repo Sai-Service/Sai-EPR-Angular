@@ -1340,7 +1340,7 @@
                                                     <table style="width: 100%;background-color: white;">
                                                         <tr>
                                                             <td class="PageHeader1" >
-                                                                &nbsp;&nbsp;Labor&nbsp;Details&nbsp;&nbsp;{{jobCardNum}}
+                                                                &nbsp;&nbsp;Labor&nbsp;Details&nbsp;&nbsp;{{jobCardNum}}&nbsp;&nbsp;&nbsp;&nbsp;{{regNo}}
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -1375,6 +1375,7 @@
                                                                     <th scope="col">&nbsp;</th>
                                                                     <!-- <th scope="col">Uom</th> -->
                                                                     <th scope="col">Description</th>
+                                                                    <th scope="col">GItem</th>
                                                                     <th scope="col">Tax %</th>
                                                                     <th scope="col">Quantity</th>
                                                                     <th scope="col">Unit Price</th>
@@ -1440,12 +1441,12 @@
                                                                             </td> -->
 
 
-                                                                            <td><input type="text" formControlName="segment"
+                                                                            <td><input type="text" formControlName="segment" value={{segment}}
                                                                                 (keyup)="getInvItemId($event)" id="invItemIdFirstWay"
                                                                                 list="dynmicUserIds1" class="form-control"  style="width: 8rem;"
-                                                                                (ngModelChange)="serchByitemId($event,i)" />
+                                                                                (change)="serchByitemId(segment,i)" />
                                                                                 <datalist id="dynmicUserIds1">
-                                                                                    <option *ngFor="let item of LaborItemList" [ngValue]="item.itemId">
+                                                                                    <option *ngFor="let item of LaborItemList" [ngValue]="item.segment">
                                                                                             {{item.segment}}
                                                                                     </option>
                                                                                 </datalist> 
@@ -1459,15 +1460,28 @@
                   
                                                                             <div *ngIf="dispSplitRatio; then splt11; else splt21"> </div>
                                                                             <ng-template #splt11>
-                                                                            <td>
-                                                                                <input disabled type="text" formControlName="description"  class="form-control"  style="height: 25px;">
-                                                                            </td>
-                                                                             </ng-template>
-                                                                            <ng-template #splt21>
-                                                                            <td>
-                                                                                <input disabled type="text" formControlName="description"  class="form-control"  style="height: 25px; width:380px" >
-                                                                            </td>
+                                                                                <!-- <div *ngIf="genericItemLab; then genYes1; else genNo1"> </div>
+                                                                                <ng-template #genYes1> -->
+                                                                                     <td><input  type="text" formControlName="description"  class="form-control"  style="height: 25px;"> </td>
+                                                                                <!-- </ng-template>
+                                                                                <ng-template #genNo1>
+                                                                                     <td><input disabled type="text" formControlName="description"  class="form-control"  style="height: 25px;"> </td>
+                                                                               </ng-template> -->
+                                                                            
                                                                             </ng-template>
+                                                                            <ng-template #splt21>
+                                                                                <!-- <div *ngIf="genericItemLab; then genYes2; else genNo2"> </div>
+                                                                                <ng-template #genYes2> -->
+                                                                                     <td><input  type="text" formControlName="description"  class="form-control"  style="height: 25px; width:350px" ></td>
+                                                                               <!-- </ng-template>
+                                                                               <ng-template #genNo2>
+                                                                                    <td><input disabled type="text" formControlName="description"  class="form-control"  style="height: 25px; width:350px" ></td>
+                                                                              </ng-template> -->
+                                                                           </ng-template>
+
+
+
+                                                                            <td><input disabled type="text" formControlName="genericItem"  class="form-control"  style="height: 25px; width:30px" ></td>
 
 
                                                                           
@@ -1655,7 +1669,7 @@
                                                 <table style="width: 100%;background-color: white;">
                                                     <tr>
                                                         <td class="PageHeader1">
-                                                            &nbsp;&nbsp;Material&nbsp;Details&nbsp;&nbsp; {{jobCardNum}}
+                                                            &nbsp;&nbsp;Material&nbsp;Details&nbsp;&nbsp; {{jobCardNum}}&nbsp;&nbsp;&nbsp;&nbsp;{{regNo}}
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -1914,7 +1928,7 @@
                                                 <table style="width: 100%;background-color: white;">
                                                     <tr>
                                                         <td class="PageHeader1">
-                                                            &nbsp;&nbsp;Billing&nbsp;Details&nbsp;&nbsp;{{jobCardNum}}
+                                                            &nbsp;&nbsp;Billing&nbsp;Details&nbsp;&nbsp;{{jobCardNum}}&nbsp;&nbsp;&nbsp;&nbsp;{{regNo}}
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -3301,14 +3315,14 @@
                                 <th style="width:10rem"   scope="col">Description&nbsp;</th>
                                 <!-- <th style="width:8rem"   scope="col">Category&nbsp;</th>
                                 <th style="width:3rem"  scope="col">UOM&nbsp;</th> -->
-                                <th style="width:6rem"  scope="col">Select</th>
+                                <th style="width:4rem"  scope="col">Select</th>
                            </tr>
                         </tbody>
                            <tr *ngFor="let com of lstcomments1 let i=index" class="ItemStyle" style="text-decoration:none;">
                                 <td style="width:3rem;text-align: center;">{{i+1}}</td>
                                 <!-- <td style="width:10rem;text-align: left;">{{com.itemId}}</td> -->
                                 <td style="width:10rem;text-align: left;">{{com.segment}}</td>
-                                <td style="width:30rem;text-align: left;">{{com.description}}</td>
+                                <td style="width:25rem;text-align: left;">{{com.description}}</td>
                                 <!-- <td style="width:8rem;text-align: center;">{{com.itemCategory}}</td>      
                                 <td style="width:8rem;text-align: center;">{{com.uom}}</td>  -->
                                 <!-- <td><button class="btn btn-secondary" (click)="F9SearchItemCodeNew(com.segment)">Select</button></td>  -->
