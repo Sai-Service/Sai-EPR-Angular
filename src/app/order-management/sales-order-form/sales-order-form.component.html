@@ -581,8 +581,19 @@
                             <td style="width: 15%" class="LabelFontStyle">
                                 Remark&nbsp;:&nbsp;
                             </td>
-                            <td colspan="3">
-                                <input type="text" formControlName="remarks" class="form-control" style="width: 100%;">
+                            <td>
+                                <input type="text" formControlName="remarks" class="form-control" style="width: 170px;">
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle">
+                                Broker&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                <select formControlName="broker" id="broker" class="form-control" style="width: 170px;">
+                                <option>--Select--</option>
+                                <option *ngFor="let mm of brokerList">
+                                    {{mm.custName}}
+                                </option>
+                            </select>
                             </td>
                         </tr>
                         <tr>
@@ -703,6 +714,11 @@
                                 <input disabled type="text" formControlName="remarks" [(ngModel)]='remarks'
                                     value={{remarks}} class="form-control" style="width: 170px;">
                             </td>
+                            <td style="width: 15%" class="LabelFontStyle">
+                                Broker&nbsp;:&nbsp;
+                            </td>
+                            <input disabled type="text" formControlName="broker" [(ngModel)]='broker'
+                            value={{broker}} class="form-control" style="width: 170px;">
                         </tr>
                         <tr>
                             <td style="width: 15%;font-weight: bold;" class="LabelFontStyle">
@@ -1441,12 +1457,12 @@
                                                                 id="taxCategoryName" class="form-control"
                                                                 style="width: 160px;height: 25px;font-size: 10px;">
                                                                 <option>--Select--</option>
-                                                                <option *ngFor="let sc of  taxCategoryList[i]" [value]="sc">
+                                                                <option *ngFor="let sc of  taxCategoryList[i]" [NgValue]="sc">
                                                                     {{sc.taxCategoryName}}
                                                                 </option>
                                                             </select>
                                                             <!-- [ngValue]="sc" -->
-                                                            <input  type="number" formControlName="taxCategoryId"
+                                                            <input hidden type="number" formControlName="taxCategoryId"
                                                                 value="taxCategoryId" class="form-control"
                                                                 style="height: 20px;width: 160px;">
                                                         </ng-template>

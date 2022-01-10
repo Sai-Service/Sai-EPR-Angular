@@ -1207,7 +1207,9 @@ export class CounterSalePerformaInvComponent implements OnInit {
     this.orderManagementService.createProformaOrderFFn(jsonData).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
-        window.location.reload();
+        this.orderNumber = res.obj;
+        this.OrderFind(this.orderNumber);
+        // window.location.reload();
         this.isDisabled = true;
       } else {
         if (res.code === 400) {

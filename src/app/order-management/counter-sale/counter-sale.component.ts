@@ -1734,7 +1734,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   }
 
   onKey(index, fldName,event) {
-    alert (event.keyCode)
+    // alert (event.keyCode)
     if (event.keyCode !=13){
     // alert(index +'Onkey Alert' +'---'+fldName)
     var arrayControl = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;

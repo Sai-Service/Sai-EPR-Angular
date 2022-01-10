@@ -708,6 +708,10 @@ transactionTypeNameListNew(deptId,ouId): Observable<any> {
   return this.http.get(this.ServerUrl +`/OrderTrnType/otList?deptId=${deptId}&ouId=${ouId}`);
 }
 
+brokerListFn(): Observable<any> {
+  return this.http.get(this.ServerUrl +`/Customer/ClassCode/BROKER`);
+}
+
 variantCodeList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
 }

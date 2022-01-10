@@ -39,6 +39,7 @@ interface ISalesBookingForm {
   custName: string,
   orderedDate: Date,
   transactionTypeName: string,
+  broker:string;
   flowStatusCode: string,
   payTermDesc: string,
   salesRepName: string,
@@ -214,6 +215,7 @@ export class SalesOrderFormComponent implements OnInit {
   adhocFinanceOffer: number;
   adhocISL: number;
   public transactionTypeNameList: any;
+  brokerList:any;
   public payTermDescList: any;
   public salesRepNameList: any;
   public taxCategoryList: any = [];
@@ -315,6 +317,7 @@ export class SalesOrderFormComponent implements OnInit {
       custName: ['', [Validators.required]],
       orderedDate: [''],
       transactionTypeName: ['', [Validators.required]],
+      broker:[],
       flowStatusCode: [''],
       payTermDesc: ['', [Validators.required]],
       salesRepName: ['', [Validators.required]],
@@ -501,6 +504,14 @@ export class SalesOrderFormComponent implements OnInit {
         }
       );
 
+      this.service.brokerListFn()
+      .subscribe(
+        data => {
+          this.brokerList = data;
+          console.log(this.brokerList);
+        }
+      );
+      
     this.service.payTermDescList()
       .subscribe(
         data => {
@@ -629,7 +640,7 @@ export class SalesOrderFormComponent implements OnInit {
   // this.lstgetOrderLineDetails[i].segment,,this.allDatastore.taxCategoryName,this.allDatastore.priceListId,i
   onGstPersantage(custtaxCategoryName, taxPercentage, itemtaxCategotyName, k) {
     // alert(itemtaxCategotyName)
-    //  alert(custtaxCategoryName+'----'+taxPercentage+'----'+itemtaxCategotyName+'---'+k)
+     alert(custtaxCategoryName+'----'+taxPercentage+'----'+itemtaxCategotyName+'---'+k)
     let controlinv = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     this.orderManagementService.getTaxCategoriesForSales(custtaxCategoryName, taxPercentage)
       .subscribe(
