@@ -1340,7 +1340,7 @@
                                                     <table style="width: 100%;background-color: white;">
                                                         <tr>
                                                             <td class="PageHeader1" >
-                                                                &nbsp;&nbsp;Labor&nbsp;Details&nbsp;&nbsp;{{jobCardNum}}&nbsp;&nbsp;&nbsp;&nbsp;{{regNo}}
+                                                                &nbsp;&nbsp;Labor&nbsp;Details&nbsp;&nbsp;{{jobCardNum}}&nbsp;&nbsp;&nbsp;&nbsp;{{regNo}}&nbsp;&nbsp;&nbsp;&nbsp;{{jobStatus}}
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -1455,8 +1455,15 @@
                                                                             <input hidden  type="number"  formControlName="itemId"  class="form-control" style="width: 50px;"  >
                                                                         
                                                                              <!-- <td><input disabled  type="text"  formControlName="uom"  class="form-control" style="width: 50px;"  ></td> -->
-                                                                            <td><button  type="button" style="width: fit-content;height: 23px;" class="btn btn-info1" data-toggle="modal" data-target="#itemDetails" (click)="getTrans(i)">...</button></td>
-                                                                        
+                                                                           
+                                                                             <div *ngIf="saveLabButton; then searchY; else searchN"></div>
+                                                                             <ng-template #searchY>
+                                                                                 <td><button  type="button" style="width: fit-content;height: 23px;" class="btn btn-info1" data-toggle="modal" data-target="#itemDetails" (click)="getTrans(i)">...</button></td>
+                                                                             </ng-template>
+                                                                             <ng-template #searchN>
+                                                                                <td><button disabled type="button" style="width: fit-content;height: 23px;" class="btn btn-info1" data-toggle="modal" data-target="#itemDetails" (click)="getTrans(i)">...</button></td>
+                                                                            </ng-template>
+
                   
                                                                             <div *ngIf="dispSplitRatio; then splt11; else splt21"> </div>
                                                                             <ng-template #splt11>
@@ -1669,7 +1676,7 @@
                                                 <table style="width: 100%;background-color: white;">
                                                     <tr>
                                                         <td class="PageHeader1">
-                                                            &nbsp;&nbsp;Material&nbsp;Details&nbsp;&nbsp; {{jobCardNum}}&nbsp;&nbsp;&nbsp;&nbsp;{{regNo}}
+                                                            &nbsp;&nbsp;Material&nbsp;Details&nbsp;&nbsp; {{jobCardNum}}&nbsp;&nbsp;&nbsp;&nbsp;{{regNo}}&nbsp;&nbsp;&nbsp;&nbsp;{{jobStatus}} 
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -1928,7 +1935,7 @@
                                                 <table style="width: 100%;background-color: white;">
                                                     <tr>
                                                         <td class="PageHeader1">
-                                                            &nbsp;&nbsp;Billing&nbsp;Details&nbsp;&nbsp;{{jobCardNum}}&nbsp;&nbsp;&nbsp;&nbsp;{{regNo}}
+                                                            &nbsp;&nbsp;Billing&nbsp;Details&nbsp;&nbsp;{{jobCardNum}}&nbsp;&nbsp;&nbsp;&nbsp;{{regNo}}&nbsp;&nbsp;&nbsp;&nbsp;{{jobStatus}}
                                                         </td>
                                                     </tr>
                                                 </table>

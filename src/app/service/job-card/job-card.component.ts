@@ -156,7 +156,7 @@ export class JobCardComponent implements OnInit {
   regNo: string;
   labTotTaxAmt: number;
   matTaxableAmt: number;
-  billableTyId:number;
+  // billableTyId:number;
   matTotTaxAmt: number;
   matTotAmt: number;
   labTaxableAmt: number;
@@ -930,8 +930,10 @@ export class JobCardComponent implements OnInit {
 
     alert ("select.genericItem : "+select.genericItem);
 
+    if(select.genericItem==='N') {
     this.CheckForDuplicateLineItem(select.itemId,i)
     if(this.duplicateLabLineItem) { return;}
+    }
    
     (patch.controls[i]).patchValue({ itemId: select.itemId });
     (patch.controls[i]).patchValue({ segment: select.segment });
@@ -945,12 +947,16 @@ export class JobCardComponent implements OnInit {
 
     var labArr = this.jobcardForm.get('jobCardLabLines').value
 
-    for(i=0;i< this.lineDetailsArray.length -1;i++) {
+        // for(i=0;i< this.lineDetailsArray.length -1;i++) {
+        //     if(labArr[i].genericItem==='Y') {
+        //       this.lineDetailsArray.controls[i].get('description').enable();
+        //     } else {this.lineDetailsArray.controls[i].get('description').disable(); }
+
+        // }
+
         if(labArr[i].genericItem==='Y') {
           this.lineDetailsArray.controls[i].get('description').enable();
         } else {this.lineDetailsArray.controls[i].get('description').disable(); }
-
-    }
 
     if(serModel===null)  {  serModel=''; }
 
@@ -1120,19 +1126,16 @@ export class JobCardComponent implements OnInit {
 
   
   addRow(index) {
-   
+
     var arrayControl = this.jobcardForm.get('jobCardLabLines').value
    
-    // alert ("Add Row index :"+index  + "  len1:"+len1);
-    var invItemId = arrayControl[index].itemId;
-    // alert("Item Id Jc lab line : "+invItemId +" , "+index);
     var len1= this.lineDetailsArray.length-1;
-    if(len1===index) {
+     if(len1===index) {
+     
     this.checkLabLineValidation(index);
-
+   
     if(this.labLineValidation ) {
-    // if (invItemId != null ) {
-
+   
       this.lineDetailsArray.push(this.lineDetailsGroup());
       var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
       var no = this.lineDetailsArray.length;
@@ -1150,23 +1153,17 @@ export class JobCardComponent implements OnInit {
       
     } else { alert('Incomplete Line.Please update line details and proceed.'); }
 
-    var index = index + 1
-    var aa = index + 1;
-    var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
-    (patch.controls[index]).patchValue(
-      {
-        // polineNum: aa,
-      }
-    );
+       
     }
   }
 
+
   checkLabLineValidation(index){
+    // alert ( " checkLabLineValidation..."+index);
+
     var arrayControl = this.jobcardForm.get('jobCardLabLines').value
     var invItemId = arrayControl[index].itemId;
     this.labLineValidation=false
-
-    // alert ("arrayControl[index].billableTyId :"+arrayControl[index].billableTyId);
 
     if(Number(arrayControl[index].billableTyId)<=0)
     { this.labLineValidation=false;return; }
@@ -1321,7 +1318,8 @@ export class JobCardComponent implements OnInit {
   Search(jobCardNo) {
 
     var  jcNum=jobCardNo.toUpperCase();
-
+    this.saveLabButton=true;
+    this.displaybilling=true;
     this.jobcardForm.reset();
     // this.lineDetailsArray.clear();
     this.jobcardForm.get('jobCardLabLines').reset();
@@ -1393,12 +1391,6 @@ export class JobCardComponent implements OnInit {
             this.lineDetailsArray.push(payInvGrp);
           }
 
-
-          // for (let i = 0; i < this.lstcomments.jobCardLabLines.splitArr.length - len1; i++) {
-          //   var payInvGrp1: FormGroup = this.splitDetailsGroup();
-          //   this.splitDetailsArray().push(payInvGrp1);
-          // }
-
           
 
           if (this.lstcomments.lineCnt > 0) {
@@ -1464,7 +1456,6 @@ export class JobCardComponent implements OnInit {
           }
 
       
-
           this.jobcardForm.patchValue(this.lstcomments);
          
           var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
@@ -1479,6 +1470,18 @@ export class JobCardComponent implements OnInit {
             patch.controls[ln].patchValue({laborAmt:lbrAmt});
 
           }
+
+          ///// disable/enable descreption column
+
+          if (this.lstcomments.jobStatus === 'Opened' ){
+           for(  let i=0;i< data.obj.jobCardLabLines.length;i++) {
+
+            if(data.obj.jobCardLabLines[i].genericItem==='Y') {
+              this.lineDetailsArray.controls[i].get('description').enable();
+            } else 
+            {this.lineDetailsArray.controls[i].get('description').disable(); }
+          }}
+
 
           this.jobcardForm.patchValue({labBasicAmt: this.lstcomments.labBasicAmt});
           this.jobcardForm.patchValue({matBasicAmt: this.lstcomments.matBasicAmt});
