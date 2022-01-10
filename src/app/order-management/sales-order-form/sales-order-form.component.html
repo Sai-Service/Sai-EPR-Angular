@@ -546,8 +546,8 @@
                                 <select formControlName="salesRepName" id="salesRepName" class="form-control"
                                     (ngModelChange)="onOptionsSelectedTL($event)" style="width: 170px;">
                                     <option>--Select--</option>
-                                    <option *ngFor="let pt of salesRepNameList">
-                                        {{pt.ticketNo}}
+                                    <option *ngFor="let pt of salesRepNameList" [(ngValue)]="pt.ticketNo">
+                                        {{pt.ticketNo}}--{{pt.description}}
                                     </option>
                                 </select>
 
@@ -1437,15 +1437,16 @@
                                                         <ng-template #thentaxCategoryName>
                                                             <!-- (ngModelChange)="ontaxCateChange(i,event)" -->
                                                             <select formControlName="taxCategoryName" 
-                                                                (change)="onOptionTaxCatSelected(event,i)"
+                                                                (change)="onOptionTaxCatSelected($event,i)"
                                                                 id="taxCategoryName" class="form-control"
                                                                 style="width: 160px;height: 25px;font-size: 10px;">
                                                                 <option>--Select--</option>
-                                                                <option *ngFor="let sc of  taxCategoryList[i]" [ngValue]="sc">
+                                                                <option *ngFor="let sc of  taxCategoryList[i]" [value]="sc">
                                                                     {{sc.taxCategoryName}}
                                                                 </option>
                                                             </select>
-                                                            <input hidden type="number" formControlName="taxCategoryId"
+                                                            <!-- [ngValue]="sc" -->
+                                                            <input  type="number" formControlName="taxCategoryId"
                                                                 value="taxCategoryId" class="form-control"
                                                                 style="height: 20px;width: 160px;">
                                                         </ng-template>
@@ -2045,6 +2046,9 @@
                             <td>
                                 <button class="btn btn-primary"
                                     [routerLink]="['/admin/transaction/PaymentReceipt',orderNumber]">Payment</button>
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-primary" (click)="SOA()">SOA</button>
                             </td>
                             <!-- <div [style.display]="isVisible2 ? 'block' : 'none'" style="display: inline-block;"> -->
                             <td>

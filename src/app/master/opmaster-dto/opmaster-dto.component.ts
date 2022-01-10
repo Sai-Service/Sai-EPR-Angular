@@ -1759,9 +1759,9 @@ export class OPMasterDtoComponent implements OnInit {
     console.log(arrayControl);
     
    
-    arrayControl[index].baseAmtLineWise = arrayControl[index].unitPrice * arrayControl[index].orderedQty;
-
-    var baseAmount = arrayControl[index].baseAmtLineWise
+    arrayControl[index].baseAmtLineWise = Math.round(((arrayControl[index].unitPrice * arrayControl[index].orderedQty) + Number.EPSILON) * 100) / 100;
+    // var baseAmount = arrayControl[index].baseAmtLineWise;
+    var baseAmount = Math.round(((arrayControl[index].baseAmtLineWise) + Number.EPSILON) * 100) / 100;
     var taxCategoryId = arrayControl[index].taxCategoryId;
     // alert(taxCategoryId)
     if (baseAmount != null) {
@@ -1787,13 +1787,17 @@ export class OPMasterDtoComponent implements OnInit {
             for (let i = 0; i < this.taxCalforItem.length; i++) {
 
               if (this.taxCalforItem[i].totTaxPer != 0) {
-                sum = sum + this.taxCalforItem[i].totTaxAmt
+                // sum = sum + this.taxCalforItem[i].totTaxAmt;
+                sum=  Math.round(((sum + this.taxCalforItem[i].totTaxAmt) + Number.EPSILON) * 100) / 100;
               }
             }
             (patch.controls[index]).patchValue({
-              baseAmtLineWise: arrayControl[index].baseAmtLineWise,
-              taxAmtLineWise: sum,
-              totAmtLineWise: arrayControl[index].baseAmtLineWise + sum,
+              // baseAmtLineWise: arrayControl[index].baseAmtLineWise,
+              // taxAmtLineWise: sum,
+              // totAmtLineWise: arrayControl[index].baseAmtLineWise + sum,
+              baseAmtLineWise : Math.round(((arrayControl[index].baseAmtLineWise) + Number.EPSILON) * 100) / 100,
+              taxAmtLineWise : Math.round(((sum) + Number.EPSILON) * 100) / 100,
+              totAmtLineWise : Math.round(((arrayControl[index].baseAmtLineWise + sum) + Number.EPSILON) * 100) / 100,
             });
             this.patchResultList(index, this.taxCalforItem);
           });

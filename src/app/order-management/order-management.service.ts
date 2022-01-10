@@ -160,6 +160,14 @@ export class OrderManagementService {
     });
   }
 
+  downloadSoa(orderNumber){
+    const REQUEST_URI = this.ServerUrl +`/orderHeader/SS_Sales_SOA/${orderNumber}`;    
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
 
 
   downloadAddonINV(InvoiceNumber){
