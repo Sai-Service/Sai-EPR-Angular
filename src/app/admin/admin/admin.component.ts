@@ -345,31 +345,6 @@ export class AdminComponent implements OnInit {
       this.isVisible35=false;
     }
 
-    if (Number(sessionStorage.getItem('divisionId')) === 2 && sessionStorage.getItem('deptName')==='Accessories' && Number(sessionStorage.getItem('roleId'))===6){
-      this.isVisible11=true;
-      this.isVisible12=false;
-      this.isVisible13=false;
-      this.isVisible14=true;
-      this.isVisible15=true;
-      this.isVisible16=true;
-      this.isVisible17=true;
-      this.isVisible18=true;
-      this.isVisible19=true;
-      this.isVisible20=true;
-      this.isVisible21=false;
-      this.isVisible22=false;
-      this.isVisible23=false;
-      this.isVisible24=true;
-      this.isVisible25=true;
-      this.isVisible26=true;
-      this.isVisible27=true;
-      this.isVisible28=true;
-      this.isVisible29=true;
-      this.isVisible30=true;
-      this.isVisible31=true;
-      this.isVisible32=false;
-    }
-
     if (
       sessionStorage.getItem('ticketNo') === undefined ||
       sessionStorage.getItem('ticketNo') === null ||
@@ -404,10 +379,6 @@ export class AdminComponent implements OnInit {
 
   close() {
     this.router.navigate(['login']);
-  }
-
-  closeF9(){
-    this.ItemIdList = [];
   }
 
   dashboard() {
@@ -629,6 +600,7 @@ export class AdminComponent implements OnInit {
   }
   filterRecord(event) {
     var itemCode1 = event.target.value;
+
     
     if (event.keyCode == 13) {
       var itemCode = '';
@@ -651,10 +623,9 @@ export class AdminComponent implements OnInit {
             // this.Select(data[0].itemId);
           });
       } else {
-        if(itemCode.length<4){
+        if(this.ItemIdList.length<=1){
         alert('Please Enter 4 characters of item number!!');
-        this.ItemIdList = [];
-  
+       
         return;
         }
       }

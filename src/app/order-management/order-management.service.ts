@@ -77,12 +77,6 @@ export class OrderManagementService {
     return this.http.get(this.ServerUrl +`/orderHeader/ACSPLoc?orderNumber=${orderNumber}&locationId=${locId}`);
   }
 
-  findCSProformaByNum(orderNumber,locId): Observable<any> {
-    return this.http.get(this.ServerUrl +`/Proforma/${sessionStorage.getItem('divisionId')}/${orderNumber}`);
-  }
-
-
-
   UpdateCounterSaleInv(UpdateCounterSaleInvRecord) {
     const options = {
       headers: this.headers
@@ -330,7 +324,7 @@ public pickTicketInvoiceFun(pickTicketInvDels) {
     const options = {
       headers: this.headers
     };
-    const url = this.ServerUrl + '/Proforma';
+    const url = this.ServerUrl + '/orderHeader/postAccSPOrders';
     return this.http.post(url, AccLineRecord1, options);
   }
 

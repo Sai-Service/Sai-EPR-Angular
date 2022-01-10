@@ -639,8 +639,8 @@ export class SalesOrderFormComponent implements OnInit {
 
   // this.lstgetOrderLineDetails[i].segment,,this.allDatastore.taxCategoryName,this.allDatastore.priceListId,i
   onGstPersantage(custtaxCategoryName, taxPercentage, itemtaxCategotyName, k) {
-    // alert(itemtaxCategotyName)
-     alert(custtaxCategoryName+'----'+taxPercentage+'----'+itemtaxCategotyName+'---'+k)
+    alert(itemtaxCategotyName)
+    //  alert(custtaxCategoryName+'----'+taxPercentage+'----'+itemtaxCategotyName+'---'+k)
     let controlinv = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     this.orderManagementService.getTaxCategoriesForSales(custtaxCategoryName, taxPercentage)
       .subscribe(
@@ -1231,9 +1231,6 @@ export class SalesOrderFormComponent implements OnInit {
 
 
   OrderBooked() {
-    this.closeResetButton = false;
-    this.progress = 0;
-    this.dataDisplay = 'Order Save in progress....Do not refresh the Page';
     this.ouId = Number(sessionStorage.getItem('ouId'))
     const formValue: ISalesBookingForm = this.transData(this.SalesOrderBookingForm.getRawValue());
     formValue.flowStatusCode = 'BOOKED';
@@ -1247,8 +1244,6 @@ export class SalesOrderFormComponent implements OnInit {
         console.log(this.orderNumber);
         this.isDisabled = false;
         alert(res.message);
-        this.dataDisplay = ''
-        this.closeResetButton = true;
         this.SalesOrderBookingForm.get('accountNo').disable();
         this.displayorderDetails = false;
         this.displayVehicleDetails = false;
@@ -1258,8 +1253,6 @@ export class SalesOrderFormComponent implements OnInit {
         if (res.code === 400) {
           this.isDisabled = true;
           alert(res.message);
-          this.dataDisplay = 'Error In Order!'
-          this.closeResetButton = true;
           // this.SalesOrderBookingForm.reset();
         }
       }
@@ -1511,6 +1504,13 @@ export class SalesOrderFormComponent implements OnInit {
     //  var taxCaName =taxObj[i].taxCategoryName;
     console.log(taxObj);
 
+    // alert(taxCategoryName.taxCategoryName)
+    var taxCateObj=event.target.value;
+    alert(event.target.value)
+    // console.log(event[0]);
+    //  alert(event.target.value);
+    // console.log(taxCateObj[0]);
+    //  if ( this.op !='Search' && event != null ){
     this.indexVal = i;
     var arrayControl = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value;
     let controlinv = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
@@ -1568,14 +1568,14 @@ export class SalesOrderFormComponent implements OnInit {
 
 
   orderLineUpdate() {
-    this.closeResetButton = false;
-    this.progress = 0;
-    this.dataDisplay = 'Order Update in progress....Do not refresh the Page';
+    // const formValue: ISalesBookingForm = (this.SalesOrderBookingForm.value);
     var orderLines = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value;
     let jsonData = this.SalesOrderBookingForm.value;
     let salesObj = Object.assign(new SalesOrderobj(), jsonData);
     salesObj.setoeOrderLinesAllList(orderLines);
     var taxStr = [];
+    // debugger;
+  
     for (let k = 0; k < orderLines.length; k++) {
       if (orderLines[k].invType != 'SS_ADDON_INS') {
         orderLines[k].taxCategoryName = orderLines[k].taxCategoryName.taxCategoryName;
@@ -1584,6 +1584,7 @@ export class SalesOrderFormComponent implements OnInit {
     console.log(this.taxMap.values());
 
     for (let taxlinval of this.taxMap.values()) {
+      // alert(taxlinval.length +'---')
       for (let i = 0; i < taxlinval.length; i++) {
         taxStr.push(taxlinval[i]);
       }
@@ -1592,14 +1593,10 @@ export class SalesOrderFormComponent implements OnInit {
     this.orderManagementService.UpdateSalesUpdateLine(JSON.stringify(salesObj)).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
-        this.dataDisplay = ''
-        this.closeResetButton = true;
         this.OrderFind(this.orderNumber);
       } else {
         if (res.code === 400) {
           alert(res.message);
-          this.dataDisplay = 'Order Not update due to Some Error!'
-          this.closeResetButton = true;
           // this.SalesOrderBookingForm.reset();
         }
       }

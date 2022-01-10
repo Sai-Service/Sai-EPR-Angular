@@ -401,6 +401,7 @@ export class PaymentArComponent implements OnInit {
       // selectAllflag: [],
       applyTo: [],
       applyrcptFlag: [],
+      custTrxId:[],
       trxNumber: [],
       trxDate: [],
       invoiceAmount: [],

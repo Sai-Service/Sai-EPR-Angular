@@ -237,16 +237,13 @@ lineDetailsArray() :FormArray{
   addRow(index) {
   this.addNewLine=true;
    var ordLineArr = this.orderGenerationForm.get('orderList').value;
-   var len1 = this.lineDetailsArray().length-1;
-
-   if(len1===index){
-   
+   var len = this.lineDetailsArray().length;
     if( ordLineArr[index].itemId>0  &&  ordLineArr[index].orderQty>0 ) {
    
     this.lineDetailsArray().push(this.lineDetailsGroup()); 
     
    }else {alert ("Incomplete Line - Check Order Part No , Order Qty .... ");}
-  }
+   
 }
 
 RemoveRow(index) {
@@ -263,8 +260,8 @@ else {
 }
 
 orderHedaerList=[[
-  'Srl No',	
-  'Part No',	
+    'Srl No',	
+    'Part No',	
     'Description',	
     'Unit Price',	
     'Back order Qty',	
@@ -276,7 +273,7 @@ orderHedaerList=[[
     'WS Cons-Tot',
     'CS Cons-Tot',
     'Set Qty',
-   'Order Qty	',
+    'Order Qty	',
     'Order Value'
   ]]
 
@@ -297,9 +294,7 @@ orderListExport() {
   xlsx.utils.sheet_add_aoa(ws,this.orderHedaerList); 
   var formValue= this.transData(this.orderGenerationForm.get('orderList').value);
   // console.log(formValue);
-  
-  xlsx.utils.sheet_add_json(ws,formValue,{origin:'A2',skipHeader:true}); 
-  
+   xlsx.utils.sheet_add_json(ws,formValue,{origin:'A2',skipHeader:true}); 
   // const ws: xlsx.WorkSheet =
   //  // xlsx.utils.table_to_sheet(document.getElementById('orderListTable')); 
   //    xlsx.utils.json_to_sheet(this.orderGenerationForm.get('orderList').value);
@@ -716,6 +711,7 @@ CreateOrder() {
       }
 
       setFocus(name) {
+
         const ele = this.aForm.nativeElement[name];
         if (ele) {
           ele.focus();

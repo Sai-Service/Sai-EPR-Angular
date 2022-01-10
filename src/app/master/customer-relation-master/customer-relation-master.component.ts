@@ -124,7 +124,7 @@ export class CustomerRelationMasterComponent implements OnInit {
   custRelationMaster(custRelationMasterForm:any) {  }
 
   ngOnInit(): void {
-
+    $("#wrapper").toggleClass("toggled");
     this.name=  sessionStorage.getItem('name');
     this.loginArray=sessionStorage.getItem('divisionName');
     this.divisionName=sessionStorage.getItem('divisionName');
@@ -342,12 +342,15 @@ export class CustomerRelationMasterComponent implements OnInit {
 
 
     addRow(index) {
-          // alert("Adding new Line..."+index);
-        
-          var custLineArr = this.custRelationMasterForm.get('custList').value;
-         if( custLineArr[index].customerId>0) {
+        var custLineArr = this.custRelationMasterForm.get('custList').value;
+      
+        var len1=this.lineDetailsArray().length-1;
+        // alert ("Len1 :" +len1 + "  index :"+index);
+        if(index===len1) {
+          if( custLineArr[index].customerId>0) {
           this.lineDetailsArray().push(this.lineDetailsGroup()); 
          }else {alert ("Incomplete Line ");}
+        }
     }
 
     RemoveRow(index) {

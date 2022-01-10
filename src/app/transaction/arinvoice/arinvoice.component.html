@@ -559,8 +559,8 @@
                 <ng-template #thenBlockHSN> -->
                                                     <!-- <input type="text" formControlName="hsnSacCode"
                                                         style="width: 4rem;" class="form-control"> -->
-                                                        <select  style="width:fit-content" formControlName="hsnSacCode" id="hsnSacCode" class="form-control">
-                                                                                <!-- (ngModelChange)='onHsnCodeSelected($event,i)' #hsnSacCode1 -->
+                                                        <select  style="width:fit-content" formControlName="hsnSacCode" id="hsnSacCode" class="form-control"
+                                                                                (ngModelChange)='onHsnCodeSelected($event,i)' #hsnSacCode1>
                                                                                 <option></option>
                                                                                 <option *ngFor="let sc of hsnSacCodeList" [ngValue]="sc.hsnsaccode">
                                                                                     {{sc.hsnsaccode}}-{{sc.description}}
