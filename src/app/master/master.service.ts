@@ -191,6 +191,11 @@ export class MasterService {
   supplierCodeList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/supp');
   }
+
+  pricelIstListFn(ouId): Observable<any> {
+    return this.http.get(this.ServerUrl +`/pricelist/NDPPrc?ouId=${ouId}`);
+  }
+
   getTdsType():Observable<any>{
     return this.http.get(this.ServerUrl+`/cmnLookup/CmnType/SuppTdsType`);
   }

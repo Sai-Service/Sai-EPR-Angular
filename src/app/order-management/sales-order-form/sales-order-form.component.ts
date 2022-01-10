@@ -122,6 +122,7 @@ export class SalesOrderFormComponent implements OnInit {
   birthDate: Date;
   emailId1: string;
   basicValue: number;
+  isTaxable:string;
   priceListHeaderId: number;
   emailId: string;
   state: string;
@@ -399,6 +400,7 @@ export class SalesOrderFormComponent implements OnInit {
       orderedItem: [''],
       pricingQty: [''],
       unitSellingPrice: [''],
+      isTaxable:[''],
       taxCategoryName: [''],
       baseAmt: [''],
       taxAmt: [''],
@@ -639,7 +641,7 @@ export class SalesOrderFormComponent implements OnInit {
 
   // this.lstgetOrderLineDetails[i].segment,,this.allDatastore.taxCategoryName,this.allDatastore.priceListId,i
   onGstPersantage(custtaxCategoryName, taxPercentage, itemtaxCategotyName, k) {
-    alert(itemtaxCategotyName)
+    // alert(itemtaxCategotyName)
     //  alert(custtaxCategoryName+'----'+taxPercentage+'----'+itemtaxCategotyName+'---'+k)
     let controlinv = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     this.orderManagementService.getTaxCategoriesForSales(custtaxCategoryName, taxPercentage)
@@ -653,7 +655,7 @@ export class SalesOrderFormComponent implements OnInit {
 
           (controlinv.controls[k]).patchValue({
             taxCategoryId: itemCateNameList.taxCategoryId,
-            taxCategoryName: itemCateNameList,
+            taxCategoryName: itemCateNameList.taxCategoryName,
           })
         }
       );
@@ -1083,6 +1085,7 @@ export class SalesOrderFormComponent implements OnInit {
     console.log(arrayControl);
     var itemId = arrayControl[index].itemId;
     var taxcatName = arrayControl[index].taxCategoryName;
+    alert(taxcatName)
     // alert(arrayControl[index].invType);
     // alert(arrayControl[index].invType.includes('ADDON_INS'))
     if (arrayControl[index].invType.includes('ADDON_INS')) {
@@ -1318,8 +1321,10 @@ export class SalesOrderFormComponent implements OnInit {
                   this.isVisible3 = true;
                   this.isVisible3 = false;
                 }
-                if (data.obj.flowStatusCode === 'BOOKED' && this.lstgetOrderLineDetails.length < 1) {
-                  this.isVisible2 = false;
+                // alert(this.lstgetOrderLineDetails.length +'----'+ data.obj.flowStatusCode)
+                if (data.obj.flowStatusCode === 'BOOKED' && this.lstgetOrderLineDetails.length !=0) {
+                  // alert('hi')
+                  this.isVisible2 = true;
                   this.isVisible3 = true;
                   this.isVisible3 = false;
                 }
@@ -1380,19 +1385,24 @@ export class SalesOrderFormComponent implements OnInit {
             console.log(Number(sessionStorage.getItem('ouId')));
             var controlinv1 = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value;
             var controlinv2 = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
-            if (data.obj.taxAmounts.length === 0) {
-              for (let i = 0; i < controlinv1.length; i++) {
-                if (controlinv1[i].invType === 'SS_VEHICLE' && controlinv1[i].flowStatusCode === 'ALLOTED') {
-                  this.onKey(i, 'Search');
-                }
-                // let itemTaxCat = this.taxCategoryList.find(d => d.taxCategoryId === controlinv1[i].taxCategoryId);
-
-                // controlinv2.controls[i].patchValue({ taxCategoryName: itemTaxCat.taxCategoryName }); --- minal madam code
-                // controlinv2.controls[i].patchValue({ taxCategoryId: itemTaxCat.taxCategoryId }); --- minal madam code
-                controlinv2.controls[i].patchValue({ taxCategoryName: controlinv1[i].taxCategoryName });
-                controlinv2.controls[i].patchValue({ taxCategoryId: controlinv1[i].taxCategoryId });
-              }
-            }
+            // if (data.obj.taxAmounts.length === 0) {
+            //   for (let i = 0; i < controlinv1.length; i++) {
+            //     if (controlinv1[i].invType === 'SS_VEHICLE' && controlinv1[i].flowStatusCode === 'ALLOTED') {
+            //       this.onKey(i, 'Search');
+            //     }
+              
+            //     // controlinv2.controls[i].patchValue({ taxCategoryName: controlinv1[i].taxCategoryName });
+            //     // controlinv2.controls[i].patchValue({ taxCategoryId: controlinv1[i].taxCategoryId });
+            //   }
+            // }
+            // else{
+            //   alert(controlinv1[0].taxCategoryId)
+            //   let itemTaxCat = this.taxCategoryList.find(d => d.taxCategoryId === controlinv1[0].taxCategoryId);
+            //   console.log(itemTaxCat);
+              
+            //     controlinv2.controls[0].patchValue({ taxCategoryName: itemTaxCat.taxCategoryName });
+            //    controlinv2.controls[0].patchValue({ taxCategoryId: itemTaxCat.taxCategoryId });
+            // }
           }
         }
       )
@@ -1498,28 +1508,19 @@ export class SalesOrderFormComponent implements OnInit {
   onOptionTaxCatSelected(event: any, i) {
     // alert(event)
     console.log(event);
-    console.log(event[i].taxCategoryName.taxCategoryName);
-    // alert(event.control.value)
-    var taxObj = event.target.value[0].taxCategoryName;
-    //  var taxCaName =taxObj[i].taxCategoryName;
-    console.log(taxObj);
-
-    // alert(taxCategoryName.taxCategoryName)
-    var taxCateObj=event.target.value;
-    alert(event.target.value)
-    // console.log(event[0]);
-    //  alert(event.target.value);
-    // console.log(taxCateObj[0]);
-    //  if ( this.op !='Search' && event != null ){
+    var taxObj = event.target.value;
     this.indexVal = i;
     var arrayControl = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value;
     let controlinv = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
     let controlinv2 = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     var baseAmt = arrayControl[i].baseAmt;
-    var itemId = arrayControl[i].itemId
-
-    let select = this.taxCategoryList[i].find(d => d.taxCategoryName === event[i].taxCategoryName);
-
+    var itemId = arrayControl[i].itemId;
+    let select = this.taxCategoryList[i].find(d => d.taxCategoryName === taxObj);
+    console.log(this.taxCategoryList[i]);
+    
+    
+    console.log(select);
+    
     var taxCategoryId = select.taxCategoryId;
     console.log(taxCategoryId);
     // controlinv.controls[i].patchValue({taxCategoryId:select.taxCategoryId});
@@ -1577,7 +1578,7 @@ export class SalesOrderFormComponent implements OnInit {
     // debugger;
   
     for (let k = 0; k < orderLines.length; k++) {
-      if (orderLines[k].invType != 'SS_ADDON_INS') {
+      if (orderLines[k].isTaxable === 'Y') {
         orderLines[k].taxCategoryName = orderLines[k].taxCategoryName.taxCategoryName;
       }
     }

@@ -893,7 +893,7 @@
                                                 <select type="text" formControlName="financeType" id="financeType"
                                                     class="form-control" style="width: 170px;" (change)="financeSelectionYes($event)">
                                                     <option>--Select--</option>
-                                                    <option *ngFor="let sc of  financeTypeList">{{sc.codeDesc}}</option>
+                                                    <option *ngFor="let sc of  financeTypeList"[value]="sc.codeDesc" >{{sc.codeDesc}}</option>
                                                 </select>
                                             </td>
                                             <div *ngIf="DisplayfinanceSelectionYes; then thenfinanceSelectionYes; else elsefinanceSelectionYes"></div>
@@ -907,7 +907,7 @@
                                                 <select type="text" formControlName="financerName" id="financerName"
                                                     class="form-control" style="width: 170px;">
                                                     <option>--Select--</option>
-                                                    <option *ngFor="let sc of  financerNameList">{{sc.codeDesc}}
+                                                    <option *ngFor="let sc of  financerNameList" [value]="sc.codeDesc">{{sc.codeDesc}}
                                                     </option>
                                                 </select>
                                             </td>
@@ -966,7 +966,7 @@
                                                 <select type="text" formControlName="exchange" id="exchange"
                                                     class="form-control" style="width: 120px;" (change)="exchangeYes($event)">
                                                     <option>--Select--</option>
-                                                    <option *ngFor="let sc of  YesNoList">
+                                                    <option *ngFor="let sc of  YesNoList" [value]="sc.cmnDesc">
                                                         {{sc.cmnDesc}}
                                                     </option>
                                                 </select>
@@ -1061,7 +1061,7 @@
                                                 <select disabled formControlName="financeType" id="financeType"
                                                     class="form-control" style="width: 170px;">
                                                     <option>--Select--</option>
-                                                    <option *ngFor="let sc of  financeTypeList">{{sc.codeDesc}}</option>
+                                                    <option *ngFor="let sc of  financeTypeList" [value]="sc.codeDesc">{{sc.codeDesc}}</option>
                                                 </select>
                                             </td>
                                             <td style="width: 15%" class="LabelFontStyle">
@@ -1457,7 +1457,7 @@
                                                                 id="taxCategoryName" class="form-control"
                                                                 style="width: 160px;height: 25px;font-size: 10px;">
                                                                 <option>--Select--</option>
-                                                                <option *ngFor="let sc of  taxCategoryList[i]" [NgValue]="sc">
+                                                                <option *ngFor="let sc of  taxCategoryList[i]" [value]="sc.taxCategoryName">
                                                                     {{sc.taxCategoryName}}
                                                                 </option>
                                                             </select>
@@ -1479,6 +1479,10 @@
                                                                 style="height: 20px;width: 160px;">
                                                         </ng-template>
                                                     </td>
+                                                  
+                                                        <input hidden disabled type="text" formControlName="isTaxable"
+                                                            class="form-control" style="height: 20px;width: 70px;">
+                                                 
                                                     <td>
 
                                                         <input disabled type="number" formControlName="baseAmt"

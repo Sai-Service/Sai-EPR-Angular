@@ -69,6 +69,7 @@ export class BulkUploadWithCsvComponent implements OnInit {
   userList1: any[] = [];
   lastkeydown1: number = 0;
   public supplierCodeList: any[];
+  public pricelIstList : any=[];
   public suppIdList: any;
   private sub: any;
   segment1: string;
@@ -143,6 +144,15 @@ export class BulkUploadWithCsvComponent implements OnInit {
           data1 = this.supplierCodeList;
         }
       );
+
+      // this.service.pricelIstListFn(sessionStorage.getItem('ouId'))
+      // .subscribe(
+      //   data1 => {
+      //     this.pricelIstList = data1;
+      //     console.log(this.pricelIstList);
+      //   }
+      // );
+      
     this.itemButton1 = true;
     this.myInputField.nativeElement.focus();
     // this.itemButton.nativeElement.hidden=true;
