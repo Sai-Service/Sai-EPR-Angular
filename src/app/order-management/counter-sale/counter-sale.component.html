@@ -445,7 +445,7 @@
 
                         <!-- (ngModelChange)='onOptionsSelectedlncategoryType'  (ngModelChange)="onOptionsSelectedTransactionType($event)"-->
                         <select formControlName="transactionTypeName" [(ngModel)]="transactionTypeName"
-                            id="transactionTypeName" (change)="onOptionsSelectedTransactionType(transactionTypeName)"
+                            id="transactionTypeName" (ngModelChange)="onOptionsSelectedTransactionType(transactionTypeName)"
                             class="form-control" style="width: fit-content;">
                             <option>--Select--</option>
                             <option *ngFor="let orderType of orderTypeList" [value]="orderType.transactionTypeName">

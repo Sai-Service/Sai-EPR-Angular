@@ -1425,6 +1425,8 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
             this.isDisabled3 = true;
             this.customerNameSearch.splice(0, this.customerNameSearch.length);
             console.log(this.customerNameSearch);
+            this.transactionTypeName='Spares Sale - Credit';
+            this.CounterSaleOrderBookingForm.patchValue({createOrderType:'Pick Ticket'});
           }
           else {
             if (data.code === 400) {
@@ -1656,8 +1658,9 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
 
   validate(index: number, qty1) {
-    var trxLnArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
-    var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray
+    // var trxLnArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
+    var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+    var trxLnArr=trxLnArr1.getRawValue();
 
     var locator = trxLnArr[index].frmLocatorId;
 
@@ -1672,9 +1675,11 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     }
     var transactionTypeName = this.CounterSaleOrderBookingForm.get('transactionTypeName').value;
     var createOrderType = this.CounterSaleOrderBookingForm.get('createOrderType').value;
-
+    // alert(locator)
     let selloc = this.locData[index].find(d => Number(d.ROWNUM) === Number(locator));
-    //alert(selloc.segmentName +'--'+selloc.onHandQty);
+    console.log(this.locData[index]);
+    
+    // alert(selloc.segmentName +'--'+selloc.onHandQty);
     // alert(createOrderType+'---'+ transactionTypeName.includes('Credit')+'---'+Avalqty)
     if (createOrderType === 'Pick Ticket' && transactionTypeName.includes('Credit') && Avalqty === 0) {
       // alert(Avalqty);
@@ -1684,7 +1689,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       alert("Select Item not in Stock!!")
     }
     if (qty1 > selloc.onHandQty) {
-      alert("Item available with multiple price , Please check price and available quntity!!")
+      alert("Item available with multiple price , Please check price and available quantity!!")
       qty1 = selloc.onHandQty;
       //trxLnArr1.controls[index].patchValue({ orderedQty: bckOrd });
       trxLnArr1.controls[index].patchValue({ pricingQty: selloc.onHandQty });
@@ -1733,7 +1738,9 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     // alert (event.keyCode)
     if (event.keyCode !=13){
     // alert(index +'Onkey Alert' +'---'+fldName)
-    var arrayControl = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
+    // var arrayControl = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
+    var arrayControlNew = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+    var arrayControl = arrayControlNew.getRawValue();
     var pricingQty = arrayControl[index].pricingQty;
     var Avalqty = arrayControl[index].Avalqty;
     // alert(pricingQty)
@@ -1842,11 +1849,19 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
         });
 
     var itemId1 = arrayControl[index].itemId;
+   
     var item = arrayControl[index].segment;
     var pricingQty = arrayControl[index].pricingQty;
-    // alert(itemId1)
+    var isNewLine : boolean=false;
+    // alert(orderLines.length);
+    for (let i = 0; i < arrayControl.length; i++) {
+      // alert(arrayControl[i].itemId)
+      if (arrayControl[i].itemId ===null){
+        isNewLine=true;
+      }
+    }
     if (event.keyCode != 13){
-    if (itemId1 != null && fldName != "locator" ) {
+    if (itemId1 != null && fldName != "locator" && isNewLine===false ) {
       this.addRow(index);
     }
   }
