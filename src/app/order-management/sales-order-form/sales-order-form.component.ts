@@ -39,7 +39,9 @@ interface ISalesBookingForm {
   custName: string,
   orderedDate: Date,
   transactionTypeName: string,
-  broker:string;
+  // broker:string;
+  subDealerId:number;
+  subDealerName:string;
   flowStatusCode: string,
   payTermDesc: string,
   salesRepName: string,
@@ -318,7 +320,9 @@ export class SalesOrderFormComponent implements OnInit {
       custName: ['', [Validators.required]],
       orderedDate: [''],
       transactionTypeName: ['', [Validators.required]],
-      broker:[],
+      // broker:[],
+      subDealerId:[],
+      subDealerName:[],
       flowStatusCode: [''],
       payTermDesc: ['', [Validators.required]],
       salesRepName: ['', [Validators.required]],
@@ -558,13 +562,7 @@ export class SalesOrderFormComponent implements OnInit {
         }
       );
 
-    this.orderManagementService.getFinNameSearch()
-      .subscribe(
-        data => {
-          this.financerNameList = data;
-          console.log(this.financerNameList);
-        }
-      );
+   
 
     this.orderManagementService.categoryList()
       .subscribe(
@@ -1905,9 +1903,16 @@ export class SalesOrderFormComponent implements OnInit {
 
   financeSelectionYes(event: any) {
     // alert(event.target.value)
-    if (event.target.value === 'Sai Service' || event.target.value === 'Self') {
+    if (event.target.value != 'None') {
       this.DisplayfinanceSelectionYes = false;
       this.DisplayfinanceSelectionYes1 = false;
+      this.orderManagementService.finananceList(event.target.value,sessionStorage.getItem('divisionId'))
+      .subscribe(
+        data => {
+            this.financerNameList = data;
+            console.log(this.financerNameList);
+        }
+      );
     }
     else {
       this.DisplayfinanceSelectionYes = true;
@@ -1921,6 +1926,8 @@ export class SalesOrderFormComponent implements OnInit {
       this.SalesOrderBookingForm.get('downPayment').reset();
       this.SalesOrderBookingForm.get('tenure').reset();
     }
+
+   
   }
 
   exchangeYes(event: any) {
