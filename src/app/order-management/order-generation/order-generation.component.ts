@@ -267,7 +267,7 @@ lineDetailsArray() :FormArray{
     if( ordLineArr[index].itemId>0  &&  ordLineArr[index].orderQty>=0 ) {
        this.lineDetailsArray().push(this.lineDetailsGroup()); 
    }else {
-     alert ("Incomplete Line - Check Order Part No , Order Qty ....Line will be deleted.. ");
+     alert ("Incomplete Line - Order Part No / Order Qty not updated ....Line will be deleted.. ");
       this.lineDetailsArray().removeAt(index);
     }
 
