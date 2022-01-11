@@ -251,4 +251,10 @@ getAvgHistoryList(mLocId,mitemId,frmDate,toDate): Observable<any> {
   return this.http.get(this.ServerUrl + `/averageCost/avghistory?locationId=${mLocId}&itemId=${mitemId}&startDate=${frmDate}&endDate=${toDate}`);
   }
 
-}
+
+
+
+   
+     
+  
+ }

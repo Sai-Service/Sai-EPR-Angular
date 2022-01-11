@@ -127,11 +127,13 @@
                 </table>
         </fieldset>
 
-
+       
        
         <div class="center">
             <div class="center" formArrayName="orderList">
                 <div class="grid_scroll">
+                    
+                  
                     <div class="col-md-12 table-responsive" #orderList> 
                         <div style="padding-bottom: 10px;padding-top: 10px;">
                             <div class="row">
@@ -145,76 +147,90 @@
                         cellspacing="0" cellpadding="4" rules="all" class="center">
                        
                               <thead>
-                                  
-
                                 <tr class="GridHeader">
-                                      <th style="width:4rem" scope="col">Srl&nbsp;No.</th>
-                                      <th style="width:6rem" scope="col">Part&nbsp;No</th>
-                                      <th style="width:10rem" scope="col">Description</th>
-                                      <th style="width:12rem" scope="col">Unit&nbsp;Price</th>
-                                      <th style="width:6rem" scope="col">Back order&nbsp;Qty</th>
-                                      <th style="width:8rem" scope="col">Cust Backorder</th>
-                                      <th style="width:6rem" scope="col">WS Cons-Curr</th>
-                                      <th style="width:6rem" scope="col">CS Cons-Curr</th>
-                                      <!-- <th style="width:6rem" scope="col">WS-Cons-Mth1</th>
-                                      <th style="width:6rem" scope="col">CS-Cons-Mth1</th>
-                                      <th style="width:6rem" scope="col">WS-Cons-Mth2</th>
-                                      <th style="width:6rem" scope="col">CS-Cons-Mth2</th>
-                                      <th style="width:6rem" scope="col">WS-Cons-Mth3</th>
-                                      <th style="width:6rem" scope="col">CS-Cons-Mth3</th> -->
+                                    <th  scope="col">Srl&nbsp;No.</th>
+                                    <th  scope="col">Part&nbsp;No</th>
+                                    <th  scope="col">Description</th>
+                                    <th  scope="col">Unit&nbsp;Price</th>
+                                    <th  scope="col">Curr&nbsp;Qty</th>
 
-                                      <th style="width:6rem" scope="col">Curr&nbsp;Qty</th>
-                                      <th style="width:6rem" scope="col">InTrans Qty</th>
-                                      <th style="width:6rem" scope="col">WS Cons-Tot</th>
-                                      <th style="width:6rem" scope="col">CS Cons-Tot</th>
-                                      <th style="width:6rem" scope="col">Cons Details</th>
-                                      <th style="width:8rem" scope="col">Set&nbsp;Qty</th>
-                                      <th style="width:8rem" scope="col">Order&nbsp;Qty</th>
-                                      <th style="width:8rem" scope="col">Order&nbsp;Value</th>
-                                      <th style="width:2rem" scope="col">Add+</th>
-                                      <th style="width:2rem" scope="col">Del-</th>
-                                  </tr>
+                                    <th  scope="col">BkOrder&nbsp;</th>
+                                    <th  scope="col">Cust BkOrder</th>
+                                    <th  scope="col">InTransit</th>
+                                    <th  scope="col">Last order&nbsp;</th>
+
+                                    <th  scope="col">Mth1Tot&nbsp;</th>
+                                    <th  scope="col">Mth2Tot</th>
+                                    <th  scope="col">Mth3Tot</th>
+                                    <th  scope="col">Mth4Tot&nbsp;</th>
+
+                                    <th  scope="col">Cons Details</th>
+
+                                    <th  scope="col">Tot Cons&nbsp;</th>
+                                    <th  scope="col">Set&nbsp;Qty</th>
+                                    <th  scope="col">Order&nbsp;Qty</th>
+                                    <th  scope="col">Order&nbsp;Value</th>
+                                 
+                                    
+                                    <th  scope="col">Add+</th>
+                                    <!-- <th  scope="col">Del-</th> -->
+                                </tr>
+
                               </thead>
+
                               <tbody>
+
                               <tr *ngFor="let group of lineDetailsArray().controls; let i= index" [formGroupName]="i" >
-                               <td hidden>
-                                <input  hidden style="width:5rem;"  type="number" formControlName="itemId" class="form-control">
-                                <input  hidden style="width:5rem;"  type="number" formControlName="sprOrderId" class="form-control">
+                              
+                                <td hidden>
+                                <input hidden style="width:5rem;"  type="number" formControlName="itemId" class="form-control">
+                                <input hidden style="width:5rem;"  type="number" formControlName="sprOrderId" class="form-control">
                                 <input hidden disabled style="width:4rem;"  type="number" formControlName="mth1ConWsQty" class="form-control">
                                 <input hidden disabled style="width:4rem;"  type="number" formControlName="mth1ConsSaleQty" class="form-control">
                                 <input hidden disabled style="width:4rem;"  type="number" formControlName="mth2ConWsQty" class="form-control">
                                 <input hidden disabled style="width:4rem;"  type="number" formControlName="mth2ConsSaleQty" class="form-control">
                                 <input hidden disabled style="width:4rem;"  type="number" formControlName="mth3ConWsQty" class="form-control">
                                 <input hidden disabled style="width:4rem;"  type="number" formControlName="mth3ConsSaleQty" class="form-control">
+                                <input hidden disabled style="width:4rem;"  type="number" formControlName="consSaleQty"  class="form-control">
+                                <input hidden disabled style="width:4rem;"  type="number" formControlName="currSaleQty"  class="form-control">
+                                <input hidden disabled style="width:4rem;"  type="number" formControlName="currWsQty"  class="form-control">
+                                <input hidden disabled style="width:4rem;"  type="number" formControlName="conWsQty"  class="form-control">
+                           
                             </td>
+
                                 <td style="text-align: center;width: 4rem;">{{i+1}}</td>
                                 <td> <input   style="width:3rem;background-color: yellow;width:6rem;text-transform: uppercase;"    type="text" formControlName="segment" (keydown.enter)="enterKeyLock(i)"  class="form-control"  (change)="validateItem(i)"></td>
-                                <td> <input  disabled style="width:10rem;"  type="text" formControlName="description" class="form-control"></td>
-                                <!-- <td> <input  disabled style="width:2rem;"  type="text" formControlName="uom" class="form-control"></td> -->
+                                <td> <input  disabled style="width:12rem;" type="text"   formControlName="description" class="form-control"></td>
                                 <td> <input  disabled style="width:6rem;"  type="number" formControlName="unitPrice"  class="form-control"></td>
+                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="currentStock" class="form-control"></td>
+                                
                                 <td> <input  disabled style="width:3rem;"  type="number" formControlName="backOrderQty" class="form-control"></td>
                                 <td> <input  disabled style="width:3rem;"  type="number" formControlName="custBackOrder" class="form-control"></td>
-                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="currWsQty" class="form-control"></td>
-                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="currSaleQty" class="form-control"></td>
-  
-                                <!-- <input type="number" formControlName="pricingQty" name="pricingQty{{i}}" class="form-control"
-                                (change)="onKey(i,'prc')" (keydown.enter)="enterKeyLock(i)" style="height: 20px;width:50px;" min="0"
-                                oninput="this.value = Math.abs(this.value)"> -->
-                                      
-                                <td> <input  disabled style="width:4rem;"  type="number" formControlName="currentStock" class="form-control"></td>
-                                <td> <input  disabled style="width:4rem;"  type="number" formControlName="intransitQty" class="form-control"></td>
-                                <td> <input  disabled style="width:4rem;"  type="number" formControlName="conWsQty" class="form-control"></td>
-                                <td> <input  disabled style="width:4rem;"  type="number" formControlName="consSaleQty" class="form-control"></td>
-                  
+                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="intransitQty" class="form-control"></td>
+                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="lastOrderQty" class="form-control"></td>
+                               
+                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="mth1TotalCons" class="form-control"></td>
+                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="mth2TotalCons" class="form-control"></td>
+                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="mth3TotalCons" class="form-control"></td>
+                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="mth4TotalCons" class="form-control"></td>
                                 <td><button  type="button" style="width: fit-content;height: 23px;" class="btn btn-info1" data-toggle="modal" data-target="#consumtionDetails" (click)="getTrans(i)">...</button></td>
-                                <td> <input  disabled style="width:4rem;"  type="number" formControlName="setQty" class="form-control"></td>
-                                <td> <input   style="width:4rem;background-color: yellow;"   type="number" formControlName="orderQty" (keydown.enter)="enterKeyLock(i)"
-                                    (change)="validateOrdQty(i)"  class="form-control" ></td>
+                               
+                               
+                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="totalCons" class="form-control"></td>
+                                <!-- <td> <input  disabled style="width:4rem;"  type="number" formControlName="mth4TotalCons" class="form-control"></td> -->
+                               
+                               
+                               
+                                <td> <input  disabled style="width:3rem;"  type="number" formControlName="setQty" class="form-control"></td>
+                                <td> <input   style="width:4rem;background-color: yellow;"   type="number" formControlName="orderQty" (keydown.enter)="enterKeyLock(i)" (change)="validateOrdQty(i)"  class="form-control" ></td>
                                 <td> <input  disabled style="width:6rem;"  type="number" formControlName="totalValue" class="form-control"></td>
                                
                                 <td><button  type="submit" class="btn btn-info" (click)="addRow(i)"  style="width: min-content;"><i class="fa fa-plus"></i></button>  </td>
-                                <td><button  type="submit" class="btn btn-info" (click)="RemoveRow(i)"  style="width: min-content;"><i class="fa fa-trash"></i></button>  </td>
+                                <!-- <td><button  type="submit" class="btn btn-info" (click)="RemoveRow(i)"  style="width: min-content;"><i class="fa fa-trash"></i></button>  </td> -->
                                 <!-- (keydown.shift.arrowdown)="addRow(i)" -->
+                           
+                                                        
+                           
                             </tr>
                         </tbody>
                  </table>
@@ -367,6 +383,14 @@
                             <td> <input  disabled style="width:3rem;"  type="number" formControlName="mth2ConWsQty" [(ngModel)]= 'mth2ConWsQty' class="form-control"></td>
                             <td style="width: 15%" class="LabelFontStyle">&nbsp;WS&nbsp;Month3:&nbsp;</td>
                             <td> <input  disabled style="width:3rem;"  type="number" formControlName="mth3ConWsQty" [(ngModel)]= 'mth3ConWsQty' class="form-control"></td>
+                            <td style="width: 15%" class="LabelFontStyle">&nbsp;WS&nbsp;Month4:&nbsp;</td>
+                            <td> <input  disabled style="width:3rem;"  type="number" formControlName="currWsQty" [(ngModel)]= 'currWsQty' class="form-control"></td>
+                           
+                            <td style="width: 15%" class="LabelFontStyle">&nbsp;WS&nbsp;Total:&nbsp;</td>
+                            <td> <input  disabled style="width:4rem;"  type="number" formControlName="conWsQty" [(ngModel)]= 'conWsQty' class="form-control"></td>
+                          
+
+                           
                     </tr>
                     <tr>
                             <td style="width: 15%" class="LabelFontStyle">&nbsp;CS&nbsp;Month1:&nbsp;</td>
@@ -375,8 +399,15 @@
                             <td> <input  disabled style="width:3rem;"  type="number" formControlName="mth2ConsSaleQty" [(ngModel)]= 'mth2ConsSaleQty' class="form-control"></td>
                             <td style="width: 15%" class="LabelFontStyle">&nbsp;CS&nbsp;Month3:&nbsp;</td>
                             <td> <input  disabled style="width:3rem;"  type="number" formControlName="mth3ConsSaleQty" [(ngModel)]= 'mth3ConsSaleQty' class="form-control"></td>
-                     
+                            <td style="width: 15%" class="LabelFontStyle">&nbsp;CS&nbsp;Month4:&nbsp;</td>
+                            <td> <input  disabled style="width:3rem;"  type="number" formControlName="currSaleQty"     [(ngModel)]= 'currSaleQty' class="form-control"></td>
+                           
+                            <td style="width: 15%" class="LabelFontStyle">&nbsp;CS&nbsp;Total:&nbsp;</td>
+                            <td> <input  disabled style="width:4rem;"  type="number" formControlName="consSaleQty"      [(ngModel)]= 'consSaleQty' class="form-control"></td>
+              
                     </tr>
+
+                   
         
                       
                 </table>

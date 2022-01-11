@@ -52,7 +52,7 @@ export class AmcSchemeMasterComponent implements OnInit {
   
   endDate:Date;
   schemeDesc:string;
-  schemePrd:number;
+  schemeValidYears:number;
   gracePrd:number;
   totalPrd:number;
   schemeValidKm:number;
@@ -72,8 +72,13 @@ export class AmcSchemeMasterComponent implements OnInit {
   amcMatToal:number=0;
   amcSchemeTotal:number=0;
 
+  disAmount:number;
+  totAmtlab:number;
+  totAmtmat:number;
+
   displayButton=true;
   duplicateLineItem=false;
+  amcSchLineValidation=false;
 
   userList2: any[] = [];
   lastkeydown1: number = 0;
@@ -98,7 +103,7 @@ export class AmcSchemeMasterComponent implements OnInit {
     startDate:[],
     endDate:[],
     schemeDesc:[],
-    schemePrd:[],
+    schemeValidYears:[],
     gracePrd:[],
     totalPrd:[],
     schemeValidKm:[],
@@ -116,6 +121,9 @@ export class AmcSchemeMasterComponent implements OnInit {
     amcMatToal:[],
     amcSchemeTotal:[],
 
+    disAmount:[],
+    totAmtlab:[],
+    totAmtmat:[],
 
     amcItemList: this.fb.array([this.lineDetailsGroup()])   
 
@@ -125,20 +133,20 @@ export class AmcSchemeMasterComponent implements OnInit {
 lineDetailsGroup() {
     return this.fb.group({ 
     itemId:[''],
+    schCoupId:[],
     couponId:[''],
     couponNumber:[''],
     couponDesc :['', [Validators.required]],    
     quantity:['', [Validators.required]],
-    value:['', [Validators.required]],
+    unitPrice:['', [Validators.required]],
+    amount:['', [Validators.required]],
+    disc:[],
+    net:[],
+    tax:[],
     total:['', [Validators.required]],
     couponCode:[],
     gstpercentage:[],
     couponActualCode:[],
-    discount:[],
-    taxableAmt:[],
-    taxAmt:[],
-    netAmt:[],
-
    });
 }
 
@@ -199,14 +207,40 @@ RemoveRow(index) {
 
 addRow(index) {
   var amcLineArr = this.amcSchemeMasterForm.get('amcItemList').value;
- var len = this.lineDetailsArray().length;
-//  alert(amcLineArr[index].couponId);
-  if( amcLineArr[index].couponId>0) {
+  var len1 = this.lineDetailsArray().length-1;
+
+  if(len1===index){
+
+    this.checkAmcSchLineValidation(index);
+    
+    if(this.amcSchLineValidation ) {
+        if( amcLineArr[index].couponId>0) {
+        this.lineDetailsArray().push(this.lineDetailsGroup()); 
+        }else {alert ("Incomplete Line - Check Line Details .... ");}
+      }
+  }
+ }
+
+checkAmcSchLineValidation(index){
  
-  this.lineDetailsArray().push(this.lineDetailsGroup()); 
-  
- }else {alert ("Incomplete Line - Check Line Details .... ");}
- 
+  var arrayControl = this.amcSchemeMasterForm.get('amcItemList').value
+  var cpnId = arrayControl[index].couponId;
+  this.amcSchLineValidation=false
+
+  if(Number(arrayControl[index].billableTyId)<=0)
+  { this.amcSchLineValidation=false;return; }
+
+  if(cpnId===null || cpnId==undefined || cpnId<=0)
+  { this.amcSchLineValidation=false;return; }
+
+  if(Number(arrayControl[index].quantity)<=0 ||arrayControl[index].quantity===null || arrayControl[index].quantity===undefined )
+   { this.amcSchLineValidation=false;return; }
+
+   if(Number(arrayControl[index].unitPrice)<=0 ||arrayControl[index].unitPrice===null || arrayControl[index].unitPrice===undefined )
+   { this.amcSchLineValidation=false;return; }
+
+  this.amcSchLineValidation=true;
+
 }
 
 transeData(val) {
@@ -248,15 +282,17 @@ transeData(val) {
      updateMast(){alert("Update AMC scheme ....wip");}
 
 
-    onOptionAmcCoupenSelected(cpnNumber :any, index) {
-    
+    onOptionAmcCoupenSelected(cpn :any, index) {
+      var arrayControl = this.amcSchemeMasterForm.get('amcItemList').value
+      var patch = this.amcSchemeMasterForm.get('amcItemList') as FormArray;
+      var cpnNumber = arrayControl[index].couponNumber;
+       
       let selectedValue = this.AmcCouponLst.find(v => v.couponNumber === cpnNumber);
       if( selectedValue != undefined){
 
       console.log(selectedValue);
       // alert (selectedValue.couponNumber);
-      var arrayControl = this.amcSchemeMasterForm.get('amcItemList').value
-      var patch = this.amcSchemeMasterForm.get('amcItemList') as FormArray;
+     
       
       this.CheckForDuplicateLineItem(selectedValue.couponId,index)
       if(this.duplicateLineItem ==false) {
@@ -268,8 +304,8 @@ transeData(val) {
                 couponDesc: selectedValue.couponDesc,
                 couponCode: selectedValue.couponCode,
                 quantity: selectedValue.quantity,
-                value: selectedValue.value,
-                total: selectedValue.total,
+                unitPrice: selectedValue.value,
+                amount: selectedValue.total,
                 itemId:selectedValue.itemId,
                 couponActualCode:selectedValue.couponActualCode,
                 gstpercentage:selectedValue.gstpercentage,
@@ -326,15 +362,19 @@ transeData(val) {
         var len1=arrayControl.length;
      
         var lineDiscountp=0
+        
 
         for (let i = 0; i < len1 ; i++)
           {
            
-             var lineTotal=(arrayControl[i].quantity * arrayControl[i].value);
+             var lineTotal=(arrayControl[i].quantity * arrayControl[i].unitPrice);
             
              if(arrayControl[i].couponCode==='Labor') { lineDiscountp= this.discOnLabour;}
              if(arrayControl[i].couponCode==='Material') {lineDiscountp=this.discOnMatrl;}
 
+            if(lineDiscountp==null || lineDiscountp==undefined ) {lineDiscountp=0;}
+              // alert ("line disc p :" +lineDiscountp);
+          
              var lineDisAmt =lineTotal *lineDiscountp/100;
              var lineTaxable =lineTotal-lineDisAmt;
              var lineTax=(lineTotal-lineDisAmt)* arrayControl[i].gstpercentage/100;
@@ -342,10 +382,10 @@ transeData(val) {
 
             (patch.controls[i]).patchValue(
               {
-                discount: lineDisAmt,
-                taxableAmt : lineTaxable,
-                taxAmt: lineTax,
-                netAmt: lineNetTotal,
+                disc: lineDisAmt,
+                net : lineTaxable,
+                tax: lineTax,
+                total: lineNetTotal,
             });
       }
       this.CalculateAmcTotalValues();
@@ -355,33 +395,46 @@ transeData(val) {
 
       var arrayControl = this.amcSchemeMasterForm.get('amcItemList').value
       var patch = this.amcSchemeMasterForm.get('amcItemList') as FormArray;
+
       var len2=arrayControl.length;
       var labTotal=0; var labDisc=0;var labTax=0;var glabTotal=0;
       var matTotal=0; var matDisc=0;var matTax=0;var gmatTotal=0;
+      var amcDisAmount =0; var amcTotAmtlab=0; var amcTotAmtmat=0;
+
+
       for (let i = 0; i < len2 ; i++)
       { 
         if(arrayControl[i].couponCode==='Labor') {
 
-          labTotal=labTotal+(arrayControl[i].quantity * arrayControl[i].value);
-          labDisc=labDisc+arrayControl[i].discount;
-          labTax=labTax+arrayControl[i].taxAmt;
-          glabTotal=glabTotal+arrayControl[i].netAmt;
+          labTotal=labTotal+(arrayControl[i].quantity * arrayControl[i].unitPrice);
+          labDisc=labDisc+arrayControl[i].disc;
+          labTax=labTax+arrayControl[i].tax;
+          glabTotal=glabTotal+arrayControl[i].total;
          
         }
         if(arrayControl[i].couponCode==='Material') {
-          matTotal=matTotal+(arrayControl[i].quantity * arrayControl[i].value);
+          matTotal=matTotal+(arrayControl[i].quantity * arrayControl[i].unitPrice);
           matDisc=matDisc+arrayControl[i].discount;
           matTax=matTax+arrayControl[i].taxAmt;
           gmatTotal=gmatTotal+arrayControl[i].netAmt;
         }
       }
-            this.amcSchemeMasterForm.patchValue({
-            amcLabBasicAmt:  Math.round(labTotal+Number.EPSILON*100)/100,
-            amcLabDiscount: Math.round(labDisc+Number.EPSILON*100)/100,
-            amcLabTax: Math.round(labTax+Number.EPSILON*100)/100,
-            amcLabTotal:Math.round(glabTotal+Number.EPSILON*100)/100,
-            amcSchemeTotal:Math.round((glabTotal+gmatTotal)+Number.EPSILON*100)/100,
+
+                        
+          this.amcSchemeMasterForm.patchValue({
+            amcLabBasicAmt: Math.round((labTotal+Number.EPSILON)*100)/100,
+            amcLabDiscount: Math.round((labDisc+Number.EPSILON)*100)/100,
+            amcLabTax: Math.round((labTax+Number.EPSILON)*100)/100,
+            amcLabTotal:Math.round((glabTotal+Number.EPSILON)*100)/100,
+            amcSchemeTotal:Math.round(((glabTotal+gmatTotal)+Number.EPSILON)*100)/100,
+
+            disAmount:Math.round(((labDisc+matDisc)+Number.EPSILON)*100)/100,
+            totAmtlab:Math.round(((labTotal-labDisc)+Number.EPSILON)*100)/100,
+            totAmtmat:Math.round(((matTotal-matDisc)+Number.EPSILON)*100)/100,
+
           });
+
+         
          
     }
 
