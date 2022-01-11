@@ -2314,6 +2314,25 @@ PriceListIdList(mOuId,mDivId): Observable<any> {
       // http://localhost:8081/pricelist/ItmPrcBatch/?priceListName=Bajaj%20Regular%20MRP&itemId=3382&batchCode=
     }
 
+
+    public OrderGenNewItemSubmit(locId,itemCode,mths,ordNum) {
+      // alert ("in  OrderGenNewItemSubmit -"+itemCode);
+      const options = {
+        headers: this.headers
+      };
+       const url = this.ServerUrl + `/spareOrder/addCons?locId=${locId}&itemCode=${itemCode}&months=${mths}&orderNumber=${ordNum}`;
+      return this.http.post(url, options);
+    }
+
+    getNewLineConsDetails(itmId,orderNum): Observable<any> {
+      return this.http.get(this.ServerUrl + `/spareOrder/ByOrderItem?&itemId=${itmId}&orderNumber=${orderNum}`);
+    }
+    
+    // POST - http://localhost:8081/spareOrder/addCons?locId=2102&itemCode=DK73012V&months=3&orderNumber=BJ-2102100022
+
+    //  GET - http://localhost:8081/spareOrder/ByOrderItem?itemId=29649&orderNumber=BJ-2102100022
+
+
 ////////////////////////////OrderTypeMaster//////////////////
 UpdateOrderTypeMasterById1(OrderTypeMasterRecord) {
   const options = {
@@ -2358,6 +2377,15 @@ OrderCategoryList(): Observable<any> {
 
   ReverseReasonList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/CmnType/ReversalReason');
+  }
+
+  RcptReverseReasonList(): Observable<any> {
+    return this.http.get(this.ServerUrl +'/cmnLookup/CmnType/RcptRevReason');
+  }
+
+  RcptChqBounceReasonList(chqBncRsn): Observable<any> {
+     return this.http.get(this.ServerUrl + `/cmnLookup/CmnType/${chqBncRsn}`);
+    // http://localhost:8081/cmnLookup/CmnType/ChqBncRsn
   }
 
   RefReasonLst(): Observable<any> {
@@ -2409,6 +2437,8 @@ OrderCategoryList(): Observable<any> {
     return this.http.post(url, ArReceiptRefundRecord, options);
   }
   ////////////////////////// ///////////////////////////////////////
+
+ 
 
   custAccountNoSearch(accountNo,ouId,divId): Observable<any> {
     // alert("ms >>account no:"+accountNo+","+ouId +","+divId);
@@ -2560,6 +2590,7 @@ OrderCategoryList(): Observable<any> {
 
       getOrderListBajaj (ordNumber): Observable<any> {
         return this.http.get(this.ServerUrl + `/spareOrder/ByOrderNumber/${ordNumber}`);
+        // http://localhost:8081/spareOrder/ByOrderNumber/BJ-2102100035
       }
 
       getOrderNumberLatest (mLocId): Observable<any> {

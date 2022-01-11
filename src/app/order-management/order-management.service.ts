@@ -596,5 +596,17 @@ printCSRtndocument(mRtnNumber){
 }
 
 
+printArReceipt(rcptNumber){
+  const REQUEST_URI = this.ServerUrl +`/omPayment/counterSaleReceipt/${rcptNumber}`;  
+  //http://localhost:8081/omPayment/counterSaleReceipt/21222094800016
+  return this.http.get(REQUEST_URI, {
+    // params: REQUEST_PARAMS,
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
+}
+
+
+
 
 }

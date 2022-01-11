@@ -21,6 +21,7 @@ interface IPaymentRcptAr {
   deptId: number;
   custAccountNo: number;
   billToSiteId: number;
+  billToCustId:number;
   glDate: Date;
   // glDateLine:Date
   receiptNumber: number;
@@ -37,7 +38,8 @@ interface IPaymentRcptAr {
 
   reversalDate: string;
   reversalComment: string;
-  reversalReasonCode: number;
+  reversalReasonCode: string;
+  bounceReasonCode:string;
   reversalCategory: string;
   status: string;
 
@@ -78,6 +80,7 @@ export class PaymentArComponent implements OnInit {
   public VehRegNoList: Array<string> = [];
   public RefReasonList: Array<string> = [];
   
+  ChqBounceReasonList:any;
   viewAccountingArRcpt: Array<string> = [];
   viewAccountingLines: Array<string> = [];
 
@@ -163,7 +166,7 @@ export class PaymentArComponent implements OnInit {
   // checkDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   checkDate :string;
   receiptDate = this.pipe.transform(Date.now(), 'y-MM-dd');
-  
+  // jobCardDate = this.pipe.transform(Date.now(), 'dd-MM-y');
   // trxDate= this.pipe.transform(this.now, 'dd-MM-y');
   // trxDate=this.pipe.transform(this.now, 'y-MM-dd');
   // trxDate :Date;
@@ -176,6 +179,7 @@ export class PaymentArComponent implements OnInit {
   reversalComment: string;
   reversalReasonCode: number;
   reversalCategory: string;
+  bounceReasonCode:string;
   // status : string;
   status = 'Open';
   cancelDate = null;
@@ -237,7 +241,7 @@ export class PaymentArComponent implements OnInit {
   validateStatus = false;
   showRefYellow = false;
   applHistory=false;
-
+  chqBounceStatus=false;
 
   showInvoiceGrid = false;
   showRefundGrid = false;
@@ -259,7 +263,10 @@ export class PaymentArComponent implements OnInit {
 
   // public emplId =26;
   // customerId:number;
-  public billToSiteId = 101;
+  // public billToSiteId = 101;
+  billToSiteId:number;
+  billToCustId:number;
+
   // public billToSiteId=107; 
 
   public applyTo = 'INVOICE'
@@ -278,7 +285,7 @@ export class PaymentArComponent implements OnInit {
   paymentAr(paymentArForm: any) { }
 
 
-  constructor(private service: MasterService, private orderManagementService: OrderManagementService, private fb: FormBuilder, private router: Router) {
+  constructor(private service: MasterService,  private orderManagementService: OrderManagementService,  private fb: FormBuilder, private router: Router) {
 
 
     this.paymentArForm = fb.group({
@@ -352,6 +359,7 @@ export class PaymentArComponent implements OnInit {
       searchBy: [],
       searchValue: [],
       billToSiteId: [],
+      billToCustId:[],
       custSiteAddress: [],
       applyTo: [],
 
@@ -363,6 +371,7 @@ export class PaymentArComponent implements OnInit {
       reversalReasonCode: [],
       reversalDate: [],
       reversalCategory: [],
+      bounceReasonCode:[],
 
       cancelReason: [],
       cancelDate: [],
@@ -427,7 +436,7 @@ export class PaymentArComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    $("#wrapper").toggleClass("toggled");
     this.name = sessionStorage.getItem('name');
     this.loginArray = sessionStorage.getItem('divisionName');
     this.divisionId = Number(sessionStorage.getItem('divisionId'));
@@ -510,13 +519,18 @@ export class PaymentArComponent implements OnInit {
 
 
 
-    this.service.ReverseReasonList()
+    this.service.RcptReverseReasonList()
       .subscribe(
         data => {
           this.ReverseReasonList = data;
           console.log(this.ReverseReasonList);
         }
       );
+
+     
+
+
+      
 
     this.service.RefReasonLst()
       .subscribe(
@@ -569,6 +583,23 @@ export class PaymentArComponent implements OnInit {
         this.getTdsAmount(this.custTdsPer);
   
   }
+
+  validateTdsAmt(rcptAmt: any) {
+  
+    var tdsAmt =this.paymentArForm.get('tdsAmount').value
+    // alert ("in...tds..."+tdsAmt)
+    if (tdsAmt < 0) {
+      alert("TDS AMOUNT :  Should not be below Zero.");
+      this.paymentArForm.patchValue({tdsAmount:0})
+      return;
+    } 
+       
+        // this.getTdsAmount(this.custTdsPer);
+  
+  }
+
+
+
 
   validateChqDate(chqDate) {
     var currDate = new Date();
@@ -725,9 +756,9 @@ export class PaymentArComponent implements OnInit {
             this.paymentArForm.patchValue({
               customerSiteId: this.CustomerSiteDetails.customerSiteId,
               customerSiteAddress: this.CustomerSiteDetails.address1 + "," +
-                this.CustomerSiteDetails.address2 + "," +
-                this.CustomerSiteDetails.address3 + "," +
-                this.CustomerSiteDetails.location,
+              this.CustomerSiteDetails.address2 + "," +
+              this.CustomerSiteDetails.address3 + "," +
+              this.CustomerSiteDetails.location,
               custCity: this.CustomerSiteDetails.city,
               custState: this.CustomerSiteDetails.state,
               custPincode: this.CustomerSiteDetails.pinCd,
@@ -1485,6 +1516,43 @@ export class PaymentArComponent implements OnInit {
 
 
 
+  CustAccountNoSearch_Testing(accountNo) {
+    alert("CustAccountNoSearch:"+accountNo);
+    if (accountNo <= 0) {
+      this.custName = null;
+      this.custSiteAddress = null;
+    } else {
+
+      this.service.searchCustomerByAccount(accountNo)
+        .subscribe(
+          data => {
+            this.accountNoSearch = data.obj;
+            alert (data.code);
+           if (data.code != 200) {
+              this.custName = null;
+              this.custSiteAddress = null;
+              alert("Customer Account no doesn't Exists.\nDivision/OpUnit -" + this.loginArray + "(" + this.divisionId + ") / " + this.ouName + "(" + this.ouId + ")")
+            }
+            else {
+              this.paymentArForm.patchValue({custAccountNo:data.obj.custAccountNo});
+              console.log(this.accountNoSearch);
+              this.paymentArForm.patchValue({
+                customerId: this.accountNoSearch.customerId,
+                custName: this.accountNoSearch.custName,
+                //  custSiteAddress: this.accountNoSearch.billToAddress,
+                // billToSiteId: this.accountNoSearch.billToLocId,
+              });
+              this.GetCustomerSiteDetails(this.accountNoSearch.customerId);
+              this.getTdsAmount(this.accountNoSearch.tdsPer)
+            
+            }
+
+          });
+    }
+  }
+          
+  
+
   CustAccountNoSearch(accountNo) {
     // alert("CustAccountNoSearch:"+accountNo);
     if (accountNo <= 0) {
@@ -1496,22 +1564,36 @@ export class PaymentArComponent implements OnInit {
         .subscribe(
           data => {
             this.accountNoSearch = data.obj;
-            this.paymentArForm.patchValue({custAccountNo:data.obj.accountNo});
-            if (this.accountNoSearch === null) {
+            if (data.obj.length === 0) {
               this.custName = null;
               this.custSiteAddress = null;
+              this.paymentArForm.patchValue({custAccountNo:''});
               alert("Customer Account no doesn't Exists.\nDivision/OpUnit -" + this.loginArray + "(" + this.divisionId + ") / " + this.ouName + "(" + this.ouId + ")")
             }
             else {
-
+              this.paymentArForm.patchValue({custAccountNo:data.obj[0].accountNo});
               console.log(this.accountNoSearch);
+            
               this.paymentArForm.patchValue({
-                customerId: this.accountNoSearch.customerId,
-                custName: this.accountNoSearch.custName,
-                //  custSiteAddress: this.accountNoSearch.billToAddress,
-                billToSiteId: this.accountNoSearch.billToLocId,
+                customerId: this.accountNoSearch[0].customerId,
+                custName: this.accountNoSearch[0].custName,
+                billToSiteId: this.accountNoSearch[0].billToLocId,
+                billToCustId: this.accountNoSearch[0].billToLocId,
+                customerSiteId: this.accountNoSearch[0].customerSiteId,
+                customerSiteAddress: this.accountNoSearch[0].billToAddress,
+                custCity: this.accountNoSearch[0].siteName,
+                custState: this.accountNoSearch[0].state,
+                CustomerGstNo: this.accountNoSearch[0].gstNo,
+                customerPanNo: this.accountNoSearch[0].panNo,
+                customerTanNo: this.accountNoSearch[0].tanNo,
+                custPhone: this.accountNoSearch[0].mobile1,
+                // customerType: this.accountNoSearch[0].customerId.custType,
+                // custTaxCategoryName: this.accountNoSearch[0].taxCategoryName,
+                  // custPincode: this.accountNoSearch[0].pinCd,
+                custTdsPer: this.accountNoSearch[0].tdsPer,
               });
-              this.GetCustomerSiteDetails(this.accountNoSearch.customerId);
+
+              // this.GetCustomerSiteDetails(this.accountNoSearch.customerId);
               this.getTdsAmount(this.accountNoSearch.tdsPer)
             
             }
@@ -1521,6 +1603,10 @@ export class PaymentArComponent implements OnInit {
 
           
   }
+
+
+
+
 
       getTdsAmount(tdsP) {
         // alert ("tdsp="+tdsP);
@@ -2007,11 +2093,20 @@ export class PaymentArComponent implements OnInit {
 
     const formValue: IPaymentRcptAr = this.paymentArForm.value;
 
-    if (formValue.reversalReasonCode === undefined || formValue.reversalReasonCode === null || formValue.reversalReasonCode <= 0) {
+    if (formValue.reversalReasonCode === undefined || formValue.reversalReasonCode === null || formValue.reversalReasonCode.trim()=='') {
       this.cancelValidation = false;
       alert("REVERSE REASON: Should not be null....");
       return;
     }
+
+    if (formValue.reversalReasonCode==='ChqBounce'){
+
+    if (formValue.bounceReasonCode === undefined || formValue.bounceReasonCode === null || formValue.bounceReasonCode.trim() =='') {
+      this.cancelValidation = false;
+      alert("CHQ BOUNCE REASON: Should not be null....");
+      return;
+    }
+  }
 
     //  alert("formValue.reversalDate :"+formValue.reversalDate);
 
@@ -2077,16 +2172,45 @@ export class PaymentArComponent implements OnInit {
 
 
 
-  onReasonSelected(mReasonId) {
-    if (mReasonId != null) {
+  onReasonSelected(mReasonCode) {
+    if (mReasonCode != null) {
+      var pymtType =this.paymentArForm.get('payType').value
+      if(mReasonCode ==='ChqBounce' && pymtType != 'CHEQUE' ){
+        this.paymentArForm.get('reversalReasonCode').reset();
+        this.reversalReasonCode=null;
+        alert ("Please select proper Reversal Reason...")
+        return;
+      }
       this.reversalDate = this.pipe.transform(this.now, 'y-MM-dd');
-      // glDate = this.pipe.transform(Date.now(), 'y-MM-dd');
       this.reversalCategory = 'Receipt Reversed'
       this.status = 'REVERSED'
       this.enableApplyButton = false;
+
+    
     }
 
-  }
+      this.chqBounceStatus=false; 
+      this.bounceReasonCode=null;
+    
+    
+
+      if(mReasonCode ==='ChqBounce' && pymtType ==='CHEQUE' ){
+          this.chqBounceStatus=true;
+          this.service.RcptChqBounceReasonList('ChqBncRsn')
+          .subscribe(
+            data => {
+              this.ChqBounceReasonList = data;
+              console.log(this.ChqBounceReasonList);
+            }
+          );
+      } 
+
+     
+     
+    }
+  
+
+  
 
 
   // ReceiptArApplication(rcptNumber: any, custActNo: any, rcptDate: any,ouId:any) {
@@ -2465,6 +2589,23 @@ export class PaymentArComponent implements OnInit {
             }
           );
       }
+
+   
+
+  printReceipt(){
+    var mRtnOrderNumber=this.paymentArForm.get('receiptNumber').value
+    
+    const fileName = 'download.pdf';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.orderManagementService.printArReceipt(mRtnOrderNumber)
+      .subscribe(data => {
+        var blob = new Blob([data], { type: 'application/pdf' });
+        var url = URL.createObjectURL(blob);
+        var printWindow = window.open(url, '', 'width=800,height=500');
+        printWindow.open
+        
+      });
+  }
 
 }
 
