@@ -742,6 +742,7 @@ export class ItemMasterComponent implements OnInit {
       this.service.hsnSacCodeDet(mHsnCode)
       .subscribe(
       data => {
+        this.hsnSacCodeList = data;
         this.hsnSacCodeDet = data;
         console.log(this.hsnSacCodeDet);
         this.itemMasterForm.patchValue(this.hsnSacCodeDet.gstPercentage);
@@ -1263,7 +1264,7 @@ else{
 
 
   getHSCSACCODE($event) {
-    let userId = (<HTMLInputElement>document.getElementById('invItemIdFirstWay')).value;
+    let userId = (<HTMLInputElement>document.getElementById('hsnSacCodeId')).value;
     this.userList2 = [];
 
     if (userId.length > 2) {

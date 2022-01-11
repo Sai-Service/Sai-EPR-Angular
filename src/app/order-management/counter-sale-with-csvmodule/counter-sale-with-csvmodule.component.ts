@@ -70,6 +70,7 @@ interface ISalesBookingForm {
   mobile1: number;
   paymentType: string;
   issuedBy: string;
+  salesRepId:number;
 }
 
 interface CustomerCreationInterface {
@@ -106,6 +107,7 @@ interface CustomerCreationInterface {
   panNo: string;
   tanNo: string;
   location: string;
+  salesRepName:string;
 }
 
 
@@ -126,6 +128,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
   refCustNo: string;
   isDisabled3 = false;
   isDisabled5 = false;
+  salesRepId:number;
   creditAmt: number;
   errorList: string;
   displaywalkingCustomer = true;
@@ -147,6 +150,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
   disAmt: number;
   taxAmt: number;
   discType: string;
+  custPoDate:Date;
   // Customer Form
   locData: any = [];
   // =[ {
@@ -175,6 +179,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
   public issueCodeTypeList: any[];
   public status = "Active";
   public titleList: Array<string>[];
+  exicutiveNameByCustNameList: any = [];
   displayOrgnization: boolean;
   PersonType: any;
   classCodeType: string;
@@ -388,7 +393,9 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
       taxCategoryName: [''],
       transactionTypeId: [''],
       InvoiceNumber: [''],
+      salesRepId:[],
       creditAmt: [''],
+      custPoDate:[''],
       name: ['', [Validators.required]],
       customerSiteId: [''],
       id: [''],
@@ -1231,6 +1238,16 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
             }
           }
         });
+        this.service.exicutiveNameByCustName(custAccountNo, sessionStorage.getItem('locId'))
+        .subscribe(
+          data => {
+            if (data.code === 200) {
+              this.exicutiveNameByCustNameList = data.obj;
+              var salesExicustive = data.obj.ticketNo + '--' + data.obj.fullName;
+              this.CounterSaleOrderBookingForm.patchValue({ salesRepId: data.obj.emplId });
+              this.CounterSaleOrderBookingForm.patchValue({ salesRepName: salesExicustive })
+            }
+          })
   }
 
 

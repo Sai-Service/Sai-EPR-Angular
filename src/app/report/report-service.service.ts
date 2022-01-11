@@ -28,6 +28,50 @@ export class ReportServiceService {
     });
   }
 
+  stockMadeDetailsReport(fromDate, toDate,stockMadeToFromLoc,tolocId){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprStkTrfMade?fromDate=${fromDate}&toDate=${toDate}&fromLoc=${stockMadeToFromLoc}&toLoc=${tolocId}`;
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+  spstktrfMdSummaryReport(invcDt1,invcDt4,locId,tolocId){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprStkTrfMadeSummary?fromDate=${invcDt1}&toDate=${invcDt4}&fromLoc=${locId}&toLoc=${tolocId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+
+  SprStkTrfRecdDtlsReport(invcDt1,invcDt4,locId,tolocId){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprStkTrfRecdDtls?fromDate=${invcDt1}&toDate=${invcDt4}&fromLoc=${locId}&toLoc=${tolocId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+
+  SprStkTrfRecdSummaryReport(invcDt1,invcDt4,locId,tolocId){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprStkTrfRecdSummary?fromDate=${invcDt1}&toDate=${invcDt4}&fromLoc=${locId}&toLoc=${tolocId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+
+  JobCardSummaryReport(invcDt1,invcDt4,locId){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/JobCardSummary?fromDate=${invcDt1}&toDate=${invcDt4}&fromLoc=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
   spIssueDetailsReport(invcDt1,invcDt4,locId){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/SprIssueDtls?fromDate=${invcDt1}&toDate=${invcDt4}&locId=${locId}`;
     return this.http.get(REQUEST_URI, {
@@ -145,13 +189,7 @@ export class ReportServiceService {
     });
   }
 
-  spstktrfMdSummaryReport(invcDt1,invcDt4,locId,tolocId){
-    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprStkTrfMade?fromDate=${invcDt1}&toDate=${invcDt4}&fromLoc=${locId}&toLoc=${tolocId}`;
-    return this.http.get(REQUEST_URI, {
-      responseType: 'arraybuffer',
-      headers: this.headers,
-    });
-  }
+ 
 
   getLocationSearch1(ouId): Observable<any> {
     return this.http.get(this.ServerUrl + `/locationMst/locListOuwise/${ouId}`);

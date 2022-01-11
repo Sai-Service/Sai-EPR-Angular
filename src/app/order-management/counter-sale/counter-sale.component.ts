@@ -1049,7 +1049,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   downloadCSINV() {
     var invoiceNumber = this.CounterSaleOrderBookingForm.get('trxNumber').value;
     const fileName = 'download.pdf';
-    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    // const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     if (this.divisionId === 1) {
       this.orderManagementService.downloadCSINV(this.orderNumber)
         .subscribe(data => {
@@ -1729,7 +1729,9 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     }
   }
 
-  onKey(index, fldName) {
+  onKey(index, fldName,event) {
+    // alert (event.keyCode)
+    if (event.keyCode !=13){
     // alert(index +'Onkey Alert' +'---'+fldName)
     var arrayControl = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     var pricingQty = arrayControl[index].pricingQty;
@@ -1848,13 +1850,18 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     var item = arrayControl[index].segment;
     var pricingQty = arrayControl[index].pricingQty;
     // alert(itemId1)
-    if (itemId1 != null && fldName != "locator") {
+    if (event.keyCode != 13){
+    if (itemId1 != null && fldName != "locator" ) {
       this.addRow(index);
     }
+  }
     else {
       this.displayRemoveRow.push(true);
     }
-
+  }
+  else{
+    alert('Enter Key Not Allowed.!... Please Use Tab Key')
+  }
   }
 
 
@@ -2194,7 +2201,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       // this.AvailQty(i,trxLnArr[i].itemId,'locator');
     }
     var fldName = "locator";
-    this.onKey(i, fldName);
+    this.onKey(i, fldName,event);
   }
 
 
@@ -2524,10 +2531,29 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
 
 
-  enterKeyLock(i) {
-    alert('Enter Not Allowed.!');
-    this.setFocus('pricingQty' + i);
-    return;
+  enterKeyLock(event,i) {
+    alert(event.key)
+    console.log(event);
+    if (event.keyCode === 9){
+      alert('hi')
+      var fldName ='prc';
+     this.onKey(i,fldName,event)
+    }
+    else if(event.keyCode === 13) {
+      alert('Enter Not Allowed.!');
+       this.setFocus('pricingQty' + i);
+       return;
+    }
+    // if (event.keyCode === 13){
+    //   alert('Enter Not Allowed.!');
+    //   this.setFocus('pricingQty' + i);
+    //   return;
+    // }
+    // else{
+    //   alert('else tab')
+    //  var fldName ='prc';
+    //   this.onKey(i,fldName)
+    // }
   }
 
   updateTotAmtPerline(lineIndex) {

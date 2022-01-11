@@ -430,8 +430,172 @@
             </tr>
        
           
+            <tr>
+                <td style="border: 1px solid black;padding-left: 5px;">Spares Stock Made Detail Report</td>
+                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="stockMadefromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="stockMadeToDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Ship&nbsp;To&nbsp;Location&nbsp;</td>&nbsp;
+                            <td>
+                                <input disabled type="text" class="form-control"  formControlName="stockMadeToLocName">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Ship&nbsp;From&nbsp;Location&nbsp;</td>&nbsp;
+                            <td>
+                                <select formControlName="stockMadeToFromLoc" id="stockMadeToFromLoc" class="form-control">
+                                    <option>--Select--</option>
+                                    <option *ngFor="let sc of  BillShipFromList" [ngValue]="sc.locId">
+                                        {{sc.locCode}}
+                                    </option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="border: 1px solid black;padding-left: 5px;">
+                    <button class="btn-primary" [disabled]="isDisabled11" (click)="stockMade()">View Report</button>
+                </td>
+            </tr>
          
          
+
+            <tr>
+                <td style="border: 1px solid black;padding-left: 5px;">Spares Stock Made Summary Report</td>
+                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="spstktrfMdSumfromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="spstktrfMdSumtoDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Ship&nbsp;To&nbsp;Location&nbsp;</td>&nbsp;
+                            <td>
+                                <input disabled type="text" class="form-control"  formControlName="stockMadeToLocName">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Ship&nbsp;From&nbsp;Location&nbsp;</td>&nbsp;
+                            <td>
+                                <select formControlName="spstktrfMdSumToLoc" id="spstktrfMdSumToLoc" class="form-control">
+                                    <option>--Select--</option>
+                                    <option *ngFor="let sc of  BillShipFromList" [ngValue]="sc.locId">
+                                        {{sc.locCode}}
+                                    </option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="border: 1px solid black;padding-left: 5px;">
+                    <button class="btn-primary" [disabled]="isDisabled12" (click)="spstktrfMdSummary()">View Report</button>
+                </td>
+            </tr>
+      
+      
+            <tr>
+                <td style="border: 1px solid black;padding-left: 5px;">Spares Stock Received Detail Report</td>
+                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="SprStkTrfRecdDtlsfromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="SprStkTrfRecdDtlstoDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Ship&nbsp;To&nbsp;Location&nbsp;</td>&nbsp;
+                            <td>
+                                <input disabled type="text" class="form-control"  formControlName="stockMadeToLocName">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Ship&nbsp;From&nbsp;Location&nbsp;</td>&nbsp;
+                            <td>
+                                <select formControlName="SprStkTrfRecdDtlsFromLoc" id="sSprStkTrfRecdDtlsFromLoc" class="form-control">
+                                    <option>--Select--</option>
+                                    <option *ngFor="let sc of  BillShipFromList" [ngValue]="sc.locId">
+                                        {{sc.locCode}}
+                                    </option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="border: 1px solid black;padding-left: 5px;">
+                    <button class="btn-primary" [disabled]="isDisabled13" (click)="SprStkTrfRecdDtls()">View Report</button>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td style="border: 1px solid black;padding-left: 5px;">Spares Stock Received Summary Report</td>
+                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="SprStkTrfRecdSummaryfromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="SprStkTrfRecdSummarytoDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Ship&nbsp;To&nbsp;Location&nbsp;</td>&nbsp;
+                            <td>
+                                <input disabled type="text" class="form-control"  formControlName="stockMadeToLocName">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Ship&nbsp;From&nbsp;Location&nbsp;</td>&nbsp;
+                            <td>
+                                <select formControlName="SprStkTrfRecdSummaryFromLoc" id="SprStkTrfRecdSummaryFromLoc" class="form-control">
+                                    <option>--Select--</option>
+                                    <option *ngFor="let sc of  BillShipFromList" [ngValue]="sc.locId">
+                                        {{sc.locCode}}
+                                    </option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="border: 1px solid black;padding-left: 5px;">
+                    <button class="btn-primary" [disabled]="isDisabled14" (click)="SprStkTrfRecdSummary()">View Report</button>
+                </td>
+            </tr>
+      
         </table>
     </div>
         <table class="center">

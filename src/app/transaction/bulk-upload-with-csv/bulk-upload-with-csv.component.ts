@@ -69,6 +69,7 @@ export class BulkUploadWithCsvComponent implements OnInit {
   userList1: any[] = [];
   lastkeydown1: number = 0;
   public supplierCodeList: any[];
+  public pricelIstList : any=[];
   public suppIdList: any;
   private sub: any;
   segment1: string;
@@ -79,6 +80,7 @@ export class BulkUploadWithCsvComponent implements OnInit {
   supplierSite: string;
   // invcDt1:Date;
   itemButton1 = true;
+  priceListName:string;
 
   pipe = new DatePipe('en-US');
   now = new Date();
@@ -111,6 +113,7 @@ export class BulkUploadWithCsvComponent implements OnInit {
       userName: ['', [Validators.required]],
       supplierSite: ['', [Validators.required]],
       invcDt1: ['', [Validators.required]],
+      priceListName:['',Validators.required]
     })
   }
   bulkUploadCSV(bulkUploadCSVForm) { 
@@ -143,6 +146,15 @@ export class BulkUploadWithCsvComponent implements OnInit {
           data1 = this.supplierCodeList;
         }
       );
+
+      this.service.pricelIstListFn(Number(sessionStorage.getItem('ouId')))
+      .subscribe(
+        data1 => {
+          this.pricelIstList = data1;
+          console.log(this.pricelIstList);
+        }
+      );
+      
     this.itemButton1 = true;
     this.myInputField.nativeElement.focus();
     // this.itemButton.nativeElement.hidden=true;
@@ -209,6 +221,7 @@ export class BulkUploadWithCsvComponent implements OnInit {
         // let location=this.bulkUploadCSVForm.get('locCode').value;
         var location = (sessionStorage.getItem('locCode'));
         var invcNo = this.bulkUploadCSVForm.get('invcNo').value;
+        var priceListName =this.bulkUploadCSVForm.get('priceListName').value;
         var fileName = this.bulkUploadCSVForm.get('file').value;
         console.log(fileName);
         // indexOf
@@ -229,7 +242,7 @@ export class BulkUploadWithCsvComponent implements OnInit {
           return;
         }
         // alert(location+'  '+invcNo+' '+supplierNo+' '+ supplierSite+' '+ userName+' '+ invcDt1)
-        this.service.bulkpouploadSparesBajaj(formData, location, invcNo, supplierNo, supplierSite, userName, invcDt1).subscribe((res: any) => {
+        this.service.bulkpouploadSparesBajaj(formData, location, invcNo, supplierNo, supplierSite, userName, invcDt1,priceListName).subscribe((res: any) => {
           if (res.code === 200) {
             alert(res.message);
             this.poDetails[0] = res.obj;
