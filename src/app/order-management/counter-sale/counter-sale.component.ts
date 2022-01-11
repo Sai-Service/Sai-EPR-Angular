@@ -1766,16 +1766,11 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     var taxCategoryId = arrayControl[index].taxCategoryId;
     // alert(taxCategoryId);
     if (taxCategoryId === null) {
-
       select = this.taxCategoryList[index].find(d => d.taxCategoryName === taxcatName.taxCategoryName);
       taxCategoryId = select.taxCategoryId;
       patch.controls[index].patchValue({ taxCategoryId: taxCategoryId });
       patch.controls[index].patchValue({ taxCategoryName: select });
     } else {
-      // alert("2" + taxCategoryId)
-      // select = [{ taxCategoryId: taxCategoryId, taxCategoryName: taxcatName }];
-      // console.log(select);
-      // taxCategoryId = select.taxCategoryId;
       patch.controls[index].patchValue({ taxCategoryId: taxCategoryId });
       patch.controls[index].patchValue({ taxCategoryName: taxcatName });
     }
