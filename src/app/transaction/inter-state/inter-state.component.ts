@@ -262,8 +262,8 @@ taxCategoryId:number;
         this.createOrderTypeList = data1;
         console.log(this.createOrderTypeList);
         // data1 = this.createOrderTypeList;
-        // this.InterStateForm.patchValue({transactionTypeName:this.createOrderTypeList.transactionTypeName});
-        this.transactionTypeName=this.createOrderTypeList[0].transactionTypeName;
+        this.InterStateForm.patchValue({transactionTypeName:this.createOrderTypeList[0].transactionTypeName});
+        // this.transactionTypeName=this.createOrderTypeList[0].transactionTypeName;
 
       }
     );
@@ -293,20 +293,20 @@ taxCategoryId:number;
       data => {
         this.subInvCode = data;
         console.log(this.subInventoryId);
-         this.subInventoryId=this.subInvCode.subInventoryId;
+        //  this.subInventoryId=this.subInvCode.subInventoryId;
          this.InterStateForm.patchValue({subInventoryId:this.subInvCode.subInventoryId})
 
         // alert(this.subInventoryId);
       });
 
-    //   this.service.taxCategoryIgstListForSALES()
-    // .subscribe(
-    //   data1 => {
-    //     this.taxCategoryList = data1;
-    //     console.log(this.taxCategoryList);
-    //     data1 = this.taxCategoryList;
-    //   }
-    // );comment by vinita
+      this.service.taxCategoryIgstListForSALES()
+    .subscribe(
+      data1 => {
+        this.taxCategoryList = data1;
+        console.log(this.taxCategoryList);
+        data1 = this.taxCategoryList;
+      }
+    );
     this.orderlineDetailsGroup();
     var patch=this.InterStateForm.get('oeOrderLinesAllList') as FormArray
      (patch.controls[0]).patchValue(
