@@ -262,6 +262,7 @@ export class AdminComponent implements OnInit {
       this.isVisible30=false;
       this.isVisible31=true;
       this.isVisible32=false;
+      this.isVisible35=false;
     }
     if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId'))===2 && sessionStorage.getItem('deptName')==='Service'){
       this.isVisible11=false;
@@ -286,6 +287,7 @@ export class AdminComponent implements OnInit {
       this.isVisible30=false;
       this.isVisible31=false;
       this.isVisible32=true;
+      this.isVisible35=true;
     }
 
 
@@ -313,6 +315,7 @@ export class AdminComponent implements OnInit {
       this.isVisible30=true;
       this.isVisible31=true;
       this.isVisible32=false;
+      this.isVisible35=false;
     }
 
     if (Number(sessionStorage.getItem('divisionId')) === 2 && sessionStorage.getItem('deptName')==='Spares' && Number(sessionStorage.getItem('roleId'))===4){
@@ -339,6 +342,7 @@ export class AdminComponent implements OnInit {
       this.isVisible30=true;
       this.isVisible31=true;
       this.isVisible32=false;
+      this.isVisible35=false;
     }
 
     if (
@@ -608,7 +612,7 @@ export class AdminComponent implements OnInit {
         itemCode = itemCode1;
         // alert(itemCode + 'item in else');
       }
-       //alert(itemCode.length + 'length'+this.ItemIdList.length);
+     // alert(itemCode.length + 'length'+this.ItemIdList.length);
       // enter keycode
       if (itemCode.length >= 4 && this.ItemIdList.length <= 1) {
         this.service
@@ -668,10 +672,13 @@ export class AdminComponent implements OnInit {
         this.gstPer = this.lstcomments[0].GSTPERCENTAGE;
         this.principleItem = this.lstcomments[0].PRINCPLEITEM;
         this.adminForm1.patchValue(data);
+      
       } else {
         alert('Stock Details not availabe for item - ' + itemId);
+       
       }
-      this.ItemIdList =[];
+     this.ItemIdList =[]; 
+     this.adminForm1.get('searchItemCode').setValue('') ;
     });
   }
   userCheck(roleId: number): boolean {

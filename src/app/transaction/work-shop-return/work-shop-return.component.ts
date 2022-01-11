@@ -100,10 +100,9 @@ reqNo:string;
  now=new Date();
  creationDate=this.pipe.transform(this.now,'dd-MM-yyyy')
   subInvdetail: any;
-  displayaddButton:boolean=true;
 
 
-  constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
+  constructor(private fb: FormBuilder, private router: Router, private service: MasterService) { 
     this.WorkshopReturnForm=fb.group({
       reqNo:[],
       requestNumber:['',[Validators.required]],
@@ -122,19 +121,19 @@ reqNo:string;
       divId:[''],
       deptId:[''],
       divisionId:[''],
-
+      
       JobNo:[''],
       issueTo:[],
       trxLinesList:this.fb.array([]),
-
-
+  
+  
      });
     }
     trxLinesList():FormArray{
-
+     
       return this.WorkshopReturnForm.get("trxLinesList") as FormArray
     }
-
+  
     newtrxLinesList(): FormGroup{
       return this.fb.group({
         lineNumber:[''],
@@ -170,14 +169,14 @@ reqNo:string;
     this.frmSubInvCode='WIP';
     if(this.frmSubInvCode==='WIP')
     {
-      // alert('Hello');
+      alert('Hello');
       this.service.getdivsubInv(this.frmSubInvCode,this.divisionId).subscribe(
         data=>{
           this.subInvdetail=data;
         }
       );
     }
-
+    
     this.service.transTypereturn().subscribe(
       data =>{ this.transType = data;
         this.transactionTypeId=this.transType[0].transactionTypeId;
@@ -205,7 +204,7 @@ reqNo:string;
       console.log(data);
      }
    );
-
+   
    this.addnewtrxLinesList();
    var patch = this.WorkshopReturnForm.get('trxLinesList') as  FormArray
       (patch.controls[0]).patchValue(
@@ -220,7 +219,7 @@ workshopReturn(WorkshopReturnForm:any){}
 
 addnewtrxLinesList(){
   this.trxLinesList().push(this.newtrxLinesList());
-
+    
 var len = this.trxLinesList().length;
 var patch = this.WorkshopReturnForm.get('trxLinesList') as FormArray;
 (patch.controls[len - 1]).patchValue(
@@ -236,7 +235,7 @@ removenewtrxLinesList(trxLineIndex){
 
 onSelectjob(event)
 {
-  // alert(event);
+  alert(event);
   // var jobno=event.target.value;
   this.service.returnBillableType(event).subscribe(
     data=>{
@@ -247,8 +246,8 @@ onSelectjob(event)
 onSelectType(event)
 {
   var jobno=this.WorkshopReturnForm.get('repairNo').value;
-  // alert(this.subInvdetail.subInventoryId+'SubInv');
-  // alert(jobno+'job'+event);
+  alert(this.subInvdetail.subInventoryId+'SubInv');
+  alert(jobno+'job'+event);
   this.service.itemLst(jobno,event,this.subInvdetail.subInventoryId).subscribe(
     data=>{
       this.ItemIdList=data;
@@ -282,7 +281,6 @@ search(reqNo)
        });
        this.WorkshopReturnForm.patchValue(data.obj);
        this.WorkshopReturnForm.patchValue(data.obj.trxLinesList);
-       this.displayaddButton=false;
       //  this.displayButton=false;
       // this.display=false;
      }
@@ -311,14 +309,14 @@ newmoveOrder()
       alert("Record inserted Successfully");
       // this.display=false;
       // this.moveOrderForm.patchValue({frmSubInvCode:subCode});
-      for (let i = 1; i < res.obj.trxLinesList.length-1 ; i++) {
+      for (let i = 0; i < res.obj.trxLinesList.length-1 ; i++) {
         var trxList:FormGroup=this.newtrxLinesList();
         this.trxLinesList().push(trxList);
 
       }
       this.displayButton=false;
       this.WorkshopReturnForm.disable();
-      this.displayaddButton=false;
+      
       // this.moveOrderForm.reset();
     }
     else
@@ -348,15 +346,15 @@ closeReurn()
   // let select1= this.subInvCode.find(d=>d.subInventoryCode===this.frmSubInvCode);
   // alert(this.subInvCode.subInventoryId+'ID');
   var subInv=this.subInvdetail.subInventoryId;
-  // alert(subInv+'sub');
-
+  alert(subInv+'sub');
+  
 
   let locId1=this.WorkshopReturnForm.get('locId');
   var jobno=this.WorkshopReturnForm.get('repairNo').value;
   var trxLnArr1 = this.WorkshopReturnForm.get('trxLinesList').value;
   var trxLnArr2 = this.WorkshopReturnForm.get('trxLinesList') as FormArray;
   var itemid=trxLnArr1[i].invItemId;
-  // alert (itemid);
+  alert (itemid);
   // var frmSubCode=trxLnArr1[i].frmSubInvCode;
   // alert("FromSub"+frmSubCode);
   // alert(select1);
@@ -370,8 +368,8 @@ closeReurn()
         console.log(data);
         var getfrmSubLoc =data;
         //   // alert(getfrmSubLoc.segmentName+'SegmentName')
-
-
+  
+  
           // alert(i +'i');
           this.locData[i] = data;
           if(getfrmSubLoc.length==1)
@@ -391,9 +389,9 @@ closeReurn()
          trxLnArr2.controls[i].patchValue({onHandQty:getfrmSubLoc[0].onHandQty})
          trxLnArr2.controls[i].patchValue({id:getfrmSubLoc[0].id});
           }
-
+  
       });
-
+  
 
     this.service.getItemDetail(itemid).subscribe
     (data => {this.getItemDetail = data;
@@ -404,30 +402,30 @@ closeReurn()
       // trxLnArr1.controls[i].patchValue({frmSubInvCode:this.subInvCode.subInventoryCode});
     }
     );
-
+    
  }
 
- AvailQty(event:any,i:number)
+ AvailQty(event:any,i:number) 
  {
-  //  alert(event);
+   alert(event);
    var trxLnArr1=this.WorkshopReturnForm.get('trxLinesList')as FormArray;
    var trxLnArr = this.WorkshopReturnForm.get('trxLinesList').value;
    var itemid=trxLnArr[i].invItemId;
    var locId=trxLnArr[i].frmLocatorId;
    var onhandid=trxLnArr[i].id;
    // trxLnArr1.controls[i].patchValue({locatorId:locId});
-  // alert(locId+'locatorID');
+  alert(locId+'locatorID');
   //  var subcode=this.WorkshopReturnForm.get('subInventoryCode').value;
    var subInv=this.subInvdetail.subInventoryId;
   // alert(subcode);
    // let select2= this.subInvCode.find(d=>d.subInventoryCode===subcode);
   // alert(select2.subInventoryId+'Id')
   this.service.getonhandqty(Number(sessionStorage.getItem('locId')),subInv,locId,itemid).subscribe
-     (data =>{
+     (data =>{ 
        this.onhand1 = data;
        console.log(this.onhand1);
       //  alert(this.onHandId);
-      //  alert(this.onhand1);
+       alert(this.onhand1);
        trxLnArr1.controls[i].patchValue({onHandQty:data.obj});
      // var trxLnArr=this.stockTranferForm.get('trxLinesList').value;
      let onHand=data.obj;
@@ -439,6 +437,6 @@ closeReurn()
    // var trxLnArr1=this.stockTranferForm.get('trxLinesList')as FormArray;
    trxLnArr1.controls[i].patchValue({avlqty: avlqty1});
      })
-
+   
  }
 }

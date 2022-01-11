@@ -1736,12 +1736,32 @@ export class OPMasterDtoComponent implements OnInit {
     // alert('Hi')
     console.log(index);
 
-    var arrayControl = this.poMasterDtoForm.get('poLines').value
+    var trxLnArr = this.poMasterDtoForm.get('poLines').value;
+    var trxLnArr1 = this.poMasterDtoForm.get('poLines') as FormArray
+    var orderedQty= trxLnArr[index].orderedQty;
+    var uomCode= trxLnArr[index].uom;
+    if (uomCode === 'NO') {
+      // alert(Number.isInteger(qty1)+'Status');
+      if (!(Number.isInteger(orderedQty))) {
+        alert('Please enter correct No');
+        trxLnArr1.controls[index].patchValue({ orderedQty: '' });
+        return;
+      }
+    }
+
+    var arrayControl = this.poMasterDtoForm.get('poLines').value;
+    // var  uomCode= arrayControl[index].uom
+    // var isvalidqty = this.validate(index);
+    // if (isvalidqty == false) {
+    //   return;
+    // }
     var patch = this.poMasterDtoForm.get('poLines') as FormArray;
     console.log(arrayControl);
-    arrayControl[index].baseAmtLineWise = arrayControl[index].unitPrice * arrayControl[index].orderedQty;
-
-    var baseAmount = arrayControl[index].baseAmtLineWise
+    
+   
+    arrayControl[index].baseAmtLineWise = Math.round(((arrayControl[index].unitPrice * arrayControl[index].orderedQty) + Number.EPSILON) * 100) / 100;
+    // var baseAmount = arrayControl[index].baseAmtLineWise;
+    var baseAmount = Math.round(((arrayControl[index].baseAmtLineWise) + Number.EPSILON) * 100) / 100;
     var taxCategoryId = arrayControl[index].taxCategoryId;
     // alert(taxCategoryId)
     if (baseAmount != null) {
@@ -1767,13 +1787,17 @@ export class OPMasterDtoComponent implements OnInit {
             for (let i = 0; i < this.taxCalforItem.length; i++) {
 
               if (this.taxCalforItem[i].totTaxPer != 0) {
-                sum = sum + this.taxCalforItem[i].totTaxAmt
+                // sum = sum + this.taxCalforItem[i].totTaxAmt;
+                sum=  Math.round(((sum + this.taxCalforItem[i].totTaxAmt) + Number.EPSILON) * 100) / 100;
               }
             }
             (patch.controls[index]).patchValue({
-              baseAmtLineWise: arrayControl[index].baseAmtLineWise,
-              taxAmtLineWise: sum,
-              totAmtLineWise: arrayControl[index].baseAmtLineWise + sum,
+              // baseAmtLineWise: arrayControl[index].baseAmtLineWise,
+              // taxAmtLineWise: sum,
+              // totAmtLineWise: arrayControl[index].baseAmtLineWise + sum,
+              baseAmtLineWise : Math.round(((arrayControl[index].baseAmtLineWise) + Number.EPSILON) * 100) / 100,
+              taxAmtLineWise : Math.round(((sum) + Number.EPSILON) * 100) / 100,
+              totAmtLineWise : Math.round(((arrayControl[index].baseAmtLineWise + sum) + Number.EPSILON) * 100) / 100,
             });
             this.patchResultList(index, this.taxCalforItem);
           });
@@ -1782,6 +1806,21 @@ export class OPMasterDtoComponent implements OnInit {
       this.baseAmountCal(baseAmount);
     }
   }
+
+
+  validate(index: number){
+    var trxLnArr = this.poMasterDtoForm.get('poLines').value;
+    var orderedQty= trxLnArr[index].orderedQty;
+    var uomCode= trxLnArr[index].uom;
+    if (uomCode === 'NO') {
+      // alert(Number.isInteger(qty1)+'Status');
+      if (!(Number.isInteger(orderedQty))) {
+        alert('Please enter correct No');
+        return;
+      }
+    }
+  }
+
   baseAmountCal(baseAmount) {
 
     this.sum = this.sum + baseAmount;

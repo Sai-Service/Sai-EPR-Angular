@@ -42,6 +42,7 @@
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/allotment']">Allotment</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/Deallotment']">De Allotment</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/orderList']">Order List</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/SalesOrderForm']">Sales Order-New</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/ReversalOrder']">Reversal Order</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/GatePass']">Sales Gate Pass</a></li>
@@ -246,15 +247,30 @@
         aria-haspopup="true" aria-expanded="false">
         Reports
       </a>
-      <div [style.display]="isVisible30 ? 'block' : 'none'">
+     
       <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Spares Reports</a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" [routerLink]="['/admin/Report/AllReports']">All Reports</a></li>
-          </ul>
-        </li>
+        <!-- <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle"  href="#">Spares Reports</a> -->
+          <!-- <ul class="dropdown-menu"> -->
+            <div [style.display]="isVisible30 ? 'block' : 'none'">
+            <li><a class="dropdown-submenu" [routerLink]="['/admin/Report/SparesReports']">Spares Reports</a></li>
+          </div>
+          <div [style.display]="isVisible35 ? 'block' : 'none'">
+          <li><a class="dropdown-submenu" [routerLink]="['/admin/Report/ServiceReport']">Service Reports</a></li>
+        </div>
+          <!-- </ul> -->
+        <!-- </li> -->
       </ul>
-      </div>
+      
+      <!-- <div [style.display]="isVisible35 ? 'block' : 'none'">
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Spares Reports</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" [routerLink]="['/admin/Report/SparesReports']">Service Reports</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div> -->
+      
     </li>
   </div>
     <li class="nav-item dropdown">
@@ -568,7 +584,7 @@
                 <td style="width: 15%" class="LabelFontStyle">&nbsp;&nbsp;&nbsp;&nbsp;Item&nbsp;Description&nbsp;:</td>
                 <td>
                   <input   type="text"  formControlName="searchItemCode"  id="searchItemCode"
-                           [(ngModel)]="searchItemCode" class="form-control"  placeholder="Enter Item Code"
+                           [(ngModel)]="searchItemCode" class="form-control"  placeholder="Enter Item Description"
                            style="width: 300px; background-color: rgb(240, 240, 166); text-transform: uppercase;"  >
                </td>
 

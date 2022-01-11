@@ -441,6 +441,22 @@
                         <ng-template #elseDMSCDMS>
                             <tr>
                                 <td style="width: 15%" class="LabelFontStyle">
+                                    Customer&nbsp;PO&nbsp;Number:&nbsp;
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" formControlName="custPoNumber" value={{custPoNumber}}
+                                        [ngClass]="{ 'is-invalid': submitted && f.custPoNumber.errors }" style="width:100%;">
+                                </td>
+                                <td style="width: 15%" class="LabelFontStyle">
+                                    Customer&nbsp;PO&nbsp;Date&nbsp;:&nbsp;
+                                </td>
+                                <td>
+                                    <input type="date" class="form-control" formControlName="custPoDate" value={{custPoDate}}
+                                        [ngClass]="{ 'is-invalid': submitted && f.custPoDate.errors }" style="width:100%;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 15%" class="LabelFontStyle">
                                     CDMS&nbsp;Customer&nbsp;Number:&nbsp;
                                 </td>
                                 <td>
@@ -570,22 +586,30 @@
                                         <input disabled type="text" formControlName="issuedBy" [(ngModel)]='issuedBy'
                                             value={{issuedBy}} class="form-control" style="width: 160px;">
                                     </td>
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        Executive&nbsp;Name&nbsp;:&nbsp;
+                                    </td>
+                                    <td>
+                                        <input disabled type="text" formControlName="salesRepName" [(ngModel)]='salesRepName'
+                                            value={{salesRepName}} class="form-control" style="width: 160px;">
+                                        <input disabled hidden type="number" formControlName="salesRepId" [(ngModel)]='salesRepId'
+                                            value={{salesRepId}} class="form-control" style="width: 160px;">
+                                    </td>
                                 </ng-template>
                                 <ng-template #elsesalesRepName>
                                     <td style="width: 15%" class="LabelFontStyle">
                                         Sales&nbsp;Person&nbsp;:&nbsp;
                                     </td>
                                     <td>
-                                        <input disabled type="text" formControlName="salesRepName"
-                                            [(ngModel)]='salesRepName' value={{salesRepName}} class="form-control"
-                                            style="width: 160px;">
+                                        <input disabled type="text" formControlName="salesRepName" [(ngModel)]='salesRepName'
+                                            value={{salesRepName}} class="form-control" style="width: 160px;">
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle">
                                         TL&nbsp;Name&nbsp;:&nbsp;
                                     </td>
                                     <td>
-                                        <input disabled type="text" formControlName="tlName" [(ngModel)]='tlName'
-                                            value={{tlName}} class="form-control" style="width: 160px;">
+                                        <input disabled type="text" formControlName="tlName" [(ngModel)]='tlName' value={{tlName}}
+                                            class="form-control" style="width: 160px;">
                                     </td>
                                 </ng-template>
                             </tr>

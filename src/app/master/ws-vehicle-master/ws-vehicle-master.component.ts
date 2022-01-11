@@ -21,7 +21,7 @@ interface IWsVehicleMaster {
   categoryId: number;
   itemId: number;
   custAccountNo: number;
-  custPhone1: number;
+  mobile1: number;
   custName: string;
   address1: string;
   address2: string;
@@ -33,8 +33,6 @@ interface IWsVehicleMaster {
   divisionId:number;
   divisionName:string;
   dealerCode:string;
-  insurerCompId:number;
-  insurerSiteId:number;
 
 
 }
@@ -65,11 +63,6 @@ export class WsVehicleMasterComponent implements OnInit {
   public colorCodeList: Array<string> = [];
   public FuelTypeList: Array<string> = [];
   public statusList: Array<string> = [];
-
-  public insNameList:Array<string>[];
-  public insSiteList:Array<string>[];
-
-
   // public dealerCodeList :Array<string>=[];
   dealerCodeList:any;
 
@@ -150,9 +143,6 @@ export class WsVehicleMasterComponent implements OnInit {
 
   insuDate: string;
   policyNo: string;
-
-  insurerCompId:number;
-  insurerSiteId:number;
   insCompanyName: string;
   inscompanySite: string;
 
@@ -327,8 +317,6 @@ export class WsVehicleMasterComponent implements OnInit {
       policyNo: [],
       insCompanyName: [],
       inscompanySite: [],
-      insurerCompId:[],
-      insurerSiteId:[],
 
       mcpNo: [],
       mcpPackage: [],
@@ -438,7 +426,7 @@ export class WsVehicleMasterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    $("#wrapper").toggleClass("toggled");
+
     this.name = sessionStorage.getItem('name');
     this.loginArray = sessionStorage.getItem('divisionName');
     this.divisionId = Number(sessionStorage.getItem('divisionId'));
@@ -548,29 +536,7 @@ export class WsVehicleMasterComponent implements OnInit {
         }
       );
 
-      this.service.insNameList()
-      .subscribe(
-        data => {
-          this.insNameList = data;
-          console.log(this.insNameList);
-        }
-      );
 
-
-  }
-
-
-  onInsurerNameSelected(customerId: number) {
-    // alert('in '+ customerId)
-    if(customerId>0) {
-    this.service.insSiteList(customerId)
-     .subscribe(
-      data => {
-        this.insSiteList = data.customerSiteMasterList;
-        console.log(this.insSiteList);
-      }
-    );
-    } else {this.insSiteList=null;}
   }
 
   transeData(val) {
@@ -620,7 +586,7 @@ export class WsVehicleMasterComponent implements OnInit {
     this.CheckDataValidations()
 
     if (this.checkValidation) {
-      alert("Data Validation Sucessfull....\Updating  WS Customer Master")
+      alert("Data Validation Sucessfull....\Updating WS Customer Master")
       // this.service.UpdateSaiEwCustomer(formValue).subscribe((res: any) => {
       //   if (res.code === 200) {
       //     alert('RECORD UPDATED SUCCESSFUILY');
@@ -1104,7 +1070,7 @@ export class WsVehicleMasterComponent implements OnInit {
       alert("CUSTOMER NO: Should not be null");
     }
 
-    if (formValue.custPhone1 < 0 || formValue.custPhone1 === undefined || formValue.custPhone1 === null) {
+    if (formValue.mobile1 < 0 || formValue.mobile1 === undefined || formValue.mobile1 === null) {
       this.checkValidation = false;
       alert("CUSTOMER PHONE1: Should not be null");
     }

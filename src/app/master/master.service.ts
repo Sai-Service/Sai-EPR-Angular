@@ -191,6 +191,11 @@ export class MasterService {
   supplierCodeList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/supp');
   }
+
+  pricelIstListFn(ouId): Observable<any> {
+    return this.http.get(this.ServerUrl +`/pricelist/NDPPrc?ouId=${ouId}`);
+  }
+
   getTdsType():Observable<any>{
     return this.http.get(this.ServerUrl+`/cmnLookup/CmnType/SuppTdsType`);
   }
@@ -706,6 +711,10 @@ mainModelListDivisionWise(divisionId): Observable<any> {
 
 transactionTypeNameListNew(deptId,ouId): Observable<any> {
   return this.http.get(this.ServerUrl +`/OrderTrnType/otList?deptId=${deptId}&ouId=${ouId}`);
+}
+
+brokerListFn(): Observable<any> {
+  return this.http.get(this.ServerUrl +`/Customer/ClassCode/BROKER`);
 }
 
 variantCodeList(): Observable<any> {
@@ -1390,6 +1399,21 @@ StockgatePassSubmit(stkGatePass) {
   return this.http.post(url, stkGatePass, options);
 }
 ///////////OnHand////////////
+
+
+searchByItemCodeInclude(itemCd):Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/itemMst/segment/${itemCd}`)
+  // http://localhost:8081/itemMst/segment/DH
+}
+
+searchByItemDescInclude(itemDesc,divId):Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/itemMst/searchByLabdesc/${divId}?itemDesc=${itemDesc}`)
+ // http://localhost:8081/itemMst/searchBydesc/2?itemDesc=ring
+//  http://localhost:8081/itemMst/searchByLabdesc/2?itemDesc=ring
+}
+
 searchByItemByLoc(locId,itemid,ouId,divId):Observable<any>
 {
   //  alert("MS>>> "+ itemid+","+locId+","+ouId+","+divId);
@@ -1508,8 +1532,8 @@ getsearchByJob(jobno):Observable<any>{
 }
 
 
-subInvCode(deptId,divId):Observable<any>{
-  return this.http.get(this.ServerUrl +`/subInvMst/wipissue?deptId=${deptId}&divisionId=${divId}`);
+subInvCode(deptId):Observable<any>{
+  return this.http.get(this.ServerUrl +`/subInvMst/wipissue/${deptId}`);
 }
 
 

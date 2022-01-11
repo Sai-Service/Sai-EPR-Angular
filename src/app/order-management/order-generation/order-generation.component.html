@@ -132,18 +132,18 @@
         <div class="center">
             <div class="center" formArrayName="orderList">
                 <div class="grid_scroll">
-                  
-                       <!-- <table style="border-color:#494949;border-collapse:collapse;width: 100%;"> -->
-                        <table style="width: 100%; border: solid 1px Gray" class="auto-style4"
-                        cellspacing="0" cellpadding="4" rules="all" class="center">
-                        <div class="col-md-12 table-responsive" #orderList> 
-                            <div style="padding-bottom: 10px;padding-top: 10px;">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <button (click)="orderListExport()" class="btn btn-success" style="width: fit-content;">Export To Excel</button>
-                                    </div>
+                    <div class="col-md-12 table-responsive" #orderList> 
+                        <div style="padding-bottom: 10px;padding-top: 10px;">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <button (click)="orderListExport()" class="btn btn-success" style="width: fit-content;">Export To Excel</button>
                                 </div>
-                             </div>
+                            </div>
+                         </div>
+                       <!-- <table style="border-color:#494949;border-collapse:collapse;width: 100%;"> -->
+                        <table style="width: 100%; border: solid 1px Gray" class="auto-style4" id="orderListTable"
+                        cellspacing="0" cellpadding="4" rules="all" class="center">
+                       
                               <thead>
                                   
 
@@ -180,6 +180,12 @@
                                <td hidden>
                                 <input  hidden style="width:5rem;"  type="number" formControlName="itemId" class="form-control">
                                 <input  hidden style="width:5rem;"  type="number" formControlName="sprOrderId" class="form-control">
+                                <input hidden disabled style="width:4rem;"  type="number" formControlName="mth1ConWsQty" class="form-control">
+                                <input hidden disabled style="width:4rem;"  type="number" formControlName="mth1ConsSaleQty" class="form-control">
+                                <input hidden disabled style="width:4rem;"  type="number" formControlName="mth2ConWsQty" class="form-control">
+                                <input hidden disabled style="width:4rem;"  type="number" formControlName="mth2ConsSaleQty" class="form-control">
+                                <input hidden disabled style="width:4rem;"  type="number" formControlName="mth3ConWsQty" class="form-control">
+                                <input hidden disabled style="width:4rem;"  type="number" formControlName="mth3ConsSaleQty" class="form-control">
                             </td>
                                 <td style="text-align: center;width: 4rem;">{{i+1}}</td>
                                 <td> <input   style="width:3rem;background-color: yellow;width:6rem;text-transform: uppercase;"    type="text" formControlName="segment" (keydown.enter)="enterKeyLock(i)"  class="form-control"  (change)="validateItem(i)"></td>
@@ -190,14 +196,7 @@
                                 <td> <input  disabled style="width:3rem;"  type="number" formControlName="custBackOrder" class="form-control"></td>
                                 <td> <input  disabled style="width:3rem;"  type="number" formControlName="currWsQty" class="form-control"></td>
                                 <td> <input  disabled style="width:3rem;"  type="number" formControlName="currSaleQty" class="form-control"></td>
-                            <!-- <td hidden> -->
-                                <input hidden disabled style="width:4rem;"  type="number" formControlName="mth1ConWsQty" class="form-control">
-                                <input hidden disabled style="width:4rem;"  type="number" formControlName="mth1ConsSaleQty" class="form-control">
-                                <input hidden disabled style="width:4rem;"  type="number" formControlName="mth2ConWsQty" class="form-control">
-                                <input hidden disabled style="width:4rem;"  type="number" formControlName="mth2ConsSaleQty" class="form-control">
-                                <input hidden disabled style="width:4rem;"  type="number" formControlName="mth3ConWsQty" class="form-control">
-                                <input hidden disabled style="width:4rem;"  type="number" formControlName="mth3ConsSaleQty" class="form-control">
-                            <!-- </td> -->
+  
                                 <!-- <input type="number" formControlName="pricingQty" name="pricingQty{{i}}" class="form-control"
                                 (change)="onKey(i,'prc')" (keydown.enter)="enterKeyLock(i)" style="height: 20px;width:50px;" min="0"
                                 oninput="this.value = Math.abs(this.value)"> -->
@@ -218,9 +217,8 @@
                                 <!-- (keydown.shift.arrowdown)="addRow(i)" -->
                             </tr>
                         </tbody>
-                        </div>
                  </table>
-                  
+                    </div>
                 </div>
            </div>
         </div>
