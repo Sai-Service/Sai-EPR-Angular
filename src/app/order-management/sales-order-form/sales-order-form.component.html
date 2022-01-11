@@ -588,9 +588,9 @@
                                 Broker&nbsp;:&nbsp;
                             </td>
                             <td>
-                                <select formControlName="broker" id="broker" class="form-control" style="width: 170px;">
+                                <select formControlName="subDealerId" id="subDealerId" class="form-control" style="width: 170px;">
                                 <option>--Select--</option>
-                                <option *ngFor="let mm of brokerList">
+                                <option *ngFor="let mm of brokerList" [ngValue]="mm.customerId">
                                     {{mm.custName}}
                                 </option>
                             </select>
@@ -773,8 +773,8 @@
                                 <select formControlName="variant" id="variant" class="form-control"
                                     style="width: 170px;" (ngModelChange)="onOptionsSelectedColor($event)">
                                     <option>--Select--</option>
-                                    <option *ngFor="let mm of VariantSearch">
-                                        {{mm.variant}}
+                                    <option *ngFor="let mm of VariantSearch" [ngValue]="mm.variant">
+                                        {{mm.variant}}--{{mm.varDescription}}
                                     </option>
                                 </select>
                             </td>
@@ -784,8 +784,8 @@
                             <td>
                                 <select formControlName="color" id="color" class="form-control" style="width: 170px;">
                                     <option>--Select--</option>
-                                    <option *ngFor="let cc of ColourSearch">
-                                        {{cc.ColorCode}}
+                                    <option *ngFor="let cc of ColourSearch" [ngValue]="cc.ColorCode">
+                                        {{cc.ColorCode}}--{{cc.colorDesc}}
                                     </option>
                                 </select>
                             </td>

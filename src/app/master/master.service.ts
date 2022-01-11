@@ -2638,13 +2638,14 @@ bulkPickTickCSV(formData: FormData ,priceListName:string,taxCategoryName:string,
   return this.http.post(REQUEST_URI, formData);
 }
 
-  bulkpouploadSparesBajaj(formData: FormData ,location:string,invcNo:string,supplierNo:string,suppSite:string,userName:string,invcDt1) {
+  bulkpouploadSparesBajaj(formData: FormData ,location:string,invcNo:string,supplierNo:string,suppSite:string,userName:string,invcDt1,priceListName:string) {
     formData.append('location', location);
     formData.append('invcNo', invcNo);
     formData.append('supplierNo', supplierNo);
     formData.append('suppSite', suppSite);
     formData.append('userName', userName);
     formData.append('invcDt1',invcDt1);
+    formData.append('priceListName',priceListName);
     const REQUEST_URI = this.ServerUrl +'/fileImport/uploadBjSpPO';
     return this.http.post(REQUEST_URI, formData);
 }

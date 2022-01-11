@@ -87,21 +87,21 @@
             </div>
             </td>
         </tr>
-        <!-- <tr>
+         <tr> 
             <td style="width: 15%" class="LabelFontStyle">
                 &nbsp;&nbsp;PriceList&nbsp;Name&nbsp;:&nbsp;
             </td>
             <td>
-                <select formControlName="supplierSite" id="supplierSite" #myinput
+                <select formControlName="priceListName" id="priceListName" #myinput
                 data-live-search="true" 
                 class="form-control">
                 <option>--Select--</option>
                 <option *ngFor="let sc of  pricelIstList">
-                    {{sc.siteName}}
+                    {{sc.priceListName}}
                 </option>
             </select>
             </td>
-        </tr> -->
+        </tr> 
     </ng-template>
     <!-- </div> -->
         <tr>
