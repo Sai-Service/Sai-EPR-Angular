@@ -162,6 +162,8 @@
                                               <td>
                                                   <input disabled type="text" class="form-control" formControlName="custAccountNo" [(ngModel)]='custAccountNo'
                                                       value={{custAccountNo}} style="width: 160px;">
+                                                      <input hidden formControlName="customerSiteId">  
+                                                      <input hidden formControlName="customerId">
                                                   </td>
                                               <td style="width: 15%" class="LabelFontStyle">
                                                   Name:&nbsp;
@@ -311,7 +313,7 @@
                                            (change)="onKey(i)" class="form-control"
                                           style="width: 160px;height: 25px;font-size: 10px;">
                                           <!-- <option>--Select--</option> -->
-                                          <option *ngFor="let sc of  taxCategoryList[i]"   [value]="sc">
+                                          <option *ngFor="let sc of  taxCategoryList[i]"   [value]="sc.taxCategoryName">
                                               {{sc.taxCategoryName}}
                                           </option>
                                       </select>

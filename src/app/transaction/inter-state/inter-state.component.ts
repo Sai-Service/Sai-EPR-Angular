@@ -8,12 +8,15 @@ import { MasterService } from 'src/app/master/master.service';
 // import { TransactionService } from 'src/app/transaction/transaction.service';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 import { DatePipe } from '@angular/common';
+// import { freemem } from 'os';
 
 
 interface IinterState{
   InterStateNo:number;
   orderNumber:number;
   transactionTypeName:number;
+  divisionId:number;
+  customerSiteId:number;
   BillLocName:string;
   billToLocId:number;
   paymentType:string;
@@ -33,6 +36,7 @@ export class StockTransferRow {
   segment: string;
   Locator: string;
   quantity: number;
+  customerId:number;
 }
 
 export class reserveLine {
@@ -135,7 +139,8 @@ taxCategoryId:number;
   public itemMap2 = new Map<number, any[]>();
   public itemMap3 = new Map<string, StockTransferRow>();
   public taxMap = new Map<string, any>();
-
+  customerSiteId:number;
+  customerId:number;
 
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService,private orderManagementService: OrderManagementService) {
@@ -155,6 +160,7 @@ taxCategoryId:number;
       remarks:[],
       trxNumber:[],
       orderedDate:[],
+      customerSiteId:[],
       subtotal:[],
       totTax:[],
       totAmt:[],
@@ -171,6 +177,7 @@ taxCategoryId:number;
       createOrderType:[],
       locCode:[],
       custtaxCategoryName:[],
+      customerId:[],
       oeOrderLinesAllList: this.fb.array([this.orderlineDetailsGroup()]),
       taxAmounts: this.fb.array([this.TaxDetailsGroup()]),
     })
@@ -266,6 +273,7 @@ taxCategoryId:number;
     this.service.getShiptoLoc(this.locId)
       .subscribe(
         data => {
+
           this.getshiplist = data;
           // this.custAccountNo=this.getshiplist[0].custAccountNo;
       // this.custName=this.getshiplist[0].custName;
@@ -287,6 +295,8 @@ taxCategoryId:number;
         this.subInvCode = data;
         console.log(this.subInventoryId);
          this.subInventoryId=this.subInvCode.subInventoryId;
+         this.InterStateForm.patchValue({subInventoryId:this.subInvCode.subInventoryId})
+
         // alert(this.subInventoryId);
       });
 
@@ -436,7 +446,9 @@ taxCategoryId:number;
       this.state=select1.state;
       this.gstNo=select1.gstNo;
       this.billToLocId=select1.toLocationId;
-      this.InterStateForm.patchValue({custtaxCategoryName:select1.taxCategoryName})
+      this.InterStateForm.patchValue({custtaxCategoryName:select1.taxCategoryName,
+        customerSiteId:select1.customerSiteId,
+        customerId:select1.customerId})
   }}
   taxDetails(op, i, taxCategoryId) {
     // alert('hi'+' ' +op+'-' +i);
@@ -659,7 +671,7 @@ taxCategoryId:number;
                           let itemCateNameList = this.taxCategoryList[k].find(d => d.taxCategoryName === data.obj[i].taxCategoryName);
                           (controlinv.controls[k]).patchValue({
                             taxCategoryId: itemCateNameList.taxCategoryId,
-                            taxCategoryName: itemCateNameList,
+                            taxCategoryName: itemCateNameList.taxCategoryName
                           })
                         }
                       );
@@ -766,14 +778,15 @@ taxCategoryId:number;
       }
    AvailQty(event:any,i)
 {
-  alert(i+'I');
+  // alert(i+'I');
   var trxLnArr =this.InterStateForm.get('oeOrderLinesAllList').value;
   console.log(trxLnArr);
 
   var itemid=trxLnArr[i].itemId;
-  var locId=trxLnArr[i].frmLocatorId;
+  var locId1=trxLnArr[i].frmLocatorId;
+  var locId=this.getfrmSubLoc.find(d=>d.ROWNUM===locId1)
   var onhandid=trxLnArr[i].id;
-  this.service.getonhandqty(Number(sessionStorage.getItem('locId')),this.subInventoryId,locId,itemid).subscribe
+  this.service.getonhandqty(Number(sessionStorage.getItem('locId')),this.subInventoryId,locId.locatorId,itemid).subscribe
       (data =>{
       this.onhand1 = data;
       console.log(this.onhand1);
@@ -878,7 +891,7 @@ taxCategoryId:number;
           select = this.taxCategoryList[index].find(d => d.taxCategoryName === taxcatName.taxCategoryName);
           taxCategoryId = select.taxCategoryId;
           patch.controls[index].patchValue({ taxCategoryId: taxCategoryId });
-          patch.controls[index].patchValue({ taxCategoryName: select });
+          patch.controls[index].patchValue({ taxCategoryName: select .taxCategoryName});
         } else {
           // alert("2" + taxCategoryId)
           // select = [{ taxCategoryId: taxCategoryId, taxCategoryName: taxcatName }];
@@ -891,7 +904,8 @@ taxCategoryId:number;
         patch.controls[index].patchValue({ disAmt: 0 });
         var baseAmt = arrayControl[index].unitSellingPrice * pricingQty;
 
-        var disAmt1 = arrayControl[index].disAmt;
+        // var disAmt1 = arrayControl[index].disAmt;
+        var disAmt1 =0;
         var invLineNo1 = index + 1;
         console.log(invLineNo1);
         var sum = 0;
@@ -1054,9 +1068,11 @@ taxCategoryId:number;
           this.ouId = Number(sessionStorage.getItem('ouId'));
           // this.emplId = Number(sessionStorage.getItem('emplId'));
           for (let i = 0; i < formValue.oeOrderLinesAllList.length; i++) {
-            formValue.oeOrderLinesAllList[i].taxCategoryName = formValue.oeOrderLinesAllList[i].taxCategoryName.taxCategoryName;
-            // orderLines[i].frmLocatorId = orderLines[i].frmLocatorName;
-            }
+            // formValue.oeOrderLinesAllList[i].taxCategoryName = formValue.oeOrderLinesAllList[i].taxCategoryName.taxCategoryName;
+            var locId=this.getfrmSubLoc.find(d=>d.ROWNUM===formValue.oeOrderLinesAllList[i].frmLocatorId)
+            console.log(locId);
+            formValue.oeOrderLinesAllList[i].frmLocatorId = locId.locatorId;
+                     }
           this.orderManagementService.SaveCounterSaleOrder(formValue).subscribe((res: any) => {
             if (res.code === 200) {
               this.orderNumber = res.obj;
