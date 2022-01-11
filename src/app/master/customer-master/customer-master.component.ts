@@ -664,7 +664,7 @@ export class CustomerMasterComponent implements OnInit {
     // return validgst;
     }
     const sGstNo1 = sGstnoVal.substr(2, 10);
-    this.panNo = sGstNo1;
+    this.spanNo = sGstNo1;
     //  alert('Gst verificaition2');
     this.customerMasterForm.patchValue({'spanNo':sGstNo1});
     var res = sGstnoVal.substr(0, 2);
@@ -807,7 +807,9 @@ export class CustomerMasterComponent implements OnInit {
 
     const formValue: IcustomerMaster = this.transDataWithSite(this.customerMasterForm.value);
     formValue.customerId1 = this.custAccountNo;
-
+    // if (formValue.tdsPer === 'Organization') {
+    //   formValue.title = 'M/S';
+    // }
     if (formValue.custType === 'Organization') {
       formValue.title = 'M/S';
     }
