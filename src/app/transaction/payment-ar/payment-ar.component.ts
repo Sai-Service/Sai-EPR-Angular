@@ -1608,12 +1608,10 @@ export class PaymentArComponent implements OnInit {
   }
 
 
-
-
-
-      getTdsAmount(tdsP) {
+      getTdsAmount(t) {
+       var tdsP= this.paymentArForm.get('custTdsPer').value;
         // alert ("tdsp="+tdsP);
-        if(tdsP==null || tdsP==undefined) {this.custTdsPer=0;this.tdsAmount=0;}
+        if(tdsP==null || tdsP==undefined)  { tdsP=0;this.custTdsPer=0;this.tdsAmount=0;}
         if(Number(this.paymentAmt)>0) {
         this.tdsAmount = (Number(this.paymentAmt)*tdsP/100);
       } else {this.tdsAmount=0;}
