@@ -258,16 +258,21 @@ lineDetailsArray() :FormArray{
   closeMast() {
     this.router.navigate(['admin']);
   }
+
   addRow(index) {
   this.addNewLine=true;
    var ordLineArr = this.orderGenerationForm.get('orderList').value;
-   var len = this.lineDetailsArray().length;
-    if( ordLineArr[index].itemId>0  &&  ordLineArr[index].orderQty>0 ) {
-   
-    this.lineDetailsArray().push(this.lineDetailsGroup()); 
-    
-   }else {alert ("Incomplete Line - Check Order Part No , Order Qty .... ");}
-   
+   var len1 = this.lineDetailsArray().length-1;
+   if(len1===index){
+    if( ordLineArr[index].itemId>0  &&  ordLineArr[index].orderQty>=0 ) {
+       this.lineDetailsArray().push(this.lineDetailsGroup()); 
+   }else {
+     alert ("Incomplete Line - Order Part No / Order Qty not updated ....Line will be deleted.. ");
+      this.lineDetailsArray().removeAt(index);
+    }
+
+
+  }
 }
 
 RemoveRow(index) {
@@ -461,30 +466,25 @@ CreateOrder() {
         console.log(this.lstOrderList);
         var len = this.lineDetailsArray().length;
         var y = 0;
-        // alert("this.lstinvoices.length  >>" +this.lstinvoices.length);
-       
-        for (let i = 0; i < this.lstOrderList.length - len; i++) {
+         for (let i = 0; i < this.lstOrderList.length - len; i++) {
           var ordLnGrp: FormGroup = this.lineDetailsGroup();
           this.lineDetailsArray().push(ordLnGrp);
           y=i;
-          // this.dataDisplay=i;
-          // if (i> (this.lstOrderList.length-3))  {
-          //   this.spinIcon=false;
-          //   this.dataDisplay ='';
-            
-          // }
-
-         
-         
+                 
         }
-        // alert ("i="+y +" this.lstOrderList.length >> "+this.lstOrderList.length);
+
         this.orderGenerationForm.get('orderList').patchValue(this.lstOrderList);
+
+        //  alert ("this.lstOrderList.length,len :"+len+","+this.lstOrderList.length);
+        //  for(  let i=0;i< this.lstOrderList.length;i++) {
+        //      this.lineDetailsArray().controls[i].get('segment').disable();
+        //  }
         this.CalculateOrdValue();
        
        } 
         });
 
-       
+      
         
       }
 
@@ -609,18 +609,43 @@ CreateOrder() {
   validateItem(index){  
     var ordLineArr = this.orderGenerationForm.get('orderList').value;
     var patch = this.orderGenerationForm.get('orderList') as FormArray;
-    var mSegment = ordLineArr[index].segment;
+
+    
     var mths =this.orderGenerationForm.get('consCriteria').value;
     var ordNum=this.orderGenerationForm.get('orderNumber').value;
+
+    var mSegment = ordLineArr[index].segment;
+    var sprOrdId=ordLineArr[index].sprOrderId;
+
+    
     mSegment=mSegment.toUpperCase();
-    this.lineDetailsArray().controls[index].get('orderQty').disable();
+    // this.lineDetailsArray().controls[index].get('orderQty').disable();
   
-    // alert (index+" << in validate itemcode.."+mSegment);
-    if(mSegment===null || mSegment===undefined  || mSegment.trim() === '') {
-       alert("Please Enter Item Code");
-          this.lineDetailsArray().controls[index].get('orderQty').reset();
-      return; 
-    }
+    // alert (index+" << sprOrdId.."+sprOrdId);
+    
+        if(sprOrdId>0 && mSegment===null || mSegment===undefined  || mSegment.trim() === '')
+        {
+          var mItemId = ordLineArr[index].itemId;
+              
+          if(mItemId>0) {
+            var segment1;
+            this.service.getItemDetail(mItemId) .subscribe( data => { segment1= data.segment;
+            patch.controls[index].patchValue({segment:segment1});
+            // this.lineDetailsArray().controls[index].get('orderQty').enable();
+            return;
+          });
+
+        }
+        return;
+      }
+
+        if(mSegment===null || mSegment===undefined  || mSegment.trim() === '') {
+          alert("Please Enter Item Code");
+              this.lineDetailsArray().controls[index].get('orderQty').reset();
+          return; 
+        }
+   
+
 
    
     var segId ; 
@@ -784,7 +809,7 @@ CreateOrder() {
     }
 
     CheckLineValidations(i) {
-     
+      var patch = this.orderGenerationForm.get('orderList') as FormArray;
       var ordLineArr1 = this.orderGenerationForm.get('orderList').value;
       var lineValue1=ordLineArr1[i].itemId;
       var lineValue2=ordLineArr1[i].segment;
@@ -801,12 +826,15 @@ CreateOrder() {
         this.lineValidation=false;
         return;
       } 
-    
-      if(lineValue3===undefined || lineValue3===null  || lineValue3 <=0){
+
+    if( lineValue1>0){
+      if(lineValue3===undefined || lineValue3===null  || lineValue3 <0){
+        patch.controls[i].patchValue({orderQty:0})
         alert("Line-"+j+ " ORDER QTY :  should be above Zero");
         this.lineValidation=false;
         return;
       } 
+    }
        
       this.lineValidation=true;
     

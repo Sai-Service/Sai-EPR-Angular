@@ -601,10 +601,11 @@ export class ARInvoiceComponent implements OnInit {
 
   };
   onOptionType(event:any){
+    if(event!=undefined){
     if(event==='Manual'){
     let currItemList = this.invItemList.filter((item) => (item.stockable === 'N'));
     this.invItemList=currItemList;
-    }
+    }}
   }
   onOptionSelectInvoice(event:any){
     alert(event);
@@ -1427,7 +1428,7 @@ export class ARInvoiceComponent implements OnInit {
     this.orderManagementService.accountNoSearchFn(accountNo, this.ouId,this.divisionId)
       .subscribe(
         data => {
-          this.accountNoSearch = data.obj;
+          this.accountNoSearch = data.obj[0];
           console.log(this.accountNoSearch);
           let selectedValue = this.paymentTermList.find(v => v.lookupValue === this.accountNoSearch.paymentType);
           this.arInvoiceForm.patchValue({
