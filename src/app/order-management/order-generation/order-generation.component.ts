@@ -51,14 +51,14 @@ export class OrderGenerationComponent implements OnInit {
   deptId:number; 
   emplId :number;
 
-  // orderNumber='BJ-2102100012'
-  orderNumber:string;
+  orderNumber='BJ-2102100035'
+  // orderNumber:string;
  
   fromDate=this.pipe.transform(Date.now(), 'y-MM-dd');
   toDate=this.pipe.transform(Date.now(), 'y-MM-dd');
 
   orderDate=this.pipe.transform(Date.now(), 'y-MM-dd');
-  order
+  // order
   status:string; //='Active';
   consCriteria:number=3;
   currMonthYN:string='Yes';
@@ -69,9 +69,16 @@ export class OrderGenerationComponent implements OnInit {
   mth1ConWsQty :number;
   mth2ConWsQty:number;
   mth3ConWsQty:number;
+
   mth1ConsSaleQty:number;
   mth2ConsSaleQty:number;
   mth3ConsSaleQty:number;
+
+  currSaleQty:number;
+  consSaleQty:number;
+  currWsQty:number;
+  conWsQty:number;
+
   partNumber :string;
   partDesc:string;
 
@@ -119,8 +126,15 @@ export class OrderGenerationComponent implements OnInit {
     mth1ConsSaleQty:[],
     mth2ConsSaleQty:[],
     mth3ConsSaleQty:[],
+
+    
     partNumber:[],
     partDesc:[],
+
+    currSaleQty:[],
+    consSaleQty:[],
+    currWsQty:[],
+    conWsQty:[],
 
 
 
@@ -140,13 +154,23 @@ lineDetailsGroup() {
     mth1ConWsQty:['', [Validators.required]],
     mth2ConWsQty:['', [Validators.required]],
     mth3ConWsQty:['', [Validators.required]],
+    currWsQty:['', [Validators.required]],
+    conWsQty:['', [Validators.required]],
+
     mth1ConsSaleQty:['', [Validators.required]],
     mth2ConsSaleQty:['', [Validators.required]],
     mth3ConsSaleQty:['', [Validators.required]],
-    currWsQty:['', [Validators.required]],
     currSaleQty:['', [Validators.required]],
-    conWsQty:['', [Validators.required]],
     consSaleQty:['', [Validators.required]],
+   
+    lastOrderQty:[],
+    mth1TotalCons:[],
+    mth2TotalCons:[],
+    mth3TotalCons:[],
+    mth4TotalCons:[],
+    totalCons:[],
+
+   
  
     currentStock: ['', [Validators.required]],
     backOrderQty: ['', [Validators.required]],
@@ -234,16 +258,21 @@ lineDetailsArray() :FormArray{
   closeMast() {
     this.router.navigate(['admin']);
   }
+
   addRow(index) {
   this.addNewLine=true;
    var ordLineArr = this.orderGenerationForm.get('orderList').value;
-   var len = this.lineDetailsArray().length;
-    if( ordLineArr[index].itemId>0  &&  ordLineArr[index].orderQty>0 ) {
-   
-    this.lineDetailsArray().push(this.lineDetailsGroup()); 
-    
-   }else {alert ("Incomplete Line - Check Order Part No , Order Qty .... ");}
-   
+   var len1 = this.lineDetailsArray().length-1;
+   if(len1===index){
+    if( ordLineArr[index].itemId>0  &&  ordLineArr[index].orderQty>=0 ) {
+       this.lineDetailsArray().push(this.lineDetailsGroup()); 
+   }else {
+     alert ("Incomplete Line - Order Part No / Order Qty not updated ....Line will be deleted.. ");
+      this.lineDetailsArray().removeAt(index);
+    }
+
+
+  }
 }
 
 RemoveRow(index) {
@@ -417,6 +446,7 @@ CreateOrder() {
     this.dispShowOrdButton=false;
     this.dispGenOrdButton=false;
     var mOrderNumber =this.orderGenerationForm.get('orderNumber').value
+
     this.service.getOrderListBajaj(mOrderNumber)
     .subscribe(
       data => {
@@ -436,30 +466,25 @@ CreateOrder() {
         console.log(this.lstOrderList);
         var len = this.lineDetailsArray().length;
         var y = 0;
-        // alert("this.lstinvoices.length  >>" +this.lstinvoices.length);
-       
-        for (let i = 0; i < this.lstOrderList.length - len; i++) {
+         for (let i = 0; i < this.lstOrderList.length - len; i++) {
           var ordLnGrp: FormGroup = this.lineDetailsGroup();
           this.lineDetailsArray().push(ordLnGrp);
           y=i;
-          // this.dataDisplay=i;
-          // if (i> (this.lstOrderList.length-3))  {
-          //   this.spinIcon=false;
-          //   this.dataDisplay ='';
-            
-          // }
-
-         
-         
+                 
         }
-        // alert ("i="+y +" this.lstOrderList.length >> "+this.lstOrderList.length);
+
         this.orderGenerationForm.get('orderList').patchValue(this.lstOrderList);
+
+        //  alert ("this.lstOrderList.length,len :"+len+","+this.lstOrderList.length);
+        //  for(  let i=0;i< this.lstOrderList.length;i++) {
+        //      this.lineDetailsArray().controls[i].get('segment').disable();
+        //  }
         this.CalculateOrdValue();
        
        } 
         });
 
-       
+      
         
       }
 
@@ -584,16 +609,43 @@ CreateOrder() {
   validateItem(index){  
     var ordLineArr = this.orderGenerationForm.get('orderList').value;
     var patch = this.orderGenerationForm.get('orderList') as FormArray;
+
+    
+    var mths =this.orderGenerationForm.get('consCriteria').value;
+    var ordNum=this.orderGenerationForm.get('orderNumber').value;
+
     var mSegment = ordLineArr[index].segment;
+    var sprOrdId=ordLineArr[index].sprOrderId;
+
+    
     mSegment=mSegment.toUpperCase();
-    this.lineDetailsArray().controls[index].get('orderQty').disable();
+    // this.lineDetailsArray().controls[index].get('orderQty').disable();
   
-    // alert (index+" << in validate itemcode.."+mSegment);
-    if(mSegment===null || mSegment===undefined  || mSegment.trim() === '') {
-       alert("Please Enter Item Code");
-          this.lineDetailsArray().controls[index].get('orderQty').reset();
-      return; 
-    }
+    // alert (index+" << sprOrdId.."+sprOrdId);
+    
+        if(sprOrdId>0 && mSegment===null || mSegment===undefined  || mSegment.trim() === '')
+        {
+          var mItemId = ordLineArr[index].itemId;
+              
+          if(mItemId>0) {
+            var segment1;
+            this.service.getItemDetail(mItemId) .subscribe( data => { segment1= data.segment;
+            patch.controls[index].patchValue({segment:segment1});
+            // this.lineDetailsArray().controls[index].get('orderQty').enable();
+            return;
+          });
+
+        }
+        return;
+      }
+
+        if(mSegment===null || mSegment===undefined  || mSegment.trim() === '') {
+          alert("Please Enter Item Code");
+              this.lineDetailsArray().controls[index].get('orderQty').reset();
+          return; 
+        }
+   
+
 
    
     var segId ; 
@@ -606,38 +658,117 @@ CreateOrder() {
              segId =data.itemId;
              this.duplicateLineCheck(index,segId,mSegment);
              if(this.lineItemRepeated===false) {
-             
-             
-              this.service.getLineDetailsSingleItem('12MU - Bajaj Distributorship NDP',segId) .subscribe( data => { prc= data[0].priceValue;
-                patch.controls[index].patchValue({ unitPrice: prc})
+
+              // this.service.getLineDetailsSingleItem('12MU - Bajaj Distributorship NDP',segId) .subscribe( data => { prc= data[0].priceValue;
+              //   patch.controls[index].patchValue({ unitPrice: prc})
+              // });
+
+                // posting newly added line item consuption to order table
+                this.service.OrderGenNewItemSubmit(sessionStorage.getItem('locId'),mSegment,mths,ordNum).subscribe((res: any) => { 
+                if (res.code === 200) { // alert(res.message); 
+                  this.service.getNewLineConsDetails(segId,ordNum)
+              .subscribe(
+                data => {
+                    if(data.length >0) {
+
+                    (patch.controls[index]).patchValue(
+                        {
+                          
+                        unitPrice: data[0].unitPrice,
+                        itemId: data[0].itemId,
+                        segment : data[0].segment,
+                        description: data[0].description,
+                        mth1ConWsQty: data[0].mth1ConWsQty,
+                        mth2ConWsQty: data[0].mth2ConWsQty,
+                        mth3ConWsQty: data[0].mth3ConWsQty,
+                        mth1ConsSaleQty: data[0].mth1ConsSaleQty,
+                        mth2ConsSaleQty: data[0].mth2ConsSaleQty,
+                        mth3ConsSaleQty: data[0].mth3ConsSaleQty,
+                        currWsQty: data[0].currWsQty,
+                        currSaleQty: data[0].currSaleQty,
+                        conWsQty: data[0].conWsQty,
+                        consSaleQty: data[0].consSaleQty,
+                        currentStock: data[0].currentStock,
+                        backOrderQty: data[0].backOrderQty,
+                        intransitQty: data[0].intransitQty,
+                        custBackOrder: data[0].custBackOrder,
+                        totalValue: data[0].totalValue,
+                  
+                      }); } else 
+                      { alert (mSegment+" : Consumption Details Not Found....");
+                         this.lineDetailsArray().controls[index].get('orderQty').disable();
+                      }
+                    
+                    });
+                
+                
+                } else  {
+                  if (res.code === 400) { alert(res.message);  
+                    this.lineDetailsArray().controls[index].get('orderQty').disable();}
+                }
               });
 
-             (patch.controls[index]).patchValue(
-              {
-               
-                itemId: data.itemId,
-                segment : mSegment,
-                description: data.description,
-                uom: data.uom,
-                unitPrice: prc,
-                mth1ConWsQty: 0,
-                mth2ConWsQty: 0,
-                mth3ConWsQty: 0,
-                mth1ConsSaleQty: 0,
-                mth2ConsSaleQty: 0,
-                mth3ConsSaleQty: 0,
-                currWsQty: 0,
-                currSaleQty: 0,
-                conWsQty: 0,
-                consSaleQty: 0,
-                currentStock: 0,
-                backOrderQty: 0,
-                intransitQty: 0,
-                custBackOrder: 0,
-                totalValue: 0,
+             // fetch newwly added line consumption from table
+          
+              // this.service.getNewLineConsDetails(segId,ordNum)
+              // .subscribe(
+              //   data => {
+              //        if(data.length >0) {
 
-              }
-            );} else {this.lineDetailsArray().controls[index].get('orderQty').disable();
+              //       (patch.controls[index]).patchValue(
+              //           {
+                          
+              //           unitPrice: data[0].unitPrice,
+              //           itemId: data[0].itemId,
+              //           segment : data[0].segment,
+              //           description: data[0].description,
+              //           mth1ConWsQty: data[0].mth1ConWsQty,
+              //           mth2ConWsQty: data[0].mth2ConWsQty,
+              //           mth3ConWsQty: data[0].mth3ConWsQty,
+              //           mth1ConsSaleQty: data[0].mth1ConsSaleQty,
+              //           mth2ConsSaleQty: data[0].mth2ConsSaleQty,
+              //           mth3ConsSaleQty: data[0].mth3ConsSaleQty,
+              //           currWsQty: data[0].currWsQty,
+              //           currSaleQty: data[0].currSaleQty,
+              //           conWsQty: data[0].conWsQty,
+              //           consSaleQty: data[0].consSaleQty,
+              //           currentStock: data[0].currentStock,
+              //           backOrderQty: data[0].backOrderQty,
+              //           intransitQty: data[0].intransitQty,
+              //           custBackOrder: data[0].custBackOrder,
+              //           totalValue: data[0].totalValue,
+                  
+              //         }); }  });
+                
+
+            //  (patch.controls[index]).patchValue(
+            //   {
+               
+            //     itemId: data.itemId,
+            //     segment : mSegment,
+            //     description: data.description,
+            //     uom: data.uom,
+            //     unitPrice: prc,
+            //     mth1ConWsQty: 0,
+            //     mth2ConWsQty: 0,
+            //     mth3ConWsQty: 0,
+            //     mth1ConsSaleQty: 0,
+            //     mth2ConsSaleQty: 0,
+            //     mth3ConsSaleQty: 0,
+            //     currWsQty: 0,
+            //     currSaleQty: 0,
+            //     conWsQty: 0,
+            //     consSaleQty: 0,
+            //     currentStock: 0,
+            //     backOrderQty: 0,
+            //     intransitQty: 0,
+            //     custBackOrder: 0,
+            //     totalValue: 0,
+            //   });
+
+            
+
+          } else {this.lineDetailsArray().controls[index].get('orderQty').disable();
                       this.lineDetailsArray().removeAt(index);
                       }
 
@@ -660,6 +791,8 @@ CreateOrder() {
       );
   }
 
+
+
   duplicateLineCheck(index,mItem,itemSeg) {
     this.lineItemRepeated=false;
     var ordLineArr = this.orderGenerationForm.get('orderList').value;
@@ -676,7 +809,7 @@ CreateOrder() {
     }
 
     CheckLineValidations(i) {
-     
+      var patch = this.orderGenerationForm.get('orderList') as FormArray;
       var ordLineArr1 = this.orderGenerationForm.get('orderList').value;
       var lineValue1=ordLineArr1[i].itemId;
       var lineValue2=ordLineArr1[i].segment;
@@ -693,12 +826,15 @@ CreateOrder() {
         this.lineValidation=false;
         return;
       } 
-    
-      if(lineValue3===undefined || lineValue3===null  || lineValue3 <=0){
+
+    if( lineValue1>0){
+      if(lineValue3===undefined || lineValue3===null  || lineValue3 <0){
+        patch.controls[i].patchValue({orderQty:0})
         alert("Line-"+j+ " ORDER QTY :  should be above Zero");
         this.lineValidation=false;
         return;
       } 
+    }
        
       this.lineValidation=true;
     
@@ -742,6 +878,12 @@ exportToExcel1() {
       this.mth1ConsSaleQty=orderLineArr[index].mth1ConsSaleQty;
       this.mth2ConsSaleQty=orderLineArr[index].mth2ConsSaleQty;
       this.mth3ConsSaleQty=orderLineArr[index].mth3ConsSaleQty;
+
+      this.currWsQty=orderLineArr[index].currWsQty;
+      this.conWsQty=orderLineArr[index].conWsQty;
+      this.currSaleQty=orderLineArr[index].currSaleQty;
+      this.consSaleQty=orderLineArr[index].consSaleQty;
+
 
 
       // alert (index +"  Item Id : "+lineSegId + "  ItemCode : "+orderLineArr[index].segment + " m3sale :"+orderLineArr[index].mth3ConsSaleQty)
