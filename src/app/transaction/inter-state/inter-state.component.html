@@ -47,8 +47,8 @@
                 </td>
                 <input hidden formControlName="subInventoryId">
                 <td>
-                    <input disabled type="text" formControlName="transactionTypeName" 
-                        id="transactionTypeName" class="form-control" style="width: 160px;">
+                    <input disabled type="text" formControlName="transactionTypeName" id="transactionTypeName"
+                        class="form-control" style="width: 160px;">
                 </td>
 
                 <td style="width: 15%" class="LabelFontStyle">
@@ -81,10 +81,11 @@
                         class="form-control" style="width: 160px;">
                     <input hidden disabled type="text" formControlName="paymentType" [(ngModel)]='paymentType'
                         value={{paymentType}} class="form-control" style="width: 160px;">
-                        <input hidden disabled type="text" formControlName="custtaxCategoryName" [(ngModel)]='custtaxCategoryName'
-                        value={{custtaxCategoryName}} class="form-control" style="width: 160px;">
-                        
-                    </td>
+                    <input hidden disabled type="text" formControlName="custtaxCategoryName"
+                        [(ngModel)]='custtaxCategoryName' value={{custtaxCategoryName}} class="form-control"
+                        style="width: 160px;">
+
+                </td>
                 <td style="width: 15%" class="LabelFontStyle1">
                     Price&nbsp;List&nbsp;:&nbsp;
                 </td>
@@ -292,22 +293,33 @@
                                                         </option>
                                                     </datalist>
                                                 </td>
-                                                <input hidden  type="number" formControlName="itemId">
+                                                <input hidden type="number" formControlName="itemId">
 
                                                 <td>
                                                     <input disabled type="text" formControlName="orderedItem"
                                                         value="orderedItem" class="form-control"
                                                         style="height: 20px;width: 160px;">
                                                 </td>
-                                                <td><select class="form-control" style="height: 20px; width: 110px;"
-                                                        formControlName="frmLocatorId"
-                                                        (ngModelChange)='AvailQty($event,i)'>
-                                                        <option>--Select--</option>
-                                                        <option *ngFor="let locId of  locData[i]"
-                                                            [ngValue]="locId.ROWNUM">
-                                                            {{locId.segmentName}}--{{locId.onHandQty}}</option>
-                                                        <input hidden formControlName="frmLocatorId">
-                                                    </select>
+                                                <td>
+                                                    <div
+                                                        *ngIf="displayfrmLocatorName;then thenfrmLocatorName;else elsefrmLocatorName">
+                                                    </div>
+                                                    <ng-template #thenfrmLocatorName>
+                                                        <select class="form-control" style="height: 20px; width: 110px;"
+                                                            formControlName="frmLocatorId"
+                                                            (change)='AvailQty($event,i)'>
+                                                            <option>--Select--</option>
+                                                            <option *ngFor="let locId of  locData[i]"
+                                                                [ngValue]="locId.ROWNUM">
+                                                                {{locId.segmentName}}--{{locId.onHandQty}}</option>
+                                                      </select>
+                                                        <input hidden formControlName="locatorId">
+                                                    </ng-template>
+                                                    <ng-template #elsefrmLocatorName>
+                                                        <input disabled type="text" formControlName="frmLocatorName"
+                                                            class="form-control"
+                                                            style="height: 20px;width:fit-content;">
+                                                    </ng-template>
                                                 </td>
                                                 <input hidden formControlName="onHandQty">
                                                 <input hidden formControlName="id">
@@ -329,15 +341,25 @@
                                                         (change)="onKey(i)">
                                                 </td>
                                                 <td>
-                                                    <select formControlName="taxCategoryName" id="taxCategoryName"
-                                                        (change)='onOptionTaxCatSelected($event,i)' class="form-control"
-                                                        style="width: 160px;height: 25px;font-size: 10px;">
-                                                        <!-- <option>--Select--</option>(change)="onKey(i)" -->
-                                                        <option *ngFor="let sc of  taxCategoryList[i]"
-                                                            [value]="sc.taxCategoryName">
-                                                            {{sc.taxCategoryName}}
-                                                        </option>
-                                                    </select>
+                                                    <div
+                                                        *ngIf="displaytaxCategoryName;then thentaxCategoryName;else elsetaxCategoryName">
+                                                    </div>
+                                                    <ng-template #thentaxCategoryName>
+                                                        <select formControlName="taxCategoryName" id="taxCategoryName"
+                                                            (change)='onOptionTaxCatSelected($event,i)'
+                                                            class="form-control"
+                                                            style="width: 160px;height: 25px;font-size: 10px;">
+                                                            <!-- <option>--Select--</option>(change)="onKey(i)" -->
+                                                            <option *ngFor="let sc of  taxCategoryList[i]"
+                                                                [value]="sc.taxCategoryName">
+                                                                {{sc.taxCategoryName}}
+                                                            </option>
+                                                        </select>
+                                                    </ng-template>
+                                                    <ng-template #elsetaxCategoryName>
+                                                        <input disabled type="text" formControlName="taxCategoryName"
+                                                            class="form-control" style="height: 20px;width:fit-content">
+                                                    </ng-template>
                                                 </td>
                                                 <input hidden type="number" formControlName="taxCategoryId"
                                                     [(ngModel)]='taxCategoryId' class="form-control"
@@ -374,7 +396,7 @@
                                                         <option value="Invoiced">Invoiced</option>
                                                     </select> -->
                                                     <input disabled type="text" formControlName="flowStatusCode"
-                                                    class="form-control" style="height: 20px;width: 70px;">
+                                                        class="form-control" style="height: 20px;width: 70px;">
                                                 </td>
                                                 <td>
                                                     <button type="submit" class="btn btn-primary" (click)="addRow(i)"
@@ -608,7 +630,7 @@
             <tr>
                 <td>
                     <button type="submit" class="btn btn-primary" id="register" (click)="IntterstateSaleOrderSave()"
-                        style="width: 8rem;">Create Order</button>
+                    [style.display]="isVisible11 ? 'block' : 'none'"   style="width: 8rem;">Create Order</button>
                 </td>
                 <td>
                     <button type="submit" class="btn btn-primary" id="register" (click)="refresh()"
