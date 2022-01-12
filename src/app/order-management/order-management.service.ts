@@ -324,7 +324,7 @@ public pickTicketInvoiceFun(pickTicketInvDels) {
     const options = {
       headers: this.headers
     };
-    const url = this.ServerUrl + '/orderHeader/postAccSPOrders';
+    const url = this.ServerUrl + '/Proforma';
     return this.http.post(url, AccLineRecord1, options);
   }
 
@@ -609,8 +609,8 @@ printCSRtndocument(mRtnNumber){
 
 
 printArReceipt(rcptNumber){
-  const REQUEST_URI = this.ServerUrl +`/omPayment/counterSaleReceipt/${rcptNumber}`;  
-  //http://localhost:8081/omPayment/counterSaleReceipt/21222094800016
+  const REQUEST_URI = this.ServerUrl +`/arCashReceipts/arReceiptPrint/${rcptNumber}`;  
+  // http://localhost:8081/arCashReceipts/arReceiptPrint/21221026900924
   return this.http.get(REQUEST_URI, {
     // params: REQUEST_PARAMS,
     responseType: 'arraybuffer',

@@ -51,8 +51,8 @@ export class OrderGenerationComponent implements OnInit {
   deptId:number; 
   emplId :number;
 
-  orderNumber='BJ-2102100035'
-  // orderNumber:string;
+  // orderNumber='BJ-2102100035'
+  orderNumber:string;
  
   fromDate=this.pipe.transform(Date.now(), 'y-MM-dd');
   toDate=this.pipe.transform(Date.now(), 'y-MM-dd');
@@ -547,7 +547,7 @@ CreateOrder() {
 
         updateOrder() {
           const formValue: IOrderGen = this.transeData1(this.orderGenerationForm.value);
-
+          this.displayButton=false;
           this.lineValidation=false;
           var orderLineArr = this.orderGenerationForm.get('orderList').value;
           var len1=orderLineArr.length;
@@ -576,7 +576,7 @@ CreateOrder() {
           // this.service.OrderLineAddUpdate(formValue).subscribe((res: any) => {
           this.service.OrderLineAddUpdate(variants.value).subscribe((res: any) => {
            if (res.code === 200) { alert(res.message);  } else  {
-           if (res.code === 400) { alert(res.message); }
+           if (res.code === 400) { alert(res.message);  this.displayButton=true; }
            }
    
          });
@@ -693,7 +693,15 @@ CreateOrder() {
                         intransitQty: data[0].intransitQty,
                         custBackOrder: data[0].custBackOrder,
                         totalValue: data[0].totalValue,
-                  
+                        lastOrderQty: data[0].lastOrderQty,
+                        mth1TotalCons: data[0].mth1TotalCons,
+                        mth2TotalCons: data[0].mth2TotalCons,
+                        mth3TotalCons: data[0].mth3TotalCons,
+                        mth4TotalCons: data[0].mth4TotalCons,
+                        totalCons: data[0].totalCons,
+                        setQty: data[0].setQty,
+                        orderQty: data[0].orderQty,
+
                       }); } else 
                       { alert (mSegment+" : Consumption Details Not Found....");
                          this.lineDetailsArray().controls[index].get('orderQty').disable();

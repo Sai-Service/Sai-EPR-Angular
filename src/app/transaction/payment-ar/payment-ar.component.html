@@ -528,14 +528,14 @@
                                     <td style="width: 15%" class="LabelFontStyle">Receipt&nbsp;No:&nbsp;</td>
                                     <td> <input disabled  style="font-weight: bold; background-color: lightgreen;"  type="text" formControlName="receiptNumber"  id="receiptNumber" [(ngModel)]="receiptNumber" class="form-control"> </td>
                                 
-                                    <td style="width: 15%" class="LabelFontStyle">Receipt&nbsp;Date&nbsp;</td>
+                                    <td style="width: 15%" class="LabelFontStyle">Receipt&nbsp;Date:&nbsp;</td>
                                     <td><input  disabled  type="date"  formControlName="receiptDate"  id="receiptDate" [(ngModel)]="receiptDate" class="form-control" style="background-color: lightgreen;" ></td>
                                     
 
                                     <div *ngIf="displayButton ,then thenshowDet1Yes; else thenshowDet1No")></div>
                                     <ng-template #thenshowDet1Yes>
                                      
-                                        <td style="width: 15%" class="LabelFontStyle">GL&nbsp;Date&nbsp;</td>
+                                        <td style="width: 15%" class="LabelFontStyle">GL&nbsp;Date:&nbsp;</td>
                                         <td><input  disabled type="date"  formControlName="glDate"  id="glDate" [(ngModel)]="glDate" class="form-control" 
                                             max="{{minDate | date:'yyyy-MM-dd'}}" (change)="glPrdValidate(glDate)" ></td>
                                         
@@ -546,7 +546,7 @@
                                     <ng-template #thenshowDet1No>
                                  
                                         
-                                        <td style="width: 15%" class="LabelFontStyle">GL&nbsp;Date&nbsp;</td>
+                                        <td style="width: 15%" class="LabelFontStyle">GL&nbsp;Date:&nbsp;</td>
                                         <td><input disabled  type="date"  formControlName="glDate"  id="glDate" [(ngModel)]="glDate" class="form-control" (change)="glPrdValidate(glDate)" style="background-color: yellow;"></td>
                                         
                                         <td  style="width: 15%" class="LabelFontStyle1">Receipt&nbsp;Amount:&nbsp;</td>
@@ -588,7 +588,7 @@
                                     </ng-template>
 
 
-                                    <td style="width: 15%" class="LabelFontStyle">Ref&nbsp;Date&nbsp;</td>
+                                    <td style="width: 15%" class="LabelFontStyle">Ref&nbsp;Date:&nbsp;</td>
                                     <td><input   type="date"  formControlName="referenceDate"  id="referenceDate" 
                                         max="{{minDate | date:'yyyy-MM-dd'}}" [(ngModel)]="referenceDate" class="form-control" ></td>
                                    
@@ -614,7 +614,7 @@
                                         <td style="width: 15%" class="LabelFontStyle">Ref.&nbsp;No:&nbsp;</td>
                                           <td> <input  disabled type="text" formControlName="referenceNo"  id="referenceNo"  [(ngModel)]="referenceNo" class="form-control"  >  </td>
                                        
-                                        <td style="width: 15%" class="LabelFontStyle">Ref&nbsp;Date&nbsp;</td>
+                                        <td style="width: 15%" class="LabelFontStyle">Ref&nbsp;Date:&nbsp;</td>
                                         <td><input disabled  type="date"  formControlName="referenceDate"  id="referenceDate" [(ngModel)]="referenceDate" class="form-control" ></td>
                                    
                                         <td  style="width: 15%" class="LabelFontStyle1">TDS&nbsp;Amount:&nbsp;</td>
@@ -717,7 +717,7 @@
                                      <td>
                                         <input    type="text" formControlName="bankName"  id="bankName" [(ngModel)] ="bankName" class="form-control"  style="background-color: yellow;">
                                     </td>
-                                    <td style="width: 15%" class="LabelFontStyle1">Branch&nbsp;:&nbsp;</td>
+                                    <td style="width: 15%" class="LabelFontStyle1">Branch:&nbsp;&nbsp;</td>
                                     <td>
                                         <input    type="text" formControlName="bankBranch"  id="bankBranch" [(ngModel)] ="bankBranch" class="form-control" style="background-color: yellow;">
                                     </td>
@@ -739,7 +739,7 @@
                                      <td>
                                         <input  disabled  type="text" formControlName="bankName"  id="bankName" [(ngModel)] ="bankName" class="form-control"  placeholder="">
                                     </td>
-                                    <td style="width: 15%" class="LabelFontStyle">Branch&nbsp;:&nbsp;</td>
+                                    <td style="width: 15%" class="LabelFontStyle">Branch:&nbsp;&nbsp;</td>
                                     <td>
                                         <input  disabled  type="text" formControlName="bankBranch"  id="bankBranch" [(ngModel)] ="bankBranch" class="form-control" placeholder="">
                                     </td>
@@ -783,21 +783,21 @@
 
 
                                 <tr>
-                                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Applied&nbsp;&nbsp;:&nbsp;</td>
+                                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Applied:&nbsp;</td>
                                     <td>
                                         <input  disabled  style="text-align: right;" type="number" formControlName="totAppliedtAmount"  id="totAppliedtAmount" [(ngModel)] ="totAppliedtAmount" class="form-control" placeholder="">
                                     </td>
-                                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Unapplied&nbsp;&nbsp;:&nbsp;</td>
+                                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Unapplied:&nbsp;</td>
                                     <td>
                                         <input  disabled  style="text-align: right;" type="number" formControlName="totUnAppliedtAmount"  id="totUnAppliedtAmount" [(ngModel)] ="totUnAppliedtAmount" class="form-control" placeholder="">
                                     </td>
                                    
-                                    <td style="width: 15%" class="LabelFontStyle">&nbsp;OnAct&nbsp;&nbsp;:&nbsp;</td>
+                                    <td style="width: 15%" class="LabelFontStyle">&nbsp;OnAct:&nbsp;</td>
                                     <td>
                                         <input  disabled style="text-align: right;"  type="text" formControlName="totalOnAccountAmt"  id="totalOnAccountAmt" [(ngModel)] ="totalOnAccountAmt" class="form-control" placeholder="">
                                     </td>
 
-                                    <td style="width: 15%" class="LabelFontStyle">Balance&nbsp;&nbsp;:&nbsp;</td>
+                                    <td style="width: 15%" class="LabelFontStyle">Balance:&nbsp;&nbsp;&nbsp;</td>
                                     <td>
                                         <input  disabled  style="text-align: right;" type="number" formControlName="balanceAmount"  id="balanceAmount" [(ngModel)] ="balanceAmount" class="form-control" placeholder="">
                                     </td>

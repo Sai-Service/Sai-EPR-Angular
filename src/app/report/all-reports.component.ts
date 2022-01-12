@@ -100,6 +100,8 @@ export class AllReportsComponent implements OnInit {
   SprStkTrfRecdSummaryfromDate:Date;
   SprStkTrfRecdSummarytoDate:Date;
   SprStkTrfRecdSummaryFromLoc:number;
+  SprcusttakestatfromDate:Date;
+  SprcusttakestattoDate:Date;
 
   closeResetButton = true;
   dataDisplay: any;
@@ -182,6 +184,8 @@ export class AllReportsComponent implements OnInit {
       SprStkTrfRecdSummaryfromDate:[],
       SprStkTrfRecdSummarytoDate:[],
       SprStkTrfRecdSummaryFromLoc:[],
+      SprcusttakestatfromDate:[],
+      SprcusttakestattoDate:[],
     })
   }
 
@@ -652,6 +656,29 @@ this.reportService.SprStkTrfRecdSummaryReport(fromDate,invcDt4,sessionStorage.ge
   .subscribe(data => {
     saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
     this.isDisabled14 = false;
+    this.closeResetButton = true;
+    this.dataDisplay = ''
+  })
+}
+
+
+
+
+Sprcusttakestat(){
+  this.isDisabled15 = true;
+  this.closeResetButton = false;
+  this.progress = 0;
+  this.dataDisplay = 'Report Is Running....Do not refresh the Page';
+var invcDt2 = this.reportForm.get('SprcusttakestatfromDate').value;
+var fromDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
+var invcDt3 = this.reportForm.get('SprcusttakestattoDate').value;
+var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');  
+const fileName = 'Spares-Customer-Off-Take-Statement-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+this.reportService.SprcusttakestatReport(fromDate,invcDt4,sessionStorage.getItem('locId'))
+  .subscribe(data => {
+    saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+    this.isDisabled15 = false;
     this.closeResetButton = true;
     this.dataDisplay = ''
   })

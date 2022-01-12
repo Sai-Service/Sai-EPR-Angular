@@ -1286,7 +1286,8 @@ export class SalesOrderFormComponent implements OnInit {
             this.SalesOrderBookingForm.patchValue({ billToAddress: data.obj.custAddress });
             this.SalesOrderBookingForm.patchValue({ shipToAddress: data.obj.custAddress });
             this.SalesOrderBookingForm.patchValue({ priceListHeaderId: data.obj.priceListId });
-            this.SalesOrderBookingForm.patchValue({ custTaxCat: data.obj.taxCategoryName })
+            this.SalesOrderBookingForm.patchValue({ custTaxCat: data.obj.taxCategoryName });
+            this.SalesOrderBookingForm.patchValue({name:data.obj.billLocName})
             let control = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
 
             if (this.lstgetOrderLineDetails.length === 0 && this.lstgetOrderTaxDetails.length === 0) {

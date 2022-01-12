@@ -64,6 +64,14 @@ export class ReportServiceService {
   }
 
 
+  SprcusttakestatReport(invcDt1,invcDt4,locId){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/CustomerOffTake?fromDate=${invcDt1}&toDate=${invcDt4}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
   JobCardSummaryReport(invcDt1,invcDt4,locId){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/JobCardSummary?fromDate=${invcDt1}&toDate=${invcDt4}&fromLoc=${locId}`;
     return this.http.get(REQUEST_URI, {
