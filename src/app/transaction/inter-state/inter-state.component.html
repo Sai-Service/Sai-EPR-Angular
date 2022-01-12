@@ -81,7 +81,10 @@
                         class="form-control" style="width: 160px;">
                     <input hidden disabled type="text" formControlName="paymentType" [(ngModel)]='paymentType'
                         value={{paymentType}} class="form-control" style="width: 160px;">
-                </td>
+                        <input hidden disabled type="text" formControlName="custtaxCategoryName" [(ngModel)]='custtaxCategoryName'
+                        value={{custtaxCategoryName}} class="form-control" style="width: 160px;">
+                        
+                    </td>
                 <td style="width: 15%" class="LabelFontStyle1">
                     Price&nbsp;List&nbsp;:&nbsp;
                 </td>
@@ -289,7 +292,7 @@
                                                         </option>
                                                     </datalist>
                                                 </td>
-                                                <input hidden type="number" formControlName="itemId">
+                                                <input hidden  type="number" formControlName="itemId">
 
                                                 <td>
                                                     <input disabled type="text" formControlName="orderedItem"
@@ -301,7 +304,7 @@
                                                         (ngModelChange)='AvailQty($event,i)'>
                                                         <option>--Select--</option>
                                                         <option *ngFor="let locId of  locData[i]"
-                                                            [ngValue]="locId.locatorId">
+                                                            [ngValue]="locId.ROWNUM">
                                                             {{locId.segmentName}}--{{locId.onHandQty}}</option>
                                                         <input hidden formControlName="frmLocatorId">
                                                     </select>
@@ -362,14 +365,16 @@
                                                         class="form-control" style="height: 20px;width: 70px;">
                                                 </td>
                                                 <td>
-                                                    <select formControlName="flowStatusCode" id="flowStatusCode"
+                                                    <!-- <select formControlName="flowStatusCode" id="flowStatusCode"
                                                         class="form-control"
                                                         style="width: 120px;height: 25px;font-size: 10px;">
                                                         <option>--Select--</option>
                                                         <option value="BOOKED">BOOKED</option>
                                                         <option value="CANCELLED">CANCELLED</option>
                                                         <option value="Invoiced">Invoiced</option>
-                                                    </select>
+                                                    </select> -->
+                                                    <input disabled type="text" formControlName="flowStatusCode"
+                                                    class="form-control" style="height: 20px;width: 70px;">
                                                 </td>
                                                 <td>
                                                     <button type="submit" class="btn btn-primary" (click)="addRow(i)"
