@@ -752,7 +752,7 @@
                                     <input formControlName="siteName" value={{siteName}} [(ngModel)]='siteName'
                                         class="form-control" placeholder="Enter Site Name"
                                         [ngClass]="{ 'is-invalid': submitted && f.siteName.errors }">
-                                  <div *ngIf="submitted && f.sGstNo.errors" class="invalid-feedback">
+                                  <div *ngIf="submitted && f.siteName.errors" class="invalid-feedback">
                                   </div>
                               </td>
                       </tr>

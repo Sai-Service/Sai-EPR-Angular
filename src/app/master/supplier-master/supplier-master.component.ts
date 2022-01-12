@@ -943,13 +943,13 @@ else{
           this.supplierMasterForm.get('prePayAcct').disable();
           this.supplierMasterForm.get('prePayAcct').disable();
           this.currentOp = 'INSERT';
-          for(let x=0; x <this.lstcomments.supplierSiteMasterList.length; x++){
-            var ouObj =  this.ouIdList.find(d => d.ouId=== this.lstcomments.supplierSiteMasterList[x].ouId);
-            if(ouObj != undefined){
+          // for(let x=0; x <this.lstcomments.supplierSiteMasterList.length; x++){
+          //   var ouObj =  this.ouIdList.find(d => d.ouId=== this.lstcomments.supplierSiteMasterList[x].ouId);
+          //   if(ouObj != undefined){
 
-            this.lstcomments.supplierSiteMasterList[x].ouId = ouObj.ouName;
-          }
-          }
+          //   this.lstcomments.supplierSiteMasterList[x].ouId = ouObj.ouName;
+          // }
+          // }
         }
       );
   }
@@ -1044,16 +1044,17 @@ else{
 
   onOptionSiteStateSeleted(event:any)
   {
-
+    alert(event+'--'+this.supplierMasterForm.get('souId').value);
     if (this.currentOp === 'SEARCH') {
       return;
     }
-    if(this.souId!=undefined && event!=undefined ){
-         this.service.taxCategoryList1(this.souId,event)
+    if(this.supplierMasterForm.get('souId').value!=undefined && event!=undefined ){
+         this.service.taxCategorySiteList1(this.supplierMasterForm.get('souId').value,event)
         .subscribe(
           data => {
             // this.taxCategoryNameList = data;
             this.staxCatName=data.taxCategoryName;
+            this.supplierMasterForm.patchValue({staxCatName:data.taxCategoryName})
             // console.log(this.taxCategoryNameList);
 
           }
