@@ -44,6 +44,7 @@ interface IPaymentRcptAr {
   status: string;
 
   tdsAmount:number;
+  tdstrxNumber:string;
 
   
 
@@ -120,6 +121,7 @@ export class PaymentArComponent implements OnInit {
   paymentMethod: string;
   receiptAmount: number;
   tdsAmount:number;
+  tdstrxNumber:string;
   receiptStatus = 'Open';
 
   receiptMethodId: number;
@@ -316,6 +318,7 @@ export class PaymentArComponent implements OnInit {
       insuranceFlag: [],
       receiptAmount: [],
       tdsAmount:[],
+      tdstrxNumber:[],
 
       searchByRcptNo: [],
       searchByCustNo: [],
@@ -2101,7 +2104,7 @@ export class PaymentArComponent implements OnInit {
 
     if (formValue.reversalReasonCode==='ChqBounce'){
 
-    if (formValue.bounceReasonCode === undefined || formValue.bounceReasonCode === null || formValue.bounceReasonCode.trim() =='') {
+    if (formValue.reversalComment === undefined || formValue.reversalComment === null || formValue.reversalComment.trim() =='') {
       this.cancelValidation = false;
       alert("CHQ BOUNCE REASON: Should not be null....");
       return;
@@ -2123,13 +2126,13 @@ export class PaymentArComponent implements OnInit {
       return;
     }
 
-    if (formValue.reversalComment === undefined || formValue.reversalComment === null || formValue.reversalComment.trim() == '') {
-      this.cancelValidation = false;
-      alert("REVERSAL REMARKS : Should not be null");
-      return;
-    }
+    // if (formValue.reversalComment === undefined || formValue.reversalComment === null || formValue.reversalComment.trim() == '') {
+    //   this.cancelValidation = false;
+    //   alert("REVERSAL REMARKS : Should not be null");
+    //   return;
+    // }
 
-    alert("Status :" + formValue.status);
+    // alert("Status :" + formValue.status);
     if (formValue.status === undefined || formValue.status === null) {
       alert("STATUS: Should not be null....");
       this.cancelValidation = false
@@ -2589,12 +2592,10 @@ export class PaymentArComponent implements OnInit {
             }
           );
       }
-
-   
+ 
 
   printReceipt(){
     var mRtnOrderNumber=this.paymentArForm.get('receiptNumber').value
-    
     const fileName = 'download.pdf';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.orderManagementService.printArReceipt(mRtnOrderNumber)
