@@ -312,8 +312,8 @@
                                                             <option *ngFor="let locId of  locData[i]"
                                                                 [ngValue]="locId.ROWNUM">
                                                                 {{locId.segmentName}}--{{locId.onHandQty}}</option>
-                                                            <input hidden formControlName="frmLocatorId">
-                                                        </select>
+                                                      </select>
+                                                        <input hidden formControlName="locatorId">
                                                     </ng-template>
                                                     <ng-template #elsefrmLocatorName>
                                                         <input disabled type="text" formControlName="frmLocatorName"

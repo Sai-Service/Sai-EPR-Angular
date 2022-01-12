@@ -27,6 +27,7 @@ interface IinterState {
   orderStatus: string;
   remarks: string;
   custAccountNo: number;
+  locatorId:number;
 }
 
 
@@ -148,6 +149,7 @@ export class InterStateComponent implements OnInit {
   isVisible11: boolean = true;
   uuidRef: string;
 
+  locatorId:number;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService) {
     this.InterStateForm = fb.group({
@@ -218,6 +220,7 @@ export class InterStateComponent implements OnInit {
       onHandQty: [],
       id: [],
       frmLocatorName:[],
+      locatorId:[],
     })
   }
 
@@ -617,6 +620,7 @@ export class InterStateComponent implements OnInit {
                       if (this.getfrmSubLoc.length == 1) {
                         controlinv.controls[k].patchValue({ onHandId: selLocator[0].segmentName });
                         controlinv.controls[k].patchValue({ frmLocatorId: selLocator[0].ROWNUM });
+                        controlinv.controls[k].patchValue({locatorId:selLocator[0].locatorId});
                         controlinv.controls[k].patchValue({ frmLocator: selLocator[0].segmentName });
                         controlinv.controls[k].patchValue({ onHandQty: selLocator[0].onHandQty });
                         controlinv.controls[k].patchValue({ id: selLocator[0].id });
@@ -628,6 +632,7 @@ export class InterStateComponent implements OnInit {
                         alert('Please check Item has old stock with price');
                         controlinv.controls[k].patchValue({ frmLocatorId: selLocator[0].ROWNUM });
                         controlinv.controls[k].patchValue({ frmLocator: selLocator[0].segmentName });
+                        controlinv.controls[k].patchValue({locatorId:selLocator[0].locatorId});
                         // controlinv.controls[k].patchValue({ frmLocatorId: selLocator[0].locatorId });
                         controlinv.controls[k].patchValue({ onHandQty: selLocator[0].onHandQty })
                         controlinv.controls[k].patchValue({ id: selLocator[0].id });
@@ -674,6 +679,7 @@ export class InterStateComponent implements OnInit {
           if (getfrmSubLoc.length == 1) {
             controlinv.controls[k].patchValue({ onHandId: selLocator[0].segmentName });
             controlinv.controls[k].patchValue({ frmLocatorId: selLocator[0].ROWNUM });
+            controlinv.controls[k].patchValue({locatorId:selLocator[0].locatorId});
             controlinv.controls[k].patchValue({ frmLocator: selLocator[0].segmentName });
             controlinv.controls[k].patchValue({ onHandQty: selLocator[0].onHandQty });
             controlinv.controls[k].patchValue({ id: selLocator[0].id });
@@ -687,6 +693,7 @@ export class InterStateComponent implements OnInit {
              alert('Please check Item has old stock with price');
              controlinv.controls[k].patchValue({ frmLocatorId: selLocator[0].ROWNUM });
              controlinv.controls[k].patchValue({ frmLocator: selLocator[0].segmentName });
+             controlinv.controls[k].patchValue({locatorId:selLocator[0].locatorId});
              // controlinv.controls[k].patchValue({ frmLocatorId: selLocator[0].locatorId });
              controlinv.controls[k].patchValue({ onHandQty: selLocator[0].onHandQty })
              controlinv.controls[k].patchValue({ id: selLocator[0].id });
@@ -755,8 +762,8 @@ export class InterStateComponent implements OnInit {
     if (taxCategoryId === null) {
 
       select = this.taxCategoryList[index].find(d => d.taxCategoryName === taxcatName.taxCategoryName);
-      taxCategoryId = select.taxCategoryId;
-      patch.controls[index].patchValue({ taxCategoryId: taxCategoryId });
+      // taxCategoryId = select.taxCategoryId;
+      patch.controls[index].patchValue({ taxCategoryId: select.taxCategoryId });
       patch.controls[index].patchValue({ taxCategoryName: select.taxCategoryName });
     } else {
       // alert("2" + taxCategoryId)
@@ -906,10 +913,8 @@ export class InterStateComponent implements OnInit {
     // this.emplId = Number(sessionStorage.getItem('emplId'));
     formValue.divisionId=this.divisionId;
     for (let i = 0; i < formValue.oeOrderLinesAllList.length; i++) {
-      // formValue.oeOrderLinesAllList[i].taxCategoryName = formValue.oeOrderLinesAllList[i].taxCategoryName.taxCategoryName;
-      var locId = this.getfrmSubLoc.find(d => d.ROWNUM === formValue.oeOrderLinesAllList[i].frmLocatorId)
-      console.log(locId);
-      formValue.oeOrderLinesAllList[i].frmLocatorId = locId.locatorId;
+     
+      formValue.oeOrderLinesAllList[i].frmLocatorId =  formValue.oeOrderLinesAllList[i].locatorId;
     }
     this.orderManagementService.SaveCounterSaleOrder(formValue).subscribe((res: any) => {
       if (res.code === 200) {
