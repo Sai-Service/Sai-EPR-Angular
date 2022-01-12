@@ -41,7 +41,7 @@
                          <td style="width: 15%" class="LabelFontStyle">&nbsp;Months&nbsp;:&nbsp;</td>
 
                             <td>
-                                <input  type ="number" class="form-control" formControlName="consCriteria" [(ngModel)]='consCriteria'
+                                <input  disabled type ="number" class="form-control" formControlName="consCriteria" [(ngModel)]='consCriteria'
                                     value={{consCriteria}}  (change)="validateConsMth()" min="0" max="12" style="background-color: yellow;" > </td>
 
                         <td style="width: 15%" class="LabelFontStyle">&nbsp;Order&nbsp;No:&nbsp;</td>
@@ -72,7 +72,7 @@
                         <td style="width: 15%" class="LabelFontStyle">&nbsp;&nbsp;Current&nbsp;Mth&nbsp;:&nbsp;</td>
 
                                 <td>
-                                    <select formControlName="currMonthYN" id="currMonthYN" class="form-control"  [(ngModel)]="currMonthYN"  style="background-color: yellow;">
+                                    <select disabled formControlName="currMonthYN" id="currMonthYN" class="form-control"  [(ngModel)]="currMonthYN"  style="background-color: yellow;">
                                     <option value="Yes">Yes</option>
                                     <option value="No">No</option>
                                     </select>
@@ -162,7 +162,7 @@
                                     <th  scope="col">Mth1Tot&nbsp;</th>
                                     <th  scope="col">Mth2Tot</th>
                                     <th  scope="col">Mth3Tot</th>
-                                    <th  scope="col">Mth4Tot&nbsp;</th>
+                                    <th  scope="col">Cur&nbsp;Cons Tot&nbsp;</th>
 
                                     <th  scope="col">Cons Details</th>
 
@@ -271,6 +271,7 @@
                
                 </ng-template>
                 <ng-template #elseBlock1>
+                    <td> <button disabled type="submit" class="btn btn-info" id="register" (click)="updateOrder()">Save</button></td>
                     <td> <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>
                     <td> <button type="submit" class="btn btn-info" id="register" (click)="closeMast()">Close</button></td>
                 </ng-template>
@@ -383,7 +384,7 @@
                             <td> <input  disabled style="width:3rem;"  type="number" formControlName="mth2ConWsQty" [(ngModel)]= 'mth2ConWsQty' class="form-control"></td>
                             <td style="width: 15%" class="LabelFontStyle">&nbsp;WS&nbsp;Month3:&nbsp;</td>
                             <td> <input  disabled style="width:3rem;"  type="number" formControlName="mth3ConWsQty" [(ngModel)]= 'mth3ConWsQty' class="form-control"></td>
-                            <td style="width: 15%" class="LabelFontStyle">&nbsp;WS&nbsp;Month4:&nbsp;</td>
+                            <td style="width: 15%" class="LabelFontStyle">&nbsp;WS&nbsp;Curr Mth:&nbsp;</td>
                             <td> <input  disabled style="width:3rem;"  type="number" formControlName="currWsQty" [(ngModel)]= 'currWsQty' class="form-control"></td>
                            
                             <td style="width: 15%" class="LabelFontStyle">&nbsp;WS&nbsp;Total:&nbsp;</td>
@@ -399,7 +400,7 @@
                             <td> <input  disabled style="width:3rem;"  type="number" formControlName="mth2ConsSaleQty" [(ngModel)]= 'mth2ConsSaleQty' class="form-control"></td>
                             <td style="width: 15%" class="LabelFontStyle">&nbsp;CS&nbsp;Month3:&nbsp;</td>
                             <td> <input  disabled style="width:3rem;"  type="number" formControlName="mth3ConsSaleQty" [(ngModel)]= 'mth3ConsSaleQty' class="form-control"></td>
-                            <td style="width: 15%" class="LabelFontStyle">&nbsp;CS&nbsp;Month4:&nbsp;</td>
+                            <td style="width: 15%" class="LabelFontStyle">&nbsp;CS&nbsp;Curr Mth:&nbsp;</td>
                             <td> <input  disabled style="width:3rem;"  type="number" formControlName="currSaleQty"     [(ngModel)]= 'currSaleQty' class="form-control"></td>
                            
                             <td style="width: 15%" class="LabelFontStyle">&nbsp;CS&nbsp;Total:&nbsp;</td>
