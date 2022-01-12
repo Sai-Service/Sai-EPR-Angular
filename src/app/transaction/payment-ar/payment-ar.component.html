@@ -620,6 +620,9 @@
                                         <td  style="width: 15%" class="LabelFontStyle1">TDS&nbsp;Amount:&nbsp;</td>
                                         <td><input  disabled  style="font-weight: bold;text-align: right;"   type="number"   min="1" formControlName="tdsAmount"  id="tdsAmount"  [(ngModel)]="tdsAmount" class="form-control"  style="background-color: yellow;">    </td>
                                         <!-- (change)="validateAmt(paymentAmt)" -->
+
+                                    
+                                    
                                  
                                 </ng-template>
 
@@ -667,6 +670,10 @@
     
                                         </td>
 
+                                        <td  style="width: 15%" class="LabelFontStyle">TDS&nbsp;InvNo:&nbsp;</td>
+                                        <td><input disabled  style="font-weight: bold;text-align: right;"   type="number"   min="1" formControlName="tdstrxNumber"  id="tdstrxNumber"  [(ngModel)]="tdstrxNumber" 
+                                            class="form-control" ></td>
+
                                     </ng-template>
 
 
@@ -704,6 +711,10 @@
                                                 </select>
         
                                             </td>
+
+                                            <td  style="width: 15%" class="LabelFontStyle">TDS&nbsp;InvNo:&nbsp;</td>
+                                            <td><input disabled  style="font-weight: bold;text-align: right;"   type="number"   min="1" formControlName="tdstrxNumber"  id="tdstrxNumber"  [(ngModel)]="tdstrxNumber" 
+                                                class="form-control" ></td>
     
                                         </ng-template>
                                 </tr>
@@ -821,7 +832,7 @@
                                 <td style="width: 15%" class="LabelFontStyle">&nbsp;Reason:&nbsp;</td>
 
                                 <td>
-                                    <select formControlName="reversalReasonCode" id="reversalReasonCode" [(ngModel)]="reversalReasonCode" class="form-control"
+                                    <select  style="width: 300px;" formControlName="reversalReasonCode" id="reversalReasonCode" [(ngModel)]="reversalReasonCode" class="form-control"
                                                              (ngModelChange)='onReasonSelected($event)' >
                                         <option disabled>--Select--</option>
                                         <option *ngFor="let sc of  ReverseReasonList" [ngValue]="sc.code"  >
@@ -846,11 +857,11 @@
                                 </td>
 
                               
-                                <td style="width: 15%" class="LabelFontStyle">Comments&nbsp;:&nbsp;</td>
+                                <!-- <td style="width: 15%" class="LabelFontStyle">Comments&nbsp;:&nbsp;</td>
                                 
                                 <td>
                                     <input  style="text-transform:uppercase;"  type="text"  formControlName="reversalComment"  id="reversalComment"  [(ngModel)]="reversalComment" class="form-control" >
-                                </td>
+                                </td> -->
 
                               </tr>
 
@@ -861,8 +872,8 @@
 
                                 <td style="width: 15%" class="LabelFontStyle">&nbsp;Bounce&nbsp;Reason:&nbsp;</td>
 
-                                <td colspan="2">
-                                    <select formControlName="bounceReasonCode" id="bounceReasonCode" [(ngModel)]="bounceReasonCode" class="form-control" style="width: 100%;" >
+                                <td >
+                                    <select formControlName="reversalComment" id="reversalComment" [(ngModel)]="reversalComment" class="form-control" style="width: 300px;" >
                                         <option disabled>--Select--</option>
                                         <option *ngFor="let sc of  ChqBounceReasonList" [ngValue]="sc.code"  >
                                            <!-- {{sc.code}}- -->
