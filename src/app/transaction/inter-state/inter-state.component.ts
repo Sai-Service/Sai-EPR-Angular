@@ -7,6 +7,7 @@ import { MasterService } from 'src/app/master/master.service';
 // import { TransactionService } from 'src/app/transaction/transaction.service';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 import { DatePipe } from '@angular/common';
+import { v4 as uuidv4 } from 'uuid';
 // import { freemem } from 'os';
 
 
@@ -141,6 +142,11 @@ export class InterStateComponent implements OnInit {
   customerSiteId: number;
   customerId: number;
   pipe: any;
+  displayfrmLocatorName=true;
+  frmLocatorName:string;
+  displaytaxCategoryName=true;
+  isVisible11: boolean = true;
+  uuidRef: string;
 
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService) {
@@ -187,6 +193,7 @@ export class InterStateComponent implements OnInit {
       // lineNumber:[''],
       // segment:[''],
       itemId: [],
+      uuidRef: [''],
       orderedItem: [''],
       pricingQty: [''],
       unitSellingPrice: [''],
@@ -210,6 +217,7 @@ export class InterStateComponent implements OnInit {
       resveQty: [],
       onHandQty: [],
       id: [],
+      frmLocatorName:[],
     })
   }
 
@@ -326,6 +334,7 @@ export class InterStateComponent implements OnInit {
     (patch.controls[0]).patchValue(
       {
         lineNumber: 1,
+        uuidRef: uuidv4()
       }
     );
 
@@ -362,17 +371,53 @@ export class InterStateComponent implements OnInit {
     var len = this.orderlineDetailsArray().length;
     // alert(len);
     var patch = this.InterStateForm.get('oeOrderLinesAllList') as FormArray
+    var refId = uuidv4();
     (patch.controls[len - 1]).patchValue(
       {
         lineNumber: len,
-        flowStatusCode:'BOOKED'
+        flowStatusCode:'BOOKED',
+        uuidRef: refId
       }
     );
   }
 
   RemoveRow(OrderLineIndex) {
+    alert(OrderLineIndex);
+    // this.orderlineDetailsArray().removeAt(OrderLineIndex);
+    var trxLnArr2 = this.InterStateForm.get('oeOrderLinesAllList') as FormArray;
+    var trxLnArr1=trxLnArr2.getRawValue();
+    var itemid = trxLnArr1[OrderLineIndex].segment;
+    var itemid1 = trxLnArr1[OrderLineIndex].itemId;
+    var uuidref = trxLnArr1[OrderLineIndex].uuidRef;
+    var locatorId = trxLnArr1[OrderLineIndex].frmLocatorId;
+    var prc = trxLnArr1[OrderLineIndex].unitSellingPrice;
     this.orderlineDetailsArray().removeAt(OrderLineIndex);
+    this.TaxDetailsArray().removeAt(OrderLineIndex);
+    if (itemid != null || itemid != undefined) {
+      this.deleteReserveLinewise(OrderLineIndex, itemid1, uuidref);
+      this.itemMap3.delete(itemid);
+      // for (let x = 0; x < trxLnArr1.length; x++) {
+      //   if (itemid1 === trxLnArr1[x].itemId || itemid1 != null || itemid1 !=undefined) {
+      //     this.resverQty(x, itemid1, locatorId, prc);
+      //   }
+      // }
+    }
+    // var formVal = this.InterStateForm.get('oeOrderLinesAllList').value;
+    // var formArr = this.InterStateForm.get('oeOrderLinesAllList') as FormArray;
+
+    // var basicAmt = 0;
+    // var taxAmt1 = 0;
+    // var totAmt = 0;
+    // var disAmt = 0;
+    // for (let i = 0; i < formVal.length; i++) {
+    //   (formArr.controls[i]).patchValue({
+    //     lineNumber: i + 1,
+    //   });
+    // }
+   
   }
+
+  
 
 
   onOptiongetItem(event) {
@@ -571,7 +616,7 @@ export class InterStateComponent implements OnInit {
                       controlinv.controls[k].get('frmLocatorId').enable();
                       if (this.getfrmSubLoc.length == 1) {
                         controlinv.controls[k].patchValue({ onHandId: selLocator[0].segmentName });
-                        controlinv.controls[k].patchValue({ locatorId: selLocator[0].ROWNUM });
+                        controlinv.controls[k].patchValue({ frmLocatorId: selLocator[0].ROWNUM });
                         controlinv.controls[k].patchValue({ frmLocator: selLocator[0].segmentName });
                         controlinv.controls[k].patchValue({ onHandQty: selLocator[0].onHandQty });
                         controlinv.controls[k].patchValue({ id: selLocator[0].id });
@@ -581,7 +626,7 @@ export class InterStateComponent implements OnInit {
                         // alert('2');
                         // alert(selLocator[0].segmentName);
                         alert('Please check Item has old stock with price');
-                        controlinv.controls[k].patchValue({ locatorId: selLocator[0].ROWNUM });
+                        controlinv.controls[k].patchValue({ frmLocatorId: selLocator[0].ROWNUM });
                         controlinv.controls[k].patchValue({ frmLocator: selLocator[0].segmentName });
                         // controlinv.controls[k].patchValue({ frmLocatorId: selLocator[0].locatorId });
                         controlinv.controls[k].patchValue({ onHandQty: selLocator[0].onHandQty })
@@ -600,6 +645,7 @@ export class InterStateComponent implements OnInit {
                 (data => {
                   this.resrveqty = data;
                   controlinv.controls[k].patchValue({ resveQty: this.resrveqty });
+                  this.AvailQty(select.itemId,k);
                 });
             }
             else if (data.code === 400) {
@@ -627,7 +673,7 @@ export class InterStateComponent implements OnInit {
           this.locData[k] = data;
           if (getfrmSubLoc.length == 1) {
             controlinv.controls[k].patchValue({ onHandId: selLocator[0].segmentName });
-            controlinv.controls[k].patchValue({ locatorId: selLocator[0].ROWNUM });
+            controlinv.controls[k].patchValue({ frmLocatorId: selLocator[0].ROWNUM });
             controlinv.controls[k].patchValue({ frmLocator: selLocator[0].segmentName });
             controlinv.controls[k].patchValue({ onHandQty: selLocator[0].onHandQty });
             controlinv.controls[k].patchValue({ id: selLocator[0].id });
@@ -639,7 +685,7 @@ export class InterStateComponent implements OnInit {
             //  trxLnArr2.controls[i].patchValue({onHandId:getfrmSubLoc});
              // alert(selLocator[0].segmentName);
              alert('Please check Item has old stock with price');
-             controlinv.controls[k].patchValue({ locatorId: selLocator[0].ROWNUM });
+             controlinv.controls[k].patchValue({ frmLocatorId: selLocator[0].ROWNUM });
              controlinv.controls[k].patchValue({ frmLocator: selLocator[0].segmentName });
              // controlinv.controls[k].patchValue({ frmLocatorId: selLocator[0].locatorId });
              controlinv.controls[k].patchValue({ onHandQty: selLocator[0].onHandQty })
@@ -655,6 +701,7 @@ export class InterStateComponent implements OnInit {
         (data => {
           this.resrveqty = data;
           controlinv.controls[k].patchValue({ resveQty: this.resrveqty });
+          this.AvailQty(select.itemId,k);
         });
 
     }
@@ -886,9 +933,13 @@ export class InterStateComponent implements OnInit {
   OrderFind(orderNumber) {
     this.op = 'Search';
     // this.isDisabled10=false;
+    this.isVisible11=false;
     this.emplId = Number(sessionStorage.getItem('emplId'))
     this.orderlineDetailsArray().clear();
+    this.orderlineDetailsArray().disable();
     this.TaxDetailsArray().clear();
+    this.displayfrmLocatorName=false;
+    this.displaytaxCategoryName=false;
        this.orderManagementService.counterSaleOrderSearchNew(orderNumber, sessionStorage.getItem('locId'))
       .subscribe(
         data => {
@@ -896,7 +947,7 @@ export class InterStateComponent implements OnInit {
             this.lstgetOrderLineDetails = data.obj.oeOrderLinesAllList;
             this.lstgetOrderTaxDetails = data.obj.taxAmounts;
             this.allDatastore = data.obj;
-           
+            this.InterStateForm.disable();
             let control = this.InterStateForm.get('oeOrderLinesAllList') as FormArray;
             let control1 = this.InterStateForm.get('taxAmounts') as FormArray;
             for (let i = 0; i <= this.lstgetOrderLineDetails.length - 1; i++) {
@@ -904,12 +955,16 @@ export class InterStateComponent implements OnInit {
               control.push(oeOrderLinesAllList1);
               this.displayLineflowStatusCode.push(true);
               this.displayCounterSaleLine.push(false);
+              control.controls[i].get('segment').disable();
+              control.controls[i].get('Avalqty').disable();
+              control.controls[i].get('pricingQty').disable();
             }
             for (let j = 0; j <= this.lstgetOrderTaxDetails.length; j++) {
               var orderTaxLinesList: FormGroup = this.TaxDetailsGroup();
               control1.push(orderTaxLinesList);
             }
             this.InterStateForm.patchValue(data.obj);
+           
             this.createOrderType = data.obj.createOrderType;
             this.priceListName = data.obj.priceListName;
             this.paymentType = data.obj.paymentType;
@@ -962,33 +1017,36 @@ export class InterStateComponent implements OnInit {
   }
 
   reservePos(i) {
-    // alert("Hello");
+    var len = i;
     var trxLnArr1 = this.InterStateForm.get('oeOrderLinesAllList').value;
-    // var trxLnArr2 = this.moveOrderForm.get('trxLinesList') as FormArray;
-    const formValue: IinterState = this.InterStateForm.value;
-    let variants = <FormArray>this.orderlineDetailsArray();
-    var transtypeid = this.InterStateForm.get('transactionTypeName').value
-    var toloc = this.InterStateForm.get('BillLocName').value;
-    var locId1 = this.locId;
+    console.log(trxLnArr1);
+    var locId1 = Number(sessionStorage.getItem('locId'));
+    var prqty = trxLnArr1[len].pricingQty;
+    var itemId = trxLnArr1[len].itemId;
+    var transactionNumber = trxLnArr1[len].uuidRef;
+    var locatorId = trxLnArr1[len].frmLocatorName;
+    var rate = trxLnArr1[len].unitSellingPrice;
+    var transactionType = this.InterStateForm.get('transactionTypeName').value;
 
-    let variantFormGroup = <FormGroup>variants.controls[i];
-    variantFormGroup.addControl('transactionType', new FormControl(transtypeid, Validators.required));
-    variantFormGroup.addControl('locId', new FormControl(locId1, Validators.required));
-    variantFormGroup.addControl('invItemId', new FormControl(trxLnArr1[i].itemId, Validators.required));
-    variantFormGroup.addControl('reservedQty', new FormControl(trxLnArr1[i].pricingQty, Validators.required));
-    variantFormGroup.addControl('onHandId', new FormControl(trxLnArr1[i].id, Validators.required));
-    variantFormGroup.addControl('transactionNumber', new FormControl(toloc, Validators.required));
-
-    // var reserveinfo=formValue[0];
-
-    this.service.reservePost(variants.value[i]).subscribe((res: any) => {
-      //  var obj=res.obj;
+    var resLn: reserveLine = new reserveLine();
+    resLn.transactionType = transactionType;
+    resLn.transactionNumber = transactionNumber;
+    resLn.locId = locId1;
+    resLn.reservedQty = prqty;
+    resLn.invItemId = itemId;
+    resLn.locatorId = locatorId;
+    resLn.rate = rate;
+    this.service.reservePost(resLn).subscribe((res: any) => {
       if (res.code === 200) {
-        // alert("Record inserted Successfully");
+        var stkRow: StockTransferRow = new StockTransferRow();
+        stkRow.segment = (trxLnArr1[i].segment);
+        stkRow.Locator = (trxLnArr1[i].frmLocator);
+        stkRow.quantity = (trxLnArr1[i].quantity);
+        this.itemMap3.set(trxLnArr1[i].segment, stkRow);
       }
       else {
         if (res.code === 400) {
-          // alert("Code already present in data base");
+          alert(res.message);
           this.InterStateForm.reset();
         }
       }
@@ -1000,5 +1058,15 @@ export class InterStateComponent implements OnInit {
   }
   refresh() {
     window.location.reload();
+  }
+  deleteReserveLinewise(i, itemid, transferId) {
+     if (itemid != null) {
+      // alert(i+'----'+itemid+'---'+transferId);
+      this.service.reserveDeleteLine(transferId, Number(sessionStorage.getItem('locId')), itemid).subscribe((res: any) => {
+        //  var obj=res.obj;
+        if (res.code === 200) {
+        }
+      });
+    }
   }
 }
