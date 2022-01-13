@@ -8,6 +8,8 @@ import { NgForm } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { InteractionModeRegistry } from 'chart.js';
 import { now } from 'jquery';
+import { OrderManagementService } from 'src/app/order-management/order-management.service';
+import { ServiceService } from 'src/app/service/service.service';
 
 interface IWsVehicleMaster {
   regNo: string;
@@ -265,7 +267,7 @@ export class WsVehicleMasterComponent implements OnInit {
 
   wsVehicleMaster(wsVehicleMasterForm: any) { }
 
-  constructor(private service: MasterService, private fb: FormBuilder, private router: Router) {
+  constructor(private service: MasterService,private serviceService: ServiceService, private fb: FormBuilder, private router: Router) {
     this.wsVehicleMasterForm = fb.group({
 
       loginArray: [''],
@@ -1129,6 +1131,21 @@ export class WsVehicleMasterComponent implements OnInit {
     // this.GetCustomerDetails(this.lstcomments.customerId);
     // this.GetCustomerSiteDetails(this.lstcomments.customerId);
 
+  }
+
+   
+  vehHistory(){
+  var vehRegNum=this.wsVehicleMasterForm.get('vehRegNo').value
+  const fileName = 'download.pdf';
+  const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+  this.serviceService.printVehicleHistory(vehRegNum)
+    .subscribe(data => {
+      var blob = new Blob([data], { type: 'application/pdf' });
+      var url = URL.createObjectURL(blob);
+      var printWindow = window.open(url, '', 'width=800,height=500');
+      printWindow.open
+      
+    });
   }
 
 }

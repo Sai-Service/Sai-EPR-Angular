@@ -820,8 +820,8 @@
                             </fieldset>
                        
 
-                        <!-- <div *ngIf="showReason; then thenBlock2; else elseBlock2"></div>
-                        <ng-template #thenBlock2> -->
+                        <div *ngIf="showReasonDetails; then rsnBlock1; else rsnBlock2"></div>
+                        <ng-template #rsnBlock1>
 
                         <fieldset class="RFS">
                         <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Reversal Details</legend>
@@ -846,7 +846,7 @@
                             <td style="width: 15%" class="LabelFontStyle">Reversal&nbsp;Date:&nbsp;</td>
                                 
                             <td>
-                                <input  disabled  type="date"  formControlName="reversalDate"  id="reversalDate"  [(ngModel)]="reversalDate" class="form-control" >
+                                <input  disabled  type="date"  formControlName="reversalDate"  id="reversalDate" [(ngModel)]="reversalCategory"  value={{reversalDate}} class="form-control" >
                             </td>
 
                           
@@ -890,23 +890,12 @@
                         </table>
                         </fieldset>
                         </ng-template>
-                        <ng-template #showTotalYes>
+                        <ng-template #rsnBlock2></ng-template>
 
                         </ng-template>
+                        <ng-template #showTotalYes> </ng-template>
 
-                        <!-- </ng-template>
-                        <ng-template #elseBlock2> </ng-template> -->
-                  
-
-
-
-
-                            <!-- <table style="width: 100%; background-color: #4d3f28;" >
-                            <tr>
-                                <td class="SubHeading2">&nbsp;&nbsp;</td>
-                            </tr>
-                            </table> -->
-
+                       
                              <!-- ----------------------------------------buttons-------------------- -->
                     <br>
                      <table class="center">

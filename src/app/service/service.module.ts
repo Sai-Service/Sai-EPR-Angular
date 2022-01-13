@@ -7,10 +7,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxDateRangeModule } from 'ngx-daterange';
 // import { JobcardOpeningComponent } from './jobcard-opening/jobcard-opening.component';
 import { ServiceGatepassComponent } from './service-gatepass/service-gatepass.component';
+import { VehicleServiceHistoryComponent } from './vehicle-service-history/vehicle-service-history.component';
 
 
 @NgModule({
-  declarations: [JobCardComponent,  ServiceGatepassComponent],
+  declarations: [JobCardComponent,  ServiceGatepassComponent, VehicleServiceHistoryComponent],
   imports: [
     CommonModule,
     ServiceRoutingModule,
