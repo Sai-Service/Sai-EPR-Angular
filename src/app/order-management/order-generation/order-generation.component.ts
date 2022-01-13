@@ -98,7 +98,8 @@ export class OrderGenerationComponent implements OnInit {
   addNewLine = false;
   lineItemRepeated = false;
   lineValidation = false;
-  viewLogFile = false;;
+  viewLogFile = false;
+  orderUpdateStatus =true;
 
   // epltable1: any;
 
@@ -269,15 +270,23 @@ export class OrderGenerationComponent implements OnInit {
   }
 
   addRow(index) {
-    this.addNewLine = true;
+   
     var ordLineArr = this.orderGenerationForm.get('orderList').value;
     var len1 = this.lineDetailsArray().length - 1;
     if (len1 === index) {
       if (ordLineArr[index].itemId > 0 && ordLineArr[index].orderQty >= 0) {
         this.lineDetailsArray().push(this.lineDetailsGroup());
       } else {
-        alert("Incomplete Line - Order Part No / Order Qty not updated ....Line will be deleted.. ");
+
+        if(index>0) {
+        alert("Incomplete Line - Order Part No / Order Qty not updated ....Line will be deleted ");
         this.lineDetailsArray().removeAt(index);
+        }
+
+        // if(index===0) {
+        //   alert("Incomplete Line - Order Part No / Order Qty not updated .... ");
+        // }
+
       }
 
 
@@ -450,7 +459,15 @@ export class OrderGenerationComponent implements OnInit {
             this.orderDate = data[0].orderDate;
             this.consCriteria = data[0].consCriteria;
 
-            this.displayButton = true;
+            if(data[0].cdmsRefNo ==null || data[0].cdmsRefNo ==undefined || data[0].cdmsRefNo.trim() =='' ){
+            this.displayButton = true; this.orderUpdateStatus=true;
+            } else { 
+               this.displayButton = false;
+               this.orderUpdateStatus=false;
+               this.orderGenerationForm.disable();
+              
+              }
+
             console.log(this.lstOrderList);
             var len = this.lineDetailsArray().length;
             var y = 0;
@@ -460,6 +477,8 @@ export class OrderGenerationComponent implements OnInit {
               y = i;
 
             }
+
+           
 
             this.orderGenerationForm.get('orderList').patchValue(this.lstOrderList);
 
@@ -534,6 +553,7 @@ export class OrderGenerationComponent implements OnInit {
 
   updateOrder() {
     const formValue: IOrderGen = this.transeData1(this.orderGenerationForm.value);
+    var cdmsNum = this.orderGenerationForm.get('orderList').value;
     this.displayButton = false;
     this.lineValidation = false;
     var orderLineArr = this.orderGenerationForm.get('orderList').value;
@@ -857,7 +877,7 @@ export class OrderGenerationComponent implements OnInit {
 
   exportToExcel1() {
     const ws: xlsx.WorkSheet =
-      xlsx.utils.table_to_sheet(this.epltable1.nativeElement);
+    xlsx.utils.table_to_sheet(this.epltable1.nativeElement);
     const wb: xlsx.WorkBook = xlsx.utils.book_new();
     xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
     xlsx.writeFile(wb, 'epltable1.xlsx');

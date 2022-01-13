@@ -1041,6 +1041,8 @@
                     <!-- ===================================Buttons======================================== -->
                       <table class="center">
                         <tr>
+
+
                             <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
                             <ng-template #thenBlock1>
                                 <td>
@@ -1140,6 +1142,10 @@
 
                                     </ng-template>
                                     <ng-template #elseBlock1>
+
+                                            <td>
+                                                <button type="button" class="btn btn-info" (click)="vehHistory()" [disabled]="!wsVehicleMasterForm">History</button>
+                                            </td>
                                    
                                             <td>
                                                 <button type="button" class="btn btn-info" (click)="updateMast()" [disabled]="!wsVehicleMasterForm">Update</button>

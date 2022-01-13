@@ -127,8 +127,10 @@
                 </table>
         </fieldset>
 
+
+
        
-       
+<!--        
         <div class="center">
             <div class="center" formArrayName="orderList">
                 <div class="grid_scroll">
@@ -142,7 +144,6 @@
                                 </div>
                             </div>
                          </div>
-                       <!-- <table style="border-color:#494949;border-collapse:collapse;width: 100%;"> -->
                         <table id="dataTable" style="width: 100%; border: solid 1px Gray" class="auto-style4" id="orderListTable"
                         cellspacing="0" cellpadding="4" rules="all" class="center">
                        
@@ -153,28 +154,21 @@
                                     <th  scope="col">Description</th>
                                     <th  scope="col">Unit&nbsp;Price</th>
                                     <th  scope="col">Curr&nbsp;Qty</th>
-
                                     <th  scope="col">BkOrder&nbsp;</th>
                                     <th  scope="col">Cust BkOrder</th>
                                     <th  scope="col">InTransit</th>
                                     <th  scope="col">Last order&nbsp;</th>
-
                                     <th  scope="col">Mth1Tot&nbsp;</th>
                                     <th  scope="col">Mth2Tot</th>
                                     <th  scope="col">Mth3Tot</th>
                                     <th  scope="col">Cur&nbsp;Cons Tot&nbsp;</th>
-
                                     <th  scope="col">Cons Details</th>
-
                                     <th  scope="col">Tot Cons&nbsp;</th>
                                     <th  scope="col">Set&nbsp;Qty</th>
                                     <th  scope="col">Order&nbsp;Qty</th>
                                     <th  scope="col">Order&nbsp;Value</th>
-                                 
-                                    
                                     <th  scope="col">Add+</th>
-                                    <!-- <th  scope="col">Del-</th> -->
-                                </tr>
+                                   </tr>
 
                               </thead>
 
@@ -203,41 +197,99 @@
                                 <td> <input  disabled style="width:12rem;" type="text"   formControlName="description" class="form-control"></td>
                                 <td> <input  disabled style="width:6rem;"  type="number" formControlName="unitPrice"  class="form-control"></td>
                                 <td> <input  disabled style="width:3rem;"  type="number" formControlName="currentStock" class="form-control"></td>
-                                
                                 <td> <input  disabled style="width:3rem;"  type="number" formControlName="backOrderQty" class="form-control"></td>
                                 <td> <input  disabled style="width:3rem;"  type="number" formControlName="custBackOrder" class="form-control"></td>
                                 <td> <input  disabled style="width:3rem;"  type="number" formControlName="intransitQty" class="form-control"></td>
                                 <td> <input  disabled style="width:3rem;"  type="number" formControlName="lastOrderQty" class="form-control"></td>
-                               
                                 <td> <input  disabled style="width:3rem;"  type="number" formControlName="mth1TotalCons" class="form-control"></td>
                                 <td> <input  disabled style="width:3rem;"  type="number" formControlName="mth2TotalCons" class="form-control"></td>
                                 <td> <input  disabled style="width:3rem;"  type="number" formControlName="mth3TotalCons" class="form-control"></td>
                                 <td> <input  disabled style="width:3rem;"  type="number" formControlName="mth4TotalCons" class="form-control"></td>
                                 <td><button  type="button" style="width: fit-content;height: 23px;" class="btn btn-info1" data-toggle="modal" data-target="#consumtionDetails" (click)="getTrans(i)">...</button></td>
-                               
-                               
                                 <td> <input  disabled style="width:3rem;"  type="number" formControlName="totalCons" class="form-control"></td>
-                                <!-- <td> <input  disabled style="width:4rem;"  type="number" formControlName="mth4TotalCons" class="form-control"></td> -->
-                               
-                               
-                               
                                 <td> <input  disabled style="width:3rem;"  type="number" formControlName="setQty" class="form-control"></td>
                                 <td> <input   style="width:4rem;background-color: yellow;"   type="number" formControlName="orderQty" (keydown.enter)="enterKeyLock(i)" (change)="validateOrdQty(i)"  class="form-control" ></td>
                                 <td> <input  disabled style="width:6rem;"  type="number" formControlName="totalValue" class="form-control"></td>
                                
+                                <div *ngIf="orderUpdateStatus; then ord1; else ord2;"></div>
+                                <ng-template #ord1>
                                 <td><button  type="submit" class="btn btn-info" (click)="addRow(i)"  style="width: min-content;"><i class="fa fa-plus"></i></button>  </td>
-                                <!-- <td><button  type="submit" class="btn btn-info" (click)="RemoveRow(i)"  style="width: min-content;"><i class="fa fa-trash"></i></button>  </td> -->
-                                <!-- (keydown.shift.arrowdown)="addRow(i)" -->
-                           
-                                                        
-                           
+                                </ng-template>
+                                <ng-template #ord2>
+                                    <td><button  disabled type="submit" class="btn btn-info" (click)="addRow(i)"  style="width: min-content;"><i class="fa fa-plus"></i></button>  </td>
+                                </ng-template>
+                               
                             </tr>
                         </tbody>
                  </table>
-                 <!-- <button type="button" class="btn btn-primary" (click)="exportExcel()">Export</button> -->
-                    </div>
+                     </div>
                 </div>
            </div>
+        </div> -->
+
+
+        <div class="container1">
+            <div class="grid_scroll_3">
+            <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+           <tbody>
+                <tr class="GridHeader">
+                    <th  scope="col" style="width: 4rem;">Srl&nbsp;No.</th>
+                    <th  scope="col" >Part&nbsp;No</th>
+                    <th  scope="col" >Description</th>
+                    <th  scope="col" style="width: 4rem;">Unit&nbsp;Price</th>
+                    <th  scope="col" style="width: 4rem;">Curr&nbsp;Qty</th>
+                    <th  scope="col" style="width: 3rem;">BkOrder&nbsp;</th>
+                    <th  scope="col" style="width: 3rem;">Cust BkOrder</th>
+                    <th  scope="col" style="width: 3rem;">InTransit</th>
+                    <th  scope="col" style="width: 3rem;">Last Order&nbsp;</th>
+                    <th  scope="col" style="width: 4rem;">Mth1Tot&nbsp;</th>
+                    <th  scope="col" style="width: 4rem;">Mth2Tot</th>
+                    <th  scope="col" style="width: 4rem;">Mth3Tot</th>
+                    <th  scope="col" style="width: 4rem;">Cur&nbsp;Cons Tot&nbsp;</th>
+                    <th  scope="col" style="width: 4rem;">Cons Detls</th>
+                    <th  scope="col" style="width: 4rem;">Tot Cons&nbsp;</th>
+                    <th  scope="col" style="width: 4rem;">Set&nbsp;Qty</th>
+                    <th  scope="col" style="width: 4rem;">Order&nbsp;Qty</th>
+                    <th  scope="col">Order&nbsp;Value</th>
+                    <th  scope="col">Add+</th>
+               </tr>
+           </tbody>
+           
+           <ng-container  class="center" formArrayName="orderList">
+            <ng-container   *ngFor="let group of lineDetailsArray().controls; let i= index" [formGroupName]="i" class="auto-style5">  
+                        <tr>
+
+                            <td style="text-align: center;width: 4rem;">{{i+1}}</td>
+                            <td> <input   style="width:3rem;background-color: yellow;width:6rem;text-transform: uppercase;"    type="text" formControlName="segment" (keydown.enter)="enterKeyLock(i)"  class="form-control"  (change)="validateItem(i)"></td>
+                            <td> <input  disabled style="width:14rem;" type="text"   formControlName="description" class="form-control"></td>
+                            <td> <input  disabled style="width:6rem;"  type="number" formControlName="unitPrice"  class="form-control"></td>
+                            <td> <input  disabled style="width:4rem;"  type="number" formControlName="currentStock" class="form-control"></td>
+                            <td> <input  disabled style="width:3rem;"  type="number" formControlName="backOrderQty" class="form-control"></td>
+                            <td> <input  disabled style="width:3rem;"  type="number" formControlName="custBackOrder" class="form-control"></td>
+                            <td> <input  disabled style="width:3rem;"  type="number" formControlName="intransitQty" class="form-control"></td>
+                            <td> <input  disabled style="width:3rem;"  type="number" formControlName="lastOrderQty" class="form-control"></td>
+                            <td> <input  disabled style="width:4rem;"  type="number" formControlName="mth1TotalCons" class="form-control"></td>
+                            <td> <input  disabled style="width:4rem;"  type="number" formControlName="mth2TotalCons" class="form-control"></td>
+                            <td> <input  disabled style="width:4rem;"  type="number" formControlName="mth3TotalCons" class="form-control"></td>
+                            <td> <input  disabled style="width:4rem;"  type="number" formControlName="mth4TotalCons" class="form-control"></td>
+                            <td><button  type="button" style="width:fit-content;height: 23px;" class="btn btn-info1" data-toggle="modal" data-target="#consumtionDetails" (click)="getTrans(i)">...</button></td>
+                            <td> <input  disabled style="width:4rem;"  type="number" formControlName="totalCons" class="form-control"></td>
+                            <td> <input  disabled style="width:4rem;"  type="number" formControlName="setQty" class="form-control"></td>
+                            <td> <input   style="width:4rem;background-color: yellow;"   type="number" formControlName="orderQty" (keydown.enter)="enterKeyLock(i)" (change)="validateOrdQty(i)"  class="form-control" ></td>
+                            <td> <input  disabled style="width:6rem;"  type="number" formControlName="totalValue" class="form-control"></td>
+                           
+                            <div *ngIf="orderUpdateStatus; then ord1; else ord2;"></div>
+                            <ng-template #ord1>
+                            <td><button  type="submit" class="btn btn-info" (click)="addRow(i)"  style="width: min-content;"><i class="fa fa-plus"></i></button>  </td>
+                            </ng-template>
+                            <ng-template #ord2>
+                                <td><button  disabled type="submit" class="btn btn-info" (click)="addRow(i)"  style="width: min-content;"><i class="fa fa-plus"></i></button>  </td>
+                            </ng-template>
+                    </tr>
+                    </ng-container>
+                    </ng-container>
+            </table>
+            </div>
         </div>
      
 

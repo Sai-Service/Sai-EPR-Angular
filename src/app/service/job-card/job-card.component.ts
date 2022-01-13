@@ -1474,6 +1474,7 @@ export class JobCardComponent implements OnInit {
           ///// disable/enable descreption column
 
           if (this.lstcomments.jobStatus === 'Opened' ){
+            
            for(  let i=0;i< data.obj.jobCardLabLines.length;i++) {
 
             if(data.obj.jobCardLabLines[i].genericItem==='Y') {

@@ -253,4 +253,14 @@ printWsGatePass(jcNumber){
 //  http://localhost:8081/SRGatepass/print/12PU.101-40
 }
 
+printVehicleHistory(vehNum){
+  const REQUEST_URI = this.ServerUrl +`/jobCard/vehHistory/${vehNum}`;  
+  return this.http.get(REQUEST_URI, {
+  responseType: 'arraybuffer',
+  headers: this.headers,
+});
+
+//  http://localhost:8081/jobCard/vehHistory/MH12MP9225
+}
+
 }

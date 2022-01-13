@@ -929,6 +929,10 @@ export class PaymentArComponent implements OnInit {
           this.totAppliedtAmount = data.obj.oePayList[0].totAppliedtAmount.toFixed(2);
           this.totUnAppliedtAmount = data.obj.oePayList[0].totUnAppliedtAmount.toFixed(2);
           this.balanceAmount = data.obj.oePayList[0].balanceAmount.toFixed(2);
+          this.reversalReasonCode=data.obj.oePayList[0].reversalReasonCode;
+          this.reversalComment=data.obj.oePayList[0].reversalComment;
+          this.reversalDate=data.obj.oePayList[0].reversalDate;
+          this.reversalCategory=data.obj.oePayList[0].reversalCategory;
 
           this.GetCustomerDetails(data.obj.oePayList[0].customerId)
           this.GetCustomerSiteDetails(data.obj.oePayList[0].customerId)
@@ -943,7 +947,6 @@ export class PaymentArComponent implements OnInit {
             this.enableCancelButton = false;
             this.paymentArForm.disable();
             return;
-
            }
 
           //  if (data.obj.oePayList[0].paymentAmt === data.obj.oePayList[0].totAppliedtAmount && data.obj.oePayList[0].payType != 'CASH' ) {
@@ -999,26 +1002,23 @@ export class PaymentArComponent implements OnInit {
           } 
           
           else {
+            // alert ("in...else....")
             this.showReasonDetails=true;
-            this.reversalComment=data.obj.oePayList[0].reversalComment
+            this.reversalReasonCode=data.obj.oePayList[0].reversalReasonCode;
+            this.reversalComment=data.obj.oePayList[0].reversalComment;
+            this.reversalDate=data.obj.oePayList[0].reversalDate;
+            this.reversalCategory=data.obj.oePayList[0].reversalCategory;
             this.showModalForm = false;
             this.enableApplyButton = false;
             this.enableCancelButton = false;
             this.paymentArForm.disable();
-
-
           }
+        } );
 
-
-
-
-        }
-      );
-
-    this.paymentArForm.get('searchByRcptNo').enable();
-    this.paymentArForm.get('searchByCustNo').enable();
-    this.paymentArForm.get('searchByDate').enable();
-    this.paymentArForm.get('applyTo').enable();
+            this.paymentArForm.get('searchByRcptNo').enable();
+            this.paymentArForm.get('searchByCustNo').enable();
+            this.paymentArForm.get('searchByDate').enable();
+            this.paymentArForm.get('applyTo').enable();
   }
 
 
