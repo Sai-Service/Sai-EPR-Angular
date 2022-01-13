@@ -230,8 +230,16 @@
 
         <div class="container1">
             <div class="grid_scroll_3">
-            <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
-           <tbody>
+                  <!-- <div style="padding-bottom: 10px;padding-top: 10px;">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <button (click)="orderListExport()" class="btn btn-success" style="width: fit-content;">Export To Excel</button>
+                            </div>
+                        </div>
+                     </div> -->
+                <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+          
+                <tbody>
                 <tr class="GridHeader">
                     <th  scope="col" style="width: 4rem;">Srl&nbsp;No.</th>
                     <th  scope="col" >Part&nbsp;No</th>
@@ -297,6 +305,7 @@
         <table class="center">
             <tr>
 
+
                 <div *ngIf="dispGenOrdButton; then G1; else G2;"></div>
                 <ng-template #G1>
                      <td> <button style="width:fit-content;" type="submit" class="btn btn-info" id="register" (click)="CreateOrder()">Create Order</button></td>
@@ -321,6 +330,15 @@
                 <td> <button type="submit" class="btn btn-info" id="register" (click)="newMast()">Print</button></td>
                 <td> <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>
                 <td> <button type="submit" class="btn btn-info" id="register" (click)="closeMast()">Close</button></td>
+
+                
+                <div style="padding-bottom: 10px;padding-top: 10px;">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <button (click)="orderListExport()" class="btn btn-success" style="width: fit-content;">Export To Excel</button>
+                        </div>
+                    </div>
+                 </div>
                
                 </ng-template>
                 <ng-template #elseBlock1>
@@ -330,7 +348,7 @@
                 </ng-template>
 
               
-
+                    <td>
                         <div *ngIf="spinIcon; then hList1; else hList2"></div>
                         <ng-template #hList1> 
                             <div class="d-flex justify-content-center">
@@ -341,7 +359,7 @@
                                 </div>
                         </ng-template>
                         <ng-template #hList2> </ng-template>
-
+                    </td>
                        <td class="LabelFontStyle" style="color: blue;">&nbsp;{{dataDisplay }}&nbsp; </td>
                   
                 

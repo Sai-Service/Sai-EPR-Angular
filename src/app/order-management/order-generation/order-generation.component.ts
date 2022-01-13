@@ -60,8 +60,8 @@ export class OrderGenerationComponent implements OnInit {
   deptId: number;
   emplId: number;
 
-  // orderNumber='BJ-2102100035'
-  orderNumber: string;
+  orderNumber='BJ-2102100037'
+  // orderNumber: string;
 
   fromDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   toDate = this.pipe.transform(Date.now(), 'y-MM-dd');
@@ -436,12 +436,14 @@ export class OrderGenerationComponent implements OnInit {
 
 
   SearchByOrderNo(ordNo) {
-    this.ShowOrder();
+     this.ShowOrder();
   }
 
   ShowOrder() {
     this.dispShowOrdButton = false;
     this.dispGenOrdButton = false;
+    this.spinIcon=true;
+    this.dataDisplay ='Loading Order Details....Pls wait';
     var mOrderNumber = this.orderGenerationForm.get('orderNumber').value
 
     this.service.getOrderListBajaj(mOrderNumber)
@@ -450,9 +452,9 @@ export class OrderGenerationComponent implements OnInit {
           this.lstOrderList = data;
           // alert ("Total order lines :" +data.length);
           if (data.length > 0) {
-            // this.spinIcon=true;
+           this.orderGenerationForm.get('orderNumber').disable();
             this.viewLogFile = true;
-            // this.dataDisplay ='Loading Order Details in progress....Do not refresh the Page';
+           
             this.cdmsRefNo = data[0].cdmsRefNo;
             this.dlrCode = data[0].dlrCode;
             this.status = data[0].status;
@@ -478,17 +480,13 @@ export class OrderGenerationComponent implements OnInit {
 
             }
 
-           
-
             this.orderGenerationForm.get('orderList').patchValue(this.lstOrderList);
 
-            //  alert ("this.lstOrderList.length,len :"+len+","+this.lstOrderList.length);
-            //  for(  let i=0;i< this.lstOrderList.length;i++) {
-            //      this.lineDetailsArray().controls[i].get('segment').disable();
-            //  }
+           
             this.CalculateOrdValue();
 
-          }
+          } else { alert (mOrderNumber+ "  - Order Number doesn't exists");
+                   this.orderGenerationForm.get('orderNumber').enable();}
         });
 
 
@@ -607,6 +605,8 @@ export class OrderGenerationComponent implements OnInit {
 
     orderTotal = Math.round((orderTotal + Number.EPSILON) * 100) / 100,
       this.orderGenerationForm.patchValue({ orderValue: orderTotal })
+      this.spinIcon=false;
+      this.dataDisplay=null;
 
   }
 
