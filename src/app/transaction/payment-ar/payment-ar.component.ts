@@ -931,15 +931,6 @@ export class PaymentArComponent implements OnInit {
           this.GetCustomerDetails(data.obj.oePayList[0].customerId)
           this.GetCustomerSiteDetails(data.obj.oePayList[0].customerId)
 
-          // alert("Receipt reversalReasonCode " + data.obj.oePayList[0].reversalReasonCode);
-
-
-          // var rAmt=data.obj.oePayList[0].paymentAmt
-          // var bAmt=data.obj.oePayList[0].balanceAmount
-          // alert ("Payment Amt :"+rAmt  + "\nBalance Amt :" +bAmt) ;
-
-          // && data.obj.oePayList[0].paymentAmt === data.obj.oePayList[0].balanceAmount
-
            if (data.obj.oePayList[0].paymentAmt === data.obj.oePayList[0].totAppliedtAmount) {
 
             this.showModalForm = false;
@@ -980,7 +971,8 @@ export class PaymentArComponent implements OnInit {
             }
 
           } else {
-
+            
+            this.reversalComment=data.obj.oePayList[0].reversalComment
             this.showModalForm = false;
             this.enableApplyButton = false;
             this.enableCancelButton = false;
@@ -2173,9 +2165,14 @@ export class PaymentArComponent implements OnInit {
 
 
 
-  onReasonSelected(mReasonCode) {
-    if (mReasonCode != null) {
+  onReasonSelected(mReasonCode1) {
+      var mReasonCode=this.paymentArForm.get('reversalReasonCode').value
       var pymtType =this.paymentArForm.get('payType').value
+
+      // alert ("REaseonCode , pytype :"+mReasonCode +","+pymtType);
+
+     if (mReasonCode != null) {
+    
       if(mReasonCode ==='ChqBounce' && pymtType != 'CHEQUE' ){
         this.paymentArForm.get('reversalReasonCode').reset();
         this.reversalReasonCode=null;
@@ -2186,16 +2183,14 @@ export class PaymentArComponent implements OnInit {
       this.reversalCategory = 'Receipt Reversed'
       this.status = 'REVERSED'
       this.enableApplyButton = false;
-
     
     }
 
       this.chqBounceStatus=false; 
-      this.bounceReasonCode=null;
+      this.reversalComment=null;
     
-    
-
       if(mReasonCode ==='ChqBounce' && pymtType ==='CHEQUE' ){
+        // alert ("in Reason fn..chq bounc")
           this.chqBounceStatus=true;
           this.service.RcptChqBounceReasonList('ChqBncRsn')
           .subscribe(

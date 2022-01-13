@@ -856,13 +856,6 @@
                                     <input   type="text"  formControlName="reversalCategory"  id="reversalCategory"  [(ngModel)]="reversalCategory" class="form-control" >
                                 </td>
 
-                              
-                                <!-- <td style="width: 15%" class="LabelFontStyle">Comments&nbsp;:&nbsp;</td>
-                                
-                                <td>
-                                    <input  style="text-transform:uppercase;"  type="text"  formControlName="reversalComment"  id="reversalComment"  [(ngModel)]="reversalComment" class="form-control" >
-                                </td> -->
-
                               </tr>
 
                               
@@ -875,7 +868,7 @@
                                 <td >
                                     <select formControlName="reversalComment" id="reversalComment" [(ngModel)]="reversalComment" class="form-control" style="width: 300px;" >
                                         <option disabled>--Select--</option>
-                                        <option *ngFor="let sc of  ChqBounceReasonList" [ngValue]="sc.code"  >
+                                        <option *ngFor="let sc of  ChqBounceReasonList" [(ngValue)]="sc.code"  >
                                            <!-- {{sc.code}}- -->
                                            {{sc.codeDesc}}
                                         </option>
@@ -884,7 +877,14 @@
 
                               </tr>
                             </ng-template>
-                            <ng-template #showLovNo></ng-template>
+                            <ng-template #showLovNo>
+
+                                <td style="width: 15%" class="LabelFontStyle">Comments&nbsp;:&nbsp;</td>
+                                
+                                <td>
+                                    <input  style="text-transform:uppercase;width: 300px;"  type="text"  formControlName="reversalComment"  id="reversalComment"  [(ngModel)]="reversalComment" class="form-control" >
+                                </td>
+                            </ng-template>
 
                              
                         </table>
