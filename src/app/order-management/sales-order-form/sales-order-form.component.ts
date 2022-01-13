@@ -443,7 +443,7 @@ export class SalesOrderFormComponent implements OnInit {
     this.op = 'insert';
     // this.displayLineTaxDetails=true;
     this.currentOpration = 'NewOrder';
-    this.displaysegmentInvType[0] = true;
+    // this.displaysegmentInvType[0] = true;
 
     this.divisionName = sessionStorage.getItem('divisionName');
     this.ouName = (sessionStorage.getItem('ouName'));
@@ -1294,6 +1294,7 @@ export class SalesOrderFormComponent implements OnInit {
               this.orderlineDetailsArray().push(this.orderlineDetailsGroup());
               this.TaxDetailsArray().push(this.TaxDetailsGroup());
               this.displayLineTaxDetails = true;
+              this.displaysegmentInvType[0] = true;
               if (data.obj.flowStatusCode === 'BOOKED') {
                 this.op = 'insert';
                 this.displayLineTaxDetails = false;

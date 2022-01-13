@@ -904,7 +904,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
     this.displayLineflowStatusCode.push(true);
     this.itemSeg = '';
     var ln = len-1;
-    alert(ln)
+    // alert(ln)
     this.setFocus('itemSeg' + ln);
   }
 
@@ -951,7 +951,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
   }
 
   updateTotAmtPerline(lineIndex) {
-    alert(lineIndex);
+    // alert(lineIndex);
     var formArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     var formVal= formArr.getRawValue();
     // var tcsPer = this.CounterSaleOrderBookingForm.get('tcsPer').value;
@@ -1042,6 +1042,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
     jsonData.emplId=sessionStorage.getItem('emplId');
     jsonData.ouId = Number(sessionStorage.getItem('ouId'));
     jsonData.locId = Number(sessionStorage.getItem('locId'));
+    jsonData.deptId=sessionStorage.getItem('deptId');
     console.log(jsonData);
     this.orderManagementService.createProformaOrderFFn(jsonData).subscribe((res: any) => {
       if (res.code === 200) {
