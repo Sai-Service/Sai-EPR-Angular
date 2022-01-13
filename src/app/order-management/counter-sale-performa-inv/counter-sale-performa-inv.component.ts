@@ -31,6 +31,7 @@ interface ISalesBookingForm {
   emailId1: string;
   birthDate: Date;
   weddingDate: Date;
+  customerId:number;
   gstNo: string;
   panNo: string;
   custAccountNo: number;
@@ -109,6 +110,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
   custPoNumber: string;
   custPoDate: Date;
   state: string;
+  customerId:number;
   transactionTypeName: string;
   issueCodeType: string;
   issueCode: string;
@@ -204,6 +206,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
       emailId1: [],
       birthDate: [],
       weddingDate: [],
+      customerId:[],
       gstNo: [],
       panNo: [],
       custAccountNo: ['', [Validators.required]],
@@ -307,6 +310,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
       this.CounterSaleOrderBookingForm.patchValue({ issueCode: 'CM03' });
       var concatissuetypecode = this.CounterSaleOrderBookingForm.get('issueCode').value + '-' + this.CounterSaleOrderBookingForm.get('issueCodeType1').value
       this.CounterSaleOrderBookingForm.patchValue({ issueCodeType: concatissuetypecode });
+      this.transactionTypeName='Proforma';
     }
     this.CounterSaleOrderBookingForm.patchValue({ discType: 'No Discount' })
 
@@ -453,6 +457,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
         data => {
           if (data.code === 200) {
             this.selCustomer = data.obj;
+            this.displayCSOrderAndLineDt = false;
             this.custSiteList = data.obj.customerSiteMasterList;
             if (data.obj.tcsYN === 'Y') {
               this.CounterSaleOrderBookingForm.patchValue(data.obj);
@@ -775,6 +780,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
                         });
                      
                       }
+
                     }
               
                   }
@@ -807,6 +813,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
                             disAmt: 0
                           })
                         }
+                        this.setFocus('pricingQty' + k);
                       }
                     }
                   }
@@ -896,9 +903,9 @@ export class CounterSalePerformaInvComponent implements OnInit {
     this.displayCounterSaleLine.push(true);
     this.displayLineflowStatusCode.push(true);
     this.itemSeg = '';
-    var ln = len - 1;
+    var ln = len-1;
+    alert(ln)
     this.setFocus('itemSeg' + ln);
-    var arrayControl = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
   }
 
 
@@ -1027,6 +1034,14 @@ export class CounterSalePerformaInvComponent implements OnInit {
     console.log(this.CounterSaleOrderBookingForm.value);
     console.log(formValue);
     let jsonData = this.CounterSaleOrderBookingForm.getRawValue();
+    var custPoDate = this.CounterSaleOrderBookingForm.get('custPoDate').value;
+    jsonData.orderedDate = this.pipe.transform(this.now, 'yyyy-MM-dd');
+    jsonData.refCustNo = this.CounterSaleOrderBookingForm.get('refCustNo').value;
+    jsonData.custPoNumber = this.CounterSaleOrderBookingForm.get('custPoNumber').value;
+    jsonData.custPoDate = this.pipe.transform(custPoDate, 'yyyy-MM-dd');
+    jsonData.emplId=sessionStorage.getItem('emplId');
+    jsonData.ouId = Number(sessionStorage.getItem('ouId'));
+    jsonData.locId = Number(sessionStorage.getItem('locId'));
     console.log(jsonData);
     this.orderManagementService.createProformaOrderFFn(jsonData).subscribe((res: any) => {
       if (res.code === 200) {

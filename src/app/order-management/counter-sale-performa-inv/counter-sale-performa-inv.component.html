@@ -177,6 +177,7 @@
                                 <input type="text" formControlName="custName" [(ngModel)]='custName' value={{custName}}
                                     class="form-control" style="width: 170px;" data-bs-toggle="modal"
                                     data-bs-target="#customerNameSearchModel">
+                                    <input hidden class="form-control" formControlName="customerId" [(ngModel)]='customerId'>
                             </td>
                             <td>
                                 <button type="button" [disabled]="isDisabled3" class="btn btn-primary"
@@ -430,13 +431,14 @@
                         Order&nbsp;Type&nbsp;:&nbsp;
                     </td>
                     <td>
-                        <select formControlName="transactionTypeName" [(ngModel)]="transactionTypeName"
+                        <!-- <select formControlName="transactionTypeName" [(ngModel)]="transactionTypeName"
                         id="transactionTypeName" class="form-control" style="width: fit-content;" (change)="onOptionsSelectedTransactionType(transactionTypeName)">
                         <option>--Select--</option>
                         <option *ngFor="let orderType of orderTypeList" [value]="orderType.transactionTypeName">
                             {{orderType.transactionTypeName}}
                         </option>
-                    </select>
+                    </select> -->
+                    <input disabled type="text" formControlName="transactionTypeName" [(ngModel)]='transactionTypeName' value={{transactionTypeName}} class="form-control" style="width: 160px;">
                     </td>
                     <td style="width: 15%" class="LabelFontStyle1">
                         Price&nbsp;List&nbsp;:&nbsp;
