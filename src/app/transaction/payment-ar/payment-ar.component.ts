@@ -237,6 +237,7 @@ export class PaymentArComponent implements OnInit {
   showBankDetails = false;
   showModalForm = true;
   enableCancelButton = true;
+  showReasonDetails=false;
   enableApplyButton = true;
   cancelValidation = false;
   applySaveButton = false;
@@ -244,6 +245,7 @@ export class PaymentArComponent implements OnInit {
   showRefYellow = false;
   applHistory=false;
   chqBounceStatus=false;
+
 
   showInvoiceGrid = false;
   showRefundGrid = false;
@@ -931,20 +933,44 @@ export class PaymentArComponent implements OnInit {
           this.GetCustomerDetails(data.obj.oePayList[0].customerId)
           this.GetCustomerSiteDetails(data.obj.oePayList[0].customerId)
 
-           if (data.obj.oePayList[0].paymentAmt === data.obj.oePayList[0].totAppliedtAmount) {
-
-            this.showModalForm = false;
-            this.enableApplyButton = false;
+          //  if (data.obj.oePayList[0].paymentAmt === data.obj.oePayList[0].totAppliedtAmount && data.obj.oePayList[0].payType ==='CASH' ) {
+          
+          
+          if ( data.obj.oePayList[0].totAppliedtAmount>0 && data.obj.oePayList[0].payType ==='CASH' && data.obj.oePayList[0].reversalReasonCode ===null ) {
+            this.showReasonDetails=false;
+            this.showModalForm = true;
+            this.enableApplyButton = true;
             this.enableCancelButton = false;
             this.paymentArForm.disable();
             return;
 
            }
-          else if (data.obj.oePayList[0].reversalReasonCode === null) {
+
+          //  if (data.obj.oePayList[0].paymentAmt === data.obj.oePayList[0].totAppliedtAmount && data.obj.oePayList[0].payType != 'CASH' ) {
+         
+           if ( data.obj.oePayList[0].totAppliedtAmount >=0  && data.obj.oePayList[0].payType != 'CASH' && data.obj.oePayList[0].reversalReasonCode ===null ) {
+            // alert ( " resn code : "+ data.obj.oePayList[0].reversalReasonCode + ","+data.obj.oePayList[0].totAppliedtAmount +","+data.obj.oePayList[0].payType)
+            this.showModalForm = false;
+            this.enableApplyButton = false;
+            this.enableCancelButton = true;
+            this.showReasonDetails=false;
+            // this.paymentArForm.disable();
+            this.paymentArForm.get('reversalReasonCode').enable();
+            this.paymentArForm.get('reversalCategory').enable();
+            this.paymentArForm.get('reversalComment').enable();
+
+            if( data.obj.oePayList[0].totAppliedtAmount < data.obj.oePayList[0].paymentAmt ){ this.enableApplyButton = true; this.showModalForm = true;}
+
+            return;
+
+           }
+
+
+           if (data.obj.oePayList[0].reversalReasonCode === null) {
 
             this.showModalForm = true;
             this.enableApplyButton = true;
-
+            
             // this.paymentArForm.disable()
             this.paymentArForm.get('bankName').disable();
             this.paymentArForm.get('bankBranch').disable();
@@ -960,7 +986,7 @@ export class PaymentArComponent implements OnInit {
             // this.paymentArForm.get('status').enable();
             this.paymentArForm.get('selectAllflag1').enable();
 
-            if (data.obj.oePayList[0].paymentAmt === data.obj.oePayList[0].balanceAmount) {
+            if (data.obj.oePayList[0].paymentAmt === data.obj.oePayList[0].balanceAmount  ) {
               this.enableCancelButton = true;
             }
             else {
@@ -970,13 +996,17 @@ export class PaymentArComponent implements OnInit {
               this.paymentArForm.get('reversalComment').disable();
             }
 
-          } else {
-            
+          } 
+          
+          else {
+            this.showReasonDetails=true;
             this.reversalComment=data.obj.oePayList[0].reversalComment
             this.showModalForm = false;
             this.enableApplyButton = false;
             this.enableCancelButton = false;
             this.paymentArForm.disable();
+
+
           }
 
 
@@ -2101,9 +2131,9 @@ export class PaymentArComponent implements OnInit {
     }
   }
 
-    //  alert("formValue.reversalDate :"+formValue.reversalDate);
+     alert("formValue.reversalDate :"+formValue.reversalDate);
 
-    if (formValue.reversalDate === undefined || formValue.reversalDate === null) {
+    if (formValue.reversalDate == undefined || formValue.reversalDate == null) {
       this.cancelValidation = false;
       alert("REVERSAL DATE: Should not be null....");
       return;
@@ -2179,6 +2209,7 @@ export class PaymentArComponent implements OnInit {
         alert ("Please select proper Reversal Reason...")
         return;
       }
+
       this.reversalDate = this.pipe.transform(this.now, 'y-MM-dd');
       this.reversalCategory = 'Receipt Reversed'
       this.status = 'REVERSED'

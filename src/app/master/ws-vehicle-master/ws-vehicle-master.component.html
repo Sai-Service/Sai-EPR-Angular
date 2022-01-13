@@ -163,10 +163,7 @@
                 </tr>
 
                 <tr>
-
-                   
                     <td style="width: 12%" class="LabelFontStyle">Model&nbsp;:&nbsp;</td>
-
                     <td>  
                         <select formControlName="mainModel" id="mainModel" [(ngModel)]="mainModel" class="form-control"  
                             (ngModelChange)="onOptionsSelectedModel($event)"  style="background-color: yellow" >
@@ -176,10 +173,9 @@
                             </option>
                         </select>
                     </td>
-
                     <td style="width: 12%" class="LabelFontStyle">&nbsp;Variant&nbsp;Code:</td>
-
                    <td>
+
                     <select formControlName="variantCode" id="variantCode" class="form-control" [(ngModel)]="variantCode" 
                     (ngModelChange)="onOptionsSelectedVariant($event)"  (change)="onOptionsSelectedVariant(variantCode)"  style="background-color: yellow" >
                     
@@ -188,14 +184,11 @@
                             {{mv.variant}}-{{mv.varDescription}}
                         </option>
                     </select>
-                </td>
-
-    
-                    <td style="width: 12%" class="LabelFontStyle">Variant&nbsp;Desc:&nbsp;</td>
-    
-                    <td>
-                        <input disabled  type="text"  formControlName="variantDesc"  id="variantDesc" [(ngModel)]="variantDesc" class="form-control" >
                     </td>
+                    <td style="width: 12%" class="LabelFontStyle">Variant&nbsp;Desc:&nbsp;</td>
+                   
+                    <td> <input disabled  type="text"  formControlName="variantDesc"  id="variantDesc" [(ngModel)]="variantDesc" class="form-control" > </td>
+                   
                 </tr>
 
                 <tr>
