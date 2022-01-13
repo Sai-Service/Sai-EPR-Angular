@@ -318,7 +318,7 @@ export class OrderGenerationComponent implements OnInit {
     }
     xlsx.utils.sheet_add_json(ws, xlOrdList, { origin: 'A2', skipHeader: true });
     xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
-    xlsx.writeFile(wb, 'CounterSaleOrderList.xlsx');
+    xlsx.writeFile(wb, 'orderGenerationList.xlsx');
   }
 
 
