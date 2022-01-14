@@ -1,6 +1,5 @@
 
-<form [formGroup]="orderGenerationForm" (ngSubmit)="orderGeneration(orderGenerationForm.value)"
-#aForm>  
+<form [formGroup]="orderGenerationForm" (ngSubmit)="orderGeneration(orderGenerationForm.value)" #aForm> 
  
     <div class="center">
 
@@ -284,7 +283,11 @@
                             <td><button  type="button" style="width:fit-content;height: 23px;" class="btn btn-info1" data-toggle="modal" data-target="#consumtionDetails" (click)="getTrans(i)">...</button></td>
                             <td> <input  disabled style="width:4rem;"  type="number" formControlName="totalCons" class="form-control"></td>
                             <td> <input  disabled style="width:4rem;"  type="number" formControlName="setQty" class="form-control"></td>
-                            <td> <input   style="width:4rem;background-color: yellow;" name ='orderQty{{i}}' type="number" formControlName="orderQty"  (keydown.tab)="NextLineCall(i)"   (keydown.enter)="enterKeyLock(i)" (change)="validateOrdQty(i)"  class="form-control" ></td>
+                            <td> <input   style="width:4rem;background-color: yellow;" name ='orderQty{{i}}' 
+                                type="number" formControlName="orderQty"   (keydown.tab)="NextLineCall(i)"  
+                                (keydown.enter)="enterKeyLock(i)" (change)="validateOrdQty(i)"  class="form-control" ></td>
+                           
+                           
                             <td> <input  disabled style="width:6rem;"  type="number" formControlName="totalValue" class="form-control"></td>
                            
                             <div *ngIf="orderUpdateStatus; then ord1; else ord2;"></div>
@@ -328,7 +331,7 @@
                 <ng-template #thenBlock1>
                  <td> <button type="submit" class="btn btn-info" id="register" (click)="updateOrder()">Save</button></td>
                 <td> <button type="submit" class="btn btn-info" id="register" (click)="newMast()">Cancel</button></td>
-                <td> <button type="submit" class="btn btn-info" id="register" (click)="newMast()">Print</button></td>
+                <!-- <td> <button type="submit" class="btn btn-info" id="register" (click)="newMast()">Print</button></td> -->
                 <td> <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>
                 <td> <button type="submit" class="btn btn-info" id="register" (click)="closeMast()">Close</button></td>
 

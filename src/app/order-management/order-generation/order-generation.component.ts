@@ -921,8 +921,10 @@ export class OrderGenerationComponent implements OnInit {
   }
 
   NextLineCall(index) {
+    alert ("index1 :"+index)
     var ln=index+1;
-    this.setFocus('orderQty'+ln);
+    alert ("index2 :"+ln)
+    this.setFocus('orderQty'+index+1);
   }
 
 }
