@@ -227,7 +227,7 @@
            </div>
         </div> -->
 
-
+        <fieldset class="RFS">
         <div class="container1">
             <div class="grid_scroll_3">
                   <!-- <div style="padding-bottom: 10px;padding-top: 10px;">
@@ -237,6 +237,7 @@
                             </div>
                         </div>
                      </div> -->
+               
                 <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
           
                 <tbody>
@@ -298,11 +299,19 @@
                                 <td><button  disabled type="submit" class="btn btn-info" (click)="addRow(i)"  style="width: min-content;"><i class="fa fa-plus"></i></button>  </td>
                             </ng-template> -->
                     </tr>
+                   </ng-container>
                     </ng-container>
-                    </ng-container>
+
             </table>
             </div>
         </div>
+
+            <table>
+                <tr>
+                    <td> <button style="width:fit-content;" type="submit" class="btn btn-info" id="register" (click)="addNewRow()">Add New Line</button></td>
+                </tr>
+            </table>
+        </fieldset>
      
 
 

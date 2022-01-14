@@ -269,8 +269,13 @@ export class OrderGenerationComponent implements OnInit {
     this.router.navigate(['admin']);
   }
 
+  addNewRow() {
+    var len1 = this.lineDetailsArray().length - 1;
+    this.addRow(len1);
+  }
+
   addRow(index) {
-   
+  
     var ordLineArr = this.orderGenerationForm.get('orderList').value;
     var len1 = this.lineDetailsArray().length - 1;
     if (len1 === index) {
