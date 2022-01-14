@@ -90,6 +90,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
   orderNumber: number;
   emailId: string;
   emailId1: string;
+  locationId:number;
   birthDate: Date;
   weddingDate: Date;
   gstNo: string;
@@ -129,7 +130,6 @@ export class CounterSalePerformaInvComponent implements OnInit {
   ouId: number;
   deptId: number;
   locId: number;
-  locationId: number;
   deptName: string;
   invType: string;
   locCode: string;
@@ -181,6 +181,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
   createOrderTypeList: any[];
   public orderTypeList: any;
   public issueCodeTypeList: any[];
+  lstgetOrderLineDetails: any[];
   public priceListNameList: any;
   displayCSOrderAndLineDt = true;
   displaysegmentInvType: Array<boolean> = [];
@@ -325,7 +326,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
     this.ouId = Number(sessionStorage.getItem('ouId'));
     this.deptId = Number(sessionStorage.getItem('deptId'));
     this.locId = Number(sessionStorage.getItem('locId'));
-    this.locationId = Number(sessionStorage.getItem('locId'));
+    // this.locationId = Number(sessionStorage.getItem('locId'));
     this.deptName = (sessionStorage.getItem('deptName'));
     this.invType = 'SS_SPARES';
     this.orderlineDetailsArray().controls[0].patchValue({ invType: 'SS_SPARES' });
@@ -407,7 +408,22 @@ export class CounterSalePerformaInvComponent implements OnInit {
 
   get f() { return this.CounterSaleOrderBookingForm.controls }
 
-  OrderFind(orderNumber) { }
+  OrderFind(orderNumber) {
+    this.orderManagementService.proformaOrderSearchNew(sessionStorage.getItem('divisionId'),orderNumber )
+    .subscribe(
+      data => {
+        if (data.code === 200) {
+          this.lstgetOrderLineDetails = data.obj.oeOrderLinesAllList;
+          let control = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+          for (let i = 0; i <= this.lstgetOrderLineDetails.length - 1; i++) {
+            var oeOrderLinesAllList1: FormGroup = this.orderlineDetailsGroup();
+            control.push(oeOrderLinesAllList1);
+          }
+          this.CounterSaleOrderBookingForm.patchValue(data.obj);
+        }
+    
+  })
+}
 
 
   onOptionsSelectedTransactionType(transactionTypeName: string) {
@@ -904,7 +920,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
     this.displayLineflowStatusCode.push(true);
     this.itemSeg = '';
     var ln = len-1;
-    alert(ln)
+    // alert(ln)
     this.setFocus('itemSeg' + ln);
   }
 
@@ -951,7 +967,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
   }
 
   updateTotAmtPerline(lineIndex) {
-    alert(lineIndex);
+    // alert(lineIndex);
     var formArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     var formVal= formArr.getRawValue();
     // var tcsPer = this.CounterSaleOrderBookingForm.get('tcsPer').value;
@@ -1041,7 +1057,8 @@ export class CounterSalePerformaInvComponent implements OnInit {
     jsonData.custPoDate = this.pipe.transform(custPoDate, 'yyyy-MM-dd');
     jsonData.emplId=sessionStorage.getItem('emplId');
     jsonData.ouId = Number(sessionStorage.getItem('ouId'));
-    jsonData.locId = Number(sessionStorage.getItem('locId'));
+    jsonData.locationId = Number(sessionStorage.getItem('locId'));
+    jsonData.deptId=sessionStorage.getItem('deptId');
     console.log(jsonData);
     this.orderManagementService.createProformaOrderFFn(jsonData).subscribe((res: any) => {
       if (res.code === 200) {
