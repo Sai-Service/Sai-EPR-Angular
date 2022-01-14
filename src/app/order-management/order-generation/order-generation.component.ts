@@ -407,7 +407,9 @@ export class OrderGenerationComponent implements OnInit {
         this.orderNumber = res.obj;
         this.orderGenerationForm.disable();
         this.displayButton = false;
+        this.spinIcon = false;
         this.getLatestOrderNumber(this.locId);
+        
       } else {
         if (res.code === 400) {
           // alert('Error While Saving Record:-' + res.obj);
@@ -426,25 +428,24 @@ export class OrderGenerationComponent implements OnInit {
     this.service.getOrderNumberLatest(mlocId)
       .subscribe(
         data => {
-          alert("Order Number : " + data.obj);
-          // this.lstLatestOrder =data.obj
-          // console.log(this.lstLatestOrder);
-          // alert(this.lstLatestOrder)
+          alert("Order Number : " + data.obj +" Created...");
           this.orderNumber = data.obj;
+          // if(data.obj !=null) { this.ShowOrder(data.obj) }
         });
   }
 
 
   SearchByOrderNo(ordNo) {
-     this.ShowOrder();
+    var mOrderNumber = this.orderGenerationForm.get('orderNumber').value
+     this.ShowOrder(mOrderNumber);
   }
 
-  ShowOrder() {
+  ShowOrder(mOrderNumber) {
     this.dispShowOrdButton = false;
     this.dispGenOrdButton = false;
     this.spinIcon=true;
     this.dataDisplay ='Loading Order Details....Pls wait';
-    var mOrderNumber = this.orderGenerationForm.get('orderNumber').value
+    // var mOrderNumber = this.orderGenerationForm.get('orderNumber').value
 
     this.service.getOrderListBajaj(mOrderNumber)
       .subscribe(
@@ -866,13 +867,13 @@ export class OrderGenerationComponent implements OnInit {
     return;
   }
 
-  setFocus(name) {
+  // setFocus(name) {
 
-    const ele = this.aForm.nativeElement[name];
-    if (ele) {
-      ele.focus();
-    }
-  }
+  //   const ele = this.aForm.nativeElement[name];
+  //   if (ele) {
+  //     ele.focus();
+  //   }
+  // }
 
 
   exportToExcel1() {
@@ -911,7 +912,17 @@ export class OrderGenerationComponent implements OnInit {
   }
 
 
+  setFocus(name) {
 
+    const ele = this.aForm.nativeElement[name];
+    if (ele) {
+      ele.focus();
+    }
+  }
 
+  NextLineCall(index) {
+    var ln=index+1;
+    this.setFocus('orderQty'+ln);
+  }
 
 }

@@ -1,6 +1,7 @@
 
-<form [formGroup]="orderGenerationForm" (ngSubmit)="orderGeneration(orderGenerationForm.value)">
-
+<form [formGroup]="orderGenerationForm" (ngSubmit)="orderGeneration(orderGenerationForm.value)"
+#aForm>  
+ 
     <div class="center">
 
         <table style="width: 100%;background-color: white;">
@@ -245,17 +246,17 @@
                     <th  scope="col" >Part&nbsp;No</th>
                     <th  scope="col" >Description</th>
                     <th  scope="col" style="width: 4rem;">Unit&nbsp;Price</th>
-                    <th  scope="col" style="width: 4rem;">Curr&nbsp;Qty</th>
-                    <th  scope="col" style="width: 3rem;">BkOrder&nbsp;</th>
+                    <th  scope="col" style="width: 4rem;">Current Stock</th>
+                    <th  scope="col" style="width: 3rem;">Back Order&nbsp;</th>
                     <th  scope="col" style="width: 3rem;">Cust BkOrder</th>
-                    <th  scope="col" style="width: 3rem;">InTransit</th>
+                    <th  scope="col" style="width: 3rem;">InTransit Qty</th>
                     <th  scope="col" style="width: 3rem;">Last Order&nbsp;</th>
-                    <th  scope="col" style="width: 4rem;">Mth1Tot&nbsp;</th>
-                    <th  scope="col" style="width: 4rem;">Mth2Tot</th>
-                    <th  scope="col" style="width: 4rem;">Mth3Tot</th>
-                    <th  scope="col" style="width: 4rem;">Cur&nbsp;Cons Tot&nbsp;</th>
-                    <th  scope="col" style="width: 4rem;">Cons Detls</th>
-                    <th  scope="col" style="width: 4rem;">Tot Cons&nbsp;</th>
+                    <th  scope="col" style="width: 4rem;">Month1 Total&nbsp;</th>
+                    <th  scope="col" style="width: 4rem;">Month2 Total</th>
+                    <th  scope="col" style="width: 4rem;">Month3 Total</th>
+                    <th  scope="col" style="width: 4rem;">Cur&nbsp;Month Total&nbsp;</th>
+                    <th  scope="col" style="width: 2rem;">Cons Detls</th>
+                    <th  scope="col" style="width: 4rem;">Total&nbsp;Cons Qty&nbsp;</th>
                     <th  scope="col" style="width: 4rem;">Set&nbsp;Qty</th>
                     <th  scope="col" style="width: 4rem;">Order&nbsp;Qty</th>
                     <th  scope="col">Order&nbsp;Value</th>
@@ -269,7 +270,7 @@
 
                             <td style="text-align: center;width: 4rem;">{{i+1}}</td>
                             <td> <input   style="width:3rem;background-color: yellow;width:6rem;text-transform: uppercase;"    type="text" formControlName="segment" (keydown.enter)="enterKeyLock(i)"  class="form-control"  (change)="validateItem(i)"></td>
-                            <td> <input  disabled style="width:14rem;" type="text"   formControlName="description" class="form-control"></td>
+                            <td> <input  disabled style="width:13rem;" type="text"   formControlName="description" class="form-control"></td>
                             <td> <input  disabled style="width:6rem;"  type="number" formControlName="unitPrice"  class="form-control"></td>
                             <td> <input  disabled style="width:4rem;"  type="number" formControlName="currentStock" class="form-control"></td>
                             <td> <input  disabled style="width:3rem;"  type="number" formControlName="backOrderQty" class="form-control"></td>
@@ -283,7 +284,7 @@
                             <td><button  type="button" style="width:fit-content;height: 23px;" class="btn btn-info1" data-toggle="modal" data-target="#consumtionDetails" (click)="getTrans(i)">...</button></td>
                             <td> <input  disabled style="width:4rem;"  type="number" formControlName="totalCons" class="form-control"></td>
                             <td> <input  disabled style="width:4rem;"  type="number" formControlName="setQty" class="form-control"></td>
-                            <td> <input   style="width:4rem;background-color: yellow;"   type="number" formControlName="orderQty" (keydown.enter)="enterKeyLock(i)" (change)="validateOrdQty(i)"  class="form-control" ></td>
+                            <td> <input   style="width:4rem;background-color: yellow;" name ='orderQty{{i}}' type="number" formControlName="orderQty"  (keydown.tab)="NextLineCall(i)"   (keydown.enter)="enterKeyLock(i)" (change)="validateOrdQty(i)"  class="form-control" ></td>
                             <td> <input  disabled style="width:6rem;"  type="number" formControlName="totalValue" class="form-control"></td>
                            
                             <div *ngIf="orderUpdateStatus; then ord1; else ord2;"></div>

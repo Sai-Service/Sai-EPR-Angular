@@ -2587,7 +2587,7 @@ OrderCategoryList(): Observable<any> {
 ////////////////////////////// Back order File upload /////////
 
   public orderGenBajaj(ordeGenRecord,mLocId,mths,dlrCd,pord) {
-    alert (  "MS>> Loc Id :" +mLocId + " ," +mths);
+    // alert (  "MS>> Loc Id :" +mLocId + " ," +mths);
       const options = {
         headers: this.headers
       };
