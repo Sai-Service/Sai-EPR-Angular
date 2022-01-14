@@ -160,7 +160,7 @@
                                     <td>
                                         <select formControlName="name" id="name" class="form-control"
                                             style="width: 200px;"
-                                            (ngModelChange)='onOptionsSelectedcustSiteName($event)'>
+                                            (change)='onOptionsSelectedcustSiteName($event)'>
                                             <!-- <option>--Select--</option> -->
                                             <option *ngFor="let custSite of custSiteList" [value]="custSite.siteName">
                                                 {{custSite.siteName}}
@@ -717,8 +717,12 @@
                             <td style="width: 15%" class="LabelFontStyle">
                                 Broker&nbsp;:&nbsp;
                             </td>
-                            <input disabled type="text" formControlName="broker" [(ngModel)]='broker'
-                            value={{broker}} class="form-control" style="width: 170px;">
+                            <td>
+                            <input disabled type="text" formControlName="subDealerDesc" [(ngModel)]='subDealerDesc'
+                            value={{subDealerDesc}} class="form-control" style="width: 170px;">
+                            <input disabled type="text" formControlName="subDealerId" [(ngModel)]='subDealerId'
+                            value={{subDealerId}} class="form-control" style="width: 170px;">
+                        </td>
                         </tr>
                         <tr>
                             <td style="width: 15%;font-weight: bold;" class="LabelFontStyle">
@@ -849,6 +853,16 @@
                             <td>
                                 <input disabled type="text" formControlName="fuelType" [(ngModel)]='fuelType'
                                     class="form-control" style="width: 150px;">
+                            </td>
+                            
+                        </tr>
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Ex-Showroom&nbsp;Price:&nbsp;
+                            </td>
+                            <td>
+                                <input disabled type="number" formControlName="basicValue" class="form-control"
+                                style="width: 150px;">
                             </td>
                         </tr>
                     </table>
@@ -1385,7 +1399,7 @@
 
                                                         </td>
                                                         <td>
-                                                            <input disabled type="number"
+                                                            <input  type="number"
                                                                 formControlName="unitSellingPrice" class="form-control"
                                                                 style="height: 20px;width: 90px;" (change)="onKey(i)">
                                                         </td>

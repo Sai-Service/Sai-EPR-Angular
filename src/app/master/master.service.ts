@@ -2587,7 +2587,7 @@ OrderCategoryList(): Observable<any> {
 ////////////////////////////// Back order File upload /////////
 
   public orderGenBajaj(ordeGenRecord,mLocId,mths,dlrCd,pord) {
-    alert (  "MS>> Loc Id :" +mLocId + " ," +mths);
+    // alert (  "MS>> Loc Id :" +mLocId + " ," +mths);
       const options = {
         headers: this.headers
       };
@@ -2645,6 +2645,12 @@ bulkpouploadSales(formData: FormData) {
   getOrderByUser(locId, startDt, endDt,deptId){
     return this.http.get(this.ServerUrl + `/orderHeader/getByDate?locId=${locId}&startDt=${startDt}&endDt=${endDt}&dept=${deptId}`)
   }
+
+
+  getSalesOrderByUser(locId, startDt, endDt,deptId){
+    return this.http.get(this.ServerUrl + `/orderHeader/getByDateOM?startDt=${startDt}&endDt=${endDt}&locId=${locId}&dept=${deptId}`)
+  }
+
 
   bulkpouploadSpares(formData: FormData) {
       return this.http.post(this.ServerUrl + `/fileImport/uploadSpAcPO`, formData)

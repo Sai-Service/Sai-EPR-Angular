@@ -1396,20 +1396,25 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
             this.CounterSaleOrderBookingForm.patchValue({ custAccountNo: custAccountNo });
             let select = this.payTermDescList.find(d => d.lookupValueId === this.selCustomer.termId);
             // this.paymentType = select.lookupValue;
+            console.log(this.custSiteList);
+
             this.CounterSaleOrderBookingForm.patchValue({ paymentType: select.lookupValue })
-            this.CounterSaleOrderBookingForm.get('custName').disable();
-            this.CounterSaleOrderBookingForm.get('mobile1').disable();
+            // this.CounterSaleOrderBookingForm.get('custName').disable();
+            // this.CounterSaleOrderBookingForm.get('mobile1').disable();
             // alert(this.custSiteList.length)
             for (let i = 0; i < this.custSiteList.length; i++) {
-              if (this.custSiteList.length === 1) {
-                // alert(this.custSiteList.length)
+              // alert(this.custSiteList.length + '----' + this.custSiteList[i].ouId + '-----' + sessionStorage.getItem('ouId'));
+              if (this.custSiteList.length === 1 && Number(this.custSiteList[i].ouId) === Number(sessionStorage.getItem('ouId'))) {
                 this.CounterSaleOrderBookingForm.patchValue({ name: this.custSiteList[0].siteName });
                 this.onOptionsSelectedcustSiteName(this.custSiteList[0].siteName);
               }
-              else if (this.custSiteList.length > 1) {
-                // alert('hi')
-                this.CounterSaleOrderBookingForm.patchValue({ name: this.custSiteList[0].siteName });
-                this.onOptionsSelectedcustSiteName(this.custSiteList[0].siteName);
+              if (this.custSiteList.length > 1) {
+               if( Number(this.custSiteList[i].ouId) === Number(sessionStorage.getItem('ouId'))) {
+                this.CounterSaleOrderBookingForm.patchValue({ name: this.custSiteList[i].siteName });
+              //  this.onOptionsSelectedcustSiteName(this.custSiteList[i].siteName);
+              }}
+              else if (this.custSiteList[i].ouId != (sessionStorage.getItem('ouId'))) {
+                alert('Please Create/Select Operating Unit wise Site to continue process!')
               }
             }
             var custName = data.obj.custName;
@@ -1425,12 +1430,12 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
               this.displaytcsYN = false;
               this.displaytcsBuuton = true;
             }
-            this.CounterSaleOrderBookingForm.get('custAccountNo').disable();
+            // this.CounterSaleOrderBookingForm.get('custAccountNo').disable();
             this.isDisabled3 = true;
             this.customerNameSearch.splice(0, this.customerNameSearch.length);
             console.log(this.customerNameSearch);
-            this.transactionTypeName = 'Spares Sale - Credit';
-            this.CounterSaleOrderBookingForm.patchValue({ createOrderType: 'Pick Ticket' });
+            // this.transactionTypeName = 'Spares Sale - Credit';
+            // this.CounterSaleOrderBookingForm.patchValue({ createOrderType: 'Pick Ticket' });
           }
           else {
             if (data.code === 400) {
@@ -1485,12 +1490,13 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
   onOptionsSelectedcustSiteName(siteName) {
     // alert(siteName);
+    // siteName= siteName.target.value;
     //  alert(sessionStorage.getItem('ouId'));
     let selSite = this.custSiteList.find(d => d.siteName === siteName);
     console.log(selSite);
     console.log(this.custSiteList);
 
-    // alert(selSite.ouId);
+    // alert(selSite.ouId +'-----' + sessionStorage.getItem('ouId'));
 
     if (selSite.ouId != (sessionStorage.getItem('ouId'))) {
       alert('First Create OU wise Site to continue process!')
@@ -1546,7 +1552,8 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
             }
           })
     }
-
+    this.transactionTypeName = 'Spares Sale - Credit';
+    this.CounterSaleOrderBookingForm.patchValue({ createOrderType: 'Pick Ticket' });
   }
   // onOptionsSelectedcustSiteName(siteName) {
   //   // alert(siteName);
@@ -1890,13 +1897,13 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       }
       var orderedDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
       this.CounterSaleOrderBookingForm.patchValue({ orderedDate: orderedDate });
-      this.CounterSaleOrderBookingForm.get('custAccountNo').disable();
-      this.CounterSaleOrderBookingForm.get('name').disable();
-      this.CounterSaleOrderBookingForm.get('custName').disable();
-      this.CounterSaleOrderBookingForm.get('mobile1').disable();
-      this.CounterSaleOrderBookingForm.get('refCustNo').disable();
-      this.CounterSaleOrderBookingForm.get('custPoDate').disable();
-      this.CounterSaleOrderBookingForm.get('custPoNumber').disable();
+      // this.CounterSaleOrderBookingForm.get('custAccountNo').disable();
+      // this.CounterSaleOrderBookingForm.get('name').disable();
+      // this.CounterSaleOrderBookingForm.get('custName').disable();
+      // this.CounterSaleOrderBookingForm.get('mobile1').disable();
+      // this.CounterSaleOrderBookingForm.get('refCustNo').disable();
+      // this.CounterSaleOrderBookingForm.get('custPoDate').disable();
+      // this.CounterSaleOrderBookingForm.get('custPoNumber').disable();
       if (this.CounterSaleOrderBookingForm.get('createOrderType').value === 'Sales Order' && this.CounterSaleOrderBookingForm.get('othRefNo').value === undefined) {
         alert('Please Enter Reference Number First !');
         this.CounterSaleOrderBookingForm.get('segment').disable();
@@ -1912,6 +1919,13 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
         let select = (this.itemMap2.get(k)).find(d => d.segment === segment);
         //this.CounterSaleOrderBookingForm.patchValue({ itemId: select.itemId })
         if (segment != undefined) {
+          this.CounterSaleOrderBookingForm.get('custAccountNo').disable();
+          this.CounterSaleOrderBookingForm.get('name').disable();
+          this.CounterSaleOrderBookingForm.get('custName').disable();
+          this.CounterSaleOrderBookingForm.get('mobile1').disable();
+          this.CounterSaleOrderBookingForm.get('refCustNo').disable();
+          this.CounterSaleOrderBookingForm.get('custPoDate').disable();
+          this.CounterSaleOrderBookingForm.get('custPoNumber').disable();
           this.itemId = select.itemId;
           var custtaxCategoryName = this.CounterSaleOrderBookingForm.get('taxCategoryName').value;
           var priceListId = this.CounterSaleOrderBookingForm.get('priceListId').value;
@@ -2538,9 +2552,6 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     this.itemSeg = '';
     var ln = len - 1;
     this.setFocus('itemSeg' + ln);
-    var arrayControl = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
-
-
   }
 
 
@@ -3000,8 +3011,8 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   onOptionsSelectedTransactionType(transactionTypeName: string) {
     if (transactionTypeName != undefined) {
       // alert(transactionTypeName)'
-      if (this.CounterSaleOrderBookingForm.get('custName').value == undefined) {
-        alert("Please Enter Customer Proper Site Name ")
+      if (this.CounterSaleOrderBookingForm.get('custName').value == undefined && this.CounterSaleOrderBookingForm.get('custAddress').value == undefined) {
+        alert("Please Get Proper Customer Details!.")
         return;
       }
 
@@ -3021,14 +3032,14 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
         let selectTrx = this.createOrderTypeList.find(d => d.code === 'Direct Invoice');
         this.CounterSaleOrderBookingForm.patchValue({ createOrderType: selectTrx.codeDesc });
         this.setFocus('createOrderType');
-        this.CounterSaleOrderBookingForm.get('name').disable();
+        // this.CounterSaleOrderBookingForm.get('name').disable();
         // alert('hi')
       }
       if (transactionTypeName.includes('Credit')) {
         let selectTrx = this.createOrderTypeList.find(d => d.code === 'Pick Ticket');
         this.CounterSaleOrderBookingForm.patchValue({ createOrderType: selectTrx.codeDesc });
         this.setFocus('createOrderType');
-        this.CounterSaleOrderBookingForm.get('name').disable();
+        // this.CounterSaleOrderBookingForm.get('name').disable();
       }
 
     }

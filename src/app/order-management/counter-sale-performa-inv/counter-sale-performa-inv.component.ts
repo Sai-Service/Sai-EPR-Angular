@@ -31,6 +31,7 @@ interface ISalesBookingForm {
   emailId1: string;
   birthDate: Date;
   weddingDate: Date;
+  customerId:number;
   gstNo: string;
   panNo: string;
   custAccountNo: number;
@@ -89,6 +90,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
   orderNumber: number;
   emailId: string;
   emailId1: string;
+  locationId:number;
   birthDate: Date;
   weddingDate: Date;
   gstNo: string;
@@ -109,6 +111,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
   custPoNumber: string;
   custPoDate: Date;
   state: string;
+  customerId:number;
   transactionTypeName: string;
   issueCodeType: string;
   issueCode: string;
@@ -127,7 +130,6 @@ export class CounterSalePerformaInvComponent implements OnInit {
   ouId: number;
   deptId: number;
   locId: number;
-  locationId: number;
   deptName: string;
   invType: string;
   locCode: string;
@@ -179,6 +181,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
   createOrderTypeList: any[];
   public orderTypeList: any;
   public issueCodeTypeList: any[];
+  lstgetOrderLineDetails: any[];
   public priceListNameList: any;
   displayCSOrderAndLineDt = true;
   displaysegmentInvType: Array<boolean> = [];
@@ -204,6 +207,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
       emailId1: [],
       birthDate: [],
       weddingDate: [],
+      customerId:[],
       gstNo: [],
       panNo: [],
       custAccountNo: ['', [Validators.required]],
@@ -307,6 +311,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
       this.CounterSaleOrderBookingForm.patchValue({ issueCode: 'CM03' });
       var concatissuetypecode = this.CounterSaleOrderBookingForm.get('issueCode').value + '-' + this.CounterSaleOrderBookingForm.get('issueCodeType1').value
       this.CounterSaleOrderBookingForm.patchValue({ issueCodeType: concatissuetypecode });
+      this.transactionTypeName='Proforma';
     }
     this.CounterSaleOrderBookingForm.patchValue({ discType: 'No Discount' })
 
@@ -321,7 +326,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
     this.ouId = Number(sessionStorage.getItem('ouId'));
     this.deptId = Number(sessionStorage.getItem('deptId'));
     this.locId = Number(sessionStorage.getItem('locId'));
-    this.locationId = Number(sessionStorage.getItem('locId'));
+    // this.locationId = Number(sessionStorage.getItem('locId'));
     this.deptName = (sessionStorage.getItem('deptName'));
     this.invType = 'SS_SPARES';
     this.orderlineDetailsArray().controls[0].patchValue({ invType: 'SS_SPARES' });
@@ -403,7 +408,22 @@ export class CounterSalePerformaInvComponent implements OnInit {
 
   get f() { return this.CounterSaleOrderBookingForm.controls }
 
-  OrderFind(orderNumber) { }
+  OrderFind(orderNumber) {
+    this.orderManagementService.proformaOrderSearchNew(sessionStorage.getItem('divisionId'),orderNumber )
+    .subscribe(
+      data => {
+        if (data.code === 200) {
+          this.lstgetOrderLineDetails = data.obj.oeOrderLinesAllList;
+          let control = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+          for (let i = 0; i <= this.lstgetOrderLineDetails.length - 1; i++) {
+            var oeOrderLinesAllList1: FormGroup = this.orderlineDetailsGroup();
+            control.push(oeOrderLinesAllList1);
+          }
+          this.CounterSaleOrderBookingForm.patchValue(data.obj);
+        }
+    
+  })
+}
 
 
   onOptionsSelectedTransactionType(transactionTypeName: string) {
@@ -453,6 +473,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
         data => {
           if (data.code === 200) {
             this.selCustomer = data.obj;
+            this.displayCSOrderAndLineDt = false;
             this.custSiteList = data.obj.customerSiteMasterList;
             if (data.obj.tcsYN === 'Y') {
               this.CounterSaleOrderBookingForm.patchValue(data.obj);
@@ -775,6 +796,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
                         });
                      
                       }
+
                     }
               
                   }
@@ -807,6 +829,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
                             disAmt: 0
                           })
                         }
+                        this.setFocus('pricingQty' + k);
                       }
                     }
                   }
@@ -896,9 +919,9 @@ export class CounterSalePerformaInvComponent implements OnInit {
     this.displayCounterSaleLine.push(true);
     this.displayLineflowStatusCode.push(true);
     this.itemSeg = '';
-    var ln = len - 1;
+    var ln = len-1;
+    // alert(ln)
     this.setFocus('itemSeg' + ln);
-    var arrayControl = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
   }
 
 
@@ -944,7 +967,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
   }
 
   updateTotAmtPerline(lineIndex) {
-    alert(lineIndex);
+    // alert(lineIndex);
     var formArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     var formVal= formArr.getRawValue();
     // var tcsPer = this.CounterSaleOrderBookingForm.get('tcsPer').value;
@@ -1027,6 +1050,15 @@ export class CounterSalePerformaInvComponent implements OnInit {
     console.log(this.CounterSaleOrderBookingForm.value);
     console.log(formValue);
     let jsonData = this.CounterSaleOrderBookingForm.getRawValue();
+    var custPoDate = this.CounterSaleOrderBookingForm.get('custPoDate').value;
+    jsonData.orderedDate = this.pipe.transform(this.now, 'yyyy-MM-dd');
+    jsonData.refCustNo = this.CounterSaleOrderBookingForm.get('refCustNo').value;
+    jsonData.custPoNumber = this.CounterSaleOrderBookingForm.get('custPoNumber').value;
+    jsonData.custPoDate = this.pipe.transform(custPoDate, 'yyyy-MM-dd');
+    jsonData.emplId=sessionStorage.getItem('emplId');
+    jsonData.ouId = Number(sessionStorage.getItem('ouId'));
+    jsonData.locationId = Number(sessionStorage.getItem('locId'));
+    jsonData.deptId=sessionStorage.getItem('deptId');
     console.log(jsonData);
     this.orderManagementService.createProformaOrderFFn(jsonData).subscribe((res: any) => {
       if (res.code === 200) {

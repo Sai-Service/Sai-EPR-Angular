@@ -820,8 +820,8 @@
                             </fieldset>
                        
 
-                        <!-- <div *ngIf="showReason; then thenBlock2; else elseBlock2"></div>
-                        <ng-template #thenBlock2> -->
+                        <div *ngIf="showReasonDetails; then rsnBlock1; else rsnBlock2"></div>
+                        <ng-template #rsnBlock1>
 
                         <fieldset class="RFS">
                         <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Reversal Details</legend>
@@ -846,7 +846,7 @@
                             <td style="width: 15%" class="LabelFontStyle">Reversal&nbsp;Date:&nbsp;</td>
                                 
                             <td>
-                                <input  disabled  type="date"  formControlName="reversalDate"  id="reversalDate"  [(ngModel)]="reversalDate" class="form-control" >
+                                <input  disabled  type="date"  formControlName="reversalDate"  id="reversalDate" [(ngModel)]="reversalCategory"  value={{reversalDate}} class="form-control" >
                             </td>
 
                           
@@ -855,13 +855,6 @@
                                 <td>
                                     <input   type="text"  formControlName="reversalCategory"  id="reversalCategory"  [(ngModel)]="reversalCategory" class="form-control" >
                                 </td>
-
-                              
-                                <!-- <td style="width: 15%" class="LabelFontStyle">Comments&nbsp;:&nbsp;</td>
-                                
-                                <td>
-                                    <input  style="text-transform:uppercase;"  type="text"  formControlName="reversalComment"  id="reversalComment"  [(ngModel)]="reversalComment" class="form-control" >
-                                </td> -->
 
                               </tr>
 
@@ -875,7 +868,7 @@
                                 <td >
                                     <select formControlName="reversalComment" id="reversalComment" [(ngModel)]="reversalComment" class="form-control" style="width: 300px;" >
                                         <option disabled>--Select--</option>
-                                        <option *ngFor="let sc of  ChqBounceReasonList" [ngValue]="sc.code"  >
+                                        <option *ngFor="let sc of  ChqBounceReasonList" [(ngValue)]="sc.code"  >
                                            <!-- {{sc.code}}- -->
                                            {{sc.codeDesc}}
                                         </option>
@@ -884,29 +877,25 @@
 
                               </tr>
                             </ng-template>
-                            <ng-template #showLovNo></ng-template>
+                            <ng-template #showLovNo>
+
+                                <td style="width: 15%" class="LabelFontStyle">Comments&nbsp;:&nbsp;</td>
+                                
+                                <td>
+                                    <input  style="text-transform:uppercase;width: 300px;"  type="text"  formControlName="reversalComment"  id="reversalComment"  [(ngModel)]="reversalComment" class="form-control" >
+                                </td>
+                            </ng-template>
 
                              
                         </table>
                         </fieldset>
                         </ng-template>
-                        <ng-template #showTotalYes>
+                        <ng-template #rsnBlock2></ng-template>
 
                         </ng-template>
+                        <ng-template #showTotalYes> </ng-template>
 
-                        <!-- </ng-template>
-                        <ng-template #elseBlock2> </ng-template> -->
-                  
-
-
-
-
-                            <!-- <table style="width: 100%; background-color: #4d3f28;" >
-                            <tr>
-                                <td class="SubHeading2">&nbsp;&nbsp;</td>
-                            </tr>
-                            </table> -->
-
+                       
                              <!-- ----------------------------------------buttons-------------------- -->
                     <br>
                      <table class="center">
