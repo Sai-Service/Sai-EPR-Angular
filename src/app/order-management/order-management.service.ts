@@ -77,6 +77,11 @@ export class OrderManagementService {
     return this.http.get(this.ServerUrl +`/orderHeader/ACSPLoc?orderNumber=${orderNumber}&locationId=${locId}`);
   }
 
+
+  proformaOrderSearchNew(divisionId,orderNumber): Observable<any> {
+    return this.http.get(this.ServerUrl +`/Proforma/${divisionId}/${orderNumber}`);
+  }
+
   UpdateCounterSaleInv(UpdateCounterSaleInvRecord) {
     const options = {
       headers: this.headers
