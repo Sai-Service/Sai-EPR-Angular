@@ -60,7 +60,7 @@ export class OrderGenerationComponent implements OnInit {
   deptId: number;
   emplId: number;
 
-  orderNumber='BJ-2102100037'
+  orderNumber='BJ-2102100040'
   // orderNumber: string;
 
   fromDate = this.pipe.transform(Date.now(), 'y-MM-dd');
@@ -430,7 +430,7 @@ export class OrderGenerationComponent implements OnInit {
         data => {
           alert("Order Number : " + data.obj +" Created...");
           this.orderNumber = data.obj;
-          // if(data.obj !=null) { this.ShowOrder(data.obj) }
+          if(data.obj !=null) { this.ShowOrder(data.obj) }
         });
   }
 
@@ -920,11 +920,12 @@ export class OrderGenerationComponent implements OnInit {
     }
   }
 
-  NextLineCall(index) {
-    alert ("index1 :"+index)
-    var ln=index+1;
-    alert ("index2 :"+ln)
-    this.setFocus('orderQty'+index+1);
+  NextLineCall(index,event,fldName) {
+    // alert ("event.keyCode :"+  event.keyCode+ "," + fldName);
+    var len1 = this.lineDetailsArray().length - 1;
+    if (len1 === index  && event.keyCode===9 ) { this.addRow(index);return;}
+      var ln=index+1;
+      this.setFocus('orderQty'+ln);
   }
 
 }

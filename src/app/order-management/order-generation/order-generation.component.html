@@ -259,7 +259,7 @@
                     <th  scope="col" style="width: 4rem;">Set&nbsp;Qty</th>
                     <th  scope="col" style="width: 4rem;">Order&nbsp;Qty</th>
                     <th  scope="col">Order&nbsp;Value</th>
-                    <th  scope="col">Add+</th>
+                    <!-- <th  scope="col">Add+</th> -->
                </tr>
            </tbody>
            
@@ -284,19 +284,19 @@
                             <td> <input  disabled style="width:4rem;"  type="number" formControlName="totalCons" class="form-control"></td>
                             <td> <input  disabled style="width:4rem;"  type="number" formControlName="setQty" class="form-control"></td>
                             <td> <input   style="width:4rem;background-color: yellow;" name ='orderQty{{i}}' 
-                                type="number" formControlName="orderQty"   (keydown.tab)="NextLineCall(i)"  
+                                type="number" formControlName="orderQty"   (keydown.tab)="NextLineCall(i,$event,'ordQty')"  
                                 (keydown.enter)="enterKeyLock(i)" (change)="validateOrdQty(i)"  class="form-control" ></td>
                            
                            
-                            <td> <input  disabled style="width:6rem;"  type="number" formControlName="totalValue" class="form-control"></td>
+                            <td> <input  disabled style="width:7rem;"  type="number" formControlName="totalValue" class="form-control"></td>
                            
-                            <div *ngIf="orderUpdateStatus; then ord1; else ord2;"></div>
+                            <!-- <div *ngIf="orderUpdateStatus; then ord1; else ord2;"></div>
                             <ng-template #ord1>
                             <td><button  type="submit" class="btn btn-info" (click)="addRow(i)"  style="width: min-content;"><i class="fa fa-plus"></i></button>  </td>
                             </ng-template>
                             <ng-template #ord2>
                                 <td><button  disabled type="submit" class="btn btn-info" (click)="addRow(i)"  style="width: min-content;"><i class="fa fa-plus"></i></button>  </td>
-                            </ng-template>
+                            </ng-template> -->
                     </tr>
                     </ng-container>
                     </ng-container>
