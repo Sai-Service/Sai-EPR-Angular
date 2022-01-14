@@ -111,12 +111,13 @@ export class InterStateComponent implements OnInit {
   public minDate = new Date();
   getshiplist: any = [];
   frmLocatorId: number;
-  locData = [{
-    "locatorId": 999,
-    "segmentName": "D.U.01.D.01",
-    "id": 7,
-    "onHandQty": 40
-  }];
+  locData  :any= [];
+  // {
+  //   "locatorId": 999,
+  //   "segmentName": "D.U.01.D.01",
+  //   "id": 7,
+  //   "onHandQty": 40
+  // }
   Avalqty: number;
   onhand1: any;
   resveQty: number;
@@ -386,42 +387,20 @@ export class InterStateComponent implements OnInit {
 
   RemoveRow(OrderLineIndex) {
     alert(OrderLineIndex);
+    debugger;
     // this.orderlineDetailsArray().removeAt(OrderLineIndex);
     var trxLnArr2 = this.InterStateForm.get('oeOrderLinesAllList') as FormArray;
     var trxLnArr1=trxLnArr2.getRawValue();
     var itemid = trxLnArr1[OrderLineIndex].segment;
     var itemid1 = trxLnArr1[OrderLineIndex].itemId;
     var uuidref = trxLnArr1[OrderLineIndex].uuidRef;
-    var locatorId = trxLnArr1[OrderLineIndex].frmLocatorId;
-    var prc = trxLnArr1[OrderLineIndex].unitSellingPrice;
-    this.orderlineDetailsArray().removeAt(OrderLineIndex);
-    this.TaxDetailsArray().removeAt(OrderLineIndex);
     if (itemid != null || itemid != undefined) {
       this.deleteReserveLinewise(OrderLineIndex, itemid1, uuidref);
       this.itemMap3.delete(itemid);
-      // for (let x = 0; x < trxLnArr1.length; x++) {
-      //   if (itemid1 === trxLnArr1[x].itemId || itemid1 != null || itemid1 !=undefined) {
-      //     this.resverQty(x, itemid1, locatorId, prc);
-      //   }
-      // }
     }
-    // var formVal = this.InterStateForm.get('oeOrderLinesAllList').value;
-    // var formArr = this.InterStateForm.get('oeOrderLinesAllList') as FormArray;
-
-    // var basicAmt = 0;
-    // var taxAmt1 = 0;
-    // var totAmt = 0;
-    // var disAmt = 0;
-    // for (let i = 0; i < formVal.length; i++) {
-    //   (formArr.controls[i]).patchValue({
-    //     lineNumber: i + 1,
-    //   });
-    // }
-   
+    this.orderlineDetailsArray().removeAt(OrderLineIndex);
+    this.locData.removeAt(OrderLineIndex);
   }
-
-  
-
 
   onOptiongetItem(event) {
     
@@ -501,7 +480,7 @@ export class InterStateComponent implements OnInit {
       this.poLineTax = i;
       // var itemId = this.invItemList1[i].itemId;
       var taxCategoryId = taxCategoryId;
-      this.taxCategoryId = taxCategoryId;
+      //this.taxCategoryId = taxCategoryId;
       // var diss = 0;
       var arrayControl = this.InterStateForm.get('oeOrderLinesAllList').value
       var diss = arrayControl[i].diss1;
@@ -517,7 +496,7 @@ export class InterStateComponent implements OnInit {
       //     }
       //   );
       // }
-      this.service.taxCalforItem(this.itemId, this.taxCategoryId, diss, this.baseAmt)
+      this.service.taxCalforItem(this.itemId, taxCategoryId, diss, this.baseAmt)
         .subscribe(
           (data: any[]) => {
             this.taxCalforItem = data;
@@ -537,9 +516,10 @@ export class InterStateComponent implements OnInit {
               this.TaxDetailsArray().push(invLnGrp);
               this.InterStateForm.get('taxAmounts').patchValue(this.taxCalforItem);
             }
-
-          });
+            
+              });
     }
+
   }
   onOptionsSelectedDescription(event: any, k) {
     alert('desc' + k)
@@ -552,25 +532,15 @@ export class InterStateComponent implements OnInit {
     controlinv.controls[k].patchValue({ itemId: select.itemId});
     if (event != undefined) {
       
-      // this.itemId = select.itemId;
-      // var custtaxCategoryName = this.InterStateForm.get('custtaxCategoryName');
-      
-      // this.service.getItemDetail(select.itemId).subscribe(data => {
-      //   this.getItemDetail = data;
-      //   // alert("this.getItemDetail.description" + this.getItemDetail.description);
-      //   controlinv.controls[k].patchValue({ orderedItem: this.getItemDetail.description });
-      //   // controlinv.controls[k].patchValue({uom:this.getItemDetail.uom});
-      //   // controlinv.controls[k].patchValue({segment:this.getItemDetail.segment});
-      //   // trxLnArr1.controls[i].patchValue({frmSubInvCode:this.subInvCode.subInventoryCode});
-      // });
-      // if(event != null){}
-      alert(this.custtaxCategoryName)
+        alert(this.custtaxCategoryName)
       // else {
       this.orderManagementService.addonDescList1(event, this.custtaxCategoryName, this.priceListId)
         .subscribe(
           data => {
             if (data.code === 200) {
               this.addonDescList = data.obj; //// item iformation
+              console.log(data.obj);
+              
               for (let i = 0; i < data.obj.length; i++) {
                 var taxCatNm: string = data.obj[i].taxCategoryName;
                 alert(taxCatNm.includes)
@@ -580,24 +550,12 @@ export class InterStateComponent implements OnInit {
                     orderedItem: data.obj[i].description,
                     hsnSacCode: data.obj[i].hsnSacCode,
                     uom: data.obj[i].uom,
+                    taxCategoryName:data.obj[i].taxCategoryName,
+                    taxCategoryId:data.obj[i].taxCategoryId,
                     // unitSellingPrice: data.obj[0].priceValue,by vinita
                   });
-                  alert(this.custtaxCategoryName+'--'+ data.obj[i].taxPercentage)
-                  this.orderManagementService.getTaxCategoriesForSales(this.custtaxCategoryName, data.obj[i].taxPercentage)
-                    .subscribe(
-                      data1 => {
-                        this.taxCategoryList[k] = data1;
-                        // this.allTaxCategoryList[k] = data1;
-                        let itemCateNameList = this.taxCategoryList[k].find(d => d.taxCategoryName === data.obj[i].taxCategoryName);
-                        (controlinv.controls[k]).patchValue({
-                          taxCategoryId: itemCateNameList.taxCategoryId,
-                          taxCategoryName: itemCateNameList.taxCategoryName
-                        })
-                      }
-                    );
-
-                }
-              }
+                  alert(this.custtaxCategoryName+'--'+ data.obj[i].taxCategoryId)
+           
               if (select.itemId != null) {
                 this.service.getfrmSubLocPrice(this.locId, select.itemId, this.subInventoryId).subscribe(
                   data => {
@@ -653,65 +611,77 @@ export class InterStateComponent implements OnInit {
                   this.AvailQty(select.itemId,k);
                 });
             }
-            else if (data.code === 400) {
-              alert('res err' + data.message);
+            else  if (taxCatNm.includes('Sale-I-GST')) {
+              (controlinv.controls[k]).patchValue({
+                itemId: data.obj[i].itemId,
+                orderedItem: data.obj[i].description,
+                hsnSacCode: data.obj[i].hsnSacCode,
+                uom: data.obj[i].uom,
+                taxCategoryName:data.obj[i].taxCategoryName,
+                taxCategoryId:data.obj[i].taxCategoryId,
+                // unitSellingPrice: data.obj[0].priceValue,by vinita
+              });
+           
+              if (select.itemId != null) {
+                this.service.getfrmSubLocPrice(this.locId, select.itemId, this.subInventoryId).subscribe(
+                  data => {
+                    console.log(data);
+                    if (data.length === 0) {
+                      // alert('1')
+                      alert('Item Not Found In Stock!.');
+                      var lotList = [{ locatorId: 0, segmentName: 'Not Found' }]
+                      controlinv.controls[k].patchValue({ frmLocatorId: lotList });
+                      controlinv.controls[k].patchValue({ onHandQty: 0 });
+                      controlinv.controls[k].get('frmLocatorId').disable()
+                      return;
+                    }
+                    else {
+                      this.getfrmSubLoc = data;
+                      console.log(this.getfrmSubLoc);
+                      this.locData[k] = data;
+                      var selLocator = this.locData[k];
+                      controlinv.controls[k].get('frmLocatorId').enable();
+                      if (this.getfrmSubLoc.length == 1) {
+                        controlinv.controls[k].patchValue({ onHandId: selLocator[0].segmentName });
+                        controlinv.controls[k].patchValue({ frmLocatorId: selLocator[0].ROWNUM });
+                        controlinv.controls[k].patchValue({locatorId:selLocator[0].locatorId});
+                        controlinv.controls[k].patchValue({ frmLocator: selLocator[0].segmentName });
+                        controlinv.controls[k].patchValue({ onHandQty: selLocator[0].onHandQty });
+                        controlinv.controls[k].patchValue({ id: selLocator[0].id });
+                        controlinv.controls[k].patchValue({ unitSellingPrice: selLocator[0].prc });
+                      }
+                      else {
+                        // alert('2');
+                        // alert(selLocator[0].segmentName);
+                        alert('Please check Item has old stock with price');
+                        controlinv.controls[k].patchValue({ frmLocatorId: selLocator[0].ROWNUM });
+                        controlinv.controls[k].patchValue({ frmLocator: selLocator[0].segmentName });
+                        controlinv.controls[k].patchValue({locatorId:selLocator[0].locatorId});
+                        // controlinv.controls[k].patchValue({ frmLocatorId: selLocator[0].locatorId });
+                        controlinv.controls[k].patchValue({ onHandQty: selLocator[0].onHandQty })
+                        controlinv.controls[k].patchValue({ id: selLocator[0].id });
+                        controlinv.controls[k].patchValue({ unitSellingPrice: selLocator[0].prc });
+                      }
+                    }
+                  });
+
+
+              }
+              if (this.deptName == 'Spares') {
+                controlinv.controls[k].patchValue({ invType: 'SS_SPARES' });
+              }
+              this.service.getreserqty(this.locId, select.itemId).subscribe
+                (data => {
+                  this.resrveqty = data;
+                  controlinv.controls[k].patchValue({ resveQty: this.resrveqty });
+                  this.AvailQty(select.itemId,k);
+                });
             }
-            //   const hsnSacCode1 = data[i].hsnSacCode.substr(0, 8);
-            //  if (this.hsnSacCode ===null || hsnSacCode1.length <8){
-            //    alert('please confirm HSN/SAC Code!');
-            //  return;
-            //  }f
           }
-          // }
-        );
-      this.service.getfrmSubLocPrice(this.locId, select.itemId, this.subInventoryId).subscribe(
-        data => {
-           this.getfrmSubLoc = data;
-          console.log(data);
-          var getfrmSubLoc = data;
-          // alert(getfrmSubLoc.segmentName+'SegmentName')
-         this.locData[k] = data;
-          var selLocator = this.locData[k];
-         
-
-          // alert(i +'i');
-          this.locData[k] = data;
-          if (getfrmSubLoc.length == 1) {
-            controlinv.controls[k].patchValue({ onHandId: selLocator[0].segmentName });
-            controlinv.controls[k].patchValue({ frmLocatorId: selLocator[0].ROWNUM });
-            controlinv.controls[k].patchValue({locatorId:selLocator[0].locatorId});
-            controlinv.controls[k].patchValue({ frmLocator: selLocator[0].segmentName });
-            controlinv.controls[k].patchValue({ onHandQty: selLocator[0].onHandQty });
-            controlinv.controls[k].patchValue({ id: selLocator[0].id });
-            controlinv.controls[k].patchValue({ unitSellingPrice: selLocator[0].prc });
-          
           }
-          else {
-            // this.getfrmSubLoc=data;;
-            //  trxLnArr2.controls[i].patchValue({onHandId:getfrmSubLoc});
-             // alert(selLocator[0].segmentName);
-             alert('Please check Item has old stock with price');
-             controlinv.controls[k].patchValue({ frmLocatorId: selLocator[0].ROWNUM });
-             controlinv.controls[k].patchValue({ frmLocator: selLocator[0].segmentName });
-             controlinv.controls[k].patchValue({locatorId:selLocator[0].locatorId});
-             // controlinv.controls[k].patchValue({ frmLocatorId: selLocator[0].locatorId });
-             controlinv.controls[k].patchValue({ onHandQty: selLocator[0].onHandQty })
-             controlinv.controls[k].patchValue({ id: selLocator[0].id });
-             controlinv.controls[k].patchValue({ unitSellingPrice: selLocator[0].prc });
-          }
-
         });
-      if (this.deptName == 'Spares') {
-        controlinv.controls[k].patchValue({ invType: 'SS_SPARES' });
-      }
-      this.service.getreserqty(this.locId, select.itemId).subscribe
-        (data => {
-          this.resrveqty = data;
-          controlinv.controls[k].patchValue({ resveQty: this.resrveqty });
-          this.AvailQty(select.itemId,k);
-        });
-
     }
+    
   }
   AvailQty(event: any, i) {
     // alert(i+'I');
@@ -783,7 +753,7 @@ export class InterStateComponent implements OnInit {
     console.log(invLineNo1);
     var sum = 0;
     // var baseAmount = this.sum;
-    this.service.taxCalforItem(itemId, this.taxCategoryId, disAmt1, baseAmt)
+    this.service.taxCalforItem(itemId, taxCategoryId, disAmt1, baseAmt)
       .subscribe(
         (data: any[]) => {
           this.taxCalforItem = data;
@@ -796,10 +766,10 @@ export class InterStateComponent implements OnInit {
             }
           }
           (patch.controls[index]).patchValue({
-            baseAmt: baseAmt,
+            baseAmt: Math.round((baseAmt + Number.EPSILON) * 100) / 100,
             // baseAmtLineWise: arrayControl[index].baseAmtLineWise,
-            taxAmt: sum,
-            totAmt: baseAmt + sum,
+            taxAmt:Math.round((sum + Number.EPSILON) * 100) / 100,
+            totAmt: Math.round((baseAmt + sum + Number.EPSILON) * 100) / 100,
           });
           let controlinv1 = this.InterStateForm.get('taxAmounts') as FormArray;
           this.TaxDetailsArray().clear();
@@ -825,13 +795,13 @@ export class InterStateComponent implements OnInit {
 
     let select = this.taxCategoryList.find(d => d.taxCategoryName === taxCategoryName);
 
-    this.taxCategoryId = select.taxCategoryId;
+    //this.taxCategoryId = select.taxCategoryId;
     console.log(this.taxCategoryId);
 
     let controlinv = this.InterStateForm.get('taxAmounts') as FormArray;
     var diss = 0;
     if (this.baseAmt != undefined) {
-      this.service.taxCalforItem(this.itemId, this.taxCategoryId, diss, this.baseAmt)
+      this.service.taxCalforItem(this.itemId, select.taxCategoryId, diss, this.baseAmt)
         .subscribe(
           (data: any[]) => {
             this.lstInvLineDeatails1 = data;
@@ -913,7 +883,7 @@ export class InterStateComponent implements OnInit {
     // this.emplId = Number(sessionStorage.getItem('emplId'));
     formValue.divisionId=this.divisionId;
     for (let i = 0; i < formValue.oeOrderLinesAllList.length; i++) {
-     
+     alert(formValue.oeOrderLinesAllList[i].taxCategoryId);
       formValue.oeOrderLinesAllList[i].frmLocatorId =  formValue.oeOrderLinesAllList[i].locatorId;
     }
     this.orderManagementService.SaveCounterSaleOrder(formValue).subscribe((res: any) => {

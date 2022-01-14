@@ -308,9 +308,9 @@
                                                         <select class="form-control" style="height: 20px; width: 110px;"
                                                             formControlName="frmLocatorId"
                                                             (change)='AvailQty($event,i)'>
-                                                            <option>--Select--</option>
+                                                            <!-- <option>--Select--</option> -->
                                                             <option *ngFor="let locId of  locData[i]"
-                                                                [ngValue]="locId.ROWNUM">
+                                                                [value]="locId.ROWNUM">
                                                                 {{locId.segmentName}}--{{locId.onHandQty}}</option>
                                                       </select>
                                                         <input hidden formControlName="locatorId">
@@ -341,7 +341,7 @@
                                                         (change)="onKey(i)">
                                                 </td>
                                                 <td>
-                                                    <div
+                                                    <!-- <div
                                                         *ngIf="displaytaxCategoryName;then thentaxCategoryName;else elsetaxCategoryName">
                                                     </div>
                                                     <ng-template #thentaxCategoryName>
@@ -349,20 +349,20 @@
                                                             (change)='onOptionTaxCatSelected($event,i)'
                                                             class="form-control"
                                                             style="width: 160px;height: 25px;font-size: 10px;">
-                                                            <!-- <option>--Select--</option>(change)="onKey(i)" -->
+                                                         <option>--Select--</option>(change)="onKey(i)" 
                                                             <option *ngFor="let sc of  taxCategoryList[i]"
                                                                 [value]="sc.taxCategoryName">
                                                                 {{sc.taxCategoryName}}
                                                             </option>
                                                         </select>
                                                     </ng-template>
-                                                    <ng-template #elsetaxCategoryName>
+                                                    <ng-template #elsetaxCategoryName> -->
                                                         <input disabled type="text" formControlName="taxCategoryName"
                                                             class="form-control" style="height: 20px;width:fit-content">
-                                                    </ng-template>
+                                                    <!-- </ng-template>  [(ngModel)]='taxCategoryId' -->
                                                 </td>
                                                 <input hidden type="number" formControlName="taxCategoryId"
-                                                    [(ngModel)]='taxCategoryId' class="form-control"
+                                                    class="form-control"
                                                     style="height: 20px;width: 160px;">
                                                 <input hidden type="number" formControlName="orgId" [(ngModel)]='orgId'
                                                     class="form-control" style="height: 20px;width: 160px;">
