@@ -956,7 +956,7 @@ export class PaymentArComponent implements OnInit {
             this.showModalForm = false;
             this.enableApplyButton = false;
             this.enableCancelButton = true;
-            this.showReasonDetails=false;
+            this.showReasonDetails=true;
             // this.paymentArForm.disable();
             this.paymentArForm.get('reversalReasonCode').enable();
             this.paymentArForm.get('reversalCategory').enable();
@@ -973,6 +973,8 @@ export class PaymentArComponent implements OnInit {
 
             this.showModalForm = true;
             this.enableApplyButton = true;
+            this.enableCancelButton = true;
+            this.showReasonDetails=true;
             
             // this.paymentArForm.disable()
             this.paymentArForm.get('bankName').disable();
@@ -994,6 +996,7 @@ export class PaymentArComponent implements OnInit {
             }
             else {
               this.enableCancelButton = false;
+              this.showReasonDetails=false;
               this.paymentArForm.get('reversalReasonCode').disable();
               this.paymentArForm.get('reversalCategory').disable();
               this.paymentArForm.get('reversalComment').disable();
@@ -1011,6 +1014,7 @@ export class PaymentArComponent implements OnInit {
             this.showModalForm = false;
             this.enableApplyButton = false;
             this.enableCancelButton = false;
+            this.showReasonDetails=false;
             this.paymentArForm.disable();
           }
         } );

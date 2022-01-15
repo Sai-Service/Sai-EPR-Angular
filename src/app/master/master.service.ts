@@ -805,6 +805,15 @@ public AmcSchemeMasterSubmit(AmcSchemeMasterRecord) {
   // http://localhost:8081/schHdr
 }
 
+public AmcEnrollMasterSubmit(AmcEnrollMasterRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/amcEnroll';
+  return this.http.post(url, AmcEnrollMasterRecord, options);
+  // http://localhost:8081/schHdr
+}
+
 
 insNameList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/Customer/ClassCode/INSURER');

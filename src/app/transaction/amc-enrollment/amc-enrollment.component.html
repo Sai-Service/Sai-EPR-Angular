@@ -34,45 +34,19 @@
                 <tr>
                     <td style="width: 15%" class="LabelFontStyle">&nbsp;Reg&nbsp;No:&nbsp;</td>
                     <td> <input  type ="text" class="form-control" formControlName="regNo"  value={{regNo}} (change)="serchByRegNo(regNo)"
-                        style="background-color: yellow;" placeholder="Regno"> </td>
+                        style="background-color: yellow; text-transform: uppercase;" placeholder="Regno"> </td>
                     <td style="width: 15%" class="LabelFontStyle">&nbsp;Amc&nbsp;No:&nbsp;</td>
                     <td> <input  disabled type ="text" class="form-control" formControlName="amcNumber"  value={{amcNumber}}  > </td>
                     <td style="width: 15%" class="LabelFontStyle">&nbsp;Amc&nbsp;Date:&nbsp;</td>
                     <td> <input  disabled type ="date" class="form-control" formControlName="amcDate" [(ngModel)]='amcDate'  
                         value={{amcDate}} > </td>
-                   
+                        <td style="width: 15%" class="LabelFontStyle">&nbsp;Start&nbsp;Date:&nbsp;</td>
+                        <td> <input disabled type ="date" class="form-control" formControlName="startDate"  value={{startDate}}   > </td>
+                      
                        
                        
                 </tr>
-                <tr>
-                    <input hidden type ="text" class="form-control" formControlName="customerId"  value={{customerId}} >
-
-                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Service&nbsp;Advisor:&nbsp;</td>
-                    <td> <input  type ="text" class="form-control" formControlName="saName" [(ngModel)]='saName' placeholder="LOV"
-                        value={{saName}} style="background-color: yellow;" > </td>
-                  
-                        <td style="width: 15%" class="LabelFontStyle">&nbsp;Customer&nbsp;Name:&nbsp;</td>
-                        <td>
-                            <table>
-                                <tr>
-                                 <td > <input disabled style="width: 300px;"  type ="text" class="form-control" formControlName="custName" [(ngModel)]="custName" value={{custName}}  > </td>
-                        
-                                 <td>
-                                     <button type="button"  class="btn btn-primary" 
-                                     data-toggle="modal" data-target="#customerDetails"   style="width: 2rem;color: black;">
-                                     &nbsp;...&nbsp;</button>
-                                 </td>
-     
-                                </tr>
-                            </table>
-                        </td>
-                        <td style="width: 15%" class="LabelFontStyle">&nbsp;Customer&nbsp;No:&nbsp;</td>
-                        <td> <input disabled type ="text" class="form-control" formControlName="custAccountNo"  value={{custAccountNo}}  > </td>
-                      
-
-                          </tr>
-                
-
+               
                 <tr>
                    
                   
@@ -109,21 +83,64 @@
                         </select>
                     </td>
 
-                <!-- <td colspan="3"> <input   type ="text" class="form-control" formControlName="schemeNumber"  value={{schemeNumber}} style="background-color: yellow;width: 100%;" placeholder="LOV" > </td> -->
+                    <input hidden type ="text" class="form-control" formControlName="schemeId" [(ngModel)]='schemeId' value={{schemeId}} >
+
+                   
+                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Scheme&nbsp;Desc:&nbsp;</td>
+                    <td colspan="3"> <input disabled  style="width: 100%;" type ="text" class="form-control" formControlName="schemeDesc" [(ngModel)]='schemeDesc' value={{schemeDesc}} > </td>
                    
 
-                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Start&nbsp;Date:&nbsp;</td>
-                    <td> <input disabled type ="date" class="form-control" formControlName="startDate"  value={{startDate}}   > </td>
-                 
+                    <td style="width: 15%" class="LabelFontStyle">&nbsp;End&nbsp;Date:&nbsp;</td>
+                    <td> <input  disabled type ="date" class="form-control" formControlName="endDate"  value={{endDate}}   > </td>
+         
             </tr>
                 <tr>
+
+                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Material&nbsp;Dis(%):&nbsp;</td>
+                    <td> <input disabled type ="number" class="form-control" formControlName="discOnMatrl" [(ngModel)]='discOnMatrl'    value={{discOnMatrl}} > </td>
+                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Labour&nbsp;Dis(%):&nbsp;</td>
+                    <td> <input disabled type ="number" class="form-control" formControlName="discOnLabour" [(ngModel)]='discOnLabour'  value={{discOnLabour}} > </td>
+                    
                     <td style="width: 15%" class="LabelFontStyle">&nbsp;Start&nbsp;Kms:&nbsp;</td>
                     <td> <input disabled type ="number" class="form-control" formControlName="startKms"  value={{startKms}}   > </td>
                     <td style="width: 15%" class="LabelFontStyle">&nbsp;End&nbsp;Kms:&nbsp;</td>
-                    <td> <input disabled type ="number" class="form-control" formControlName="endKms"  value={{endKms}}   > </td>
-                    <td style="width: 15%" class="LabelFontStyle">&nbsp;End&nbsp;Date:&nbsp;</td>
-                    <td> <input  disabled type ="date" class="form-control" formControlName="endDate"  value={{endDate}}   > </td>
+                    <td> <input disabled type ="number" class="form-control" formControlName="schemeValidKm"  value={{schemeValidKm}}   > </td>
+                             
+
+                </tr>
+
+                <tr>
+
+                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Scheme&nbsp;Period:&nbsp;</td>
+                    <td> <input disabled type ="number" class="form-control" formControlName="schemeValidYears" [(ngModel)]='schemeValidYears'  
+                        value={{schemeValidYears}} > </td>
+                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Grace&nbsp;Period:&nbsp;</td>
+                    <td> <input disabled type ="number" class="form-control" formControlName="gracePeriod" [(ngModel)]='gracePeriod'
+                            value={{gracePeriod}} > </td>
+                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Total&nbsp;Period:&nbsp;</td>
+                    <td> <input disabled type ="number" class="form-control" formControlName="totalPeriod" [(ngModel)]='totalPeriod'
+                        value={{totalPeriod}} > </td>
+                </tr>
+
+                <tr>
+                    <input hidden type ="text" class="form-control" formControlName="customerId" [(ngModel)]='customerId' value={{customerId}} >
+
+                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Srv&nbsp;Advisor:&nbsp;</td>
+                    <td> <input  type ="text" class="form-control" formControlName="saName" [(ngModel)]='saName' placeholder="LOV"
+                        value={{saName}} style="background-color: yellow;" > </td>
+                  
+                    <!-- <td style="width: 15%" class="LabelFontStyle">&nbsp;Cust&nbsp;No:&nbsp;</td>
+                    <td> <input disabled type ="text" class="form-control" formControlName="custAccountNo"  value={{custAccountNo}}  > </td>
+                 -->
+                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Cust&nbsp;Name:&nbsp;</td>
                    
+                    <td colspan="3"> <input disabled style="width: 100%;" type ="text" class="form-control" formControlName="custName"  value={{custName}}  > </td>
+                    <td></td>
+                    <td>
+                        <button type="button"  class="btn btn-primary" 
+                        data-toggle="modal" data-target="#customerDetails"   style="width:fit-content;color: black;">
+                        Customer Details</button>
+                    </td>
 
                 </tr>
             </table>
@@ -153,12 +170,13 @@
                     <tr class="ItemStyle" style="text-decoration:none;">
                         <td><input disabled type="number" formControlName="amcLabBasicAmt" style="width: 9em;font-weight: bold;font-size: small;text-align: center;" ></td>
                         <td><input disabled type="number" formControlName="amcLabDiscount" style="width: 9em;font-weight: bold;font-size: small;text-align: center;" ></td>
-                        <td><input disabled type="number" formControlName="amdLabTax" style="width: 9em;font-weight: bold;font-size: small;text-align: center;" ></td>
-                        <td><input disabled type="number" formControlName="amcLabToal" style="width: 9em;font-weight: bold;font-size: small;text-align: center;" ></td>
+                        <td><input disabled type="number" formControlName="amcLabTax" style="width: 9em;font-weight: bold;font-size: small;text-align: center;" ></td>
+                        <td><input disabled type="number" formControlName="amcLabTotal" style="width: 9em;font-weight: bold;font-size: small;text-align: center;" ></td>
                         <td><input disabled type="number" formControlName="amcMatBasicAmt" style="width: 9em;font-weight: bold;font-size: small;text-align: center;" ></td>
                         <td><input disabled type="number" formControlName="amcMatDiscount" style="width: 9em;font-weight: bold;font-size: small;text-align: center;" ></td>
+                        
                         <td><input disabled type="number" formControlName="amdMatTax" style="width: 9em;font-weight: bold;font-size: small;text-align: center;" ></td>
-                        <td><input disabled type="number" formControlName="amcMatToal" style="width: 9em;font-weight: bold;font-size: small;text-align: center;" ></td>
+                        <td><input disabled type="number" formControlName="amcMatTotal" style="width: 9em;font-weight: bold;font-size: small;text-align: center;" ></td>
                         <td><input disabled type="number" formControlName="amcSchemeTotal" style="width: 10em;font-weight: bold;font-size: small;text-align: center;" ></td>
                     </tr>
 
@@ -179,25 +197,51 @@
                               cellspacing="0" cellpadding="4" rules="all" class="center">
                               <thead>
                                 <tr class="GridHeader">
-                                      <th style="width:4rem" scope="col">Srl No</th>
-                                      <th style="width:10rem" scope="col">Coupon Number</th>
-                                      <th style="width:20rem" scope="col">Coupon Description</th>
-                                      <th style="width:8rem" scope="col">Quantity</th>
-                                      <th style="width:8rem"  scope="col">Price</th>
-                                      <th style="width:8rem" scope="col">Utilized Qty</th>
-                                      <th style="width:8rem" scope="col">Balance Qty</th>
-                                      <th style="width:8rem"  scope="col">Total Amount</th>
+                                    <th style="width:4rem" scope="col">Srl No</th>
+                                    <th style="width:5rem" scope="col">Coupon Number</th>
+                                    <th style="width:5rem" scope="col">Item Code</th>
+                                    <th style="width:10rem" scope="col">Description</th>
+                                    <th style="width:5rem" scope="col">Coupon Type</th>
+                                    <th style="width:5rem" scope="col">Quantity</th>
+                                    <th style="width:5rem" scope="col">Utilized Qty</th>
+                                    <th style="width:5rem" scope="col">Balance Qty</th> 
+                                    <th style="width:5rem"  scope="col">Unit Price</th>
+                                    <th style="width:6rem"  scope="col">Amount</th>
+                                    <th style="width:6rem"  scope="col">Discount</th>
+                                    <th style="width:6rem"  scope="col">Taxable Amt</th>
+                                    <th style="width:3rem" scope="col">Tax%</th>
+                                    <th style="width:6rem" scope="col">Tax Amt</th>
+                                    <th style="width:7rem" scope="col">Total Amt</th>
+
+                                      <!-- <th style="width:8rem"  scope="col">Total Amount</th> -->
+                                     
                                    </tr>
                               </thead>
 
                             <tr *ngFor="let group of lineDetailsArray().controls; let i= index" [formGroupName]="i">
                                 
                                 <input hidden type="text" formControlName="couponId"  class="form-control"  >
-                                
+                                <input hidden   type="text" formControlName="cpnNumber"  class="form-control" >
+                               
                                 <td style="text-align: center;width: 4rem;">{{i+1}}</td>
-                                <td><input disabled style="width: 15rem;"  type="text" formControlName="couponNumber"  class="form-control" placeholder="Coupon Number" ></td>
-                                <td><input disabled style="width: 20rem;" type="text" formControlName="couponDesc"  class="form-control" placeholder="Coupon Description"  ></td>
-                               </tr>
+                                <td><input disabled style="width: 5rem;"  type="text" formControlName="couponNumber"  class="form-control" placeholder="Coupon Number" ></td>
+                                <td><input disabled style="width: 5rem;" type="text" formControlName="couponActualCode"  class="form-control"  ></td>
+                                <td><input disabled style="width: 10rem;" type="text" formControlName="couponDesc"  class="form-control"  ></td>
+                                <td><input disabled  style="width: 6rem;text-align: center;" type="text" formControlName="couponCode"  class="form-control"   ></td>
+                                <td><input disabled  style="width: 6rem;text-align: right;" type="number" formControlName="quantity"  class="form-control"   ></td>
+                                <td><input disabled style="width: 6rem;" type="number" formControlName="utilQty"  class="form-control"  ></td>
+                                <td><input disabled  style="width: 6rem;" type="number" formControlName="balQty"  class="form-control"   ></td>
+                                <td><input disabled style="width: 6rem;"  type="number" formControlName="unitPrice"  class="form-control"  ></td>
+                                <td><input disabled style="width: 6rem;" type="number" formControlName="amount"  class="form-control"   ></td>
+                                <td><input disabled style="width: 6rem;" type="number" formControlName="disc"  class="form-control"   ></td>
+                                <td><input disabled style="width: 6rem;"  type="number" formControlName="net"  class="form-control"  ></td>
+                                <td><input disabled  style="width: 5rem;text-align: center;" type="number" formControlName="gstpercentage"  class="form-control"   ></td>
+                                <td><input disabled style="width: 6rem;" type="number" formControlName="tax"  class="form-control"  ></td>
+                                <td><input disabled  style="width: 7rem;text-align: center;" type="number" formControlName="total"  class="form-control"   ></td>
+                            
+                               
+
+                            </tr>
                     </table>
 
                    

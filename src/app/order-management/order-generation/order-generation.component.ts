@@ -60,7 +60,7 @@ export class OrderGenerationComponent implements OnInit {
   deptId: number;
   emplId: number;
 
-  orderNumber='BJ-2102100040'
+  orderNumber='BJ-2102100001'
   // orderNumber: string;
 
   fromDate = this.pipe.transform(Date.now(), 'y-MM-dd');
@@ -449,7 +449,7 @@ export class OrderGenerationComponent implements OnInit {
     this.dispShowOrdButton = false;
     this.dispGenOrdButton = false;
     this.spinIcon=true;
-    this.dataDisplay ='Loading Order Details....Pls wait';
+    this.dataDisplay ='Loading Order Details....Pls wait..';
     // var mOrderNumber = this.orderGenerationForm.get('orderNumber').value
 
     this.service.getOrderListBajaj(mOrderNumber)
@@ -458,6 +458,7 @@ export class OrderGenerationComponent implements OnInit {
           this.lstOrderList = data;
           // alert ("Total order lines :" +data.length);
           if (data.length > 0) {
+           
            this.orderGenerationForm.get('orderNumber').disable();
             this.viewLogFile = true;
            
@@ -492,6 +493,7 @@ export class OrderGenerationComponent implements OnInit {
             this.CalculateOrdValue();
 
           } else { alert (mOrderNumber+ "  - Order Number doesn't exists");
+                   this.spinIcon=false; this.dataDisplay=null;
                    this.orderGenerationForm.get('orderNumber').enable();}
         });
 
@@ -929,8 +931,9 @@ export class OrderGenerationComponent implements OnInit {
     // alert ("event.keyCode :"+  event.keyCode+ "," + fldName);
     var len1 = this.lineDetailsArray().length - 1;
     if (len1 === index  && event.keyCode===9 ) { this.addRow(index);return;}
-      var ln=index+1;
-      this.setFocus('orderQty'+ln);
+
+      // var ln=index+1;
+      // this.setFocus('orderQty'+ln);
   }
 
 }

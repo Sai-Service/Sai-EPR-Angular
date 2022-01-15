@@ -34,7 +34,7 @@ export class AmcEnrollmentComponent implements OnInit {
    
   lstAmcSchemeList:any[];
   lstAmcSchLineDetails:any[];
-
+  lstAmcSchHeaderDetails:any;
   loginName:string;
   loginArray:string;
   divisionId:number;
@@ -52,17 +52,25 @@ export class AmcEnrollmentComponent implements OnInit {
   amcDate:Date;
   saName:string;
   regNo:string;
-  custNo :string;
+  // custNo :string;
   contactNo:string;
   custAddress:string;
 
   schemeGrp:string;
   schemeId:number;
   schemeNumber :string;
+  schemeDesc:string;
   startDate:Date;
   endDate :Date;
   startKms:number;
-  endKms:number;
+  schemeValidKm:number;
+  discOnMatrl:number;
+  discOnLabour:number;
+
+  schemeValidYears:number;
+  gracePeriod:number;
+  totalPeriod:number;
+
 
   customerId: number;
   dmsCustNo: number;
@@ -82,6 +90,21 @@ export class AmcEnrollmentComponent implements OnInit {
   custTdsPer:number;
 
   
+  amcLabBasicAmt:number=0;
+  amcLabDiscount:number=0;
+  amcLabTax:number=0;
+  amcLabTotal:number=0;
+  amcMatBasicAmt:number=0;
+  amcMatDiscount:number=0;
+  amdMatTax:number=0;
+  amcMatTotal:number=0;
+  amcSchemeTotal:number=0;
+
+  disAmount:number;
+  totAmtlab:number;
+  totAmtmat:number;
+
+  
 
   displayButton=true;
 
@@ -92,7 +115,7 @@ export class AmcEnrollmentComponent implements OnInit {
     loginName:[''],
     divisionId:[],
     ouName :[''],
-    locId:[''],
+    locId:[],
     locationId:[],
     locName :[''],
     ouId :[],
@@ -105,17 +128,25 @@ export class AmcEnrollmentComponent implements OnInit {
     saName:[],
     regNo:[],
 
-    custNo :[],
+    // custNo :[],
     contactNo:[],
     custAddress:[],
 
     schemeId:[],
     schemeGrp:[],
     schemeNumber :[],
+    schemeDesc:[],
     startDate:[],
     endDate :[],
     startKms:[],
-    endKms:[],
+    schemeValidKm:[],
+    discOnMatrl:[],
+    discOnLabour:[],
+
+    schemeValidYears:[],
+    gracePeriod:[],
+    totalPeriod:[],
+
 
     customerId:[],
     dmsCustNo:[],
@@ -133,30 +164,46 @@ export class AmcEnrollmentComponent implements OnInit {
     customerType:[],
     custTaxCategoryName:[],
     custTdsPer:[],
+
+    amcLabBasicAmt:[],
+    amcLabDiscount:[],
+    amcLabTax:[],
+    amcLabTotal:[],
+    amcMatBasicAmt:[],
+    amcMatDiscount:[],
+    amdMatTax:[],
+    amcMatTotal:[],
+    amcSchemeTotal:[],
+
+    disAmount:[],
+    totAmtlab:[],
+    totAmtmat:[],
+
+    utilQty:[],
+    balQty:[],
   
     amcItemList: this.fb.array([this.lineDetailsGroup()])   
 
   });
 }
 
-
 lineDetailsGroup() {
   return this.fb.group({ 
   itemId:[''],
+  schCoupId:[],
   couponId:[''],
   couponNumber:[''],
   couponDesc :['', [Validators.required]],    
   quantity:['', [Validators.required]],
-  value:['', [Validators.required]],
+  unitPrice:['', [Validators.required]],
+  amount:['', [Validators.required]],
+  disc:[],
+  net:[],
+  tax:[],
   total:['', [Validators.required]],
   couponCode:[],
   gstpercentage:[],
   couponActualCode:[],
-  discount:[],
-  taxableAmt:[],
-  taxAmt:[],
-  netAmt:[],
-
  });
 }
 
@@ -204,11 +251,17 @@ closeMast() {
   this.router.navigate(['admin']);
 }
 
-      serchByRegNo(mRegNo) {
+      serchByRegNo(mreg) {
        
-        var mreg=this.amcEnrollmentForm.get('regNo').value
-        alert(mreg);
-        this.service.getVehRegDetails(mreg)
+        var mRegNo=this.amcEnrollmentForm.get('regNo').value
+        if(mRegNo ===null || mRegNo ===undefined || mRegNo.trim() ===''){
+          alert ("Please Enter Vehicle Registration No...");return;
+         }
+         mRegNo=mRegNo.toUpperCase();
+
+         alert ("Reg No :" +mRegNo)
+
+        this.service.getVehRegDetails(mRegNo)
           .subscribe(
             data => {
               this.getVehRegDetails = data;
@@ -218,6 +271,7 @@ closeMast() {
 
               this.amcEnrollmentForm.patchValue({
                 customerId: this.getVehRegDetails.customerId,
+                regNo :mRegNo,
               });
               // this.enableCustAccount = false;
               this.GetCustomerDetails(this.getVehRegDetails.customerId);
@@ -282,18 +336,103 @@ closeMast() {
        
 
         onSelectAmcScheme(schNo){
+          if(schNo !=null) {
+            alert (this.customerId)
+          if(this.customerId >0) {
+
+          let selectedValue = this.lstAmcSchemeList.find(v => v.schemeNumber === schNo);
+          if( selectedValue != undefined){
+             console.log(selectedValue);
+            this.schemeDesc=selectedValue.schemeDesc;
+          } else {this.schemeDesc=null;}
+
         this.service.AmcSchemeDetails(schNo)
         .subscribe(
           data => {
-            this.lstAmcSchLineDetails = data.schCoupLst;
+            this.lstAmcSchLineDetails = data.amcItemList;
+            this.lstAmcSchHeaderDetails=data;
             console.log(this.lstAmcSchLineDetails);
+            console.log(this.lstAmcSchHeaderDetails);
+            this.showAmcPaymentDetails()
             var len = this.lineDetailsArray().length;
               for (let i = 0; i < this.lstAmcSchLineDetails.length - len; i++) {
               var invLnGrp: FormGroup = this.lineDetailsGroup();
               this.lineDetailsArray().push(invLnGrp);
-
             }
             this.amcEnrollmentForm.get('amcItemList').patchValue(this.lstAmcSchLineDetails);
-          });}
+            
+          });
+         } else {alert ("Please Enter Customer Vehilcle Registration no. and proceed."); 
+                this.amcEnrollmentForm.get('schemeNumber').reset();}
+      } }
+
+
+          showAmcPaymentDetails(){
+
+                // alert ("this.lstAmcSchHeaderDetails.amcLabBasicAmt : "+this.lstAmcSchHeaderDetails.amcLabBasicAmt)    
+                this.amcEnrollmentForm.patchValue({
+
+                  startDate: this.lstAmcSchHeaderDetails.startDate,
+                  schemeValidKm: this.lstAmcSchHeaderDetails.schemeValidKm,
+
+                  schemeValidYears: this.lstAmcSchHeaderDetails.schemeValidYears,
+                  gracePeriod: this.lstAmcSchHeaderDetails.gracePeriod,
+                  totalPeriod: this.lstAmcSchHeaderDetails.totalPeriod,
+                  
+                  discOnMatrl: Math.round((this.lstAmcSchHeaderDetails.discOnMaterial+Number.EPSILON)*100)/100,
+                  discOnLabour: Math.round((this.lstAmcSchHeaderDetails.discOnLabour+Number.EPSILON)*100)/100,
+                 
+
+                  amcLabBasicAmt: Math.round((this.lstAmcSchHeaderDetails.amcLabBasicAmt+Number.EPSILON)*100)/100,
+                  amcLabDiscount: Math.round((this.lstAmcSchHeaderDetails.amcLabDiscount+Number.EPSILON)*100)/100,
+                 
+
+                  amcLabTax: Math.round((this.lstAmcSchHeaderDetails.amcLabTax+Number.EPSILON)*100)/100,
+                  amcLabTotal: Math.round((this.lstAmcSchHeaderDetails.amcLabTotal+Number.EPSILON)*100)/100,
+                 
+                  // amcLabBasicAmt: Math.round((this.lstAmcSchHeaderDetails.amcLabBasicAmt+Number.EPSILON)*100)/100,
+                  // amcLabDiscount: Math.round((this.lstAmcSchHeaderDetails.amcLabDiscount+Number.EPSILON)*100)/100,
+                 
+                  // amcLabBasicAmt: Math.round((this.lstAmcSchHeaderDetails.amcLabBasicAmt+Number.EPSILON)*100)/100,
+                  // amcLabDiscount: Math.round((this.lstAmcSchHeaderDetails.amcLabDiscount+Number.EPSILON)*100)/100,
+                 
+                  amdMatTax: Math.round((this.lstAmcSchHeaderDetails.amdMatTax+Number.EPSILON)*100)/100,
+                  amcMatTotal: Math.round((this.lstAmcSchHeaderDetails.amcMatTotal+Number.EPSILON)*100)/100,
+                  amcSchemeTotal: Math.round((this.lstAmcSchHeaderDetails.amcSchemeTotal+Number.EPSILON)*100)/100,
+                 });
+               
+          }
+
+                    
+          transeData(val) {
+
+            delete val.loginArray;
+            delete val.loginName;
+            delete val.locName;
+            delete val.ouName;
+            delete val.locationId;
+            // delete val.ouId;
+            delete val.deptId;
+            // delete val.emplId;
+            delete val.orgId;
+
+          return val;
+          }
+          newMast() {
+            const formValue: IAmcEnroll =this.transeData(this.amcEnrollmentForm.value);
+            this.service.AmcEnrollMasterSubmit(formValue).subscribe((res: any) => {
+              if (res.code === 200) {
+                alert('RECORD INSERTED SUCCESSFUILY');
+                // this.mcpPackageMasterForm.reset();
+                this.displayButton=false;
+                this.amcEnrollmentForm.disable();
+              } else {
+                if (res.code === 400) {
+                  alert('ERROR WHILE INSERTING');
+                  // this.amcSchemeMasterForm.reset();
+                }
+              }
+            });
+          }
 
 }
