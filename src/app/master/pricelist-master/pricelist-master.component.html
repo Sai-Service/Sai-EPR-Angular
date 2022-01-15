@@ -37,7 +37,24 @@
                                                    
                         </tr>
                     </table>
-                    
+                    <!-- <fieldset> -->
+                        <table class="center">
+                            <tr>
+                                <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                                <ng-template #hList2> 
+                                    <div class="d-flex justify-content-center">
+                                        <div class="spinner-border text-primary" role="status" >
+                                              <span class="sr-only" id="loading"></span>
+                                       
+                                        </div>
+                                    </div>
+                              </ng-template>
+                              <ng-template #hList1> </ng-template>
+                               <!-- </td> -->
+                               <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">&nbsp;{{dataDisplay }}&nbsp; </td>
+                            </tr>
+                        </table>
+                    <!-- </fieldset>        -->
                     <fieldset class="RFS">
                     <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">PL Header Details</legend>
                    <table class="center">

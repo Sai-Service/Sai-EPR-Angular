@@ -105,6 +105,7 @@ interface AccOrderLinesPost1 {
   adhocFinanceOffer: number;
   adhocISL: number;
   itemType: string;
+  subDealerDesc:string;
 }
 
 
@@ -121,6 +122,7 @@ export class SalesOrderFormComponent implements OnInit {
   public op: string;
   private sub: any;
   invLineNo: number;
+  subDealerDesc:string;
   birthDate: Date;
   emailId1: string;
   basicValue: number;
@@ -263,6 +265,8 @@ export class SalesOrderFormComponent implements OnInit {
   custPoNumber: string;
   custPoDate: Date;
   refCustNo: string;
+  isDisabled3 = false;
+  isDisabled4=false;
 
   displaysegmentInvType: Array<boolean> = [];
   displayLineflowStatusCode: Array<boolean> = [];
@@ -292,6 +296,7 @@ export class SalesOrderFormComponent implements OnInit {
     this.SalesOrderBookingForm = fb.group({
       divisionName: [''],
       ouName: [''],
+      subDealerDesc:[],
       exchange: ['', [Validators.required]],
       priceListHeaderId: [''],
       taxiYN: [''],
@@ -1271,8 +1276,12 @@ export class SalesOrderFormComponent implements OnInit {
     this.displaySalesLines = false;
     this.displayAllButtons = false;
     this.displayCreateOrderButton = true;
-    this.displayCustomerSite = false;
+    this.displayCustomerSite=false;
+    this.isDisabled3 = true;
+    this.isDisabled4=true;
     this.currentOpration = 'orderSearch';
+    this.SalesOrderBookingForm.get('custName').disable();
+    this.SalesOrderBookingForm.get('mobile1').disable();
     this.emplId = Number(sessionStorage.getItem('emplId'))
     this.orderlineDetailsArray().clear();
     this.TaxDetailsArray().clear();
@@ -1287,6 +1296,7 @@ export class SalesOrderFormComponent implements OnInit {
             this.SalesOrderBookingForm.patchValue({ shipToAddress: data.obj.custAddress });
             this.SalesOrderBookingForm.patchValue({ priceListHeaderId: data.obj.priceListId });
             this.SalesOrderBookingForm.patchValue({ custTaxCat: data.obj.taxCategoryName });
+            this.SalesOrderBookingForm.patchValue({ fuelType: data.obj.fuelType });
             this.SalesOrderBookingForm.patchValue({name:data.obj.billLocName})
             let control = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
 
@@ -1361,6 +1371,7 @@ export class SalesOrderFormComponent implements OnInit {
                   this.SalesOrderBookingForm.get('exRegNo').disable();
                   this.SalesOrderBookingForm.get('insCharges').disable();
                   this.SalesOrderBookingForm.get('offerPrice').disable();
+                 
                 }
                 else {
                   this.displayRemoveRow[i] = false;
@@ -1817,12 +1828,25 @@ export class SalesOrderFormComponent implements OnInit {
             this.SalesOrderBookingForm.patchValue({ payTermDesc: select.lookupValue })
             this.SalesOrderBookingForm.get('custName').disable();
             this.SalesOrderBookingForm.get('mobile1').disable();
-            if (this.custSiteList.length === 1) {
-              this.SalesOrderBookingForm.patchValue({ name: this.custSiteList[0].siteName });
-              this.onOptionsSelectedcustSiteName(this.custSiteList[0].siteName);
+            for (let i = 0; i < this.custSiteList.length; i++) {
+              // alert(this.custSiteList.length + '----' + this.custSiteList[i].ouId + '-----' + sessionStorage.getItem('ouId'));
+              if (this.custSiteList.length === 1 && Number(this.custSiteList[i].ouId) === Number(sessionStorage.getItem('ouId'))) {
+                this.SalesOrderBookingForm.patchValue({ name: this.custSiteList[0].siteName });
+                this.onOptionsSelectedcustSiteName(this.custSiteList[0].siteName);
+              }
+              if (this.custSiteList.length > 1) {
+               if( Number(this.custSiteList[i].ouId) === Number(sessionStorage.getItem('ouId'))) {
+                this.SalesOrderBookingForm.patchValue({ name: this.custSiteList[i].siteName });
+              //  this.onOptionsSelectedcustSiteName(this.custSiteList[i].siteName);
+              }}
+              else if (this.custSiteList[i].ouId != (sessionStorage.getItem('ouId'))) {
+                alert('Please Create/Select Operating Unit wise Site to continue process!')
+              }
             }
             var custName = data.obj.custName;
-
+            this.isDisabled3 = true;
+            this.customerNameSearch.splice(0, this.customerNameSearch.length);
+            console.log(this.customerNameSearch);
 
             this.SalesOrderBookingForm.get('accountNo').disable();
           }

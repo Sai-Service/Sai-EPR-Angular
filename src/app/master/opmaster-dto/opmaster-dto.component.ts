@@ -123,6 +123,7 @@ export class OPMasterDtoComponent implements OnInit {
   // @ViewChild('poMasterDtoForm') poMasterDtoForm: ElementRef;
   supSelCnt: number;
   isDisabled = true;
+  discLineAmt:number;
   docType: string;
   private sub: any;
   selectedLine = 0;
@@ -371,6 +372,7 @@ export class OPMasterDtoComponent implements OnInit {
       // poDate: ['', [Validators.required]],
       // poType: ['', [Validators.required]],
       ouId: [''],
+      discLineAmt:[''],
       poDate: [''],
       poType: [''],
       segment1: [''],
@@ -1462,7 +1464,8 @@ export class OPMasterDtoComponent implements OnInit {
               (patch.controls[i]).patchValue({
                 baseAmtLineWise: arrayControl[i].baseAmtLineWise,
                 taxAmtLineWise: sum,
-                totAmtLineWise: arrayControl[i].baseAmtLineWise + sum,
+                discLineAmt:diss,
+                totAmtLineWise: arrayControl[i].baseAmtLineWise-diss + sum,
               });
             });
 
@@ -1738,8 +1741,8 @@ export class OPMasterDtoComponent implements OnInit {
 
     var trxLnArr = this.poMasterDtoForm.get('poLines').value;
     var trxLnArr1 = this.poMasterDtoForm.get('poLines') as FormArray
-    var orderedQty= trxLnArr[index].orderedQty;
-    var uomCode= trxLnArr[index].uom;
+    var orderedQty = trxLnArr[index].orderedQty;
+    var uomCode = trxLnArr[index].uom;
     if (uomCode === 'NO') {
       // alert(Number.isInteger(qty1)+'Status');
       if (!(Number.isInteger(orderedQty))) {
@@ -1757,8 +1760,8 @@ export class OPMasterDtoComponent implements OnInit {
     // }
     var patch = this.poMasterDtoForm.get('poLines') as FormArray;
     console.log(arrayControl);
-    
-   
+
+
     arrayControl[index].baseAmtLineWise = Math.round(((arrayControl[index].unitPrice * arrayControl[index].orderedQty) + Number.EPSILON) * 100) / 100;
     // var baseAmount = arrayControl[index].baseAmtLineWise;
     var baseAmount = Math.round(((arrayControl[index].baseAmtLineWise) + Number.EPSILON) * 100) / 100;
@@ -1788,16 +1791,16 @@ export class OPMasterDtoComponent implements OnInit {
 
               if (this.taxCalforItem[i].totTaxPer != 0) {
                 // sum = sum + this.taxCalforItem[i].totTaxAmt;
-                sum=  Math.round(((sum + this.taxCalforItem[i].totTaxAmt) + Number.EPSILON) * 100) / 100;
+                sum = Math.round(((sum + this.taxCalforItem[i].totTaxAmt) + Number.EPSILON) * 100) / 100;
               }
             }
             (patch.controls[index]).patchValue({
               // baseAmtLineWise: arrayControl[index].baseAmtLineWise,
               // taxAmtLineWise: sum,
               // totAmtLineWise: arrayControl[index].baseAmtLineWise + sum,
-              baseAmtLineWise : Math.round(((arrayControl[index].baseAmtLineWise) + Number.EPSILON) * 100) / 100,
-              taxAmtLineWise : Math.round(((sum) + Number.EPSILON) * 100) / 100,
-              totAmtLineWise : Math.round(((arrayControl[index].baseAmtLineWise + sum) + Number.EPSILON) * 100) / 100,
+              baseAmtLineWise: Math.round(((arrayControl[index].baseAmtLineWise) + Number.EPSILON) * 100) / 100,
+              taxAmtLineWise: Math.round(((sum) + Number.EPSILON) * 100) / 100,
+              totAmtLineWise: Math.round(((arrayControl[index].baseAmtLineWise + sum) + Number.EPSILON) * 100) / 100,
             });
             this.patchResultList(index, this.taxCalforItem);
           });
@@ -1808,10 +1811,10 @@ export class OPMasterDtoComponent implements OnInit {
   }
 
 
-  validate(index: number){
+  validate(index: number) {
     var trxLnArr = this.poMasterDtoForm.get('poLines').value;
-    var orderedQty= trxLnArr[index].orderedQty;
-    var uomCode= trxLnArr[index].uom;
+    var orderedQty = trxLnArr[index].orderedQty;
+    var uomCode = trxLnArr[index].uom;
     if (uomCode === 'NO') {
       // alert(Number.isInteger(qty1)+'Status');
       if (!(Number.isInteger(orderedQty))) {
@@ -1836,7 +1839,7 @@ export class OPMasterDtoComponent implements OnInit {
     formValue.supplierCode = this.supplierCode;
     formValue.ouId = this.ouId;
     formValue.currencyCode = 'INR';
-    formValue.divisionId= Number(sessionStorage.getItem('divisionId'));
+    formValue.divisionId = Number(sessionStorage.getItem('divisionId'));
     var arrayControl = this.poMasterDtoForm.get('poLines').value
     this.baseAmount = 0;
     this.totTaxAmt = 0;
@@ -1918,7 +1921,7 @@ export class OPMasterDtoComponent implements OnInit {
 
 
 
-  taxDetails(op, i,taxCategoryId) {
+  taxDetails(op, i, taxCategoryId) {
     this.poLineTax = i;
     this.displaytaxDisscountButton = false;
     this.displayTaxDetailForm = false;
@@ -2055,6 +2058,7 @@ export class OPMasterDtoComponent implements OnInit {
             {
               diss1: dissAmt,
               taxAmtLineWise: sum,
+              discLineAmt:diss1,
               totAmtLineWise: tolAmoutLine,
             }
           );
@@ -2177,8 +2181,9 @@ export class OPMasterDtoComponent implements OnInit {
 
   filterRecord(event, i) {
     var itemCode = event.target.value;
+    if (event.keyCode == 13) {
     if (itemCode.length === 4) {
-      if (event.keyCode == 13) {
+      // if (event.keyCode == 13) {
         this.service.invItemList2New('GOODS', (sessionStorage.getItem('deptName')), (sessionStorage.getItem('divisionId')), itemCode.toUpperCase())
           .subscribe((data) => {
             if (data.length === 0) {
@@ -2189,18 +2194,129 @@ export class OPMasterDtoComponent implements OnInit {
               this.invItemList = data;
             }
           });
-      }
+      // }
     }
+
+    if (itemCode.length === 8) {
+      alert('1hiii')
+      // if (event.keyCode == 13) {
+            console.log(this.invItemList);
+            this.service.invItemList2New('GOODS', (sessionStorage.getItem('deptName')), (sessionStorage.getItem('divisionId')), itemCode.toUpperCase())
+              .subscribe((data) => {
+                if (data.length === 0) {
+                  alert('Item Not Present in Master');
+                  return;
+                }
+                else {
+                  this.invItemList = data;
+                  alert('2hiiiiii')
+                }
+              });
+            // }
+          }
     else if (itemCode.length === 3) {
       alert('Please Enter 4 characters of item number!!');
       return;
     }
   }
+  }
+
+
+  // filterRecord(event, i) {
+  //   var itemCode1 = event.target.value;
+  //   alert(itemCode1);
+  //   if (event.keyCode == 13) {
+  //     var itemCode = '';
+  //     if (itemCode1.includes('--')) {
+  //       var itemCode2 = itemCode1.split('--');
+  //       itemCode = itemCode2[0];
+  //       // alert(itemCode + 'item in if');
+  //     } else {
+  //       itemCode = itemCode1;
+  //       // alert(itemCode + 'item in else');
+  //     }
+  //     alert(itemCode.length + 'length'+this.invItemList.length);
+  //     if (itemCode.length >= 4 && this.invItemList.length <= 1) {
+  //       this.service.invItemList2New('GOODS', (sessionStorage.getItem('deptName')), (sessionStorage.getItem('divisionId')), itemCode.toUpperCase())
+  //         .subscribe((data) => {
+  //           if (data.length === 0) {
+  //             alert('Item Not Present in Master');
+  //             return;
+  //           }
+  //           else {
+  //             this.invItemList = data;
+  //           }
+  //         });
+  //     } else {
+  //       if (this.invItemList.length <= 1) {
+  //         alert('Please Enter 4 characters of item number!!');
+  //         return;
+  //       }
+  //     }
+  //     if (itemCode.length === 8) {
+  //       console.log(this.invItemList);
+  //       this.service.invItemList2New('GOODS', (sessionStorage.getItem('deptName')), (sessionStorage.getItem('divisionId')), itemCode.toUpperCase())
+  //         .subscribe((data) => {
+  //           if (data.length === 0) {
+  //             alert('Item Not Present in Master');
+  //             return;
+  //           }
+  //           else {
+  //             this.invItemList = data;
+  //           }
+  //         });
+  //     }
+  //   }
+  // }
 
 
 
-
-
+  // filterRecord(event,i) {
+  //   var itemCode1 = event.target.value;
+  //   alert(itemCode1);
+  //   if (event.keyCode == 13) {
+  //     var itemCode = '';
+  //     if (itemCode1.includes('--')) {
+  //       var itemCode2 = itemCode1.split('--');
+  //       itemCode = itemCode2[0];
+  //       // alert(itemCode + 'item in if');
+  //     } else {
+  //       itemCode = itemCode1;
+  //       // alert(itemCode + 'item in else');
+  //     }
+  //     alert(itemCode.length + 'length'+this.invItemList.length);
+  //     if (itemCode.length >= 4 && this.invItemList.length <= 1) {
+  //       this.service.invItemList2New('GOODS', (sessionStorage.getItem('deptName')), (sessionStorage.getItem('divisionId')), itemCode.toUpperCase())
+  //         .subscribe((data) => {
+  //           if (data.length === 0) {
+  //             alert('Item Not Present in Master');
+  //             return;
+  //           }
+  //           else {
+  //             this.invItemList = data;
+  //           }
+  //         });
+  //     } else {
+  //       if (this.invItemList.length <= 1) {
+  //         alert('Please Enter 4 characters of item number!!');
+  //         return;
+  //       }
+  //     }
+  //     if (itemCode.length === 8) {
+  //       console.log(this.invItemList);
+  //       this.service.invItemList2New('GOODS', (sessionStorage.getItem('deptName')), (sessionStorage.getItem('divisionId')), itemCode.toUpperCase())
+  //         .subscribe((data) => {
+  //           if (data.length === 0) {
+  //             alert('Item Not Present in Master');
+  //             return;
+  //           }
+  //           else {
+  //             this.invItemList = data;
+  //           }
+  //         });
+  //     }
+  //   }
+  // }
 
 
 
