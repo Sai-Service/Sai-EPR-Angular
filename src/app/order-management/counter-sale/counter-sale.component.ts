@@ -170,6 +170,8 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   onhand1: any;
   Avalqty: number;
   isVisible: boolean = false;
+  isVisible15: boolean = false;
+  isVisible16: boolean = false;
   displayPerson: boolean;
   public minDate = new Date();
   public cityList: Array<string>[];
@@ -999,20 +1001,34 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
               this.PaymentButton = true;
               this.displaycounterSaleOrderSave = false;
               this.CounterSaleOrderBookingForm.disable();
+              this.isVisible15=false;
+              this.isVisible16=false;
+             this.CounterSaleOrderBookingForm.get('remarks').disable();
+              for (let i=0; data.obj.oeOrderLinesAllList.length; i++){
+                control.controls[i].get('flowStatusCode').disable();
+              }
             }
             else if (data.obj.orderStatus === 'INVOICED' && data.obj.gatePassYN === 'N') {
               //  alert(data.obj.orderStatus +'---'+data.obj.gatePassYN )
               this.displayAfterGatePass = true;
+              this.isVisible15=false;
+              this.isVisible16=false;
               this.isVisible = true;
               this.displaypickTicketUpdate = true;
               this.displaycounterSaleAllButtons = false;
               this.CounterSaleOrderBookingForm.get('boxQty').enable();
               this.CounterSaleOrderBookingForm.get('driverName').enable();
               this.CounterSaleOrderBookingForm.get('vehNo').enable();
+              this.CounterSaleOrderBookingForm.get('remarks').disable();
+              for (let i=0; data.obj.oeOrderLinesAllList.length; i++){
+                control.controls[i].get('flowStatusCode').disable();
+              }
             }
             else {
               this.displayAfterGatePass = true;
               this.isVisible = true;
+              this.isVisible15=true;
+              this.isVisible16=true;
             }
             if (data.obj.transactionTypeName === 'Accessories Sale - Cash' || data.obj.transactionTypeName === 'Spares Sale - Cash') {
               // this.paymentButton.nativeElement.hidden = true;
