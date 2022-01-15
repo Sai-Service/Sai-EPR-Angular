@@ -120,7 +120,8 @@ export class EpmloyeeMasterComponent implements OnInit {
       emailId: ['', [Validators.required, Validators.email, Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')]],
       contact1: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern('[0-9]*'), ]],
       contact2: ['', [Validators.minLength(10), Validators.maxLength(10), Validators.pattern('[0-9]*'), ]],
-      loginPass: ['', [Validators.required,Validators.minLength(5),Validators.maxLength(10)]],
+      // loginPass: ['', [Validators.required,Validators.minLength(5),Validators.maxLength(10)]],
+      loginPass:[''],
       status: ['', [Validators.required]],
       endDate:[''],
       loginAccess:[''],
@@ -214,10 +215,12 @@ export class EpmloyeeMasterComponent implements OnInit {
   }
 
   newMast() {
+    
     this.submitted = true;
     if(this.employeeMasterForm.invalid){
     return;
     } 
+
     const formValue: IEmployeeMaster = this.transData(this.employeeMasterForm.value);
     this.service.EmployeeMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
@@ -395,51 +398,53 @@ export class EpmloyeeMasterComponent implements OnInit {
   }
 
 
-   message: string = "Please Fix the Errors !";
-    msgType:string ="Close";
+   message: string = "Please Fix the Errors !";
+    msgType:string ="Close";
   
-    getMessage(msgType: string) {
-      this.msgType = msgType;
-      if (msgType.includes("Save")) {
-        this.submitted = true;
-        (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
-        if (this.employeeMasterForm.invalid) {
-          
-          //this.submitted = false;
-          (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '');
-          return;
-        }
-        this.message = "Do you want to SAVE the changes(Yes/No)?"
-        
-      }
+    getMessage(msgType: string) {
+      this.msgType = msgType;
+      if (msgType.includes("Save")) {
+        this.submitted = true;
+        (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
+        if (this.employeeMasterForm.invalid) {
+          
+          //this.submitted = false;
+          (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '');
+          return;
+        }
+        this.message = "Do you want to SAVE the changes(Yes/No)?"
+        
+      }
   
-      if (msgType.includes("Reset")) {
-        this.message = "Do you want to Reset the changes(Yes/No)?"
-      }
-      
-      if (msgType.includes("Close")) {
-        this.message = "Do you want to Close the Form(Yes/No)?"
-      }
-      return;
-    }
+      if (msgType.includes("Reset")) {
+        this.message = "Do you want to Reset the changes(Yes/No)?"
+      }
+      
+      if (msgType.includes("Close")) {
+        this.message = "Do you want to Close the Form(Yes/No)?"
+      }
+      return;
+    }
   
-   executeAction() {
-      if(this.msgType.includes("Save")) {
-       
-        this.newMast();
-      }
+   executeAction() {
+      if(this.msgType.includes("Save")) {
+       
+        this.newMast();
+      }
   
-      if (this.msgType.includes("Reset")) {
-        this.resetMast();
-  //       this.itemMasterForm.reset();
-      }
-      
-      if (this.msgType.includes("Close")) {
-        // this.closeItemCatMast();
-        this.router.navigate(['admin']);
-      }
-      return;
-    }
+      if (this.msgType.includes("Reset")) {
+        this.resetMast();
+  //       this.itemMasterForm.reset();
+      }
+      
+      if (this.msgType.includes("Close")) {
+        // this.closeItemCatMast();
+        this.router.navigate(['admin']);
+      }
+      return;
+    }
+
+
 
   exportToExcel1() {
     const ws: xlsx.WorkSheet =   

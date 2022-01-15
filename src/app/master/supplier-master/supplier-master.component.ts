@@ -908,6 +908,7 @@ else{
 
   searchBySuppCode(suppno) {
     this.currentOp = 'SEARCH';
+    if(suppno!=undefined){
     this.service.getsearchBySuppCode(suppno)
       .subscribe(
         data => {
@@ -952,8 +953,9 @@ else{
           // }
         }
       );
-  }
+  }}
   searchBySuppId(suppId) {
+    if(suppId!=undefined){
     this.service.getsearchBySuppCode(suppId)
       .subscribe(
         data => {
@@ -961,7 +963,7 @@ else{
           console.log(this.lstcommentsId);
           this.supplierMasterForm.patchValue(this.lstcommentsId);
         }
-      );
+      );}
   }
   onOuIdSelected(souId: any) {
     console.log(souId);

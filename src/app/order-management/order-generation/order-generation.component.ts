@@ -60,7 +60,7 @@ export class OrderGenerationComponent implements OnInit {
   deptId: number;
   emplId: number;
 
-  orderNumber='BJ-2102100037'
+  orderNumber='BJ-2102100040'
   // orderNumber: string;
 
   fromDate = this.pipe.transform(Date.now(), 'y-MM-dd');
@@ -269,8 +269,13 @@ export class OrderGenerationComponent implements OnInit {
     this.router.navigate(['admin']);
   }
 
+  addNewRow() {
+    var len1 = this.lineDetailsArray().length - 1;
+    this.addRow(len1);
+  }
+
   addRow(index) {
-   
+  
     var ordLineArr = this.orderGenerationForm.get('orderList').value;
     var len1 = this.lineDetailsArray().length - 1;
     if (len1 === index) {
@@ -407,7 +412,9 @@ export class OrderGenerationComponent implements OnInit {
         this.orderNumber = res.obj;
         this.orderGenerationForm.disable();
         this.displayButton = false;
+        this.spinIcon = false;
         this.getLatestOrderNumber(this.locId);
+        
       } else {
         if (res.code === 400) {
           // alert('Error While Saving Record:-' + res.obj);
@@ -426,25 +433,24 @@ export class OrderGenerationComponent implements OnInit {
     this.service.getOrderNumberLatest(mlocId)
       .subscribe(
         data => {
-          alert("Order Number : " + data.obj);
-          // this.lstLatestOrder =data.obj
-          // console.log(this.lstLatestOrder);
-          // alert(this.lstLatestOrder)
+          alert("Order Number : " + data.obj +" Created...");
           this.orderNumber = data.obj;
+          if(data.obj !=null) { this.ShowOrder(data.obj) }
         });
   }
 
 
   SearchByOrderNo(ordNo) {
-     this.ShowOrder();
+    var mOrderNumber = this.orderGenerationForm.get('orderNumber').value
+     this.ShowOrder(mOrderNumber);
   }
 
-  ShowOrder() {
+  ShowOrder(mOrderNumber) {
     this.dispShowOrdButton = false;
     this.dispGenOrdButton = false;
     this.spinIcon=true;
     this.dataDisplay ='Loading Order Details....Pls wait';
-    var mOrderNumber = this.orderGenerationForm.get('orderNumber').value
+    // var mOrderNumber = this.orderGenerationForm.get('orderNumber').value
 
     this.service.getOrderListBajaj(mOrderNumber)
       .subscribe(
@@ -866,13 +872,13 @@ export class OrderGenerationComponent implements OnInit {
     return;
   }
 
-  setFocus(name) {
+  // setFocus(name) {
 
-    const ele = this.aForm.nativeElement[name];
-    if (ele) {
-      ele.focus();
-    }
-  }
+  //   const ele = this.aForm.nativeElement[name];
+  //   if (ele) {
+  //     ele.focus();
+  //   }
+  // }
 
 
   exportToExcel1() {
@@ -911,7 +917,20 @@ export class OrderGenerationComponent implements OnInit {
   }
 
 
+  setFocus(name) {
 
+    const ele = this.aForm.nativeElement[name];
+    if (ele) {
+      ele.focus();
+    }
+  }
 
+  NextLineCall(index,event,fldName) {
+    // alert ("event.keyCode :"+  event.keyCode+ "," + fldName);
+    var len1 = this.lineDetailsArray().length - 1;
+    if (len1 === index  && event.keyCode===9 ) { this.addRow(index);return;}
+      var ln=index+1;
+      this.setFocus('orderQty'+ln);
+  }
 
 }

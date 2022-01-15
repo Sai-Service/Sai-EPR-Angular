@@ -311,6 +311,7 @@
                             <input disabled type="text" [ngModel]="status" formControlName="status" class="form-control" >
                         </td>
                     </tr>
+
                     <tr *ngIf="displayRolePass">
                         <td style="width: 10%" class="LabelFontStyle">
                             Role&nbsp;Id&nbsp;:
@@ -320,13 +321,16 @@
                             [ngClass]="{ 'is-invalid': submitted && f.roleId.errors }"
                             >
                         </td>
+
                         <td style="width: 10%" class="LabelFontStyle">
                             Password&nbsp;&nbsp;:
                         </td>
+
                         <td>
                             <input type="password" formControlName="loginPass" value={{loginPass}} class="form-control"
                             [ngClass]="{ 'is-invalid': submitted && f.loginPass.errors }"
                             placeholder="Please enter password">
+                           
                             <div *ngIf="submitted && f.loginPass.errors" class="invalid-feedback">
                                 <div *ngIf="f.loginPass.errors.required">Please
                                     Enter password upto 10 digits</div>
@@ -340,6 +344,7 @@
                             Enter password upto 10 digits</span> -->
                         </td>
                     </tr>
+
                     <td style="width: 10%" class="LabelFontStyle1">
                         Team&nbsp;Role&nbsp;:
                     </td>
