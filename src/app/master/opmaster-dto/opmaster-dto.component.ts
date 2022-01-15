@@ -1464,7 +1464,7 @@ export class OPMasterDtoComponent implements OnInit {
               (patch.controls[i]).patchValue({
                 baseAmtLineWise: arrayControl[i].baseAmtLineWise,
                 taxAmtLineWise: sum,
-                // discLineAmt:diss,
+                discLineAmt:diss,
                 totAmtLineWise: arrayControl[i].baseAmtLineWise-diss + sum,
               });
             });
@@ -2058,7 +2058,7 @@ export class OPMasterDtoComponent implements OnInit {
             {
               diss1: dissAmt,
               taxAmtLineWise: sum,
-              // discLineAmt:diss1,
+              discLineAmt:diss1,
               totAmtLineWise: tolAmoutLine,
             }
           );
