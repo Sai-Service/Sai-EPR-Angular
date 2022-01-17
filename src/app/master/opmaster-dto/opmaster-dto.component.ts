@@ -764,7 +764,7 @@ export class OPMasterDtoComponent implements OnInit {
       invDescription: [],
       invCategory: [],
       uom: [],
-      discLineAmt:[0],
+      discLineAmt:[],
       hsnSacCode: [],
       gstPercentage: [],
       taxCategoryName: [],
