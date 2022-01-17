@@ -2483,13 +2483,6 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
                 console.log(this.taxCategoryList[k]);
                
                 this.allTaxCategoryList[k] = data1;
-                // let itemCateNameList = this.taxCategoryList[i].find(d => d.taxCategoryName === data1.obj[i].taxCategoryName);
-                // console.log(itemCateNameList);
-
-                // (controlinv.controls[i]).patchValue({
-                //   taxCategoryId: itemCateNameList.taxCategoryId,
-                //   taxCategoryName: itemCateNameList,
-                // })
               }
             );
           }

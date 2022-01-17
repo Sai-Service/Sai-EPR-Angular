@@ -212,5 +212,61 @@ export class ReportServiceService {
       headers: this.headers,
     });
   }
+
+
+
+  //////////////////////////// Service URL Srarted /////////////////////////
+
+  
+
+
+  jobSummaryReport(fromDate,toDate,locId){
+    const REQUEST_URI = this.ServerUrl +`/ServiceReports/JobCardSummary?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+  servindToDtReport(fromDate,toDate,locId){
+    const REQUEST_URI = this.ServerUrl +`/ServiceReports/ServiceIndRep?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+
+///////////////////// Sales Reports API Starts ////////////////////
+
+vhslRegisterReport(fromDate,toDate,locId){
+  const REQUEST_URI = this.ServerUrl +`/SalesReports/VehSalesReg?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}`;
+  return this.http.get(REQUEST_URI, {
+    // params: REQUEST_PARAMS,
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
+}
+
+salesINDReport(fromDate,toDate,locId){
+  const REQUEST_URI = this.ServerUrl +`/SalesReports/VehIndReg?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}`;
+  return this.http.get(REQUEST_URI, {
+    // params: REQUEST_PARAMS,
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
+}
+
+salesbookingregReport(fromDate,toDate,locId){
+  const REQUEST_URI = this.ServerUrl +`/SalesReports/VehBookReg?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}`;
+  return this.http.get(REQUEST_URI, {
+    // params: REQUEST_PARAMS,
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
+}
+
 }
 

@@ -200,7 +200,7 @@
                                                     data-bs-toggle="modal" data-bs-target="#customerNameSearchModel">
                                             </td>
                                             <td>
-                                                <button type="button" class="btn btn-primary"
+                                                <button type="button" class="btn btn-primary" [disabled]="isDisabled3"
                                                     (click)="custNameSearch(custName)" data-toggle="modal"
                                                     data-target="#customerNameSearchModel"
                                                     style="width: 2rem;color: white;">
@@ -283,7 +283,7 @@
                                                     data-bs-toggle="modal" data-bs-target="#contactNoSearchModel">
                                             </td>
                                             <td>
-                                                <button type="button" class="btn btn-primary"
+                                                <button type="button" class="btn btn-primary" [disabled]="isDisabled4"
                                                     (click)="searchByContact(mobile1)" data-toggle="modal"
                                                     data-target="#contactNoSearchModel"
                                                     style="width: 2rem;color: white;">
@@ -720,7 +720,7 @@
                             <td>
                             <input disabled type="text" formControlName="subDealerDesc" [(ngModel)]='subDealerDesc'
                             value={{subDealerDesc}} class="form-control" style="width: 170px;">
-                            <input disabled type="text" formControlName="subDealerId" [(ngModel)]='subDealerId'
+                            <input hidden disabled type="text" formControlName="subDealerId" [(ngModel)]='subDealerId'
                             value={{subDealerId}} class="form-control" style="width: 170px;">
                         </td>
                         </tr>
@@ -929,15 +929,13 @@
                                                 Finance&nbsp;Amount&nbsp;:&nbsp;
                                             </td>
                                             <td>
-                                                <input type="text" formControlName="financeAmt" [(ngModel)]='financeAmt'
-                                                    value={{financeAmt}} class="form-control" style="width: 150px;">
+                                                <input type="text" formControlName="financeAmt" value={{financeAmt}} class="form-control" style="width: 150px;">
                                             </td>
                                             <td style="width: 15%" class="LabelFontStyle">
                                                 EMI&nbsp;:&nbsp;
                                             </td>
                                             <td>
-                                                <input type="text" formControlName="emi" [(ngModel)]='emi' value={{emi}}
-                                                    class="form-control" style="width: 150px;">
+                                                <input type="text" formControlName="emi"  value={{emi}}  class="form-control" style="width: 150px;">
                                             </td>
                                         </ng-template>
                                         </tr>
@@ -950,16 +948,13 @@
                                                 Tenure&nbsp;:&nbsp;
                                             </td>
                                             <td>
-                                                <input type="text" formControlName="tenure" [(ngModel)]='tenure'
-                                                    value={{tenure}} class="form-control" style="width: 170px;">
+                                                <input type="text" formControlName="tenure"  value={{tenure}} class="form-control" style="width: 170px;">
                                             </td>
                                             <td style="width: 15%" class="LabelFontStyle">
                                                 Down&nbsp;Payment&nbsp;:&nbsp;
                                             </td>
                                             <td>
-                                                <input type="text" formControlName="downPayment"
-                                                    [(ngModel)]='downPayment' value={{downPayment}} class="form-control"
-                                                    style="width: 170px;">
+                                                <input type="text" formControlName="downPayment" value={{downPayment}} class="form-control" style="width: 170px;">
                                             </td>
                                         </tr>
                                     </ng-template>
@@ -2066,6 +2061,10 @@
                             </td>
                             <td>
                                 <button type="submit" class="btn btn-primary" (click)="SOA()">SOA</button>
+                            </td>
+
+                            <td>
+                                <button type="submit" class="btn btn-primary" [style.display]="isVisible5 ? 'block' : 'none'" (click)="finexchangeUpdate()" [disabled]="isDisabled5" style="width: fit-content;height: fit-content;">Finanace/Exchange Update</button>
                             </td>
                             <!-- <div [style.display]="isVisible2 ? 'block' : 'none'" style="display: inline-block;"> -->
                             <td>

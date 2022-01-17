@@ -531,6 +531,14 @@ public pickTicketInvoiceFun(pickTicketInvDels) {
     return this.http.put(url, TaxCategoryupdate, options);
   }
 
+  finexchangeUpdate(formValue){
+    const options = {
+      headers: this.headers
+    };
+    const url = (this.ServerUrl + `/orderHeader/financeDetUpdate`);
+    return this.http.put(url, formValue, options);
+  }
+
   UpdateSalesUpdateLine(UpdateSaleUpdateRecord) {
     const options = {
       headers: this.headers

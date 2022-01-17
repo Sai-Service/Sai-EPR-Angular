@@ -1347,19 +1347,19 @@
                               Journal&nbsp;:&nbsp;
                           </td>
                           <td>
-                              <input disabled formControlName="jeSource" id="jeSource" class="form-control" [ngModel]="jeSource" >
+                              <input disabled formControlName="jeSource" id="jeSource" class="form-control" [(ngModel)]="jeSource" >
                           </td>
                           <td style="width: 18%" class="LabelFontStyle">
                               Description&nbsp;:&nbsp;
                           </td>
                           <td>
-                              <input disabled formControlName="name" class="form-control" [ngModel]="name" >
+                              <input disabled formControlName="name" class="form-control" [(ngModel)]="name" >
                           </td>
                           <td style="width: 18%" class="LabelFontStyle">
                               Ledger&nbsp;:&nbsp;
                           </td>
                           <td>
-                              <input disabled formControlName="ledgerName" class="form-control" [ngModel]="ledgerName" >
+                              <input disabled formControlName="ledgerName" class="form-control" [(ngModel)]="ledgerName" >
                           </td>
                       </tr>
                       <tr>
@@ -1367,13 +1367,13 @@
                               Category&nbsp;:&nbsp;
                           </td>
                           <td>
-                              <input disabled formControlName="jeCategory" id="jeCategory" class="form-control" [ngModel]="jeCategory" >
+                              <input disabled formControlName="jeCategory" id="jeCategory" class="form-control" [(ngModel)]="jeCategory" >
                           </td>
                           <td style="width: 18%" class="LabelFontStyle">
                               Date&nbsp;:&nbsp;
                           </td>
                           <td>
-                              <input disabled formControlName="postedDate" id="postedDate" class="form-control" [ngModel]="postedDate" >
+                              <input disabled formControlName="postedDate" id="postedDate" class="form-control" [(ngModel)]="postedDate" >
                           </td>
                           <td style="width: 18%" class="LabelFontStyle">
                               Period&nbsp;:&nbsp;
@@ -1397,7 +1397,7 @@
                             </tr>
                           </thead>
                           <tbody>
-                              <tr *ngFor="let com of viewAccountingArdata" class="ItemStyle" style="text-decoration:none;">
+                              <tr *ngFor="let com of viewAccounting1" class="ItemStyle" style="text-decoration:none;">
                                 <td>{{com.jeLineNum}}</td>
                                 <td>{{com.segmentName}}</td>
                                 <td style="text-align: right;">{{com.enteredDr}}</td>
