@@ -134,7 +134,7 @@ export class ARInvoiceComponent implements OnInit {
   viewAccounting1: any[];
   viewAccounting2: any[];
   docSeqValue:string;
-  name1:string;
+  name1:number;
   ledgerId:number;
   description:string;
 
@@ -200,6 +200,7 @@ export class ARInvoiceComponent implements OnInit {
       class: [],
       locId: [],
       trxNumber1: [],
+      name1:[],
       trxNumber: [],
       custTrxTypeId: [],
       referenceNo: [],
@@ -2059,7 +2060,7 @@ export class ARInvoiceComponent implements OnInit {
 
   }
 
-  viewAccounting(trxNumber){
+  viewAccountingold(trxNumber){
     // var tranNo=this.arInvoiceForm.get('transactionNo').value;
     this.service.viewAccountingAR(trxNumber)
       .subscribe((res:any) =>{
@@ -2089,6 +2090,32 @@ export class ARInvoiceComponent implements OnInit {
 
   }
 
+
+  viewAccounting(trxNumber: any) {
+    // alert(receiptNo);
+    this.service.viewAccountingAR(trxNumber).subscribe((res: any) => {
+      if (res.code === 200) {
+        this.viewAccounting2 = res.obj;
+        this.description = res.obj.description;
+        this.periodName = res.obj.periodName;
+        this.postedDate = res.obj.postedDate;
+        this.jeCategory = res.obj.jeCategory;
+        this.name1 = res.obj.name;
+        this.ledgerId = res.obj.ledgerId;
+        this.runningTotalDr = res.obj.runningTotalDr;
+        this.runningTotalCr = res.obj.runningTotalCr;
+        this.docSeqValue=res.obj.docSeqValue;
+        console.log(this.description);
+        this.viewAccounting1 = res.obj.glLines;
+        console.log(this.viewAccounting1);
+        // alert(res.message);
+      } else {
+        if (res.code === 400) {
+          alert(res.message);
+        }
+      }
+    });
+  }
 
 
 }
