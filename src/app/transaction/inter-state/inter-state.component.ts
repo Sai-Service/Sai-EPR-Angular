@@ -194,6 +194,7 @@ export class InterStateComponent implements OnInit {
       taxAmounts: this.fb.array([this.TaxDetailsGroup()]),
     })
   }
+
   orderlineDetailsGroup() {
     return this.fb.group({
       // lineNumber:[''],
@@ -693,6 +694,7 @@ export class InterStateComponent implements OnInit {
     // alert(locId1);
     console.log(this.getfrmSubLoc);
     var locId = this.getfrmSubLoc.find(d => d.ROWNUM === locId1)
+    alert(locId.locatorId);
     var onhandid = trxLnArr[i].id;
     this.service.getonhandqty(Number(sessionStorage.getItem('locId')), this.subInventoryId, locId.locatorId, itemid).subscribe
       (data => {
@@ -715,18 +717,9 @@ export class InterStateComponent implements OnInit {
             'Transfer is not allowed,Item has Reserve quantity - ' + reserve
           );
 
-        var trxLnArr3 = this.InterStateForm.get('oeOrderLinesAllList').value;
-        // trxLnArr1.controls[i].patchValue({ Avalqty: avlqty1 });
-        // var len = this.orderlineDetailsArray().length;
-        trxLnArr3.controls[i].reset();
-        // trxLnArr3.controls[i].get('segment').reset();
-        // (trxLnArr1.controls[len - 1]).patchValue(
-        //   {
-        //     lineNumber:len,
-        //     flowStatusCode:'BOOKED',
-        //   }
-        // );
-        return  0;
+        var trxLnArr3 = this.InterStateForm.get('oeOrderLinesAllList') as FormArray;
+        trxLnArr3.controls[i].patchValue({segment:'',orderedItem:'',frmLocatorId:'',unitSellingPrice:'',taxCategoryName:'',hsnSacCode:''});
+        // trxLnArr3[i].reset();
        }
       else
     {
