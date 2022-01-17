@@ -1,4 +1,4 @@
-<form [formGroup]="InterStateForm" (ngSubmit)="InterState(InterStateForm.value)">
+<form [formGroup]="InterStateForm" (ngSubmit)="InterState(InterStateForm.value)" #instateForm>
     <!--
   <input hidden class="form-control" formControlName="locCode" [(ngModel)]='locCode'>
   <input hidden class="form-control" formControlName="locId" [(ngModel)]='locId'>
@@ -90,13 +90,15 @@
                     Price&nbsp;List&nbsp;:&nbsp;
                 </td>
                 <td>
-                    <select formControlName="priceListName" id="priceListName" class="form-control"
+                        <input disabled type="text" formControlName="priceListName" [(ngModel)]='priceListName'
+                        value={{priceListName}} class="form-control" style="width: 160px;">
+                    <!-- <select formControlName="priceListName" id="priceListName" class="form-control"
                         [(ngModel)]="priceListName" style="width: 160px;">
                         <option>--Select--</option>
                         <option *ngFor="let pl of priceListNameList">
                             {{pl.priceListName}}
                         </option>
-                    </select>
+                    </select> -->
                     <input hidden disabled type="text" formControlName="priceListId" [(ngModel)]='priceListId'
                         value={{priceListId}} class="form-control" style="width: 160px;">
                 </td>
@@ -178,14 +180,14 @@
                     Name:&nbsp;
                 </td>
                 <td colspan="3">
-                    <input type="text" class="form-control" formControlName="custName" [(ngModel)]='custName'
+                    <input disabled type="text" class="form-control" formControlName="custName" [(ngModel)]='custName'
                         value={{custName}} style="width: 100%;">
                 </td>
                 <td style="width: 15%" class="LabelFontStyle">
                     Contact&nbsp;No&nbsp;:&nbsp;
                 </td>
                 <td>
-                    <input class="form-control" formControlName="mobile1" [(ngModel)]='mobile1' value={{mobile1}}
+                    <input disabled class="form-control" formControlName="mobile1" [(ngModel)]='mobile1' value={{mobile1}}
                         style="width: 100%;">
                 </td>
             </tr>
@@ -398,6 +400,8 @@
                                                     <input disabled type="text" formControlName="flowStatusCode"
                                                         class="form-control" style="height: 20px;width: 70px;">
                                                 </td>
+                                                <div *ngIf="displayaddButton; then thenBlockopen; else elseBlockfreeze"> </div>
+                                                <ng-template #thenBlockopen>
                                                 <td>
                                                     <button type="submit" class="btn btn-primary" (click)="addRow(i)"
                                                         style="width: min-content;"><i class="fa fa-plus"></i></button>
@@ -406,6 +410,17 @@
                                                     <button type="submit" class="btn btn-primary" (click)="RemoveRow(i)"
                                                         style="width: min-content;"><i class="fa fa-trash"></i></button>
                                                 </td>
+                                                </ng-template>
+                                                <ng-template #elseBlockfreeze>
+                                                    <td>
+                                                        <button disabled type="submit" class="btn btn-primary" (click)="addRow(i)"
+                                                            style="width: min-content;"><i class="fa fa-plus"></i></button>
+                                                    </td>
+                                                    <td>
+                                                        <button disabled type="submit" class="btn btn-primary" (click)="RemoveRow(i)"
+                                                            style="width: min-content;"><i class="fa fa-trash"></i></button>
+                                                    </td>
+                                                    </ng-template>
                                             </tr>
                                         </ng-container>
                                     </ng-container>
@@ -629,7 +644,7 @@
         <table class="center">
             <tr>
                 <td>
-                    <button type="submit" class="btn btn-primary" id="register" (click)="IntterstateSaleOrderSave()"
+                    <button type="submit" class="btn btn-primary" id="btnOrder" (click)="IntterstateSaleOrderSave()"
                     [style.display]="isVisible11 ? 'block' : 'none'"   style="width: 8rem;">Create Order</button>
                 </td>
                 <td>
