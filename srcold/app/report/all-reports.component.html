@@ -1,0 +1,516 @@
+<form [formGroup]="reportForm" (ngSubmit)="report(reportForm.value)">
+    <fieldset class="RFS">
+    <table class="center">
+        <tr>
+            <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+            <ng-template #hList2>
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="sr-only" id="loading"></span>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template #hList1> </ng-template>
+            <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">&nbsp;{{dataDisplay}}&nbsp; </td>
+        </tr>
+    </table>
+    </fieldset>
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <td class="PageHeader">
+                Spares&nbsp;Report&nbsp;
+            </td>
+        </tr>
+        </table>
+        <br>
+        <div class="grid_scroll">
+        <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+            <tr class="GridHeader" style="font-size: 14px;">
+                <th scope="col"> Report&nbsp;Name</th>
+                <th scope="col">Parameters</th>
+                <th scope="col">View Report</th>
+            </tr>
+            <tr>
+                <td style="border: 1px solid black;padding-left: 5px;">Purachase Register Details </td>
+                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="purRegFromDt"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="purRegToDt"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Location&nbsp;Id&nbsp;</td>&nbsp;
+                               <td>
+                                <input disabled type="text" class="form-control"  formControlName="location" >
+                            </td> 
+
+                        </tr>
+                    </table>
+                </td>
+                <td style="border: 1px solid black;padding-left: 5px;">
+                    <button class="btn-primary" [disabled]="isDisabled1" (click)="spPurReg()">View Report</button>
+                </td>
+            </tr>
+
+            <tr>
+                <td style="border: 1px solid black;padding-left: 5px;">Spares Purchase Register - Summary</td>
+                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="sppurRegiSummfromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="sppurRegiSummtoDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Location&nbsp;Id&nbsp;</td>&nbsp;
+                               <td>
+                                <input disabled type="text" class="form-control"  formControlName="location" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Department&nbsp;Id&nbsp;</td>&nbsp; 
+                            <td>
+                                <input disabled type="text" class="form-control"  formControlName="deptId" >
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="border: 1px solid black;padding-left: 5px;">
+                    <button class="btn-primary" [disabled]="isDisabled11" (click)="sppurRegiSumm()">View Report</button>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td style="border: 1px solid black;padding-left: 5px;">Spares Issue Details Report</td>
+                <td style="width: 50%;border: 1px solid black;padding-left: 5px;">
+                    <table style="width: 100%;">
+                    <tr>
+                        <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
+                        <td>
+                            <input type="date" class="form-control"  formControlName="sidfromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>To&nbsp;Date&nbsp;</td>&nbsp;
+                        <td>
+                            <input type="date" class="form-control"  formControlName="sidtoDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Location&nbsp;Id&nbsp;</td>&nbsp;
+                        <td>
+                         <input disabled type="text" class="form-control"  formControlName="location" >
+                     </td>
+                    </tr>
+                    </table>
+                </td>
+                <td style="border: 1px solid black;padding-left: 5px;">
+                    <button class="btn-primary" [disabled]="isDisabled2" (click)="spIssueDetails()">View Report</button>
+                </td>
+            </tr>
+
+            <tr>
+                <td style="border: 1px solid black;padding-left: 5px;">Spares Issue Summary</td>
+                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="spIssueSummfromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="spIssueSummtoDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Location&nbsp;Id&nbsp;</td>&nbsp;
+                               <td>
+                                <input disabled type="text" class="form-control"  formControlName="location" >
+                            </td>
+                        </tr>
+                       
+                    </table>
+                </td>
+                <td style="border: 1px solid black;padding-left: 5px;">
+                    <button class="btn-primary" [disabled]="isDisabled3" (click)="spIssueSummary()">View Report</button>
+                </td>
+            </tr>
+
+            <tr>
+                <td style="border: 1px solid black;padding-left: 5px;">Spares Closing Stock Report</td>
+                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>Location&nbsp;Id&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
+                               <td>
+                                <input disabled type="text" class="form-control"  formControlName="location" >
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="border: 1px solid black;padding-left: 5px;">
+                    <button class="btn-primary" [disabled]="isDisabled4"  (click)="spclosStock()">View Report</button>
+                </td>
+            </tr>
+
+            <tr>
+                <td style="border: 1px solid black;padding-left: 5px;">Spares Receipt Register</td>
+                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="spreceiptfromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="spreceipttoDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Location&nbsp;Id&nbsp;</td>&nbsp;
+                               <td>
+                                <input disabled type="text" class="form-control"  formControlName="location" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Department&nbsp;Id&nbsp;</td>&nbsp; 
+                            <td>
+                                <input disabled type="text" class="form-control"  formControlName="deptId" >
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="border: 1px solid black;padding-left: 5px;">
+                    <button class="btn-primary" [disabled]="isDisabled5"  (click)="spReceiptRegister()">View Report</button>
+                </td>
+            </tr>
+
+
+            <tr class="ItemStyle" style="text-decoration:none;font-size: 14px;">
+                <td style="border: 1px solid black;padding-left: 5px;">Sai Debtors</td>
+                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>To&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="invcDt1"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Location&nbsp;Id&nbsp;</td>&nbsp;
+                               <td>
+                                <input disabled type="text" class="form-control"  formControlName="location" >
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="border: 1px solid black;padding-left: 5px;">
+                    <!-- <a   (click)="SPdebtorsReport()" href="ViewReport">View Report</a> -->
+                    <button class="btn-primary" [disabled]="isDisabled6" (click)="SPdebtorsReport()">View Report</button>
+                </td>
+            </tr>
+          
+            <tr>
+                <td style="border: 1px solid black;padding-left: 5px;">Stock Ledger</td>
+                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="stockLedgerfromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="stockLedgerToDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>SubInventory&nbsp;</td>&nbsp;
+                            <td>
+                                <input disabled type="text" class="form-control"  formControlName="stockLedgerSubInv" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Item&nbsp;Code&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="text" formControlName="segment"
+                                list="dynmicUserIds1" class="form-control" (keydown.tab)="filterRecord($event)" />
+                            <datalist id="dynmicUserIds1">
+                                <option *ngFor="let item of invItemList" [ngValue]="item.segment" >{{item.segment}}</option>
+                            </datalist>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Ship&nbsp;To&nbsp;Location&nbsp;</td>&nbsp;
+                            <td>
+                                <!-- <select formControlName="stockLedgerToLoc" id="stockLedgerToLoc" class="form-control">
+                                    <option>--Select--</option>
+                                    <option *ngFor="let sc of  BillShipToList" [ngValue]="sc.locId">
+                                        {{sc.locCode}}
+                                    </option>
+                                </select> -->
+                                <input disabled type="text" class="form-control"  formControlName="stockLedgerToLocName">
+                                <input disabled hidden type="number" class="form-control"  formControlName="stockLedgerToLoc">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>User&nbsp;Name&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="text" class="form-control"  formControlName="stockLedgerUserName">
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="border: 1px solid black;padding-left: 5px;">
+                    <button class="btn-primary" [disabled]="isDisabled10" (click)="stockLedger()">View Report</button>
+                </td>
+            </tr>
+       
+          
+            <tr>
+                <td style="border: 1px solid black;padding-left: 5px;">Spares Stock Made Detail Report</td>
+                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="stockMadefromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="stockMadeToDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Ship&nbsp;To&nbsp;Location&nbsp;</td>&nbsp;
+                            <td>
+                                <input disabled type="text" class="form-control"  formControlName="stockMadeToLocName">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Ship&nbsp;From&nbsp;Location&nbsp;</td>&nbsp;
+                            <td>
+                                <select formControlName="stockMadeToFromLoc" id="stockMadeToFromLoc" class="form-control">
+                                    <option>--Select--</option>
+                                    <option *ngFor="let sc of  BillShipFromList" [ngValue]="sc.locId">
+                                        {{sc.locCode}}
+                                    </option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="border: 1px solid black;padding-left: 5px;">
+                    <button class="btn-primary" [disabled]="isDisabled11" (click)="stockMade()">View Report</button>
+                </td>
+            </tr>
+         
+         
+
+            <tr>
+                <td style="border: 1px solid black;padding-left: 5px;">Spares Stock Made Summary Report</td>
+                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="spstktrfMdSumfromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="spstktrfMdSumtoDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Ship&nbsp;To&nbsp;Location&nbsp;</td>&nbsp;
+                            <td>
+                                <input disabled type="text" class="form-control"  formControlName="stockMadeToLocName">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Ship&nbsp;From&nbsp;Location&nbsp;</td>&nbsp;
+                            <td>
+                                <select formControlName="spstktrfMdSumToLoc" id="spstktrfMdSumToLoc" class="form-control">
+                                    <option>--Select--</option>
+                                    <option *ngFor="let sc of  BillShipFromList" [ngValue]="sc.locId">
+                                        {{sc.locCode}}
+                                    </option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="border: 1px solid black;padding-left: 5px;">
+                    <button class="btn-primary" [disabled]="isDisabled12" (click)="spstktrfMdSummary()">View Report</button>
+                </td>
+            </tr>
+      
+      
+            <tr>
+                <td style="border: 1px solid black;padding-left: 5px;">Spares Stock Received Detail Report</td>
+                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="SprStkTrfRecdDtlsfromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="SprStkTrfRecdDtlstoDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Ship&nbsp;To&nbsp;Location&nbsp;</td>&nbsp;
+                            <td>
+                                <input disabled type="text" class="form-control"  formControlName="stockMadeToLocName">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Ship&nbsp;From&nbsp;Location&nbsp;</td>&nbsp;
+                            <td>
+                                <select formControlName="SprStkTrfRecdDtlsFromLoc" id="sSprStkTrfRecdDtlsFromLoc" class="form-control">
+                                    <option>--Select--</option>
+                                    <option *ngFor="let sc of  BillShipFromList" [ngValue]="sc.locId">
+                                        {{sc.locCode}}
+                                    </option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="border: 1px solid black;padding-left: 5px;">
+                    <button class="btn-primary" [disabled]="isDisabled13" (click)="SprStkTrfRecdDtls()">View Report</button>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td style="border: 1px solid black;padding-left: 5px;">Spares Stock Received Summary Report</td>
+                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="SprStkTrfRecdSummaryfromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="SprStkTrfRecdSummarytoDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Ship&nbsp;To&nbsp;Location&nbsp;</td>&nbsp;
+                            <td>
+                                <input disabled type="text" class="form-control"  formControlName="stockMadeToLocName">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Ship&nbsp;From&nbsp;Location&nbsp;</td>&nbsp;
+                            <td>
+                                <select formControlName="SprStkTrfRecdSummaryFromLoc" id="SprStkTrfRecdSummaryFromLoc" class="form-control">
+                                    <option>--Select--</option>
+                                    <option *ngFor="let sc of  BillShipFromList" [ngValue]="sc.locId">
+                                        {{sc.locCode}}
+                                    </option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="border: 1px solid black;padding-left: 5px;">
+                    <button class="btn-primary" [disabled]="isDisabled14" (click)="SprStkTrfRecdSummary()">View Report</button>
+                </td>
+            </tr>
+      
+
+
+            <tr>
+                <td style="border: 1px solid black;padding-left: 5px;">Spares Customer Off Take Statement</td>
+                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="SprcusttakestatfromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="SprcusttakestattoDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Ship&nbsp;To&nbsp;Location&nbsp;</td>&nbsp;
+                            <td>
+                                <input disabled type="text" class="form-control"  formControlName="stockMadeToLocName">
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="border: 1px solid black;padding-left: 5px;">
+                    <button class="btn-primary" [disabled]="isDisabled15" (click)="Sprcusttakestat()">View Report</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+        <table class="center">
+            <tr>
+                <td>
+                    <button type="submit" class="btn btn-primary" id="register" (click)="refresh()">
+                        Clear
+                    </button>
+                </td>
+                <td>
+                    <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
+                </td>
+            </tr>
+        </table>
+</form>
+
+
+
+
+
+<!-- <a href="#b0" id="b0-link" class="link" rel="b0">link b0</a>
+
+<a href="#b1" id="b1-link" class="link" rel="b1">link b1</a>
+
+<div class='box' id='b0'> abstract content </div>
+<div class='box' id='b1'> introduction content </div> -->
+
