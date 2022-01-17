@@ -776,7 +776,8 @@ export class SalesOrderFormComponent implements OnInit {
                       orderedItem: data.obj[i].description,
                       hsnSacCode: data.obj[i].hsnSacCode,
                       uom: data.obj[i].uom,
-                      flowStatusCode: 'BOOKED'
+                      flowStatusCode: 'BOOKED',
+                      isTaxable:data.obj[i].isTaxable,
                       // unitSellingPrice: data.obj[0].priceValue,by vinita
                     });
 
@@ -794,14 +795,15 @@ export class SalesOrderFormComponent implements OnInit {
                       );
                   }
                 }
-                else if (data.obj[i].isTaxable = 'N' && taxCatNm === null) {
+                else if (data.obj[i].isTaxable === 'N' && taxCatNm === null) {
                   // alert(data.obj[i].isTaxable);
                   (controlinv.controls[k]).patchValue({
                     itemId: data.obj[i].itemId,
                     orderedItem: data.obj[i].description,
                     hsnSacCode: data.obj[i].hsnSacCode,
                     uom: data.obj[i].uom,
-                    unitSellingPrice: data.obj[i].priceValue
+                    unitSellingPrice: data.obj[i].priceValue,
+                    isTaxable:data.obj[i].isTaxable,
                   });
                 }
               }
@@ -1129,10 +1131,10 @@ export class SalesOrderFormComponent implements OnInit {
     console.log(arrayControl);
     var itemId = arrayControl[index].itemId;
     var taxcatName = arrayControl[index].taxCategoryName;
-    alert(taxcatName)
+    // alert(taxcatName)
     // alert(arrayControl[index].invType);
     // alert(arrayControl[index].invType.includes('ADDON_INS'))
-    if (arrayControl[index].invType.includes('ADDON_INS')) {
+    if (arrayControl[index].isTaxable ==='N') {
       // alert('addon')
       var baseAmt = arrayControl[index].unitSellingPrice * arrayControl[index].pricingQty;
       (patch.controls[index]).patchValue({
@@ -1144,7 +1146,8 @@ export class SalesOrderFormComponent implements OnInit {
         flowStatusCode: 'BOOKED'
       });
     }
-    if (arrayControl[index].invType != 'SS_ADDON_INS' && taxcatName != undefined) {
+    // alert(arrayControl[index].isTaxable +'----'+ taxcatName)
+    if (arrayControl[index].isTaxable != 'N' && (taxcatName != null || taxcatName !='')) {
       console.log(taxcatName);
       let select;
       var taxCategoryId = arrayControl[index].taxCategoryId;
@@ -1355,6 +1358,9 @@ export class SalesOrderFormComponent implements OnInit {
                 }
               );
             }
+            if (data.obj.orderStatus==='INVOICED'){
+              this.isVisible2=true;
+            }
             if (data.obj.exchangeYes === 'Y') {
               this.Displayexchange = false;
             }
@@ -1393,7 +1399,7 @@ export class SalesOrderFormComponent implements OnInit {
                 }
                 // alert(this.lstgetOrderLineDetails.length +'----'+ data.obj.flowStatusCode)
                 if (data.obj.flowStatusCode === 'BOOKED' && this.lstgetOrderLineDetails.length !=0) {
-                 alert('hi')
+                //  alert('hi')
                   this.isVisible2 = true;
                   this.isVisible3 = true;
                   this.isVisible3 = false;
@@ -1420,7 +1426,7 @@ export class SalesOrderFormComponent implements OnInit {
                 if (this.lstgetOrderLineDetails[i].flowStatusCode === 'INVOICED' || this.lstgetOrderLineDetails[i].flowStatusCode === 'CANCELLED') {
                   this.isVisible4 = true;
                   this.isVisible3 = false;
-                  this.isVisible5 = true;
+                  this.isVisible5 = false;
                   this.displayLineflowStatusCode[i] = true;
                   this.displayRemoveRow[i] = false;
                   this.displaytaxCategoryName[i] = false;

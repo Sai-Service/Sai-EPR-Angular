@@ -693,7 +693,7 @@ export class InterStateComponent implements OnInit {
     var locId1 = trxLnArr[i].frmLocatorId;
     // alert(locId1);
     console.log(this.getfrmSubLoc);
-    var locId = this.getfrmSubLoc.find(d => d.ROWNUM === locId1)
+    var locId = this.getfrmSubLoc.find(d => d.ROWNUM === locId1);
     alert(locId.locatorId);
     var onhandid = trxLnArr[i].id;
     this.service.getonhandqty(Number(sessionStorage.getItem('locId')), this.subInventoryId, locId.locatorId, itemid).subscribe
@@ -718,7 +718,7 @@ export class InterStateComponent implements OnInit {
           );
 
         var trxLnArr3 = this.InterStateForm.get('oeOrderLinesAllList') as FormArray;
-        trxLnArr3.controls[i].patchValue({segment:'',orderedItem:'',frmLocatorId:'',unitSellingPrice:'',taxCategoryName:'',hsnSacCode:''});
+        trxLnArr3.controls[i].patchValue({segment:'',orderedItem:'',frmLocatorId:'',unitSellingPrice:'',taxCategoryName:'',hsnSacCode:'',locatorId:''});
         // trxLnArr3[i].reset();
        }
       else
