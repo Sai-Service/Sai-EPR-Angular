@@ -131,6 +131,12 @@ export class ARInvoiceComponent implements OnInit {
   public segmentNameList: any;
   subscription: any;
   public taxUistatus: boolean = false;
+  viewAccounting1: any[];
+  viewAccounting2: any[];
+  docSeqValue:string;
+  name1:number;
+  ledgerId:number;
+  description:string;
 
   public distarray:any[]=[];
 
@@ -190,11 +196,11 @@ export class ARInvoiceComponent implements OnInit {
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService) {
     this.arInvoiceForm = fb.group({
       // poHeaderId: [],
-
       source: [],
       class: [],
       locId: [],
       trxNumber1: [],
+      name1:[],
       trxNumber: [],
       custTrxTypeId: [],
       referenceNo: [],
@@ -259,6 +265,9 @@ export class ARInvoiceComponent implements OnInit {
       periodName:[],
       runningTotalDr:[],
       runningTotalCr:[],
+      ledgerId:[],
+      description:[],
+      docSeqValue:[],
 
 
       invLines: this.fb.array([this.lineDetailsGroup()]),
@@ -608,7 +617,7 @@ export class ARInvoiceComponent implements OnInit {
     }}
   }
   onOptionSelectInvoice(event:any){
-    alert(event);
+    // alert(event);
     this.service.arInvoiceList(event).subscribe(
       data => {
           this.invTypeList = data;
@@ -675,7 +684,7 @@ export class ARInvoiceComponent implements OnInit {
   };
 
   custNameSearch(billToCustName) {
-    alert(billToCustName)
+    // alert(billToCustName)
     this.orderManagementService.custNameSearchFn1(billToCustName, sessionStorage.getItem('divisionId'))
       .subscribe(
         data => {
@@ -967,7 +976,7 @@ export class ARInvoiceComponent implements OnInit {
     // manArInvObj.setTaxLines(Array.from(this.taxarr.values()));
     // manArInvObj.setinvDisLines(this.arInvoiceForm.value.invDisLines);
     // manArInvObj.setinvDisLines(Array.from(this.distarr.values()));
-    alert(this.distarr.size+'Array')
+    // alert(this.distarr.size+'Array')
 
 
 
@@ -1025,14 +1034,14 @@ export class ARInvoiceComponent implements OnInit {
 
     var len1 = this.TaxDetailsArray().length;
     this.invLineNo = i+1;
-    alert(this.invLineNo+activeTab);
-    alert(len1 + 'lengthUpdate' + this.taxUistatus);
+    // alert(this.invLineNo+activeTab);
+    // alert(len1 + 'lengthUpdate' + this.taxUistatus);
 
     // this.taxUistatus=false;
 
     if (this.taxUistatus === false) {
 
-      alert('If call');
+      // alert('If call');
 
       this.TaxDetailsArray().clear();
       this.lineDistributionArray().clear();
@@ -1064,10 +1073,10 @@ export class ARInvoiceComponent implements OnInit {
         locId = '000';
       }
       var len1 = this.TaxDetailsArray().length;
-      alert(baseAmount+'Base'+this.taxCategoryId);
+      // alert(baseAmount+'Base'+this.taxCategoryId);
       // alert(baseAmount + " baseAmount" + this.taxCategoryId + " this.taxCategoryId" + diss + " diss")
       if (baseAmount != null && this.taxCategoryId != undefined) {
-        alert(baseAmount+'Base'+this.taxCategoryId);
+        // alert(baseAmount+'Base'+this.taxCategoryId);
         this.service.taxCalforItem1(sessionStorage.getItem('ouId'), locId, baseAmount, this.taxCategoryId, diss)
           .subscribe(
             (data: any) => {
@@ -1132,16 +1141,16 @@ export class ARInvoiceComponent implements OnInit {
                       control.controls[z].patchValue(data.invDisLines[i]);
                      (control.controls[z]).patchValue({ invoiceLineNum: this.invLineNo });
                     }
-                    alert('this.lineDistributionArray().length ' + this.lineDistributionArray().length)
+                    // alert('this.lineDistributionArray().length ' + this.lineDistributionArray().length)
                     for (let i = 0; i < this.lineDistributionArray().length; i++) {
 
                       control.controls[i].patchValue({ lineNum: i + 1 });
                       (control.controls[i]).patchValue({ invoiceLineNum: this.invLineNo });
                     }
                     control.controls[0].patchValue({ invoiceLineNum: this.invLineNo })
-                    alert(this.distarr.size+'Arraytax')
+                    // alert(this.distarr.size+'Arraytax')
                     this.distarr.set(this.invLineNo, this.arInvoiceForm.get('invDisLines').value);
-                    alert(this.distarr.size+'afterArray')
+                    // alert(this.distarr.size+'afterArray')
                     console.log(this.arInvoiceForm.get('invDisLines').value);
                   }
                 );
@@ -1687,7 +1696,7 @@ export class ARInvoiceComponent implements OnInit {
       var LineDueAmt = Number(invLineArr[index].balance1);
 
       if (lineApplAmt > LineDueAmt || lineApplAmt <= 0 || lineApplAmt > ytotUnAppAmt) {
-        alert("Line: " + (index + 1) + "\nInvoice Amt :" + LineDueAmt + "\nApplied Amt :" + lineApplAmt + "\nLine appiled Amt should be > 0 and <= Line balance Amt and  <=Unapplied Amt");
+        // alert("Line: " + (index + 1) + "\nInvoice Amt :" + LineDueAmt + "\nApplied Amt :" + lineApplAmt + "\nLine appiled Amt should be > 0 and <= Line balance Amt and  <=Unapplied Amt");
         patch.controls[index].patchValue({ applAmtNew: '' })
         patch.controls[index].patchValue({ applyrcptFlag: '' })
       }
@@ -1854,7 +1863,7 @@ export class ARInvoiceComponent implements OnInit {
 
   glPrdValidateLine(i: any) {
 
-    alert("GL Period : " + this.pipe.transform(this.GLPeriodCheck.startDate, 'dd-MM-y') + " - " + this.pipe.transform(this.GLPeriodCheck.endDate, 'dd-MM-y'));
+    // alert("GL Period : " + this.pipe.transform(this.GLPeriodCheck.startDate, 'dd-MM-y') + " - " + this.pipe.transform(this.GLPeriodCheck.endDate, 'dd-MM-y'));
 
 
     var patch = this.arInvoiceForm.get('invLine') as FormArray;
@@ -2051,22 +2060,27 @@ export class ARInvoiceComponent implements OnInit {
 
   }
 
-  viewAccounting(trxNumber){
+  viewAccountingold(trxNumber){
     // var tranNo=this.arInvoiceForm.get('transactionNo').value;
     this.service.viewAccountingAR(trxNumber)
       .subscribe((res:any) =>{
         if (res.code === 200) {
-          this.viewAccountingArdata=res.obj;
-          // this.name=res.obj.name;
-          // this.periodName=res.obj.periodName;
-          // this.postedDate=res.obj.postedDate;
-          // this.jeCategory=res.obj.jeCategory;
-          // this.jeSource=res.obj.jeSource;
-          // this.runningTotalDr=res.obj.runningTotalDr.toFixed(2);
-          // this.runningTotalCr=res.obj.runningTotalCr.toFixed(2);
+          // this.viewAccountingArdata=res.obj;
+          this.viewAccounting2 = res.obj;
+        this.description = res.obj.description;
+        this.periodName = res.obj.periodName;
+        this.postedDate = res.obj.postedDate;
+        this.jeCategory = res.obj.jeCategory;
+        this.name1 = res.obj.name;
+        this.ledgerId = res.obj.ledgerId;
+        this.runningTotalDr = res.obj.runningTotalDr;
+        this.runningTotalCr = res.obj.runningTotalCr;
+        this.docSeqValue=res.obj.docSeqValue;
+        console.log(this.description);
 
+        this.viewAccounting1 = res.obj.glLines;
+        console.log(this.viewAccounting1);
 
-              alert(res.message);
             } else {
               if (res.code === 400) {
                 alert(res.message);
@@ -2076,6 +2090,32 @@ export class ARInvoiceComponent implements OnInit {
 
   }
 
+
+  viewAccounting(trxNumber: any) {
+    // alert(receiptNo);
+    this.service.viewAccountingAR(trxNumber).subscribe((res: any) => {
+      if (res.code === 200) {
+        this.viewAccounting2 = res.obj;
+        this.description = res.obj.description;
+        this.periodName = res.obj.periodName;
+        this.postedDate = res.obj.postedDate;
+        this.jeCategory = res.obj.jeCategory;
+        this.name1 = res.obj.name;
+        this.ledgerId = res.obj.ledgerId;
+        this.runningTotalDr = res.obj.runningTotalDr;
+        this.runningTotalCr = res.obj.runningTotalCr;
+        this.docSeqValue=res.obj.docSeqValue;
+        console.log(this.description);
+        this.viewAccounting1 = res.obj.glLines;
+        console.log(this.viewAccounting1);
+        // alert(res.message);
+      } else {
+        if (res.code === 400) {
+          alert(res.message);
+        }
+      }
+    });
+  }
 
 
 }

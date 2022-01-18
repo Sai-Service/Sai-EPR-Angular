@@ -929,15 +929,13 @@
                                                 Finance&nbsp;Amount&nbsp;:&nbsp;
                                             </td>
                                             <td>
-                                                <input type="text" formControlName="financeAmt" [(ngModel)]='financeAmt'
-                                                    value={{financeAmt}} class="form-control" style="width: 150px;">
+                                                <input type="text" formControlName="financeAmt" value={{financeAmt}} class="form-control" style="width: 150px;">
                                             </td>
                                             <td style="width: 15%" class="LabelFontStyle">
                                                 EMI&nbsp;:&nbsp;
                                             </td>
                                             <td>
-                                                <input type="text" formControlName="emi" [(ngModel)]='emi' value={{emi}}
-                                                    class="form-control" style="width: 150px;">
+                                                <input type="text" formControlName="emi"  value={{emi}}  class="form-control" style="width: 150px;">
                                             </td>
                                         </ng-template>
                                         </tr>
@@ -950,16 +948,13 @@
                                                 Tenure&nbsp;:&nbsp;
                                             </td>
                                             <td>
-                                                <input type="text" formControlName="tenure" [(ngModel)]='tenure'
-                                                    value={{tenure}} class="form-control" style="width: 170px;">
+                                                <input type="text" formControlName="tenure"  value={{tenure}} class="form-control" style="width: 170px;">
                                             </td>
                                             <td style="width: 15%" class="LabelFontStyle">
                                                 Down&nbsp;Payment&nbsp;:&nbsp;
                                             </td>
                                             <td>
-                                                <input type="text" formControlName="downPayment"
-                                                    [(ngModel)]='downPayment' value={{downPayment}} class="form-control"
-                                                    style="width: 170px;">
+                                                <input type="text" formControlName="downPayment" value={{downPayment}} class="form-control" style="width: 170px;">
                                             </td>
                                         </tr>
                                     </ng-template>
@@ -1318,7 +1313,7 @@
                                     <thead>
                                         <tr class="GridHeader">
                                             <th scope="col" style="width: 40px;">Line No</th>
-                                            <th scope="col" style="width: 40px;">Tax Details</th>
+                                            <th scope="col" style="width: fit-content;height: fit-content;">Tax Details</th>
                                             <th scope="col" style="width: 40px;">Type Category</th>
                                             <th scope="col" style="width: 160px;">Item code</th>
                                             <th scope="col" style="width: 160px;">Description</th>
@@ -2066,6 +2061,10 @@
                             </td>
                             <td>
                                 <button type="submit" class="btn btn-primary" (click)="SOA()">SOA</button>
+                            </td>
+
+                            <td>
+                                <button type="submit" class="btn btn-primary" [style.display]="isVisible5 ? 'block' : 'none'" (click)="finexchangeUpdate()" [disabled]="isDisabled5" style="width: fit-content;height: fit-content;">Finanace/Exchange Update</button>
                             </td>
                             <!-- <div [style.display]="isVisible2 ? 'block' : 'none'" style="display: inline-block;"> -->
                             <td>

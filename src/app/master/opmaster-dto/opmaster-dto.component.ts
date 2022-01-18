@@ -125,6 +125,7 @@ export class OPMasterDtoComponent implements OnInit {
   isDisabled = true;
   discLineAmt:number;
   docType: string;
+  discheadrAmt:number;
   private sub: any;
   selectedLine = 0;
   compileType: number;
@@ -372,7 +373,7 @@ export class OPMasterDtoComponent implements OnInit {
       // poDate: ['', [Validators.required]],
       // poType: ['', [Validators.required]],
       ouId: [''],
-      discLineAmt:[''],
+      discheadrAmt:[''],
       poDate: [''],
       poType: [''],
       segment1: [''],
@@ -765,6 +766,7 @@ export class OPMasterDtoComponent implements OnInit {
       invDescription: [],
       invCategory: [],
       uom: [],
+      discLineAmt:[],
       hsnSacCode: [],
       gstPercentage: [],
       taxCategoryName: [],
@@ -781,7 +783,6 @@ export class OPMasterDtoComponent implements OnInit {
       taxAmtLineWise: [],
       totAmtLineWise: [],
       taxAmounts: this.fb.array([])
-
     });
   }
 
@@ -1358,12 +1359,17 @@ export class OPMasterDtoComponent implements OnInit {
     this.baseAmount = 0;
     this.totTaxAmt = 0;
     this.totalAmt = 0;
+    this.discheadrAmt=0;
 
     for (var i = 0; i < arrayControl.length; i++) {
-      this.baseAmount = this.baseAmount + arrayControl[i].baseAmtLineWise;
-      this.totTaxAmt = this.totTaxAmt + arrayControl[i].taxAmtLineWise;
+      this.baseAmount = (this.baseAmount + (arrayControl[i].baseAmtLineWise-arrayControl[i].discLineAmt));
+      this.totTaxAmt = (this.totTaxAmt + arrayControl[i].taxAmtLineWise);
+      this.totalAmt = (this.baseAmount + this.totTaxAmt);
     }
-    this.totalAmt = (this.baseAmount + this.totTaxAmt);
+    console.log(this.discLineAmt);
+    console.log(this.baseAmount);
+    console.log( this.totalAmt);  
+    // this.totalAmt = ((this.baseAmount-this.discLineAmt) + this.totTaxAmt);
     formValue.totalAmt = this.totalAmt;
     formValue.baseAmount = this.baseAmount;
     formValue.totTaxAmt = this.totTaxAmt;
@@ -1990,6 +1996,7 @@ export class OPMasterDtoComponent implements OnInit {
   }
 
   addDiscount(i) {
+    // alert(i);
     // alert('hi')
     const formValue: IpostPO = this.poMasterDtoForm.value;
     formValue.polineNum = this.poLineTax;
@@ -2019,12 +2026,18 @@ export class OPMasterDtoComponent implements OnInit {
 
     }
     // var diss = arrayControltaxAmounts[0].totTaxAmt;
-    var arrayControl = this.poMasterDtoForm.get('poLines').value
+    var arrayControl = this.poMasterDtoForm.get('poLines').value;
     var baseAmount = arrayControl[this.poLineTax].baseAmtLineWise;
-
-
+    // alert(diss1);
+    var discAmtcontrol = this.poMasterDtoForm.get('poLines') as FormArray;
+    console.log(discAmtcontrol);
+    // debugger;
+    // (discAmtcontrol.controls[i]).patchValue(
+    //   {
+    //     discLineAmt:diss1,
+    //   }
+    // );
     console.log(invItemId, this.taxCat, diss1, baseAmount);
-
     let control = this.lineDetailsArray.controls[aa].get('taxAmounts') as FormArray;
     control.clear();
     // this.taxCatId
@@ -2045,13 +2058,14 @@ export class OPMasterDtoComponent implements OnInit {
             } else if (this.taxCalforItem[i].taxRateName.includes('Disc')) {
 
               dissAmt = dissAmt + this.taxCalforItem[i].totTaxAmt;
-            } else {
-              sum = sum + this.taxCalforItem[i].totTaxAmt
+            } 
+            else {
+              sum = sum + this.taxCalforItem[i].totTaxAmt;
             }
           }
           var TotAmtLineWise1 = arrayControl[this.poLineTax].baseAmtLineWise;
 
-          var tolAmoutLine = sum + TotAmtLineWise1 + vorcharges;
+          var tolAmoutLine = (sum + TotAmtLineWise1 + vorcharges)-diss1;
 
           var patch = this.poMasterDtoForm.get('poLines') as FormArray;
           (patch.controls[aa]).patchValue(

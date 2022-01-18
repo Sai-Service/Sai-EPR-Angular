@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener, ElementRef } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { controllers } from 'chart.js';
@@ -149,8 +149,11 @@ export class InterStateComponent implements OnInit {
   displaytaxCategoryName=true;
   isVisible11: boolean = true;
   uuidRef: string;
-
+  displayaddButton: boolean = true;
   locatorId:number;
+
+  @ViewChild('instateForm') instateForm: ElementRef;
+  // instateForm: any;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService) {
     this.InterStateForm = fb.group({
@@ -191,6 +194,7 @@ export class InterStateComponent implements OnInit {
       taxAmounts: this.fb.array([this.TaxDetailsGroup()]),
     })
   }
+
   orderlineDetailsGroup() {
     return this.fb.group({
       // lineNumber:[''],
@@ -305,8 +309,12 @@ export class InterStateComponent implements OnInit {
         data => {
           this.priceListNameList = data;
           console.log(this.priceListNameList);
-          this.InterStateForm.patchValue({ priceListName: data[0].priceListName })
-          this.InterStateForm.patchValue({ priceListId: data[0].priceListHeaderId })
+          for (let i = 0; i < data.length; i++) {
+            if (data[i].ouId === 999) {
+              this.InterStateForm.patchValue({ priceListName: data[i].priceListName })
+              this.InterStateForm.patchValue({ priceListId: data[i].priceListHeaderId })
+            }
+          }
         }
       );
 //subInvCode2(deptId, divisionId) {
@@ -386,9 +394,6 @@ export class InterStateComponent implements OnInit {
   }
 
   RemoveRow(OrderLineIndex) {
-    alert(OrderLineIndex);
-    debugger;
-    // this.orderlineDetailsArray().removeAt(OrderLineIndex);
     var trxLnArr2 = this.InterStateForm.get('oeOrderLinesAllList') as FormArray;
     var trxLnArr1=trxLnArr2.getRawValue();
     var itemid = trxLnArr1[OrderLineIndex].segment;
@@ -399,7 +404,8 @@ export class InterStateComponent implements OnInit {
       this.itemMap3.delete(itemid);
     }
     this.orderlineDetailsArray().removeAt(OrderLineIndex);
-    this.locData.removeAt(OrderLineIndex);
+    this.locData.splice(OrderLineIndex,1)
+
   }
 
   onOptiongetItem(event) {
@@ -412,7 +418,7 @@ export class InterStateComponent implements OnInit {
           console.log(this.ItemIdList);
         });
     }
-    alert('get  Item ' +  this.getshiplist.length);
+    // alert('get  Item ' +  this.getshiplist.length);
     var select1 = this.getshiplist.find(d => d.toLocation === event);
     // alert(select1.custAccountNo);
     if (select1 != undefined) {
@@ -522,19 +528,13 @@ export class InterStateComponent implements OnInit {
 
   }
   onOptionsSelectedDescription(event: any, k) {
-    alert('desc' + k)
-    //let select = this.invItemList1.find(d => d.segment === segment);
     let controlinv = this.InterStateForm.get('oeOrderLinesAllList') as FormArray;
-    // var itemType = (controlinv.controls[k]).get('invType').value;
-    let select = this.ItemIdList.find(d => d.SEGMENT === event);
-    // alert(select.itemId)
-    
-    controlinv.controls[k].patchValue({ itemId: select.itemId});
+
+   let select = this.ItemIdList.find(d => d.SEGMENT === event);
+   if(select!=undefined){
+   controlinv.controls[k].patchValue({ itemId: select.itemId});
     if (event != undefined) {
-      
-        alert(this.custtaxCategoryName)
-      // else {
-      this.orderManagementService.addonDescList1(event, this.custtaxCategoryName, this.priceListId)
+   this.orderManagementService.addonDescList1(event, this.custtaxCategoryName, this.priceListId)
         .subscribe(
           data => {
             if (data.code === 200) {
@@ -543,7 +543,7 @@ export class InterStateComponent implements OnInit {
               
               for (let i = 0; i < data.obj.length; i++) {
                 var taxCatNm: string = data.obj[i].taxCategoryName;
-                alert(taxCatNm.includes)
+                // alert(taxCatNm.includes)
                 if (taxCatNm.includes('Sale-S&C')) {
                   (controlinv.controls[k]).patchValue({
                     itemId: data.obj[i].itemId,
@@ -554,7 +554,8 @@ export class InterStateComponent implements OnInit {
                     taxCategoryId:data.obj[i].taxCategoryId,
                     // unitSellingPrice: data.obj[0].priceValue,by vinita
                   });
-                  alert(this.custtaxCategoryName+'--'+ data.obj[i].taxCategoryId)
+                  this.InterStateForm.get('BillLocName').disable();
+                  // alert(this.custtaxCategoryName+'--'+ data.obj[i].taxCategoryId)
            
               if (select.itemId != null) {
                 this.service.getfrmSubLocPrice(this.locId, select.itemId, this.subInventoryId).subscribe(
@@ -681,19 +682,19 @@ export class InterStateComponent implements OnInit {
           }
         });
     }
-    
   }
-  AvailQty(event: any, i) {
-    // alert(i+'I');
+  }
+  AvailQty (event: any, i){
+    alert(i+'I');
     var trxLnArr = this.InterStateForm.get('oeOrderLinesAllList').value;
     console.log(trxLnArr);
     
     var itemid = trxLnArr[i].itemId;
-    alert(itemid)
     var locId1 = trxLnArr[i].frmLocatorId;
-    alert(locId1);
+    // alert(locId1);
     console.log(this.getfrmSubLoc);
-    var locId = this.getfrmSubLoc.find(d => d.ROWNUM === locId1)
+    var locId = this.getfrmSubLoc.find(d => d.ROWNUM === locId1);
+    alert(locId.locatorId);
     var onhandid = trxLnArr[i].id;
     this.service.getonhandqty(Number(sessionStorage.getItem('locId')), this.subInventoryId, locId.locatorId, itemid).subscribe
       (data => {
@@ -705,15 +706,28 @@ export class InterStateComponent implements OnInit {
         let onHand = data.obj;
         // alert(onHand+'ONHAND');
         let reserve = trxLnArr[i].resveQty;
-        // alert(reserve+'Reserve');
-        // alert(onHand+'OnHand');
-        // alert(reserve+'reserve');
         let avlqty1 = 0;
-        avlqty1 = onHand - reserve;
-        // alert(avlqty1+'avail');
-        var trxLnArr1 = this.InterStateForm.get('oeOrderLinesAllList') as FormArray;
+        alert(data.obj+'qty');
+        avlqty1 = data.obj - reserve;
+        alert(avlqty1+'avlqty');
+        // trxLnArr1.controls[i].patchValue({ avlqty: avlqty1 });
+        // trxLnArr1.controls[i].patchValue({ resveQty: reserve });
+        if (avlqty1 <= 0) {
+          alert(
+            'Transfer is not allowed,Item has Reserve quantity - ' + reserve
+          );
+
+        var trxLnArr3 = this.InterStateForm.get('oeOrderLinesAllList') as FormArray;
+        trxLnArr3.controls[i].patchValue({segment:'',orderedItem:'',frmLocatorId:'',unitSellingPrice:'',taxCategoryName:'',hsnSacCode:'',locatorId:''});
+        // trxLnArr3[i].reset();
+       }
+      else
+    {
+      var trxLnArr1 = this.InterStateForm.get('oeOrderLinesAllList') as FormArray;
         trxLnArr1.controls[i].patchValue({ Avalqty: avlqty1 });
-      })
+        trxLnArr1.controls[i].patchValue({ resveQty: reserve });
+         return avlqty1
+    } })
   }
 
   onKey(index) {
@@ -724,6 +738,23 @@ export class InterStateComponent implements OnInit {
     console.log(arrayControl);
     var itemId = arrayControl[index].itemId;
     var taxcatName = arrayControl[index].taxCategoryName;
+    // var arrayControl = arrayControl.getRawValue();
+    var pricingQty = arrayControl[index].pricingQty;
+    var Avalqty = arrayControl[index].Avalqty;
+    // alert(pricingQty)
+    if (pricingQty === null || pricingQty === undefined || pricingQty === '') {
+      return;
+    }
+    if (pricingQty <= 0) {
+      alert("Please enter quantity more than zero");
+      return;
+    }
+    var isvalidqty = this.validate(index, pricingQty);
+
+    if (isvalidqty == false) {
+      return;
+    }
+
     // alert(taxcatName)
     console.log(taxcatName);
     let select;
@@ -781,7 +812,15 @@ export class InterStateComponent implements OnInit {
           }
           this.InterStateForm.get('taxAmounts').patchValue(data);
         });
-
+        var itemId1 = arrayControl[index].itemId;
+        // if (event.keyCode != 13) {
+          if (itemId1 != null ) {
+            this.addRow(index);
+          }
+        // }
+        else {
+          // this.displayRemoveRow.push(true);
+        }
   }
 
   onOptionTaxCatSelected(taxCategoryName, i) {
@@ -883,17 +922,19 @@ export class InterStateComponent implements OnInit {
     // this.emplId = Number(sessionStorage.getItem('emplId'));
     formValue.divisionId=this.divisionId;
     for (let i = 0; i < formValue.oeOrderLinesAllList.length; i++) {
-     alert(formValue.oeOrderLinesAllList[i].taxCategoryId);
+    //  alert(formValue.oeOrderLinesAllList[i].taxCategoryId);
       formValue.oeOrderLinesAllList[i].frmLocatorId =  formValue.oeOrderLinesAllList[i].locatorId;
     }
     this.orderManagementService.SaveCounterSaleOrder(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         this.orderNumber = res.obj;
+        (document.getElementById('btnOrder') as HTMLInputElement).disabled = true;    
         console.log(this.orderNumber);
         alert(res.message);
         this.orderNumber = res.obj;
         // this.orderNumber=this.CounterSaleOrderBookingForm.get('orderNumber').value;
         console.log(this.orderNumber);
+        this.displayaddButton = false;
         this.OrderFind(this.orderNumber);
       } else {
         if (res.code === 400) {
@@ -987,8 +1028,11 @@ export class InterStateComponent implements OnInit {
               // this.isVisible = false;
             }
             this.InterStateForm.controls['emplId'].patchValue(Number(sessionStorage.getItem('emplId')));
+
          
-        }});
+        }
+        this.displayaddButton = false;
+      });
   }
 
   reservePos(i) {
@@ -1029,9 +1073,11 @@ export class InterStateComponent implements OnInit {
     );
   }
   close() {
+    this.deleteReserve();
     this.router.navigate(['admin']);
   }
   refresh() {
+    this.deleteReserve();
     window.location.reload();
   }
   deleteReserveLinewise(i, itemid, transferId) {
@@ -1043,5 +1089,89 @@ export class InterStateComponent implements OnInit {
         }
       });
     }
+  }
+
+  validate(index: number, qty1) {
+    // var trxLnArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
+    var trxLnArr1 = this.InterStateForm.get('oeOrderLinesAllList') as FormArray;
+    var trxLnArr = trxLnArr1.getRawValue();
+
+    var locator = trxLnArr[index].frmLocatorId;
+
+    var Avalqty = trxLnArr[index].Avalqty;
+    let uomCode = trxLnArr[index].uom;
+    let unitSellingPrice = trxLnArr[index].unitSellingPrice;
+    // if (this.orderNumber === undefined && Avalqty != null || Avalqty != undefined) {
+    if (qty1 > Avalqty) {
+      alert('Please enter available quantity')
+      trxLnArr1.controls[index].patchValue({ pricingQty: Avalqty });
+    }
+    
+    let selloc = this.locData[index].find(d => Number(d.ROWNUM) === Number(locator));
+    console.log(this.locData[index]);
+
+    
+    if (qty1 > selloc.onHandQty) {
+      alert("Item available with multiple price , Please check price and available quantity!!")
+      qty1 = selloc.onHandQty;
+      trxLnArr1.controls[index].patchValue({ pricingQty: selloc.onHandQty });
+
+    }
+
+ if (this.orderNumber === undefined && Avalqty != null || Avalqty != undefined) {
+      if (qty1 <= 0) {
+        alert("Please enter quantity more than zero");
+        trxLnArr1.controls[index].patchValue({ quantity: '' });
+        this.setFocus('pricingQty');
+        return false;
+      }
+
+      if (uomCode === 'NO') {
+        if (!(Number.isInteger(qty1))) {
+          alert('Please enter correct No');
+          trxLnArr1.controls[index].patchValue({ pricingQty: '' });
+          return;
+        }
+      }
+      if (unitSellingPrice <= 0) {
+        alert("Please enter more than zero amount");
+        trxLnArr1.controls[index].patchValue({ unitSellingPrice: '' });
+        trxLnArr1.controls[index].patchValue({ baseAmt: '' });
+        trxLnArr1.controls[index].patchValue({ taxAmt: '' });
+        trxLnArr1.controls[index].patchValue({ totAmt: '' });
+        (<any>trxLnArr[index].get('unitSellingPrice')).nativeElement.focus();
+        return false;
+      }
+    }
+  } 
+  setFocus(name) {
+
+    const ele = this.instateForm.nativeElement[name];
+    if (ele) {
+      ele.focus();
+    }
+  }
+  ngOnDestroy(): void {
+    alert('Window Closed Directely.!');
+    this.deleteReserve();
+    return;
+  }
+  deleteReserve() {
+    // alert('delete reserve')
+    // var transferId = this.CounterSaleOrderBookingForm.get('uuidRef').value;
+    var trxLnArr2 = this.InterStateForm.get('oeOrderLinesAllList') as FormArray;
+    var trxLnArr1 = trxLnArr2.getRawValue();
+    for (let j = 0; j < trxLnArr1.length; j++) {
+      var transferId = trxLnArr1[j].uuidRef;
+      this.service.reserveDelete(transferId, Number(sessionStorage.getItem('locId'))).subscribe((res: any) => {
+        if (res.code === 200) {
+        }
+      });
+    }
+  }
+  @HostListener('window:unload', ['$event'])
+  keyEvent1(event: KeyboardEvent) {
+    this.deleteReserve();
+    console.log(event);
   }
 }
