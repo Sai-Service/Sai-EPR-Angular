@@ -239,6 +239,7 @@
                         <td style="width: 10%" class="LabelFontStyle1">
                             Email&nbsp;ID&nbsp;:
                         </td> 
+                        
                         <td>
                             <input type="email" formControlName="emailId" value={{emailId}} class="form-control"
                             [ngClass]="{ 'is-invalid': submitted && f.emailId.errors }"
@@ -248,6 +249,7 @@
                             <div *ngIf="f.emailId.errors.email">Please enter valid email ID 
                             </div>
                         </div>
+
                         <!-- <span
                             *ngIf="!employeeMasterForm.get('emailId').valid && employeeMasterForm.get('emailId').touched">Please enter valid email ID 
                           </span> -->
@@ -747,6 +749,7 @@
         </form>
     </div>
 </div>
+
 <div class="container1">
     <div class="col-md-12 table-responsive" #epltable1>
         <div style="padding-bottom: 10px;padding-top: 10px;">
@@ -790,11 +793,6 @@
             <td>{{com.contact1}}</td>
             <td>{{com.contact2}}</td>  
             <td>{{com.status}}</td>
-            <!-- <td><button type="button" class="btn" (click)="getlocHeadDashbordSearch(com.status)" 
-                style="vertical-align:top;height: 0rem;margin-top: -5px;border: none;"
-                (click)="onKey()"> <u>{{com.status}}</u>
-            </button>
-            </td> -->
             <td><button class="btn btn-primary" (click)="Select(com.emplId)">Select</button></td>
         </tr>
     </table>

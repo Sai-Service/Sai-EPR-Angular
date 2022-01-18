@@ -274,7 +274,8 @@ export class EpmloyeeMasterComponent implements OnInit {
           console.log(this.lstcomments);
         }
       );
-  };
+  }
+
   SearchByEmpId(empId){
     alert(empId);
     this.service.getEmpIdDetails(empId)
@@ -302,18 +303,13 @@ export class EpmloyeeMasterComponent implements OnInit {
     let select = this.lstcomments.find(d => d.emplId === emplId);
     if (select) {
       this.employeeMasterForm.patchValue(select);
-      // this.divisionId = select.divisionId.divisionId;
-      // this.divisionName=select.divisionId.divisionName;
-      // this.locCode=select.locId.locCode;
-      // this.locId = select.locId.locId;
-      // this.deptId= select.deptId+'-'
-      this.displayButton = false;
+       this.displayButton = false;
       this.deptId= select.deptId+'-'+select.deptName;
       this.deptName = select.deptName;
-      // alert(this.deptId);
-      this.employeeMasterForm.patchValue({title:select.title});
+       this.employeeMasterForm.patchValue({title:select.title});
     }
   }
+
   AccessChange(e) {
     if (e.target.checked) {
       this.loginAccess='Y'
@@ -324,6 +320,7 @@ export class EpmloyeeMasterComponent implements OnInit {
       this.displayRolePass = false;
     }
   }
+  
   onKey(event: any) {
     var title =this.employeeMasterForm.get("title").value;
     // const aaa = this.title + '.'+' ' + this.fname + ' ' + this.mname + ' ' + this.lname ;

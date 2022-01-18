@@ -246,7 +246,8 @@
                                     
                                 <td style="width: 15%" class="LabelFontStyle">Transfer&nbsp;Amt:&nbsp;</td>
                                 <td>
-                                    <input     type="nunber"  min="1" formControlName="trfAmount"  id="trfAmount" [(ngModel)]="trfAmount" class="form-control" style="background-color: yellow;text-align: right;" >
+                                    <input     type="nunber"  min="1" formControlName="trfAmount"  id="trfAmount" [(ngModel)]="trfAmount" 
+                                      class="form-control"  (change) ='validateTrfAmt(trfAmount)' style="background-color: yellow;text-align: right;" >
                                 </td> 
                                 <td style="width: 15%" class="LabelFontStyle">&nbsp;Amt&nbsp;In&nbsp;Words:&nbsp;</td>
                                
