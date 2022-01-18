@@ -1350,7 +1350,7 @@ export class SalesOrderFormComponent implements OnInit {
               this.SalesOrderBookingForm.patchValue({ tenure: data.obj.tenure });
               this.SalesOrderBookingForm.patchValue({ emi: data.obj.emi });
               this.SalesOrderBookingForm.patchValue({downPayment : data.obj.emi});
-              this.orderManagementService.finananceList(data.obj.financerName,sessionStorage.getItem('divisionId'))
+              this.orderManagementService.finananceList(data.obj.financeType,sessionStorage.getItem('divisionId'))
               .subscribe(
                 data => {
                     this.financerNameList = data;
