@@ -92,9 +92,9 @@ export class EmployeeMasterComponent implements OnInit {
   endDate:string;
   public status = "Active";
 
-  loginPass: string=null;
-  loginAccess:string;
-  roleId1:number=null;
+  loginPass: string;
+  loginAccess:string='N';
+  roleId:number;
   teamRole:string;
 
   displayInactive = true;
@@ -143,7 +143,7 @@ export class EmployeeMasterComponent implements OnInit {
 
     loginPass:[],
     loginAccess:[''],
-    roleId1:[],
+    roleId:[],
     teamRole:[],
   
 
@@ -167,7 +167,7 @@ ngOnInit(): void {
   this.ouId=Number(sessionStorage.getItem('ouId'));
   this.locId=Number(sessionStorage.getItem('locId'));
   this.locName=(sessionStorage.getItem('locName'));
-  this.deptId=Number(sessionStorage.getItem('deptId'));
+  // this.deptId=Number(sessionStorage.getItem('deptId'));
   this.emplId= Number(sessionStorage.getItem('emplId'));
   this.divisionId = Number(sessionStorage.getItem('divisionId'));
   this.orgId=this.ouId;
@@ -254,8 +254,9 @@ transData(val) {
   delete val.loginName;
   delete val.locName;
   delete val.ouName;
-  // delete val.locId;
-  // delete val.ouId;
+  delete val.locCode;
+  delete val.deptName;
+  delete val.locationId;
   // delete val.deptId;
   // delete val.emplId;
   delete val.orgId;
@@ -265,8 +266,6 @@ transData(val) {
 newMast() {
    
   const formValue: IEmplMaster = this.transData(this.employeesMasterForm.value);
-
-  
   this.CheckDataValidations();
 
   if (this.checkValidation === true) {
@@ -274,7 +273,7 @@ newMast() {
   this.service.EmployeeMasterSubmit(formValue).subscribe((res: any) => {
     if (res.code === 200) {
       alert('RECORD INSERTED SUCCESSFULLY');    
-      this.employeesMasterForm.reset();
+      // this.employeesMasterForm.reset();
     } else {
       if (res.code === 400) {
         alert('Error while data insertion');
@@ -374,21 +373,42 @@ onOptionsDEPTSelected(event){
 }
 
 
-loginRights(e) {
+loginRightschkbox(e) {
   // alert (e.target.checked);
   if (e.target.checked === true) {
      this.showLoginDetails = true; 
+     this.loginAccess='Y';
      }
   else {
      this.showLoginDetails = false;
+     this.loginAccess='N';
     //  this.employeesMasterForm.patchValue({roleId:null});
     //  this.employeesMasterForm.patchValue({teamRole:null});
     //  this.employeesMasterForm.patchValue({loginPass:null});
-     this.employeesMasterForm.get('roleId1').reset();
+     this.employeesMasterForm.get('roleId').reset();
      this.employeesMasterForm.get('teamRole').reset();
      this.employeesMasterForm.get('loginPass').reset();
      }
 }
+
+
+loginRights(event) {
+  // alert (e.target.checked);
+  var loga=this.employeesMasterForm.get('loginAccess').value;
+  if (loga === 'Y') {
+     this.showLoginDetails = true; 
+     this.loginAccess='Y';
+     }
+  else {
+     this.showLoginDetails = false;
+     this.loginAccess='N';
+     this.employeesMasterForm.get('roleId').reset();
+     this.employeesMasterForm.get('teamRole').reset();
+     this.employeesMasterForm.get('loginPass').reset();
+     }
+}
+
+
 
 
 exportToExcel1() {
@@ -426,15 +446,6 @@ CheckDataValidations() {
 
   var msg1;
   
-
- 
- 
-  // if(eml.includes('@')===true) { alert ("Valid Email..");} else alert ("InValid Email..");
-
-  // alert ("div Id :" +formValue.divisionId);
-  // alert ("loc Id :" +formValue.locId);
-  // alert ("Dept Id :" +formValue.deptId);
-
   if (formValue.divisionId === undefined || formValue.divisionId === null) {
     this.checkValidation = false;
     msg1="DIVISION: Should not be null....";
@@ -458,7 +469,7 @@ CheckDataValidations() {
 
   if (formValue.ticketNo === undefined || formValue.ticketNo === null || formValue.ticketNo.trim()=='') {
     this.checkValidation = false;
-    alert("TICKET NO : Should not be null / Enter valid Customer No");
+    alert("TICKET NO : Should not be null.");
     return;
   }
 
@@ -535,10 +546,31 @@ CheckDataValidations() {
   }
 
   
+ if( formValue.loginAccess==='Y' ) {
+   
+  if (formValue.roleId === undefined || formValue.roleId === null || formValue.roleId <0 ) {
+    this.checkValidation = false;
+    alert("ROLE ID : Should not be null");
+    return;
+  }
+
+  if (formValue.teamRole === undefined || formValue.teamRole === null  ) {
+    this.checkValidation = false;
+    alert("TEAM ROLE  : Should not be null");
+    return;
+  }
+
+  if (formValue.loginPass === undefined || formValue.loginPass === null || formValue.loginPass.trim() === '' ) {
+    this.checkValidation = false;
+    alert("LOGIN PASSWORD  : Should not be null");
+    return;
+  }
+
+ }
+
   this.checkValidation = true
 
 }
-
 
   validateStartDate(stDate) {
     var currDate = new Date();

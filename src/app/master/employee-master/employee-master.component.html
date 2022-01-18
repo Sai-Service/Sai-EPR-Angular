@@ -94,18 +94,18 @@
 
                 <tr>
                     <td style="width: 15%" class="LabelFontStyle1"> First&nbsp;&nbsp;Name: </td>
-                    <td> <input type='text' formControlName="fname" [(ngModel)]='fname' value={{fname}} class="form-control" style="background-color: yellow;text-transform: uppercase;"  (keyup)="onKey($event)"></td>
-                    <td style="width: 15%" class="LabelFontStyle"> Middle&nbsp;Name;&nbsp;: </td>
-                    <td> <input type='text' formControlName="mname" [(ngModel)]='mname' value={{mname}} class="form-control"  (keyup)="onKey($event)" style="text-transform: uppercase;" ></td>
+                    <td> <input type='text' uppercase formControlName="fname" [(ngModel)]='fname' value={{fname}} class="form-control"  style="background-color: yellow;text-transform: uppercase;"  (keyup)="onKey($event)"></td>
+                    <td style="width: 15%" class="LabelFontStyle"> Middle&nbsp;Name&nbsp;: </td>
+                    <td> <input type='text' uppercase formControlName="mname" [(ngModel)]='mname' value={{mname}} class="form-control"  (keyup)="onKey($event)" style="text-transform: uppercase;" ></td>
                     <td style="width: 15%" class="LabelFontStyle1"> Last&nbsp;&nbsp;Name: </td>
-                    <td> <input type='text' formControlName="lname" [(ngModel)]='lname' value={{lname}} class="form-control" style="background-color: yellow;text-transform: uppercase;"  (keyup)="onKey($event)"></td>
+                    <td> <input type='text' uppercase formControlName="lname" [(ngModel)]='lname' value={{lname}} class="form-control" style="background-color: yellow;text-transform: uppercase;"  (keyup)="onKey($event)"></td>
                    
                 </tr>
 
               
                 <tr>
                         <td style="width: 15%" class="LabelFontStyle1"> Full&nbsp;&nbsp;Name: </td>
-                        <td colspan="3"> <input  disabled type='text' formControlName="fullName" [(ngModel)]='fullName' value={{fullName}} class="form-control" style="width: 100%;text-transform: uppercase;"></td>
+                        <td colspan="3"> <input uppercase disabled type='text' formControlName="fullName" [(ngModel)]='fullName' value={{fullName}} class="form-control" style="width: 100%;text-transform: uppercase;"></td>
                         <td style="width: 15%" class="LabelFontStyle1"> DOB&nbsp;&nbsp;: </td>
                         <td> <input type='date' formControlName="dob" [(ngModel)]='dob' value={{dob}} 
                             class="form-control" (change)="validateDob(dob)" style="background-color: yellow;"></td>
@@ -114,9 +114,9 @@
 
                 <tr>
                     <td style="width: 15%" class="LabelFontStyle1"> Contact&nbsp;&nbsp;No1: </td>
-                    <td> <input type='number' formControlName="contact1" [(ngModel)]='contact1' value={{contact1}} class="form-control" style="background-color: yellow;"></td>
+                    <td> <input type='number' formControlName="contact1" [(ngModel)]='contact1' value={{contact1}} class="form-control" style="background-color: yellow;text-align: left;"></td>
                     <td style="width: 15%" class="LabelFontStyle"> Contact&nbsp;&nbsp;No2: </td>
-                    <td> <input type='number' formControlName="contact2" [(ngModel)]='contact2' value={{contact2}} class="form-control" ></td>
+                    <td> <input type='number' formControlName="contact2" [(ngModel)]='contact2' value={{contact2}} class="form-control" style="text-align: left;"></td>
                     <td style="width: 15%" class="LabelFontStyle1"> Email&nbsp;&nbsp;Id: </td>
                     <td> <input type='email' formControlName="emailId" [(ngModel)]='emailId' value={{emailId}} class="form-control" style="background-color: yellow;"></td>
                    
@@ -177,8 +177,17 @@
              
                 <tr>
                     <td  style="width: 15%" class="LabelFontStyle">Login&nbsp;Access&nbsp;:</td>
-                    <td><input  type="checkbox"   formControlName="loginAccess" [(ngModel)]="loginAccess"  (change)="loginRights($event)"></td>
-                     <td></td> <td></td>
+                    <!-- <td><input  type="checkbox"   formControlName="loginAccess" [(ngModel)]="loginAccess"  (change)="loginRights($event)"></td> -->
+                    
+                    <td>
+                        <select formControlName="loginAccess" id="loginAccess" class="form-control"  [(ngModel)]="loginAccess" (change)="loginRights($event)"
+                        style="background-color: yellow; width: 70px;">
+                         <option value="N">No</option>
+                         <option value="Y">Yes</option>
+                    </select>
+                    </td>
+                    
+                    <td></td> <td></td>
                     <td style="width: 15%" class="LabelFontStyle"> End&nbsp;&nbsp;Date: </td>
                     <td > <input disabled type='date' formControlName="endDate" [(ngModel)]='endDate' value={{endDate}} 
                         class="form-control"   ></td>
@@ -190,8 +199,8 @@
             </table>
         </fieldset>
 
-        <!-- <div *ngIf="showLoginDetails; then LoginYes; else LoginNo"></div>
-        <ng-template #LoginYes> -->
+        <div *ngIf="showLoginDetails; then LoginYes; else LoginNo"></div>
+        <ng-template #LoginYes>
 
         <fieldset class="RFS">
             <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Role Details </legend>
@@ -199,7 +208,7 @@
             <table class="center" >
                 <tr>
                     <td style="width: 15%" class="LabelFontStyle1"> Role&nbsp;&nbsp;Id: </td>
-                    <td > <input type='text' formControlName="roleId1" [(ngModel)]='roleId1' value={{roleId1}} class="form-control" style="background-color: yellow;"></td>
+                    <td > <input type='text' formControlName="roleId" [(ngModel)]='roleId' value={{roleId}} class="form-control" style="background-color: yellow;"></td>
                 
                     <td style="width: 15%" class="LabelFontStyle1"> Team&nbsp;&nbsp;Role: </td>
                     <td>
@@ -217,8 +226,8 @@
             </tr>
             </table>
         </fieldset>
-        <!-- </ng-template>
-        <ng-template #LoginNo></ng-template> -->
+        </ng-template>
+        <ng-template #LoginNo></ng-template>
 
 
         <br>
