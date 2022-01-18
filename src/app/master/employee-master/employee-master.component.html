@@ -20,7 +20,7 @@
                 <td> <input hidden   type="number"  formControlName="locId"      [(ngModel)]="locId" class="form-control"> </td>
                 <td> <input hidden   type="number"  formControlName="emplId"     class="form-control" [(ngModel)]="emplId"></td>
                 <td> <input hidden   type="number"  formControlName="ouId"       id="ouId" [(ngModel)]="ouId" class="form-control"></td>
-                <td> <input hidden   type="number"  formControlName="deptId"     id="deptId" [(ngModel)]="deptId" class="form-control"></td>
+                <td> <input hidden  type="number"  formControlName="deptId"     id="deptId" [(ngModel)]="deptId" class="form-control"></td>
                          
               </tr>
 
@@ -38,7 +38,7 @@
                     <td style="width: 15%" class="LabelFontStyle1"> Division&nbsp;&nbsp;: </td>
                     <td>
                         <select  type='number' formControlName="divisionId" id="divisionId" class="form-control" style="background-color: yellow;" >
-                            <option></option>
+                            <!-- <option></option> -->
                             <option *ngFor="let sc of  DivisionIDList" [ngValue]="sc.divisionId"  >
                                 {{sc.divisionName}}
                             </option>
@@ -48,7 +48,7 @@
                     <td style="width: 15%" class="LabelFontStyle1"> Location&nbsp;&nbsp;: </td>
                     <td>
                         <select type='number' formControlName="locId" id="locId" class="form-control" style="background-color: yellow;">
-                            <option></option>
+                            <!-- <option></option> -->
                             <option *ngFor="let sc of  locIdList" [ngValue]="sc.locId" >
                                 {{sc.locId}}-{{sc.locCode}}
                             </option>
@@ -57,9 +57,9 @@
 
                     <td style="width: 15%" class="LabelFontStyle1"> Dept&nbsp;&nbsp;: </td>
                     <td>
-                        <select type='number' formControlName="divisionId" id="divisionId" class="form-control" (ngModelChange)='onOptionsDEPTSelected($event)' style="background-color: yellow;">
-                            <option></option>
-                            <option *ngFor="let sc of  DepartmentList" [ngValue]="sc.cmnTypeId"  >
+                        <select type='number' formControlName="deptId" id="deptId" [(ngModel)]="deptId"  class="form-control" (ngModelChange)='onOptionsDEPTSelected($event)' style="background-color: yellow;">
+                            <!-- <option></option> -->
+                            <option *ngFor="let sc of  DepartmentList" [(ngValue)]="sc.cmnTypeId"  >
                                 {{sc.cmnTypeId}}-{{sc.code}}
                             </option>
                         </select>
@@ -73,7 +73,7 @@
                     <td style="width: 15%" class="LabelFontStyle1"> Designation&nbsp;&nbsp;: </td>
                     <td>
                         <select type='text' formControlName="designation" id="designation" class="form-control" style="background-color: yellow;">
-                            <option></option>
+                            <!-- <option></option> -->
                             <option *ngFor="let sc of  DesignationList" [ngValue]="sc.code"  >
                                 {{sc.code}}   
                             </option>
@@ -83,7 +83,7 @@
                     <td style="width: 15%" class="LabelFontStyle1"> Title&nbsp;&nbsp;: </td>
                     <td>
                         <select  type='text' formControlName="title" id="title" class="form-control" (ngModelChange)='onTitleSelected($event)' style="background-color: yellow;">
-                            <option></option>
+                            <!-- <option></option> -->
                             <option *ngFor="let sc of  titleList" [ngValue]="sc.code">
                                 {{sc.code}}
                             </option>
@@ -94,49 +94,95 @@
 
                 <tr>
                     <td style="width: 15%" class="LabelFontStyle1"> First&nbsp;&nbsp;Name: </td>
-                    <td> <input type='text' formControlName="fname" [(ngModel)]='fname' value={{fname}} class="form-control" style="background-color: yellow;"  (keyup)="onKey($event)"></td>
+                    <td> <input type='text' formControlName="fname" [(ngModel)]='fname' value={{fname}} class="form-control" style="background-color: yellow;text-transform: uppercase;"  (keyup)="onKey($event)"></td>
                     <td style="width: 15%" class="LabelFontStyle"> Middle&nbsp;Name;&nbsp;: </td>
-                    <td> <input type='text' formControlName="mname" [(ngModel)]='mname' value={{mname}} class="form-control"  (keyup)="onKey($event)" ></td>
+                    <td> <input type='text' formControlName="mname" [(ngModel)]='mname' value={{mname}} class="form-control"  (keyup)="onKey($event)" style="text-transform: uppercase;" ></td>
                     <td style="width: 15%" class="LabelFontStyle1"> Last&nbsp;&nbsp;Name: </td>
-                    <td> <input type='text' formControlName="lname" [(ngModel)]='lname' value={{lname}} class="form-control" style="background-color: yellow;"  (keyup)="onKey($event)"></td>
+                    <td> <input type='text' formControlName="lname" [(ngModel)]='lname' value={{lname}} class="form-control" style="background-color: yellow;text-transform: uppercase;"  (keyup)="onKey($event)"></td>
                    
                 </tr>
 
               
                 <tr>
                         <td style="width: 15%" class="LabelFontStyle1"> Full&nbsp;&nbsp;Name: </td>
-                        <td colspan="3"> <input  disabled type='text' formControlName="fullName" [(ngModel)]='fullName' value={{fullName}} class="form-control" style="width: 100%;"></td>
+                        <td colspan="3"> <input  disabled type='text' formControlName="fullName" [(ngModel)]='fullName' value={{fullName}} class="form-control" style="width: 100%;text-transform: uppercase;"></td>
                         <td style="width: 15%" class="LabelFontStyle1"> DOB&nbsp;&nbsp;: </td>
-                        <td> <input type='date' formControlName="dob" [(ngModel)]='dob' value={{dob}} class="form-control" style="background-color: yellow;"></td>
+                        <td> <input type='date' formControlName="dob" [(ngModel)]='dob' value={{dob}} 
+                            class="form-control" (change)="validateDob(dob)" style="background-color: yellow;"></td>
                       
                 </tr>
 
                 <tr>
                     <td style="width: 15%" class="LabelFontStyle1"> Contact&nbsp;&nbsp;No1: </td>
-                    <td> <input type='text' formControlName="contact1" [(ngModel)]='contact1' value={{contact1}} class="form-control" style="background-color: yellow;"></td>
+                    <td> <input type='number' formControlName="contact1" [(ngModel)]='contact1' value={{contact1}} class="form-control" style="background-color: yellow;"></td>
                     <td style="width: 15%" class="LabelFontStyle"> Contact&nbsp;&nbsp;No2: </td>
-                    <td> <input type='text' formControlName="contact2" [(ngModel)]='contact2' value={{contact2}} class="form-control" ></td>
+                    <td> <input type='number' formControlName="contact2" [(ngModel)]='contact2' value={{contact2}} class="form-control" ></td>
                     <td style="width: 15%" class="LabelFontStyle1"> Email&nbsp;&nbsp;Id: </td>
-                    <td> <input type='text' formControlName="emailId" [(ngModel)]='emailId' value={{emailId}} class="form-control" style="background-color: yellow;"></td>
+                    <td> <input type='email' formControlName="emailId" [(ngModel)]='emailId' value={{emailId}} class="form-control" style="background-color: yellow;"></td>
                    
+                    <!-- <td>
+                        <input type="email" required formControlName="emailId" value={{emailId}} class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.emailId.errors }"
+                        placeholder="Enter email id" lowercase  style="text-transform: lowercase;">
+                    <div *ngIf="submitted && f.emailId.errors" class="invalid-feedback">
+                        <div *ngIf="f.emailId.errors.required">Please enter valid email ID </div>
+                        <div *ngIf="f.emailId.errors.email">Please enter valid email ID 
+                        </div>
+                    </div> -->
                 </tr>
 
                 <tr>
                         <td style="width: 15%" class="LabelFontStyle1"> PAN&nbsp;&nbsp;: </td>
                         <td > <input type='text' formControlName="panNo" [(ngModel)]='panNo' value={{panNo}} class="form-control" style="background-color: yellow;"></td>
                     
-                        <td style="width: 15%" class="LabelFontStyle1"> Start&nbsp;&nbsp;Date: </td>
-                        <td > <input type='date' formControlName="startDate" [(ngModel)]='startDate' value={{startDate}} class="form-control" style="background-color: yellow;"></td>
-                    
+                     
                         <td style="width: 15%" class="LabelFontStyle1"> Status&nbsp;&nbsp;: </td>
-                        <td > <input disabled  type='text' formControlName="status" [(ngModel)]='status' value={{status}} class="form-control" ></td>
+                       
+                        <div *ngIf="displayButton; then statusLovNo; else statusLovYes"></div>
+                        <ng-template #statusLovNo> 
+                                <td > <input disabled  type='text' formControlName="status" [(ngModel)]='status' value={{status}} class="form-control" ></td>
+                                <!-- <td>
+                                    <select formControlName="status" id="status" class="form-control"  
+                                    [(ngModel)]="status" (ngModelChange)='onOptionsSelected($event)'>
+                                    <option disabled>--Select--</option>
+                                    <option *ngFor="let sc of  statusList" [ngValue] ="sc.code">
+                                        {{sc.code}}
+                                    </option>
+                                </select>
+                                </td> -->
+                        
+                            </ng-template>
+                        <ng-template #statusLovYes> 
+
+
+                                <td>
+                                    <select formControlName="status" id="status" class="form-control"  
+                                    [(ngModel)]="status" (ngModelChange)='onOptionsSelected($event)'>
+                                    <option disabled>--Select--</option>
+                                    <option *ngFor="let sc of  statusList" [ngValue] ="sc.code">
+                                        {{sc.code}}
+                                    </option>
+                                </select>
+                                </td>
+                        </ng-template>
+
+
+                        <td style="width: 15%" class="LabelFontStyle1"> Start&nbsp;&nbsp;Date: </td>
+                        <td > <input type='date' formControlName="startDate" [(ngModel)]='startDate' value={{startDate}} 
+                            class="form-control"  (change)="validateStartDate(startDate)" style="background-color: yellow;"></td>
                     
+
                 </tr>
 
              
                 <tr>
                     <td  style="width: 15%" class="LabelFontStyle">Login&nbsp;Access&nbsp;:</td>
                     <td><input  type="checkbox"   formControlName="loginAccess" [(ngModel)]="loginAccess"  (change)="loginRights($event)"></td>
+                     <td></td> <td></td>
+                    <td style="width: 15%" class="LabelFontStyle"> End&nbsp;&nbsp;Date: </td>
+                    <td > <input disabled type='date' formControlName="endDate" [(ngModel)]='endDate' value={{endDate}} 
+                        class="form-control"   ></td>
+                
                 </tr>
               
 
@@ -144,20 +190,21 @@
             </table>
         </fieldset>
 
-        <div *ngIf="showLoginDetails; then LoginYes; else LoginNo"></div>
-        <ng-template #LoginYes>
+        <!-- <div *ngIf="showLoginDetails; then LoginYes; else LoginNo"></div>
+        <ng-template #LoginYes> -->
+
         <fieldset class="RFS">
             <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Role Details </legend>
                
             <table class="center" >
                 <tr>
                     <td style="width: 15%" class="LabelFontStyle1"> Role&nbsp;&nbsp;Id: </td>
-                    <td > <input type='text' formControlName="roleId" [(ngModel)]='roleId' value={{roleId}} class="form-control" style="background-color: yellow;"></td>
+                    <td > <input type='text' formControlName="roleId1" [(ngModel)]='roleId1' value={{roleId1}} class="form-control" style="background-color: yellow;"></td>
                 
                     <td style="width: 15%" class="LabelFontStyle1"> Team&nbsp;&nbsp;Role: </td>
                     <td>
                         <select formControlName="teamRole"  class="form-control">
-                            <option>--Select--</option>
+                            <option disabled>--Select--</option>
                             <option *ngFor="let sc of  teamRoleList" >
                                 {{sc.code}}
                             </option>
@@ -170,8 +217,8 @@
             </tr>
             </table>
         </fieldset>
-        </ng-template>
-        <ng-template #LoginNo></ng-template>
+        <!-- </ng-template>
+        <ng-template #LoginNo></ng-template> -->
 
 
         <br>

@@ -239,6 +239,7 @@
                         <td style="width: 10%" class="LabelFontStyle1">
                             Email&nbsp;ID&nbsp;:
                         </td> 
+                        
                         <td>
                             <input type="email" formControlName="emailId" value={{emailId}} class="form-control"
                             [ngClass]="{ 'is-invalid': submitted && f.emailId.errors }"
@@ -248,6 +249,7 @@
                             <div *ngIf="f.emailId.errors.email">Please enter valid email ID 
                             </div>
                         </div>
+
                         <!-- <span
                             *ngIf="!employeeMasterForm.get('emailId').valid && employeeMasterForm.get('emailId').touched">Please enter valid email ID 
                           </span> -->

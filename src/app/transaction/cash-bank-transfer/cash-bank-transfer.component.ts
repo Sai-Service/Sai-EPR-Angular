@@ -361,7 +361,7 @@ export class CashBankTransferComponent implements OnInit {
         this.service.CashBankTrfPostSubmit(formValue,postEmplId).subscribe((res: any) => {
           if (res.code === 200) {
             alert('RECORD INSERTED SUCCESSFUILY');
-            // this.docTrfNo=res.obj;
+            this.docTrfNo=res.obj;
             this.cashBankTransferForm.disable();
             this.statusSave=false;
             this.statusPost=false;
@@ -440,8 +440,6 @@ export class CashBankTransferComponent implements OnInit {
        
         searchMast(){}
         SearchByDocNo(mDocNo){alert("Search By Document Number .... ...Wip " +mDocNo);}
-
-        // SearchByDate(mFrmDate,mToDate){alert("Search By Date .... ...Wip " +mFrmDate +","+mToDate);}
 
         SearchByDate() {
           var frmDt=this.cashBankTransferForm.get('fromDate').value;

@@ -13,13 +13,15 @@ interface IEmplMaster {
   emplId: number;
   ticketNo: string;
   divisionId: number;
+  locId: number;
+  deptId: number;
+
   title: string;
   fname: string
   mname: string
   lname: string
   fullName: string
-  locId: number;
-  deptId: string;
+ 
   designation: string;
   dob: string;
   panNo: string;
@@ -28,7 +30,7 @@ interface IEmplMaster {
   contact2: number;
   loginPass: string;
   status:string;
-  endDate:Date;
+  endDate:string;
   loginAccess:string;
   roleId:number;
   startDate:Date;
@@ -45,7 +47,7 @@ export class EmployeeMasterComponent implements OnInit {
   @ViewChild('epltable1', { static: false }) epltable1: ElementRef;
   pipe = new DatePipe('en-US');
   public minDate = new Date();
-
+  submitted = false;
   public statusList: Array<string> = [];
   public DesignationList: Array<string> = [];
   public DepartmentList: any;
@@ -67,7 +69,7 @@ export class EmployeeMasterComponent implements OnInit {
   locName : string;
   orgId:number;
   ouId :number;
-  deptId:string; 
+  deptId:number; 
   emplId :number;
 
   locCode:string;
@@ -87,16 +89,21 @@ export class EmployeeMasterComponent implements OnInit {
   panNo:string;
 
   startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
-  endDate:Date;
+  endDate:string;
   public status = "Active";
 
-  loginPass: string;
+  loginPass: string=null;
   loginAccess:string;
-  roleId:number;
+  roleId1:number=null;
   teamRole:string;
+
+  displayInactive = true;
+  Status1: any;
+  inactiveDate: Date;
 
   showLoginDetails = false;
   displayButton=true;
+  checkValidation=false;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.employeesMasterForm = fb.group({
@@ -109,7 +116,7 @@ export class EmployeeMasterComponent implements OnInit {
     locationId:[],
     locName :[''],
     ouId :[],
-    deptId :[],
+    deptId :[''],
     emplId:[''],
     orgId:[''],
     locCode:[],
@@ -124,17 +131,19 @@ export class EmployeeMasterComponent implements OnInit {
     lname:[],
     fullName:[],
     dob:[],
-    emailId:[],
+     // emailId: ['', [Validators.required,Validators.email]],
+    emailId: ['', [Validators.required, Validators.email, Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')]],
+    
     contact1:[],
     contact2:[],
     panNo:[],
     startDate:[],
+    endDate:[''],
     status:[],
 
-    loginPass:[''],
-    endDate:[''],
+    loginPass:[],
     loginAccess:[''],
-    roleId:[''],
+    roleId1:[],
     teamRole:[],
   
 
@@ -158,7 +167,7 @@ ngOnInit(): void {
   this.ouId=Number(sessionStorage.getItem('ouId'));
   this.locId=Number(sessionStorage.getItem('locId'));
   this.locName=(sessionStorage.getItem('locName'));
-  // this.deptId=Number(sessionStorage.getItem('dept'));
+  this.deptId=Number(sessionStorage.getItem('deptId'));
   this.emplId= Number(sessionStorage.getItem('emplId'));
   this.divisionId = Number(sessionStorage.getItem('divisionId'));
   this.orgId=this.ouId;
@@ -214,6 +223,21 @@ ngOnInit(): void {
 
 }
 
+onOptionsSelected(event: any) {
+
+  this.Status1 = this.employeesMasterForm.get('status').value;
+  alert(this.Status1);
+  if (this.Status1 === 'Inactive') {
+    this.displayInactive = false;
+    // this.endDate = new Date();
+    this.endDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+  }
+  else if (this.Status1 === 'Active') {
+    this.employeesMasterForm.get('endDate').reset();
+    this.displayInactive=true;
+  }
+}
+
 
 
 resetMast() {
@@ -231,17 +255,22 @@ transData(val) {
   delete val.locName;
   delete val.ouName;
   // delete val.locId;
-  delete val.ouId;
+  // delete val.ouId;
   // delete val.deptId;
-  delete val.emplId;
+  // delete val.emplId;
   delete val.orgId;
 
  return val;
 }
 newMast() {
    
-
   const formValue: IEmplMaster = this.transData(this.employeesMasterForm.value);
+
+  
+  this.CheckDataValidations();
+
+  if (this.checkValidation === true) {
+
   this.service.EmployeeMasterSubmit(formValue).subscribe((res: any) => {
     if (res.code === 200) {
       alert('RECORD INSERTED SUCCESSFULLY');    
@@ -254,6 +283,7 @@ newMast() {
     }
   });
 }
+}
 
 updateMast() {
   // alert(this.divisionName);
@@ -264,6 +294,9 @@ updateMast() {
   // this.locId=select.locId;
 
   const formValue: IEmplMaster = this.employeesMasterForm.value;
+  this.CheckDataValidations();
+  if (this.checkValidation === true) {
+
   formValue.divisionId=this.divisionId;
   formValue.locId=this.locId;
   this.service.UpdateEmpMasterById(formValue, formValue.emplId).subscribe((res: any) => {
@@ -276,8 +309,9 @@ updateMast() {
         this.employeesMasterForm.reset();
       }
     }
-  });
-};
+   });
+ }
+ }
 
 
 searchMast() {
@@ -296,7 +330,7 @@ Select(emplId: number) {
   if (select) {
     this.employeesMasterForm.patchValue(select);
      this.displayButton = false;
-    this.deptId= select.deptId+'-'+select.deptName;
+    this.deptId= select.deptId;   //+'-'+select.deptName;
     this.deptName = select.deptName;
      this.employeesMasterForm.patchValue({title:select.title});
   }
@@ -318,6 +352,9 @@ SearchByEmpId(empId){
 
 onOptionsDEPTSelected(event){  
   // alert ("Dept :"+event) ;
+
+  var dept =this.employeesMasterForm.get('deptId').value;
+  // alert (dept);
 
   let select = this.DepartmentList.find(d => d.cmnTypeId === event);
   this.service.DesignationList(select.code)
@@ -347,7 +384,7 @@ loginRights(e) {
     //  this.employeesMasterForm.patchValue({roleId:null});
     //  this.employeesMasterForm.patchValue({teamRole:null});
     //  this.employeesMasterForm.patchValue({loginPass:null});
-     this.employeesMasterForm.get('roleId').reset();
+     this.employeesMasterForm.get('roleId1').reset();
      this.employeesMasterForm.get('teamRole').reset();
      this.employeesMasterForm.get('loginPass').reset();
      }
@@ -366,16 +403,162 @@ exportToExcel1() {
  onKey(event: any) {
   var title =this.employeesMasterForm.get("title").value;
   // const aaa = this.title + '.'+' ' + this.fname + ' ' + this.mname + ' ' + this.lname ;
-  const aaa = title + '.'+' ' + this.fname + ' ' + this.mname + ' ' + this.lname ;
+  if(this.mname===null || this.mname===undefined || this.mname.trim()===''){this.mname=''; }
+  // const aaa = title + '.'+' ' + this.fname + ' ' + this.mname + ' ' + this.lname ;
+  const aaa =  this.fname.trim() + ' ' + this.mname.trim() + ' ' + this.lname.trim() ;
+ 
   this.fullName = aaa;
 }
 
 onTitleSelected(mTitle: any) {
-  if(mTitle !=null){
-  var title =this.employeesMasterForm.get("title").value;
-   const aaa = title + '.'+' ' + this.fname + ' ' + this.mname + ' ' + this.lname ;
-  this.fullName = aaa;
-  }
+  // if(mTitle !=null){
+  // var title =this.employeesMasterForm.get("title").value;
+  // if(this.mname===null || this.mname===undefined || this.mname.trim()===''){this.mname=''; }
+  //  const aaa = title + '.'+' ' + this.fname + ' ' + this.mname + ' ' + this.lname ;
+  // this.fullName = aaa;
+  // }
 }
+
+
+CheckDataValidations() {
+
+  const formValue: IEmplMaster = this.employeesMasterForm.value;
+
+  var msg1;
+  
+
+ 
+ 
+  // if(eml.includes('@')===true) { alert ("Valid Email..");} else alert ("InValid Email..");
+
+  // alert ("div Id :" +formValue.divisionId);
+  // alert ("loc Id :" +formValue.locId);
+  // alert ("Dept Id :" +formValue.deptId);
+
+  if (formValue.divisionId === undefined || formValue.divisionId === null) {
+    this.checkValidation = false;
+    msg1="DIVISION: Should not be null....";
+    alert(msg1);
+    return;
+  }
+
+  if (formValue.locId === undefined || formValue.locId === null) {
+    this.checkValidation = false;
+    alert("LOCATION: Should not be null....");
+    return;
+  }
+
+  // alert ("Dept Id :" +formValue.deptId);
+  if (formValue.deptId === undefined || formValue.deptId === null) {
+    this.checkValidation = false;
+    alert("DEPT: Should not be null....");
+    return;
+  }
+
+
+  if (formValue.ticketNo === undefined || formValue.ticketNo === null || formValue.ticketNo.trim()=='') {
+    this.checkValidation = false;
+    alert("TICKET NO : Should not be null / Enter valid Customer No");
+    return;
+  }
+
+  
+
+  if (formValue.designation === undefined || formValue.designation === null) {
+    this.checkValidation = false;
+    alert("DESIGNATION : Should not be null....");
+    return;
+  }
+
+  if (formValue.title === undefined || formValue.title === null) {
+    this.checkValidation = false;
+    alert("TITLE: Should not be null....");
+    return;
+  }
+
+  
+  if (formValue.fname == null  || formValue.fname == undefined || formValue.fname.trim() == '') {
+    alert("FIRST NAME: Should not be null....");
+    return;
+  }
+
+  if (formValue.lname == null  || formValue.lname == undefined || formValue.lname.trim() == '') {
+    alert("LAST NAME: Should not be null....");
+    return;
+  }
+
+  if (formValue.fullName == null  || formValue.fullName == undefined || formValue.fullName.trim() == '') {
+    alert("FULL NAME: Should not be null....");
+    return;
+  }
+
+  
+  var empdob = new Date(formValue.dob);
+  var cDate = new Date();
+ 
+ 
+  if (formValue.dob === undefined || formValue.dob === null || empdob >=cDate ) {
+    this.checkValidation = false;
+    alert("EMPLOYEE DOB: enter valid Date of Birth" );
+    this.dob = this.pipe.transform(cDate, 'y-MM-dd');
+    return;
+  }
+
+   
+  if (formValue.contact1 === undefined || formValue.contact1 === null || formValue.contact1<=0) {
+    this.checkValidation = false;
+    alert("CONTACT NO1: Should not be null....");
+    return;
+  }
+  
+   
+  
+  if (formValue.emailId === undefined || formValue.emailId === null || formValue.emailId.trim() == '') {
+    this.checkValidation = false;
+    alert("EMAIL ID: Should not be null....");
+    return;
+  } else {
+     if(formValue.emailId.includes('@')===false) {alert("EMAIL ID: Enter Valid Email Id....");return; }
+  }
+
+  if (formValue.panNo === undefined || formValue.panNo === null || formValue.panNo.trim() == '' || formValue.panNo.trim().length !=10) {
+    this.checkValidation = false;
+    alert("PAN: Should not be null / Enter Valid PAN....");
+    return;
+  }
+
+ 
+  if (formValue.status === undefined || formValue.status === null) {
+    this.checkValidation = false;
+    alert("RECEIPT STATUS: Should not be null....");
+    return;
+  }
+
+  
+  this.checkValidation = true
+
+}
+
+
+  validateStartDate(stDate) {
+    var currDate = new Date();
+    var sDate = new Date(stDate);
+    if (sDate > currDate) {
+      alert("START DATE :" + "Should not be above Today's Date");
+      this.startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+    }
+  }
+
+  validateDob(dDate) {
+    var currDate = new Date();
+    var sDate = new Date(dDate);
+    if (sDate >= currDate) {
+      alert("DOB:" + "Should  be below Today's Date");
+      this.dob = this.pipe.transform(Date.now(), 'y-MM-dd');
+    }
+  }
+
+
+  
 
 }
