@@ -1,0 +1,355 @@
+<form [formGroup]="employeesMasterForm" (ngSubmit)="employeesMaster(employeesMasterForm.value)">
+
+    <div class="center">
+
+        <table style="width: 100%;background-color: white;">
+            <tr>
+                <td class="PageHeader">
+                    &nbsp;&nbsp;EMPLOYEE&nbsp;MASTER
+                </td>
+            </tr>
+        </table>
+
+        <div class="form-bg">
+            <div class="center" style="width: 100%;">
+
+            <table class="center">
+                <tr>
+
+                <td> <input hidden   type="number"  formControlName="divisionId" class="form-control" [(ngModel)]="divisionId"> </td>
+                <td> <input hidden   type="number"  formControlName="locId"      [(ngModel)]="locId" class="form-control"> </td>
+                <!-- <td> <input hidden   type="number"  formControlName="emplId"     class="form-control" [(ngModel)]="emplId"></td> -->
+                <td> <input hidden   type="number"  formControlName="ouId"       id="ouId" [(ngModel)]="ouId" class="form-control"></td>
+                <td> <input hidden  type="number"  formControlName="deptId"     id="deptId" [(ngModel)]="deptId" class="form-control"></td>
+                         
+              </tr>
+
+
+
+            </table>
+
+
+            
+        <fieldset class="RFS">
+            <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Employee Details </legend>
+               
+            <table class="center" >
+                 <tr>
+                    <td style="width: 15%" class="LabelFontStyle1"> Division&nbsp;&nbsp;: </td>
+                    <td>
+                        <select  type='number' formControlName="divisionId" id="divisionId" class="form-control" style="background-color: yellow;" >
+                            <!-- <option></option> -->
+                            <option *ngFor="let sc of  DivisionIDList" [ngValue]="sc.divisionId"  >
+                                {{sc.divisionName}}
+                            </option>
+                        </select>
+                    </td>
+
+                    <td style="width: 15%" class="LabelFontStyle1"> Location&nbsp;&nbsp;: </td>
+                    <td>
+                        <select type='number' formControlName="locId" id="locId" class="form-control" style="background-color: yellow;">
+                            <!-- <option></option> -->
+                            <option *ngFor="let sc of  locIdList" [ngValue]="sc.locId" >
+                                {{sc.locId}}-{{sc.locCode}}
+                            </option>
+                        </select>
+                    </td>
+
+                    <td style="width: 15%" class="LabelFontStyle1"> Dept&nbsp;&nbsp;: </td>
+                    <td>
+                        <select type='number' formControlName="deptId" id="deptId" [(ngModel)]="deptId"  class="form-control" (ngModelChange)='onOptionsDEPTSelected($event)' style="background-color: yellow;">
+                            <!-- <option></option> -->
+                            <option *ngFor="let sc of  DepartmentList" [(ngValue)]="sc.cmnTypeId"  >
+                                {{sc.cmnTypeId}}-{{sc.code}}
+                            </option>
+                        </select>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle1"> Ticket&nbsp;&nbsp;No: </td>
+                    <td>  <input  type='text'formControlName="ticketNo" [(ngModel)]='ticketNo' value={{ticketNo}} class="form-control"  (keyup)="onKey($event,'tkt')"  style="background-color: yellow;"></td>
+
+                    <td style="width: 15%" class="LabelFontStyle1"> Designation&nbsp;&nbsp;: </td>
+                    <td>
+                        <select type='text' formControlName="designation" id="designation" class="form-control" style="background-color: yellow;">
+                            <!-- <option></option> -->
+                            <option *ngFor="let sc of  DesignationList" [ngValue]="sc.code"  >
+                                {{sc.code}}   
+                            </option>
+                        </select>
+                    </td>
+
+                    <td style="width: 15%" class="LabelFontStyle1"> Title&nbsp;&nbsp;: </td>
+                    <td>
+                        <select  type='text' formControlName="title" id="title" class="form-control" (ngModelChange)='onTitleSelected($event)' style="background-color: yellow;">
+                            <!-- <option></option> -->
+                            <option *ngFor="let sc of  titleList" [ngValue]="sc.code">
+                                {{sc.code}}
+                            </option>
+                        </select>
+                    </td>
+
+                </tr>
+
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle1"> First&nbsp;&nbsp;Name: </td>
+                    <td> <input type='text' uppercase formControlName="fname" [(ngModel)]='fname' value={{fname}} class="form-control"  style="background-color: yellow;"  (keyup)="onKey($event ,'nam')"></td>
+                    <td style="width: 15%" class="LabelFontStyle"> Middle&nbsp;Name&nbsp;: </td>
+                    <td> <input type='text' uppercase formControlName="mname" [(ngModel)]='mname' value={{mname}} class="form-control"  (keyup)="onKey($event,'nam')"  ></td>
+                    <td style="width: 15%" class="LabelFontStyle1"> Last&nbsp;&nbsp;Name: </td>
+                    <td> <input type='text' uppercase formControlName="lname" [(ngModel)]='lname' value={{lname}} class="form-control" style="background-color: yellow;"  (keyup)="onKey($event,'nam')"></td>
+                   
+                </tr>
+
+              
+                <tr>
+                        <td style="width: 15%" class="LabelFontStyle1"> Full&nbsp;&nbsp;Name: </td>
+                        <td colspan="3"> <input uppercase disabled type='text' formControlName="fullName" [(ngModel)]='fullName' value={{fullName}} class="form-control" style="width: 100%;"></td>
+                        <td style="width: 15%" class="LabelFontStyle1"> DOB&nbsp;&nbsp;: </td>
+                        <td> <input type='date' formControlName="dob" [(ngModel)]='dob' value={{dob}} 
+                            class="form-control" (change)="validateDob(dob)" style="background-color: yellow;"></td>
+                      
+                </tr>
+
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle1"> Contact1&nbsp;: </td>
+                    <td> <input type='number' formControlName="contact1" [(ngModel)]='contact1' value={{contact1}} class="form-control" style="background-color: yellow;text-align: left;"></td>
+                    <td style="width: 15%" class="LabelFontStyle"> Contact2&nbsp;: </td>
+                    <td> <input type='number' formControlName="contact2" [(ngModel)]='contact2' value={{contact2}} class="form-control" style="text-align: left;"></td>
+                    <td style="width: 15%" class="LabelFontStyle1"> Email&nbsp;&nbsp;Id&nbsp;: </td>
+                    <td> <input type='email' formControlName="emailId" [(ngModel)]='emailId' value={{emailId}} class="form-control" style="background-color: yellow;"></td>
+                   
+                    <!-- <td>
+                        <input type="email" required formControlName="emailId" value={{emailId}} class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.emailId.errors }"
+                        placeholder="Enter email id" lowercase  style="text-transform: lowercase;">
+                    <div *ngIf="submitted && f.emailId.errors" class="invalid-feedback">
+                        <div *ngIf="f.emailId.errors.required">Please enter valid email ID </div>
+                        <div *ngIf="f.emailId.errors.email">Please enter valid email ID 
+                        </div>
+                    </div> -->
+                </tr>
+
+                <tr>
+                        <td style="width: 15%" class="LabelFontStyle1"> PAN&nbsp;&nbsp;: </td>
+                        <td > <input type='text' formControlName="panNo" [(ngModel)]='panNo' value={{panNo}} (keyup)="onKey($event,'pan')"  class="form-control" style="background-color: yellow;"></td>
+                    
+                     
+                        <td style="width: 15%" class="LabelFontStyle1"> Status&nbsp;&nbsp;: </td>
+                       
+                        <div *ngIf="displayButton; then statusLovNo; else statusLovYes"></div>
+                        <ng-template #statusLovNo> 
+                                <td > <input disabled  type='text' formControlName="status" [(ngModel)]='status' value={{status}} class="form-control" ></td>
+                                <!-- <td>
+                                    <select formControlName="status" id="status" class="form-control"  
+                                    [(ngModel)]="status" (ngModelChange)='onOptionsSelected($event)'>
+                                    <option disabled>--Select--</option>
+                                    <option *ngFor="let sc of  statusList" [ngValue] ="sc.code">
+                                        {{sc.code}}
+                                    </option>
+                                </select>
+                                </td> -->
+                        
+                            </ng-template>
+                        <ng-template #statusLovYes> 
+
+
+                                <td>
+                                    <select formControlName="status" id="status" class="form-control"  
+                                    [(ngModel)]="status" (ngModelChange)='onOptionsSelected($event)'>
+                                    <option disabled>--Select--</option>
+                                    <option *ngFor="let sc of  statusList" [ngValue] ="sc.code">
+                                        {{sc.code}}
+                                    </option>
+                                </select>
+                                </td>
+                        </ng-template>
+
+
+                        <td style="width: 15%" class="LabelFontStyle1"> Start&nbsp;&nbsp;Date: </td>
+                        <td > <input type='date' formControlName="startDate" [(ngModel)]='startDate' value={{startDate}} 
+                            class="form-control"  (change)="validateStartDate(startDate)" style="background-color: yellow;"></td>
+                    
+
+                </tr>
+
+             
+                <tr>
+                    <td  style="width: 15%" class="LabelFontStyle">Login&nbsp;Access&nbsp;:</td>
+                    <!-- <td><input  type="checkbox"   formControlName="loginAccess" [(ngModel)]="loginAccess"  (change)="loginRights($event)"></td> -->
+                    
+                    <td>
+                        <select formControlName="loginAccess" id="loginAccess" class="form-control"  [(ngModel)]="loginAccess" (change)="loginRights($event)"
+                        style="background-color: yellow; width: 70px;">
+                         <option value="N">No</option>
+                         <option value="Y">Yes</option>
+                    </select>
+                    </td>
+                    
+                    <td></td> <td></td>
+                    <td style="width: 15%" class="LabelFontStyle"> End&nbsp;&nbsp;Date: </td>
+                    <td > <input disabled type='date' formControlName="endDate" [(ngModel)]='endDate' value={{endDate}} 
+                        class="form-control"   ></td>
+                
+                </tr>
+              
+
+
+            </table>
+        </fieldset>
+
+        <div *ngIf="showLoginDetails; then LoginYes; else LoginNo"></div>
+        <ng-template #LoginYes>
+
+        <fieldset class="RFS">
+            <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Role Details </legend>
+               
+            <table class="center" >
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle1"> Role&nbsp;&nbsp;Id: </td>
+                    <td > <input type='text' formControlName="roleId" [(ngModel)]='roleId' value={{roleId}} class="form-control" style="background-color: yellow;"></td>
+                
+                    <td style="width: 15%" class="LabelFontStyle1"> Team&nbsp;&nbsp;Role: </td>
+                    <td>
+                        <select formControlName="teamRole"  class="form-control">
+                            <option disabled>--Select--</option>
+                            <option *ngFor="let sc of  teamRoleList" >
+                                {{sc.code}}
+                            </option>
+                        </select>
+                    </td> 
+
+                    <td style="width: 15%" class="LabelFontStyle1"> Password&nbsp;&nbsp;: </td>
+                    <td > <input   type='password' formControlName="loginPass" [(ngModel)]='loginPass' value={{loginPass}} class="form-control" ></td>
+                
+            </tr>
+            </table>
+        </fieldset>
+        </ng-template>
+        <ng-template #LoginNo></ng-template>
+
+
+        <br>
+        <table class="center">
+            <tr>
+                <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
+                <ng-template #thenBlock1>
+                <td> <button type="submit" class="btn btn-info" id="register" (click)="newMast()">Save</button></td>
+                <td> <button  type="submit" class="btn btn-info" id="register" (click)="searchMast()">Search</button></td>
+                <td> <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>
+                <td> <button type="submit" class="btn btn-info" id="register" (click)="closeMast()">Close</button></td>
+               
+                </ng-template>
+                <ng-template #elseBlock1>
+                    <td> <button type="submit" class="btn btn-info" id="register" (click)="updateMast()">Update</button></td>
+                    <td> <button  type="submit" class="btn btn-info" id="register" (click)="searchMast()">Search</button></td>
+                    <td> <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>
+                    <td> <button type="submit" class="btn btn-info" id="register" (click)="closeMast()">Close</button></td>
+                </ng-template>
+                
+            </tr>
+        </table>
+
+        <fieldset class="RFS">
+            <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
+               Search </legend>
+
+         <table class="center" style="width: 100%;background-color: #FFE4B5;">
+                 <tr>
+                  <td >
+                      <table class="center">
+                          <tr> 
+                           <td>&nbsp;Ticket&nbsp;No:&nbsp;</td>
+                           <td>
+                                <input type ="text" class="form-control" formControlName="ticketNo" [(ngModel)]='ticketNo'
+                                    value={{ticketNo}} >
+                                 
+                            </td>
+
+                            <td>
+                                <button type="button" class="btn-primary" (click)="SearchByTktNo(ticketNo)"><i class="fa fa-search"
+                                        aria-hidden="true"></i></button>
+                            </td>
+
+                            <td>&nbsp;Employee&nbsp;Name:&nbsp;</td>
+                            <td>
+                                 <input type ="text" class="form-control" formControlName="fullName" [(ngModel)]='fullName'
+                                     value={{fullName}} >
+                                  
+                             </td>
+ 
+                             <td>
+                                 <button type="button" class="btn-primary" (click)="SearchByFullName(fullName)"><i class="fa fa-search"
+                                         aria-hidden="true"></i></button>
+                             </td>
+
+                          
+                           
+                          </tr>
+                      </table>
+                  </td>
+                </tr>
+
+               
+            </table>
+        </fieldset>
+
+
+
+        
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<div class="container1">
+    <div class="col-md-12 table-responsive" #epltable1>
+        <div style="padding-bottom: 10px;padding-top: 10px;">
+            <div class="row">
+             <div class="col-sm-12">
+              <button (click)="exportToExcel1()" class="btn btn-success" style="width: fit-content;">Export To Excel</button> 
+             </div>
+            </div>
+           </div>
+    <div class="grid_scroll">
+    <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
+        <tbody>
+            <tr class="GridHeader">
+                <th scope="col">Employee Id</th>
+                <th scope="col">Ticket No</th>
+                <th scope="col">Division ID</th>
+                <th scope="col">Full Name</th>
+                <th scope="col">Location ID</th>
+                <th scope="col">Department</th>
+                <th scope="col">Designation</th>
+                <th scope="col">Date of Birth</th>
+                <th scope="col">PAN No</th>
+                <th scope="col">Email ID</th>
+                <th scope="col">Contact No1</th>
+                <th scope="col">Contact No2</th>
+                <th scope="col">Status</th>
+                <th scope="col">Select one</th>
+            </tr>
+        </tbody>
+        <tr *ngFor="let com of lstcomments" class="ItemStyle" style="text-decoration:none;">
+            <td>{{com.emplId}}</td>
+            <td>{{com.ticketNo}}</td>
+            <td>{{com.divisionId}}</td>
+            <td>{{com.fullName}}</td>
+            <td>{{com.locId}}</td>
+            <td>{{com.deptId}}</td>
+            <td>{{com.designation}}</td>
+            <td>{{com.dob}}</td>
+            <td>{{com.panNo}}</td>
+            <td>{{com.emailId}}</td>
+            <td>{{com.contact1}}</td>
+            <td>{{com.contact2}}</td>  
+            <td>{{com.status}}</td>
+            <td><button class="btn btn-info" (click)="Select(com.emplId)">Select</button></td>
+        </tr>
+    </table>
+</div>
+    </div>
+</div>

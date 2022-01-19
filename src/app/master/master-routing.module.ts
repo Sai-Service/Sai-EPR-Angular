@@ -13,6 +13,7 @@ import { ItemMasterComponent } from './item-master/item-master.component';
 import { CommonMasterComponent } from './common-master/common-master.component';
 import { DocumentSequenceMasterComponent } from './document-sequence-master/document-sequence-master.component';
 import { EpmloyeeMasterComponent } from './epmloyee-master/epmloyee-master.component';
+import { EmployeeMasterComponent } from './employee-master/employee-master.component';
 import { CustomerMasterComponent } from './customer-master/customer-master.component';
 import { GlCodeCombinationComponent } from './gl-code-combination/gl-code-combination.component';
 import { HsnSacMasterComponent } from './hsn-sac-master/hsn-sac-master.component';
@@ -58,6 +59,7 @@ const routes: Routes = [
   {path:'CommonMaster', component:CommonMasterComponent},
   {path:'DocumentSequenceMaster',component:DocumentSequenceMasterComponent},
   {path:'EmployeeMaster', component:EpmloyeeMasterComponent},
+  {path:'EmployeesMaster', component:EmployeeMasterComponent},
   {path:'customerMaster', component:CustomerMasterComponent},
   {path: 'GlCodeCombination', component:GlCodeCombinationComponent},
   {path:'HsnSacMaster', component:HsnSacMasterComponent},

@@ -9,6 +9,7 @@ import { DatePipe } from '@angular/common';
 import { InteractionModeRegistry } from 'chart.js';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 import { mapToMapExpression } from '@angular/compiler/src/render3/util';
+import * as converter from 'number-to-words';
 
 interface ICashBankTransfer {
       openPeriod:string;
@@ -35,9 +36,9 @@ interface ICashBankTransfer {
       reversalStatus:string;
       reversalDate:string;
       reversalDocNo:string;
-      reversalDocDt:string;
-      toReceiptId:number;
-      fromReceiptId:number;
+      reversalDocDt:string;
+      toReceiptId:number;
+      fromReceiptId:number;
 }
 
 @Component({
@@ -114,9 +115,9 @@ export class CashBankTransferComponent implements OnInit {
      reversalStatus='N';
      reversalDate:string;
      reversalDocNo:string=null;
-     reversalDocDt:string=null;
-     toReceiptId:number=null;
-     fromReceiptId:number=null;
+      reversalDocDt:string=null;
+      toReceiptId:number=null;
+      fromReceiptId:number=null;
 
       fromDate=this.pipe.transform(Date.now(), 'y-MM-dd');  
       toDate=this.pipe.transform(Date.now(), 'y-MM-dd');  
@@ -180,9 +181,9 @@ export class CashBankTransferComponent implements OnInit {
           trfNarration:[],
 
           reversalDocNo:[],
-          reversalDocDt:[],
-          toReceiptId:[],
-          fromReceiptId:[],
+          reversalDocDt:[],
+          toReceiptId:[],
+          fromReceiptId:[],
 
           searchDocNo:[],
           fromDate:[],
@@ -360,7 +361,7 @@ export class CashBankTransferComponent implements OnInit {
         this.service.CashBankTrfPostSubmit(formValue,postEmplId).subscribe((res: any) => {
           if (res.code === 200) {
             alert('RECORD INSERTED SUCCESSFUILY');
-            // this.docTrfNo=res.obj;
+            this.docTrfNo=res.obj;
             this.cashBankTransferForm.disable();
             this.statusSave=false;
             this.statusPost=false;
@@ -439,8 +440,6 @@ export class CashBankTransferComponent implements OnInit {
        
         searchMast(){}
         SearchByDocNo(mDocNo){alert("Search By Document Number .... ...Wip " +mDocNo);}
-
-        // SearchByDate(mFrmDate,mToDate){alert("Search By Date .... ...Wip " +mFrmDate +","+mToDate);}
 
         SearchByDate() {
           var frmDt=this.cashBankTransferForm.get('fromDate').value;
@@ -572,8 +571,9 @@ export class CashBankTransferComponent implements OnInit {
                 });
   
                 }
-                this.toAcctCode='12PU.101.21.13998.0001';
-                this.toGlCodeId=10651;
+                
+                // this.toAcctCode='12PU.101.21.13998.0001';
+                // this.toGlCodeId=10651;
           }
 
           clearSearch() {
@@ -729,6 +729,20 @@ export class CashBankTransferComponent implements OnInit {
                        return;
                     } 
                     this.checkValidation=true
+          }
+
+          validateTrfAmt(x) {
+
+            var trfAmt=this.cashBankTransferForm.get('trfAmount').value
+            if(trfAmt <=0) {  alert ("Transfer Amount should by above zero");
+             this.cashBankTransferForm.patchValue({trfAmount:''});
+             this.cashBankTransferForm.patchValue({amtInWords:''});
+            return;
+          }
+
+            var inwords =converter.toWords(trfAmt);
+            this.amtInWords=inwords.toUpperCase();
+
           }
         
   
