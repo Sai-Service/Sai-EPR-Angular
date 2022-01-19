@@ -55,22 +55,6 @@ export class AllOrderListComponent implements OnInit {
             this.totInvAmt = Math.round(((this.totInvAmt += (this.orderListDetails[x].orAmt)) + Number.EPSILON) * 100) / 100;
             console.log(this.totInvAmt);
         }
-          // for (let i = 0; i < res.obj.length; i++) {
-          //   var poDt = this.orderListDetails[i].poDate;
-          //   var supInvDt = this.orderListDetails[i].suppInvDate;
-          //   this.orderListDetails[i].poDate = this.pipe.transform(poDt, 'dd-MM-yyyy');
-          //   this.orderListDetails[i].suppInvDate = this.pipe.transform(supInvDt, 'dd-MM-yyyy');
-          //   if (this.orderListDetails[i].rcvLines.length > 0) {
-          //     var recDt = this.orderListDetails[i].rcvLines[0].receiptDate;
-          //     this.orderListDetails[i].rcvLines[0].receiptDate = this.pipe.transform(recDt, 'dd-MM-yyyy');
-          //     this.isPending[i] = false;
-          //   }else{
-          //       this.orderListDetails[i].rcvLines.push({receiptNo : "Pending"});
-          //       this.isPending[i] = true;
-          //   }
-  
-          // }
-          // console.log(this.orderListDetails);
         }
         else {
           if (res.code === 400) {

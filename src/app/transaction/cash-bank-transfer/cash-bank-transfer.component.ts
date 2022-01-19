@@ -9,7 +9,7 @@ import { DatePipe } from '@angular/common';
 import { InteractionModeRegistry } from 'chart.js';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 import { mapToMapExpression } from '@angular/compiler/src/render3/util';
-import * as converter from 'number-to-words';
+// import * as converter from 'number-to-words';
 
 interface ICashBankTransfer {
       openPeriod:string;
@@ -740,8 +740,8 @@ export class CashBankTransferComponent implements OnInit {
             return;
           }
 
-            var inwords =converter.toWords(trfAmt);
-            this.amtInWords=inwords.toUpperCase();
+            // var inwords =converter.toWords(trfAmt);
+            // this.amtInWords=inwords.toUpperCase();
 
           }
         

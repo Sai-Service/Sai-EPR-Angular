@@ -2655,6 +2655,9 @@ bulkpouploadSales(formData: FormData) {
     return this.http.get(this.ServerUrl + `/orderHeader/getByDate?locId=${locId}&startDt=${startDt}&endDt=${endDt}&dept=${deptId}`)
   }
 
+  getClosingStock(ouId){
+    return this.http.get(this.ServerUrl + `/orderHeader/onHandList/${ouId}`)
+  }
 
   getSalesOrderByUser(locId, startDt, endDt,deptId){
     return this.http.get(this.ServerUrl + `/orderHeader/getByDateOM?startDt=${startDt}&endDt=${endDt}&locId=${locId}&dept=${deptId}`)
