@@ -226,7 +226,7 @@ ngOnInit(): void {
 onOptionsSelected(event: any) {
 
   this.Status1 = this.employeesMasterForm.get('status').value;
-  alert(this.Status1);
+  // alert(this.Status1);
   if (this.Status1 === 'Inactive') {
     this.displayInactive = false;
     // this.endDate = new Date();
@@ -263,13 +263,29 @@ transData(val) {
 
  return val;
 }
+
+convUpperCase(){
+  const formValue: IEmplMaster = (this.employeesMasterForm.value);
+  this.employeesMasterForm.patchValue({
+    ticketNo: this.ticketNo.toUpperCase(),
+    fname: this.fname.toUpperCase(),
+    lname: this.lname.toUpperCase(),
+    fullName: this.fullName.toUpperCase(),
+    panNo: this.panNo.toUpperCase(),
+    });
+
+    
+  if (formValue.mname == null  || formValue.mname == undefined || formValue.mname.trim() == '') {
+  }else {this.employeesMasterForm.patchValue({mname:this.mname.toUpperCase()});}
+
+}
+
 newMast() {
    
   const formValue: IEmplMaster = this.transData(this.employeesMasterForm.value);
   this.CheckDataValidations();
-
   if (this.checkValidation === true) {
-
+    
   this.service.EmployeeMasterSubmit(formValue).subscribe((res: any) => {
     if (res.code === 200) {
       alert('RECORD INSERTED SUCCESSFULLY');    
@@ -323,6 +339,9 @@ searchMast() {
     );
 }
 
+
+
+
 Select(emplId: number) {
     
   let select = this.lstcomments.find(d => d.emplId === emplId);
@@ -336,9 +355,11 @@ Select(emplId: number) {
 }
 
 
-SearchByEmpId(empId){
-  alert(empId);
-  this.service.getEmpIdDetails(empId)
+
+SearchByTktNo(tNo){
+  // alert(tNo);
+  var tktNumber =this.employeesMasterForm.get('ticketNo').value;
+  this.service.getEmpIdDetails(tktNumber)
   .subscribe(
     data => {
       this.lstcomments = data;
@@ -346,6 +367,22 @@ SearchByEmpId(empId){
     }
   );
 }
+
+
+SearchByFullName(fnam){
+  // alert(fnam);
+  var fNam =this.employeesMasterForm.get('fullName').value;
+  this.service.getEmpIdDetails1(fNam)
+  .subscribe(
+    data => {
+      this.lstcomments = data;
+      console.log(this.lstcomments);
+    }
+  );
+}
+
+
+
 
 
 
@@ -420,15 +457,36 @@ exportToExcel1() {
  }
 
 
- onKey(event: any) {
+ onKey(event: any ,fldName) {
   var title =this.employeesMasterForm.get("title").value;
+  if(fldName==='nam') {
   // const aaa = this.title + '.'+' ' + this.fname + ' ' + this.mname + ' ' + this.lname ;
   if(this.mname===null || this.mname===undefined || this.mname.trim()===''){this.mname=''; }
   // const aaa = title + '.'+' ' + this.fname + ' ' + this.mname + ' ' + this.lname ;
-  const aaa =  this.fname.trim() + ' ' + this.mname.trim() + ' ' + this.lname.trim() ;
+  
  
-  this.fullName = aaa;
+ if(this.fname.trim().length>0) {this.employeesMasterForm.patchValue({fname:this.fname.toUpperCase()});}
+ if(this.mname.trim().length>0) {this.employeesMasterForm.patchValue({mname:this.mname.toUpperCase()});}
+ if(this.lname.trim().length>0) {this.employeesMasterForm.patchValue({lname:this.lname.toUpperCase()});}
+//  if(this.fullName.trim().length>0) {this.employeesMasterForm.patchValue({fullName:this.fullName.toUpperCase()});}
+ 
+ this.fullName = this.fname.trim() + ' ' + this.mname.trim() + ' ' + this.lname.trim() ; 
+  }
+
+  if(fldName==='tkt') {
+    if(this.ticketNo.trim().length>0) {this.employeesMasterForm.patchValue({ticketNo:this.ticketNo.toUpperCase()});}
+
+   }
+   if(fldName==='pan') {
+    if(this.panNo.trim().length>0) {this.employeesMasterForm.patchValue({panNo:this.panNo.toUpperCase()});}
+
+   }
+
 }
+
+// validatePAN(){
+//   if(this.panNo.trim().length>0) {this.employeesMasterForm.patchValue({panNo:this.panNo.toUpperCase()});}
+// }
 
 onTitleSelected(mTitle: any) {
   // if(mTitle !=null){
@@ -471,7 +529,7 @@ CheckDataValidations() {
     this.checkValidation = false;
     alert("TICKET NO : Should not be null.");
     return;
-  }
+  } 
 
   
 
@@ -489,16 +547,20 @@ CheckDataValidations() {
 
   
   if (formValue.fname == null  || formValue.fname == undefined || formValue.fname.trim() == '') {
+    this.checkValidation = false;
     alert("FIRST NAME: Should not be null....");
     return;
-  }
+  } 
+
 
   if (formValue.lname == null  || formValue.lname == undefined || formValue.lname.trim() == '') {
+    this.checkValidation = false;
     alert("LAST NAME: Should not be null....");
     return;
   }
 
   if (formValue.fullName == null  || formValue.fullName == undefined || formValue.fullName.trim() == '') {
+    this.checkValidation = false;
     alert("FULL NAME: Should not be null....");
     return;
   }
@@ -570,6 +632,7 @@ CheckDataValidations() {
 
   this.checkValidation = true
 
+ 
 }
 
   validateStartDate(stDate) {

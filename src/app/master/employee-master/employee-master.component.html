@@ -18,7 +18,7 @@
 
                 <td> <input hidden   type="number"  formControlName="divisionId" class="form-control" [(ngModel)]="divisionId"> </td>
                 <td> <input hidden   type="number"  formControlName="locId"      [(ngModel)]="locId" class="form-control"> </td>
-                <td> <input hidden   type="number"  formControlName="emplId"     class="form-control" [(ngModel)]="emplId"></td>
+                <!-- <td> <input hidden   type="number"  formControlName="emplId"     class="form-control" [(ngModel)]="emplId"></td> -->
                 <td> <input hidden   type="number"  formControlName="ouId"       id="ouId" [(ngModel)]="ouId" class="form-control"></td>
                 <td> <input hidden  type="number"  formControlName="deptId"     id="deptId" [(ngModel)]="deptId" class="form-control"></td>
                          
@@ -68,7 +68,7 @@
                 </tr>
                 <tr>
                     <td style="width: 15%" class="LabelFontStyle1"> Ticket&nbsp;&nbsp;No: </td>
-                    <td>  <input  type='text'formControlName="ticketNo" [(ngModel)]='ticketNo' value={{ticketNo}} class="form-control"  style="background-color: yellow;"></td>
+                    <td>  <input  type='text'formControlName="ticketNo" [(ngModel)]='ticketNo' value={{ticketNo}} class="form-control"  (keyup)="onKey($event,'tkt')"  style="background-color: yellow;"></td>
 
                     <td style="width: 15%" class="LabelFontStyle1"> Designation&nbsp;&nbsp;: </td>
                     <td>
@@ -94,18 +94,18 @@
 
                 <tr>
                     <td style="width: 15%" class="LabelFontStyle1"> First&nbsp;&nbsp;Name: </td>
-                    <td> <input type='text' uppercase formControlName="fname" [(ngModel)]='fname' value={{fname}} class="form-control"  style="background-color: yellow;text-transform: uppercase;"  (keyup)="onKey($event)"></td>
+                    <td> <input type='text' uppercase formControlName="fname" [(ngModel)]='fname' value={{fname}} class="form-control"  style="background-color: yellow;"  (keyup)="onKey($event ,'nam')"></td>
                     <td style="width: 15%" class="LabelFontStyle"> Middle&nbsp;Name&nbsp;: </td>
-                    <td> <input type='text' uppercase formControlName="mname" [(ngModel)]='mname' value={{mname}} class="form-control"  (keyup)="onKey($event)" style="text-transform: uppercase;" ></td>
+                    <td> <input type='text' uppercase formControlName="mname" [(ngModel)]='mname' value={{mname}} class="form-control"  (keyup)="onKey($event,'nam')"  ></td>
                     <td style="width: 15%" class="LabelFontStyle1"> Last&nbsp;&nbsp;Name: </td>
-                    <td> <input type='text' uppercase formControlName="lname" [(ngModel)]='lname' value={{lname}} class="form-control" style="background-color: yellow;text-transform: uppercase;"  (keyup)="onKey($event)"></td>
+                    <td> <input type='text' uppercase formControlName="lname" [(ngModel)]='lname' value={{lname}} class="form-control" style="background-color: yellow;"  (keyup)="onKey($event,'nam')"></td>
                    
                 </tr>
 
               
                 <tr>
                         <td style="width: 15%" class="LabelFontStyle1"> Full&nbsp;&nbsp;Name: </td>
-                        <td colspan="3"> <input uppercase disabled type='text' formControlName="fullName" [(ngModel)]='fullName' value={{fullName}} class="form-control" style="width: 100%;text-transform: uppercase;"></td>
+                        <td colspan="3"> <input uppercase disabled type='text' formControlName="fullName" [(ngModel)]='fullName' value={{fullName}} class="form-control" style="width: 100%;"></td>
                         <td style="width: 15%" class="LabelFontStyle1"> DOB&nbsp;&nbsp;: </td>
                         <td> <input type='date' formControlName="dob" [(ngModel)]='dob' value={{dob}} 
                             class="form-control" (change)="validateDob(dob)" style="background-color: yellow;"></td>
@@ -113,11 +113,11 @@
                 </tr>
 
                 <tr>
-                    <td style="width: 15%" class="LabelFontStyle1"> Contact&nbsp;&nbsp;No1: </td>
+                    <td style="width: 15%" class="LabelFontStyle1"> Contact1&nbsp;: </td>
                     <td> <input type='number' formControlName="contact1" [(ngModel)]='contact1' value={{contact1}} class="form-control" style="background-color: yellow;text-align: left;"></td>
-                    <td style="width: 15%" class="LabelFontStyle"> Contact&nbsp;&nbsp;No2: </td>
+                    <td style="width: 15%" class="LabelFontStyle"> Contact2&nbsp;: </td>
                     <td> <input type='number' formControlName="contact2" [(ngModel)]='contact2' value={{contact2}} class="form-control" style="text-align: left;"></td>
-                    <td style="width: 15%" class="LabelFontStyle1"> Email&nbsp;&nbsp;Id: </td>
+                    <td style="width: 15%" class="LabelFontStyle1"> Email&nbsp;&nbsp;Id&nbsp;: </td>
                     <td> <input type='email' formControlName="emailId" [(ngModel)]='emailId' value={{emailId}} class="form-control" style="background-color: yellow;"></td>
                    
                     <!-- <td>
@@ -133,7 +133,7 @@
 
                 <tr>
                         <td style="width: 15%" class="LabelFontStyle1"> PAN&nbsp;&nbsp;: </td>
-                        <td > <input type='text' formControlName="panNo" [(ngModel)]='panNo' value={{panNo}} class="form-control" style="background-color: yellow;"></td>
+                        <td > <input type='text' formControlName="panNo" [(ngModel)]='panNo' value={{panNo}} (keyup)="onKey($event,'pan')"  class="form-control" style="background-color: yellow;"></td>
                     
                      
                         <td style="width: 15%" class="LabelFontStyle1"> Status&nbsp;&nbsp;: </td>
@@ -236,20 +236,64 @@
                 <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
                 <ng-template #thenBlock1>
                 <td> <button type="submit" class="btn btn-info" id="register" (click)="newMast()">Save</button></td>
-                <td> <button type="submit" class="btn btn-info" id="register" (click)="searchMast()">Search</button></td>
+                <td> <button  type="submit" class="btn btn-info" id="register" (click)="searchMast()">Search</button></td>
                 <td> <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>
                 <td> <button type="submit" class="btn btn-info" id="register" (click)="closeMast()">Close</button></td>
                
                 </ng-template>
                 <ng-template #elseBlock1>
                     <td> <button type="submit" class="btn btn-info" id="register" (click)="updateMast()">Update</button></td>
-                    <td> <button type="submit" class="btn btn-info" id="register" (click)="searchMast()">Search</button></td>
+                    <td> <button  type="submit" class="btn btn-info" id="register" (click)="searchMast()">Search</button></td>
                     <td> <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>
                     <td> <button type="submit" class="btn btn-info" id="register" (click)="closeMast()">Close</button></td>
                 </ng-template>
                 
             </tr>
         </table>
+
+        <fieldset class="RFS">
+            <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
+               Search </legend>
+
+         <table class="center" style="width: 100%;background-color: #FFE4B5;">
+                 <tr>
+                  <td >
+                      <table class="center">
+                          <tr> 
+                           <td>&nbsp;Ticket&nbsp;No:&nbsp;</td>
+                           <td>
+                                <input type ="text" class="form-control" formControlName="ticketNo" [(ngModel)]='ticketNo'
+                                    value={{ticketNo}} >
+                                 
+                            </td>
+
+                            <td>
+                                <button type="button" class="btn-primary" (click)="SearchByTktNo(ticketNo)"><i class="fa fa-search"
+                                        aria-hidden="true"></i></button>
+                            </td>
+
+                            <td>&nbsp;Employee&nbsp;Name:&nbsp;</td>
+                            <td>
+                                 <input type ="text" class="form-control" formControlName="fullName" [(ngModel)]='fullName'
+                                     value={{fullName}} >
+                                  
+                             </td>
+ 
+                             <td>
+                                 <button type="button" class="btn-primary" (click)="SearchByFullName(fullName)"><i class="fa fa-search"
+                                         aria-hidden="true"></i></button>
+                             </td>
+
+                          
+                           
+                          </tr>
+                      </table>
+                  </td>
+                </tr>
+
+               
+            </table>
+        </fieldset>
 
 
 
