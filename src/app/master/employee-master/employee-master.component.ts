@@ -92,9 +92,9 @@ export class EmployeeMasterComponent implements OnInit {
   endDate:string;
   public status = "Active";
 
-  loginPass: string=null;
-  loginAccess:string;
-  roleId1:number=null;
+  loginPass: string;
+  loginAccess:string='N';
+  roleId:number;
   teamRole:string;
 
   displayInactive = true;
@@ -143,7 +143,7 @@ export class EmployeeMasterComponent implements OnInit {
 
     loginPass:[],
     loginAccess:[''],
-    roleId1:[],
+    roleId:[],
     teamRole:[],
   
 
@@ -167,7 +167,7 @@ ngOnInit(): void {
   this.ouId=Number(sessionStorage.getItem('ouId'));
   this.locId=Number(sessionStorage.getItem('locId'));
   this.locName=(sessionStorage.getItem('locName'));
-  this.deptId=Number(sessionStorage.getItem('deptId'));
+  // this.deptId=Number(sessionStorage.getItem('deptId'));
   this.emplId= Number(sessionStorage.getItem('emplId'));
   this.divisionId = Number(sessionStorage.getItem('divisionId'));
   this.orgId=this.ouId;
@@ -226,7 +226,7 @@ ngOnInit(): void {
 onOptionsSelected(event: any) {
 
   this.Status1 = this.employeesMasterForm.get('status').value;
-  alert(this.Status1);
+  // alert(this.Status1);
   if (this.Status1 === 'Inactive') {
     this.displayInactive = false;
     // this.endDate = new Date();
@@ -254,27 +254,42 @@ transData(val) {
   delete val.loginName;
   delete val.locName;
   delete val.ouName;
-  // delete val.locId;
-  // delete val.ouId;
+  delete val.locCode;
+  delete val.deptName;
+  delete val.locationId;
   // delete val.deptId;
   // delete val.emplId;
   delete val.orgId;
 
  return val;
 }
+
+convUpperCase(){
+  const formValue: IEmplMaster = (this.employeesMasterForm.value);
+  this.employeesMasterForm.patchValue({
+    ticketNo: this.ticketNo.toUpperCase(),
+    fname: this.fname.toUpperCase(),
+    lname: this.lname.toUpperCase(),
+    fullName: this.fullName.toUpperCase(),
+    panNo: this.panNo.toUpperCase(),
+    });
+
+    
+  if (formValue.mname == null  || formValue.mname == undefined || formValue.mname.trim() == '') {
+  }else {this.employeesMasterForm.patchValue({mname:this.mname.toUpperCase()});}
+
+}
+
 newMast() {
    
   const formValue: IEmplMaster = this.transData(this.employeesMasterForm.value);
-
-  
   this.CheckDataValidations();
-
   if (this.checkValidation === true) {
-
+    
   this.service.EmployeeMasterSubmit(formValue).subscribe((res: any) => {
     if (res.code === 200) {
       alert('RECORD INSERTED SUCCESSFULLY');    
-      this.employeesMasterForm.reset();
+      // this.employeesMasterForm.reset();
     } else {
       if (res.code === 400) {
         alert('Error while data insertion');
@@ -324,6 +339,9 @@ searchMast() {
     );
 }
 
+
+
+
 Select(emplId: number) {
     
   let select = this.lstcomments.find(d => d.emplId === emplId);
@@ -337,9 +355,11 @@ Select(emplId: number) {
 }
 
 
-SearchByEmpId(empId){
-  alert(empId);
-  this.service.getEmpIdDetails(empId)
+
+SearchByTktNo(tNo){
+  // alert(tNo);
+  var tktNumber =this.employeesMasterForm.get('ticketNo').value;
+  this.service.getEmpIdDetails(tktNumber)
   .subscribe(
     data => {
       this.lstcomments = data;
@@ -347,6 +367,22 @@ SearchByEmpId(empId){
     }
   );
 }
+
+
+SearchByFullName(fnam){
+  // alert(fnam);
+  var fNam =this.employeesMasterForm.get('fullName').value;
+  this.service.getEmpIdDetails1(fNam)
+  .subscribe(
+    data => {
+      this.lstcomments = data;
+      console.log(this.lstcomments);
+    }
+  );
+}
+
+
+
 
 
 
@@ -374,21 +410,42 @@ onOptionsDEPTSelected(event){
 }
 
 
-loginRights(e) {
+loginRightschkbox(e) {
   // alert (e.target.checked);
   if (e.target.checked === true) {
      this.showLoginDetails = true; 
+     this.loginAccess='Y';
      }
   else {
      this.showLoginDetails = false;
+     this.loginAccess='N';
     //  this.employeesMasterForm.patchValue({roleId:null});
     //  this.employeesMasterForm.patchValue({teamRole:null});
     //  this.employeesMasterForm.patchValue({loginPass:null});
-     this.employeesMasterForm.get('roleId1').reset();
+     this.employeesMasterForm.get('roleId').reset();
      this.employeesMasterForm.get('teamRole').reset();
      this.employeesMasterForm.get('loginPass').reset();
      }
 }
+
+
+loginRights(event) {
+  // alert (e.target.checked);
+  var loga=this.employeesMasterForm.get('loginAccess').value;
+  if (loga === 'Y') {
+     this.showLoginDetails = true; 
+     this.loginAccess='Y';
+     }
+  else {
+     this.showLoginDetails = false;
+     this.loginAccess='N';
+     this.employeesMasterForm.get('roleId').reset();
+     this.employeesMasterForm.get('teamRole').reset();
+     this.employeesMasterForm.get('loginPass').reset();
+     }
+}
+
+
 
 
 exportToExcel1() {
@@ -400,15 +457,36 @@ exportToExcel1() {
  }
 
 
- onKey(event: any) {
+ onKey(event: any ,fldName) {
   var title =this.employeesMasterForm.get("title").value;
+  if(fldName==='nam') {
   // const aaa = this.title + '.'+' ' + this.fname + ' ' + this.mname + ' ' + this.lname ;
   if(this.mname===null || this.mname===undefined || this.mname.trim()===''){this.mname=''; }
   // const aaa = title + '.'+' ' + this.fname + ' ' + this.mname + ' ' + this.lname ;
-  const aaa =  this.fname.trim() + ' ' + this.mname.trim() + ' ' + this.lname.trim() ;
+  
  
-  this.fullName = aaa;
+ if(this.fname.trim().length>0) {this.employeesMasterForm.patchValue({fname:this.fname.toUpperCase()});}
+ if(this.mname.trim().length>0) {this.employeesMasterForm.patchValue({mname:this.mname.toUpperCase()});}
+ if(this.lname.trim().length>0) {this.employeesMasterForm.patchValue({lname:this.lname.toUpperCase()});}
+//  if(this.fullName.trim().length>0) {this.employeesMasterForm.patchValue({fullName:this.fullName.toUpperCase()});}
+ 
+ this.fullName = this.fname.trim() + ' ' + this.mname.trim() + ' ' + this.lname.trim() ; 
+  }
+
+  if(fldName==='tkt') {
+    if(this.ticketNo.trim().length>0) {this.employeesMasterForm.patchValue({ticketNo:this.ticketNo.toUpperCase()});}
+
+   }
+   if(fldName==='pan') {
+    if(this.panNo.trim().length>0) {this.employeesMasterForm.patchValue({panNo:this.panNo.toUpperCase()});}
+
+   }
+
 }
+
+// validatePAN(){
+//   if(this.panNo.trim().length>0) {this.employeesMasterForm.patchValue({panNo:this.panNo.toUpperCase()});}
+// }
 
 onTitleSelected(mTitle: any) {
   // if(mTitle !=null){
@@ -426,15 +504,6 @@ CheckDataValidations() {
 
   var msg1;
   
-
- 
- 
-  // if(eml.includes('@')===true) { alert ("Valid Email..");} else alert ("InValid Email..");
-
-  // alert ("div Id :" +formValue.divisionId);
-  // alert ("loc Id :" +formValue.locId);
-  // alert ("Dept Id :" +formValue.deptId);
-
   if (formValue.divisionId === undefined || formValue.divisionId === null) {
     this.checkValidation = false;
     msg1="DIVISION: Should not be null....";
@@ -458,9 +527,9 @@ CheckDataValidations() {
 
   if (formValue.ticketNo === undefined || formValue.ticketNo === null || formValue.ticketNo.trim()=='') {
     this.checkValidation = false;
-    alert("TICKET NO : Should not be null / Enter valid Customer No");
+    alert("TICKET NO : Should not be null.");
     return;
-  }
+  } 
 
   
 
@@ -478,16 +547,20 @@ CheckDataValidations() {
 
   
   if (formValue.fname == null  || formValue.fname == undefined || formValue.fname.trim() == '') {
+    this.checkValidation = false;
     alert("FIRST NAME: Should not be null....");
     return;
-  }
+  } 
+
 
   if (formValue.lname == null  || formValue.lname == undefined || formValue.lname.trim() == '') {
+    this.checkValidation = false;
     alert("LAST NAME: Should not be null....");
     return;
   }
 
   if (formValue.fullName == null  || formValue.fullName == undefined || formValue.fullName.trim() == '') {
+    this.checkValidation = false;
     alert("FULL NAME: Should not be null....");
     return;
   }
@@ -535,10 +608,32 @@ CheckDataValidations() {
   }
 
   
+ if( formValue.loginAccess==='Y' ) {
+   
+  if (formValue.roleId === undefined || formValue.roleId === null || formValue.roleId <0 ) {
+    this.checkValidation = false;
+    alert("ROLE ID : Should not be null");
+    return;
+  }
+
+  if (formValue.teamRole === undefined || formValue.teamRole === null  ) {
+    this.checkValidation = false;
+    alert("TEAM ROLE  : Should not be null");
+    return;
+  }
+
+  if (formValue.loginPass === undefined || formValue.loginPass === null || formValue.loginPass.trim() === '' ) {
+    this.checkValidation = false;
+    alert("LOGIN PASSWORD  : Should not be null");
+    return;
+  }
+
+ }
+
   this.checkValidation = true
 
+ 
 }
-
 
   validateStartDate(stDate) {
     var currDate = new Date();
