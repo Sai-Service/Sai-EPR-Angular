@@ -61,12 +61,13 @@ export class WsVehicleMasterComponent implements OnInit {
   public ewInsNameList: Array<string> = [];
 
   public ItemEWList: Array<string> = [];
-  public mainModelList: Array<string> = [];
+  // public mainModelList: Array<string> = [];
   public colorCodeList: Array<string> = [];
   public FuelTypeList: Array<string> = [];
   public statusList: Array<string> = [];
   // public dealerCodeList :Array<string>=[];
   dealerCodeList:any;
+  mainModelList:any;
 
   pipe = new DatePipe('en-US');
   public minDate = new Date()  ;
@@ -258,7 +259,7 @@ export class WsVehicleMasterComponent implements OnInit {
   tvSaleDealer: string;
   tvSaleLocation: string;
 
-  itemTypeForCat: string = 'SS_VEHICLE';
+  itemTypeForCat: string ;
   categoryId: number;
   public ServiceModelList   :Array<string> = [];
 
@@ -846,9 +847,12 @@ export class WsVehicleMasterComponent implements OnInit {
   }
 
 
-  onOptionsSelectedModel(mainModel) {
-
+  onOptionsSelectedModel(mainModel:any) {
     if (mainModel != null) {
+
+      let selectedValue = this.mainModelList.find(v => v.code === mainModel);
+      this.itemTypeForCat=selectedValue.attribute2;
+
       this.segment=null;
       this.variantDesc = null;
       this.service.VariantSearchFn(mainModel)

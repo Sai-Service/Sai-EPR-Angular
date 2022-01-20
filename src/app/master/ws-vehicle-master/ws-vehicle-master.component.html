@@ -351,14 +351,16 @@
 
                    
                     <td style="width: 15%;" class="LabelFontStyle1">Item&nbsp;Category&nbsp;:&nbsp;</td>
-                    <td>
+                    <input disabled  type="text"  formControlName="itemTypeForCat"  id="itemTypeForCat" [(ngModel)]="itemTypeForCat" class="form-control" >
+                        
+                    <!-- <td>
                         <select formControlName="categoryId" id="categoryId" class="form-control" style="background-color: yellow;">
                             <option>--Select--</option>
                             <option *ngFor="let sc of  categoryIdList" [ngValue]="sc.categoryId">
                                 {{sc.attribute1}}
                             </option>
                         </select>
-                    </td>
+                    </td> -->
 
                     <td style="width: 12%" class="LabelFontStyle">Service&nbsp;Model:&nbsp;</td>
                     <td>
