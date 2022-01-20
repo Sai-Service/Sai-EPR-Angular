@@ -338,6 +338,14 @@ public pickTicketInvoiceFun(pickTicketInvDels) {
     return this.http.post(url, AccLineRecord1, options);
   }
 
+  proformaInv(orderNumber,locId){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/PrintProforma?orderNumber=${orderNumber}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
 
 
   accountNoSearchFn2(accountNo,divisionId): Observable<any> {

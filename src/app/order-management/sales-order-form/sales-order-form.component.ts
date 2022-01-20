@@ -332,7 +332,7 @@ export class SalesOrderFormComponent implements OnInit {
   dataDisplay: any;
   progress = 0;
   isVisible2: boolean = false;
-  isVisible3: boolean = false;
+  isVisible3: boolean = true;
   isVisible4: boolean = false;
   isVisible5: boolean = false;
   isVisible6: boolean = false;
@@ -1253,13 +1253,21 @@ export class SalesOrderFormComponent implements OnInit {
 
 
   addRow() {
-    this.isVisible2 = true;
-    this.displaysegmentInvType.push(true);
-    this.displaytaxCategoryName.push(true);
     this.orderlineDetailsArray().push(this.orderlineDetailsGroup());
     var len = this.orderlineDetailsArray().length;
-    // alert(len);
-    var patch = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray
+    var lineDetArray = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value;
+    // alert(len)
+    var len1= (len-1);
+    // alert(len1)
+   var itemqty = lineDetArray[len1].pricingQty;
+   var item = lineDetArray[len1].segment;
+  //  alert(lineDetArray[len1].pricingQty);
+   if (itemqty != undefined || item != '' || itemqty != '' || item !=undefined){
+    //  alert('hi444')
+     this.isVisible2 = true;
+    this.displaysegmentInvType.push(true);
+    this.displaytaxCategoryName.push(true);
+    var patch = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     (patch.controls[len - 1]).patchValue(
       {
         lineNumber: len,
@@ -1272,7 +1280,7 @@ export class SalesOrderFormComponent implements OnInit {
     this.displaytaxCategoryName.push(true);
     this.displayRemoveRow.push(true);
   }
-
+}
   // RemoveRow(OrderLineIndex){
   //   this.orderlineDetailsArray().removeAt(OrderLineIndex);   
   // }
@@ -1428,14 +1436,14 @@ export class SalesOrderFormComponent implements OnInit {
                 this.displayCounterSaleLine.push(false);
                 if (data.obj.flowStatusCode === 'ENTERED') {
                   this.isVisible2 = true;
-                  this.isVisible3 = true;
+                  // this.isVisible3 = true;
                   this.isVisible3 = false;
                 }
                 // alert(this.lstgetOrderLineDetails.length +'----'+ data.obj.flowStatusCode)
                 if (data.obj.flowStatusCode === 'BOOKED' && this.lstgetOrderLineDetails.length !=0) {
                 //  alert('hi')
                   this.isVisible2 = true;
-                  this.isVisible3 = true;
+                  // this.isVisible3 = true;
                   this.isVisible3 = false;
                   this.isVisible5 = true;
                 }
@@ -1451,15 +1459,10 @@ export class SalesOrderFormComponent implements OnInit {
                   this.isVisible2 = true;
                   // this.isVisible5 = false;
                 }
-                if (this.lstgetOrderLineDetails[i].flowStatusCode === 'READY FOR INVOICE') {
-                  this.displaytaxCategoryName[i] = false;
-                  this.displayLineflowStatusCode[i] = true;
-                  this.isVisible3 = true;
-                  this.isVisible5 = false;
-                }
+             
                 if (this.lstgetOrderLineDetails[i].flowStatusCode === 'INVOICED' || this.lstgetOrderLineDetails[i].flowStatusCode === 'CANCELLED') {
                   this.isVisible4 = true;
-                  this.isVisible3 = false;
+                  // this.isVisible3 = false;
                   this.isVisible5 = false;
                   this.displayLineflowStatusCode[i] = true;
                   this.displayRemoveRow[i] = false;
@@ -1498,7 +1501,15 @@ export class SalesOrderFormComponent implements OnInit {
               //this.SalesOrderBookingForm.patchValue({taxAmounts:this.lstgetOrderTaxDetails[x]})
             }
             this.SalesOrderBookingForm.patchValue(data.obj);
-
+            for (let k=0 ; k < this.lstgetOrderLineDetails.length; k++){
+              if (this.lstgetOrderLineDetails[k].flowStatusCode === 'READY FOR INVOICE') {
+                // alert(this.lstgetOrderLineDetails[k].flowStatusCode);
+                this.displaytaxCategoryName[k] = false;
+                this.displayLineflowStatusCode[k] = true;
+                this.isVisible3 = true;
+                this.isVisible5 = false;
+              }
+            }
             this.salesRepName = data.obj.salesRepName;
             console.log(Number(sessionStorage.getItem('ouId')));
             var controlinv1 = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value;
@@ -1923,7 +1934,7 @@ export class SalesOrderFormComponent implements OnInit {
       );
   }
 
-  downloadAllInvoice(invType) {
+  downloadAllInvoice(invType,trxNumber) {
     // alert(invType)
     if (invType === 'SS_VEHICLE') {
       this.orderManagementService.downloadVehicleINV(this.orderNumber)
@@ -1936,7 +1947,7 @@ export class SalesOrderFormComponent implements OnInit {
     }
     else {
       // alert(invType);
-      this.orderManagementService.downloadAddonINV(this.orderNumber)
+      this.orderManagementService.downloadAddonINV(trxNumber)
         .subscribe(data => {
           var blob = new Blob([data], { type: 'application/pdf' });
           var url = URL.createObjectURL(blob);
