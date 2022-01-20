@@ -1,12 +1,9 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener, ElementRef } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { controllers } from 'chart.js';
-import { data } from 'jquery';
 import { MasterService } from 'src/app/master/master.service';
 // import { TransactionService } from 'src/app/transaction/transaction.service';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
-import { DatePipe } from '@angular/common';
 import { v4 as uuidv4 } from 'uuid';
 // import { freemem } from 'os';
 
