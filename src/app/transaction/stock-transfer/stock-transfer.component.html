@@ -166,6 +166,8 @@
                 <ng-template #thenBlock1>
                 <tr>  <td><input disabled type="number" class="form-control"  style="height: 20px;width: 50px;border-color:white;"formControlName="lineNumber" >
                  </td>
+                 <input disabled hidden type="text" class="form-control"
+                                                            formControlName="uuidRef" value={{uuidRef}}>
                 <!-- <td><select  class="form-control" style="height: 20px;width:120px;" formControlName="itemId" (ngModelChange)='onOptionItemDetails($event,trxLineIndex)'> -->
                     <td><input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 100%;" (ngModelChange)='onOptionItemDetails($event,trxLineIndex)' />
                       <datalist id="dynmicUserIds1">
@@ -185,7 +187,7 @@
                 <td><input disabled type="number" class="form-control" style="height: 20px;width: 100%;" formControlName="transCost"  value="{{ transCost | number:'1.2-2' }}" ></td>
                 <td><select class=" form-control" style="height: 20px; width: 100%;" formControlName="frmLocator" (ngModelChange)="AvailQty($event,trxLineIndex)">
                 <!-- <option>--Select--</option> -->
-                <option *ngFor="let locId of  locData[trxLineIndex]" [value]="locId.locatorId">{{locId.segmentName}}--{{locId.onHandQty}}</option>
+                <option *ngFor="let locId of  locData[trxLineIndex]" [ngValue]="locId.locatorId">{{locId.segmentName}}--{{locId.onHandQty}}</option>
                 </select>
                 <span *ngIf="getGroupControllinewise(trxLineIndex,'frmLocator').touched && getGroupControllinewise(trxLineIndex,'frmLocator').invalid" class="error">Valid Item
                </span>
