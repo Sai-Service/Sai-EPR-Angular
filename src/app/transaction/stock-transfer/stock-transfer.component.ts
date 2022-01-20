@@ -2,8 +2,6 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener, ElementRef } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { controllers } from 'chart.js';
-import { data } from 'jquery';
 import { MasterService } from '../../master/master.service';
 import { DatePipe } from '@angular/common';
 import { v4 as uuidv4 } from 'uuid';
@@ -258,8 +256,10 @@ export class StockTransferComponent implements OnInit {
     // this.deleteReserveLinewise(trxLineIndex);
     this.itemMap.delete(trxLnArr1[trxLineIndex].segment);
     this.deleteReserveLinewise(trxLineIndex, itemid, uuidref);
+    this.locData.splice(trxLineIndex,1)
     }
     this.trxLinesList().removeAt(trxLineIndex);
+    
     var patch = this.stockTranferForm.get('trxLinesList') as FormArray;
     var len = this.trxLinesList().length;
     (patch.controls[len - 1]).patchValue(
@@ -360,16 +360,7 @@ export class StockTransferComponent implements OnInit {
     if(this.currentOp==='SEARCH'){
       return;
     }
-    // alert(event);
-    // if(event.key==='Tab')
-    // {
-
-
-        // if(event != null)
-        // {
-        //   // alert(event.length);
-        //   this.displayRemoveRow[i] = true;
-        // }
+ 
     var subcode=this.stockTranferForm.get('subInventoryCode').value;
    // alert(subcode+'Subinventory')
     // let subcode1=this.subInvCode.find(d=>d.subInventoryCode===subcode);
@@ -412,8 +403,9 @@ export class StockTransferComponent implements OnInit {
 
             if(getfrmSubLoc.length==1)
             {
-              alert('if---------');
-            trxLnArr1.controls[i].patchValue({frmLocator:selLocator[0].segmentName});
+              // alert('if---------');
+            // trxLnArr1.controls[i].patchValue({frmLocator:selLocator[0].segmentName});
+            trxLnArr1.controls[i].patchValue({frmLocator:selLocator[0].locatorId});
             trxLnArr1.controls[i].patchValue({locatorId:selLocator[0].locatorId});
             trxLnArr1.controls[i].patchValue({onHandQty:selLocator[0].onHandQty});
             trxLnArr1.controls[i].patchValue({onHandId:selLocator[0].id});
@@ -431,8 +423,10 @@ export class StockTransferComponent implements OnInit {
         this.service.getreserqty( this.locId,itemId).subscribe
         (data=>{
           this.resrveqty=data;
-          trxLnArr1.controls[i].patchValue({resveQty:this.resrveqty});
+          trxLnArr1.controls[i].patchValue({resveQty:data});
+          // this.AvailQty(this.frmLocator,i);
         });
+        
       }
   }
   AvailQty(event:any,i:number)
@@ -440,41 +434,30 @@ export class StockTransferComponent implements OnInit {
   if(this.currentOp==='SEARCH'){
     return;
   }
-  // alert(event+'Loca');
+  alert(event+'Loca');
   var trxLnArr1=this.stockTranferForm.get('trxLinesList')as FormArray;
   var trxLnArr = this.stockTranferForm.get('trxLinesList').value;
   var itemid=trxLnArr[i].itemId;
-  var locId=trxLnArr[i].frmLocator;
-  var onhandid=trxLnArr[i].id;
-  trxLnArr1.controls[i].patchValue({locatorId:locId});
-//  alert(locId+'locatorID');
-  var subcode=this.stockTranferForm.get('subInventoryCode').value;
- // alert(subcode);
-  // let select2= this.subInvCode.find(d=>d.subInventoryCode===subcode);
- // alert(select2.subInventoryId+'Id')
- this.service.getonhandqty(Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId,locId,itemid).subscribe
+  var locatorId=event;
+  trxLnArr1.controls[i].patchValue({locatorId:locatorId});
+  alert(locatorId+'locatorID');
+  this.service.getonhandqty(Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId,locatorId,itemid).subscribe
     (data =>{
       this.onhand1 = data;
       console.log(this.onhand1);
-      // alert(this.onHandId);
-      // alert(this.onhand1);
       trxLnArr1.controls[i].patchValue({onHandQty:data.obj});
     // var trxLnArr=this.stockTranferForm.get('trxLinesList').value;
     let onHand=data.obj;
   let reserve=trxLnArr[i].resveQty;
-  // alert(onHand+'OnHand');
-  // alert(reserve+'reserve');
+  alert(onHand+'OnHand');
+  alert(reserve+'reserve');
   let avlqty1=0;
   avlqty1= onHand-reserve;
-
-  // var trxLnArr1=this.stockTranferForm.get('trxLinesList')as FormArray;
   trxLnArr1.controls[i].patchValue({avlqty: avlqty1});
   if(avlqty1<0)
   {
     alert("Transfer is not allowed,Item has Reserve quantity - "+reserve);
-    // this.trxLinesList().clear();
-    // this.addnewtrxLinesList(i);
-  }
+   }
     })
 
 }
@@ -637,14 +620,7 @@ deleteReserveLinewise(i, itemid, transferId) {
         this.transferLoc=res.obj[0].transReference;
         this.stockTranferForm.patchValue({transDate:res.obj[0].transDate})
         this.status=res.obj[0].status;
-        // this.search(this.shipmentNumber);
-        //  this.stockTranferForm.patchValue({
-        //    'transferLoc':res.obj[0].transReference,
-        //  'issueTo':res.obj[0].issueTo,
-        //  'shipmentNumber':res.obj[0].shipmentNumber})
-        // 'transReference':res.obj[0].transReference
-        // 'transferOrgId':res.obj[0].transReference });
-         var trxLnArr2 = this.stockTranferForm.get('trxLinesList') as FormArray;
+        var trxLnArr2 = this.stockTranferForm.get('trxLinesList') as FormArray;
          for(let i=0; i<res.obj.length; i++){
           // trxLnArr2.controls[i].patchValue(res.obj[i]);
 
@@ -736,12 +712,14 @@ deleteReserveLinewise(i, itemid, transferId) {
   //   patch.controls[i].patchValue({ locatorId: select1.locatorId });
   // }
   closeMoveOrder() {
-    this.router.navigate(['admin']);
     this.deleteReserve();
+    this.router.navigate(['admin']);
+    
   }
   resetMoveOrder() {
-    window.location.reload();
     this.deleteReserve();
+    window.location.reload();
+    
   }
 searchAll()
 {
@@ -972,6 +950,15 @@ viewStockgatePass() {
 
     return;
   }
-
+@HostListener('window:unload', ['$event'])
+  keyEvent1(event: KeyboardEvent) {
+    this.deleteReserve();
+    console.log(event);
+  }
+  ngOnDestroy(): void {
+    alert('Window Closed Directely.!');
+    this.deleteReserve();
+    return;
+  }
 }
 

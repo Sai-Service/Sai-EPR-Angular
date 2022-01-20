@@ -186,6 +186,7 @@
 
                 <td><input disabled type="number" class="form-control" style="height: 20px;width: 100%;" formControlName="transCost"  value="{{ transCost | number:'1.2-2' }}" ></td>
                 <td><select class=" form-control" style="height: 20px; width: 100%;" formControlName="frmLocator" (ngModelChange)="AvailQty($event,trxLineIndex)">
+                  <!-- (ngModelChange)="AvailQty($event,trxLineIndex)" -->
                 <!-- <option>--Select--</option> -->
                 <option *ngFor="let locId of  locData[trxLineIndex]" [ngValue]="locId.locatorId">{{locId.segmentName}}--{{locId.onHandQty}}</option>
                 </select>
