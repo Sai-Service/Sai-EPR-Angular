@@ -359,11 +359,13 @@ Select(emplId: number) {
 SearchByTktNo(tNo){
   // alert(tNo);
   var tktNumber =this.employeesMasterForm.get('ticketNo').value;
+  tktNumber =tktNumber.toUpperCase();
   this.service.getEmpIdDetails(tktNumber)
   .subscribe(
     data => {
       this.lstcomments = data;
-      console.log(this.lstcomments);
+      if(data.length===0) {alert ("No Records found...."); this.lstcomments=null;} 
+      else { console.log(this.lstcomments);}
     }
   );
 }
@@ -372,11 +374,15 @@ SearchByTktNo(tNo){
 SearchByFullName(fnam){
   // alert(fnam);
   var fNam =this.employeesMasterForm.get('fullName').value;
+  fNam =fNam.toUpperCase();
+ 
   this.service.getEmpIdDetails1(fNam)
   .subscribe(
     data => {
       this.lstcomments = data;
-      console.log(this.lstcomments);
+      if(data.length===0) {alert ("No Records found...."); this.lstcomments=null;} 
+      else { console.log(this.lstcomments);}
+      
     }
   );
 }
