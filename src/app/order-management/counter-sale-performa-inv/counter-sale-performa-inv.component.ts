@@ -1077,4 +1077,22 @@ export class CounterSalePerformaInvComponent implements OnInit {
     });
   }
 
+
+  downloadProformaInv(){
+    // this.isDisabled2 = true;
+    // this.closeResetButton = false;
+    // this.progress = 0;
+    // this.dataDisplay = 'Report Is Running....Do not refresh the Page';
+    const fileName = 'Sales Invoiced Not Delivered-' + sessionStorage.getItem('locName').trim() + '.xls';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.orderManagementService.proformaInv(this.orderNumber, sessionStorage.getItem('locId'))
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        // this.dataDisplay = ''
+        // this.closeResetButton = true;
+        // this.isDisabled2 = false;
+      })
+  }
+  
+
 }

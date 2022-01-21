@@ -1137,6 +1137,10 @@
                     style="width: fit-content;" (click)="createProformaOrder()">Create Order</button>
                 </td>
                 <td>
+                    <button type="submit" [disabled]="isDisabled" class="btn btn-primary" id="register"
+                    style="width: fit-content;" (click)="downloadProformaInv()">Download Proforma Inv</button>
+                </td>
+                <td>
                     <button type="submit" class="btn btn-primary" id="register"
                     (click)="refresh()">Clear</button>
                 </td>
