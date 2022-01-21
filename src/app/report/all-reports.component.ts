@@ -697,7 +697,8 @@ this.reportService.SprcusttakestatReport(fromDate,invcDt4,sessionStorage.getItem
 
 
 
-spbackOrderQty(){
+spbackOrderQty(spbackOrderQtyCustAccNo,spbackOrderQtyOrderNumber){
+  alert(spbackOrderQtyCustAccNo+'----'+spbackOrderQtyOrderNumber)
   this.isDisabled16 = true;
   this.closeResetButton = false;
   this.progress = 0;
@@ -706,11 +707,16 @@ var invcDt2 = this.reportForm.get('spbackOrderQtyfromDate').value;
 var fromDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
 var invcDt3 = this.reportForm.get('spbackOrderQtytoDate').value;
 var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');  
-var custAccountNo = this.reportForm.get('spbackOrderQtyCustAccNo').value;
-var orderNumber = this.reportForm.get('spbackOrderQtyOrderNumber').value;
+var orderNumber = spbackOrderQtyOrderNumber;
+if (spbackOrderQtyCustAccNo===undefined || spbackOrderQtyCustAccNo===null){
+  spbackOrderQtyCustAccNo='';
+}
+if (orderNumber === undefined || orderNumber=== null){
+orderNumber=''
+}
 const fileName = 'Spares-Customer-Off-Take-Statement-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
 const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-this.reportService.spbackOrderQtyReport(fromDate,invcDt4,sessionStorage.getItem('locId'),custAccountNo,orderNumber)
+this.reportService.spbackOrderQtyReport(fromDate,invcDt4,sessionStorage.getItem('locId'),spbackOrderQtyCustAccNo,orderNumber)
   .subscribe(data => {
     saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
     this.isDisabled16 = false;

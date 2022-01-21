@@ -515,19 +515,19 @@
                         <tr>
                             <td>Customer&nbsp;Account&nbsp;No&nbsp;</td>&nbsp;
                             <td>
-                                <input  type="number" class="form-control"  formControlName="spbackOrderQtyCustAccNo">
+                                <input  type="number" class="form-control"  formControlName="spbackOrderQtyCustAccNo" [(ngModel)]="spbackOrderQtyCustAccNo">
                             </td>
                         </tr>
                         <tr>
                             <td>Order&nbsp;No&nbsp;</td>&nbsp;
                             <td>
-                                <input  type="number" class="form-control"  formControlName="spbackOrderQtyOrderNumber">
+                                <input  type="number" class="form-control"  formControlName="spbackOrderQtyOrderNumber" [(ngModel)]="spbackOrderQtyOrderNumber">
                             </td>
                         </tr>
                     </table>
                 </td>
                 <td style="border: 1px solid black;padding-left: 5px;">
-                    <button class="btn-primary" [disabled]="isDisabled16" (click)="spbackOrderQty()">View Report</button>
+                    <button class="btn-primary" [disabled]="isDisabled16" (click)="spbackOrderQty(spbackOrderQtyCustAccNo,spbackOrderQtyOrderNumber)">View Report</button>
                 </td>
             </tr>
         </table>
