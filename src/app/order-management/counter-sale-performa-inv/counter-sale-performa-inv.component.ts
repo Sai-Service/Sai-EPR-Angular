@@ -3,6 +3,16 @@ import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { MasterService } from 'src/app/master/master.service';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 import { DatePipe, Location } from '@angular/common';
+import { saveAs } from 'file-saver';
+
+
+
+const MIME_TYPES = {
+  pdf: 'application/pdf',
+  xls: 'application/vnd.ms-excel',
+  xlsx: 'application/vnc.openxmlformats-officedocument.spreadsheetxml.sheet'
+};
+
 
 @Component({
   selector: 'app-counter-sale-performa-inv',
@@ -1146,7 +1156,6 @@ export class CounterSalePerformaInvComponent implements OnInit {
       }
     });
   }
-
 
   downloadProformaInv(){
     // this.isDisabled2 = true;
