@@ -199,8 +199,8 @@
                                         formControlName="customerSiteId" [(ngModel)]='customerSiteId'
                                         value={{customerSiteId}} style="width: 160px;">
                                     <input hidden disabled type="text" class="form-control"
-                                        formControlName="taxCategoryName" 
-                                        value={{taxCategoryName}} style="width: 160px;">
+                                        formControlName="taxCategoryName" value={{taxCategoryName}}
+                                        style="width: 160px;">
 
                                 </td>
                             </ng-template>
@@ -209,8 +209,8 @@
                                     <input disabled type="text" class="form-control" formControlName="name"
                                         value={{name}} style="width: 160px;">
                                     <input hidden disabled type="text" class="form-control"
-                                        formControlName="taxCategoryName" 
-                                        value={{taxCategoryName}} style="width: 160px;">
+                                        formControlName="taxCategoryName" value={{taxCategoryName}}
+                                        style="width: 160px;">
                                 </td>
                             </ng-template>
                             <!-- </td> -->
@@ -444,15 +444,19 @@
                                     Customer&nbsp;PO&nbsp;Number:&nbsp;
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control" formControlName="custPoNumber" value={{custPoNumber}}
-                                        [ngClass]="{ 'is-invalid': submitted && f.custPoNumber.errors }" style="width:100%;">
+                                    <input type="text" class="form-control" formControlName="custPoNumber"
+                                        value={{custPoNumber}}
+                                        [ngClass]="{ 'is-invalid': submitted && f.custPoNumber.errors }"
+                                        style="width:100%;">
                                 </td>
                                 <td style="width: 15%" class="LabelFontStyle">
                                     Customer&nbsp;PO&nbsp;Date&nbsp;:&nbsp;
                                 </td>
                                 <td>
-                                    <input type="date" class="form-control" formControlName="custPoDate" value={{custPoDate}}
-                                        [ngClass]="{ 'is-invalid': submitted && f.custPoDate.errors }" style="width:100%;">
+                                    <input type="date" class="form-control" formControlName="custPoDate"
+                                        value={{custPoDate}}
+                                        [ngClass]="{ 'is-invalid': submitted && f.custPoDate.errors }"
+                                        style="width:100%;">
                                 </td>
                             </tr>
                             <tr>
@@ -590,10 +594,12 @@
                                         Executive&nbsp;Name&nbsp;:&nbsp;
                                     </td>
                                     <td>
-                                        <input disabled type="text" formControlName="salesRepName" [(ngModel)]='salesRepName'
-                                            value={{salesRepName}} class="form-control" style="width: 160px;">
-                                        <input disabled hidden type="number" formControlName="salesRepId" [(ngModel)]='salesRepId'
-                                            value={{salesRepId}} class="form-control" style="width: 160px;">
+                                        <input disabled type="text" formControlName="salesRepName"
+                                            [(ngModel)]='salesRepName' value={{salesRepName}} class="form-control"
+                                            style="width: 160px;">
+                                        <input disabled hidden type="number" formControlName="salesRepId"
+                                            [(ngModel)]='salesRepId' value={{salesRepId}} class="form-control"
+                                            style="width: 160px;">
                                     </td>
                                 </ng-template>
                                 <ng-template #elsesalesRepName>
@@ -601,15 +607,16 @@
                                         Sales&nbsp;Person&nbsp;:&nbsp;
                                     </td>
                                     <td>
-                                        <input disabled type="text" formControlName="salesRepName" [(ngModel)]='salesRepName'
-                                            value={{salesRepName}} class="form-control" style="width: 160px;">
+                                        <input disabled type="text" formControlName="salesRepName"
+                                            [(ngModel)]='salesRepName' value={{salesRepName}} class="form-control"
+                                            style="width: 160px;">
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle">
                                         TL&nbsp;Name&nbsp;:&nbsp;
                                     </td>
                                     <td>
-                                        <input disabled type="text" formControlName="tlName" [(ngModel)]='tlName' value={{tlName}}
-                                            class="form-control" style="width: 160px;">
+                                        <input disabled type="text" formControlName="tlName" [(ngModel)]='tlName'
+                                            value={{tlName}} class="form-control" style="width: 160px;">
                                     </td>
                                 </ng-template>
                             </tr>
@@ -620,13 +627,13 @@
                                 </td>
 
                                 <td>
-                                    <select formControlName="paymentType" id="paymentType" 
-                                    class="form-control" style="width: 160px;">
-                                    <option>--Select--</option>
-                                    <option *ngFor="let pt of payTermDescList" [value]="pt.lookupValue">
-                                        {{pt.lookupValue}}
-                                    </option>
-                                </select>
+                                    <select formControlName="paymentType" id="paymentType" class="form-control"
+                                        style="width: 160px;">
+                                        <option>--Select--</option>
+                                        <option *ngFor="let pt of payTermDescList" [value]="pt.lookupValue">
+                                            {{pt.lookupValue}}
+                                        </option>
+                                    </select>
                                     <!-- <input disabled type="text" formControlName="paymentType" [(ngModel)]='paymentType'
                                         value={{paymentType}} class="form-control" style="width: 160px;"> -->
                                     <input hidden disabled type="text" formControlName="paymentTermId"
@@ -657,14 +664,20 @@
                                     Issue&nbsp;Code&nbsp;:&nbsp;
                                 </td>
                                 <td>
-                                    <select formControlName="issueCodeType" id="issueCodeType" class="form-control"
-                                        style="width: 160px;">
+                                    <select formControlName="issueCodeType1" id="issueCodeType1" class="form-control"
+                                        (ngModelChange)='onOptionsSelectedissueTypeCode($event)' style="width: 160px;">
                                         <option>--Select--</option>
                                         <option *ngFor="let issueCodeType of issueCodeTypeList"
                                             [value]="issueCodeType.codeDesc">
-                                            {{issueCodeType.code}}--{{issueCodeType.codeDesc}}
+                                            {{issueCodeType.code}}-{{issueCodeType.codeDesc}}
                                         </option>
                                     </select>
+
+                                    <input hidden type="text" formControlName="issueCode" value={{issueCode}}
+                                        class="form-control" style="width: 160px;">
+
+                                    <input hidden type="text" formControlName="issueCodeType" value={{issueCodeType}}
+                                        class="form-control" style="width: 160px;">
                                 </td>
                                 <td style="width: 15%" class="LabelFontStyle">
                                     Subtotal&nbsp;Amount&nbsp;:&nbsp;
@@ -1166,8 +1179,8 @@
                     <table class="center">
                         <tr>
                             <td>
-                                <button type="submit" [disabled]="isDisabled5" class="btn btn-primary" id="register" style="width: fit-content;"
-                                    (click)="counterSaleOrderSave()">Create
+                                <button type="submit" [disabled]="isDisabled5" class="btn btn-primary" id="register"
+                                    style="width: fit-content;" (click)="counterSaleOrderSave()">Create
                                     Order</button>
                             </td>
                             <td>
@@ -1279,7 +1292,7 @@
                             <li class="nav-item"></li>
                             <li class="nav-item"></li>
                             <li class="nav-item"></li>
-                            <li class="nav-item"></li>  
+                            <li class="nav-item"></li>
                             <li class="nav-item"></li>
                         </ul>
 
@@ -1355,8 +1368,7 @@
                                                                 <input type="text" formControlName="segment"
                                                                     id="invItemIdFirstWay" list="dynmicUserIds1"
                                                                     class="form-control"
-                                                                    style="height: 20px;width:fit-content;"
-                                                                   >
+                                                                    style="height: 20px;width:fit-content;">
                                                                 <datalist id="dynmicUserIds1">
                                                                     <option>--Select--</option>
                                                                     <option
@@ -1463,7 +1475,7 @@
 
                                                             <td>
                                                                 <input disabled type="number" formControlName="taxAmt"
-                                                                    class="form-control" 
+                                                                    class="form-control"
                                                                     style="height: 20px;width: 70px;">
                                                             </td>
                                                             <td>
@@ -1861,7 +1873,7 @@
                         <!-- </div> -->
                     </div>
                 </fieldset>
-               
+
             </div>
         </div>
     </section>

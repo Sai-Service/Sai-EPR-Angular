@@ -36,6 +36,7 @@ import { PoReceiptFormComponent } from './master/po-receipt-form/po-receipt-form
 import { DeActivateGuard } from './de-activate.guard';
 import { FaCommanMasterComponent } from './fixed-asset/fa-master/fa-comman-master/fa-comman-master.component';
 import { AllReportsComponent } from './report/all-reports.component';
+
 // import { NgxSpinnerModule } from "ngx-spinner"; 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { AllReportsComponent } from './report/all-reports.component';
     PoReceiptFormComponent,
     FaCommanMasterComponent,
     AllReportsComponent,
+   
   
     // CounterSaleReturnComponent,
     // ItemLocatorMasterComponent,

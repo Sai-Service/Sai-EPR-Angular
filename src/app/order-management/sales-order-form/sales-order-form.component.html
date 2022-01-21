@@ -841,22 +841,28 @@
                                     style="width: 150px;">
                             </td>
                             <td style="width: 15%" class="LabelFontStyle">
+                                Variant&nbsp;Description&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                <input disabled type="text" formControlName="variantDesc" class="form-control"
+                                    style="width: 150px;">
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle">
                                 Color&nbsp;:&nbsp;
                             </td>
                             <td>
                                 <input disabled type="text" formControlName="color" class="form-control"
                                     style="width: 150px;">
                             </td>
+                        </tr>
+                        <tr>
                             <td style="width: 15%" class="LabelFontStyle">
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fuel&nbsp;Type&nbsp;:&nbsp;
+                                &nbsp;Fuel&nbsp;Type&nbsp;:&nbsp;
                             </td>
                             <td>
                                 <input disabled type="text" formControlName="fuelType" [(ngModel)]='fuelType'
                                     class="form-control" style="width: 150px;">
                             </td>
-                            
-                        </tr>
-                        <tr>
                             <td style="width: 15%" class="LabelFontStyle1">
                                 Ex-Showroom&nbsp;Price:&nbsp;
                             </td>
@@ -1351,7 +1357,7 @@
                                                         </td>
                                                         <td>
                                                         
-                                                            <button type="button" class="btn btn-primary"
+                                                            <button type="button" class="btn btn-primary" style="width: fit-content;height: fit-content;"
                                                                 data-toggle="modal" (click)="openTaxDetails(i)"
                                                                 data-target="#taxDetails">
                                                                 Tax Details
@@ -1412,7 +1418,7 @@
                                                         </td>
                                                         <td>
                                                             
-                                                            <button type="button" class="btn btn-primary"
+                                                            <button type="button" class="btn btn-primary"  style="width: fit-content;height: fit-content;"
                                                                 data-toggle="modal" (click)="openTaxDetails(i)"
                                                                 data-target="#taxDetails">
                                                                 Tax Details
@@ -1519,7 +1525,7 @@
                                                         </div>
                                                         <ng-template #thenLineflowStatusCode>
                                                             <input disabled type="text" formControlName="flowStatusCode"
-                                                                class="form-control" style="height: 20px;width:120px;">
+                                                                class="form-control" style="height: 20px;width:145px;">
                                                         </ng-template>
                                                         <ng-template #elseLineflowStatusCode>
                                                             <!-- <select formControlName="flowStatusCode" id="flowStatusCode"
@@ -1544,7 +1550,7 @@
                                                         </ng-template>
                                                     </td>
                                                     <td>
-                                                        <button type="submit" class="btn btn-primary" (click)="addRow()"
+                                                        <button type="submit" class="btn btn-primary" [disabled]="isDisabled6" (click)="addRow()"
                                                             style="width: min-content;"><i
                                                                 class="fa fa-plus"></i></button>
                                                     </td>
@@ -2056,7 +2062,7 @@
                                 <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
                             </td>
                             <td>
-                                <button class="btn btn-primary"
+                                <button class="btn btn-primary" [style.display]="isVisible6 ? 'block' : 'none'"
                                     [routerLink]="['/admin/transaction/PaymentReceipt',orderNumber]">Payment</button>
                             </td>
                             <td>
@@ -2122,7 +2128,7 @@
                                                             <td style="border: 1px solid black;color: black;">
                                                                 <button type="button" class="btn btn-primary"
                                                                     style="width: 8rem;"
-                                                                    (click)="downloadAllInvoice(com.invType)">View
+                                                                    (click)="downloadAllInvoice(com.invType,com.trxNumber)">View
                                                                     Invoice</button>
                                                             </td>
                                                         </tr>
