@@ -631,7 +631,7 @@
                                 <thead>
                                     <tr class="GridHeader">
                                         <th scope="col">Line No</th>
-                                        <th scope="col">Type Category</th>
+                                        <!-- <th scope="col">Type Category</th> -->
                                         <th scope="col">Item Search</th>
                                         <th scope="col">Item code</th>
                                         <th scope="col">Description</th>
@@ -646,6 +646,7 @@
                                         <th scope="col">SGST</th>
                                         <th scope="col">CGST</th>
                                         <th scope="col">IGST</th>
+                                        <th scope="col">Taxable Amount</th>
                                         <th scope="col">Total Amount</th>
                                         <th scope="col">MRP</th>
                                         <th scope="col">Status</th>
@@ -661,13 +662,13 @@
                                             <tr>
                                                 <div *ngIf="displaysegmentInvType[i]; then thensegmentInvType; else elsesegmentInvType"> </div>
                                                 <ng-template #thensegmentInvType>
-                                                    <td>
+                                                   <td>
                                                         <a id="line{{i}}" [value]="i+1" class="nav-link waves-light"
                                                             style="width:100%;" data-toggle="tab">
                                                             {{i+1}}
                                                         </a>
                                                     </td>
-                                                    <td>
+                                                 <!--     <td>
                                                         <select formControlName="invType"
                                                             class="form-control"
                                                             style="height: 20px;font-size: 10px;width: 120px;">
@@ -676,7 +677,7 @@
                                                                 {{cate.codeDesc}}
                                                             </option>
                                                         </select>
-                                                    </td>
+                                                    </td> --> 
                                                     <td>
                                                         <input type="text"
                                                             style="height: 20px;width: 100px;text-transform: uppercase;"
@@ -757,6 +758,10 @@
                                                     </td>
                                                     <td>
                                                         <input disabled type="number" formControlName="igst"
+                                                            class="form-control" style="height: 20px;width: 80px;">
+                                                    </td>
+                                                    <td>
+                                                        <input disabled type="number" formControlName="taxAmt"
                                                             class="form-control" style="height: 20px;width: 80px;">
                                                     </td>
                                                     <td>
