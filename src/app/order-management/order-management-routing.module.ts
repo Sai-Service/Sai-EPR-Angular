@@ -40,7 +40,7 @@ const routes: Routes = [
   {path:'CSPerformaINV',component:CounterSalePerformaInvComponent},
   {path:'SalesOrderList',component:SalesOrderListComponent},
   {path:'ClosingStock',component:ClosingStockGridComponent},
-  // {path:'GatePass/:orderNumber',component:SalesGatePassComponent},
+  {path:'GatePass/:orderNumber',component:SalesGatePassComponent},
   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];
 

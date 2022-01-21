@@ -1,24 +1,3 @@
-// import { Component, OnInit } from '@angular/core';
-// import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-// import { OrderManagementService } from 'src/app/order-management/order-management.service';
-// import { MasterService } from 'src/app/master/master.service';
-// import { Router } from '@angular/router';
-
-
-
-// @Component({
-//   selector: 'app-sales-gate-pass',
-//   templateUrl: './sales-gate-pass.component.html',
-//   styleUrls: ['./sales-gate-pass.component.css']
-// })
-// export class SalesGatePassComponent implements OnInit {
-
-//   constructor() { }
-
-//   ngOnInit(): void {
-//   }
-
-// }
 
 
 import { Component, OnInit } from '@angular/core';
@@ -27,6 +6,7 @@ import { OrderManagementService } from 'src/app/order-management/order-managemen
 import { MasterService } from 'src/app/master/master.service';
 import { Router } from '@angular/router';
 import { saveAs } from 'file-saver';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 
 
 const MIME_TYPES = {
@@ -70,9 +50,9 @@ export class SalesGatePassComponent implements OnInit {
   contactNo:number;
   contactPerson:string;
   salesExeName:string;
- 
+  private sub: any;
 
-  constructor(private fb: FormBuilder, private router: Router, private service: MasterService,private orderManagementService: OrderManagementService) {
+  constructor(private fb: FormBuilder, private router: Router,private router1: ActivatedRoute, private service: MasterService,private orderManagementService: OrderManagementService) {
     this.SalesGatepassForm = fb.group({
       gatepassNo: [''],
       orderNumber:[''],
@@ -99,6 +79,15 @@ export class SalesGatePassComponent implements OnInit {
      }
   ngOnInit(): void {
     this.emplId = Number(sessionStorage.getItem('emplId'));
+
+
+    this.sub = this.router1.params.subscribe(params => {
+      this.orderNumber = params['orderNumber'];
+      // alert(this.orderNumber)
+      if (this.orderNumber != undefined) {
+        this.orderNumberPost(this.orderNumber);
+      }
+    });
   }
 
   gatePassOrderNo(orderNumber){
@@ -163,7 +152,7 @@ export class SalesGatePassComponent implements OnInit {
 
      orderNumberPost(orderNumber)
      {
-       alert(orderNumber);
+      //  alert(orderNumber);
      // const formValue: IDivision = this.transData(this.divisionMasterForm.value);
       this.orderManagementService.orderNoPost(orderNumber,this.emplId).subscribe((res: any) => {
         if (res.code === 200) {
