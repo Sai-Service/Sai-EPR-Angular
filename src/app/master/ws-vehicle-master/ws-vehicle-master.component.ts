@@ -35,9 +35,9 @@ interface IWsVehicleMaster {
   divisionId:number;
   divisionName:string;
   dealerCode:string;
-
-
+  itemTypeForCat:string;
 }
+
 @Component({
   selector: 'app-ws-vehicle-master',
   templateUrl: './ws-vehicle-master.component.html',
@@ -259,7 +259,7 @@ export class WsVehicleMasterComponent implements OnInit {
   tvSaleDealer: string;
   tvSaleLocation: string;
 
-  itemTypeForCat: string ;
+  itemTypeForCat: string='SS_VEHICLE' ;
   categoryId: number;
   public ServiceModelList   :Array<string> = [];
 
@@ -523,6 +523,7 @@ export class WsVehicleMasterComponent implements OnInit {
     //       console.log(this.SSitemTypeList);
     //     }
     //   );
+    // this.service.getCategoryIdListByDivision(this.itemTypeForCat)
     this.service.getCategoryIdListByDivision(this.itemTypeForCat)
       .subscribe(
         data => {
@@ -851,7 +852,8 @@ export class WsVehicleMasterComponent implements OnInit {
     if (mainModel != null) {
 
       let selectedValue = this.mainModelList.find(v => v.code === mainModel);
-      this.itemTypeForCat=selectedValue.attribute2;
+      // this.itemTypeForCat=selectedValue.attribute2;
+      
 
       this.segment=null;
       this.variantDesc = null;
@@ -1064,6 +1066,14 @@ export class WsVehicleMasterComponent implements OnInit {
       this.checkValidation = false;
       alert("ITEM CATEGORY: Should not be null");
     }
+
+    
+
+    // if (formValue.itemTypeForCat === undefined || formValue.itemTypeForCat === null || formValue.itemTypeForCat.trim() === '') {
+    //   this.checkValidation = false;
+    //   alert("ITEM CATEGORY : Should not be null....");
+    //   return;
+    // }
 
     // if (formValue.itemId < 0 || formValue.itemId === undefined || formValue.itemId === null) {
     //   this.checkValidation = false;
