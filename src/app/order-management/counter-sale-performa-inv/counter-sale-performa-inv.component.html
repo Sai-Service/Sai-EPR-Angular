@@ -636,6 +636,7 @@
                                         <th scope="col">Item code</th>
                                         <th scope="col">Description</th>
                                         <th scope="col">HSN/SAC code</th>
+                                        <th scope="col">Locator</th>
                                         <th scope="col">Available QTY</th>
                                         <th scope="col">Qty</th>
                                         <th scope="col">Unit Price</th>
@@ -706,6 +707,21 @@
                                                     <td>
                                                         <input disabled type="text" formControlName="hsnSacCode"
                                                             class="form-control" style="height: 20px;width: 120px;">
+                                                    </td>
+                                                    <input hidden type="number" formControlName="onHandQty">
+                                                    <input hidden formControlName="id">
+                                                    <input hidden type="number" formControlName="resveQty">
+                                                    <td>
+                                                        <select class="form-control"
+                                                            style="height: 20px; width: 160px; "
+                                                            formControlName="frmLocatorId"
+                                                            (ngModelChange)="onSelLocaPrice($event,i)">
+                                                            <option *ngFor="let locId of  locData[i]"
+                                                                [value]="locId.ROWNUM">
+                                                                {{locId.segmentName}}--{{locId.onHandQty}}--{{locId.prc}}
+                                                            </option>
+                                                        </select>
+                                                        <input hidden formControlName="frmLocatorId">
                                                     </td>
                                                     <td>
                                                         <input disabled type="number" formControlName="Avalqty"

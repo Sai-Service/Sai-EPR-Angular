@@ -92,6 +92,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
   emailId1: string;
   locationId:number;
   birthDate: Date;
+  subInventoryId: number;
   weddingDate: Date;
   gstNo: string;
   panNo: string;
@@ -158,6 +159,10 @@ export class CounterSalePerformaInvComponent implements OnInit {
   mrp:number;
   creditDays:string;
   daysMsg:string;
+  frmLocatorId:number;
+  resveQty:number;
+  onHandQty:number;
+  id:number;
 
   // orderedDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
   // custPoDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
@@ -197,8 +202,14 @@ export class CounterSalePerformaInvComponent implements OnInit {
   displayCounterSaleLine: Array<boolean> = [];
   displayLineflowStatusCode: Array<boolean> = [];
   isDisabled = false;
+  allDatastore: any;
 
   @ViewChild('aForm') aForm: ElementRef;
+  getfrmSubLoc: any;
+  locData: any = [];
+  resrveqty: any;
+  onhand1: any;
+  public subInvCode: any;
 
   constructor(private fb: FormBuilder, private location1: Location, private router1: ActivatedRoute, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService,) {
     this.CounterSaleOrderBookingForm = fb.group({
@@ -288,6 +299,11 @@ export class CounterSalePerformaInvComponent implements OnInit {
       mrp:[''],
       flowStatusCode:[''] ,
       uom:[''],
+      frmLocatorId:[''],
+      resveQty:[''],
+      onHandQty:[''],
+      id:[''],
+      
      })
   }
 
@@ -401,6 +417,14 @@ export class CounterSalePerformaInvComponent implements OnInit {
         }
       );
   
+
+
+      this.service.subInvCode2(this.deptId, this.divisionId).subscribe(
+        data => {
+          this.subInvCode = data;
+          console.log(this.subInventoryId);
+          this.subInventoryId = this.subInvCode.subInventoryId;
+        });
   }
 
   CounterSaleOrderBooking(CounterSaleOrderBookingForm: any) {
@@ -409,17 +433,35 @@ export class CounterSalePerformaInvComponent implements OnInit {
   get f() { return this.CounterSaleOrderBookingForm.controls }
 
   OrderFind(orderNumber) {
+    alert(orderNumber)
+    this.orderlineDetailsArray().clear();
     this.orderManagementService.proformaOrderSearchNew(sessionStorage.getItem('divisionId'),orderNumber )
     .subscribe(
       data => {
         if (data.code === 200) {
           this.lstgetOrderLineDetails = data.obj.oeOrderLinesAllList;
+          this.allDatastore = data.obj;
           let control = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
-          for (let i = 0; i <= this.lstgetOrderLineDetails.length - 1; i++) {
+          alert(this.lstgetOrderLineDetails.length)
+          for (let i = 0; i <= this.lstgetOrderLineDetails.length-1; i++) {
             var oeOrderLinesAllList1: FormGroup = this.orderlineDetailsGroup();
             control.push(oeOrderLinesAllList1);
           }
+          for (let k = 0; k < data.obj.oeOrderLinesAllList.length; k++) {
+            this.CounterSaleOrderBookingForm.patchValue({ baseAmt: this.lstgetOrderLineDetails[k].baseAmt });
+            let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+            (controlinv.controls[k]).patchValue({
+              baseAmt: Math.round((data.obj.oeOrderLinesAllList[k].baseAmt + Number.EPSILON) * 100) / 100,
+              taxAmt: Math.round((data.obj.oeOrderLinesAllList[k].taxAmt + Number.EPSILON) * 100) / 100,
+              totAmt: Math.round((data.obj.oeOrderLinesAllList[k].totAmt + Number.EPSILON) * 100) / 100,
+              unitSellingPrice: Math.round((data.obj.oeOrderLinesAllList[k].unitSellingPrice + Number.EPSILON) * 100) / 100,
+              disPer: data.obj.oeOrderLinesAllList[k].disPer,
+              taxCategoryId: data.obj.oeOrderLinesAllList[k].taxCategoryId,
+            });
+          }
           this.CounterSaleOrderBookingForm.patchValue(data.obj);
+          console.log(this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value);
+          
         }
     
   })
@@ -832,6 +874,76 @@ export class CounterSalePerformaInvComponent implements OnInit {
                         this.setFocus('pricingQty' + k);
                       }
                     }
+                    if (select.itemId != null) {
+                      // this.getLocatorDetails(k, select.itemId);
+                      let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+                      var invTp = controlinv.controls[k].get('invType').value;
+                      // this.service.getfrmSubLoc(this.locId, select.itemId, this.subInventoryId).subscribe(
+                      this.service.getfrmSubLocPrice(this.locId, select.itemId, this.subInventoryId).subscribe(
+                        data => {
+                          console.log(data);
+                          if (data.length === 0) {
+                            // alert('1')
+                            alert('Item Not Found In Stock!.');
+                            var lotList = [{ locatorId: 0, segmentName: 'Not Found' }]
+                            controlinv.controls[k].patchValue({ frmLocatorId: lotList });
+                            controlinv.controls[k].patchValue({ onHandQty: 0 });
+                            controlinv.controls[k].get('frmLocatorId').disable();
+                            var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+                            controlinv.controls[k].patchValue({ Avalqty: '' });
+                            controlinv.controls[k].patchValue({ pricingQty: '' });
+                            controlinv.controls[k].patchValue({ orderedItem: '' });
+                            controlinv.controls[k].patchValue({ orderedItem: '' });
+                            controlinv.controls[k].patchValue({ unitSellingPrice: '' });
+                            controlinv.controls[k].patchValue({ taxCategoryName: '' });
+                            controlinv.controls[k].patchValue({ hsnSacCode: '' });
+                            this.setFocus('itemSeg' + k);
+                            return;
+                          } else {
+                            this.getfrmSubLoc = data;
+                            console.log(this.getfrmSubLoc);
+                            this.locData[k] = data;
+                            var selLocator = this.locData[k];
+                            console.log(this.locData[k]);
+                            // alert(selLocator[0].id );
+                            // controlinv.controls[k].get('frmLocatorId').enable();
+                            if (this.getfrmSubLoc.length == 1) {
+
+                              controlinv.controls[k].patchValue({ onHandId: selLocator[0].segmentName });
+                              controlinv.controls[k].patchValue({ frmLocatorId: selLocator[0].ROWNUM });
+                              controlinv.controls[k].patchValue({ frmLocator: selLocator[0].segmentName });
+                              controlinv.controls[k].patchValue({ onHandQty: selLocator[0].onHandQty });
+                              controlinv.controls[k].patchValue({ id: selLocator[0].id });
+                              controlinv.controls[k].patchValue({ unitSellingPrice: selLocator[0].prc });
+                            }
+                            else {
+                              // alert(selLocator[0].segmentName);
+                              alert('Please check Item has old stock with price');
+                              controlinv.controls[k].patchValue({ frmLocatorId: selLocator[0].ROWNUM });
+                              controlinv.controls[k].patchValue({ frmLocator: selLocator[0].segmentName });
+                              // controlinv.controls[k].patchValue({ frmLocatorId: selLocator[0].locatorId });
+                              controlinv.controls[k].patchValue({ onHandQty: selLocator[0].onHandQty })
+                              controlinv.controls[k].patchValue({ id: selLocator[0].id });
+                              controlinv.controls[k].patchValue({ unitSellingPrice: selLocator[0].prc });
+                            }
+                            // this.service.getreserqty(this.locId, select.itemId).subscribe
+                            //   (data => {
+                            //     this.resrveqty = data;
+                            //     controlinv.controls[k].patchValue({ resveQty: this.resrveqty });
+                            //     this.AvailQty(k, select.itemId,'Item');
+                            //     this.setFocus('pricingQty');
+                            //   });
+
+                            this.service.getreserqtyNew(this.locId, select.itemId, selLocator[0].locatorId, selLocator[0].prc).subscribe
+                              (data => {
+                                this.resrveqty = data;
+                                controlinv.controls[k].patchValue({ resveQty: this.resrveqty });
+                                this.AvailQty(k, select.itemId, 'Item');
+                                this.setFocus('pricingQty' + k);
+                              });
+                          }
+                        });
+                    }
                   }
                   else if (data.code === 400) {
                     alert(data.message);
@@ -845,6 +957,66 @@ export class CounterSalePerformaInvComponent implements OnInit {
 
 
     }
+  }
+
+
+  AvailQty(i, itemId, calledFrom){
+    var trxLnArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
+    var trxLnFormArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+    if (itemId === undefined) {
+      itemId = trxLnArr[i].itemId;
+    }
+    var locId;
+    if (calledFrom === 'Item') {
+      var linLocData = this.locData[i];
+      let sellocId = linLocData.find(d => Number(d.ROWNUM) === trxLnArr[i].frmLocatorId);
+      locId = sellocId.locatorId;
+      (trxLnFormArr.controls[i]).patchValue({
+        frmLocatorName: locId,
+      });
+    }
+    if (locId != null) {
+      this.service.getonhandqty(Number(sessionStorage.getItem('locId')), this.subInventoryId, locId, itemId).subscribe
+        (data => {
+          this.onhand1 = data.obj;
+          console.log(this.onhand1);
+          var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+          trxLnArr1.controls[i].patchValue({ onHandQty: data.obj });
+          let onHand = data.obj;
+          let reserve = trxLnArr[i].resveQty;
+          let avlqty1 = 0;
+          avlqty1 = onHand - reserve;
+          var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+          trxLnArr1.controls[i].patchValue({ Avalqty: avlqty1 });
+          if (avlqty1 < 0) {
+            trxLnArr1.controls[i].patchValue({ Avalqty: 0 });
+          }
+          this.setFocus('pricingQty' + i);
+
+        })
+    }
+  }
+
+
+  onSelLocaPrice(event: Number, i) {
+    console.log(event);
+    console.log(this.locData);
+    var linLocData = this.locData[i];
+    let selloc = linLocData.find(d => Number(d.ROWNUM) === Number(event));
+    console.log(selloc);
+    var trxLnArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
+    var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+    if (trxLnArr[i].frmLocatorId != '') {
+      if (trxLnArr[i].pricingQty != undefined) {
+        if (trxLnArr[i].pricingQty > selloc.onHandQty) {
+          trxLnArr1.controls[i].patchValue({ pricingQty: selloc.onHandQty });
+        }
+      }
+      trxLnArr1.controls[i].patchValue({ unitSellingPrice: selloc.prc });
+      trxLnArr1.controls[i].patchValue({ frmLocatorName: selloc.locatorId });
+    }
+    var fldName = "locator";
+    this.onKey(i, fldName);
   }
 
   onKey(index, fldName){
