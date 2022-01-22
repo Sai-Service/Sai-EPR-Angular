@@ -121,12 +121,14 @@ export class CounterSalePerformaInvComponent implements OnInit {
   lstgetOrderLineDetails: any[];
   public priceListNameList: any;
   displayCSOrderAndLineDt = true;
+  displaysegmentHeader=true;
   displaysegmentInvType: Array<boolean> = [];
   categoryList: any[];
   public itemMap = new Map<string, any[]>();
   public itemMap2 = new Map<number, any[]>();
   invItemList1: any[];
   displayorderHedaerDetails = true;
+  displayaddRemoveBtn=true;
   public addonDescList: any[];
   displayaddRow = true;
   displayRemoveRow: Array<boolean> = [];
@@ -134,6 +136,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
   displayCounterSaleLine: Array<boolean> = [];
   displayLineflowStatusCode: Array<boolean> = [];
   isDisabled = false;
+  isDisabled1=true;
   
 
   @ViewChild('aForm') aForm: ElementRef;
@@ -374,6 +377,10 @@ export class CounterSalePerformaInvComponent implements OnInit {
 
   OrderFind(orderNumber) {
     this.orderlineDetailsArray().clear();
+    this.displaysegmentHeader=false;
+    this.displayaddRemoveBtn=false;
+    this.displayaddRow = false;
+    this.isDisabled1=false;
     this.orderManagementService.proformaOrderSearchNew(sessionStorage.getItem('divisionId'), orderNumber)
       .subscribe(
         data => {
@@ -383,6 +390,8 @@ export class CounterSalePerformaInvComponent implements OnInit {
             for (let i = 0; i <= this.lstgetOrderLineDetails.length - 1; i++) {
               var oeOrderLinesAllList1: FormGroup = this.orderlineDetailsGroup();
               control.push(oeOrderLinesAllList1);
+              this.displaysegmentInvType[i] = false;
+              this.displayRemoveRow[i] = false;
 
             }
             this.CounterSaleOrderBookingForm.patchValue(data.obj);

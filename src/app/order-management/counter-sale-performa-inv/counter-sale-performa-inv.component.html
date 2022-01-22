@@ -636,7 +636,11 @@
                                         <th scope="col">Item code</th>
                                         <th scope="col">Description</th>
                                         <th scope="col">HSN/SAC code</th>
+                                        <div *ngIf="displaysegmentHeader; then thensegmentHeader; else elsesegmentHeader"> </div>
+                                        <ng-template #thensegmentHeader>
                                         <th scope="col">Locator</th>
+                                        </ng-template>
+                                        <ng-template #elsesegmentHeader></ng-template>
                                         <th scope="col">Available QTY</th>
                                         <th scope="col">Qty</th>
                                         <th scope="col">Unit Price</th>
@@ -651,8 +655,12 @@
                                         <th scope="col">Total Amount</th>
                                         <th scope="col">MRP</th>
                                         <!-- <th scope="col">Status</th> -->
+                                        <div *ngIf="displayaddRemoveBtn; then thenaddRemoveBtn; else elseaddRemoveBtn"> </div>
+                                        <ng-template #thenaddRemoveBtn>
                                         <th scope="col">Add</th>
                                         <th scope="col">Remove</th>
+                                        </ng-template>
+                                        <ng-template #elseaddRemoveBtn></ng-template>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -828,7 +836,7 @@
                                                             style="height: 20px;width: 50px;">
                                                     </td>
                                                     <td>
-                                                        <input type="number" formControlName="pricingQty"
+                                                        <input disabled type="number" formControlName="pricingQty"
                                                             name="pricingQty{{i}}" class="form-control"
                                                             (change)="onKey(i,'prc')" (keydown.enter)="enterKeyLock(i)"
                                                             style="height: 20px;width:50px;" min="0"
@@ -838,7 +846,7 @@
                                                             min="0" oninput="this.value = Math.abs(this.value)">
                                                     </td>
                                                     <td>
-                                                        <input type="number" formControlName="unitSellingPrice"
+                                                        <input disabled type="number" formControlName="unitSellingPrice"
                                                             class="form-control" min="0" step="0.01"
                                                             style="height: 20px; width:80px;"
                                                             (change)="onKey(i,'usprc')">
@@ -882,7 +890,7 @@
                                                         <input disabled type="number" formControlName="mrp"
                                                             class="form-control" style="height: 20px;width: 80px;">
                                                     </td>
-                                                    <td>
+                                                    <td hidden>
                                                         <select formControlName="flowStatusCode" id="flowStatusCode1"
                                                             class="form-control"
                                                             style="width: fit-content;height: 25px;font-size: 10px;"
@@ -905,9 +913,9 @@
                                                                 class="fa fa-plus"></i></button>
                                                     </ng-template>
                                                     <ng-template #elseaddRow>
-                                                        <button disabled type="submit" class="btn btn-primary"
+                                                        <!-- <button disabled type="submit" class="btn btn-primary"
                                                             (click)="addRow(i)" style="width: min-content;"><i
-                                                                class="fa fa-plus"></i></button>
+                                                                class="fa fa-plus"></i></button> -->
                                                     </ng-template>
                                                 </td>
                                                 <td>
@@ -920,10 +928,10 @@
                                                                 class="fa fa-trash"></i></button>
                                                     </ng-template>
                                                     <ng-template #elseRemoveRow>
-                                                        <button disabled type="submit" class="btn btn-primary"
+                                                        <!-- <button disabled type="submit" class="btn btn-primary"
                                                             (click)="RemoveRow(OrderLineIndex)"
                                                             style="width: min-content;"><i
-                                                                class="fa fa-trash"></i></button>
+                                                                class="fa fa-trash"></i></button> -->
                                                     </ng-template>
                                                 </td>
                                             </tr>
@@ -1158,7 +1166,7 @@
                     style="width: fit-content;" (click)="createProformaOrder()">Create Order</button>
                 </td>
                 <td>
-                    <button type="submit" [disabled]="isDisabled" class="btn btn-primary" id="register"
+                    <button type="submit" [disabled]="isDisabled1" class="btn btn-primary" id="register"
                     style="width: fit-content;" (click)="downloadProformaInv()">Download Proforma Inv</button>
                 </td>
                 <td>
