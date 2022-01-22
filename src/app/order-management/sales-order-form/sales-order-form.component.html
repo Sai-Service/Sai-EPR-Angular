@@ -1550,7 +1550,7 @@
                                                         </ng-template>
                                                     </td>
                                                     <td>
-                                                        <button type="submit" class="btn btn-primary" [disabled]="isDisabled6" (click)="addRow()"
+                                                        <button type="submit" class="btn btn-primary" [disabled]="isDisabled6" (click)="addRow(i)"
                                                             style="width: min-content;"><i
                                                                 class="fa fa-plus"></i></button>
                                                     </td>
@@ -2144,6 +2144,12 @@
                                     </div>
                                 </div>
                             </td>
+                          
+                                <td>
+                                    <button class="btn btn-primary" [style.display]="isVisible7 ? 'block' : 'none'" style="width: fit-content;height: fit-content;"
+                                        [routerLink]="['/admin/OrderManagement/GatePass',orderNumber]">Generate Gate Pass</button>
+                                </td>
+                        
                             <!-- </div> -->
                         </tr>
                     </table>
