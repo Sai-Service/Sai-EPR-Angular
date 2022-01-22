@@ -851,9 +851,11 @@ export class WsVehicleMasterComponent implements OnInit {
   onOptionsSelectedModel(mainModel:any) {
     if (mainModel != null) {
 
-      let selectedValue = this.mainModelList.find(v => v.code === mainModel);
+      // let selectedValue = this.mainModelList.find(v => v.code === mainModel);
       // this.itemTypeForCat=selectedValue.attribute2;
       
+      // this.categoryId=35;
+      this.wsVehicleMasterForm.patchValue({categoryId:35});
 
       this.segment=null;
       this.variantDesc = null;
