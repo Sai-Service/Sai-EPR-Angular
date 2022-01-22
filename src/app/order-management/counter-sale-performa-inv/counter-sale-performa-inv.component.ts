@@ -142,6 +142,10 @@ export class CounterSalePerformaInvComponent implements OnInit {
   resrveqty: any;
   onhand1: any;
   public subInvCode: any;
+  onHandQty:number;
+  id:number;
+  resveQty:number;
+  frmLocatorId:number;
 
   constructor(private fb: FormBuilder, private location1: Location, private service: MasterService, private orderManagementService: OrderManagementService) {
     this.CounterSaleOrderBookingForm = fb.group({
@@ -232,6 +236,10 @@ export class CounterSalePerformaInvComponent implements OnInit {
       mrp: [''],
       flowStatusCode: [''],
       uom: [''],
+      onHandQty:[''],
+      id:[''],
+      resveQty:[''],
+      frmLocatorId:['']
     })
   }
 
@@ -255,7 +263,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
       this.CounterSaleOrderBookingForm.patchValue({ issueCode: 'CM03' });
       var concatissuetypecode = this.CounterSaleOrderBookingForm.get('issueCode').value + '-' + this.CounterSaleOrderBookingForm.get('issueCodeType1').value
       this.CounterSaleOrderBookingForm.patchValue({ issueCodeType: concatissuetypecode });
-      this.transactionTypeName = 'Proforma';
+      this.transactionTypeName = 'Proforma Invoice';
     }
     this.CounterSaleOrderBookingForm.patchValue({ discType: 'No Discount' })
 
@@ -362,157 +370,10 @@ export class CounterSalePerformaInvComponent implements OnInit {
 
 
 
-  // OrderFind(orderNumber) { 
-  //   this.orderManagementService.searchProforma(orderNumber, sessionStorage.getItem('divisonId'))
-  //   .subscribe(
-  //     data => {
-  //       if (data.code === 200) {
-  //         this.lstgetOrderLineDetails = data.obj.oeOrderLinesAllList;
-  //         // this.lstgetOrderTaxDetails = data.obj.taxAmounts;
-  //           this.allDatastore = data.obj;
-  //         if (data.obj.discType === 'Header Level Discount') {
-  //          //this.onOptionsSelectedDiscountType(data.obj.discType);
-  //           this.CounterSaleOrderBookingForm.patchValue({ disPer: data.obj.disPer });
-  //           this.CounterSaleOrderBookingForm.get('disPer').disable();
-  //         }
-  //         if (this.allDatastore.tcsYN === 'Y') {
-  //           this.displaytcsYN = false;
-  //           this.isDisabled = false;
-  //           // this.displaytcsBuuton = true;
-  //           // this.tcsAmt = Math.round(((data.obj.totAmt * this.tcsPer) + Number.EPSILON) * 100) / 100;
-  //         }
-  //         else {
-  //           this.displaytcsYN = true;
-  //           // this.displaytcsBuuton = false;
-  //           // this.isDisabled = false;
-  //         }
-  //         let control = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
-  //         //let control1 = this.CounterSaleOrderBookingForm.get('taxAmounts') as FormArray;
-  //         for (let i = 0; i <= this.lstgetOrderLineDetails.length - 1; i++) {
-  //           var oeOrderLinesAllList1: FormGroup = this.orderlineDetailsGroup();
-  //           control.push(oeOrderLinesAllList1);
-  //           this.displaysegmentInvType[i] = false;
-  //           this.displayLineflowStatusCode.push(true);
-  //           this.displayCounterSaleLine.push(false);
-  //         }
-  //         // for (let j = 0; j <= this.lstgetOrderTaxDetails.length; j++) {
-  //         //   var orderTaxLinesList: FormGroup = this.TaxDetailsGroup();
-  //         //   control1.push(orderTaxLinesList);
-  //         // }
-  //         this.CounterSaleOrderBookingForm.patchValue(data.obj);
-  //         //this.salesRepName = data.obj.salesRepName;
-  //        // this.createOrderType = data.obj.createOrderType;
-  //         this.priceListName = data.obj.priceListName;
-  //        // this.paymentType = data.obj.paymentType;
-  //         //this.paymentTermId = data.obj.paymentTermId;
-  //         this.CounterSaleOrderBookingForm.patchValue({ trxNumber: data.obj.trxNumber })
-  //         this.totTax = Math.round((data.obj.totTax + Number.EPSILON) * 100) / 100;
-  //         this.totAmt = Math.round((data.obj.totAmt + Number.EPSILON) * 100) / 100;
-  //         this.subtotal = Math.round((data.obj.subtotal + Number.EPSILON) * 100) / 100;
 
-  //         this.disPer = data.obj.disPer;
-  //         this.CounterSaleOrderBookingForm.patchValue({ name: data.obj.billLocName });
-  //         this.CounterSaleOrderBookingForm.patchValue({ trxNumber: data.obj.trxNumber })
-  //         var orderedDate1 = data.obj.orderedDate;
-  //         var orderedDate2 = this.pipe.transform(orderedDate1, 'dd-MM-yyyy');
-  //         this.CounterSaleOrderBookingForm.patchValue(({ orderedDate: orderedDate2 }));
-  //         this.transactionTypeName = data.obj.transactionTypeName;
-  //         for (let k = 0; k < data.obj.oeOrderLinesAllList.length; k++) {
-  //           this.CounterSaleOrderBookingForm.patchValue({ baseAmt: this.lstgetOrderLineDetails[k].baseAmt });
-  //           let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
-  //           (controlinv.controls[k]).patchValue({
-  //             baseAmt: Math.round((data.obj.oeOrderLinesAllList[k].baseAmt + Number.EPSILON) * 100) / 100,
-  //             taxAmt: Math.round((data.obj.oeOrderLinesAllList[k].taxAmt + Number.EPSILON) * 100) / 100,
-  //             totAmt: Math.round((data.obj.oeOrderLinesAllList[k].totAmt + Number.EPSILON) * 100) / 100,
-  //             unitSellingPrice: Math.round((data.obj.oeOrderLinesAllList[k].unitSellingPrice + Number.EPSILON) * 100) / 100,
-  //             disPer: data.obj.oeOrderLinesAllList[k].disPer,
-  //             taxCategoryId: data.obj.oeOrderLinesAllList[k].taxCategoryId,
-  //           });
-  //         }
-
-  //         for (let k = 0; k < data.obj.taxAmounts.length; k++) {
-  //           let controlinv = this.CounterSaleOrderBookingForm.get('taxAmounts') as FormArray;
-  //           (controlinv.controls[k]).patchValue({
-  //             totTaxAmt: data.obj.taxAmounts[k].totTaxAmt,
-  //           });
-  //           this.TaxDetailsArray().disabled;
-  //         }
-  //         this.CounterSaleOrderBookingForm.patchValue({ orderedDate: data.obj.orderedDate });
-  //         this.CounterSaleOrderBookingForm.get('orderedDate').disable();
-  //         // alert( data.obj.orderStatus +'-----' + data.obj.trxNumber);
-  //         if (data.obj.orderStatus != 'BOOKED' && data.obj.trxNumber != null) {
-  //           //this.isVisible = true;
-  //         }
-  //         else {
-  //           //this.isVisible = false;
-  //         }
-  //         this.CounterSaleOrderBookingForm.controls['emplId'].patchValue(Number(sessionStorage.getItem('emplId')));
-  //         if (this.allDatastore.createOrderType === 'Pick Ticket' && this.allDatastore.flowStatusCode === 'BOOKED') {
-  //           this.CounterSaleOrderBookingForm.get('custName').disable();
-  //           this.CounterSaleOrderBookingForm.get('mobile1').disable();
-  //           this.CounterSaleOrderBookingForm.get('refCustNo').disable();
-  //           this.CounterSaleOrderBookingForm.get('custPoDate').disable();
-  //           this.CounterSaleOrderBookingForm.get('custPoNumber').disable();
-  //           this.CounterSaleOrderBookingForm.get('custAccountNo').disable();
-  //           this.displayorderHedaerDetails = false;
-  //           // this.displaycounterSaleOrderSave = false;
-  //           // this.displaypickTicketInvoice = false;
-  //           // this.displaypickTicketUpdate = false;
-  //           // this.displayViewGatePass = true;
-  //           // for (let i = 0; this.allDatastore.oeOrderLinesAllList.length; i++) {
-  //           // if (data.obj.oeOrderLinesAllList[i].flowStatusCode === 'BOOKED') {
-  //           //   this.displayLineflowStatusCode[i] = false;
-  //           //   this.displayRemoveRow[i] = false;
-  //           // }
-  //           // else if
-  //           //   (this.allDatastore.oeOrderLinesAllList[i].flowStatusCode === 'CANCELLED' && this.allDatastore.oeOrderLinesAllList[i].flowStatusCode === 'Invoiced') {
-  //           //   this.displayLineflowStatusCode[i] = true;
-  //           // }
-  //           // }
-
-  //         }
-
-  //         // alert(data.obj.orderStatus);
-  //         if (data.obj.orderStatus === 'BOOKED' && Number(sessionStorage.getItem('divisionId')) === 2) {
-  //           this.service.crediteLimitFn(this.allDatastore.customerId, sessionStorage.getItem('locId'), this.allDatastore.customerSiteId)
-  //             .subscribe(
-  //               data => {
-  //                 if (data.code === 200) {
-  //                   // alert(data.obj);
-  //                   // var credAmt = this.CounterSaleOrderBookingForm.get('creditAmt').value;
-  //                   // var newCrAmt = Number(this.allDatastore.creditAmt) - Number(data.obj.outStandingAmt);
-  //                   // this.CounterSaleOrderBookingForm.patchValue({ creditAmt: newCrAmt });
-  //                   var newCrmAmt1 = Math.round(((data.obj.outStandingAmt) + Number.EPSILON) * 100) / 100;
-  //                   this.CounterSaleOrderBookingForm.patchValue({ creditAmt: newCrmAmt1 });
-  //                   this.CounterSaleOrderBookingForm.patchValue({ creditDays: data.obj.creditDays });
-  //                   this.CounterSaleOrderBookingForm.patchValue({ daysMsg: data.obj.daysMsg });
-  //                   if (this.CounterSaleOrderBookingForm.get('daysMsg').value.includes('Exceeded')) {
-  //                     alert('Credit Days is exceeded.!');
-  //                     // this.isDisabled10 = true;
-  //                   }
-  //                   else if (this.allDatastore.totAmt >= data.obj.outStandingAmt) {
-  //                     alert('Credit Amount is exceeded.! ... Credit Amount is' + ' ' + this.allDatastore.crdAmt + ' ' + 'Total Amount is' + ' ' + this.allDatastore.totAmt + '.!')
-  //                     // this.isDisabled10 = true;
-  //                     return;
-  //                   }
-  //                   // else {
-  //                   //   this.isDisabled10 = false;
-  //                   // }
-  //                 }
-  //               })
-  //         }
-
-
-  //       }
-  //       else {
-  //         if (data.code) {
-  //           alert(data.message);
-  //         }
-  //       }
-  //     });
-  //   }
 
   OrderFind(orderNumber) {
+    this.orderlineDetailsArray().clear();
     this.orderManagementService.proformaOrderSearchNew(sessionStorage.getItem('divisionId'), orderNumber)
       .subscribe(
         data => {
@@ -522,6 +383,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
             for (let i = 0; i <= this.lstgetOrderLineDetails.length - 1; i++) {
               var oeOrderLinesAllList1: FormGroup = this.orderlineDetailsGroup();
               control.push(oeOrderLinesAllList1);
+
             }
             this.CounterSaleOrderBookingForm.patchValue(data.obj);
           }
@@ -1285,12 +1147,13 @@ export class CounterSalePerformaInvComponent implements OnInit {
     jsonData.ouId = Number(sessionStorage.getItem('ouId'));
     jsonData.locationId = Number(sessionStorage.getItem('locId'));
     jsonData.deptId = sessionStorage.getItem('deptId');
+    jsonData.divisionId=sessionStorage.getItem('divisionId');
     console.log(jsonData);
     this.orderManagementService.createProformaOrderFFn(jsonData).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
         this.orderNumber = res.obj;
-        this.OrderFind(this.orderNumber);
+        this.OrderFind(res.obj);
         // window.location.reload();
         this.isDisabled = true;
       } else {
