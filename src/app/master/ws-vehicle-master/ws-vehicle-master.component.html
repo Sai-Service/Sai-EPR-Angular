@@ -354,10 +354,10 @@
                     <!-- <input disabled  type="text"  formControlName="itemTypeForCat"  id="itemTypeForCat" [(ngModel)]="itemTypeForCat" class="form-control" > -->
                         
                     <td>
-                        <select formControlName="categoryId" id="categoryId" class="form-control" style="background-color: yellow;">
-                            <option>--Select--</option>
+                        <select formControlName="categoryId" id="categoryId" [(ngModel)]="categoryId" class="form-control" style="background-color: yellow;">
+                            <option disabled>--Select--</option>
                             <option *ngFor="let sc of  categoryIdList" [ngValue]="sc.categoryId">
-                                {{sc.attribute1}}
+                              {{sc.categoryId}}-{{sc.attribute1}}
                             </option>
                         </select>
                     </td>
