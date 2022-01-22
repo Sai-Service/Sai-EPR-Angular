@@ -386,15 +386,28 @@ export class CounterSalePerformaInvComponent implements OnInit {
         data => {
           if (data.code === 200) {
             this.lstgetOrderLineDetails = data.obj.oeOrderLinesAllList;
-            let control = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
-            for (let i = 0; i <= this.lstgetOrderLineDetails.length - 1; i++) {
+            this.displayCustomerSite = false; 
+            this.displayCSOrderAndLineDt = false;
+            let orLineCtrl = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+            debugger;
+            for (let i = 0; i < this.lstgetOrderLineDetails.length; i++) {
               var oeOrderLinesAllList1: FormGroup = this.orderlineDetailsGroup();
-              control.push(oeOrderLinesAllList1);
+              orLineCtrl.push(oeOrderLinesAllList1);
               this.displaysegmentInvType[i] = false;
               this.displayRemoveRow[i] = false;
 
             }
             this.CounterSaleOrderBookingForm.patchValue(data.obj);
+            this.CounterSaleOrderBookingForm.patchValue({name:data.obj.billLocName});
+            orLineCtrl = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+            for (let i = 0; i < this.lstgetOrderLineDetails.length; i++) {
+              orLineCtrl.controls[i].patchValue({
+                sgst:this.lstgetOrderLineDetails[i].taxAmt/2,
+                cgst:this.lstgetOrderLineDetails[i].taxAmt/2,
+                igst:'',
+                taxAmt:this.lstgetOrderLineDetails[i].taxAmt});
+
+            }
           }
 
         })

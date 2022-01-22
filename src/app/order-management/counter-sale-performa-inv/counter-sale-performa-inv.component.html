@@ -3,7 +3,7 @@
     <table style="width: 100%;background-color: white;">
         <tr>
             <td colspan="4" class="PageHeader" style="width: 100%;">
-                &nbsp;Proforma&nbsp;Invoice&nbsp;
+                &nbsp;Counter&nbsp;Sale&nbsp;Booking&nbsp;
             </td>
             <td colspan="2" align="right" style="background-color: #FFE4B5;text-align: right;width: 100%;">
                 &nbsp;Order&nbsp;No&nbsp;&nbsp;
@@ -636,11 +636,6 @@
                                         <th scope="col">Item code</th>
                                         <th scope="col">Description</th>
                                         <th scope="col">HSN/SAC code</th>
-                                        <div *ngIf="displaysegmentHeader; then thensegmentHeader; else elsesegmentHeader"> </div>
-                                        <ng-template #thensegmentHeader>
-                                        <th scope="col">Locator</th>
-                                        </ng-template>
-                                        <ng-template #elsesegmentHeader></ng-template>
                                         <th scope="col">Available QTY</th>
                                         <th scope="col">Qty</th>
                                         <th scope="col">Unit Price</th>
@@ -651,16 +646,11 @@
                                         <th scope="col">SGST</th>
                                         <th scope="col">CGST</th>
                                         <th scope="col">IGST</th>
-                                        <th scope="col">Taxable Amount</th>
+                                        <th scope="col">Taxable Amou</th>
                                         <th scope="col">Total Amount</th>
-                                        <th scope="col">MRP</th>
-                                        <!-- <th scope="col">Status</th> -->
-                                        <div *ngIf="displayaddRemoveBtn; then thenaddRemoveBtn; else elseaddRemoveBtn"> </div>
-                                        <ng-template #thenaddRemoveBtn>
+                                        <th scope="col">MRP</th>                                       
                                         <th scope="col">Add</th>
                                         <th scope="col">Remove</th>
-                                        </ng-template>
-                                        <ng-template #elseaddRemoveBtn></ng-template>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -716,21 +706,6 @@
                                                     <td>
                                                         <input disabled type="text" formControlName="hsnSacCode"
                                                             class="form-control" style="height: 20px;width: 120px;">
-                                                    </td>
-                                                    <input hidden type="number" formControlName="onHandQty">
-                                                    <input hidden formControlName="id">
-                                                    <input hidden type="number" formControlName="resveQty">
-                                                    <td>
-                                                        <select class="form-control"
-                                                            style="height: 20px; width: 160px; "
-                                                            formControlName="frmLocatorId"
-                                                            (ngModelChange)="onSelLocaPrice($event,i)">
-                                                            <option *ngFor="let locId of  locData[i]"
-                                                                [value]="locId.ROWNUM">
-                                                                {{locId.segmentName}}--{{locId.onHandQty}}--{{locId.prc}}
-                                                            </option>
-                                                        </select>
-                                                        <input hidden formControlName="frmLocatorId">
                                                     </td>
                                                     <td>
                                                         <input disabled type="number" formControlName="Avalqty"
@@ -796,7 +771,7 @@
                                                         <input disabled type="number" formControlName="mrp"
                                                             class="form-control" style="height: 20px;width: 80px;">
                                                     </td>
-                                                    <td hidden>
+                                                    <td>
                                                         <input disabled type="text" formControlName="flowStatusCode"
                                                             class="form-control" style="height: 20px;width: 100px;">
                                                     </td>
@@ -807,15 +782,15 @@
                                                             style="width: fit-content;" [value]="i+1" >{{i+1}}</a>
                                                        
                                                     </td>
-                                                    <td>
+                                                    <!-- <td>
                                                         <input disabled type="text" formControlName="invType"
                                                             value="invType" [ngValue]="invType" class="form-control"
                                                             style="height: 20px;width: 120px">
-                                                    </td>
+                                                    </td> -->
                                                     <td>
                                                         <input disabled type="text" class="form-control"
                                                             style="height: 20px;width: 100px;">
-                                                    </td>
+                                                    </td> 
                                                     <td>
                                                         <input disabled type="text" formControlName="segment"
                                                             value="segment" [ngValue]="segment" class="form-control"
@@ -836,7 +811,7 @@
                                                             style="height: 20px;width: 50px;">
                                                     </td>
                                                     <td>
-                                                        <input disabled type="number" formControlName="pricingQty"
+                                                        <input type="number" formControlName="pricingQty"
                                                             name="pricingQty{{i}}" class="form-control"
                                                             (change)="onKey(i,'prc')" (keydown.enter)="enterKeyLock(i)"
                                                             style="height: 20px;width:50px;" min="0"
@@ -846,7 +821,7 @@
                                                             min="0" oninput="this.value = Math.abs(this.value)">
                                                     </td>
                                                     <td>
-                                                        <input disabled type="number" formControlName="unitSellingPrice"
+                                                        <input type="number" formControlName="unitSellingPrice"
                                                             class="form-control" min="0" step="0.01"
                                                             style="height: 20px; width:80px;"
                                                             (change)="onKey(i,'usprc')">
@@ -883,6 +858,10 @@
                                                             class="form-control" style="height: 20px;width: 80px;">
                                                     </td>
                                                     <td>
+                                                        <input disabled type="number" formControlName="taxAmt"
+                                                            class="form-control" style="height: 20px;width: 80px;">
+                                                    </td>
+                                                    <td>
                                                         <input disabled type="number" formControlName="totAmt"
                                                             class="form-control" style="height: 20px;width: 80px;">
                                                     </td>
@@ -890,18 +869,16 @@
                                                         <input disabled type="number" formControlName="mrp"
                                                             class="form-control" style="height: 20px;width: 80px;">
                                                     </td>
-                                                    <td hidden>
+                                                    <!-- <td>
                                                         <select formControlName="flowStatusCode" id="flowStatusCode1"
                                                             class="form-control"
                                                             style="width: fit-content;height: 25px;font-size: 10px;"
                                                             (ngModelChange)="updateLineOnCancel(i,flowStatusCode)"
                                                             #flowStatusCode1>
-                                                            <option [disabled]="isDisabled">--Select--</option>
                                                             <option value="BOOKED" hidden>BOOKED</option>
-                                                            <option value="CANCELLED">CANCELLED</option>
-                                                            <option value="INVOICED" hidden>INVOICED</option>
+                                                            <option value="CANCELLED">CANCELLED</option>                                                           
                                                         </select>
-                                                    </td>
+                                                    </td> -->
                                                 </ng-template>
                                                 <td>
                                                     <div *ngIf="displayaddRow; then thenaddRow; else elseaddRow">
@@ -913,9 +890,9 @@
                                                                 class="fa fa-plus"></i></button>
                                                     </ng-template>
                                                     <ng-template #elseaddRow>
-                                                        <!-- <button disabled type="submit" class="btn btn-primary"
+                                                        <button disabled type="submit" class="btn btn-primary"
                                                             (click)="addRow(i)" style="width: min-content;"><i
-                                                                class="fa fa-plus"></i></button> -->
+                                                                class="fa fa-plus"></i></button>
                                                     </ng-template>
                                                 </td>
                                                 <td>
@@ -928,10 +905,10 @@
                                                                 class="fa fa-trash"></i></button>
                                                     </ng-template>
                                                     <ng-template #elseRemoveRow>
-                                                        <!-- <button disabled type="submit" class="btn btn-primary"
+                                                        <button disabled type="submit" class="btn btn-primary"
                                                             (click)="RemoveRow(OrderLineIndex)"
                                                             style="width: min-content;"><i
-                                                                class="fa fa-trash"></i></button> -->
+                                                                class="fa fa-trash"></i></button>
                                                     </ng-template>
                                                 </td>
                                             </tr>
@@ -1164,10 +1141,6 @@
                 <td>
                     <button type="submit" [disabled]="isDisabled" class="btn btn-primary" id="register"
                     style="width: fit-content;" (click)="createProformaOrder()">Create Order</button>
-                </td>
-                <td>
-                    <button type="submit" [disabled]="isDisabled1" class="btn btn-primary" id="register"
-                    style="width: fit-content;" (click)="downloadProformaInv()">Download Proforma Inv</button>
                 </td>
                 <td>
                     <button type="submit" class="btn btn-primary" id="register"
