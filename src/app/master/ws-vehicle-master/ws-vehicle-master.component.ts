@@ -35,9 +35,9 @@ interface IWsVehicleMaster {
   divisionId:number;
   divisionName:string;
   dealerCode:string;
-
-
+  itemTypeForCat:string;
 }
+
 @Component({
   selector: 'app-ws-vehicle-master',
   templateUrl: './ws-vehicle-master.component.html',
@@ -61,12 +61,13 @@ export class WsVehicleMasterComponent implements OnInit {
   public ewInsNameList: Array<string> = [];
 
   public ItemEWList: Array<string> = [];
-  public mainModelList: Array<string> = [];
+  // public mainModelList: Array<string> = [];
   public colorCodeList: Array<string> = [];
   public FuelTypeList: Array<string> = [];
   public statusList: Array<string> = [];
   // public dealerCodeList :Array<string>=[];
   dealerCodeList:any;
+  mainModelList:any;
 
   pipe = new DatePipe('en-US');
   public minDate = new Date()  ;
@@ -258,7 +259,7 @@ export class WsVehicleMasterComponent implements OnInit {
   tvSaleDealer: string;
   tvSaleLocation: string;
 
-  itemTypeForCat: string = 'SS_VEHICLE';
+  itemTypeForCat: string='SS_VEHICLE' ;
   categoryId: number;
   public ServiceModelList   :Array<string> = [];
 
@@ -522,6 +523,7 @@ export class WsVehicleMasterComponent implements OnInit {
     //       console.log(this.SSitemTypeList);
     //     }
     //   );
+    // this.service.getCategoryIdListByDivision(this.itemTypeForCat)
     this.service.getCategoryIdListByDivision(this.itemTypeForCat)
       .subscribe(
         data => {
@@ -846,9 +848,15 @@ export class WsVehicleMasterComponent implements OnInit {
   }
 
 
-  onOptionsSelectedModel(mainModel) {
-
+  onOptionsSelectedModel(mainModel:any) {
     if (mainModel != null) {
+
+      // let selectedValue = this.mainModelList.find(v => v.code === mainModel);
+      // this.itemTypeForCat=selectedValue.attribute2;
+      
+      // this.categoryId=35;
+      this.wsVehicleMasterForm.patchValue({categoryId:35});
+
       this.segment=null;
       this.variantDesc = null;
       this.service.VariantSearchFn(mainModel)
@@ -1060,6 +1068,14 @@ export class WsVehicleMasterComponent implements OnInit {
       this.checkValidation = false;
       alert("ITEM CATEGORY: Should not be null");
     }
+
+    
+
+    // if (formValue.itemTypeForCat === undefined || formValue.itemTypeForCat === null || formValue.itemTypeForCat.trim() === '') {
+    //   this.checkValidation = false;
+    //   alert("ITEM CATEGORY : Should not be null....");
+    //   return;
+    // }
 
     // if (formValue.itemId < 0 || formValue.itemId === undefined || formValue.itemId === null) {
     //   this.checkValidation = false;

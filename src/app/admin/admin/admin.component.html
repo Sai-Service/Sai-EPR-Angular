@@ -40,6 +40,8 @@
         <div [style.display]="isVisible12 ? 'block' : 'none'">
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Sales Order</a>
           <ul class="dropdown-menu">
+            
+            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/ClosingStock']">Closing Stock</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/allotment']">Allotment</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/Deallotment']">De Allotment</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/SalesOrderList']">Sales Order List</a></li>
@@ -118,9 +120,9 @@
         <ul class="dropdown-menu">
           <!-- <li><a class="dropdown-item" [routerLink]="['/admin/service/JobcardOpening']">JobCard Opening</a></li> -->
           <li><a class="dropdown-item" [routerLink]="['/admin/service/JobCard']">JobCard</a></li>
-          <li><a class="dropdown-item" [routerLink]="['/admin/master/WsVehicleMaster']">Vehicle Master WS</a></li>
           <li><a class="dropdown-item" [routerLink]="['/admin/service/ServiceGatepass']">Gate Pass</a></li>
-          <li><a class="dropdown-item" [routerLink]="['/admin/service/VehicleServiceHistory']">Vehicle History</a></li>
+          <li><a class="dropdown-item" [routerLink]="['/admin/master/WsVehicleMaster']">Vehicle Master WS</a></li>
+          <!-- <li><a class="dropdown-item" [routerLink]="['/admin/service/VehicleServiceHistory']">Vehicle History</a></li> -->
        
         </ul>
       </li>
@@ -832,11 +834,7 @@
       </div>
       <div class="modal-body">
           <label style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
-
-
-          Testing
-
-
+              Testing
           </label>
       </div>
         <div class="modal-footer">

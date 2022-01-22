@@ -103,6 +103,9 @@
                                                         <th scope="col" style="border: 1px solid black;">Select</th>
                                                         <th scope="col" style="border: 1px solid black;">Item To Allocate</th>
                                                         <th scope="col" style="border: 1px solid black;">Description</th>
+                                                        <th scope="col" style="border: 1px solid black;">Chassis No</th>
+                                                        <th scope="col" style="border: 1px solid black;">Engine No</th>
+                                                        <th scope="col" style="border: 1px solid black;">Color Code</th>
                                                         <th scope="col" style="border: 1px solid black;">Date Of Purchase</th>
                                                         <th scope="col" style="border: 1px solid black;">Dealer Code</th>
                                                         <th scope="col" style="border: 1px solid black;">Rips</th>
@@ -111,6 +114,7 @@
                                                         <th scope="col" style="border: 1px solid black;">Hold</th>
                                                         <th scope="col" style="border: 1px solid black;">Hold Reason</th>
                                                         <th scope="col" style="border: 1px solid black;">Fuel Type</th>
+                                                        <th scope="col" style="border: 1px solid black;">Destination Type Code</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -121,6 +125,9 @@
                                                         </td>
                                                         <td style="border: 1px solid black;">{{com.segment}}</td>
                                                         <td style="border: 1px solid black;">{{com.description}}</td>
+                                                        <td style="border: 1px solid black;">{{com.chassisNo}}</td>
+                                                        <td style="border: 1px solid black;">{{com.engineNo}}</td>
+                                                        <td style="border: 1px solid black;">{{com.colorCode}}</td>
                                                         <td style="border: 1px solid black;">{{com.dateOfPurchase  | date:'yyyy-MM-dd  hh:mm:ss'}}</td>
                                                         <td style="border: 1px solid black;">{{com.dealerCode}}</td>
                                                         <td style="border: 1px solid black;">{{com.rips}}</td>
@@ -129,7 +136,7 @@
                                                         <td style="border: 1px solid black;">{{com.hold}}</td>
                                                         <td style="border: 1px solid black;">{{com.holdReason}}</td>
                                                         <td style="border: 1px solid black;">{{com.fuelType}}</td>
-                                                        
+                                                        <td style="border: 1px solid black;">{{com.destinationTypeCode}}</td>
                                                     </tr>
                                                 </tbody>
                                             </table>

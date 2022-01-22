@@ -53,6 +53,11 @@ export class OrderManagementService {
     return this.http.get(this.ServerUrl + `/itemMst/ByCatType?itemCatType=${itemCatType}&divId=${divId}`)
   }
 
+
+  getItemByCatTypeNew(itemCatType, divId,variant): Observable<any> {
+    return this.http.get(this.ServerUrl + `//itemMst/ByCatType1?itemCatType=${itemCatType}&divId=${divId}&variant=${variant}`)
+  }
+
   searchByItemSegmentDiv(divId,itemSeg):Observable<any>
 {
     return this.http.get(this.ServerUrl+`/itemMst/details/${divId}/${itemSeg}`)
@@ -333,6 +338,14 @@ public pickTicketInvoiceFun(pickTicketInvDels) {
     return this.http.post(url, AccLineRecord1, options);
   }
 
+  proformaInv(orderNumber,locId){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/PrintProforma?orderNumber=${orderNumber}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
 
 
   accountNoSearchFn2(accountNo,divisionId): Observable<any> {

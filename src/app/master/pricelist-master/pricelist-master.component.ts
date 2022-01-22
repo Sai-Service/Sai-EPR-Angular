@@ -1368,7 +1368,7 @@ export class PricelistMasterComponent implements OnInit {
         }
         xlsx.utils.sheet_add_json(ws, xlOrdList, { origin: 'A2', skipHeader: true });
         xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
-        xlsx.writeFile(wb, 'orderGenerationList.xlsx');
+        xlsx.writeFile(wb, 'pricelist.xlsx');
       }
 
     )
@@ -1432,6 +1432,8 @@ export class PricelistMasterComponent implements OnInit {
     if (sType == 'ITEM NUMBER') { this.F9SearchItemCodeNew("itmCode"); }
     if (sType == 'ITEM DESCRIPTION') { this.F9SearchItemDesc(); }
   }
+
+  
 
   F9SearchItemCodeNew(itemSeg) {
 

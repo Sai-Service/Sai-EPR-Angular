@@ -17,6 +17,7 @@ import { OrderGenerationComponent } from './order-generation/order-generation.co
 import { BackorderSparesImportBajajComponent } from './backorder-spares-import-bajaj/backorder-spares-import-bajaj.component';
 import { CounterSalePerformaInvComponent } from './counter-sale-performa-inv/counter-sale-performa-inv.component';
 import { SalesOrderListComponent } from './sales-order-list/sales-order-list.component';
+import { ClosingStockGridComponent } from './closing-stock-grid/closing-stock-grid.component';
 
 const routes: Routes = [
   {path:'salesOrderBooking', component:SalesOrderBookingComponent},
@@ -38,7 +39,8 @@ const routes: Routes = [
   {path:'BackorderSparesImportBajaj',component:BackorderSparesImportBajajComponent},
   {path:'CSPerformaINV',component:CounterSalePerformaInvComponent},
   {path:'SalesOrderList',component:SalesOrderListComponent},
-  // {path:'GatePass/:orderNumber',component:SalesGatePassComponent},
+  {path:'ClosingStock',component:ClosingStockGridComponent},
+  {path:'GatePass/:orderNumber',component:SalesGatePassComponent},
   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];
 

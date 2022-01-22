@@ -2428,7 +2428,7 @@ docSeqValue:number;
   }
 
   onOptionsSelectedBranchNew(event){
-    alert(event)
+    // alert(event)
     let selectinterbranch = this.InterBrancList.find(v => v.lookupValue == event);
     console.log(selectinterbranch);
     this.lookupValueDesc5= selectinterbranch.lookupValueDesc;

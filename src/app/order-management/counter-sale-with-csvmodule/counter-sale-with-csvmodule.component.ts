@@ -131,6 +131,8 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
   salesRepId:number;
   creditAmt: number;
   errorList: string;
+  issueCodeType1:string;
+  issueCode:string;
   displaywalkingCustomer = true;
   transactionTypeId: number;
   customerSiteId: number;
@@ -476,6 +478,8 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
       status: [''],
       discType: [''],
       files: [''],
+      issueCodeType1:[''],
+      issueCode:[''],
     })
 
   }
@@ -575,11 +579,17 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
       this.showApplyDiscount = true;
       if (sessionStorage.getItem('deptName') === 'Spares') {
         this.CounterSaleOrderBookingForm.patchValue({ transactionTypeName: 'Spares Sale - Cash' });
-        this.CounterSaleOrderBookingForm.patchValue({ issueCodeType: 'Regular Sales' });
+        this.CounterSaleOrderBookingForm.patchValue({ issueCodeType1: 'Regular Sales' });
+      this.CounterSaleOrderBookingForm.patchValue({ issueCode: 'CM03' });
+      var concatissuetypecode = this.CounterSaleOrderBookingForm.get('issueCode').value + '-' + this.CounterSaleOrderBookingForm.get('issueCodeType1').value
+      this.CounterSaleOrderBookingForm.patchValue({ issueCodeType: concatissuetypecode });
       }
       else if (sessionStorage.getItem('deptName') === 'Accessories') {
         this.CounterSaleOrderBookingForm.patchValue({ transactionTypeName: 'Accessories Sale - Credit' });
-        this.CounterSaleOrderBookingForm.patchValue({ issueCodeType: 'Regular Sales' });
+        this.CounterSaleOrderBookingForm.patchValue({ issueCodeType1: 'Regular Sales' });
+        this.CounterSaleOrderBookingForm.patchValue({ issueCode: 'CM03' });
+        var concatissuetypecode = this.CounterSaleOrderBookingForm.get('issueCode').value + '-' + this.CounterSaleOrderBookingForm.get('issueCodeType1').value
+        this.CounterSaleOrderBookingForm.patchValue({ issueCodeType: concatissuetypecode });
       }
       else {
         this.CounterSaleOrderBookingForm.patchValue({ transactionTypeName: '--Select--' });
@@ -2767,5 +2777,14 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
   closeModalDialog() {
     this.display = 'none'; //set none css after close dialog
     this.myInputField.nativeElement.focus();
+  }
+
+
+
+  onOptionsSelectedissueTypeCode(event: any) {
+    let selectIssueCode = this.issueCodeTypeList.find(d => d.codeDesc === event);
+    this.CounterSaleOrderBookingForm.patchValue({ issueCode: selectIssueCode.code })
+    var concatissuetypecode = this.CounterSaleOrderBookingForm.get('issueCode').value + '-' + this.CounterSaleOrderBookingForm.get('issueCodeType1').value
+    this.CounterSaleOrderBookingForm.patchValue({ issueCodeType: concatissuetypecode });
   }
 }

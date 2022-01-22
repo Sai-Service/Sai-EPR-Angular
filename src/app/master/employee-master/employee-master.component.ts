@@ -289,6 +289,8 @@ newMast() {
   this.service.EmployeeMasterSubmit(formValue).subscribe((res: any) => {
     if (res.code === 200) {
       alert('RECORD INSERTED SUCCESSFULLY');    
+      this.employeesMasterForm.disable();
+      this.displayButton=false;
       // this.employeesMasterForm.reset();
     } else {
       if (res.code === 400) {
@@ -317,11 +319,13 @@ updateMast() {
   this.service.UpdateEmpMasterById(formValue, formValue.emplId).subscribe((res: any) => {
     if (res.code === 200) {
       alert('RECORD UPDATED SUCCESSFULLY');
-      window.location.reload();
+      // window.location.reload();
+      this.employeesMasterForm.disable();
     } else {
       if (res.code === 400) {
         alert('ERROR OCCOURED IN PROCEESS');
-        this.employeesMasterForm.reset();
+        // this.employeesMasterForm.disable();
+        // this.employeesMasterForm.reset();
       }
     }
    });

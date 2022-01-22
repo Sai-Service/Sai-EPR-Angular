@@ -250,7 +250,7 @@ export class StockTransferComponent implements OnInit {
     var itemid=trxLnArr1[trxLineIndex].itemId;
 
     var uuidref = trxLnArr1[trxLineIndex].uuidRef;
-    alert((trxLnArr1[trxLineIndex].segment)+'Delete');
+    // alert((trxLnArr1[trxLineIndex].segment)+'Delete');
     if((trxLnArr1[trxLineIndex].segment)!='')
     {
     // this.deleteReserveLinewise(trxLineIndex);
@@ -434,13 +434,13 @@ export class StockTransferComponent implements OnInit {
   if(this.currentOp==='SEARCH'){
     return;
   }
-  alert(event+'Loca');
+  // alert(event+'Loca');
   var trxLnArr1=this.stockTranferForm.get('trxLinesList')as FormArray;
   var trxLnArr = this.stockTranferForm.get('trxLinesList').value;
   var itemid=trxLnArr[i].itemId;
   var locatorId=event;
   trxLnArr1.controls[i].patchValue({locatorId:locatorId});
-  alert(locatorId+'locatorID');
+  // alert(locatorId+'locatorID');
   this.service.getonhandqty(Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId,locatorId,itemid).subscribe
     (data =>{
       this.onhand1 = data;
@@ -449,8 +449,8 @@ export class StockTransferComponent implements OnInit {
     // var trxLnArr=this.stockTranferForm.get('trxLinesList').value;
     let onHand=data.obj;
   let reserve=trxLnArr[i].resveQty;
-  alert(onHand+'OnHand');
-  alert(reserve+'reserve');
+  // alert(onHand+'OnHand');
+  // alert(reserve+'reserve');
   let avlqty1=0;
   avlqty1= onHand-reserve;
   trxLnArr1.controls[i].patchValue({avlqty: avlqty1});
@@ -572,7 +572,7 @@ deleteReserve() {
 
 deleteReserveLinewise(i, itemid, transferId) {
   if (itemid != null) {
-    alert(i+'----'+itemid+'---'+transferId);
+    // alert(i+'----'+itemid+'---'+transferId);
     this.service.reserveDeleteLine(transferId, Number(sessionStorage.getItem('locId')), itemid).subscribe((res: any) => {
       //  var obj=res.obj;
       if (res.code === 200) {
