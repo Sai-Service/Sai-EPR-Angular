@@ -2638,8 +2638,17 @@ OrderCategoryList(): Observable<any> {
 
 
   ///////////////////////////////////////////////////////////////////////////////////
-bulkpouploadSales(formData: FormData) {
-    return this.http.post(this.ServerUrl + `/fileImport/uploadVhPO`, formData)
+// bulkpouploadSales(formData: FormData) {
+//     return this.http.post(this.ServerUrl + `/fileImport/uploadVhPO`, formData)
+//   }
+
+bulkpouploadSales(formData: FormData,locCode,suppNo,supplierSite,username){
+formData.append('location', locCode);
+    formData.append('supplierNo', suppNo);
+    formData.append('suppSite', supplierSite);
+    formData.append('userName', username);
+    const REQUEST_URI = this.ServerUrl +'/fileImport/uploadVhPO';
+    return this.http.post(REQUEST_URI, formData);
   }
 
   pendingPOList(emplId) {

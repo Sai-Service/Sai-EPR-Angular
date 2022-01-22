@@ -1498,6 +1498,7 @@ export class SalesOrderFormComponent implements OnInit {
                 if (this.lstgetOrderLineDetails[i].flowStatusCode === 'BOOKED' || this.lstgetOrderLineDetails[i].flowStatusCode === 'ALLOTED') {
                   this.displaytaxCategoryName[i] = true;
                   this.displayLineflowStatusCode[i] = false;
+                  this.isVisible2=true;
                 }
                 if (this.lstgetOrderLineDetails[i].flowStatusCode === 'ALLOTED' && this.lstgetOrderLineDetails[i].invType === 'SS_VEHICLE') {
                   //  this.onOptionsSelectedDescription(this.lstgetOrderLineDetails[i].segment,i)
