@@ -13,7 +13,7 @@
                     value={{orderNumber}}>
             </td>
             <td style="background-color: #FFE4B5;">
-                <button type="button" class="btn-primary" (click)="OrderFind(orderNumber)"><i class="fa fa-search"
+                <button type="button" class="btn-primary" [disabled]="isDisabled4" (click)="OrderFind(orderNumber)"><i class="fa fa-search"
                         aria-hidden="true"></i></button>
             </td>
         </tr>
