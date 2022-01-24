@@ -1,15 +1,14 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener, ElementRef } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild, HostListener, ElementRef } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MasterService } from 'src/app/master/master.service';
-// import { TransactionService } from 'src/app/transaction/transaction.service';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 import { v4 as uuidv4 } from 'uuid';
-// import { freemem } from 'os';
 
 
 interface IinterState {
   InterStateNo: number;
+  resveQty: number;
   orderNumber: number;
   transactionTypeName: number;
   divisionId: number;
@@ -602,11 +601,12 @@ export class InterStateComponent implements OnInit {
               if (this.deptName == 'Spares') {
                 controlinv.controls[k].patchValue({ invType: 'SS_SPARES' });
               }
+              // debugger;
               this.service.getreserqty(this.locId, select.itemId).subscribe
                 (data => {
-                  this.resrveqty = data;
-                  controlinv.controls[k].patchValue({ resveQty: this.resrveqty });
-                  this.AvailQty(select.itemId,k);
+                  console.log(data);
+                   controlinv.controls[k].patchValue({ resveQty:data });
+                   this.AvailQty(k, select.itemId, 'Item');
                 });
             }
             else  if (taxCatNm.includes('Sale-I-GST')) {
@@ -670,9 +670,10 @@ export class InterStateComponent implements OnInit {
               }
               this.service.getreserqty(this.locId, select.itemId).subscribe
                 (data => {
-                  this.resrveqty = data;
-                  controlinv.controls[k].patchValue({ resveQty: this.resrveqty });
-                  this.AvailQty(select.itemId,k);
+                  // this.resrveqty = data;
+                  console.log(data);
+                  controlinv.controls[k].patchValue({ resveQty: data });
+                  // this.AvailQty(select.itemId,k);
                 });
             }
           }
@@ -681,42 +682,106 @@ export class InterStateComponent implements OnInit {
     }
   }
   }
-  AvailQty (event: any, i){
-    alert(i+'I');
+
+  AvailQty(i, itemId, calledFrom) {
+    var trxLnArr = this.InterStateForm.get('oeOrderLinesAllList').value;
+    var trxLnFormArr = this.InterStateForm.get('oeOrderLinesAllList') as FormArray;
+    if (itemId === undefined) {
+      itemId = trxLnArr[i].itemId;
+    }
+    var locId;
+    if (calledFrom === 'Item') {
+      var linLocData = this.locData[i];
+      let sellocId = linLocData.find(d => Number(d.ROWNUM) === trxLnArr[i].frmLocatorId);
+      locId = sellocId.locatorId;
+      (trxLnFormArr.controls[i]).patchValue({
+        frmLocatorName: locId,
+      });
+    }
+    // if (calledFrom === 'locator') {
+    //   locId = trxLnArr[i].frmLocatorName;
+    //   trxLnArr[i].frmLocatorId = trxLnArr[i].frmLocatorName;
+    // }
+    if (locId != null) {
+      this.service.getonhandqty(Number(sessionStorage.getItem('locId')), this.subInventoryId, locId, itemId).subscribe
+        (data => {
+          this.onhand1 = data.obj;
+          console.log(this.onhand1);
+          var trxLnArr1 = this.InterStateForm.get('oeOrderLinesAllList') as FormArray;
+          trxLnArr1.controls[i].patchValue({ onHandQty: data.obj });
+          let onHand = data.obj;
+          let reserve = trxLnArr[i].resveQty;
+          let avlqty1 = 0;
+          avlqty1 = onHand - reserve;
+          var trxLnArr1 = this.InterStateForm.get('oeOrderLinesAllList') as FormArray;
+          trxLnArr1.controls[i].patchValue({ Avalqty: avlqty1 });
+          // alert(avlqty1);
+          if (avlqty1 === 0) {
+            // alert('hi')
+          alert('Transfer is not allowed,Item has Reserve quantity - ' + reserve);
+            var trxLnArr3 = this.InterStateForm.get('oeOrderLinesAllList') as FormArray;
+            trxLnArr3.controls[i].patchValue({segment:'',orderedItem:'',frmLocatorId:'',unitSellingPrice:'',taxCategoryName:'',hsnSacCode:'',locatorId:'',resveQty:''});
+          }
+
+          if (avlqty1 <= 0) {
+            // alert('hi1')
+          alert('Transfer is not allowed,Item has Reserve quantity - ' + reserve);
+            var trxLnArr3 = this.InterStateForm.get('oeOrderLinesAllList') as FormArray;
+            trxLnArr3.controls[i].patchValue({segment:'',orderedItem:'',frmLocatorId:'',unitSellingPrice:'',taxCategoryName:'',hsnSacCode:'',locatorId:'',resveQty:''});
+          }
+          this.setFocus('pricingQty' + i);
+
+        })
+    }
+    // else {
+    //   alert('Locator Not Found!.');
+    //   var trxLnArr1 = this.InterStateForm.get('oeOrderLinesAllList') as FormArray;
+    //   trxLnArr1.controls[i].patchValue({ Avalqty: '' });
+    //   trxLnArr1.controls[i].patchValue({ pricingQty: '' });
+    //   trxLnArr1.controls[i].patchValue({ orderedItem: '' });
+    //   trxLnArr1.controls[i].patchValue({ orderedItem: '' });
+    //   trxLnArr1.controls[i].patchValue({ unitSellingPrice: '' });
+    //   trxLnArr1.controls[i].patchValue({ taxCategoryName: '' });
+    //   this.setFocus('itemSeg' + i);
+    // }
+  }
+
+
+
+
+
+
+
+  AvailQtyOld (event: any, i,calledFrom){
+    alert(i+'I'+event);
     var trxLnArr = this.InterStateForm.get('oeOrderLinesAllList').value;
     console.log(trxLnArr);
     
     var itemid = trxLnArr[i].itemId;
-    var locId1 = trxLnArr[i].frmLocatorId;
-    // alert(locId1);
+    var reserve = trxLnArr[i].resveQty;
+    alert(reserve+'Reserve In available');
+    var locId1 = event
     console.log(this.getfrmSubLoc);
     var locId = this.getfrmSubLoc.find(d => d.ROWNUM === locId1);
-    alert(locId.locatorId);
-    var onhandid = trxLnArr[i].id;
-    this.service.getonhandqty(Number(sessionStorage.getItem('locId')), this.subInventoryId, locId.locatorId, itemid).subscribe
+     this.service.getonhandqty(Number(sessionStorage.getItem('locId')), this.subInventoryId, locId.locatorId, itemid).subscribe
       (data => {
         this.onhand1 = data;
         console.log(this.onhand1);
         var trxLnArr1 = this.InterStateForm.get('oeOrderLinesAllList') as FormArray;
         trxLnArr1.controls[i].patchValue({ onHandQty: data.obj });
-        // var trxLnArr=this.moveOrderForm.get('trxLinesList').value;
         let onHand = data.obj;
-        // alert(onHand+'ONHAND');
         let reserve = trxLnArr[i].resveQty;
         let avlqty1 = 0;
-        alert(data.obj+'qty');
         avlqty1 = data.obj - reserve;
-        alert(avlqty1+'avlqty');
-        // trxLnArr1.controls[i].patchValue({ avlqty: avlqty1 });
-        // trxLnArr1.controls[i].patchValue({ resveQty: reserve });
-        if (avlqty1 <= 0) {
+        console.log(avlqty1);
+        console.log(trxLnArr[i].resveQty);
+        if (avlqty1 < 0) {
           alert(
             'Transfer is not allowed,Item has Reserve quantity - ' + reserve
           );
 
         var trxLnArr3 = this.InterStateForm.get('oeOrderLinesAllList') as FormArray;
-        trxLnArr3.controls[i].patchValue({segment:'',orderedItem:'',frmLocatorId:'',unitSellingPrice:'',taxCategoryName:'',hsnSacCode:'',locatorId:''});
-        // trxLnArr3[i].reset();
+        trxLnArr3.controls[i].patchValue({segment:'',orderedItem:'',frmLocatorId:'',unitSellingPrice:'',taxCategoryName:'',hsnSacCode:'',locatorId:'',resveQty:''});
        }
       else
     {

@@ -30,6 +30,41 @@
     <!-- <div [style.display]="isVisible1 ? 'block' : 'none'" class="center"> -->
         <div *ngIf="displayParamter; then thenParamter; else elseParamter"> </div>
         <ng-template #thenParamter>
+            <tr>
+                <td style="width: 15%" class="LabelFontStyle">
+                    &nbsp;&nbsp;Supplier&nbsp;No&nbsp;:&nbsp;
+                </td>
+                            <td>
+                    <input type="text" formControlName="supplierNo"
+                        (keyup)="getUserIdsFirstWay($event)" id="userIdFirstWay"
+                        list="dynmicUserIds" class="form-control" placeholder="Supplier details"
+                        (ngModelChange)="onSupplierCodeSelected($event)">
+                    <datalist id="dynmicUserIds">
+                        <option *ngFor="let item of supplierCodeList" [ngValue]="item.suppNo">
+                            {{item.name}}@{{item.suppNo}}</option>
+                    </datalist>
+                    <div *ngIf="submitted && f.supplierNo.errors" class="invalid-feedback">
+                        <div *ngIf="f.supplierNo.errors.required">Code cannot be blank</div>
+                    </div>
+                </td>
+           
+                <td style="width: 15%" class="LabelFontStyle">
+                    &nbsp;&nbsp;Supplier&nbsp;Site&nbsp;:&nbsp;
+                </td>
+                <td>
+                    <select formControlName="supplierSite" id="supplierSite" #myinput
+                    data-live-search="true" 
+                    class="form-control">
+                    <option>--Select--</option>
+                    <option *ngFor="let sc of  suppIdList">
+                        {{sc.siteName}}
+                    </option>
+                </select>
+                <div *ngIf="submitted && f.supplierSite.errors" class="invalid-feedback">
+                    <div *ngIf="f.supplierSite.errors.required">Code cannot be blank</div>
+                </div>
+                </td>
+            </tr>
         </ng-template>
         <ng-template #elseParamter>
         <tr>  
@@ -231,25 +266,7 @@
         </tr>
     </table>
    
-    <div class="modal fade" id="salesErrorList" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              ...
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-          </div>
-        </div>
-      </div>
+   
 
     <table class="center">
         <tr>

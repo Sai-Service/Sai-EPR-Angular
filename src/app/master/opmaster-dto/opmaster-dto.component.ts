@@ -2683,37 +2683,37 @@ export class OPMasterDtoComponent implements OnInit {
     this.allUsers = this.service.BindUser();
   }
 
-  uploadFile() {
-    console.log('doctype-check' + this.docType)
-    let formData = new FormData();
-    formData.append('file', this.fileInput.nativeElement.files[0])
-    // alert(this.deptName);
-    if (this.deptName === 'Sales') {
-      this.service.bulkpouploadSales(formData).subscribe((res: any) => {
-        if (res.code === 200) {
-          alert(res.obj);
-          // this.Search(this.segment1);
-        } else {
-          if (res.code === 400) {
-            alert('Error In File : \n' + res.obj);
-          }
-        }
-      });
-    }
-    else {
-      this.service.bulkpouploadSpares(formData).subscribe((res: any) => {
-        if (res.code === 200) {
-          alert(res.obj);
-        } else {
-          if (res.code === 400) {
-            alert('Error In File : \n' + res.obj);
-          }
-        }
-      });
-      // }
-    }
-    // });
-  }
+  // uploadFile() {
+  //   console.log('doctype-check' + this.docType)
+  //   let formData = new FormData();
+  //   formData.append('file', this.fileInput.nativeElement.files[0])
+  //   // alert(this.deptName);
+  //   if (this.deptName === 'Sales') {
+  //     this.service.bulkpouploadSales(formData).subscribe((res: any) => {
+  //       if (res.code === 200) {
+  //         alert(res.obj);
+  //         // this.Search(this.segment1);
+  //       } else {
+  //         if (res.code === 400) {
+  //           alert('Error In File : \n' + res.obj);
+  //         }
+  //       }
+  //     });
+  //   }
+  //   else {
+  //     this.service.bulkpouploadSpares(formData).subscribe((res: any) => {
+  //       if (res.code === 200) {
+  //         alert(res.obj);
+  //       } else {
+  //         if (res.code === 400) {
+  //           alert('Error In File : \n' + res.obj);
+  //         }
+  //       }
+  //     });
+  //     // }
+  //   }
+  //   // });
+  // }
 
   message1: string = "Please Fix the Errors !";
   msgType: string = "Close";

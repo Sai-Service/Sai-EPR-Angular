@@ -129,6 +129,7 @@ export class BulkUploadWithCsvComponent implements OnInit {
     this.bulkUploadCSVForm.patchValue({ location: sessionStorage.getItem('locCode') });
     this.bulkUploadCSVForm.patchValue({ userName: sessionStorage.getItem('ticketNo') })
     console.log(sessionStorage.getItem('locCode'));
+    this.bulkUploadCSVForm.patchValue({username: sessionStorage.getItem('ticketNo')})
     this.displaySalesErrorList=true;
 
     if (sessionStorage.getItem('deptName')==='Sales'){
@@ -185,7 +186,16 @@ export class BulkUploadWithCsvComponent implements OnInit {
     formData.append('file', this.fileInput.nativeElement.files[0])
     // alert(this.deptName);
     if (this.deptName === 'Sales') {
-      this.service.bulkpouploadSales(formData).subscribe((res: any) => {  
+      var supplierNo1 = this.supplierNo;
+      console.log(this.supplierCodeList);   
+      let selectedValue = this.supplierCodeList.find(v => v.suppId == supplierNo1);
+      console.log(selectedValue);
+      var suppNo=selectedValue.suppNo
+      console.log(suppNo);
+      var supplierSite = this.bulkUploadCSVForm.get('supplierSite').value;
+      var userName = (sessionStorage.getItem('ticketNo'));
+      var locCode = (sessionStorage.getItem('locCode'));
+      this.service.bulkpouploadSales(formData,locCode,suppNo,supplierSite,userName).subscribe((res: any) => {  
        if (res.code === 200) {        
           this.poDetails = res.obj;
           this.dataDisplay ='File Uploaded Sucessfully....'

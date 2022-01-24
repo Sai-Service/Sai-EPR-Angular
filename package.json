@@ -24,6 +24,7 @@
     "@ng-bootstrap/schematics": "^2.0.0-alpha.1",
     "@syncfusion/ej2-data": "^18.4.30",
     "@types/jquery": "^3.5.5",
+    "@types/uuid": "^8.3.4",
     "angular-2-daterangepicker": "^1.1.53",
     "angular-datetimerangepicker": "^2.4.0",
     "bootstrap": "^4.5.3",
