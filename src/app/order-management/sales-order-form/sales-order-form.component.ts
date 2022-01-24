@@ -926,11 +926,11 @@ export class SalesOrderFormComponent implements OnInit {
             }
           );
       }
-    }
+     }
   }
 
   onOptionsSelectedVariant(mainModel) {
-    if (this.currentOpration != 'orderSearch') {
+    // if (this.currentOpration != 'orderSearch') {
       // alert('mainModel')
       this.orderManagementService.VariantSearchFn(mainModel)
         .subscribe(
@@ -939,7 +939,7 @@ export class SalesOrderFormComponent implements OnInit {
             console.log(this.VariantSearch);
           }
         );
-    }
+    // }
   }
 
 
@@ -1561,6 +1561,25 @@ export class SalesOrderFormComponent implements OnInit {
               else{
                 this.isVisible3 = false;
               }
+              if (this.lstgetOrderLineDetails[k].invType != 'SS_VEHICLE' && this.lstgetOrderLineDetails[k].flowStatusCode !='ALLOTED' || this.lstgetOrderLineDetails[k].flowStatusCode != 'READY FOR INVOICE' || this.lstgetOrderLineDetails[k].flowStatusCode != 'INVOICED'){
+                this.displayVehicleDetails=true;
+                var variantNew=data.obj.variant;
+                // this.SalesOrderBookingForm.patchValue({color:data.obj.color})
+                this.orderManagementService.ColourSearchFn(variantNew)
+                .subscribe(
+                  data => {
+                    this.ColourSearch = data;
+                    console.log(this.ColourSearch);
+                    let select = this.ColourSearch.find(d => d.variant === variantNew);
+                    console.log(select); 
+                    this.SalesOrderBookingForm.patchValue({color:select.ColorCode})
+                  }
+                );
+              }
+              if (this.lstgetOrderLineDetails[k].invType === 'SS_VEHICLE' && this.lstgetOrderLineDetails[k].flowStatusCode === 'READY FOR INVOICE' || this.lstgetOrderLineDetails[k].flowStatusCode === 'INVOICED' || this.lstgetOrderLineDetails[k].flowStatusCode ==='ALLOTED'){
+                this.displayVehicleDetails=false;
+                this.SalesOrderBookingForm.patchValue({color:this.allDatastore.color})
+              }
             }
             for (let x = 0; x < this.lstgetOrderLineDetails.length; x++) {
               // alert('hi')
@@ -1579,7 +1598,7 @@ export class SalesOrderFormComponent implements OnInit {
 
     this.SalesOrderBookingForm.get('accountNo').disable();
     this.displayorderDetails = false;
-    this.displayVehicleDetails = false;
+    // this.displayVehicleDetails = false;
     this.displayCreateOrderButton = true;
   }
 

@@ -777,7 +777,7 @@
                                 <select formControlName="variant" id="variant" class="form-control"
                                     style="width: 170px;" (ngModelChange)="onOptionsSelectedColor($event)">
                                     <option>--Select--</option>
-                                    <option *ngFor="let mm of VariantSearch" [ngValue]="mm.variant">
+                                    <option *ngFor="let mm of VariantSearch" [value]="mm.variant">
                                         {{mm.variant}}--{{mm.varDescription}}
                                     </option>
                                 </select>
