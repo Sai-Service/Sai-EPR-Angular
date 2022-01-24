@@ -33,7 +33,7 @@
 
                 <tr>
                     <td style="width: 15%" class="LabelFontStyle">&nbsp;Reg&nbsp;No:&nbsp;</td>
-                    <td> <input  type ="text" class="form-control" formControlName="regNo"  value={{regNo}} (change)="serchByRegNo(regNo)"
+                    <td> <input autofocus type ="text" class="form-control" formControlName="regNo"  value={{regNo}} (change)="serchByRegNo(regNo)"
                         style="background-color: yellow; text-transform: uppercase;" placeholder="Regno"> </td>
                     <td style="width: 15%" class="LabelFontStyle">&nbsp;Amc&nbsp;No:&nbsp;</td>
                     <td> <input  disabled type ="text" class="form-control" formControlName="amcNumber"  value={{amcNumber}}  > </td>
@@ -101,8 +101,8 @@
                     <td style="width: 15%" class="LabelFontStyle">&nbsp;Labour&nbsp;Dis(%):&nbsp;</td>
                     <td> <input disabled type ="number" class="form-control" formControlName="discOnLabour" [(ngModel)]='discOnLabour'  value={{discOnLabour}} > </td>
                     
-                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Start&nbsp;Kms:&nbsp;</td>
-                    <td> <input disabled type ="number" class="form-control" formControlName="startKms"  value={{startKms}}   > </td>
+                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Curr&nbsp;Kms:&nbsp;</td>
+                    <td> <input  type ="number" class="form-control" formControlName="startKms"  value={{startKms}} (change)="validateStartKms()" style="background-color: yellow;"  > </td>
                     <td style="width: 15%" class="LabelFontStyle">&nbsp;End&nbsp;Kms:&nbsp;</td>
                     <td> <input disabled type ="number" class="form-control" formControlName="schemeValidKm"  value={{schemeValidKm}}   > </td>
                              

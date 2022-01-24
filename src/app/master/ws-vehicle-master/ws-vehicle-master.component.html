@@ -196,7 +196,7 @@
                     <td style="width: 12%" class="LabelFontStyle">Colour&nbsp;:&nbsp;</td>
 
                     <td>
-                        <select formControlName="colorCode" id="colorCode" class="form-control" (change)="CreateItemCode()"
+                        <select formControlName="colorCode" id="colorCode"  [(ngModel)]="colorCode" class="form-control" (change)="CreateItemCode()"
                          style="background-color: yellow"  >
                            <option >--Select--</option>
                             <option *ngFor="let mc of colorCodeList" [ngValue]="mc.ColorCode">
@@ -459,17 +459,37 @@
                 </td>
                 <td style="width: 12%" class="LabelFontStyle">Ins&nbsp;Company:&nbsp;</td>
 
-                <td>
+                <!-- <td>
                     <input   type="text"  formControlName="insCompanyName"  id="insCompanyName" [(ngModel)]="insCompanyName" class="form-control" >
+                </td> -->
+                <td>
+                <select  formControlName="insurerCompId" id="insurerCompId"  (ngModelChange)='onInsurerNameSelected($event)' class="form-control">
+                <option></option>
+                <option *ngFor="let sc of insNameList"
+                    [ngValue]="sc.customerId">
+                    {{sc.custName}}
+                </option>
+                </select>
                 </td>
              </tr>
              <tr>
              
                 <td style="width: 12%" class="LabelFontStyle">Insurance&nbsp;Site:&nbsp;</td>
 
-                <td>
+                <!-- <td>
                     <input   type="text"  formControlName="inscompanySite"  id="inscompanySite" [(ngModel)]="inscompanySite" class="form-control" >
-                </td>
+                </td> -->
+
+                <td>
+                <select  formControlName="insurerSiteId" id="insurerSiteId" class="form-control">
+                <option>--Select--</option>
+                <option *ngFor="let sc of insSiteList"
+                    [ngValue]="sc.customerSiteId">
+                    {{sc.address1}}{{sc.address2}}-{{sc.address3}}-{{sc.location}}-{{sc.city}}-{{sc.pinCd}}-{{sc.state}}
+                </option>
+                </select>
+               </td>
+
              </tr>
 
              <tr>

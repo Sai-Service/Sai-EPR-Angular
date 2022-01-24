@@ -254,6 +254,7 @@ printWsGatePass(jcNumber){
 }
 
 printVehicleHistory(vehNum){
+  alert("History : "+vehNum);
   const REQUEST_URI = this.ServerUrl +`/jobCard/vehHistory/${vehNum}`;  
   return this.http.get(REQUEST_URI, {
   responseType: 'arraybuffer',
