@@ -534,7 +534,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       disAmt: [0],
       uom: [],
       lnflowStatusCode: [''],
-      Avalqty: [],
+      Avalqty: [''],
       resveQty: [],
       frmLocatorName: [],
       itemId: [],

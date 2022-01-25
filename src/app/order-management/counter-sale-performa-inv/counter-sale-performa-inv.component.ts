@@ -1048,17 +1048,42 @@ export class CounterSalePerformaInvComponent implements OnInit {
   }
 
 
-  RemoveRow(OrderLineIndex) {
+  RemoveRowOld(OrderLineIndex) {
     this.orderlineDetailsArray().removeAt(OrderLineIndex);
     this.TaxDetailsArray().removeAt(OrderLineIndex);
     var formVal = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     var formArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+    var basicAmt = 0;
+    var taxAmt1 = 0;
+    var totAmt = 0;
+    var disAmt = 0;
+    var tcsAmt1 = 0;
     for (let i = 0; i < formVal.length; i++) {
       (formArr.controls[i]).patchValue({
         lineNumber: i + 1,
       });
     }
-    this.updateTotAmtPerline(0);
+  }
+
+
+  RemoveRow(OrderLineIndex) {
+    this.orderlineDetailsArray().removeAt(OrderLineIndex);
+    var formVal = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
+    var formArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+    var basicAmt = 0;
+    var taxAmt1 = 0;
+    var totAmt = 0;
+    var disAmt = 0;
+    var tcsAmt1 = 0;
+    //alert(formVal.length)
+    // debugger;
+    for (let i = 0; i < formVal.length; i++) {
+      (formArr.controls[i]).patchValue({
+        lineNumber: i + 1,
+      });
+    }
+    // this.updateTotAmtPerline(0);
+    this.updateTotAmtPerline(OrderLineIndex)
   }
 
 
@@ -1073,7 +1098,6 @@ export class CounterSalePerformaInvComponent implements OnInit {
   }
 
   updateTotAmtPerline(lineIndex) {
-    // alert(lineIndex);
     var formArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     var formVal = formArr.getRawValue();
     // var tcsPer = this.CounterSaleOrderBookingForm.get('tcsPer').value;
