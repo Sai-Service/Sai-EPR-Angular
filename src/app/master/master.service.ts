@@ -793,6 +793,12 @@ AmcSchemeDetails(schNo): Observable<any> {
   // http://localhost:8081/schHdr/schemeName/AM10
 }
 
+AmcEnrollmentDetails(enrollNo): Observable<any> {
+  return this.http.get(this.ServerUrl +`/McpEnrollMst/amcEnrollNo/${enrollNo}`);
+  // http://localhost:8081/McpEnrollMst/amcEnrollNo/AMC2209-2
+}
+
+
 
 
 public AmcSchemeMasterSubmit(AmcSchemeMasterRecord) {

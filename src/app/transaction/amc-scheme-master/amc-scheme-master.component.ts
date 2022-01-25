@@ -311,6 +311,8 @@ transeData(val) {
           } ); 
         }
 
+        
+
         Select(schId: number) {
            
            this.amcSchemeMasterForm.reset();
