@@ -808,9 +808,8 @@ public AmcEnrollMasterSubmit(AmcEnrollMasterRecord) {
   const options = {
     headers: this.headers
   };
-  const url = this.ServerUrl + '/amcEnroll';
+  const url = this.ServerUrl + '/McpEnrollMst/amcEnroll';
   return this.http.post(url, AmcEnrollMasterRecord, options);
-  // http://localhost:8081/schHdr
 }
 
 

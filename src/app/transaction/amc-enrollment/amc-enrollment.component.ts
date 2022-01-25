@@ -12,8 +12,8 @@ import { TransactionService } from 'src/app/transaction/transaction.service';
 import { trigger } from '@angular/animations';
 
 interface IAmcEnroll {  
-  amcNumber :string;
-  amcDate:Date;
+  enrollmentNo :string;
+  enrollmentDate:Date;
   saName:string;
   regNo:string;
   contactNo:string;
@@ -70,8 +70,9 @@ export class AmcEnrollmentComponent implements OnInit {
   deptId:number; 
   emplId :number;
 
-  amcNumber :string;
-  amcDate:Date;
+  enrollmentNo :string;
+  // enrollmentDate:Date;
+  enrollmentDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   saName:string;
   regNo:string;
   contactNo:string;
@@ -144,8 +145,8 @@ export class AmcEnrollmentComponent implements OnInit {
     emplId:[''],
     orgId:[''],
 
-    amcNumber :[],
-    amcDate:[],
+    enrollmentNo :[],
+    enrollmentDate:[],
     saName:[],
     regNo:[],
 
@@ -447,6 +448,7 @@ closeMast() {
               if (res.code === 200) {
                 alert('RECORD INSERTED SUCCESSFUILY');
                 // this.mcpPackageMasterForm.reset();
+                 this.enrollmentNo=  res.obj.enrollmentNo
                 this.displayButton=false;
                 this.amcEnrollmentForm.disable();
               } else {
