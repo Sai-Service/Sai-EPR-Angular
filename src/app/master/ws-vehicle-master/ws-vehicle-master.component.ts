@@ -35,9 +35,9 @@ interface IWsVehicleMaster {
   divisionId:number;
   divisionName:string;
   dealerCode:string;
-
-
+  itemTypeForCat:string;
 }
+
 @Component({
   selector: 'app-ws-vehicle-master',
   templateUrl: './ws-vehicle-master.component.html',
@@ -61,12 +61,13 @@ export class WsVehicleMasterComponent implements OnInit {
   public ewInsNameList: Array<string> = [];
 
   public ItemEWList: Array<string> = [];
-  public mainModelList: Array<string> = [];
+  // public mainModelList: Array<string> = [];
   public colorCodeList: Array<string> = [];
   public FuelTypeList: Array<string> = [];
   public statusList: Array<string> = [];
   // public dealerCodeList :Array<string>=[];
   dealerCodeList:any;
+  mainModelList:any;
 
   pipe = new DatePipe('en-US');
   public minDate = new Date()  ;
@@ -258,10 +259,15 @@ export class WsVehicleMasterComponent implements OnInit {
   tvSaleDealer: string;
   tvSaleLocation: string;
 
-  itemTypeForCat: string = 'SS_VEHICLE';
+  itemTypeForCat: string='SS_VEHICLE' ;
   categoryId: number;
-  public ServiceModelList   :Array<string> = [];
 
+  insurerCompId: string;
+  insurerSiteId: string;
+
+  public ServiceModelList   :Array<string> = [];
+  public insNameList: Array<string>[];
+  public insSiteList: Array<string>[];
 
   get f() { return this.wsVehicleMasterForm.controls; }
 
@@ -281,7 +287,8 @@ export class WsVehicleMasterComponent implements OnInit {
       orgId: [],
       divisionId: [],
 
-
+      insurerCompId:[],
+      insurerSiteId:[],
 
       /////////////////////SEARCH/////
       mainModelName: [Validators.required],
@@ -462,7 +469,13 @@ export class WsVehicleMasterComponent implements OnInit {
     }
   );
 
-  
+  this.service.insNameList()
+  .subscribe(
+    data => {
+      this.insNameList = data;
+      console.log(this.insNameList);
+    }
+  );
 
 
     this.service.issueByList(this.locId, this.deptId, this.divisionId)
@@ -522,6 +535,7 @@ export class WsVehicleMasterComponent implements OnInit {
     //       console.log(this.SSitemTypeList);
     //     }
     //   );
+    // this.service.getCategoryIdListByDivision(this.itemTypeForCat)
     this.service.getCategoryIdListByDivision(this.itemTypeForCat)
       .subscribe(
         data => {
@@ -583,6 +597,8 @@ export class WsVehicleMasterComponent implements OnInit {
   }
 
   updateMast() {
+
+    alert ( "in Wip ....") ; return;
 
     const formValue: IWsVehicleMaster = this.wsVehicleMasterForm.value ;
     this.CheckDataValidations()
@@ -846,9 +862,15 @@ export class WsVehicleMasterComponent implements OnInit {
   }
 
 
-  onOptionsSelectedModel(mainModel) {
-
+  onOptionsSelectedModel(mainModel:any) {
     if (mainModel != null) {
+
+      // let selectedValue = this.mainModelList.find(v => v.code === mainModel);
+      // this.itemTypeForCat=selectedValue.attribute2;
+      
+      // this.categoryId=35;
+      this.wsVehicleMasterForm.patchValue({categoryId:35});
+
       this.segment=null;
       this.variantDesc = null;
       this.service.VariantSearchFn(mainModel)
@@ -1061,6 +1083,14 @@ export class WsVehicleMasterComponent implements OnInit {
       alert("ITEM CATEGORY: Should not be null");
     }
 
+    
+
+    // if (formValue.itemTypeForCat === undefined || formValue.itemTypeForCat === null || formValue.itemTypeForCat.trim() === '') {
+    //   this.checkValidation = false;
+    //   alert("ITEM CATEGORY : Should not be null....");
+    //   return;
+    // }
+
     // if (formValue.itemId < 0 || formValue.itemId === undefined || formValue.itemId === null) {
     //   this.checkValidation = false;
     //   alert("ITEM Id: Should not be null");
@@ -1132,6 +1162,18 @@ export class WsVehicleMasterComponent implements OnInit {
     // this.GetCustomerSiteDetails(this.lstcomments.customerId);
 
   }
+
+  onInsurerNameSelected(customerId: number) {
+    // alert('in '+ customerId)
+    if(customerId >0) {
+    this.service.insSiteList(customerId)
+      .subscribe(
+        data => {
+          this.insSiteList = data.customerSiteMasterList;
+          console.log(this.insSiteList);
+        }
+      );
+  } }
 
    
   vehHistory(){

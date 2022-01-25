@@ -125,6 +125,7 @@ export class OPMasterDtoComponent implements OnInit {
   isDisabled = true;
   discLineAmt:number;
   docType: string;
+  discheadrAmt:number;
   private sub: any;
   selectedLine = 0;
   compileType: number;
@@ -372,6 +373,7 @@ export class OPMasterDtoComponent implements OnInit {
       // poDate: ['', [Validators.required]],
       // poType: ['', [Validators.required]],
       ouId: [''],
+      discheadrAmt:[''],
       poDate: [''],
       poType: [''],
       segment1: [''],
@@ -764,7 +766,7 @@ export class OPMasterDtoComponent implements OnInit {
       invDescription: [],
       invCategory: [],
       uom: [],
-      discLineAmt:[0],
+      discLineAmt:[],
       hsnSacCode: [],
       gstPercentage: [],
       taxCategoryName: [],
@@ -1357,12 +1359,17 @@ export class OPMasterDtoComponent implements OnInit {
     this.baseAmount = 0;
     this.totTaxAmt = 0;
     this.totalAmt = 0;
+    this.discheadrAmt=0;
 
     for (var i = 0; i < arrayControl.length; i++) {
-      this.baseAmount = this.baseAmount + arrayControl[i].baseAmtLineWise;
-      this.totTaxAmt = this.totTaxAmt + arrayControl[i].taxAmtLineWise;
+      this.baseAmount = (this.baseAmount + (arrayControl[i].baseAmtLineWise-arrayControl[i].discLineAmt));
+      this.totTaxAmt = (this.totTaxAmt + arrayControl[i].taxAmtLineWise);
+      this.totalAmt = (this.baseAmount + this.totTaxAmt);
     }
-    this.totalAmt = (this.baseAmount + this.totTaxAmt);
+    console.log(this.discLineAmt);
+    console.log(this.baseAmount);
+    console.log( this.totalAmt);  
+    // this.totalAmt = ((this.baseAmount-this.discLineAmt) + this.totTaxAmt);
     formValue.totalAmt = this.totalAmt;
     formValue.baseAmount = this.baseAmount;
     formValue.totTaxAmt = this.totTaxAmt;
@@ -1989,7 +1996,7 @@ export class OPMasterDtoComponent implements OnInit {
   }
 
   addDiscount(i) {
-    alert(i);
+    // alert(i);
     // alert('hi')
     const formValue: IpostPO = this.poMasterDtoForm.value;
     formValue.polineNum = this.poLineTax;
@@ -2021,7 +2028,7 @@ export class OPMasterDtoComponent implements OnInit {
     // var diss = arrayControltaxAmounts[0].totTaxAmt;
     var arrayControl = this.poMasterDtoForm.get('poLines').value;
     var baseAmount = arrayControl[this.poLineTax].baseAmtLineWise;
-    alert(diss1);
+    // alert(diss1);
     var discAmtcontrol = this.poMasterDtoForm.get('poLines') as FormArray;
     console.log(discAmtcontrol);
     // debugger;
@@ -2676,37 +2683,37 @@ export class OPMasterDtoComponent implements OnInit {
     this.allUsers = this.service.BindUser();
   }
 
-  uploadFile() {
-    console.log('doctype-check' + this.docType)
-    let formData = new FormData();
-    formData.append('file', this.fileInput.nativeElement.files[0])
-    // alert(this.deptName);
-    if (this.deptName === 'Sales') {
-      this.service.bulkpouploadSales(formData).subscribe((res: any) => {
-        if (res.code === 200) {
-          alert(res.obj);
-          // this.Search(this.segment1);
-        } else {
-          if (res.code === 400) {
-            alert('Error In File : \n' + res.obj);
-          }
-        }
-      });
-    }
-    else {
-      this.service.bulkpouploadSpares(formData).subscribe((res: any) => {
-        if (res.code === 200) {
-          alert(res.obj);
-        } else {
-          if (res.code === 400) {
-            alert('Error In File : \n' + res.obj);
-          }
-        }
-      });
-      // }
-    }
-    // });
-  }
+  // uploadFile() {
+  //   console.log('doctype-check' + this.docType)
+  //   let formData = new FormData();
+  //   formData.append('file', this.fileInput.nativeElement.files[0])
+  //   // alert(this.deptName);
+  //   if (this.deptName === 'Sales') {
+  //     this.service.bulkpouploadSales(formData).subscribe((res: any) => {
+  //       if (res.code === 200) {
+  //         alert(res.obj);
+  //         // this.Search(this.segment1);
+  //       } else {
+  //         if (res.code === 400) {
+  //           alert('Error In File : \n' + res.obj);
+  //         }
+  //       }
+  //     });
+  //   }
+  //   else {
+  //     this.service.bulkpouploadSpares(formData).subscribe((res: any) => {
+  //       if (res.code === 200) {
+  //         alert(res.obj);
+  //       } else {
+  //         if (res.code === 400) {
+  //           alert('Error In File : \n' + res.obj);
+  //         }
+  //       }
+  //     });
+  //     // }
+  //   }
+  //   // });
+  // }
 
   message1: string = "Please Fix the Errors !";
   msgType: string = "Close";

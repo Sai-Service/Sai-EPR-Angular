@@ -795,7 +795,6 @@ AmcSchemeDetails(schNo): Observable<any> {
 
 
 
-
 public AmcSchemeMasterSubmit(AmcSchemeMasterRecord) {
   const options = {
     headers: this.headers
@@ -809,9 +808,8 @@ public AmcEnrollMasterSubmit(AmcEnrollMasterRecord) {
   const options = {
     headers: this.headers
   };
-  const url = this.ServerUrl + '/amcEnroll';
+  const url = this.ServerUrl + '/McpEnrollMst/amcEnroll';
   return this.http.post(url, AmcEnrollMasterRecord, options);
-  // http://localhost:8081/schHdr
 }
 
 
@@ -2326,6 +2324,13 @@ PriceListIdList(mOuId,mDivId): Observable<any> {
       // http://localhost:8081/pricelist/ItmPrcList/?priceListName=Bajaj Regular MRP&itemId=544
     }
 
+    getLineDetailsSingleItemNew(plName,mSeg): Observable<any> {
+      return this.http.get(this.ServerUrl + `/pricelist/ItmPrcListNew/?priceListName=${plName}&segment=${mSeg}`);
+     
+      //  http://localhost:8081/pricelist/ItmPrcListNew?priceListName=Bajaj Regular MRP&segment=JX402222
+    }
+
+
     getLineDetailsWithItemBatchCode(plName,itmId,bCode): Observable<any> {
       // alert("Pl,itmid,bcode : "+plName+" , "+itmId +" , "+bCode);
       return this.http.get(this.ServerUrl + `/pricelist/ItmPrcBatch/?priceListName=${plName}&itemId=${itmId}&batchCode=${bCode}`);
@@ -2638,8 +2643,17 @@ OrderCategoryList(): Observable<any> {
 
 
   ///////////////////////////////////////////////////////////////////////////////////
-bulkpouploadSales(formData: FormData) {
-    return this.http.post(this.ServerUrl + `/fileImport/uploadVhPO`, formData)
+// bulkpouploadSales(formData: FormData) {
+//     return this.http.post(this.ServerUrl + `/fileImport/uploadVhPO`, formData)
+//   }
+
+bulkpouploadSales(formData: FormData,locCode,suppNo,supplierSite,username){
+formData.append('location', locCode);
+    formData.append('supplierNo', suppNo);
+    formData.append('suppSite', supplierSite);
+    formData.append('userName', username);
+    const REQUEST_URI = this.ServerUrl +'/fileImport/uploadVhPO';
+    return this.http.post(REQUEST_URI, formData);
   }
 
   pendingPOList(emplId) {
@@ -2655,6 +2669,9 @@ bulkpouploadSales(formData: FormData) {
     return this.http.get(this.ServerUrl + `/orderHeader/getByDate?locId=${locId}&startDt=${startDt}&endDt=${endDt}&dept=${deptId}`)
   }
 
+  getClosingStock(ouId){
+    return this.http.get(this.ServerUrl + `/orderHeader/onHandList/${ouId}`)
+  }
 
   getSalesOrderByUser(locId, startDt, endDt,deptId){
     return this.http.get(this.ServerUrl + `/orderHeader/getByDateOM?startDt=${startDt}&endDt=${endDt}&locId=${locId}&dept=${deptId}`)

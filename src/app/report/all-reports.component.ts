@@ -102,6 +102,10 @@ export class AllReportsComponent implements OnInit {
   SprStkTrfRecdSummaryFromLoc:number;
   SprcusttakestatfromDate:Date;
   SprcusttakestattoDate:Date;
+  spbackOrderQtyfromDate:Date;
+  spbackOrderQtytoDate:Date;
+  spbackOrderQtyCustAccNo:number;
+  spbackOrderQtyOrderNumber:number;
 
   closeResetButton = true;
   dataDisplay: any;
@@ -122,6 +126,7 @@ export class AllReportsComponent implements OnInit {
   isDisabled13 = false;
   isDisabled14 = false;
   isDisabled15 = false;
+  isDisabled16 = false;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) {
     this.reportForm = this.fb.group({
@@ -186,6 +191,10 @@ export class AllReportsComponent implements OnInit {
       SprStkTrfRecdSummaryFromLoc:[],
       SprcusttakestatfromDate:[],
       SprcusttakestattoDate:[],
+      spbackOrderQtyfromDate:[],
+      spbackOrderQtytoDate:[],
+      spbackOrderQtyCustAccNo:[],
+      spbackOrderQtyOrderNumber:[],
     })
   }
 
@@ -679,6 +688,38 @@ this.reportService.SprcusttakestatReport(fromDate,invcDt4,sessionStorage.getItem
   .subscribe(data => {
     saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
     this.isDisabled15 = false;
+    this.closeResetButton = true;
+    this.dataDisplay = ''
+  })
+}
+
+
+
+
+
+spbackOrderQty(spbackOrderQtyCustAccNo,spbackOrderQtyOrderNumber){
+  alert(spbackOrderQtyCustAccNo+'----'+spbackOrderQtyOrderNumber)
+  this.isDisabled16 = true;
+  this.closeResetButton = false;
+  this.progress = 0;
+  this.dataDisplay = 'Report Is Running....Do not refresh the Page';
+var invcDt2 = this.reportForm.get('spbackOrderQtyfromDate').value;
+var fromDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
+var invcDt3 = this.reportForm.get('spbackOrderQtytoDate').value;
+var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');  
+var orderNumber = spbackOrderQtyOrderNumber;
+if (spbackOrderQtyCustAccNo===undefined || spbackOrderQtyCustAccNo===null){
+  spbackOrderQtyCustAccNo='';
+}
+if (orderNumber === undefined || orderNumber=== null){
+orderNumber=''
+}
+const fileName = 'Spares-Customer-Off-Take-Statement-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+this.reportService.spbackOrderQtyReport(fromDate,invcDt4,sessionStorage.getItem('locId'),spbackOrderQtyCustAccNo,orderNumber)
+  .subscribe(data => {
+    saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+    this.isDisabled16 = false;
     this.closeResetButton = true;
     this.dataDisplay = ''
   })

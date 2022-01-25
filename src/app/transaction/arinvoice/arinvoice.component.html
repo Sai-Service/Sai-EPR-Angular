@@ -121,10 +121,9 @@
             <td style="width: 15%" class="LabelFontStyle1">&nbsp;Type&nbsp;:&nbsp;</td>
             <td>
                 <!-- <input type="text" formControlName="invType" class="form-control"> [ngValue]="sc.custTrxTypeId"-->
-                <select
-                formControlName="custTrxTypeId" name="custTrxTypeId" id="custTrxTypeId" class="form-control">
+                <select formControlName="custTrxTypeId" name="custTrxTypeId" id="custTrxTypeId" class="form-control">
                                         <option disabled>--Select--</option>
-                                        <option *ngFor="let sc of invTypeList"[value]=sc.custTrxTypeId>
+                                        <option *ngFor="let sc of invTypeList" [value]=sc.custTrxTypeId>
                                             {{sc.name}}
                                         </option>
                 </select>
@@ -631,7 +630,7 @@
                             <table class="GridFont" cellspacing="0" cellpadding="4" border="0"  style="width:100%;border-collapse:collapse;">
                                 <thead>
                                     <tr class="GridHeader">
-                                        <th scope="col">Info</th>
+                                        <th scope="col" hidden>Info</th>
                                         <th scope="col">SL. NO.</th>
                                         <th scope="col">Tax Rate Name
                                         </th>
@@ -696,8 +695,8 @@
                                             <ng-container *ngFor="let taxDet of TaxDetailsArray().controls; let j= index"
                                             [formGroupName]="j"  class="auto-style5">
                                           <tr class="ItemStyle" style="text-decoration:none;">
-                                            <input type="text" formControlName="invLineNo">
-                                            <input type="text" formControlName="taxItemId">
+                                            <input hidden type="text" formControlName="invLineNo">
+                                            <input hidden type="text" formControlName="taxItemId">
                                             <td> <input disabled formControlName="lineNumber"
                                                 class="form-control" style="width: 2rem;height: 25px;font-size: 10px;">
                                         </td>

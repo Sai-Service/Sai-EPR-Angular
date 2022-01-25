@@ -309,7 +309,7 @@
                                                     <ng-template #thenfrmLocatorName>
                                                         <select class="form-control" style="height: 20px; width: 110px;"
                                                             formControlName="frmLocatorId"
-                                                            (change)='AvailQty($event,i)'>
+                                                            (ngModelChange)='AvailQty($event,i)'>
                                                             <!-- <option>--Select--</option> -->
                                                             <option *ngFor="let locId of  locData[i]"
                                                                 [value]="locId.ROWNUM">
@@ -325,7 +325,7 @@
                                                 </td>
                                                 <input hidden formControlName="onHandQty">
                                                 <input hidden formControlName="id">
-                                                <input hidden type="text" formControlName="resveQty">
+                                                <input hidden type="number" formControlName="resveQty">
                                                 <td>
                                                     <input type="number" formControlName="Avalqty" class="form-control"
                                                         style="height: 20px;width: 70px;">

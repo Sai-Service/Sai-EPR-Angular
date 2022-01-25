@@ -11,7 +11,29 @@ import { OrderManagementService } from 'src/app/order-management/order-managemen
 import { TransactionService } from 'src/app/transaction/transaction.service';
 import { trigger } from '@angular/animations';
 
-interface IAmcEnroll {  }
+interface IAmcEnroll {  
+  enrollmentNo :string;
+  enrollmentDate:Date;
+  saName:string;
+  regNo:string;
+  contactNo:string;
+  custAddress:string;
+
+  schemeGrp:string;
+  schemeId:number;
+  schemeNumber :string;
+  schemeDesc:string;
+  startDate:Date;
+  endDate :Date;
+  startKms:number;
+  schemeValidKm:number;
+  discOnMatrl:number;
+  discOnLabour:number;
+
+  schemeValidYears:number;
+  gracePeriod:number;
+  totalPeriod:number;
+}
 
 @Component({
   selector: 'app-amc-enrollment',
@@ -48,11 +70,11 @@ export class AmcEnrollmentComponent implements OnInit {
   deptId:number; 
   emplId :number;
 
-  amcNumber :string;
-  amcDate:Date;
+  enrollmentNo :string;
+  // enrollmentDate:Date;
+  enrollmentDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   saName:string;
   regNo:string;
-  // custNo :string;
   contactNo:string;
   custAddress:string;
 
@@ -105,7 +127,7 @@ export class AmcEnrollmentComponent implements OnInit {
   totAmtmat:number;
 
   
-
+  amcHeaderValidation =false;
   displayButton=true;
 
   constructor(private service: MasterService,private orderManagementService:OrderManagementService,private transactionService: TransactionService , private  fb: FormBuilder, private router: Router) {
@@ -123,8 +145,8 @@ export class AmcEnrollmentComponent implements OnInit {
     emplId:[''],
     orgId:[''],
 
-    amcNumber :[],
-    amcDate:[],
+    enrollmentNo :[],
+    enrollmentDate:[],
     saName:[],
     regNo:[],
 
@@ -420,10 +442,13 @@ closeMast() {
           }
           newMast() {
             const formValue: IAmcEnroll =this.transeData(this.amcEnrollmentForm.value);
+            this.checkAmcHeaderValidations();
+            if(this.amcHeaderValidation) {
             this.service.AmcEnrollMasterSubmit(formValue).subscribe((res: any) => {
               if (res.code === 200) {
                 alert('RECORD INSERTED SUCCESSFUILY');
                 // this.mcpPackageMasterForm.reset();
+                 this.enrollmentNo=  res.obj.enrollmentNo
                 this.displayButton=false;
                 this.amcEnrollmentForm.disable();
               } else {
@@ -434,5 +459,54 @@ closeMast() {
               }
             });
           }
+          }
+
+
+          validateStartKms(){
+            var startKm =this.amcEnrollmentForm.get('startKms').value;
+            var endKm=this.amcEnrollmentForm.get('schemeValidKm').value;
+            alert (startKm +" ," + endKm);
+
+            if(startKm >=endKm) { alert ("Enter Valid Start Kilomoeter Reading...") ;
+             this.amcEnrollmentForm.patchValue({startKms:0});return;
+             }
+
+          }
+
+          
+  checkAmcHeaderValidations()
+  {
+
+      const formValue: IAmcEnroll = this.amcEnrollmentForm.value;
+      // alert("mainModel date :" +formValue.mainModel);
+
+      if(formValue.regNo===undefined || formValue.regNo===null  || formValue.regNo.trim()==='' ) {
+          this.amcHeaderValidation=false;
+          alert ("VEHICLE REG NO: Should not be null value");
+          return; 
+      }
+
+      if(formValue.schemeNumber===undefined || formValue.schemeNumber===null  || formValue.schemeNumber.trim()==='' ) {
+        this.amcHeaderValidation=false;
+        alert ("SCEHME NUMBER: Should not be null value");
+        return; 
+      }
+
+      if(formValue.saName===undefined || formValue.saName===null  || formValue.saName.trim()==='' ) {
+        this.amcHeaderValidation=false;
+        alert ("SERVICE ADVISOR: Should not be null value");
+        return; 
+      }
+
+      if(formValue.startKms===undefined || formValue.startKms===null  || formValue.startKms<=0 ) {
+        this.amcHeaderValidation=false;
+        alert ("CURRENT KILOMETER READING: Should be above zero");
+        return; 
+      }
+
+      this.amcHeaderValidation=true;
+
+    }
+
 
 }

@@ -1461,7 +1461,7 @@ docSeqValue:number;
         alert(res.message);
         // this.poInvoiceForm.disable();
         alert(res.obj);
-        this.internalSeqNo = res.obj;
+        this.internalSeqNum = res.obj;
         this.displayTdsButton = true;
         this.showTdsLines(res.obj);
 
@@ -2428,7 +2428,7 @@ docSeqValue:number;
   }
 
   onOptionsSelectedBranchNew(event){
-    alert(event)
+    // alert(event)
     let selectinterbranch = this.InterBrancList.find(v => v.lookupValue == event);
     console.log(selectinterbranch);
     this.lookupValueDesc5= selectinterbranch.lookupValueDesc;

@@ -275,7 +275,7 @@ export class PricelistMasterComponent implements OnInit {
 
 
   ngOnInit(): void {
-
+    $("#wrapper").toggleClass("toggled");
     this.displayLineDetails = false;
     this.name = sessionStorage.getItem('name');
     this.loginArray = sessionStorage.getItem('divisionName');
@@ -1368,7 +1368,7 @@ export class PricelistMasterComponent implements OnInit {
         }
         xlsx.utils.sheet_add_json(ws, xlOrdList, { origin: 'A2', skipHeader: true });
         xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
-        xlsx.writeFile(wb, 'orderGenerationList.xlsx');
+        xlsx.writeFile(wb, 'pricelist.xlsx');
       }
 
     )
@@ -1433,7 +1433,56 @@ export class PricelistMasterComponent implements OnInit {
     if (sType == 'ITEM DESCRIPTION') { this.F9SearchItemDesc(); }
   }
 
+  
+
   F9SearchItemCodeNew(itemSeg) {
+
+    this.CheckHeaderValidations();
+    if (this.headerValidation == false) {
+      alert('Please Select Header Deatils !');
+      return;
+    }
+    var sType = this.priceListMasterForm.get('searchBy').value
+    var mSegment;
+    if (sType == 'ITEM NUMBER') {
+      mSegment = this.priceListMasterForm.get('searchByItemCode').value
+    }
+    if (sType == 'ITEM DESCRIPTION') {
+      mSegment = itemSeg;
+      this.selectItemName = mSegment;
+    }
+
+    mSegment = mSegment.toUpperCase();
+    var plName = this.priceListMasterForm.get("priceListName").value
+    if (mSegment === null || mSegment === undefined || mSegment.trim() === '') {
+      alert("Please Enter valid Item Code");
+      return;
+    }
+
+       this.service.getLineDetailsSingleItemNew(plName, mSegment).subscribe(
+              data1 => {
+                console.log(data1);
+                if (data1.length > 0) {
+                  this.priceListLineDetails2 = data1;
+                  this.itemFoundInPLmaster = true;
+                  this.updateButton = true;
+                  this.updateHeaderButton = false;
+                  this.addNew = false;
+                  console.log(data1);
+
+                  var len = this.lineDetailsArray().length;
+                  for (let i = 0; i < this.priceListLineDetails2.length - len; i++) {
+                    var avlLnGrp: FormGroup = this.lineDetailsGroup();
+                    this.lineDetailsArray().push(avlLnGrp);
+                  }
+                  this.priceListMasterForm.get('priceListDetailList').patchValue(this.priceListLineDetails2);
+
+                } else { alert(mSegment + " - Item Not Found in Price List Master - " + plName) }
+              });
+  }
+
+
+  F9SearchItemCodeNew_Old(itemSeg) {   // not in use
 
     this.CheckHeaderValidations();
     if (this.headerValidation == false) {
@@ -1461,7 +1510,6 @@ export class PricelistMasterComponent implements OnInit {
     this.service.getItemDetailsByCode(mSegment)
       .subscribe(
         data => {
-
           if (data != null) {
             segId = data.itemId;
             this.service.getLineDetailsSingleItem(plName, segId).subscribe(
@@ -1489,6 +1537,12 @@ export class PricelistMasterComponent implements OnInit {
 
         });
   }
+
+
+
+
+
+
 
 
   F9SearchItemCode(mSegment) {

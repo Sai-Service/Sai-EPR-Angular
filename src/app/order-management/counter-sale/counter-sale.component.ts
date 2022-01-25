@@ -534,7 +534,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       disAmt: [0],
       uom: [],
       lnflowStatusCode: [''],
-      Avalqty: [],
+      Avalqty: [''],
       resveQty: [],
       frmLocatorName: [],
       itemId: [],
@@ -1919,13 +1919,6 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       }
       var orderedDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
       this.CounterSaleOrderBookingForm.patchValue({ orderedDate: orderedDate });
-      // this.CounterSaleOrderBookingForm.get('custAccountNo').disable();
-      // this.CounterSaleOrderBookingForm.get('name').disable();
-      // this.CounterSaleOrderBookingForm.get('custName').disable();
-      // this.CounterSaleOrderBookingForm.get('mobile1').disable();
-      // this.CounterSaleOrderBookingForm.get('refCustNo').disable();
-      // this.CounterSaleOrderBookingForm.get('custPoDate').disable();
-      // this.CounterSaleOrderBookingForm.get('custPoNumber').disable();
       if (this.CounterSaleOrderBookingForm.get('createOrderType').value === 'Sales Order' && this.CounterSaleOrderBookingForm.get('othRefNo').value === undefined) {
         alert('Please Enter Reference Number First !');
         this.CounterSaleOrderBookingForm.get('segment').disable();

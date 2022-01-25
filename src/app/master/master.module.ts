@@ -17,6 +17,7 @@ import { ItemMasterComponent } from './item-master/item-master.component';
 import { CommonMasterComponent } from './common-master/common-master.component';
 import { DocumentSequenceMasterComponent } from './document-sequence-master/document-sequence-master.component';
 import { EpmloyeeMasterComponent } from './epmloyee-master/epmloyee-master.component';
+import { EmployeeMasterComponent } from './employee-master/employee-master.component';
 import { CustomerMasterComponent } from './customer-master/customer-master.component';
 import { GlCodeCombinationComponent } from './gl-code-combination/gl-code-combination.component';
 import { HsnSacMasterComponent } from './hsn-sac-master/hsn-sac-master.component';
@@ -35,11 +36,12 @@ import { OrderTypeMasterComponent } from './order-type-master/order-type-master.
 import { WsVehicleMasterComponent } from './ws-vehicle-master/ws-vehicle-master.component';
 import { VariantMasterComponent } from './variant-master/variant-master.component';
 import { TaxThresholdSetupComponent } from './tax-threshold-setup/tax-threshold-setup.component';
-import{SubinventoryMasterComponent}from './subinventory-master/subinventory-master.component';
+import {SubinventoryMasterComponent}from './subinventory-master/subinventory-master.component';
 import { PendingShipmentListComponent } from './pending-shipment-list/pending-shipment-list.component';
 import { ItemMasterLocatorComponent } from './item-master-locator/item-master-locator.component';
 import { ReceivableTranstypeMasterComponent } from './receivable-transtype-master/receivable-transtype-master.component';
 import { CustomerRelationMasterComponent } from './customer-relation-master/customer-relation-master.component';
+
 // import { DashboardComponent } from './dashboard/dashboard.component';
 
 
@@ -56,6 +58,7 @@ import { CustomerRelationMasterComponent } from './customer-relation-master/cust
     CommonMasterComponent, 
     DocumentSequenceMasterComponent, 
     EpmloyeeMasterComponent, 
+    EmployeeMasterComponent,
     CustomerMasterComponent, 
     GlCodeCombinationComponent, 
     HsnSacMasterComponent, 
@@ -77,7 +80,7 @@ import { CustomerRelationMasterComponent } from './customer-relation-master/cust
     PendingShipmentListComponent,
     ItemMasterLocatorComponent,
     ReceivableTranstypeMasterComponent,
-    CustomerRelationMasterComponent],
+    CustomerRelationMasterComponent,  ],
     
   // declarations: [DivisionMasterComponent, OrganizationMasterComponent, LocationMasterComponent, CompanyMasterComponent, FNDCommonLookupComponent, ItemCategortComponent, SupplierMasterComponent, LocatorMasterComponent, ItemMasterComponent, CommonMasterComponent, DocumentSequenceMasterComponent, EpmloyeeMasterComponent, CustomerMasterComponent, GlCodeCombinationComponent, HsnSacMasterComponent, OPMasterDtoComponent, JaiRegimeMasterComponent, TaxAccountsComponent, TaxCategoryMasterComponent, JaiTaxCategoryLineComponent, JaiTaxRatesMasterComponent, JaiTaxTypeComponent,FlexFieldComponent, PricelistMasterComponent, OmGruopMasterComponent, OrderTypeMasterComponent,SubinventoryMasterComponent,SaiEwSchemeComponent],
   

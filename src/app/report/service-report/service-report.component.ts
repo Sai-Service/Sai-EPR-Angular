@@ -89,8 +89,7 @@ export class ServiceReportComponent implements OnInit {
     var fromDate = this.pipe.transform(purStDt, 'dd-MMM-yyyy');
     var spreceipttoDate2 = this.serviceReportForm.get('servindToDt').value;
     var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
-    const fileName = 'Job-Card-Summary-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
-
+    const fileName = 'Invoice-Not-Delivery-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.servindToDtReport(fromDate, toDate, sessionStorage.getItem('locId'))
       .subscribe(data => {
