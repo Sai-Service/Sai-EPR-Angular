@@ -187,7 +187,8 @@ export class PricelistMasterComponent implements OnInit {
   selectItemName: string;
   searchByItem = true;
   searchByDesc = false;
-  showDescList = false;
+  showDescList = true;
+  recordCnt: number;
 
   @ViewChild('fileInput') fileInput;
   message: string;
@@ -243,6 +244,7 @@ export class PricelistMasterComponent implements OnInit {
       searchByItemCode: [],
       searchByItem: [],
       selectItemName: [],
+      recordCnt:[],
 
       priceListDetailList: this.fb.array([this.lineDetailsGroup()])
     });
@@ -1633,12 +1635,13 @@ export class PricelistMasterComponent implements OnInit {
     this.service.searchByItemDescf9(this.divisionId, itemDesc).subscribe(
       data => {
         this.lstcomments1 = data;
+        this.recordCnt =data.length;
         if (this.lstcomments1.length <= 0) {
           this.showDescList = false;
-          alert("Item Description contains " + itemDesc + " not found in Master"); return;
-        }
+          // alert("Item Description contains " + itemDesc + " not found in Master"); 
+        } else {
         this.showDescList = true;
-        console.log(data);
+        console.log(data); }
       });
 
   }
