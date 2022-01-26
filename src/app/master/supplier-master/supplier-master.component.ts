@@ -253,7 +253,7 @@ export class SupplierMasterComponent implements OnInit {
       status: ['', [Validators.nullValidator]],
       divisionId:[],
       compId:[],
-      type:[],
+      type:['', [Validators.required]],
       locId:[],
       ouId:[''],
       souId:[''],
@@ -298,7 +298,7 @@ export class SupplierMasterComponent implements OnInit {
   segment4:[],
   lookupValueDesc4:[],
   segment5:[],
-  lookupValueDesc5:[],
+  lookupValueDesc5:[], 
   prePayAcct: [],
   prepayCodeCombId: [],
   sacctsPayCodeCombId:[],
@@ -307,7 +307,7 @@ export class SupplierMasterComponent implements OnInit {
    semailId:[],
    screateDebitMemoFlag:[],
    supTdsTyp:[],
-   supTds:[],
+   supTds:['', [Validators.required]],
    sbankName:[],
    sacctNo:[],
    sifscCode:[],
@@ -621,17 +621,18 @@ export class SupplierMasterComponent implements OnInit {
   }
 
   newsupplierMast() {
+    this.submitted = true;
+    if(this.supplierMasterForm.invalid){
+    alert('Field Validation Error (D)');
+      return;
+    }
     var isvaliddata = this.validation();
     if (isvaliddata === false) {
       // alert('In Validation (v)');
       return;
     }
 
-    // this.submitted = true;
-    // if(this.supplierMasterForm.invalid){
-    // alert('In Validation');
-    //   return;
-    // }
+
     // const formValue: IsupplierMaster = this.transData(this.supplierMasterForm.value);
     const formValue:IsupplierMaster=this.supplierMasterForm.value;
     formValue.compId=41;
