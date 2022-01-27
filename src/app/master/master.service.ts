@@ -793,6 +793,12 @@ AmcSchemeDetails(schNo): Observable<any> {
   // http://localhost:8081/schHdr/schemeName/AM10
 }
 
+AmcEnrollmentDetails(enrollNo): Observable<any> {
+  return this.http.get(this.ServerUrl +`/McpEnrollMst/amcEnrollNo/${enrollNo}`);
+  // http://localhost:8081/McpEnrollMst/amcEnrollNo/AMC2209-2
+}
+
+
 
 
 public AmcSchemeMasterSubmit(AmcSchemeMasterRecord) {
@@ -3488,6 +3494,11 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
         return this.http.get(this.ServerUrl+`/AccountTrf/TrfDtList?frmDate=${fDate}&toDate=${tDate}`);
         // http://localhost:8081/AccountTrf/TrfDtList?frmDate=2021-10-25&toDate=2021-10-25
      }
+
+     getBnkChqList(bankId,rcptMthId,locId): Observable<any> {
+      return this.http.get(this.ServerUrl+`/AccountTrf/CounterList?bankId=${bankId}&receiptMethodId=${rcptMthId}&locId=${locId}`);
+      // http://localhost:8081/AccountTrf/CounterList?bankId=902&receiptMethodId=58&locId=2102
+   }
 
 
     ////////////////////////// Pending Shipment Lis///////////

@@ -67,7 +67,7 @@ export class CashBankTransferComponent implements OnInit {
       recAccountCode :any;
 
       lstcomments: any;
-
+      lstChequeList: any;
       loginName:string;
       divisionId:number;
       loginArray:string;
@@ -188,8 +188,29 @@ export class CashBankTransferComponent implements OnInit {
           searchDocNo:[],
           fromDate:[],
           toDate:[],
+
+          rcptLine: this.fb.array([this.rcptLineDetails()]),
       
         });
+      }
+
+      rcptLineDetails() {
+        return this.fb.group({
+          selectFlag: [],
+          receiptNumber:[],
+          receiptDate: [],
+          receiptMethodId: [],
+          locId: [],
+          checkNo: [],
+          checkDate: [],
+          bankName: [],
+          branchName: [],
+          amount: [],
+         })
+      }
+    
+      rcptLineArray(): FormArray {
+        return <FormArray>this.cashBankTransferForm.get('rcptLine')
       }
 
         ngOnInit(): void {
@@ -744,7 +765,31 @@ export class CashBankTransferComponent implements OnInit {
             // this.amtInWords=inwords.toUpperCase();
 
           }
-        
+
+          LoadRcptList(){
+
+            // var frmDt=this.cashBankTransferForm.get('fromDate').value;
+            // var toDt=this.cashBankTransferForm.get('toDate').value;
+
+             this.service.getBnkChqList(902,58,2102)
+              .subscribe(
+                data => {
+                  this.lstChequeList = data.obj;
+                  console.log(this.lstChequeList);
+                  var len = this.rcptLineArray().length;
+                  // alert("this.lstChequeList.length :"+this.lstChequeList.length);
+                  for (let i = 0; i < this.lstChequeList.length - len; i++) {
+                    var invLnGrp: FormGroup = this.rcptLineDetails();
+                    this.rcptLineArray().push(invLnGrp);
+      
+                  }
+                  this.cashBankTransferForm.get('rcptLine').patchValue(this.lstChequeList);
+              
+                } ); 
+              }
+
+
+                  
   
  
 }
