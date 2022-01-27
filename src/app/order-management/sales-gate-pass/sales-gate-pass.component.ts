@@ -91,7 +91,7 @@ export class SalesGatePassComponent implements OnInit {
   }
 
   gatePassOrderNo(orderNumber){
-    alert(orderNumber);
+    // alert(orderNumber);
     this.orderManagementService.getGatepassSearch(orderNumber)
     .subscribe(
       data => {
