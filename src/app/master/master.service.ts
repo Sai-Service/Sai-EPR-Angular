@@ -3495,6 +3495,11 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
         // http://localhost:8081/AccountTrf/TrfDtList?frmDate=2021-10-25&toDate=2021-10-25
      }
 
+     getBnkChqList(bankId,rcptMthId,locId): Observable<any> {
+      return this.http.get(this.ServerUrl+`/AccountTrf/CounterList?bankId=${bankId}&receiptMethodId=${rcptMthId}&locId=${locId}`);
+      // http://localhost:8081/AccountTrf/CounterList?bankId=902&receiptMethodId=58&locId=2102
+   }
+
 
     ////////////////////////// Pending Shipment Lis///////////
 
