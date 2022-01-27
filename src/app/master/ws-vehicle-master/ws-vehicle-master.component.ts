@@ -261,8 +261,13 @@ export class WsVehicleMasterComponent implements OnInit {
 
   itemTypeForCat: string='SS_VEHICLE' ;
   categoryId: number;
-  public ServiceModelList   :Array<string> = [];
 
+  insurerCompId: string;
+  insurerSiteId: string;
+
+  public ServiceModelList   :Array<string> = [];
+  public insNameList: Array<string>[];
+  public insSiteList: Array<string>[];
 
   get f() { return this.wsVehicleMasterForm.controls; }
 
@@ -282,7 +287,8 @@ export class WsVehicleMasterComponent implements OnInit {
       orgId: [],
       divisionId: [],
 
-
+      insurerCompId:[],
+      insurerSiteId:[],
 
       /////////////////////SEARCH/////
       mainModelName: [Validators.required],
@@ -463,7 +469,13 @@ export class WsVehicleMasterComponent implements OnInit {
     }
   );
 
-  
+  this.service.insNameList()
+  .subscribe(
+    data => {
+      this.insNameList = data;
+      console.log(this.insNameList);
+    }
+  );
 
 
     this.service.issueByList(this.locId, this.deptId, this.divisionId)
@@ -585,6 +597,8 @@ export class WsVehicleMasterComponent implements OnInit {
   }
 
   updateMast() {
+
+    alert ( "in Wip ....") ; return;
 
     const formValue: IWsVehicleMaster = this.wsVehicleMasterForm.value ;
     this.CheckDataValidations()
@@ -1148,6 +1162,18 @@ export class WsVehicleMasterComponent implements OnInit {
     // this.GetCustomerSiteDetails(this.lstcomments.customerId);
 
   }
+
+  onInsurerNameSelected(customerId: number) {
+    // alert('in '+ customerId)
+    if(customerId >0) {
+    this.service.insSiteList(customerId)
+      .subscribe(
+        data => {
+          this.insSiteList = data.customerSiteMasterList;
+          console.log(this.insSiteList);
+        }
+      );
+  } }
 
    
   vehHistory(){

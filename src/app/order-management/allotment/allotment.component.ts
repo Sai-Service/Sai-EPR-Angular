@@ -75,7 +75,7 @@ export class AllotmentComponent implements OnInit {
 
 console.log(this.orgId);
 
-    this.orderManagementService.allotmentSearch(this.orgId)
+    this.orderManagementService.allotmentSearch(this.orgId,sessionStorage.getItem('locId'),sessionStorage.getItem('divisionId'))
     .subscribe(
       (data: any[])  => {
         this.allotmentsearchlist = data;

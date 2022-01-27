@@ -137,6 +137,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
   displayLineflowStatusCode: Array<boolean> = [];
   isDisabled = false;
   isDisabled1=true;
+  isDisabled4=true;
   
 
   @ViewChild('aForm') aForm: ElementRef;
@@ -254,6 +255,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.isDisabled4=false;
     $("#wrapper").toggleClass("toggled");
     if (Number(sessionStorage.getItem('divisionId')) === 1) {
       this.displayDMSCDMS = true;
@@ -381,6 +383,9 @@ export class CounterSalePerformaInvComponent implements OnInit {
     this.displayaddRemoveBtn=false;
     this.displayaddRow = false;
     this.isDisabled1=false;
+    this.isDisabled = true;
+    this.isDisabled4=true;
+    this.CounterSaleOrderBookingForm.disable();
     this.orderManagementService.proformaOrderSearchNew(sessionStorage.getItem('divisionId'), orderNumber)
       .subscribe(
         data => {
@@ -389,7 +394,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
             this.displayCustomerSite = false; 
             this.displayCSOrderAndLineDt = false;
             let orLineCtrl = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
-            debugger;
+            // debugger;
             for (let i = 0; i < this.lstgetOrderLineDetails.length; i++) {
               var oeOrderLinesAllList1: FormGroup = this.orderlineDetailsGroup();
               orLineCtrl.push(oeOrderLinesAllList1);
@@ -1044,26 +1049,42 @@ export class CounterSalePerformaInvComponent implements OnInit {
   }
 
 
-  RemoveRow(OrderLineIndex) {
-    // alert(OrderLineIndex)
-    // var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
-    // var trxLnArr2 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
-    //  var trxLnArr1 = trxLnArr2.getRawValue();
-    // var itemid = trxLnArr1[OrderLineIndex].segment;
-    // var itemid1 = trxLnArr1[OrderLineIndex].itemId;
-    // var uuidref = trxLnArr1[OrderLineIndex].uuidRef;
-    // var locatorId = trxLnArr1[OrderLineIndex].frmLocatorName;
-    // var prc = trxLnArr1[OrderLineIndex].unitSellingPrice;
+  RemoveRowOld(OrderLineIndex) {
     this.orderlineDetailsArray().removeAt(OrderLineIndex);
     this.TaxDetailsArray().removeAt(OrderLineIndex);
     var formVal = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     var formArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+    var basicAmt = 0;
+    var taxAmt1 = 0;
+    var totAmt = 0;
+    var disAmt = 0;
+    var tcsAmt1 = 0;
     for (let i = 0; i < formVal.length; i++) {
       (formArr.controls[i]).patchValue({
         lineNumber: i + 1,
       });
     }
-    this.updateTotAmtPerline(0);
+  }
+
+
+  RemoveRow(OrderLineIndex) {
+    this.orderlineDetailsArray().removeAt(OrderLineIndex);
+    var formVal = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
+    var formArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+    var basicAmt = 0;
+    var taxAmt1 = 0;
+    var totAmt = 0;
+    var disAmt = 0;
+    var tcsAmt1 = 0;
+    //alert(formVal.length)
+    // debugger;
+    for (let i = 0; i < formVal.length; i++) {
+      (formArr.controls[i]).patchValue({
+        lineNumber: i + 1,
+      });
+    }
+    // this.updateTotAmtPerline(0);
+    this.updateTotAmtPerline(OrderLineIndex)
   }
 
 
@@ -1078,7 +1099,6 @@ export class CounterSalePerformaInvComponent implements OnInit {
   }
 
   updateTotAmtPerline(lineIndex) {
-    // alert(lineIndex);
     var formArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     var formVal = formArr.getRawValue();
     // var tcsPer = this.CounterSaleOrderBookingForm.get('tcsPer').value;

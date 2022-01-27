@@ -34,7 +34,7 @@
                     <input hidden type ="text" class="form-control" formControlName="schemeId"  value={{schemeId}} >
                  
                     <td>&nbsp;Scheme&nbsp;No:&nbsp;</td>
-                    <td> <input  type ="text" class="form-control" formControlName="schemeNumber"  value={{schemeNumber}} style="background-color: yellow;" > </td>
+                    <td> <input autofocus type ="text" class="form-control" formControlName="schemeNumber"  value={{schemeNumber}} style="background-color: yellow;" > </td>
                     <td>&nbsp;Scheme&nbsp;Name:&nbsp;</td>
                     <td colspan="3"> <input  type ="text" class="form-control" formControlName="schemeDesc"  value={{schemeDesc}} style="background-color: yellow;width: 100%;"  > </td>
                     <td>&nbsp;Scheme&nbsp;Group:&nbsp;</td>
@@ -48,11 +48,11 @@
                     <td> <input  type ="number" class="form-control" formControlName="schemeValidYears" [(ngModel)]='schemeValidYears'  
                         value={{schemeValidYears}} style="background-color: yellow;" > </td>
                     <td>&nbsp;Grace&nbsp;Period:&nbsp;</td>
-                    <td> <input  type ="number" class="form-control" formControlName="gracePrd" [(ngModel)]='gracePrd'
-                            value={{gracePrd}} style="background-color: yellow;"> </td>
+                    <td> <input  type ="number" class="form-control" formControlName="gracePeriod" [(ngModel)]='gracePeriod'
+                            value={{gracePeriod}} style="background-color: yellow;"> </td>
                     <td>&nbsp;Total&nbsp;Period:&nbsp;</td>
-                    <td> <input  type ="number" class="form-control" formControlName="totalPrd" [(ngModel)]='totalPrd'
-                        value={{totalPrd}} style="background-color: yellow;"> </td>
+                    <td> <input  type ="number" class="form-control" formControlName="totalPeriod" [(ngModel)]='totalPeriod'
+                        value={{totalPeriod}} style="background-color: yellow;"> </td>
 
                         <td>&nbsp;Scheme&nbsp;Kms:&nbsp;</td>
                         <td> <input  type ="number" class="form-control" formControlName="schemeValidKm" [(ngModel)]='schemeValidKm'
@@ -264,6 +264,43 @@
     </div>
     </div>
 </form>
+
+
+<br>
+
+<div class="container1">
+    <div class="grid_scroll">
+    <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+        <tbody>
+                <tr class="GridHeader">
+                <th style="width:3rem" scope="col">Srl&nbsp;No&nbsp;</th> 
+                <th style="width:5rem" scope="col">Scheme&nbsp;No&nbsp;</th>
+                <th style="width:5rem" scope="col">Scheme&nbsp;Desc&nbsp;</th>
+                <th style="width:5rem" scope="col"> Scheme&nbsp;Km</th>
+                <th style="width:5rem" scope="col"> Scheme&nbsp;Prd</th>
+                <th style="width:6rem" scope="col">Start&nbsp;Date</th>
+                <th style="width:7rem" scope="col">Labour&nbsp;Amt</th>
+                <th style="width:7rem" scope="col">Matrl&nbsp;Amt</th>
+                <th style="width:7rem" scope="col">Scheme&nbsp;Amt</th>
+                <th style="width:5rem" scope="col">Select</th>
+            </tr>
+        </tbody>
+        <tr *ngFor="let com of lstcomments let i=index" class="ItemStyle" style="text-decoration:none;">
+                <td style="text-align: center;">{{i+1}}</td>
+                <td style="text-align: center;width: 5rem;">{{com.schemeNumber}}</td>   
+                <td style="text-align: left; width: 15rem;">{{com.schemeDesc}}</td> 
+                <td style="text-align: center;">{{com.schemeValidKm}}</td>
+                <td style="text-align: center;">{{com.schemeValidYears}}</td>
+                <td style="text-align: center;">{{com.startDate| date:'dd-MM-y'}}</td> 
+                <td style="text-align: center;">{{com.amcLabTotal}}</td>
+                <td style="text-align: center;">{{com.amcMatTotal}}</td>
+                <td style="text-align: center;">{{com.amcSchemeTotal}}</td>
+                <td><button class="btn btn-info" (click)="Select(com.schemeId)">Select</button></td>   
+        </tr> 
+    </table>
+</div>
+</div>
+
         
 
 

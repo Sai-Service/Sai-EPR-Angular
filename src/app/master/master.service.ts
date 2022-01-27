@@ -795,7 +795,6 @@ AmcSchemeDetails(schNo): Observable<any> {
 
 
 
-
 public AmcSchemeMasterSubmit(AmcSchemeMasterRecord) {
   const options = {
     headers: this.headers
@@ -809,9 +808,8 @@ public AmcEnrollMasterSubmit(AmcEnrollMasterRecord) {
   const options = {
     headers: this.headers
   };
-  const url = this.ServerUrl + '/amcEnroll';
+  const url = this.ServerUrl + '/McpEnrollMst/amcEnroll';
   return this.http.post(url, AmcEnrollMasterRecord, options);
-  // http://localhost:8081/schHdr
 }
 
 
@@ -2325,6 +2323,13 @@ PriceListIdList(mOuId,mDivId): Observable<any> {
       return this.http.get(this.ServerUrl + `/pricelist/ItmPrcList/?priceListName=${plName}&itemId=${itmId}`);
       // http://localhost:8081/pricelist/ItmPrcList/?priceListName=Bajaj Regular MRP&itemId=544
     }
+
+    getLineDetailsSingleItemNew(plName,mSeg): Observable<any> {
+      return this.http.get(this.ServerUrl + `/pricelist/ItmPrcListNew/?priceListName=${plName}&segment=${mSeg}`);
+     
+      //  http://localhost:8081/pricelist/ItmPrcListNew?priceListName=Bajaj Regular MRP&segment=JX402222
+    }
+
 
     getLineDetailsWithItemBatchCode(plName,itmId,bCode): Observable<any> {
       // alert("Pl,itmid,bcode : "+plName+" , "+itmId +" , "+bCode);

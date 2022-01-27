@@ -33,13 +33,13 @@
 
                 <tr>
                     <td style="width: 15%" class="LabelFontStyle">&nbsp;Reg&nbsp;No:&nbsp;</td>
-                    <td> <input  type ="text" class="form-control" formControlName="regNo"  value={{regNo}} (change)="serchByRegNo(regNo)"
+                    <td> <input autofocus type ="text" class="form-control" formControlName="regNo"  value={{regNo}} (change)="serchByRegNo(regNo)"
                         style="background-color: yellow; text-transform: uppercase;" placeholder="Regno"> </td>
-                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Amc&nbsp;No:&nbsp;</td>
-                    <td> <input  disabled type ="text" class="form-control" formControlName="amcNumber"  value={{amcNumber}}  > </td>
-                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Amc&nbsp;Date:&nbsp;</td>
-                    <td> <input  disabled type ="date" class="form-control" formControlName="amcDate" [(ngModel)]='amcDate'  
-                        value={{amcDate}} > </td>
+                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Enrollment&nbsp;No:&nbsp;</td>
+                    <td> <input  disabled type ="text" class="form-control" formControlName="enrollmentNo"  value={{enrollmentNo}}  > </td>
+                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Enrollment&nbsp;Date:&nbsp;</td>
+                    <td> <input  disabled type ="date" class="form-control" formControlName="enrollmentDate" [(ngModel)]='enrollmentDate'  
+                        value={{enrollmentDate}} > </td>
                         <td style="width: 15%" class="LabelFontStyle">&nbsp;Start&nbsp;Date:&nbsp;</td>
                         <td> <input disabled type ="date" class="form-control" formControlName="startDate"  value={{startDate}}   > </td>
                       
@@ -48,9 +48,7 @@
                 </tr>
                
                 <tr>
-                   
-                  
-                   
+                 
 
                     <!-- <td style="width: 15%" class="LabelFontStyle">&nbsp;Contact&nbsp;No:&nbsp;</td>
                     <td> <input  disabled type ="text" class="form-control" formControlName="contactNo"  value={{contactNo}}  > </td>
@@ -101,8 +99,8 @@
                     <td style="width: 15%" class="LabelFontStyle">&nbsp;Labour&nbsp;Dis(%):&nbsp;</td>
                     <td> <input disabled type ="number" class="form-control" formControlName="discOnLabour" [(ngModel)]='discOnLabour'  value={{discOnLabour}} > </td>
                     
-                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Start&nbsp;Kms:&nbsp;</td>
-                    <td> <input disabled type ="number" class="form-control" formControlName="startKms"  value={{startKms}}   > </td>
+                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Curr&nbsp;Kms:&nbsp;</td>
+                    <td> <input  type ="number" class="form-control" formControlName="startKms"  value={{startKms}} (change)="validateStartKms()" style="background-color: yellow;"  > </td>
                     <td style="width: 15%" class="LabelFontStyle">&nbsp;End&nbsp;Kms:&nbsp;</td>
                     <td> <input disabled type ="number" class="form-control" formControlName="schemeValidKm"  value={{schemeValidKm}}   > </td>
                              
@@ -134,7 +132,7 @@
                  -->
                     <td style="width: 15%" class="LabelFontStyle">&nbsp;Cust&nbsp;Name:&nbsp;</td>
                    
-                    <td colspan="3"> <input disabled style="width: 100%;" type ="text" class="form-control" formControlName="custName"  value={{custName}}  > </td>
+                    <td colspan="3"> <input disabled style="width: 100%;" type ="text" class="form-control" formControlName="custName" [(ngModel)]='custName'  value={{custName}}  > </td>
                     <td></td>
                     <td>
                         <button type="button"  class="btn btn-primary" 
@@ -227,20 +225,17 @@
                                 <td><input disabled style="width: 5rem;"  type="text" formControlName="couponNumber"  class="form-control" placeholder="Coupon Number" ></td>
                                 <td><input disabled style="width: 5rem;" type="text" formControlName="couponActualCode"  class="form-control"  ></td>
                                 <td><input disabled style="width: 10rem;" type="text" formControlName="couponDesc"  class="form-control"  ></td>
-                                <td><input disabled  style="width: 6rem;text-align: center;" type="text" formControlName="couponCode"  class="form-control"   ></td>
-                                <td><input disabled  style="width: 6rem;text-align: right;" type="number" formControlName="quantity"  class="form-control"   ></td>
-                                <td><input disabled style="width: 6rem;" type="number" formControlName="utilQty"  class="form-control"  ></td>
-                                <td><input disabled  style="width: 6rem;" type="number" formControlName="balQty"  class="form-control"   ></td>
+                                <td><input disabled  style="width: 4rem;text-align: center;" type="text" formControlName="couponCode"  class="form-control"   ></td>
+                                <td><input disabled  style="width: 4rem;text-align: right;" type="number" formControlName="quantity"  class="form-control"   ></td>
+                                <td><input disabled style="width: 4rem;" type="number" formControlName="utilQty"  class="form-control"  ></td>
+                                <td><input disabled  style="width: 4rem;" type="number" formControlName="balQty"  class="form-control"   ></td>
                                 <td><input disabled style="width: 6rem;"  type="number" formControlName="unitPrice"  class="form-control"  ></td>
                                 <td><input disabled style="width: 6rem;" type="number" formControlName="amount"  class="form-control"   ></td>
                                 <td><input disabled style="width: 6rem;" type="number" formControlName="disc"  class="form-control"   ></td>
                                 <td><input disabled style="width: 6rem;"  type="number" formControlName="net"  class="form-control"  ></td>
-                                <td><input disabled  style="width: 5rem;text-align: center;" type="number" formControlName="gstpercentage"  class="form-control"   ></td>
-                                <td><input disabled style="width: 6rem;" type="number" formControlName="tax"  class="form-control"  ></td>
+                                <td><input disabled  style="width: 3rem;text-align: center;" type="number" formControlName="gstpercentage"  class="form-control"   ></td>
+                                <td><input disabled style="width: 5rem;" type="number" formControlName="tax"  class="form-control"  ></td>
                                 <td><input disabled  style="width: 7rem;text-align: center;" type="number" formControlName="total"  class="form-control"   ></td>
-                            
-                               
-
                             </tr>
                     </table>
 

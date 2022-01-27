@@ -11,7 +11,23 @@ import { OrderManagementService } from 'src/app/order-management/order-managemen
 import { TransactionService } from 'src/app/transaction/transaction.service';
 import { trigger } from '@angular/animations';
 
-interface IAmcScheme {  }
+interface IAmcScheme { 
+  schemeId:number;
+  schemeNumber:string;
+  startDate:string;
+  endDate:Date;
+  schemeDesc:string;
+  schemeValidYears:number;
+  totalPeriod:number;
+  gracePeriod:number;
+  schemeValidKm:number;
+  schemeGrp:string;
+  discOnMatrl:number;
+  discOnLabour:number;
+  disAmount:number;
+  totAmtlab:number;
+  totAmtmat:number;
+ }
 
 @Component({
   selector: 'app-amc-scheme-master',
@@ -30,7 +46,7 @@ export class AmcSchemeMasterComponent implements OnInit {
   public McpPackageCategoryList :Array<string> = [];
   public McpPackageList:Array<string> = [];
 
-
+  lstcomments: any;
 
   loginName:string;
   loginArray:string;
@@ -53,8 +69,8 @@ export class AmcSchemeMasterComponent implements OnInit {
   endDate:Date;
   schemeDesc:string;
   schemeValidYears:number;
-  gracePrd:number;
-  totalPrd:number;
+  totalPeriod:number;
+  gracePeriod:number;
   schemeValidKm:number;
   schemeGrp:string;
   discOnMatrl:number;
@@ -79,6 +95,7 @@ export class AmcSchemeMasterComponent implements OnInit {
   displayButton=true;
   duplicateLineItem=false;
   amcSchLineValidation=false;
+  amcHeaderValidation =false;
 
   userList2: any[] = [];
   lastkeydown1: number = 0;
@@ -104,8 +121,8 @@ export class AmcSchemeMasterComponent implements OnInit {
     endDate:[],
     schemeDesc:[],
     schemeValidYears:[],
-    gracePrd:[],
-    totalPrd:[],
+    gracePeriod:[],
+    totalPeriod:[],
     schemeValidKm:[],
     schemeGrp:[],
     discOnMatrl:[],
@@ -260,6 +277,8 @@ transeData(val) {
 
   newMast() {
       const formValue: IAmcScheme =this.transeData(this.amcSchemeMasterForm.value);
+      this.checkAmcHeaderValidations();
+      if(this.amcHeaderValidation) {
       this.service.AmcSchemeMasterSubmit(formValue).subscribe((res: any) => {
         if (res.code === 200) {
           alert('RECORD INSERTED SUCCESSFUILY');
@@ -273,12 +292,51 @@ transeData(val) {
           }
         }
       });
-    }
+    }}
   
 
-    searchMast() { alert ("Search AMC Scheme ...WIP")
+   
 
-    }
+    searchMast() {
+      // var frmDt=this.amcSchemeMasterForm.get('fromDate').value;
+      // var toDt=this.amcSchemeMasterForm.get('toDate').value;
+        //  alert("SearchByRcptNo-Receipt date : "+ frmDt+","+toDt  );
+   
+      this.service.AmcSchemeList()
+        .subscribe(
+          data => {
+            this.lstcomments = data;
+            console.log(this.lstcomments);
+            
+          } ); 
+        }
+
+        Select(schId: number) {
+           
+           this.amcSchemeMasterForm.reset();
+          for(let i=0; i<this.lineDetailsArray.length; i++){
+            this.lineDetailsArray().removeAt(i);
+          }
+            let select = this.lstcomments.find(d => d.schemeId === schId);
+          if (select) {
+           
+               var control = this.amcSchemeMasterForm.get('amcItemList') as FormArray;
+              // alert ("select.amcItemList.length :"+select.amcItemList.length);
+              this.lineDetailsArray().clear();
+              
+              for (let i=0; i<select.amcItemList.length;i++)
+                {
+                  var amcItemList:FormGroup=this.lineDetailsGroup();
+                  control.push(amcItemList);
+                }
+
+               this.amcSchemeMasterForm.patchValue(select);
+           }
+
+           this.displayButton = false;
+           this.schemeId=select.schemeId;
+        }
+
      updateMast(){alert("Update AMC scheme ....wip");}
 
 
@@ -461,5 +519,80 @@ transeData(val) {
     }
     return matches;
   };
+
+
+  checkAmcHeaderValidations()
+  {
+
+      const formValue: IAmcScheme = this.amcSchemeMasterForm.value;
+      // alert("mainModel date :" +formValue.mainModel);
+
+      if(formValue.schemeNumber===undefined || formValue.schemeNumber===null  || formValue.schemeNumber.trim()==='' ) {
+          this.amcHeaderValidation=false;
+          alert ("SCEHME NUMBER: Should not be null value");
+          return; 
+      }
+
+      if(formValue.schemeDesc===undefined || formValue.schemeDesc===null  || formValue.schemeDesc.trim()==='' ) {
+        this.amcHeaderValidation=false;
+        alert ("SCEHME DESCREPTION: Should not be null value");
+        return; 
+      }
+
+      if(formValue.schemeValidYears===undefined || formValue.schemeValidYears===null  || formValue.schemeValidYears<=0 ) {
+        this.amcHeaderValidation=false;
+        alert ("SCEHME PERIOD (YRS): Should be above zero");
+        return; 
+      }
+
+      if(formValue.gracePeriod===undefined || formValue.gracePeriod===null  || formValue.gracePeriod<0 ) {
+        this.amcHeaderValidation=false;
+        alert ("GRACE PERIOD : Enter Valid Grace Period");
+        return; 
+      }
+
+      if(formValue.totalPeriod===undefined || formValue.totalPeriod===null  || formValue.totalPeriod<=0 ) {
+        this.amcHeaderValidation=false;
+        alert ("TOTAL PERIOD : Enter Valid Total Period");
+        return; 
+      }
+
+      if(formValue.schemeValidKm===undefined || formValue.schemeValidKm===null  || formValue.schemeValidKm<=0 ) {
+        this.amcHeaderValidation=false;
+        alert ("SCEHME VALID KMS: Should be above zero");
+        return; 
+      }
+
+    
+
+      if(formValue.discOnMatrl===undefined || formValue.discOnMatrl===null  || formValue.discOnMatrl<0 ) {
+        this.amcHeaderValidation=false;
+        alert ("MATERIAL DISCOUNT : Enter Valid Discount Percentage");
+        return; 
+      }
+
+      if(formValue.discOnLabour===undefined || formValue.discOnLabour===null  || formValue.discOnLabour<0 ) {
+        this.amcHeaderValidation=false;
+        alert ("LABOUR DISCOUNT : Enter Valid Discount Percentage");
+        return; 
+      }
+
+      var sDate = new Date(formValue.startDate);
+      var cDate = new Date();
+     
+     
+      if (formValue.startDate === undefined || formValue.startDate === null || sDate >cDate ) {
+        this.amcHeaderValidation = false;
+        alert("START DATE: Enter valid  date" );
+        this.startDate = this.pipe.transform(cDate, 'y-MM-dd');
+        return;
+      }
+
+      this.amcHeaderValidation=true;
+    
+
+
+    }
+
 
 }
