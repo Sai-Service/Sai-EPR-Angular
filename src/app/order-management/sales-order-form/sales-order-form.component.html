@@ -851,7 +851,7 @@
                                 Color&nbsp;:&nbsp;
                             </td>
                             <td>
-                                <input disabled type="text" formControlName="color" class="form-control"
+                                <input disabled type="text" formControlName="colorCode" class="form-control"
                                     style="width: 150px;">
                             </td>
                         </tr>
@@ -2047,6 +2047,23 @@
                     </fieldset>
                 </div>
             </ng-template>
+            <fieldset class="RFS">
+                <table class="center">
+                    <tr>
+                        <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                        <ng-template #hList2> 
+                            <div class="d-flex justify-content-center">
+                                <div class="spinner-border text-primary" role="status" >
+                                      <span class="sr-only" id="loading"></span>
+                               
+                                </div>
+                            </div>
+                      </ng-template>
+                      <ng-template #hList1> </ng-template>
+                       <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">&nbsp;{{dataDisplay }}&nbsp; </td>
+                    </tr>
+                </table>
+            </fieldset>
             <div *ngIf="displayAllButtons; then thenAllButtons; else elseAllButtons"></div>
             <ng-template #thenAllButtons>
             </ng-template>
@@ -2066,7 +2083,7 @@
                                     [routerLink]="['/admin/transaction/PaymentReceipt',orderNumber]">Payment</button>
                             </td>
                             <td>
-                                <button type="submit" class="btn btn-primary" (click)="SOA()">SOA</button>
+                                <button type="submit" class="btn btn-primary" (click)="SOA()" [disabled]="isDisabled7">SOA</button>
                             </td>
 
                             <td>
@@ -2074,19 +2091,19 @@
                             </td>
                             <!-- <div [style.display]="isVisible2 ? 'block' : 'none'" style="display: inline-block;"> -->
                             <td>
-                                <button type="submit" class="btn btn-primary" (click)="orderLineUpdate()" [style.display]="isVisible2 ? 'block' : 'none'">Update</button>
+                                <button type="submit" class="btn btn-primary" (click)="orderLineUpdate()" [disabled]="isDisabled11" [style.display]="isVisible2 ? 'block' : 'none'">Update</button>
                             </td>
                             <!-- </div> -->
                             <!-- <div [style.display]="isVisible3 ? 'block' : 'none'" > -->
                             <td>
-                                <button type="submit" class="btn btn-primary" (click)="createInvoice()"
+                                <button type="submit" class="btn btn-primary" (click)="createInvoice()" [disabled]="isDisabled8"
                                     style="width: 8rem;" [style.display]="isVisible3 ? 'block' : 'none'">Create Invoice</button>
                             </td>
                             <!-- </div> -->
                             <!-- <div [style.display]="isVisible4 ? 'block' : 'none'" style="display: inline-block;"> -->
                             <td>
                                 <button type="button" class="btn btn-primary" data-toggle="modal" [style.display]="isVisible4 ? 'block' : 'none'"
-                                    data-target="#viewInvoice" style="width: 8rem;" (click)="viewAllInvoice()">
+                                    data-target="#viewInvoice" [disabled]="isDisabled9" style="width: 8rem;" (click)="viewAllInvoice()">
                                     View Invoice
                                 </button>
                                 <div class="modal" id="viewInvoice">
@@ -2146,15 +2163,14 @@
                             </td>
                           
                                 <td>
-                                    <button class="btn btn-primary" [style.display]="isVisible7 ? 'block' : 'none'" style="width: fit-content;height: fit-content;"
+                                    <button class="btn btn-primary" [style.display]="isVisible7 ? 'block' : 'none'" style="width: fit-content;height: fit-content;" 
                                         [routerLink]="['/admin/OrderManagement/GatePass',orderNumber]">Generate Gate Pass</button>
                                 </td>
-                        
-                            <!-- </div> -->
                         </tr>
                     </table>
                 </fieldset>
             </ng-template>
+           
         </div>
     </div>
 </form>

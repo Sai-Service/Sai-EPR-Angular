@@ -63,22 +63,21 @@ fieldset {
     width: 100%;
     }
 
-    input[type="text"]:disabled {
-        /* background: rgb(208,208,208); */
+    /* input[type="text"]:disabled { 
         color: black;
       }
 
       input[type="number"]:disabled {
-        /* background: rgb(208,208,208); */
+     
         color: black;
         background-color: white;
       }
 
       input[type="date"]:disabled {
-        /* background: rgb(208,208,208); */
+      
         color: black;
         background-color: white;
-      }
+      } */
 
       .LabelFontStyle1:before{
         content:"*";
@@ -98,9 +97,9 @@ fieldset {
         height: 15px;
       }
 
-      .form-control{
+      /* .form-control{
         border: white;
-      }
+      } */
       
       .LabelFontStyle1 {
         font-family: Verdana,Sans-serif, Arial, Helvetica;
@@ -115,4 +114,4 @@ fieldset {
         height: 15px;
       }
 
-      input[type="text"][disabled]{background-color:white}
+      /* input[type="text"][disabled]{background-color:white} */

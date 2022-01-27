@@ -185,11 +185,15 @@ export class SalesGatePassComponent implements OnInit {
   
 
   downloadGatePass(){
-    const fileName = 'download.pdf';
-    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    // const fileName = 'download.pdf';
+    // const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.orderManagementService.downloadGatePass(this.orderNumber)
     .subscribe(data => {
-      saveAs(new Blob([data], { type: MIME_TYPES[EXT] }));
+      // saveAs(new Blob([data], { type: MIME_TYPES[EXT] }));
+      var blob = new Blob([data], { type: 'application/pdf' });
+      var url = URL.createObjectURL(blob);
+      var printWindow = window.open(url, '', 'width=800,height=500');
+      printWindow.open
     });
   }
   
