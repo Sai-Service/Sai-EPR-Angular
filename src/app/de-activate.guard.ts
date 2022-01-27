@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, CanDeactivate } from '@angular/router';
-import { Observable } from 'rxjs';
+
 import { JobCardComponent } from './service/job-card/job-card.component';
 
 @Injectable({

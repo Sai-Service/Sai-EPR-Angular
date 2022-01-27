@@ -902,7 +902,6 @@ export class CounterSalePerformaInvComponent implements OnInit {
     }
   }
 
-
   AvailQty(i, itemId, calledFrom){
     var trxLnArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     var trxLnFormArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
@@ -939,6 +938,8 @@ export class CounterSalePerformaInvComponent implements OnInit {
         })
     }
   }
+
+
 
 
   onSelLocaPrice(event: Number, i) {
