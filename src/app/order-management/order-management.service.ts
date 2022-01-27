@@ -517,8 +517,8 @@ public pickTicketInvoiceFun(pickTicketInvDels) {
 
 
   // ***************************** Allotment Form ****************************
-  allotmentSearch(orgId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/orderHeader/Allotment/${orgId}`);
+  allotmentSearch(orgId,locId,divisionId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/orderHeader/Allotment?orgId=${orgId}&locId=${locId}&divisionId=${divisionId}`);
   }
 
   allotmentVehicleSearch(model, color, variant, locId): Observable<any> {

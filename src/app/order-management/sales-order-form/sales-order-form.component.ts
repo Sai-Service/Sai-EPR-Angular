@@ -1480,6 +1480,20 @@ export class SalesOrderFormComponent implements OnInit {
                 this.isVisible3 = false;
                 this.isVisible5 = true;
               }
+
+              this.displayVehicleDetails=true;
+              var variantNew=data.obj.variant;
+              this.SalesOrderBookingForm.patchValue({color:data.obj.color})
+              this.orderManagementService.ColourSearchFn(variantNew)
+              .subscribe(
+                data => {
+                  this.ColourSearch = data;
+                  console.log(this.ColourSearch);
+                  let select = this.ColourSearch.find(d => d.variant === variantNew);
+                  console.log(select); 
+                  this.SalesOrderBookingForm.patchValue({color:select.ColorCode})
+                }
+              );
             }
             else {
               for (let i = 0; i < this.lstgetOrderLineDetails.length; i++) {
@@ -1550,9 +1564,8 @@ export class SalesOrderFormComponent implements OnInit {
               //this.SalesOrderBookingForm.patchValue({taxAmounts:this.lstgetOrderTaxDetails[x]})
             }
             this.SalesOrderBookingForm.patchValue(data.obj);
-            for (let k = 0; k < this.lstgetOrderLineDetails.length; k++) {
+            for (let k = 0; k < this.lstgetOrderLineDetails.length; k++) {  
               if (this.lstgetOrderLineDetails[k].flowStatusCode === 'READY FOR INVOICE') {
-                // alert(this.lstgetOrderLineDetails[k].flowStatusCode);
                 this.displaytaxCategoryName[k] = false;
                 this.displayLineflowStatusCode[k] = true;
                 this.isVisible3 = true;
@@ -1560,11 +1573,11 @@ export class SalesOrderFormComponent implements OnInit {
               }
               else{
                 this.isVisible3 = false;
-              }
+              }  
               if (this.lstgetOrderLineDetails[k].invType != 'SS_VEHICLE' && this.lstgetOrderLineDetails[k].flowStatusCode !='ALLOTED' || this.lstgetOrderLineDetails[k].flowStatusCode != 'READY FOR INVOICE' || this.lstgetOrderLineDetails[k].flowStatusCode != 'INVOICED'){
                 this.displayVehicleDetails=true;
                 var variantNew=data.obj.variant;
-                // this.SalesOrderBookingForm.patchValue({color:data.obj.color})
+                this.SalesOrderBookingForm.patchValue({color:data.obj.color})
                 this.orderManagementService.ColourSearchFn(variantNew)
                 .subscribe(
                   data => {
