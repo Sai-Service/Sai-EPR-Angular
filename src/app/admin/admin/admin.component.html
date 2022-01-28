@@ -141,7 +141,6 @@
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Inventory</a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/AvgCostUpadte']">Average Cost Update</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/stockTransfer']">Stock Transfer</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/StockTaking']">Stock Taking</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/OnHandDetails']">Stock Details</a></li>
             <li class="dropdown-submnu"><a class="dropdown-item dropdown-toggle" href="#">Stock Consumption</a>
@@ -164,6 +163,18 @@
         </li>
       </ul>
     </li>
+    </div>
+    <!-- <div [style.display]="isVisible37 ? 'block' : 'none'"> -->
+      <!-- <ul class="dropdown-menu">
+      <li><a class="dropdown-item" [routerLink]="['/admin/transaction/stockTransfer']">Stock Transfer</a></li>
+      </ul>  -->
+      <div [style.display]="isVisible37 ? 'block' : 'none'">
+      <li class="nav-item dropdown">
+        <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true"  [routerLink]="['/admin/transaction/stockTransfer']" aria-expanded="false">
+          Stock Transfer
+        </a>
+      </li> 
     </div>
 
     <div [style.display]="isVisible32 ? 'block' : 'none'">

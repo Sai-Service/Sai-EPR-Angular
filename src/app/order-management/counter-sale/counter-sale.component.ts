@@ -395,6 +395,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   isDisabled = false;
   isDisabled3 = false;
   isDisabled10 = false;
+  isDisabled11= false;
 
 
   constructor(private fb: FormBuilder, private location1: Location, private router1: ActivatedRoute, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService,) {
@@ -801,6 +802,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
   OrderFind(orderNumber) {
     this.op = 'Search';
+    this.isDisabled11=true;
     // this.isDisabled10=false;
     this.displayCSOrderAndLineDt = false;
     this.emplId = Number(sessionStorage.getItem('emplId'))
