@@ -1462,8 +1462,13 @@ searchByItemBYSegment(divId,itemDesc):Observable<any>
   // http://localhost:8081/itemMst/searchBydesc/2/ring
 }
 
-viewReserveData(locId,invId):Observable<any>
-{
+// viewReserveData(locId,invId):Observable<any>
+// {
+//   return this.http.get(this.ServerUrl+`/reserveQty/reserveDtls?locId=${locId}&invItemId=${invId}`)
+// }
+
+
+viewReserveData(locId,invId){
   return this.http.get(this.ServerUrl+`/reserveQty/reserveDtls?locId=${locId}&invItemId=${invId}`)
 }
 
