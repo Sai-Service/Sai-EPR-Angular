@@ -1,11 +1,8 @@
-import { PathLocationStrategy } from '@angular/common';
-import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit} from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { controllers } from 'chart.js';
-import { data } from 'jquery';
 import { MasterService } from 'src/app/master/master.service';
-import { AllOrderListComponent } from 'src/app/order-management/all-order-list/all-order-list.component';
+
 
 interface IOnhanddetails {
   segment: string;
