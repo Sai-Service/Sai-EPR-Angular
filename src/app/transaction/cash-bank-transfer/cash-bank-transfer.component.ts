@@ -124,6 +124,7 @@ export class CashBankTransferComponent implements OnInit {
       fromDate=this.pipe.transform(Date.now(), 'y-MM-dd');  
       toDate=this.pipe.transform(Date.now(), 'y-MM-dd');  
       searchDocNo:string;
+      selectAllFlag=false;
 
       display = true;
       displayButton = true;
@@ -136,6 +137,7 @@ export class CashBankTransferComponent implements OnInit {
       copyButton=true;
       checkValidation=false;
       showChqListModal =false;
+
 
       get f() { return this.cashBankTransferForm.controls; }
       cashBankTransfer(cashBankTransferForm:any) {  }
@@ -785,13 +787,28 @@ export class CashBankTransferComponent implements OnInit {
                 } ); 
               }
               
+              selectAllFlagEvent(e) {
+               
+                var rcptLineArr = this.cashBankTransferForm.get('rcptLine').value;
+                var patch = this.cashBankTransferForm.get('rcptLine') as FormArray;
+                if (e.target.checked) { 
+                for (let i = 0; i < this.rcptLineArray().length; i++) {
+                patch.controls[i].patchValue({ selectFlag: true })    }
+                } 
+                else 
+                {
+                  for (let i = 0; i < this.rcptLineArray().length; i++) {
+                    patch.controls[i].patchValue({ selectFlag: '' }) 
+                  }
+                }
+
+              this.CalculateValue(0);
+              }
+
 
               selectFlagEvent(e, index) {
-                           
                 if (e.target.checked) { }
                   this.CalculateValue(index);
-                
-
               }
 
 
@@ -815,6 +832,15 @@ export class CashBankTransferComponent implements OnInit {
                 this.amtInWords=inWords;
               }
 
+
+              onKey(event: any) {
+                var trfAmt=this.cashBankTransferForm.get('trfAmount').value
+                var inWords =this.number2text(trfAmt);
+                this.amtInWords=inWords;
+                     
+              }
+
+
               validateTrfAmt(x) {
 
                 var trfAmt=this.cashBankTransferForm.get('trfAmount').value
@@ -824,10 +850,10 @@ export class CashBankTransferComponent implements OnInit {
                 return;
               }
                 
-                var inWords =this.number2text(trfAmt);
-                this.amtInWords=inWords;
-              }
-
+              var inWords =this.number2text(trfAmt);
+              this.amtInWords=inWords;
+               
+            }
 
                number2text(value) {
                 var fraction = Math.round(this.frac(value)*100);

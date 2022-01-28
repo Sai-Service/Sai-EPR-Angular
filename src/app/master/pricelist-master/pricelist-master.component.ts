@@ -161,7 +161,7 @@ export class PricelistMasterComponent implements OnInit {
   updateHeaderButton = false;
   plsearch = false;
   displayItemDetails = true;
-  addNew = false;
+  addNew = true;
   itemFoundInPLmaster = false;
   userList2: any[] = [];
   lastkeydown1: number = 0;
@@ -981,8 +981,7 @@ export class PricelistMasterComponent implements OnInit {
     var priceLineArr = this.priceListMasterForm.get('priceListDetailList').value;
     var mSegment = priceLineArr[index].segment; mSegment = mSegment.toUpperCase();
     var plName = this.priceListMasterForm.get("priceListName").value
-    // alert ("Item Code :"+mSegment + " Batchcode :"+priceLineArr[index].batchCode +" index :"+index);
-
+    
     if (mSegment === null || mSegment === undefined || mSegment.trim() === '') {
       alert("Please Enter Item Code");
       this.lineDetailsArray().controls[index].get('batchCode').disable();
@@ -991,7 +990,7 @@ export class PricelistMasterComponent implements OnInit {
       this.lineDetailsArray().controls[index].get('itemCategory').reset();
       this.lineDetailsArray().controls[index].get('uom').reset();
       return;
-    }
+    } 
 
 
     var segId; var bCode; var x;
@@ -1010,15 +1009,21 @@ export class PricelistMasterComponent implements OnInit {
                 itemName: data.segment,
                 segment: mSegment,
 
-              }
-            );
+              } );
 
 
 
             var mbCode = this.lineDetailsArray().controls[index].get('batchCode').value;
             mbCode = mbCode.toUpperCase();
             patch.controls[index].patchValue({ batchCode: mbCode });
+           
+            this.duplicateLineCheck(index, segId, mSegment, mbCode);
+            if (this.lineItemRepeated) {
+              this.lineDetailsArray().removeAt(index);
+            }
+
             //  this.service.getLineDetailsSingleItem(plName,segId)  .subscribe(
+
             this.service.getLineDetailsWithItemBatchCode(plName, segId, mbCode).subscribe(
               data1 => {
                 console.log(data1);
@@ -1034,6 +1039,7 @@ export class PricelistMasterComponent implements OnInit {
                 } else {
 
                   this.lineDetailsArray().controls[index].get('priceValue').enable();
+                  this.lineDetailsArray().controls[index].get('batchCode').enable();
                 }
               });
 
