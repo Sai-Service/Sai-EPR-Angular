@@ -1,11 +1,8 @@
-import { PathLocationStrategy } from '@angular/common';
-import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit} from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { controllers } from 'chart.js';
-import { data } from 'jquery';
 import { MasterService } from 'src/app/master/master.service';
-import { AllOrderListComponent } from 'src/app/order-management/all-order-list/all-order-list.component';
+
 
 interface IOnhanddetails {
   segment: string;
@@ -190,17 +187,17 @@ onhandDetailsForm:FormGroup;
 
  searchByItem(segment)
  {
-alert('In call by item');
-   alert(this.onhandDetailsForm.get('segment').value);
+//  alert('In call by item');
+  //  alert(this.onhandDetailsForm.get('segment').value);
    var segmentl=this.onhandDetailsForm.get('segment').value
- var segment1 = '';
+var segment1 = '';
    if (segmentl.includes('--')) {
     var segmentln = segmentl.split('--');
     segment1 = segmentln[0];
-    alert(segment1 + 'item in if');
+    // alert(segment1 + 'item in if');
   } else {
     segment1 = segmentl;
-    alert(segment1 + 'item in else');
+    // alert(segment1 + 'item in else');
   }
 
 
@@ -237,7 +234,7 @@ alert('In call by item');
 
       } else { alert(segment1+" - Stock not Available...");}
    })
-   this.ItemIdList =[];
+   //this.ItemIdList =[];
   }
 
   searchByItemF9(xyz) {
@@ -339,27 +336,25 @@ alert('In call by item');
 
       filterRecord(event) {
         var itemCode1 = event.target.value;
-        // alert(itemCode1+'---'+event.keyCode);
-        // debugger;
         if (event.keyCode === 13) {
 
           var itemCode = '';
           if (itemCode1.includes('--')) {
             var itemCode2 = itemCode1.split('--');
             itemCode = itemCode2[0];
-            // alert(itemCode + 'item in if');
+            
           } else {
             itemCode = itemCode1;
-            // alert(itemCode + 'item in else');
+            
           }
-          //  alert(itemCode.length + 'length'+this.ItemIdList.length);
+          
           // enter keycode
           if (itemCode.length >= 4 && this.ItemIdList.length <= 1) {
             this.service
               .searchByItemSegmentDiv(this.divisionId, itemCode.toUpperCase())
               .subscribe((data) => {
                 this.ItemIdList = data;
-
+              
                 // this.Select(data[0].itemId);
               });
           } else {
@@ -375,7 +370,7 @@ alert('In call by item');
             let select1 = this.ItemIdList.find(
               (d) => d.segment === itemCode.toUpperCase()
             );
-            // alert(select1.itemId + 'In len');
+            //  alert(select1.itemId + 'In len');
             if (select1 != undefined) {
               this.searchByItem(select1.segment);
             }else{
@@ -401,11 +396,13 @@ alert('In call by item');
         this.router.navigate(['admin']);
       }
       viewReserve(locId,segment){
+        // alert(segment);
+        // debugger;
         var selinv=this.ItemIdList.find(d=>d.segment===segment)
-        alert(locId +'------'+selinv.itemId)
+        // alert(locId +'------'+selinv.itemId)
         // this.service.viewReserveData(locId,selinv.itemId).subscribe((res: any) => {
           this.service.viewReserveData(locId,selinv.itemId).subscribe((res: any) => {
-        this.reserveData=data;
+        this.reserveData=res;
         console.log(this.reserveData);
         });
       }
