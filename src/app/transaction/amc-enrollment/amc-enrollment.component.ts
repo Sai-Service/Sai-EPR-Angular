@@ -459,8 +459,7 @@ closeMast() {
 
           newMast() {
             const formValue: IAmcEnroll =this.transeData(this.amcEnrollmentForm.value);
-            alert("in Save...")
-            this.checkAmcHeaderValidations();
+              this.checkAmcHeaderValidations();
             if(this.amcHeaderValidation) {
             this.service.AmcEnrollMasterSubmit(formValue).subscribe((res: any) => {
               if (res.code === 200) {
@@ -516,9 +515,7 @@ closeMast() {
         return; 
       }
 
-      alert ("amcHeaderValidation2 :" +this.amcHeaderValidation);
-
-      alert ("srvAdvisor :"+formValue.srvAdvisor);
+     
 
       if(formValue.srvAdvisor===undefined || formValue.srvAdvisor===null  || formValue.srvAdvisor <=0 ) {
         this.amcHeaderValidation=false;
