@@ -168,15 +168,37 @@
                                 <div *ngIf="selectdisp; then disp1; else disp2"></div>
                                  <ng-template #disp2> 
                                     <input  hidden  type="text"  formControlName="fromAcctDescp"  id="fromAcctDescp" [(ngModel)]="fromAcctDescp" class="form-control"  >
+                                        
                                     <td style="width: 15%" class="LabelFontStyle">From&nbsp;A/c:&nbsp;</td>
+                               
+                                    <td>
+                                    <table>
+                                    <tr>
+                                  
+                                           
                                 <td>  
-                                    <select   formControlName="fromAcctDescpId" id="fromAcctDescpId" [(ngModel)]="fromAcctDescpId"  class="form-control"   (ngModelChange)="onSelectionFromAc($event)" style="background-color: yellow;" >     
+                                    <select   formControlName="fromAcctDescpId" id="fromAcctDescpId" [(ngModel)]="fromAcctDescpId"  class="form-control"   
+                                    (ngModelChange)="onSelectionFromAc($event)" style="background-color: yellow;" >     
                                     <option disabled>--Select--</option>
                                     <option *ngFor="let sc of  fromAcctList" [ngValue]="sc.bankAccountId">
                                     {{sc.methodName}}
                                     </option>
                                     </select>
                                 </td>
+                                     
+                                <div *ngIf="showChqListModal; then BTYes1; else BTNo1"></div>
+                                <ng-template #BTYes1> 
+                                <td>
+                                    <button type="button"  class="btn btn-primary" 
+                                    data-toggle="modal" data-target="#ChqListModal" (click)="LoadRcptList()"  style="width: 2rem;color: black;">
+                                    &nbsp;...&nbsp;</button>
+                                </td> 
+                                </ng-template>
+                                <ng-template #BTNo1></ng-template>
+
+                                 </tr>
+                                 </table>
+                                 </td>
 
                                 <td style="width: 15%" class="LabelFontStyle">To&nbsp;A/c:&nbsp;</td>
                                     <input  hidden  type="text"  formControlName="toAcctDescp"  id="toAcctDescp" [(ngModel)]="toAcctDescp" class="form-control" >
@@ -308,16 +330,17 @@
 
                                     </ng-template>
 
-                                    <td>
+                                    <!-- <td>
                                         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#ChqListModal" (click)="LoadRcptList()">List</button>
-                                    </td>
+                                    </td> -->
                                     
                                                             
                                 <td>
                                     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button>
                                 </td>
+
                         <!-- Modal -->
-                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 500px;">
                                 <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-body">
@@ -347,7 +370,7 @@
                                 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalLong">Close</button>
                                 </td>
                                 <!-- Modal -->
-                                <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" style="width: 500px;">
                                     <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-body">
@@ -428,6 +451,8 @@
 
                     
 <!-- -----------------------------------------Receipt List Cheques -->
+<div *ngIf="showChqListModal; then BTYes; else BTNo"></div>
+<ng-template #BTYes> 
 
 <div class="modal fade" id="ChqListModal" tabindex="-1" role="dialog" aria-labelledby="ChqListModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -441,29 +466,25 @@
          </div>
         
          <div class="modal-body">
-         <!-- <table class="center" style="width: 100%;">
+         <table class="center" style="width: 100%;">
+      
             <tr>
+                <td style="width: 15%" class="LabelFontStyle"> &nbsp;Amount&nbsp;:&nbsp;</td>
+                
+                <td>
+                <table>
+                <tr>
 
-                 <td style="width: 15%" class="LabelFontStyle">
-                    Customer &nbsp;No&nbsp;:&nbsp;
-                </td>
-                <td style="font-weight: bold;">{{this.custAccountNo}}
-
-                <td style="width: 15%" class="LabelFontStyle">
-                    Narration &nbsp;&nbsp;:&nbsp;
-                </td> 
-                 <td style="font-weight: bold;">{{this.custName}} 
-
-              <td><input style="width: 95px;height: 25px;text-align: right;"     type="text" formControlName="trfNarration" class="form-control"></td>
-              
-                    
-
-            <td>
-                <button style="width: 8em;" type="button" class="btn btn-info" (click)="LoadRcptList()"  >Run</button>
+                <td><input disabled style="width: 150px;height: 25px;text-align: right;" type="text" formControlName="trfAmount" [(ngModel)]='trfAmount' class="form-control"></td>
+                <!-- <td ><input disabled  style="width:800px"  type="text"  formControlName="amtInWords"  id="amtInWords" [(ngModel)]="amtInWords" class="form-control" ></td> -->
+                <td>{{amtInWords}}</td>
+           
+            </tr>
+            </table>
             </td>
             </tr>
           
-         </table> -->
+         </table>
 
         
     <div class="container1">
@@ -490,7 +511,8 @@
     <ng-container   *ngFor="let group of rcptLineArray().controls; let k= index" [formGroupName]="k" class="auto-style5">  
                <tr>
                 <td style="text-align: right;">{{k+1}}</td>
-                <td><input  type="checkbox"  style="text-align: center;width: 3rem;"  formControlName="selectFlag" ></td>  
+                <td><input  type="checkbox"  style="text-align: center;width: 3rem;"  formControlName="selectFlag" 
+                    (change)="selectFlagEvent($event,k)"></td>  
                 
                 <td><input style="width: 8rem;height: 25px;text-align: center;"   disabled  type="text" formControlName="receiptNumber" class="form-control"></td>
                 <td><input style="width: 9rem;height: 25px;text-align:center;"    disabled  type="date" formControlName="receiptDate"   class="form-control"  > </td>
@@ -517,6 +539,8 @@
 </div>
 </div>
 </div>
+</ng-template>
+<ng-template #BTNo> </ng-template>
 
 
 
