@@ -267,10 +267,17 @@
                             <tr>
                                     
                                 <td style="width: 15%" class="LabelFontStyle">Transfer&nbsp;Amt:&nbsp;</td>
+                                <div *ngIf="showChqListModal; then BTYes11; else BTNo12"></div>
+                                <ng-template #BTNo12> 
                                 <td>
-                                    <input     type="nunber"  min="1" formControlName="trfAmount"  id="trfAmount" [(ngModel)]="trfAmount" 
+                                    <input  type="nunber"  min="1" formControlName="trfAmount"  id="trfAmount" [(ngModel)]="trfAmount" 
                                       class="form-control"  (change) ='validateTrfAmt(trfAmount)' (keyup)="onKey($event)" style="background-color: yellow;text-align: right;" >
                                 </td> 
+                                </ng-template>
+                                <ng-template #BTYes11> 
+                                   <td> <input disabled type="nunber"  formControlName="trfAmount"  id="trfAmount" [(ngModel)]="trfAmount"  class="form-control"  style="text-align: right;background-color:lightgreen;" > </td> 
+                                </ng-template>
+
                                 <td style="width: 15%" class="LabelFontStyle">&nbsp;Amt&nbsp;In&nbsp;Words:&nbsp;</td>
                                
                                 <td colspan="3">

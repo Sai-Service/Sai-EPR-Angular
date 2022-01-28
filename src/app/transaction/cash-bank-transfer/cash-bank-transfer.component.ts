@@ -560,7 +560,11 @@ export class CashBankTransferComponent implements OnInit {
         
           onSelectionFromAc(methodId :number) { 
             if (methodId>0) {
-              if(methodId===58) {this.showChqListModal=true;} else {this.showChqListModal=false;}
+              if(methodId===58) {this.showChqListModal=true;} else {
+                this.showChqListModal=false;
+                this.trfAmount=null;
+                this.amtInWords=null;
+              }
             
             let selectedValue = this.fromAcctList.find(v => v.bankAccountId == methodId);
             if( selectedValue != undefined){
@@ -770,7 +774,8 @@ export class CashBankTransferComponent implements OnInit {
             // var frmDt=this.cashBankTransferForm.get('fromDate').value;
             // var toDt=this.cashBankTransferForm.get('toDate').value;
 
-             this.service.getBnkChqList(902,58,2102)
+             var rcptMethidId =this.cashBankTransferForm.get('fromAcctDescpId').value;
+             this.service.getBnkChqList(902,rcptMethidId,sessionStorage.getItem('locId'))
               .subscribe(
                 data => {
                   this.lstChequeList = data.obj;
