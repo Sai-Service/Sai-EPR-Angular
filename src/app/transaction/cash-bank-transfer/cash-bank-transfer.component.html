@@ -307,6 +307,10 @@
                                         
 
                                     </ng-template>
+
+                                    <td>
+                                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#ChqListModal" (click)="LoadRcptList()">List</button>
+                                    </td>
                                     
                                                             
                                 <td>
@@ -422,6 +426,103 @@
                     
                     <!-- ==================================================== -->
 
+                    
+<!-- -----------------------------------------Receipt List Cheques -->
+
+<div class="modal fade" id="ChqListModal" tabindex="-1" role="dialog" aria-labelledby="ChqListModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+         <div class="modal-header">
+          <!-- <h5 class="modal-title" id="exampleModal2Label">AR&nbsp;Receipt&nbsp;Application&nbsp;-&nbsp;Receipt&nbsp;No:&nbsp;{{this.receiptNumber}}&nbsp;BillToSite:&nbsp;{{this.billToSiteId}} </h5> -->
+          <h5 class="modal-title" id="ChqListModalLabel">&nbsp;Receipt&nbsp;List&nbsp;</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+         </div>
+        
+         <div class="modal-body">
+         <!-- <table class="center" style="width: 100%;">
+            <tr>
+
+                 <td style="width: 15%" class="LabelFontStyle">
+                    Customer &nbsp;No&nbsp;:&nbsp;
+                </td>
+                <td style="font-weight: bold;">{{this.custAccountNo}}
+
+                <td style="width: 15%" class="LabelFontStyle">
+                    Narration &nbsp;&nbsp;:&nbsp;
+                </td> 
+                 <td style="font-weight: bold;">{{this.custName}} 
+
+              <td><input style="width: 95px;height: 25px;text-align: right;"     type="text" formControlName="trfNarration" class="form-control"></td>
+              
+                    
+
+            <td>
+                <button style="width: 8em;" type="button" class="btn btn-info" (click)="LoadRcptList()"  >Run</button>
+            </td>
+            </tr>
+          
+         </table> -->
+
+        
+    <div class="container1">
+    <div class="grid_scroll_3">
+    <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+   <tbody>
+        <tr class="GridHeader">
+          
+            <th style="width:3rem" scope="col">Srl#</th>
+            <!-- <th style="width:3rem;text-align: center;" scope="col"><input  type="checkbox" formControlName="selectAllflag1" [(ngModel)]="selectAllflag1" (change)="applyReceiptFlagAll($event)"></th> -->
+            <th style="width:3rem" scope="col">Select</th>
+            <th style="width:10rem" scope="col">Receipt No</th>
+            <th style="width:6rem" scope="col">Receipt Date</th>
+            <th style="width:10rem" scope="col">Cheque No</th>
+            <th style="width:10rem" scope="col">Cheque Date</th>
+            <th style="width:10rem" scope="col">Amount</th>
+            <th style="width:15rem" scope="col">Bank Name</th>
+            <th style="width:15rem" scope="col">Bank Branch</th>
+          
+       </tr>
+   </tbody>
+   
+   <ng-container  class="center" formArrayName="rcptLine">
+    <ng-container   *ngFor="let group of rcptLineArray().controls; let k= index" [formGroupName]="k" class="auto-style5">  
+               <tr>
+                <td style="text-align: right;">{{k+1}}</td>
+                <td><input  type="checkbox"  style="text-align: center;width: 3rem;"  formControlName="selectFlag" ></td>  
+                
+                <td><input style="width: 8rem;height: 25px;text-align: center;"   disabled  type="text" formControlName="receiptNumber" class="form-control"></td>
+                <td><input style="width: 9rem;height: 25px;text-align:center;"    disabled  type="date" formControlName="receiptDate"   class="form-control"  > </td>
+                <td><input style="width: 7rem;height: 25px;text-align: center;" disabled  type="text" formControlName="checkNo"       class="form-control"></td>
+                <td><input style="width: 9rem;height: 25px;text-align: center;" disabled  type="date" formControlName="checkDate"     class="form-control"></td>
+                <td><input style="width: 7rem;height: 25px;text-align: right;"  disabled  type="number" formControlName="amount"      class="form-control"></td>
+                <td><input style="width: 15rem;height: 25px;text-align: left;"  disabled  type="text" formControlName="bankName"      class="form-control" > </td>
+                <td><input style="width: 11rem;height: 25px;text-align: left;"  disabled  type="text" formControlName="branchName"      class="form-control" > </td>
+               
+              
+            
+            </tr>
+            </ng-container>
+            </ng-container>
+    </table>
+        </div>
+</div>
+</div>
+
+        <div class="modal-footer">
+        <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+        </div>
+
+</div>
+</div>
+</div>
+
+
+
+
+
+
                 </form>
             </div>
         </div>
@@ -464,5 +565,7 @@
     </table>
 </div>
 </div>
+
+
 
 

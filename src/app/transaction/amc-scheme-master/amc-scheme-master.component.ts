@@ -298,10 +298,6 @@ transeData(val) {
    
 
     searchMast() {
-      // var frmDt=this.amcSchemeMasterForm.get('fromDate').value;
-      // var toDt=this.amcSchemeMasterForm.get('toDate').value;
-        //  alert("SearchByRcptNo-Receipt date : "+ frmDt+","+toDt  );
-   
       this.service.AmcSchemeList()
         .subscribe(
           data => {
@@ -311,30 +307,37 @@ transeData(val) {
           } ); 
         }
 
+        
+
         Select(schId: number) {
            
-           this.amcSchemeMasterForm.reset();
+          //  this.amcSchemeMasterForm.reset();
           for(let i=0; i<this.lineDetailsArray.length; i++){
             this.lineDetailsArray().removeAt(i);
           }
             let select = this.lstcomments.find(d => d.schemeId === schId);
+            
           if (select) {
            
-               var control = this.amcSchemeMasterForm.get('amcItemList') as FormArray;
+            var control = this.amcSchemeMasterForm.get('amcItemList') as FormArray;
               // alert ("select.amcItemList.length :"+select.amcItemList.length);
               this.lineDetailsArray().clear();
               
               for (let i=0; i<select.amcItemList.length;i++)
                 {
+               
+                  alert ("in for loop :"+select.amcItemList.length);
                   var amcItemList:FormGroup=this.lineDetailsGroup();
                   control.push(amcItemList);
                 }
 
-               this.amcSchemeMasterForm.patchValue(select);
+               
            }
 
            this.displayButton = false;
            this.schemeId=select.schemeId;
+           this.amcSchemeMasterForm.get('amcItemList').patchValue(select.amcItemList);
+           this.amcSchemeMasterForm.patchValue(select);
         }
 
      updateMast(){alert("Update AMC scheme ....wip");}

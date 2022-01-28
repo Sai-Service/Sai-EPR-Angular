@@ -337,7 +337,8 @@
                                                       <!-- (change)="onOptioninvItemIdSelectedNew(searchByItemCode,i)"  -->
                                 </td>
 
-                                   
+                                  <input hidden formControlName="recordCnt" [(ngModel)]='recordCnt'>
+                            
                                 <td style="text-align: left; width: 100%;">
                                     <button type="submit" class="btn btn-primary" (click)="F9Search()" style="width: 4em;" ><i class="fa fa-search"></i></button>
                                   </td>
@@ -351,6 +352,8 @@
                                          style="width: 300px; background-color:yellow; text-transform: uppercase;"  >
                                          <!-- style="width: 300px; background-color: rgb(240, 240, 166); text-transform: uppercase;" -->
                              </td>
+
+
 
                              <td style="text-align: left; width: 100%;">
                                 <button type="submit" class="btn btn-primary"  data-toggle="modal" data-target="#PlDescSearch"  (click)="F9Search()" style="width: 4em;" ><i class="fa fa-search"></i></button>
@@ -388,8 +391,8 @@
                                                 <tr class="GridHeader">
                                                       <th style="width:4rem" scope="col">Srl No.</th>
                                                       <!-- <th style="width:5rem" scope="col">Item Id</th> -->
-                                                      <th style="width:13rem" scope="col">Item Code</th>
-                                                      <th style="width:25rem" scope="col">Item Description</th>
+                                                      <th style="width:15rem" scope="col">Item Code</th>
+                                                      <th style="width:30rem" scope="col">Item Description</th>
                                                       <th style="width:8rem" scope="col">Item Category</th>
                                                       <th style="width:3rem" scope="col">UOM</th>
                                                       <th style="width:6rem" scope="col">Batch Code</th>
@@ -447,7 +450,7 @@
                                                         </datalist> 
                                                     </td>  -->
                                                 <td>
-                                                    <input  style="width:13rem;background-color: yellow; "  type="text" formControlName="segment" class="form-control"  
+                                                    <input  style="width:15rem;background-color: yellow; "  type="text" formControlName="segment" class="form-control"  
                                                                      (change)="validateitemWithBatchCode(i)" placeholder="Enter Item Code"  >
                                                                      <!-- "onOptioninvItemIdSelectedNew(segment,i)" -->
                                                 </td>
@@ -461,20 +464,20 @@
                                                 </ng-template>
                                               
                                                 <td>
-                                                    <input disabled style="width:22rem;"  type="text" formControlName="itemDescription" class="form-control"   placeholder="Item Description "  >
+                                                    <input disabled style="width:29rem;"  type="text" formControlName="itemDescription" class="form-control"   placeholder="Item Description "  >
                                                 </td>
 
                                                 <td>
-                                                    <input style="width:8rem;" disabled  type="text" formControlName="itemCategory"  class="form-control" placeholder="Item Category "  >
+                                                    <input style="width:10rem;" disabled  type="text" formControlName="itemCategory"  class="form-control" placeholder="Item Category "  >
                                                 </td>
                                                 <td>
-                                                    <input style="width: 3rem;" disabled  type="text" formControlName="uom"  class="form-control" placeholder="Uom "  >
+                                                    <input style="width: 5rem;" disabled  type="text" formControlName="uom"  class="form-control" placeholder="Uom "  >
                                                 </td>
                                                 <td>
                                                     <input style="width:6rem;"  type="text" formControlName="batchCode"  class="form-control" placeholder="Batch Code"  (change)="validateitemWithBatchCode(i)"  >
                                                 </td>
                                                 <td>
-                                                    <input style="text-align: right;width:6rem;"  type="number" formControlName="priceValue"  class="form-control" (change)="validatePrice(i)" placeholder="Price "  >
+                                                    <input style="text-align: right;width:10rem;"  type="number" formControlName="priceValue"  class="form-control" (change)="validatePrice(i)" placeholder="Price "  >
                                                 </td>
                                                
                                                 <div *ngIf="addNew; then  showyes; else showNo"> </div>
@@ -968,7 +971,7 @@
                 <!-- <td>{{com.description}}</td>    -->
                 <td>{{com.priceListType}}</td>   
                 <td>{{com.ouName}}</td> 
-                <td>{{com.divisionName}}</td> 
+                <td style="text-align: center;">{{com.divisionName}}</td> 
                 <td style="text-align: center;">{{com.startDate |date:'dd-MM-y'}}</td>
                 <td style="text-align: center;">{{com.status}}</td>
                 <td style="text-align: center;"><button class="btn btn-info" (click)="SelectPL(com.priceListHeaderId)">Select</button></td> 
@@ -978,8 +981,8 @@
 </div>
 
 <!-- ------------------------------------------- -->
-<div *ngIf="showDescList; then showDescYes; else showDescNo"></div>
-<ng-template #showDescYes>
+<!-- <div *ngIf="showDescList; then showDescYes; else showDescNo"></div>
+<ng-template #showDescYes> -->
 
 <div class="modal fade" id="PlDescSearch" tabindex="-1" role="dialog" aria-labelledby="PlDescSearchLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -987,7 +990,14 @@
         
         <div class="modal-header">
 
-          <h5 class="modal-title" id="PlDescSearchLabel" style="text-align: center;" >ITEM&nbsp;LIST&nbsp;</h5>
+            <div *ngIf="showDescList; then showDescYes; else showDescNo"></div>
+             <ng-template #showDescYes>
+               <h5 class="modal-title" id="PlDescSearchLabel" style="text-align: center;" >ITEM&nbsp;LIST&nbsp;:&nbsp;{{recordCnt}}&nbsp; Records Found</h5>
+             </ng-template>
+             <ng-template #showDescNo>
+                <h5 class="modal-title" id="PlDescSearchLabel" style="text-align: center;" >ITEM&nbsp;LIST:&nbsp;{{recordCnt}}&nbsp;Records Found.</h5>
+              </ng-template>
+
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -1037,9 +1047,9 @@
       </div>
     </div>
 </div>
-
+<!-- 
 </ng-template>
-<ng-template #showDescNo> </ng-template>
+<ng-template #showDescNo> </ng-template> -->
 
 <div class="modal fade" id="showpListData" tabindex="-1" role="dialog" aria-labelledby="showpListDataLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">

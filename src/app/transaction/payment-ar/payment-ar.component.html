@@ -1022,6 +1022,7 @@
                             </div>
                           </div>
                           
+                          
                         </ng-template>
                         <ng-template #ShowMNo> </ng-template>
 
@@ -1586,17 +1587,19 @@
                   <div class="modal-body">
                       <table>
                           <tr>
-                              <table class="GridFont" id="excel-table" cellspacing="0"
-                                  cellpadding="4">
+                              <table class="GridFont" id="excel-table" cellspacing="0"  cellpadding="4" style="font-size: small;">
                                   <tbody>
                                       <tr class="GridHeader">
                                           <th  style="width: 70px;"  scope="col">Customer No</th>
                                           <th  style="width: 250px;" scope="col">Customer Name</th>
                                           <th  style="width: 300px;"scope="col">Address</th>
                                           <th  style="width: 200px;"scope="col">Site</th>
+                                          <th  style="width: 100px;"scope="col">Mobile</th>
                                           <th  style="width: 100px;"scope="col">GST No</th>
                                           <th  style="width: 100px;"scope="col">Pan No</th>
-                                          <th  style="width: 100px;"scope="col">Mobile</th>
+                                          <th  style="width: 100px;"scope="col">Tds%</th>
+                                          <th  style="width: 100px;"scope="col">Tcs%</th>
+
                                           <th  style="width:fit-content;"scope="col">Select</th>
                                       </tr>
                                       <tr *ngFor="let com of customerNameSearch"
@@ -1605,9 +1608,11 @@
                                           <td style="width: 250px;">{{com.custName}}</td>
                                           <td style="width: 300px;">{{com.billToAddress}}</td>
                                           <td style="width: 200px;">{{com.siteName}}</td>
+                                          <td style="width: 100px;text-align: center;">{{com.mobile1}}</td>
                                           <td style="width: 100px;text-align: center;">{{com.gstNo}}</td>
                                           <td style="width: 100px; text-align: center;">{{com.panNo}}</td>
-                                          <td style="width: 100px;text-align: center;">{{com.mobile1}}</td>
+                                          <td style="width: 100px;text-align: center;">{{com.tdsPer}}</td>
+                                          <td style="width: 100px;text-align: center;">{{com.tcsPer}}</td>
                                           <td><button class="btn btn-info" style="width: fit-content;"
                                                   (click)="CustAccountNoSearch(com.accountNo)"
                                                   data-dismiss="modal">Select</button></td>

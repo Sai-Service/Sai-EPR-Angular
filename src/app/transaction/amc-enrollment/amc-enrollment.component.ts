@@ -9,12 +9,13 @@ import { DatePipe } from '@angular/common';
 import { InteractionModeRegistry } from 'chart.js';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 import { TransactionService } from 'src/app/transaction/transaction.service';
+import { ServiceService } from 'src/app/service/service.service';
 import { trigger } from '@angular/animations';
 
 interface IAmcEnroll {  
   enrollmentNo :string;
   enrollmentDate:Date;
-  saName:string;
+  srvAdvisor:string;
   regNo:string;
   contactNo:string;
   custAddress:string;
@@ -53,6 +54,8 @@ export class AmcEnrollmentComponent implements OnInit {
   getVehRegDetails: any;
   CustomerDetailsList: any;
   CustomerSiteDetails: any;
+  lstcomments:any;
+  public srvAdvisorList: any[];
    
   lstAmcSchemeList:any[];
   lstAmcSchLineDetails:any[];
@@ -73,7 +76,7 @@ export class AmcEnrollmentComponent implements OnInit {
   enrollmentNo :string;
   // enrollmentDate:Date;
   enrollmentDate = this.pipe.transform(Date.now(), 'y-MM-dd');
-  saName:string;
+  srvAdvisor:string;
   regNo:string;
   contactNo:string;
   custAddress:string;
@@ -130,7 +133,7 @@ export class AmcEnrollmentComponent implements OnInit {
   amcHeaderValidation =false;
   displayButton=true;
 
-  constructor(private service: MasterService,private orderManagementService:OrderManagementService,private transactionService: TransactionService , private  fb: FormBuilder, private router: Router) {
+  constructor(private service: MasterService,private orderManagementService:OrderManagementService,private transactionService: TransactionService ,private serviceService: ServiceService, private  fb: FormBuilder, private router: Router) {
     this.amcEnrollmentForm = fb.group({
 
     loginArray:[''],
@@ -147,7 +150,7 @@ export class AmcEnrollmentComponent implements OnInit {
 
     enrollmentNo :[],
     enrollmentDate:[],
-    saName:[],
+    srvAdvisor:[],
     regNo:[],
 
     // custNo :[],
@@ -261,6 +264,15 @@ ngOnInit(): void {
     console.log(this.lstAmcSchemeList);
   }
 );
+
+this.serviceService.srvAdvisorListFN((sessionStorage.getItem('locId')), 'Service')
+.subscribe(
+  data1 => {
+    this.srvAdvisorList = data1;
+    console.log(this.srvAdvisorList);
+  }
+);
+
 }
 
 
@@ -355,18 +367,17 @@ closeMast() {
         }
 
 
-       
-
         onSelectAmcScheme(schNo){
+          if(this.displayButton) {          
           if(schNo !=null) {
-            alert (this.customerId)
+            // alert (this.customerId)
           if(this.customerId >0) {
 
           let selectedValue = this.lstAmcSchemeList.find(v => v.schemeNumber === schNo);
+
           if( selectedValue != undefined){
              console.log(selectedValue);
-            this.schemeDesc=selectedValue.schemeDesc;
-          } else {this.schemeDesc=null;}
+         
 
         this.service.AmcSchemeDetails(schNo)
         .subscribe(
@@ -386,7 +397,11 @@ closeMast() {
           });
          } else {alert ("Please Enter Customer Vehilcle Registration no. and proceed."); 
                 this.amcEnrollmentForm.get('schemeNumber').reset();}
-      } }
+                this.schemeDesc=selectedValue.schemeDesc;
+          } else {this.schemeDesc=null;}
+        } 
+        }
+      }
 
 
           showAmcPaymentDetails(){
@@ -465,7 +480,7 @@ closeMast() {
           validateStartKms(){
             var startKm =this.amcEnrollmentForm.get('startKms').value;
             var endKm=this.amcEnrollmentForm.get('schemeValidKm').value;
-            alert (startKm +" ," + endKm);
+            // alert (startKm +" ," + endKm);
 
             if(startKm >=endKm) { alert ("Enter Valid Start Kilomoeter Reading...") ;
              this.amcEnrollmentForm.patchValue({startKms:0});return;
@@ -492,7 +507,7 @@ closeMast() {
         return; 
       }
 
-      if(formValue.saName===undefined || formValue.saName===null  || formValue.saName.trim()==='' ) {
+      if(formValue.srvAdvisor===undefined || formValue.srvAdvisor===null  || formValue.srvAdvisor.trim()==='' ) {
         this.amcHeaderValidation=false;
         alert ("SERVICE ADVISOR: Should not be null value");
         return; 
@@ -506,6 +521,39 @@ closeMast() {
 
       this.amcHeaderValidation=true;
 
+    }
+
+
+    SearchByEnrollNo(x) {
+
+      var enrollNum =this.amcEnrollmentForm.get('enrollmentNo').value
+      if(enrollNum ===undefined || enrollNum===null || enrollNum.trim()==='') {
+        alert ("Please enter valid Amc Enrollment Number and Proceed...");return;
+      }
+     
+      this.displayButton=false;
+      enrollNum=enrollNum.toUpperCase();
+      this.service.AmcEnrollmentDetails(enrollNum)
+      .subscribe(
+        data => {
+          this.lstcomments = data;
+          if(data !=null) {
+          console.log(this.lstcomments);
+          var control = this.amcEnrollmentForm.get('amcItemList') as FormArray;
+          this.lineDetailsArray().clear();
+          
+          for (let i=0; i<this.lstcomments.amcItemList.length;i++)
+            {
+              var amcItemList:FormGroup=this.lineDetailsGroup();
+              control.push(amcItemList);
+            }
+            this.amcEnrollmentForm.patchValue(this.lstcomments);
+            this.GetCustomerDetails(this.lstcomments.customerId);
+            this.GetCustomerSiteDetails(this.lstcomments.customerId);
+           
+         }  else { alert ("No Data found....");}
+        } ); 
+    
     }
 
 
