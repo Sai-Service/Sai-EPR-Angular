@@ -1013,7 +1013,7 @@
 
                         <td> <button type="button" class="btn btn-primary"  style="width: 8rem;" (click)="completeInvoice()">Complete</button></td>
                         <div *ngIf="disabledViewAccounting; then thenBlockViewAccounting; else elseBlockViewAccounting"></div>
-                        <ng-template #thenBlockViewAccounting>
+                        <ng-template #thenBlockViewAccounting> 
                           <td>
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#viewAccountingModel"  style="width: 8rem;" (click)="viewAccounting(trxNumber)" >
                             View Accounting</button></td>

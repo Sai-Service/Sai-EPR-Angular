@@ -67,7 +67,7 @@ onhandDetailsForm:FormGroup;
   searchItemName:string;
 
   showOrg = false;
-
+  reserveData:any=[];
 
 
 
@@ -339,7 +339,7 @@ alert('In call by item');
 
       filterRecord(event) {
         var itemCode1 = event.target.value;
-        alert(itemCode1+'---'+event.keyCode);
+        // alert(itemCode1+'---'+event.keyCode);
         // debugger;
         if (event.keyCode === 13) {
 
@@ -347,12 +347,12 @@ alert('In call by item');
           if (itemCode1.includes('--')) {
             var itemCode2 = itemCode1.split('--');
             itemCode = itemCode2[0];
-            alert(itemCode + 'item in if');
+            // alert(itemCode + 'item in if');
           } else {
             itemCode = itemCode1;
-            alert(itemCode + 'item in else');
+            // alert(itemCode + 'item in else');
           }
-           alert(itemCode.length + 'length'+this.ItemIdList.length);
+          //  alert(itemCode.length + 'length'+this.ItemIdList.length);
           // enter keycode
           if (itemCode.length >= 4 && this.ItemIdList.length <= 1) {
             this.service
@@ -370,12 +370,12 @@ alert('In call by item');
             }
           }
           if (itemCode.length === 8 ) {
-            alert('in len if' + itemCode.toUpperCase());
+            // alert('in len if' + itemCode.toUpperCase());
             console.log(this.ItemIdList);
             let select1 = this.ItemIdList.find(
               (d) => d.segment === itemCode.toUpperCase()
             );
-            alert(select1.itemId + 'In len');
+            // alert(select1.itemId + 'In len');
             if (select1 != undefined) {
               this.searchByItem(select1.segment);
             }else{
@@ -402,8 +402,11 @@ alert('In call by item');
       }
       viewReserve(locId,segment){
         var selinv=this.ItemIdList.find(d=>d.segment===segment)
-        this.service.viewReserveData(locId,selinv.itemId).subscribe((res: any) => {
-
+        alert(locId +'------'+selinv.itemId)
+        // this.service.viewReserveData(locId,selinv.itemId).subscribe((res: any) => {
+          this.service.viewReserveData(locId,selinv.itemId).subscribe((res: any) => {
+        this.reserveData=data;
+        console.log(this.reserveData);
         });
       }
 }
