@@ -15,7 +15,7 @@ import { trigger } from '@angular/animations';
 interface IAmcEnroll {  
   enrollmentNo :string;
   enrollmentDate:Date;
-  srvAdvisor:string;
+  srvAdvisor:number;
   regNo:string;
   contactNo:string;
   custAddress:string;
@@ -26,7 +26,7 @@ interface IAmcEnroll {
   schemeDesc:string;
   startDate:Date;
   endDate :Date;
-  startKms:number;
+  currentKms:number;
   schemeValidKm:number;
   discOnMatrl:number;
   discOnLabour:number;
@@ -76,7 +76,7 @@ export class AmcEnrollmentComponent implements OnInit {
   enrollmentNo :string;
   // enrollmentDate:Date;
   enrollmentDate = this.pipe.transform(Date.now(), 'y-MM-dd');
-  srvAdvisor:string;
+  srvAdvisor:number;
   regNo:string;
   contactNo:string;
   custAddress:string;
@@ -87,7 +87,7 @@ export class AmcEnrollmentComponent implements OnInit {
   schemeDesc:string;
   startDate:Date;
   endDate :Date;
-  startKms:number;
+  currentKms:number;
   schemeValidKm:number;
   discOnMatrl:number;
   discOnLabour:number;
@@ -163,7 +163,7 @@ export class AmcEnrollmentComponent implements OnInit {
     schemeDesc:[],
     startDate:[],
     endDate :[],
-    startKms:[],
+    currentKms:[],
     schemeValidKm:[],
     discOnMatrl:[],
     discOnLabour:[],
@@ -293,7 +293,7 @@ closeMast() {
          }
          mRegNo=mRegNo.toUpperCase();
 
-         alert ("Reg No :" +mRegNo)
+        //  alert ("Reg No :" +mRegNo)
 
         this.service.getVehRegDetails(mRegNo)
           .subscribe(
@@ -455,9 +455,11 @@ closeMast() {
 
           return val;
           }
+
+
           newMast() {
             const formValue: IAmcEnroll =this.transeData(this.amcEnrollmentForm.value);
-            this.checkAmcHeaderValidations();
+              this.checkAmcHeaderValidations();
             if(this.amcHeaderValidation) {
             this.service.AmcEnrollMasterSubmit(formValue).subscribe((res: any) => {
               if (res.code === 200) {
@@ -478,12 +480,12 @@ closeMast() {
 
 
           validateStartKms(){
-            var startKm =this.amcEnrollmentForm.get('startKms').value;
+            var startKm =this.amcEnrollmentForm.get('currentKms').value;
             var endKm=this.amcEnrollmentForm.get('schemeValidKm').value;
             // alert (startKm +" ," + endKm);
 
-            if(startKm >=endKm) { alert ("Enter Valid Start Kilomoeter Reading...") ;
-             this.amcEnrollmentForm.patchValue({startKms:0});return;
+            if(startKm >=endKm || startKm <=0) { alert ("Enter Valid Start Kilomoeter Reading...") ;
+             this.amcEnrollmentForm.patchValue({currentKms:0});return;
              }
 
           }
@@ -491,10 +493,8 @@ closeMast() {
           
   checkAmcHeaderValidations()
   {
-
-      const formValue: IAmcEnroll = this.amcEnrollmentForm.value;
-      // alert("mainModel date :" +formValue.mainModel);
-
+       const formValue: IAmcEnroll = this.amcEnrollmentForm.value;
+    
       if(formValue.regNo===undefined || formValue.regNo===null  || formValue.regNo.trim()==='' ) {
           this.amcHeaderValidation=false;
           alert ("VEHICLE REG NO: Should not be null value");
@@ -506,16 +506,20 @@ closeMast() {
         alert ("SCEHME NUMBER: Should not be null value");
         return; 
       }
+     
+     
 
-      if(formValue.srvAdvisor===undefined || formValue.srvAdvisor===null  || formValue.srvAdvisor.trim()==='' ) {
+      if(formValue.currentKms===undefined || formValue.currentKms===null  || formValue.currentKms<=0 ) {
         this.amcHeaderValidation=false;
-        alert ("SERVICE ADVISOR: Should not be null value");
+        alert ("CURRENT KILOMETER READING: Should be above zero");
         return; 
       }
 
-      if(formValue.startKms===undefined || formValue.startKms===null  || formValue.startKms<=0 ) {
+     
+
+      if(formValue.srvAdvisor===undefined || formValue.srvAdvisor===null  || formValue.srvAdvisor <=0 ) {
         this.amcHeaderValidation=false;
-        alert ("CURRENT KILOMETER READING: Should be above zero");
+        alert ("SERVICE ADVISOR: Should not be null value");
         return; 
       }
 

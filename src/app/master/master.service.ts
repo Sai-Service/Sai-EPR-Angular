@@ -811,6 +811,7 @@ public AmcSchemeMasterSubmit(AmcSchemeMasterRecord) {
 }
 
 public AmcEnrollMasterSubmit(AmcEnrollMasterRecord) {
+  alert ("in amc enrollment");
   const options = {
     headers: this.headers
   };
