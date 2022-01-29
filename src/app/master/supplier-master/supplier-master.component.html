@@ -381,9 +381,10 @@
                       <tr style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;">
                           <td style="width: 15%" class="LabelFontStyle1">&nbsp;Mobile1&nbsp;:&nbsp;</td>
                           <td>
-                              <input type="number" formControlName="mobile1" value={{mobile1}} class="form-control"
+                              <input formControlName="mobile1" value={{mobile1}} class="form-control"
                               [ngClass]="{ 'is-invalid': submitted && f.mobile1.errors }"
-                              placeholder="Enter mobile1" >
+                              placeholder="Enter mobile1" onKeyPress="if(this.value.length==10) return false;"
+                              oninput="this.value = Math.abs(this.value)">
                           <div *ngIf="submitted && f.mobile1.errors" class="invalid-feedback">
                               <div *ngIf="f.mobile1.errors.required">Enter mobile1 </div>
                               <div *ngIf="f.mobile1.errors.maxlength">Enter mobile1</div>
@@ -397,7 +398,8 @@
                           <td>
                               <input type="number" formControlName="mobile2" value={{mobile2}} class="form-control"
                               [ngClass]="{ 'is-invalid': submitted && f.mobile2.errors }"
-                              placeholder="Enter mobile2" >
+                              placeholder="Enter mobile2" onKeyPress="if(this.value.length==10 ||this.value.length>=7) return false;"
+                              oninput="this.value = Math.abs(this.value)" >
                           <div *ngIf="submitted && f.mobile2.errors" class="invalid-feedback">
                               <!-- <div *ngIf="f.mobile2.errors.required">Enter mobile2 </div> -->
                               <div *ngIf="f.mobile2.errors.maxlength">Enter mobile2
