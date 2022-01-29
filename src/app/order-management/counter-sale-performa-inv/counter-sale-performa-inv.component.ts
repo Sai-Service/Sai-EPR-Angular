@@ -35,6 +35,8 @@ export class CounterSalePerformaInvComponent implements OnInit {
   custAccountNo: number;
   creditAmt: number;
   name: string;
+  msRefNo:string;
+  msRefCustNo:string;
   customerSiteId: number;
   taxCategoryName: string;
   custName: string;
@@ -206,6 +208,8 @@ export class CounterSalePerformaInvComponent implements OnInit {
       disPer: [],
       creditDays: [],
       daysMsg: [],
+      msRefNo:[],
+      msRefCustNo:[],
       oeOrderLinesAllList: this.fb.array([this.orderlineDetailsGroup()]),
     })
   }
@@ -322,16 +326,19 @@ export class CounterSalePerformaInvComponent implements OnInit {
         }
       );
 
-    this.orderManagementService.priceListNameList1(sessionStorage.getItem('ouId'), (sessionStorage.getItem('divisionId')))
+      this.orderManagementService.priceListNameList1(sessionStorage.getItem('ouId'), (sessionStorage.getItem('divisionId')))
       .subscribe(
         data => {
           this.priceListNameList = data;
-          console.log(this.priceListNameList);
-          this.CounterSaleOrderBookingForm.patchValue({ priceListName: data[0].priceListName })
-          this.CounterSaleOrderBookingForm.patchValue({ priceListId: data[0].priceListHeaderId })
+          // console.log(this.priceListNameList);
+          for (let i = 0; i < data.length; i++) {
+            if (data[i].ouId === 999) {
+              this.CounterSaleOrderBookingForm.patchValue({ priceListName: data[i].priceListName })
+              this.CounterSaleOrderBookingForm.patchValue({ priceListId: data[i].priceListHeaderId })
+            }
+          }
         }
       );
-
     this.orderlineDetailsGroup();
     var patch = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray
     (patch.controls[0]).patchValue(
@@ -404,6 +411,12 @@ export class CounterSalePerformaInvComponent implements OnInit {
             }
             this.CounterSaleOrderBookingForm.patchValue(data.obj);
             this.CounterSaleOrderBookingForm.patchValue({name:data.obj.billLocName});
+            var orderedDate1 = data.obj.orderedDate;
+            var orderedDate2 = this.pipe.transform(orderedDate1, 'dd-MM-yyyy');
+            this.CounterSaleOrderBookingForm.patchValue(({ orderedDate: orderedDate2 }));
+            var custPoDate1 = data.obj.custPoDate;
+            var custPoDate2 = this.pipe.transform(custPoDate1, 'dd-MM-yyyy');
+            this.CounterSaleOrderBookingForm.patchValue(({ custPoDate: custPoDate2 }));
             orLineCtrl = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
             for (let i = 0; i < this.lstgetOrderLineDetails.length; i++) {
               orLineCtrl.controls[i].patchValue({
@@ -743,8 +756,8 @@ export class CounterSalePerformaInvComponent implements OnInit {
       this.CounterSaleOrderBookingForm.get('refCustNo').disable();
       this.CounterSaleOrderBookingForm.get('custPoDate').disable();
       this.CounterSaleOrderBookingForm.get('custPoNumber').disable();
-
-
+      this.CounterSaleOrderBookingForm.get('msRefNo').disable();
+      this.CounterSaleOrderBookingForm.get('msRefCustNo').disable();
       let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
       let select = (this.itemMap2.get(k)).find(d => d.segment === segment);
 
@@ -1209,18 +1222,11 @@ export class CounterSalePerformaInvComponent implements OnInit {
   }
 
   downloadProformaInv(){
-    // this.isDisabled2 = true;
-    // this.closeResetButton = false;
-    // this.progress = 0;
-    // this.dataDisplay = 'Report Is Running....Do not refresh the Page';
-    const fileName = 'Sales Invoiced Not Delivered-' + sessionStorage.getItem('locName').trim() + '.xls';
+    const fileName = 'Proforma Invoice-' + sessionStorage.getItem('locName').trim() + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.orderManagementService.proformaInv(this.orderNumber, sessionStorage.getItem('locId'))
       .subscribe(data => {
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-        // this.dataDisplay = ''
-        // this.closeResetButton = true;
-        // this.isDisabled2 = false;
       })
   }
   

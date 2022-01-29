@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, RequiredValidator, PatternValidator } from '@angular/forms';
-import { NgForm } from '@angular/forms';
-import { from } from 'rxjs';
-import { Url } from 'url';
+import { FormGroup, FormBuilder, PatternValidator } from '@angular/forms';
+// import { NgForm } from '@angular/forms';
+// import { from } from 'rxjs';
+// import { Url } from 'url';
 import { Router } from '@angular/router';
-import { Validators, FormArray } from '@angular/forms';
-import { FormsModule } from '@angular/forms';
-import { NgModule } from '@angular/core';
+import { Validators} from '@angular/forms';
+// import { FormsModule } from '@angular/forms';
+// import { NgModule } from '@angular/core';
 import { MasterService } from '../master.service';
-import { data, valHooks } from 'jquery';
+// import { data, valHooks } from 'jquery';
 
 interface IsupplierMaster {
   suppId: number;
@@ -227,16 +227,16 @@ export class SupplierMasterComponent implements OnInit {
       suppId: [],
       suppno:[''],
       supName:[],
-      suppNo: ['', [Validators.maxLength(10), Validators.minLength(3), Validators.pattern('[0-9]*')]],
-      name: ['', [ Validators.required, Validators.maxLength(150), Validators.pattern('[a-zA-Z ]*')]],
+      suppNo: [''],
+      name: ['', [ Validators.required, Validators.minLength(3), Validators.maxLength(150), Validators.pattern('[a-zA-Z,.& 0-9/-]*')]],
      address1: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(100),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
       address2: ['', [Validators.required,Validators.minLength(3),Validators.maxLength(100),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
       address3: ['',[Validators.maxLength(50)]],
       address4: ['',[Validators.maxLength(50)]],
       city: ['', [Validators.required,Validators.minLength(3),Validators.maxLength(50),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
       contactNo: ['', [Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
-      mobile1: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
-      mobile2: ['', [Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
+      mobile1: ['', [Validators.required]],
+      mobile2: [''],
       contactPerson: ['',[Validators.pattern('[a-zA-Z /-]*')]],
       taxCategoryName: [''],
       creditDays: ['', [Validators.required, Validators.pattern('[0-9]*')]],
@@ -244,7 +244,8 @@ export class SupplierMasterComponent implements OnInit {
       remarks: [''],
       emailId: ['', [Validators.email]],
       state: ['', [Validators.required]],
-      gstNo: ['', [Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{1}[A-Z0-9]{1}$"),Validators.minLength(15), Validators.maxLength(15)]],
+      // gstNo: ['', [Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{1}[A-Z0-9]{1}$"),Validators.minLength(15), Validators.maxLength(15)]],
+      gstNo:[],
       panNo: ['', [Validators.required, Validators.pattern("^[A-Za-z]{5}[0-9]{4}[A-Za-z]$"), Validators.maxLength(10)]],
       tanNo: [''],
       msmeYN: [],
@@ -642,6 +643,11 @@ export class SupplierMasterComponent implements OnInit {
     if(formValue.gstNo===''){
       formValue.gstNo='GSTUNREGISTERED';
     }
+    formValue.name=(this.supplierMasterForm.get('name').value).toUpperCase();
+    formValue.address1=(this.supplierMasterForm.get('address1').value).toUpperCase();
+    formValue.address2=(this.supplierMasterForm.get('address2').value).toUpperCase();
+    // formValue.address3=(this.supplierMasterForm.get('address3').value).toUpperCase();
+    // formValue.address4=(this.supplierMasterForm.get('address4').value).toUpperCase();
     this.service.SupliMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD INSERTED SUCCESSFULLY');
@@ -727,13 +733,34 @@ export class SupplierMasterComponent implements OnInit {
 
   gstVerification(event: any) {
     var gstno = this.supplierMasterForm.get('gstNo').value
+    // var sGstnoVal = this.customerMasterForm.get('sGstNo').value
+    if(gstno===''){
+      this.supplierMasterForm.patchValue({'gstNo':'GSTUNREGISTERED'});
+      return;
+    }
+    else{
+    var regex: string = "{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}";
+       var p = new PatternValidator();
+       var patt = new RegExp('{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}');
+      let validgst = patt.test(gstno);
+      if (validgst === false) {
+        alert('Please enter valid GST Number');
+      }
+
+    else{
+      alert('Please enter valid GST Number');
+      return false;
+    }
+    // return validgst;
+    }
     const gstNo1 = gstno.substr(2, 10);
-    this.panNo = gstNo1;
-    // alert('Gst verificaition');
+    // this.panNo = gstNo1;
+    // alert('Gst verificaition'+ gstNo1);
     this.supplierMasterForm.patchValue({'panNo':gstNo1});
     var res = gstno.substr(0, 2);
     console.log(res);
-    const state = this.supplierMasterForm.get('state').value;
+    // alert(res+'res');
+    const state = (this.supplierMasterForm.get('state').value).toUpperCase();
     console.log(state);
     console.log(this.state === 'MAHARASHTRA' && res === 27);
     switch (state) {
@@ -956,7 +983,7 @@ else{
       );
   }}
   searchBySuppId(suppId) {
-    if(suppId!=undefined){
+    if(suppId!=undefined){ 
     this.service.getsearchBySuppCode(suppId)
       .subscribe(
         data => {

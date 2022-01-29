@@ -820,6 +820,10 @@
                                 <input disabled type="number" formControlName="basicValue" class="form-control"
                                 style="width: 150px;">
                             </td>
+                            <td colspan="3">
+                                <button type="submit" class="btn btn-primary" (click)="modelDetailsUpdate()"  style="width: fit-content;height: fit-content;">Model Details Update</button>
+                                <!-- [style.display]="isVisible5 ? 'block' : 'none'" [disabled]="isDisabled5" -->
+                            </td>
                         </tr>
                     </table>
                 </ng-template>
@@ -1538,7 +1542,7 @@
                                                             </select> -->
 
                                                             <select formControlName="flowStatusCode"
-                                                                class="form-control"
+                                                                class="form-control"  (ngModelChange)="updateLineOnCancel(i,flowStatusCode)"
                                                                 style="width: fit-content;height: 25px;font-size: 10px;">
                                                                 <option value="BOOKED">BOOKED</option>
                                                                 <option value="CANCELLED">CANCELLED</option>
@@ -2103,7 +2107,7 @@
                             <!-- <div [style.display]="isVisible4 ? 'block' : 'none'" style="display: inline-block;"> -->
                             <td>
                                 <button type="button" class="btn btn-primary" data-toggle="modal" [style.display]="isVisible4 ? 'block' : 'none'"
-                                    data-target="#viewInvoice" [disabled]="isDisabled9" style="width: 8rem;" (click)="viewAllInvoice()">
+                                    data-target="#viewInvoice" style="width: 8rem;" (click)="viewAllInvoice()">
                                     View Invoice
                                 </button>
                                 <div class="modal" id="viewInvoice">
