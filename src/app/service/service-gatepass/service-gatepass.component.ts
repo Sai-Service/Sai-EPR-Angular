@@ -256,7 +256,8 @@ GetJobcardList() {
   var jLocId=this.locId;
   var jcNum=null;
   var jDate=null;
-  var jStatus ='Invoiced'
+  // var jStatus ='Invoiced'
+  var jStatus =null;
   var jRegNo=this.serviceGatepassForm.get('regNo').value
   jRegNo=jRegNo.toUpperCase();
 
@@ -264,10 +265,22 @@ GetJobcardList() {
   .subscribe(
     data => {
       if(data.length>0) {
-        this.gpButton=true;
-      this.lstJobcardList = data;
+        this.lstJobcardList = data;
+        // alert ("this.lstJobcardList.length :"+this.lstJobcardList.length);
+        for (let i = 0; i < this.lstJobcardList.length; i++) {
+          
+          if(this.lstJobcardList[i].status ==='Opened' || this.lstJobcardList[i].status ==='Ready for Invoice' || this.lstJobcardList[i].status ==='Closed') {
+            this.gpButton=false;
+            break;
+          }
+           this.gpButton=true;
+          } 
+
+          // alert ("gpButton : :"+this.gpButton);
+      
       this.jobCardNum=data[0].jobCardNum;
       console.log(this.lstJobcardList); 
+
       } else {alert ("No Jobcard available to Gatepass...");this.gpButton=false;}
      });
     
@@ -290,27 +303,6 @@ if(msgType.includes("gPass")){ this.message="Generate Gatepass for this Vehicle(
   }
 
 
-  GenerateGatePass() { 
-    this.CheckGPvalidation();
-  if(this.checkValidation===false) {
-    return;
-  }
-  this.gpButton=false;
- var jcNum=this.serviceGatepassForm.get('jobCardNum').value;
- this.serviceService.generateServiceGatePass(jcNum).subscribe((res: any) => {
-      if (res.code === 200) {
-        this.printGPbutton=true;
-        alert(res.message);
-        this.gpNumber = res.obj.gatepassId;
-        this.serviceGatepassForm.disable();
-      } else {
-        if (res.code === 400) {
-          this.printGPbutton=false;
-           alert(res.message);
-        }
-      }
-    });
-  }
 
   
 
@@ -348,11 +340,34 @@ CheckGPvalidation() {
 }
 
 
+GenerateGatePass() { 
+  this.CheckGPvalidation();
+if(this.checkValidation===false) {
+  return;
+}
+this.gpButton=false;
+var jcNum=this.serviceGatepassForm.get('jobCardNum').value;
+var regNum=this.serviceGatepassForm.get('regNo').value;
+this.serviceService.generateServiceGatePass(regNum,sessionStorage.getItem('locId')).subscribe((res: any) => {
+    if (res.code === 200) {
+      this.printGPbutton=true;
+      alert(res.message);
+      this.gpNumber = res.obj.gatepassId;
+      this.serviceGatepassForm.disable();
+    } else {
+      if (res.code === 400) {
+        this.printGPbutton=false;
+         alert(res.message);
+      }
+    }
+  });
+}
+
 printGP(){
   var jcNum=this.serviceGatepassForm.get('jobCardNum').value
   const fileName = 'download.pdf';
   const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-  this.serviceService.printWsGatePass(jcNum)
+  this.serviceService.printWsGatePass(jcNum,sessionStorage.getItem('locId'))
     .subscribe(data => {
       var blob = new Blob([data], { type: 'application/pdf' });
       var url = URL.createObjectURL(blob);

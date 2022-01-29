@@ -163,14 +163,27 @@ public lineWISESubmit(Record) {
 }
 
 
-generateServiceGatePass(jcNo){
+generateServiceGatePass(regNo,mlocId){
   const options = {
     headers: this.headers
   };
-  const url = this.ServerUrl + `/SRGatepass/postSRVGatepass?jobCardNum=${jcNo}`;
+  // const url = this.ServerUrl + `/SRGatepass/postSRVGatepass?jobCardNum=${jcNo}`;
+  const url = this.ServerUrl + `/SRGatepass/SRVGatepass?regNo=${regNo}&locId=${mlocId}`;
   return this.http.post(url, options);
-  // http://localhost:8081/SRGatepass/postSRVGatepass?jobCardNum=12PU.101-40
+  // old -- http://localhost:8081/SRGatepass/postSRVGatepass?jobCardNum=12PU.101-40
+  // new -- http://localhost:8081/SRGatepass/SRVGatepass?regNo=MH12SV4124&locId=2202
 }
+
+printWsGatePass(jcNumber,locId){
+  const REQUEST_URI = this.ServerUrl +`/SRGatepass/print/${jcNumber}`;  
+  return this.http.get(REQUEST_URI, {
+  responseType: 'arraybuffer',
+  headers: this.headers,
+});
+
+}
+
+
 
 GenerateInvoiceFN(jobCardNum){
   const options = {
@@ -241,17 +254,6 @@ printWsInvoicedocument(jcNumber,jtype){
   }  
 }
 
-
-printWsGatePass(jcNumber){
-  
-   const REQUEST_URI = this.ServerUrl +`/SRGatepass/print/${jcNumber}`;  
-   return this.http.get(REQUEST_URI, {
-   responseType: 'arraybuffer',
-   headers: this.headers,
- });
- 
-//  http://localhost:8081/SRGatepass/print/12PU.101-40
-}
 
 printVehicleHistory(vehNum){
   alert("History : "+vehNum);
