@@ -1736,7 +1736,7 @@
                         <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-primary" (click)="downloadCSINV()" style="width: 6rem;">
+                        <button type="button" class="btn btn-primary" (click)="downloadCSINV()" [disabled]="isDisabled15" style="width: 6rem;">
                             View&nbsp;Invoice
                         </button>
                     </td>
@@ -1751,7 +1751,7 @@
                         </td>
                     </ng-template>
                     <td>
-                        <button type="button" class="btn btn-primary" (click)="gatePassViewFn()" style="width: 8rem;">
+                        <button type="button" class="btn btn-primary" [disabled]="isDisabled16" (click)="gatePassViewFn()" style="width: 8rem;">
                             View&nbsp;Gate&nbsp;Pass
                         </button>
                     </td>
