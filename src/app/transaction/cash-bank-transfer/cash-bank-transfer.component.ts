@@ -98,6 +98,7 @@ export class CashBankTransferComponent implements OnInit {
       toAcctDescp:string;
 
       fromAcctDescpId:number;
+      bankId:number;
       toAcctDescpId:number;
 
       trfAmount:number;
@@ -171,6 +172,7 @@ export class CashBankTransferComponent implements OnInit {
           toAcctDescp:[],
           fromAcctDescpId:[],
           toAcctDescpId:[],
+          bankId:[],
     
           status:[],
 
@@ -570,6 +572,8 @@ export class CashBankTransferComponent implements OnInit {
             if( selectedValue != undefined){
               console.log(selectedValue);
              this.fromAcctDescp=selectedValue.methodName;
+             this.bankId=selectedValue.bankId;
+             
             }
 
 
@@ -775,7 +779,8 @@ export class CashBankTransferComponent implements OnInit {
             // var toDt=this.cashBankTransferForm.get('toDate').value;
 
              var rcptMethidId =this.cashBankTransferForm.get('fromAcctDescpId').value;
-             this.service.getBnkChqList(902,rcptMethidId,sessionStorage.getItem('locId'))
+             var bnkId =this.cashBankTransferForm.get('bankId').value;
+             this.service.getBnkChqList(bnkId,rcptMethidId,sessionStorage.getItem('locId'))
               .subscribe(
                 data => {
                   this.lstChequeList = data.obj;
@@ -943,6 +948,15 @@ export class CashBankTransferComponent implements OnInit {
                         res = "zero"; 
                     } 
                     return res;
+            }
+
+            removeRcptLines(){
+              var applLineArr = this.cashBankTransferForm.get('rcptLine').value;
+              var len1 = applLineArr.length;
+              for (let i = len1 - 1; i >= 0; i--) {
+               if (this.rcptLineArray().controls[i].get('selectFlag').value != true) {
+                 this.rcptLineArray().removeAt(i);   } 
+             }
             }
                   
   

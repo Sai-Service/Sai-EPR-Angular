@@ -168,7 +168,8 @@
                                 <div *ngIf="selectdisp; then disp1; else disp2"></div>
                                  <ng-template #disp2> 
                                     <input  hidden  type="text"  formControlName="fromAcctDescp"  id="fromAcctDescp" [(ngModel)]="fromAcctDescp" class="form-control"  >
-                                        
+                                    <input  hidden  type="text"  formControlName="bankId"  id="bankId" [(ngModel)]="bankId" class="form-control"  >
+                                      
                                     <td style="width: 15%" class="LabelFontStyle">From&nbsp;A/c:&nbsp;</td>
                                
                                     <td>
@@ -537,7 +538,7 @@
     </div>
 
         <div class="modal-footer">
-        <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-info" data-dismiss="modal"  (click)="removeRcptLines()">Close</button>
         </div>
 
     </div>
