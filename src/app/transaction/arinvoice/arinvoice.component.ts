@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
-import { data } from 'jquery';
+// import { data } from 'jquery';
 import { MasterService } from 'src/app/master/master.service';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 import { TransactionService } from '../transaction.service';

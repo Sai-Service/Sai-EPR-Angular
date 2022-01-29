@@ -11,6 +11,7 @@ import { OrderManagementService } from 'src/app/order-management/order-managemen
 import { mapToMapExpression } from '@angular/compiler/src/render3/util';
 // import * as converter from 'number-to-words';
 
+
 interface ICashBankTransfer {
       openPeriod:string;
       docTrfNo:string;
@@ -110,6 +111,7 @@ export class CashBankTransferComponent implements OnInit {
 
       trfHeader:string;
       trfNarration:string;
+      chqTrfAmt:number=0;
 
      reversalPeriod:string=null;
      reversalStatus='N';
@@ -122,6 +124,7 @@ export class CashBankTransferComponent implements OnInit {
       fromDate=this.pipe.transform(Date.now(), 'y-MM-dd');  
       toDate=this.pipe.transform(Date.now(), 'y-MM-dd');  
       searchDocNo:string;
+      selectAllFlag=false;
 
       display = true;
       displayButton = true;
@@ -133,6 +136,8 @@ export class CashBankTransferComponent implements OnInit {
       revButton=false;
       copyButton=true;
       checkValidation=false;
+      showChqListModal =false;
+
 
       get f() { return this.cashBankTransferForm.controls; }
       cashBankTransfer(cashBankTransferForm:any) {  }
@@ -188,6 +193,7 @@ export class CashBankTransferComponent implements OnInit {
           searchDocNo:[],
           fromDate:[],
           toDate:[],
+          chqTrfAmt:[],
 
           rcptLine: this.fb.array([this.rcptLineDetails()]),
       
@@ -491,6 +497,9 @@ export class CashBankTransferComponent implements OnInit {
               if (select) {
                 this.cashBankTransferForm.patchValue(select);
                 this.docTrfNo = select.docTrfNo;
+
+                var inWords =this.number2text(select.trfAmount);
+                this.amtInWords=inWords;
                 // this.fromAcctDescp=select.fromAcctDescp;
                 // this.toAcctDescp=select.toAcctDescp;
                 this.displayButton = false;
@@ -551,7 +560,12 @@ export class CashBankTransferComponent implements OnInit {
         
           onSelectionFromAc(methodId :number) { 
             if (methodId>0) {
-            //  alert ("From ac:"+methodId);
+              if(methodId===58) {this.showChqListModal=true;} else {
+                this.showChqListModal=false;
+                this.trfAmount=null;
+                this.amtInWords=null;
+              }
+            
             let selectedValue = this.fromAcctList.find(v => v.bankAccountId == methodId);
             if( selectedValue != undefined){
               console.log(selectedValue);
@@ -571,6 +585,7 @@ export class CashBankTransferComponent implements OnInit {
                });
 
               }
+
           }
 
           onSelectionToAc(methodId :number) { 
@@ -752,26 +767,15 @@ export class CashBankTransferComponent implements OnInit {
                     this.checkValidation=true
           }
 
-          validateTrfAmt(x) {
-
-            var trfAmt=this.cashBankTransferForm.get('trfAmount').value
-            if(trfAmt <=0) {  alert ("Transfer Amount should by above zero");
-             this.cashBankTransferForm.patchValue({trfAmount:''});
-             this.cashBankTransferForm.patchValue({amtInWords:''});
-            return;
-          }
-
-            // var inwords =converter.toWords(trfAmt);
-            // this.amtInWords=inwords.toUpperCase();
-
-          }
+        
 
           LoadRcptList(){
 
             // var frmDt=this.cashBankTransferForm.get('fromDate').value;
             // var toDt=this.cashBankTransferForm.get('toDate').value;
 
-             this.service.getBnkChqList(902,58,2102)
+             var rcptMethidId =this.cashBankTransferForm.get('fromAcctDescpId').value;
+             this.service.getBnkChqList(902,rcptMethidId,sessionStorage.getItem('locId'))
               .subscribe(
                 data => {
                   this.lstChequeList = data.obj;
@@ -787,8 +791,159 @@ export class CashBankTransferComponent implements OnInit {
               
                 } ); 
               }
+              
+              selectAllFlagEvent(e) {
+               
+                var rcptLineArr = this.cashBankTransferForm.get('rcptLine').value;
+                var patch = this.cashBankTransferForm.get('rcptLine') as FormArray;
+                if (e.target.checked) { 
+                for (let i = 0; i < this.rcptLineArray().length; i++) {
+                patch.controls[i].patchValue({ selectFlag: true })    }
+                } 
+                else 
+                {
+                  for (let i = 0; i < this.rcptLineArray().length; i++) {
+                    patch.controls[i].patchValue({ selectFlag: '' }) 
+                  }
+                }
+
+              this.CalculateValue(0);
+              }
 
 
+              selectFlagEvent(e, index) {
+                if (e.target.checked) { }
+                  this.CalculateValue(index);
+              }
+
+
+              CalculateValue(i) {
+
+                var rcptLineArr = this.cashBankTransferForm.get('rcptLine').value;
+                var patch = this.cashBankTransferForm.get('rcptLine') as FormArray;
+                var totAmt=0;
+                
+                for (let i = 0; i < this.rcptLineArray().length; i++) {
+            
+                  if (rcptLineArr[i].selectFlag === true) {
+                    totAmt = totAmt + Number(rcptLineArr[i].amount);
+                  }
+                         
+                }
+                  
+                // alert (" totAmt : "+totAmt);
+                this.cashBankTransferForm.patchValue({trfAmount:totAmt});
+                var inWords =this.number2text(totAmt);
+                this.amtInWords=inWords;
+              }
+
+
+              onKey(event: any) {
+                var trfAmt=this.cashBankTransferForm.get('trfAmount').value
+                var inWords =this.number2text(trfAmt);
+                this.amtInWords=inWords;
+                     
+              }
+
+
+              validateTrfAmt(x) {
+
+                var trfAmt=this.cashBankTransferForm.get('trfAmount').value
+                if(trfAmt <=0) {  alert ("Transfer Amount should by above zero");
+                 this.cashBankTransferForm.patchValue({trfAmount:''});
+                 this.cashBankTransferForm.patchValue({amtInWords:''});
+                return;
+              }
+                
+              var inWords =this.number2text(trfAmt);
+              this.amtInWords=inWords;
+               
+            }
+
+               number2text(value) {
+                var fraction = Math.round(this.frac(value)*100);
+                var f_text  = "";
+            
+                if(fraction > 0) {
+                    f_text = "AND "+this.convert_number(fraction)+" PAISE";
+                }
+                return this.convert_number(value)+" RUPEE "+f_text+" ONLY";
+               }
+            
+                frac(f) {
+                    return f % 1;
+                }
+
+          convert_number(number)
+          {
+              if ((number < 0) || (number > 999999999)) 
+              { 
+                  return "NUMBER OUT OF RANGE!";
+              }
+              var Gn = Math.floor(number / 10000000);  /* Crore */ 
+              number -= Gn * 10000000; 
+              var kn = Math.floor(number / 100000);     /* lakhs */ 
+              number -= kn * 100000; 
+              var Hn = Math.floor(number / 1000);      /* thousand */ 
+              number -= Hn * 1000; 
+              var Dn = Math.floor(number / 100);       /* Tens (deca) */ 
+              number = number % 100;               /* Ones */ 
+              var tn= Math.floor(number / 10); 
+              var one=Math.floor(number % 10); 
+              var res = ""; 
+
+              if (Gn>0) 
+              { 
+                  res += (this.convert_number(Gn) + " CRORE"); 
+              } 
+              if (kn>0) 
+              { 
+                      res += (((res=="") ? "" : " ") + 
+                      this.convert_number(kn) + " LAKH"); 
+              } 
+              if (Hn>0) 
+              { 
+                  res += (((res=="") ? "" : " ") +
+                  this.convert_number(Hn) + " THOUSAND"); 
+              } 
+
+              if (Dn) 
+              { 
+                  res += (((res=="") ? "" : " ") + 
+                  this.convert_number(Dn) + " HUNDRED"); 
+              } 
+
+
+              var ones = Array("", "ONE", "TWO", "THREE", "FOUR", "FIVE", "SIX","SEVEN", "EIGHT", "NINE", "TEN", "ELEVEN", "TWELVE", "THIRTEEN","FOURTEEN", "FIFTEEN", "SIXTEEN", "SEVENTEEN", "EIGHTEEN","NINETEEN"); 
+              var tens = Array("", "", "TWENTY", "THIRTY", "FOURTY", "FIFTY", "SIXTY","SEVENTY", "EIGHTY", "NINETY"); 
+
+                  if (tn>0 || one>0) 
+                  { 
+                      if (!(res=="")) 
+                      { 
+                          res += " AND "; 
+                      } 
+                      if (tn < 2) 
+                      { 
+                          res += ones[tn * 10 + one]; 
+                      } 
+                      else 
+                     { 
+
+                      res += tens[tn];
+                      if (one>0) 
+                      { 
+                          res += ("-" + ones[one]); 
+                      } 
+                    } 
+                  }
+
+                    if (res=="")
+                    { 
+                        res = "zero"; 
+                    } 
+                    return res;
+            }
                   
   
  

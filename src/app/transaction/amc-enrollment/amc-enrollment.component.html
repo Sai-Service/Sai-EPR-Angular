@@ -100,7 +100,8 @@
                     <td> <input disabled type ="number" class="form-control" formControlName="discOnLabour" [(ngModel)]='discOnLabour'  value={{discOnLabour}} > </td>
                     
                     <td style="width: 15%" class="LabelFontStyle">&nbsp;Curr&nbsp;Kms:&nbsp;</td>
-                    <td> <input  type ="number" class="form-control" formControlName="startKms"  value={{startKms}} (change)="validateStartKms()" style="background-color: yellow;"  > </td>
+                    <td> <input  type ="number" class="form-control" formControlName="currentKms" [(ngModel)]="currentKms" value={{currentKms}} (change)="validateStartKms()" style="background-color: yellow;"  > </td>
+                   
                     <td style="width: 15%" class="LabelFontStyle">&nbsp;End&nbsp;Kms:&nbsp;</td>
                     <td> <input disabled type ="number" class="form-control" formControlName="schemeValidKm"  value={{schemeValidKm}}   > </td>
                              

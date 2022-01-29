@@ -1443,7 +1443,7 @@ export class JobCardComponent implements OnInit {
             this.jobcardForm.get('jobCardMatLines').disable();
             this.displaybilling = false;
             this.dispButtonStatus = false;
-            this.dispReadyInvoice = true;
+            this.dispReadyInvoice = false;
             this.printInvoiceButton=false;
             this.saveBillButton=true;
             this.genBillButton=false;
@@ -2178,7 +2178,7 @@ export class JobCardComponent implements OnInit {
 
    this.CheckSaveBillValidation()
     if(this.saveBillValidation) {
-    // this.saveBillButton=false;
+    this.saveBillButton=false;
   
     const formValue: IjobCard = this.tranceFun(this.jobcardForm.value);
     this.serviceService.BillingCal(formValue).subscribe((res: any) => {

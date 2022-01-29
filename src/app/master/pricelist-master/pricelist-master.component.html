@@ -62,7 +62,7 @@
                         <tr>
                             <td style="width: 15%" class="LabelFontStyle">Division&nbsp;:</td>
                              <td>
-                                <input disabled type="text"  formControlName="divisionName" id="divisionName"  [(ngModel)]="divisionName" class="form-control">
+                                <input disabled type="text"  formControlName="divisionName" id="divisionName"  [(ngModel)]="divisionName" class="form-control" >
                               </td>
                             
                               <td style="width: 15%" class="LabelFontStyle">Dept&nbsp;:</td>
@@ -70,7 +70,7 @@
                               <div *ngIf="displayButton; then thenBlock112; else elseBlock112"></div>
                               <ng-template #thenBlock112>
                                      <td>  
-                                        <select formControlName="deptId" id="deptId" [(ngModel)]="deptId" class="form-control">
+                                        <select formControlName="deptId" id="deptId" [(ngModel)]="deptId" class="form-control" >
                                             <option disabled>--Select--</option>
                                             <option *ngFor="let sc of  DepartmentList" [ngValue]="sc.cmnTypeId"  >
                                             {{sc.cmnTypeId}}-{{sc.code}}
@@ -103,7 +103,7 @@
                                     <ng-template #thenBlock114>
 
                                      <td>  
-                                        <select   formControlName="ouId" id="ouId" [(ngModel)]="ouId"  class="form-control"  >
+                                        <select   formControlName="ouId" id="ouId" [(ngModel)]="ouId"  class="form-control" style="background-color: yellow;" >
                                         <option disabled>--Select--</option>
                                         <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">
                                         {{sc.ouId}}-{{sc.ouName}}
@@ -145,7 +145,7 @@
                                 <ng-template #thenBlock111>
 
                                     <td> 
-                                    <select  formControlName="priceListType" id="priceListType"  [(ngModel)]="priceListType" class="form-control" (ngModelChange)='onPLTSelected($event)'>
+                                    <select  formControlName="priceListType" id="priceListType"  [(ngModel)]="priceListType" class="form-control" (ngModelChange)='onPLTSelected($event)'  style="background-color: yellow;">
                                         <option disabled>--Select--</option>
                                         <option *ngFor="let sc of  PriceTypeList" [ngValue]="sc.code">
                                             {{sc.cmnTypeId}}-{{sc.code}}
@@ -172,10 +172,10 @@
                                             <td style="width: 15%" class="LabelFontStyle">PL&nbsp;Name:&nbsp;</td>
 
                                             <td><input disabled type="text"  formControlName="priceListName" id="priceListName"  [(ngModel)]="priceListName" class="form-control"></td>
-                                </ng-template>
+                                         </ng-template>
 
                                             <td style="width: 15%" class="LabelFontStyle">PL&nbsp;Description:&nbsp;</td>
-                                            <td><input  type="text"  formControlName="description" id="description" [(ngModel)]="description" class="form-control"></td>
+                                            <td><input  type="text"  formControlName="description" id="description" [(ngModel)]="description" class="form-control" style="background-color: yellow;"></td>
 
                             </tr>
 
@@ -190,7 +190,7 @@
 
                                     <td>
                                         <select  formControlName="status" id="status" class="form-control"  
-                                        [ngModel]="status" (ngModelChange)='onOptionsSelectedStatus($event)'>
+                                        [ngModel]="status" (ngModelChange)='onOptionsSelectedStatus($event)' style="background-color: yellow;">
                                         <option disabled>--Select--</option>
                                         <option *ngFor="let sc of  statusList" [ngValue]="sc.code">
                                             {{sc.code}}
@@ -205,10 +205,10 @@
                                         <div *ngIf="displayButton; then b1; else b2"></div>
                                          <ng-template #b1> 
                                         <td><input   type="date"   id="startDate"  formControlName="startDate"  [(ngModel)]="startDate" class="form-control"
-                                            max="{{minDate | date:'yyyy-MM-dd'}}"> </td>
+                                            max="{{minDate | date:'yyyy-MM-dd'}}" style="background-color: yellow;"> </td>
                                          </ng-template>
                                          <ng-template #b2> 
-                                            <td> <input disabled type="text" formControlName="startDate" [(ngModel)]="startDate" class="form-control"  [ngModel]="startDate | date:'yyyy-MM-dd' " > </td>
+                                            <td> <input disabled type="date" formControlName="startDate" [(ngModel)]="startDate" class="form-control"  [ngModel]="startDate | date:'yyyy-MM-dd' " > </td>
                                          </ng-template>
 
                             
@@ -231,7 +231,7 @@
                                     <ng-template #thenBlock113>
                                    
                                         <td>  
-                                            <select formControlName="priceSubType" id="priceSubType" [(ngModel)]="priceSubType" class="form-control">
+                                            <select formControlName="priceSubType" id="priceSubType" [(ngModel)]="priceSubType" class="form-control" style="background-color: yellow;">
                                                 <option disabled>--Select--</option>
                                                 <option *ngFor="let sc of  PriceSubTypeList" [ngValue]="sc.code"  >
                                                 {{sc.code}}
@@ -474,10 +474,10 @@
                                                     <input style="width: 5rem;" disabled  type="text" formControlName="uom"  class="form-control" placeholder="Uom "  >
                                                 </td>
                                                 <td>
-                                                    <input style="width:6rem;"  type="text" formControlName="batchCode"  class="form-control" placeholder="Batch Code"  (change)="validateitemWithBatchCode(i)"  >
+                                                    <input style="width:6rem;background-color: yellow;"  type="text" formControlName="batchCode"  class="form-control" placeholder="Batch Code"  (change)="validateitemWithBatchCode(i)"  >
                                                 </td>
                                                 <td>
-                                                    <input style="text-align: right;width:10rem;"  type="number" formControlName="priceValue"  class="form-control" (change)="validatePrice(i)" placeholder="Price "  >
+                                                    <input style="text-align: right;width:10rem;background-color: yellow;"  type="number" formControlName="priceValue"  class="form-control" (change)="validatePrice(i)" placeholder="Price "  >
                                                 </td>
                                                
                                                 <div *ngIf="addNew; then  showyes; else showNo"> </div>

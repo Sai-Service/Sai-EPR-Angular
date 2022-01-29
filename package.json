@@ -37,6 +37,7 @@
     "ngx-daterange": "^1.0.43",
     "ngx-pagination": "^5.0.0",
     "ngx-spinner": "^12.0.0",
+    "num-words": "^1.2.2",
     "popper.js": "^1.16.1",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.3",
