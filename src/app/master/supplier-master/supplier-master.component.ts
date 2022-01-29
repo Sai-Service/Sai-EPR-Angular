@@ -228,7 +228,7 @@ export class SupplierMasterComponent implements OnInit {
       suppno:[''],
       supName:[],
       suppNo: ['', [Validators.maxLength(10), Validators.minLength(3), Validators.pattern('[0-9]*')]],
-      name: ['', [ Validators.required, Validators.maxLength(150), Validators.pattern('[a-zA-Z ]*')]],
+      name: ['', [ Validators.required, Validators.minLength(3), Validators.maxLength(150), Validators.pattern('[a-zA-Z,.& 0-9/-]*')]],
      address1: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(100),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
       address2: ['', [Validators.required,Validators.minLength(3),Validators.maxLength(100),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
       address3: ['',[Validators.maxLength(50)]],

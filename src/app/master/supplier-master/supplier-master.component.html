@@ -234,12 +234,14 @@
                               <td colspan="6">
                                   <input formControlName="name" value={{name}} class="form-control"
                                   [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
-                                  placeholder="Enter name" style="width: 75%;" >
-                              <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
-                                  <div *ngIf="f.name.errors.required">Supplier Name cannot be blank </div>
-                                  <div *ngIf="f.name.errors.maxlength">Enter name
-                                  </div>
-                              </div>
+                                  placeholder="Enter name" style="width: 75%; text-transform: uppercase;">
+                                  <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                                    <div *ngIf="f.name.errors.required">Supplier Name cannot be blank </div>
+                                    <div *ngIf="f.name.errors.maxlength">Maximum 150 characters allowed</div>
+                                    <div *ngIf="f.name.errors.minlength">Minimum 3 characters required</div>
+                                    <div *ngIf="f.name.errors.pattern">Some special characters are not allowed</div>
+                                </div>
+                        
                               <!-- <span *ngIf="!supplierMasterForm.get('name').valid && supplierMasterForm.get('name').touched">Please
                                   Enter name </span> -->
                                  </td>
@@ -252,13 +254,13 @@
                         <td colspan="4">
                             <input formControlName="name" value={{name}} class="form-control"
                             [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
-                            placeholder="Enter name" style="width: 75%;" >
+                            placeholder="Enter name" style="width: 75%; text-transform: uppercase;">
                         </td>
                         <td style="width: 15%" class="LabelFontStyle1">Ticket&nbsp;No&nbsp;:&nbsp;</td>
                         <td>
                             <input formControlName="ticketNo" value={{ticketNo}} class="form-control"
                             [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
-                            placeholder="Enter Ticket No" style="width: 75%;" >
+                            placeholder="Enter Ticket No" style="width: 75%; text-transform: uppercase;" >
                         </td>
                         <input hidden formControlName="ouId">
                       </tr>
@@ -267,7 +269,7 @@
                           <td>
                               <input formControlName="address1" value={{address1}}  class="form-control"
                               [ngClass]="{ 'is-invalid': submitted && f.address1.errors }"
-                              placeholder="Enter address" >
+                              placeholder="Enter address" style="text-transform: uppercase;" >
                           <div *ngIf="submitted && f.address1.errors" class="invalid-feedback">
                               <div *ngIf="f.address1.errors.required">Address cannot be blank</div>
                               <div *ngIf="f.address1.errors.maxlength">Maximum 100 Characters allowed</div>
@@ -280,11 +282,11 @@
                           <td>
                               <input formControlName="address2" value={{address2}}  [(ngModel)]='address2' class="form-control"
                               [ngClass]="{ 'is-invalid': submitted && f.address2.errors }"
-                              placeholder="Enter address" >
+                              placeholder="Enter address" style="text-transform: uppercase;" >
                           <div *ngIf="submitted && f.address2.errors" class="invalid-feedback">
                               <div *ngIf="f.address2.errors.required">Enter address </div>
                               <div *ngIf="f.address2.errors.maxlength">Enter address </div>
-                              <div *ngIf="f.address1.errors.minlength">Enter address </div>
+                              <div *ngIf="f.address2.errors.minlength">Enter address </div>
                           </div>
                           <!-- <span *ngIf="!supplierMasterForm.get('address2').valid && supplierMasterForm.get('address2').touched">Please
                               Enter address </span> -->
@@ -293,7 +295,7 @@
                           <td>
                               <input formControlName="address3" value={{address3}} [(ngModel)]='address3' class="form-control"
                               [ngClass]="{ 'is-invalid': submitted && f.address3.errors }"
-                              placeholder="Enter address" >
+                              placeholder="Enter address" style="text-transform: uppercase;" >
                           <div *ngIf="submitted && f.address3.errors" class="invalid-feedback">
                               <!-- <div *ngIf="f.address3.errors.required">Enter address </div> -->
                               <div *ngIf="f.address3.errors.maxlength">Enter address
@@ -306,7 +308,7 @@
                           <td>
                               <input formControlName="address4" value={{address4}}  [(ngModel)]='address4' class="form-control"
                               [ngClass]="{ 'is-invalid': submitted && f.address4.errors }"
-                              placeholder="Enter address" >
+                              placeholder="Enter address" style="text-transform: uppercase;" >
                           <div *ngIf="submitted && f.address4.errors" class="invalid-feedback">
                               <!-- <div *ngIf="f.address4.errors.required">Enter address </div> -->
                               <div *ngIf="f.address4.errors.maxlength">Enter address
@@ -326,7 +328,8 @@
                               </option>
                           </select> -->
                           <input type="text" formControlName="city" id="city"  class="form-control" 
-                          [ngClass]="{'is-invalid': submitted && f.city.errors }">
+                          [ngClass]="{'is-invalid': submitted && f.city.errors }" 
+                          style="text-transform: uppercase;">
                           <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
                               <div *ngIf="f.city.errors.required">City cannote be blank</div>
                               <div *ngIf="f.city.errors.maxlength">Maximum 50 characters allowed</div>
