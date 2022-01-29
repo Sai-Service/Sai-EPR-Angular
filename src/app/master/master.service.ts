@@ -3502,6 +3502,7 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
      }
 
      getBnkChqList(bankId,rcptMthId,locId): Observable<any> {
+    //  alert(bankId +","+rcptMthId +","+locId);
       return this.http.get(this.ServerUrl+`/AccountTrf/CounterList?bankId=${bankId}&receiptMethodId=${rcptMthId}&locId=${locId}`);
       // http://localhost:8081/AccountTrf/CounterList?bankId=902&receiptMethodId=58&locId=2102
    }

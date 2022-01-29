@@ -88,6 +88,7 @@ export class AdminComponent implements OnInit {
   isVisible34:boolean=true;
   isVisible35:boolean=true;
   isVisible36:boolean=true;
+  isVisible37:boolean=true;
   public show: boolean = false;
   isShown: boolean = false;
   displayUserIdwiseAccess: boolean = true;
@@ -265,12 +266,14 @@ export class AdminComponent implements OnInit {
       this.isVisible32=false;
       this.isVisible35=false;
       this.isVisible36=true;
+      this.isVisible37=true;
     }
     if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId'))===2 && sessionStorage.getItem('deptName')==='Service'){
       this.isVisible11=false;
       this.isVisible12=false;
       this.isVisible13=true;
       this.isVisible14=false;
+      this.isVisible37=false;
       this.isVisible15=false;
       this.isVisible16=true;
       this.isVisible17=false;
@@ -298,6 +301,7 @@ export class AdminComponent implements OnInit {
       // alert('roleId  1' + this.isVisible20)
       this.isVisible11=true;
       this.isVisible12=false;
+      this.isVisible37=true;
       this.isVisible13=false;
       this.isVisible14=true;
       this.isVisible15=true;
@@ -335,6 +339,7 @@ export class AdminComponent implements OnInit {
       this.isVisible19=true;
       this.isVisible20=false;
       this.isVisible21=false;
+      this.isVisible37=true;
       this.isVisible22=false;
       this.isVisible23=false;
       this.isVisible24=true;

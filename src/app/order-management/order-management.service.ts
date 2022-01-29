@@ -413,6 +413,15 @@ public pickTicketInvoiceFun(pickTicketInvDels) {
   }
 
 
+  public  variantDetailsUpdate(orderNumber,model,variant,color,basicValue){
+    const options = {
+      headers: this.headers
+    };
+    const url = this.ServerUrl + `/orderHeader/variantUpdate?orderNumber=${orderNumber}&Model=${model}&color=${color}&variant=${variant}&attribute2=${basicValue}`;
+    return this.http.put(url, options);
+  }
+
+
   // ////////////////************Order Payment Receipt **************//////////////////
   PaymentModeList(): Observable<any> {
     return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/PayType');
