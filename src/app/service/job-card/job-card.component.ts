@@ -928,7 +928,7 @@ export class JobCardComponent implements OnInit {
       // alert ("SELECT >>event : "+event + " index :"+i + ","+select.description);
     if(select.genericItem==='Y') {this.genericItemLab=true;} else {this.genericItemLab=false;}
 
-    alert ("select.genericItem : "+select.genericItem);
+    // alert ("select.genericItem : "+select.genericItem);
 
     if(select.genericItem==='N') {
     this.CheckForDuplicateLineItem(select.itemId,i)
@@ -1689,6 +1689,7 @@ export class JobCardComponent implements OnInit {
     }
 
    if(this.labLineValidation) {
+     this.saveLabButton=false;
 
     const formValue: IjobCard = this.tranceFun(this.jobcardForm.value);
     formValue.emplId = Number(sessionStorage.getItem('emplId'));
@@ -1723,7 +1724,7 @@ export class JobCardComponent implements OnInit {
         // patch.patchValue(res.obj.jobCardLinesList);
         // obj.jobCardLinesList
       } else {
-        if (res.code === 400) {
+        if (res.code === 400) {this.saveLabButton=true;
           alert(res.message);
         }
       }
@@ -2770,7 +2771,7 @@ onSearchTypeSelected(evnt) {
 SearchPartNum(){
 
   var  sType =this.jobcardForm.get('searchBy').value;
-  alert ("Search by :"+this.searchBy);
+  // alert ("Search by :"+this.searchBy);
   if(sType ==='ITEM CODE') {
   var itmCd=this.jobcardForm.get('searchByItemCode').value;
  
