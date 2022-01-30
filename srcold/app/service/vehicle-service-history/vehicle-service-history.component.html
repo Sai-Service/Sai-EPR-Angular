@@ -1,0 +1,97 @@
+<form [formGroup]="vehicleServiceHistoryForm" (ngSubmit)="vehicleServiceHistory(vehicleServiceHistoryForm.value)">
+    <!-- <br> -->
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <td class="PageHeader">
+                Vehicle&nbsp;Service&nbsp;History&nbsp;
+            </td>
+        </tr>
+    </table>
+
+    <fieldset class="RFS">
+        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
+          Vehicle Details</legend>
+    <table class="center">
+
+        <input  hidden style="width:60px ;"   type="text" formControlName="locId"  [(ngModel)]="locId" class="form-control"  >
+           
+        <tr>
+            <td class="LabelFontStyle"> &nbsp;&nbsp;Vehicle&nbsp;&nbsp;No:&nbsp;</td>
+            <td> <input   style="width:200px ;"   type="text" formControlName="vehRegNo"  [(ngModel)]="vehRegNo" class="form-control"  ></td>
+        </tr>
+       
+
+      
+
+        <!-- <tr>
+         
+                        <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                        <ng-template #hList2> 
+                            <div class="d-flex justify-content-center">
+                                <div class="spinner-border text-primary" role="status" >
+                                      <span class="sr-only" id="loading"></span>
+                               
+                                </div>
+                            </div>
+                      </ng-template>
+                      <ng-template #hList1> </ng-template>
+
+                      <td class="LabelFontStyle" style="color: blue;">&nbsp;{{dataDisplay }}&nbsp; </td>
+                   
+                           
+        </tr> -->
+
+    </table>
+  
+    
+
+    <table class="center">
+        <tr>
+           
+            <td> <button type="submit" class="btn btn-primary" id="register" (click)="showHist()" style="width:fit-content;">Show History</button></td>
+           
+                <td>
+                    <button disabled type="submit" class="btn btn-primary" id="resetBtn" data-toggle="modal" 
+                    data-target="#confirmAlert" (click)="getMessage('Reset')">Reset</button>
+                        
+                </td>
+                <td>
+                    <button disabled type="submit" class="btn btn-primary" id="closeBtn"
+                    data-toggle="modal" data-target="#confirmAlert" (click)="getMessage('Close')">Close</button>
+                </td>
+         
+                       
+
+        </tr>
+    </table>
+</fieldset>
+
+</form>
+<!-- --------------------------------------------------------------------------------------------- -->
+
+<div class="modal" id="confirmAlert" tabindex="-1" role="dialog" aria-hidden="true" style="width: 500px; text-align: center;">
+    <div class="modal-dialog modal-dialog-centered modal-sm"  role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" >Confirmation!</h5>
+        </div>
+        <div class="modal-body">
+            <label style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
+                {{message}}
+            </label>
+        </div>
+        <div class="modal-footer">
+            <table class="center">
+        <tr>
+            <td>
+            <button  type="submit" class="btn btn-primary" data-dismiss="modal" id="register"   (click)="executeAction()">Yes</button>
+            </td>
+            <td>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+            </td>
+        </tr>
+        </table>
+        </div>
+        </div>
+        </div>
+    </div>
