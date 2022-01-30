@@ -357,7 +357,7 @@ export class CashBankTransferComponent implements OnInit {
           this.CheckDataValidations();
 
           if (this.checkValidation===true) {
-            alert("Data Validation Sucessfull....\nPosting data...")
+            // alert("Data Validation Sucessfull....\nPosting data...")
           const formValue: ICashBankTransfer =this.transeData(this.cashBankTransferForm.value);
           this.service.CashBankTrfSaveSubmit(formValue,this.emplId).subscribe((res: any) => {
             if (res.code === 200) {

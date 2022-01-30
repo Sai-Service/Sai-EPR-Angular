@@ -10,6 +10,7 @@ import { InteractionModeRegistry } from 'chart.js';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 import { ServiceService } from '../service.service';
 import { mapToMapExpression } from '@angular/compiler/src/render3/util';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 interface IServiceGatePass { 
 
@@ -45,6 +46,7 @@ export class ServiceGatepassComponent implements OnInit {
     lstStatementLines:any
     lstAvlBnkLines:any;
     lstcomments:any;
+    gpNumList:any;
 
     loginName:string;
     divisionId:number;
@@ -87,8 +89,13 @@ export class ServiceGatepassComponent implements OnInit {
     checkValidation=false;
     gpButton=false;
     printGPbutton=false;
-  
 
+    showGenForm=true;
+    showPrintForm=false;
+  
+    optType:string;
+    genGp :string;
+    prnGp:string;
           
     get f() { return this.serviceGatepassForm.controls; }
     serviceGatepass(serviceGatepassForm:any) {  }
@@ -132,6 +139,11 @@ export class ServiceGatepassComponent implements OnInit {
         custContact: [],
 
         jobCardNum:[],
+
+        optType:[],
+        genGp :[],
+        prnGp:[],
+
         });
     }
   
@@ -204,6 +216,8 @@ export class ServiceGatepassComponent implements OnInit {
   
                 if(this.getVehRegDetails !=null){
                 console.log(this.getVehRegDetails);
+
+                if (this.showPrintForm) {this.LoadGatePassList(mreg);}
   
                 this.serviceGatepassForm.patchValue({
                   customerId: this.getVehRegDetails.customerId,
@@ -213,12 +227,34 @@ export class ServiceGatepassComponent implements OnInit {
                 });
                   this.GetCustomerDetails(this.getVehRegDetails.customerId);
                 // this.GetCustomerSiteDetails(this.getVehRegDetails.customerId);??
-                this.GetJobcardList();
+                if(this.showGenForm) {this.GetJobcardList();}
               }  else { alert("Vehicle Regno. Not Found....");this.resetMast();  }
   
               });
             
         }
+
+        LoadGatePassList(regNum){
+          var jLocId=this.locId;
+          var jcNum=null;
+          var jDate=null;
+          var jStatus ='Closed';
+          var jRegNo=regNum;
+
+          this.serviceService.getJonCardNoSearchLoc(jcNum,jDate,jStatus,jRegNo,jLocId)
+          .subscribe(
+            data => {
+              if(data.length>0) {this.printGPbutton=true;
+              this.lstJobcardList = data;
+              console.log(this.lstJobcardList); } else {this.printGPbutton=false; alert ("No Record Found...");}
+             });
+
+      }
+      
+
+        
+    
+
   
         GetCustomerDetails(mCustId: any) {
           // alert("Customer Id: "+mCustId);
@@ -252,39 +288,7 @@ resetMast() {
   window.location.reload();
 }
           
-GetJobcardList() {
-  var jLocId=this.locId;
-  var jcNum=null;
-  var jDate=null;
-  // var jStatus ='Invoiced'
-  var jStatus =null;
-  var jRegNo=this.serviceGatepassForm.get('regNo').value
-  jRegNo=jRegNo.toUpperCase();
 
-  this.serviceService.getJonCardNoSearchLoc(jcNum,jDate,jStatus,jRegNo,jLocId)
-  .subscribe(
-    data => {
-      if(data.length>0) {
-        this.lstJobcardList = data;
-        // alert ("this.lstJobcardList.length :"+this.lstJobcardList.length);
-        for (let i = 0; i < this.lstJobcardList.length; i++) {
-          
-          if(this.lstJobcardList[i].status ==='Opened' || this.lstJobcardList[i].status ==='Ready for Invoice' || this.lstJobcardList[i].status ==='Closed') {
-            this.gpButton=false;
-            break;
-          }
-           this.gpButton=true;
-          } 
-
-          // alert ("gpButton : :"+this.gpButton);
-      
-      this.jobCardNum=data[0].jobCardNum;
-      console.log(this.lstJobcardList); 
-
-      } else {alert ("No Jobcard available to Gatepass...");this.gpButton=false;}
-     });
-    
-}
 
 
 message1:string="PleaseFixtheErrors!";
@@ -339,6 +343,40 @@ CheckGPvalidation() {
 
 }
 
+GetJobcardList() {
+  var jLocId=this.locId;
+  var jcNum=null;
+  var jDate=null;
+  // var jStatus ='Invoiced'
+  var jStatus =null;
+  var jRegNo=this.serviceGatepassForm.get('regNo').value
+  jRegNo=jRegNo.toUpperCase();
+
+  this.serviceService.getPendingjcListForGP(jRegNo,jLocId)
+  .subscribe(
+    data => {
+      if(data.length>0) {
+        this.lstJobcardList = data;
+        // alert ("this.lstJobcardList.length :"+this.lstJobcardList.length);
+        for (let i = 0; i < this.lstJobcardList.length; i++) {
+          
+          if(this.lstJobcardList[i].status ==='Opened' || this.lstJobcardList[i].status ==='Ready for Invoice' || this.lstJobcardList[i].status ==='Closed') {
+            this.gpButton=false;
+            break;
+          }
+           this.gpButton=true;
+          } 
+
+          // alert ("gpButton : :"+this.gpButton);
+      
+      this.jobCardNum=data[0].jobCardNum;
+      console.log(this.lstJobcardList); 
+
+      } else {alert ("No Jobcard available to Gatepass...");this.gpButton=false;}
+     });
+    
+}
+
 
 GenerateGatePass() { 
   this.CheckGPvalidation();
@@ -364,10 +402,15 @@ this.serviceService.generateServiceGatePass(regNum,sessionStorage.getItem('locId
 }
 
 printGP(){
-  var jcNum=this.serviceGatepassForm.get('jobCardNum').value
+
+  var regNum=this.serviceGatepassForm.get('regNo').value
+  var gpNum=this.serviceGatepassForm.get('gpNumber').value
+  if(gpNum==undefined || gpNum==null || gpNum<=0) {alert("Gate Pass Number not Selected..."); return;}
+  if(regNum==undefined || regNum==null || regNum.trim()==''){return;}
+
   const fileName = 'download.pdf';
   const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-  this.serviceService.printWsGatePass(jcNum,sessionStorage.getItem('locId'))
+  this.serviceService.printWsGatePass(regNum,gpNum,sessionStorage.getItem('locId'))
     .subscribe(data => {
       var blob = new Blob([data], { type: 'application/pdf' });
       var url = URL.createObjectURL(blob);
@@ -378,7 +421,23 @@ printGP(){
 }
 
 
-    
+radioEvent(event:any){
+  // alert(event.target.value);
+  this.clearForm();
+  if( event.target.value==='genGp') {this.showGenForm=true;this.showPrintForm=false; }
+   else {this.showPrintForm=true;this.showGenForm=false;}
+   }
+
+ clearForm() {
+   this.regNo=null;this.gpNumber=null;this.gpDate=null;this.gpByName=null;
+   this.vin=null;this.mainModel=null;this.custAccountNo=null;this.customerType=null;
+   this.custAddress=null;this.custCity=null;this.custState=null;this.custPincode=null;
+   this.custPhone=null;this.custEmail=null;this.custContact=null;this.delvType=null;
+   this.delvTakenBy=null;this.driverName=null;
+   this.lstJobcardList=null;this.custName=null;
+   
+ }
+ 
         
 
 }
