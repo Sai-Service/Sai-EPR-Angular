@@ -1505,7 +1505,7 @@ export class SalesOrderFormComponent implements OnInit {
             }
             this.SalesOrderBookingForm.patchValue(data.obj);
             for (let k = 0; k < this.lstgetOrderLineDetails.length; k++) {
-              alert(this.lstgetOrderLineDetails[k].flowStatusCode)
+              // alert(this.lstgetOrderLineDetails[k].flowStatusCode)
               if (this.lstgetOrderLineDetails[k].flowStatusCode === 'READY FOR INVOICE') {
                 this.displaytaxCategoryName[k] = false;
                 this.displayLineflowStatusCode[k] = true;
@@ -1788,7 +1788,7 @@ export class SalesOrderFormComponent implements OnInit {
         orderLines[k].taxCategoryName = orderLines[k].taxCategoryName.taxCategoryName;
       }
      if (orderLines[k].invType === 'SS_VEHICLE' && orderLines[k].flowStatusCode != 'INVOICED' ){
-      alert('hhh222')
+      // alert('hhh222')
         if (orderLines[k].invType.includes('SS_ADDON') && orderLines[k].flowStatusCode === 'READY FOR INVOICE') {
           alert('First Create Vehicle Invoice!.');
           this.dataDisplay = 'First Create Vehicle Invoice!.....Do not refresh the Page';
@@ -2283,7 +2283,7 @@ export class SalesOrderFormComponent implements OnInit {
     var color= this.SalesOrderBookingForm.get('color').value; 
     var fuelType= this.SalesOrderBookingForm.get('fuelType').value; 
     var basicValue= this.SalesOrderBookingForm.get('basicValue').value;  
-    alert(model+'---'+variant+'----'+color+'---'+fuelType+'---'+basicValue);
+    // alert(model+'---'+variant+'----'+color+'---'+fuelType+'---'+basicValue);
     this.orderManagementService.variantDetailsUpdate(this.orderNumber,model,variant,color,basicValue)
     .subscribe(
       res => {
