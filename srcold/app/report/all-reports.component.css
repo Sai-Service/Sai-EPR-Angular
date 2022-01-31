@@ -1,0 +1,12 @@
+.grid_scroll{
+    overflow: auto;
+     height: 400px;
+    width: 100%;
+    }
+
+/* 
+    #b0 { display: none; }
+
+#b1 { display: none; }
+
+a { display: inline; padding: 0 10px; } */

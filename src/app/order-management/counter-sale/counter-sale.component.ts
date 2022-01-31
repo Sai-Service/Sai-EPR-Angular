@@ -172,6 +172,8 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   isVisible: boolean = false;
   isVisible15: boolean = false;
   isVisible16: boolean = false;
+  isVisible17: boolean = false;
+  isVisible18: boolean = false;
   displayPerson: boolean;
   public minDate = new Date();
   public cityList: Array<string>[];
@@ -395,6 +397,9 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   isDisabled = false;
   isDisabled3 = false;
   isDisabled10 = false;
+  isDisabled11= false;
+  isDisabled15=false;
+  isDisabled16=false;
 
 
   constructor(private fb: FormBuilder, private location1: Location, private router1: ActivatedRoute, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService,) {
@@ -801,6 +806,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
   OrderFind(orderNumber) {
     this.op = 'Search';
+    this.isDisabled11=true;
     // this.isDisabled10=false;
     this.displayCSOrderAndLineDt = false;
     this.emplId = Number(sessionStorage.getItem('emplId'))
@@ -1029,6 +1035,22 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                 control.controls[i].get('flowStatusCode').disable();
               }
             }
+            else if (data.obj.orderStatus === 'CANCELLED' ||data.obj.orderStatus === 'CLOSED' ){
+              this.displayAfterGatePass = false;
+              // this.isVisible = false;
+              this.displaypickTicketUpdate = true;
+              this.displaypickTicketInvoice = true;
+              this.PaymentButton = true;
+              this.displaycounterSaleOrderSave = false;
+              this.CounterSaleOrderBookingForm.disable();
+              this.isVisible15=false;
+              this.isVisible16=false;
+              this.isDisabled15=true;
+              this.isDisabled16=true;
+             this.CounterSaleOrderBookingForm.get('remarks').disable();
+              for (let i=0; data.obj.oeOrderLinesAllList.length; i++){
+                control.controls[i].get('flowStatusCode').disable();
+            }}
             else {
               this.displayAfterGatePass = true;
               this.isVisible = true;
@@ -2597,8 +2619,6 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   }
 
   updateTotAmtPerline(lineIndex) {
-
-    // var formVal = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     var formArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     var formVal = formArr.getRawValue();
     var tcsPer = this.CounterSaleOrderBookingForm.get('tcsPer').value;
@@ -2608,7 +2628,6 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     var disAmt = 0;
     var tcsAmt1 = 0;
     for (let i = 0; i < formVal.length; i++) {
-      // debugger;
       if (formVal[i].flowStatusCode === 'BOOKED' || formVal[i].flowStatusCode === 'INVOICED') {
         if (formVal[i].baseAmt == undefined || formVal[i].baseAmt == null || formVal[i].baseAmt == '') {
 

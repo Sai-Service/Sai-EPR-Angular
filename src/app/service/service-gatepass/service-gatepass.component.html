@@ -12,58 +12,80 @@
         <div class="center" style="width: 100%;">
             <div class="form-bg">
                 <div class="center" style="width: 100%;">
-                  
-                    <!-- <fieldset class="RFS">
-                    <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Gate Pass Details</legend>
-                   -->
-                    <table class="center" style="width: 100%;background-color: #FFE4B5;">
-                        <!-- <table class="center" style="width: 100%;"> -->
-                                <tr>
-                                <td  class="LabelFontStyle">&nbsp;GP&nbsp;Number&nbsp;:&nbsp;</td>
-                                
-                                <td>
-                                    <input disabled type="text" class="form-control" formControlName="gpNumber" [(ngModel)]='gpNumber'
-                                        value={{gpNumber}} >
-                                </td>
-                               
-    
-                                <td class="LabelFontStyle">&nbsp;GP&nbsp;&nbsp;Date:&nbsp;</td>
-                                
-                                <td>
-                                    <input disabled type="date" class="form-control" formControlName="gpDate" [(ngModel)]='gpDate'
-                                        value={{gpDate}} max="{{minDate | date:'yyyy-MM-dd'}}">
-                                </td>
-
-                                <td class="LabelFontStyle">&nbsp;GP&nbsp;Generated&nbsp;By:&nbsp;</td>
-                                
-                                <td>
-                                    <input disabled type="text" class="form-control" formControlName="loginName" [(ngModel)]='loginName'
-                                        value={{loginName}} style="width: 250px;">
-                                </td>
-
-                                </tr>
+                    <fieldset class="RFS"> 
+                    <table>
+                        <tr>
+                            <td style="font-weight:bold;"><input type="radio" id="genGp"   name="optType"  [(ngModel)]="genGp"   value="genGp"  checked   (change)="radioEvent($event)"  >&nbsp;Generate&nbsp;GatePass</td>
+                            <td style="font-weight:bold;"><input type="radio" id="prnGp"   name="optType"  [(ngModel)]="prnGp"   value="prnGp"     (change)="radioEvent($event)"         >&nbsp;Print&nbsp;GatePass</td>
+                           
+                        </tr>
                     </table>
-                    <!-- </fieldset> -->
+                    </fieldset>
+                  
+                   
 
                     <fieldset class="RFS">
                         <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Vehicle |Customer Details</legend>
                         <table class="center" style="width: 100%;">
-                          
-                            <tr>
-    
-                                <td class="LabelFontStyle1">&nbsp;Reg&nbsp;&nbsp;Number:&nbsp;</td>
-                                
-                                <td> <input  type ="text" class="form-control" formControlName="regNo"  value={{regNo}} (change)="serchByRegNo(regNo)"
-                                    style="background-color: yellow;text-transform: uppercase;" placeholder="Regno"> </td>
+                        <tr>
 
+                                    <td class="LabelFontStyle1">&nbsp;Reg&nbsp;&nbsp;Number:&nbsp;</td>
+                                        
+                                    <td> <input  type ="text" class="form-control" formControlName="regNo" [(ngModel)]='regNo' value={{regNo}} (change)="serchByRegNo(regNo)"
+                                        style="background-color: yellow;text-transform: uppercase;" placeholder="Regno"> </td>
+
+                                    <td  class="LabelFontStyle">&nbsp;GP&nbsp;Number&nbsp;:&nbsp;</td>
+                                    
+                                    <div *ngIf="showGenForm; then genFYes; else genFNo"></div>
+                                    <ng-template #genFYes> 
+                                        <td><input disabled type="text" class="form-control" formControlName="gpNumber" [(ngModel)]='gpNumber' value={{gpNumber}}  > </td>
+                                    </ng-template>
+                                    <ng-template #genFNo> 
+                                        <!-- <td><input  type="text" class="form-control" formControlName="gpNumber" [(ngModel)]='gpNumber' value={{gpNumber}} style="background-color: yellow;" > </td> -->
+                                   
+                                        <td>
+                                            <select formControlName="gpNumber" id="gpNumber" class="form-control" style="background-color: yellow;">
+                                               <!-- <option></option> -->
+                                               <option *ngFor="let sc of  lstJobcardList"  [ngValue]="sc.gatepassId">
+                                                   {{sc.gatepassId}} /{{sc.jobCardNum}}
+                                                   <!-- /{{sc.jobCardNum}}/{{sc.jobCardDate |date:'dd-MM-y'}} -->
+                                               </option>
+                                           </select>
+                                       </td>
+                                   
+                                    </ng-template>
+                                   
+        
+                                    <td class="LabelFontStyle">&nbsp;GP&nbsp;&nbsp;Date:&nbsp;</td>
+                                    
+                                    <td>
+                                        <input disabled type="date" class="form-control" formControlName="gpDate" [(ngModel)]='gpDate'
+                                            value={{gpDate}} max="{{minDate | date:'yyyy-MM-dd'}}">
+                                    </td>
+    
+                                    <td class="LabelFontStyle">&nbsp;Created&nbsp;By:&nbsp;</td>
+                                    
+                                    <td>
+                                        <input disabled type="text" class="form-control" formControlName="loginName" [(ngModel)]='loginName'
+                                            value={{loginName}} style="width:100%;">
+                                    </td>
+    
+                                    </tr>
+
+                                    <tr>
+
+    
+                              
                                <td style="width: 15%"   class="LabelFontStyle">  VIN&nbsp;:</td>
-                               <td> <input disabled type="text" class="form-control" formControlName="vin"> </td>
+                               <td> <input disabled type="text" class="form-control" formControlName="vin" [(ngModel)]="vin"> </td>
 
                                <td style="width: 15%"  class="LabelFontStyle"> Model&nbsp;:</td>
-                               <td> <input type="text" disabled  class="form-control" placeholder=""  formControlName="mainModel"> </td>
+                               <td> <input type="text" disabled  class="form-control" placeholder=""  formControlName="mainModel" [(ngModel)]="mainModel"> </td>
                                <td style="width: 15%" class="LabelFontStyle">Cust&nbsp;No:&nbsp;</td>
                                 <td> <input disabled  type="text"  formControlName="custAccountNo"  id="custAccountNo" [(ngModel)]="custAccountNo" class="form-control" > </td>
-                           
+                                <td style="width: 15%" class="LabelFontStyle">&nbsp;Type:&nbsp;</td>
+                                <td> <input disabled    type="text"  formControlName="customerType"  id="customerType" [(ngModel)]="customerType" class="form-control" > </td>
+                          
                                
                             </tr>  
 
@@ -91,16 +113,16 @@
                                
                             </tr> 
                             <tr>
-                                 <td style="width: 15%" class="LabelFontStyle">PIN:&nbsp;</td>
-                                <td> <input disabled  type="text"  formControlName="custPincode"  id="custPincode" [(ngModel)]="custPincode" class="form-control" > </td>
                                 <td style="width: 15%" class="LabelFontStyle">Contact&nbsp;Person:&nbsp;</td>
-                                <td> <input disabled  type="text"  formControlName="custContact"  id="custContact" [(ngModel)]="custContact" class="form-control" > </td>
+                                <td colspan="3"> <input disabled  type="text"  formControlName="custContact"  id="custContact" [(ngModel)]="custContact" class="form-control" style="width: 100%;" > </td>
                         
-                                  <td style="width: 15%" class="LabelFontStyle">&nbsp;Type:&nbsp;</td>
-                                <td> <input disabled    type="text"  formControlName="customerType"  id="customerType" [(ngModel)]="customerType" class="form-control" > </td>
                                 <td style="width: 15%" class="LabelFontStyle">State:&nbsp;</td>
                                 <td> <input disabled  type="text"  formControlName="custState"  id="custState" [(ngModel)]="custState" class="form-control" > </td>
                              
+                                 <td style="width: 15%" class="LabelFontStyle">PIN:&nbsp;</td>
+                                <td> <input disabled  type="text"  formControlName="custPincode"  id="custPincode" [(ngModel)]="custPincode" class="form-control" > </td>
+                              
+                               
                             </tr>
                           
 
@@ -108,7 +130,7 @@
                                 <td  class="LabelFontStyle1">&nbsp;Delivery&nbsp;&nbsp;Type:&nbsp;</td>
                                 <!-- <td> <input type="text" disabled  class="form-control" placeholder=""  formControlName="delvType"> </td> -->
                                 <td>
-                                     <select formControlName="delvType" id="delvType" class="form-control" style="background-color: yellow;">
+                                     <select formControlName="delvType" id="delvType"  [(ngModel)]="delvType" class="form-control" style="background-color: yellow;">
                                         <option></option>
                                         <option *ngFor="let sc of  pickupTypeList">
                                             {{sc.codeDesc}}
@@ -117,16 +139,16 @@
                                 </td>
 
                                 <td   class="LabelFontStyle1">&nbsp;Driver&nbsp;&nbsp;Name:&nbsp;</td>
-                                <td> <input type="text"   class="form-control" placeholder=""  formControlName="driverName" style="background-color: yellow;"> </td>
+                                <td> <input type="text"   class="form-control" placeholder=""  formControlName="driverName" [(ngModel)]="driverName" style="background-color: yellow;"> </td>
                              
                                 <td  class="LabelFontStyle1">&nbsp;Delivery&nbsp;&nbsp;Taken&nbsp;By:&nbsp;</td>
-                                <td colspan="3"> <input type="text"   class="form-control" placeholder=""  formControlName="delvTakenBy" style="background-color: yellow;width: 100%;"> </td>
+                                <td colspan="3"> <input type="text"   class="form-control" placeholder=""  formControlName="delvTakenBy" [(ngModel)]="delvTakenBy" style="background-color: yellow;width: 100%;"> </td>
                               </tr>
-                              <tr>
+                              <!-- <tr>
                                 <td   class="LabelFontStyle">&nbsp;JC&nbsp;&nbsp;No:&nbsp;</td>
                                 <td> <input  type="text"   class="form-control" placeholder=""  formControlName="jobCardNum" value={{jobCardNum}} [(ngModel)]="jobCardNum" > </td>
                             
-                              </tr>
+                              </tr> -->
                            
                     </table>
                     <br>
@@ -153,7 +175,7 @@
                                       <td> <button type="button" class="btn btn-info" (click)="printGP()" >Print GP</button> </td>
                                     </ng-template>
                                     <ng-template #gppNo> 
-                                        <td> <button  type="button" class="btn btn-info" (click)="printGP()" >Print GP</button> </td>
+                                        <td> <button disabled type="button" class="btn btn-info" (click)="printGP()" >Print GP</button> </td>
                                     </ng-template>
 
                                     <!-- <td> <button style="width: fit-content;" type="button" class="btn btn-info" (click)="jobcardFind()" >Generate GatePass</button> </td>  -->
@@ -179,6 +201,7 @@
                                     <th  scope="col">Reg&nbsp;No&nbsp;</th>
                                     <th  scope="col">Job&nbsp;Type</th>
                                     <th  scope="col">Status&nbsp;</th>
+                                    <th  scope="col">GP&nbsp;No</th>
                                     <th  scope="col">Service&nbsp;Advisor</th>
                                     <th  scope="col">Group&nbsp;</th>
                                     <th  scope="col">Invoice&nbsp;No</th>
@@ -196,6 +219,7 @@
                                     <td style="text-align: center;width: 5rem;">{{com.regNo}}</td>
                                     <td style="text-align: center;width: 5rem;">{{com.attribute1}}</td>
                                     <td style="text-align: center;width: 8rem;">{{com.status}}</td>
+                                    <td style="text-align: center;width: 3rem;">{{com.gatepassId}}</td>
                                     <td style="text-align: left;width: 11rem;">{{com.fullName}}</td>
                                     <td style="text-align: center;width: 2rem;">{{com.custAccountNo}}</td>
                                     <td style="text-align: center;width: 2rem;">{{com.custAccountNo}}</td>
