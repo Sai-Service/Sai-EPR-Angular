@@ -1,16 +1,9 @@
-import { Component, OnInit, HostListener, ViewChild, ElementRef } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators, FormArray, FormControlName } from '@angular/forms';
-import { NgForm } from '@angular/forms';
-
-import { Url } from 'url';
+import { Component, OnInit,  ViewChild, ElementRef } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { NgModule } from '@angular/core';
-// import { MasterService } from '../master.service';
 import { MasterService } from 'src/app/master/master.service'
 import { DatePipe } from '@angular/common';
-import { data, get } from 'jquery';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location, } from "@angular/common";
 import * as xlsx from 'xlsx';

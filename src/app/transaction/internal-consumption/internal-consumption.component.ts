@@ -1,11 +1,9 @@
-import { DatePipe, PathLocationStrategy } from '@angular/common';
-import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener, ElementRef } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { controllers } from 'chart.js';
-import { data } from 'jquery';
 import { MasterService } from 'src/app/master/master.service';
-import {} from 'rxjs';
+
 
 interface InternalConsumption
 {

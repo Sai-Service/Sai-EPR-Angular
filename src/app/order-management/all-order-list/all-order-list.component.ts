@@ -1,13 +1,10 @@
 import { Component, OnInit, HostListener, ViewChild, ElementRef ,NgModule} from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators, FormArray, FormControlName } from '@angular/forms';
-import { NgForm } from '@angular/forms';
-import { from,Observable } from 'rxjs';
-import { Url } from 'url';
-import { FormsModule } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder} from '@angular/forms';
+
 import { MasterService } from 'src/app/master/master.service'
 import { DatePipe ,Location} from '@angular/common';
-import { data, get } from 'jquery';
-import { ActivatedRoute, ParamMap,Router } from '@angular/router';
+
+import { ActivatedRoute,Router } from '@angular/router';
 import * as xlsx from 'xlsx';
 
 @Component({

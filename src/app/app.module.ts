@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import{ HTTP_INTERCEPTORS}from '@angular/common/http';
-import { HttpErrorInterceptorInterceptor} from './http-error-interceptor.interceptor';
+//import { HttpErrorInterceptorInterceptor} from './http-error-interceptor.interceptor';
 // import { CanDeactivateGuard } from './can-deactivate-guard.service';
 // import * as Rollbar from 'rollbar';
 // import { DaterangepickerModule } from 'angular-2-daterangepicker';
@@ -33,7 +33,7 @@ import { HashLocationStrategy, LocationStrategy  } from '@angular/common';
 // import { PageNotFouundComponent } from './page-not-fouund/page-not-fouund.component';
 import { DashboardComponent } from './master/dashboard/dashboard.component';
 import { PoReceiptFormComponent } from './master/po-receipt-form/po-receipt-form.component';
-import { DeActivateGuard } from './de-activate.guard';
+//import { DeActivateGuard } from './de-activate.guard';
 import { FaCommanMasterComponent } from './fixed-asset/fa-master/fa-comman-master/fa-comman-master.component';
 import { AllReportsComponent } from './report/all-reports.component';
 
@@ -78,13 +78,13 @@ import { AllReportsComponent } from './report/all-reports.component';
     // NgxSpinnerModule
   ],
   providers: [
-    {provide : LocationStrategy , useClass: HashLocationStrategy},
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: HttpErrorInterceptorInterceptor,
-      multi: true
-    },
-    DeActivateGuard
+    // {provide : LocationStrategy , useClass: HashLocationStrategy},
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   //useClass: HttpErrorInterceptorInterceptor,
+    //   multi: true
+    // },
+    // DeActivateGuard
   ],
 
   bootstrap: [AppComponent]

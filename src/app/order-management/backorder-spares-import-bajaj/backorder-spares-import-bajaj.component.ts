@@ -1,22 +1,11 @@
-import { Component, OnInit, HostListener, ViewChild, ElementRef } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators, FormArray, FormControlName } from '@angular/forms';
-import { NgForm } from '@angular/forms';
-
-import { Url } from 'url';
-import { Observable } from 'rxjs';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { NgModule } from '@angular/core';
-// import { MasterService } from '../master.service';
 import { MasterService } from 'src/app/master/master.service'
 import { DatePipe } from '@angular/common';
-import { data, get } from 'jquery';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location, } from "@angular/common";
 import * as xlsx from 'xlsx';
-import { HttpEventType, HttpResponse } from '@angular/common/http';
-import { HttpClient } from '@angular/common/http';
-
 
 @Component({
   selector: 'app-backorder-spares-import-bajaj',
@@ -70,7 +59,8 @@ export class BackorderSparesImportBajajComponent implements OnInit {
   
   @ViewChild('fileInput') fileInput;
 
-  constructor(private fb: FormBuilder, private router: Router, private location1: Location, private router1: ActivatedRoute, private service: MasterService,private http: HttpClient) {
+  constructor(private fb: FormBuilder, private router: Router, private location1: Location,
+     private router1: ActivatedRoute, private service: MasterService) {
     this.backorderSparesImportBajajForm = this.fb.group({
 
      
