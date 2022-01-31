@@ -989,20 +989,21 @@ export class SalesOrderFormComponent implements OnInit {
 
 
   addDiscount(i) {
-    // alert(i+1);
+     alert(i+1);
+     var ln = Number(i+1);
     console.log(this.SalesOrderBookingForm.get('oeOrderLinesAllList').value);
     let controlinv1 = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value;
     let controlinv = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
-    var invLineNo = controlinv1[i].lineNumber;
+    var invLineNo = controlinv1[ln].lineNumber;
     // alert(invLineNo);
-    // debugger;
-    var invLineItemId = controlinv1[i].itemId;
-    var taxCategoryId = controlinv1[i].taxCategoryId;
+     debugger;
+    var invLineItemId = controlinv1[ln].itemId;
+    var taxCategoryId = controlinv1[ln].taxCategoryId;
     // alert(taxCategoryId)
-    console.log(controlinv1[i].taxCategoryId);
+    console.log(controlinv1[ln].taxCategoryId);
     this.activeLineNo = invLineNo;
-    var baseAmt = controlinv1[i].baseAmt;
-    // alert(baseAmt);
+    var baseAmt = controlinv1[ln].baseAmt;
+     alert(baseAmt);
     var patch = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
     var arrayControlTax = this.SalesOrderBookingForm.get('taxAmounts').value;
     var index = Number(arrayControlTax[1].invLineNo);
@@ -1699,7 +1700,7 @@ export class SalesOrderFormComponent implements OnInit {
     //alert('added to map closeTaxModal..' + this.selTaxLn)
     this.display = 'none'; //set none css after close dialog
     this.myInputField.nativeElement.focus();
-    // debugger;
+  
     var taxValues = this.SalesOrderBookingForm.get('taxAmounts').value;
     var totDisc = 0;
     var totTax = 0;
@@ -1844,7 +1845,7 @@ export class SalesOrderFormComponent implements OnInit {
     var taxCategoryId = select.taxCategoryId;
     console.log(taxCategoryId);
     // controlinv.controls[i].patchValue({taxCategoryId:select.taxCategoryId});
-    // debugger;
+
     (controlinv2.controls[i]).patchValue({
       taxCategoryId: taxCategoryId,
     });
@@ -1897,7 +1898,7 @@ export class SalesOrderFormComponent implements OnInit {
     let salesObj = Object.assign(new SalesOrderobj(), jsonData);
     salesObj.setoeOrderLinesAllList(orderLines);
     var taxStr = [];
-    // debugger;
+
     this.isDisabled11 = true;
     for (let k = 0; k < orderLines.length; k++) {
       if (orderLines[k].isTaxable === 'Y') {
@@ -1979,7 +1980,7 @@ export class SalesOrderFormComponent implements OnInit {
 
 
   taxDetails(op, i, taxCategoryId) {
-    // alert('hi'+' ' +op+'-' +i);
+     alert('hi'+' ' +op+'-' +i);
     // alert(this.displayCounterSaleLine[i]);
     this.selectedLine = i;
     if (op === 'Search') {
@@ -2330,7 +2331,7 @@ export class SalesOrderFormComponent implements OnInit {
     var disAmt = 0;
     var tcsAmt1 = 0;
     for (let i = 0; i < formVal.length; i++) {
-      // debugger;
+ 
       if (formVal[i].flowStatusCode === 'BOOKED' || formVal[i].flowStatusCode === 'INVOICED' || formVal[i].flowStatusCode === 'READY FOR INVOICE' || formVal[i].flowStatusCode === 'ALLOTED') {
         if (formVal[i].baseAmt == undefined || formVal[i].baseAmt == null || formVal[i].baseAmt == '') {
 
