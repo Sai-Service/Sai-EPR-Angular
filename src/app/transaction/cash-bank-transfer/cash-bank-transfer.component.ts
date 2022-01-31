@@ -91,13 +91,14 @@ export class CashBankTransferComponent implements OnInit {
      
      
       clearingDate = this.pipe.transform(Date.now(), 'y-MM-dd');
-     
+      
       status:string='Save';
 
       fromAcctDescp:string;
       toAcctDescp:string;
 
       fromAcctDescpId:number;
+      bankId:number;
       toAcctDescpId:number;
 
       trfAmount:number;
@@ -171,6 +172,7 @@ export class CashBankTransferComponent implements OnInit {
           toAcctDescp:[],
           fromAcctDescpId:[],
           toAcctDescpId:[],
+          bankId:[],
     
           status:[],
 
@@ -346,35 +348,63 @@ export class CashBankTransferComponent implements OnInit {
 
           delete val.fromAcctDescpId;
           delete val.toAcctDescpId;
+          delete val.chqTrfAmt;
+          delete val.rcptLine;
+
           return val;
         }
        
          
 
          cashBnkTrfSave() {
-          this.CheckDataValidations();
 
+          this.CheckDataValidations();
           if (this.checkValidation===true) {
-            alert("Data Validation Sucessfull....\nPosting data...")
-          const formValue: ICashBankTransfer =this.transeData(this.cashBankTransferForm.value);
+            const formValue: ICashBankTransfer =this.transeData(this.cashBankTransferForm.value);
           this.service.CashBankTrfSaveSubmit(formValue,this.emplId).subscribe((res: any) => {
             if (res.code === 200) {
               alert('RECORD INSERTED SUCCESSFUILY');
               this.docTrfNo=res.obj;
-              this.cashBankTransferForm.disable();
+              // this.cashBankTransferForm.disable();
               this.statusSave=false;
+              this.updateArReceipt(res.obj);
+
             } else {
               if (res.code === 400) {
                 var x=res.obj;
                 // alert('Code already present in the data base');
                 alert(x);
-                  
               }
             }
           });
 
         }else{ alert("Data Validation Not Sucessfull....\nPosting Not Done...")  }
         
+      }
+
+      updateArReceipt(docTrfNum) {
+        let variants = <FormArray>this.rcptLineArray();
+        var dTrfNum = docTrfNum;
+
+        for (let i = 0; i < this.rcptLineArray().length; i++) {
+      
+           let variantFormGroup = <FormGroup>variants.controls[i];
+            variantFormGroup.addControl('docTrfNo', new FormControl(dTrfNum, Validators.required));
+        }
+
+        console.log(variants.value);
+
+        this.service.arRcptUpdate(variants.value, dTrfNum).subscribe((res: any) => {
+          if (res.code === 200) {
+            alert('RECORD INSERTED SUCCESSFUILY');
+    
+            this.cashBankTransferForm.disable();
+    
+          } else {
+            if (res.code === 400) {
+              alert('Error While Saving Record:-' + res.obj);  } 
+            }
+        });
       }
 
 
@@ -565,11 +595,20 @@ export class CashBankTransferComponent implements OnInit {
                 this.trfAmount=null;
                 this.amtInWords=null;
               }
+
+              var x=this.cashBankTransferForm.get('fromAcctDescpId').value;
+              var y=this.cashBankTransferForm.get('toAcctDescpId').value;
+              if(x===y) {alert ("From A/c and To A/c Should not be Same...");
+               this.cashBankTransferForm.get('fromAcctDescpId').reset();
+              return;
+            }
             
             let selectedValue = this.fromAcctList.find(v => v.bankAccountId == methodId);
             if( selectedValue != undefined){
               console.log(selectedValue);
              this.fromAcctDescp=selectedValue.methodName;
+             this.bankId=selectedValue.bankId;
+             
             }
 
 
@@ -591,6 +630,14 @@ export class CashBankTransferComponent implements OnInit {
           onSelectionToAc(methodId :number) { 
             if (methodId>0) {
               // alert ("To ac:"+methodId);
+              var x=this.cashBankTransferForm.get('fromAcctDescpId').value;
+              var y=this.cashBankTransferForm.get('toAcctDescpId').value;
+
+              if(x===y) {alert ("From A/c and To A/c Should not be Same...");
+              this.cashBankTransferForm.get('toAcctDescpId').reset();
+             return;
+            }
+
               let selectedValue = this.toAcctList.find(v => v.bankAccountId == methodId);
               if( selectedValue != undefined){
                 console.log(selectedValue);
@@ -775,7 +822,8 @@ export class CashBankTransferComponent implements OnInit {
             // var toDt=this.cashBankTransferForm.get('toDate').value;
 
              var rcptMethidId =this.cashBankTransferForm.get('fromAcctDescpId').value;
-             this.service.getBnkChqList(902,rcptMethidId,sessionStorage.getItem('locId'))
+             var bnkId =this.cashBankTransferForm.get('bankId').value;
+             this.service.getBnkChqList(bnkId,rcptMethidId,sessionStorage.getItem('locId'))
               .subscribe(
                 data => {
                   this.lstChequeList = data.obj;
@@ -943,6 +991,15 @@ export class CashBankTransferComponent implements OnInit {
                         res = "zero"; 
                     } 
                     return res;
+            }
+
+            removeRcptLines(){
+              var applLineArr = this.cashBankTransferForm.get('rcptLine').value;
+              var len1 = applLineArr.length;
+              for (let i = len1 - 1; i >= 0; i--) {
+               if (this.rcptLineArray().controls[i].get('selectFlag').value != true) {
+                 this.rcptLineArray().removeAt(i);   } 
+             }
             }
                   
   
