@@ -3473,6 +3473,20 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
         return this.http.post(url, CashBankTrfRecord, options);
       }
 
+
+      arRcptUpdate(ArRcptUpdateRecord,docTrfNum) {
+        const options = {
+          headers: this.headers
+        };
+        const url = (this.ServerUrl + `/AccountTrf/ArSaveUpdate?docTrfNo=${docTrfNum}`);
+        return this.http.put(url, ArRcptUpdateRecord, options);
+
+        // new - http://localhost:8081/AccountTrf/ArSaveUpdate?docTrfNo=2125210510003
+
+        // http://localhost:8081/AccountTrf/ArSaveUpdate  Parameter <Your Rcptline Array> , String docTrfNo
+      }
+
+
       public CashBankTrfPostSubmit(CashBankTrfRecord,mEmplId) {
         const options = {
           headers: this.headers
