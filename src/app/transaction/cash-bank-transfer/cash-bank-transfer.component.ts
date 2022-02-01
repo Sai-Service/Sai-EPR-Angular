@@ -69,6 +69,7 @@ export class CashBankTransferComponent implements OnInit {
 
       lstcomments: any;
       lstChequeList: any;
+
       loginName:string;
       divisionId:number;
       loginArray:string;
@@ -80,9 +81,6 @@ export class CashBankTransferComponent implements OnInit {
       ouId :number;
       deptId:number; 
       emplId :number;
-
-      // branch:number;
-      // period:number;
       openPeriod:string;
       docTrfNo:string;
       transferCode:number;
@@ -346,8 +344,8 @@ export class CashBankTransferComponent implements OnInit {
           // delete val.ouId;
           // delete val.locId;
 
-          delete val.fromAcctDescpId;
-          delete val.toAcctDescpId;
+          // delete val.fromAcctDescpId;
+          // delete val.toAcctDescpId;
           delete val.chqTrfAmt;
           delete val.rcptLine;
 
@@ -357,16 +355,18 @@ export class CashBankTransferComponent implements OnInit {
          
 
          cashBnkTrfSave() {
-
+          const formValue: ICashBankTransfer =this.transeData(this.cashBankTransferForm.value);
           this.CheckDataValidations();
           if (this.checkValidation===true) {
-            const formValue: ICashBankTransfer =this.transeData(this.cashBankTransferForm.value);
+            this.displayButton=false;
+        
           this.service.CashBankTrfSaveSubmit(formValue,this.emplId).subscribe((res: any) => {
             if (res.code === 200) {
               alert('RECORD INSERTED SUCCESSFUILY');
               this.docTrfNo=res.obj;
               // this.cashBankTransferForm.disable();
               this.statusSave=false;
+              this.statusPost=true;
               this.updateArReceipt(res.obj);
 
             } else {
@@ -396,7 +396,7 @@ export class CashBankTransferComponent implements OnInit {
 
         this.service.arRcptUpdate(variants.value, dTrfNum).subscribe((res: any) => {
           if (res.code === 200) {
-            alert('RECORD INSERTED SUCCESSFUILY');
+            alert('Receipt Updated Successfully');
     
             this.cashBankTransferForm.disable();
     
@@ -415,13 +415,14 @@ export class CashBankTransferComponent implements OnInit {
         //   alert("Data Validation Sucessfull....\nPosting data  to MCP ITEM MASTER TABLE")
         var postEmplId=Number(sessionStorage.getItem('emplId'));
         const formValue: ICashBankTransfer =this.transeData(this.cashBankTransferForm.value);
+        this.statusPost=false;
         this.service.CashBankTrfPostSubmit(formValue,postEmplId).subscribe((res: any) => {
           if (res.code === 200) {
             alert('RECORD INSERTED SUCCESSFUILY');
             this.docTrfNo=res.obj;
             this.cashBankTransferForm.disable();
             this.statusSave=false;
-            this.statusPost=false;
+          
           } else {
             if (res.code === 400) {
               var x=res.obj;
@@ -598,6 +599,7 @@ export class CashBankTransferComponent implements OnInit {
 
               var x=this.cashBankTransferForm.get('fromAcctDescpId').value;
               var y=this.cashBankTransferForm.get('toAcctDescpId').value;
+            
               if(x===y) {alert ("From A/c and To A/c Should not be Same...");
                this.cashBankTransferForm.get('fromAcctDescpId').reset();
               return;
@@ -632,7 +634,7 @@ export class CashBankTransferComponent implements OnInit {
               // alert ("To ac:"+methodId);
               var x=this.cashBankTransferForm.get('fromAcctDescpId').value;
               var y=this.cashBankTransferForm.get('toAcctDescpId').value;
-
+             
               if(x===y) {alert ("From A/c and To A/c Should not be Same...");
               this.cashBankTransferForm.get('toAcctDescpId').reset();
              return;
@@ -704,7 +706,8 @@ export class CashBankTransferComponent implements OnInit {
         
               const formValue: ICashBankTransfer = this.cashBankTransferForm.value;
               // alert("mainModel date :" +formValue.mainModel);
-      
+
+            
               if(formValue.transferCode===undefined || formValue.transferCode===null ) {
                   this.checkValidation=false;
                   alert ("TRANSFER TYPE: Should not be null value");
@@ -738,6 +741,8 @@ export class CashBankTransferComponent implements OnInit {
                  alert ("NARRATION: Should not be null value");
                   return;
                } 
+
+              //  alert ("formValue.fromAcctDescpId :" +formValue.fromAcctDescpId);
             
               if (formValue.fromAcctDescpId <=0  || formValue.fromAcctDescpId===undefined || formValue.fromAcctDescpId===null)
               {
@@ -745,6 +750,8 @@ export class CashBankTransferComponent implements OnInit {
                   alert ("FROM A/C: Should not be null....");
                   return;
                } 
+
+              //  alert ("formValue.toAcctDescpId :" +formValue.toAcctDescpId);
                if (formValue.toAcctDescpId <=0  || formValue.toAcctDescpId===undefined || formValue.toAcctDescpId===null)
                {
                    this.checkValidation=false;

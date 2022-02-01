@@ -41,6 +41,8 @@ import { BulkUploadPricelistComponent } from './bulk-upload-pricelist/bulk-uploa
 import { BankReconcillationComponent } from './bank-reconcillation/bank-reconcillation.component';
 import { AmcSchemeMasterComponent } from './amc-scheme-master/amc-scheme-master.component';
 import { AmcEnrollmentComponent } from './amc-enrollment/amc-enrollment.component';
+// import { ShippingNetworkComponent } from './shipping-network/shipping-network.component';
+
 // import { OrderGenerationComponent } from './order-generation/order-generation.component';
 // import { CounterSaleReturnComponent } from './counter-sale-return/counter-sale-return.component';
 
@@ -87,6 +89,7 @@ import { AmcEnrollmentComponent } from './amc-enrollment/amc-enrollment.componen
     BankReconcillationComponent,
     AmcSchemeMasterComponent,
     AmcEnrollmentComponent,
+    // ShippingNetworkComponent,
     // OrderGenerationComponent,
     // CounterSaleReturnComponent
   ],

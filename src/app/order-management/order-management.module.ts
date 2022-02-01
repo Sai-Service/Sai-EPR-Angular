@@ -20,6 +20,7 @@ import { BackorderSparesImportBajajComponent } from './backorder-spares-import-b
 import { CounterSalePerformaInvComponent } from './counter-sale-performa-inv/counter-sale-performa-inv.component';
 import { SalesOrderListComponent } from './sales-order-list/sales-order-list.component';
 import { ClosingStockGridComponent } from './closing-stock-grid/closing-stock-grid.component';
+import { ShippingNetworkComponent } from './shipping-network/shipping-network.component';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { ClosingStockGridComponent } from './closing-stock-grid/closing-stock-gr
      BackorderSparesImportBajajComponent,
      CounterSalePerformaInvComponent,
      SalesOrderListComponent,
-     ClosingStockGridComponent ],
+     ClosingStockGridComponent,
+     ShippingNetworkComponent ],
   imports: [
     CommonModule,
     OrderManagementRoutingModule,

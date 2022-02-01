@@ -37,6 +37,9 @@ import { BulkUploadPricelistComponent } from './bulk-upload-pricelist/bulk-uploa
 import { BankReconcillationComponent } from './bank-reconcillation/bank-reconcillation.component';
 import { AmcSchemeMasterComponent } from './amc-scheme-master/amc-scheme-master.component';
 import { AmcEnrollmentComponent } from './amc-enrollment/amc-enrollment.component';
+// import { ShippingNetworkComponent } from './shipping-network/shipping-network.component';cd..
+
+
 // import { CounterSaleReturnComponent } from './counter-sale-return/counter-sale-return.component';
 
 const routes: Routes = [
@@ -78,9 +81,11 @@ const routes: Routes = [
 {path :'BankReconcillation',component:BankReconcillationComponent},
 {path:'AmcSchemeMaster',component:AmcSchemeMasterComponent},
 {path :'AmcEnrollment',component:AmcEnrollmentComponent},
+// {path :'ShippingNetwork',component:ShippingNetworkComponent},
 // {path:'CounterSaleReturn',component:CounterSaleReturnComponent},
  {path : '' ,redirectTo: 'Dashboard', pathMatch: 'full'}
 ];
+
 
 
 

@@ -1,10 +1,9 @@
-import { DatePipe, PathLocationStrategy } from '@angular/common';
-import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener, ValueProvider } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { DatePipe } from '@angular/common';
+import { Component, OnInit} from '@angular/core';
+import { FormBuilder, FormGroup} from '@angular/forms';
 import { Router } from '@angular/router';
-import { controllers } from 'chart.js';
-import { data } from 'jquery';
 import { MasterService } from 'src/app/master/master.service';
+
 
 interface IAccountEnquiry
 {
@@ -53,18 +52,21 @@ public InterBrancList:Array<string>=[];
   jeSource:string;
   name:string;
   jeCategory:string;
-  // postedDate:Date;
+  postedDate:Date;
   pipe = new DatePipe('en-US');
   periodName:string;
-  now = new Date();
-  postedDate = this.pipe.transform(this.now, 'dd-MMM-yyyy')
+  // now = new Date();
+  // postedDate = this.pipe.transform('dd-MMM-yyyy')
 
+  isVisible:Boolean=false;
+  isouBalance:boolean=false;
 
   showModal:boolean;
   JVdata: any;
   viewAccountingjvdata: any;
   runningTotalCr: number;
   runningTotalDr: number;
+  JVBaldata: any;
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService)  {
     this.AccountEnquiryForm=fb.group({
       runningTotalDr:[],
@@ -262,6 +264,33 @@ public InterBrancList:Array<string>=[];
           }
 
           });
+        this.isVisible=true;
+        this.isouBalance=false;  
+        }
+
+showBalDetail()
+{
+  var formValue:IAccountEnquiry=this.AccountEnquiryForm.value;
+  var postedDate = this.pipe.transform(formValue.postedDate, 'dd-MMM-yyyy');
+  formValue.postedDate=postedDate;
+  this.service.AccountBalSearch(formValue).subscribe
+  ((res:any) => {
+    if(res.code===200)
+    {
+      this.JVBaldata=res.obj;
+    }
+    else
+{
+  if(res.code===400)
+  {
+    alert('ERROR OCCOURED IN PROCEESS');
+    this.AccountEnquiryForm.reset();
+  }
+}
+
+});
+this.isVisible=false;
+        this.isouBalance=true;  
 }
 
 viewAccounting(event:any){

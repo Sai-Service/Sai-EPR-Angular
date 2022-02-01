@@ -51,10 +51,13 @@ export class SalesGatePassComponent implements OnInit {
   contactPerson:string;
   salesExeName:string;
   private sub: any;
+  shipToLoc:number;
+  public BillShipList: Array<string> = [];
 
   constructor(private fb: FormBuilder, private router: Router,private router1: ActivatedRoute, private service: MasterService,private orderManagementService: OrderManagementService) {
     this.SalesGatepassForm = fb.group({
       gatepassNo: [''],
+      shipToLoc:[''],
       orderNumber:[''],
       emplId:[''],
       segment:[],
@@ -79,15 +82,23 @@ export class SalesGatePassComponent implements OnInit {
      }
   ngOnInit(): void {
     this.emplId = Number(sessionStorage.getItem('emplId'));
-
+    this.shipToLoc=Number(sessionStorage.getItem('locCode'));
 
     this.sub = this.router1.params.subscribe(params => {
       this.orderNumber = params['orderNumber'];
       // alert(this.orderNumber)
       if (this.orderNumber != undefined) {
-        this.orderNumberPost(this.orderNumber);
+        this.orderNumberPost(this.orderNumber,sessionStorage.getItem('locId'));
       }
     });
+
+    this.service.getLocationSearch1(sessionStorage.getItem('ouId'))
+    .subscribe(
+      data => {
+        this.BillShipList = data;
+        console.log(this.BillShipList);
+      }
+    );
   }
 
   gatePassOrderNo(orderNumber){
@@ -120,6 +131,8 @@ export class SalesGatePassComponent implements OnInit {
       }
       
     );
+  
+
   }
 
 
@@ -150,11 +163,10 @@ export class SalesGatePassComponent implements OnInit {
     );
      }
 
-     orderNumberPost(orderNumber)
+     orderNumberPost(orderNumber,locId)
      {
-      //  alert(orderNumber);
      // const formValue: IDivision = this.transData(this.divisionMasterForm.value);
-      this.orderManagementService.orderNoPost(orderNumber,this.emplId).subscribe((res: any) => {
+      this.orderManagementService.orderNoPost(orderNumber,this.emplId,locId).subscribe((res: any) => {
         if (res.code === 200) {
          alert(res.message);
          this.gatepassNoSearch(this.orderNumber);
