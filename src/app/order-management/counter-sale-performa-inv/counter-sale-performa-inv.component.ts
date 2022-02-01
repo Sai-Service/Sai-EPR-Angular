@@ -844,21 +844,21 @@ export class CounterSalePerformaInvComponent implements OnInit {
                           console.log(data);
                           if (data.length === 0) {
                             // alert('1')
-                            alert('Item Not Found In Stock!.');
-                            var lotList = [{ locatorId: 0, segmentName: 'Not Found' }]
-                            controlinv.controls[k].patchValue({ frmLocatorId: lotList });
+                            // alert('Item Not Found In Stock!.');
+                            // var lotList = [{ locatorId: 0, segmentName: 'Not Found' }]
+                            // controlinv.controls[k].patchValue({ frmLocatorId: lotList });
                             controlinv.controls[k].patchValue({ onHandQty: 0 });
                             controlinv.controls[k].get('frmLocatorId').disable();
                             var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
-                            controlinv.controls[k].patchValue({ Avalqty: '' });
-                            controlinv.controls[k].patchValue({ pricingQty: '' });
-                            controlinv.controls[k].patchValue({ orderedItem: '' });
-                            controlinv.controls[k].patchValue({ orderedItem: '' });
-                            controlinv.controls[k].patchValue({ unitSellingPrice: '' });
-                            controlinv.controls[k].patchValue({ taxCategoryName: '' });
-                            controlinv.controls[k].patchValue({ hsnSacCode: '' });
-                            this.setFocus('itemSeg' + k);
-                            return;
+                            // controlinv.controls[k].patchValue({ Avalqty: '' });
+                            // controlinv.controls[k].patchValue({ pricingQty: '' });
+                            // controlinv.controls[k].patchValue({ orderedItem: '' });
+                            // controlinv.controls[k].patchValue({ orderedItem: '' });
+                            // controlinv.controls[k].patchValue({ unitSellingPrice: '' });
+                            // controlinv.controls[k].patchValue({ taxCategoryName: '' });
+                            // controlinv.controls[k].patchValue({ hsnSacCode: '' });
+                            // this.setFocus('itemSeg' + k);
+                            // return;
                           } else {
                             this.getfrmSubLoc = data;
                             console.log(this.getfrmSubLoc);
