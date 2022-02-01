@@ -18,6 +18,7 @@ import { BackorderSparesImportBajajComponent } from './backorder-spares-import-b
 import { CounterSalePerformaInvComponent } from './counter-sale-performa-inv/counter-sale-performa-inv.component';
 import { SalesOrderListComponent } from './sales-order-list/sales-order-list.component';
 import { ClosingStockGridComponent } from './closing-stock-grid/closing-stock-grid.component';
+import { ShippingNetworkComponent } from './shipping-network/shipping-network.component';
 
 const routes: Routes = [
   {path:'salesOrderBooking', component:SalesOrderBookingComponent},
@@ -41,8 +42,11 @@ const routes: Routes = [
   {path:'SalesOrderList',component:SalesOrderListComponent},
   {path:'ClosingStock',component:ClosingStockGridComponent},
   {path:'GatePass/:orderNumber',component:SalesGatePassComponent},
+  {path:'ShippingNetwork',component:ShippingNetworkComponent},
   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];
+
+
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

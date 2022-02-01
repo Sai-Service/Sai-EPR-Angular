@@ -1092,6 +1092,13 @@ public AccountEnquirySearch(AccountEnquiryRecord):Observable<any>{
   const url = this.ServerUrl + '/glHeader/glEnquiry';
   return this.http.post(url, AccountEnquiryRecord, options);
 }
+public AccountBalSearch(AccountGlRecord):Observable<any>{
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/glHeader/glBalances';
+  return this.http.post(url, AccountGlRecord, options);
+}
 public viewAccountingjv(JVNO):Observable<any>
 {
   return this.http.get(this.ServerUrl+`/glHeader/receiptNoWise/${JVNO}`);
