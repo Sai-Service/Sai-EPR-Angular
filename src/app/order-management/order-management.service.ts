@@ -586,11 +586,12 @@ deallotmentReasonType():Observable<any>{
 }
 
 
-orderNoPost(orderNumber,emplId) {
+orderNoPost(orderNumber,emplId,locId) {
   const REQUEST_PARAMS = new HttpParams().set('orderNumber', orderNumber)
     .set('emplId', emplId)
+    .set('servLocId',locId)
 
-  const REQUEST_URI = this.ServerUrl + `/salesGatePass/postSlGatepass?orderNumber=${orderNumber}&emplId=${emplId}`;
+  const REQUEST_URI = this.ServerUrl + `/salesGatePass/postSlGatepass?orderNumber=${orderNumber}&emplId=${emplId}&servLocId=${locId}`;
   return this.http.post(REQUEST_URI, {
     params: REQUEST_PARAMS,
 

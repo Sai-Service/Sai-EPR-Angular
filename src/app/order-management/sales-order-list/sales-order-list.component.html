@@ -71,10 +71,11 @@
                 <th >Color</th>
                 <th >Variant</th>
                 <th >Order Status</th>
-                <th >Allotment Status</th>
+                <!-- <th >Allotment Status</th> -->
+                <th >Invoice No</th>
                 <th >Invoice Date</th>
-                <th >Invoice Amt</th>
-                <th>Invoice Status</th>
+                <!-- <th >Invoice Amt</th>
+                <th>Invoice Status</th> -->
             </tr>
             <tr *ngFor="let com of orderListDetails ; let i= index" class="ItemStyle" style="text-decoration:none;font-size: 11px;">
                 <td style="padding-left: 5px;padding-top: 10px;">
@@ -87,11 +88,12 @@
                 <td style="padding-left: 5px; text-align: center;">{{com.model}}</td>
                 <td style="padding-left: 5px; text-align: center;">{{com.color}}</td>
                 <td style="padding-left: 5px; text-align: center;">{{com.variant}}</td>
-                <td style="padding-left: 5px; text-align: center;">{{com.orStatus}}</td>
-                <td style="padding-left: 5px; text-align: center;">{{com.AllotmentStatus}}</td>
+                <td style="padding-left: 5px; text-align: center;">{{com.flStatusCode}}</td>
+                <!-- <td style="padding-left: 5px; text-align: center;">{{com.AllotmentStatus}}</td> -->
+                <td style="padding-left: 5px; text-align: center;">{{com.invNum}}</td>
                 <td style="padding-left: 5px; text-align: center;">{{com.invDate}}</td>
-                <td style="padding-left: 5px; text-align: center;">{{com.invAmt}}</td>
-                <td style="padding-left: 5px; text-align: center;">{{com.invStatus}}</td>
+                <!-- <td style="padding-left: 5px; text-align: center;">{{com.invAmt}}</td>
+                <td style="padding-left: 5px; text-align: center;">{{com.invStatus}}</td> -->
                 <!-- <td *ngIf="isPending[i]" style="padding-left: 5px; text-align: center; background-color:orangered ;" >
                     {{com.reNum}}
                 </td>
