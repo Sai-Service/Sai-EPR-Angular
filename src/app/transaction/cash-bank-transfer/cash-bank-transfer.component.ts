@@ -69,6 +69,7 @@ export class CashBankTransferComponent implements OnInit {
 
       lstcomments: any;
       lstChequeList: any;
+
       loginName:string;
       divisionId:number;
       loginArray:string;
@@ -80,9 +81,6 @@ export class CashBankTransferComponent implements OnInit {
       ouId :number;
       deptId:number; 
       emplId :number;
-
-      // branch:number;
-      // period:number;
       openPeriod:string;
       docTrfNo:string;
       transferCode:number;

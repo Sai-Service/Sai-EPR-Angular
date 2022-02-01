@@ -230,13 +230,7 @@
         <fieldset class="RFS">
         <div class="container1">
             <div class="grid_scroll_3">
-                  <!-- <div style="padding-bottom: 10px;padding-top: 10px;">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <button (click)="orderListExport()" class="btn btn-success" style="width: fit-content;">Export To Excel</button>
-                            </div>
-                        </div>
-                     </div> -->
+                
                
                 <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
           
@@ -269,7 +263,8 @@
                         <tr>
 
                             <td style="text-align: center;width: 4rem;">{{i+1}}</td>
-                            <td> <input   style="width:3rem;background-color: yellow;width:6rem;text-transform: uppercase;"    type="text" formControlName="segment" (keydown.enter)="enterKeyLock(i)"  class="form-control"  (change)="validateItem(i)"></td>
+                            <td> <input   style="width:3rem;background-color: yellow;width:6rem;text-transform: uppercase;"    type="text" formControlName="segment"  class="form-control"  
+                                            (keydown.enter)="enterKeyLock(i)"  (change)="validateItem(i)" ></td>
                             <td> <input  disabled style="width:13rem;" type="text"   formControlName="description" class="form-control"></td>
                             <td> <input  disabled style="width:6rem;"  type="number" formControlName="unitPrice"  class="form-control"></td>
                             <td> <input  disabled style="width:4rem;"  type="number" formControlName="currentStock" class="form-control"></td>
@@ -285,8 +280,8 @@
                             <td> <input  disabled style="width:4rem;"  type="number" formControlName="totalCons" class="form-control"></td>
                             <td> <input  disabled style="width:4rem;"  type="number" formControlName="setQty" class="form-control"></td>
                             <td> <input   style="width:4rem;background-color: yellow;" name ='orderQty{{i}}' 
-                                type="number" formControlName="orderQty"   (keydown.tab)="NextLineCall(i,$event,'ordQty')"  
-                                (keydown.enter)="enterKeyLock(i)" (change)="validateOrdQty(i)"  class="form-control" ></td>
+                                type="number" formControlName="orderQty"    class="form-control" 
+                                (keydown.tab)="NextLineCall(i,$event,'ordQty')" (keydown.enter)="enterKeyLock(i)" (change)="validateOrdQty(i)" ></td>
                            
                            
                             <td> <input  disabled style="width:7rem;"  type="number" formControlName="totalValue" class="form-control"></td>
@@ -373,7 +368,7 @@
                         </ng-template>
                         <ng-template #hList2> </ng-template>
                     </td>
-                       <td class="LabelFontStyle" style="color: blue;">&nbsp;{{dataDisplay }}&nbsp; </td>
+                    <td class="LabelFontStyle" style="color: blue;">&nbsp;{{dataDisplay }}&nbsp; </td>
                   
                 
             </tr>
