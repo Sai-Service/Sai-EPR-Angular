@@ -374,10 +374,10 @@
                                     <ng-template #Block12> 
                                         <div *ngIf="statusPost; then Block2; else Block21"></div>
                                         <ng-template #Block2> 
-                                             <td> <button  type="button" class="btn btn-info" (click)="cashBnkTrfPost()" >Post</button>  </td>
+                                          <td> <button  type="button" class="btn btn-info" (click)="cashBnkTrfPost()" >Post</button>  </td>
                                         </ng-template>
-                                        <ng-template #Block21> 
-                                            <!-- <td> <button disabled type="button" class="btn btn-info" (click)="cashBnkTrfPost()" >Post</button>  </td> -->
+                                        <ng-template #Block21>
+                                          <td> <button  disabled type="button" class="btn btn-info" (click)="cashBnkTrfPost()" >Post</button>  </td>
                                         </ng-template>
 
                                         
@@ -628,8 +628,8 @@
                 <tr class="GridHeader">
                 <th style="width:5rem" scope="col">Srl&nbsp;No&nbsp;</th> 
                 <th style="width:5rem" scope="col">Trf&nbsp;No&nbsp;</th>
-                <th style="width:5rem" scope="col">Trf&nbsp;No&nbsp;</th>
-                <th style="width:5rem" scope="col"> Trf&nbsp;Date</th>
+                <th style="width:5rem" scope="col">Trf&nbsp;Date&nbsp;</th>
+                <th style="width:5rem" scope="col"> Trf&nbsp;Type</th>
                 <th style="width:10rem" scope="col"> Trf&nbsp;Header</th>
                 <th style="width:6rem" scope="col">Trf&nbsp;Amt</th>
                 <th style="width:10rem" scope="col">From&nbsp;A/c</th>
@@ -641,8 +641,8 @@
         </tbody>
         <tr *ngFor="let com of lstcomments let i=index" class="ItemStyle" style="text-decoration:none;">
                 <td style="text-align: center;">{{i+1}}</td>
-                <td>{{com.docTrfNo}}</td>
-                <td>{{com.transferDate| date:'dd-MM-y'}}</td>   
+                <td style="text-align: center;">{{com.docTrfNo}}</td>
+                <td style="text-align: center;">{{com.transferDate| date:'dd-MM-y'}}</td>   
                 <td style="text-align: center;">{{com.transferDescp}}</td>   
                 <td style="text-align: center;">{{com.trfHeader}}</td> 
                 <td style="text-align: center;">{{com.trfAmount}}</td>

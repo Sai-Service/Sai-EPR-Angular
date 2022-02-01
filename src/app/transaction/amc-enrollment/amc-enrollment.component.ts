@@ -461,12 +461,13 @@ closeMast() {
             const formValue: IAmcEnroll =this.transeData(this.amcEnrollmentForm.value);
               this.checkAmcHeaderValidations();
             if(this.amcHeaderValidation) {
+              this.displayButton=false;
             this.service.AmcEnrollMasterSubmit(formValue).subscribe((res: any) => {
               if (res.code === 200) {
                 alert('RECORD INSERTED SUCCESSFUILY');
                 // this.mcpPackageMasterForm.reset();
-                 this.enrollmentNo=  res.obj.enrollmentNo
-                this.displayButton=false;
+                this.enrollmentNo=  res.obj.enrollmentNo
+              
                 this.amcEnrollmentForm.disable();
               } else {
                 if (res.code === 400) {
