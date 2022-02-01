@@ -23,10 +23,14 @@ getJonCardNoSearch(jonCardNo): Observable<any> {
 
 getJonCardNoSearchLoc(jcNum,jDate,jStatus,jRegNo,jLocId): Observable<any> {
   return this.http.get(this.ServerUrl +`/jobCard/jobList?jobDate=${jDate}&status=${jStatus}&locId=${jLocId}&jobCardNum=${jcNum}&regNo=${jRegNo}`);
+  }
 
-  // return this.http.get(this.ServerUrl +`/jobCard/jobList?jobDate=${jobDate}&status=&locId=${jLocId}&jobCardNum&regNo`);
-  // http://localhost:8081/jobCard/jobList?jobDate=2021-12-21&status=Invoiced&locId=121&jobCardNum&regNo 
-}
+getPendingjcListForGP(jRegNo,jLocId): Observable<any> {
+  return this.http.get(this.ServerUrl +`/jobCard/pendingList?locId=${jLocId}&regNo=${jRegNo}`);
+ }
+
+
+
 
 
 
@@ -174,13 +178,14 @@ generateServiceGatePass(regNo,mlocId){
   // new -- http://localhost:8081/SRGatepass/SRVGatepass?regNo=MH12SV4124&locId=2202
 }
 
-printWsGatePass(jcNumber,locId){
-  const REQUEST_URI = this.ServerUrl +`/SRGatepass/print/${jcNumber}`;  
+printWsGatePass(jcNumber,gpNum,locId){
+  // const REQUEST_URI = this.ServerUrl +`/SRGatepass/print/${jcNumber}`;  
+  const REQUEST_URI = this.ServerUrl +`/SRGatepass/printSrvGatePass?vehicleNo=${jcNumber}&gatepassId=${gpNum}`;  
   return this.http.get(REQUEST_URI, {
   responseType: 'arraybuffer',
   headers: this.headers,
 });
-
+// http://localhost:8081/SRGatepass/printSrvGatePass?vehicleNo=MH12TJ9161&gatepassId=43
 }
 
 

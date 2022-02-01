@@ -1362,7 +1362,7 @@
                                                         <td>
                                                         
                                                             <button type="button" class="btn btn-primary" style="width: fit-content;height: fit-content;"
-                                                                data-toggle="modal" (click)="openTaxDetails(i)"
+                                                                data-toggle="modal"  [disabled]="isDisabledtaxbtn[i]" (click)="openTaxDetails(i)"
                                                                 data-target="#taxDetails">
                                                                 Tax Details
                                                             </button>
@@ -1423,7 +1423,7 @@
                                                         <td>
                                                             
                                                             <button type="button" class="btn btn-primary"  style="width: fit-content;height: fit-content;"
-                                                                data-toggle="modal" (click)="openTaxDetails(i)"
+                                                                data-toggle="modal" [disabled]="isDisabledtaxbtn[i]" (click)="openTaxDetails(i)"
                                                                 data-target="#taxDetails">
                                                                 Tax Details
                                                             </button>
@@ -1476,7 +1476,7 @@
                                                                 id="taxCategoryName" class="form-control"
                                                                 style="width: 160px;height: 25px;font-size: 10px;">
                                                                 <option>--Select--</option>
-                                                                <option *ngFor="let sc of  taxCategoryList[i]" [value]="sc.taxCategoryName">
+                                                                <option *ngFor="let sc of  taxCategoryList[i]" [ngValue]="sc.taxCategoryName">
                                                                     {{sc.taxCategoryName}}
                                                                 </option>
                                                             </select>
@@ -1548,6 +1548,7 @@
                                                                 <option value="CANCELLED">CANCELLED</option>
                                                                 <option value="INVOICED" hidden>INVOICED</option>
                                                                 <option value="ALLOTED" hidden>ALLOTED</option>
+                                                                <option value="DE-ALLOTED" hidden>DE-ALLOTED</option>
                                                                 <option value="READY FOR INVOICE">READY FOR INVOICE
                                                                 </option>
                                                             </select>
@@ -1826,7 +1827,7 @@
                                                     </tbody>    
                                                 </table>
                                                 <button type="button" class="btn btn-primary"
-                                                    (click)="addDiscount(selectedLine)"
+                                                    (click)="addDiscount(selTaxLn)"
                                                     style="width: 8rem; border: solid 1px Gray">Apply
                                                     Discount</button>
                                         </div>
