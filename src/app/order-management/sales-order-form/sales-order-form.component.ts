@@ -1352,6 +1352,7 @@ export class SalesOrderFormComponent implements OnInit {
     this.displayCustomerSite = false;
     this.isDisabled3 = true;
     this.isDisabled4 = true;
+    this.isDisabled8= false;
     this.currentOpration = 'orderSearch';
     this.SalesOrderBookingForm.get('custName').disable();
     this.SalesOrderBookingForm.get('mobile1').disable();
