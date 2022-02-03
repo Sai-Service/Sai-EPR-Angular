@@ -2,7 +2,7 @@
     <table style="width: 100%;background-color: white;">
         <tr>
             <td class="PageHeader">
-                &nbsp;&nbsp;EXTENDED&nbsp;WARRANTY&nbsp;CUSTOMER&nbsp;FORM
+                &nbsp;&nbsp;Extended&nbsp;Warranty&nbsp;Enrollment&nbsp;
             </td>
         </tr>
     </table>
@@ -113,7 +113,7 @@
                         <div *ngIf="displayButton; then pYes; else pNo"></div>
                         <ng-template #pYes>
                         <td> 
-                            <select  formControlName="paytmentSource" id="paytmentSource" [(ngModel)]="paytmentSource" class="form-control" (ngModelChange)="onSourceSelected(paytmentSource)">
+                            <select  formControlName="paytmentSource" id="paytmentSource" [(ngModel)]="paytmentSource" class="form-control" (ngModelChange)="onSourceSelected(paytmentSource)" style="background-color: yellow;">
                                 <!-- <option value=""></option> -->
                                 <option value="SERVICE">SERVICE</option>
                                 <option value="SALES">SALES</option>
@@ -142,7 +142,7 @@
                                 <table>
                                     <tr>
                                       <td>
-                                        <input   type="text"  formControlName="orderNumber"  id="orderNumber" [(ngModel)]="orderNumber" class="form-control" placeholder="Enter Order No & click click on button right ." >
+                                        <input   type="text"  formControlName="orderNumber"  id="orderNumber" [(ngModel)]="orderNumber" class="form-control" style="background-color: yellow;" placeholder="Enter Order No & click click on button right ." >
                                       </td>
 
                                       <td colspan="8" style="text-align: left; width: 100%;height: 26px;">
@@ -189,7 +189,7 @@
                             <td style="width: 15%" class="LabelFontStyle1">Reg&nbsp;No:&nbsp;</td>
     
                             <td>
-                             <input style="font-weight: bold;" type="text"
+                             <input style="font-weight: bold;background-color: yellow;" type="text"
                                 formControlName="vehRegNo"
                                 [(ngModel)]="vehRegNo"
                                 (change)="serchByRegNo(vehRegNo)"
@@ -339,7 +339,7 @@
                     <div *ngIf="displayButton; then thenBlock901; else elseBlock901"></div>
                     <ng-template #thenBlock901>
                         <td>
-                            <input   type="number"  formControlName="kmsEwSale"  id="kmsEwSale" [(ngModel)]="kmsEwSale" class="form-control" (change)='onEnterKms(kmsEwSale)' >
+                            <input   type="number"  formControlName="kmsEwSale"  id="kmsEwSale" [(ngModel)]="kmsEwSale" class="form-control" (change)='onEnterKms(kmsEwSale)' style="background-color: yellow;">
                         </td>
                     </ng-template>
                     <ng-template #elseBlock901>
@@ -548,7 +548,7 @@
                             <td style="width: 15%" class="LabelFontStyle1">Sold&nbsp;By:&nbsp;</td>
 
                             <td>
-                                <select type="text" class="form-control" formControlName="soldByEmpId">
+                                <select type="text" class="form-control" formControlName="soldByEmpId" style="background-color: yellow;">
                                 <option disabled>--Select--</option>
                                 <option *ngFor="let sc of issueByList" [ngValue]="sc.emplId" >
                                 {{sc.emplId}}-{{sc.ticketNo}}-{{sc.name}}
@@ -561,7 +561,7 @@
                             <div *ngIf="displayButton; then thenBlock902; else elseBlock902"></div>
                             <ng-template #thenBlock902>
                             <td>  
-                                <select  formControlName="ewSchemeId" id="ewSchemeId" [(ngModel)]="ewSchemeId" class="form-control" (ngModelChange)="GetSchemeDetails($event)"  >
+                                <select  formControlName="ewSchemeId" id="ewSchemeId" [(ngModel)]="ewSchemeId" class="form-control" (ngModelChange)="GetSchemeDetails($event)"  style="background-color: yellow;">
                                     <option disabled>--Select--</option>
                                     <option *ngFor="let sc of EwSchemeItemList" [ngValue] ="sc.ewSchemeId" >
                                         {{sc.ewSchemeNo}}
@@ -606,7 +606,7 @@
                             <ng-template #thenBlock903>
 
                             <td>  
-                                <select   formControlName="itemId" id="itemId" [(ngModel)]="itemId"  class="form-control">
+                                <select   formControlName="itemId" id="itemId" [(ngModel)]="itemId"  class="form-control" style="background-color: yellow;">
                                 <option disabled>--Select--</option>
                                 <option *ngFor="let sc of  invItemListEw" [ngValue]="sc.ITEMID">
                                 <!-- {{sc.itemId}}- -->
@@ -638,14 +638,14 @@
                             <td style="width: 15%" class="LabelFontStyle1">EW&nbsp;Booklet&nbsp;No:&nbsp;</td>
     
                             <td>
-                                <input   type="text"  formControlName="ewBookletNo"  id="ewBookletNo" [(ngModel)]="ewBookletNo" class="form-control" >
+                                <input   type="text"  formControlName="ewBookletNo"  id="ewBookletNo" [(ngModel)]="ewBookletNo" class="form-control" style="background-color: yellow;">
                             </td>
 
                             <td style="width: 15%" class="LabelFontStyle1">EW&nbsp;Insurance:&nbsp;</td>
     
                             
                             <td>  
-                                <select   formControlName="ewInsurerId" id="ewInsurerId" [(ngModel)]="ewInsurerId"  class="form-control" (change) ="onEwInsurerSalected(ewInsurerId)" >
+                                <select   formControlName="ewInsurerId" id="ewInsurerId" [(ngModel)]="ewInsurerId"  class="form-control" (change) ="onEwInsurerSalected(ewInsurerId)" style="background-color: yellow;">
                                 <option disabled>--Select--</option>
                                 <option *ngFor="let sc of  ewInsNameList" [ngValue]="sc.customerId">
                                 {{sc.customerId}}-{{sc.custName}}
@@ -682,7 +682,7 @@
                             <td   style="width: 15%" class="LabelFontStyle">Premium&nbsp;Amt:&nbsp;</td>
 
                             <td>
-                                <input disabled style="font-weight: bold;text-align: right;"   type="number" formControlName="ewSchemeAmt"  id="ewSchemeAmt"  [(ngModel)]="ewSchemeAmt" class="form-control" placeholder=" Premium Amt">
+                                <input disabled style="font-weight: bold;text-align: right;"   type="number" formControlName="ewSchemeAmt"  id="ewSchemeAmt"  [(ngModel)]="ewSchemeAmt" class="form-control" placeholder=" Premium Amt" >
                             </td>
           
                           </tr>
@@ -711,14 +711,14 @@
                             <td   style="width: 15%" class="LabelFontStyle1">Receipt&nbsp;Amount:&nbsp;</td>
 
                             <td>
-                                <input style="font-weight: bold;text-align: right;"   type="number" formControlName="paymentAmt"  id="paymentAmt"  [(ngModel)]="paymentAmt"   class="form-control" (change)="validateAmt(paymentAmt)" placeholder="Receipt Amount">
+                                <input style="font-weight: bold;text-align: right;background-color: yellow;"   type="number" formControlName="paymentAmt"  id="paymentAmt"  [(ngModel)]="paymentAmt"   class="form-control" (change)="validateAmt(paymentAmt)" placeholder="Receipt Amount">
                             </td>
 
 
                            <td style="width: 15%" class="LabelFontStyle1">Pay&nbsp;Mode:&nbsp;</td>
 
                             <td>  
-                                <select formControlName="payType" id="payType" [(ngModel)]="payType" class="form-control" (ngModelChange)='onPayTypeSelected($event,"Active")' >
+                                <select formControlName="payType" id="payType" [(ngModel)]="payType" class="form-control" (ngModelChange)='onPayTypeSelected($event,"Active")'style="background-color: yellow;" >
                                     <option disabled>--Select--</option>
                                     <option *ngFor="let sc of  PaymentModeList" [ngValue]="sc.lookupValue"  >
                                         {{sc.lookupValue}} 
@@ -728,7 +728,7 @@
                         
                             <td style="width: 15%" class="LabelFontStyle1">Pay&nbsp;Method:&nbsp;</td>
                             <td>  
-                                <select formControlName="receiptMethodId" id="receiptMethodId" [(ngModel)]="receiptMethodId" class="form-control">
+                                <select formControlName="receiptMethodId" id="receiptMethodId" [(ngModel)]="receiptMethodId" class="form-control" style="background-color: yellow;">
                                     <option >--Select--</option>
                                     <option *ngFor="let sc of  ReceiptMethodList " [ngValue]="sc.receiptMethodId">
                                         {{sc.receiptMethodId}}-{{sc.methodName}} 
