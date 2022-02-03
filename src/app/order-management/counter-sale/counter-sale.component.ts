@@ -257,6 +257,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   customerId: number;
   custType: string;
   custAccountNo: number;
+  custClassCode: string;
   custName: string;
   custAddress: string;
   salesRepName: string;
@@ -1446,6 +1447,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
             // this.CounterSaleOrderBookingForm.get('custName').disable();
             // this.CounterSaleOrderBookingForm.get('mobile1').disable();
             // alert(this.custSiteList.length)
+            this.custClassCode = this.selCustomer.classCodeType;
             for (let i = 0; i < this.custSiteList.length; i++) {
               // alert(this.custSiteList.length + '----' + this.custSiteList[i].ouId + '-----' + sessionStorage.getItem('ouId'));
               if (this.custSiteList.length === 1 && Number(this.custSiteList[i].ouId) === Number(sessionStorage.getItem('ouId'))) {
@@ -1965,11 +1967,15 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
           this.CounterSaleOrderBookingForm.get('custPoNumber').disable();
           this.itemId = select.itemId;
           var custtaxCategoryName = this.CounterSaleOrderBookingForm.get('taxCategoryName').value;
+          let isExportCust ="N";
+        if(this.custClassCode.includes("EXPORTER")){
+          isExportCust ="Y";
+        }
           var priceListId = this.CounterSaleOrderBookingForm.get('priceListId').value;
           console.log(priceListId);
           if (custtaxCategoryName === 'Sales-IGST') {
             // alert(custtaxCategoryName);
-            this.orderManagementService.addonDescList1(segment, custtaxCategoryName, priceListId)
+            this.orderManagementService.addonDescList2(segment, custtaxCategoryName, priceListId,isExportCust)
               .subscribe(
                 data => {
                   if (data.code === 200) {
@@ -2069,7 +2075,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
               ;
           }
           else {
-            this.orderManagementService.addonDescList1(segment, custtaxCategoryName, priceListId)
+            this.orderManagementService.addonDescList2(segment, custtaxCategoryName, priceListId,isExportCust)
               .subscribe(
                 data => {
                   if (data.code === 200) {

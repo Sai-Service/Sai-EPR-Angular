@@ -40,6 +40,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
   customerSiteId: number;
   taxCategoryName: string;
   custName: string;
+  custClassCode:string;
   mobile1: number;
   custAddress: string;
   walkCustName: string;
@@ -487,6 +488,8 @@ export class CounterSalePerformaInvComponent implements OnInit {
               this.displaytcsBuuton = false;
               // this.isDisabled = true;
             }
+            this.custClassCode = this.selCustomer.classCodeType;
+            
             this.CounterSaleOrderBookingForm.patchValue({ tcsYN: data.obj.tcsYN });
             this.CounterSaleOrderBookingForm.patchValue({ custName: data.obj.custName });
             this.CounterSaleOrderBookingForm.patchValue({ customerId: data.obj.customerId });
@@ -560,7 +563,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
     console.log(this.custSiteList);
 
     // alert(selSite.ouId);
-
+debugger;
     if (selSite.ouId != (sessionStorage.getItem('ouId'))) {
       alert('First Create OU wise Site to continue process!')
     }
@@ -582,6 +585,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
       this.birthDate = this.selCustomer.birthDate;
       this.weddingDate = this.selCustomer.weddingDate;
       this.taxCategoryName = this.selCustomer.taxCategoryName;
+      this.custClassCode = this.selCustomer.classCodeType;
       this.CounterSaleOrderBookingForm.patchValue({ creditAmt: selSite.creditAmt });
       if (selSite.disPer != null) {
         // alert(selSite.disPer)
@@ -766,9 +770,13 @@ export class CounterSalePerformaInvComponent implements OnInit {
         var custtaxCategoryName = this.CounterSaleOrderBookingForm.get('taxCategoryName').value;
         var priceListId = this.CounterSaleOrderBookingForm.get('priceListId').value;
         console.log(priceListId);
+        let isExportCust ="N";
+        if(this.custClassCode.includes("EXPORTER")){
+          isExportCust ="Y";
+        }
         if (custtaxCategoryName === 'Sales-IGST') {
           // alert(custtaxCategoryName);
-          this.orderManagementService.addonDescList1(segment, custtaxCategoryName, priceListId)
+          this.orderManagementService.addonDescList2(segment, custtaxCategoryName, priceListId, isExportCust)
             .subscribe(
               data => {
                 if (data.code === 200) {
@@ -808,7 +816,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
             ;
         }
         else {
-          this.orderManagementService.addonDescList1(segment, custtaxCategoryName, priceListId)
+          this.orderManagementService.addonDescList2(segment, custtaxCategoryName, priceListId,isExportCust)
             .subscribe(
               data => {
                 if (data.code === 200) {
