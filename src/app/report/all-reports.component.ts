@@ -1,16 +1,8 @@
-import { Component, OnInit, HostListener, ViewChild, ElementRef } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators, FormArray, FormControlName } from '@angular/forms';
-import { NgForm } from '@angular/forms';
-import { from } from 'rxjs';
-import { Url } from 'url';
-import { Observable } from 'rxjs';
+import { Component, OnInit} from '@angular/core';
+import { FormGroup, FormBuilder} from '@angular/forms';
 import { Router, ActivatedRoute} from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { NgModule } from '@angular/core';
 import { ReportServiceService } from 'src/app/report/report-service.service'
 import { DatePipe,Location } from '@angular/common';
-import { data, get } from 'jquery';
-import * as xlsx from 'xlsx';
 import { MasterService } from 'src/app/master/master.service';
 import { saveAs } from 'file-saver';
 

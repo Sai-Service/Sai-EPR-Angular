@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators ,FormArray} from '@angular/forms';
 import { Router } from '@angular/router';
-import { from } from 'rxjs';
 import { MasterService } from 'src/app/master/master.service';
 import{ BankService} from '../bank.service';
 

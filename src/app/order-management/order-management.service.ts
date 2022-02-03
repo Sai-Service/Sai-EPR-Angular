@@ -243,6 +243,7 @@ export class OrderManagementService {
     const REQUEST_PARAMS = new HttpParams().set('segment', segment)
     .set('taxCategoryName', taxCategoryName)
     .set('priceListHeaderId', priceListHeaderId)
+    
     const REQUEST_URI = this.ServerUrl +'/itemMst/segmentLike';
     return this.http.get(REQUEST_URI, {
       params: REQUEST_PARAMS,
@@ -250,6 +251,18 @@ export class OrderManagementService {
     });
   }
  
+  addonDescList2(segment, taxCategoryName, priceListHeaderId, isExportCust):Observable<any> {
+    const REQUEST_PARAMS = new HttpParams().set('segment', segment)
+    .set('taxCategoryName', taxCategoryName)
+    .set('priceListHeaderId', priceListHeaderId)
+    .set('isExportCust', isExportCust)
+    const REQUEST_URI = this.ServerUrl +'/itemMst/segmentLike';
+    return this.http.get(REQUEST_URI, {
+      params: REQUEST_PARAMS,
+  
+    });
+  }
+
   getTaxCategoriesForSales(taxCategoryName,hsnTaxPer):Observable<any>{
     return this.http.get(this.ServerUrl +`/JaiTaxCatg/taxCateDtls?taxCatType=SALES&suppTaxCate=${taxCategoryName}&hsnTaxPer=${hsnTaxPer}`);
   }

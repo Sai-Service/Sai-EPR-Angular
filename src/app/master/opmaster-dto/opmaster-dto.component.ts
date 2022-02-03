@@ -1,32 +1,9 @@
 import { Component, OnInit, HostListener, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators, FormArray, FormControlName } from '@angular/forms';
-import { NgForm } from '@angular/forms';
-import { from } from 'rxjs';
-import { Url } from 'url';
-import { Observable } from 'rxjs';
 import { Data, Router } from '@angular/router';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { NgModule } from '@angular/core';
 import { MasterService } from '../master.service';
 import { DatePipe } from '@angular/common';
-import { data, get } from 'jquery';
-// import Keyboard from 'keyboard-events';
-// import Keyboard from 'keyboard';
-// import MyActions from 'my-actions.js';
-
-
-
-// import { Query } from '@syncfusion/ej2-data';
-// import { EmitType } from '@syncfusion/ej2-base';
-// import { FilteringEventArgs } from '@syncfusion/ej2-dropdowns';
-// import { Query, DataManager, ODataV4Adaptor } from '@syncfusion/ej2-data';
-// import { FilteringEventArgs } from '@syncfusion/ej2-dropdowns';
-// import { EmitType } from '@syncfusion/ej2-base';
-
-
-
-
 interface IpostPO {
   poHeaderId: number;
   poLineId: number;
@@ -351,7 +328,7 @@ export class OPMasterDtoComponent implements OnInit {
 
   @ViewChild('fileInput') fileInput;
   message: string;
-  allUsers: Observable<OPMasterDtoComponent[]>;
+
 
   // buttons display
   displayFirstButtonDisplay = true;
@@ -2679,9 +2656,6 @@ export class OPMasterDtoComponent implements OnInit {
     this.displayTaxDetailData = false;
   }
 
-  loadAllUser() {
-    this.allUsers = this.service.BindUser();
-  }
 
   // uploadFile() {
   //   console.log('doctype-check' + this.docType)

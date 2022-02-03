@@ -7,7 +7,7 @@ import { NgModule } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { InteractionModeRegistry } from 'chart.js';
-import { from } from 'rxjs';
+
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 import { MasterService } from 'src/app/master/master.service';
 import { Location } from "@angular/common";

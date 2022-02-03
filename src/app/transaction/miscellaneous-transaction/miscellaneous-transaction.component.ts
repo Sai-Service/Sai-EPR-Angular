@@ -1,4 +1,4 @@
-import { DatePipe, PathLocationStrategy } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import {
   Component,
   OnInit,
@@ -16,12 +16,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { controllers } from 'chart.js';
-import { data } from 'jquery';
 import { MasterService } from 'src/app/master/master.service';
-import {} from 'rxjs';
-import { listenerCount } from 'events';
-import { first } from 'rxjs/operators';
 
 interface Imiscellaneous {
   invItemId: number;
