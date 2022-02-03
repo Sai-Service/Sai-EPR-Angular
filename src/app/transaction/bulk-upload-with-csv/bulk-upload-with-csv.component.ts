@@ -202,7 +202,7 @@ export class BulkUploadWithCsvComponent implements OnInit {
           this.closeResetButton=true;
         } else {
           if (res.code === 400) {
-            alert('Error In File : \n' + res.obj);
+            alert('Error In File : \n' + res.message+'---'+ res.obj);
             this.dataDisplay ='File Uploading Failed....'
             this.closeResetButton=true;
             this.displaySalesErrorList=false

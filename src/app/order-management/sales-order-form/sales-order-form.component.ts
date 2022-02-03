@@ -1459,8 +1459,28 @@ export class SalesOrderFormComponent implements OnInit {
                   this.isVisible2 = true;
                   // this.isVisible5 = false;
                 }
-
-                if (this.lstgetOrderLineDetails[i].flowStatusCode === 'INVOICED' || this.lstgetOrderLineDetails[i].flowStatusCode === 'CANCELLED' || this.lstgetOrderLineDetails[i].flowStatusCode==='DE-ALLOTED') {
+                if (this.lstgetOrderLineDetails[i].flowStatusCode === 'CANCELLED' || this.lstgetOrderLineDetails[i].flowStatusCode==='DE-ALLOTED'){
+               
+                  this.isDisabledtaxbtn[i]=true;
+                  this.isVisible4 = true;
+                  this.isVisible3 = false;
+                  this.isVisible5 = false;
+                  this.displayLineflowStatusCode[i] = true;
+                  this.displayRemoveRow[i] = false;
+                  this.displaytaxCategoryName[i] = false;
+                  this.SalesOrderBookingForm.get('financeType').disable();
+                  this.SalesOrderBookingForm.get('financerName').disable();
+                  this.SalesOrderBookingForm.get('financeAmt').disable();
+                  this.SalesOrderBookingForm.get('emi').disable();
+                  this.SalesOrderBookingForm.get('tenure').disable();
+                  this.SalesOrderBookingForm.get('downPayment').disable();
+                  this.SalesOrderBookingForm.get('exchange').disable();
+                  this.SalesOrderBookingForm.get('loyaltyBonus').disable();
+                  this.SalesOrderBookingForm.get('exRegNo').disable();
+                  this.SalesOrderBookingForm.get('insCharges').disable();
+                  this.SalesOrderBookingForm.get('offerPrice').disable();
+                }
+                if (this.lstgetOrderLineDetails[i].flowStatusCode === 'INVOICED') {
                   this.isVisible4 = true;
                   this.isVisible3 = false;
                   // this.isVisible3 = false;
@@ -1468,7 +1488,7 @@ export class SalesOrderFormComponent implements OnInit {
                   this.displayLineflowStatusCode[i] = true;
                   this.displayRemoveRow[i] = false;
                   this.displaytaxCategoryName[i] = false;
-                  this.isDisabledtaxbtn[i]=true;
+                  this.isDisabledtaxbtn[i]=false;
                   this.SalesOrderBookingForm.get('financeType').disable();
                   this.SalesOrderBookingForm.get('financerName').disable();
                   this.SalesOrderBookingForm.get('financeAmt').disable();
