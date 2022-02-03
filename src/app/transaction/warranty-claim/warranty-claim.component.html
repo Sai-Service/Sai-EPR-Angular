@@ -1,0 +1,35 @@
+
+<form [formGroup]="warrantyClaimForm" (ngSubmit)="warrantyClaim(warrantyClaimForm.value)" #aForm> 
+ 
+    <div class="center">
+
+        <table style="width: 100%;background-color: white;">
+            <tr>
+                <td class="PageHeader">
+                    &nbsp;&nbsp;Warrany&nbsp;Claim&nbsp;Form
+                </td>
+            </tr>
+        </table>
+
+        <fieldset class="RFS">
+            <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Search</legend>
+        
+            <table class="center" style="width: 100%;background-color: #FFE4B5;">
+            <tr>
+
+                <td  style="background-color: #FFE4B5;" class="LabelFontStyle">&nbsp;Line&nbsp;&nbsp;Status:&nbsp;</td>
+                
+                <td style="background-color: #FFE4B5;">
+                    <input type="text" class="form-control" formControlName="lineStatus"  value={{lineStatus}} [(ngModel)]="lineStatus" >
+                </td>
+            </tr>
+            </table>
+        </fieldset>
+
+
+
+
+    </div>
+</form>
+
+       
