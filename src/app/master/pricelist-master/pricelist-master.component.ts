@@ -264,6 +264,7 @@ export class PricelistMasterComponent implements OnInit {
       // startDate: ['', [Validators.required]],
       // endDate: ['', [Validators.required]],
       segment: ['', [Validators.required]],
+      mrp:[],
     });
   }
 
