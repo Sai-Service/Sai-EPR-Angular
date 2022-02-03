@@ -22,7 +22,7 @@ import { McpPackageMasterComponent } from './mcp-package-master/mcp-package-mast
 import { McpEnquiryComponent } from './mcp-enquiry/mcp-enquiry.component';
 import { McpEnrollmentComponent } from './mcp-enrollment/mcp-enrollment.component';
 import { McpCancellationComponent } from './mcp-cancellation/mcp-cancellation.component';
-  import { from } from 'rxjs';
+  
 import { StockTakingComponent } from './stock-taking/stock-taking.component';
 import { JournalVoucherComponent } from './journal-voucher/journal-voucher.component';
 import { OnHandDetailsComponent } from './on-hand-details/on-hand-details.component';

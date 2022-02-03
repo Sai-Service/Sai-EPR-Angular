@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { from } from 'rxjs';
+
 import { AllotmentComponent } from './allotment/allotment.component';
 import { CounterSaleWithCSVModuleComponent } from './counter-sale-with-csvmodule/counter-sale-with-csvmodule.component';
 import { CounterSaleComponent } from './counter-sale/counter-sale.component';

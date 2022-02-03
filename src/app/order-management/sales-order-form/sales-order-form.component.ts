@@ -1,22 +1,18 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
-import { NgForm } from '@angular/forms';
-import { from } from 'rxjs';
-import { Url } from 'url';
+
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Router } from '@angular/router';
 import { Validators, FormArray } from '@angular/forms';
-import { FormsModule } from '@angular/forms';
-import { NgModule } from '@angular/core';
+
 import { MasterService } from 'src/app/master/master.service';
 import { TransactionService } from 'src/app/transaction/transaction.service';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
-import { data } from 'jquery';
-import { DatePipe } from '@angular/common';
+
 import { Location } from "@angular/common";
 import { saveAs } from 'file-saver';
 import { SalesOrderobj } from './sales-orderobj'
-import { identifierModuleUrl } from '@angular/compiler';
+
 const MIME_TYPES = {
   pdf: 'application/pdf',
   xls: 'application/vnd.ms-excel',
@@ -1584,7 +1580,7 @@ export class SalesOrderFormComponent implements OnInit {
     // alert('added to map closeTaxModal..' + this.selTaxLn)
     this.display = 'none'; //set none css after close dialog
     this.myInputField.nativeElement.focus();
-    // debugger;
+  
     var taxValues = this.SalesOrderBookingForm.get('taxAmounts').value;
     var totDisc = 0;
     var totTax = 0;
@@ -1729,7 +1725,7 @@ export class SalesOrderFormComponent implements OnInit {
     var taxCategoryId = select.taxCategoryId;
     console.log(taxCategoryId);
     // controlinv.controls[i].patchValue({taxCategoryId:select.taxCategoryId});
-    // debugger;
+
     (controlinv2.controls[i]).patchValue({
       taxCategoryId: taxCategoryId,
     });
@@ -1782,7 +1778,7 @@ export class SalesOrderFormComponent implements OnInit {
     let salesObj = Object.assign(new SalesOrderobj(), jsonData);
     salesObj.setoeOrderLinesAllList(orderLines);
     var taxStr = [];
-    // debugger;
+
     this.isDisabled11 = true;
     for (let k = 0; k < orderLines.length; k++) {
       if (orderLines[k].isTaxable === 'Y') {
@@ -1863,7 +1859,7 @@ export class SalesOrderFormComponent implements OnInit {
 
 
   taxDetails(op, i, taxCategoryId) {
-    // alert('hi'+' ' +op+'-' +i);
+     alert('hi'+' ' +op+'-' +i);
     // alert(this.displayCounterSaleLine[i]);
     this.selectedLine = i;
     if (op === 'Search') {
@@ -2214,7 +2210,7 @@ export class SalesOrderFormComponent implements OnInit {
     var disAmt = 0;
     var tcsAmt1 = 0;
     for (let i = 0; i < formVal.length; i++) {
-      // debugger;
+ 
       if (formVal[i].flowStatusCode === 'BOOKED' || formVal[i].flowStatusCode === 'INVOICED' || formVal[i].flowStatusCode === 'READY FOR INVOICE' || formVal[i].flowStatusCode === 'ALLOTED') {
         if (formVal[i].baseAmt == undefined || formVal[i].baseAmt == null || formVal[i].baseAmt == '') {
 
