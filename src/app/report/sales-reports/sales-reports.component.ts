@@ -71,12 +71,12 @@ export class SalesReportsComponent implements OnInit {
     this.closeResetButton = false;
     this.progress = 0;
     this.dataDisplay = 'Report Is Running....Do not refresh the Page';
-    var purStDt = this.salesReportForm.get('jobSumFromDt').value;
+    var purStDt = this.salesReportForm.get('vhslRegisterFromDt').value;
     var fromDate = this.pipe.transform(purStDt, 'dd-MMM-yyyy');
-    var spreceipttoDate2 = this.salesReportForm.get('jobSumToDt').value;
+    var spreceipttoDate2 = this.salesReportForm.get('vhslRegisterToDt').value;
     var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
     const fileName = 'Vehicle Sales Register-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
-
+    // alert(fromDate+'----'+ toDate+'-----'+ sessionStorage.getItem('locId'))
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.vhslRegisterReport(fromDate, toDate, sessionStorage.getItem('locId'))
       .subscribe(data => {
@@ -121,7 +121,7 @@ export class SalesReportsComponent implements OnInit {
     var fromDate = this.pipe.transform(purStDt, 'dd-MMM-yyyy');
     var spreceipttoDate2 = this.salesReportForm.get('salesbkregToDt').value;
     var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
-    const fileName = 'Sales Invoiced Not Delivered-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+    const fileName = 'Sales Booking Register-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
 
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.salesbookingregReport(fromDate, toDate, sessionStorage.getItem('locId'))

@@ -507,6 +507,7 @@ export class SalesOrderFormComponent implements OnInit {
   ngOnInit(): void {
     $("#wrapper").toggleClass("toggled");
     this.op = 'insert';
+    this.isVisible3 = false;
     // this.displayLineTaxDetails=true;
     this.currentOpration = 'NewOrder';
     // this.displaysegmentInvType[0] = true;
@@ -1162,7 +1163,6 @@ export class SalesOrderFormComponent implements OnInit {
             let taxMapData = this.SalesOrderBookingForm.get('taxAmounts').value;
             var ln: string = String(index);
             this.taxMap.set(ln, taxMapData);
-            // alert('added to map onkey' + index)
             console.log(this.taxMap.get(ln));
             this.updateTotAmtPerline(index);
             // this.updateTotAmtPerline(index);
@@ -1400,6 +1400,7 @@ export class SalesOrderFormComponent implements OnInit {
             let control = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
             // alert(this.lstgetOrderLineDetails.length);
             if (this.lstgetOrderLineDetails.length === 0 && this.lstgetOrderTaxDetails.length === 0) {
+              alert('0 length')
               this.orderlineDetailsArray().push(this.orderlineDetailsGroup());
               this.TaxDetailsArray().push(this.TaxDetailsGroup());
               this.displayLineTaxDetails = true;
@@ -1418,7 +1419,10 @@ export class SalesOrderFormComponent implements OnInit {
                 this.isVisible3 = false;
                 this.isVisible5 = true;
               }
-
+              if (data.obj.flowStatusCode === 'ENTERED') {
+                // this.isVisible2 = true;
+                this.isVisible3 = false;
+              }
               this.displayVehicleDetails = true;
               var variantNew = data.obj.variant;
               this.SalesOrderBookingForm.patchValue({ color: data.obj.color });
@@ -1443,7 +1447,7 @@ export class SalesOrderFormComponent implements OnInit {
                 if (data.obj.flowStatusCode === 'ENTERED') {
                   this.isVisible2 = true;
                   // this.isVisible3 = true;
-                  this.isVisible3 = false;
+                  this.isVisible3 = true;
                 }
 
                 if (this.lstgetOrderLineDetails[i].flowStatusCode === 'BOOKED' || this.lstgetOrderLineDetails[i].flowStatusCode === 'ALLOTED') {
