@@ -58,32 +58,9 @@ export class WarrantyClaimComponent implements OnInit {
   fromDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   toDate = this.pipe.transform(Date.now(), 'y-MM-dd');
 
-  orderDate = this.pipe.transform(Date.now(), 'y-MM-dd');
-  // order
-  status: string; //='Active';
-  consCriteria: number = 3;
-  currMonthYN: string = 'Yes';
-  orderValue: number;
-  dlrCode: string = '15209';
-  cdmsRefNo: string; //='TEST-CDMS-123';
+  
 
-  mth1ConWsQty: number;
-  mth2ConWsQty: number;
-  mth3ConWsQty: number;
-
-  mth1ConsSaleQty: number;
-  mth2ConsSaleQty: number;
-  mth3ConsSaleQty: number;
-
-  currSaleQty: number;
-  consSaleQty: number;
-  currWsQty: number;
-  conWsQty: number;
-
-  partNumber: string;
-  partDesc: string;
-
-  displayButton = false;
+  displayButton = true;
   spinIcon = false;
   dispGenOrdButton = true;
   dispShowOrdButton = true;
@@ -110,85 +87,41 @@ export class WarrantyClaimComponent implements OnInit {
       emplId: [''],
       orgId: [''],
 
-      orderNumber: [],
+ 
       fromDate: [],
       toDate: [],
 
-      status: [],
-      orderDate: [],
-      consCriteria: [],
-      currMonthYN: [],
-      orderValue: [],
-      dlrCode: [],
-      cdmsRefNo: [],
-
-      mth1ConWsQty: [],
-      mth2ConWsQty: [],
-      mth3ConWsQty: [],
-      mth1ConsSaleQty: [],
-      mth2ConsSaleQty: [],
-      mth3ConsSaleQty: [],
-
-
-      partNumber: [],
-      partDesc: [],
-
-      currSaleQty: [],
-      consSaleQty: [],
-      currWsQty: [],
-      conWsQty: [],
-
-
-
-      orderList: this.fb.array([this.lineDetailsGroup()])
+      warrLines: this.fb.array([this.lineDetailsGroup()])
 
     });
   }
 
   lineDetailsGroup() {
     return this.fb.group({
-      sprOrderId: [''],
-      itemId: [''],
-      segment: ['', [Validators.required]],
-      description: ['', [Validators.required]],
-      unitPrice: ['', [Validators.required]],
-
-      mth1ConWsQty: ['', [Validators.required]],
-      mth2ConWsQty: ['', [Validators.required]],
-      mth3ConWsQty: ['', [Validators.required]],
-      currWsQty: ['', [Validators.required]],
-      conWsQty: ['', [Validators.required]],
-
-      mth1ConsSaleQty: ['', [Validators.required]],
-      mth2ConsSaleQty: ['', [Validators.required]],
-      mth3ConsSaleQty: ['', [Validators.required]],
-      currSaleQty: ['', [Validators.required]],
-      consSaleQty: ['', [Validators.required]],
-
-      lastOrderQty: [],
-      mth1TotalCons: [],
-      mth2TotalCons: [],
-      mth3TotalCons: [],
-      mth4TotalCons: [],
-      totalCons: [],
-
-
-
-      currentStock: ['', [Validators.required]],
-      backOrderQty: ['', [Validators.required]],
-      intransitQty: ['', [Validators.required]],
-      custBackOrder: ['', [Validators.required]],
-
-      orderQty: ['', [Validators.required]],
-      totalValue: ['', [Validators.required]],
-      uom: [],
-      setQty: [],
-    
+    itemCode:[],
+    itemDesc:[],
+    hsnSac:[],
+    taxPer:[],
+    repairNo:[],
+    vehicleNo:[],
+    chassisNo:[],
+    qty:[],
+    avgCost:[],
+    totValue:[],
+    ndp:[],
+    mrp:[],
+    msilclaimNo:[],
+    msilClaimDate:[],
+    msilInvNo:[],
+    msilInvDate:[],
+    msilClaimAmt:[],
+    oldStatus:[],
+    newStatus:[],
     });
   }
 
   lineDetailsArray(): FormArray {
-    return <FormArray>this.warrantyClaimForm.get('orderList')
+    return <FormArray>this.warrantyClaimForm.get('warrLines')
   }
 
 

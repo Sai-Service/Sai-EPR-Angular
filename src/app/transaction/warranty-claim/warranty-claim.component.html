@@ -6,25 +6,149 @@
         <table style="width: 100%;background-color: white;">
             <tr>
                 <td class="PageHeader">
-                    &nbsp;&nbsp;Warrany&nbsp;Claim&nbsp;Form
+                    &nbsp;&nbsp;Warranty&nbsp;Claim&nbsp;Form
                 </td>
             </tr>
         </table>
 
         <fieldset class="RFS">
-            <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Search</legend>
+            <!-- <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Search</legend> -->
         
             <table class="center" style="width: 100%;background-color: #FFE4B5;">
             <tr>
+
+                <td>&nbsp;From&nbsp;Date:&nbsp;</td>
+
+                <td>
+                    <input type ="date" class="form-control" formControlName="fromDate" [(ngModel)]='fromDate'
+                        value={{fromDate}} max="{{minDate | date:'yyyy-MM-dd'}}" >
+                     
+                </td>
+                <td>&nbsp;To&nbsp;Date:&nbsp;</td>
+                <td>
+                    <input type ="date" class="form-control" formControlName="toDate" [(ngModel)]='toDate'
+                        value={{toDate}} max="{{minDate | date:'yyyy-MM-dd'}}" >
+                     
+                </td>
 
                 <td  style="background-color: #FFE4B5;" class="LabelFontStyle">&nbsp;Line&nbsp;&nbsp;Status:&nbsp;</td>
                 
                 <td style="background-color: #FFE4B5;">
                     <input type="text" class="form-control" formControlName="lineStatus"  value={{lineStatus}} [(ngModel)]="lineStatus" >
                 </td>
+
+                <td  style="background-color: #FFE4B5;" class="LabelFontStyle">&nbsp;Item&nbsp;&nbsp;Type:&nbsp;</td>
+                
+                <td style="background-color: #FFE4B5;">
+                    <input type="text" class="form-control" formControlName="itemType"  value={{itemType}} [(ngModel)]="itemType" >
+                </td>
+
+                <td>
+                    <button style="width:fit-content"  type="button" class="btn btn-primary"  id="register"   (click)="dispDetails()">Display Details</button>
+               </td>
+               
+               <td>
+                <button style="width:fit-content" type="button" class="btn btn-primary" (click)="clearSearch()">Reset</button>
+               </td>
+
+               
             </tr>
             </table>
         </fieldset>
+
+        <!-- <fieldset class="RFS"> -->
+            <div class="container1">
+                <div class="grid_scroll_3">
+                    
+                   
+                    <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+              
+                    <tbody>
+                    <tr class="GridHeader">
+                        <th  scope="col" style="width: 4rem;">Srl&nbsp;No</th>
+                        <th  scope="col" >Item&nbsp;Code</th>
+                        <th  scope="col" >Description</th>
+                        <th  scope="col" style="width: 4rem;">HSN&nbsp;</th>
+                        <th  scope="col" style="width: 4rem;">Tax%</th>
+                        <th  scope="col" style="width: 3rem;">Repair No&nbsp;</th>
+                        <th  scope="col" style="width: 3rem;">Vehicle No</th>
+                        <th  scope="col" style="width: 3rem;">Chassi No</th>
+                        <th  scope="col" style="width: 3rem;">Qty&nbsp;</th>
+                        <th  scope="col" style="width: 4rem;">Avg Cost&nbsp;</th>
+                        <th  scope="col" style="width: 4rem;">Total Value</th>
+                        <th  scope="col" style="width: 4rem;">NDP</th>
+                        <th  scope="col" style="width: 4rem;">MRP&nbsp;</th>
+                        <th  scope="col" style="width: 4rem;">Old&nbsp;Status&nbsp;</th>
+                        <th  scope="col" style="width: 4rem;">New&nbsp;Status</th>
+                        <th  scope="col" style="width: 2rem;">MSIL Claim No</th>
+                        <th  scope="col" style="width: 2rem;">MSIL Claim Date</th>
+                        <th  scope="col" style="width: 4rem;">Claim&nbsp;Amt</th>
+                        <th  scope="col" style="width: 4rem;">MSIL&nbsp;Inv No</th>
+                        <th  scope="col" style="width: 4rem;">MSIL&nbsp;Inv Date</th>
+
+                   </tr>
+               </tbody>
+
+                                   
+                                  
+                                  
+                                  
+               
+               <ng-container  class="center" formArrayName="warrLines">
+                <ng-container   *ngFor="let group of lineDetailsArray().controls; let i= index" [formGroupName]="i" class="auto-style5">  
+                            <tr>
+    
+                                <td style="text-align: center;width: 4rem;">{{i+1}}</td>
+                                <td> <input  disabled style="width:10rem;height: 25px;" type="text" formControlName="itemCode"  class="form-control"   ></td>
+                                <td> <input  disabled style="width:10rem;height: 25px;" type="text"   formControlName="itemDesc" class="form-control"></td>
+                                <td> <input  disabled style="width:4rem;height: 25px;"  type="number" formControlName="hsnSac"  class="form-control"></td>
+                                <td> <input  disabled style="width:3rem;height: 25px;"  type="number" formControlName="taxPer" class="form-control"></td>
+                                <td> <input  disabled style="width:8rem;height: 25px;"  type="number" formControlName="repairNo" class="form-control"></td>
+                                <td> <input  disabled style="width:8rem;height: 25px;"  type="number" formControlName="vehicleNo" class="form-control"></td>
+                                <td> <input  disabled style="width:8rem;height: 25px;"  type="number" formControlName="chassisNo" class="form-control"></td>
+                                <td> <input  disabled style="width:4rem;height: 25px;"  type="number" formControlName="qty" class="form-control"></td>
+                                <td> <input  disabled style="width:4rem;height: 25px;"  type="number" formControlName="avgCost" class="form-control"></td>
+                                <td> <input  disabled style="width:4rem;height: 25px;"  type="number" formControlName="totValue" class="form-control"></td>
+                                <td> <input  disabled style="width:4rem;height: 25px;"  type="number" formControlName="ndp" class="form-control"></td>
+                                <td> <input  disabled style="width:4rem;height: 25px;"  type="number" formControlName="mrp" class="form-control"></td>
+                                <td> <input  disabled  style="width:4rem;height: 25px;"  type="text" formControlName="oldStatus" class="form-control"></td>
+                                <td> <input   style="width:4rem;height: 25px;"  type="text" formControlName="newStatus" class="form-control"></td>
+                                <td> <input   style="width:5rem;height: 25px;"  type="number" formControlName="msilclaimNo" class="form-control"></td>
+                                <td> <input   style="width:9rem;height: 25px;"  type="date" formControlName="msilClaimDate" class="form-control"></td>
+                                <td> <input   style="width:5rem;height: 25px;"  type="number" formControlName="msilClaimAmt" class="form-control"></td>
+                                <td> <input   style="width:5rem;height: 25px;"  type="text" formControlName="msilInvNo" class="form-control"></td>
+                                <td> <input   style="width:9rem;height: 25px;"  type="date" formControlName="msilInvDate" class="form-control"></td>
+                                                             
+                        </tr>
+                       </ng-container>
+                        </ng-container>
+    
+                </table>
+                </div>
+            </div>
+    
+            <!-- </fieldset> -->
+            <br>
+
+            <table class="center">
+            <tr>
+                <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
+                <ng-template #thenBlock1>
+                <td> <button type="submit" class="btn btn-info" id="register" (click)="newMast()">Save</button></td>
+                <td> <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>
+                <td> <button type="submit" class="btn btn-info" id="register" (click)="closeMast()">Close</button></td>
+               
+                </ng-template>
+                <ng-template #elseBlock1>
+                    <td> <button disabled type="submit" class="btn btn-info" id="register" >Save</button></td>
+                    <td> <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>
+                    <td> <button type="submit" class="btn btn-info" id="register" (click)="closeMast()">Close</button></td>
+                </ng-template>
+                
+            </tr>
+        </table>
+
+
 
 
 
