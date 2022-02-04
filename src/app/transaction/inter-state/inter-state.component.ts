@@ -529,7 +529,7 @@ export class InterStateComponent implements OnInit {
   onOptionsSelectedDescription(event: any, k) {
     let controlinv = this.InterStateForm.get('oeOrderLinesAllList') as FormArray;
     let isExportCust ="N";
-    if(this.custClassCode.includes("EXPORTER")){
+    if(this.custClassCode.includes("EXPORTER") && Number(sessionStorage.getItem('ouId'))===22){
       isExportCust ="Y";
     }
    let select = this.ItemIdList.find(d => d.SEGMENT === event);

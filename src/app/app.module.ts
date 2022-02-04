@@ -78,7 +78,7 @@ import { AllReportsComponent } from './report/all-reports.component';
     // NgxSpinnerModule
   ],
   providers: [
-    // {provide : LocationStrategy , useClass: HashLocationStrategy},
+     {provide : LocationStrategy , useClass: HashLocationStrategy},
     // {
     //   provide: HTTP_INTERCEPTORS,
     //   //useClass: HttpErrorInterceptorInterceptor,

@@ -1307,7 +1307,7 @@ export class SalesOrderFormComponent implements OnInit {
             let control = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
             // alert(this.lstgetOrderLineDetails.length);
             if (this.lstgetOrderLineDetails.length === 0 && this.lstgetOrderTaxDetails.length === 0) {
-              alert('0 length')
+              // alert('0 length')
               this.orderlineDetailsArray().push(this.orderlineDetailsGroup());
               this.TaxDetailsArray().push(this.TaxDetailsGroup());
               this.displayLineTaxDetails = true;
