@@ -321,7 +321,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
       }
 
         ngOnInit(): void {
-
+          $("#wrapper").toggleClass("toggled");
           this.name=  sessionStorage.getItem('name');
           this.loginArray=sessionStorage.getItem('divisionName');
           this.divisionId=Number(sessionStorage.getItem('divisionId'));

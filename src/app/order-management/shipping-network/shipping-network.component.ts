@@ -170,5 +170,17 @@ export class ShippingNetworkComponent implements OnInit {
     // this.lstJobcardList = null;
   }
 
+  
+  resetMast() {
+    window.location.reload();
+  }
+
+  closeMast() {
+    this.router.navigate(['admin']);
+  }
+
+  newMast(){
+    alert ("Save Data ...wip");
+  }
 
 }
