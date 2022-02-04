@@ -510,6 +510,7 @@ export class SalesOrderFormComponent implements OnInit {
   ngOnInit(): void {
     $("#wrapper").toggleClass("toggled");
     this.op = 'insert';
+    this.isVisible3 = false;
     // this.displayLineTaxDetails=true;
     this.currentOpration = 'NewOrder';
     // this.displaysegmentInvType[0] = true;
@@ -1069,7 +1070,6 @@ export class SalesOrderFormComponent implements OnInit {
             let taxMapData = this.SalesOrderBookingForm.get('taxAmounts').value;
             var ln: string = String(index);
             this.taxMap.set(ln, taxMapData);
-            // alert('added to map onkey' + index)
             console.log(this.taxMap.get(ln));
             this.updateTotAmtPerline(index);
             // this.updateTotAmtPerline(index);
@@ -1307,6 +1307,7 @@ export class SalesOrderFormComponent implements OnInit {
             let control = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
             // alert(this.lstgetOrderLineDetails.length);
             if (this.lstgetOrderLineDetails.length === 0 && this.lstgetOrderTaxDetails.length === 0) {
+              // alert('0 length')
               this.orderlineDetailsArray().push(this.orderlineDetailsGroup());
               this.TaxDetailsArray().push(this.TaxDetailsGroup());
               this.displayLineTaxDetails = true;
@@ -1325,7 +1326,10 @@ export class SalesOrderFormComponent implements OnInit {
                 this.isVisible3 = false;
                 this.isVisible5 = true;
               }
-
+              if (data.obj.flowStatusCode === 'ENTERED') {
+                // this.isVisible2 = true;
+                this.isVisible3 = false;
+              }
               this.displayVehicleDetails = true;
               var variantNew = data.obj.variant;
               this.SalesOrderBookingForm.patchValue({ color: data.obj.color });
@@ -1350,7 +1354,7 @@ export class SalesOrderFormComponent implements OnInit {
                 if (data.obj.flowStatusCode === 'ENTERED') {
                   this.isVisible2 = true;
                   // this.isVisible3 = true;
-                  this.isVisible3 = false;
+                  this.isVisible3 = true;
                 }
 
                 if (this.lstgetOrderLineDetails[i].flowStatusCode === 'BOOKED' || this.lstgetOrderLineDetails[i].flowStatusCode === 'ALLOTED') {
@@ -1362,8 +1366,28 @@ export class SalesOrderFormComponent implements OnInit {
                   this.isVisible2 = true;
                   // this.isVisible5 = false;
                 }
-
-                if (this.lstgetOrderLineDetails[i].flowStatusCode === 'INVOICED' || this.lstgetOrderLineDetails[i].flowStatusCode === 'CANCELLED' || this.lstgetOrderLineDetails[i].flowStatusCode === 'DE-ALLOTED') {
+                if (this.lstgetOrderLineDetails[i].flowStatusCode === 'CANCELLED' || this.lstgetOrderLineDetails[i].flowStatusCode==='DE-ALLOTED'){
+               
+                  this.isDisabledtaxbtn[i]=true;
+                  this.isVisible4 = true;
+                  this.isVisible3 = false;
+                  this.isVisible5 = false;
+                  this.displayLineflowStatusCode[i] = true;
+                  this.displayRemoveRow[i] = false;
+                  this.displaytaxCategoryName[i] = false;
+                  this.SalesOrderBookingForm.get('financeType').disable();
+                  this.SalesOrderBookingForm.get('financerName').disable();
+                  this.SalesOrderBookingForm.get('financeAmt').disable();
+                  this.SalesOrderBookingForm.get('emi').disable();
+                  this.SalesOrderBookingForm.get('tenure').disable();
+                  this.SalesOrderBookingForm.get('downPayment').disable();
+                  this.SalesOrderBookingForm.get('exchange').disable();
+                  this.SalesOrderBookingForm.get('loyaltyBonus').disable();
+                  this.SalesOrderBookingForm.get('exRegNo').disable();
+                  this.SalesOrderBookingForm.get('insCharges').disable();
+                  this.SalesOrderBookingForm.get('offerPrice').disable();
+                }
+                if (this.lstgetOrderLineDetails[i].flowStatusCode === 'INVOICED') {
                   this.isVisible4 = true;
                   this.isVisible3 = false;
                   // this.isVisible3 = false;
@@ -1371,7 +1395,7 @@ export class SalesOrderFormComponent implements OnInit {
                   this.displayLineflowStatusCode[i] = true;
                   this.displayRemoveRow[i] = false;
                   this.displaytaxCategoryName[i] = false;
-                  this.isDisabledtaxbtn[i] = true;
+                  this.isDisabledtaxbtn[i]=false;
                   this.SalesOrderBookingForm.get('financeType').disable();
                   this.SalesOrderBookingForm.get('financerName').disable();
                   this.SalesOrderBookingForm.get('financeAmt').disable();

@@ -771,7 +771,7 @@ debugger;
         var priceListId = this.CounterSaleOrderBookingForm.get('priceListId').value;
         console.log(priceListId);
         let isExportCust ="N";
-        if(this.custClassCode.includes("EXPORTER")){
+        if(this.custClassCode.includes("EXPORTER") && Number(sessionStorage.getItem('ouId'))===22){
           isExportCust ="Y";
         }
         if (custtaxCategoryName === 'Sales-IGST') {

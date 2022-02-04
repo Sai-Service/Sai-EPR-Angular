@@ -1151,6 +1151,7 @@ docSeqValue:number;
     var invoiceId = this.invLineDetailsArray().controls[k].get('invoiceId').value;
     var taxcat = this.invLineDetailsArray().controls[k].get('taxCategoryName').value;
     var itemtyp = this.invLineDetailsArray().controls[k].get('lineTypeLookupCode').value;
+    var amount = this.invLineDetailsArray().controls[k].get('amount').value;
     // alert(itemtyp+'itemtyp');
     // this.lineDistributionArray().clear();
     // alert(lineNumber + ' ' + invoiceId);
@@ -1160,7 +1161,7 @@ docSeqValue:number;
       alert('Invoice No is not generated');
       // this.onOptionTaxCatSelected(taxcat, k);
       if (itemtyp != 'MISCELLANEOUS') {
-        this.distribution1(k);
+        this.distribution1(k,itemtyp,amount);
       }
       return;
     }
@@ -1495,8 +1496,8 @@ docSeqValue:number;
   move(val1, val2) {
     val2.focus();
   }
-  distribution1(k) {
-    // alert(k);
+  distribution1(k,itemtyp,amount) {
+    // alert('distribution----'+itemtyp +'----'+ amount);
     var arrayControl = this.poInvoiceForm.get('obj').value;
     var distributionSet = arrayControl[0].distributionSet;
     var arrayControl2 = this.poInvoiceForm.get('invLines').value;
@@ -1561,7 +1562,10 @@ docSeqValue:number;
           {
             distLineNumber: aa,
             // invoiceLineNum: k + 1
-            invoiceLineNum: invln
+            invoiceLineNum: invln,
+            lineTypeLookupCode:itemtyp,
+            amount : amount,
+            baseAmount:amount,
           }
         );
         this.distarr.set(invln, this.poInvoiceForm.get('distribution').value);
@@ -1904,7 +1908,7 @@ docSeqValue:number;
     // alert(taxCategoryId+'-----'+k)
     var arrayControl = this.poInvoiceForm.get('invLines').value;
    var linetaxCategoryId=arrayControl[k].taxCategoryId
-   alert(linetaxCategoryId);
+  //  alert(linetaxCategoryId);
   }
 
   processManuaTax(lstInvLineDeatails1: any) {
@@ -2330,10 +2334,11 @@ docSeqValue:number;
 
   }
   fnCancatination(index) {
-    // alert(index)
-    var arrayControl = this.poInvoiceForm.get('distribution').value
+    // alert(index +'---- code combination')
+    var arrayControl = this.poInvoiceForm.get('distribution').value;
     var patch = this.poInvoiceForm.get('distribution') as FormArray;
-    // arrayControl[index].segmentName = arrayControl[index].segment11 + '.' + arrayControl[index].segment2 + '.' + arrayControl[index].segment3 + '.' + arrayControl[index].segment4 + '.' + arrayControl[index].segment5 + '.' + arrayControl[index].segment6 + '.' + arrayControl[index].segment7 + '.' + arrayControl[index].segment8 + '.' + arrayControl[index].segment9;
+    var invLinesArray = this.poInvoiceForm.get('invLines') as FormArray;
+    var invLinesControl = this.poInvoiceForm.get('invLines').value;
     arrayControl[index].segmentName = this.poInvoiceForm.get('segment11').value + '.'
       + this.poInvoiceForm.get('segment2').value + '.'
       + this.poInvoiceForm.get('segment3').value + '.'
@@ -2341,32 +2346,41 @@ docSeqValue:number;
       + this.poInvoiceForm.get('segment5').value;
     this.segmentName1 = arrayControl[index].segmentName
     console.log(this.segmentName1);
-    (patch.controls[index]).patchValue({ distCodeCombSeg: this.segmentName1 })
-
+    // alert(arrayControl[index].segmentName);
+    (patch.controls[index]).patchValue({ distCodeCombSeg: this.segmentName1 });
+    // alert('invLines'+ invLinesControl[index].defaultDisAcc);
     this.service.segmentNameList(this.segmentName1)
       .subscribe(
         data => {
           this.segmentNameList = data;
           if (this.segmentNameList.code === 200) {
-            // alert('in if 1' + index)
             // alert(this.segmentNameList.obj.codeCombinationId);
             (patch.controls[index]).patchValue({ distCodeCombId: this.segmentNameList.obj.codeCombinationId });
+            // (invLinesArray.controls[index]).patchValue({ defaultDistCcid: this.segmentNameList.obj.codeCombinationId });
             if (this.segmentNameList.length == 0) {
-              // alert('in if 2')
               alert('Invalid Code Combination');
             } else {
-              // alert('in if 3')
               console.log(this.segmentNameList);
-              (patch.controls[index]).patchValue({ distCodeCombId: this.segmentNameList.obj.codeCombinationId })
-              // this.distCodeCombId = Number(this.segmentNameList.codeCombinationId)
+              (patch.controls[index]).patchValue({ distCodeCombId: this.segmentNameList.obj.codeCombinationId });
+             
+              // alert(invLinesControl.length);
+              for (let x=0 ; x < invLinesControl.length ; x++){
+                // alert(invLinesControl[index].lineNumber+'-----'+arrayControl[index].invoiceLineNum)
+              if (arrayControl[index].invoiceLineNum === invLinesControl[x].lineNumber){
+              // if (invLinesControl[index].lineTypeLookupCode=== arrayControl[index].lineTypeLookupCode){
+                // alert(invLinesControl[x].lineTypeLookupCode+'-----'+arrayControl[index].lineTypeLookupCode);
+                (invLinesArray.controls[index]).patchValue({ defaultDistCcid: this.segmentNameList.obj.codeCombinationId });
+                (invLinesArray.controls[index]).patchValue({ defaultDisAcc: arrayControl[index].segmentName})
+                // alert('invLines'+ invLinesControl[index].defaultDistCcid +'----'+ invLinesControl[index].defaultDisAcc);
+                console.log(invLinesControl[index].defaultDistCcid);
+              }
+            }
             }
           }
           if (this.segmentNameList.code === 400) {
             alert(data.message);
             (patch.controls[index]).patchValue({ distCodeCombSeg: '' })
-            // alert(this.segmentNameList.message);
-
-
+           
           }
         }
       );
@@ -2417,6 +2431,7 @@ docSeqValue:number;
   onOptionsSelectedNatural(event){
     // alert(event+'-----'+this.selectedLine)
     // this.lookupValueDesc4= this.NaturalAccountList.description;
+    if (event != undefined){
     let selectnaturalaccount = this.NaturalAccountList.find(v => v.naturalaccount == event);
     console.log(selectnaturalaccount);
     this.lookupValueDesc4= selectnaturalaccount.description;
@@ -2424,14 +2439,16 @@ docSeqValue:number;
       data => {
        this.InterBrancList= data.obj
       })
-    
+    }
   }
 
   onOptionsSelectedBranchNew(event){
     // alert(event)
+    if (event != undefined){
     let selectinterbranch = this.InterBrancList.find(v => v.lookupValue == event);
     console.log(selectinterbranch);
     this.lookupValueDesc5= selectinterbranch.lookupValueDesc;
+  }
   }
 
   CheckTdsLineValidations(i) {
