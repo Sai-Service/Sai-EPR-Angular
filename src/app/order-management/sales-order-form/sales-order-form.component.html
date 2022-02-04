@@ -1331,6 +1331,7 @@
                                             <th scope="col" style="width: 90px;">Unit Price</th>
                                             <th scope="col" style="width: 160px;">Tax Category</th>
                                             <th scope="col" style="width: 90px;">Base Amount</th>
+                                            <th scope="col" style="width: 90px;">Discount</th>
                                             <th scope="col" style="width: 90px;">Tax Amount</th>
                                             <th scope="col" style="width: 90px;">Total Amont</th>
                                             <th scope="col" style="width: 90px;">HSN/SAC code</th>
@@ -1509,6 +1510,11 @@
                                                     </td>
                                                     <td>
 
+                                                        <input disabled type="number" formControlName="disAmt"
+                                                            class="form-control" style="height: 20px;width: 70px;">
+                                                    </td>
+                                                    <td>
+
                                                         <input disabled type="number" formControlName="taxAmt"
                                                             class="form-control" style="height: 20px;width: 70px;">
                                                     </td>
@@ -1594,10 +1600,13 @@
                                     <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
                                       <div class="modal-content">
                                         <div class="modal-header">
-                                          <h5 class="modal-title" id="exampleModalLongTitle">Tax Details Of Line-{{selTaxLn}}</h5>
-                                          <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                          </button> -->
+                                          <h5 class="modal-title" id="exampleModalLongTitle">Tax Details Of Line-{{selectedLine}}</h5>
+                                          <input disabled type="text"  
+                                          value={{popDisAmt}} class="form-control" style="width: 170px;font-weight: bold;">
+                                          <input disabled type="text" 
+                                          value={{popTaxAmt}} class="form-control" style="width: 170px;font-weight: bold;">
+                                          <input disabled type="text"
+                                          value={{popTotAmt}} class="form-control" style="width: 170px;font-weight: bold;">
                                         </div>
                                         <div class="modal-body">
                                             <table class="GridFont" cellspacing="0" cellpadding="4" border="0"
