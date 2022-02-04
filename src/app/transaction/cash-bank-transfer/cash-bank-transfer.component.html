@@ -226,7 +226,7 @@
                                 <td>  
                                     <select   formControlName="fromAcctDescpId" id="fromAcctDescpId" [(ngModel)]="fromAcctDescpId"  class="form-control"   
                                     (ngModelChange)="onSelectionFromAc($event)" style="background-color: yellow;" >     
-                                    <option disabled>--Select--</option>
+                                    <option >--Select--</option>
                                     <option *ngFor="let sc of  fromAcctList" [ngValue]="sc.bankAccountId">
                                     {{sc.methodName}}
                                     </option>
@@ -375,6 +375,7 @@
                                         <div *ngIf="statusPost; then Block2; else Block21"></div>
                                         <ng-template #Block2> 
                                           <td> <button  type="button" class="btn btn-info" (click)="cashBnkTrfPost()" >Post</button>  </td>
+                                       
                                         </ng-template>
                                         <ng-template #Block21>
                                           <td> <button  disabled type="button" class="btn btn-info" (click)="cashBnkTrfPost()" >Post</button>  </td>
@@ -395,9 +396,15 @@
                                         </ng-template>
                                         <ng-template #Block41></ng-template>
 
-                                        
 
-                                    </ng-template>
+                                        <div *ngIf="viewAct; then act1; else act2"></div>
+                                        <ng-template #act1> 
+                                        <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#viewAccountingModel"  style="width:fit-content" (click)="viewAccounting()" > View Accounting </button></td>     
+                                        </ng-template>
+                                        <ng-template #act2> </ng-template>
+
+                                        
+                                        </ng-template>
 
                                     <!-- <td>
                                         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#ChqListModal" (click)="LoadRcptList()">List</button>
@@ -608,19 +615,138 @@
     </ng-template>
     <ng-template #BTNo> </ng-template>
 
+<!-- -----------------------------------------------View Accounting Modal ------------------------------------------ -->
 
-
-
-
-
-                </form>
-            </div>
+<div class="modal fade" id="viewAccountingModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <!-- modal-dialog-scrollable -->
+      <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle" style="margin-left: 40%;">Accounting Effect</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
+        <div class="modal-body">
+
+               <div class="grid_scroll2">
+                <table class="auto-style4" class="GridFont"   style="border-color:#959595;width:100%;">
+                    <thead>
+                      <tr class="GridHeader">
+                      <!-- <th>Line</th> -->
+                      <th>Doc.Seq.No</th>
+                      <th>Description</th>
+                      <th>Name</th>
+                      <th>Category</th>
+                      <th>Source</th>
+                      <th>Period</th>
+                      <th>Debit(INR)</th>
+                      <th>Credit(INR)</th>
+                      <th>Select</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <td><input  disabled   type="text"  style="width: 10rem;text-align: center;" formControlName="docSeqValue"  id="status" [(ngModel)]="docSeqValue" class="form-control" ></td> 
+                      <td><input  disabled   type="text"  style="width: 10rem;text-align: center;" formControlName="description"  id="description" [(ngModel)]="description" class="form-control" ></td> 
+                      <td><input  disabled   type="text" style="width: 10rem;text-align: center;" formControlName="name1"  id="name1" [(ngModel)]="name1" class="form-control" ></td> 
+                      <td><input  disabled   type="text" style="width: 10rem;text-align: center;" formControlName="jeCategory"  id="jeCategory" [(ngModel)]="jeCategory" class="form-control" ></td> 
+                      <td><input  disabled   type="text" style="width: 5rem;text-align: center;" formControlName="jeSource"  id="jeSource" [(ngModel)]="jeSource" class="form-control" ></td> 
+                      <td><input  disabled   type="text" style="width: 5rem;text-align: center;" formControlName="periodName"  id="periodName" [(ngModel)]="periodName" class="form-control" ></td> 
+                      <td><input  disabled   type="text" style="width: 8rem;text-align: right;" formControlName="runningTotalDr"  id="runningTotalDr" [(ngModel)]="runningTotalDr" class="form-control" ></td> 
+                      <td><input  disabled   type="text" style="width: 8rem;text-align: right;" formControlName="runningTotalCr"  id="runningTotalCr" [(ngModel)]="runningTotalCr" class="form-control" ></td> 
+                        
+                        
+                        <td><button class="btn btn-secondary" (click)="ViewActSelect(0)">Details</button></td>  
+                        
+                        <!-- <tr *ngFor="let com of viewAccountingBankTrf let i=index" class="ItemStyle" style="text-decoration:none;position: initial;font-size: small;">
+                            <td >{{i+1}}</td>
+                            <td >{{com.docSeqValue}}</td>
+                            <td >{{com.description}}</td>
+                            <td>{{com.name}}</td>
+                            <td>{{com.jeCategory}}</td>
+                            <td>{{com.jeSource}}</td>
+                            <td>{{com.periodName}}</td>
+                            <td style="text-align: right;padding-right: 100px;">{{com.runningTotalDr}}</td>
+                            <td style="text-align: right;padding-right: 100px;">{{com.runningTotalCr}}</td>
+                            <td><button class="btn btn-secondary" (click)="ViewActSelect(i)">Details</button></td>    -->
+                          <!-- </tr>  -->
+
+
+
+                      </tbody>
+                  
+                      </table>
+                   
+            </div>
+
+        </div>
+
+        
+        <div *ngIf="showViewActLine ,then showLineYes; else showLineNo")></div>
+        <ng-template #showLineYes>
+
+        <div class="modal-body">
+
+            <div class="grid_scroll2">
+             <table class="auto-style4" class="GridFont"   style="border-color:#959595;width:100%;">
+                 <thead>
+                   <tr class="GridHeader">
+                   <th>Line</th>
+                   <th>Account</th>
+                   <th>Debit(INR)</th>
+                   <th>Credit(INR)</th>
+                   <th>Description</th>
+                   <th>Account Description</th>
+                  </tr>
+                 </thead>
+                 <tbody>
+                    <tr *ngFor="let com of viewAccountingBnkTrfLines" class="ItemStyle" style="text-decoration:none;position: initial;font-size: small;">
+                      <td>{{com.jeLineNum}}</td>
+                      <td style="width: 200px;">{{com.segmentName}}</td>
+                      <td style="text-align: right;padding-right: 5px; width:150px ;" >{{com.enteredDr}}</td>
+                      <td style="text-align: right;padding-right: 5px; width:150px">{{com.enteredCr}}</td>
+                      <td >{{com.description}}</td>
+                      <td >{{com.accountDesc}}</td>
+                    </tr>
+                </tbody>
+                   <tr>
+                    <td></td>
+                        <td style="font-size: small;">Total:&nbsp;</td>
+                         <!-- <td></td> <td></td> <td></td><td></td> -->
+                        <td >
+                            <input disabled formControlName="runningTotalDr" id="runningTotalDr" [(ngModel)]="runningTotalDr" class="form-control"  style="text-align: right;height: 22px;width: 150px;font-weight:bold;">
+                        </td>
+                        <td >
+                            <input disabled   formControlName="runningTotalCr" id="runningTotalCr" [(ngModel)]="runningTotalDr" class="form-control"  style="text-align: right;height: 22px;width: 150px;font-weight: bold;">
+                        </td>
+                    </tr>
+                   </table>
+                
+         </div>
+
+     </div>
+    </ng-template>
+    <ng-template #showLineNo></ng-template>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
     </div>
+  </div>
+<!-- ------------------------------------------------------------------------------------------------------ -->
+
+
+
+
+</form>
+</div>
+</div>
+</div>
 </div>
 
 <br>
-
+  
 <div class="container1">
     <div class="grid_scroll">
     <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">

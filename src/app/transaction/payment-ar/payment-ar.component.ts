@@ -2587,6 +2587,7 @@ export class PaymentArComponent implements OnInit {
       return;
       }
 
+      
       viewAccounting(receiptNo: any) {
 
         this.viewAccountingArRcpt=null;

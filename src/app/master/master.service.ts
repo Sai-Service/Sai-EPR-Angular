@@ -3488,6 +3488,14 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
 
       }
 
+      getGlAccountBalance(glCode,prdName): Observable<any> {
+        return this.http.get(this.ServerUrl+`/glHeader/accGlBalances?segmentNameFrm=${glCode}&periodName=${prdName}`);
+        // http://localhost:8081/glHeader/accGlBalances?segmentNameFrm=12MU.2102.21.21701.0000&periodName=Jan-21-22
+
+
+
+     }
+
 
       public CashBankTrfSaveSubmit(CashBankTrfRecord,mEmplId) {
         const options = {
@@ -3544,6 +3552,12 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
       return this.http.get(this.ServerUrl+`/AccountTrf/CounterList?bankId=${bankId}&receiptMethodId=${rcptMthId}&locId=${locId}`);
       // http://localhost:8081/AccountTrf/CounterList?bankId=902&receiptMethodId=58&locId=2102
    }
+
+   
+   viewAccountingBankTransfer(trfNo): Observable<any> {
+    return this.http.get(this.ServerUrl + `/glHeader/AccountTrf/${trfNo}`);
+    // http://localhost:8081/glHeader/AccountTrf/2125210510008
+  }
 
 
     ////////////////////////// Pending Shipment Lis///////////
