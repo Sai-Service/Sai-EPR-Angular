@@ -1250,6 +1250,23 @@ taxCalforItemwithMulDisc(itemId,taxCatId,baseAmount,diss1,diss2,diss3,diss4,diss
   });
 }
 
+
+calTaxWithDisc(itemId,taxCatId,baseAmount,diss1,diss2,diss3,diss4,diss5) {
+  const REQUEST_PARAMS = new HttpParams().set('itemId', itemId)
+  .set('baseAmt', baseAmount)
+  .set('taxCateId', taxCatId)
+  .set('disAmt1', diss1)
+  .set('disAmt2', diss2)
+  .set('disAmt3', diss3)
+  .set('disAmt4', diss4)
+  .set('disAmt5', diss5)
+  const REQUEST_URI = this.ServerUrl +'/orderHeader/sotaxcal';
+  return this.http.get(REQUEST_URI, {
+    params: REQUEST_PARAMS,
+
+  });
+}
+
 taxCalforItem1( ouId, locId, baseAmount, taxCategoryId, diss ){
   const REQUEST_PARAMS = new HttpParams().set('ouId', ouId)
   .set('locId', locId)
