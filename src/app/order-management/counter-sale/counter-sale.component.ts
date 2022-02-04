@@ -123,6 +123,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   CounterSaleOrderBookingForm: FormGroup;
   lnflowStatusCode: 'BOOKED';
   refCustNo: string;
+  // classCodeType:string;
   issueCodeType1: string;
   issueCode: string;
   custPoNumber: string;
@@ -395,6 +396,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     this.CounterSaleOrderBookingForm = fb.group({
       emplId: [''],
       salesRepId: [''],
+      classCodeType:[''],
       // uuidRef: [''],
       taxCategoryName: [''],
       disPer: [''],
@@ -468,7 +470,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       taxAmounts: this.fb.array([this.TaxDetailsGroup()]),
       ouName: [''],
       loginArray: [''],
-      classCodeType: [''],
+      // classCodeType: [''],
       title: [''],
       fName: [''],
       mName: [''],
@@ -787,6 +789,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
             this.lstgetOrderLineDetails = data.obj.oeOrderLinesAllList;
             this.lstgetOrderTaxDetails = data.obj.taxAmounts;
             this.allDatastore = data.obj;
+            this.custClassCode=data.obj.classCodeType;
             if (data.obj.discType === 'Header Level Discount') {
               this.onOptionsSelectedDiscountType(data.obj.discType);
               this.CounterSaleOrderBookingForm.patchValue({ disPer: data.obj.disPer });
@@ -1823,6 +1826,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
           this.itemId = select.itemId;
           var custtaxCategoryName = this.CounterSaleOrderBookingForm.get('taxCategoryName').value;
           let isExportCust ="N";
+          alert(this.custClassCode);
         if(this.custClassCode.includes("EXPORTER") &&  Number(sessionStorage.getItem('ouId'))===22){
           isExportCust ="Y";
         }
