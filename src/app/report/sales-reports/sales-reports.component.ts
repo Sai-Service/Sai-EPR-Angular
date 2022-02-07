@@ -32,8 +32,9 @@ export class SalesReportsComponent implements OnInit {
   salesINDToDt:Date;
   salesbkregFromDt:Date;
   salesbkregToDt:Date;
-
-
+  salesAltnotInvToDt:Date;
+  ouName:string;
+ 
 
   isDisabled1 = false;
   isDisabled2=false;
@@ -45,8 +46,10 @@ export class SalesReportsComponent implements OnInit {
       locCode:[''],
       salesINDFromDt:[''],
       salesINDToDt:[''],
+      ouName:[''],
       salesbkregToDt:[''],
       salesbkregFromDt:[''],
+      salesAltnotInvToDt:[''],
     })
    }
 
@@ -55,6 +58,7 @@ export class SalesReportsComponent implements OnInit {
 
   ngOnInit(): void {
       this.salesReportForm.patchValue({locCode:sessionStorage.getItem('locCode')});
+      this.salesReportForm.patchValue({ouName:sessionStorage.getItem('ouName')+'-'+sessionStorage.getItem('ouId')})
   }
 
   refresh() {
@@ -94,14 +98,14 @@ export class SalesReportsComponent implements OnInit {
     this.closeResetButton = false;
     this.progress = 0;
     this.dataDisplay = 'Report Is Running....Do not refresh the Page';
-    var purStDt = this.salesReportForm.get('salesINDFromDt').value;
-    var fromDate = this.pipe.transform(purStDt, 'dd-MMM-yyyy');
+    // var purStDt = this.salesReportForm.get('salesINDFromDt').value;
+    // var fromDate = this.pipe.transform(purStDt, 'dd-MMM-yyyy');
     var spreceipttoDate2 = this.salesReportForm.get('salesINDToDt').value;
     var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
-    const fileName = 'Sales Invoiced Not Delivered-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+    const fileName = 'Sales Invoiced Not Delivered-' + sessionStorage.getItem('locName').trim() + '-'  + '-TO-' + toDate + '.xls';
 
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.salesINDReport(fromDate, toDate, sessionStorage.getItem('locId'))
+    this.reportService.salesINDReport(toDate, sessionStorage.getItem('locId'))
       .subscribe(data => {
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
         this.dataDisplay = ''
@@ -125,6 +129,52 @@ export class SalesReportsComponent implements OnInit {
 
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.salesbookingregReport(fromDate, toDate, sessionStorage.getItem('locId'))
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.dataDisplay = ''
+        this.closeResetButton = true;
+        this.isDisabled2 = false;
+      })
+  }
+
+
+
+  salesAltnotInv(){
+    this.isDisabled2 = true;
+    this.closeResetButton = false;
+    this.progress = 0;
+    this.dataDisplay = 'Report Is Running....Do not refresh the Page';
+    // var purStDt = this.salesReportForm.get('salesbkregFromDt').value;
+    // var fromDate = this.pipe.transform(purStDt, 'dd-MMM-yyyy');
+    var spreceipttoDate2 = this.salesReportForm.get('salesAltnotInvToDt').value;
+    var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
+    const fileName = 'Sales Alloted Not Invoiced Report-' + sessionStorage.getItem('locName').trim() + '-' +  '-TO-' + toDate + '.xls';
+
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.salesAltnotInvReport(toDate, sessionStorage.getItem('locId'))
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.dataDisplay = ''
+        this.closeResetButton = true;
+        this.isDisabled2 = false;
+      })
+  }
+
+
+
+  vehicleClosingStock(){
+    this.isDisabled2 = true;
+    this.closeResetButton = false;
+    this.progress = 0;
+    this.dataDisplay = 'Report Is Running....Do not refresh the Page';
+    // var purStDt = this.salesReportForm.get('salesbkregFromDt').value;
+    // var fromDate = this.pipe.transform(purStDt, 'dd-MMM-yyyy');
+    // var spreceipttoDate2 = this.salesReportForm.get('salesAltnotInvToDt').value;
+    // var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
+    const fileName = 'Vehicle Closing Stock-' + sessionStorage.getItem('locName').trim() + '-' +  '-TO-' + '.xls';
+
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.vehicleClosingStockReport(sessionStorage.getItem('ouId'))
       .subscribe(data => {
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
         this.dataDisplay = ''

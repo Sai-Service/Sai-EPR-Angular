@@ -41,6 +41,8 @@ export class ServiceReportComponent implements OnInit {
       joblocCode:[''],
       servindFromDt:[''],
       servindToDt:[''],
+      serPendingVehicleFromDt:[],
+      serPendingVehicleToDt:[],
     })
   }
 
@@ -93,6 +95,27 @@ export class ServiceReportComponent implements OnInit {
       })
   }
 
+
+
+  serPendingVehicle(){
+    this.isDisabled2 = true;
+    this.closeResetButton = false;
+    this.progress = 0;
+    this.dataDisplay = 'Report Is Running....Do not refresh the Page';
+    var purStDt = this.serviceReportForm.get('serPendingVehicleFromDt').value;
+    var fromDate = this.pipe.transform(purStDt, 'dd-MMM-yyyy');
+    var spreceipttoDate2 = this.serviceReportForm.get('serPendingVehicleToDt').value;
+    var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
+    const fileName = 'Service Pending Vehicle Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.serPendingVehicleReport(fromDate, toDate, sessionStorage.getItem('locId'))
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.dataDisplay = ''
+        this.closeResetButton = true;
+        this.isDisabled2 = false;
+      })
+  }
   
   refresh() {
     window.location.reload();

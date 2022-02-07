@@ -42,6 +42,8 @@ import { BankReconcillationComponent } from './bank-reconcillation/bank-reconcil
 import { AmcSchemeMasterComponent } from './amc-scheme-master/amc-scheme-master.component';
 import { AmcEnrollmentComponent } from './amc-enrollment/amc-enrollment.component';
 import { WarrantyClaimComponent } from './warranty-claim/warranty-claim.component';
+import { PayableInvoiceNewComponent } from './payable-invoice-new/payable-invoice-new.component';
+
 // import { ShippingNetworkComponent } from './shipping-network/shipping-network.component';
 
 // import { OrderGenerationComponent } from './order-generation/order-generation.component';
@@ -91,6 +93,8 @@ import { WarrantyClaimComponent } from './warranty-claim/warranty-claim.componen
     AmcSchemeMasterComponent,
     AmcEnrollmentComponent,
     WarrantyClaimComponent,
+    PayableInvoiceNewComponent,
+  
     // ShippingNetworkComponent,
     // OrderGenerationComponent,
     // CounterSaleReturnComponent

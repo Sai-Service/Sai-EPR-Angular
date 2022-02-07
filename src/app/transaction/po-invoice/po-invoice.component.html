@@ -45,7 +45,6 @@
                                         <th scope="col">Payment Currency</th>
                                         <th scope="col">Payment Rate Date</th>
                                         <th scope="col">Distribution Set</th>
-                                        <!-- <th scope="col">Match Action</th> -->
                                         <th scope="col">Terms Date</th>
                                         <th scope="col">Terms</th>
                                         <th scope="col">Payment Method</th>
@@ -55,8 +54,6 @@
                                         <th scope="col">Taxation Country</th>
                                         <th scope="col">Related& Invoice</th>
                                         <th scope="col">Supplier Tax Inv No</th>
-                                        <!-- <th scope="col">Remit-To&nbsp;Supplier&nbsp;Name</th>
-            <th scope="col">Remit-To&nbsp;Supplier&nbsp;Site</th> -->
                                         <th scope="col">Remit-To Bank Acct Name</th>
                                         <th scope="col">Remit-To Bank Acct No</th>
                                         <th scope="col">Debit Memo Reason</th>
@@ -86,14 +83,8 @@
                                                     <!-- <button data-toggle="modal" data-target="#myModel1" (click)="selectINVLineDtl(invoiceNum,i)">Select</button> -->
                                                     <button type="button" (click)="selectINVLineDtl(i)">Select</button>
                                                 </td>
-                                                <!-- <td>
-                <a [value]="i+1" data-toggle="collapse"
-                href="#collapseExample+{{i}}" role="button"
-                aria-expanded="true" aria-controls="collapseExample+{{i}}"
-                (click)="invoiceDetails(i)">
-                {{i+1}}
-            </a>
-            </td> -->
+                                                <input hidden type="number" formControlName="invoiceId" class="form-control"
+                                                style="width: 50px;height: 25px;">   
                                                 <td>
                                                     <div *ngIf="displayOUName; then thenOUName; else elseOUName"></div>
                                                     <ng-template #thenOUName>
@@ -101,10 +92,7 @@
                                                             class="form-control" style="width: 80px;height: 25px;">
                                                     </ng-template>
                                                     <ng-template #elseOUName>
-                                                        <!-- <select formControlName="ouId"  id="ouId" class="form-control" style="width: 100px;height: 25px;font-size: 10px;">
-                    <option>--Select--</option>
-                    <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">{{sc.ouName}}</option>
-                    </select> -->
+                                                        
                                                         <input disabled type="text" formControlName="ouName"
                                                             value={{ouName}} class="form-control"
                                                             style="width: 80px;height: 25px;">
@@ -125,7 +113,7 @@
                                                 <td>
                                                     <div *ngIf="displaypoType; then thenpoType; else elsepoType"></div>
                                                     <ng-template #thenpoType>
-                                                        <input type="text" formControlName="invTypeLookupCode"
+                                                        <input disabled type="text" formControlName="invTypeLookupCode"
                                                             class="form-control" style="width: 150px;height: 25px;">
                                                     </ng-template>
                                                     <ng-template #elsepoType>
@@ -139,9 +127,7 @@
                                                                 {{sc.codeDesc}}
                                                             </option>
                                                         </select>
-                                                        <!-- <span
-                    *ngIf="getGroupControl(i,'obj', 'invTypeLookupCode').touched && getGroupControl(i,'obj', 'invTypeLookupCode').invalid">Valid name
-                                </span> -->
+                                                        
                                                     </ng-template>
                                                 </td>
                                                 <td>
@@ -162,7 +148,7 @@
                                                 <td>
                                                     <div *ngIf="displayname; then thenname; else elsename"></div>
                                                     <ng-template #thenname>
-                                                        <input type="text" class="form-control" formControlName="name"
+                                                        <input disabled type="text" class="form-control" formControlName="name"
                                                             style="width: 160px;height: 25px;font-size: 10px;">
                                                     </ng-template>
                                                     <ng-template #elsename>
@@ -176,24 +162,19 @@
                                                                 {{item.name}}
                                                             </option>
                                                         </select>
-                                                        <!-- <span
-                *ngIf="getGroupControl(i,'obj', 'name').touched && getGroupControl(i,'obj', 'name').invalid">Valid name
-                            </span> -->
-                                                        <!-- <app-field-error-display [displayError]="isFieldValid(i,'name')" errorMsg="Please Enter Supplier Name">
-                </app-field-error-display>  -->
-
+                                                      
                                                     </ng-template>
                                                 </td>
                                                 <td>
                                                     <!-- <input hidden type="text" class="form-control" formControlName="suppId" value={{suppId}} > -->
                                                     <div *ngIf="displaysuppNo; then thensuppNo; else elsesuppNo"></div>
                                                     <ng-template #thensuppNo>
-                                                        <input type="text" class="form-control" formControlName="suppNo"
+                                                        <input disabled type="text" class="form-control" formControlName="suppNo"
                                                             value={{suppNo}}
                                                             style="width: 50px;height: 25px;font-size: 10px;">
                                                     </ng-template>
                                                     <ng-template #elsesuppNo>
-                                                        <input type="text" class="form-control" formControlName="suppNo"
+                                                        <input disabled type="text" class="form-control" formControlName="suppNo"
                                                             value={{suppNo}}
                                                             style="width: 50px;height: 25px;font-size: 10px;">
                                                     </ng-template>
@@ -241,9 +222,7 @@
                                                     <input type="text" class="form-control" formControlName="invoiceNum"
                                                         value={{invoiceNum}}
                                                         style="width: 120px;height: 25px;font-size: 10px;">
-                                                    <!-- <span
-                *ngIf="getGroupControl(i,'obj', 'invoiceNum').touched && getGroupControl(i,'obj', 'invoiceNum').invalid">Valid Number
-                            </span> -->
+                                                    
                                                 </td>
                                                 <td>
                                                     <input hidden type="number" min="0" class="form-control"
@@ -300,11 +279,7 @@
                                                         style="width: 120px;height: 25px;font-size: 10px;">
                                                 </td>
                                                 <td>
-                                                    <!-- <div *ngIf="displaydistributionSet; then thendistributionSet; else elsedistributionSet"></div>
-                <ng-template #thendistributionSet>
-                <input type="text" class="form-control" formControlName="distributionSet" value={{distributionSet}} style="width: 120px;height: 25px;font-size: 10px;">
-                </ng-template>
-                <ng-template #elsedistributionSet> -->
+                                                   
                                                     <select formControlName="distributionSet" class="form-control"
                                                         style="width: 160px;height: 25px;font-size: 10px;">
                                                         <option>--Select--</option>
@@ -985,10 +960,11 @@
                                                                 </select>
                                                                
                                                             </td>
+                                                            <!-- <input  formControlName="invoiceId"
+                                                            class="form-control"
+                                                            style="width: 50px;height: 25px;"> -->
                                                             <td>
-                                                                <div
-                                                                    *ngIf="displayitemName; then thenitemName; else elseitemName">
-                                                                </div>
+                                                                <div  *ngIf="displayitemName; then thenitemName; else elseitemName"></div>
                                                                 <ng-template #thenitemName>
                                                                     <input hidden type="text" formControlName="itemId">
                                                                     <input type="text" class="form-control"
@@ -1067,10 +1043,10 @@
                                                                 </select>
                                                             </td>
                                                             <td>
-                                                                <input formControlName="locId" id="locId"
-                                                                    class="form-control"
-                                                                    style="width: 150px;height: 25px;font-size: 10px;">
-                                                              
+                                                                <input disabled type="text" formControlName="locCode" id="locCode" class="form-control"
+                                                                style="width: fit-content;height: 25px;font-size: 10px;">
+                                                                <input hidden formControlName="locId" id="locId" class="form-control"
+                                                                    style="width: fit-content;height: 25px;font-size: 10px;">
                                                             </td>
                                                            
                                                             <td>
@@ -1130,8 +1106,8 @@
                                                             
                                                             <td>
                                                              
-                                                                <input  type="number" class="form-control" formControlName="defaultDistCcid" >
-                                                                <input type="text" class="form-control"formControlName="defaultDisAcc" value={{defaultDisAcc}}   style="width: 150px;height: 25px;font-size: 10px;">
+                                                                <input hidden type="number" class="form-control" formControlName="defaultDistCcid" >
+                                                                <input disabled type="text" class="form-control"formControlName="defaultDisAcc" value={{defaultDisAcc}}   style="width: fit-content;height: 25px;font-size: 10px;">
                                                             </td>
                                                             <td>
                                                                 <input type="text" class="form-control"
@@ -1569,7 +1545,7 @@
                                                             </td>
 
                                                             <td>
-                                                                <input hidden formControlName="invoiceId"
+                                                                <input  formControlName="invoiceId"
                                                                     class="form-control"
                                                                     style="width: 50px;height: 25px;">
                                                             </td>
@@ -1751,15 +1727,10 @@
                                                                     class="form-control">
                                                             </td>
 
-                                                            <div
-                                                                *ngIf="poInvoiceForm.controls['taxLines'].controls[j].controls.totTaxPer.value === 0; then thenBlock; else elseBlock">
-                                                            </div>
+                                                            <div  *ngIf="poInvoiceForm.controls['taxLines'].controls[j].controls.totTaxPer.value === 0; then thenBlock; else elseBlock"> </div>
                                                             <ng-template #thenBlock>
-                                                                <td><input type="number" min="0"
-                                                                        formControlName="totTaxAmt"
-                                                                        (change)="validateNum(i,j)" class="form-control"
-                                                                        style="width: 6rem; text-align: right; height: 25px;font-size: 10px;"
-                                                                        class="form-control">
+                                                                <td><input type="number" min="0" formControlName="totTaxAmt" (change)="validateNum(i,j)" class="form-control"
+                                                                        style="width: 6rem; text-align: right; height: 25px;font-size: 10px;" class="form-control">
                                                                 </td>
                                                             </ng-template>
                                                             <ng-template #elseBlock>
@@ -1837,6 +1808,7 @@
                                 <div *ngIf="displayapInvCancelled; then thenapInvCancelled; else elseapInvCancelled"> </div>
                                 <ng-template #thenapInvCancelled>
                                 </ng-template>
+
                                 <ng-template #elseapInvCancelled>
                                 <td>
                                     <button type="submit" (click)="apInvCancelled()" class="btn btn-primary"
@@ -1856,6 +1828,10 @@
                                 <td>
                                     <button type="submit" class="btn btn-primary"
                                         (click)="apInvoiceSave()">Save</button>
+                                </td>
+                                <td>
+                                    <button type="submit" class="btn btn-primary" [style.display]="isVisibleUpdateBtn ? 'block' : 'none'"
+                                        (click)="apInvoiceSave()">Update</button>
                                 </td>
                                 <td>
                                     <div
@@ -1948,9 +1924,9 @@
                       <td> -->
 
 
-                    <!-- <div class="grid_scroll3">   -->
+                    <!-- <div class="grid_scroll3">   
 
-                    <!-- </div> -->
+                  </div> -->
 
                     <!-- </div> -->
                     <!-- </td>

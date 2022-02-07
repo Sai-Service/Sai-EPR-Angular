@@ -47,7 +47,7 @@ export class ReportServiceService {
 
 
   SprStkTrfRecdDtlsReport(invcDt1,invcDt4,locId,tolocId){
-    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprStkTrfRecdDtls?fromDate=${invcDt1}&toDate=${invcDt4}&fromLoc=${locId}&toLoc=${tolocId}`;
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprStkTrfRecdDtls?fromDate=${invcDt1}&toDate=${invcDt4}&shipToLoc=${locId}&shipFromLoc=${tolocId}`;
     return this.http.get(REQUEST_URI, {
       responseType: 'arraybuffer',
       headers: this.headers,
@@ -66,6 +66,15 @@ export class ReportServiceService {
 
   SprcusttakestatReport(invcDt1,invcDt4,locId){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/CustomerOffTake?fromDate=${invcDt1}&toDate=${invcDt4}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+
+  spSparesMiscIssueReceiptReport(invcDt1,invcDt4,locId){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprMiscRep?fromDate=${invcDt1}&toDate=${invcDt4}&locId=${locId}`;
     return this.http.get(REQUEST_URI, {
       responseType: 'arraybuffer',
       headers: this.headers,
@@ -237,6 +246,16 @@ export class ReportServiceService {
     });
   }
 
+
+  serPendingVehicleReport(fromDate,toDate,locId){
+    const REQUEST_URI = this.ServerUrl +`/ServiceReports/ServPendingVeh?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
   servindToDtReport(fromDate,toDate,locId){
     const REQUEST_URI = this.ServerUrl +`/ServiceReports/ServiceIndRep?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}`;
     return this.http.get(REQUEST_URI, {
@@ -258,8 +277,17 @@ vhslRegisterReport(fromDate,toDate,locId){
   });
 }
 
-salesINDReport(fromDate,toDate,locId){
-  const REQUEST_URI = this.ServerUrl +`/SalesReports/VehIndReg?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}`;
+salesINDReport(toDate,locId){
+  const REQUEST_URI = this.ServerUrl +`/SalesReports/VehIndReg?fromDate=toDate=${toDate}&locId=${locId}`;
+  return this.http.get(REQUEST_URI, {
+    // params: REQUEST_PARAMS,
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
+}
+
+salesAltnotInvReport(toDate,locId){
+  const REQUEST_URI = this.ServerUrl +`/SalesReports/VehAnIReg?toDate=${toDate}&locId=${locId}`;
   return this.http.get(REQUEST_URI, {
     // params: REQUEST_PARAMS,
     responseType: 'arraybuffer',
@@ -269,6 +297,15 @@ salesINDReport(fromDate,toDate,locId){
 
 salesbookingregReport(fromDate,toDate,locId){
   const REQUEST_URI = this.ServerUrl +`/SalesReports/VehBookReg?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}`;
+  return this.http.get(REQUEST_URI, {
+    // params: REQUEST_PARAMS,
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
+}
+
+vehicleClosingStockReport(orgId){
+  const REQUEST_URI = this.ServerUrl +`/SalesReports/VehClosingStk?orgId=${orgId}`;
   return this.http.get(REQUEST_URI, {
     // params: REQUEST_PARAMS,
     responseType: 'arraybuffer',
