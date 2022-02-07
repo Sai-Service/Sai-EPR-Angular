@@ -247,14 +247,28 @@ public AvgCostUpdateSubmit(AvgCostUpdateRecord) {
 
 // getAvgHistoryList
 getAvgHistoryList(mLocId,mitemId,frmDate,toDate): Observable<any> {
-  alert("Master Service :"+ mLocId+","+mitemId+" ,"+frmDate+","+toDate);
+ 
   return this.http.get(this.ServerUrl + `/averageCost/avghistory?locationId=${mLocId}&itemId=${mitemId}&startDate=${frmDate}&endDate=${toDate}`);
   }
 
+  ///////////////////////////////////////////////////// warrany claim /////////////////////
 
+  lineStatusLst(): Observable<any> {
+    return this.http.get(this.ServerUrl +'/cmnLookup/CmnType/WARRANTY_STATUS');
+    // // http://localhost:8081/cmnLookup/CmnType/WARRANTY_STATUS
+  }
 
+  itemTypeLst(): Observable<any> {
+    return this.http.get(this.ServerUrl +'/cmnLookup/CmnType/ITEM_TYPE');
+  // http://localhost:8081/cmnLookup/CmnType/ITEM_TYPE
 
-   
+  }
+
+  getWarrantyData(fromDt,toDt,ouId,lineStat,itmType): Observable<any> {
+    alert(fromDt+","+toDt+","+ouId+","+lineStat+","+itmType);
+    return this.http.get(this.ServerUrl+`/oemWarranty/warrantyData?fromDate=${fromDt}&toDate=${toDt}&ouId=${ouId}&lineStatus=${lineStat}&itemType=${itmType}`);
+    //  http://localhost:8081/oemWarranty/warrantyData
+    }
      
   
  }

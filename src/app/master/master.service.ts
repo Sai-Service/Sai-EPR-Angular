@@ -3488,13 +3488,21 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
 
       }
 
-      getGlAccountBalance(glCode,prdName): Observable<any> {
+      xxxgetGlAccountBalance(glCode,prdName): Observable<any> {
         return this.http.get(this.ServerUrl+`/glHeader/accGlBalances?segmentNameFrm=${glCode}&periodName=${prdName}`);
         // http://localhost:8081/glHeader/accGlBalances?segmentNameFrm=12MU.2102.21.21701.0000&periodName=Jan-21-22
+      }
 
+        public getGlAccountBalance( glCode,prdName) {
+          const options = {
+            headers: this.headers
+          };
+          const url = this.ServerUrl +`/glHeader/accGlBalances?segmentNameFrm=${glCode}&periodName=${prdName}`;
+          return this.http.post(url, options);
+          // http://localhost:8081/AccountTrf/AcctTrfPost?emplId=216
+        }
 
-
-     }
+    
 
 
       public CashBankTrfSaveSubmit(CashBankTrfRecord,mEmplId) {
@@ -3529,6 +3537,10 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
         // http://localhost:8081/AccountTrf/AcctTrfPost?emplId=216
 
       }
+
+     
+
+      
 
       public CashBankTrfReversalSubmit(CashBankTrfRecord,mEmplId,docTrfNo) {
         const options = {

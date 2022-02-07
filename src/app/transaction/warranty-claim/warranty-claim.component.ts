@@ -33,11 +33,11 @@ export class WarrantyClaimComponent implements OnInit {
   pipe = new DatePipe('en-US');
   public minDate = new Date();
 
-  lstClearBackOrder: any;
-  lstOrderList: any;
-  lstLatestOrder: any;
-  public lstItemDetails: any;
+  public lineStatusList       : Array<string> = [];
+  public itemTypeList          : Array<string> = [];
 
+  lstWarrantyDtls: any;
+  
   dataDisplay: any;
   loginName: string;
   loginArray: string;
@@ -90,6 +90,9 @@ export class WarrantyClaimComponent implements OnInit {
  
       fromDate: [],
       toDate: [],
+          
+      lineStatus:[],
+      itemType:[],
 
       warrLines: this.fb.array([this.lineDetailsGroup()])
 
@@ -145,6 +148,22 @@ export class WarrantyClaimComponent implements OnInit {
     console.log(this.loginArray);
     console.log(this.locId);
 
+    this.transactionService.lineStatusLst()
+    .subscribe(
+      data => {
+        this.lineStatusList = data;
+        console.log(this.lineStatusList);
+      }
+    );
+
+    this.transactionService.itemTypeLst()
+    .subscribe(
+      data => {
+        this.itemTypeList = data;
+        console.log(this.itemTypeList);
+      }
+    );
+
 
   }
 
@@ -191,7 +210,42 @@ export class WarrantyClaimComponent implements OnInit {
 
   }
 
-  dispDetails(){}
+  dispDetails(){
+
+    
+
+    var fDate=this.warrantyClaimForm.get('fromDate').value;
+    var tDate=this.warrantyClaimForm.get('toDate').value;
+
+    var lstat=this.warrantyClaimForm.get('lineStatus').value;
+    var itmtp=this.warrantyClaimForm.get('itemType').value;
+
+    alert ("in disp details...."+fDate +","+tDate);
+
+    alert ("in disp details...."+ lstat +","+itmtp);
+  
+
+  this.transactionService.getWarrantyData(fDate,tDate,sessionStorage.getItem('ouId'),lstat,itmtp)
+  .subscribe(
+    data => {
+      this.lstWarrantyDtls = data;
+      console.log(this.lstWarrantyDtls);
+     var len = this.lineDetailsArray().length;
+      var y = 0;
+      for (let i = 0; i < this.lstWarrantyDtls.length - len; i++) {
+        var ordLnGrp: FormGroup = this.lineDetailsGroup();
+        this.lineDetailsArray().push(ordLnGrp);
+        y = i;
+
+      }
+
+      this.warrantyClaimForm.get('warrLines').patchValue(this.lstWarrantyDtls);
+
+    } ); 
+
+  }
+
+
   clearSearch() {
     // this.jobcardForm.get('jobCardNum2').reset();
     // this.jobcardForm.get('regNo1').reset();

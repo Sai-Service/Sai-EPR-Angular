@@ -628,6 +628,10 @@ export class CashBankTransferComponent implements OnInit {
             var trfDesc =this.cashBankTransferForm.get('transferDescp').value;
             var prdNam  =this.cashBankTransferForm.get('openPeriod').value;
 
+            // if(prdNam===undefined || prdNam===null || prdNam.trim()==='') {
+            //   this.cashBankTransferForm.get('fromAcctDescpId').reset()
+            // }
+
         
             
             if (methodId>0) {
@@ -662,26 +666,32 @@ export class CashBankTransferComponent implements OnInit {
 
                  this.fromAcctCode =this.payAccountCode.name;
                  this.fromGlCodeId=this.payAccountCode.id;
-                 
+                //  if(trfCode===180) { 
+                   this.glCodeBalance(this.fromAcctCode,prdNam);
+                  // }
+  
                });
-
-               if(trfCode===180) {
-
-               this.service.getGlAccountBalance(this.fromAcctCode,prdNam)
-               .subscribe(
-                 data => {
-                   this.trfAmount =data.obj.trfAmount;
-                   
-                 });
+              }  
+            }
+         
+          glCodeBalance(gcode,prd) {
+            const formValue: ICashBankTransfer =this.transeData(this.cashBankTransferForm.value);
+             this.service.getGlAccountBalance(gcode,prd).subscribe((res: any) => {
+              if (res.code === 200) {
+                alert('RECORD UPDATED SUCCESSFUILY');
+                var x=res.obj;
+                alert(x);
+               } else {
+                if (res.code === 400) {
+                  var x=res.obj;
+                  alert(x);
+                    
                 }
-
-
               }
-
-
-
-
-          }
+            });
+    
+            
+        }
 
           onSelectionToAc(methodId :number) { 
             if (methodId>0) {
