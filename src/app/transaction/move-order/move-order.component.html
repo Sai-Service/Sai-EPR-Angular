@@ -136,10 +136,10 @@
             Issue To:
           </td>
           <td>
-              <select type="text" class="form-control" formControlName="issueTo" >
-                <option>--Select--</option>
+              <input  type="text" class="form-control" formControlName="issueTo" >
+                <!-- <option>--Select--</option>
                 <option *ngFor="let ib of issueByList">{{ib.fullName}}</option>
-                </select>
+                </select> -->
                 <span
                 *ngIf="getGroupControl('issueTo').touched && getGroupControl('issueTo').invalid" class="error">Valid IssueTo
                </span>
@@ -193,6 +193,8 @@
                     <!-- <input type="hidden" formControlName="locId" [(ngModel)]="locId"> -->
                 <td><input type="text" class="form-control"  style="height: 20px;width: 50px;" formControlName="lineNumber">
                  </td>
+                 <input disabled hidden type="text" class="form-control"
+                                                            formControlName="uuidRef" value={{uuidRef}}>
                   <!-- <div *ngIf="displaySegment; then thenBlock1; else elseBlock1">
                 </div>
             <ng-template #thenBlock1> -->
