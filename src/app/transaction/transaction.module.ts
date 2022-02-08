@@ -22,7 +22,7 @@ import { McpPackageMasterComponent } from './mcp-package-master/mcp-package-mast
 import { McpEnquiryComponent } from './mcp-enquiry/mcp-enquiry.component';
 import { McpEnrollmentComponent } from './mcp-enrollment/mcp-enrollment.component';
 import { McpCancellationComponent } from './mcp-cancellation/mcp-cancellation.component';
-  import { from } from 'rxjs';
+  
 import { StockTakingComponent } from './stock-taking/stock-taking.component';
 import { JournalVoucherComponent } from './journal-voucher/journal-voucher.component';
 import { OnHandDetailsComponent } from './on-hand-details/on-hand-details.component';
@@ -41,6 +41,9 @@ import { BulkUploadPricelistComponent } from './bulk-upload-pricelist/bulk-uploa
 import { BankReconcillationComponent } from './bank-reconcillation/bank-reconcillation.component';
 import { AmcSchemeMasterComponent } from './amc-scheme-master/amc-scheme-master.component';
 import { AmcEnrollmentComponent } from './amc-enrollment/amc-enrollment.component';
+import { WarrantyClaimComponent } from './warranty-claim/warranty-claim.component';
+// import { ShippingNetworkComponent } from './shipping-network/shipping-network.component';
+
 // import { OrderGenerationComponent } from './order-generation/order-generation.component';
 // import { CounterSaleReturnComponent } from './counter-sale-return/counter-sale-return.component';
 
@@ -87,6 +90,8 @@ import { AmcEnrollmentComponent } from './amc-enrollment/amc-enrollment.componen
     BankReconcillationComponent,
     AmcSchemeMasterComponent,
     AmcEnrollmentComponent,
+    WarrantyClaimComponent,
+    // ShippingNetworkComponent,
     // OrderGenerationComponent,
     // CounterSaleReturnComponent
   ],

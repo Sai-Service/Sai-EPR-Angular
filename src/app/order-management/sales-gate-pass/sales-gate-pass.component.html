@@ -16,8 +16,17 @@
                   <tr>
                     <td style="font-weight: bold;" class="LabelFontStyle1"> Order&nbsp;No&nbsp;:&nbsp;  </td>
                     <td><input  class="form-control" formControlName="orderNumber" style="border:solid 1px black" [(ngModel)]="orderNumber"> </td>&nbsp;&nbsp;
+                    <td style="font-weight: bold;" class="LabelFontStyle1"> Service&nbsp;Location&nbsp;:&nbsp;  </td>
                     <td>
-                        <button type="button" style="width:fit-content ;" class="btn btn-secondary" data-dismiss="modal" (click)="orderNumberPost(orderNumber)">Generate&nbsp;Gatepass</button>
+                        <select formControlName="shipToLoc" id="shipToLoc" [(ngModel)]="shipToLoc" class="form-control">
+                            <option>--Select--</option>
+                            <option *ngFor="let sc of  BillShipList" [value]="sc.locId">
+                                {{sc.locCode}}
+                            </option>
+                        </select>
+                    </td>
+                    <td>
+                        <button type="button" style="width:fit-content ;" class="btn btn-secondary" data-dismiss="modal" (click)="orderNumberPost(orderNumber,shipToLoc)">Generate&nbsp;Gatepass</button>
                     </td>
         
                   </tr>

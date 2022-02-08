@@ -1,17 +1,10 @@
-import { Component, OnInit, HostListener, ViewChild, ElementRef } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators, FormArray, FormControlName,FormsModule,ReactiveFormsModule} from '@angular/forms';
-import { NgForm } from '@angular/forms';
-import { from ,Observable} from 'rxjs';
-import { Url } from 'url';
+import { Component, OnInit} from '@angular/core';
+import { FormGroup, FormBuilder} from '@angular/forms';
 import { Router, ActivatedRoute} from '@angular/router';
-import { NgModule } from '@angular/core';
 import { ReportServiceService } from 'src/app/report/report-service.service'
 import { DatePipe,Location,CommonModule } from '@angular/common';
-import { data, get } from 'jquery';
-import * as xlsx from 'xlsx';
 import { MasterService } from 'src/app/master/master.service';
 import { saveAs } from 'file-saver'; 
-import { BrowserModule } from '@angular/platform-browser';
 
 const MIME_TYPES = {
   pdf: 'application/pdf',
@@ -78,12 +71,12 @@ export class SalesReportsComponent implements OnInit {
     this.closeResetButton = false;
     this.progress = 0;
     this.dataDisplay = 'Report Is Running....Do not refresh the Page';
-    var purStDt = this.salesReportForm.get('jobSumFromDt').value;
+    var purStDt = this.salesReportForm.get('vhslRegisterFromDt').value;
     var fromDate = this.pipe.transform(purStDt, 'dd-MMM-yyyy');
-    var spreceipttoDate2 = this.salesReportForm.get('jobSumToDt').value;
+    var spreceipttoDate2 = this.salesReportForm.get('vhslRegisterToDt').value;
     var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
     const fileName = 'Vehicle Sales Register-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
-
+    // alert(fromDate+'----'+ toDate+'-----'+ sessionStorage.getItem('locId'))
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.vhslRegisterReport(fromDate, toDate, sessionStorage.getItem('locId'))
       .subscribe(data => {
@@ -128,7 +121,7 @@ export class SalesReportsComponent implements OnInit {
     var fromDate = this.pipe.transform(purStDt, 'dd-MMM-yyyy');
     var spreceipttoDate2 = this.salesReportForm.get('salesbkregToDt').value;
     var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
-    const fileName = 'Sales Invoiced Not Delivered-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+    const fileName = 'Sales Booking Register-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
 
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.salesbookingregReport(fromDate, toDate, sessionStorage.getItem('locId'))

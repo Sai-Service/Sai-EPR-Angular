@@ -133,7 +133,7 @@ export class InterStateComponent implements OnInit {
   getItemDetail: any;
   getfrmSubLoc: any;
   custtaxCategoryName: string;
-
+  custClassCode:string;
   public itemMap2 = new Map<number, any[]>();
   public itemMap3 = new Map<string, StockTransferRow>();
   public taxMap = new Map<string, any>();
@@ -185,6 +185,7 @@ export class InterStateComponent implements OnInit {
       createOrderType: [],
       locCode: [],
       custtaxCategoryName: [],
+      custClassCode:[],
       customerId: [],
       oeOrderLinesAllList: this.fb.array([this.orderlineDetailsGroup()]),
       taxAmounts: this.fb.array([this.TaxDetailsGroup()]),
@@ -425,8 +426,10 @@ export class InterStateComponent implements OnInit {
       this.state = select1.state;
       this.gstNo = select1.gstNo;
       this.billToLocId = select1.toLocationId;
-      this.InterStateForm.patchValue({
+      this.custClassCode = select1.classCodeType;
+      this.InterStateForm.patchValue({ 
         custtaxCategoryName: select1.taxCategoryName,
+        custClassCode:select1.classCodeType,
         customerSiteId: select1.customerSiteId,
         customerId: select1.customerId
       })
@@ -525,7 +528,10 @@ export class InterStateComponent implements OnInit {
   }
   onOptionsSelectedDescription(event: any, k) {
     let controlinv = this.InterStateForm.get('oeOrderLinesAllList') as FormArray;
-
+    let isExportCust ="N";
+    if(this.custClassCode.includes("EXPORTER") && Number(sessionStorage.getItem('ouId'))===22){
+      isExportCust ="Y";
+    }
    let select = this.ItemIdList.find(d => d.SEGMENT === event);
    if(select!=undefined){
    controlinv.controls[k].patchValue({ itemId: select.itemId});

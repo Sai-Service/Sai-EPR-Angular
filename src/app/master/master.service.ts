@@ -1250,6 +1250,23 @@ taxCalforItemwithMulDisc(itemId,taxCatId,baseAmount,diss1,diss2,diss3,diss4,diss
   });
 }
 
+
+calTaxWithDisc(itemId,taxCatId,baseAmount,diss1,diss2,diss3,diss4,diss5) {
+  const REQUEST_PARAMS = new HttpParams().set('itemId', itemId)
+  .set('baseAmt', baseAmount)
+  .set('taxCateId', taxCatId)
+  .set('disAmt1', diss1)
+  .set('disAmt2', diss2)
+  .set('disAmt3', diss3)
+  .set('disAmt4', diss4)
+  .set('disAmt5', diss5)
+  const REQUEST_URI = this.ServerUrl +'/orderHeader/sotaxcal';
+  return this.http.get(REQUEST_URI, {
+    params: REQUEST_PARAMS,
+
+  });
+}
+
 taxCalforItem1( ouId, locId, baseAmount, taxCategoryId, diss ){
   const REQUEST_PARAMS = new HttpParams().set('ouId', ouId)
   .set('locId', locId)
@@ -3471,6 +3488,22 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
 
       }
 
+      xxxgetGlAccountBalance(glCode,prdName): Observable<any> {
+        return this.http.get(this.ServerUrl+`/glHeader/accGlBalances?segmentNameFrm=${glCode}&periodName=${prdName}`);
+        // http://localhost:8081/glHeader/accGlBalances?segmentNameFrm=12MU.2102.21.21701.0000&periodName=Jan-21-22
+      }
+
+        public getGlAccountBalance( glCode,prdName) {
+          const options = {
+            headers: this.headers
+          };
+          const url = this.ServerUrl +`/glHeader/accGlBalances?segmentNameFrm=${glCode}&periodName=${prdName}`;
+          return this.http.post(url, options);
+          // http://localhost:8081/AccountTrf/AcctTrfPost?emplId=216
+        }
+
+    
+
 
       public CashBankTrfSaveSubmit(CashBankTrfRecord,mEmplId) {
         const options = {
@@ -3505,6 +3538,10 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
 
       }
 
+     
+
+      
+
       public CashBankTrfReversalSubmit(CashBankTrfRecord,mEmplId,docTrfNo) {
         const options = {
           headers: this.headers
@@ -3527,6 +3564,12 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
       return this.http.get(this.ServerUrl+`/AccountTrf/CounterList?bankId=${bankId}&receiptMethodId=${rcptMthId}&locId=${locId}`);
       // http://localhost:8081/AccountTrf/CounterList?bankId=902&receiptMethodId=58&locId=2102
    }
+
+   
+   viewAccountingBankTransfer(trfNo): Observable<any> {
+    return this.http.get(this.ServerUrl + `/glHeader/AccountTrf/${trfNo}`);
+    // http://localhost:8081/glHeader/AccountTrf/2125210510008
+  }
 
 
     ////////////////////////// Pending Shipment Lis///////////

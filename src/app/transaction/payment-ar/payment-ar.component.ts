@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, NumberValueAccessor, FormControlName } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder} from '@angular/forms';
 import { Router } from '@angular/router';
 import { Validators, FormArray } from '@angular/forms';
 import { MasterService } from '../../master/master.service';
-import { NgModule } from '@angular/core';
-import { NgForm } from '@angular/forms';
+
 import { DatePipe } from '@angular/common';
-import { InteractionModeRegistry } from 'chart.js';
+
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
-import { escapeIdentifier } from '@angular/compiler/src/output/abstract_emitter';
-import { of } from 'rxjs';
+
 
 
 interface IPaymentRcptAr {
@@ -2589,6 +2587,7 @@ export class PaymentArComponent implements OnInit {
       return;
       }
 
+      
       viewAccounting(receiptNo: any) {
 
         this.viewAccountingArRcpt=null;

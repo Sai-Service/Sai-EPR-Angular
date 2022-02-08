@@ -170,7 +170,7 @@ export class SaiEwSchemeMasterComponent implements OnInit {
         }
 
         ngOnInit(): void {
-
+          $("#wrapper").toggleClass("toggled");
           this.name=  sessionStorage.getItem('name');
           this.loginArray=sessionStorage.getItem('divisionName');
           this.loginName=sessionStorage.getItem('name');

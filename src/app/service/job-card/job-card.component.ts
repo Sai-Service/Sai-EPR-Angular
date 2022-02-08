@@ -4,14 +4,7 @@ import { Router } from '@angular/router';
 import { MasterService } from 'src/app/master/master.service';
 import { ServiceService } from '../service.service';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
-import { observable, Observable } from 'rxjs';
 import { DatePipe } from '@angular/common';
-import * as moment from 'moment';
-import { ThemeService } from 'ng2-charts';
-// import { DecimalPipe,formatNumber } from '@angular/common';
-// import {  Inject, LOCALE_ID } from '@angular/core';
-// import { of } from 'rxjs/observable/of';
-// import 'rxjs/add/observable/of';
 
 interface IjobCard {
 
@@ -339,8 +332,8 @@ export class JobCardComponent implements OnInit {
   // jobCardDate = Date.now();
   // jobCardDate = this.pipe.transform(this.now, 'y-MM-d');
   
-  //public minDatetime=this.pipe.transform(this.promiseDate, 'yyyy-MM-ddThh:mm')
-  public minDatetime = moment(new Date()).format('YYYY-MM-DDTHH:mm')
+  public minDatetime=this.pipe.transform(new Date(), 'yyyy-MM-ddThh:mm')
+ // public minDatetime = moment(new Date()).format('YYYY-MM-DDTHH:mm')
   promiseDate = this.minDatetime;
  
   @ViewChild("myinput") myInputField: ElementRef;

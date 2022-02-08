@@ -243,6 +243,7 @@ export class OrderManagementService {
     const REQUEST_PARAMS = new HttpParams().set('segment', segment)
     .set('taxCategoryName', taxCategoryName)
     .set('priceListHeaderId', priceListHeaderId)
+    
     const REQUEST_URI = this.ServerUrl +'/itemMst/segmentLike';
     return this.http.get(REQUEST_URI, {
       params: REQUEST_PARAMS,
@@ -250,6 +251,18 @@ export class OrderManagementService {
     });
   }
  
+  addonDescList2(segment, taxCategoryName, priceListHeaderId, isExportCust):Observable<any> {
+    const REQUEST_PARAMS = new HttpParams().set('segment', segment)
+    .set('taxCategoryName', taxCategoryName)
+    .set('priceListHeaderId', priceListHeaderId)
+    .set('isExportCust', isExportCust)
+    const REQUEST_URI = this.ServerUrl +'/itemMst/segmentLike';
+    return this.http.get(REQUEST_URI, {
+      params: REQUEST_PARAMS,
+  
+    });
+  }
+
   getTaxCategoriesForSales(taxCategoryName,hsnTaxPer):Observable<any>{
     return this.http.get(this.ServerUrl +`/JaiTaxCatg/taxCateDtls?taxCatType=SALES&suppTaxCate=${taxCategoryName}&hsnTaxPer=${hsnTaxPer}`);
   }
@@ -586,11 +599,12 @@ deallotmentReasonType():Observable<any>{
 }
 
 
-orderNoPost(orderNumber,emplId) {
+orderNoPost(orderNumber,emplId,locId) {
   const REQUEST_PARAMS = new HttpParams().set('orderNumber', orderNumber)
     .set('emplId', emplId)
+    .set('servLocId',locId)
 
-  const REQUEST_URI = this.ServerUrl + `/salesGatePass/postSlGatepass?orderNumber=${orderNumber}&emplId=${emplId}`;
+  const REQUEST_URI = this.ServerUrl + `/salesGatePass/postSlGatepass?orderNumber=${orderNumber}&emplId=${emplId}&servLocId=${locId}`;
   return this.http.post(REQUEST_URI, {
     params: REQUEST_PARAMS,
 

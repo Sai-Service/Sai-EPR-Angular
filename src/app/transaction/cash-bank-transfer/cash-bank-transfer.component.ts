@@ -9,6 +9,7 @@ import { DatePipe } from '@angular/common';
 import { InteractionModeRegistry } from 'chart.js';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 import { mapToMapExpression } from '@angular/compiler/src/render3/util';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 // import * as converter from 'number-to-words';
 
 
@@ -61,6 +62,10 @@ export class CashBankTransferComponent implements OnInit {
       public bnkHeaderList       : Array<string> = [];
       public statusList          : Array<string> = [];
           
+      viewAccountingBankTrf: any;
+      viewAccountingBnkTrfLines: any;
+     
+
       fromAcctList :any;
       toAcctList:any;
       TransferTypeList:any;
@@ -69,6 +74,7 @@ export class CashBankTransferComponent implements OnInit {
 
       lstcomments: any;
       lstChequeList: any;
+
       loginName:string;
       divisionId:number;
       loginArray:string;
@@ -80,9 +86,6 @@ export class CashBankTransferComponent implements OnInit {
       ouId :number;
       deptId:number; 
       emplId :number;
-
-      // branch:number;
-      // period:number;
       openPeriod:string;
       docTrfNo:string;
       transferCode:number;
@@ -138,6 +141,20 @@ export class CashBankTransferComponent implements OnInit {
       copyButton=true;
       checkValidation=false;
       showChqListModal =false;
+      viewAct=false;
+
+      showViewActLine =false;
+      totalDr:number;
+      totalCr:number;
+      runningTotalCr:number;
+      runningTotalDr:number;
+
+      docSeqValue:string;
+      description:string;
+      name1:string;
+      jeCategory:string;
+      jeSource:string;
+      periodName:string;
 
 
       get f() { return this.cashBankTransferForm.controls; }
@@ -196,6 +213,18 @@ export class CashBankTransferComponent implements OnInit {
           fromDate:[],
           toDate:[],
           chqTrfAmt:[],
+
+          totalDr:[],
+          totalCr:[],
+          runningTotalCr:[],
+          runningTotalDr:[],
+
+          docSeqValue:[],
+          description:[],
+          name1:[],
+          jeCategory:[],
+          jeSource:[],
+          periodName:[],
 
           rcptLine: this.fb.array([this.rcptLineDetails()]),
       
@@ -544,12 +573,14 @@ export class CashBankTransferComponent implements OnInit {
                   this.statusSave=false;
                   this.revButton=false;
                   this.copyButton=true;
+                  this.viewAct=false;
                  }
                 if(stat1=='Post') {
                   this.statusPost=false;
                   this.statusSave=false;
                   this.revButton=true;
                   this.copyButton=true;
+                  this.viewAct=true;
                  }
 
                  if(revStat1=='Y') {
@@ -569,6 +600,7 @@ export class CashBankTransferComponent implements OnInit {
             
       
         onSelectionTrfcode(mEvent :number) {
+          // alert ("Transfer Type :"+mEvent);
          let selectedValue = this.TransferTypeList.find(v => v.lookupValueId == mEvent);
           if( selectedValue != undefined){
             console.log(selectedValue);
@@ -592,6 +624,16 @@ export class CashBankTransferComponent implements OnInit {
 
         
           onSelectionFromAc(methodId :number) { 
+            var trfCode =this.cashBankTransferForm.get('transferCode').value;
+            var trfDesc =this.cashBankTransferForm.get('transferDescp').value;
+            var prdNam  =this.cashBankTransferForm.get('openPeriod').value;
+
+            // if(prdNam===undefined || prdNam===null || prdNam.trim()==='') {
+            //   this.cashBankTransferForm.get('fromAcctDescpId').reset()
+            // }
+
+        
+            
             if (methodId>0) {
               if(methodId===58) {this.showChqListModal=true;} else {
                 this.showChqListModal=false;
@@ -624,12 +666,32 @@ export class CashBankTransferComponent implements OnInit {
 
                  this.fromAcctCode =this.payAccountCode.name;
                  this.fromGlCodeId=this.payAccountCode.id;
-                 
+                //  if(trfCode===180) { 
+                   this.glCodeBalance(this.fromAcctCode,prdNam);
+                  // }
+  
                });
-
+              }  
+            }
+         
+          glCodeBalance(gcode,prd) {
+            const formValue: ICashBankTransfer =this.transeData(this.cashBankTransferForm.value);
+             this.service.getGlAccountBalance(gcode,prd).subscribe((res: any) => {
+              if (res.code === 200) {
+                alert('RECORD UPDATED SUCCESSFUILY');
+                var x=res.obj;
+                alert(x);
+               } else {
+                if (res.code === 400) {
+                  var x=res.obj;
+                  alert(x);
+                    
+                }
               }
-
-          }
+            });
+    
+            
+        }
 
           onSelectionToAc(methodId :number) { 
             if (methodId>0) {
@@ -1010,7 +1072,62 @@ export class CashBankTransferComponent implements OnInit {
                  this.rcptLineArray().removeAt(i);   } 
              }
             }
+              
+            
+           
+      viewAccounting() {
+
+        this.viewAccountingBankTrf=null;
+        this.viewAccountingBnkTrfLines=null;
+        this.showViewActLine=false;
+        var docNo =this.cashBankTransferForm.get("docTrfNo").value;
+      this.service.viewAccountingBankTransfer(docNo).subscribe((res: any) => {
+      if (res.code === 200) {
+        this.viewAccountingBankTrf = res.obj;
+        console.log(this.viewAccountingBankTrf);
+
+        this.docSeqValue=this.viewAccountingBankTrf.docSeqValue;
+        this.description=this.viewAccountingBankTrf.description;
+        this.name1=this.viewAccountingBankTrf.name;
+        this.jeCategory=this.viewAccountingBankTrf.jeCategory;
+        this.jeSource=this.viewAccountingBankTrf.jeSource;
+        this.periodName=this.viewAccountingBankTrf.periodName;
+        this.runningTotalDr=this.viewAccountingBankTrf.runningTotalDr;
+        this.runningTotalCr=this.viewAccountingBankTrf.runningTotalCr;
+        
+        // alert(this.viewAccountingBankTrf.name);
+       
+      } else {
+        if (res.code === 400) {
+          alert(res.message);
+        }
+      }
+    });
+      }
+
+      ViewActSelect(index) {
+        // alert ("View Act Line ..."+index);
+        this.showViewActLine=true;
+        var docNo =this.cashBankTransferForm.get("docTrfNo").value;
+        this.service.viewAccountingBankTransfer(docNo).subscribe((res: any) => {
+          if (res.code === 200) {
+            this.viewAccountingBnkTrfLines = res.obj.glLines;
+            console.log(this.viewAccountingBnkTrfLines);
+            this.runningTotalDr=res.obj.runningTotalDr;
+            this.runningTotalCr=res.obj.runningTotalCr;
+            // this.paymentArForm.patchValue({totalDr:res.obj[index].runningTotalDr})
+            // this.paymentArForm.patchValue({totalCr:res.obj[index].runningTotalCr})
+            // alert(this.runningTotalDr +","+this.runningTotalCr);
+            } 
+            else {
+            if (res.code === 400) {
+              alert(res.message);
+            }
+          }
+        });
+
                   
-  
+       
+      }
  
 }

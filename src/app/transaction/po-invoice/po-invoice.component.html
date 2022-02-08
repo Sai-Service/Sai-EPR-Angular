@@ -732,7 +732,7 @@
                                                             </td>
                                                             <td>
                                                                 <input formControlName="lineTypeLookupCode"
-                                                                    (keydown.shift.arrowdown)="addRowDistribution(k)"
+                                                                    (keydown.shift.arrowdown)="addRowDistribution(k,lineTypeLookupCode)"
                                                                     class="form-control"
                                                                     style="width: 100px;height: 25px;">
                                                                 <!-- <span
@@ -947,20 +947,10 @@
                                                         [formGroupName]="k" class="auto-style5">
 
                                                         <tr class="ItemStyle" style="text-decoration:none;">
-                                                            <!-- <td>
-                                                <button type="submit" class="btn btn-primgit pushary fa fa-plus" (click)="addRow(k)"></button>
-                                            </td> -->
-                                                            <!-- <td>
-                                                <button type="submit" class="btn btn-primary fa fa-trash" (click)="Delete(trxLineIndex)"></button>
-                                            </td> -->
-                                                            <!-- <td>
-                                                <button type="submit" class="btn btn-primary" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"    (click)="distribution1(k)" >Distribution</button>
-                                            </td> class="tab-pane fade" (click)="onOptionTaxCatSelected($event,k)" -->
+                                                         
 
                                                             <td>
-                                                                <div
-                                                                    *ngIf="displayViewTaxDetails; then thenViewTaxDetails; else elseViewTaxDetails">
-                                                                </div>
+                                                                <div  *ngIf="displayViewTaxDetails; then thenViewTaxDetails; else elseViewTaxDetails">  </div>
                                                                 <ng-template #thenViewTaxDetails>
                                                                 </ng-template>
                                                                 <ng-template #elseViewTaxDetails>
@@ -993,16 +983,7 @@
                                                                     <option value="OTHER">OTHER</option>
                                                                     <option value="MISCELLANEOUS">MISCELLANEOUS</option>
                                                                 </select>
-                                                                <!-- <span
-                                        *ngIf="getGroupControl(k,'invLines', 'lineTypeLookupCode').touched && getGroupControl(k,'invLines', 'lineTypeLookupCode').invalid">Valid Number
-                                                    </span> -->
-                                                                <!-- <select formControlName="lineTypeLookupCode" id="lineTypeLookupCode"   (keydown.shift.arrowdown)="addRow(k)"
-                                          class="form-control" style="width: 100px;height: 25px;font-size: 10px;">
-                                          <option>--Select--</option>
-                                          <option *ngFor="let sc of  APitemtYPE">
-                                              {{sc.code}}
-                                          </option>
-                                      </select> -->
+                                                               
                                                             </td>
                                                             <td>
                                                                 <div
@@ -1015,15 +996,7 @@
                                                                         style="width: 140px;height: 25px;font-size: 10px;">
                                                                 </ng-template>
                                                                 <ng-template #elseitemName>
-                                                                    <!-- <input type="text" formControlName="segment"
-                                        (keyup)="getInvItemId($event)" id="invItemIdFirstWay"
-                                        list="dynmicUserIds1" class="form-control"
-                                        (ngModelChange)="onOptioninvItemIdSelected($event,i)" style="width: 100px;height: 25px;font-size: 10px;">
-                                    <datalist id="dynmicUserIds1">
-                                        <option *ngFor="let item of invItemList"
-                                            [ngValue]="item.itemId">{{item.segment}}
-                                        </option>
-                                    </datalist> -->
+                                                                   
                                                                     <select formControlName="segment" id="segment"
                                                                         (ngModelChange)='InventIdSelected($event, k)'
                                                                         class="form-control"
@@ -1033,15 +1006,7 @@
                                                                             {{sc.segment}}
                                                                         </option>
                                                                     </select>
-                                                                    <!-- <input type="text" formControlName="segment"
-                                    (keyup)="getInvItemId($event)" id="invItemIdFirstWay"
-                                    list="dynmicUserIds1" class="form-control"
-                                    (ngModelChange)="onOptioninvItemIdSelected($event,i)" style="width: 100px;height: 25px;font-size: 10px;"/>
-                                <datalist id="dynmicUserIds1">
-                                    <option *ngFor="let item of invItemList1"
-                                        [ngValue]="item.itemId">{{item.segment}}
-                                    </option>
-                                </datalist> -->
+                                                                  
                                                                 </ng-template>
                                                             </td>
                                                             <input hidden type="text" formControlName="itemId">
@@ -1067,9 +1032,7 @@
                                                                 <input type="number" min="0" class="form-control"
                                                                     formControlName="amount" value={{amount}}
                                                                     style="width: 80px;height: 25px;font-size: 10px;text-align: right;">
-                                                                <!-- <span
-                                        *ngIf="getGroupControl(k,'invLines', 'amount').touched && getGroupControl(k,'invLines', 'amount').invalid">Valid Number
-                                                    </span> -->
+                                                               
                                                             </td>
                                                             <td>
                                                                 <select style="width:fit-content"
@@ -1107,38 +1070,9 @@
                                                                 <input formControlName="locId" id="locId"
                                                                     class="form-control"
                                                                     style="width: 150px;height: 25px;font-size: 10px;">
-                                                                <!-- <select formControlName="locId" id="locId" class="form-control" style="width: 150px;height: 25px;font-size: 10px;">
-                                            <option>--Select--</option>
-                                            <option *ngFor="let sc of  locIdList" [ngValue]="sc.locId" >
-                                                {{sc.locId}}-{{sc.locCode}}
-                                            </option>
-                                        </select> -->
-                                                                <!-- <span
-                                        *ngIf="getGroupControl(k,'invLines', 'locId').touched && getGroupControl(k,'invLines', 'locId').invalid">Valid Number
-                                                    </span> -->
+                                                              
                                                             </td>
-                                                            <!-- <td>
-                                        <select formControlName="hsnSacCode" id="hsnSacCode"  style="width: 4rem;" class="form-control" style="width: 100px;height: 25px;font-size: 10px;">
-                                            <option>--Select--</option>
-                                            <option *ngFor="let sc of  hsnsaclist" [ngValue]="sc.hsnsaccode" >
-                                                {{sc.hsnsaccode}}
-                                            </option>
-                                        </select>
-
-                                    </td> -->
-
-                                                            <!-- <td>
-                                          <input type="text" class="form-control" formControlName="poNumber" value={{poNumber}} style="width: 100px;height: 25px;font-size: 10px;">
-                                      </td> -->
-                                                            <!-- </td>
-                                      <td>
-
-                                          <input type="number" min="0"  class="form-control" formControlName="poLineId" value={{poLineId}} style="width: 100px;height: 25px;font-size: 10px;">
-                                      </td>
-                                      <td>
-
-                                          <input type="text" class="form-control" formControlName="segment1" value={{segment1}} style="width: 100px;height: 25px;font-size: 10px;">
-                                      </td> -->
+                                                           
                                                             <td>
                                                                 <!-- filed not available in json -->
                                                                 <input type="text" class="form-control"
@@ -1176,20 +1110,11 @@
                                                                     formControlName="baseAmount" value={{baseAmount}}
                                                                     style="width: 100px;height: 25px;font-size: 10px;text-align: right;">
                                                             </td>
-                                                            <!-- <td>
-                                          <input type="text" class="form-control" formControlName="itemName" value={{itemName}} style="width: 100px;height: 25px;font-size: 10px;">
-                                      </td> -->
-                                                            <!-- <td>
-                                          <input type="text" class="form-control" formControlName="description" value={{description}} style="width: 100px;height: 25px;font-size: 10px;">
-                                      </td> -->
+                                                          
                                                             <td>
 
-                                                                <!-- <input  type="text" formControlName="glDate" value={{glDate}} class="form-control"
-                                    style="width: 80px;height: 25px;font-size: 10px;"> -->
-
-                                                                <div
-                                                                    *ngIf="displayglDate; then thenglDate; else elseglDate">
-                                                                </div>
+                                                              
+                                                                <div *ngIf="displayglDate; then thenglDate; else elseglDate"> </div>
                                                                 <ng-template #thenglDate>
                                                                     <input type="text" class="form-control"
                                                                         formControlName="glDate" value="{{glDate}}"
@@ -1202,20 +1127,13 @@
                                                                         style="width: 130px;height: 25px;font-size: 10px;">
                                                                 </ng-template>
                                                             </td>
-                                                            <!-- <td>
-                                          <input type="text" class="form-control" formControlName="segment1" value={{segment1}} style="width: 100px;height: 25px;font-size: 10px;">
-                                      </td> -->
+                                                            
                                                             <td>
-                                                                <!-- filed not available in json -->
-                                                                <input hidden type="text" class="form-control"
-                                                                    formControlName="defaultDistCcid">
-                                                                <input type="text" class="form-control"
-                                                                    formControlName="defaultDisAcc"
-                                                                    value={{defaultDisAcc}}
-                                                                    style="width: 150px;height: 25px;font-size: 10px;">
+                                                             
+                                                                <input  type="number" class="form-control" formControlName="defaultDistCcid" >
+                                                                <input type="text" class="form-control"formControlName="defaultDisAcc" value={{defaultDisAcc}}   style="width: 150px;height: 25px;font-size: 10px;">
                                                             </td>
                                                             <td>
-                                                                <!-- filed not available in json -->
                                                                 <input type="text" class="form-control"
                                                                     formControlName="segment1" value={{segment1}}
                                                                     style="width: 100px;height: 25px;font-size: 10px;">
@@ -2168,12 +2086,6 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-primary" data-dismiss="modal"
                                             aria-hidden="true" (click)="fnCancatination(content)">Ok</button>
-                                        <!-- []="(segment6.value === null || segment5.value=== null)" -->
-                                        <!-- <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true"
-                            (click)="fnCancatination(content)">Clear</button> -->
-                                        <!-- <button type="button" class="btn btn-primary"
-                            []="!segment11 || !segment2 || !segment3 || !segment4 || !segment5"
-                            (click)="fnCancatination(content)" data-dismiss="modal">Ok</button> -->
                                     </div>
                                 </div>
                             </div>
