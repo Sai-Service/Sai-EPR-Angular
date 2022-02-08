@@ -1,9 +1,7 @@
 // import { Component, OnInit } from '@angular/core';
-import { PathLocationStrategy } from '@angular/common';
-import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { FormArray, FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { data } from 'jquery';
 import { MasterService } from 'src/app/master/master.service';
 import { ServiceService } from 'src/app/service/service.service';
 import { DatePipe } from '@angular/common';
@@ -38,6 +36,7 @@ interface ImoveOrder{
     priceValue:number;
     batchCode:string;
     regNo:string;
+    segment:string;
 }
 
 @Component({
@@ -77,12 +76,13 @@ export class MoveOrderComponent implements OnInit {
   subInventoryId:number;
   toSubInvCode:string;
   subInventoryCode:string;
-  locData =[ {
-    "locatorId": 999,
-    "segmentName": "D.U.01.D.01",
-    "id": 7,
-    "onHandQty": 40
-  }];
+  locData:any =[];
+  // {
+  //   "locatorId": 999,
+  //   "segmentName": "D.U.01.D.01",
+  //   "id": 7,
+  //   "onHandQty": 40
+  // }
   JobNo:string;
   itemId:number;
   onHandQty:number;
@@ -113,6 +113,9 @@ export class MoveOrderComponent implements OnInit {
  public batchdata = [];
  pricedata:any[];
  regNo:string;
+ segment:string;
+ userList2: any[] = [];
+  lastkeydown1: number = 0;
  
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService,private serviceService: ServiceService) {
@@ -215,6 +218,7 @@ export class MoveOrderComponent implements OnInit {
       data =>{ this.transType = data;
         console.log(this.transType);
         this.transactionTypeId=this.transType[0].transactionTypeId;
+        this.transactionTypeName=this.transType[0].transactionTypeName;
 
        } );
        
@@ -372,8 +376,12 @@ var trxLnArr1 = this.moveOrderForm.get('trxLinesList').value;
 }
 onChangeRepairNo(event)
 {
-  var selregno=this.workshopIssue.find(d=>d.jobCardNum===event)
-  this.serviceService.billableTyIdLstFN(event, selregno.regNo)
+
+  var itemCode2 = event.split(' -- ');
+    var    jobNo = itemCode2[0];
+    // alert(jobNo);
+  var selregno=this.workshopIssue.find(d=>d.jobCardNum===jobNo)
+  this.serviceService.billableTyIdLstFN(jobNo, selregno.regNo)
   .subscribe(
     data1 => {
      
@@ -388,21 +396,51 @@ onChangeRepairNo(event)
         // console.log(this.invItemId);
       });
 }
+getInvItemId($event)
+{
+  // alert('in getInvItemId')
+   let userId=(<HTMLInputElement>document.getElementById('invItemIdFirstWay')).value;
+   this.userList2=[];
+   if (userId.length > 2) {
+    if ($event.timeStamp - this.lastkeydown1 > 200) {
+      // this.userList2 = this.searchFromArray1(this.ItemIdList, userId);
+    }
+  }
+}
+// searchFromArray1(arr, regex) {
+//   let matches = [], i;
+//   for (i = 0; i < arr.length; i++) {
+//     if (arr[i].match(regex)) {
+//       matches.push(arr[i]);
+//     }
+//   }
+//   return matches;
+// };
+
 
  onOptionSelectedSubInv(event:any,i)
  {
-  //  alert('----' + event +'*****');
-   if(event==='')
-   {return;
-   }
+   
+   alert('----' + event +'*****');
+  //  if(event==='')
+  //  {return;
+  //  }
+   console.log(this.ItemIdList);
+   let select1=this.ItemIdList.find(d=>d.SEGMENT===event);
+   console.log(select1);
+   if(select1!=undefined){
+     alert(select1.itemId+'1st alert')
   var subInv=this.subInvCode.subInventoryId;
-  var repNo=this.moveOrderForm.get('repairNo').value;
-
+  var repNo1=this.moveOrderForm.get('repairNo').value.split(' -- ');
+  var repNo=repNo1[0];
+    // alert(repNo+'rep');
   let locId1=this.moveOrderForm.get('locId');
   var trxLnArr1 = this.moveOrderForm.get('trxLinesList').value;
   var trxLnArr2 = this.moveOrderForm.get('trxLinesList') as FormArray;
-  var itemid=trxLnArr1[i].invItemId;
-  // alert (itemid);
+  // var itemid=trxLnArr1[i].invItemId;
+  // var itemid =select1.itemId;
+  trxLnArr2.controls[i].patchValue({invItemId:select1.itemId})
+  alert (select1.itemId);
   // var frmSubCode=trxLnArr1[i].frmSubInvCode;
   // alert("FromSub"+frmSubCode);
   // alert(select1);
@@ -410,69 +448,61 @@ onChangeRepairNo(event)
 
     // alert('Item'+itemid);
   var subInv=this.subInvCode.subInventoryId;
-    this.service.getfrmSubLoc(this.locId,itemid,subInv).subscribe(
+  // debugger;
+    this.service.getfrmSubLoc(this.locId,select1.itemId,subInv).subscribe(
       data =>{
         //  this.getfrmSubLoc = data;
         console.log(data);
         var getfrmSubLoc =data;
-        //   // alert(getfrmSubLoc.segmentName+'SegmentName')
-  
-  
-          // alert(i +'i');
           this.locData[i] = data;
+          var selLocator = this.locData[i]
           if(getfrmSubLoc.length==1)
           {
           // this.displayLocator[i]=false;
-          trxLnArr2.controls[i].patchValue({onHandId:getfrmSubLoc[0].segmentName});
-          trxLnArr2.controls[i].patchValue({locatorId:getfrmSubLoc[0].locatorId});
-          trxLnArr2.controls[i].patchValue({frmLocator:getfrmSubLoc[0].segmentName});
-          trxLnArr2.controls[i].patchValue({onHandQty:getfrmSubLoc[0].onHandQty});
-          trxLnArr2.controls[i].patchValue({id:getfrmSubLoc[0].id});
+          // trxLnArr2.controls[i].patchValue({onHandId:getfrmSubLoc[0].segmentName});
+          trxLnArr2.controls[i].patchValue({frmLocatorId:selLocator[0].locatorId});
+          trxLnArr2.controls[i].patchValue({frmLocator:selLocator[0].segmentName});
+          trxLnArr2.controls[i].patchValue({onHandQty:selLocator[0].onHandQty});
+          // trxLnArr2.controls[i].patchValue({id:getfrmSubLoc[0].id});
           }
           else
           {
            // this.getfrmSubLoc=data;;
          //  trxLnArr2.controls[i].patchValue({onHandId:getfrmSubLoc});
-         trxLnArr2.controls[i].patchValue({frmLocator:getfrmSubLoc[0].segmentName});
-         trxLnArr2.controls[i].patchValue({onHandQty:getfrmSubLoc[0].onHandQty})
-         trxLnArr2.controls[i].patchValue({id:getfrmSubLoc[0].id});
+         trxLnArr2.controls[i].patchValue({frmLocator:selLocator[0].segmentName});
+         trxLnArr2.controls[i].patchValue({onHandQty:selLocator[0].onHandQty})
+         trxLnArr2.controls[i].patchValue({id:selLocator[0].id});
           }
   
       });
   
 
-    this.service.getItemDetail(itemid).subscribe
+    this.service.getItemDetail(select1.itemId).subscribe
     (data => {this.getItemDetail = data;
       // alert("this.getItemDetail.description" + this.getItemDetail.description);
       trxLnArr2.controls[i].patchValue({description: this.getItemDetail.description});
       trxLnArr2.controls[i].patchValue({uom:this.getItemDetail.uom});
-      trxLnArr2.controls[i].patchValue({segment:this.getItemDetail.segment});
+      // trxLnArr2.controls[i].patchValue({segment:this.getItemDetail.segment});
       // trxLnArr1.controls[i].patchValue({frmSubInvCode:this.subInvCode.subInventoryCode});
     }
     );
-    this.service.getreserqty(this.locId,itemid).subscribe
+    this.service.getreserqty(this.locId,select1.itemId).subscribe
     (data=>{
       this.resrveqty=data;
       trxLnArr2.controls[i].patchValue({resveQty:this.resrveqty});
     });
-    this.service.getPriceDetail(this.locId,itemid,subInv,repNo,this.divisionId).subscribe
+    this.service.getPriceDetail(this.locId,select1.itemId,subInv,repNo,this.divisionId).subscribe
     ((res: any) => {
       if (res.code === 200)
       {
          this.pricedata=res.obj;
-        for(let j=0;j<res.obj.length;j++)
-        { 
-          this.batchdata.push({'batchCode': res.obj[j].batchCode});
-        }
-        // if(this.batchdata.length===1)
-        // {
-        //   alert('hello');
-        //   trxLnArr2.controls[i].patchValue({batchCode:this.batchdata[0]});
+        // for(let j=0;j<res.obj.length;j++)
+        // { 
+        //   this.batchdata.push({'batchCode': res.obj[j].batchCode});
         // }
-        // else{
+      
         trxLnArr2.controls[i].patchValue({batchCode:this.batchdata});
-        // }
-        // trxLnArr2.controls[i].patchValue({priceValue:res.obj.priceValue,batchCode:res.obj.batchCode});
+      
       }
       else {
         if (res.code === 400) {
@@ -481,7 +511,7 @@ onChangeRepairNo(event)
         }
       }
     });
-    
+  }
  }
 onOptionBatchCode(event,i)
 {
@@ -489,7 +519,9 @@ onOptionBatchCode(event,i)
   var selbatchCode=this.pricedata.find(d=>d.batchCode===event);
   var trxLnArr2 = this.moveOrderForm.get('trxLinesList') as FormArray;
   // alert(selbatchCode.priceValue+'Price');
-  trxLnArr2.controls[i].patchValue({priceValue:selbatchCode.priceValue});;
+  if (selbatchCode.priceValue != undefined){
+  trxLnArr2.controls[i].patchValue({priceValue:selbatchCode.priceValue});
+}
 }
 AvailQty(event:any,i:number) 
 {
@@ -528,6 +560,7 @@ validate(i:number,qty1)
   var trxLnArr1=this.moveOrderForm.get('trxLinesList') as FormArray
   let avalqty=trxLnArr[i].avlqty;
   let qty=trxLnArr[i].quantity;  
+  let uomCode=trxLnArr[i].uom;
 //  alert(avalqty+'avalqty');
 //  alert(trxLnArr[i].quantity +' qty');
   if(qty>avalqty)
@@ -542,6 +575,14 @@ validate(i:number,qty1)
     trxLnArr1.controls[i].patchValue({quantity:''});
     qty1.focus();
   }
+  if(uomCode==='NO')
+  {
+    // alert(Number.isInteger(qty)+'Status');
+    if(!(Number.isInteger(qty)))
+    {
+    alert('Please enter correct No');
+    trxLnArr1.controls[i].patchValue({quantity:''});
+  }}
   // this.reservePos(i);
 }
  search(reqNo)

@@ -42,13 +42,13 @@
               <input  disabled type="text" class="form-control" formControlName="creationDate"  [(ngModel)]="creationDate" >
             </td>
           <td style="width: 15%" class="LabelFontStyle1">
-              Issue Type:
+              Transaction Type:
             </td>
             <td>
-              <select class="form-control" formControlName="transactionTypeName" [(ngModel)]="transactionTypeName">
-                <option>--Select--</option>
-                <option *ngFor="let tt of transType">{{tt.transactionTypeName}}</option>
-              </select>
+              <input disabled class="form-control" formControlName="transactionTypeName" [(ngModel)]="transactionTypeName">
+                <!-- <option>--Select--</option> -->
+                <!-- <option *ngFor="let tt of transType">{{tt.transactionTypeName}}</option>
+              </select> -->
               <input hidden formControlName="transactionTypeId" [(ngModel)]="transactionTypeId">
               <span
                 *ngIf="getGroupControl('transactionTypeId').touched && getGroupControl('transactionTypeId').invalid">Valid Transaction Type
@@ -69,7 +69,7 @@
               <!-- <input type="text" class="form-control" formControlName="repairNo"> -->
               <select type="text" class="form-control" formControlName="repairNo" (ngModelChange)="onChangeRepairNo($event)">
                   <option>--Select--</option>
-                  <option *ngFor="let repairNo of workshopIssue">{{repairNo.jobCardNum}}</option>
+                  <option *ngFor="let repairNo of workshopIssue">{{repairNo.jobCardNum}} -- {{repairNo.regNo}}</option>
                 </select>
                 <span
                 *ngIf="getGroupControl('repairNo').touched && getGroupControl('repairNo').invalid">Valid RepairNo
@@ -94,7 +94,7 @@
                     From Subinventory:
                   </td>
                   <td>
-                      <input type="text" class="form-control" formControlName="frmSubInvCode" [(ngModel)]="frmSubInvCode">
+                      <input disabled type="text" class="form-control" formControlName="frmSubInvCode" [(ngModel)]="frmSubInvCode">
                     <!-- <select class="form-control" formControlName="frmSubInvCode">
                       <option>--Select--</option>
                       <option *ngFor="let subCode of subInvCode" [ngValue]="subCode">{{subCode.subInventoryCode}}</option>
@@ -104,7 +104,7 @@
                     To Subinventory:
                   </td>
                   <td>
-                         <input type="text" class="form-control" formControlName="toSubInvCode" [(ngModel)]="toSubInvCode">
+                         <input disabled type="text" class="form-control" formControlName="toSubInvCode" [(ngModel)]="toSubInvCode">
                     <!-- <select type="text" class="form-control" formControlName="toSubInvCode">
                       <option>--Select--</option>
                       <option *ngFor="let subCode of subInvCode">{{subCode.subInventoryCode}}</option>
@@ -148,7 +148,7 @@
             Status:
           </td>
           <td>
-            <input type="text" class="form-control" formControlName="headerStatus" [(ngModel)]="headerStatus">
+            <input disabled type="text" class="form-control" formControlName="headerStatus" [(ngModel)]="headerStatus">
           </td>
 
         </tr>
@@ -193,51 +193,54 @@
                     <!-- <input type="hidden" formControlName="locId" [(ngModel)]="locId"> -->
                 <td><input type="text" class="form-control"  style="height: 20px;width: 50px;" formControlName="lineNumber">
                  </td>
-                  <div *ngIf="displaySegment; then thenBlock1; else elseBlock1">
+                  <!-- <div *ngIf="displaySegment; then thenBlock1; else elseBlock1">
                 </div>
-            <ng-template #thenBlock1>
-                <td><select  class="form-control" style="height: 20px;" formControlName="invItemId" (ngModelChange)='onOptionSelectedSubInv($event,trxLineIndex)'>
-                  <option>--Select--</option>
-                  <option *ngFor="let invId of ItemIdList" [ngValue]="invId.itemId" [value]="invId.itemId">{{invId.SEGMENT}}--{{invId.description}}</option>
-                </select>
+            <ng-template #thenBlock1> -->
+                <td>
+                <input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;" (ngModelChange)='onOptionSelectedSubInv($event,trxLineIndex)' />
+                      <datalist id="dynmicUserIds1">
+                        <option *ngFor="let item of ItemIdList" [ngValue]="item.itemId">{{item.SEGMENT}}
+                          </option>
+                         </datalist>
+                         <input hidden type="text" formControlName="invItemId" >
                 <span
-                *ngIf="getGroupControllinewise(trxLineIndex,'invItemId').touched && getGroupControllinewise(trxLineIndex,'invItemId').invalid" class="error">Valid Item
+                *ngIf="getGroupControllinewise(trxLineIndex,'segment').touched && getGroupControllinewise(trxLineIndex,'segment').invalid" class="error">Valid Item
                </span>
                 </td>
-            </ng-template>
+            <!-- </ng-template>
             <ng-template #elseBlock1>
                 <td><input disabled type="text" class="form-control"  formControlName="segment" style="height: 20px;">
                 </td>
-            </ng-template>
+            </ng-template> -->
                 <td><input disabled type="text" class="form-control" style="height: 20px;" formControlName="description"></td>
                 <!-- <td><input type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="frmSubInvCode"></td> -->
-                <div *ngIf="displayLocator; then thenBlock2; else elseBlock2">
+                <!-- <div *ngIf="displayLocator; then thenBlock2; else elseBlock2">
                   </div>
-              <ng-template #thenBlock2>
-                <td><select class="form-control" style="height: 20px; width: 110px;" formControlName="frmLocatorId" (ngModelChange)='AvailQty($event,trxLineIndex)'>
-                  <option>--Select--</option>
+              <ng-template #thenBlock2> -->
+                <td><select class="form-control" style="height: 20px; width: 110px;" formControlName="fromLocator" (ngModelChange)='AvailQty($event,trxLineIndex)'>
+                  <!-- <option>--Select--</option> -->
                   <option *ngFor="let locId of  locData[trxLineIndex]" [ngValue]="locId.locatorId">{{locId.segmentName}}--{{locId.onHandQty}}</option>
                   <input hidden formControlName="frmLocatorId">
                 </select>
                 <span
-                *ngIf="getGroupControllinewise(trxLineIndex,'frmLocatorId').touched && getGroupControllinewise(trxLineIndex,'frmLocatorId').invalid" class="error">Valid Item
+                *ngIf="getGroupControllinewise(trxLineIndex,'fromLocator').touched && getGroupControllinewise(trxLineIndex,'fromLocator').invalid" class="error">Valid Item
                </span>
                 </td>
-              </ng-template>
+              <!-- </ng-template>
               <ng-template #elseBlock2>
                   <td><input disabled class="form-control" style="height: 20px; width: 110px;" formControlName="fromLocator">
                     </td>
-                </ng-template>
+                </ng-template> -->
                 <input hidden formControlName="onHandQty">
                 <input hidden formControlName="id">
                 <td><select class="form-control" style="height: 20px; width: 70px;" formControlName="batchCode" (ngModelChange)="onOptionBatchCode($event,trxLineIndex)">
                   <option *ngFor="let batcode of  batchdata" [value]="batcode.batchCode">{{batcode.batchCode}}</option>
                  </select>                </td>
-                <td><input type="number" min="0"  class="form-control" style="height: 20px;width: 70px;" formControlName="priceValue"></td>
+                <td><input disabled type="number" min="0"  class="form-control" style="height: 20px;width: 70px;" formControlName="priceValue"></td>
                 <td><input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="avlqty"></td>
                 <input hidden  type="text"  formControlName="resveQty">
                 <td><input type="text" class="form-control" style="height: 20px;width: 50px;" formControlName="uom"></td>
-                <td><input type="number" min="0"  class="form-control" style="height: 20px;width: 50px;" formControlName="quantity" (change)="validate(trxLineIndex,qty)" #qty >
+                <td><input type="number" min="0.0"  class="form-control" style="height: 20px;width: 50px;" formControlName="quantity" (change)="validate(trxLineIndex,qty)" #qty >
                   <span
                   *ngIf="getGroupControllinewise(trxLineIndex,'quantity').touched && getGroupControllinewise(trxLineIndex,'quantity').invalid" class="error">Valid Item
                  </span></td>

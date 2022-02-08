@@ -1,14 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, PatternValidator } from '@angular/forms';
-// import { NgForm } from '@angular/forms';
-// import { from } from 'rxjs';
-// import { Url } from 'url';
 import { Router } from '@angular/router';
 import { Validators} from '@angular/forms';
-// import { FormsModule } from '@angular/forms';
-// import { NgModule } from '@angular/core';
 import { MasterService } from '../master.service';
-// import { data, valHooks } from 'jquery';
+
 
 interface IsupplierMaster {
   suppId: number;
@@ -208,7 +203,7 @@ export class SupplierMasterComponent implements OnInit {
   prePayAcct: string;
   prepayCodeCombId: number;
   displaysite:boolean=true;
-  createDebitMemoFlag:string;
+  createDebitMemoFlag='N';
   currentOp: string;
   semailId:string;
   screateDebitMemoFlag:string;
@@ -260,7 +255,7 @@ export class SupplierMasterComponent implements OnInit {
       souId:[''],
       ExeAddress: [],
       saddress1: ['', [Validators.minLength(10),Validators.maxLength(100),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
-      saddress2: ['', [Validators.minLength(10),Validators.maxLength(100),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
+      saddress2: ['', [Validators.minLength(3),Validators.maxLength(100),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
       saddress3: ['',[Validators.maxLength(50)]],
       saddress4: ['',[Validators.maxLength(50)]],
       scity:  ['', [Validators.minLength(3),Validators.maxLength(50),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
@@ -739,20 +734,22 @@ export class SupplierMasterComponent implements OnInit {
       return;
     }
     else{
-    var regex: string = "{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}";
+    // var regex: string = "{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}";
+    var regex:string="[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{1}[A-Z0-9]{1}";
        var p = new PatternValidator();
-       var patt = new RegExp('{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}');
-      let validgst = patt.test(gstno);
-      if (validgst === false) {
+       var patt = new RegExp('[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{1}[A-Z0-9]{1}');
+      //  alert(gstno.length+'gstno.length');
+      var validgst = patt.test(gstno);
+      if (validgst === false  && gstno.length==15) {
         alert('Please enter valid GST Number');
       }
 
     else{
-      alert('Please enter valid GST Number');
+      // alert('Please enter valid GST Number');
       return false;
     }
     // return validgst;
-    }
+    
     const gstNo1 = gstno.substr(2, 10);
     // this.panNo = gstNo1;
     // alert('Gst verificaition'+ gstNo1);
@@ -767,42 +764,119 @@ export class SupplierMasterComponent implements OnInit {
       case 'MAHARASHTRA':
         if (res != 27) {
           alert('Kindly entered correct GST No Start with 27');
-          this.supplierMasterForm.get('gstnNo').reset();
+          this.supplierMasterForm.get('gstNo').reset();
         }
         break;
       case 'GOA':
         if (res != 30) {
           alert('Kindly entered correct GST No Start with 30');
-          this.supplierMasterForm.get('gstnNo').reset();
+          this.supplierMasterForm.get('gstNo').reset();
         }
         break;
       case 'ANDHRA PRADESH':
         if (res != 28) {
           alert('Kindly entered correct GST No Start with 28');
-          this.supplierMasterForm.get('gstnNo').reset();
+          this.supplierMasterForm.get('gstNo').reset();
         }
         break;
       case 'KARNATAKA':
         if (res != 29) {
           alert('Kindly entered correct GST No Start with 29');
-          this.supplierMasterForm.get('gstnNo').reset();
+          this.supplierMasterForm.get('gstNo').reset();
         }
         break;
       case 'KERALA':
         if (res != 32) {
           alert('Kindly entered correct GST No Start with 32');
-          this.supplierMasterForm.get('gstnNo').reset();
+          this.supplierMasterForm.get('gstNo').reset();
         }
         break;
       case 'TELANGANA':
         if (res != 36) {
           alert('Kindly entered correct GST No Start with 36');
-          this.supplierMasterForm.get('gstnNo').reset();
+          this.supplierMasterForm.get('gstNo').reset();
         }
         break;
     }
 
+  }
 
+  }
+
+  gstVerification1(event: any) {
+    var gstno = this.supplierMasterForm.get('sGstNo').value
+    // var sGstnoVal = this.customerMasterForm.get('sGstNo').value
+    if(gstno===''){
+      this.supplierMasterForm.patchValue({'sGstNo':'GSTUNREGISTERED'});
+      return;
+    }
+    else{
+    // var regex: string = "{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}";
+    var regex:string="[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{1}[A-Z0-9]{1}";
+       var p = new PatternValidator();
+       var patt = new RegExp('[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{1}[A-Z0-9]{1}');
+      //  alert(gstno.length+'gstno.length');
+      var validgst = patt.test(gstno);
+      if (validgst === false  && gstno.length==15) {
+        alert('Please enter valid GST Number');
+      }
+
+    else{
+      // alert('Please enter valid GST Number');
+      return false;
+    }
+    // return validgst;
+    
+    const gstNo1 = gstno.substr(2, 10);
+    // this.panNo = gstNo1;
+    // alert('Gst verificaition'+ gstNo1);
+    this.supplierMasterForm.patchValue({'spanNo':gstNo1});
+    var res = gstno.substr(0, 2);
+    console.log(res);
+    // alert(res+'res');
+    const state = (this.supplierMasterForm.get('sstate').value).toUpperCase();
+    console.log(state);
+    console.log(this.state === 'MAHARASHTRA' && res === 27);
+    switch (state) {
+      case 'MAHARASHTRA':
+        if (res != 27) {
+          alert('Kindly entered correct GST No Start with 27');
+          this.supplierMasterForm.get('sGstNo').reset();
+        }
+        break;
+      case 'GOA':
+        if (res != 30) {
+          alert('Kindly entered correct GST No Start with 30');
+          this.supplierMasterForm.get('sGstNo').reset();
+        }
+        break;
+      case 'ANDHRA PRADESH':
+        if (res != 28) {
+          alert('Kindly entered correct GST No Start with 28');
+          this.supplierMasterForm.get('sGstNo').reset();
+        }
+        break;
+      case 'KARNATAKA':
+        if (res != 29) {
+          alert('Kindly entered correct GST No Start with 29');
+          this.supplierMasterForm.get('sGstNo').reset();
+        }
+        break;
+      case 'KERALA':
+        if (res != 32) {
+          alert('Kindly entered correct GST No Start with 32');
+          this.supplierMasterForm.get('sGstNo').reset();
+        }
+        break;
+      case 'TELANGANA':
+        if (res != 36) {
+          alert('Kindly entered correct GST No Start with 36');
+          this.supplierMasterForm.get('sGstNo').reset();
+        }
+        break;
+    }
+
+  }
 
   }
 
@@ -1074,7 +1148,7 @@ else{
 
   onOptionSiteStateSeleted(event:any)
   {
-    alert(event+'--'+this.supplierMasterForm.get('souId').value);
+    // alert(event+'--'+this.supplierMasterForm.get('souId').value);
     if (this.currentOp === 'SEARCH') {
       return;
     }
