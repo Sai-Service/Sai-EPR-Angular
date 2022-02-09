@@ -31,7 +31,8 @@ export class SalesOrderListComponent implements OnInit {
 
   @ViewChild('epltable', { static: false }) epltable: ElementRef;
 
-  constructor(private fb: FormBuilder, private router: Router, private location1: Location, private router1: ActivatedRoute, private service: MasterService) { 
+  constructor(private fb: FormBuilder, private router: Router, private location1: Location,
+     private router1: ActivatedRoute, private service: MasterService) { 
     this.orderListForm = this.fb.group({
       startDt: [],
       endDt: [],

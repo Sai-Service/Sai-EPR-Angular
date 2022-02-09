@@ -1509,9 +1509,9 @@ export class SalesOrderFormComponent implements OnInit {
     }
 
     var orLineVal = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value;
-    this.popDisAmt = 0;
-    this.popTaxAmt=orLineVal[i].taxAmt;
-    this.popTotAmt=orLineVal[i].totAmt;
+    this.popDisAmt= orLineVal[i].disAmt;
+    this.popTaxAmt= orLineVal[i].taxAmt;
+    this.popTotAmt= orLineVal[i].totAmt;
   }
 
   closeTaxModal() {
