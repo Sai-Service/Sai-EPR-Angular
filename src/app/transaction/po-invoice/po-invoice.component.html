@@ -80,7 +80,6 @@
                                             [formGroupName]="i" class="auto-style5">
                                             <tr class="ItemStyle" style="text-decoration:none;">
                                                 <td>
-                                                    <!-- <button data-toggle="modal" data-target="#myModel1" (click)="selectINVLineDtl(invoiceNum,i)">Select</button> -->
                                                     <button type="button" (click)="selectINVLineDtl(i)">Select</button>
                                                 </td>
                                                 <input hidden type="number" formControlName="invoiceId" class="form-control"
@@ -237,9 +236,7 @@
                                                         formControlName="invoiceAmt" value={{invoiceAmt}}
                                                         style="width: 90px;height: 25px;font-size: 10px;text-align: right;"
                                                         (change)="prepaymentData($event)" #amt>
-                                                    <!-- <span
-                *ngIf="getGroupControl(i,'obj', 'invoiceAmt').touched && getGroupControl(i,'obj', 'invoiceAmt').invalid">Valid Amount
-                            </span> -->
+                                                   
                                                 </td>
                                                 <td>
                                                     <input type="text" class="form-control" formControlName="taxAmt"
@@ -288,7 +285,7 @@
                                                             {{ds.distributionSetName}}
                                                         </option>
                                                     </select>
-                                                    <!-- </ng-template> -->
+                                                   
                                                 </td>
                                                 <!-- <td>
                 <input type="text" class="form-control" formControlName="matchAction" value={{matchAction}}  style="width: 120px;height: 25px;font-size: 10px;">
@@ -324,7 +321,7 @@
                                                     <select formControlName="payGroup" value={{payGroup}}
                                                         class="form-control"
                                                         style="width: 120px;height: 25px;font-size: 10px;">
-                                                        <!-- (ngModelChange)='onOptionSelectedSectionCode($event)' -->
+                                                       
                                                         <option>--Select--</option>
                                                         <option *ngFor="let ts of tdsSectionList" [ngValue]="ts.code">
                                                             {{ts.lookupValueDesc}}
@@ -334,8 +331,7 @@
 
 
                                                 <td>
-                                                    <!-- <input type="text" class="form-control" formControlName="prepayType" value={{prepayType}} style="width: 120px;height: 25px;font-size: 10px;"> -->
-
+                                                   
                                                     <select formControlName="prepayType" class="form-control"
                                                         style="width: 120px;height: 25px;font-size: 10px;">
                                                         <option>--Select--</option>
@@ -432,7 +428,7 @@
                                     <button type="button" class="close" data-dismiss="modal"
                                         aria-hidden="true">&times;</button>
                                 </div>
-                                <!-- <div class="container-fluid"> -->
+                             
                                 <div class="modal-body">
 
                                     <table style="width: 100%; border: solid 1px Gray;">
@@ -440,7 +436,7 @@
                                         <tr>
                                             <td class="LabelFontStyle">&nbsp;Name&nbsp;:</td>
                                             <td>
-                                                <!-- <input formControlName="mobile1" value={{mobile1}} class="form-control"> -->
+                                                
                                             </td>
                                             <td></td>
                                             <td></td>
@@ -571,7 +567,7 @@
                             </td>
                             <td style="width: 15%" class="LabelFontStyle">Invoice&nbsp;Status&nbsp;:</td>
                             <td style="font-weight: bold;">
-                                <!-- {{INVStatus}} -->
+                              
                                 <input disabled type="text" formControlName="INVStatus" class="form-control">
                             </td>
                             <td style="width: 15%" class="LabelFontStyle">PO&nbsp;Number&nbsp;:</td>

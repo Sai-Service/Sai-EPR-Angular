@@ -1,1 +1,1615 @@
-<p>payable-invoice-new works!</p>
+<div class="center">
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <td class="PageHeader">
+                &nbsp;&nbsp;Payable&nbsp;Invoice
+            </td>
+            <td>
+                <table class="center" style="width: 10rem; background-color: #FFE4B5;">
+                    <tr>
+                        <!-- <input hidden formControlName="emplId" class="form-control"> -->
+                        <td colspan="2" style="width: 100%;text-align: center;margin-left: 10px;">
+                            <button data-toggle="modal" data-target="#myModel"
+                                style="text-align: center; margin-right: 90%;">Find</button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+    <div class="center" style="width: 100%;">
+        <div class="form-bg">
+            <div class="center" style="width: 100%;">
+                <form [formGroup]="poInvoiceForm" (ngSubmit)="poInvoice(poInvoiceForm.value)">
+                    <input hidden formControlName="emplId" class="form-control">
+                    <div id="Panel1" class="auto-style103">
+                        <div class="grid_scroll2">
+                            <table class="GridFont">
+                                <thead>
+                                    <tr class="GridHeader">
+                                        <th scope="col">No.</th>
+                                        <th scope="col">OU</th>
+                                        <th scope="col">Location</th>
+                                        <th scope="col">Type</th>
+                                        <th scope="col">PO No</th>
+                                        <th scope="col">Trading Partner</th>
+                                        <th scope="col">Supp No</th>
+                                        <th scope="col">Supp Site</th>
+                                        <th scope="col">Invoice Date</th>
+                                        <th scope="col">Invoice No</th>
+                                        <th scope="col">Document No</th>
+                                        <th scope="col">Invoice Amount</th>
+                                        <th scope="col">Tax Amount</th>
+                                        <th scope="col">GL Date</th>
+                                        <th scope="col">Payment Currency</th>
+                                        <th scope="col">Payment Rate Date</th>
+                                        <th scope="col">Distribution Set</th>
+                                        <th scope="col">Terms Date</th>
+                                        <th scope="col">Terms</th>
+                                        <th scope="col">Payment Method</th>
+                                        <th scope="col">Pay Group</th>
+                                        <th scope="col">Prepayment Type</th>
+                                        <th scope="col">Settlement Date</th>
+                                        <th scope="col">Taxation Country</th>
+                                        <th scope="col">Related& Invoice</th>
+                                        <th scope="col">Supplier Tax Inv No</th>
+                                        <th scope="col">Remit-To Bank Acct Name</th>
+                                        <th scope="col">Remit-To Bank Acct No</th>
+                                        <th scope="col">Debit Memo Reason</th>
+                                        <th>
+                                            <table style="width: 100%;">
+                                                <tr>
+                                                    <th colspan="3">
+                                                        Transaction&nbsp;Refernce
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="col" style="width: 100px;height: 25px;">Type Name</th>
+                                                    <th scope="col" style="width: 100px;height: 25px;">Invoice No</th>
+                                                    <th scope="col" style="width: 100px;height: 25px;">Description</th>
+                                                </tr>
+                                            </table>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container class="center" formArrayName="obj">
+                                        <ng-container *ngFor="let group of lineDetailsArray().controls; let i= index"
+                                            [formGroupName]="i" class="auto-style5">
+                                            <div *ngIf="displayHeaderData; then thenHeaderData; else elseHeaderData">
+                                            </div>
+                                            <ng-template #thenHeaderData>
+                                                <tr class="ItemStyle" style="text-decoration:none;">
+                                                    <td>
+                                                        <button type="button"
+                                                            (click)="selectINVLineDtl(i)">Select</button>
+                                                    </td>
+                                                    <input hidden type="number" formControlName="invoiceId"
+                                                        class="form-control" style="width: 50px;height: 25px;">
+                                                    <td>
+                                                        <input disabled type="text" formControlName="ouName"
+                                                            value={{ouName}} class="form-control"
+                                                            style="width: 80px;height: 25px;">
+                                                        <input hidden type="number" formControlName="ouId"
+                                                            value={{ouId}} class="form-control"
+                                                            style="width: 80px;height: 25px;">
+                                                    </td>
+                                                    <td>
+                                                        <select formControlName="locationId" class="form-control"
+                                                            style="width: 100px;height: 25px;font-size: 10px;">
+                                                            <option>--Select--</option>
+                                                            <option *ngFor="let sc of  locIdList" [ngValue]="sc.locId">
+                                                                {{sc.locId}}-{{sc.locCode}}
+                                                            </option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select formControlName="invTypeLookupCode"
+                                                            name="invTypeLookupCode" id="invTypeLookupCode"
+                                                            class="form-control"
+                                                            style="width: 160px;height: 25px;font-size: 10px;">
+                                                            <option>--Select--</option>
+                                                            <option *ngFor="let sc of  poTypeList"
+                                                                [ngValue]="sc.codeDesc" [selected]="sc.cmnId===60">
+                                                                {{sc.codeDesc}}
+                                                            </option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control"
+                                                            formControlName="segment1" placeholder="Enter Po no"
+                                                            style="width: 90px;height: 25px;font-size: 10px;">
+                                                    </td>
+                                                    <td>
+                                                        <input hidden type="text" formControlName="suppId">
+                                                        <select formControlName="name" id="name" class="form-control"
+                                                            (ngModelChange)='onOptionsSelectedsuppName($event,i)'
+                                                            style="width: 160px;height: 25px;font-size: 10px;">
+                                                            <option>--Select--</option>
+                                                            <option *ngFor="let item of  supplierCodeList"
+                                                                [ngValue]="item.suppNo">
+                                                                {{item.name}}
+                                                            </option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <input disabled type="text" class="form-control"
+                                                            formControlName="suppNo" value={{suppNo}}
+                                                            style="width: 50px;height: 25px;font-size: 10px;">
+                                                    </td>
+                                                    <td>
+                                                        <select formControlName="supplierSiteId" id="supplierSiteId"
+                                                            #myinput data-live-search="true"
+                                                            (ngModelChange)='onSiteSelected($event)'
+                                                            class="form-control"
+                                                            style="width: 70px;height: 25px;font-size: 10px;">
+                                                            <option>--Select--</option>
+                                                            <option *ngFor="let sc of  suppIdList"
+                                                                [ngValue]="sc.suppSiteId">
+                                                                {{sc.suppSiteId}}-{{sc.address1}} {{sc.address2}}
+                                                                {{sc.address3}}
+                                                                {{sc.address4}} {{sc.city}}-{{sc.pinCd}} {{sc.state1}}
+                                                            </option>
+                                                        </select>
+                                                        <input type="text" hidden formControlName="taxCategoryName"
+                                                            class="form-control"
+                                                            style="width: 150px;height: 25px;font-size: 11px;">
+                                                    </td>
+                                                    <td>
+                                                        <input type="date" formControlName="invoiceDate"
+                                                            class="form-control"
+                                                            style="width: 150px;height: 25px;font-size: 11px;">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control"
+                                                            formControlName="invoiceNum" value={{invoiceNum}}
+                                                            style="width: 120px;height: 25px;font-size: 10px;">
+                                                    </td>
+                                                    <td>
+                                                        <input hidden type="number" min="0" class="form-control"
+                                                            formControlName="invoiceId1" value={{invoiceId1}} disabled
+                                                            style="width: 120px;height: 25px;font-size: 10px;">
+                                                        <input disabled type="number" min="0" class="form-control"
+                                                            formControlName="internalSeqNum" value={{internalSeqNum}}
+                                                            disabled style="width: 120px;height: 25px;font-size: 10px;">
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" class="form-control"
+                                                            formControlName="invoiceAmt" value={{invoiceAmt}}
+                                                            style="width: 90px;height: 25px;font-size: 10px;text-align: right;"
+                                                            (change)="prepaymentData($event)" #amt>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control" formControlName="taxAmt"
+                                                            value={{taxAmt}}
+                                                            style="width: 90px;height: 25px;font-size: 10px;text-align: right;">
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control" formControlName="glDate"
+                                                            value={{glDate}}
+                                                            style="width: 90px;height: 25px;font-size: 10px;">
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control" formControlName="currency"
+                                                            value={{currency}}
+                                                            style="width: 60px;height: 25px;font-size: 10px;">
+                                                    </td>
+                                                    <td>
+                                                        <input type="date" class="form-control"
+                                                            formControlName="paymentRateDate" value={{paymentRateDate}}
+                                                            style="width: 120px;height: 25px;font-size: 10px;">
+                                                    </td>
+                                                    <td>
+                                                        <select formControlName="distributionSet" class="form-control"
+                                                            style="width: 160px;height: 25px;font-size: 10px;">
+                                                            <option>--Select--</option>
+                                                            <option *ngFor="let ds of  distributionSetNameList"
+                                                                [ngValue]="ds.distributionSetName">
+                                                                {{ds.distributionSetName}}
+                                                            </option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <input type="date" class="form-control"
+                                                            formControlName="termsDate" value={{termsDate}}
+                                                            style="width: 120px;height: 25px;font-size: 10px;">
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" min="0" class="form-control"
+                                                            formControlName="terms" value={{terms}}
+                                                            style="width: 120px;height: 25px;font-size: 10px;">
+                                                    </td>
+                                                    <td>
+
+                                                        <select formControlName="paymentMethod" class="form-control"
+                                                            style="width: 120px;height: 25px;font-size: 10px;"
+                                                            (change)='onOptionSelectedSectionPaymentMethod($event)'>
+                                                            <option *ngFor="let sc of  paymentMethodList"
+                                                                [value]="sc.lookupValue">
+                                                                {{sc.lookupValue}}
+                                                            </option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select formControlName="payGroup" value={{payGroup}}
+                                                            class="form-control"
+                                                            style="width: 120px;height: 25px;font-size: 10px;">
+                                                            <option>--Select--</option>
+                                                            <option *ngFor="let ts of tdsSectionList"
+                                                                [ngValue]="ts.code">
+                                                                {{ts.lookupValueDesc}}
+                                                            </option>
+                                                        </select>
+                                                    </td>
+
+
+                                                    <td>
+
+                                                        <select formControlName="prepayType" class="form-control"
+                                                            style="width: 120px;height: 25px;font-size: 10px;">
+                                                            <option>--Select--</option>
+                                                            <option *ngFor="let sc of  prepayTypeList"
+                                                                [ngValue]="sc.prepayType">
+                                                                {{sc.locCode}}
+                                                            </option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <input type="date" class="form-control"
+                                                            formControlName="settlementDate" value={{settlementDate}}
+                                                            style="width: 120px;height: 25px;font-size: 10px;">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control"
+                                                            formControlName="taxationCountry" value={{taxationCountry}}
+                                                            style="width: 120px;height: 25px;font-size: 10px;">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control" placeholder=""
+                                                            style="width: 120px;height: 25px;font-size: 10px;">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control" placeholder=""
+                                                            style="width: 120px;height: 25px;font-size: 10px;">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control"
+                                                            formControlName="remitToBankAccount"
+                                                            value={{remitToBankAccount}}
+                                                            style="width: 120px;height: 25px;font-size: 10px;">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control"
+                                                            formControlName="remitToBankAccountNo"
+                                                            value={{remitToBankAccountNo}}
+                                                            style="width: 120px;height: 25px;font-size: 10px;">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control"
+                                                            formControlName="debitMemoReason" value={{debitMemoReason}}
+                                                            style="width: 120px;height: 25px;font-size: 10px;">
+                                                    </td>
+                                                    <td>
+                                                        <table>
+                                                            <tr>
+                                                                <td>
+                                                                    <input class="form-control"
+                                                                        style="width: 100px;height: 25px;">
+                                                                </td>
+                                                                <td>
+                                                                    <input class="form-control"
+                                                                        style="width: 100px;height: 25px;">
+                                                                </td>
+                                                                <td>
+                                                                    <input class="form-control"
+                                                                        style="width: 100px;height: 25px;">
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template #elseHeaderData>
+                                                <tr class="ItemStyle" style="text-decoration:none;">
+                                                    <td>
+                                                        <button type="button"
+                                                            (click)="selectINVLineDtl(i)">Select</button>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" disabled formControlName="ouName"
+                                                            value={{ouName}} class="form-control"
+                                                            style="width: 80px;height: 25px;">
+                                                    </td>
+                                                    <td>
+                                                        <select disabled formControlName="locationId"
+                                                            class="form-control"
+                                                            style="width: fit-content;height: 25px;font-size: 10px;">
+                                                            <option>--Select--</option>
+                                                            <option *ngFor="let sc of  locIdList" [ngValue]="sc.locId">
+                                                                {{sc.locId}}-{{sc.locCode}}
+                                                            </option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <input disabled type="text" formControlName="invTypeLookupCode"
+                                                            class="form-control" style="width: 150px;height: 25px;">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" disabled class="form-control"
+                                                            formControlName="segment1" placeholder="Enter Po no"
+                                                            style="width: 90px;height: 25px;font-size: 10px;">
+                                                    </td>
+                                                    <td>
+                                                        <input hidden type="text" formControlName="suppId">
+                                                        <input disabled type="text" class="form-control"
+                                                            formControlName="name"
+                                                            style="width: 160px;height: 25px;font-size: 10px;">
+                                                    </td>
+                                                    <td>
+                                                        <input disabled type="text" class="form-control"
+                                                            formControlName="suppNo" value={{suppNo}}
+                                                            style="width: 50px;height: 25px;font-size: 10px;">
+                                                    </td>
+                                                    <td>
+                                                        <input hidden formControlName="suppSiteId">
+                                                        <input disabled type="text" class="form-control"
+                                                            formControlName="siteName" value={{siteName}}
+                                                            style="width: 65px;height: 25px;font-size: 10px;">
+                                                    </td>
+                                                    <td>
+                                                        <input disabled formControlName="invoiceDate"
+                                                            class="form-control"
+                                                            style="width: 150px;height: 25px;font-size: 11px;">
+                                                    </td>
+
+                                                    <td>
+                                                        <input type="text" disabled class="form-control"
+                                                            formControlName="invoiceNum" value={{invoiceNum}}
+                                                            style="width: 120px;height: 25px;font-size: 10px;">
+
+                                                    </td>
+                                                    <td>
+                                                        <input hidden type="number" min="0" class="form-control"
+                                                            formControlName="invoiceId1" value={{invoiceId1}} disabled
+                                                            style="width: 120px;height: 25px;font-size: 10px;">
+                                                        <input disabled type="number" min="0" class="form-control"
+                                                            formControlName="internalSeqNum" value={{internalSeqNum}}
+                                                            disabled style="width: 120px;height: 25px;font-size: 10px;">
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" class="form-control"
+                                                            formControlName="invoiceAmt" value={{invoiceAmt}}
+                                                            style="width: 90px;height: 25px;font-size: 10px;text-align: right;"
+                                                            (change)="prepaymentData($event)" #amt>
+
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control" formControlName="taxAmt"
+                                                            value={{taxAmt}}
+                                                            style="width: 90px;height: 25px;font-size: 10px;text-align: right;">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" disabled formControlName="glDate"
+                                                            value={{glDate}} class="form-control" [(ngModel)]='glDate'
+                                                            style="width: 130px;height: 25px;font-size: 10px;">
+                                                    </td>
+                                                    <td>
+                                                        <input disabled class="form-control" formControlName="currency"
+                                                            value={{currency}}
+                                                            style="width: 60px;height: 25px;font-size: 10px;">
+                                                    </td>
+                                                    <td>
+
+                                                        <input type="date" disabled class="form-control"
+                                                            formControlName="paymentRateDate" value={{paymentRateDate}}
+                                                            style="width: 120px;height: 25px;font-size: 10px;">
+
+                                                    </td>
+                                                    <td>
+                                                        <select disabled formControlName="distributionSet"
+                                                            class="form-control"
+                                                            style="width: 160px;height: 25px;font-size: 10px;">
+                                                            <option>--Select--</option>
+                                                            <option *ngFor="let ds of  distributionSetNameList"
+                                                                [ngValue]="ds.distributionSetName">
+                                                                {{ds.distributionSetName}}
+                                                            </option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <input disabled type="date" class="form-control" formControlName="termsDate"
+                                                            value={{termsDate}}
+                                                            style="width: 120px;height: 25px;font-size: 10px;">
+                                                    </td>
+                                                    <td>
+                                                        <input disabled type="number" min="0" class="form-control"
+                                                            formControlName="terms" value={{terms}}
+                                                            style="width: 120px;height: 25px;font-size: 10px;">
+                                                    </td>
+                                                    <td>
+    
+                                                        <select disabled formControlName="paymentMethod" class="form-control"
+                                                            style="width: 120px;height: 25px;font-size: 10px;"
+                                                            (change)='onOptionSelectedSectionPaymentMethod($event)'>
+                                                            <option *ngFor="let sc of  paymentMethodList"
+                                                                [value]="sc.lookupValue">
+                                                                {{sc.lookupValue}}
+                                                            </option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select disabled formControlName="payGroup" value={{payGroup}}
+                                                            class="form-control"
+                                                            style="width: 120px;height: 25px;font-size: 10px;">
+                                                            <option>--Select--</option>
+                                                            <option *ngFor="let ts of tdsSectionList" [ngValue]="ts.code">
+                                                                {{ts.lookupValueDesc}}
+                                                            </option>
+                                                        </select>
+                                                    </td>
+    
+    
+                                                    <td>
+                                                       
+                                                        <select disabled formControlName="prepayType" class="form-control"
+                                                            style="width: 120px;height: 25px;font-size: 10px;">
+                                                            <option>--Select--</option>
+                                                            <option *ngFor="let sc of  prepayTypeList"
+                                                                [ngValue]="sc.prepayType">
+                                                                {{sc.locCode}}
+                                                            </option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <input type="date" disabled class="form-control"
+                                                            formControlName="settlementDate" value={{settlementDate}}
+                                                            style="width: 120px;height: 25px;font-size: 10px;">
+                                                    </td>
+                                                    <td>
+                                                        <input disabled type="text" class="form-control"
+                                                            formControlName="taxationCountry" value={{taxationCountry}}
+                                                            style="width: 120px;height: 25px;font-size: 10px;">
+                                                    </td>
+                                                    <td>
+                                                        <input disabled type="text" class="form-control" placeholder=""
+                                                            style="width: 120px;height: 25px;font-size: 10px;">
+                                                    </td>
+                                                    <td>
+                                                        <input disabled type="text" class="form-control" placeholder=""
+                                                            style="width: 120px;height: 25px;font-size: 10px;">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" disabled class="form-control"
+                                                            formControlName="remitToBankAccount"
+                                                            value={{remitToBankAccount}}
+                                                            style="width: 120px;height: 25px;font-size: 10px;">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" disabled class="form-control"
+                                                            formControlName="remitToBankAccountNo"
+                                                            value={{remitToBankAccountNo}}
+                                                            style="width: 120px;height: 25px;font-size: 10px;">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" disabled class="form-control"
+                                                            formControlName="debitMemoReason" value={{debitMemoReason}}
+                                                            style="width: 120px;height: 25px;font-size: 10px;">
+                                                    </td>
+                                                    <td>
+                                                        <table>
+                                                            <tr>
+                                                                <td>
+                                                                <input disabled class="form-control"  style="width: 100px;height: 25px;">
+                                                            </td>
+                                                            <td>
+                                                                <input disabled class="form-control" style="width: 100px;height: 25px;">
+                                                            </td>
+                                                            <td>
+                                                                <input disabled class="form-control"  style="width: 100px;height: 25px;">
+                                                            </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </ng-template>
+                                        </ng-container>
+                                    </ng-container>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="myModel" role="dialog" aria-hidden="true"
+                        style="width: 100%;margin-left: 0;">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="myModalLabel"
+                                        style="text-align: left; font-size: medium; margin-left: 45%; font-family: Verdana,Sans-serif, Arial, Helvetica;font-weight: bold;">
+                                        Find Invoices</h4>
+                                    <button type="button" class="close" data-dismiss="modal"
+                                        aria-hidden="true">&times;</button>
+                                </div>
+
+                                <div class="modal-body">
+
+                                    <table style="width: 100%; border: solid 1px Gray;">
+                                        <th colspan="4" style="text-align: left;">&nbsp;Trading&nbsp;Partner&nbsp;</th>
+                                        <tr>
+                                            <td class="LabelFontStyle">&nbsp;Name&nbsp;:</td>
+                                            <td>
+
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="LabelFontStyle">&nbsp;Supplier&nbsp;No&nbsp;:</td>
+                                            <td>
+                                                <input type="number" min="0" formControlName="suppNo" value={{suppNo}}
+                                                    class="form-control">
+                                            </td>
+                                            <td class="LabelFontStyle">&nbsp;Supplier&nbsp;Site&nbsp;:</td>
+                                            <td><input type="number" min="0" formControlName="suppId" value={{suppId}}
+                                                    class="form-control"> </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="LabelFontStyle">&nbsp;PO&nbsp;No&nbsp;:</td>
+                                            <td><input type="text" formControlName="segment1" value={{segment1}}
+                                                    class="form-control"> </td>
+                                            <td class="LabelFontStyle">&nbsp;PO&nbsp;Shipment&nbsp;:</td>
+                                            <td><select class="form-control">
+                                                    <option>--Select--</option>
+                                                </select> </td>
+                                        </tr>
+                                        <th colspan="4" style="text-align: left;">&nbsp;Invoice&nbsp;</th>
+                                        <tr style="border-top: solid 1px gray; width: 100%;">
+                                            <td class="LabelFontStyle">INV&nbsp;No&nbsp;:</td>
+                                            <td><input type="text" formControlName="invoiceNum" value={{invoiceNum}}
+                                                    class="form-control"> </td>
+                                            <td class="LabelFontStyle">&nbsp;Type&nbsp;:</td>
+                                            <td><select class="form-control">
+                                                    <option>--Select--</option>
+                                                </select> </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="LabelFontStyle">&nbsp;Amount&nbsp;:</td>
+                                            <td>
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <input type="number" min="0" formControlName="invoiceAmt"
+                                                                value={{invoiceAmt}} name="greaterThanValue"
+                                                                class="form-control" (change)="onChange1($event)"
+                                                                placeholder="0" style="width: 96px;">
+                                                        </td>
+                                                        <td>
+                                                            <input type="number" min="0" name="lessThanValue"
+                                                                class="form-control" (change)="onChange($event)"
+                                                                style="width: 96px;">
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td class="LabelFontStyle">&nbsp;Dates&nbsp;:</td>
+                                            <td style="vertical-align:bottom;">
+                                                <date-range-picker [instanceId]="'secondDateRange'"
+                                                    [options]="secondFieldOptions" [controlName]="'secondDateRange'"
+                                                    #dateRangePicker style="vertical-align: bottom;">
+                                                    <input id="secondDateRange" class="form-control" type="text"
+                                                        name="dateRange" [value]="dateRangePicker.range"
+                                                        placeholder="From - To" formControlName="secondDateRange" />
+                                                </date-range-picker>
+                                            </td>
+                                        </tr>
+
+                                    </table>
+
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                        [disabled]="isDisabled" (click)="apInvFind(content)">Find</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <table style="width: 100%; background-color: #FFE4B5;">
+                        <tr>
+
+                            <td style="width: 15%" class="LabelFontStyle">Invoice&nbsp;Number&nbsp;:</td>
+                            <td>
+                                <input disabled type="text" formControlName="invoiceNum" class="form-control">
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle">Invoice&nbsp;Status&nbsp;:</td>
+                            <td style="font-weight: bold;">
+                              
+                                <input disabled type="text" formControlName="INVStatus" class="form-control">
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle">PO&nbsp;Number&nbsp;:</td>
+                            <td>
+                                <input disabled type="text" formControlName="segment1" class="form-control">
+                            </td>
+                        </tr>
+
+                    </table>
+                    <div class="auto-style103">
+                        <div class="classic-tabs">
+                            <ul class="nav tabs-white nav-fill" role="tablist" style="padding: 0px;">
+                                <li class="nav-item">
+                                    <a class="nav-link waves-light active" data-toggle="tab" href="#panel1002"
+                                        role="tab">Lines</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link waves-light" data-toggle="tab" href="#panel1006" role="tab">Tax
+                                        Details</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link waves-light" data-toggle="tab" href="#panel10099"
+                                        role="tab">Distribution</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link waves-light" data-toggle="tab" href="#panel10008"
+                                        role="tab">TDS</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content rounded-bottom">
+                                <div class="tab-pane fade in show active" id="panel1002" role="tabpanel">
+                                   
+                                    <div class="grid_scroll_1">
+                                        <div *ngIf="displayAddNewLine; then thenAddNewLine; else elseAddNewLine"></div>
+                                        <ng-template #thenAddNewLine>
+                                            <button class="btn btn-primary" (click)="addRow(k)">Add Row</button>
+                                        </ng-template>
+                                        <ng-template #elseAddNewLine>
+                                            <table>
+                                                <tr>
+                                                    <td class="LabelFontStyle">
+                                                        Add New Line&nbsp;&nbsp;:&nbsp;
+                                                    </td>
+                                                    <td>
+                                                        <button type="submit" class="btn btn-primary fa fa-plus"
+                                                            (click)="addRow()">Add Row</button>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </ng-template>
+                                        <table class="GridFont" cellspacing="0" cellpadding="4" border="0"
+                                            style="width:100%;border-collapse:collapse;">
+                                            <thead>
+                                                <tr class="GridHeader">
+                                                
+                                                    <th scope="col">View Tax Details</th>
+                                                    <th scope="col">No.</th>
+                                                    <th scope="col">Type</th>
+                                                    <th scope="col">Item</th>
+                                                    <th scope="col">Description</th>
+                                                    <th scope="col">Amount</th>
+                                                    <th scope="col">HSN/SAC</th>
+                                                    <th scope="col">Tax Category</th>
+                                                    <th scope="col">Location</th>
+                                                    <th scope="col">Match Basis</th>
+                                                   
+                                                    <th scope="col">Receipt No</th>
+                                                   
+                                                    <th scope="col">Qty Invoiced</th>
+                                                    <th scope="col">UOM</th>
+                                                    <th scope="col">Unit Price</th>
+                                                  
+                                                    <th scope="col">GL Date</th>
+                                                 
+                                                    <th scope="col">Default Distribution Acc</th>
+                                                    <th scope="col">Default Acc Desc</th>
+                                                    <th scope="col">Track As Assect</th>
+                                                    <th scope="col">Asset Book</th>
+                                                    <th scope="col">Asset Category</th>
+                                                    <th scope="col">Tax Rate Name</th>
+                                                    <th scope="col">Ship-To</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <ng-container class="center" formArrayName="invLines">
+                                                    <ng-container
+                                                        *ngFor="let group of invLineDetailsArray().controls; let k= index"
+                                                        [formGroupName]="k" class="auto-style5">
+
+                                                        <tr class="ItemStyle" style="text-decoration:none;">
+                                                            <td>
+                                                                <div  *ngIf="displayViewTaxDetails; then thenViewTaxDetails; else elseViewTaxDetails">  </div>
+                                                                <ng-template #thenViewTaxDetails>
+                                                                </ng-template>
+                                                                <ng-template #elseViewTaxDetails>
+                                                                    <a data-toggle="tab" href="#panel1006"
+                                                                        (click)="onOptionViewTaxDetails(taxCategoryId,k)">
+                                                                        <img id="bajajlogo" src="assets\images\tax.png">
+                                                                    </a>
+                                                                </ng-template>
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" class="form-control"
+                                                                    formControlName="lineNumber" value={{lineNumber}}
+                                                                    data-toggle="collapse"
+                                                                    data-target="#collapseExample" aria-expanded="false"
+                                                                    aria-controls="collapseExample"
+                                                                    style="width: 50px;height: 25px;font-size: 10px;"
+                                                                    (click)="selectDisLineDtl(k)" #val1
+                                                                    (change)="move(val1,val2)" [disabled]="isDisabled">
+                                                                
+                                                            </td>
+                                                            <td>
+                                                              
+                                                                <select class="form-control"
+                                                                    formControlName="lineTypeLookupCode"
+                                                                    value={{lineTypeLookupCode}}
+                                                                    style="width: 100px;height: 25px;font-size: 10px;"
+                                                                    (ngModelChange)="getLocation(k)" #typecode>
+                                                                    <option value="ITEM">ITEM</option>
+                                                                    <option value="OTHER">OTHER</option>
+                                                                    <option value="MISCELLANEOUS">MISCELLANEOUS</option>
+                                                                </select>
+                                                               
+                                                            </td>
+                                                          
+                                                            <td>
+                                                                <div  *ngIf="displayitemName; then thenitemName; else elseitemName"></div>
+                                                                <ng-template #thenitemName>
+                                                                    <input hidden type="text" formControlName="itemId">
+                                                                    <input type="text" class="form-control"
+                                                                        formControlName="itemName" value={{itemName}}
+                                                                        style="width: 140px;height: 25px;font-size: 10px;">
+                                                                </ng-template>
+                                                                <ng-template #elseitemName>
+                                                                   
+                                                                    <select formControlName="segment" id="segment"
+                                                                        (ngModelChange)='InventIdSelected($event, k)'
+                                                                        class="form-control"
+                                                                        style="width: 140px;height: 25px;font-size: 10px;">
+                                                                        <option>--Select--</option>
+                                                                        <option *ngFor="let sc of  invItemList1">
+                                                                            {{sc.segment}}
+                                                                        </option>
+                                                                    </select>
+                                                                  
+                                                                </ng-template>
+                                                            </td>
+                                                            <input hidden type="text" formControlName="itemId">
+                                                            <td>
+                                                                <div
+                                                                    *ngIf="displaydescription; then thendescription; else elsedescription">
+                                                                </div>
+                                                                <ng-template #thendescription>
+                                                                    <input type="text" class="form-control"
+                                                                        formControlName="description"
+                                                                        value={{description}}
+                                                                        style="width: 100px;height: 25px;font-size: 10px;">
+                                                                </ng-template>
+                                                                <ng-template #elsedescription>
+                                                                    <input type="text" class="form-control"
+                                                                        formControlName="invDescription"
+                                                                        value={{invDescription}}
+                                                                        style="width: 100px;height: 25px;font-size: 10px;">
+                                                                </ng-template>
+                                                            </td>
+                                                            <td>
+                                                              
+                                                                <input type="number" min="0" class="form-control"
+                                                                    formControlName="amount" value={{amount}}
+                                                                    style="width: 80px;height: 25px;font-size: 10px;text-align: right;">
+                                                               
+                                                            </td>
+                                                            <td>
+                                                                <select style="width:fit-content"
+                                                                    formControlName="hsnSacCode" id="hsnSacCode"
+                                                                    class="form-control"
+                                                                    (ngModelChange)='onHsnCodeSelected($event,k)'
+                                                                    style="width: 150px;height: 25px;font-size: 10px;text-align: center;"
+                                                                    #hsnSacCode1>
+                                                                    <option>--Select--</option>
+                                                                    <option *ngFor="let sc of hsnSacCodeList"
+                                                                        [ngValue]="sc.hsnsaccode">
+                                                                        {{sc.hsnsaccode}}-{{sc.description}}
+                                                                    </option>
+                                                                </select>
+                                                                <input hidden type="number"
+                                                                    formControlName="gstPercentage" style="width: 5rem;"
+                                                                    class="form-control">
+                                                            </td>
+                                                            <input hidden type="number" formControlName="taxCategoryId">
+                                                            <td>
+                                                              
+                                                                <select formControlName="taxCategoryName"
+                                                                    id="taxCategoryName"
+                                                                    (ngModelChange)='onOptionTaxCatSelected($event,k)'
+                                                                    class="form-control"
+                                                                    style="width: 150px;height: 25px;font-size: 10px;">
+                                                                    <option>--Select--</option>
+                                                                    <option *ngFor="let sc of  taxCategoryList[k]"
+                                                                        value="{{sc.taxCategoryName}}">
+                                                                        {{sc.taxCategoryName}}
+                                                                    </option>
+                                                                </select>
+                                                            </td>
+                                                            <td>
+                                                                <input disabled type="text" formControlName="locCode" id="locCode" class="form-control"
+                                                                style="width: fit-content;height: 25px;font-size: 10px;">
+                                                                <input hidden formControlName="locId" id="locId" class="form-control"
+                                                                    style="width: fit-content;height: 25px;font-size: 10px;">
+                                                            </td>
+                                                           
+                                                            <td>
+                                                              
+                                                                <input type="text" class="form-control"
+                                                                    formControlName="matchType" value={{matchType}}
+                                                                    style="width: 100px;height: 25px;font-size: 10px;">
+                                                            </td>
+                                                         
+                                                            <td>
+                                                                
+                                                                <input type="text" class="form-control"
+                                                                    formControlName="receiptNumber"
+                                                                    value={{receiptNumber}}
+                                                                    style="width: 100px;height: 25px;font-size: 10px;">
+                                                            </td>
+                                                          
+                                                            <td>
+                                                               
+                                                                <input type="text" class="form-control"
+                                                                    formControlName="qtyInvoiced" value={{qtyInvoiced}}
+                                                                    style="width: 60px;height: 25px;font-size: 10px;text-align: right;">
+                                                            </td>
+                                                            <td>
+                                                               
+                                                                <input type="text" class="form-control"
+                                                                    formControlName="segment1" value={{segment1}}
+                                                                    style="width: 100px;height: 25px;font-size: 10px;">
+                                                            </td>
+                                                            <td>
+                                                               
+                                                                <input type="number" class="form-control"
+                                                                    formControlName="baseAmount" value={{baseAmount}}
+                                                                    style="width: 100px;height: 25px;font-size: 10px;text-align: right;">
+                                                            </td>
+                                                          
+                                                            <td>
+
+                                                              
+                                                                <div *ngIf="displayglDate; then thenglDate; else elseglDate"> </div>
+                                                                <ng-template #thenglDate>
+                                                                    <input type="text" class="form-control"
+                                                                        formControlName="glDate" value="{{glDate}}"
+                                                                        style="width: 90px;height: 25px;font-size: 10px;">
+                                                                </ng-template>
+                                                                <ng-template #elseglDate>
+                                                                    <input type="text" disabled formControlName="glDate"
+                                                                        value={{glDate}} class="form-control"
+                                                                        [(ngModel)]='glDate'
+                                                                        style="width: 130px;height: 25px;font-size: 10px;">
+                                                                </ng-template>
+                                                            </td>
+                                                            
+                                                            <td>
+                                                             
+                                                                <input hidden type="number" class="form-control" formControlName="defaultDistCcid" >
+                                                                <input disabled type="text" class="form-control"formControlName="defaultDisAcc" value={{defaultDisAcc}}   style="width: fit-content;height: 25px;font-size: 10px;">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" class="form-control"
+                                                                    formControlName="segment1" value={{segment1}}
+                                                                    style="width: 100px;height: 25px;font-size: 10px;">
+                                                            </td>
+                                                            <td>
+                                                               
+                                                                <input type="text" class="form-control"
+                                                                    formControlName="segment1" value={{segment1}}
+                                                                    style="width: 100px;height: 25px;font-size: 10px;">
+                                                            </td>
+                                                            <td>
+                                                              
+                                                                <input type="text" class="form-control"
+                                                                    formControlName="segment1" value={{segment1}}
+                                                                    style="width: 100px;height: 25px;font-size: 10px;">
+                                                            </td>
+                                                            <td>
+                                                               
+                                                                <input type="text" class="form-control"
+                                                                    formControlName="segment1" value={{segment1}}
+                                                                    style="width: 100px;height: 25px;font-size: 10px;">
+                                                            </td>
+                                                            <td>
+                                                               
+                                                                <input type="text" class="form-control"
+                                                                    formControlName="segment1" value={{segment1}}
+                                                                    style="width: 100px;height: 25px;font-size: 10px;">
+                                                            </td>
+                                                            <td>
+                                                               
+                                                                <input type="text" class="form-control"
+                                                                    formControlName="segment1" value={{segment1}}
+                                                                    style="width: 100px;height: 25px;font-size: 10px;">
+                                                            </td>
+                                                            <td>
+                                                                <button type="submit"
+                                                                    class="btn btn-primary fa fa-trash"
+                                                                    (click)="Delete(trxLineIndex)"></button>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                          
+                                                        </tr>
+                                                    </ng-container>
+                                                </ng-container>
+                                            </tbody>
+
+                                        </table>
+                                       
+                                    </div>
+                                  
+                                </div>
+                                <div class="tab-pane fade" id="panel10099" role="tabpanel">
+                                    <div class="grid_scroll_1">
+                                        <table class="GridFont">
+                                          
+                                                <thead>
+                                                    <tr class="GridHeader">
+                                                        <th scope="col">Inv Line No</th>
+                                                        <th scope="col">No.</th>
+                                                        <th scope="col">Type</th>
+                                                        <th scope="col">Amount</th>
+                                                        <th scope="col">GL Date</th>
+                                                        <th scope="col">Account</th>
+                                                        <th scope="col">Price</th>
+                                                        <th scope="col">Description</th>
+                                                        <th hidden scope="col">Status</th>
+                                                        <th hidden scope="col">Accounting</th>
+                                                        <th scope="col" style="width: fit-content;">Account Description</th>
+                                                        <div *ngIf="disDeleteButton; then thendisDeleteButton; else elsedisDeleteButton"> </div>
+                                                        <ng-template #thendisDeleteButton>
+                                                            <th scope="col">Delete</th>
+                                                        </ng-template>
+                                                        <ng-template #elsedisDeleteButton> </ng-template>
+                                                    </tr>
+                                                </thead>
+                                           
+                                            <tbody>
+                                                <ng-container class="center" formArrayName="distribution">
+                                                    <ng-container  *ngFor="let group of lineDistributionArray().controls; let k= index"
+                                                        [formGroupName]="k" class="auto-style5">
+                                                        <tr class="ItemStyle" style="text-decoration:none;">
+                                                            <input hidden type="text"
+                                                                formControlName="invDistributionId">
+                                                            <input type="text" formControlName="invoiceLineNum"
+                                                                style="width: 40px;height: 25px;" class="form-control">
+                                                            <td>
+                                                                <input formControlName="distLineNumber"
+                                                                    class="form-control"
+                                                                    style="width: 40px;height: 25px;">
+                                                            </td>
+                                                            <td>
+                                                                <input formControlName="lineTypeLookupCode"
+                                                                    (keydown.shift.arrowdown)="addRowDistribution(k,lineTypeLookupCode)"
+                                                                    class="form-control"
+                                                                    style="width: 100px;height: 25px;">
+                                                              
+                                                            </td>
+                                                            <td>
+                                                                <input type="number" min="0" formControlName="amount"
+                                                                    class="form-control"
+                                                                    style="width: 100px;height: 25px;text-align: right;"
+                                                                    (change)="amountmatch(k,$event)">
+                                                                
+                                                            </td>
+                                                            <td>
+                                                                <div  *ngIf="dispaccountingDate; then thenaccountingDate; else elseaccountingDate"> </div>
+                                                                <ng-template #thenaccountingDate>
+                                                                    <input type="text" class="form-control"
+                                                                        formControlName="accountingDate"
+                                                                        style="width: 90px;height: 25px;font-size: 10px;">
+                                                                </ng-template>
+                                                                <ng-template #elseaccountingDate>
+                                                                    <input type="text" disabled
+                                                                        formControlName="accountingDate"
+                                                                        value={{accountingDate}} class="form-control"
+                                                                        [(ngModel)]='accountingDate'
+                                                                        style="width: 130px;height: 25px;font-size: 10px;">
+                                                                </ng-template>
+                                                            </td>
+                                                            <td>
+                                                                <div   *ngIf="dispAccountCode; then thendispAccountCode; else elsedispAccountCode">  </div>
+                                                                <ng-template #thendispAccountCode>
+
+                                                                    <input formControlName="distCodeCombId" hidden
+                                                                        class="form-control"
+                                                                        style="width: 160px;height: 25px;">
+                                                                    <input formControlName="distCodeCombSeg"
+                                                                        (click)="openCodeComb1(k)" data-toggle="modal"
+                                                                        data-target="#myModel1" class="form-control"
+                                                                        style="width: 160px;height: 25px;">
+                                                                    
+                                                                </ng-template>
+                                                                <ng-template #elsedispAccountCode>
+                                                                    <input formControlName="distCodeCombId" hidden
+                                                                        class="form-control"
+                                                                        style="width: 160px;height: 25px;">
+                                                                    <input formControlName="distCodeCombSeg"
+                                                                        (click)="openCodeComb1(k)" data-toggle="modal"
+                                                                        data-target="#myModel1" class="form-control"
+                                                                        style="width: 160px;height: 25px;">
+                                                                </ng-template>
+
+                                                            </td>
+                                                            <td>
+                                                                <input type="number" min="0"
+                                                                    formControlName="baseAmount" class="form-control"
+                                                                    style="width: 100px;height: 25px;text-align: right;">
+                                                               
+                                                            </td>
+                                                            <td>
+                                                                <input formControlName="description"
+                                                                    class="form-control"
+                                                                    style="width: 160px;height: 25px;">
+                                                            </td>
+                                                          
+                                                            <div
+                                                                *ngIf="dispStatus; then thendispStatus; else elsedispStatus">
+                                                            </div>
+                                                            <ng-template #thendispStatus>
+                                                                <td hidden><select formControlName="invTransferStatus"
+                                                                        class="form-control"
+                                                                        style="width: 100px;height: 25px;"
+                                                                        (ngModelChange)='onOptionsSelected($event,k)'>
+                                                                        <option value="--Select--">--Select--</option>
+                                                                        <option value="Never Validated">Never Validated
+                                                                        </option>
+                                                                        <option value="Validated">Validated</option>
+                                                                        <option value="Etc">Etc</option>
+                                                                    </select></td>
+                                                                <td hidden>
+                                                                    <input formControlName="poChargeDesc"
+                                                                        class="form-control"
+                                                                        style="width: 120px;height: 25px;">
+                                                                </td>
+                                                            </ng-template>
+                                                            <ng-template #elsedispStatus>
+                                                                <td hidden><input type="text"
+                                                                        formControlName="invTransferStatus"
+                                                                        class="form-control"
+                                                                        style="width: 100px;height: 25px;"></td>
+
+                                                                <td hidden>
+                                                                    <input type="text" formControlName="poChargeDesc"
+                                                                        class="form-control"
+                                                                        style="width: 120px;height: 25px;">
+                                                                </td>
+                                                            </ng-template>
+                                                            <td>
+                                                                <input formControlName="accDesc" class="form-control"
+                                                                    style="width: fit-content;height: 25px;">
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    *ngIf="disDeleteButton; then thendisDeleteButton; else elsedisDeleteButton">
+                                                                </div>
+                                                                <ng-template #thendisDeleteButton>
+                                                                    <button type="submit" class="btn btn-primary"
+                                                                        (click)="RemoveDistributionRow(k)"
+                                                                        style="width: min-content;"><i
+                                                                            class="fa fa-trash"></i></button>
+                                                                </ng-template>
+                                                                <ng-template #elsedisDeleteButton>
+                                                                </ng-template>
+
+                                                            </td>
+                                                        </tr>
+                                                    </ng-container>
+                                                </ng-container>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                               
+                                <div class="tab-pane fade" id="panel1006" role="tabpanel">
+                                    <label>Tax Details of Invoice Line No : {{activeLineNo}}</label>
+                                    <div class="grid_scroll_1">
+                                        <table class="GridFont" cellspacing="0" cellpadding="4" border="0"
+                                            style="width:100%;border-collapse:collapse;">
+                                            <thead>
+                                                <tr class="GridHeader">
+                                                    <th scope="col">SL. NO.</th>
+                                                    <th scope="col">Tax Rate Name
+                                                    </th>
+                                                    <th scope="col">Tax Type</th>
+                                                    <th scope="col">Tax Point Basis
+                                                    </th>
+                                                    <th scope="col">
+                                                        <table style="width: 100%;">
+                                                            <tr style="border-bottom: solid 1px Gray;">
+                                                                <td colspan="10" style="text-align: center;">
+                                                                    Precedence</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="width: 2rem; border-right: solid 1px Gray;">
+                                                                    1</td>
+                                                                <td style="width: 2rem; border-right: solid 1px Gray;">
+                                                                    2</td>
+                                                                <td style="width: 2rem; border-right: solid 1px Gray;">
+                                                                    3</td>
+                                                                <td style="width: 2rem; border-right: solid 1px Gray;">
+                                                                    4</td>
+                                                                <td style="width: 2rem; border-right: solid 1px Gray;">
+                                                                    5</td>
+                                                                <td style="width: 2rem; border-right: solid 1px Gray;">
+                                                                    6</td>
+                                                                <td style="width: 2rem; border-right: solid 1px Gray;">
+                                                                    7</td>
+                                                                <td style="width: 2rem; border-right: solid 1px Gray;">
+                                                                    8</td>
+                                                                <td style="width: 2rem; border-right: solid 1px Gray;">
+                                                                    9</td>
+                                                                <td style="width: 2rem;">
+                                                                    10</td>
+                                                            </tr>
+                                                        </table>
+                                                    </th>
+                                                    <th scope="col">Currency</th>
+                                                    <th scope="col">Tax Rate</th>
+                                                    <th scope="col">Tax Amount</th>
+                                                    <th scope="col">Recoverable</th>
+                                                    <th scope="col">Inclusive</th>
+                                                    <th scope="col">Self Assesed/Reverse Charge</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <ng-container class="center" formArrayName="taxLines">
+                                                    <ng-container
+                                                        *ngFor="let taxDet of TaxDetailsArray().controls; let j= index"
+                                                        [formGroupName]="j" class="auto-style5">
+                                                        <tr class="ItemStyle" style="text-decoration:none;">
+                                                            <td> <input formControlName="lineNumber"
+                                                                    class="form-control"
+                                                                    style="width: 2rem;height: 25px;font-size: 10px;">
+                                                            </td>
+                                                            <td> <input type="text"
+                                                                    style="width: 9rem;height: 25px;font-size: 10px;"
+                                                                    formControlName="taxRateName" class="form-control">
+                                                            </td>
+                                                            <td> <input type="text"
+                                                                    style="width: 6rem;height: 25px;font-size: 10px;"
+                                                                    formControlName="taxTypeName" class="form-control">
+                                                            </td>
+                                                            <td> <input type="text" formControlName="taxPointBasis"
+                                                                    class="form-control"
+                                                                    style="width: 5rem; text-align: center;margin-left: 6px; height: 25px;font-size: 10px;">
+                                                            </td>
+                                                            <td>
+                                                                <table style="width: 100%;">
+                                                                    <tr>
+                                                                        <td style=" border-right: solid 1px Gray;">
+                                                                            <input formControlName="precedence1"
+                                                                                class="form-control"
+                                                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                                                        </td>
+                                                                        <td style=" border-right: solid 1px Gray;">
+                                                                            <input formControlName="precedence2"
+                                                                                class="form-control"
+                                                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                                                        </td>
+                                                                        <td style=" border-right: solid 1px Gray;">
+                                                                            <input formControlName="precedence3"
+                                                                                class="form-control"
+                                                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                                                        </td>
+                                                                        <td style=" border-right: solid 1px Gray;">
+                                                                            <input formControlName="precedence4"
+                                                                                class="form-control"
+                                                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                                                        </td>
+                                                                        <td style=" border-right: solid 1px Gray;">
+                                                                            <input formControlName="precedence5"
+                                                                                class="form-control"
+                                                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                                                        </td>
+                                                                        <td style=" border-right: solid 1px Gray;">
+                                                                            <input formControlName="precedence6"
+                                                                                class="form-control"
+                                                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                                                        </td>
+                                                                        <td style=" border-right: solid 1px Gray;">
+                                                                            <input formControlName="precedence7"
+                                                                                class="form-control"
+                                                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                                                        </td>
+                                                                        <td style=" border-right: solid 1px Gray;">
+                                                                            <input formControlName="precedence8"
+                                                                                class="form-control"
+                                                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                                                        </td>
+                                                                        <td style=" border-right: solid 1px Gray;">
+                                                                            <input formControlName="precedence9"
+                                                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;"
+                                                                                class="form-control">
+                                                                        </td>
+                                                                        <td> <input formControlName="precedence10"
+                                                                                class="form-control"
+                                                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+
+                                                            <td> <input type="text" formControlName="currencyCode"
+                                                                    style="width: 3rem; height: 25px;font-size: 10px;"
+                                                                    class="form-control">
+                                                            </td>
+                                                            <td> <input formControlName="totTaxPer"
+                                                                    style="width: 2rem; text-align: right; height: 25px;font-size: 10px;"
+                                                                    class="form-control">
+                                                            </td>
+                                                           
+                                                            <div *ngIf="poInvoiceForm.controls['taxLines'].controls[j].controls.totTaxPer.value === 0; then thenBlock; else elseBlock"> </div>
+                                                            <ng-template #thenBlock>
+                                                                <td><input type="number" min="0" formControlName="totTaxAmt"
+                                                                        class="form-control" style="width: 4rem; text-align: right; height: 25px;font-size: 10px;" >
+                                                                </td>
+                                                            </ng-template>
+                                                            <ng-template #elseBlock>
+                                                                <td><input type="number" formControlName="totTaxAmt" class="form-control"
+                                                                        style="width: 4rem; text-align: right; height: 25px;font-size: 10px;">
+                                                                </td>
+                                                            </ng-template>
+                                                           
+                                                            <div  *ngIf="poInvoiceForm.controls['taxLines'].controls[j].controls.recoverableFlag.value === 'Y'; then thenBlockRecFlag; else elseBlockRecFlag">  </div>
+                                                            <ng-template #thenBlockRecFlag>
+                                                                <td><input type="checkbox" name="recoverableFlag"
+                                                                        value="recoverableFlag" checked>
+                                                                </td>
+                                                            </ng-template>
+                                                            <ng-template #elseBlockRecFlag>
+                                                                <td><input type="checkbox" name="recoverableFlag"
+                                                                        value="recoverableFlag">
+                                                                </td>
+                                                            </ng-template>
+                                                            <div *ngIf="poInvoiceForm.controls['taxLines'].controls[j].controls.inclusiveFlag.value === 'Y'; then thenBlockInclFlag; else elseBlockInclFlag"> </div>
+                                                            <ng-template #thenBlockInclFlag>
+                                                                <td><input type="checkbox" name="inclusiveFlag"
+                                                                        value="inclusiveFlag" checked></td>
+                                                            </ng-template>
+                                                            <ng-template #elseBlockInclFlag>
+                                                                <td><input type="checkbox" name="inclusiveFlag"
+                                                                        value="inclusiveFlag">
+                                                                </td>
+                                                            </ng-template>
+                                                            <div  *ngIf="poInvoiceForm.controls['taxLines'].controls[j].controls.selfAssesedFlag.value === 'Y'; then thenBlockselfAssFlag; else elseBlockselfAssFlag">  </div>
+                                                            <ng-template #thenBlockselfAssFlag>
+                                                                <td><input type="checkbox" name="selfAssesedFlag"
+                                                                        value="selfAssesedFlag" checked>
+                                                                </td>
+                                                            </ng-template>
+                                                            <ng-template #elseBlockselfAssFlag>
+                                                                <td><input type="checkbox" name="selfAssesedFlag"
+                                                                        value="selfAssesedFlag">
+                                                                </td>
+                                                            </ng-template>
+                                                        </tr>
+                                                        <tr>
+                                                            <input hidden type="text" formControlName="invLineItemId"
+                                                                style="width: 4rem; text-align: right; height: 25px;font-size: 10px;">
+                                                            <input hidden type="text" class="form-control"
+                                                                formControlName="invLineNo"
+                                                                style="width: 4rem; text-align: right; height: 25px;font-size: 10px;">
+                                                          
+                                                        </tr>
+                                                    </ng-container>
+                                                </ng-container>
+                                            </tbody>
+
+                                        </table>
+                                        <button type="button" class="btn btn-primary"
+                                            (click)="addDiscount(selectedLine)"
+                                            style="width: 8rem; border: solid 1px Gray">Apply
+                                            Discount</button>
+                                        
+                                    </div>
+                                  
+                                </div>
+
+
+
+                                <div class="tab-pane fade" id="panel10008" role="tabpanel">
+                                    <div class="grid_scroll_1">
+                                        <table class="GridFont" cellspacing="0" cellpadding="4" border="0"
+                                            style="width:100%;border-collapse:collapse;">
+                                            <thead>
+                                                <tr class="GridHeader">
+                                                    <th scope="col" style="width: 40px;">Inv Id</th>
+                                                    <th scope="col" style="width: 40px;">Line No</th>
+                                                    <th scope="col" style="width: 40px;">Dist No</th>
+                                                    <th scope="col" style="width: 230px;">Account</th>
+                                                    <th scope="col" style="width: 100px;">Amount</th>
+                                                    <th scope="col" style="width: 200px;">Description</th>
+                                                    <th scope="col" style="width: 200px;">Section Code</th>
+                                                    <th scope="col" style="width: 200px;">Tax Category</th>
+                                                    <th scope="col" style="width: 200px;">Tax Amount</th>
+                                                    <th scope="col" style="width: 200px;">Select</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <ng-container class="center" formArrayName="tdsLines">
+                                                    <ng-container
+                                                        *ngFor="let group of TdsDetailsArray().controls; let k= index"
+                                                        [formGroupName]="k" class="auto-style5">
+                                                        <tr class="ItemStyle" style="text-decoration:none;">
+                                                            <td>
+                                                                <input formControlName="invoiceId" class="form-control"
+                                                                    style="width: 60px;height: 25px;">
+                                                            </td>
+                                                            <td>
+                                                                <input formControlName="invoiceLineNum"
+                                                                    class="form-control"
+                                                                    style="width: 30px;height: 25px;">
+                                                            </td>
+                                                           <td>
+                                                                <input formControlName="distLineNumber"
+                                                                    class="form-control"
+                                                                    style="width: 40px;height: 25px;">                                                             
+                                                            </td>
+                                                           <td>
+                                                                <input formControlName="distCodeCombSeg"
+                                                                    class="form-control"
+                                                                    style="width: 200px;height: 25px;">
+                                                            </td>
+
+                                                            <td>
+                                                                <input formControlName="baseAmount" class="form-control"
+                                                                    style="width: 100px;height: 25px;text-align: right;"
+                                                                    (change)="amountmatch(k,$event)">
+                                                            </td>
+                                                          <td>
+                                                                <input formControlName="description"
+                                                                    class="form-control"
+                                                                    style="width: 200px;height: 25px;text-align: left;">
+                                                            </td>
+                                                           <td>
+                                                                <select style="width: 190px;height: 25px;"
+                                                                    formControlName="actualSectionCode"
+                                                                    id="actualSectionCode" class="form-control">
+                                                                    <option>--Select--</option>
+                                                                    <option *ngFor="let ts of tdsSectionList"
+                                                                        [ngValue]="ts.lookupValueDesc">
+                                                                        {{ts.lookupValueDesc}}
+                                                                    </option>
+                                                                </select>
+                                                            </td>
+                                                             <td>
+                                                                <select style="width: 210px;height: 25px;"
+                                                                    formControlName="taxCategoryId" id="taxCategoryId"
+                                                                    class="form-control"
+                                                                    (ngModelChange)='onTaxCatgSelected($event,k)'>
+                                                                    <option>--Select--</option>
+                                                                    <option *ngFor="let ts of tdsTaxCategoryList"
+                                                                        [ngValue]="ts.taxCategoryId">
+                                                                        {{ts.taxCategoryName}}
+                                                                    </option>
+                                                                </select>
+                                                            </td>
+
+                                                            <td>
+                                                                <input formControlName="taxAmount" class="form-control"
+                                                                    style="width: 100px;height: 25px;text-align: right;">
+                                                            </td>
+
+                                                            <td><input type="checkbox" name="tdsSelectFlag"
+                                                                    value="tdsSelectFlag"
+                                                                    (change)="tdsSelectFlag1($event,k)"> </td>
+                                                            <td>
+                                                                <input hidden style="width: 50px;height: 25px;"
+                                                                    formControlName="distCodeCombId"
+                                                                    class="form-control">
+                                                            </td>
+
+                                                            <td>
+                                                                <input hidden formControlName="invoiceId"
+                                                                    class="form-control"
+                                                                    style="width: 50px;height: 25px;">
+                                                            </td>
+
+                                                            <td>
+                                                                <input hidden type="number"
+                                                                    formControlName="invoiceDistId" class="form-control"
+                                                                    style="width: 50px;height: 25px;">
+                                                            </td>
+
+                                                            <td>
+                                                                <input hidden formControlName="distCodeCombId"
+                                                                    class="form-control"
+                                                                    style="width: 50px;height: 25px;">
+                                                            </td>
+
+                                                            <td>
+                                                                <input hidden formControlName="thresHoldHdrId"
+                                                                    class="form-control"
+                                                                    style="width: 50px;height: 25px;">
+                                                            </td>
+
+                                                            <td>
+                                                                <input hidden formControlName="thresHoldTypeId"
+                                                                    class="form-control"
+                                                                    style="width: 50px;height: 25px;">
+                                                            </td>
+
+                                                        </tr>
+                                                    </ng-container>
+                                                </ng-container>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+
+
+                                 
+                                    <div class="grid_scroll_2">
+                                        <table class="GridFont" cellspacing="0" cellpadding="4" border="0"
+                                            style="width:100%;border-collapse:collapse;">
+                                            <thead>
+                                                <tr class="GridHeader">
+                                                    <th scope="col" style="width: 40px;">SL. NO.</th>
+                                                    <th scope="col">Tax Name</th>
+                                                    <th scope="col">Tax Type</th>
+
+                                                    <th scope="col">
+                                                        <table style="width: 100%;">
+                                                            <tr style="border-bottom: solid 1px Gray;">
+                                                                <td colspan="10" style="text-align: center;">
+                                                                    Precedence</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="width: 2rem; border-right: solid 1px Gray;">
+                                                                    1</td>
+                                                                <td style="width: 2rem; border-right: solid 1px Gray;">
+                                                                    2</td>
+                                                                <td style="width: 2rem; border-right: solid 1px Gray;">
+                                                                    3</td>
+                                                                <td style="width: 2rem; border-right: solid 1px Gray;">
+                                                                    4</td>
+                                                                <td style="width: 2rem; border-right: solid 1px Gray;">
+                                                                    5</td>
+                                                                <td style="width: 2rem; border-right: solid 1px Gray;">
+                                                                    6</td>
+                                                                <td style="width: 2rem; border-right: solid 1px Gray;">
+                                                                    7</td>
+                                                                <td style="width: 2rem; border-right: solid 1px Gray;">
+                                                                    8</td>
+                                                                <td style="width: 2rem; border-right: solid 1px Gray;">
+                                                                    9</td>
+                                                                <td style="width: 2rem;">
+                                                                    10</td>
+                                                            </tr>
+                                                        </table>
+                                                    </th>
+                                                    <th scope="col">Tax Rate</th>
+                                                    <th scope="col">Tax Amount</th>
+
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <ng-container class="center" formArrayName="tdsTaxLines">
+                                                    <ng-container
+                                                        *ngFor="let taxDet of tdsTaxDetailsArray().controls; let j= index"
+                                                        [formGroupName]="j" class="auto-style5">
+                                                        <tr class="ItemStyle" style="text-decoration:none;">
+                                                            <td> <input formControlName="lineNumber"
+                                                                    class="form-control"
+                                                                    style="width: 40px;height: 25px;font-size: 10px;">
+                                                            </td>
+                                                            <td> <input type="text"
+                                                                    style="width: 23rem;height: 25px;font-size: 10px;"
+                                                                    formControlName="taxRateName" class="form-control">
+                                                            </td>
+                                                            <td> <input type="text"
+                                                                    style="width: 12rem;height: 25px;font-size: 10px;"
+                                                                    formControlName="taxTypeName" class="form-control">
+                                                            </td>
+                                                           
+                                                            <td>
+                                                                <table style="width: 100%;">
+                                                                    <tr>
+                                                                        <td style=" border-right: solid 1px Gray;">
+                                                                            <input formControlName="precedence1"
+                                                                                class="form-control"
+                                                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                                                        </td>
+                                                                        <td style=" border-right: solid 1px Gray;">
+                                                                            <input formControlName="precedence2"
+                                                                                class="form-control"
+                                                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                                                        </td>
+                                                                        <td style=" border-right: solid 1px Gray;">
+                                                                            <input formControlName="precedence3"
+                                                                                class="form-control"
+                                                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                                                        </td>
+                                                                        <td style=" border-right: solid 1px Gray;">
+                                                                            <input formControlName="precedence4"
+                                                                                class="form-control"
+                                                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                                                        </td>
+                                                                        <td style=" border-right: solid 1px Gray;">
+                                                                            <input formControlName="precedence5"
+                                                                                class="form-control"
+                                                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                                                        </td>
+                                                                        <td style=" border-right: solid 1px Gray;">
+                                                                            <input formControlName="precedence6"
+                                                                                class="form-control"
+                                                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                                                        </td>
+                                                                        <td style=" border-right: solid 1px Gray;">
+                                                                            <input formControlName="precedence7"
+                                                                                class="form-control"
+                                                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                                                        </td>
+                                                                        <td style=" border-right: solid 1px Gray;">
+                                                                            <input formControlName="precedence8"
+                                                                                class="form-control"
+                                                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                                                        </td>
+                                                                        <td style=" border-right: solid 1px Gray;">
+                                                                            <input formControlName="precedence9"
+                                                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;"
+                                                                                class="form-control">
+                                                                        </td>
+                                                                        <td> <input formControlName="precedence10"
+                                                                                class="form-control"
+                                                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                            <td> <input formControlName="totTaxPer"
+                                                                    style="width: 4rem; text-align: right; height: 25px;font-size: 10px;"
+                                                                    class="form-control">
+                                                            </td>
+
+                                                            <div  *ngIf="poInvoiceForm.controls['taxLines'].controls[j].controls.totTaxPer.value === 0; then thenBlock; else elseBlock"> </div>
+                                                            <ng-template #thenBlock>
+                                                                <td><input type="number" min="0" formControlName="totTaxAmt" (change)="validateNum(i,j)" class="form-control"
+                                                                        style="width: 6rem; text-align: right; height: 25px;font-size: 10px;" class="form-control">
+                                                                </td>
+                                                            </ng-template>
+                                                            <ng-template #elseBlock>
+                                                                <td><input type="number" formControlName="totTaxAmt"
+                                                                        class="form-control"
+                                                                        style="width: 6rem; text-align: right; height: 25px;font-size: 10px;">
+                                                                </td>
+                                                            </ng-template>
+                                                        </tr>
+                                                        <tr>
+                                                            <input hidden type="text" formControlName="invLineItemId"
+                                                                style="width: 4rem; text-align: right; height: 25px;font-size: 10px;">
+                                                            <input hidden type="text" class="form-control"
+                                                                formControlName="invLineNo"
+                                                                style="width: 4rem; text-align: right; height: 25px;font-size: 10px;">
+                                                           
+                                                        </tr>
+                                                    </ng-container>
+                                                </ng-container>
+                                            </tbody>
+
+                                        </table>
+
+                                    </div>
+
+                                </div>
+
+                                
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

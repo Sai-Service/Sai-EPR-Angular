@@ -1014,6 +1014,12 @@ docSeqValue:number;
               }
             );
           }
+
+          console.log(this.locIdList);
+         
+          let selectedValue = this.locIdList.find(v => v.locId == res.obj[i].attribute1);
+          console.log(selectedValue);
+          this.lineDetailsArray().controls[i].patchValue({ locationId: selectedValue.locId});
           // for (let j=0;j<res.obj.length;j++){
           //   alert(res.obj[i].invoiceStatus);
           // if (res.obj[i].invoiceStatus===null){
@@ -1030,8 +1036,8 @@ docSeqValue:number;
           if (res.obj[i].invoiceStatus === 'Validated') {
             this.poInvoiceForm.disable();
           }
-          alert(res.obj[i].invoiceStatus)
-          if (res.obj[i].invoiceStatus){
+          // alert(res.obj[i].invoiceStatus)
+          if (res.obj[i].invoiceStatus===null){
             this.lineDetailsArray().controls[i].get('locationId').enable();
             this.lineDetailsArray().controls[i].get('invTypeLookupCode').disable();
             this.lineDetailsArray().controls[i].get('segment1').enable();

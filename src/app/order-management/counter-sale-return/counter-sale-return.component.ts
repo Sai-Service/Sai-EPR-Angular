@@ -372,8 +372,6 @@ export class CounterSaleReturnComponent implements OnInit {
              this.headerFound=false;
             return;
           } else {
-
-           
           this.lstOrderItemLines=data.obj.oeOrderLinesAllList;
           this.lstCreditNotes=data.obj.cmList;
           console.log(this.lstOrderHeader);

@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PayableInvoiceNewComponent } from './payable-invoice-new.component';
+import { ReactiveFormsModule ,FormsModule} from '@angular/forms';
 
 describe('PayableInvoiceNewComponent', () => {
   let component: PayableInvoiceNewComponent;
@@ -8,7 +9,8 @@ describe('PayableInvoiceNewComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PayableInvoiceNewComponent ]
+      declarations: [ PayableInvoiceNewComponent ],
+      imports: [ReactiveFormsModule,FormsModule],
     })
     .compileComponents();
   }));
