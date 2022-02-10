@@ -182,7 +182,7 @@ export class MoveOrderComponent implements OnInit {
       uom:[''],
       segmentName:[],
       // quantity:[],
-      quantity:['',[Validators.required,Validators.pattern('[0-9]*')]],
+      quantity:['',[Validators.required]],
       reason:[''],
       toSubInvCode:[],
       toLocatorId:[],
@@ -448,6 +448,7 @@ onChangeRepairNo(event)
       this.Billabletype = data1;
       console.log(data1);
       console.log(this.Billabletype);
+      this.moveOrderForm.patchValue({billable:data1[0].billableTyName});
     }
      )
      this.moveOrderForm.patchValue({issueTo:selregno.srvAdvisorName});
@@ -558,12 +559,13 @@ getInvItemId($event)
       if (res.code === 200)
       {
          this.pricedata=res.obj;
-        for(let j=0;j<res.obj.length;j++)
-        { 
-          this.batchdata.push({'batchCode': res.obj[j].batchCode});
-        }
+        // for(let j=0;j<res.obj.length;j++)
+        // { 
+        //   this.batchdata.push({'batchCode': res.obj[j].batchCode});
+        // }
       
-        trxLnArr2.controls[i].patchValue({batchCode:this.batchdata});
+        trxLnArr2.controls[i].patchValue({batchCode:res.obj.batchCode,
+        priceValue:res.obj.priceValue});
       
       }
       else {
@@ -575,16 +577,6 @@ getInvItemId($event)
     });
   }
  }
-onOptionBatchCode(event,i)
-{
-  // alert(event);
-  var selbatchCode=this.pricedata.find(d=>d.batchCode===event);
-  var trxLnArr2 = this.moveOrderForm.get('trxLinesList') as FormArray;
-  // alert(selbatchCode.priceValue+'Price');
-  if (selbatchCode.priceValue != undefined){
-  trxLnArr2.controls[i].patchValue({priceValue:selbatchCode.priceValue});
-}
-}
 AvailQty(event:any,i:number) 
 {
   var trxLnArr =this.moveOrderForm.get('trxLinesList').value;
@@ -646,6 +638,9 @@ validate(i:number,qty1)
     trxLnArr1.controls[i].patchValue({quantity:''});
   }}
   // this.reservePos(i);
+ 
+    // alert(Number.isInteger(qty)+'Status');
+  
 }
  search(reqNo)
  {

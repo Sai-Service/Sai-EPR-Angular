@@ -81,7 +81,7 @@
             <td>
                 <!-- <input type="text" class="form-control" formControlName="repairNo"> -->
                 <select type="text" class="form-control" formControlName="billable">
-                    <option>--Select--</option>
+                    <!-- <option>--Select--</option> -->
                     <option *ngFor="let bill of Billabletype">{{bill.billableTyName}}</option>
                   </select>
                   <span
@@ -235,9 +235,12 @@
                 </ng-template> -->
                 <input hidden formControlName="onHandQty">
                 <input hidden formControlName="id">
-                <td><select class="form-control" style="height: 20px; width: 70px;" formControlName="batchCode" (ngModelChange)="onOptionBatchCode($event,trxLineIndex)">
-                  <option *ngFor="let batcode of  batchdata" [value]="batcode.batchCode">{{batcode.batchCode}}</option>
-                 </select>                </td>
+                <td>
+                  <input class="form-control" style="height: 20px; width: 70px;" formControlName="batchCode" >
+                  <!-- (ngModelChange)="onOptionBatchCode($event,trxLineIndex)" -->
+                  <!-- <option *ngFor="let batcode of  batchdata" [value]="batcode.batchCode">{{batcode.batchCode}}</option>
+                 </select>    -->
+                 </td>
                 <td><input disabled type="number" min="0"  class="form-control" style="height: 20px;width: 70px;" formControlName="priceValue"></td>
                 <td><input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="avlqty"></td>
                 <input hidden  type="text"  formControlName="resveQty">
