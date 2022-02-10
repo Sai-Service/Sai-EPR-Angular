@@ -64,7 +64,7 @@ export  class IcTrans {
   segment:string;
   Locator:string;
   quantity:number;
-
+  repairOrder:number;
 }
 
 @Component({
@@ -137,6 +137,7 @@ export class InternalConsumptionComponent implements OnInit {
   public locIdList:Array<string>=[];
   public TypeList:Array<string>=[];
   public issueByList:Array<string>=[];
+  public workshopIssue:any[];
   segmentNameList:any;
   codeCombinationId:number;
   compileType:number;
@@ -174,6 +175,7 @@ export class InternalConsumptionComponent implements OnInit {
   content: number;
   title: string;
   sub:string;
+  repairOrder:number;
 
   type1:string;
   dispheader:boolean=false;
@@ -240,6 +242,7 @@ export class InternalConsumptionComponent implements OnInit {
     RackNo:[''],
     Row:[''],
     RowNo:[''],
+    repairOrder:[],
       cycleLinesList:this.fb.array([]),
 
     })
@@ -292,18 +295,14 @@ export class InternalConsumptionComponent implements OnInit {
       this.reservePos(i);
     }
     else{
-      // debugger;
       this.deleteReserveLinewise(i);
       this.reservePos(i);
     }
    }
    var len1 = this.cycleLinesList().length;
-    // alert(len1+'Length'+i);
-    if(len1==i+1){
+   if(len1==i+1){
 
     this.cycleLinesList().push(this.newcycleLinesList());
-
-    // (<any>this.stockTranferForm.get('segment')).nativeElement.focus();
     var patch = this.InternalConsumptionForm.get('cycleLinesList') as FormArray;
     var len = this.cycleLinesList().length;
     (patch.controls[len - 1]).patchValue(
@@ -360,19 +359,7 @@ export class InternalConsumptionComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // alert(this.route1.queryParams+'hell')
-console.log(this.route1.queryParams+'hell');
-    this.route1.queryParams.subscribe(params => {
-      console.log(params.type1)
-      let id=params.type1;
-      // alert(id+'ID');
-      if(id != undefined )
-      {
-      this.dispheader=true;
-      this.displable=true;
-      }
-      });
-
+ 
     this.locId=Number(sessionStorage.getItem('locId'));
     this.deptId=Number(sessionStorage.getItem('dept'));
     this.divisionId=Number(sessionStorage.getItem('divisionId'));
@@ -426,21 +413,8 @@ console.log(this.route1.queryParams+'hell');
       this.service.TransactionTypeIC().subscribe(
         data=>{
           this.transType=data;
-          // if(this.dispheader===true)
-          // {
-          //   // this.InternalConsumptionForm.reset();
-          //  alert('In 1st If'+this.transType.length);
-          //    for(let i=0;i<this.transType.length;i++)
-          //    {
-          //      alert('In For');
-          //      if(this.transType[i].transactionTypeId===13)
-          //      {
-          //        alert('In If');
-          //        this.transType.splice(i,1);
-          //      }
-          //    }
-
-          // }
+          this.InternalConsumptionForm.patchValue({compileType:data[0].transactionTypeName,
+            compileId:data[0].transactionTypeId})
         }
       );
        this.service.ReasonList().subscribe(
@@ -463,17 +437,7 @@ console.log(this.route1.queryParams+'hell');
         }
       )
 
-      // this.service.ItemIdDivisionList(this.divisionId).subscribe(
-      //       data =>{ this.ItemIdList = data;
-      //         console.log(this.ItemIdList);
-
-      //    });
-        //  this.service.ItemIdListDept(this.deptId,Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId).subscribe(
-        //   data => {
-        //     this.ItemIdList = data;
-        //     // console.log(this.invItemId);
-        //   });
-         this.service.issueByList(this.locId,this.deptId,this.divisionId).subscribe
+       this.service.issueByList(this.locId,this.deptId,this.divisionId).subscribe
       (data => {this.issueByList = data;
           console.log(this.issueByList);
         });
@@ -490,20 +454,7 @@ console.log(this.route1.queryParams+'hell');
 
      );
      this.displayRemoveRow[0] = false;
-    //  this.route1.queryParams
-    //   .filter(params => params.type1)
-    //   .subscribe(params => {
-    //     console.log(params); // { order: "popular" }
-
-    //     this.type1 = params.type1;
-    //     alert('sub'+this.sub)
-    //     console.log(this.type1); // popular
-    //   }
-    // );
-
-    //  alert('sub'+this.sub);
-
-  }
+     }
   InternalConsumption(InternalConsumptionForm:any){}
 
   getInvItemId($event)
@@ -531,58 +482,7 @@ close(){
 this.router.navigate(['admin']);
 }
 
-  // onOptionItemDetails(event:any,i){
-
-  //    var trxLnArr=this.InternalConsumptionForm.get('cycleLinesList').value;
-  //   // var itemid=trxLnArr[i].itemId;
-  //   // alert(event);
-  //   let select1=this.ItemIdList.find(d=>d.SEGMENT===event);
-  //    if(select1!=undefined)
-  //    {
-  //   console.log(select1);
-  //   // alert(select1.itemId+"itemId")
-  //   var itemId= select1.itemId
-  //   var trxLnArr1=this.InternalConsumptionForm.get('cycleLinesList')as FormArray;
-  //   trxLnArr1.controls[i].patchValue({invItemId:select1.itemId});
-  //   var subcode=this.InternalConsumptionForm.get('subInventory').value;
-  //   // alert(subcode+'Subcode');
-  //  this.service.getItemDetail(select1.itemId).subscribe
-  // (data => {this.getItemDetail = data;
-  //   // alert("this.getItemDetail.description" + this.getItemDetail.description);
-  //   if(this.getItemDetail.description !=undefined){
-  //     trxLnArr1.controls[i].patchValue({description: this.getItemDetail.description});
-  //     trxLnArr1.controls[i].patchValue({uom:this.getItemDetail.uom});
-  //     trxLnArr1.controls[i].patchValue({entryStatusCode:"Manual"});
-  //     trxLnArr1.controls[i].patchValue({subInventory:subcode})
-  //     trxLnArr1.controls[i].patchValue({locId:Number(sessionStorage.getItem('locId'))})
-  //   }
-  // } );
-  // // alert(itemId +'ItemName');
-  // this.service.getCostDetail(Number(sessionStorage.getItem('locId')),itemId).subscribe
-  // (data =>{
-  //   this.CostDetail=data;
-  //   trxLnArr1.controls[i].patchValue({itemUnitCost:this.CostDetail.rate});
-  // });
-  // //   ////////////////
-  // //   alert(this.locId +"Loc");
-  // //   alert('this.itemId '+this.itemId )
-  // //   var subInvCode = this.InternalConsumptionForm.get('subInventory').value;
-  // //   // var itemId = this.InternalConsumptionForm.get('itemId').value;
-  // //   alert(select1.itemId)
-  // //   alert(subInvCode);
-  // //   this.service.getItemDetail11(Number(sessionStorage.getItem('locId')),itemId,subInvCode).subscribe
-  // //   (data =>{ this.getItemDetail1 = data
-  // // var sysQty = this.getItemDetail1.onHnQty
-  // // var LocName=this.getItemDetail1.locatorName
-  // //      trxLnArr1.controls[i].patchValue({systemQty: sysQty });
-  // //      trxLnArr1.controls[i].patchValue({LocatorSegment:LocName});
-  // //      trxLnArr1.controls[i].patchValue({entryStatusCode:'Process'});
-  // //     })
-
-  //   }
-  // }
-
-  onOptiongetItem(event:any,i)
+onOptiongetItem(event:any,i)
   {
     if(this.currentOp==='SEARCH'){
       return;
@@ -596,10 +496,6 @@ this.router.navigate(['admin']);
     var compId= this.InternalConsumptionForm.get('compileId').value;
     var compileType1=this.InternalConsumptionForm.get('compileType').value;
     var subcode=this.InternalConsumptionForm.get('subInventory').value;
-    // let select2= this.subInvCode.find(d=>d.subInventoryCode===subcode);
-    //  alert(select2.subInventoryId+'Subcode');
-    // alert(compId);
-    // alert(compLnId+'CompileLineId')
       this.displayheader=false;
       this.service.getItemDetail(select1.itemId).subscribe
       (data => {this.getItemDetail = data;
@@ -665,14 +561,7 @@ this.router.navigate(['admin']);
           this.displayLocator[i]  = true;
 
           }
-          // if(event!=null)
-          // {
-          //   // this.displayaddButton=true;
-          //   // alert('Remove');
-          //   (document.getElementById('btnadd'+i) as HTMLInputElement).disabled = false;
-          //   (document.getElementById('btnrem'+i) as HTMLInputElement).disabled = true;
-          // }
-
+      
         });}
 
   }
@@ -688,11 +577,6 @@ this.router.navigate(['admin']);
   //alert(locId+'locatorID');
   var onhandid=trxLnArr[i].id;
   var subcode=trxLnArr[i].subInventory;
-  //alert(subcode);
-  // let select2= this.subInvCode.find(d=>d.subInventoryCode===subcode);
-  //alert(select2.subInventoryId+'Id')
-  //alert(event);
-  // var onHand1:number;
   this.service.getonhandqty(Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId,locId,itemid).subscribe
     (data =>{
       this.onhand = data;
@@ -1044,20 +928,6 @@ this.router.navigate(['admin']);
                 patch.controls[i].patchValue(xx[0]);
             // }
             console.log(data.obj);
-            // for(let i= 0 ; i<data.obj.length; i++){
-            //   control.controls[i].patchValue(data.obj);
-            // }
-          //  alert(data.obj.compileLineId)
-            // this.InternalConsumptionForm.get('cycleLinesList').patchValue(data.obj);
-            //  for(let i=0; i< data.obj.length; i++){
-            //   //   alert(data.obj.cycleLinesList[i].subInventory+'subInventory');
-              // this.InternalConsumptionForm.patchValue({'srlNo':i+1})
-              // control.controls[i].patchValue({srlNo:i+1  })
-
-              // this.InternalConsumptionForm.patchValue({'segment':data.obj.segment});
-              // this.InternalConsumptionForm.patchValue({'subInventory':data.obj[i].subInventory});
-              // this.InternalConsumptionForm.patchValue({'compileLineId':data.obj[i].compileLineId})
-              // }
           }
           }
         )
@@ -1089,18 +959,7 @@ this.router.navigate(['admin']);
                 // }
 
                 for (let i = 0; i < this.cycleLinesList().length; i++) {
-                  // this.onOptiongetItem(data.obj.cycleLinesList[i].segment,i);
-                  // let itemLoct : ItemLocator  = new ItemLocator();
-                  // // let csvRecord: CsvData = new CsvData();
-
-                  // itemLoct.locatorId = data.obj.cycleLinesList[i].locatorId;
-                  // itemLoct.segmentName=data.obj.cycleLinesList[i].LocatorSegment;
-                  // this.getfrmSubLoc.push(itemLoct);
-                  // debugger;
-                  // console.log(this.getfrmSubLoc);
-                  // let sellc=this.getfrmSubLoc.find(d=>d.locatorId===data.obj.cycleLinesList[i].locatorId)
-                  // alert(sellc.segmentName+'Segment');
-                  // control.controls[i].patchValue({LocatorSegment:sellc.segmentName});
+              
                   control.controls[i].patchValue({
                     lineNumber: i + 1
                   })
@@ -1167,11 +1026,7 @@ this.router.navigate(['admin']);
 
 
       onSelectReason(event){
-        // alert(event);
-        // var reasname=this.InternalConsumptionForm.get('reason').value;
-        // this.service.reasonaccCode(this.locId,reasname).subscribe(
-          var reasonArr  = event.split('-');
-          // alert(reasonArr.length);
+         var reasonArr  = event.split('-');
           this.service.reasonaccCode(this.locId,reasonArr[0], reasonArr[1]).subscribe(
 
           data => {
@@ -1181,7 +1036,12 @@ this.router.navigate(['admin']);
 
           }
         );
-        // this.addnewcycleLinesList(-1);
+        this.service.WorkShopIssue(this.locId).subscribe(
+          data=>{
+           this.workshopIssue=data;
+           console.log(data);
+          }
+        );
         this.service.ItemIdListDept(this.deptId,Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId).subscribe(
           data => {
             this.ItemIdList = data;

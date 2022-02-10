@@ -40,10 +40,10 @@
       </td>
       <input hidden formControlName="compileId" [(ngModel)]="compileId" >
       <td>
-        <select class="form-control" formControlName="compileType" [(ngModel)]=compileType #myinput>
-          <option></option>
+        <input disabled class="form-control" formControlName="compileType" [(ngModel)]=compileType #myinput>
+          <!-- <option></option>
           <option *ngFor="let tt of transType" [ngValue]="tt.transactionTypeId" > {{tt.transactionTypeName}}</option>
-        </select>
+        </select> -->
         <span
               *ngIf="getGroupControl('compileType').touched && getGroupControl('compileType').invalid">Valid Transaction Type
              </span>
@@ -70,10 +70,10 @@
     </td>
     <input hidden formControlName="compileId" [(ngModel)]="compileId">
     <td>
-      <select class="form-control" formControlName="compileType" #myinput>
+      <input class="form-control" formControlName="compileType" #myinput>
         <!-- <option>--Select--</option> -->
-        <option *ngFor="let tt of transType" [ngValue]="tt.transactionTypeId" > {{tt.transactionTypeName}}</option>
-      </select>
+        <!-- <option *ngFor="let tt of transType" [ngValue]="tt.transactionTypeId" > {{tt.transactionTypeName}}</option>
+      </select> -->
       <span
       *ngIf="getGroupControl('compileType').touched && getGroupControl('compileType').invalid">Valid Transaction Type
      </span>
@@ -156,37 +156,24 @@
         Made By:
        </td>
        <td>
-         <input type="text" class="form-control" formControlName="approvedBy" [(ngModel)]="approvedBy">
-         <!-- <select type="text" class="form-control" formControlName="approvedBy" [(ngModel)]="approvedBy">
-          <option>--Select--</option>
-          <option *ngFor="let ib of issueByList">{{ib.name}}</option>
-          </select> -->
+         <input disabled type="text" class="form-control" formControlName="approvedBy" [(ngModel)]="approvedBy">
+      </td>
+      <td style="width: 15%" class="LabelFontStyle">
+        Repair Order:
        </td>
-       <!-- (click)="process()" -->
-        <td>
-
-
-         <input hidden type="text" formControlName="locId" [(ngModel)]="locId">
+       <td>
+         <select  class="form-control" formControlName="repairOrder">
+          <option>--Select--</option>
+          <option *ngFor="let repairNo of workshopIssue">{{repairNo.jobCardNum}} -- {{repairNo.regNo}}</option>
+        </select>
+        </td>
+         <td>
+     <input hidden type="text" formControlName="locId" [(ngModel)]="locId">
        </td>
     </tr>
   </table>
   <br>
-  <!-- <table style="width: 100%; background-color: #a4d3e9;">
-    <tr>
-        <td style="width: 15%" class="LabelFontStyle">Item &nbsp;&nbsp;Name&nbsp;:</td>
-        <td>
-          <select  type="text"  formControlName="itemId"   class="form-control"  style="height: 20px;width: 100px;" [(ngModel)]="itemId">
-
-            <option *ngFor="let item of ItemIdList" [ngValue]="item.itemId">{{item.SEGMENT}}
-              </option>
-            </select>
-          </td>
-        <td colspan="8" style="text-align: left; width: 100%;">
-            <button type="submit" class="btn btn-primary" (click)="searchByCompileID(itemId)"><i class="fa fa-search"></i></button>
-        </td>
-    </tr>
-</table> -->
-<br>
+ <br>
   <div formArrayName="cycleLinesList">
   <div class="grid_scroll">
 
@@ -224,21 +211,12 @@
          <tr>  <td><input disabled type="text" class="form-control"  style="height: 20px;width: 50px;" formControlName="lineNumber">
              </td>
              <input hidden formControlName="compileId" [(ngModel)]="compileId">
-             <input hidden formControlName="compileLineId">
-                       <td>.<input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 100px;" (ngModelChange)="onOptiongetItem($event,trxLineIndex)" />
+             <input hidden formControlName="compileLineId"> 
+                       <td><input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 100px;" (ngModelChange)="onOptiongetItem($event,trxLineIndex)" />
               <datalist id="dynmicUserIds1">
                 <option *ngFor="let item of ItemIdList" [ngValue]="item.invItemId">{{item.SEGMENT}}
                   </option>
                  </datalist>
-
-                 <input type="text" list="dynmicUserIds1" (keyup)="filterRecord( $event,trxLineIndex)"
-                 formControlName="segment" id="invItemIdFirstWay" class="form-control"
-                 style="height: 20px;width:120px;" name="segment{{trxLineIndex}}" />
-               <!-- (ngModelChange)="onOptiongetItem($event,trxLineIndex)" -->
-               <datalist id="dynmicUserIds1">
-                 <option *ngFor="let item of ItemIdList" [value]="item.SEGMENT">{{item.SEGMENT}}</option>
-               </datalist>
-
                  <span
                  *ngIf="getGroupControllinewise(trxLineIndex,'segment').touched && getGroupControllinewise(trxLineIndex,'segment').invalid" class="error">Valid Item
                 </span>
