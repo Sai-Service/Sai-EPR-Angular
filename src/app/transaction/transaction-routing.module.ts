@@ -38,6 +38,8 @@ import { BankReconcillationComponent } from './bank-reconcillation/bank-reconcil
 import { AmcSchemeMasterComponent } from './amc-scheme-master/amc-scheme-master.component';
 import { AmcEnrollmentComponent } from './amc-enrollment/amc-enrollment.component';
 import { WarrantyClaimComponent } from './warranty-claim/warranty-claim.component';
+import { PayableInvoiceNewComponent } from './payable-invoice-new/payable-invoice-new.component';
+
 // import { ShippingNetworkComponent } from './shipping-network/shipping-network.component';cd..
 
 
@@ -83,6 +85,7 @@ const routes: Routes = [
 {path:'AmcSchemeMaster',component:AmcSchemeMasterComponent},
 {path :'AmcEnrollment',component:AmcEnrollmentComponent},
 {path :'WarrantyClaim',component:WarrantyClaimComponent},
+{path:'payableInvoice',component:PayableInvoiceNewComponent},
 // {path :'ShippingNetwork',component:ShippingNetworkComponent},
 // {path:'CounterSaleReturn',component:CounterSaleReturnComponent},
  {path : '' ,redirectTo: 'Dashboard', pathMatch: 'full'}
