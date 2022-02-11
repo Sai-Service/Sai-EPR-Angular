@@ -188,26 +188,20 @@
         
                                     <thead>
                                         <tr class="GridHeader">
-                                            <!-- <th scope="col">LineId</th> -->
-                                            <!-- <th scope="col">PLineId</th> -->
-                                            
                                             <th scope="col">Select</th>
                                             <th scope="col" >Item Number</th>
+                                            <th scope="col" >Description</th>
                                             <th scope="col" >Return Qty </th>
                                             <th scope="col" >Issued Qty</th>
-                                            <!-- <th scope="col" >OnHand Qty</th> -->
                                             <th scope="col" >UOM</th>
-                                            <!-- <th scope="col">Sub Inventory</th> -->
-                                            <th scope="col">Locator</th>
-                                            <!-- <th scope="col">HSN</th> -->
-                                            <th scope="col">Item Description</th>
-                                            <th scope="col">Tax %</th>
+                                             <th scope="col">Tax %</th>
                                             <th scope="col">Unit Price</th>
                                             <th scope="col">Base Amount</th>
-                                            <th scope="col">Dis%</th>
                                             <th scope="col">Dis Amount</th>
                                             <th scope="col">Tax Amount</th>
                                             <th scope="col">Tot Amount</th>
+                                            <th scope="col">HSN/SAC</th>
+                                            <th scope="col">Status</th>
                                             <th scope="col">Add</th>
                                             <th scope="col">Del</th>
                                            
@@ -217,7 +211,10 @@
                                     <tbody>
                                         <ng-container class="center" formArrayName="oeOrderLinesAllList">
                                             <ng-container *ngFor="let group of lineDetailsArray.controls; let i= index"; [formGroupName]="i" class="auto-style5">
-        
+                                                <div *ngIf="displayLineDetails ,then thenLineDetails; else elseLineDetails")></div>
+                                                <ng-template #thenLineDetails>
+                                                </ng-template>
+                                                <ng-template #elseLineDetails>
                                                 <tr>
     
                                                     <input  type="text" hidden disabled formControlName="itemId"  class="form-control" style="height: 25px;width: 50px;"> 
@@ -228,36 +225,35 @@
                                                     <input  type="text" hidden disabled formControlName="taxCategoryId"  class="form-control" style="height: 25px;width: 50px;"> 
                                                     <input  type="text" hidden disabled formControlName="invType"  class="form-control" style="height: 25px;width: 50px;"> 
                                                    
-                                               
+                                              
+                                                <td> <input style="text-align: center;width: 3rem;" type="checkbox"  name="selectFlag" formControlName="selectFlag" [(ngModel)]="selectFlag"  (change)="LineSelectFlag($event,i)">  </td>
+                                              
                                                 <div *ngIf ="showAllItem;then BlockShowAll1;else BlockShowAll2"></div>
                                                 <ng-template #BlockShowAll1>
-                                                     <td><input disabled  type="text" formControlName="orderedItem"  id="orderedItem"   class="form-control" style="height: 25px;width: 200px;" > </td>
+                                                     <td><input disabled  type="text" formControlName="segment"  id="segment"   class="form-control" style="height: 25px;width: 200px;" > </td>
                                                 </ng-template>
                                                 <ng-template #BlockShowAll2>
-                                                    <td><input  type="text" formControlName="orderedItem"  id="orderedItem"   (change)="findOrderItem(i)"
+                                                    <td><input  type="text" formControlName="segment"  id="segment"   (change)="findOrderItem(i)"
                                                         style="height: 25px;width: 200px;background-color: yellow;"  class="form-control" > </td>
                                                 </ng-template>
-    
-                                                   <!-- <td><input disabled  type="number" formControlName="cancelledQty" class="form-control" style="height: 25px;width: 60px;background-color: yellow;" (change)="validateQty(i)" > </td>  -->
+                                                
+                                                    <td> <input disabled type="text" formControlName="orderedItem" value="orderedItem" [ngValue]="orderedItem" class="form-control" style="height: 25px;width: 150px;"> </td>
+                                                <td><input disabled  type="number" formControlName="cancelledQty" class="form-control" style="height: 25px;width: 60px;background-color: yellow;" (change)="validateQty(i)" > </td> 
                                                    <td> <input disabled type="number" formControlName="pricingQty"   class="form-control" style="height: 25px;width: 60px;" ></td>
-                                                  
                                                    <td> <input disabled type="text" formControlName="uom" class="form-control" style="height: 25px;width: 40px;" >  </td> 
-                                                    <td>
-                                                   <input hidden  disabled type="text" formControlName="hsnSacCode" class="form-control" style="height: 25px;width: 80px;">
-                                                </td>
-        
-                                                    <td> <input disabled type="number"   formControlName="taxPer"  class="form-control" style="height: 25px;width: 40px;"></td>
-                                                    <td> <input disabled type="number"  formControlName="unitSellingPrice" class="form-control" style="height: 25px;width: 80px;text-align: right;"></td>
-                                                    <td> <input disabled type="number"  formControlName="baseAmt"  class="form-control" style="height: 25px;width: 100px;text-align: right;"> </td>
-                                                    <td> <input disabled type="number"  formControlName="disPer"  class="form-control" style="height: 25px;width: 40px;text-align: right;"> </td>
+                                                   <td>  <input  disabled type="text"  formControlName="gstPercentage" class="form-control"  style="height: 25px;width: 35px;"> </td>
+                                                   <td>  <input  disabled type="number"  formControlName="unitSellingPrice" class="form-control"  style="height: 25px;width: 80px;">  </td>
+                                                    <td> <input disabled type="number"  formControlName="baseAmt"  class="form-control" style="height: 25px;width:100px;text-align: right;"> </td>
                                                     <td> <input disabled type="number"  formControlName="disAmt"  class="form-control" style="height: 25px;width: 80px;text-align: right;"></td>
                                                     <td> <input disabled type="number"  formControlName="taxAmt"  class="form-control" style="height: 25px;width: 100px;text-align: right;"> </td>
                                                     <td> <input disabled type="number"  formControlName="totAmt"  class="form-control" style="height: 25px;width: 100px;text-align: right;"></td>
+                                                    <td> <input  disabled type="number" formControlName="hsnSacCode" class="form-control" style="height: 25px;width: 80px;"> </td>  
+                                                    <td> <input  disabled type="text" formControlName="flowStatusCode" class="form-control" style="height: 25px;width: 80px;"> </td>  
                                                     <td> <button type="submit" class="btn btn-info" (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i class="fa fa-plus"></i></button>  </td>
                                                     <td> <button type="submit" class="btn btn-info" (click)="RemoveRow(i)" style="width: min-content;"><i  class="fa fa-trash"></i></button>   </td>
                                                    
                                                   </tr>
-                                      
+                                                </ng-template>
                                             </ng-container>
                                         </ng-container>
                                     </tbody>
@@ -619,7 +615,7 @@
                                             Color&nbsp;:&nbsp;
                                         </td>
                                         <td>
-                                            <input disabled type="text" formControlName="colorCode" class="form-control"
+                                            <input disabled type="text" formControlName="colorDesc" class="form-control"
                                                 style="width: 150px;">
                                         </td>
                                     </tr>
@@ -666,8 +662,6 @@
                                 <th scope="col" style="width: 90px;">Total Amont</th>
                                 <th scope="col" style="width: 90px;">HSN/SAC code</th>
                                 <th scope="col" style="width: 120px;">Status</th>
-                                <th scope="col" style="width: 120px;">Add</th>
-                                <th scope="col" style="width: 120px;">Remove</th>
                             </tr>
                         </tbody>
                        
@@ -681,10 +675,11 @@
                                 <td style="width:4rem;text-align: center;">{{com.unitSellingPrice}}</td>
                                 <td style="width:8rem;text-align: center;">{{com.taxCategoryName}}</td> 
                                 <td style="width:8rem;text-align: center;">{{com.baseAmt|number:'0.00'}}</td>
+                                <td style="width:10rem;text-align: center;">{{com.discAmt|number:'0.00'}}</td>
                                 <td style="width:10rem;text-align: center;">{{com.taxAmt|number:'0.00'}}</td>
                                 <td style="width:8rem;text-align: right;">{{com.totAmt|number:'0.00'}}</td>
-                                <td style="width:8rem;text-align: right;">{{hsnSacCode}}</td>
-                                <td style="width:8rem;text-align: right;">{{flowStatusCode}}</td>
+                                <td style="width:8rem;text-align: right;">{{com.hsnSacCode}}</td>
+                                <td style="width:8rem;text-align: right;">{{com.flowStatusCode}}</td>
                             </tr>
                     </table>
                     </div>

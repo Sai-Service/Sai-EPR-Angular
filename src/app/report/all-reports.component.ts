@@ -586,7 +586,7 @@ export class AllReportsComponent implements OnInit {
   //  alert(toLicId)
     const fileName = 'Stock-Made-Details-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.stockMadeDetailsReport(fromDate, toDate, toLicId,sessionStorage.getItem('locId'))
+    this.reportService.stockMadeDetailsReport(fromDate, toDate, sessionStorage.getItem('locId'),toLicId)
       .subscribe(data => {
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
         this.isDisabled11 = false;

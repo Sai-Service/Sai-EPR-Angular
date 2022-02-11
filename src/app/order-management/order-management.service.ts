@@ -634,6 +634,13 @@ reversalReasonList(): Observable<any> {
 counterSaleReturnSearchHeader(orderNumber): Observable<any> {
   return this.http.get(this.ServerUrl +`/orderHeader/salesReturn/${orderNumber}`);
 }
+
+
+SaleReturnSearchHeader(orderNumber): Observable<any> {
+  return this.http.get(this.ServerUrl +`/orderHeader/vehReturn/${orderNumber}`);
+}
+
+
 counterSaleReturnSearchLines(orderNumber): Observable<any> {
   return this.http.get(this.ServerUrl +`/orderHeader/salesRtnLines/${orderNumber}`);
 }
