@@ -1826,7 +1826,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
           this.itemId = select.itemId;
           var custtaxCategoryName = this.CounterSaleOrderBookingForm.get('taxCategoryName').value;
           let isExportCust ="N";
-          alert(this.custClassCode);
+          // alert(this.custClassCode);
         if(this.custClassCode.includes("EXPORTER") &&  Number(sessionStorage.getItem('ouId'))===22){
           isExportCust ="Y";
         }

@@ -308,13 +308,14 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>Ship&nbsp;To&nbsp;Location&nbsp;</td>&nbsp;
+                            <td>Ship&nbsp;From&nbsp;Location&nbsp;</td>&nbsp;
+                            
                             <td>
                                 <input disabled type="text" class="form-control"  formControlName="stockMadeToLocName">
                             </td>
                         </tr>
                         <tr>
-                            <td>Ship&nbsp;From&nbsp;Location&nbsp;</td>&nbsp;
+                            <td>Ship&nbsp;To&nbsp;Location&nbsp;</td>&nbsp;
                             <td>
                                 <select formControlName="stockMadeToFromLoc" id="stockMadeToFromLoc" class="form-control">
                                     <option>--Select--</option>
@@ -350,13 +351,14 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>Ship&nbsp;To&nbsp;Location&nbsp;</td>&nbsp;
+                            <td>Ship&nbsp;From&nbsp;Location&nbsp;</td>&nbsp;
+                           
                             <td>
                                 <input disabled type="text" class="form-control"  formControlName="stockMadeToLocName">
                             </td>
                         </tr>
                         <tr>
-                            <td>Ship&nbsp;From&nbsp;Location&nbsp;</td>&nbsp;
+                            <td>Ship&nbsp;To&nbsp;Location&nbsp;</td>&nbsp;
                             <td>
                                 <select formControlName="spstktrfMdSumToLoc" id="spstktrfMdSumToLoc" class="form-control">
                                     <option>--Select--</option>
@@ -528,6 +530,38 @@
                 </td>
                 <td style="border: 1px solid black;padding-left: 5px;">
                     <button class="btn-primary" [disabled]="isDisabled16" (click)="spbackOrderQty(spbackOrderQtyCustAccNo,spbackOrderQtyOrderNumber)">View Report</button>
+                </td>
+            </tr>
+       
+       
+            <tr>
+                <td style="border: 1px solid black;padding-left: 5px;">Spares Misc Issue Receipt Report</td>
+                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="spmiscissRecfromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="spmiscissRectoDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Ship&nbsp;To&nbsp;Location&nbsp;</td>&nbsp;
+                            <td>
+                                <input disabled type="text" class="form-control"  formControlName="stockMadeToLocName">
+                            </td>
+                        </tr>
+                    
+                       
+                    </table>
+                </td>
+                <td style="border: 1px solid black;padding-left: 5px;">
+                    <button class="btn-primary" [disabled]="isDisabled16" (click)="spSparesMiscIssueReceipt()">View Report</button>
                 </td>
             </tr>
         </table>

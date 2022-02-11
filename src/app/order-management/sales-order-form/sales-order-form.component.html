@@ -730,7 +730,7 @@
                             </td>
                             <td>
                                 <input disabled type="text" formControlName="subtotal" [(ngModel)]='subtotal'
-                                    value={{subtotal}} class="form-control" style="width: 170px;text-align: right;">
+                                    value={{subtotal}} class="form-control" style="width: 170px;text-align: right;font-weight: bold;">
                             </td>
                             <td style="width: 15%;font-weight: bold;" class="LabelFontStyle">
                                 Tax&nbsp;:&nbsp;
@@ -775,7 +775,7 @@
                             </td>
                             <td>
                                 <select formControlName="variant" id="variant" class="form-control"
-                                    style="width: 170px;" (ngModelChange)="onOptionsSelectedColor($event)">
+                                    style="width:fit-content;" (ngModelChange)="onOptionsSelectedColor($event)">
                                     <option>--Select--</option>
                                     <option *ngFor="let mm of VariantSearch" [value]="mm.variant">
                                         {{mm.variant}}--{{mm.varDescription}}
@@ -798,7 +798,7 @@
                             </td>
                             <td>
                                 <input disabled type="text" formControlName="fuelType" [(ngModel)]='fuelType'
-                                    class="form-control" style="width: 150px;">
+                                    class="form-control" style="width: 150px; ">
                             </td>
                             <!-- <td style="width: 15%" class="LabelFontStyle">
                                Taxi&nbsp;Flag&nbsp;:&nbsp;
@@ -818,7 +818,7 @@
                             </td>
                             <td>
                                 <input disabled type="number" formControlName="basicValue" class="form-control"
-                                style="width: 150px;">
+                                style="width: 150px; font-weight: bold;">
                             </td>
                             <td colspan="3">
                                 <button type="submit" class="btn btn-primary" (click)="modelDetailsUpdate()"  style="width: fit-content;height: fit-content;">Model Details Update</button>
@@ -849,7 +849,7 @@
                             </td>
                             <td>
                                 <input disabled type="text" formControlName="variantDesc" class="form-control"
-                                    style="width: 150px;">
+                                style="width: 200px;">
                             </td>
                             <td style="width: 15%" class="LabelFontStyle">
                                 Color&nbsp;:&nbsp;
@@ -872,7 +872,7 @@
                             </td>
                             <td>
                                 <input disabled type="number" formControlName="basicValue" class="form-control"
-                                style="width: 150px;">
+                                style="width: 150px;font-weight: bold;">
                             </td>
                         </tr>
                     </table>
@@ -1263,55 +1263,11 @@
                                     <a class="nav-link waves-light active" data-toggle="tab" href="#panel1002"
                                         role="tab">Lines</a>
                                 </li>
-                                <li class="nav-item">
+                                <!-- <li class="nav-item">
                                     <a class="nav-link waves-light" data-toggle="tab" href="#panel1006" role="tab">Tax
                                         Details</a>
-                                </li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
-                                <li class="nav-item"></li>
+                                </li> -->
+                       
                             </ul>
                         </div>
                         <div class="tab-content rounded-bottom">
@@ -1322,22 +1278,22 @@
                                     style="width:100%;border-collapse:collapse;">
                                     <thead>
                                         <tr class="GridHeader">
-                                            <th scope="col" style="width: 40px;">Line No</th>
-                                            <th scope="col" style="width: fit-content;height: fit-content;">Tax Details</th>
+                                            <th scope="col" style="width: 20px;">Line No</th>
+                                            <th scope="col" style="width: 40px">Tax Details</th>
                                             <th scope="col" style="width: 40px;">Type Category</th>
-                                            <th scope="col" style="width: 160px;">Item code</th>
-                                            <th scope="col" style="width: 160px;">Description</th>
-                                            <th scope="col" style="width: 70px;">Qty</th>
-                                            <th scope="col" style="width: 90px;">Unit Price</th>
-                                            <th scope="col" style="width: 160px;">Tax Category</th>
-                                            <th scope="col" style="width: 90px;">Base Amount</th>
-                                            <th scope="col" style="width: 90px;">Discount</th>
-                                            <th scope="col" style="width: 90px;">Tax Amount</th>
-                                            <th scope="col" style="width: 90px;">Total Amont</th>
-                                            <th scope="col" style="width: 90px;">HSN/SAC code</th>
+                                            <th scope="col" style="width: 130px;">Item code</th>
+                                            <th scope="col" style="width: 150px;">Description</th>
+                                            <th scope="col" style="width: 30px;">Qty</th>
+                                            <th scope="col" style="width: 70px;">Unit Price</th>
+                                            <th scope="col" style="width: 200px;">Tax Category</th>
+                                            <th scope="col" style="width: 70px;">Base Amount</th>
+                                            <th scope="col" style="width: 65px;">Discount</th>
+                                            <th scope="col" style="width: 65px;">Tax Amount</th>
+                                            <th scope="col" style="width: 80px;">Total Amont</th>
+                                            <th scope="col" style="width: 65px;">HSN/SAC code</th>
                                             <th scope="col" style="width: 120px;">Status</th>
-                                            <th scope="col" style="width: 120px;">Add</th>
-                                            <th scope="col" style="width: 120px;">Remove</th>
+                                            <th scope="col" style="width: 30px;">Add</th>
+                                            <th scope="col" style="width: 30px;">Remove</th>
                                         </tr>
                                     </thead>
                                     <tbody class="ItemStyle">
@@ -1352,27 +1308,25 @@
                                                     <ng-template #thensegmentInvType>
                                                         <td>
                                                             <!-- insert    (click)="taxDetails('insert', i, taxCategoryId)"-->
-                                                            <input hidden type="number" Value={{lineNumber}}
+                                                            <input type="number" Value={{lineNumber}}
                                                                 formControlName="lineNumber" class="form-control"
-                                                                style="height: 20px;width: 40px;">
-                                                            <a class="nav-link waves-light" value="{{lineNumber}}"
+                                                                style="height: 20px;width: 20px;">
+                                                            <!-- <a class="nav-link waves-light" value="{{lineNumber}}"
                                                                 data-toggle="tab" href="#panel1006" role="tab" >
                                                                 {{i+1}}
-                                                            </a>
+                                                            </a> -->
                                                         </td>
                                                         <td>
-                                                        
-                                                            <button type="button" class="btn btn-primary" style="width: fit-content;height: fit-content;"
-                                                                data-toggle="modal"  [disabled]="isDisabledtaxbtn[i]" (click)="openTaxDetails(i)"
-                                                                data-target="#taxDetails">
-                                                                Tax Details
-                                                            </button>
+                                                           
+                                                            <button type="button"  data-toggle="modal"  [disabled]="isDisabledtaxbtn[i]" 
+                                                            (click)="openTaxDetails(i)" class="btn btn-primary"
+                                                                data-target="#taxDetails" style="width: 40px;text-align: left;">Tax..</button>
                                                         </td>
                                                         <td>
                                                             <select formControlName="invType" id="invType{{i}}"
                                                                 (ngModelChange)='onOptionsSelectedCategory($event, i)'
                                                                 class="form-control"
-                                                                style="width: 160px;height: 25px;font-size: 10px;">
+                                                                style="width: 130px;height: 25px;font-size: 10px;">
                                                                 <option>--Select--</option>
                                                                 <option *ngFor="let cate of  categoryList"
                                                                     [value]="cate.itemType">
@@ -1384,7 +1338,7 @@
                                                             <select formControlName="segment" id="segment{{i}}"
                                                                 (ngModelChange)='onOptionsSelectedDescription($event,i)'
                                                                 class="form-control"
-                                                                style="width: 160px;height: 25px;font-size: 10px;">
+                                                                style="width:130px;height: 25px;font-size: 10px;">
                                                                 <option>--Select--</option>
                                                                 <option *ngFor="let item of  itemMap2.get(i) | keyvalue"
                                                                     [value]="item.value.segment">
@@ -1396,64 +1350,62 @@
                                                         <td>
                                                             <input disabled type="text" formControlName="orderedItem"
                                                                 value="orderedItem" [ngValue]="orderedItem"
-                                                                class="form-control" style="height: 20px;width: 160px;">
+                                                                class="form-control" style="height: 20px;width: 150px;">
                                                         </td>
                                                         <td>
                                                             <input disabled type="number" formControlName="pricingQty"
                                                                 class="form-control" (change)="onKey(i)"
-                                                                style="height: 20px;width: 70px;">
+                                                                style="height: 20px;width: 30px;">
 
                                                         </td>
                                                         <td>
                                                             <input  disabled type="number"
                                                                 formControlName="unitSellingPrice" class="form-control"
-                                                                style="height: 20px;width: 90px;" (change)="onKey(i)">
+                                                                style="height: 20px;width: 80px;" (change)="onKey(i)">
                                                         </td>
                                                     </ng-template>
                                                     <ng-template #elsesegmentInvType>
                                                         <td>
                                                             <!-- search   (click)="taxDetails('Search', i, taxCategoryId)"-->
-                                                            <input hidden type="number" Value={{lineNumber}}
+                                                            <input  type="number" Value={{lineNumber}}
                                                                 formControlName="lineNumber" class="form-control"
-                                                                style="height: 20px;width: 40px;">
-                                                            <a class="nav-link waves-light" value="{{lineNumber}}"
+                                                                style="height: 20px;width: 20px;">
+                                                            <!-- <a class="nav-link waves-light" value="{{lineNumber}}"
                                                                 data-toggle="tab" href="#panel1006" role="tab" >
                                                                 {{i+1}}
-                                                            </a>
+                                                            </a> -->
                                                         </td>
                                                         <td>
                                                             
-                                                            <button type="button" class="btn btn-primary"  style="width: fit-content;height: fit-content;"
+                                                            <button type="button" class="btn btn-primary" 
                                                                 data-toggle="modal" [disabled]="isDisabledtaxbtn[i]" (click)="openTaxDetails(i)"
-                                                                data-target="#taxDetails">
-                                                                Tax Details
-                                                            </button>
+                                                                data-target="#taxDetails"  style="width: 40px;text-align: left;">Tax..</button>
                                                         </td>
                                                         <td>
                                                             <input disabled type="text" formControlName="invType"
                                                                 value="invType" [ngValue]="invType" class="form-control"
-                                                                style="height: 20px;width: 160px;">
+                                                                style="height: 20px;width: 130px;">
                                                         </td>
                                                         <td>
                                                             <input disabled type="text" formControlName="segment"
                                                                 value="segment" [ngValue]="segment" class="form-control"
-                                                                style="height: 20px;width: 160px;">
+                                                                style="height: 20px;width: 130px;">
                                                         </td>
                                                         <td>
                                                             <input disabled type="text" formControlName="orderedItem"
                                                                 value="orderedItem" [ngValue]="orderedItem"
-                                                                class="form-control" style="height: 20px;width: 160px;">
+                                                                class="form-control" style="height: 20px;width: 150px;">
                                                         </td>
                                                         <td>
                                                             <input disabled type="number" formControlName="pricingQty"
                                                                 class="form-control" (change)="onKey(i)"
-                                                                style="height: 20px;width: 70px;">
+                                                                style="height: 20px;width: 30px;">
 
                                                         </td>
                                                         <td>
                                                             <input disabled type="number"
                                                                 formControlName="unitSellingPrice" class="form-control"
-                                                                style="height: 20px;width: 90px;"
+                                                                style="height: 20px;width: 70px;"
                                                                 (change)="onKey(i,'unitSellingPrice')">
                                                         </td>
                                                         <!-- <td>
@@ -1475,7 +1427,7 @@
                                                             <select formControlName="taxCategoryName" 
                                                                 (change)="onOptionTaxCatSelected($event,i)"
                                                                 id="taxCategoryName" class="form-control"
-                                                                style="width: 160px;height: 25px;font-size: 10px;">
+                                                                style="width: 200px;height: 25px;font-size: 10px;">
                                                                 <option>--Select--</option>
                                                                 <option *ngFor="let sc of  taxCategoryList[i]" [ngValue]="sc.taxCategoryName">
                                                                     {{sc.taxCategoryName}}
@@ -1484,16 +1436,16 @@
                                                             <!-- [ngValue]="sc" -->
                                                             <input hidden type="number" formControlName="taxCategoryId"
                                                                 value="taxCategoryId" class="form-control"
-                                                                style="height: 20px;width: 160px;">
+                                                                style="height: 20px;width: 150px;">
                                                         </ng-template>
 
                                                         <ng-template #elsetaxCategoryName>
                                                             <input disabled type="text"
                                                                 formControlName="taxCategoryName" class="form-control"
-                                                                style="height: 20px;width: 160px;">
+                                                                style="height: 20px;width: 200px;">
 
                                                             <input hidden type="number" formControlName="taxCategoryId"
-                                                                class="form-control" style="height: 20px;width: 160px;">
+                                                                class="form-control" style="height: 20px;width: 150px;">
                                                             <input hidden type="number" formControlName="orgId"
                                                                 [(ngModel)]='orgId' class="form-control"
                                                                 style="height: 20px;width: 160px;">
@@ -1511,23 +1463,23 @@
                                                     <td>
 
                                                         <input disabled type="number" formControlName="disAmt"
-                                                            class="form-control" style="height: 20px;width: 70px;">
+                                                            class="form-control" style="height: 20px;width: 65px;">
                                                     </td>
                                                     <td>
 
                                                         <input disabled type="number" formControlName="taxAmt"
-                                                            class="form-control" style="height: 20px;width: 70px;">
+                                                            class="form-control" style="height: 20px;width: 65px;">
                                                     </td>
                                                     <td>
 
                                                         <input disabled type="number" formControlName="totAmt"
-                                                            class="form-control" style="height: 20px;width: 70px;">
+                                                            class="form-control" style="height: 20px;width: 80px;">
                                                     </td>
                                                     <td>
 
                                                         <input disabled type="text" formControlName="hsnSacCode"
                                                             class="form-control"
-                                                            style="height: 20px;width: 70px;text-align: left;">
+                                                            style="height: 20px;width:65px;text-align: left;">
                                                     </td>
                                                     <td>
                                                         <div
@@ -1555,14 +1507,13 @@
                                                                 <option value="INVOICED" hidden>INVOICED</option>
                                                                 <option value="ALLOTED" hidden>ALLOTED</option>
                                                                 <option value="DE-ALLOTED" hidden>DE-ALLOTED</option>
-                                                                <option value="READY FOR INVOICE">READY FOR INVOICE
-                                                                </option>
+                                                                <option value="READY FOR INVOICE">READY FOR INVOICE</option>
                                                             </select>
                                                         </ng-template>
                                                     </td>
                                                     <td>
-                                                        <button type="submit" class="btn btn-primary" [disabled]="isDisabled6" (click)="addRow(i)"
-                                                            style="width: min-content;"><i
+                                                        <button type="button" class="btn btn-primary" [disabled]="isDisabled6" (click)="addRow(i)"
+                                                            style="width:30px;"><i
                                                                 class="fa fa-plus"></i></button>
                                                     </td>
                                                     <td>
@@ -1570,13 +1521,13 @@
                                                             *ngIf="displayRemoveRow[i]; then thenLineRemoveRow; else elseLinefRemoveRow">
                                                         </div>
                                                         <ng-template #thenLineRemoveRow>
-                                                            <button type="submit" class="btn btn-primary"
-                                                                (click)="RemoveRow(i)" style="width: min-content;"><i
+                                                            <button type="button" class="btn btn-primary"
+                                                                (click)="RemoveRow(i)" style="width: 30px;"><i
                                                                     class="fa fa-trash"></i></button>
                                                         </ng-template>
                                                         <ng-template #elseLinefRemoveRow>
                                                             <button disabled type="submit" class="btn btn-primary"
-                                                                (click)="RemoveRow(i)" style="width: min-content;"><i
+                                                                (click)="RemoveRow(i)" style="width: 30px;"><i
                                                                     class="fa fa-trash"></i></button>
                                                         </ng-template>
                                                     </td>

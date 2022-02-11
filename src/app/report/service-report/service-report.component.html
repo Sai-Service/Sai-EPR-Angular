@@ -85,6 +85,36 @@
                     <button class="btn-primary" [disabled]="isDisabled2" (click)="servind()">View Report</button>
                 </td>
             </tr>
+       
+       
+            <tr>
+                <td style="border: 1px solid black;padding-left: 5px;">Service Pending Vehicle Report</td>
+                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="serPendingVehicleFromDt"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="serPendingVehicleToDt"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Location&nbsp;Code&nbsp;</td>&nbsp;
+                            <td>
+                                <input disabled type="text" class="form-control"  formControlName="joblocCode" >
+                            </td>
+                        </tr>
+                    </table> 
+                </td>
+                <td style="border: 1px solid black;padding-left: 5px;">
+                    <button class="btn-primary" [disabled]="isDisabled2" (click)="serPendingVehicle()">View Report</button>
+                </td>
+            </tr>
         </table>
     </div>
     <table class="center">
