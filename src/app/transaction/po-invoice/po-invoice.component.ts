@@ -985,6 +985,7 @@ docSeqValue:number;
     this.displayitemName = true;
     this.displaydescription = true;
     this.displaydistributionSet = true;
+    
     let jsonData = this.poInvoiceForm.value;
     let invSearch: ISearch = Object.assign({}, jsonData);
     // this.lineDetailsArray().disable();

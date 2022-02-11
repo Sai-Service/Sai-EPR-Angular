@@ -447,6 +447,7 @@ export class CashBankTransferComponent implements OnInit {
         var postEmplId=Number(sessionStorage.getItem('emplId'));
         const formValue: ICashBankTransfer =this.transeData(this.cashBankTransferForm.value);
         this.statusPost=false;
+        
         this.service.CashBankTrfPostSubmit(formValue,postEmplId).subscribe((res: any) => {
           if (res.code === 200) {
             alert('RECORD INSERTED SUCCESSFUILY');
@@ -667,7 +668,7 @@ export class CashBankTransferComponent implements OnInit {
                  this.fromAcctCode =this.payAccountCode.name;
                  this.fromGlCodeId=this.payAccountCode.id;
                 //  if(trfCode===180) { 
-                   this.glCodeBalance(this.fromAcctCode,prdNam);
+                  //  this.glCodeBalance(this.fromAcctCode,prdNam);
                   // }
   
                });
