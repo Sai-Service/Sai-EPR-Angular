@@ -128,13 +128,15 @@ export class ShippingNetworkComponent implements OnInit {
     //     }
     //   );
 
+   
+
     // this.service.locationIdList()
-    //   .subscribe(
-    //     data => {
-    //       this.locIdList = data;
-    //       console.log(this.locIdList);
-    //     }
-    //   );
+    // .subscribe(
+    //   data => {
+    //     this.locIdList = data;
+    //     console.log(this.locIdList);
+    //   }
+    // );
 
 
       this.service.OUIdListDiv(sessionStorage.getItem('divisionId'))
@@ -182,5 +184,45 @@ export class ShippingNetworkComponent implements OnInit {
   newMast(){
     alert ("Save Data ...wip");
   }
+
+  onSelectTrfType(evnt) {
+    alert ("Transfer Type Selected  : "+evnt);
+  }
+
+  onSelectFromOrg(org,index){
+    if(org !=null) {
+    var patch = this.shippingNetworkForm.get('shipLines') as FormArray;
+    var shipLineArr = this.shippingNetworkForm.get('shipLines').value;
+
+    var x = shipLineArr[index].fromOrg;
+    var y=shipLineArr[index].toOrg;
+
+    if(x===y) { patch.controls[index].patchValue({ fromOrg: '' });
+      // alert (" From Org : From Org and To Org Should not be Same...");
+     
+    return;
+    } 
+  }
+  }
+
+
+  onSelectToOrg(org, index){
+    if(org !=null) {
+    var patch = this.shippingNetworkForm.get('shipLines') as FormArray;
+    var shipLineArr = this.shippingNetworkForm.get('shipLines').value;
+
+    var x = shipLineArr[index].fromOrg;
+    var y=shipLineArr[index].toOrg;
+
+    if(x===y) {
+      patch.controls[index].patchValue({ toOrg: '' });
+      // alert (" To Org : From Org and To Org Should not be Same...");
+      
+    return;
+    } 
+  }
+  }
+
+ 
 
 }
