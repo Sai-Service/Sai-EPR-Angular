@@ -58,14 +58,15 @@ interface InternalConsumption
   View1:string;
   trans:string;
   CostDetail:number;
+  attribute1:number;
+  attribute2:Date;
 }
 
 export  class IcTrans {
   segment:string;
   Locator:string;
   quantity:number;
-  repairOrder:number;
-}
+  }
 
 @Component({
   selector: 'app-internal-consumption',
@@ -175,7 +176,8 @@ export class InternalConsumptionComponent implements OnInit {
   content: number;
   title: string;
   sub:string;
-  repairOrder:number;
+  attribute1:number;
+  attribute2:Date;
 
   type1:string;
   dispheader:boolean=false;
@@ -242,7 +244,8 @@ export class InternalConsumptionComponent implements OnInit {
     RackNo:[''],
     Row:[''],
     RowNo:[''],
-    repairOrder:[],
+    attribute1:[],
+  attribute2:[],
       cycleLinesList:this.fb.array([]),
 
     })
@@ -985,6 +988,10 @@ onOptiongetItem(event:any,i)
         // this.displayButton=true;
         // this.displayaddButton=true;
         const formValue:InternalConsumption=this.InternalConsumptionForm.getRawValue();
+        formValue.attribute2=this.InternalConsumptionForm.get('compileDate').value;
+        formValue.compileType=this.InternalConsumptionForm.get('compileId').value;
+        var itemcode1=this.InternalConsumptionForm.get('attribute1').value.split(' -- ');
+        formValue.attribute1=itemcode1[0];
         this.service.miscSubmit(formValue).subscribe
         ((res:any) => {
           if(res.code===200)
@@ -1036,7 +1043,8 @@ onOptiongetItem(event:any,i)
 
           }
         );
-        this.service.WorkShopIssue(this.locId).subscribe(
+        var selreason=this.reasonlist.find(d=>d.reasonName===reasonArr[0])
+        this.service.WorkShopIcIssue(this.locId,selreason.attribute2).subscribe(
           data=>{
            this.workshopIssue=data;
            console.log(data);

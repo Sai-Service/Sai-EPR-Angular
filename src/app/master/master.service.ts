@@ -3208,7 +3208,9 @@ TypeList():Observable<any>
 }
 
 
-
+WorkShopIcIssue(locId,type):Observable<any>{
+  return this.http.get(this.ServerUrl+`/jobCard/icTypeJobList?locId=${locId}&icType=${type}`);
+}
 
 ItemIdList1(locationId,subInv):Observable<any>
 {

@@ -339,7 +339,6 @@ export class MiscellaneousTransactionComponent implements OnInit {
       if (!this.itemMap.has(item1)) {
         this.reservePos(i);
       } else {
-        // debugger;
         this.deleteReserveLinewise(i);
         this.reservePos(i);
       }
@@ -390,7 +389,6 @@ export class MiscellaneousTransactionComponent implements OnInit {
     }
     var trxLnArr1 = this.miscellaneousForm.get('cycleLinesList').value;
     var itemid = trxLnArr1[trxLineIndex].segment;
-    // debugger;
     this.cycleLinesList().removeAt(trxLineIndex);
     // alert(itemid+'Delete');
     if (itemid != null || itemid !=' ' || itemid !=undefined) {
@@ -552,7 +550,6 @@ export class MiscellaneousTransactionComponent implements OnInit {
   onOptionTypeSelect(event) {
     this.addnewcycleLinesList(-1);
     this.compileType = event;
-    debugger;
     if (event === 13) {
       this.service
         .searchByItemSegmentDiv(this.divisionId, '36DH1601')
@@ -853,7 +850,6 @@ export class MiscellaneousTransactionComponent implements OnInit {
               trxLnArr1.controls[i].patchValue({ avlqty: avlqty1 });
               trxLnArr1.controls[i].patchValue({ resveQty: reserve });
             } else {
-              // debugger;
               this.getfrmSubLoc = data;
               console.log(this.getfrmSubLoc);
               // trxLnArr1.controls[i].patchValue({LocatorSegment:getfrmSubLoc[0].segmentName});
