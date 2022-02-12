@@ -64,7 +64,7 @@
 
 
                 <td>
-                    <button style="width:fit-content"  type="button" class="btn btn-primary"  id="register"   (click)="dispDetails()">Display Details</button>
+                    <button style="width:fit-content"  type="button" class="btn btn-primary"  id="register"   (click)="getWarrData()">Display Details</button>
                </td>
                
                <td>
@@ -93,6 +93,7 @@
                         <th  scope="col" style="width: 3rem;">Repair No&nbsp;</th>
                         <th  scope="col" style="width: 3rem;">Vehicle No</th>
                         <th  scope="col" style="width: 3rem;">Chassi No</th>
+                        <th  scope="col" style="width: 3rem;">Engine No</th>
                         <th  scope="col" style="width: 3rem;">Qty&nbsp;</th>
                         <th  scope="col" style="width: 4rem;">Avg Cost&nbsp;</th>
                         <th  scope="col" style="width: 4rem;">Total Value</th>
@@ -121,24 +122,25 @@
                                 <td style="text-align: center;width: 4rem;">{{i+1}}</td>
                                 <td> <input  disabled style="width:10rem;height: 25px;" type="text" formControlName="itemCode"  class="form-control"   ></td>
                                 <td> <input  disabled style="width:10rem;height: 25px;" type="text"   formControlName="itemDesc" class="form-control"></td>
-                                <td> <input  disabled style="width:4rem;height: 25px;"  type="number" formControlName="hsnSac"  class="form-control"></td>
-                                <td> <input  disabled style="width:3rem;height: 25px;"  type="number" formControlName="taxPer" class="form-control"></td>
-                                <td> <input  disabled style="width:8rem;height: 25px;"  type="number" formControlName="repairNo" class="form-control"></td>
-                                <td> <input  disabled style="width:8rem;height: 25px;"  type="number" formControlName="vehicleNo" class="form-control"></td>
-                                <td> <input  disabled style="width:8rem;height: 25px;"  type="number" formControlName="chassisNo" class="form-control"></td>
-                                <td> <input  disabled style="width:4rem;height: 25px;"  type="number" formControlName="qty" class="form-control"></td>
-                                <td> <input  disabled style="width:4rem;height: 25px;"  type="number" formControlName="avgCost" class="form-control"></td>
-                                <td> <input  disabled style="width:4rem;height: 25px;"  type="number" formControlName="totValue" class="form-control"></td>
-                                <td> <input  disabled style="width:4rem;height: 25px;"  type="number" formControlName="ndp" class="form-control"></td>
-                                <td> <input  disabled style="width:4rem;height: 25px;"  type="number" formControlName="mrp" class="form-control"></td>
+                                <td> <input  disabled style="width:5rem;height: 25px;"  type="text" formControlName="hsnSacCode"  class="form-control"></td>
+                                <td> <input  disabled style="width:3rem;height: 25px;"  type="text" formControlName="taxCate" class="form-control"></td>
+                                <td> <input  disabled style="width:8rem;height: 25px;"  type="text" formControlName="repairNo" class="form-control"></td>
+                                <td> <input  disabled style="width:8rem;height: 25px;"  type="text" formControlName="vehicleNo" class="form-control"></td>
+                                <td> <input  disabled style="width:5rem;height: 25px;"  type="text" formControlName="chassisNo" class="form-control"></td>
+                                <td> <input  disabled style="width:5rem;height: 25px;"  type="text" formControlName="engineNo" class="form-control"></td>
+                                <td> <input  disabled style="width:4rem;height: 25px;"  type="number" formControlName="itemQty" class="form-control"></td>
+                                <td> <input  disabled style="width:6rem;height: 25px;"  type="number" formControlName="weigtedAverage" class="form-control"></td>
+                                <td> <input  disabled style="width:6rem;height: 25px;"  type="number" formControlName="totValue" class="form-control"></td>
+                                <td> <input  disabled style="width:6rem;height: 25px;"  type="number" formControlName="ndp" class="form-control"></td>
+                                <td> <input  disabled style="width:6rem;height: 25px;"  type="number" formControlName="mrp" class="form-control"></td>
                                 <td> <input  disabled  style="width:4rem;height: 25px;"  type="text" formControlName="oldStatus" class="form-control"></td>
                                 <td> <input   style="width:4rem;height: 25px;"  type="text" formControlName="newStatus" class="form-control"></td>
-                                <td> <input   style="width:5rem;height: 25px;"  type="number" formControlName="msilclaimNo" class="form-control"></td>
-                                <td> <input   style="width:9rem;height: 25px;"  type="date" formControlName="msilClaimDate" class="form-control"></td>
-                                <td> <input   style="width:5rem;height: 25px;"  type="number" formControlName="msilClaimAmt" class="form-control"></td>
-                                <td> <input   style="width:5rem;height: 25px;"  type="text" formControlName="msilInvNo" class="form-control"></td>
-                                <td> <input   style="width:9rem;height: 25px;"  type="date" formControlName="msilInvDate" class="form-control"></td>
-                                                             
+                                <td> <input   style="width:8rem;height: 25px;"  type="text" formControlName="msilClaimNo" class="form-control"></td>
+                                <td> <input   style="width:9rem;height: 25px;"  type="date" formControlName="msilClaimDate" class="form-control"   max="{{minDate | date:'yyyy-MM-dd'}}" (change)="validateClaimDate('MSILCLMDATE',i)" ></td>
+                                <td> <input   style="width:5rem;height: 25px;"  type="number" formControlName="msilApproveAmt" class="form-control"></td>  
+                                <td> <input   style="width:8rem;height: 25px;"  type="text" formControlName="msilInvoiceNo" class="form-control"></td>
+                                <td> <input   style="width:9rem;height: 25px;"  type="date" formControlName="msilInvoiceDate" class="form-control"   max="{{minDate | date:'yyyy-MM-dd'}}" (change)="validateClaimDate('MSILINVDATE',i)"></td>
+                              
                         </tr>
                        </ng-container>
                         </ng-container>

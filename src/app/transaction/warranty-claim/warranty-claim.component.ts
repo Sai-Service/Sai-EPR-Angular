@@ -52,13 +52,14 @@ export class WarrantyClaimComponent implements OnInit {
   deptId: number;
   emplId: number;
 
-  lineStatus:string;
-  itemType:string;
+  lineStatus:string ='ALL';
+  itemType:string ='ALL';
 
   fromDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   toDate = this.pipe.transform(Date.now(), 'y-MM-dd');
 
   
+ 
 
   displayButton = true;
   spinIcon = false;
@@ -101,25 +102,50 @@ export class WarrantyClaimComponent implements OnInit {
 
   lineDetailsGroup() {
     return this.fb.group({
+
+    warrClaimId:[],
+    ouid:[],
+    locid:[],
+
     itemCode:[],
     itemDesc:[],
-    hsnSac:[],
-    taxPer:[],
+    hsnSacCode:[],
+    taxCate:[],
     repairNo:[],
     vehicleNo:[],
     chassisNo:[],
-    qty:[],
-    avgCost:[],
-    totValue:[],
+    itemQty:[],
+    weigtedAverage:[],
     ndp:[],
     mrp:[],
-    msilclaimNo:[],
+    msilClaimNo:[],
     msilClaimDate:[],
-    msilInvNo:[],
-    msilInvDate:[],
-    msilClaimAmt:[],
+    msilApproveAmt:[],
+    msilInvoiceNo:[],
+    msilInvoiceDate:[],
+
+    totValue:[],
     oldStatus:[],
     newStatus:[],
+
+
+    engineNo:[],
+    dealerCode:[],
+    warrantyPeriod:[],
+    kms:[],
+    repairOrderDate:[],
+    srNo:[],
+    mrnNo:[],
+    itemType:[],
+    acceptanceStatus:[],
+    creationDate:[],
+    invoiceDate:[],
+    moveOrderNo:[],
+    toAcctId:[],
+    transactionId:[],
+    invoiceStatus:[],
+    remarks:[],
+
     });
   }
 
@@ -164,6 +190,10 @@ export class WarrantyClaimComponent implements OnInit {
       }
     );
 
+    var date = new Date();
+    var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+    var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+    this.fromDate = this.pipe.transform(firstDay, 'y-MM-dd');
 
   }
 
@@ -210,40 +240,48 @@ export class WarrantyClaimComponent implements OnInit {
 
   }
 
-  dispDetails(){
-
-    
+  getWarrData(){
 
     var fDate=this.warrantyClaimForm.get('fromDate').value;
     var tDate=this.warrantyClaimForm.get('toDate').value;
-
     var lstat=this.warrantyClaimForm.get('lineStatus').value;
     var itmtp=this.warrantyClaimForm.get('itemType').value;
-
-    alert ("in disp details...."+fDate +","+tDate);
-
-    alert ("in disp details...."+ lstat +","+itmtp);
   
-
-  this.transactionService.getWarrantyData(fDate,tDate,sessionStorage.getItem('ouId'),lstat,itmtp)
+  this.transactionService.warrDataList(fDate,tDate,sessionStorage.getItem('ouId'),lstat,itmtp)
   .subscribe(
     data => {
       this.lstWarrantyDtls = data;
       console.log(this.lstWarrantyDtls);
      var len = this.lineDetailsArray().length;
+    //  alert ("this.lstWarrantyDtls.length :"+ this.lstWarrantyDtls.length);
       var y = 0;
       for (let i = 0; i < this.lstWarrantyDtls.length - len; i++) {
         var ordLnGrp: FormGroup = this.lineDetailsGroup();
         this.lineDetailsArray().push(ordLnGrp);
         y = i;
-
-      }
+       }
 
       this.warrantyClaimForm.get('warrLines').patchValue(this.lstWarrantyDtls);
+      
 
-    } ); 
+       } );   }
+       
 
+     
+
+  transeData(val) {
+
+    delete val.loginArray;
+    delete val.loginName;
+    delete val.ouName;
+    delete val.divisionId;
+    delete val.locName;
+    delete val.deptId;
+    delete val.orgId;
+
+    return val;
   }
+
 
 
   clearSearch() {
@@ -266,5 +304,32 @@ export class WarrantyClaimComponent implements OnInit {
   newMast(){}
 
   SearchByDate(){}
+
+
+  validateClaimDate(x,index) {
+
+    
+    var warLineArr = this.warrantyClaimForm.get('warrLines').value;
+    var patch = this.warrantyClaimForm.get('warrLines') as FormArray;
+
+    var currDate = new Date();
+    var z = this.pipe.transform(currDate, 'y-MM-dd');
+    var clmDate = new Date(warLineArr[index].msilClaimDate);
+    var invDate = new Date(warLineArr[index].msilInvoiceDate);
+  
+    if(x==='MSILCLMDATE') {
+      if(clmDate>currDate) {
+        patch.controls[index].patchValue({ msilClaimDate: z })
+        alert("MSIL CLAIM DATE :" + "Should not be above Today's Date");
+      }
+    }
+
+    if(x==='MSILINVDATE') {
+      if(invDate>currDate) {
+        patch.controls[index].patchValue({ msilInvoiceDate: z })
+        alert("MSIL INVOICE DATE :" + "Should not be above Today's Date");
+      }
+    }
+   }
 
 }

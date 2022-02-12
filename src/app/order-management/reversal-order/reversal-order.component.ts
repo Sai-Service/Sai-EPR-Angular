@@ -100,10 +100,19 @@ export class ReversalOrderComponent implements OnInit {
   reversalOrderForm: FormGroup;
   invLineNo: number;
   variantDesc: string;
+  headerFound=false;
+  indReturn=false;
+  checkBoxAllItem=true;
+  displayLineDetails=true;
+  // checkBoxAllItem=true;
+  showAllItem=false;
   subDealerDesc: string;
   birthDate: Date;
+  cancelledQty:number;
+  gstPercentage:Text;
   reversalReason:string;
   emailId1: string;
+  colorDesc:string;
   basicValue: number;
   isTaxable: string;
   priceListHeaderId: number;
@@ -239,6 +248,7 @@ export class ReversalOrderComponent implements OnInit {
   showQtyRtncol = false;
   lineValidation = false;
   lstOrderItemLines:any=[];
+  lineItemRepeated=false;
 
 
   constructor(private fb: FormBuilder, private location: Location, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService) {
@@ -247,6 +257,7 @@ export class ReversalOrderComponent implements OnInit {
       reversalReason: [''],
       divisionName: [''],
       ouName: [''],
+      colorDesc:[''],
       subDealerDesc: [],
       variantDesc: [''],
       colorCode: [''],
@@ -325,10 +336,13 @@ export class ReversalOrderComponent implements OnInit {
 
   orderlineDetailsGroup() {
     return this.fb.group({
+      selectFlag:[''],
+      cancelledQty:[''],
       lineNumber: [''],
       tcs: [''],
       itemId: [],
       taxPer:[''],
+      gstPercentage:[''],
       uom:[''],
       disPer:[''],
       orderedItem: [''],
@@ -392,13 +406,15 @@ export class ReversalOrderComponent implements OnInit {
   }
 
   orderFind(orderNumber) {
-    this.orderManagementService.counterSaleReturnSearchHeader(orderNumber)
+    // alert('hi')
+    this.orderManagementService.SaleReturnSearchHeader(orderNumber)
     .subscribe(
       data => {
         if (data.code===200){
         if (data != null) {
           this.lstOrderItemLines=data.obj.oeOrderLinesAllList;
           this.reversalOrderForm.patchValue(data.obj);
+         this.headerFound=true;
         }
       }
       else if (data.code===400){
@@ -442,13 +458,12 @@ export class ReversalOrderComponent implements OnInit {
     this.emplId = Number(sessionStorage.getItem('emplId'));
     var rtvLineArr = this.reversalOrderForm.get('oeOrderLinesAllList').value;
     var len1 = rtvLineArr.length;
-
+    alert(len1)
     var lrm = 0;
     for (let i = len1 - 1; i >= 0; i--) {
       if (this.lineDetailsArray.controls[i].get('selectFlag').value != true) {
         this.lineDetailsArray.removeAt(i);
         lrm = lrm + 1;
-
       }
     }
 
@@ -488,7 +503,7 @@ export class ReversalOrderComponent implements OnInit {
 
 
   CheckLineValidations(i) {
-
+    alert('Hi')
     var rtvLineArr = this.reversalOrderForm.get('oeOrderLinesAllList').value;
     var itemcd = rtvLineArr[i].itemId;
     var rtnQty = rtvLineArr[i].cancelledQty;
@@ -540,5 +555,100 @@ export class ReversalOrderComponent implements OnInit {
     this.rtnDisAmt = Number(dAmt);
   }
 
-  OrderFind(orderNumber) { }
+
+
+  LineSelectFlag(e,index) {
+    var patch = this.reversalOrderForm.get('oeOrderLinesAllList') as FormArray;
+    var rtvLineArr = this.reversalOrderForm.get('oeOrderLinesAllList').value;
+    this.lineItemRepeated=false;
+  
+    var mItemId =rtvLineArr[index].itemId;
+    var arrLen =this.lineDetailsArray.length;
+    // alert("Length :"+arrLen);
+    // if (arrLen>1) {
+     if(mItemId >0) {
+        //  this.CheckForitemRepeat(mItemId,index)
+        //  if(this.lineItemRepeated) { 
+        //   this.lineDetailsArray.removeAt(index);
+        //   this.CalculateTotal();
+        //    return;
+        //   } else  {
+            this.lineDetailsArray.controls[index].get('cancelledQty').enable(); }
+          // } 
+  
+      else {
+            alert ( "Line :"+(index+1) + " - Select ITEM NUMBER first and click on Checkbox...");
+            patch.controls[index].patchValue({selectFlag:''})
+      }
+    }
+
+    validateQty(index: any){
+      var patch = this.reversalOrderForm.get('oeOrderLinesAllList') as FormArray;
+      var qtyLineArr = this.reversalOrderForm.get('oeOrderLinesAllList').value;
+      var lineRtnQty = qtyLineArr[index].cancelledQty;
+      var lineIssQty  = qtyLineArr[index].pricingQty;
+      var uPrice= qtyLineArr[index].unitSellingPrice;
+      var dPer = qtyLineArr[index].disPer;
+      var taxP=qtyLineArr[index].gstPercentage;
+      var  mUom = qtyLineArr[index].uom;
+      if ((mUom==='NO' && Number.isInteger(lineRtnQty)==false ) || lineRtnQty<=0 || lineRtnQty>lineIssQty  ) 
+      {
+        alert ("Invalid Quantity.\n[RETURN QTY] should be as per UOM  Or \nShould not be grater than [ISSUED QTY] ")
+        patch.controls[index].patchValue({cancelledQty:''})
+        patch.controls[index].patchValue({baseAmt:0})
+        patch.controls[index].patchValue({taxAmt:0})
+        patch.controls[index].patchValue({totAmt:0})
+        patch.controls[index].patchValue({disAmt:0})
+        patch.controls[index].patchValue({selectFlag:''})
+        this.lineDetailsArray.controls[index].get('cancelledQty').disable();
+          this.validateStatus=true;
+          this.saveButton=false;
+          this.validateStatus=true;
+          this.saveButton=false;
+        } 
+        else 
+        {
+          var baseAmt =lineRtnQty *uPrice;
+          var lineDisAmt =baseAmt*dPer/100; lineDisAmt.toFixed(2);
+          var txbleAmt  =baseAmt-lineDisAmt; txbleAmt.toFixed(2);
+          var taxAmt   =(txbleAmt * taxP/100); taxAmt.toFixed(2);
+          var totAmt   =txbleAmt+taxAmt; totAmt.toFixed(2);
+          baseAmt=Math.round((baseAmt + Number.EPSILON) * 100) / 100;
+          lineDisAmt=Math.round((lineDisAmt + Number.EPSILON) * 100) / 100;
+          txbleAmt=Math.round((txbleAmt + Number.EPSILON) * 100) / 100;
+          taxAmt=Math.round((taxAmt + Number.EPSILON) * 100) / 100;
+          totAmt=Math.round((totAmt + Number.EPSILON) * 100) / 100;
+         alert ("base amt,taxamt.totamt :" +baseAmt+","+taxAmt +","+totAmt);
+        patch.controls[index].patchValue({baseAmt:baseAmt})
+        patch.controls[index].patchValue({disAmt:lineDisAmt})
+        patch.controls[index].patchValue({taxAmt:taxAmt})
+        patch.controls[index].patchValue({totAmt:totAmt})
+        }
+        this.CalculateTotal()  
+    }
+
+
+
+    showAll(e) {
+      alert(e +'---'+e.target.checked)
+      if(this.headerFound) {
+        alert(e.target.checked)
+          if ( e.target.checked === true){
+            alert('hi')
+            // this.indReturn=false;
+            // this.checkBoxAllItem=false;
+            // this.showAllItem=true;
+            this.displayLineDetails=false;
+            this.validateStatus=true; 
+             }
+          else { 
+              this.displayLineDetails=true;
+             } 
+      }
+      else {
+        alert("Order Header Details Not Found...Please check"); e.target.checked=false;
+      }
+  }
+
+
 }
