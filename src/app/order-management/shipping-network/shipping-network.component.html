@@ -97,21 +97,53 @@
                     <ng-container   *ngFor="let group of lineDetailsArray().controls; let i= index" [formGroupName]="i" class="auto-style5">  
                                 <tr>
                                     <td style="text-align: center;width: 4rem;">{{i+1}}</td>
-                                    <td> <input   style="width:5rem;background-color: yellow;"    type="text" formControlName="fromOrg"  class="form-control"  ></td>
-                                    <!-- <td> <input  disabled style="width:13rem;" type="text"   formControlName="fromOrg" class="form-control"></td> -->
-                                    <td> <input  disabled style="width:5rem;"  type="number" formControlName="toOrg"  class="form-control"></td>
-                                    <td> <input  disabled style="width:5rem;"  type="number" formControlName="trfType" class="form-control"></td>
-                                    <td> <input  disabled style="width:5rem;"  type="number" formControlName="interOrgRcvble" class="form-control"></td>
-                                    <td> <input  disabled style="width:5rem;"  type="number" formControlName="interOrgPayable" class="form-control"></td>
-                                    <td> <input  disabled style="width:5rem;"  type="number" formControlName="custNo" class="form-control"></td>
-                                    <td> <input  disabled style="width:10rem;"  type="number" formControlName="custName" class="form-control"></td>
-                                    <td> <input  disabled style="width:10rem;"  type="number" formControlName="custSite" class="form-control"></td>
-                                    <td> <input  disabled style="width:5rem;"  type="number" formControlName="supNo" class="form-control"></td>
-                                    <td> <input  disabled style="width:10rem;"  type="number" formControlName="supName" class="form-control"></td>
-                                    <td> <input  disabled style="width:10rem;"  type="number" formControlName="supSite" class="form-control"></td>
-                                    <td> <input  disabled style="width:5rem;"  type="number" formControlName="overDueDays" class="form-control"></td>
-                                    <td> <input  disabled style="width:5rem;"  type="number" formControlName="startDate" class="form-control"></td>
-                                    <td> <input  disabled style="width:5rem;"  type="number" formControlName="endDate" class="form-control"></td>
+                                     <td>
+                                        <select  formControlName="fromOrg" id="fromOrg" [(ngModel)]="fromOrg"  class="form-control"  
+                                            style="width: 7rem; height: 25px;background-color: yellow;"  (ngModelChange)='onSelectFromOrg($event, i)' >
+                                            <option disabled>--Select--</option>
+                                            <option *ngFor="let sc of locIdList"  [ngValue]="sc.locId">
+                                            {{sc.locCode}}
+                                            <!-- -{{sc.locName}} -->
+                                            </option>
+                                        </select>
+                                    </td>
+
+                                <!-- (ngModelChange)='onOptionsSelectedCategory($event, i)' -->
+                                <!-- style="height: 20px;font-size: 10px;width: 120px;" -->
+                                    <td>
+                                        <select  formControlName="toOrg" id="toOrg" [(ngModel)]="toOrg"  class="form-control"  
+                                        style="width: 7rem; height: 25px;background-color: yellow;" (ngModelChange)='onSelectToOrg($event, i)' >
+                                            <option disabled>--Select--</option>
+                                            <option *ngFor="let sc of locIdList"  [ngValue]="sc.locId">
+                                            {{sc.locCode}}
+                                            <!-- -{{sc.locName}} -->
+                                            </option>
+                                        </select>
+                                    </td>
+
+                                    <!-- <td> <input  disabled style="width:5rem;"  type="number" formControlName="trfType" class="form-control"></td> -->
+
+                                    <td>
+                                        <select  formControlName="trfType"  id ="trfType"  [(ngModel)]="trfType"  class="form-control" 
+                                        (ngModelChange)='onSelectTrfType($event)' style="width: 7rem; height: 25px;background-color: yellow;"  >
+                                            <!-- <option>--Select--</option> -->
+                                            <option value="INVOICE">INVOICE</option>
+                                            <option value="RECEIPT">RECEIPT</option>
+                                        </select>
+                                    </td>
+                                    <!-- (ngModelChange)='OnApplyTypeSelected($event)' -->
+
+                                    <td> <input  disabled style="width:5rem;height: 25px"  type="number" formControlName="interOrgRcvble" class="form-control"></td>
+                                    <td> <input  disabled style="width:5rem;height: 25px"  type="number" formControlName="interOrgPayable" class="form-control"></td>
+                                    <td> <input  disabled style="width:5rem;height: 25px"  type="number" formControlName="custNo" class="form-control"></td>
+                                    <td> <input  disabled style="width:10rem;height: 25px"  type="number" formControlName="custName" class="form-control"></td>
+                                    <td> <input  disabled style="width:10rem;height: 25px"  type="number" formControlName="custSite" class="form-control"></td>
+                                    <td> <input  disabled style="width:5rem;height: 25px"  type="number" formControlName="supNo" class="form-control"></td>
+                                    <td> <input  disabled style="width:10rem;height: 25px"  type="number" formControlName="supName" class="form-control"></td>
+                                    <td> <input  disabled style="width:10rem;height: 25px"  type="number" formControlName="supSite" class="form-control"></td>
+                                    <td> <input  disabled style="width:5rem;height: 25px"  type="number" formControlName="overDueDays" class="form-control"></td>
+                                    <td> <input  disabled style="width:5rem;height: 25px"  type="number" formControlName="startDate" class="form-control"></td>
+                                    <td> <input  disabled style="width:5rem;height: 25px"  type="number" formControlName="endDate" class="form-control"></td>
    
                                     <!-- <td> <input   style="width:4rem;background-color: yellow;" name ='orderQty{{i}}'  type="number" formControlName="orderQty" class="form-control" ></td> 
                                     <td> <input  disabled style="width:7rem;"  type="number" formControlName="totalValue" class="form-control"></td>

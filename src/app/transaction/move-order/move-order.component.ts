@@ -470,15 +470,6 @@ getInvItemId($event)
     }
   }
 }
-// searchFromArray1(arr, regex) {
-//   let matches = [], i;
-//   for (i = 0; i < arr.length; i++) {
-//     if (arr[i].match(regex)) {
-//       matches.push(arr[i]);
-//     }
-//   }
-//   return matches;
-// };
 
 
  onOptionSelectedSubInv(event:any,i)
@@ -579,9 +570,10 @@ getInvItemId($event)
  }
 AvailQty(event:any,i:number) 
 {
+  // alert(event);
   var trxLnArr =this.moveOrderForm.get('trxLinesList').value;
   var itemid=trxLnArr[i].invItemId;
-  var locId=trxLnArr[i].frmLocatorId;
+  var locId=event;
   var onhandid=trxLnArr[i].id;
   // trxLnArr1.controls[i].patchValue({locatorId:locId});
   // alert(locId+'locatorID');

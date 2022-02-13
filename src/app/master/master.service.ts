@@ -167,6 +167,8 @@ export class MasterService {
       params: REQUEST_PARAMS,
     });
   }
+  
+
   invItemList2(itemType,deptName,divisionId):Observable<any> {
     const REQUEST_PARAMS = new HttpParams().set('itemType', itemType)
     .set('dept', deptName)
@@ -445,8 +447,6 @@ public LocationMasterSubmit(LocationMasterRecord) {
   const url = this.ServerUrl + '/locationMst';
   return this.http.post(url, LocationMasterRecord, options);
 }
-
-
 
 
 getLocationSearch1(ouId): Observable<any> {
@@ -3208,7 +3208,9 @@ TypeList():Observable<any>
 }
 
 
-
+WorkShopIcIssue(locId,type):Observable<any>{
+  return this.http.get(this.ServerUrl+`/jobCard/icTypeJobList?locId=${locId}&icType=${type}`);
+}
 
 ItemIdList1(locationId,subInv):Observable<any>
 {
@@ -3501,9 +3503,7 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
           return this.http.post(url, options);
           // http://localhost:8081/AccountTrf/AcctTrfPost?emplId=216
         }
-
-    
-
+        
 
       public CashBankTrfSaveSubmit(CashBankTrfRecord,mEmplId) {
         const options = {

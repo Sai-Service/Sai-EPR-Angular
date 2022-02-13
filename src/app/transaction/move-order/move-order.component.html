@@ -16,7 +16,7 @@
                 <input type="text"  class="form-control" formControlName="reqNo" id="reqNo" name="reqNo" #reqNo>
             </td>
             <td colspan="8" style="text-align: left; width: 100%;">
-                <button type="submit" class="btn btn-primary" (click)="search(reqNo)"><i class="fa fa-search"></i></button>
+                <button type="button" class="btn btn-primary" (click)="search(reqNo)"><i class="fa fa-search"></i></button>
             </td>
         </tr>
     </table>
@@ -270,20 +270,20 @@
             </div>
             <ng-template #thenBlock>
               <td>
-                <button  type="submit" class="btn btn-primary" (click)="newmoveOrder()">Save</button>
+                <button  type="button" class="btn btn-primary" (click)="newmoveOrder()">Save</button>
               </td>
 
               </ng-template>
               <ng-template #elseBlock>
                 <td>
-                  <button disabled type="submit" class="btn btn-primary" (click)="newmoveOrder()">Save</button>
+                  <button disabled type="button" class="btn btn-primary" (click)="newmoveOrder()">Save</button>
                 </td>
               </ng-template>
               <td>
-                <button  type="submit" class="btn btn-primary" (click)="resetMoveOrder()">Reset</button>
+                <button  type="button" class="btn btn-primary" (click)="resetMoveOrder()">Reset</button>
               </td>
               <td>
-                <button  type="submit" class="btn btn-primary" (click)="closeMoveOrder()">Close</button>
+                <button  type="button" class="btn btn-primary" (click)="closeMoveOrder()">Close</button>
               </td>
           </tr>
         </table>
@@ -298,7 +298,7 @@
             <input type="text"  class="form-control" formControlName="JobNo" id="JobNo" name="JobNo" #JobNo>
         </td>
         <td colspan="8" style="text-align: left; width: 100%;">
-            <button type="submit" class="btn btn-primary" (click)='searchByJobNo(JobNo)' ><i class="fa fa-search"></i></button>
+            <button type="button" class="btn btn-primary" (click)='searchByJobNo(JobNo)' ><i class="fa fa-search"></i></button>
         </td>
     </tr>
 </table>

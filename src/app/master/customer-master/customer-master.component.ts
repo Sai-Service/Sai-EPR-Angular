@@ -761,6 +761,7 @@ export class CustomerMasterComponent implements OnInit {
     // delete val.spinCd;comment by vinita
     delete val.sstartDate;
     delete val.sendDate;
+    delete val.tdsApplDate;
     return val;
   }
   newOnlySiteMast() {
@@ -850,7 +851,7 @@ export class CustomerMasterComponent implements OnInit {
 
   UpdateSiteCustMastExeSite() {
 
-    const formValue: IcustomerMaster = this.customerMasterForm.value;
+    const formValue: IcustomerMaster =  this.transDataForSite(this.customerMasterForm.value);
     formValue.termId = this.customerMasterForm.get('paymentType').value;
     formValue.staxCategoryName=this.customerMasterForm.get('staxCatName').value;
     this.service.UpdateCustExeSiteMasterById(formValue).subscribe((res: any) => {

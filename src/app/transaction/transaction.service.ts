@@ -237,7 +237,6 @@ avgCurrentCost(mitemId,mLocId): Observable<any> {
 }
 
 public AvgCostUpdateSubmit(AvgCostUpdateRecord) {
-  alert('in service')
   const options = {
     headers: this.headers
   };
@@ -255,20 +254,24 @@ getAvgHistoryList(mLocId,mitemId,frmDate,toDate): Observable<any> {
 
   lineStatusLst(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/CmnType/WARRANTY_STATUS');
-    // // http://localhost:8081/cmnLookup/CmnType/WARRANTY_STATUS
-  }
+   }
 
   itemTypeLst(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/CmnType/ITEM_TYPE');
-  // http://localhost:8081/cmnLookup/CmnType/ITEM_TYPE
+   }
 
-  }
-
-  getWarrantyData(fromDt,toDt,ouId,lineStat,itmType): Observable<any> {
-    alert(fromDt+","+toDt+","+ouId+","+lineStat+","+itmType);
-    return this.http.get(this.ServerUrl+`/oemWarranty/warrantyData?fromDate=${fromDt}&toDate=${toDt}&ouId=${ouId}&lineStatus=${lineStat}&itemType=${itmType}`);
-    //  http://localhost:8081/oemWarranty/warrantyData
+    warrDataList(fromDt,toDt,ouId,lineStat,itmType):Observable<any> {
+      const REQUEST_PARAMS = new HttpParams().set('fromDate', fromDt)
+      .set('toDate', toDt)
+      .set('ouId',ouId)
+      .set('lineStatus', lineStat)
+      .set('itemType',itmType)
+      const REQUEST_URI = this.ServerUrl +'/oemWarranty/warrantyData';
+      return this.http.get(REQUEST_URI, {
+        params: REQUEST_PARAMS,
+      });
     }
-     
+
+
   
  }
