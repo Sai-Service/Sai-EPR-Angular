@@ -171,10 +171,22 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   onhand1: any;
   Avalqty: number;
   isVisible: boolean = false;
+  isVisibleGatePass:boolean=false;
   isVisible15: boolean = false;
   isVisible16: boolean = false;
   isVisible17: boolean = false;
   isVisible18: boolean = false;
+
+  isVisibleCreateOrder:boolean=false;
+  isVisiblePickTiPreview:boolean=false;
+  isVisibleUpdate:boolean=false;
+  isVisibleGenerateInvoice:boolean=false;
+  isVisibleGenerateGatePass:boolean=false;
+  isVisiblePayment:boolean=false;
+  isVisibleViewInvoice:boolean=false;
+  isVisibleViewReceipt:boolean=false;
+  isVisibleViewGatePass:boolean=false;
+
   displayPerson: boolean;
   public minDate = new Date();
   public cityList: Array<string>[];
@@ -597,6 +609,16 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
   
+    this.isVisibleCreateOrder=true;
+    this.isVisiblePickTiPreview=false;
+    this.isVisibleUpdate=false;
+    this.isVisibleGenerateInvoice=false;
+    this.isVisibleGenerateGatePass=false;
+    this.isVisiblePayment=false;
+    this.isVisibleViewInvoice=false;
+    this.isVisibleViewReceipt=false;
+    this.isVisibleViewGatePass=false;
+
     this.isVisible15=true;
     this.isVisible16=true;
     $("#wrapper").toggleClass("toggled");
@@ -786,6 +808,10 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           if (data.code === 200) {
+            this.isVisibleCreateOrder=false;
+            this.isVisiblePickTiPreview=true;
+            this.isVisibleUpdate=true;
+            this.isVisibleGenerateInvoice=true;
             this.lstgetOrderLineDetails = data.obj.oeOrderLinesAllList;
             this.lstgetOrderTaxDetails = data.obj.taxAmounts;
             this.allDatastore = data.obj;
@@ -873,9 +899,11 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
             // alert( data.obj.orderStatus +'-----' + data.obj.trxNumber);
             if (data.obj.orderStatus != 'BOOKED' && data.obj.trxNumber != null) {
               this.isVisible = true;
+              this.isVisibleGatePass=true;
             }
             else {
               this.isVisible = false;
+              this.isVisibleGatePass=false;
             }
             this.CounterSaleOrderBookingForm.controls['emplId'].patchValue(Number(sessionStorage.getItem('emplId')));
             if (this.allDatastore.createOrderType === 'Pick Ticket' && this.allDatastore.flowStatusCode === 'BOOKED') {
@@ -963,28 +991,45 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                   })
             }
             if (data.obj.orderStatus === 'INVOICED' && data.obj.gatePassYN === 'Y') {
-              this.displayAfterGatePass = false;
+              // this.displayAfterGatePass = false;
               // this.isVisible = false;
-              this.displaypickTicketUpdate = true;
-              this.displaypickTicketInvoice = true;
-              this.PaymentButton = true;
-              this.displaycounterSaleOrderSave = false;
+              // this.displaypickTicketUpdate = true;
+              // this.displaypickTicketInvoice = true;
+              // this.PaymentButton = true;
+              // this.displaycounterSaleOrderSave = false;
               this.CounterSaleOrderBookingForm.disable();
-              this.isVisible15=false;
-              this.isVisible16=false;
+              // this.isVisible15=false;
+              // this.isVisible16=false;
+              this.isVisibleUpdate=false;
+              this.isVisibleGenerateInvoice=false;
+              this.isVisibleGenerateGatePass=false;
+              this.isVisiblePayment=false;
+              this.isVisibleViewInvoice=true;
+              this.isVisibleViewReceipt=true;
+              this.isVisibleViewGatePass=true;
+              this.isVisiblePickTiPreview=false;
              this.CounterSaleOrderBookingForm.get('remarks').disable();
               for (let i=0; data.obj.oeOrderLinesAllList.length; i++){
                 control.controls[i].get('flowStatusCode').disable();
               }
             }
             else if (data.obj.orderStatus === 'INVOICED' && data.obj.gatePassYN === 'N') {
+              this.isVisibleUpdate=false;
+              this.isVisibleGenerateInvoice=false;
+              this.isVisibleGenerateGatePass=true;
+              this.isVisiblePayment=true;
+              this.isVisibleViewInvoice=true;
+              this.isVisibleViewReceipt=true;
+              this.isVisiblePickTiPreview=false;
               //  alert(data.obj.orderStatus +'---'+data.obj.gatePassYN )
-              this.displayAfterGatePass = true;
-              this.isVisible15=false;
-              this.isVisible16=false;
-              this.isVisible = true;
-              this.displaypickTicketUpdate = true;
-              this.displaycounterSaleAllButtons = false;
+              // this.displayAfterGatePass = true;
+              // this.isVisible15=false;
+              // this.isVisible16=false;
+              // this.isVisible = true;
+              // this.isVisibleGatePass=true;
+              // this.displaypickTicketUpdate = true;
+              // this.displaycounterSaleAllButtons = false;
+
               this.CounterSaleOrderBookingForm.get('boxQty').enable();
               this.CounterSaleOrderBookingForm.get('driverName').enable();
               this.CounterSaleOrderBookingForm.get('vehNo').enable();
