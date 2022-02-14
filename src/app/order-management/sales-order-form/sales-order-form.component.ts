@@ -921,6 +921,19 @@ export class SalesOrderFormComponent implements OnInit {
     }
   }
 
+  onOptionsSelectedBasicPrice(color:any){
+    // alert(color)
+    if (Number(sessionStorage.getItem('divisionId')) === 2) {
+      var model = this.SalesOrderBookingForm.get('model').value;
+      var variant = this.SalesOrderBookingForm.get('variant').value;
+      this.orderManagementService.dealerShipBaseAmt(model, variant,color)
+        .subscribe(
+          data => {
+            this.SalesOrderBookingForm.patchValue({ basicValue: data.obj[0].basicValue })
+          }
+        );
+    }
+  }
 
   onOptionsSelectedColor(variant) {
     // if (this.currentOpration != 'orderSearch') {
@@ -934,16 +947,7 @@ export class SalesOrderFormComponent implements OnInit {
           this.fuelType = select.fuelType;
         }
       );
-    if (Number(sessionStorage.getItem('divisionId')) === 2) {
-      var model = this.SalesOrderBookingForm.get('model').value;
-      var variant = this.SalesOrderBookingForm.get('variant').value;
-      this.orderManagementService.dealerShipBaseAmt(model, variant)
-        .subscribe(
-          data => {
-            this.SalesOrderBookingForm.patchValue({ basicValue: data.obj[0].basicValue })
-          }
-        );
-    }
+  
     // }
   }
 
