@@ -1997,8 +1997,15 @@ export class SalesOrderFormComponent implements OnInit {
     if (index === 0) {
     }
     else {
+      var formVal = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value;
+      var formArr = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
       this.orderlineDetailsArray().removeAt(index);
       this.TaxDetailsArray().removeAt(index);
+      for (let i = 0; i < formVal.length; i++) {
+        (formArr.controls[i]).patchValue({
+          lineNumber: i + 1,
+        });
+      }
     }
   }
   createInvoice() {
