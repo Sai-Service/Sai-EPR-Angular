@@ -1258,6 +1258,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     else {
       if (createOrderType === 'Sales Order') {
         this.displaysalesRepName = false;
+        this.CounterSaleOrderBookingForm.get('othRefNo').enable();
       }
     }
   }
@@ -1545,14 +1546,17 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
         data => {
           if (data.code === 200) {
             this.othRefNoSearchFnData = data.obj;
-            this.othRefNo = data.obj.orderNumber1;
-            this.salesRepName = data.obj.salesRepName1;
-            this.tlName = data.obj.tlName1;
             this.CounterSaleOrderBookingForm.patchValue(this.othRefNoSearchFnData);
             if (this.custAccountNo != this.othRefNoSearchFnData.custAccountNo1) {
-              alert('Sales Order Customer & Counter Sale Order Customer Not Match')
+              alert('Sales Order Customer & Counter Sale Order Customer Not Match');
+              this.CounterSaleOrderBookingForm.get('othRefNo').reset()
+              return;
             }
-            else { }
+            else {
+              this.othRefNo = data.obj.orderNumber1;
+              this.salesRepName = data.obj.salesRepName1;
+              this.tlName = data.obj.tlName1;
+             }
           }
           else {
             if (data.code === 400) {
@@ -1848,9 +1852,9 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       this.CounterSaleOrderBookingForm.patchValue({ orderedDate: orderedDate });
       if (this.CounterSaleOrderBookingForm.get('createOrderType').value === 'Sales Order' && this.CounterSaleOrderBookingForm.get('othRefNo').value === undefined) {
         alert('Please Enter Reference Number First !');
-        this.CounterSaleOrderBookingForm.get('segment').disable();
-        this.orderlineDetailsArray().get('segment').disable();
-        (<any>this.CounterSaleOrderBookingForm.get('othRefNo')).nativeElement.focus();
+        this.CounterSaleOrderBookingForm.get('othRefNo').enable();
+        // this.orderlineDetailsArray().get('segment').disable();
+        // (<any>this.CounterSaleOrderBookingForm.get('othRefNo')).nativeElement.focus();
       }
       else {
         //let select = this.invItemList1.find(d => d.segment === segment);
@@ -2340,6 +2344,11 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     for (let i = 0; i < orderLines.length; i++) {
       orderLines[i].taxCategoryName = orderLines[i].taxCategoryName.taxCategoryName;
       orderLines[i].frmLocatorId = orderLines[i].frmLocatorName;
+    }
+    // alert(this.othRefNo+'----'+ this.createOrderType)
+    if (this.createOrderType === 'Sales Order' && this.othRefNo===undefined){
+      alert('Please enter Sales Order Reference number...!');
+      return;
     }
     let jsonData = this.CounterSaleOrderBookingForm.getRawValue();
     var custPoDate = this.CounterSaleOrderBookingForm.get('custPoDate').value;
@@ -2893,11 +2902,13 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   onOptionsSelectedTransactionType(transactionTypeName: string) {
     if (transactionTypeName != undefined) {
       // alert(transactionTypeName)'
+      // alert(this.op)
+      if (this.op !='Search'){
       if (this.CounterSaleOrderBookingForm.get('custName').value == undefined && this.CounterSaleOrderBookingForm.get('custAddress').value == undefined) {
         alert("Please Get Proper Customer Details!.")
         return;
       }
-
+    }
       this.displayCSOrderAndLineDt = false;
       let select = this.orderTypeList.find(d => d.transactionTypeName === this.transactionTypeName);
       console.log(select);
