@@ -178,7 +178,7 @@ export class MoveOrderComponent implements OnInit {
       lineNumber:[''],
       invItemId:['',[Validators.required]],
       // frmSubInvCode:[''],
-      frmLocatorId:['',[Validators.required]],
+      frmLocatorId:[],
       uom:[''],
       segmentName:[],
       // quantity:[],
@@ -188,7 +188,7 @@ export class MoveOrderComponent implements OnInit {
       toLocatorId:[],
       description:[],
       segment:[],
-      fromLocator:[],
+      fromLocator:['',[Validators.required]],
       frmLocator:[],
       resveQty:[],
       avlqty:[''],
@@ -336,9 +336,8 @@ export class MoveOrderComponent implements OnInit {
 transdata(val)
 {
 }
-newmoveOrder()
-{
-   
+newmoveOrder(){ 
+ 
   if (this.moveOrderForm.valid) {
  var trans=this.transType.find(d=>d.transactionTypeId===this.moveOrderForm.get('transactionTypeId').value);
 //  var loc=this.getfrmSubLoc.find(d=>d.locatorId===this.moveOrderForm.get('frmLocatorId').value);
@@ -381,7 +380,7 @@ newmoveOrder()
     else
     {
       if (res.code === 400) {
-        alert("Code already present in data base");
+        alert(res.message);
         this.moveOrderForm.reset();
       }
     }
@@ -572,10 +571,11 @@ AvailQty(event:any,i:number)
 {
   // alert(event);
   var trxLnArr =this.moveOrderForm.get('trxLinesList').value;
+  var trxLnArr1 =this.moveOrderForm.get('trxLinesList') as FormArray;
   var itemid=trxLnArr[i].invItemId;
   var locId=event;
   var onhandid=trxLnArr[i].id;
-  // trxLnArr1.controls[i].patchValue({locatorId:locId});
+  trxLnArr1.controls[i].patchValue({frmLocatorId:locId});
   // alert(locId+'locatorID');
   var subcode=this.moveOrderForm.get('frmSubInvCode').value;
   // alert(subcode.subInventoryId);
