@@ -67,14 +67,21 @@
             </td>
             <td>
               <!-- <input type="text" class="form-control" formControlName="repairNo"> -->
-              <select type="text" class="form-control" formControlName="repairNo" (ngModelChange)="onChangeRepairNo($event)">
+              <!-- <select type="text" class="form-control" formControlName="repairNo" (ngModelChange)="onChangeRepairNo($event)">
                   <option>--Select--</option>
                   <option *ngFor="let repairNo of workshopIssue">{{repairNo.jobCardNum}} -- {{repairNo.regNo}}</option>
-                </select>
-                <span
-                *ngIf="getGroupControl('repairNo').touched && getGroupControl('repairNo').invalid">Valid RepairNo
-               </span>
-            </td>
+                </select> -->
+              
+               <input type="text" (keyup)="getrepairOrder($event)" formControlName="repairNo"   id="repairFirstWay"  list="dynmicUserIds2" class="form-control"  style="height: 20px;" (ngModelChange)="onChangeRepairNo($event)"/>
+               <datalist id="dynmicUserIds2">
+                 <option *ngFor="let repairNo of workshopIssue">{{repairNo.jobCardNum}} -- {{repairNo.regNo}}
+                   </option>
+                  </datalist>
+                  <span
+                  *ngIf="getGroupControl('repairNo').touched && getGroupControl('repairNo').invalid">Valid RepairNo
+                 </span>          
+        
+                    </td>
             <td style="width: 15%" class="LabelFontStyle1">
               Billable Type:
             </td>

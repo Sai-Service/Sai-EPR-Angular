@@ -135,6 +135,8 @@ export class MoveOrderComponent implements OnInit {
  segment:string;
  userList2: any[] = [];
   lastkeydown1: number = 0;
+  userList1: any[] = [];
+  lastkeydown2: number = 0;
   fromLocator:string;
 
   public itemMap = new Map<string, StockTransferRow >();
@@ -470,7 +472,17 @@ getInvItemId($event)
     }
   }
 }
-
+getrepairOrder($event)
+{
+  // alert('in getInvItemId')
+   let userId=(<HTMLInputElement>document.getElementById('repairFirstWay')).value;
+   this.userList2=[];
+   if (userId.length > 2) {
+    if ($event.timeStamp - this.lastkeydown1 > 200) {
+      // this.userList2 = this.searchFromArray1(this.ItemIdList, userId);
+    }
+  }
+}
 
  onOptionSelectedSubInv(event:any,i)
  {
@@ -494,14 +506,7 @@ getInvItemId($event)
   // var itemid=trxLnArr1[i].invItemId;
   // var itemid =select1.itemId;
   trxLnArr2.controls[i].patchValue({invItemId:select1.itemId})
-  // alert (select1.itemId);
-  // var frmSubCode=trxLnArr1[i].frmSubInvCode;
-  // alert("FromSub"+frmSubCode);
-  // alert(select1);
-  // alert(trxLnArr1.get +"item");
-
-    // alert('Item'+itemid);
-  var subInv=this.subInvCode.subInventoryId;
+   var subInv=this.subInvCode.subInventoryId;
   // debugger;
     this.service.getfrmSubLoc(this.locId,select1.itemId,subInv).subscribe(
       data =>{
