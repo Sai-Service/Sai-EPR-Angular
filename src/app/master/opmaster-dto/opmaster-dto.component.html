@@ -1009,13 +1009,12 @@
                                                                     </option>
                                                                 </select>
                                                             </td>
-                                                            <td> <input type="number" min="0"
+                                                            <td> <input type="number" min="0.00"
                                                                     formControlName="orderedQty"
                                                                     (keydown.tab)="onKey(i)"
-                                                                    oninput="this.value = Math.abs(this.value)"
                                                                     style="width: 4rem;" class="form-control">
                                                             </td>
-
+                                                            <!-- oninput="this.value = Math.abs(this.value)" -->
 
                                                             <input hidden formControlName="diss1" value={{diss1}}>
 

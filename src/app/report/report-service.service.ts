@@ -81,6 +81,14 @@ export class ReportServiceService {
     });
   }
 
+  spslReturnRegisterReport(invcDt1,invcDt4,locId){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprSalesReturn?fromDate=${invcDt1}&toDate=${invcDt4}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
   spbackOrderQtyReport(invcDt1,invcDt4,locId,custNo,ordNo){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/SprBackOrder?fromDate=${invcDt1}&toDate=${invcDt4}&locId=${locId}&custNo=${custNo}&ordNo=${ordNo}`;
     return this.http.get(REQUEST_URI, {

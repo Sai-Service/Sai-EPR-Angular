@@ -99,6 +99,17 @@
                                         class="form-control" style="text-align: left; width: 100%;">
                                 </td>
                             </tr>
+                            <tr>
+                                <td style="width: 15%" class="LabelFontStyle"> Reversal&nbsp;Reason&nbsp;:&nbsp;</td> 
+                               <td>
+                                    <select formControlName="reversalReason" id="reversalReason" class="form-control" style="width: 170px;">
+                                        <option>--Select--</option>
+                                        <option *ngFor="let rr of reversalReasonList">
+                                            {{cc.ColorCode}}--{{cc.colorDesc}}
+                                        </option>
+                                    </select>
+                                </td>
+                            </tr>
                         </table>
                     </fieldset>
                     <div *ngIf ="rtnSearch;then Blk1;else Blk2"></div>
@@ -318,7 +329,7 @@
                                             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button>
                                         </td>
                                          <!-- Modal -->
-                                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width:600px;">
+                                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 300px; text-align: center;margin-left: 40%;">
                                                 <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-body">
@@ -348,7 +359,7 @@
                                                 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalLong">Close</button>
                                                 </td>
                                                 <!-- Modal -->
-                                                <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" style="width:600px;">
+                                                <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" style="width: 300px; text-align: center;margin-left: 40%;">
                                                     <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-body">
@@ -394,7 +405,7 @@
                                                 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button>
                                             </td>
                                             <!-- Modal -->
-                                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width:600px;">
+                                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 300px; text-align: center;margin-left: 40%;">
                                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-body">

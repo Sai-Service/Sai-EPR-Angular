@@ -419,9 +419,15 @@ public pickTicketInvoiceFun(pickTicketInvDels) {
     }
   }
 
-  dealerShipBaseAmt(model,variant): Observable<any> {
+  // dealerShipBaseAmt(model,variant): Observable<any> {
+  //   if(variant !=null &&  variant!=null) {
+  //    return this.http.get(this.ServerUrl + `/orderHeader/getVehiclePrice?code=${model}&variant=${variant}`);
+  //   }
+  // }
+
+  dealerShipBaseAmt(model,variant,color): Observable<any> {
     if(variant !=null &&  variant!=null) {
-     return this.http.get(this.ServerUrl + `/orderHeader/getVehiclePrice?code=${model}&variant=${variant}`);
+     return this.http.get(this.ServerUrl + `/orderHeader/getVehiclePrice?code=${model}&variant=${variant}&colorCode=${color}`);
     }
   }
 
