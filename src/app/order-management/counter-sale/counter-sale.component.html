@@ -575,15 +575,7 @@
                     <td>
                         <input disabled type="text" formControlName="priceListName" [(ngModel)]='priceListName'
                             value={{priceListName}} class="form-control" style="width: 160px;">
-                        <!-- <select formControlName="priceListName" id="priceListName" class="form-control"
-                        style="width: 160px;"   (ngModelChange)="onOptionsSelectedPriceListID($event)">
-                        <option>--Select--</option>
-                        <option *ngFor="let pl of priceListNameList">
-                            {{pl.priceListName}}
-                        </option>
-                    </select> -->
-                        <!-- <span  *ngIf="!CounterSaleOrderBookingForm.get('priceListName').valid && CounterSaleOrderBookingForm.get('priceListName').touched" class="cross-validation-error-message alert">
-                        Select&nbsp;Create&nbsp;Order&nbsp;Type&nbsp;Name </span> -->
+                        
                         <input hidden type="number" formControlName="priceListId" [(ngModel)]='priceListId'
                             value={{priceListId}} class="form-control" style="width: 160px;">
 
@@ -628,8 +620,15 @@
                         Remark&nbsp;:&nbsp;
                     </td>
                     <td colspan="5">
+                        <div *ngIf="displayremarks; then thenremarks; else elseremarks"></div>
+                        <ng-template #thenremarks>
                         <input type="text" formControlName="remarks" value={{remarks}} class="form-control"
                             placeholder="Enter Remark" style="width: 100%;">
+                        </ng-template>
+                        <ng-template #elseremarks>
+                            <input type="text" formControlName="remarks" value={{remarks}} class="form-control"
+                            placeholder="Enter Remark" style="width: 100%;font-weight: bold;color: blue;">
+                        </ng-template>
                     </td>
                 </tr>
                 <tr>

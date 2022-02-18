@@ -186,6 +186,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   isVisibleViewInvoice: boolean = false;
   isVisibleViewReceipt: boolean = false;
   isVisibleViewGatePass: boolean = false;
+  displayremarks=true;
 
   displayPerson: boolean;
   public minDate = new Date();
@@ -1133,7 +1134,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     var orderLines = orderLines1.getRawValue();
     var exLines = this.lstgetOrderLineDetails.length;
     for (let k = 0; k < orderLines.length; k++) {
-      alert(orderLines[k].orderedQty)
+      // alert(orderLines[k].orderedQty)
       if (orderLines[k].orderedQty === 0 || orderLines[k].orderedQty ==='0') {
         if (orderLines[k].flowStatusCode === 'BOOKED' && orderLines[k].disPer != 0 && orderLines[k].disAmt === 0 && (orderLines[k].baseAmt === 0 || orderLines[k].baseAmt === '0') && (orderLines[k].taxAmt === 0 || orderLines[k].taxAmt === '0') && (orderLines[k].totAmt === 0 || orderLines[k].totAmt === '0')) {
           alert('Discount Amount is wrong for Line No ' + (k + 1) + '   And Item No:- ' + orderLines[k].segment)
@@ -1432,8 +1433,11 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
             this.isDisabled3 = true;
             this.customerNameSearch.splice(0, this.customerNameSearch.length);
             console.log(this.customerNameSearch);
-            // this.transactionTypeName = 'Spares Sale - Credit';
-            // this.CounterSaleOrderBookingForm.patchValue({ createOrderType: 'Pick Ticket' });
+            if (Number(sessionStorage.getItem('ouId'))===22 && data.obj.classCodeType==='EXPORTER'){
+              this.displayremarks=false;
+              this.CounterSaleOrderBookingForm.patchValue({remarks:'22 - Export Order'});
+              this.CounterSaleOrderBookingForm.get('remarks').disable();
+            }
           }
           else {
             if (data.code === 400) {
@@ -1934,7 +1938,6 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                       }
                     }
                     if (select.itemId != null) {
-                      // this.getLocatorDetails(k, select.itemId);
                       let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
                       var invTp = controlinv.controls[k].get('invType').value;
                       // this.service.getfrmSubLoc(this.locId, select.itemId, this.subInventoryId).subscribe(
@@ -1961,7 +1964,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                               controlinv.controls[k].patchValue({ frmLocator: selLocator[0].segmentName });
                               controlinv.controls[k].patchValue({ onHandQty: selLocator[0].onHandQty });
                               controlinv.controls[k].patchValue({ id: selLocator[0].id });
-                              controlinv.controls[k].patchValue({ unitSellingPrice: selLocator[0].prc });
+                              controlinv.controls[k].patchValue({ unitSellingPrice: selLocator[0].prc })
                             }
                             else {
                               // alert('2');
@@ -2014,7 +2017,6 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                           uom: data.obj[i].uom,
                           // unitSellingPrice: data.obj[0].priceValue,by vinita
                         });
-
                         this.orderManagementService.getTaxCategoriesForSales(custtaxCategoryName, data.obj[i].taxPercentage)
                           .subscribe(
                             data1 => {
@@ -2037,13 +2039,25 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                       }
                     }
                     if (select.itemId != null) {
-                      // this.getLocatorDetails(k, select.itemId);
+                     
+
                       let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
                       var invTp = controlinv.controls[k].get('invType').value;
+                      var utc = controlinv.controls[k].get('unitSellingPrice').value;
+                      if (this.custClassCode.includes("EXPORTER") && Number(sessionStorage.getItem('ouId')) === 22) {
+                        alert('yyuuuuu');
+                          (controlinv.controls[k]).patchValue({
+                            unitSellingPrice: data.obj[0].mrp
+                          });  
+                          utc=data.obj[0].mrp;
+                        }
+                       
+                        alert(utc);
                       // this.service.getfrmSubLoc(this.locId, select.itemId, this.subInventoryId).subscribe(
                       this.service.getfrmSubLocPrice(this.locId, select.itemId, this.subInventoryId).subscribe(
                         data => {
                           console.log(data);
+                         
                           if (data.length === 0) {
                             // alert('1')
                             alert('Item Not Found In Stock!.');
@@ -2063,20 +2077,24 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                             return;
                           } else {
                             this.getfrmSubLoc = data;
-                            console.log(this.getfrmSubLoc);
+                           
                             this.locData[k] = data;
                             var selLocator = this.locData[k];
-                            console.log(this.locData[k]);
-                            // alert(selLocator[0].id );
+                           
+                            if (this.custClassCode.includes("EXPORTER") && Number(sessionStorage.getItem('ouId')) === 22) {
+
+                            }else{
+                              utc = selLocator[0].prc;
+                            }
                             controlinv.controls[k].get('frmLocatorId').enable();
-                            if (this.getfrmSubLoc.length == 1) {
+                            if (this.getfrmSubLoc.length == 1 ) {
 
                               controlinv.controls[k].patchValue({ onHandId: selLocator[0].segmentName });
                               controlinv.controls[k].patchValue({ frmLocatorId: selLocator[0].ROWNUM });
                               controlinv.controls[k].patchValue({ frmLocator: selLocator[0].segmentName });
                               controlinv.controls[k].patchValue({ onHandQty: selLocator[0].onHandQty });
                               controlinv.controls[k].patchValue({ id: selLocator[0].id });
-                              controlinv.controls[k].patchValue({ unitSellingPrice: selLocator[0].prc });
+                              controlinv.controls[k].patchValue({ unitSellingPrice: utc });
                             }
                             else {
                               // alert(selLocator[0].segmentName);
@@ -2086,7 +2104,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                               // controlinv.controls[k].patchValue({ frmLocatorId: selLocator[0].locatorId });
                               controlinv.controls[k].patchValue({ onHandQty: selLocator[0].onHandQty })
                               controlinv.controls[k].patchValue({ id: selLocator[0].id });
-                              controlinv.controls[k].patchValue({ unitSellingPrice: selLocator[0].prc });
+                              controlinv.controls[k].patchValue({ unitSellingPrice: utc });
                             }
 
 
@@ -2099,7 +2117,8 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                               });
                           }
                         });
-                    }
+                 }
+                    
 
                   }
                   else if (data.code === 400) {
@@ -2139,7 +2158,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
           trxLnArr1.controls[i].patchValue({ pricingQty: selloc.onHandQty });
         }
       }
-      trxLnArr1.controls[i].patchValue({ unitSellingPrice: selloc.prc });
+      // trxLnArr1.controls[i].patchValue({ unitSellingPrice: selloc.prc });
       trxLnArr1.controls[i].patchValue({ frmLocatorName: selloc.locatorId });
       this.resverQty(i, trxLnArr[i].itemId, selloc.locatorId, selloc.prc);
       // this.AvailQty(i,trxLnArr[i].itemId,'locator');
@@ -2323,9 +2342,9 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     var orderLines1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     var orderLines = orderLines1.getRawValue();
     // for (let k=0; k < orderLines.length; k++){
-    alert(orderLines[k].disPer + '-discAmt ' + orderLines[k].disAmt + '---baseAmt ' + orderLines[k].baseAmt + '---taxAmt ' + orderLines[k].taxAmt + '-- totAmt ' + orderLines[k].totAmt)
+    // alert(orderLines[k].disPer + '-discAmt ' + orderLines[k].disAmt + '---baseAmt ' + orderLines[k].baseAmt + '---taxAmt ' + orderLines[k].taxAmt + '-- totAmt ' + orderLines[k].totAmt)
     if (orderLines[k].disPer != 0 && orderLines[k].disAmt === 0 && (orderLines[k].baseAmt === 0 || orderLines[k].baseAmt === '0') && (orderLines[k].taxAmt === 0 || orderLines[k].taxAmt === '0') && (orderLines[k].totAmt === 0 || orderLines[k].totAmt === '0')) {
-      alert('hhiii')
+      // alert('hhiii')
       alert('Discount Amount is wrong for Line No ' + k + '   And Item No:- ' + orderLines[k].segment)
       this.dataDisplay = ('Discount Amount is wrong for Line No ' + k + '   And Item No:- ' + orderLines[k].segment);
       this.isDisabled = false;
@@ -2505,10 +2524,10 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
 
   enterKeyLock(event, i) {
-    alert(event.key)
+    // alert(event.key)
     console.log(event);
     if (event.keyCode === 9) {
-      alert('hi')
+      // alert('hi')
       var fldName = 'prc';
       this.onKey(i, fldName, event)
     }

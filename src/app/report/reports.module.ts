@@ -5,11 +5,12 @@ import { ServiceReportComponent } from './service-report/service-report.componen
 import { SalesReportsComponent } from './sales-reports/sales-reports.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxDateRangeModule } from 'ngx-daterange';
+import { AccountsReportComponent } from './accounts-report/accounts-report.component';
 
 
 
 @NgModule({
-  declarations: [ServiceReportComponent, SalesReportsComponent],
+  declarations: [ServiceReportComponent, SalesReportsComponent, AccountsReportComponent],
   imports: [
     CommonModule,
     ReportsRoutingModule,
