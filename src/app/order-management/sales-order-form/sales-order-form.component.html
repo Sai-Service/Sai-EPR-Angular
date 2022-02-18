@@ -786,7 +786,7 @@
                                 Color&nbsp;:&nbsp;
                             </td>
                             <td>
-                                <select formControlName="color" id="color" class="form-control" style="width: 170px;">
+                                <select formControlName="color" id="color" class="form-control" style="width: 170px;" (ngModelChange)="onOptionsSelectedBasicPrice($event)">
                                     <option>--Select--</option>
                                     <option *ngFor="let cc of ColourSearch" [ngValue]="cc.ColorCode">
                                         {{cc.ColorCode}}--{{cc.colorDesc}}
@@ -856,6 +856,8 @@
                             </td>
                             <td>
                                 <input disabled type="text" formControlName="colorCode" class="form-control"
+                                    style="width: 150px;">
+                                    <input hidden disabled type="text" formControlName="color" class="form-control"
                                     style="width: 150px;">
                             </td>
                         </tr>

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AccountsReportComponent } from './accounts-report/accounts-report.component';
 import { AllReportsComponent } from './all-reports.component';
 import { SalesReportsComponent } from './sales-reports/sales-reports.component';
 import { ServiceReportComponent } from './service-report/service-report.component';
@@ -10,6 +11,7 @@ const routes: Routes = [
   {path:'SparesReports',component:AllReportsComponent},
   {path:'ServiceReport',component:ServiceReportComponent},
   {path:'SalesReports',component:SalesReportsComponent},
+  {path:'AccountsRepor',component:AccountsReportComponent},
   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];
 

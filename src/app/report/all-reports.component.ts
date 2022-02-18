@@ -100,6 +100,11 @@ export class AllReportsComponent implements OnInit {
   spbackOrderQtyOrderNumber:number;
   spmiscissRecfromDate:Date;
   spmiscissRectoDate:Date;
+  spslReturnRegistertoDate:Date;
+  spslReturnRegisterfromDate:Date;
+  spInvAging1:number;
+  spInvAging2:number;
+  spInvAging3:number;
 
   closeResetButton = true;
   dataDisplay: any;
@@ -191,6 +196,11 @@ export class AllReportsComponent implements OnInit {
       spbackOrderQtytoDate:[],
       spbackOrderQtyCustAccNo:[],
       spbackOrderQtyOrderNumber:[],
+      spslReturnRegistertoDate:[],
+      spslReturnRegisterfromDate:[],
+      spInvAging1:[],
+      spInvAging2:[],
+      spInvAging3:[],
     })
   }
 
@@ -773,146 +783,58 @@ this.reportService.spbackOrderQtyReport(fromDate,invcDt4,sessionStorage.getItem(
   }
 
 
-  // old //////
+  spslReturnRegister(){
+    this.isDisabled15 = true;
+    this.closeResetButton = false;
+    this.progress = 0;
+    this.dataDisplay = 'Report Is Running....Do not refresh the Page';
+  var invcDt2 = this.reportForm.get('spslReturnRegisterfromDate').value;
+  var fromDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
+  var invcDt3 = this.reportForm.get('spslReturnRegistertoDate').value;
+  var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');  
+  const fileName = 'Spares Sales Return Register-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+  const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+  this.reportService.spslReturnRegisterReport(fromDate,invcDt4,sessionStorage.getItem('locId'))
+    .subscribe(data => {
+      saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+      this.isDisabled15 = false;
+      this.closeResetButton = true;
+      this.dataDisplay = ''
+    })
+  }
 
 
-  // performaReg(){
-  //   var invcDt2 = this.reportForm.get('performafromDate').value;
-  //   var invcDt1 = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
-  //   var invcDt3 = this.reportForm.get('performatoDate').value;
-  //   var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');
-  //   const fileName = 'download.pdf';
-  //   const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-  //   this.reportService.performaRegister(invcDt1,invcDt4,sessionStorage.getItem('locId'))
-  //     .subscribe(data => {
-  //       var blob = new Blob([data], { type: 'application/pdf' });
-  //       var url = URL.createObjectURL(blob);
-  //       var printWindow = window.open(url, '', 'width=800,height=500');
-  //       printWindow.open
-  //     })
-  // }
-
-
-
-
-
-
-
-
-  // getInvItemId($event)
-  // {
-  //    let userId=(<HTMLInputElement>document.getElementById('invItemIdFirstWay')).value;
-  //    this.userList2=[];
-  //    if (userId.length > 2) {
-  //     if ($event.timeStamp - this.lastkeydown1 > 200) {
-  //       this.userList2 = this.searchFromArray1(this.ItemIdList, userId);
-  //     }
-  //   }
-  // }
-  // searchFromArray1(arr, regex) {
-  //   let matches = [], i;
-  //   for (i = 0; i < arr.length; i++) {
-  //     if (arr[i].match(regex)) {
-  //       matches.push(arr[i]);
-  //     }
-  //   }
-  //   return matches;
-  // };
-
-
-  // onOptioninvItemIdSelectedSingle(mItem) {
-  //   let selectedValue = this.ItemIdList.find(v => v.SEGMENT == mItem);
-  //     if( selectedValue != undefined){
-  //      console.log(selectedValue);
-  //     this.searchItemId=selectedValue.itemId;
-  //     this.searchItemName=selectedValue.DESCRIPTION;
-  //     this.searchItemCode=selectedValue.SEGMENT;
-  //   }
-
-  // }
-
-
-
-
-  // stklgrt(stklgrsubInv,searchItemCode,stkLgrUserName){
-  //   var invcDt2 = this.reportForm.get('stockLegfromDate').value;
-  //   var invcDt1 = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
-  //   var invcDt3 = this.reportForm.get('stockLegtoDate').value;
-  //   var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');
-  //   const fileName = 'download.pdf';
-  //   const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-  //   this.reportService.stklgrtReport(invcDt1,invcDt4,stklgrsubInv,searchItemCode,sessionStorage.getItem('locId'),stkLgrUserName)
-  //     .subscribe(data => {
-  //       var blob = new Blob([data], { type: 'application/pdf' });
-  //       var url = URL.createObjectURL(blob);
-  //       var printWindow = window.open(url, '', 'width=800,height=500');
-  //       printWindow.open
-  //     })
-  // }
-
-
-  // spIssSmry(){
-  //   var spreceiptfromDate2 = this.reportForm.get('spIssSmryfromDate').value;
-  //   var fromDate = this.pipe.transform(spreceiptfromDate2, 'dd-MMM-yyyy');
-  //   var spreceipttoDate2 = this.reportForm.get('spIssSmrytoDate').value;
-  //   var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
-  //   const fileName = 'download.pdf';
-  //   const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-  //   this.reportService.spIssSmryReport(fromDate,toDate,sessionStorage.getItem('locId'))
-  //     .subscribe(data => {
-  //       var blob = new Blob([data], { type: 'application/pdf' });
-  //       var url = URL.createObjectURL(blob);
-  //       var printWindow = window.open(url, '', 'width=800,height=500');
-  //       printWindow.open
-  //     })
-  // }
-
-
-  // spproforma(){
-  //   var spreceiptfromDate2 = this.reportForm.get('spproformafromDate').value;
-  //   var fromDate = this.pipe.transform(spreceiptfromDate2, 'dd-MMM-yyyy');
-  //   var spreceipttoDate2 = this.reportForm.get('spproformatoDate').value;
-  //   var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
-  //   const fileName = 'download.pdf';
-  //   const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-  //   this.reportService.spproformaReport(fromDate,toDate,sessionStorage.getItem('locId'))
-  //     .subscribe(data => {
-  //       var blob = new Blob([data], { type: 'application/pdf' });
-  //       var url = URL.createObjectURL(blob);
-  //       var printWindow = window.open(url, '', 'width=800,height=500');
-  //       printWindow.open
-  //     })
-  // }
-
-
-
-
-
-
-
-
-  // sppurRegidetail(){
-  //   var spreceiptfromDate2 = this.reportForm.get('sppurRegidetailfromDate').value;
-  //   var fromDate = this.pipe.transform(spreceiptfromDate2, 'dd-MMM-yyyy');
-  //   var spreceipttoDate2 = this.reportForm.get('sppurRegidetailtoDate').value;
-  //   var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
-  //   const fileName = 'download.pdf';
-  //   const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-  //   this.reportService.sppurRegidetailReport(fromDate,toDate,sessionStorage.getItem('locId'),sessionStorage.getItem('deptId'))
-  //     .subscribe(data => {
-  //       var blob = new Blob([data], { type: 'application/pdf' });
-  //       var url = URL.createObjectURL(blob);
-  //       var printWindow = window.open(url, '', 'width=800,height=500');
-  //       printWindow.open
-  //     })
-  // }
-
-
-
-
-
-
-
-
-
+  spInvAging(){
+    this.isDisabled15 = true;
+    this.closeResetButton = false;
+    this.progress = 0;
+    this.dataDisplay = 'Report Is Running....Do not refresh the Page';
+    var spInvAging1= this.reportForm.get('spInvAging1').value;
+    var spInvAging2= this.reportForm.get('spInvAging2').value;
+    var spInvAging3= this.reportForm.get('spInvAging3').value;
+    if ( spInvAging1 > spInvAging2){
+      alert('Please check Aging.!');
+      this.dataDisplay = 'Please check Aging.';
+      return;
+    }
+    else if (spInvAging1 >spInvAging3){
+      alert('Please check Aging.!');
+      this.dataDisplay = 'Please check Aging.';
+      return;
+    }
+    else if (spInvAging2 > spInvAging3){
+      alert('Please check Aging.!');
+      this.dataDisplay = 'Please check Aging.';
+      return;
+    }
+  const fileName = 'Spares Inventory Aging Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+  const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+  this.reportService.sspInvAgingReport(spInvAging1,spInvAging2,spInvAging3,sessionStorage.getItem('locId'))
+    .subscribe(data => {
+      saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+      this.isDisabled15 = false;
+      this.closeResetButton = true;
+      this.dataDisplay = ''
+    })
+  }
 }

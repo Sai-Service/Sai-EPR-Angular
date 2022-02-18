@@ -9,10 +9,10 @@
         <tr>
             <td style="width: 15%" class="LabelFontStyle">IC&nbsp;&nbsp;Number&nbsp;:</td>
             <td>
-                <input type="text"  class="form-control" formControlName="compNo" id="compNo" name="compNo" >
+                <input type="text"  class="form-control" formControlName="compNo"  [(ngModel)]="compNo"  >
             </td>
             <td colspan="8" style="text-align: left; width: 100%;">
-                <button type="submit" class="btn btn-primary" (click)="search(compNo)" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-search"></i></button>
+                <button type="button" class="btn btn-primary" (click)="search(compNo)"><i class="fa fa-search"></i></button>
                 <!-- Modal -->
             </td>
           </tr>
@@ -70,7 +70,7 @@
     </td>
     <input hidden formControlName="compileId" [(ngModel)]="compileId">
     <td>
-      <input class="form-control" formControlName="compileType" #myinput>
+      <input disabled class="form-control" formControlName="compileType" #myinput>
         <!-- <option>--Select--</option> -->
         <!-- <option *ngFor="let tt of transType" [ngValue]="tt.transactionTypeId" > {{tt.transactionTypeName}}</option>
       </select> -->
@@ -162,7 +162,7 @@
         Repair Order:
        </td>
        <td>
-         <select  class="form-control" formControlName="repairOrder">
+         <select  class="form-control" formControlName="attribute1">
           <option>--Select--</option>
           <option *ngFor="let repairNo of workshopIssue">{{repairNo.jobCardNum}} -- {{repairNo.regNo}}</option>
         </select>
@@ -303,16 +303,16 @@
   <table class="center">
     <tr>
        <td>
-        <button type="submit" class="btn btn-primary" (click)="close()">Close</button>
+        <button type="button" class="btn btn-primary" (click)="close()">Close</button>
       </td>
       <td>
-        <button type="submit" class="btn btn-primary" (click)="resetMiscTrans()">Reset</button>
+        <button type="button" class="btn btn-primary" (click)="resetMiscTrans()">Reset</button>
       </td>
       <div *ngIf="displayButton; then thenBlock2; else elseBlock2">
       </div>
       <ng-template #thenBlock2>
       <td>
-        <button type="submit" class="btn btn-primary" (click)="saveMisc()" >Save</button>
+        <button type="button" class="btn btn-primary" (click)="saveMisc()" >Save</button>
       </td>
     </ng-template>
       <ng-template #elseBlock2>

@@ -575,15 +575,7 @@
                     <td>
                         <input disabled type="text" formControlName="priceListName" [(ngModel)]='priceListName'
                             value={{priceListName}} class="form-control" style="width: 160px;">
-                        <!-- <select formControlName="priceListName" id="priceListName" class="form-control"
-                        style="width: 160px;"   (ngModelChange)="onOptionsSelectedPriceListID($event)">
-                        <option>--Select--</option>
-                        <option *ngFor="let pl of priceListNameList">
-                            {{pl.priceListName}}
-                        </option>
-                    </select> -->
-                        <!-- <span  *ngIf="!CounterSaleOrderBookingForm.get('priceListName').valid && CounterSaleOrderBookingForm.get('priceListName').touched" class="cross-validation-error-message alert">
-                        Select&nbsp;Create&nbsp;Order&nbsp;Type&nbsp;Name </span> -->
+                        
                         <input hidden type="number" formControlName="priceListId" [(ngModel)]='priceListId'
                             value={{priceListId}} class="form-control" style="width: 160px;">
 
@@ -628,8 +620,15 @@
                         Remark&nbsp;:&nbsp;
                     </td>
                     <td colspan="5">
+                        <div *ngIf="displayremarks; then thenremarks; else elseremarks"></div>
+                        <ng-template #thenremarks>
                         <input type="text" formControlName="remarks" value={{remarks}} class="form-control"
                             placeholder="Enter Remark" style="width: 100%;">
+                        </ng-template>
+                        <ng-template #elseremarks>
+                            <input type="text" formControlName="remarks" value={{remarks}} class="form-control"
+                            placeholder="Enter Remark" style="width: 100%;font-weight: bold;color: blue;">
+                        </ng-template>
                     </td>
                 </tr>
                 <tr>
@@ -1788,139 +1787,43 @@
     </table>
 
     <fieldset class="RFS">
-        <div *ngIf="displaycounterSaleAllButtons; then thencounterSaleAllButtons; else elsecounterSaleAllButtons"></div>
-        <ng-template #thencounterSaleAllButtons>
-            <table class="center">
-                <tr>
-                    <td>
-                        <div *ngIf="displaypickTicketInvoice; then thenpickTicketInvoice; else elsepickTicketInvoice">
-                        </div>
-                        <ng-template #thenpickTicketInvoice>
-                        </ng-template>
-                        <ng-template #elsepickTicketInvoice>
-                            <button type="button" class="btn btn-primary" (click)="downloadPickTicket()">
-                                Preview</button>
-                        </ng-template>
-                    </td>
-
-                    <td>
-                        <div *ngIf="displaypickTicketUpdate; then thenpickTicketUpdate; else elsepickTicketUpdate">
-                        </div>
-                        <ng-template #thenpickTicketUpdate>
-                        </ng-template>
-                        <ng-template #elsepickTicketUpdate>
-                            <table>
-                                <tr>
-                                    <td>
-                                        <button type="submit" class="btn btn-primary" id="register"
+        <table class="center">
+            <tr>
+                <td>
+                    <button type="submit" [disabled]="isDisabled" class="btn btn-primary" id="register"
+                        [style.display]="isVisibleCreateOrder ? 'block' : 'none'" style="width: fit-content;" (click)="counterSaleOrderSave()">Create Order</button>
+                </td>
+                <td>
+                    <button type="submit" class="btn btn-primary" id="register"
+                    (click)="refresh()">Clear</button>
+                </td>
+                <td>
+                    <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-primary" [style.display]="isVisiblePickTiPreview ? 'block' : 'none'" (click)="downloadPickTicket()"> Preview</button>
+                </td>
+                <td>
+                    <button type="submit" class="btn btn-primary" id="register" [style.display]="isVisibleUpdate ? 'block' : 'none'"
                                             (click)="pickTicketupdateFunction()" style="width: 6rem;">Update</button>
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-primary" id="invoiceBtn"
+
+                </td>
+                <td>
+                    <button type="button" class="btn btn-primary" id="invoiceBtn" 
+                     [style.display]="isVisibleGenerateInvoice ? 'block' : 'none'"
                                             [disabled]="isDisabled10" data-toggle="modal" data-target="#confirmAlert"
                                             (click)=" getMessage('INVOICE')">
                                             Invoice
                                         </button>
-                                    </td>
-                                    <td>
-                                        <div [style.display]="isVisible ? 'block' : 'none'">
-                                            <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                data-target="#gatePassParameterModal" style="width: 8rem;">
-                                                Generate&nbsp;Gate&nbsp;Pass
-                                            </button>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <button type="submit" class="btn btn-primary" id="register"
-                                            (click)="refresh()">Clear</button>
-                                    </td>
-                                    <td>
-                                        <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
-                                    </td>
-                                </tr>
-                            </table>
 
-                        </ng-template>
-                    </td>
-                    <div *ngIf="displaytcsBuuton; then thentcsBuuton; else elsetcsBuuton"> </div>
-                    <ng-template #thentcsBuuton>
-                        <!-- <td>
-                            <button type="submit" class="btn btn-primary" id="register" style="width: 5rem;"
-                            (click)="tcsCalculationAdd()">Add TCS</button>
-                        </td> -->
-                    </ng-template>
-                    <ng-template #elsetcsBuuton>
-
-                    </ng-template>
-                    <div  *ngIf="displaycounterSaleOrderSave; then thencounterSaleOrderSave; else elsecounterSaleOrderSave">
-                    </div>
-                    <ng-template #thencounterSaleOrderSave>
-                        <td>
-                            <button type="submit" [disabled]="isDisabled" class="btn btn-primary" id="register"
-                                style="width: fit-content;" (click)="counterSaleOrderSave()">Create Order</button>
-
-                            <!-- <button disabled type="submit" class="btn btn-primary" id="register"
-                                (click)="counterSaleOrderSave()">Save</button> -->
-
-                        </td>
-                        <td>
-                            <button type="submit" class="btn btn-primary" id="register"
-                                (click)="refresh()">Clear</button>
-                        </td>
-                        <td>
-                            <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
-                        </td>
-                        <td>
-                            <div *ngIf="PaymentButton; then thenBlockPaymentButton; else elseBlockPaymentButton"></div>
-                            <ng-template #thenBlockPaymentButton>
-                            </ng-template>
-                            <ng-template #elseBlockPaymentButton>
-                                <button class="btn btn-primary" id="paymentButton" #paymentButton
-                                    [routerLink]="['/admin/transaction/PaymentReceipt',orderNumber]">Payment</button>
-                            </ng-template>
-                        </td>
-                    </ng-template>
-                    <ng-template #elsecounterSaleOrderSave>
-                    </ng-template>
-
-                </tr>
-            </table>
-        </ng-template>
-        <ng-template #elsecounterSaleAllButtons>
-            <div [style.display]="isVisible ? 'block' : 'none'">
-                <table class="center">
-                    <tr>
-                        <td>
-                            <button type="button" class="btn btn-primary" (click)="downloadCSINV()"
-                                style="width: 6rem;">
-                                View&nbsp;Invoice
-                            </button>
-                        </td>
-                        <td>
-                            <button type="submit" class="btn btn-primary" id="register"
-                                (click)="refresh()">Clear</button>
-                        </td>
-                        <td>
-                            <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
-                        </td>
-                        <div *ngIf="PaymentViewReceipt; then thenBlockViewReceipt; else elseBlockViewReceipt"></div>
-                        <ng-template #thenBlockViewReceipt>
-                        </ng-template>
-                        <ng-template #elseBlockViewReceipt>
-                            <td>
-                                <button type="button" class="btn btn-primary" (click)="viewReceipt()"
-                                    style="width: 6rem;">
-                                    View&nbsp;Receipt
-                                </button>
-                            </td>
-                        </ng-template>
-                        <td>
-                            <div [style.display]="isVisible ? 'block' : 'none'">
-                                <button type="button" class="btn btn-primary" data-toggle="modal"
-                                    data-target="#gatePassParameterModal" style="width: 8rem;">
-                                    Generate&nbsp;Gate&nbsp;Pass
-                                </button>
-                                <div class="modal fade" id="gatePassParameterModal" tabindex="-1" role="dialog"
+                </td>
+                <td>
+                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                    [style.display]="isVisibleGenerateGatePass ? 'block' : 'none'"
+                    data-target="#gatePassParameterModal" style="width: 8rem;">
+                    Generate&nbsp;Gate&nbsp;Pass
+                </button>
+                <div class="modal fade" id="gatePassParameterModal" tabindex="-1" role="dialog"
                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
@@ -1967,59 +1870,38 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </td>
-                        <td>
-                            <div *ngIf="PaymentButton; then thenBlockPaymentButton; else elseBlockPaymentButton"></div>
-                            <ng-template #thenBlockPaymentButton>
-                            </ng-template>
-                            <ng-template #elseBlockPaymentButton>
-                                <button class="btn btn-primary" id="paymentButton" #paymentButton
-                                    [routerLink]="['/admin/transaction/PaymentReceipt',orderNumber]">Payment</button>
-                            </ng-template>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </ng-template>
-        <div *ngIf="displayAfterGatePass; then thencounterAfterGatePass; else elsecounterAfterGatePass"></div>
-        <ng-template #thencounterAfterGatePass>
-        </ng-template>
-        <ng-template #elsecounterAfterGatePass>
-            <table class="center">
-                <tr>
-                    <td>
-                        <button type="submit" class="btn btn-primary" id="register" (click)="refresh()">Clear</button>
-                    </td>
-                    <td>
-                        <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-primary" (click)="downloadCSINV()" [disabled]="isDisabled15" style="width: 6rem;">
-                            View&nbsp;Invoice
-                        </button>
-                    </td>
-                    <div *ngIf="PaymentViewReceipt; then thenBlockViewReceipt; else elseBlockViewReceipt"></div>
-                    <ng-template #thenBlockViewReceipt>
-                    </ng-template>
-                    <ng-template #elseBlockViewReceipt>
-                        <td>
-                            <button type="button" class="btn btn-primary" (click)="viewReceipt()" style="width: 6rem;">
-                                View&nbsp;Receipt
-                            </button>
-                        </td>
-                    </ng-template>
-                    <td>
-                        <button type="button" class="btn btn-primary" [disabled]="isDisabled16" (click)="gatePassViewFn()" style="width: 8rem;">
-                            View&nbsp;Gate&nbsp;Pass
-                        </button>
-                    </td>
-                </tr>
-            </table>
-        </ng-template>
+                            
 
+                </td>
+               
+                <td>
+                    <button class="btn btn-primary" id="paymentButton" #paymentButton [style.display]="isVisiblePayment ? 'block' : 'none'"
+                    [routerLink]="['/admin/transaction/PaymentReceipt',orderNumber]">Payment</button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-primary" (click)="downloadCSINV()"
+                    [style.display]="isVisibleViewInvoice ? 'block' : 'none'"
+                    style="width: 6rem;">
+                    View&nbsp;Invoice
+                </button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-primary" (click)="viewReceipt()"
+                    [style.display]="isVisibleViewReceipt ? 'block' : 'none'"  style="width: 6rem;">
+                                    View&nbsp;Receipt
+                                </button>
+
+                </td>
+                <td>
+                    <button type="button" class="btn btn-primary" [disabled]="isDisabled16" 
+                    [style.display]="isVisibleViewGatePass ? 'block' : 'none'" (click)="gatePassViewFn()" style="width: 8rem;">
+                        View&nbsp;Gate&nbsp;Pass
+                    </button>
+
+                </td>
+            </tr>
+        </table>
     </fieldset>
-
 
     <!-- ******************** Customer Creation Modal Start *************************************-->
     <!-- Modal -->

@@ -1,9 +1,7 @@
-import { DatePipe, PathLocationStrategy } from '@angular/common';
-import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { DatePipe } from '@angular/common';
+import { Component, OnInit} from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { controllers } from 'chart.js';
-import { data } from 'jquery';
 import { MasterService } from 'src/app/master/master.service';
 
 interface IStockaking {
@@ -773,29 +771,3 @@ export class StockTakingComponent implements OnInit {
 
 }
 
-// search(compNo)
-
-//      var compno=this.StockTakingForm.get('compNo').value;
-
-//      var appflag=this.StockTakingForm.get('trans').value;
-//      this.service.getSearchViewBycompNo(compno).subscribe
-//          (data=>{
-//            if(data.code===400)
-//            {
-//               alert("Can not View data");
-//            }
-//            if(data.code===200)
-//            {
-//      //       // this.lstcomment=data.obj;
-//                let control =this.StockTakingForm.get('cycleLinesList') as FormArray;
-//                var len = this.cycleLinesList().length;
-//                for(let i=0; i<data.obj.cycleLinesList.length-len; i++){
-//                  var trxlist:FormGroup=this.newcycleLinesList();
-//                  this.cycleLinesList().push(trxlist);
-//              }
-//                    this.StockTakingForm.patchValue(data.obj);
-//                    this.StockTakingForm.disable();
-//                  }
-//          })
-//    }
-//   }

@@ -270,8 +270,6 @@
       </a>
      
       <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-        <!-- <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle"  href="#">Spares Reports</a> -->
-          <!-- <ul class="dropdown-menu"> -->
             <div [style.display]="isVisible30 ? 'block' : 'none'">
             <li><a class="dropdown-submenu" [routerLink]="['/admin/Report/SparesReports']">Spares Reports</a></li>
           </div>
@@ -281,8 +279,7 @@
         <div [style.display]="isVisible36 ? 'block' : 'none'">
         <li><a class="dropdown-submenu" [routerLink]="['/admin/Report/SalesReports']">Sales Reports</a></li>
         </div> 
-        <!-- </ul> -->
-        <!-- </li> -->
+        <li><a class="dropdown-submenu" [routerLink]="['/admin/Report/AccountsRepor']">Accounts Reports</a></li>
       </ul>
       
       <!-- <div [style.display]="isVisible35 ? 'block' : 'none'">

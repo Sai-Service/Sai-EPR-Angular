@@ -405,6 +405,13 @@ export class ReversalOrderComponent implements OnInit {
 
   }
 
+  closeMast() {
+    this.router.navigate(['admin']);
+  }
+  resetMast() {
+    window.location.reload();
+  }
+
   orderFind(orderNumber) {
     // alert('hi')
     this.orderManagementService.SaleReturnSearchHeader(orderNumber)

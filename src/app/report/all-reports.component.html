@@ -478,7 +478,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>Ship&nbsp;To&nbsp;Location&nbsp;</td>&nbsp;
+                            <td>Location&nbsp;Code&nbsp;:&nbsp;</td>&nbsp;
                             <td>
                                 <input disabled type="text" class="form-control"  formControlName="stockMadeToLocName">
                             </td>
@@ -497,7 +497,7 @@
                 <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
                     <table style="width: 100%;">
                         <tr>
-                            <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
+                            <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
                             <td>
                                 <input type="date" class="form-control"  formControlName="spbackOrderQtyfromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
                             </td>
@@ -509,13 +509,13 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>Ship&nbsp;To&nbsp;Location&nbsp;</td>&nbsp;
+                            <td>Location&nbsp;Code&nbsp;:&nbsp;</td>&nbsp;
                             <td>
                                 <input disabled type="text" class="form-control"  formControlName="stockMadeToLocName">
                             </td>
                         </tr>
                         <tr>
-                            <td>Customer&nbsp;Account&nbsp;No&nbsp;</td>&nbsp;
+                            <td>Cust&nbsp;Account&nbsp;No&nbsp;</td>&nbsp;
                             <td>
                                 <input  type="number" class="form-control"  formControlName="spbackOrderQtyCustAccNo" [(ngModel)]="spbackOrderQtyCustAccNo">
                             </td>
@@ -551,7 +551,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>Ship&nbsp;To&nbsp;Location&nbsp;</td>&nbsp;
+                            <td>Location&nbsp;Code&nbsp;:&nbsp;</td>&nbsp;
                             <td>
                                 <input disabled type="text" class="form-control"  formControlName="stockMadeToLocName">
                             </td>
@@ -562,6 +562,73 @@
                 </td>
                 <td style="border: 1px solid black;padding-left: 5px;">
                     <button class="btn-primary" [disabled]="isDisabled16" (click)="spSparesMiscIssueReceipt()">View Report</button>
+                </td>
+            </tr>
+        
+            <tr>
+                <td style="border: 1px solid black;padding-left: 5px;">Spares Sales Return Register</td>
+                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="spslReturnRegisterfromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="spslReturnRegistertoDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Location&nbsp;Code&nbsp;:&nbsp;</td>&nbsp;
+                            <td>
+                                <input disabled type="text" class="form-control"  formControlName="stockMadeToLocName">
+                            </td>
+                        </tr>
+                    
+                       
+                    </table>
+                </td>
+                <td style="border: 1px solid black;padding-left: 5px;">
+                    <button class="btn-primary" [disabled]="isDisabled16" (click)="spslReturnRegister()">View Report</button>
+                </td>
+            </tr>
+        
+            <tr>
+                <td style="border: 1px solid black;padding-left: 5px;">Spares Inventory Aging Report</td>
+                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>Aging&nbsp;1&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td>
+                                <input type="number" class="form-control"  formControlName="spInvAging1">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Aging&nbsp;2&nbsp;:&nbsp;</td>
+                            <td>
+                                <input type="number" class="form-control"  formControlName="spInvAging2">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Aging&nbsp;3&nbsp;:&nbsp;</td>
+                            <td>
+                                <input type="number" class="form-control"  formControlName="spInvAging3">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Location&nbsp;Code&nbsp;:&nbsp;</td>
+                            <td>
+                                <input disabled type="text" class="form-control"  formControlName="stockMadeToLocName">
+                            </td>
+                        </tr>
+                       
+                    </table>
+                </td>
+                <td style="border: 1px solid black;padding-left: 5px;">
+                    <button class="btn-primary" [disabled]="isDisabled16" (click)="spInvAging()">View Report</button>
                 </td>
             </tr>
         </table>

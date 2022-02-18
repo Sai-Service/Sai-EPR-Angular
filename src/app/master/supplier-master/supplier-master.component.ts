@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, PatternValidator } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Validators} from '@angular/forms';
 import { MasterService } from '../master.service';
+import { Alert } from 'selenium-webdriver';
 
 
 interface IsupplierMaster {
@@ -241,7 +242,8 @@ export class SupplierMasterComponent implements OnInit {
       state: ['', [Validators.required]],
       // gstNo: ['', [Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{1}[A-Z0-9]{1}$"),Validators.minLength(15), Validators.maxLength(15)]],
       gstNo:[],
-      panNo: ['', [Validators.required, Validators.pattern("^[A-Za-z]{5}[0-9]{4}[A-Za-z]$"), Validators.maxLength(10)]],
+      // panNo: ['', [Validators.required, Validators.pattern("^[A-Za-z]{5}[0-9]{4}[A-Za-z]$"), Validators.maxLength(10)]],
+      panNo:[''],
       tanNo: [''],
       msmeYN: [],
       msmeNo: [],
@@ -727,7 +729,9 @@ export class SupplierMasterComponent implements OnInit {
   };
 
   gstVerification(event: any) {
+    
     var gstno = this.supplierMasterForm.get('gstNo').value
+    // alert(gstno+'gst');
     // var sGstnoVal = this.customerMasterForm.get('sGstNo').value
     if(gstno===''){
       this.supplierMasterForm.patchValue({'gstNo':'GSTUNREGISTERED'});
@@ -752,8 +756,8 @@ export class SupplierMasterComponent implements OnInit {
     
     const gstNo1 = gstno.substr(2, 10);
     // this.panNo = gstNo1;
-    // alert('Gst verificaition'+ gstNo1);
-    this.supplierMasterForm.patchValue({'panNo':gstNo1});
+    alert('Gst verificaition'+ gstNo1);
+    this.supplierMasterForm.patchValue({panNo:gstNo1});
     var res = gstno.substr(0, 2);
     console.log(res);
     // alert(res+'res');
