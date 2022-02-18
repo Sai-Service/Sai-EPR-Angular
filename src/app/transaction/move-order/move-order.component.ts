@@ -40,6 +40,8 @@ interface ImoveOrder{
     segment:string;
     fromLocator:string;
     uuidRef: string;
+    attribute10:number;
+    totalval:number;
 }
 
 export class reserveLine {
@@ -69,7 +71,7 @@ export class MoveOrderComponent implements OnInit {
   public subInvCode:any;
   public issueByList:Array<string>=[];
   public workshopIssue:any[];
-  public lstcomment1:any[];
+  lstcomment1:any[];
   // displaytransactionTypeName=true;
   repairNo:string;
   locId:number;
@@ -137,7 +139,9 @@ export class MoveOrderComponent implements OnInit {
   lastkeydown1: number = 0;
   userList1: any[] = [];
   lastkeydown2: number = 0;
+  attribute10:number;
   fromLocator:string;
+  totalval:number;
 
   public itemMap = new Map<string, StockTransferRow >();
 
@@ -164,6 +168,7 @@ export class MoveOrderComponent implements OnInit {
     issueTo:['',[Validators.required]],
     deptName:[],
     regNo:[],
+    totalval:[],
     // subInventoryId:[],
     trxLinesList:this.fb.array([]),
 
@@ -200,6 +205,7 @@ export class MoveOrderComponent implements OnInit {
       priceValue:[],
       batchCode:[],
       uuidRef: [],
+      attribute10:[],
     });
   }
   addnewtrxLinesList(i:number){
@@ -560,7 +566,7 @@ getrepairOrder($event)
         // }
       
         trxLnArr2.controls[i].patchValue({batchCode:res.obj.batchCode,
-        priceValue:res.obj.priceValue});
+        priceValue:res.obj.priceValue,attribute10:res.obj.attribute10});
       
       }
       else {
@@ -634,10 +640,8 @@ validate(i:number,qty1)
     alert('Please enter correct No');
     trxLnArr1.controls[i].patchValue({quantity:''});
   }}
-  // this.reservePos(i);
  
-    // alert(Number.isInteger(qty)+'Status');
-  
+  this.updateTotAmtPerline(i);
 }
  search(reqNo)
  {
@@ -682,8 +686,7 @@ validate(i:number,qty1)
     }
     );
  }
- searchByJobNo(JobNo)
- {
+ searchByJobNo(JobNo){
    
    var jobno=(this.moveOrderForm.get('JobNo').value);
    this.service.getsearchByJob(jobno).subscribe(
@@ -784,5 +787,26 @@ validate(i:number,qty1)
     alert('Window Closed Directely.!');
     this.deleteReserve();
     return;
+  }
+
+  updateTotAmtPerline(lineIndex) {
+    var formArr = this.moveOrderForm.get('trxLinesList') as FormArray;
+    var formVal = formArr.getRawValue();
+    var basicAmt = 0;
+    var totAmt = 0;
+    for (let i = 0; i < formVal.length; i++) {
+       
+        if (formVal[i].attribute10 == undefined || formVal[i].attribute10 == null || formVal[i].attribute10 == '') {
+
+        } else {
+          totAmt = totAmt + Number((formVal[i].attribute10)*(formVal[i].quantity));
+         
+        }
+
+      }
+     
+     totAmt = Math.round(((totAmt) + Number.EPSILON) * 100) / 100;
+    this.moveOrderForm.patchValue({ 'totalval': totAmt });
+  
   }
 }
