@@ -186,7 +186,7 @@ export class ShippingNetworkComponent implements OnInit {
   }
 
   onSelectTrfType(evnt) {
-    alert ("Transfer Type Selected  : "+evnt);
+    // alert ("Transfer Type Selected  : "+evnt);
   }
 
   onSelectFromOrg(org,index){
@@ -222,6 +222,29 @@ export class ShippingNetworkComponent implements OnInit {
     } 
   }
   }
+
+  
+  addNewRow() {
+    var len1 = this.lineDetailsArray().length - 1;
+    this.addRow(len1);
+  }
+
+  
+  addRow(index) {
+    var ordLineArr = this.shippingNetworkForm.get('shipLines').value;
+    var len1 = this.lineDetailsArray().length - 1;
+    if (len1 === index) {
+      if (ordLineArr[index].fromOrg > 0 && ordLineArr[index].toOrg >= 0) {
+        this.lineDetailsArray().push(this.lineDetailsGroup());
+      } else {
+
+        if(index>0) {
+        alert("Incomplete Line...Line will be deleted ");
+        this.lineDetailsArray().removeAt(index);
+        }
+        }
+    } }
+
 
  
 

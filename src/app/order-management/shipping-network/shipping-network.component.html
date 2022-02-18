@@ -98,7 +98,7 @@
                                 <tr>
                                     <td style="text-align: center;width: 4rem;">{{i+1}}</td>
                                      <td>
-                                        <select  formControlName="fromOrg" id="fromOrg" [(ngModel)]="fromOrg"  class="form-control"  
+                                        <select  formControlName="fromOrg" id="fromOrg"  class="form-control"  
                                             style="width: 7rem; height: 25px;background-color: yellow;"  (ngModelChange)='onSelectFromOrg($event, i)' >
                                             <option disabled>--Select--</option>
                                             <option *ngFor="let sc of locIdList"  [ngValue]="sc.locId">
@@ -111,7 +111,7 @@
                                 <!-- (ngModelChange)='onOptionsSelectedCategory($event, i)' -->
                                 <!-- style="height: 20px;font-size: 10px;width: 120px;" -->
                                     <td>
-                                        <select  formControlName="toOrg" id="toOrg" [(ngModel)]="toOrg"  class="form-control"  
+                                        <select  formControlName="toOrg" id="toOrg"   class="form-control"  
                                         style="width: 7rem; height: 25px;background-color: yellow;" (ngModelChange)='onSelectToOrg($event, i)' >
                                             <option disabled>--Select--</option>
                                             <option *ngFor="let sc of locIdList"  [ngValue]="sc.locId">
@@ -155,10 +155,16 @@
                     </table>
                     </div>
                 </div>
+
+                <table>
+                    <tr>
+                        <td> <button style="width:fit-content;" type="submit" class="btn btn-info" id="register" (click)="addNewRow()">Add|Del New Line</button></td>
+                    </tr>
+                </table>
         
                  
                 <!-- </fieldset> -->
-                <br>
+                <!-- <br> -->
                 
                 <table class="center">
                     <tr>
