@@ -937,6 +937,7 @@ onOptiongetItem(event:any,i)
       }
       search(compNo)
       {
+        alert('In Search'+compNo);
         if(compNo!=undefined){
         this.currentOp='SEARCH';
         var compno=this.InternalConsumptionForm.get('compNo').value;

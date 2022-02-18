@@ -9,7 +9,7 @@
         <tr>
             <td style="width: 15%" class="LabelFontStyle">IC&nbsp;&nbsp;Number&nbsp;:</td>
             <td>
-                <input type="text"  class="form-control" formControlName="compNo" id="compNo" name="compNo" >
+                <input type="text"  class="form-control" formControlName="compNo"  [(ngModel)]="compNo"  >
             </td>
             <td colspan="8" style="text-align: left; width: 100%;">
                 <button type="button" class="btn btn-primary" (click)="search(compNo)"><i class="fa fa-search"></i></button>
