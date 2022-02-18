@@ -102,6 +102,9 @@ export class AllReportsComponent implements OnInit {
   spmiscissRectoDate:Date;
   spslReturnRegistertoDate:Date;
   spslReturnRegisterfromDate:Date;
+  spInvAging1:number;
+  spInvAging2:number;
+  spInvAging3:number;
 
   closeResetButton = true;
   dataDisplay: any;
@@ -195,6 +198,9 @@ export class AllReportsComponent implements OnInit {
       spbackOrderQtyOrderNumber:[],
       spslReturnRegistertoDate:[],
       spslReturnRegisterfromDate:[],
+      spInvAging1:[],
+      spInvAging2:[],
+      spInvAging3:[],
     })
   }
 
@@ -797,4 +803,38 @@ this.reportService.spbackOrderQtyReport(fromDate,invcDt4,sessionStorage.getItem(
     })
   }
 
+
+  spInvAging(){
+    this.isDisabled15 = true;
+    this.closeResetButton = false;
+    this.progress = 0;
+    this.dataDisplay = 'Report Is Running....Do not refresh the Page';
+    var spInvAging1= this.reportForm.get('spInvAging1').value;
+    var spInvAging2= this.reportForm.get('spInvAging2').value;
+    var spInvAging3= this.reportForm.get('spInvAging3').value;
+    if ( spInvAging1 > spInvAging2){
+      alert('Please check Aging.!');
+      this.dataDisplay = 'Please check Aging.';
+      return;
+    }
+    else if (spInvAging1 >spInvAging3){
+      alert('Please check Aging.!');
+      this.dataDisplay = 'Please check Aging.';
+      return;
+    }
+    else if (spInvAging2 > spInvAging3){
+      alert('Please check Aging.!');
+      this.dataDisplay = 'Please check Aging.';
+      return;
+    }
+  const fileName = 'Spares Inventory Aging Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+  const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+  this.reportService.sspInvAgingReport(spInvAging1,spInvAging2,spInvAging3,sessionStorage.getItem('locId'))
+    .subscribe(data => {
+      saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+      this.isDisabled15 = false;
+      this.closeResetButton = true;
+      this.dataDisplay = ''
+    })
+  }
 }
