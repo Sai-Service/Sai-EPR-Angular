@@ -1190,4 +1190,20 @@ export class WsVehicleMasterComponent implements OnInit {
     });
   }
 
+
+  // vehNum(){
+  //   var vreg=this.wsVehicleMasterForm.get('regNo').value
+  //   alert (vreg);
+  //   alert (vreg.toUpperCase());
+  // }
+
+  
+  onInput(event) {
+    event.target.value = event.target.value.toLocaleUpperCase();
+  }
+
+  jobCardForm(){
+    this.router.navigate(['/admin/service/JobCard']);
+  }
+
 }

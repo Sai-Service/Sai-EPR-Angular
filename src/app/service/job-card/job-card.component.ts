@@ -2789,7 +2789,10 @@ SearchPartNum(){
             console.log(this.lstcomments1);
       });
     }
+  }
 
+  createNew() {
+    this.router.navigate(['/admin/master/WsVehicleMaster']);
   }
 
 }

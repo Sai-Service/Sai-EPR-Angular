@@ -262,6 +262,11 @@
                                                                             <td style="width: 15%"
                                                                                 class="LabelFontStyle1">
                                                                                 Registration&nbsp;No&nbsp;:</td>
+                                                                            
+                                                                            <td>
+                                                                                <table>
+                                                                                    <tr>
+
                                                                             <td>
                                                                                 <input type="text" style="text-transform: uppercase;background-color: yellow;"
                                                                                     formControlName="regNo"
@@ -277,13 +282,9 @@
                                                                                         [ngValue]="item.regNo">
                                                                                         {{item.regNo}}</option>
                                                                                 </datalist>
-                                                                                <!-- <select  formControlName="RegNo" id="RegNo"  (ngModelChange)="serchByRegNo($event)"
-                                                                            class="form-control">
-                                                                            <option>--Select--</option>
-                                                                            <option *ngFor="let sc of  RegNoList1" >
-                                                                                {{sc.srvAdvisorName}}
-                                                                            </option>
-                                                                        </select> -->
+
+
+                                                                               
                                                                                 <input type="text" hidden
                                                                                     formControlName="itemId">
                                                                                 <input type="text" hidden
@@ -304,9 +305,19 @@
                                                                                     formControlName="serviceModel">
                                                                             </td>
 
+                                                                            <td>
+                                                                                <button type="button" class="btn-primary" (click)="createNew()">Create New</button>
+                                                                            </td>
+
+                                                                        </tr>
+                                                                        </table>
+                                                                    </td>
+
+
+
                                                                             <td style="width: 15%"
                                                                                 class="LabelFontStyle1">
-                                                                                Vehicle&nbsp;ID&nbsp;(VIN)&nbsp;:</td>
+                                                                                VIN&nbsp;:</td>
                                                                             <td>
                                                                                 <input disabled type="text" class="form-control"
                                                                                     placeholder=""
@@ -536,17 +547,27 @@
                                                                                 class="LabelFontStyle">
                                                                                 &nbsp;Demanded&nbsp;Job&nbsp;:
                                                                             </td>
-                                                                            <td colspan="3" >
+
+                                                                            <!-- <td colspan="3" >
                                                                                 <input type="text" class="form-control"
                                                                                 formControlName="demandJob" placeholder="" style="width: 100%;">
-                                                                            </td> 
+                                                                            </td>  -->
+                                                                            <td colspan="3">
+                                                                            <textarea id="demandJob" formControlName="demandJob" rows="2" style="width: 100%;resize: none;"></textarea>
+                                                                            </td>
                                                                             <td style="width: 15%"
                                                                                 class="LabelFontStyle">
                                                                                 Recommendation&nbsp;:</td>
-                                                                            <td colspan="3"> 
+
+                                                                                <td colspan="3">
+                                                                                    <textarea id="recomJob" formControlName="recomJob" rows="2" style="width: 100%; resize: none;"></textarea>
+                                                                                </td>
+
+                                                                            <!-- <td colspan="3"> 
                                                                                 <input type="text" class="form-control"
                                                                                 formControlName="recomJob" placeholder="" style="width: 100%;">
-                                                                            </td>
+                                                                            </td> -->
+
                                                                             <!-- <td>
                                                                                 <button data-toggle="modal"
                                                                                     class="btn btn-primary"

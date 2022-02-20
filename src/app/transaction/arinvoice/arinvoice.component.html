@@ -69,10 +69,10 @@
         <a class="nav-link active" id="home-tab-md" data-toggle="tab" href="#home-md" role="tab" aria-controls="home-md" aria-selected="true">AR Invoice</a>
       </li>
       <li class="nav-item waves-effect waves-light">
-        <a class="nav-link" id="profile-tab-md" data-toggle="tab" href="#profile-md" role="tab" aria-controls="profile-md" aria-selected="false">AR Invoice Line</a>
+        <a class="nav-link" id="profile-tab-md" data-toggle="tab" href="#profile-md" role="tab" aria-controls="profile-md" aria-selected="false" (click)="viewARLinedata()">AR Invoice Line</a>
       </li>
       <li class="nav-item waves-effect waves-light">
-        <a class="nav-link" id="contact-tab-md" data-toggle="tab" href="#contact-md" role="tab" aria-controls="contact-md" aria-selected="false"  >Distribution</a>
+        <a class="nav-link" id="contact-tab-md" data-toggle="tab" href="#contact-md" role="tab" aria-controls="contact-md" aria-selected="false" (click)="viewARDist()" >Distribution</a>
     </li>
     </ul>
      <div style="border: 0px;" class="tab-content card " id="myTabContentMD">
@@ -480,9 +480,13 @@
                                                         </option>
                                                     </select> -->
 
-                                                    <input type="text" formControlName="segment"
+                                                    <!-- <input type="text" formControlName="segment"
                                                         (keyup)="getInvItemId($event)" id="invItemIdFirstWay"
-                                                        list="dynmicUserIds1" class="form-control" (ngModelChange)="onOptioninvItemIdSelected($event,i)" />
+                                                        list="dynmicUserIds1" class="form-control" (ngModelChange)="onOptioninvItemIdSelected($event,i)" /> -->
+
+                                                        <input type="text" list="dynmicUserIds1" (keyup)="filterRecord( $event,i)"
+                                                        formControlName="segment" id="invItemIdFirstWay" class="form-control"  (ngModelChange)="onOptioninvItemIdSelected($event,i)" 
+                                                        style="height: 20px;width:120px;" />
                                                         <!--  -->
                                                     <datalist id="dynmicUserIds1" autocomplete="off">
                                                         <option *ngFor="let item of invItemList"

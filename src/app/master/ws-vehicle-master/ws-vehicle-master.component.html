@@ -147,12 +147,12 @@
                     <td style="width: 15%" class="LabelFontStyle1">Reg&nbsp;No:&nbsp;</td>
 
                     <td>
-                        <input type="text" formControlName="regNo"  [(ngModel)]="regNo"   class="form-control" placeholder="Enter Veh Reg no" style="background-color: yellow"  > 
+                        <input type="text"  formControlName="regNo"  [(ngModel)]="regNo"   class="form-control" placeholder="Enter Veh Reg no" (keyup)="onInput($event)"   style="background-color: yellow ;text-transform: uppercase;"  > 
                     </td> 
 
                     <td style="width: 15%" class="LabelFontStyle1">VIN&nbsp;:&nbsp;</td>
                     <td>
-                        <input type="text" formControlName="vin"  [(ngModel)]="vin"   class="form-control" placeholder="Enter VIN" > 
+                        <input type="text" formControlName="vin"  [(ngModel)]="vin"   class="form-control" placeholder="Enter VIN" (keyup)="onInput($event)" style="text-transform: uppercase;" > 
                     </td> 
 
                     <td style="width: 15%" class="LabelFontStyle1">Item&nbsp;Code:&nbsp;</td>
@@ -209,12 +209,12 @@
                     <td style="width: 12%" class="LabelFontStyle">Chassis&nbsp;No:&nbsp;</td>
 
                     <td>
-                        <input   type="text"  formControlName="chassisNo"  id="chassisNo" [(ngModel)]="chassisNo" class="form-control" (change)="CreateItemCode()" style="background-color: yellow" >
+                        <input   type="text"  formControlName="chassisNo"  id="chassisNo" [(ngModel)]="chassisNo" class="form-control" (change)="CreateItemCode()" (keyup)="onInput($event)" style="background-color: yellow" >
                     </td>
                     <td style="width: 12%" class="LabelFontStyle">Engine&nbsp;No:&nbsp;</td>
 
                     <td>
-                        <input   type="text"  formControlName="engineNo"  id="engineNo" [(ngModel)]="engineNo" class="form-control" style="background-color: yellow"  >
+                        <input   type="text"  formControlName="engineNo"  id="engineNo" [(ngModel)]="engineNo" (keyup)="onInput($event)" class="form-control" style="background-color: yellow"  >
                     </td>
                 </tr>
                
@@ -449,7 +449,7 @@
                 <td style="width: 12%" class="LabelFontStyle">Ins&nbsp;Policy&nbsp;No:&nbsp;</td>
 
                 <td>
-                    <input   type="text"  formControlName="policyNo"  id="policyNo" [(ngModel)]="policyNo" class="form-control" >
+                    <input   type="text"  formControlName="policyNo"  id="policyNo" [(ngModel)]="policyNo" (keyup)="onInput($event)"  class="form-control" >
                 </td>
 
                 <td style="width: 12%" class="LabelFontStyle">Policy&nbsp;Expiry:&nbsp;</td>
@@ -508,7 +508,7 @@
                 <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Booklet&nbsp;No:&nbsp;</td>
 
                 <td>
-                    <input   type="text"  formControlName="ewBookletNo"  id="ewBookletNo" [(ngModel)]="ewBookletNo" class="form-control" >
+                    <input   type="text"  formControlName="ewBookletNo"  id="ewBookletNo" [(ngModel)]="ewBookletNo" class="form-control" (keyup)="onInput($event)" >
                 </td>
 
                 
@@ -556,7 +556,7 @@
                 <td style="width: 12%" class="LabelFontStyle">MCP&nbsp;No:&nbsp;</td>
 
                 <td>
-                    <input     type="text"  formControlName="mcpNo"  id="mcpNo" [(ngModel)]="mcpNo" class="form-control" >
+                    <input     type="text"  formControlName="mcpNo"  id="mcpNo" [(ngModel)]="mcpNo" class="form-control" (keyup)="onInput($event)" >
                 </td>
 
                 <td  class="LabelFontStyle">MCP&nbsp;Expiry:&nbsp;</td>
@@ -572,13 +572,13 @@
                 <td style="width: 12%" class="LabelFontStyle">CNG&nbsp;Cylinder&nbsp;No:&nbsp;</td>
 
                 <td>
-                    <input    type="text"  formControlName="cngCylinderNo"  id="cngCylinderNo" [(ngModel)]="cngCylinderNo" class="form-control" >
+                    <input    type="text"  formControlName="cngCylinderNo"  id="cngCylinderNo" [(ngModel)]="cngCylinderNo" class="form-control"  (keyup)="onInput($event)" >
                 </td>
 
                 <td style="width: 12%" class="LabelFontStyle">CNG&nbsp;Kit&nbsp;No:&nbsp;</td>
 
                 <td>
-                    <input     type="text"  formControlName="cngKitNumber"  id="cngKitNumber" [(ngModel)]="cngKitNumber" class="form-control" >
+                    <input     type="text"  formControlName="cngKitNumber"  id="cngKitNumber" [(ngModel)]="cngKitNumber" class="form-control" (keyup)="onInput($event)">
                 </td>
 
                 <td  class="LabelFontStyle">CNG&nbsp;Expiry:&nbsp;</td>
@@ -1063,7 +1063,7 @@
                     <!-- ===================================Buttons======================================== -->
                       <table class="center">
                         <tr>
-
+                            <!-- <td> <button type="button" class="btn btn-info" (click)="Test()">Test</button> </td> -->
 
                             <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
                             <ng-template #thenBlock1>
@@ -1256,6 +1256,10 @@
                                     </div>
                                  <!-- ==================================================== -->
                                     </ng-template>
+
+                                    <td>
+                                        <button type="button" class="btn btn-info" (click)="jobCardForm()" >JobCard</button>
+                                    </td>
                                     
                                 </tr>
                             </table>

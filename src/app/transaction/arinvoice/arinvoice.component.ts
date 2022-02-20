@@ -7,6 +7,7 @@ import { OrderManagementService } from 'src/app/order-management/order-managemen
 import { TransactionService } from '../transaction.service';
 import { ManualARInvoiceObj } from './manual-arinvoice-obj';
 import { DatePipe } from '@angular/common';
+import { log } from 'util';
 // import { ManualInvoiceObj } from '../po-invoice/manual-invoice-obj';
 // import { ManualARInvoiceObj } from '../manual-arinvoice-obj';
 
@@ -94,14 +95,17 @@ export class ARInvoiceComponent implements OnInit {
   balance:number;
   status = "Open"
   taxCat1: number;
-  glDate = new Date();
+  // glDate = new Date();
   taxAmount: number;
   billToCustName: string;
 
   public applyTo = 'INVOICE'
   now = Date.now();
+  new=new Date();
   public minDate = new Date();
   glDateLine = this.pipe.transform(this.now, 'y-MM-dd');
+  // glDateLine = this.pipe.transform(this.now, 'dd-MM-yyyy');
+  glDate = this.pipe.transform(this.new,'dd-MM-yyyy');
   // glDate = this.pipe.transform(this.now, 'y-MM-dd');
 
   applDate = this.pipe.transform(Date.now(), 'y-MM-dd');
@@ -466,14 +470,6 @@ export class ARInvoiceComponent implements OnInit {
           console.log(this.paymentTermList);
         }
       );
-    this.service.taxCategoryListForSALES()
-      .subscribe(
-        data1 => {
-          this.taxCategoryList = data1;
-          console.log(this.taxCategoryList);
-          data1 = this.taxCategoryList;
-        }
-      );
     this.service.locationIdList1(this.ouId)
       .subscribe(
         data => {
@@ -493,54 +489,21 @@ export class ARInvoiceComponent implements OnInit {
       console.log(this.sourceList);
 
     })
-
+    this.service
+    .searchByItemSegmentDiv(this.divisionId, '36DH1601')
+    .subscribe((data) => {
+      this.invItemList = data;
+      // console.log(this.newRow.controls.segment);
+    
+      //(<any>this.newRow.controls.segment).nativeElement.focus();
+    });
     // this.transactionService.invTypeListFN().subscribe(data => {
     //   this.invTypeList = data;
     //   console.log(this.invTypeList);
 
     // })
-    this.transactionService.invItemList1(this.divisionId)
-      .subscribe(
-        data => {
-
-          this.invItemList = data;
-          console.log(this.invItemList);
-        }
-      );
-    this.service.BranchList()
-      .subscribe(
-        data => {
-          this.BranchList = data;
-          console.log(this.BranchList);
-        }
-      );
-    this.service.CostCenterList()
-      .subscribe(
-        data => {
-          this.CostCenterList = data;
-          console.log(this.CostCenterList);
-        }
-      );
-    this.service.NaturalAccountListRec()
-      .subscribe(
-        data => {
-          this.NaturalAccountList = data;
-          console.log(this.NaturalAccountList);
-        }
-      ); this.service.InterBrancList()
-        .subscribe(
-          data => {
-            this.InterBrancList = data;
-            console.log(this.InterBrancList);
-          }
-        );
-    this.service.locationCodeList()
-      .subscribe(
-        data => {
-          this.locIdListModel = data;
-          console.log(this.locIdListModel);
-        }
-      );
+    
+    
       var patch = this.arInvoiceForm.get('invLines') as FormArray;
       (patch.controls[0]).patchValue(
         {
@@ -555,26 +518,94 @@ export class ARInvoiceComponent implements OnInit {
           console.log(this.GLPeriodCheck);
         }
       );
-      this.service.hsnSacCodeData('HSN').subscribe(
-        data=>{
-          this.hsnSacCodeList=data;
-        }
-      )
-
+      
     this.glPrdStartDate = this.GLPeriodCheck.startDate;
     this.glPrdEndDate = this.GLPeriodCheck.endDate
 
   }
+  viewARDist(){
+    // alert('Hello'+this.BranchList)
+    if(this.BranchList==undefined){
+    this.service.BranchList()
+    .subscribe(
+      data => {
+        this.BranchList = data;
+        console.log(this.BranchList);
+      }
+    );
+  this.service.CostCenterList()
+    .subscribe(
+      data => {
+        this.CostCenterList = data;
+        console.log(this.CostCenterList);
+      }
+    );
+  this.service.NaturalAccountListRec()
+    .subscribe(
+      data => {
+        this.NaturalAccountList = data;
+        console.log(this.NaturalAccountList);
+      }
+    ); this.service.InterBrancList()
+      .subscribe(
+        data => {
+          this.InterBrancList = data;
+          console.log(this.InterBrancList);
+        }
+      );
+  this.service.locationCodeList()
+    .subscribe(
+      data => {
+        this.locIdListModel = data;
+        console.log(this.locIdListModel);
+      }
+    );
+  }}
+  viewARLinedata(){
+    if( this.hsnSacCodeList=='')
+    {
+    this.service.hsnSacCodeData('HSN').subscribe(
+      data=>{
+        this.hsnSacCodeList=data;
+      }
+    )
+
+    this.service.taxCategoryListForSALES()
+    .subscribe(
+      data1 => {
+        this.taxCategoryList = data1;
+        console.log(this.taxCategoryList);
+        data1 = this.taxCategoryList;
+      }
+    );
+    }
+  }
+  filterRecord(event, i) {
+      var itemCode = event.target.value;
+   if (event.keyCode == 13) {
+      if (itemCode.length == 4) {
+      console.log(this.invItemList.length)
+             this.service
+              .searchByItemSegmentDiv(this.divisionId, itemCode.toUpperCase())
+              .subscribe((data) => {
+                this.invItemList = data;
+                // this.Select(data[0].itemId);
+                this.onOptioninvItemIdSelected(itemCode, i);
+              });
+          // }
+            } else {
+        alert('Please Enter 4 characters of item number!!');
+        return;
+      }
+    }
+  }
+
 
   arInvoice(arInvoiceForm) { }
 
   searchByInvoiceNo(trxNumber1) {
     this.displaySaveButton=false;
-    //  this.arInvoiceForm.reset();
-    // this.router.navigate(['ARInvoice']);
-    //  this.TaxDetailsArray().reset();
-    //  window.location.reload();
-    this.TaxDetailsArray().clear();
+   this.TaxDetailsArray().clear();
     // this.arInvoiceForm.get('invLines').clear();
     this.lineDistributionArray().clear();
     this.transactionService.searchByInvoiceNoAR(trxNumber1)
@@ -602,12 +633,20 @@ export class ARInvoiceComponent implements OnInit {
 
           }
           // alert('second emit call')
+          
           this.arInvoiceForm.patchValue(data);
           this.disabledViewAccounting = true;
           // this.taxUistatus = false;
         }
       );
-
+      if(this.arInvoiceForm.get('referenceNo')!=null)
+      {
+      this.arInvoiceForm.disable();
+      // this.TaxDetailsArray().disable();
+      this.arInvoiceForm.get('taxLines').disable();
+      this.arInvoiceForm.get('invLines').disable();
+      this.lineDistributionArray().disable();
+      }
   };
   onOptionType(event:any){
     if(event!=undefined){
@@ -640,6 +679,7 @@ export class ARInvoiceComponent implements OnInit {
     window.location.reload();
   }
   onOptioninvItemIdSelected(itemId, index) {
+    // alert(itemId)
     let selectedValue = this.invItemList.find(v => v.segment == itemId);
     // alert(selectedValue.stockable);
     // if(selectedValue.stockable==='Y'){

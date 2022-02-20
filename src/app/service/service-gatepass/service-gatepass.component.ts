@@ -424,7 +424,8 @@ printGP(){
 radioEvent(event:any){
   // alert(event.target.value);
   this.clearForm();
-  if( event.target.value==='genGp') {this.showGenForm=true;this.showPrintForm=false; }
+  if( event.target.value==='genGp') {this.showGenForm=true;this.showPrintForm=false;
+          this.gpDate=this.pipe.transform(Date.now(), 'y-MM-dd');   }
    else {this.showPrintForm=true;this.showGenForm=false;}
    }
 
@@ -435,7 +436,6 @@ radioEvent(event:any){
    this.custPhone=null;this.custEmail=null;this.custContact=null;this.delvType=null;
    this.delvTakenBy=null;this.driverName=null;
    this.lstJobcardList=null;this.custName=null;
-   
  }
  
         
