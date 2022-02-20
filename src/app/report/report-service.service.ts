@@ -329,5 +329,17 @@ vehicleClosingStockReport(orgId){
   });
 }
 
+///////////////////////////////  accounts report ///////////////
+
+
+gstPurchaeReport(fromDate,toDate,orgId,locId,deptId){
+  const REQUEST_URI = this.ServerUrl +`AccountsReports/GstPurchaseRep?fromDate=${fromDate}&toDate=${toDate}&orgId=${orgId}&locId=${locId}&deptId=${deptId}`;
+  return this.http.get(REQUEST_URI, {
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
+}
+
+
 }
 

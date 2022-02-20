@@ -152,7 +152,7 @@
                                                                 {{sc.address4}} {{sc.city}}-{{sc.pinCd}} {{sc.state1}}
                                                             </option>
                                                         </select>
-                                                        <input type="text" hidden formControlName="taxCategoryName"
+                                                        <input type="text" disabled hidden formControlName="taxCategoryName"
                                                             class="form-control"
                                                             style="width: 150px;height: 25px;font-size: 11px;">
                                                     </td>
@@ -706,7 +706,7 @@
                                                     <th scope="col">Asset Category</th>
                                                     <th scope="col">Tax Rate Name</th>
                                                     <th scope="col">Ship-To</th>
-
+                                                    <th scope="col">Delete</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -1602,8 +1602,281 @@
                                     </div>
 
                                 </div>
-
                                 
+                            </div>
+                        </div>
+                    </div>
+                    <table class="center">
+                        <tr>
+                            <td>
+                                <button type="submit" class="btn btn-primary" id="register" (click)="refresh()">Clear</button>
+                            </td>
+                            <td>
+                                <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
+                            </td>
+                            <td>
+                                <button type="submit" (click)="apInvCancelled()" class="btn btn-primary"
+                                [style.display]="isVisibleAPCancelled ? 'block' : 'none'"    style="width: fit-content;">AP Inv Cancelled</button>
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-primary" (click)="apInvoiceSave()" [style.display]="isVisibleSave ? 'block' : 'none'" >Save</button>
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-primary"  (click)="apInvoiceSave()"  [style.display]="isVisibleUpdateBtn ? 'block' : 'none'">Update</button>
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-primary" (click)="Validate()" [style.display]="isVisibleValidate ? 'block' : 'none'">Validate</button>
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-primary" (click)="SaveTdsDetails()"  [style.display]="isVisibleSaveTDS ? 'block' : 'none'">Save Tds</button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" 
+                                data-target="#viewAccountingModel" style="width: 8rem;" (click)="viewAccounting()">
+                                View Accounting
+                            </button>
+                        </td>
+                        </tr>
+                    </table>
+
+                    <br>
+
+                    <div *ngIf="displayModal; then thenBlockModal; else elseBlockModal"></div>
+                    <ng-template #thenBlockModal>
+                    </ng-template>
+                    <ng-template #elseBlockModal>
+                        <div id="myModel1" [style.display]="showModal ? 'block' : 'none'" class="modal fade"
+                            tabindex="-1" role="dialog" aria-hidden="true" style="width: 500px; margin-left:350px">
+
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="myModalLabel"
+                                            style="text-align: center; font-size: medium; margin-left: 20%; font-family: Verdana,Sans-serif, Arial, Helvetica;font-weight: bold;">
+                                            {{ title }}</h4>
+                                        <button type="button" class="close" data-dismiss="modal"
+                                            aria-hidden="true">&times;</button>
+                                    </div>
+                                    <div class="modal-body text-center pagination-centered">
+                                        <table>
+                                            <tr>
+                                                <td style="width: 15%" class="LabelFontStyle">
+                                                    Branch&nbsp;:
+                                                </td>
+                                                <td>
+                                                    <select formControlName="segment11" id="segment11"
+                                                        class="form-control"
+                                                        (ngModelChange)="onOptionsSelectedBranch($event,'SS_Branch')">
+                                                        <option>--Select--</option>
+                                                        <option *ngFor="let sc of  BranchList">
+                                                            {{sc.lookupValue}}
+                                                        </option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="text"
+                                                        style="width: 150px; background-color: white; border: none;"
+                                                        formControlName="lookupValueDesc1" [(ngModel)]="lookupValueDesc1" class="form-control">
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 15%" class="LabelFontStyle">
+                                                    &nbsp;Location&nbsp;:
+                                                </td>
+                                                <td>
+                                                    <select formControlName="segment2" id="segment2"
+                                                        class="form-control" 
+                                                        (ngModelChange)="onOptionsSelectedBranch($event,'SS_Location')">
+                                                        <option>--Select--</option>
+                                                        <option *ngFor="let sc of  locIdList1">
+                                                            {{sc.lookupValue}}
+                                                        </option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="text" [(ngModel)]="lookupValueDesc2"
+                                                        style="width: 150px; background-color: white; border: none;"
+                                                        formControlName="lookupValueDesc2" class="form-control">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 15%" class="LabelFontStyle">
+                                                    Cost&nbsp;Center&nbsp;:
+                                                </td>
+                                                <td>
+                                                    <select formControlName="segment3" id="segment3"
+                                                        class="form-control"
+                                                        (ngModelChange)="onOptionsSelectedBranch($event,'CostCentre')">
+                                                        <option>--Select--</option>
+                                                        <option *ngFor="let sc of  CostCenterList">
+                                                            {{sc.lookupValue}}
+                                                        </option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="text" [(ngModel)]="lookupValueDesc3"
+                                                        style="width: 150px; background-color: white; border: none;"
+                                                        formControlName="lookupValueDesc3" class="form-control">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 15%" class="LabelFontStyle">
+                                                    Natural&nbsp;Account&nbsp;:
+                                                </td>
+                                                <td>
+                                                    <select formControlName="segment4" id="segment4"
+                                                        class="form-control"
+                                                        (ngModelChange)="onOptionsSelectedNatural($event)">
+                                                        <option>--Select--</option>
+                                                        <option *ngFor="let sc of  NaturalAccountList">
+                                                            {{sc.naturalaccount}}
+                                                        </option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="text" [(ngModel)]="lookupValueDesc4"
+                                                        style="width: 150px; background-color: white; border: none;color: black;"
+                                                        formControlName="lookupValueDesc4" class="form-control">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 15%" class="LabelFontStyle">
+                                                    Inter&nbsp;Branch&nbsp;:
+
+                                                </td>
+                                                <td>
+                                                    <select formControlName="segment5" id="segment5"
+                                                        class="form-control"
+                                                        (ngModelChange)="onOptionsSelectedBranchNew($event)">
+                                                        <option>--Select--</option>
+                                                        <option *ngFor="let sc of  InterBrancList">
+                                                            {{sc.lookupValue}}
+                                                        </option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="text"
+                                                        style="width: 150px; background-color: white; border: none;"
+                                                        formControlName="lookupValueDesc5" [(ngModel)]="lookupValueDesc5" class="form-control">
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                            aria-hidden="true" (click)="fnCancatination(content)">Ok</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+
+                    <!-- ******************************** View Accounting Model ************************ -->
+                    <div class="modal fade" id="viewAccountingModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-xl" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle" style="margin-left: 40%;">Accounting Effect</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <table class="center">
+                                        <tr>
+                                            <td style="width: 18%" class="LabelFontStyle">
+                                                Desc/GRR&nbsp;No&nbsp;:&nbsp;
+                                            </td>
+                                            <td>
+                                                <input disabled formControlName="name1" id="name1" class="form-control"
+                                                    [ngModel]="name1" style="width: fit-content;">
+                                            </td>
+                                            <td style="width: 18%" class="LabelFontStyle">
+                                                Doc&nbsp;Srl&nbsp;No&nbsp;:&nbsp;
+                                            </td>
+                                            <td>
+                                                <input disabled formControlName="docSeqValue" class="form-control"
+                                                    [ngModel]="docSeqValue">
+                                            </td>
+
+                                            <td style="width: 18%" class="LabelFontStyle">
+                                                Ledger&nbsp;:&nbsp;
+                                            </td>
+                                            <td>
+                                                <input disabled formControlName="description" class="form-control"
+                                                    [ngModel]="description">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 18%" class="LabelFontStyle">
+                                                Category&nbsp;:&nbsp;
+                                            </td>
+                                            <td>
+                                                <input disabled formControlName="jeCategory" id="jeCategory"
+                                                    class="form-control" [ngModel]="jeCategory">
+                                            </td>
+                                            <td style="width: 18%" class="LabelFontStyle">
+                                                Date&nbsp;:&nbsp;
+                                            </td>
+                                            <td>
+                                                <input disabled formControlName="postedDate" id="postedDate"
+                                                    class="form-control" [ngModel]="postedDate">
+                                            </td>
+                                            <td style="width: 18%" class="LabelFontStyle">
+                                                Period&nbsp;:&nbsp;
+                                            </td>
+                                            <td>
+                                                <input disabled formControlName="periodName" id="periodName"
+                                                    class="form-control" [ngModel]="periodName">
+                                            </td>
+                                        </tr>
+                                        <br>
+                                    </table>
+                                    <div class="grid_scroll2">
+                                        <table class="auto-style4" class="GridFont"
+                                            style="border-color:#959595;width:100%;">
+                                            <thead>
+                                                <tr class="GridHeader">
+                                                    <th>Line</th>
+                                                    <th>Account</th>
+                                                    <th>Debit(INR)</th>
+                                                    <th>Credit(INR)</th>
+                                                    <th>Description</th>
+                                                    <th>Account Description</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let com of viewAccounting1" class="ItemStyle"
+                                                    style="text-decoration:none;position: initial;">
+                                                    <td>{{com.jeLineNum}}</td>
+                                                    <td>{{com.segmentName}}</td>
+                                                    <td style="text-align: right;padding-right: 5px;">{{com.enteredDr}}
+                                                    </td>
+                                                    <td style="text-align: right;padding-right: 5px;">{{com.enteredCr}}
+                                                    </td>
+                                                    <td>{{com.description}}</td>
+                                                    <td>{{com.accountDesc}}</td>
+                                                </tr>
+                                            </tbody>
+                                            <tr>
+                                                <td></td>
+                                                <td>Total:&nbsp;</td>
+                                                <td>
+                                                    <input disabled formControlName="runningTotalDr" id="runningTotalDr"
+                                                        class="form-control" [ngModel]="runningTotalDr"
+                                                        style="text-align: right;height: 22px;width: 100px;font-weight: bold;">
+                                                </td>
+                                                <td>
+                                                    <input disabled formControlName="runningTotalCr" id="runningTotalCr"
+                                                        class="form-control" [ngModel]="runningTotalCr"
+                                                        style="text-align: right;height: 22px;width: 100px;font-weight: bold;">
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
                             </div>
                         </div>
                     </div>

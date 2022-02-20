@@ -1,39 +1,142 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container-fluid">
-    <a class="navbar-brand" href="#">Brand</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main_nav"  aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="main_nav">
-      <ul class="navbar-nav">
-        <li class="nav-item active"> <a class="nav-link" href="#">Home </a> </li>
-        <li class="nav-item"><a class="nav-link" href="#"> About </a></li>
-        <li class="nav-item dropdown" id="myDropdown">
-          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">  Treeview menu  </a>
-          <ul class="dropdown-menu">
-            <li> <a class="dropdown-item" href="#"> Dropdown item 1 </a></li>
-            <li> <a class="dropdown-item" href="#"> Dropdown item 2 &raquo; </a>
-              <ul class="submenu dropdown-menu">
-                <li><a class="dropdown-item" href="#">Submenu item 1</a></li>
-                <li><a class="dropdown-item" href="#">Submenu item 2</a></li>
-                <li><a class="dropdown-item" href="#">Submenu item 3 &raquo; </a>
-                  <ul class="submenu dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Multi level 1</a></li>
-                    <li><a class="dropdown-item" href="#">Multi level 2</a></li>
-                  </ul>
-                </li>
-                <li><a class="dropdown-item" href="#">Submenu item 4</a></li>
-                <li><a class="dropdown-item" href="#">Submenu item 5</a></li>
-              </ul>
-            </li>
-            <li><a class="dropdown-item" href="#"> Dropdown item 3 </a></li>
-            <li><a class="dropdown-item" href="#"> Dropdown item 4 </a></li>
-          </ul>
-        </li>
+<form [formGroup]="reportForm" (ngSubmit)="report(reportForm.value)"><div class="center">
+
+  <table style="width: 100%;background-color: white;">
+      <tr>
+          <td class="PageHeader">
+              &nbsp;&nbsp;Reports&nbsp;&nbsp;
+          </td>
+      </tr>
+  </table>
+</div>
+
+<nav class="navbar navbar-expand-lg bg-primary" style="margin-top: 5px;">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_nav">
+      <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="main_nav">
+  
+  <ul class="navbar-nav">
+  <!-- <li class="nav-item"> <a class="nav-link" href="#"> First level 1 </a> </li>
+  <li class="nav-item"> <a class="nav-link" href="#"> First level 2 </a></li> -->
+  <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle"  data-toggle="dropdown">  Spares  </a>
+      <ul class="dropdown-menu">
+      <li>
+        <a class="dropdown-item" data-toggle="collapse" href="#panelGSTPurchaseRegister" role="tab">GST Purchase Register</a>
+      </li>
+      <li><a class="dropdown-item" href="#"> Second level 2 &raquo </a>
+       <ul class="submenu dropdown-menu">
+          <li><a class="dropdown-item" href=""> Third level 1</a></li>
+          <li><a class="dropdown-item" href=""> Third level 2</a></li>
+          <li><a class="dropdown-item" href=""> Third level 3 &raquo </a>
+        <ul class="submenu dropdown-menu">
+            <li><a class="dropdown-item" href=""> Fourth level 1</a></li>
+            <li><a class="dropdown-item" href=""> Fourth level 2</a></li>
+        </ul>
+          </li>
+          <li><a class="dropdown-item" href=""> Second level  4</a></li>
+          <li><a class="dropdown-item" href=""> Second level  5</a></li>
+       </ul>
+      </li>
+      <li><a class="dropdown-item" href="#"> Dropdown item 3 </a></li>
+      <li><a class="dropdown-item" href="#"> Dropdown item 4 </a>
       </ul>
-    </div>
-    <!-- navbar-collapse.// -->
-    </div>
-    <!-- container-fluid.// -->
-    </nav>
-    
+  </li>
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle"  data-toggle="dropdown">  Service  </a>
+    <ul class="dropdown-menu">
+    <li>
+      <!-- data-toggle="collapse" -->
+      <a class="dropdown-item"  href="#panelGSTPurchaseRegister" role="tab" >GST Purchase Register</a>
+    </li>
+    <li><a class="dropdown-item" href="#"> Second level 2 &raquo </a>
+     <ul class="submenu dropdown-menu">
+        <li><a class="dropdown-item" href=""> Third level 1</a></li>
+        <li><a class="dropdown-item" href=""> Third level 2</a></li>
+        <li><a class="dropdown-item" href=""> Third level 3 &raquo </a>
+      <ul class="submenu dropdown-menu">
+          <li><a class="dropdown-item" href=""> Fourth level 1</a></li>
+          <li><a class="dropdown-item" href=""> Fourth level 2</a></li>
+      </ul>
+        </li>
+        <li><a class="dropdown-item" href=""> Second level  4</a></li>
+        <li><a class="dropdown-item" href=""> Second level  5</a></li>
+     </ul>
+    </li>
+    <li><a class="dropdown-item" href="#"> Dropdown item 3 </a></li>
+    <li><a class="dropdown-item" href="#"> Dropdown item 4 </a>
+    </ul>
+</li>
+  </ul>
+  </div>
+  <br>
+</nav>
+<br>
+<fieldset class="RFS">
+<table style="margin-left: auto;margin-right: auto;" class="collapse" id="panelGSTPurchaseRegister">
+  <tr>
+    <td>
+      <table class="center">
+        <tr>
+          <td colspan="4" class="LabelFontStyle" style="width: 100%;">
+            &nbsp;GST&nbsp;Purchase&nbsp;Register&nbsp;&nbsp;
+        </td> 
+        </tr>
+      </table>
+    </td> 
+  </tr>
+  <tr>
+    <td>
+      <table class="center">
+        <tr>
+          <td style="width: 15%" class="LabelFontStyle">
+            &nbsp;From&nbsp;Date&nbsp;:&nbsp;
+        </td> 
+        <td>
+            <input type="date" class="form-control"  formControlName="fromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+        </td> 
+        <td style="width: 15%" class="LabelFontStyle">
+          &nbsp;To&nbsp;Date&nbsp;:&nbsp;
+      </td> 
+      <td>
+          <input type="date" class="form-control"  formControlName="toDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+      </td> 
+        </tr>
+        <tr>
+          <td style="width: 15%" class="LabelFontStyle">
+            &nbsp;Orgnization&nbsp;ID&nbsp;:&nbsp;
+        </td>
+        <td>
+          <input disabled type="text" class="form-control"  formControlName="OUCode">
+      </td> 
+      <td style="width: 15%" class="LabelFontStyle">
+        &nbsp;Location&nbsp;Code&nbsp;:&nbsp;
+    </td>
+    <td>
+      <select formControlName="locCode" id="locCode" class="form-control" (ngModelChange)='onOptionsLocation($event)'>
+        <option>--Select--</option>
+        <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
+            {{sc.locCode}}
+        </option>
+    </select> 
+      <input disabled type="number" class="form-control"  formControlName="locId">
+  </td> 
+        </tr>
+        <tr>
+          <td>
+            <table class="center">
+              <tr>
+               <td>
+                <button class="btn-primary" (click)="gstPurRegister()">View Report</button>
+               </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  </table>
+</fieldset>
+</form>
+

@@ -1492,7 +1492,6 @@ docSeqValue:number;
 
 
   close() {
-    // this.router.navigate(['login']);
     this.router.navigate(['admin']);
   }
 
@@ -2367,8 +2366,6 @@ docSeqValue:number;
     this.poInvoiceForm.get('lookupValueDesc5').reset();
   }
   onOptionsSelectedBranch(segment: any, lType: string) {
-    // alert(segment);
-    // var InterBranch1=this.GlCodeCombinaionForm.get('segment1').value;
     this.service.getInterBranch(segment, lType).subscribe(
       data => {
         this.branch = data;
