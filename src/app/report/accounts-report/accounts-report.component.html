@@ -22,9 +22,15 @@
       <a class="nav-link dropdown-toggle"  data-toggle="dropdown">  Spares  </a>
       <ul class="dropdown-menu">
       <li>
-        <a class="dropdown-item" data-toggle="collapse" href="#panelGSTPurchaseRegister" role="tab">GST Purchase Register</a>
+        <a class="dropdown-item" data-toggle="collapse" href="#panelGSTPurchaseRegister" role="tab"  (click)="reportDetails('gstPurRegister')">GST Purchase Register</a>
       </li>
-      <li><a class="dropdown-item" href="#"> Second level 2 &raquo </a>
+      <li>
+        <a class="dropdown-item" data-toggle="collapse"   href="#panelGSTPurchaseRegister" role="tab"  (click)="reportDetails('gstPurSummary')">Purchase Register Summary</a>
+      </li>
+      <li>
+        <a class="dropdown-item" data-toggle="collapse"   href="#panelGSTPurchaseRegister" role="tab"  (click)="reportDetails('receiptRegisterReport')">Receipt Register Report</a>
+      </li>
+      <!-- <li><a class="dropdown-item" href="#"> Second level 2 &raquo </a>
        <ul class="submenu dropdown-menu">
           <li><a class="dropdown-item" href=""> Third level 1</a></li>
           <li><a class="dropdown-item" href=""> Third level 2</a></li>
@@ -38,18 +44,17 @@
           <li><a class="dropdown-item" href=""> Second level  5</a></li>
        </ul>
       </li>
-      <li><a class="dropdown-item" href="#"> Dropdown item 3 </a></li>
-      <li><a class="dropdown-item" href="#"> Dropdown item 4 </a>
+      <li><a class="dropdown-item" href="#"> Dropdown item 3 </a></li> -->
       </ul>
   </li>
   <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle"  data-toggle="dropdown">  Service  </a>
     <ul class="dropdown-menu">
     <li>
-      <!-- data-toggle="collapse" -->
       <a class="dropdown-item"  href="#panelGSTPurchaseRegister" role="tab" >GST Purchase Register</a>
     </li>
-    <li><a class="dropdown-item" href="#"> Second level 2 &raquo </a>
+    
+    <!-- <li><a class="dropdown-item" href="#"> Second level 2 &raquo </a>
      <ul class="submenu dropdown-menu">
         <li><a class="dropdown-item" href=""> Third level 1</a></li>
         <li><a class="dropdown-item" href=""> Third level 2</a></li>
@@ -64,7 +69,7 @@
      </ul>
     </li>
     <li><a class="dropdown-item" href="#"> Dropdown item 3 </a></li>
-    <li><a class="dropdown-item" href="#"> Dropdown item 4 </a>
+    <li><a class="dropdown-item" href="#"> Dropdown item 4 </a> -->
     </ul>
 </li>
   </ul>
@@ -79,7 +84,7 @@
       <table class="center">
         <tr>
           <td colspan="4" class="LabelFontStyle" style="width: 100%;">
-            &nbsp;GST&nbsp;Purchase&nbsp;Register&nbsp;&nbsp;
+           {{reportName}}
         </td> 
         </tr>
       </table>
@@ -119,15 +124,33 @@
             {{sc.locCode}}
         </option>
     </select> 
-      <input disabled type="number" class="form-control"  formControlName="locId">
+      <input hidden  disabled type="number" class="form-control"  formControlName="locId">
   </td> 
         </tr>
         <tr>
-          <td>
+          <td colspan="4">
             <table class="center">
               <tr>
+                <td colspan="4">
+                  <table class="center">
+                    <tr>
+                        <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                        <ng-template #hList2>
+                            <div class="d-flex justify-content-center">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="sr-only" id="loading"></span>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template #hList1> </ng-template>
+                        <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">&nbsp;{{dataDisplay}}&nbsp; </td>
+                    </tr>
+                </table>
+                </td>
+              </tr>
+              <tr>
                <td>
-                <button class="btn-primary" (click)="gstPurRegister()">View Report</button>
+                <button class="btn-primary" [disabled]="isDisabled1" (click)="reportParameter(reportName)">View Report</button>
                </td>
               </tr>
             </table>
@@ -138,5 +161,18 @@
   </tr>
   </table>
 </fieldset>
+<table class="center">
+  <tr>
+      <td>
+          <button type="submit" class="btn btn-primary" id="register" (click)="refresh()">
+              Clear
+          </button>
+      </td>
+      <td>
+          <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
+      </td>
+  </tr>
+</table>
+
 </form>
 

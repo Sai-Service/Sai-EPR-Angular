@@ -30,6 +30,11 @@ export class AccountsReportComponent implements OnInit {
 
   pipe = new DatePipe('en-US');
   now = new Date();
+  closeResetButton = true;
+  dataDisplay: any;
+  progress = 0;
+
+  isDisabled1 = false;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) {
     this.reportForm = this.fb.group({
@@ -79,31 +84,77 @@ this.service.getLocationSearch1(sessionStorage.getItem('ouId'))
     this.reportForm.patchValue({locId:event})
   }
 
-  gstPurRegister(){
-    // this.isDisabled1 = true;
-    // this.closeResetButton = false;
-    // this.progress = 0;
-    // this.dataDisplay = 'Report Is Running....Do not refresh the Page';
+  refresh() {
+    window.location.reload();
+  }
+
+  close() {
+    this.location1.back();
+  }
+reportName:string;
+  reportDetails(reportName){
+    // alert(reportName);
+    if (reportName==='gstPurRegister'){
+    this.reportName='GST Purchase Register';
+  }
+  else if (reportName==='gstPurSummary'){
+    this.reportName='Purchase Register Summary';
+  }
+  else if (reportName==='receiptRegisterReport'){
+    this.reportName='Receipt Register Report';
+  }
+  }
+
+
+  reportParameter(reportName){
+    // alert(reportName)
+    this.isDisabled1 = true;
+    this.closeResetButton = false;
+    this.progress = 0;
+    this.dataDisplay = 'Report Is Running....Do not refresh the Page';
     var purStDt = this.reportForm.get('fromDate').value;
     var fromDate = this.pipe.transform(purStDt, 'dd-MMM-yyyy');
     var spreceipttoDate2 = this.reportForm.get('toDate').value;
     var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
-    var locId = this.reportForm.get('locId').value;
-    alert(locId);
-    if (locId === ''){
-      alert('hiiii  ')
-      locId === null;
+    // var locId = this.reportForm.get('locId').value;
+    if (this.reportForm.get('locId').value === ''){
+      this.reportForm.patchValue({locId:'null'});
     }
-    alert(locId);
+    var locId = this.reportForm.get('locId').value;
+    if (reportName==='GST Purchase Register'){
     const fileName = 'GST Purchase Register-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.gstPurchaeReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId,sessionStorage.getItem('deptId'))
       .subscribe(data => {
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-        // this.dataDisplay = ''
-        // this.closeResetButton = true;
-        // this.isDisabled1 = false;
+        this.dataDisplay = ''
+        this.closeResetButton = true;
+        this.isDisabled1 = false;
       })
+    }
+    else if (reportName==='Purchase Register Summary'){
+      const fileName = 'Purchase Register Summary-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      this.reportService.purchaseRegisterSummary(fromDate, toDate, sessionStorage.getItem('ouId'), locId,sessionStorage.getItem('deptId'))
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.dataDisplay = ''
+          this.closeResetButton = true;
+          this.isDisabled1 = false;
+        })
+    }
+
+    else if (reportName==='Receipt Register Report'){
+      const fileName = 'Receipt Register Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      this.reportService.spReceiptRegisterReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId,sessionStorage.getItem('deptId'))
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.dataDisplay = ''
+          this.closeResetButton = true;
+          this.isDisabled1 = false;
+        })
+    }
   }
 
 }
