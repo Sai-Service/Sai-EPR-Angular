@@ -7,7 +7,7 @@ import { MasterService } from '../../master/master.service';
 import { DatePipe } from '@angular/common';
 
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
-
+import { ActivatedRoute, ParamMap } from '@angular/router';
 
 
 interface IPaymentRcptAr {
@@ -280,6 +280,7 @@ export class PaymentArComponent implements OnInit {
   totalCr:number;
   runningTotalCr:number;
   runningTotalDr:number;
+  private sub: any;
 
   // applyTo: string;
 
@@ -288,7 +289,7 @@ export class PaymentArComponent implements OnInit {
   paymentAr(paymentArForm: any) { }
 
 
-  constructor(private service: MasterService,  private orderManagementService: OrderManagementService,  private fb: FormBuilder, private router: Router) {
+  constructor(private service: MasterService,  private orderManagementService: OrderManagementService,  private fb: FormBuilder, private router: Router, private router1: ActivatedRoute) {
 
 
     this.paymentArForm = fb.group({
@@ -554,6 +555,26 @@ export class PaymentArComponent implements OnInit {
 
     this.glPrdStartDate = this.GLPeriodCheck.startDate;
     this.glPrdEndDate = this.GLPeriodCheck.endDate
+
+
+    this.sub = this.router1.params.subscribe(params => {
+      this.vehRegNo = params['vehRegNo'];
+      alert(this.vehRegNo);
+      return;
+
+      this.orderManagementService.getOmReceiptSearchByOrdNo(this.orderNumber)
+      .subscribe(
+      data => {
+        // this.lstcomments = data.obj.oePayList;
+        // this.custName=data.obj.custName;
+        // this.customerId=data.obj.customerId;
+        // this.balancePay=data.obj.balancePay.toFixed(2);
+      
+        console.log(this.lstcomments);
+       }
+       
+      );
+      });
 
 
   }
