@@ -318,7 +318,7 @@ export class AllReportsComponent implements OnInit {
     const fileName = 'Purchase-Register-Summary-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
 
-    this.reportService.sppurRegiSummReport(fromDate, toDate, sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
+    this.reportService.sppurRegiSummReport(fromDate, toDate, sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
       .subscribe(data => {
         // var blob = new Blob([data], { type: 'application/pdf' });
         // var url = URL.createObjectURL(blob);
@@ -434,7 +434,7 @@ export class AllReportsComponent implements OnInit {
     var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
     const fileName = 'SP-Receipt-Register-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.spReceiptRegisterReport(fromDate, toDate, sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
+    this.reportService.spReceiptRegisterReport(fromDate, toDate, sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
       .subscribe(data => {
         // var blob = new Blob([data], { type: 'application/pdf' });
         // var url = URL.createObjectURL(blob);

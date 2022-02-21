@@ -182,8 +182,8 @@ export class ReportServiceService {
     });
   }
 
-  sppurRegiSummReport(fromDate,toDate,locId,deptId){
-    const REQUEST_URI = this.ServerUrl +`/SparesReports/PurchaseRegisterSummary?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}&deptId=${deptId}`;
+  sppurRegiSummReport(fromDate,toDate,ouId,locId,deptId){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/PurchaseRegisterSummary?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&deptId=${deptId}`;
     return this.http.get(REQUEST_URI, {
       responseType: 'arraybuffer',
       headers: this.headers,
@@ -237,8 +237,8 @@ export class ReportServiceService {
   }
 
 
-  spReceiptRegisterReport(fromDate,toDate,locId,deptId){
-    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprReceiptRegister?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}&deptId=${deptId}`;
+  spReceiptRegisterReport(fromDate,toDate,ouId,locId,deptId){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprReceiptRegister?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&deptId=${deptId}`;
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
@@ -328,6 +328,26 @@ vehicleClosingStockReport(orgId){
     headers: this.headers,
   });
 }
+
+///////////////////////////////  accounts report ///////////////
+
+
+gstPurchaeReport(fromDate,toDate,orgId,locId,deptId){
+  const REQUEST_URI = this.ServerUrl +`/AccountsReports/GstPurchaseRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${orgId}&locId=${locId}&deptId=${deptId}`;
+  return this.http.get(REQUEST_URI, {
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
+}
+
+purchaseRegisterSummary(fromDate,toDate,ouId,locId,deptId){
+  const REQUEST_URI = this.ServerUrl +`/SparesReports/PurchaseRegisterSummary?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&deptId=${deptId}`;
+  return this.http.get(REQUEST_URI, {
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
+}
+
 
 }
 

@@ -563,7 +563,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
     console.log(this.custSiteList);
 
     // alert(selSite.ouId);
-debugger;
+// debugger;
     if (selSite.ouId != (sessionStorage.getItem('ouId'))) {
       alert('First Create OU wise Site to continue process!')
     }
@@ -747,10 +747,7 @@ debugger;
   onOptionsSelectedDescription(segment: string, k) {
     if (segment != undefined && segment != "") {
       this.displayorderHedaerDetails = false;
-      // if (this.op != 'Search') {
-      //   let selPayTerm = this.payTermDescList.find(d => d.lookupValueId === this.selCustomer.termId);
-      //   this.paymentType = selPayTerm.lookupValue;
-      // }
+   
       var orderedDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
       this.CounterSaleOrderBookingForm.patchValue({ orderedDate: orderedDate });
       this.CounterSaleOrderBookingForm.get('custAccountNo').disable();
@@ -846,6 +843,14 @@ debugger;
                       // this.getLocatorDetails(k, select.itemId);
                       let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
                       var invTp = controlinv.controls[k].get('invType').value;
+                      var utc = controlinv.controls[k].get('unitSellingPrice').value;
+                      if (this.custClassCode.includes("EXPORTER") && Number(sessionStorage.getItem('ouId')) === 22) {
+                        // alert('yyuuuuu');
+                          (controlinv.controls[k]).patchValue({
+                            unitSellingPrice: data.obj[0].mrp
+                          });  
+                          utc=data.obj[0].mrp;
+                        }
                       // this.service.getfrmSubLoc(this.locId, select.itemId, this.subInventoryId).subscribe(
                       this.service.getfrmSubLocPrice(this.locId, select.itemId, this.subInventoryId).subscribe(
                         data => {
@@ -882,7 +887,8 @@ debugger;
                               controlinv.controls[k].patchValue({ frmLocator: selLocator[0].segmentName });
                               controlinv.controls[k].patchValue({ onHandQty: selLocator[0].onHandQty });
                               controlinv.controls[k].patchValue({ id: selLocator[0].id });
-                              controlinv.controls[k].patchValue({ unitSellingPrice: selLocator[0].prc });
+                              // controlinv.controls[k].patchValue({ unitSellingPrice: selLocator[0].prc });
+                              controlinv.controls[k].patchValue({ unitSellingPrice: utc });
                             }
                             else {
                               // alert(selLocator[0].segmentName);
@@ -892,7 +898,8 @@ debugger;
                               // controlinv.controls[k].patchValue({ frmLocatorId: selLocator[0].locatorId });
                               controlinv.controls[k].patchValue({ onHandQty: selLocator[0].onHandQty })
                               controlinv.controls[k].patchValue({ id: selLocator[0].id });
-                              controlinv.controls[k].patchValue({ unitSellingPrice: selLocator[0].prc });
+                              // controlinv.controls[k].patchValue({ unitSellingPrice: selLocator[0].prc });
+                              controlinv.controls[k].patchValue({ unitSellingPrice: utc });
                             }
                             // this.service.getreserqty(this.locId, select.itemId).subscribe
                             //   (data => {

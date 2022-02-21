@@ -656,6 +656,4 @@ export class ReversalOrderComponent implements OnInit {
         alert("Order Header Details Not Found...Please check"); e.target.checked=false;
       }
   }
-
-
 }
