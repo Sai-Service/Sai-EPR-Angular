@@ -47,9 +47,9 @@
                 <td style="background-color: #FFE4B5;">
                     <select formControlName="scope" id="scope" value={{scope}} class="form-control" style="width: 200px;"  >
                     <option></option>
-                    <option value="Opened">From Organization</option>
-                    <option value="Ready for Invoice">To Organization</option>
-                    <option value="Invoiced">From Or To Organization</option>
+                    <option value="fromloc">From Organization</option>
+                    <option value="toLoc">To Organization</option>
+                    <!-- <option value="Invoiced">From Or To Organization</option> -->
                      </select>
                 </td>
 
@@ -97,34 +97,38 @@
                     <ng-container   *ngFor="let group of lineDetailsArray().controls; let i= index" [formGroupName]="i" class="auto-style5">  
                                 <tr>
                                     <td style="text-align: center;width: 4rem;">{{i+1}}</td>
-                                     <td>
+
+                                     <!-- <td>
                                         <select  formControlName="fromOrg" id="fromOrg"  class="form-control"  
                                             style="width: 7rem; height: 25px;background-color: yellow;"  (ngModelChange)='onSelectFromOrg($event, i)' >
                                             <option disabled>--Select--</option>
                                             <option *ngFor="let sc of locIdList"  [ngValue]="sc.locId">
                                             {{sc.locCode}}
-                                            <!-- -{{sc.locName}} -->
                                             </option>
                                         </select>
-                                    </td>
+                                    </td> -->
 
                                 <!-- (ngModelChange)='onOptionsSelectedCategory($event, i)' -->
                                 <!-- style="height: 20px;font-size: 10px;width: 120px;" -->
-                                    <td>
+
+                                  <td> <input  disabled style="width:5rem;height: 25px"  type="text" formControlName="fromLocationId" class="form-control"></td> 
+                                  <td> <input  disabled style="width:5rem;height: 25px"  type="text" formControlName="toLocationId" class="form-control"></td>
+
+                                    
+                                    <!-- <td>
                                         <select  formControlName="toOrg" id="toOrg"   class="form-control"  
                                         style="width: 7rem; height: 25px;background-color: yellow;" (ngModelChange)='onSelectToOrg($event, i)' >
                                             <option disabled>--Select--</option>
                                             <option *ngFor="let sc of locIdList"  [ngValue]="sc.locId">
                                             {{sc.locCode}}
-                                            <!-- -{{sc.locName}} -->
                                             </option>
                                         </select>
-                                    </td>
+                                    </td> -->
 
                                     <!-- <td> <input  disabled style="width:5rem;"  type="number" formControlName="trfType" class="form-control"></td> -->
 
                                     <td>
-                                        <select  formControlName="trfType"  id ="trfType"  [(ngModel)]="trfType"  class="form-control" 
+                                        <select  formControlName="transfereType"  id ="transfereType"    class="form-control" 
                                         (ngModelChange)='onSelectTrfType($event)' style="width: 7rem; height: 25px;background-color: yellow;"  >
                                             <!-- <option>--Select--</option> -->
                                             <option value="INVOICE">INVOICE</option>

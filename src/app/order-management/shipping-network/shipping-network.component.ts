@@ -30,6 +30,7 @@ export class ShippingNetworkComponent implements OnInit {
   public DepartmentList: Array<string> = [];
   public statusList: Array<string> = [];
   public locIdList: Array<string> = [];
+  lstShipList: any;
 
   loginName:string;
   divisionId:number;
@@ -71,9 +72,9 @@ export class ShippingNetworkComponent implements OnInit {
 
   lineDetailsGroup() {
     return this.fb.group({
-      fromOrg:[],
-      toOrg:[],
-      trfType:[],
+      fromLocationId:[],
+      toLocationId:[],
+      transfereType:[],
       interOrgRcvble:[],
       interOrgPayable:[],
       custNo:[],
@@ -161,7 +162,47 @@ export class ShippingNetworkComponent implements OnInit {
 
   }
 
-  find1(){}
+
+  find1(){
+    var mScope = this.shippingNetworkForm.get('scope').value
+
+    alert ("Scope:" + mScope);
+
+    if(mScope ==='fromloc'){ this.fromScopeData();  }
+    // if(mScope ==='toloc'){ this.toScopeData();  }
+  }
+
+  fromScopeData() {
+     var mLocId = this.shippingNetworkForm.get('locId').value
+    this.service.getShipNetFromDetails(mLocId)
+      .subscribe(
+        data => {
+          this.lstShipList = data;
+          // alert ("Total order lines :" +data.length);
+          if (data.length > 0) {
+           
+           this.shippingNetworkForm.get('locId').disable();
+
+            console.log(this.lstShipList);
+            var len = this.lineDetailsArray().length;
+            var y = 0;
+            for (let i = 0; i < this.lstShipList.length - len; i++) {
+              var ordLnGrp: FormGroup = this.lineDetailsGroup();
+              this.lineDetailsArray().push(ordLnGrp);
+              y = i;
+
+            }
+
+            this.shippingNetworkForm.get('shipLines').patchValue(this.lstShipList);
+
+
+          } 
+        });
+
+
+
+  }
+
 
   clearSearch() {
     // this.jobcardForm.get('jobCardNum2').reset();
