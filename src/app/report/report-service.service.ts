@@ -294,7 +294,7 @@ vhslRegisterReport(fromDate,toDate,locId){
 }
 
 salesINDReport(toDate,locId){
-  const REQUEST_URI = this.ServerUrl +`/SalesReports/VehIndReg?fromDate=toDate=${toDate}&locId=${locId}`;
+  const REQUEST_URI = this.ServerUrl +`/SalesReports/VehIndReg?toDate=${toDate}&locId=${locId}`;
   return this.http.get(REQUEST_URI, {
     // params: REQUEST_PARAMS,
     responseType: 'arraybuffer',

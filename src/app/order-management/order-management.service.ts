@@ -592,7 +592,7 @@ public pickTicketInvoiceFun(pickTicketInvDels) {
 // Sales Gate Pass Service
 
 getGatepassSearch(orderNumber): Observable<any> {
-  return this.http.get(this.ServerUrl + `/salesGatePass/${orderNumber}`);
+  return this.http.get(this.ServerUrl + `/salesGatePass/gatepass/${orderNumber}`);
 }
 
 lineLevelOrderStatus():Observable<any>{

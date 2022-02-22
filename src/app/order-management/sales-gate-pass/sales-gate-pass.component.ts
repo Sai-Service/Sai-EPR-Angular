@@ -112,7 +112,7 @@ export class SalesGatePassComponent implements OnInit {
         this.dateOfDelv=this.lstcomments.dateOfDelv;
         this.segment=this.lstcomments.segment;
         this.vin=this.lstcomments.vin;
-        this.modelVarClr=this.lstcomments.modelVarClr;
+        this.modelVarClr=(this.lstcomments.model+' '+this.lstcomments.description+' '+this.lstcomments.colorDesc);
         this.deliveryLoc=this.lstcomments.deliveryLoc;
         this.serviceLoc=this.lstcomments.serviceLoc;
         this.orderNumber=this.lstcomments.orderNumber;
@@ -141,12 +141,14 @@ export class SalesGatePassComponent implements OnInit {
     this.orderManagementService.getGatepassSearch(orderNumber)
     .subscribe(
       data => {
+        if (data.code===200){
+          alert('hi')
         this.lstcomments = data.obj;
         console.log(this.lstcomments);
         this.vehicleNo=this.lstcomments.vehicleNo;
         this.dateOfDelv=this.lstcomments.dateOfDelv;
-        this.segment=this.lstcomments.segment;
-        this.vin=this.lstcomments.vin;
+        this.segment=data.obj.segment;
+        this.vin=data.obj.vin;
         this.modelVarClr=this.lstcomments.modelVarClr;
         this.deliveryLoc=this.lstcomments.deliveryLoc;
         this.serviceLoc=this.lstcomments.serviceLoc;
@@ -159,7 +161,11 @@ export class SalesGatePassComponent implements OnInit {
         this.excessAmt=this.lstcomments.excessAmt;
         this.SalesGatepassForm.patchValue(this.lstcomments);
       }
-      
+      else if (data.code===400){
+        alert(data.message)
+      }
+    }
+
     );
      }
 

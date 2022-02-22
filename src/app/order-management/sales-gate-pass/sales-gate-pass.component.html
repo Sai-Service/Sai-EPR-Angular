@@ -65,11 +65,11 @@
   <table class="center" style="width: 100%;">
     <tr>
         <td style="width: 15%" class="LabelFontStyle"> Item&nbsp;Number&nbsp;: </td>
-        <input disabled type="text" formControlName="segment" value="segment"  class="form-control" style="height: 20px;width: 160px;">
+        <input disabled type="text" formControlName="segment" value="segment" [(ngModel)]='segment'  class="form-control" style="height: 20px;width: 160px;">
         <td style="width: 15%" class="LabelFontStyle">   Vehicle&nbsp;Id&nbsp;(VIN)&nbsp;:  </td>
-        <input disabled type="text" formControlName="vin" value="vin"  class="form-control" style="height: 20px;width: 160px;">
+        <input disabled type="text" formControlName="vin" value="vin"  [(ngModel)]='vin' class="form-control" style="height: 20px;width: 160px;">
         <td style="width: 15%" class="LabelFontStyle">  Model&nbsp;/&nbsp;Variant&nbsp;/&nbsp;Color: </td>
-        <input disabled type="text" formControlName="modelVarClr" value="modelVarClr"  class="form-control" style="height: 20px;width: 160px;">
+        <input disabled type="text" formControlName="modelVarClr" value="modelVarClr" [(ngModel)]='modelVarClr' class="form-control" style="height: 20px;width: 160px;">
         <td style="width: 15%" class="LabelFontStyle">  Delivery&nbsp;Location&nbsp;:  </td>
         <input disabled type="text" formControlName="deliveryLoc" [(ngModel)]='deliveryLoc' id="deliveryLoc" value="deliveryLoc"  class="form-control" style="height: 20px;width: 160px;">
 

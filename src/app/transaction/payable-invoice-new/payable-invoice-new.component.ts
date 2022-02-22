@@ -187,6 +187,7 @@ export class PayableInvoiceNewComponent implements OnInit {
   taxCategoryId: number;
   taxCategoryName: string;
   hsnSacCodeList: any = [];
+  displayTaxCategory=true;
   // glDate:Date;
   //  glDate=this.pipe.transform(this.now, 'd-M-y h:mm:ss');
   // glDate = new Date();
@@ -988,14 +989,16 @@ currentOP='Search'
 
 
   selectINVLineDtl(i) {
-    alert(this.currentOP);
+    // alert(this.currentOP);
     this.tdsTaxDetailsArray().clear();
     this.lineDistributionArray().clear();
     this.invLineDetailsArray().clear();
     this.TaxDetailsArray().clear();
     this.dispaccountingDate = true;
     this.displayapInvCancelled=true;
+    this.displayViewTaxDetails=false;
     this.selectedLine = i;
+    this.displaydescription=false;
     var arrayControl = this.poInvoiceForm.get('obj').value;
     var invStatus = arrayControl[this.selectedLine].INVStatus;
     var INVStatus = arrayControl[this.selectedLine].INVStatus;
@@ -1007,6 +1010,8 @@ currentOP='Search'
         data => {
           console.log(data);
           this.isSearchPatch = true;
+          this.displayitemName=true;
+          this.displayTaxCategory=false;
           this.poInvoiceForm.patchValue({
             invoiceNum: data.invoiceNum,
             segment1: data.invLines[0].poNumber,
@@ -1127,7 +1132,7 @@ currentOP='Search'
       this.displayapInvCancelled = false;
     }
     if (this.currentOP==='Search'){
-      alert('in if search')
+      // alert('in if search')
       this.tdsTaxDetailsArray().disable();
       this.lineDistributionArray().disable();
       this.invLineDetailsArray().disable();
@@ -1178,6 +1183,7 @@ currentOP='Search'
   }
 
   onOptionViewTaxDetails(taxCategoryId,k){
+    alert(k)
     var arrayControl = this.poInvoiceForm.get('invLines').value;
    var linetaxCategoryId=arrayControl[k].taxCategoryId
   }
