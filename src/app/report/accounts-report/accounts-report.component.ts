@@ -96,12 +96,21 @@ reportName:string;
     // alert(reportName);
     if (reportName==='gstPurRegister'){
     this.reportName='GST Purchase Register';
+    this.reportForm.get('fromDate').reset();
+    this.reportForm.get('toDate').reset();
+    this.reportForm.get('locCode').reset();
   }
   else if (reportName==='gstPurSummary'){
     this.reportName='Purchase Register Summary';
+    this.reportForm.get('fromDate').reset();
+    this.reportForm.get('toDate').reset();
+    this.reportForm.get('locCode').reset();
   }
   else if (reportName==='receiptRegisterReport'){
     this.reportName='Receipt Register Report';
+    this.reportForm.get('fromDate').reset();
+    this.reportForm.get('toDate').reset();
+    this.reportForm.get('locCode').reset();
   }
   }
 
@@ -116,11 +125,10 @@ reportName:string;
     var fromDate = this.pipe.transform(purStDt, 'dd-MMM-yyyy');
     var spreceipttoDate2 = this.reportForm.get('toDate').value;
     var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
-    // var locId = this.reportForm.get('locId').value;
-    if (this.reportForm.get('locId').value === ''){
-      this.reportForm.patchValue({locId:'null'});
-    }
     var locId = this.reportForm.get('locId').value;
+    if (locId===null){
+      locId=''
+    }
     if (reportName==='GST Purchase Register'){
     const fileName = 'GST Purchase Register-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);

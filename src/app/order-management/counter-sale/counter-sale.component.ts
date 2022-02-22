@@ -2045,14 +2045,14 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                       var invTp = controlinv.controls[k].get('invType').value;
                       var utc = controlinv.controls[k].get('unitSellingPrice').value;
                       if (this.custClassCode.includes("EXPORTER") && Number(sessionStorage.getItem('ouId')) === 22) {
-                        alert('yyuuuuu');
+                        // alert('yyuuuuu');
                           (controlinv.controls[k]).patchValue({
                             unitSellingPrice: data.obj[0].mrp
                           });  
                           utc=data.obj[0].mrp;
                         }
                        
-                        alert(utc);
+                        // alert(utc);
                       // this.service.getfrmSubLoc(this.locId, select.itemId, this.subInventoryId).subscribe(
                       this.service.getfrmSubLocPrice(this.locId, select.itemId, this.subInventoryId).subscribe(
                         data => {
