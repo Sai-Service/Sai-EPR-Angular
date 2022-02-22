@@ -10,10 +10,11 @@ import { VehicleServiceHistoryComponent } from './vehicle-service-history/vehicl
 
 const routes: Routes = [
   // {path:'JobCard', component:JobCardComponent, canDeactivate: [DeActivateGuard] },
+  // {path:'JobCard/:regNo',component:JobCardComponent},
   {path:'JobCard',component:JobCardComponent},
   {path :'ServiceGatepass',component:ServiceGatepassComponent},
   {path :'VehicleServiceHistory',component:VehicleServiceHistoryComponent},
-  { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full'}
+  {path : '' ,redirectTo: 'Dashboard', pathMatch: 'full'}
 ];
 
 @NgModule({

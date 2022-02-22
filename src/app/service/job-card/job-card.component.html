@@ -2706,10 +2706,15 @@
                                                                 style="width: fit-content;" (click)="printWSInvoice()">Print invoice</button>
                                                         </td>
 
-                                                        <td>
+                                                         <!-- <td>
                                                             <button type="submit" class="btn btn-primary" id="register"
                                                                 style="width: fit-content;" (click)="showReceiptScreen()">Receipt</button>
+                                                        </td>  -->
+
+                                                        <td>
+                                                            <button class="btn btn-primary" [routerLink]="['/admin/transaction/PaymentAr']">Payment</button>
                                                         </td>
+
                                                     </ng-template>
 
                                                     <ng-template #P2>
