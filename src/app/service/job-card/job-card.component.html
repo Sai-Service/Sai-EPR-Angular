@@ -993,7 +993,7 @@
                                                                                             class="RFSL"
                                                                                             style="font-size: 10px;color: black;">
                                                                                             <b>
-                                                                                                Billing&nbsp;Customer&nbsp;</b>
+                                                                                                Billing - &nbsp;Customer&nbsp;</b>
                                                                                         </legend>
 
                                                                                         <table>
@@ -1009,7 +1009,7 @@
                                                                                                     </td>
             
                                                                                                     <td style="width: 15%" class="LabelFontStyle">
-                                                                                                        Act&nbsp;No:&nbsp;</td>
+                                                                                                        Account &nbsp;No:&nbsp;</td>
             
                                                                                                 <td>
                                                                                                     <input disabled type="text" class="form-control" placeholder=""
@@ -1361,7 +1361,7 @@
                                                     <table style="width: 100%;background-color: white;">
                                                         <tr>
                                                             <td class="PageHeader1" >
-                                                                &nbsp;&nbsp;Labor&nbsp;Details&nbsp;&nbsp;{{jobCardNum}}&nbsp;&nbsp;&nbsp;&nbsp;{{regNo}}&nbsp;&nbsp;&nbsp;&nbsp;{{jobStatus}}
+                                                                &nbsp;&nbsp;Labour&nbsp;Details&nbsp;&nbsp;{{jobCardNum}}&nbsp;&nbsp;&nbsp;&nbsp;{{regNo}}&nbsp;&nbsp;&nbsp;&nbsp;{{jobStatus}}
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -1392,7 +1392,7 @@
                                                                 <tr class="GridHeader">
                                                                     <th scope="col">Sr. no</th>
                                                                     <th scope="col">Billable Type</th>
-                                                                    <th scope="col">Labor Item</th>
+                                                                    <th scope="col">Labour Item</th>
                                                                     <th scope="col">&nbsp;</th>
                                                                     <!-- <th scope="col">Uom</th> -->
                                                                     <th scope="col">Description</th>
@@ -1467,7 +1467,7 @@
                                                                                 list="dynmicUserIds1" class="form-control"  style="width: 8rem;"
                                                                                 (change)="serchByitemId(segment,i)" />
                                                                                 <datalist id="dynmicUserIds1">
-                                                                                    <option *ngFor="let item of LaborItemList" [ngValue]="item.segment">
+                                                                                    <option *ngFor="let item of LabourItemList" [ngValue]="item.segment">
                                                                                             {{item.segment}}
                                                                                     </option>
                                                                                 </datalist> 
@@ -1967,7 +1967,7 @@
                                                 <fieldset class="RFS">
                                                     <legend id="FormsPH_LGAadhaar" class="RFSL"
                                                         style="font-size: 10px;color: black;">
-                                                        <b> Billing&nbsp;Customer&nbsp;</b>
+                                                        <b> Billing - &nbsp;Customer&nbsp;</b>
                                                     </legend>
                                                     <tr>
                                                         <td style="width: 15%" class="LabelFontStyle">
@@ -2020,7 +2020,7 @@
                                                         </td>
 
                                                         <td style="width: 15%" class="LabelFontStyle">
-                                                            Cont&nbsp;No:&nbsp;</td>
+                                                            Contact&nbsp;No:&nbsp;</td>
                                                         <td>
                                                             <input type="text" disabled class="form-control"
                                                                 formControlName="contact1" [(ngModel)]="contact1"
@@ -2095,7 +2095,7 @@
                                                                                         </td>
 
                                                                                         <td style="width: 15%" class="LabelFontStyle">
-                                                                                            Act&nbsp;No:&nbsp;</td>
+                                                                                            Account &nbsp;No:&nbsp;</td>
 
                                                                                     <td>
                                                                                         <input disabled type="text" class="form-control" placeholder=""
@@ -2217,7 +2217,7 @@
                                                                                 
                                                                             <td> <input disabled type="text"  class="form-control"
                                                                             placeholder=""   formControlName="insurerCompName" style="width: 375px;" > </td>
-                                                                            <td style="width: 15%" class="LabelFontStyle"> Act&nbsp;No:&nbsp;</td>
+                                                                            <td style="width: 15%" class="LabelFontStyle"> Account &nbsp;No:&nbsp;</td>
                                                                             <td><input disabled type="number" min="0" class="form-control"   placeholder=""  formControlName="insurerCompNo"  >  </td>
                                                                         </tr>
 
@@ -2338,12 +2338,12 @@
                                                                 <tr class="GridHeader">
                                                                    <th scope="col">Billable Type</th>
                                                                   
-                                                                    <th scope="col" style="text-align: right;">Actual Labor&nbsp;&nbsp;</th>
+                                                                    <th scope="col" style="text-align: right;">Actual Labour&nbsp;&nbsp;</th>
                                                                     <th scope="col" style="text-align: right;">Lab Dis%</th>
-                                                                    <th scope="col" style="text-align: right;">Labor Disount&nbsp;&nbsp;</th>
-                                                                    <th scope="col" style="text-align: right;">Labor Taxable&nbsp;&nbsp;</th>
-                                                                    <th scope="col" style="text-align: right;">Labor Tax Amt&nbsp;&nbsp;</th>
-                                                                    <th scope="col" style="text-align: right;">Labor Total&nbsp;&nbsp;</th>
+                                                                    <th scope="col" style="text-align: right;">Labour Disount&nbsp;&nbsp;</th>
+                                                                    <th scope="col" style="text-align: right;">Labour Taxable&nbsp;&nbsp;</th>
+                                                                    <th scope="col" style="text-align: right;">Labour Tax Amt&nbsp;&nbsp;</th>
+                                                                    <th scope="col" style="text-align: right;">Labour Total&nbsp;&nbsp;</th>
 
                                                                     <th scope="col" style="text-align: right;">Actual Material&nbsp;&nbsp;</th>
                                                                     <th scope="col" style="text-align: right;">Mat Dis%</th>
@@ -2887,7 +2887,7 @@
                                         <div class="modal-header">
                                                 <h4 class="modal-title" id="myModalLabel"
                                                 style="text-align: center; font-size: medium; margin-left: 20%; font-family: Verdana,Sans-serif, Arial, Helvetica;font-weight: bold;">
-                                                Add Technician for Line-{{ title }}. Labor Amt : {{this.lineBasicAmt}}</h4>
+                                                Add Technician for Line-{{ title }}. Labour Amt : {{this.lineBasicAmt}}</h4>
                                                
                                             <button type="button" class="close" data-dismiss="modal"
                                                 aria-hidden="true">&times;</button>
@@ -3292,7 +3292,7 @@
         <div class="modal-content">
          <div class="modal-header" >
             <!-- style="background-color: darkcyan;" -->
-        <h5 class="modal-title" id="itemDetailsLabel" style="text-align: center;color:blue"  >Labor&nbsp;Search&nbsp;:&nbsp; {{lineIndex+1}}</h5>
+        <h5 class="modal-title" id="itemDetailsLabel" style="text-align: center;color:blue"  >Labour&nbsp;Search&nbsp;:&nbsp; {{lineIndex+1}}</h5>
          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
