@@ -1134,6 +1134,8 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
     else {
       if (createOrderType === 'Sales Order') {
         this.displaysalesRepName = false;
+        this.CounterSaleOrderBookingForm.get('othRefNo').enable();
+        this.othRefNoSearch();
       }
     }
   }
@@ -1301,16 +1303,35 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
         }
       }
     }
+    // if (Number(sessionStorage.getItem('divisionId')) === 2) {
+    //   this.service.crediteLimitFn(this.selCustomer.customerId, sessionStorage.getItem('locId'), selSite.customerSiteId)
+    //     .subscribe(
+    //       data => {
+    //         if (data.code === 200) {
+    //         }
+    //       })
+    // }
+
     if (Number(sessionStorage.getItem('divisionId')) === 2) {
-      // alert(this.selCustomer.customerId+'----'+selSite.customerSiteId)
       this.service.crediteLimitFn(this.selCustomer.customerId, sessionStorage.getItem('locId'), selSite.customerSiteId)
         .subscribe(
           data => {
             if (data.code === 200) {
-              // alert(data.obj);
+              var credAmt = this.CounterSaleOrderBookingForm.get('creditAmt').value;
+              var newCrmAmt1 = Math.round(((data.obj.outStandingAmt) + Number.EPSILON) * 100) / 100;
+              this.CounterSaleOrderBookingForm.patchValue({ creditAmt: newCrmAmt1 });
+              this.CounterSaleOrderBookingForm.patchValue({ creditDays: data.obj.creditDays });
+              this.CounterSaleOrderBookingForm.patchValue({ daysMsg: data.obj.daysMsg });
             }
           })
     }
+    if (Number(sessionStorage.getItem('deptId'))===6){
+      this.transactionTypeName = 'Accessories Sale - Credit';
+    }
+    else if (Number(sessionStorage.getItem('deptId'))===5){
+    this.transactionTypeName = 'Spares Sale - Credit';
+  }
+    this.CounterSaleOrderBookingForm.patchValue({ createOrderType: 'Pick Ticket' });
 
     this.orderManagementService.getTaxCategoriesForSales(selSite.taxCategoryName, 28)
     .subscribe(
@@ -1358,30 +1379,45 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
   //       });
   // }
 
-  othRefNoSearch(othRefNo) {
-    // alert(othRefNo);
-    this.orderManagementService.othRefNoSearchFn(othRefNo)
-      .subscribe(
-        data => {
-          if (data.code === 200) {
-            this.othRefNoSearchFnData = data.obj;
-            this.othRefNo = data.obj.orderNumber1;
-            this.salesRepName = data.obj.salesRepName1;
-            this.tlName = data.obj.tlName1;
-            this.CounterSaleOrderBookingForm.patchValue(this.othRefNoSearchFnData);
-            if (this.custAccountNo != this.othRefNoSearchFnData.custAccountNo1) {
-              alert('Sales Order Customer & Counter Sale Order Customer Not Match')
-            }
-            else { }
-          }
-          else {
-            if (data.code === 400) {
-              alert(data.message)
-            }
-          }
-        })
 
+  salesOrderDetails(event){
+    // alert(event.target.value); 
+    var orderNumber=event.target.value;
+    let orderNumberDetails = this.othRefNoSearchFnData.find(d => Number(d.orderNumber1) === Number(orderNumber));
+    console.log(orderNumberDetails);
+    this.salesRepName = orderNumberDetails.salesRepName1;
+    this.tlName = orderNumberDetails.tlName1;
+    this.paymentType = orderNumberDetails.paymentType1;
   }
+
+  othRefNoSearch() {
+    var customerId= this.CounterSaleOrderBookingForm.get('customerId').value;
+      this.orderManagementService.othRefNoSearchFn(sessionStorage.getItem('locId'),1,customerId)
+        .subscribe(
+          data => {
+            if (data.code === 200) {
+              this.othRefNoSearchFnData = data.obj;
+              this.CounterSaleOrderBookingForm.patchValue(this.othRefNoSearchFnData);
+          //  alert(data.obj.length)
+              for (let i=0; i< data.obj.length; i++){
+              if (this.custAccountNo != this.othRefNoSearchFnData[i].custAccountNo1) {
+                alert('Sales Order Customer & Counter Sale Order Customer Not Match');
+                this.CounterSaleOrderBookingForm.get('othRefNo').reset()
+                return;
+              }
+              else {
+                this.othRefNo = data.obj[i].orderNumber1;
+              }
+            }
+            }
+            else {
+              if (data.code === 400) {
+                alert(data.message)
+              }
+            }
+          })
+  
+    }
 
 
   contactNoSearch(mobile1) {
