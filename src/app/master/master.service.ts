@@ -2942,6 +2942,7 @@ public saveWSVehicle(wsVehicleDetails) {
     return this.http.get(this.ServerUrl + `/SsMcpEnqMst/McpRegCheck/${mRegno}`);
 
     // http://localhost:8081/SsMcpEnqMst/McpRegCheck/MH12EM6011
+    
   }
 
 

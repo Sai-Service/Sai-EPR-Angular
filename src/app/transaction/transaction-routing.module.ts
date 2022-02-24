@@ -56,7 +56,7 @@ const routes: Routes = [
   {path:'AvgCostUpdate',component:AvgCostUpdateComponent},
   {path:'PaymentReceipt',component:PaymentReceiptComponent},
   {path:'PaymentReceipt/:orderNumber',component:PaymentReceiptComponent},
-  {path:'PaymentAr',component:PaymentArComponent},
+  {path:'PaymentAr/:attribute1',component:PaymentArComponent},
   // {path:'ReceiptArApplication',component:ReceiptArApplicationComponent},
   {path:'SaiExtendedWarranty',component:SaiExtendedWarrantyComponent},
   {path:'SaiEwSchemeMaster',component:SaiEwSchemeMasterComponent},

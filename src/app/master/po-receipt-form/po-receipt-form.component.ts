@@ -430,6 +430,7 @@ export class PoReceiptFormComponent implements OnInit {
       this.segment1 = params['segment1'];
       // alert(this.segment1);
       console.log(this.poReceiptForm.value);
+      
       this.service.getsearchByPOlines(this.segment1)
         .subscribe(
           data => {
