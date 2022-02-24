@@ -6,7 +6,7 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { MasterService } from 'src/app/master/master.service';
 import { TransactionService } from 'src/app/transaction/transaction.service';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
-import { data } from 'jquery';
+import { data, event } from 'jquery';
 import { SalesOrderobj } from 'src/app/order-management/sales-order-form/sales-orderobj'
 import { DatePipe, Location } from '@angular/common';
 import { escapeRegExp } from '@angular/compiler/src/util';
@@ -231,6 +231,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   displaypickTicketInvoice = true;
   displaycreateOrderType = true;
   showApplyDiscount = true;
+  displayothRefNo=true;
   selectedLine = 0;
   categoryList: any[];
   custSiteList: any = [];
@@ -609,7 +610,6 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-
     this.isVisibleCreateOrder = true;
     this.isVisiblePickTiPreview = false;
     this.isVisibleUpdate = false;
@@ -797,6 +797,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   OrderFind(orderNumber) {
     this.op = 'Search';
     this.isDisabled11 = true;
+    this.displayothRefNo=false;
     // this.isDisabled10=false;
     this.displayCSOrderAndLineDt = false;
     this.emplId = Number(sessionStorage.getItem('emplId'))
@@ -907,6 +908,13 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
               this.isVisibleGatePass = false;
             }
             this.CounterSaleOrderBookingForm.controls['emplId'].patchValue(Number(sessionStorage.getItem('emplId')));
+             if (this.allDatastore.createOrderType === 'Sales Order'){
+              this.displaysalesRepName=false;
+              this.tlName=data.obj.tlName;
+            }
+            else {
+              this.displaysalesRepName=true;
+            }
             if (this.allDatastore.createOrderType === 'Pick Ticket' && this.allDatastore.flowStatusCode === 'BOOKED') {
               this.CounterSaleOrderBookingForm.get('custName').disable();
               this.CounterSaleOrderBookingForm.get('mobile1').disable();
@@ -935,6 +943,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
               this.CounterSaleOrderBookingForm.get('vehNo').enable();
 
             }
+          
             else {
               this.CounterSaleOrderBookingForm.enable();
               this.displaycounterSaleOrderSave = true;
@@ -1275,6 +1284,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       if (createOrderType === 'Sales Order') {
         this.displaysalesRepName = false;
         this.CounterSaleOrderBookingForm.get('othRefNo').enable();
+        this.othRefNoSearch();
       }
     }
   }
@@ -1554,29 +1564,45 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
             }
           })
     }
+    if (Number(sessionStorage.getItem('deptId'))===6){
+      this.transactionTypeName = 'Accessories Sale - Credit';
+    }
+    else if (Number(sessionStorage.getItem('deptId'))===5){
     this.transactionTypeName = 'Spares Sale - Credit';
+  }
     this.CounterSaleOrderBookingForm.patchValue({ createOrderType: 'Pick Ticket' });
   }
 
+  salesOrderDetails(event){
+    // alert(event.target.value); 
+    var orderNumber=event.target.value;
+    let orderNumberDetails = this.othRefNoSearchFnData.find(d => Number(d.orderNumber1) === Number(orderNumber));
+    console.log(orderNumberDetails);
+    this.salesRepName = orderNumberDetails.salesRepName1;
+    this.tlName = orderNumberDetails.tlName1;
+    this.paymentType = orderNumberDetails.paymentType1;
+  }
 
-  othRefNoSearch(othRefNo) {
-    // alert(othRefNo);
-    this.orderManagementService.othRefNoSearchFn(othRefNo)
+
+  othRefNoSearch() {
+  var customerId= this.CounterSaleOrderBookingForm.get('customerId').value;
+    this.orderManagementService.othRefNoSearchFn(sessionStorage.getItem('locId'),1,customerId)
       .subscribe(
         data => {
           if (data.code === 200) {
             this.othRefNoSearchFnData = data.obj;
             this.CounterSaleOrderBookingForm.patchValue(this.othRefNoSearchFnData);
-            if (this.custAccountNo != this.othRefNoSearchFnData.custAccountNo1) {
+        //  alert(data.obj.length)
+            for (let i=0; i< data.obj.length; i++){
+            if (this.custAccountNo != this.othRefNoSearchFnData[i].custAccountNo1) {
               alert('Sales Order Customer & Counter Sale Order Customer Not Match');
               this.CounterSaleOrderBookingForm.get('othRefNo').reset()
               return;
             }
             else {
-              this.othRefNo = data.obj.orderNumber1;
-              this.salesRepName = data.obj.salesRepName1;
-              this.tlName = data.obj.tlName1;
+              this.othRefNo = data.obj[i].orderNumber1;
             }
+          }
           }
           else {
             if (data.code === 400) {
@@ -2137,31 +2163,22 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
 
   onSelLocaPrice(event: Number, i) {
-    // debugger;
     console.log(event);
-    // alert(event);
     console.log(this.locData);
     var linLocData = this.locData[i];
     let selloc = linLocData.find(d => Number(d.ROWNUM) === Number(event));
-    // if(selloc.length > 1){
-
-    // }
     console.log(selloc);
     var trxLnArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
-
-    // let selPrice=event.prc;
     if (trxLnArr[i].frmLocatorId != '') {
       if (trxLnArr[i].pricingQty != undefined) {
         if (trxLnArr[i].pricingQty > selloc.onHandQty) {
-          // alert('if');
           trxLnArr1.controls[i].patchValue({ pricingQty: selloc.onHandQty });
         }
       }
-      // trxLnArr1.controls[i].patchValue({ unitSellingPrice: selloc.prc });
       trxLnArr1.controls[i].patchValue({ frmLocatorName: selloc.locatorId });
+      trxLnArr1.controls[i].patchValue({ unitSellingPrice: selloc.prc });
       this.resverQty(i, trxLnArr[i].itemId, selloc.locatorId, selloc.prc);
-      // this.AvailQty(i,trxLnArr[i].itemId,'locator');
     }
     var fldName = "locator";
     this.onKey(i, fldName, event);
@@ -2169,7 +2186,6 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
 
   resverQty(i, itemId, locatorId, prc) {
-    // alert(i+'----' + itemId +'----'+locatorId+'----'+prc)
     let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     this.service.getreserqtyNew(this.locId, itemId, locatorId, prc).subscribe
       (data => {
@@ -2289,13 +2305,9 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
 
   pickTicketInvoiceFunction() {
-    //this.tcsCalculationAdd();
-
+   
     this.closeResetButton = false;
     this.progress = 0;
-
-    // var formLinVal = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
-    // var formLinArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
 
     var tcsPer = this.CounterSaleOrderBookingForm.get('tcsPer').value;
     var ordTotAmt = this.CounterSaleOrderBookingForm.get('totAmt').value;
@@ -2307,12 +2319,14 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     }
     this.dataDisplay = 'Invoice Genration in progress....Do not refresh the Page';
     // this.isDisabled10 = true;
-    const formValue: ISalesBookingForm = this.transData(this.CounterSaleOrderBookingForm.value);
+    // var formValue = this.CounterSaleOrderBookingForm
+    // const formValue1: ISalesBookingForm = this.transData(this.CounterSaleOrderBookingForm.value);
+    // console.log(formValue);
+    var formValue = this.CounterSaleOrderBookingForm.getRawValue();
     var orderLines = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     formValue.ouId = Number(sessionStorage.getItem('ouId'));
     formValue.emplId = Number(sessionStorage.getItem('emplId'));
     formValue.divisionId = Number(sessionStorage.getItem('divisionId'));
-    // debugger;
     this.orderManagementService.pickTicketInvoiceFun(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         this.dataDisplay = ''
@@ -2972,6 +2986,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
         }
       }
       this.displayCSOrderAndLineDt = false;
+      // alert(this.transactionTypeName);
       let select = this.orderTypeList.find(d => d.transactionTypeName === this.transactionTypeName);
       console.log(select);
       // alert(select.transactionTypeId)

@@ -380,8 +380,8 @@ public pickTicketInvoiceFun(pickTicketInvDels) {
     return this.http.get(this.ServerUrl + `/Customer/contactNo?mobile1=${mobile1}&ouId=${ouId}`);
   }
 
-  othRefNoSearchFn(othRefNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/orderHeader/getSaleOrderInfo/${othRefNo}`);
+  othRefNoSearchFn(locId,deptId,customerId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/orderHeader/getOrderListForAccSale?locationId=${locId}&dept=1&customerId=${customerId}`);
   }
 
   searchByPanNumber(panNo): Observable<any>{

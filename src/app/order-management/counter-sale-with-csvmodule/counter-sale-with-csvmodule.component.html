@@ -559,9 +559,13 @@
                                     Reference&nbsp;No&nbsp;:&nbsp;
                                 </td>
                                 <td>
-                                    <input type="text" formControlName="othRefNo" [(ngModel)]='othRefNo'
-                                        value={{othRefNo}} (keydown.tab)="othRefNoSearch(othRefNo)" class="form-control"
-                                        style="width: 160px;">
+                                    <select formControlName="othRefNo" name="othRefNo" class="form-control"
+                                    style="width: 160px;"  (change)="salesOrderDetails($event)">
+                                    <option>--Select--</option>
+                                    <option *ngFor="let cot of othRefNoSearchFnData" [value]="cot.orderNumber1">
+                                        {{cot.orderNumber1}}
+                                    </option>
+                                </select>
                                 </td>
                             </tr>
                             <tr>
