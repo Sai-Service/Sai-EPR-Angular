@@ -597,26 +597,8 @@ export class WsVehicleMasterComponent implements OnInit {
   }
 
   updateMast() {
-
-    alert ( "in Wip ....") ; return;
-
-    const formValue: IWsVehicleMaster = this.wsVehicleMasterForm.value ;
-    this.CheckDataValidations()
-
-    if (this.checkValidation) {
-      alert("Data Validation Sucessfull....\Updating WS Customer Master")
-      // this.service.UpdateSaiEwCustomer(formValue).subscribe((res: any) => {
-      //   if (res.code === 200) {
-      //     alert('RECORD UPDATED SUCCESSFUILY');
-      //     window.location.reload();
-      //   } else {
-      //     if (res.code === 400) {
-      //       alert('ERROR OCCOURED IN PROCEESS');
-      //       this.wsVehicleMasterForm.reset();
-      //     }
-      //   }
-      // });
-    } else { alert("Data Validation Not Sucessfull....\Updation Not Done...") }
+    this.newMast();
+   
   }
 
   resetMast() {

@@ -462,6 +462,15 @@ export class PaymentArComponent implements OnInit {
 
     //  alert("Org Id :"+ this.orgId);
 
+    
+    this.sub = this.router1.params.subscribe(params => {
+      this.vehRegNo = params['regNo'];
+      alert(this.vehRegNo);
+      // return;
+    });
+
+   
+
     this.service.RegNoListFN()
       .subscribe(
         data1 => {
@@ -557,25 +566,27 @@ export class PaymentArComponent implements OnInit {
     this.glPrdEndDate = this.GLPeriodCheck.endDate
 
 
-    this.sub = this.router1.params.subscribe(params => {
-      this.vehRegNo = params['vehRegNo'];
-      alert(this.vehRegNo);
-      return;
+    // this.sub = this.router1.params.subscribe(params => {
+    //   this.vehRegNo = params['vehRegNo'];
+    //   alert(this.vehRegNo);
+    //   return;
 
-      this.orderManagementService.getOmReceiptSearchByOrdNo(this.orderNumber)
-      .subscribe(
-      data => {
+      // this.orderManagementService.getOmReceiptSearchByOrdNo(this.orderNumber)
+      // .subscribe(
+      // data => {
         // this.lstcomments = data.obj.oePayList;
         // this.custName=data.obj.custName;
         // this.customerId=data.obj.customerId;
         // this.balancePay=data.obj.balancePay.toFixed(2);
       
-        console.log(this.lstcomments);
-       }
+      //   console.log(this.lstcomments);
+      //  }
        
-      );
-      });
+      // );
+      // });
 
+
+     
 
   }
 
