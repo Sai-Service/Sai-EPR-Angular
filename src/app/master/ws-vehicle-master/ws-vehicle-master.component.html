@@ -253,7 +253,7 @@
                     <td style="width: 12%" class="LabelFontStyle">Mfg&nbsp;Year&nbsp;:&nbsp;</td>
 
                     <td>
-                        <input   type="text"  formControlName="monthYrManf"  id="monthYrManf" [(ngModel)]="monthYrManf" class="form-control" >
+                        <input   type="text"  formControlName="monthYrManf"  id="monthYrManf" [(ngModel)]="monthYrManf" class="form-control" (keyup)="onInput($event)">
                     </td>
                  
 
@@ -278,13 +278,13 @@
                     <td style="width: 12%" class="LabelFontStyle">Dlr&nbsp;Invoice&nbsp;No:&nbsp;</td>
 
                     <td>
-                        <input   type="text"  formControlName="dlrInvoiceNo"  id="dlrInvoiceNo" [(ngModel)]="dlrInvoiceNo" class="form-control" >
+                        <input   type="text"  formControlName="dlrInvoiceNo"  id="dlrInvoiceNo" [(ngModel)]="dlrInvoiceNo" class="form-control" (keyup)="onInput($event)">
                     </td>
 
                     <td style="width: 12%" class="LabelFontStyle">DMS&nbsp;Invoice&nbsp;No:&nbsp;</td>
 
                     <td>
-                        <input   type="text"  formControlName="dmsInvoiceNo"  id="dmsInvoiceNo" [(ngModel)]="dmsInvoiceNo" class="form-control" >
+                        <input   type="text"  formControlName="dmsInvoiceNo"  id="dmsInvoiceNo" [(ngModel)]="dmsInvoiceNo" class="form-control" (keyup)="onInput($event)">
                     </td>
                 </tr>
 
@@ -514,9 +514,21 @@
                 
                 <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Insurer&nbsp;:&nbsp;</td>
 
-                <td>
+                <!-- <td>
                     <input   type="text"  formControlName="ewInsurerId"  id="ewInsurerId" [(ngModel)]="ewInsurerId" class="form-control" >
+                </td> -->
+
+                <td>
+                    <select  formControlName="ewInsurerId" id="ewInsurerId"  (ngModelChange)='onInsurerNameSelected($event)' class="form-control">
+                    <option></option>
+                    <option *ngFor="let sc of insNameList"
+                        [ngValue]="sc.customerId">
+                        {{sc.custName}}
+                    </option>
+                    </select>
                 </td>
+
+
 
              </tr>
 
@@ -534,9 +546,20 @@
                 </td>
                 <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Ins&nbsp;Site:&nbsp;</td>
 
-                <td>
+                <!-- <td>
                     <input   type="text"  formControlName="ewInsurerSite"  id="ewInsurerSite" [(ngModel)]="ewInsurerSite" class="form-control" >
+               </td> -->
+
+               <td>
+                <select  formControlName="ewInsurerSite" id="ewInsurerSite" class="form-control">
+                <option>--Select--</option>
+                <option *ngFor="let sc of insSiteList"
+                    [ngValue]="sc.customerSiteId">
+                    {{sc.address1}}{{sc.address2}}-{{sc.address3}}-{{sc.location}}-{{sc.city}}-{{sc.pinCd}}-{{sc.state}}
+                </option>
+                </select>
                </td>
+
 
              </tr>
              <tr>
@@ -551,6 +574,7 @@
                         {{sc.code}}
                     </option>
                 </select>
+
                 </td>
 
                 <td style="width: 12%" class="LabelFontStyle">MCP&nbsp;No:&nbsp;</td>
@@ -623,16 +647,16 @@
                     <tr>
                         <td style="width: 12%" class="LabelFontStyle">Certificate&nbsp;No:&nbsp;</td>
                         <td>
-                            <input     type="text"  formControlName="tvCertificateNo"  id="tvCertificateNo" [(ngModel)]="tvCertificateNo" class="form-control" >
+                            <input     type="text"  formControlName="tvCertificateNo"  id="tvCertificateNo" [(ngModel)]="tvCertificateNo" class="form-control" (keyup)="onInput($event)" >
                         </td>
                         <td style="width: 12%" class="LabelFontStyle">Re-Sale&nbsp;Dealer&nbsp;:&nbsp;</td>
                         <td>
-                            <input     type="text"  formControlName="tvSaleDealer"  id="tvSaleDealer" [(ngModel)]="tvSaleDealer" class="form-control" >
+                            <input     type="text"  formControlName="tvSaleDealer"  id="tvSaleDealer" [(ngModel)]="tvSaleDealer" class="form-control" (keyup)="onInput($event)" >
                         </td>
 
                         <td style="width: 12%" class="LabelFontStyle">Sale&nbsp;Location&nbsp;:&nbsp;</td>
                         <td>
-                            <input     type="text"  formControlName="tvSaleLocation"  id="tvSaleLocation" [(ngModel)]="tvSaleLocation" class="form-control" >
+                            <input     type="text"  formControlName="tvSaleLocation"  id="tvSaleLocation" [(ngModel)]="tvSaleLocation" class="form-control" (keyup)="onInput($event)" >
                         </td>
 
                      </tr>
