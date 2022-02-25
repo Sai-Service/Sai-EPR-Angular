@@ -74,7 +74,7 @@ export class WsVehicleMasterComponent implements OnInit {
 
   /////////////////////SEARCH/////
   mainModelName: string;
-  chassisNum: string;
+  // chassisNum: string;
   vehRegNo: string ;
   // = 'MH12EM6011';
   ///////////////////////////////
@@ -131,21 +131,19 @@ export class WsVehicleMasterComponent implements OnInit {
   colorCode: string;
   mainModel: string;
 
-  rfId: string;
+  // rfId: string;
   govtVehicleYn: string;
   vipYn: string;
   dealerCode: string;
-
   dealerName: string;
   dealerSite: string;
-
-
-
   dlrInvoiceNo: string;
   dmsInvoiceNo: string;
 
   insuDate: string;
   policyNo: string;
+  insurerCompId: string;
+  insurerSiteId: string;
   insCompanyName: string;
   inscompanySite: string;
 
@@ -165,11 +163,7 @@ export class WsVehicleMasterComponent implements OnInit {
   cngCylinderNo: string;
   cngKitNumber: string;
   cngExpDate: string;
-
-
   ////////////////////////////////////////////////////
-
-
   fuelType: string;
   variantDesc: string;
   variantCode: string;
@@ -177,7 +171,6 @@ export class WsVehicleMasterComponent implements OnInit {
   engineNo: string;
   vehicleDelvDate: Date;
   serviceModel: string;
-
   kmReading: string;
   soldByEmpId: string;
   customeId: number;
@@ -201,20 +194,15 @@ export class WsVehicleMasterComponent implements OnInit {
   billToAddress: string;
   shipToAddress: string;
   // contractEndDate:string;
-
   ewPeriod: number;
   warrantyDealer: string;
   vehicleAgeDays: number;
   paytmentSource: string;
-
-
   ewAmt: number;
-  ewDiscAmt: number;
-  ewTotalAmt: number;
-
+  // ewDiscAmt: number;
+  // ewTotalAmt: number;
   // ewSaleDate:Date;
   // segment: string;
-
 
   now = Date.now();
   deliveryDate : string;
@@ -223,13 +211,13 @@ export class WsVehicleMasterComponent implements OnInit {
   regDate: string;
   contractEndDate = this.pipe.transform(this.now, 'y-MM-dd');
   ewStartDate: Date
-  payType: number;
-  receiptMethodId: number;
-  paymentAmt: number;
-  bankName: string;
-  bankBranch: string;
-  checkNo: string;
-  checkDate: string;
+  // payType: number;
+  // receiptMethodId: number;
+  // paymentAmt: number;
+  // bankName: string;
+  // bankBranch: string;
+  // checkNo: string;
+  // checkDate: string;
 
   displayInactive = true;
   Status1: any;
@@ -262,8 +250,7 @@ export class WsVehicleMasterComponent implements OnInit {
   itemTypeForCat: string='SS_VEHICLE' ;
   categoryId: number;
 
-  insurerCompId: string;
-  insurerSiteId: string;
+ 
 
   public ServiceModelList   :Array<string> = [];
   public insNameList: Array<string>[];
@@ -292,12 +279,12 @@ export class WsVehicleMasterComponent implements OnInit {
 
       /////////////////////SEARCH/////
       mainModelName: [Validators.required],
-      chassisNum: [[Validators.required,Validators.pattern('[A-Z,0-9]*')]],
-      //emailId1:['', [Validators.email,Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')]],
+      // chassisNum: [[Validators.required,Validators.pattern('[A-Z,0-9]*')]],
+      // emailId1:['', [Validators.email,Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')]],
       vehRegNo: [[Validators.required,Validators.pattern('^[A-Z]{2}[0-9]{2}[A-Z]{2}[0-9]{4}')]],
       regNo: [],
       ewId: [],
-      ewSchemeId: [],
+      // ewSchemeId: [],
       // ewDate:[],
       // ewBookletNo:[],
       vin: [],
@@ -308,7 +295,7 @@ export class WsVehicleMasterComponent implements OnInit {
       itemCatg: [],
       colorCode: [],
       mainModel: [],
-      rfId: [],
+      // rfId: [],
       govtVehicleYn: [],
       vipYn: [],
 
@@ -390,21 +377,21 @@ export class WsVehicleMasterComponent implements OnInit {
 
       // itemId: [],
 
-      ewAmt: [],
-      ewDiscAmt: [],
-      ewTotalAmt: [],
+      // ewAmt: [],
+      // ewDiscAmt: [],
+      // ewTotalAmt: [],
 
-      ewSaleDate: [],
-      ewStartDate: [],
+      // ewSaleDate: [],
+      // ewStartDate: [],
 
 
-      payType: [],
-      receiptMethodId: [],
-      paymentAmt: [],
-      bankName: [],
-      bankBranch: [],
-      checkNo: [],
-      checkDate: [],
+      // payType: [],
+      // receiptMethodId: [],
+      // paymentAmt: [],
+      // bankName: [],
+      // bankBranch: [],
+      // checkNo: [],
+      // checkDate: [],
 
       ewInvoiceNo: [],
       vehicleAgeDays: [],
@@ -414,8 +401,8 @@ export class WsVehicleMasterComponent implements OnInit {
 
 
 
-      ewCancelDate: [],
-      ewCancelReason: [],
+      // ewCancelDate: [],
+      // ewCancelReason: [],
 
       mcpStatus: [],
 
@@ -561,6 +548,28 @@ export class WsVehicleMasterComponent implements OnInit {
     delete val.loginName;
     delete val.ouName;
     delete val.locName;
+
+    delete val.custName;
+    delete val.address1;
+    delete val.address2;
+    delete val.address3;
+    delete val.city;
+    delete val.state;
+    delete val.mobile1;
+    delete val.mobile2;
+    delete val.contactNo;
+    delete val.pinCd;
+    delete val.emailId1;
+    delete val.custType;
+    delete val.contractEndDate;
+    delete val.shipToAddress;
+    delete val.ewPeriod;
+    delete val.paytmentSource;
+    delete val.kmReading;
+    delete val.soldByEmpId;
+    delete val.ewType;
+    delete val.govtVehicleYn;
+    delete val.vipYn;
     // delete val.invLine;
 
     return val;
@@ -597,7 +606,7 @@ export class WsVehicleMasterComponent implements OnInit {
   }
 
   updateMast() {
-    this.newMast();
+    // this.newMast();
    
   }
 
@@ -971,7 +980,8 @@ export class WsVehicleMasterComponent implements OnInit {
     this.wsVehicleMasterForm.get('colorCode').reset();
     this.wsVehicleMasterForm.get('fuelType').reset();
     this.chassisNo = null; this.engineNo = null;
-    this.serviceModel = null; this.rfId = null;
+    this.serviceModel = null; 
+    // this.rfId = null;
     this.deliveryDate = null;
     this.dmsInvoiceNo = null; this.dlrInvoiceNo = null;
     this.dealerCode = null; this.dealerName = null; this.dealerSite = null;
@@ -984,7 +994,8 @@ export class WsVehicleMasterComponent implements OnInit {
     this.address1 = null; this.address2 = null;
     this.address3 = null; this.custAddress4 = null;
     this.city = null; this.state = null;
-    this.pinCd = null; this.rfId = this.emailId1 = null;
+    this.pinCd = null; 
+    // this.rfId = this.emailId1 = null;
     this.mobile1 = null; this.mobile2 = null; this.contactNo = null;
     this.dmsInvoiceNo = null; this.dlrInvoiceNo = null;
 
@@ -1156,6 +1167,9 @@ export class WsVehicleMasterComponent implements OnInit {
         }
       );
   } }
+
+
+ 
 
    
   vehHistory(){

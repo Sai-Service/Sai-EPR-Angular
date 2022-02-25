@@ -458,22 +458,16 @@ export class PaymentArComponent implements OnInit {
     this.orgId = this.ouId;
     console.log(this.loginArray);
     console.log(this.locId);
-    // console.log(this.emplId);
 
-    //  alert("Org Id :"+ this.orgId);
-
-    // 
+    ////////////// Navigate from JobCard form /////////
     this.sub = this.router1.params.subscribe(params => {
       this.vehRegNo = params['regNo'];
       this.attribute1=this.vehRegNo;
-      // alert(this.vehRegNo)
       if (this.vehRegNo != undefined){
       this.serchByRegNo(this.attribute1);
       }
-      // return;
     });
-  // }
-  
+  /////////////////////////////////////////////////////
 
    
 
@@ -486,7 +480,23 @@ export class PaymentArComponent implements OnInit {
       );
 
 
-    this.service.OUIdList()
+    // this.service.OUIdList()
+    //   .subscribe(
+    //     data => {
+    //       this.OUIdList = data;
+    //       console.log(this.OUIdList);
+    //     }
+    //   );
+
+    // this.service.locationIdList()
+    //   .subscribe(
+    //     data => {
+    //       this.locIdList = data;
+    //       console.log(this.locIdList);
+    //     }
+    //   );
+
+      this.service.OUIdListDiv(this.divisionId)
       .subscribe(
         data => {
           this.OUIdList = data;
@@ -494,13 +504,14 @@ export class PaymentArComponent implements OnInit {
         }
       );
 
-    this.service.locationIdList()
-      .subscribe(
-        data => {
-          this.locIdList = data;
-          console.log(this.locIdList);
-        }
-      );
+    this.service.getLocationSearch1(this.ouId)
+    .subscribe(
+      data => {
+        this.locIdList = data;
+        console.log(this.locIdList);
+
+      }
+        );
 
 
     this.service.DepartmentList()
