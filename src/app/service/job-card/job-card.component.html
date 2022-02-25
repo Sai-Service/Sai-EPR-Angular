@@ -2708,9 +2708,9 @@
 
                                                          <td>
                                                             <button type="submit" class="btn btn-primary" id="register"
-                                                                style="width: fit-content;" (click)="showReceiptScreen()">Receipt</button>
+                                                                style="width: fit-content;" [routerLink]="['/admin/transaction/PaymentAr',this.regNo]">Receipt</button>
                                                         </td> 
-
+                                                        <!-- (click)="showReceiptScreen()" -->
                                                         <!-- <td>
                                                             <button class="btn btn-primary" [routerLink]="['/admin/transaction/PaymentAr']">Payment</button>
                                                         </td> -->

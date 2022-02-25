@@ -462,12 +462,18 @@ export class PaymentArComponent implements OnInit {
 
     //  alert("Org Id :"+ this.orgId);
 
-    
+    // 
     this.sub = this.router1.params.subscribe(params => {
       this.vehRegNo = params['regNo'];
-      alert(this.vehRegNo);
+      this.attribute1=this.vehRegNo;
+      // alert(this.vehRegNo)
+      if (this.vehRegNo != undefined){
+      this.serchByRegNo(this.attribute1);
+      }
       // return;
     });
+  // }
+  
 
    
 
@@ -722,11 +728,13 @@ export class PaymentArComponent implements OnInit {
   };
 
   serchByRegNo(mRegNo) {
+    // alert(mRegNo +'Search vehicle');
     this.service.getVehRegDetails(mRegNo)
       .subscribe(
         data => {
           this.getVehRegDetails = data;
-
+          console.log(this.getVehRegDetails);
+          
           if(this.getVehRegDetails !=null){
           console.log(this.getVehRegDetails);
 
@@ -736,7 +744,9 @@ export class PaymentArComponent implements OnInit {
           this.enableCustAccount = false;
           this.GetCustomerDetails(this.customerId);
           this.GetCustomerSiteDetails(this.customerId);
-        }  else { alert("Vehicle Regno. Not Found...."); this.resetMast(); }
+        }  else { alert("Vehicle Regno. Not Found...."); 
+        // this.resetMast(); 
+      }
 
         });
       
