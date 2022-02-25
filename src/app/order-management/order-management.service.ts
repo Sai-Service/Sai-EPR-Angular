@@ -392,6 +392,9 @@ public pickTicketInvoiceFun(pickTicketInvDels) {
   custNameSearchFn1(custName,divisionId): Observable<any> {
     return this.http.get(this.ServerUrl + `/Customer/custName?custName=${custName}&divisionId=${divisionId}`);
   }
+  custNameSearchFncomp(custName,divisionId,compId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/Customer/custName1?custName=${custName}&divisionId=${divisionId}&compId=${compId}`);
+  }
 
   finananceList(finName,divisionId): Observable<any> {
     return this.http.get(this.ServerUrl + `/cmnLookup/FinanceCmpny?cmnType=FinCmpny&attribute1=${finName}&divisionId=${divisionId}`);

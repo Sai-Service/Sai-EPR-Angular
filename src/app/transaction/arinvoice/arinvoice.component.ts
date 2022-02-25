@@ -8,7 +8,7 @@ import { TransactionService } from '../transaction.service';
 import { ManualARInvoiceObj } from './manual-arinvoice-obj';
 import { DatePipe } from '@angular/common';
 import { log } from 'util';
-// import { ManualInvoiceObj } from '../po-invoice/manual-invoice-obj';
+// import { ManualInvoiceObj } from '../po-invoice/manual-invoice-obglDatej';
 // import { ManualARInvoiceObj } from '../manual-arinvoice-obj';
 
 
@@ -36,7 +36,7 @@ interface IArInvoice {
   basicAmt: number;
   taxRecoverable: number;
   extendedAmount: number;
-  glDate: Date;
+  glDate: string;
   accountDesc: string;
   billcontactNo:number;
   shipcontactNo:number;
@@ -95,17 +95,21 @@ export class ARInvoiceComponent implements OnInit {
   balance:number;
   status = "Open"
   taxCat1: number;
-  // glDate = new Date();
+  // glDate = new Date(); jyoti
+  // glDate:string;
   taxAmount: number;
   billToCustName: string;
 
   public applyTo = 'INVOICE'
-  now = Date.now();
-  new=new Date();
-  public minDate = new Date();
-  glDateLine = this.pipe.transform(this.now, 'y-MM-dd');
+  // now = Date.now();
+  // new=new Date();
+  // public minDate = new Date();
+   now=new Date();
+   glDate=this.pipe.transform(this.now,'dd-MM-yyyy')
+  glDateLine:Date;
+  // glDateLine = this.pipe.transform(this.now, 'y-MM-dd');comment by vinita
   // glDateLine = this.pipe.transform(this.now, 'dd-MM-yyyy');
-  glDate = this.pipe.transform(this.new,'dd-MM-yyyy');
+  // glDate = this.pipe.transform(this.new,'dd-MM-yyyy');comment by vinita
   // glDate = this.pipe.transform(this.now, 'y-MM-dd');
 
   applDate = this.pipe.transform(Date.now(), 'y-MM-dd');
@@ -116,7 +120,7 @@ export class ARInvoiceComponent implements OnInit {
   public locIdListModel: Array<string> = [];
   public sourceList: Array<string> = [];
   public classList: Array<string> = [];
-  public invTypeList: Array<string> = [];
+  public invTypeList: any= [];
   public BranchList: Array<string> = [];
   public CostCenterList: Array<string> = [];
   public NaturalAccountList: Array<string> = [];
@@ -159,6 +163,8 @@ export class ARInvoiceComponent implements OnInit {
   checkValidation = false;
   applLineValidation = false;
 
+  displayaddRow = true;
+  displayRmDistRow=true;
 
 
   tApplAmt:number;
@@ -189,6 +195,7 @@ export class ARInvoiceComponent implements OnInit {
   runningTotalDr:number;
   runningTotalCr:number;
   disabledViewAccounting = false;
+  compId: number;
 
   search(activeTab){
     this.activeTab = activeTab;
@@ -462,7 +469,8 @@ export class ARInvoiceComponent implements OnInit {
   ngOnInit(): void {
     this.ouId = Number(sessionStorage.getItem('ouId'));
     this.divisionId=Number(sessionStorage.getItem('divisionId'))
-    this.emplId=Number(sessionStorage.getItem('emplId'));;
+    this.emplId=Number(sessionStorage.getItem('emplId'));
+    this.compId=Number(sessionStorage.getItem('compId'));
     this.transactionService.paymentTermListFn()
       .subscribe(
         data => {
@@ -611,32 +619,71 @@ export class ARInvoiceComponent implements OnInit {
     this.transactionService.searchByInvoiceNoAR(trxNumber1)
       .subscribe(
         data => {
-          this.lstcomments = data;
+          if (data.code === 200) {
+          this.lstcomments = data.obj;
           console.log(this.lstcomments);
           this.taxUistatus = true;
           this.arInvoiceForm.patchValue(this.lstcomments, { emitEvent: false });
           // alert('after emit');
           var len = this.lineDetailsArray.length;
-          for (let i = 0; i < data.invLines.length - len; i++) {
+          for (let i = 0; i < data.obj.invLines.length - len; i++) {
             var invLnGrp: FormGroup = this.lineDetailsGroup();
             this.lineDetailsArray.push(invLnGrp);
+            
           }
-          for (let i = 0; i < data.invDisLines.length ; i++) {
+          for (let i = 0; i < data.obj.invDisLines.length ; i++) {
             var invLnGrp: FormGroup = this.distLineDetails();
             this.lineDistributionArray().push(invLnGrp);
           }
           // for (let i = 0; i < data.taxLines.length - len; i++) {
-          for (let i = 0; i < data.taxLines.length; i++) {
+          for (let i = 0; i < data.obj.taxLines.length; i++) {
             var invLnGrp: FormGroup = this.TaxDetailsGroup();
             this.TaxDetailsArray().push(invLnGrp);
-            this.arInvoiceForm.get('taxLines').patchValue(data.taxLines);
+            this.arInvoiceForm.get('taxLines').patchValue(data.obj.taxLines);
 
           }
           // alert('second emit call')
-          
-          this.arInvoiceForm.patchValue(data);
-          this.disabledViewAccounting = true;
+          var arinvLnDtlArray= this.arInvoiceForm.get('invDisLines') as FormArray;
+          alert(data.obj.invDisLines.length)
+        //   for (let index=0;index< data.invDisLines.length;index ++){
+        //     alert(data.invDisLines[index].glDate);
+        //   arinvLnDtlArray.controls[index].patchValue({
+        //     glDate:data.invDisLines[index].glDate,
+        //   })
+        // }
+          this.arInvoiceForm.patchValue(data.obj);
+          alert(this.invTypeList.length);
+          // debugger;
+          if(this.invTypeList.length<1){
+            this.service.arInvoiceList(data.obj.class ).subscribe(
+              data1 => {
+                  this.invTypeList = data1;
+                console.log( this.invTypeList);
+               
+                var seltrxtyp=this.invTypeList.find(d=>d.name==data.obj.invType)
+                console.log(seltrxtyp);
+              this.arInvoiceForm.patchValue({custTrxTypeId:seltrxtyp.custTrxTypeId});
+        
+              });
+           
+         
           // this.taxUistatus = false;
+          }
+          else{
+            var seltrxtyp=this.invTypeList.find(d=>d.name==data.obj.invType)
+            this.arInvoiceForm.patchValue({custTrxTypeId:seltrxtyp.custTrxTypeId}); 
+          }
+          this.disabledViewAccounting = true;
+          if(data.obj.invStatus=='Complete'){
+             this.displayaddRow=false;
+             this.displayRmDistRow=false;
+          }
+        }
+        else {
+          if (data.code === 400) {
+            alert(data.message)
+          }
+        }
         }
       );
       if(this.arInvoiceForm.get('referenceNo')!=null)
@@ -647,7 +694,8 @@ export class ARInvoiceComponent implements OnInit {
       this.arInvoiceForm.get('invLines').disable();
       this.lineDistributionArray().disable();
       }
-  };
+    }
+    
   onOptionType(event:any){
     if(event!=undefined){
     if(event==='Manual'){
@@ -656,8 +704,9 @@ export class ARInvoiceComponent implements OnInit {
     }}
   }
   onOptionSelectInvoice(event:any){
-    // alert(event);
-    this.service.arInvoiceList(event).subscribe(
+   alert("-1--"+event.target.value);
+   var invtyp=event.target.value
+    this.service.arInvoiceList(invtyp).subscribe(
       data => {
           this.invTypeList = data;
         console.log( this.invTypeList);
@@ -725,12 +774,12 @@ export class ARInvoiceComponent implements OnInit {
 
   custNameSearch(billToCustName) {
     // alert(billToCustName)
-    this.orderManagementService.custNameSearchFn1(billToCustName, sessionStorage.getItem('divisionId'))
+    this.orderManagementService.custNameSearchFn(billToCustName, sessionStorage.getItem('divisionId'))
       .subscribe(
         data => {
           if (data.code === 200) {
             this.customerNameSearch = data.obj;
-            console.log(this.accountNoSearch);
+            console.log(this.accountNoSearch);  
           }
           else {
             if (data.code === 400) {
@@ -1687,8 +1736,8 @@ export class ARInvoiceComponent implements OnInit {
               patch.controls[i].patchValue({ applAmt: x })
               patch.controls[i].patchValue({ applyTo: 'INVOICE' })
 
-              var z1 = this.pipe.transform(this.now, 'y-MM-dd');
-               patch.controls[i].patchValue({applDate:z1})
+              // var z1 = this.pipe.transform(this.now, 'y-MM-dd');
+              //  patch.controls[i].patchValue({applDate:z1})comment by vinita
 
               var invAmt = invLineArr[i].invoiceAmount.toFixed(2);
               patch.controls[i].patchValue({ invoiceAmount: invAmt })
@@ -1855,8 +1904,8 @@ export class ARInvoiceComponent implements OnInit {
         var ibalAmt = invBalAmt.toFixed(2);
         patch.controls[index].patchValue({ balDueAmt: ibalAmt })
 
-        var z1 = this.pipe.transform(this.now, 'y-MM-dd');
-        patch.controls[index].patchValue({ glDateLine: z1 })
+        // var z1 = this.pipe.transform(this.now, 'y-MM-dd');comment by vinita
+        // patch.controls[index].patchValue({ glDateLine: z1 })comment by vinita
         // patch.controls[i].patchValue({glDate:z1})
         this.CalculateBalance();
       }
@@ -1870,8 +1919,8 @@ export class ARInvoiceComponent implements OnInit {
         var newBal = Number(invBalAmt.toFixed(2));
         patch.controls[index].patchValue({ balDueAmt: newBal })
 
-        var z1 = this.pipe.transform(this.now, 'y-MM-dd');
-        patch.controls[index].patchValue({ glDateLine: z1 })
+        // var z1 = this.pipe.transform(this.now, 'y-MM-dd');Comment by vinita
+        // patch.controls[index].patchValue({ glDateLine: z1 })comment by vinita
         this.CalculateBalance();
       }
 
@@ -1915,9 +1964,9 @@ export class ARInvoiceComponent implements OnInit {
     var tDate = new Date(this.GLPeriodCheck.endDate);
     if (tglDate < sDate || tglDate > tDate) {
       alert("Line :" + (i + 1) + " GL date is not valid.. should be within GL period\nGL Period : " + this.pipe.transform(this.GLPeriodCheck.startDate, 'dd-MM-y') + " - " + this.pipe.transform(this.GLPeriodCheck.endDate, 'dd-MM-y'));
-      var z = this.pipe.transform(this.now, 'y-MM-dd');
-      patch.controls[i].patchValue({ glDateLine: z })
-      patch.controls[i].patchValue({ glDate: z })
+      // var z = this.pipe.transform(this.now, 'y-MM-dd');comment y vinita
+      // patch.controls[i].patchValue({ glDateLine: z })comment by vinita
+      // patch.controls[i].patchValue({ glDate: z })comment by vinita
       return;
     }
   }
@@ -1959,7 +2008,7 @@ export class ARInvoiceComponent implements OnInit {
     for (let i = 0; i < applLineArr1.length ; i++) {
 
      patch.controls[i].patchValue({ applAmt: applLineArr1[i].applAmtNew });
-     patch.controls[i].patchValue({ glDate: applLineArr1[i].glDateLine });
+    //  patch.controls[i].patchValue({ glDate: applLineArr1[i].glDateLine });comment by vinita
 
      this.invLineArray().controls[i].get('applyrcptFlag').disable();
      this.invLineArray().controls[i].get('applAmtNew').disable();
