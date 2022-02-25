@@ -39,7 +39,7 @@ import { AmcSchemeMasterComponent } from './amc-scheme-master/amc-scheme-master.
 import { AmcEnrollmentComponent } from './amc-enrollment/amc-enrollment.component';
 import { WarrantyClaimComponent } from './warranty-claim/warranty-claim.component';
 import { PayableInvoiceNewComponent } from './payable-invoice-new/payable-invoice-new.component';
-
+import { DeadStockComponent } from './dead-stock/dead-stock.component';
 // import { ShippingNetworkComponent } from './shipping-network/shipping-network.component';cd..
 
 
@@ -56,6 +56,7 @@ const routes: Routes = [
   {path:'AvgCostUpdate',component:AvgCostUpdateComponent},
   {path:'PaymentReceipt',component:PaymentReceiptComponent},
   {path:'PaymentReceipt/:orderNumber',component:PaymentReceiptComponent},
+  {path:'PaymentAr/:regNo',component:PaymentArComponent},
   {path:'PaymentAr',component:PaymentArComponent},
   // {path:'ReceiptArApplication',component:ReceiptArApplicationComponent},
   {path:'SaiExtendedWarranty',component:SaiExtendedWarrantyComponent},
@@ -86,6 +87,7 @@ const routes: Routes = [
 {path :'AmcEnrollment',component:AmcEnrollmentComponent},
 {path :'WarrantyClaim',component:WarrantyClaimComponent},
 {path:'payableInvoice',component:PayableInvoiceNewComponent},
+{path:'DeadStock',component:DeadStockComponent},
 // {path :'ShippingNetwork',component:ShippingNetworkComponent},
 // {path:'CounterSaleReturn',component:CounterSaleReturnComponent},
  {path : '' ,redirectTo: 'Dashboard', pathMatch: 'full'}

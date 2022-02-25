@@ -1406,7 +1406,7 @@ export class JobCardComponent implements OnInit {
               if(x===y) { this.cancelButton=true;}else {this.cancelButton=false;}
           }
        
-          if (this.lstcomments.jobStatus == 'Cancelled'  )
+          if (this.lstcomments.jobStatus === 'Cancelled'  )
           {  this.dispReadyInvoice = false; this.dispButtonStatus=false;this.preInvButton=false;this.cancelButton=false; 
             this.jobcardForm.disable();
             this.jobcardForm.get('jobCardLabLines').disable();
@@ -1414,7 +1414,7 @@ export class JobCardComponent implements OnInit {
           }
          
          
-          if (this.lstcomments.jobStatus == 'Invoiced' || this.lstcomments.matStatus == 'Compeleted' || this.lstcomments.jobStatus == 'Closed' ) {
+          if (this.lstcomments.jobStatus === 'Invoiced' || this.lstcomments.matStatus === 'Compeleted' || this.lstcomments.jobStatus === 'Closed' ) {
             this.jobcardForm.disable();
             this.jobcardForm.get('jobCardLabLines').disable();
             this.jobcardForm.get('jobCardMatLines').disable();
@@ -1429,9 +1429,12 @@ export class JobCardComponent implements OnInit {
             this.saveMatButton=false;
             this.preInvButton=false;
             this.cancelButton=false;
-              
+                         
           }
-          if (this.lstcomments.matStatus == 'Compeleted' || this.lstcomments.jobStatus == 'Ready for Invoice') {
+
+          // if (this.lstcomments.matStatus == 'Compeleted' || this.lstcomments.jobStatus == 'Ready for Invoice') {
+          if ( this.lstcomments.jobStatus === 'Ready for Invoice') {
+        
             this.jobcardForm.get('jobCardLabLines').disable();
             this.jobcardForm.get('jobCardMatLines').disable();
             this.displaybilling = false;
@@ -1448,6 +1451,8 @@ export class JobCardComponent implements OnInit {
            
           }
 
+
+        
       
           this.jobcardForm.patchValue(this.lstcomments);
          
@@ -1518,6 +1523,7 @@ export class JobCardComponent implements OnInit {
 
           })
 
+         
                
           // var control = this.jobcardForm.get('jobCardLabLines').value;
           // var totlabtaxamt = 0;
@@ -2606,7 +2612,9 @@ printWSInvoice(){
 }
 
 showReceiptScreen(){
-  this.router.navigate(['/admin/transaction/PaymentAr']);
+  var mVehNo =this.jobcardForm.get('regNo').value;
+  alert ("mVehNo :"+mVehNo);
+  this.router.navigate(['/admin/transaction/PaymentAr' ,mVehNo]);
 }
 
 validatePickupDate() {

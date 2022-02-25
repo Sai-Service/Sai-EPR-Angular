@@ -43,6 +43,7 @@ import { AmcSchemeMasterComponent } from './amc-scheme-master/amc-scheme-master.
 import { AmcEnrollmentComponent } from './amc-enrollment/amc-enrollment.component';
 import { WarrantyClaimComponent } from './warranty-claim/warranty-claim.component';
 import { PayableInvoiceNewComponent } from './payable-invoice-new/payable-invoice-new.component';
+import { DeadStockComponent } from './dead-stock/dead-stock.component';
 
 // import { ShippingNetworkComponent } from './shipping-network/shipping-network.component';
 
@@ -94,6 +95,7 @@ import { PayableInvoiceNewComponent } from './payable-invoice-new/payable-invoic
     AmcEnrollmentComponent,
     WarrantyClaimComponent,
     PayableInvoiceNewComponent,
+    DeadStockComponent,
   
     // ShippingNetworkComponent,
     // OrderGenerationComponent,

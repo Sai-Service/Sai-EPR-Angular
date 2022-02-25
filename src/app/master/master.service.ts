@@ -2942,6 +2942,7 @@ public saveWSVehicle(wsVehicleDetails) {
     return this.http.get(this.ServerUrl + `/SsMcpEnqMst/McpRegCheck/${mRegno}`);
 
     // http://localhost:8081/SsMcpEnqMst/McpRegCheck/MH12EM6011
+    
   }
 
 
@@ -3690,6 +3691,17 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
     }
 
 
+    ///////////////////////////shipping network /////////////////////
+
+    getShipNetFromDetails (locId): Observable<any> {
+      return this.http.get(this.ServerUrl + `/shippingNetwork/shipfrom/${locId}`);
+      // http://localhost:8081/shippingNetwork/shipfrom/2102
+      }
+
+    getShipNetToDetails (locId): Observable<any> {
+      return this.http.get(this.ServerUrl + `/shippingNetwork/shipto/${locId}`);
+        // http://localhost:8081/shippingNetwork/shipto/2102
+    }
 
 
 }

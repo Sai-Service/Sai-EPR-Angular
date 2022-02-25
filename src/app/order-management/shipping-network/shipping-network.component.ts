@@ -30,7 +30,9 @@ export class ShippingNetworkComponent implements OnInit {
   public DepartmentList: Array<string> = [];
   public statusList: Array<string> = [];
   public locIdList: Array<string> = [];
+  lstShipList: any;
 
+  dataDisplay: any;spinIcon = false;
   loginName:string;
   divisionId:number;
   loginArray:string;
@@ -43,7 +45,8 @@ export class ShippingNetworkComponent implements OnInit {
   deptId:number; 
   emplId :number;
 
-  scope:string;
+  scope:string='fromloc';
+  startDate:string;
   
   constructor(private service: MasterService,private orderManagementService:OrderManagementService,private transactionService: TransactionService , private  fb: FormBuilder, private router: Router) {
     this.shippingNetworkForm = fb.group({ 
@@ -61,6 +64,7 @@ export class ShippingNetworkComponent implements OnInit {
       orgId:[''],
 
       scope:[],
+      startDate:[],
 
 
    
@@ -71,16 +75,17 @@ export class ShippingNetworkComponent implements OnInit {
 
   lineDetailsGroup() {
     return this.fb.group({
-      fromOrg:[],
-      toOrg:[],
-      trfType:[],
-      interOrgRcvble:[],
+      shippingNetId:[],
+      fromLocationId:[],
+      toLocationId:[],
+      transfereType:[],
+      interOrgReceivable:[],
       interOrgPayable:[],
-      custNo:[],
+      custAccountNo:[],
       custName:[],
       custSite:[],
-      supNo:[],
-      supName:[],
+      suppNo:[],
+      name:[],
       supSite:[],
       overDueDays:[],
       startDate:[],
@@ -161,7 +166,81 @@ export class ShippingNetworkComponent implements OnInit {
 
   }
 
-  find1(){}
+
+  find1(){
+    var mScope = this.shippingNetworkForm.get('scope').value
+    // alert ("Scope :" +mScope);
+    this.spinIcon = true;
+    if(mScope ==='fromloc'){ this.fromScopeData();this.dataDisplay = 'Loading Data(From Org)....Please Wait...';  }
+    if(mScope ==='toloc'){ this.toScopeData();this.dataDisplay = 'Loading Data(To Org)....Please Wait...';  }
+   }
+
+  fromScopeData() {
+     var mLocId = this.shippingNetworkForm.get('locId').value
+    this.service.getShipNetFromDetails(mLocId)
+      .subscribe(
+        data => {
+          this.lstShipList = data;
+          // alert ("Total order lines :" +data.length);
+          if (data.length > 0) {
+           
+           this.shippingNetworkForm.get('locId').disable();
+
+            console.log(this.lstShipList);
+            var len = this.lineDetailsArray().length;
+            var y = 0;
+            for (let i = 0; i < this.lstShipList.length - len; i++) {
+              var ordLnGrp: FormGroup = this.lineDetailsGroup();
+              this.lineDetailsArray().push(ordLnGrp);
+              y = i;
+
+            }
+
+            this.shippingNetworkForm.get('shipLines').patchValue(this.lstShipList);
+            this.spinIcon = false;this.dataDisplay = ''; 
+
+            var shipLineArr = this.shippingNetworkForm.get('shipLines').value;
+            var patch = this.shippingNetworkForm.get('shipLines') as FormArray;
+            var z1 = this.pipe.transform(Date.now(), 'y-MM-dd');
+
+            for (let i = 0; i < this.lstShipList.length - len; i++) {
+            patch.controls[i].patchValue({ startDate: z1 })
+            }
+
+          }  
+          else { this.spinIcon = false;  this.dataDisplay = '';   }
+        });
+  }
+
+  toScopeData() {
+    var mLocId = this.shippingNetworkForm.get('locId').value
+   this.service.getShipNetToDetails(mLocId)
+     .subscribe(
+       data => {
+         this.lstShipList = data;
+         // alert ("Total order lines :" +data.length);
+         if (data.length > 0) {
+          
+          this.shippingNetworkForm.get('locId').disable();
+
+           console.log(this.lstShipList);
+           var len = this.lineDetailsArray().length;
+           var y = 0;
+           for (let i = 0; i < this.lstShipList.length - len; i++) {
+             var ordLnGrp: FormGroup = this.lineDetailsGroup();
+             this.lineDetailsArray().push(ordLnGrp);
+             y = i;
+
+           }
+
+           this.shippingNetworkForm.get('shipLines').patchValue(this.lstShipList);
+           this.spinIcon = false;this.dataDisplay = ''; 
+
+         }  
+         else { this.spinIcon = false;  this.dataDisplay = '';   }
+       });
+ }
+
 
   clearSearch() {
     // this.jobcardForm.get('jobCardNum2').reset();
@@ -234,7 +313,7 @@ export class ShippingNetworkComponent implements OnInit {
     var ordLineArr = this.shippingNetworkForm.get('shipLines').value;
     var len1 = this.lineDetailsArray().length - 1;
     if (len1 === index) {
-      if (ordLineArr[index].fromOrg > 0 && ordLineArr[index].toOrg >= 0) {
+      if (ordLineArr[index].fromLocationId > 0 && ordLineArr[index].toLocationId >= 0) {
         this.lineDetailsArray().push(this.lineDetailsGroup());
       } else {
 

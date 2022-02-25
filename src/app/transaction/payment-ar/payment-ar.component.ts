@@ -458,9 +458,18 @@ export class PaymentArComponent implements OnInit {
     this.orgId = this.ouId;
     console.log(this.loginArray);
     console.log(this.locId);
-    // console.log(this.emplId);
 
-    //  alert("Org Id :"+ this.orgId);
+    ////////////// Navigate from JobCard form /////////
+    this.sub = this.router1.params.subscribe(params => {
+      this.vehRegNo = params['regNo'];
+      this.attribute1=this.vehRegNo;
+      if (this.vehRegNo != undefined){
+      this.serchByRegNo(this.attribute1);
+      }
+    });
+  /////////////////////////////////////////////////////
+
+   
 
     this.service.RegNoListFN()
       .subscribe(
@@ -471,7 +480,23 @@ export class PaymentArComponent implements OnInit {
       );
 
 
-    this.service.OUIdList()
+    // this.service.OUIdList()
+    //   .subscribe(
+    //     data => {
+    //       this.OUIdList = data;
+    //       console.log(this.OUIdList);
+    //     }
+    //   );
+
+    // this.service.locationIdList()
+    //   .subscribe(
+    //     data => {
+    //       this.locIdList = data;
+    //       console.log(this.locIdList);
+    //     }
+    //   );
+
+      this.service.OUIdListDiv(this.divisionId)
       .subscribe(
         data => {
           this.OUIdList = data;
@@ -479,13 +504,14 @@ export class PaymentArComponent implements OnInit {
         }
       );
 
-    this.service.locationIdList()
-      .subscribe(
-        data => {
-          this.locIdList = data;
-          console.log(this.locIdList);
-        }
-      );
+    this.service.getLocationSearch1(this.ouId)
+    .subscribe(
+      data => {
+        this.locIdList = data;
+        console.log(this.locIdList);
+
+      }
+        );
 
 
     this.service.DepartmentList()
@@ -557,25 +583,27 @@ export class PaymentArComponent implements OnInit {
     this.glPrdEndDate = this.GLPeriodCheck.endDate
 
 
-    this.sub = this.router1.params.subscribe(params => {
-      this.vehRegNo = params['vehRegNo'];
-      alert(this.vehRegNo);
-      return;
+    // this.sub = this.router1.params.subscribe(params => {
+    //   this.vehRegNo = params['vehRegNo'];
+    //   alert(this.vehRegNo);
+    //   return;
 
-      this.orderManagementService.getOmReceiptSearchByOrdNo(this.orderNumber)
-      .subscribe(
-      data => {
+      // this.orderManagementService.getOmReceiptSearchByOrdNo(this.orderNumber)
+      // .subscribe(
+      // data => {
         // this.lstcomments = data.obj.oePayList;
         // this.custName=data.obj.custName;
         // this.customerId=data.obj.customerId;
         // this.balancePay=data.obj.balancePay.toFixed(2);
       
-        console.log(this.lstcomments);
-       }
+      //   console.log(this.lstcomments);
+      //  }
        
-      );
-      });
+      // );
+      // });
 
+
+     
 
   }
 
@@ -711,11 +739,13 @@ export class PaymentArComponent implements OnInit {
   };
 
   serchByRegNo(mRegNo) {
+    // alert(mRegNo +'Search vehicle');
     this.service.getVehRegDetails(mRegNo)
       .subscribe(
         data => {
           this.getVehRegDetails = data;
-
+          console.log(this.getVehRegDetails);
+          
           if(this.getVehRegDetails !=null){
           console.log(this.getVehRegDetails);
 
@@ -725,7 +755,9 @@ export class PaymentArComponent implements OnInit {
           this.enableCustAccount = false;
           this.GetCustomerDetails(this.customerId);
           this.GetCustomerSiteDetails(this.customerId);
-        }  else { alert("Vehicle Regno. Not Found...."); this.resetMast(); }
+        }  else { alert("Vehicle Regno. Not Found...."); 
+        // this.resetMast(); 
+      }
 
         });
       
