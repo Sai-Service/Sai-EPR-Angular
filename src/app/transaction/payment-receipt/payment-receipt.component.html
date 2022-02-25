@@ -138,19 +138,25 @@
                             <td style="width: 15%" class="LabelFontStyle">DD&nbsp;/Cheque&nbsp;No:&nbsp;</td>
                             <td>
                                 <input   type="text" formControlName="checkNo"  id="checkNo"  [(ngModel)] ="checkNo"  class="form-control"  placeholder="DD/Cheque No..">
+                                <span  *ngIf="!paymentReceiptForm.get('checkNo').valid && paymentReceiptForm.get('checkNo').touched">Please
+                                    Enter DD/Cheque No </span>
                             </td>
 
                             <td style="width: 15%" class="LabelFontStyle">Bank&nbsp;Name:&nbsp;</td>
 
                             <td>
                                 <input   type="text" formControlName="bankName"  id="bankName" [(ngModel)] ="bankName" class="form-control"  placeholder="Bank Name">
+                                <span  *ngIf="!paymentReceiptForm.get('bankName').valid && paymentReceiptForm.get('bankName').touched">Please
+                                    Enter Bank Name </span>
                             </td>
 
                             <td style="width: 15%" class="LabelFontStyle">Branch&nbsp;Name:&nbsp;</td>
 
                             <td>
                                 <input   type="text" formControlName="bankBranch"  id="bankBranch" [(ngModel)] ="bankBranch" class="form-control" placeholder="Branch">
-                            </td>
+                                <span  *ngIf="!paymentReceiptForm.get('bankBranch').valid && paymentReceiptForm.get('bankBranch').touched">Please
+                                    Enter Branch name </span>
+                              </td>
 
                             </ng-template>
 
@@ -183,6 +189,8 @@
                                 <td style="width: 15%" class="LabelFontStyle">Cheque/DD&nbsp;Date:&nbsp;</td>
                                 <td>
                                     <input   type="date" formControlName="checkDate"  id="checkDate"  [(ngModel)] ="checkDate" class="form-control"  placeholder="Bank Name">
+                                    <span  *ngIf="!paymentReceiptForm.get('checkDate').valid && paymentReceiptForm.get('checkDate').touched">Please
+                                        Enter Branch name </span>
                                 </td>
                             </ng-template>
 
@@ -252,7 +260,7 @@
                                     <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
                                     <ng-template #thenBlock1>
                                         <td>
-                                            <button type="button" class="btn btn-info" (click)="newMast()" [disabled]="!paymentReceiptForm">Save</button>
+                                            <button type="button" class="btn btn-info" (click)="newMast()" [disabled]="isDisabledSave">Save</button>
                                         </td>
                                         
                                         <div *ngIf="buttonviewReceipt; then thenBlockviewReceipt; else elseBlockviewReceipt"></div>

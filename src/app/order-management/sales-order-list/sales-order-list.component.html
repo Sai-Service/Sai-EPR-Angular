@@ -46,11 +46,30 @@
                                 <option value="BOOKED" >BOOKED</option>
                                 <option value="CANCELLED">CANCELLED</option>
                                 <option value="INVOICED" >INVOICED</option>
+                                <option value="CLOSED" >CLOSED</option>
                             </select>
                             </td>
                         </tr>
                     </table>
                 </td>
+            </tr>
+            <tr>
+                <table class="center">
+                    <tr>
+                        <td>Customer&nbsp;Name&nbsp;</td>&nbsp;
+                        <td colspan="2">
+                            <input type="text" formControlName="custName" class="form-control"  (keydown.tab)="onSelectCustName($event)" style="width: 100%;">
+                        </td>
+                        <!-- <td>Account&nbsp;No&nbsp;</td>&nbsp;
+                        <td colspan="2">
+                            <input type="text" formControlName="custNumber" class="form-control"  (keydown.tab)="onSelectcustNumber($event)" style="width: 100%;">
+                        </td>
+                        <td>Contact&nbsp;No&nbsp;</td>&nbsp;
+                        <td colspan="2">
+                            <input type="text" formControlName="custConatctNo" class="form-control"  (keydown.tab)="onSelectcustConatctNo($event)" style="width: 100%;">
+                        </td> -->
+                    </tr>
+                </table>
             </tr>
         </table>
         <br>

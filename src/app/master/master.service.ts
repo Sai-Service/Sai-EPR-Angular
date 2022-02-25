@@ -2590,6 +2590,11 @@ OrderCategoryList(): Observable<any> {
     return this.http.get(this.ServerUrl + `/receiptMethod?methodType=${mPaytype}&locId=${mLocId}&status=${mStatus}`);
   }
 
+  ReceiptMethodListNew(mPaytype,mStatus,deptId,orgId): Observable<any> {
+    // alert("Master Service :"+ mPaytype+" "+mLocId+" " +mStatus);
+    return this.http.get(this.ServerUrl + `/receiptMethod/rctMethodDeptwise?methodType=${mPaytype}&status=${mStatus}&attribute2=${deptId}&orgId=${orgId}`);
+  }
+
   ///////////////////////////AVERAGE COST UPDATE//////////////////////////
 
     avgCurrentCost(mitemId,mLocId): Observable<any> {

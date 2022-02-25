@@ -2,12 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, NumberValueAccessor } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Validators , FormArray } from '@angular/forms';
-// import { MasterService } from '../master.service';
 import { NgModule } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { InteractionModeRegistry } from 'chart.js';
-
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 import { MasterService } from 'src/app/master/master.service';
 import { Location } from "@angular/common";
@@ -42,6 +40,7 @@ export class PaymentReceiptComponent implements OnInit  {
     public OUIdList: Array<string> = [];
     public DepartmentList: Array<string> = [];
     public statusList: Array<string> = [];
+    isDisabledSave = false;
     public locIdList: Array<string> = [];
     public PaymentModeList : Array<string> = [];
     buttonviewReceipt=true;
@@ -148,10 +147,10 @@ export class PaymentReceiptComponent implements OnInit  {
       receiptNumber:[],
       payType:[],
       // methodType:[],
-      bankName :[],
-      bankBranch :[],
-      checkNo :[],
-      checkDate:[],
+      bankName :['',Validators.required],
+      bankBranch :['',Validators.required],
+      checkNo :['',[Validators.required]],
+      checkDate:['',Validators.required],
       searchByRcptNo  : [],
       searchByOrderNo  : [],
       searchByCustNo  : [],
@@ -262,11 +261,9 @@ export class PaymentReceiptComponent implements OnInit  {
 
 
   onPayTypeSelected(payType : any  , rmStatus : any){
-    // alert('paytype =' +payType  + " LocId :"+ this.locId + " Ou Id :"+this.ouId + " Deptid : "+ this.deptId + " Status :"+rmStatus);
-
       if (payType === 'CASH') {   
         // alert("checque seleected")   ;    
-          this.service.ReceiptMethodList(payType ,this.locId,rmStatus)
+          this.service.ReceiptMethodListNew(payType ,rmStatus,sessionStorage.getItem('deptId'),sessionStorage.getItem('ouId'))
           .subscribe(
             data => {
               this.ReceiptMethodList = data.obj;
@@ -279,7 +276,7 @@ export class PaymentReceiptComponent implements OnInit  {
             }
           );
           } else{
-          this.service.ReceiptMethodList(payType ,this.ouId,rmStatus)
+          this.service.ReceiptMethodListNew(payType ,rmStatus,sessionStorage.getItem('deptId'),sessionStorage.getItem('ouId'))
           .subscribe(
             data => {
               this.ReceiptMethodList = data.obj;
@@ -347,7 +344,7 @@ export class PaymentReceiptComponent implements OnInit  {
     if (select) {       
       this.paymentReceiptForm.patchValue(select);
       this.receiptNumber = select.receiptNumber;
-      alert(select.receiptMethodName);
+      // alert(select.receiptMethodName);
       // let recValue =this.ReceiptMethodList.find(d => d.methodName === select.receiptMethodName);
       // console.log(recValue);
       this.paymentReceiptForm.patchValue({receiptMethodName:select.receiptMethodName});
@@ -389,13 +386,23 @@ export class PaymentReceiptComponent implements OnInit  {
   
 
   newMast() {
-    // alert(this.paymentReceiptForm.get('receiptMethodName').value)
-    // alert(this.paymentReceiptForm.get('methodName').value);
+    this.isDisabledSave=true;
     const formValue: IPaymentRcpt =this.transeData(this.paymentReceiptForm.value);
-    // var receiptMethodName=this.paymentReceiptForm.get('methodName').value;
-  //  let selectReceipt=this.ReceiptMethodList.find(d=>d.receiptMethodId===receiptMethodId);
-  //  console.log(selectReceipt); 
-  //  formValue.receiptMethodName = receiptMethodName;
+    var payType = this.paymentReceiptForm.get('payType').value;
+    if (this.paymentReceiptForm.get('paymentAmt').value===undefined || payType===undefined){
+      alert('Please Fill-UP  blank Details...!');
+      return;
+    }
+    if (payType.includes("CASH") === false){
+      if (this.paymentReceiptForm.get('receiptMethodName').value === undefined || 
+      this.paymentReceiptForm.get('checkNo').value===undefined ||
+      this.paymentReceiptForm.get('bankName').value===undefined || 
+      this.paymentReceiptForm.get('bankBranch').value===undefined ||
+      this.paymentReceiptForm.get('checkDate').value===undefined){
+        alert('Select Bank details And then Save...!');
+        return;
+      }
+    }
    formValue.deptName=(sessionStorage.getItem('deptName'));
     // alert(selectReceipt.methodName +'----'+ this.receiptMethodId );
     this.orderManagementService.OrderReceiptSubmit(formValue).subscribe((res: any) => {
@@ -414,6 +421,7 @@ export class PaymentReceiptComponent implements OnInit  {
         // this.lstcomments = data.obj;
         // this.lstcomments = data;
         console.log(this.lstcomments);
+        this.showBankDetails=false;
        }
        
       );
