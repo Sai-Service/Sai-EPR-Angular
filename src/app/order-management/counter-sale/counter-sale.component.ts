@@ -1818,18 +1818,19 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
             console.log(this.taxCalforItem);
 
             for (let i = 0; i < this.taxCalforItem.length; i++) {
-
+                
               if (this.taxCalforItem[i].totTaxPer != 0) {
-                sum = sum + this.taxCalforItem[i].totTaxAmt
+                sum = sum + this.taxCalforItem[i].totTaxAmt;
               }
             }
             lineTotAmt = Math.round(((baseAmt + sum - disAmt1) + Number.EPSILON) * 100) / 100;
             (patch.controls[index]).patchValue({
               baseAmt: Math.round((baseAmt + Number.EPSILON) * 100) / 100,
-              taxAmt: Math.round((sum + Number.EPSILON) * 100) / 100,
+              taxAmt:sum,
               totAmt: Math.round(((baseAmt + sum - disAmt1) + Number.EPSILON) * 100) / 100,
               disAmt: (disPer / 100) * baseAmt,
             });
+            // taxAmt: Math.round((sum + Number.EPSILON) * 100) / 100,
             let controlinv1 = this.CounterSaleOrderBookingForm.get('taxAmounts') as FormArray;
             let distAmtArray = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
             console.log(controlinv1);
@@ -1890,6 +1891,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   onOptionsSelectedDescription(segment: string, k) {
     if (segment != undefined && segment != "") {
       this.displayorderHedaerDetails = false;
+      this.displaysalesRepName=true;
       if (this.op != 'Search') {
         let selPayTerm = this.payTermDescList.find(d => d.lookupValueId === this.selCustomer.termId);
         this.paymentType = selPayTerm.lookupValue;
@@ -1911,6 +1913,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
         let select = (this.itemMap2.get(k)).find(d => d.segment === segment);
         //this.CounterSaleOrderBookingForm.patchValue({ itemId: select.itemId })
         if (segment != undefined) {
+          this.displaysalesRepName=true;
           this.CounterSaleOrderBookingForm.get('custAccountNo').disable();
           this.CounterSaleOrderBookingForm.get('name').disable();
           this.CounterSaleOrderBookingForm.get('custName').disable();

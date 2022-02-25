@@ -1,14 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
-
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Router } from '@angular/router';
 import { Validators, FormArray } from '@angular/forms';
-
 import { MasterService } from 'src/app/master/master.service';
 import { TransactionService } from 'src/app/transaction/transaction.service';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
-
 import { Location } from "@angular/common";
 import { saveAs } from 'file-saver';
 import { SalesOrderobj } from './sales-orderobj'
@@ -1447,7 +1444,7 @@ export class SalesOrderFormComponent implements OnInit {
               // else {
               //   this.isVisible3 = false;
               // }
-              if (this.lstgetOrderLineDetails[k].invType.includes('SS_ADDON') === true || this.lstgetOrderLineDetails[k].invType != 'SS_VEHICLE' && this.lstgetOrderLineDetails[k].flowStatusCode != 'ALLOTED' || this.lstgetOrderLineDetails[k].flowStatusCode != 'READY FOR INVOICE' || this.lstgetOrderLineDetails[k].flowStatusCode != 'INVOICED') {
+              if (this.lstgetOrderLineDetails[k].invType.includes('SS_ADDON') === true || this.lstgetOrderLineDetails[k].invType != 'SS_VEHICLE' && this.lstgetOrderLineDetails[k].flowStatusCode != 'ALLOTED' || this.lstgetOrderLineDetails[k].flowStatusCode != 'READY FOR INVOICE' || this.lstgetOrderLineDetails[k].flowStatusCode != 'INVOICED' || this.lstgetOrderLineDetails[k].flowStatusCode === 'CANCELLED') {
                 this.displayVehicleDetails = true;
                 var variantNew = data.obj.variant;
                 this.SalesOrderBookingForm.patchValue({ color: data.obj.color })
