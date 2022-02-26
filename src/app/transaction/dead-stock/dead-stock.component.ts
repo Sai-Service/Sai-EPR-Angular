@@ -14,7 +14,7 @@ import * as xlsx from 'xlsx';
 
 interface IOrderGen {
   segment: string;
-  orderQty: number;
+  dFlag: string;
 }
 
 
@@ -40,6 +40,8 @@ export class DeadStockComponent implements OnInit {
   public locIdList: Array<string> = [];
   public DepartmentList: Array<string> = [];
   public statusList: Array<string> = [];
+
+  lstDeadItems: any;
   
 
   dataDisplay: any;
@@ -111,42 +113,25 @@ export class DeadStockComponent implements OnInit {
   }
   lineDetailsGroup() {
     return this.fb.group({
-      sprOrderId: [''],
-      itemId: [''],
-      segment: ['', [Validators.required]],
-      description: ['', [Validators.required]],
-      unitPrice: ['', [Validators.required]],
+       dedId:[],
+       locId: [],
+       locationCode:[],
+       ouId:[],
+       itemId:[],
+       segment:[],
+       description:[],
+       dflag:[],
+       createdBy:[],
+       creationDate: [],
+       lastUpdatedBy:[],
+       lastUpdationDate: [],
+       attribute1: [],
+       onHandId: [],
+       days:[],
+       quantity:[],
+       transactionId:[],
+       transDate: [],
 
-      mth1ConWsQty: ['', [Validators.required]],
-      mth2ConWsQty: ['', [Validators.required]],
-      mth3ConWsQty: ['', [Validators.required]],
-      currWsQty: ['', [Validators.required]],
-      conWsQty: ['', [Validators.required]],
-
-      mth1ConsSaleQty: ['', [Validators.required]],
-      mth2ConsSaleQty: ['', [Validators.required]],
-      mth3ConsSaleQty: ['', [Validators.required]],
-      currSaleQty: ['', [Validators.required]],
-      consSaleQty: ['', [Validators.required]],
-
-      lastOrderQty: [],
-      mth1TotalCons: [],
-      mth2TotalCons: [],
-      mth3TotalCons: [],
-      mth4TotalCons: [],
-      totalCons: [],
-
-
-
-      currentStock: ['', [Validators.required]],
-      backOrderQty: ['', [Validators.required]],
-      intransitQty: ['', [Validators.required]],
-      custBackOrder: ['', [Validators.required]],
-
-      orderQty: ['', [Validators.required]],
-      totalValue: ['', [Validators.required]],
-      uom: [],
-      setQty: [],
      });
   }
 
@@ -229,6 +214,106 @@ export class DeadStockComponent implements OnInit {
     
     // this.lstJobcardList = null;
   }
-  getDeadList(){}
+ 
+
+  getDeadList() {
+    var mOrgId = this.deadStockForm.get('ouId').value
+     this.ShowDeadList(mOrgId);
+  }
+
+  ShowDeadList(mOrgId) {
+   
+    // this.spinIcon=true;
+    // this.dataDisplay ='Loading Order Details....Pls wait..';
+   
+    this.service.getDeadStockList(mOrgId,'Y')
+      .subscribe(
+        data => {
+          this.lstDeadItems = data;
+          alert ("Total DeadStk lines :" +data.length);
+          if (data.length > 0) {
+           
+            console.log(this.lstDeadItems);
+            var len = this.lineDetailsArray().length;
+            var y = 0;
+            for (let i = 0; i < this.lstDeadItems.length - len; i++) {
+              var ordLnGrp: FormGroup = this.lineDetailsGroup();
+              this.lineDetailsArray().push(ordLnGrp);
+              y = i;
+
+            }
+
+            this.deadStockForm.get('deadItemList').patchValue(this.lstDeadItems);
+
+           
+            // this.CalculateOrdValue();
+
+          // } else { alert (mOrderNumber+ "  - Order Number doesn't exists");
+          //          this.spinIcon=false; this.dataDisplay=null;
+          //          this.orderGenerationForm.get('orderNumber').enable();}
+        }
+      });
+    }
+
+
+  updateMst(){}
+
+  resetMast() {
+    window.location.reload();
+  }
+
+  closeMast() {
+    this.router.navigate(['admin']);
+  }
+
+  addNewRow() {
+    var len1 = this.lineDetailsArray().length - 1;
+    this.addRow(len1);
+  }
+
+  addRow(index) {
+  
+    var ordLineArr = this.deadStockForm.get('deadItemList').value;
+    var len1 = this.lineDetailsArray().length - 1;
+    if (len1 === index) {
+      if (ordLineArr[index].itemId > 0 && ordLineArr[index].orderQty >= 0) {
+        this.lineDetailsArray().push(this.lineDetailsGroup());
+      } else {
+
+        if(index>0) {
+        alert("Incomplete Line -  Part No /  Qty not updated ....Line will be deleted ");
+        this.lineDetailsArray().removeAt(index);
+        }
+
+        // if(index===0) {
+        //   alert("Incomplete Line - Order Part No / Order Qty not updated .... ");
+        // }
+
+      }
+
+
+    }
+  }
+
+  RemoveRow(index) {
+    if (index === 0) { }
+    else {
+
+
+      // this.deleteOrderLine(index)
+
+      this.lineDetailsArray().removeAt(index);
+      // this.CalculateOrdValue();
+    }
+
+  }
+
+  validateItem(index) {}
+
+  enterKeyLock(i) {
+    alert('Enter Not Allowed.!');
+    // this.setFocus('orderQty' + i);
+    return;
+  }
 
 }

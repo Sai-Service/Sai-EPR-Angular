@@ -2585,9 +2585,14 @@ OrderCategoryList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/PayType');
   }
 
-  ReceiptMethodList(mPaytype ,mLocId,mStatus): Observable<any> {
+  ReceiptMethodList(mPaytype,mLocId,mStatus): Observable<any> {
     // alert("Master Service :"+ mPaytype+" "+mLocId+" " +mStatus);
     return this.http.get(this.ServerUrl + `/receiptMethod?methodType=${mPaytype}&locId=${mLocId}&status=${mStatus}`);
+  }
+
+  ReceiptMethodListNew(mPaytype,mOrgId,mStatus,deptId): Observable<any> {
+     return this.http.get(this.ServerUrl + `/receiptMethod/rctMethodDeptwise?methodType=${mPaytype}&status=${mStatus}&attribute2=${deptId}&orgId=${mOrgId}`);
+    // http://localhost:8081/receiptMethod/rctMethodDeptwise?methodType=CASH&status=Active&attribute2=1&orgId=22
   }
 
   ///////////////////////////AVERAGE COST UPDATE//////////////////////////
@@ -3701,6 +3706,13 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
     getShipNetToDetails (locId): Observable<any> {
       return this.http.get(this.ServerUrl + `/shippingNetwork/shipto/${locId}`);
         // http://localhost:8081/shippingNetwork/shipto/2102
+    }
+
+    /////////////////////////DEAD STOCK /////////////////////
+
+    getDeadStockList (mOuId,mFlag): Observable<any> {
+      return this.http.get(this.ServerUrl + `/DedStock/list?ouId=${mOuId}&dFlag=${mFlag}`);
+      //  http://localhost:8081/DedStock/list?ouId=21&dFlag=Y
     }
 
 

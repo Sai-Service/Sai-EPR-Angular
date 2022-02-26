@@ -851,7 +851,7 @@ export class PaymentArComponent implements OnInit {
       this.bankBranch=null;
       this.checkNo=null;
       this.checkDate=null;
-      this.service.ReceiptMethodList(payType, this.locId, rmStatus)
+      this.service.ReceiptMethodListNew(payType, this.ouId, rmStatus,this.deptId)
         .subscribe(
           data => {
             this.ReceiptMethodList = data.obj;
@@ -863,7 +863,7 @@ export class PaymentArComponent implements OnInit {
     } else {
 
       // alert("Chq/dd/neft/... selected");
-      this.service.ReceiptMethodList(payType, this.ouId, rmStatus)
+      this.service.ReceiptMethodListNew(payType, this.ouId, rmStatus,this.deptId)
         .subscribe(
           data => {
             this.ReceiptMethodList = data.obj;
@@ -875,6 +875,7 @@ export class PaymentArComponent implements OnInit {
     }
 
   }
+
 
 
 
