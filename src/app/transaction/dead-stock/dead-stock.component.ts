@@ -44,7 +44,7 @@ export class DeadStockComponent implements OnInit {
   lstDeadItems: any;
   
 
-  dataDisplay: any;
+  dataDisplay: any;spinIcon = false;
   loginName: string;
   loginArray: string;
   divisionId: number;
@@ -61,6 +61,8 @@ export class DeadStockComponent implements OnInit {
       nMonths: string;
       stk: string;
       stkCategory:string;
+      totalValue :number;
+      totalRecords:number;
 
    constructor(private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService, private fb: FormBuilder, private router: Router) {
     this.deadStockForm = fb.group({
@@ -81,29 +83,8 @@ export class DeadStockComponent implements OnInit {
       stk: [],
       stkCategory: [],
 
-      status: [],
-      orderDate: [],
-      consCriteria: [],
-      currMonthYN: [],
-      orderValue: [],
-      dlrCode: [],
-      cdmsRefNo: [],
-
-      mth1ConWsQty: [],
-      mth2ConWsQty: [],
-      mth3ConWsQty: [],
-      mth1ConsSaleQty: [],
-      mth2ConsSaleQty: [],
-      mth3ConsSaleQty: [],
-
-
-      partNumber: [],
-      partDesc: [],
-
-      currSaleQty: [],
-      consSaleQty: [],
-      currWsQty: [],
-      conWsQty: [],
+      totalValue :[],
+      totalRecords:[],
 
 
 
@@ -218,19 +199,24 @@ export class DeadStockComponent implements OnInit {
 
   getDeadList() {
     var mOrgId = this.deadStockForm.get('ouId').value
-     this.ShowDeadList(mOrgId);
+    var nMths = this.deadStockForm.get('nMonths').value
+     this.ShowDeadList(mOrgId,nMths);
+
   }
 
-  ShowDeadList(mOrgId) {
+  ShowDeadList(mOrgId,nMths) {
+
+    alert ("Not Transacted  for Months :"+nMths);
    
-    // this.spinIcon=true;
-    // this.dataDisplay ='Loading Order Details....Pls wait..';
+    this.spinIcon=true;
+    this.dataDisplay ='Loading Data....Pls wait..';
    
-    this.service.getDeadStockList(mOrgId,'Y')
+    this.service.getDeadStockList(mOrgId,'Y',nMths)
       .subscribe(
         data => {
           this.lstDeadItems = data;
-          alert ("Total DeadStk lines :" +data.length);
+          // alert ("Total Items Found :" +data.length);
+          this.totalRecords=data.length;
           if (data.length > 0) {
            
             console.log(this.lstDeadItems);
@@ -244,14 +230,14 @@ export class DeadStockComponent implements OnInit {
             }
 
             this.deadStockForm.get('deadItemList').patchValue(this.lstDeadItems);
-
+            this.spinIcon = false;this.dataDisplay = ''; 
            
             // this.CalculateOrdValue();
 
           // } else { alert (mOrderNumber+ "  - Order Number doesn't exists");
           //          this.spinIcon=false; this.dataDisplay=null;
           //          this.orderGenerationForm.get('orderNumber').enable();}
-        }
+        } else { alert ("No Records Found ....");  this.spinIcon = false;  this.dataDisplay = '';   }
       });
     }
 
