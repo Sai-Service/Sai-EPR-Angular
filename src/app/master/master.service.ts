@@ -3709,11 +3709,10 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
     }
 
     /////////////////////////DEAD STOCK /////////////////////
-
-    getDeadStockList (mOuId,mFlag): Observable<any> {
-      return this.http.get(this.ServerUrl + `/DedStock/list?ouId=${mOuId}&dFlag=${mFlag}`);
-      //  http://localhost:8081/DedStock/list?ouId=21&dFlag=Y
+    getDeadStockList (mOuId,mFlag,mth): Observable<any> {
+      // if(mth>0) {return this.http.get(this.ServerUrl + `/DedStock?ouId=${mOuId}&months=${mth}`);}
+      return this.http.get(this.ServerUrl + `/DedStock/list?ouId=${mOuId}&dFlag=${mFlag}`); 
+      // http://localhost:8081/DedStock/list?ouId=21&dFlag=Y
+      // http://localhost:8081/DedStock?ouId=21&months=10
     }
-
-
 }
