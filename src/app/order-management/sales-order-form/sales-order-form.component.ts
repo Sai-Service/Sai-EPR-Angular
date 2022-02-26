@@ -1333,6 +1333,7 @@ export class SalesOrderFormComponent implements OnInit {
               }
               this.displayVehicleDetails = true;
               var variantNew = data.obj.variant;
+              this.SalesOrderBookingForm.get('model').disable();
               this.SalesOrderBookingForm.patchValue({ color: data.obj.color });
               this.orderManagementService.ColourSearchFn(variantNew)
                 .subscribe(
@@ -1446,6 +1447,7 @@ export class SalesOrderFormComponent implements OnInit {
               // }
               if (this.lstgetOrderLineDetails[k].invType.includes('SS_ADDON') === true || this.lstgetOrderLineDetails[k].invType != 'SS_VEHICLE' && this.lstgetOrderLineDetails[k].flowStatusCode != 'ALLOTED' || this.lstgetOrderLineDetails[k].flowStatusCode != 'READY FOR INVOICE' || this.lstgetOrderLineDetails[k].flowStatusCode != 'INVOICED' || this.lstgetOrderLineDetails[k].flowStatusCode === 'CANCELLED') {
                 this.displayVehicleDetails = true;
+                this.SalesOrderBookingForm.get('model').disable();
                 var variantNew = data.obj.variant;
                 this.SalesOrderBookingForm.patchValue({ color: data.obj.color })
                 this.orderManagementService.ColourSearchFn(variantNew)

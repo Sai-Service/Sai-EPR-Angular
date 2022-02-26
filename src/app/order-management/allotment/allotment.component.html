@@ -26,10 +26,10 @@
                     &nbsp;Order&nbsp;Number&nbsp;:&nbsp;  
                 </td>
                 <td>
-                    <input   class="form-control" >
+                    <input formControlName="orderNumber" [(ngModel)]="orderNumber" value="orderNumber"  class="form-control" >
                 </td>
                 <td>
-                    <button type="button" class="btn-primary" ><i class="fa fa-search" aria-hidden="true"></i></button>
+                    <button type="button" class="btn-primary" (click)="onSelectorderNumber(orderNumber)" ><i class="fa fa-search" aria-hidden="true"></i></button>
                 </td>
             </tr>
            

@@ -2,7 +2,7 @@
     <table style="width: 100%;background-color: white;">
     <tr>
         <td class="PageHeader">
-            &nbsp;&nbsp;AR&nbsp;Invoice
+            &nbsp;&nbsp;AR&nbsp;Invoice 
         </td>
     </tr>
     </table>
@@ -91,7 +91,6 @@
             <!-- <input type="text" class="form-control" formControlName="source"> -->
             <select
             formControlName="source" name="source" id="source" class="form-control" (ngModelChange)="onOptionType($event)">
-                                    <option disabled>--Select--</option>
                                     <option *ngFor="let sc of sourceList" [ngValue]="sc.code">
                                         {{sc.code}}
                                     </option>
@@ -101,9 +100,8 @@
         <td>
             <!-- <input type="text"  class="form-control"> -->
             <select
-            formControlName="class" name="class" id="class" class="form-control" (ngModelChange)="onOptionSelectInvoice($event)">
-                                    <option > </option>
-                                    <option *ngFor="let sc of classList" >
+            formControlName="class" name="class" id="class" class="form-control" (change)="onOptionSelectInvoice($event)">
+                                 <option *ngFor="let sc of classList" [value]=sc.code>
                                         {{sc.code}}
                                     </option>
             </select>
@@ -122,7 +120,6 @@
             <td>
                 <!-- <input type="text" formControlName="invType" class="form-control"> [ngValue]="sc.custTrxTypeId"-->
                 <select formControlName="custTrxTypeId" name="custTrxTypeId" id="custTrxTypeId" class="form-control">
-                                        <option disabled>--Select--</option>
                                         <option *ngFor="let sc of invTypeList" [value]=sc.custTrxTypeId>
                                             {{sc.name}}
                                         </option>
@@ -152,7 +149,9 @@
             </td>
             <td style="width: 15%" class="LabelFontStyle">&nbsp;GL&nbsp;Date&nbsp;:&nbsp;</td>
             <td>
-                <input type="text" disabled formControlName="glDate" [(ngModel)]="glDate" class="form-control">
+                <input type="text" disabled formControlName="glDate" class="form-control"  
+                [(ngModel)]="glDate">
+                            
             </td>
             <td style="width: 15%" class="LabelFontStyle">&nbsp;Charges&nbsp;:&nbsp;</td>
             <td>
@@ -203,7 +202,6 @@
             <td style="width: 15%" class="LabelFontStyle1">&nbsp;Location&nbsp;Name&nbsp;:&nbsp;</td>
             <td>
                 <select formControlName="locId" id="locId" class="form-control">
-                    <option>--Select--</option>
                     <option *ngFor="let sc of  locIdList" [ngValue]="sc.locId" >
                         {{sc.locId}}-{{sc.locCode}}
                     </option>
@@ -602,15 +600,36 @@
                                                 <!-- <div id="accordionExample2"> -->
                                                 <!--  -->
                                                 <td>
-                                                    <button type="submit" class="btn btn-primary"
+                                                    <div *ngIf="displayaddRow; then thenaddRow; else elseaddRow">
+                                                    </div>
+                                                    <!-- type="button" -->
+                                                    <ng-template #thenaddRow>
+                                                    <button type="submit" class="btn btn-primary" id="addinvln"
                                                         (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)"
                                                         style="width: min-content;"><i
                                                             class="fa fa-plus"></i></button>
+                                                    </ng-template>
+                                                    <ng-template #elseaddRow>
+                                                        <button disabled type="submit" class="btn btn-primary" id="addinvln"
+                                                            (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)"
+                                                            style="width: min-content;"><i
+                                                                class="fa fa-plus"></i></button>
+                                                        </ng-template>
                                                 </td>
                                                 <td>
+                                                    <div
+                                                        *ngIf="displayRemoveRow; then thenRemoveRow; else elseRemoveRow">
+                                                    </div>
+                                                    <ng-template #thenRemoveRow>
                                                     <button type="submit" class="btn btn-primary"
                                                         (click)="RemoveRow(i)" style="width: min-content;"><i
                                                             class="fa fa-trash"></i></button>
+                                                    </ng-template>
+                                                    <ng-template #elseRemoveRow>
+                                                        <button disabled type="submit" class="btn btn-primary"
+                                                            (click)="RemoveRow(i)" style="width: min-content;"><i
+                                                                class="fa fa-trash"></i></button>
+                                                        </ng-template>
                                                 </td>
 
                                        </tr>
@@ -958,7 +977,7 @@
                                         <input formControlName="accountDesc" class="form-control"  style="width: 160px;height: 25px;"></td>
                                         <input  hidden formControlName="codeCombinationId"  class="form-control"  style="width: 160px;height: 25px;">
                                     <td>
-                                        <input  formControlName="glDate" [(ngModel)]="glDate" disabled  class="form-control"  style="width: 100px;height: 25px;text-align: right;">
+                                        <input formControlName="glDate" [(ngModel)]="glDate" disabled  class="form-control"  style="width: 100px;height: 25px;text-align: right;">
                                     </td>
                                     <td>
                                         <input type="number" min="0"  formControlName="percent"  class="form-control"  style="width: 160px;height: 25px;">
@@ -968,9 +987,19 @@
                                     </td>
 
                                     <td>
+                                        <div
+                                        *ngIf="displayRmDistRow; then thenRmDistRow; else elseRmDistRow">
+                                    </div>
+                                    <ng-template #thenRmDistRow>
                                     <button type="submit" class="btn btn-primary"
                                                                     (click)="RemoveDistributionRow(k)" style="width: min-content;"><i
                                                                         class="fa fa-trash"></i></button>
+                                    </ng-template>
+                                    <ng-template #elseRmDistRow>
+                                        <button disabled type="submit" class="btn btn-primary"
+                                                                        (click)="RemoveDistributionRow(k)" style="width: min-content;"><i
+                                                                            class="fa fa-trash"></i></button>
+                                        </ng-template>
                                                                     </td>
                                 </tr>
                             </ng-container>

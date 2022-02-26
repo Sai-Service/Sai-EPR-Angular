@@ -50,7 +50,7 @@ export class AllotmentComponent implements OnInit {
   // displayChassisForm:boolean;
   allotmentsearchlist:any[];
   allotmentVehiclesearchlist:any[];
-
+  allAllotmentList:any=[];
   
 
   constructor(private fb: FormBuilder,private location: Location, private router: Router, private service: MasterService,private orderManagementService:OrderManagementService,private transactionService :TransactionService) { 
@@ -79,6 +79,7 @@ console.log(this.orgId);
     .subscribe(
       (data: any[])  => {
         this.allotmentsearchlist = data;
+        this.allAllotmentList=data;
         for (let i=0;i<data.length;i++){
           if (data[i].qtyAvail===0){
             this.displayChassisForm[i]=false;
@@ -191,7 +192,21 @@ console.log(this.orgId);
 			
     }
 
-  
+    onSelectorderNumber(orderNumber){
+      // var custConatctNo = event.target.value;
+      alert(orderNumber);
+      console.log(this.allAllotmentList);
+      // debugger;
+      for (let x=0; x<this.allAllotmentList.length;x++){
+        let currCustomer = this.allAllotmentList.filter((orderList) => (orderList.orderNumber===orderNumber));
+        console.log(currCustomer);
+        this.allotmentsearchlist=currCustomer;
+      }
+      
+      // let currCustomer = this.storeAllOrderData.filter((orderList) =>(orderList.custActNo === custNumber));
+      
+    }
+    
 }
     
 
