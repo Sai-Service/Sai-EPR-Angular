@@ -2585,14 +2585,14 @@ OrderCategoryList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/PayType');
   }
 
-  ReceiptMethodList(mPaytype ,mLocId,mStatus): Observable<any> {
+  ReceiptMethodList(mPaytype,mLocId,mStatus): Observable<any> {
     // alert("Master Service :"+ mPaytype+" "+mLocId+" " +mStatus);
     return this.http.get(this.ServerUrl + `/receiptMethod?methodType=${mPaytype}&locId=${mLocId}&status=${mStatus}`);
   }
 
-  ReceiptMethodListNew(mPaytype,mStatus,deptId,orgId): Observable<any> {
-    // alert("Master Service :"+ mPaytype+" "+mLocId+" " +mStatus);
-    return this.http.get(this.ServerUrl + `/receiptMethod/rctMethodDeptwise?methodType=${mPaytype}&status=${mStatus}&attribute2=${deptId}&orgId=${orgId}`);
+  ReceiptMethodListNew(mPaytype,mOrgId,mStatus,deptId): Observable<any> {
+     return this.http.get(this.ServerUrl + `/receiptMethod/rctMethodDeptwise?methodType=${mPaytype}&status=${mStatus}&attribute2=${deptId}&orgId=${mOrgId}`);
+    // http://localhost:8081/receiptMethod/rctMethodDeptwise?methodType=CASH&status=Active&attribute2=1&orgId=22
   }
 
   ///////////////////////////AVERAGE COST UPDATE//////////////////////////
@@ -3708,5 +3708,11 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
         // http://localhost:8081/shippingNetwork/shipto/2102
     }
 
-
+    /////////////////////////DEAD STOCK /////////////////////
+    getDeadStockList (mOuId,mFlag,mth): Observable<any> {
+      // if(mth>0) {return this.http.get(this.ServerUrl + `/DedStock?ouId=${mOuId}&months=${mth}`);}
+      return this.http.get(this.ServerUrl + `/DedStock/list?ouId=${mOuId}&dFlag=${mFlag}`); 
+      // http://localhost:8081/DedStock/list?ouId=21&dFlag=Y
+      // http://localhost:8081/DedStock?ouId=21&months=10
+    }
 }
