@@ -58,7 +58,7 @@ export class DeadStockComponent implements OnInit {
   deptId: number;
   emplId: number;
 
-      nMonths: string;
+      nMonths: number=360;
       stk: string;
       stkCategory:string;
       totalValue :number;
@@ -110,6 +110,7 @@ export class DeadStockComponent implements OnInit {
        onHandId: [],
        days:[],
        quantity:[],
+       averageCost:[],
        transactionId:[],
        transDate: [],
 
@@ -198,20 +199,19 @@ export class DeadStockComponent implements OnInit {
  
 
   getDeadList() {
-    var mOrgId = this.deadStockForm.get('ouId').value
-    var nMths = this.deadStockForm.get('nMonths').value
-     this.ShowDeadList(mOrgId,nMths);
+    this.ShowDeadList();
 
   }
 
-  ShowDeadList(mOrgId,nMths) {
+  ShowDeadList() {
 
-    alert ("Not Transacted  for Months :"+nMths);
-   
+    // alert ("Not Transacted  for Months :"+nMths);
+    var mOrgId = this.deadStockForm.get('ouId').value
+    var nMths = this.deadStockForm.get('nMonths').value
     this.spinIcon=true;
     this.dataDisplay ='Loading Data....Pls wait..';
    
-    this.service.getDeadStockList(mOrgId,'Y',nMths)
+    this.service.getDeadStockList(mOrgId,'Y')
       .subscribe(
         data => {
           this.lstDeadItems = data;
@@ -230,9 +230,9 @@ export class DeadStockComponent implements OnInit {
             }
 
             this.deadStockForm.get('deadItemList').patchValue(this.lstDeadItems);
-            this.spinIcon = false;this.dataDisplay = ''; 
+            // this.spinIcon = false;this.dataDisplay = ''; 
            
-            // this.CalculateOrdValue();
+            this.CalculateDeadStcokValue();
 
           // } else { alert (mOrderNumber+ "  - Order Number doesn't exists");
           //          this.spinIcon=false; this.dataDisplay=null;
@@ -242,7 +242,80 @@ export class DeadStockComponent implements OnInit {
     }
 
 
-  updateMst(){}
+    CalculateDeadStcokValue() {
+      var patch = this.deadStockForm.get('deadItemList') as FormArray;
+      var deadLineArr = this.deadStockForm.get('deadItemList').value;
+      var len = this.lineDetailsArray().length;
+      var deadTotal = 0;
+  
+      for (let i = 0; i < len; i++) {
+        var lineValue = deadLineArr[i].quantity * deadLineArr[i].averageCost;
+  
+        lineValue = Math.round((lineValue + Number.EPSILON) * 100) / 100,
+          // patch.controls[i].patchValue({ totalValue: lineValue });
+          deadTotal = deadTotal + lineValue
+  
+      }
+  
+      deadTotal = Math.round((deadTotal + Number.EPSILON) * 100) / 100,
+        this.deadStockForm.patchValue({ totalValue: deadTotal })
+        this.spinIcon=false;
+        this.dataDisplay=null;
+  
+    }
+
+
+  transeData(val) {
+    delete val.loginArray;
+    delete val.loginName;
+    delete val.divisionId;
+    delete val.division;
+    delete val.ouName;
+    delete val.locName;
+    delete val.locationId;
+    delete val.orgId;
+    delete val.fromDate;
+    delete val.toDate;
+    delete val.orderDate;
+    return val;
+  }
+
+
+    deadFlagging() {
+
+      const formValue: IOrderGen = this.transeData(this.deadStockForm.value);
+      var dDays = this.deadStockForm.get('nMonths').value
+      var ouId = this.deadStockForm.get('ouId').value
+  
+      // alert (  "ts>> Loc Id :" +this.locId + " ," +ordMonths);
+      this.spinIcon = true;
+      this.dataDisplay = 'Dead Stock Flagging in Progress....Please wait';
+  
+      this.service.deadFlg(ouId,dDays).subscribe((res: any) => {
+        if (res.code === 200) {
+          alert('Flagging Done Successfully');
+          this.spinIcon = false;
+          this.dataDisplay = ''; 
+          // this.ShowDeadList()
+        } else {
+          if (res.code === 400) {
+            // alert('Error While Flagging Record:-' + res.obj);
+            alert('Flagging Done Successfully');
+           this.spinIcon = false;
+            this.dataDisplay = '';
+            // this.ShowDeadList()
+
+          }
+        }
+      });
+  
+  
+    }
+
+
+  updateMst(){
+    // http://localhost:8081/DedStock/addLine
+  }
 
   resetMast() {
     window.location.reload();
@@ -259,10 +332,10 @@ export class DeadStockComponent implements OnInit {
 
   addRow(index) {
   
-    var ordLineArr = this.deadStockForm.get('deadItemList').value;
+    var dedLineArr = this.deadStockForm.get('deadItemList').value;
     var len1 = this.lineDetailsArray().length - 1;
     if (len1 === index) {
-      if (ordLineArr[index].itemId > 0 && ordLineArr[index].orderQty >= 0) {
+      if (dedLineArr[index].itemId > 0 && dedLineArr[index].segment !=null) {
         this.lineDetailsArray().push(this.lineDetailsGroup());
       } else {
 

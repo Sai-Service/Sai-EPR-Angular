@@ -2862,6 +2862,13 @@ bulkPickTickCSV(formData: FormData ,priceListName:string,taxCategoryName:string,
       return this.http.get(this.ServerUrl + `/VehAddInfo/RegNo/${mRegNumber}`);
     }
 
+    getVehRegDetailsNew(mRegNumber): Observable<any> {
+        return this.http.get(this.ServerUrl + `/VehAddInfo/ws/RegNo/${mRegNumber}`);
+      // http://localhost:8081/VehAddInfo/ws/RegNo/KL07BV4680
+    }
+
+   
+
 
     getWsVehRegDetails(mRegNumber): Observable<any> {
       // alert("MS:>> " +mRegNumber );
@@ -3709,10 +3716,22 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
     }
 
     /////////////////////////DEAD STOCK /////////////////////
-    getDeadStockList (mOuId,mFlag,mth): Observable<any> {
+    getDeadStockList (mOuId,mFlag): Observable<any> {
       // if(mth>0) {return this.http.get(this.ServerUrl + `/DedStock?ouId=${mOuId}&months=${mth}`);}
       return this.http.get(this.ServerUrl + `/DedStock/list?ouId=${mOuId}&dFlag=${mFlag}`); 
       // http://localhost:8081/DedStock/list?ouId=21&dFlag=Y
       // http://localhost:8081/DedStock?ouId=21&months=10
     }
+
+
+        public deadFlg(mOu,dDays) {
+          const options = {
+            headers: this.headers
+          };
+           const url = this.ServerUrl + `/DedStock?ouId=${mOu}&days=${dDays}`;
+          return this.http.post(url, options);
+
+          // http://localhost:8081/DedStock?ouId=21&months=10
+        }
+  
 }
