@@ -153,7 +153,7 @@
                         </div>
                         <input hidden disabled type="number" class="form-control" formControlName="customerSiteId"
                             [(ngModel)]='customerSiteId' value={{customerSiteId}} style="width: 160px;">
-                        <input  disabled type="text" class="form-control" formControlName="taxCategoryName"
+                        <input hidden disabled type="text" class="form-control" formControlName="taxCategoryName"
                             [(ngModel)]='taxCategoryName' value={{taxCategoryName}} style="width: 160px;">
 
                     </td>
@@ -178,6 +178,7 @@
                                     class="form-control" style="width: 170px;" data-bs-toggle="modal"
                                     data-bs-target="#customerNameSearchModel">
                                     <input hidden class="form-control" formControlName="customerId" [(ngModel)]='customerId'>
+                                    <input hidden  type="text" class="form-control" formControlName="classCodeType" [(ngModel)]='classCodeType'>
                             </td>
                             <td>
                                 <button type="button" [disabled]="isDisabled3" class="btn btn-primary"
@@ -772,6 +773,8 @@
                                                     </td>
                                                     <td>
                                                         <input disabled type="number" formControlName="taxPer"
+                                                            class="form-control" style="height: 20px;width: 40px;">
+                                                            <input disabled hidden type="number" formControlName="taxCategoryId"
                                                             class="form-control" style="height: 20px;width: 40px;">
                                                     </td>
                                                     <td>

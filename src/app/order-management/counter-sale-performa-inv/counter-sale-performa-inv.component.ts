@@ -24,6 +24,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
   itemSeg: string = "";
   orderNumber: number;
   emailId: string;
+  classCodeType:string;
   allDatastore: any;
   emailId1: string;
   locationId: number;
@@ -141,7 +142,8 @@ export class CounterSalePerformaInvComponent implements OnInit {
   isDisabled = false;
   isDisabled1=true;
   isDisabled4=true;
-  
+  public taxCalforItem: any;
+
 
   @ViewChild('aForm') aForm: ElementRef;
   getfrmSubLoc: any;
@@ -158,6 +160,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
     this.CounterSaleOrderBookingForm = fb.group({
       orderNumber: [],
       emailId: [],
+      classCodeType:[],
       emailId1: [],
       birthDate: [],
       weddingDate: [],
@@ -225,6 +228,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
       displaysegment: false,
       lineNumber: [''],
       invType: [''],
+      taxCategoryId:[''],
       itemSeg: [''],
       segment: ['', [Validators.required]],
       itemId: [''],
@@ -493,7 +497,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
             this.CounterSaleOrderBookingForm.patchValue({ tcsYN: data.obj.tcsYN });
             this.CounterSaleOrderBookingForm.patchValue({ custName: data.obj.custName });
             this.CounterSaleOrderBookingForm.patchValue({ customerId: data.obj.customerId });
-
+            this.CounterSaleOrderBookingForm.patchValue({ classCodeType: data.obj.classCodeType});
             this.CounterSaleOrderBookingForm.patchValue({ tcsPer: data.obj.tcsPer });
             this.CounterSaleOrderBookingForm.patchValue({ custAccountNo: custAccountNo });
             let select = this.payTermDescList.find(d => d.lookupValueId === this.selCustomer.termId);
@@ -768,6 +772,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
         var priceListId = this.CounterSaleOrderBookingForm.get('priceListId').value;
         console.log(priceListId);
         let isExportCust ="N";
+        // alert(this.custClassCode)
         if(this.custClassCode.includes("EXPORTER") && Number(sessionStorage.getItem('ouId'))===22){
           isExportCust ="Y";
         }
@@ -790,6 +795,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
                         uom: data.obj[i].uom,
                         unitSellingPrice: data.obj[0].priceValue,
                         taxPer: data.obj[0].taxPercentage,
+                        taxCategoryId: data.obj[0].taxCategoryId,
                         mrp: mrp,
                         disPer: 0,
                         disAmt: 0,
@@ -829,6 +835,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
                         uom: data.obj[i].uom,
                         unitSellingPrice: data.obj[0].priceValue,
                         taxPer: data.obj[0].taxPercentage,
+                        taxCategoryId: data.obj[0].taxCategoryId,
                         mrp: mrp,
                       });
                       if (this.CounterSaleOrderBookingForm.get('issueCodeType').value.includes('Only Oil Part') && data.obj[i].uom === 'LTR' && Number(sessionStorage.getItem('divisionId')) === 2) {
@@ -993,7 +1000,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
       trxLnArr1.controls[i].patchValue({ frmLocatorName: selloc.locatorId });
     }
     var fldName = "locator";
-    this.onKey(i, fldName);
+    // this.onKey(i, fldName);
   }
 
   onKey(index, fldName){
@@ -1005,33 +1012,72 @@ export class CounterSalePerformaInvComponent implements OnInit {
     var baseAmtAfterDisc = baseAmt - disAmt;
     var patch = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     // alert(custtaxCategoryName)
-    if (custtaxCategoryName.includes('IGST')) {
-      // alert(custtaxCategoryName.includes('IGST')+'---'+baseAmtWithoutDisc+'---'+trxLnArr1[index].taxPer);
-      (patch.controls[index]).patchValue(
-        {
-          baseAmt: baseAmt,
-          igst: Math.round(((baseAmtAfterDisc * trxLnArr1[index].taxPer / 100) + Number.EPSILON) * 100) / 100,
-          totAmt: Math.round(((baseAmtAfterDisc + (baseAmtAfterDisc * trxLnArr1[index].taxPer / 100)) + Number.EPSILON) * 100) / 100,
-          disAmt: Math.round(((disAmt) + Number.EPSILON) * 100) / 100,
-          taxAmt: Math.round(((baseAmtAfterDisc * trxLnArr1[index].taxPer / 100) + Number.EPSILON) * 100) / 100,
-          sgst: 0,
-          cgst: 0,
-        })
-      this.updateTotAmtPerline(index);
-    }
-    else {
-      (patch.controls[index]).patchValue(
-        {
-          baseAmt: baseAmt,
-          sgst: Math.round((((baseAmtAfterDisc * trxLnArr1[index].taxPer / 100) / 2) + Number.EPSILON) * 100) / 100,
-          cgst: Math.round((((baseAmtAfterDisc * trxLnArr1[index].taxPer / 100) / 2) + Number.EPSILON) * 100) / 100,
-          disAmt: Math.round(((disAmt) + Number.EPSILON) * 100) / 100,
-          totAmt: Math.round(((baseAmtAfterDisc + (baseAmtAfterDisc * trxLnArr1[index].taxPer / 100)) + Number.EPSILON) * 100) / 100,
-          taxAmt: Math.round(((baseAmtAfterDisc * trxLnArr1[index].taxPer / 100) + Number.EPSILON) * 100) / 100,
-          igst: 0
-        })
-      this.updateTotAmtPerline(index);
-    }
+    // if (custtaxCategoryName.includes('IGST')) {
+    //   (patch.controls[index]).patchValue(
+    //     {
+    //       baseAmt: baseAmt,
+    //       igst: Math.round(((baseAmtAfterDisc * trxLnArr1[index].taxPer / 100) + Number.EPSILON) * 100) / 100,
+    //       totAmt: Math.round(((baseAmtAfterDisc + (baseAmtAfterDisc * trxLnArr1[index].taxPer / 100)) + Number.EPSILON) * 100) / 100,
+    //       disAmt: Math.round(((disAmt) + Number.EPSILON) * 100) / 100,
+    //       taxAmt: Math.round(((baseAmtAfterDisc * trxLnArr1[index].taxPer / 100) + Number.EPSILON) * 100) / 100,
+    //       sgst: 0,
+    //       cgst: 0,
+    //     })
+    //   this.updateTotAmtPerline(index);
+    // }
+    // else {
+    //   (patch.controls[index]).patchValue(
+    //     {
+    //       baseAmt: baseAmt,
+    //       sgst: Math.round((((baseAmtAfterDisc * trxLnArr1[index].taxPer / 100) / 2) + Number.EPSILON) * 100) / 100,
+    //       cgst: Math.round((((baseAmtAfterDisc * trxLnArr1[index].taxPer / 100) / 2) + Number.EPSILON) * 100) / 100,
+    //       disAmt: Math.round(((disAmt) + Number.EPSILON) * 100) / 100,
+    //       totAmt: Math.round(((baseAmtAfterDisc + (baseAmtAfterDisc * trxLnArr1[index].taxPer / 100)) + Number.EPSILON) * 100) / 100,
+    //       taxAmt: Math.round(((baseAmtAfterDisc * trxLnArr1[index].taxPer / 100) + Number.EPSILON) * 100) / 100,
+    //       igst: 0
+    //     })
+    //   this.updateTotAmtPerline(index);
+    // }
+    var arrayControlNew = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+    var arrayControl = arrayControlNew.getRawValue();
+    // alert(arrayControl[index].taxCategoryId)
+    var itemId = arrayControl[index].itemId;
+    var taxcatName = arrayControl[index].taxCategoryName;
+   var  taxCategoryId = arrayControl[index].taxCategoryId;
+   var disAmt1 = arrayControl[index].disAmt;
+   var sum = 0;
+   var lineTotAmt = 0;
+   var disPer = arrayControl[index].disPer;
+    // alert(itemId+'----'+taxCategoryId+'----'+disAmt1+'----'+baseAmt)
+    this.service.taxCalforItem(itemId, taxCategoryId, disAmt1, baseAmt)
+    .subscribe(
+      (data: any[]) => {
+        this.taxCalforItem = data;
+        console.log(this.taxCalforItem);
+        for (let i = 0; i < this.taxCalforItem.length; i++) {
+          if (this.taxCalforItem[i].totTaxPer != 0) {
+            sum = sum + this.taxCalforItem[i].totTaxAmt;
+          }
+        }
+        lineTotAmt = Math.round(((baseAmt + sum - disAmt1) + Number.EPSILON) * 100) / 100;
+        (patch.controls[index]).patchValue({
+          baseAmt: Math.round((baseAmt + Number.EPSILON) * 100) / 100,
+          taxAmt:sum,
+          sgst:sum/2,
+          cgst:sum/2,
+          totAmt: Math.round(((baseAmt + sum - disAmt1) + Number.EPSILON) * 100) / 100,
+          disAmt: (disPer / 100) * baseAmt,
+        });
+        let distAmtArray = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+        var disValue = data[0].totTaxAmt;
+        if (disValue > 0 && data[0].taxTypeName.includes('Discount')) {
+          patch.controls[index].patchValue({ disAmt: data[0].totTaxAmt });
+        }
+        else {
+          patch.controls[index].patchValue({ disAmt: 0 });
+        }
+        this.updateTotAmtPerline(index);
+      });
     var itemId1 = trxLnArr1[index].itemId;
     if (itemId1 != null && fldName != "locator") {
       this.addRow(index);

@@ -346,7 +346,7 @@ export class PayableInvoiceNewComponent implements OnInit {
 
   public thresHoldHdrId = 10012;
   public thresHoldTypeId = 10169;
-
+  public taxMap = new Map<string, any>();
 
   errorMsg: string;
   displayError: boolean;
@@ -438,6 +438,7 @@ export class PayableInvoiceNewComponent implements OnInit {
       inclusiveFlag: [],
       invLineItemId: [],
       invLineNo: [],
+
     });
   }
 
@@ -1400,8 +1401,12 @@ export class PayableInvoiceNewComponent implements OnInit {
               console.log(taxLinesData);
               // var headerTotTaxAmt = sum(taxLinesData[j].totTaxAmt)
               alert('Tax Details Has Been Patched... Please Confirm!');
+              var lno:String = String(this.invLineNo);
+              let taxMapData = this.poInvoiceForm.get('taxLines').value;
+              this.taxMap.set(String(lno), taxMapData);
+              console.log(this.taxMap.get(String(lno)));
             }
-
+            // var ln: string = String(this.invLineNo);
             this.invLineNo = k + 1;
             this.taxarr.set(this.invLineNo, this.poInvoiceForm.get('taxLines').value);
             let controlDist = this.poInvoiceForm.get('distribution') as FormArray;
@@ -1459,7 +1464,7 @@ export class PayableInvoiceNewComponent implements OnInit {
             }
 
             this.distarr.set(this.invLineNo, this.poInvoiceForm.get('distribution').value);
-
+           
           })
     }
   }
@@ -1957,6 +1962,52 @@ export class PayableInvoiceNewComponent implements OnInit {
         })
     }
   }
+
+
+  //-----Tax PopUp / Modal functions
+  lineTaxdetails: any = [];
+  selTaxLn = '';
+  popDisAmt: number;
+  popTaxAmt: number;
+  popTotAmt: number;
+  display = 'none';
+
+  openTaxDetails(i: number) {
+   
+    this.selTaxLn = String(i);
+    
+    var invLnNo = Number(i + 1);
+    this.lineTaxdetails = this.TaxDetailsArray() as FormArray;
+    this.lineTaxdetails.clear();
+    if (this.taxMap.has(this.selTaxLn)) {
+      var taxValues: any = this.taxMap.get(this.selTaxLn);
+      for (let x = 0; x < taxValues.length; x++) {
+        if (taxValues[x].invLineNo === invLnNo) {
+          this.lineTaxdetails.push(this.TaxDetailsGroup());
+          this.lineTaxdetails.controls[x].patchValue(taxValues[x]);
+        }
+      }
+    }
+
+    // var orLineVal = this.poInvoiceForm.get('oeOrderLinesAllList').value;
+    // this.popDisAmt= orLineVal[i].disAmt;
+    // this.popTaxAmt= orLineVal[i].taxAmt;
+    // this.popTotAmt= orLineVal[i].totAmt;
+  }
+
+  closeTaxModal() {
+    this.poInvoiceForm.get('taxLines').patchValue(this.lineTaxdetails.value);
+    this.taxMap.set(this.selTaxLn, this.lineTaxdetails.value);
+    this.display = 'none'; //set none css after close dialog
+    // var controlinv2 = this.poInvoiceForm.get('oeOrderLinesAllList') as FormArray;
+    // (controlinv2.controls[this.selTaxLn]).patchValue({
+    //   disAmt: Math.round((this.popDisAmt + Number.EPSILON) * 100) / 100,
+    //   taxAmt: Math.round((this.popTaxAmt + Number.EPSILON) * 100) / 100,
+    //   totAmt: Math.round((this.popTotAmt + Number.EPSILON) * 100) / 100,
+    // });
+    // this.myInputField.nativeElement.focus();
+  }
+
 
 }
 
