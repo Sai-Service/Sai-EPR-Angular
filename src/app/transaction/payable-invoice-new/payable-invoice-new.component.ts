@@ -384,7 +384,7 @@ export class PayableInvoiceNewComponent implements OnInit {
       lookupValueDesc5: [],
       segment1: [],
       internalSeqNo: [],
-
+      payGroup:[],
       thresHoldHdrId: [],
       thresHoldTypeId: [],
       runningTotalDr: [],
@@ -511,6 +511,7 @@ export class PayableInvoiceNewComponent implements OnInit {
       ouName: [],
       invoiceId: [],
       invoiceStatus: [],
+      payGroup:[],
       invTypeLookupCode: ['', [Validators.required]],
       segment1: [],
       name: ['', [Validators.required]],
@@ -533,7 +534,6 @@ export class PayableInvoiceNewComponent implements OnInit {
       matchAction: [],
       terms: [],
       paymentMethod: ['', [Validators.required]],
-      payGroup: [],
       prepayType: [],
       settlementDate: [],
       taxationCountry: [],
@@ -694,13 +694,13 @@ export class PayableInvoiceNewComponent implements OnInit {
           console.log(this.prepayTypeList);
         }
       );
-    this.service.invItemList1()
-      .subscribe(
-        data => {
-          this.invItemList1 = data;
-          console.log(this.invItemList1);
-        }
-      );
+    // this.service.invItemList1()
+    //   .subscribe(
+    //     data => {
+    //       this.invItemList1 = data;
+    //       console.log(this.invItemList1);
+    //     }
+    //   );
     this.service.APiNVOICEtYPETypeList()
       .subscribe(
         data => {
@@ -1036,11 +1036,13 @@ export class PayableInvoiceNewComponent implements OnInit {
             var invLnGrp: FormGroup = this.tdsLineDetails();
             this.TdsDetailsArray().push(invLnGrp);
           }
-
+          alert(data.taxLines.length)
           for (let i = 0; i < data.taxLines.length; i++) {
             var invLnGrp: FormGroup = this.TaxDetailsGroup();
             this.TaxDetailsArray().push(invLnGrp);
           }
+          console.log(data.taxLines);
+          
           this.poInvoiceForm.get('invLines').patchValue(data.invLines);
           this.poInvoiceForm.get('taxLines').patchValue(data.taxLines);
           this.poInvoiceForm.get('distribution').patchValue(data.invDisLines);
@@ -2008,6 +2010,132 @@ export class PayableInvoiceNewComponent implements OnInit {
     // this.myInputField.nativeElement.focus();
   }
 
+  tdsSelectFlag1(e, index) {
+
+    this.tdsLineValidation = true;
+    // if ( e.target.checked) {alert("Checked...");} else {alert("Unchecked...");}
+    if (e.target.checked) {
+
+      var patch = this.poInvoiceForm.get('tdsLines') as FormArray;
+      var tdsLineArr = this.poInvoiceForm.get('tdsLines').value;
+      var len1 = tdsLineArr.length;
+
+      // for (let i = 0; i < len1 ; i++)  {
+
+      var baseAmount = tdsLineArr[index].baseAmount;
+      var taxCatId = tdsLineArr[index].taxCategoryId;
+      var tdsSectionCd = tdsLineArr[index].actualSectionCode;
+
+
+      if (tdsSectionCd === null || tdsSectionCd === undefined) {
+        alert("Line-" + (index + 1) + " SECTION CODE :  Should not be null.");
+        this.tdsLineValidation = false;
+        e.target.checked = false;
+        // patch.controls[index].patchValue({tdsSelectFlag:''})
+
+        return;
+      }
+
+      if (taxCatId === null || taxCatId === undefined) {
+        alert("Line-" + (index + 1) + " TAX CATEGORY :  Should not be null.");
+        this.tdsLineValidation = false;
+        e.target.checked = false;
+        // patch.controls[index].patchValue({tdsSelectFlag:''})
+        return;
+
+      }
+
+      if (this.tdsLineValidation === true) {
+        this.showTdsTaxLines(1, baseAmount, taxCatId, tdsSectionCd, index);
+      }
+
+      // }
+    } else { this.tdsTaxDetailsArray().reset(); }
+
+  }
+
+
+  showTdsTaxLines(mItemId: any, mBaseAmt: any, mTaxCatId: any, mtdsSection: any, j: any) {
+    // alert ("Tds lines...wip.inv id :"+mInvId);
+    this.service.getTdsTaxDetails(mItemId, mBaseAmt, mTaxCatId)
+      .subscribe(
+        data => {
+          this.lstTdsTaxLineDetails = data;
+          console.log(this.lstTdsTaxLineDetails);
+
+          // alert("this.lstTdsTaxLineDetails.length  :"+this.lstTdsTaxLineDetails.length);
+
+          for (let i = 0; i < this.tdsTaxDetailsArray.length; i++) {
+            this.tdsTaxDetailsArray().removeAt(i);
+          }
+
+          this.tdsTaxDetailsArray().clear();
+
+          //  for (let i = 0; i < this.lstTdsTaxLineDetails.length; i++)
+          // {
+          var tdsTaxLnGrp: FormGroup = this.tdsTaxDetailsGroup();
+          this.tdsTaxDetailsArray().push(tdsTaxLnGrp);
+
+          // }
+          this.poInvoiceForm.get('tdsTaxLines').patchValue(this.lstTdsTaxLineDetails);
+
+          var tdsTaxArr = this.poInvoiceForm.get('tdsTaxLines').value;
+          var tdsTaxAmt1 = tdsTaxArr[0].totTaxAmt;
+          // var invLineArr = this.poInvoiceForm.get('tdsLines').value;
+          var patch = this.poInvoiceForm.get('tdsLines') as FormArray;
+          patch.controls[j].patchValue({ taxAmount: tdsTaxAmt1 })
+
+        }
+      );
+
+  }
+
+  prepaymentData(event) {
+    var headerVal = this.poInvoiceForm.get('obj').value;
+    var invtype = headerVal[0].invTypeLookupCode;
+    // alert(invtype);
+    if (invtype == 'Prepayment') {
+      var supId = headerVal[0].suppId;
+      var supsitId = headerVal[0].supplierSiteId;
+      var invamt = event.target.value;
+      this.transactionService.getprepay(supId, supsitId)
+        .subscribe(
+          data => {
+            this.prepaydata = data;
+            var arraydist = this.poInvoiceForm.get('distribution').value;
+            var patchdist = this.poInvoiceForm.get('distribution') as FormArray;
+
+            var arrinvln = this.poInvoiceForm.get('invLines') as FormArray;
+
+            for (let k = 0; k < this.invLineDetailsArray().length; k++) {
+              arrinvln.controls[k].patchValue({ lineTypeLookupCode: 'OTHER', amount: Number(invamt) });
+
+
+            }
+            console.log(this.poInvoiceForm.get('invLines').value);
+            // alert (this.poInvoiceForm.value);
+            var distlen = this.lineDistributionArray().length;
+            for (let i = 0; i < data.length - distlen; i++) {
+              var dislist: FormGroup = this.distLineDetails();
+              this.lineDistributionArray().push(dislist);
+            }
+            for (let j = 0; j < this.lineDistributionArray().length; j++) {
+              patchdist.controls[j].patchValue({
+                distCodeCombSeg: data.prepayCodeCombName, accDesc: data.prepayCodeCombDesc,
+                baseAmount: Number(invamt), amount: Number(invamt), lineTypeLookupCode: 'OTHER', distLineNumber: j + 1,
+                invoiceLineNum: this.invoiceLineNo, distCodeCombId: data.prepayCodeCombId
+              });
+            }
+            console.log(this.poInvoiceForm.get('distribution').value);
+            this.distarr.set(this.invoiceLineNo, this.poInvoiceForm.get('distribution').value);
+          });
+
+      // this.poInvoiceForm.get('distribution').disable();
+      this.poInvoiceForm.get('invLines').disable();
+      //   this.poInvoiceForm.get('taxLines').disable();
+    }
+
+  }
 
 }
 

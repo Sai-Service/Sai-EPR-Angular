@@ -195,7 +195,7 @@ export class PoInvoiceComponent implements OnInit {
   // public glDate =this.datepipe.transform(this.glDate1, 'yyyy-MM-dd');
   // pipe = new DatePipe('en-US');
   // now = Date.now();
-  // glDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
+  // glDate = this.pipe.transform(this.now, 'dd-MM-yyyy');x
 
   glDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
   accountingDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
