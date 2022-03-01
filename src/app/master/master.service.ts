@@ -1927,10 +1927,6 @@ tdsTaxCategoryList(): Observable<any> {
 }
 
 
-
-
-
-
  public jaiTaxRatesMasterSubmit(JaiTaxRatesMasterRecord) {
   const options = {
     headers: this.headers
@@ -2590,7 +2586,7 @@ OrderCategoryList(): Observable<any> {
     return this.http.get(this.ServerUrl + `/receiptMethod?methodType=${mPaytype}&locId=${mLocId}&status=${mStatus}`);
   }
 
-  ReceiptMethodListNew(mPaytype,mOrgId,mStatus,deptId): Observable<any> {
+  ReceiptMethodListNew(mPaytype,mStatus,deptId,mOrgId): Observable<any> {
      return this.http.get(this.ServerUrl + `/receiptMethod/rctMethodDeptwise?methodType=${mPaytype}&status=${mStatus}&attribute2=${deptId}&orgId=${mOrgId}`);
     // http://localhost:8081/receiptMethod/rctMethodDeptwise?methodType=CASH&status=Active&attribute2=1&orgId=22
   }

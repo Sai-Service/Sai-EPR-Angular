@@ -16,6 +16,7 @@ export class ManualInvoiceObjNew {
   invLines: any[];
   invDisLines: any[];
   taxLines=new Array();
+  invTdsLines : any=[];
   
   getinvLines(){
     return this.invLines;
@@ -37,5 +38,13 @@ export class ManualInvoiceObjNew {
   }
   setTaxLines(val3){
     this.taxLines= val3
+  }
+
+  getInvTdsLines(){
+    return this.invTdsLines;
+  }
+
+  setInvTdsLines(val4){
+    this.invTdsLines= val4
   }
 }

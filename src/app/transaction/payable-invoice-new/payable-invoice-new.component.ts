@@ -1733,6 +1733,10 @@ export class PayableInvoiceNewComponent implements OnInit {
     let manInvObj = Object.assign(new ManualInvoiceObjNew(), jsonData);
     manInvObj.setinvLines(this.poInvoiceForm.get('invLines').value);
     manInvObj.setinvDisLines(this.poInvoiceForm.get('distribution').value);
+    var tdsVals = this.poInvoiceForm.get('tdsLines').value;
+     if(tdsVals.taxCategoryId===null){
+      manInvObj.setInvTdsLines(this.poInvoiceForm.get('tdsLines').value);
+     }
     manInvObj.setTaxLines(taxStr);
     console.log(JSON.stringify(manInvObj));
     var reqArr: any[];
