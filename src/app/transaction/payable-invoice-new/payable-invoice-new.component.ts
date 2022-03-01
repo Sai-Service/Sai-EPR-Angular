@@ -1730,6 +1730,8 @@ export class PayableInvoiceNewComponent implements OnInit {
         disStr.push(dislinval[i]);
       }
     }
+
+    
     let manInvObj = Object.assign(new ManualInvoiceObjNew(), jsonData);
     manInvObj.setinvLines(this.poInvoiceForm.get('invLines').value);
     manInvObj.setinvDisLines(this.poInvoiceForm.get('distribution').value);

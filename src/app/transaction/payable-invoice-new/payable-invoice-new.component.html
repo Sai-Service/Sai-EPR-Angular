@@ -721,7 +721,7 @@
 
                                                         <tr class="ItemStyle" style="text-decoration:none;">
                                                             <td>
-                                                                <div  *ngIf="displayViewTaxDetails; then thenViewTaxDetails; else elseViewTaxDetails">  </div>
+                                                                <!-- <div  *ngIf="displayViewTaxDetails; then thenViewTaxDetails; else elseViewTaxDetails">  </div>
                                                                 <ng-template #thenViewTaxDetails>
                                                                 </ng-template>
                                                                 <ng-template #elseViewTaxDetails>
@@ -729,9 +729,9 @@
                                                                         (click)="onOptionViewTaxDetails(taxCategoryId,k)">
                                                                         <img id="bajajlogo" src="assets\images\tax.png">
                                                                     </a>
-                                                                </ng-template>  
+                                                                </ng-template>   -->
                                                                
-                                                                <!-- <div  *ngIf="displayViewTaxDetails; then thenViewTaxDetails; else elseViewTaxDetails">  </div>
+                                                                 <div  *ngIf="displayViewTaxDetails; then thenViewTaxDetails; else elseViewTaxDetails">  </div>
                                                                 <ng-template #thenViewTaxDetails>
                                                                     <button type="button"  data-toggle="modal"  
                                                                     (click)="openTaxDetails(k)" class="btn btn-primary"
@@ -741,8 +741,7 @@
                                                                     <button type="button"  data-toggle="modal"  
                                                                     (click)="openTaxDetails(k)" class="btn btn-primary"
                                                                         data-target="#taxDetails" style="width: 40px;text-align: left;">Tax..</button>
-                                                                </ng-template>     -->
-                                                            </td>
+                                                                </ng-template>                                                                </td>
                                                             <td>
                                                                 <input type="text" class="form-control"
                                                                     formControlName="lineNumber" value={{lineNumber}}
@@ -1124,7 +1123,7 @@
                                     </div>
                                 </div>
                                
-                                 <div class="tab-pane fade" id="taxDetails" role="tabpanel"> 
+                                 <!-- <div class="tab-pane fade" id="taxDetails" role="tabpanel"> 
                                     <label>Tax Details of Invoice Line No : {{activeLineNo}}</label>
                                     <div class="grid_scroll_1">
                                         <table class="GridFont" cellspacing="0" cellpadding="4" border="0"
@@ -1327,9 +1326,9 @@
                                         
                                     </div>
                                   
-                                </div> 
+                                </div>  -->
 
-                                <!-- <div class="modal fade" id="taxDetails" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal fade" id="taxDetails" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                     <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
                                       <div class="modal-content">
                                         <div class="modal-header">
@@ -1545,7 +1544,7 @@
                                         </div>
                                       </div>
                                     </div>
-                                  </div> -->
+                                  </div> 
 
                                 <div class="tab-pane fade" id="tdsDetails" role="tabpanel">
                                     <div class="grid_scroll_1">
