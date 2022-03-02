@@ -186,10 +186,14 @@
                                                             style="width: 90px;height: 25px;font-size: 10px;text-align: right;">
                                                     </td>
                                                     <td>
-                                                        <input class="form-control" formControlName="glDate"
+                                                        <!-- <input disabled type="text" class="form-control" formControlName="glDate"
                                                             value={{glDate}}
-                                                            style="width: 90px;height: 25px;font-size: 10px;">
-                                                    </td>
+                                                            style="width: 90px;height: 25px;font-size: 10px;"> -->
+                                                            <input type="text" disabled formControlName="glDate"
+                                                            value={{glDate}} class="form-control"
+                                                            [(ngModel)]='glDate'
+                                                            style="width: 130px;height: 25px;font-size: 10px;">
+                                                        </td>
                                                     <td>
                                                         <input class="form-control" formControlName="currency"
                                                             value={{currency}}
@@ -237,7 +241,7 @@
                                                             style="width: 120px;height: 25px;font-size: 10px;">
                                                             <option>--Select--</option>
                                                             <option *ngFor="let ts of tdsSectionList"
-                                                                [ngValue]="ts.code">
+                                                                [ngValue]="ts.lookupValueDesc">
                                                                 {{ts.lookupValueDesc}}
                                                             </option>
                                                         </select>
@@ -641,10 +645,10 @@
                                     <a class="nav-link waves-light active" data-toggle="tab" href="#lineDetails"
                                         role="tab">Lines</a>
                                 </li>
-                                <!-- <li class="nav-item">
+                                <li class="nav-item">
                                     <a class="nav-link waves-light" data-toggle="tab" href="#taxDetails" role="tab">Tax
                                         Details</a>
-                                </li> -->
+                                </li>
                                 <li class="nav-item">
                                     <a class="nav-link waves-light" data-toggle="tab" href="#distributionDetails"
                                         role="tab">Distribution</a>
@@ -725,9 +729,9 @@
                                                                         (click)="onOptionViewTaxDetails(taxCategoryId,k)">
                                                                         <img id="bajajlogo" src="assets\images\tax.png">
                                                                     </a>
-                                                                </ng-template>  [disabled]="isDisabledtaxbtn[i]" -->
+                                                                </ng-template>   -->
                                                                
-                                                                <div  *ngIf="displayViewTaxDetails; then thenViewTaxDetails; else elseViewTaxDetails">  </div>
+                                                                 <div  *ngIf="displayViewTaxDetails; then thenViewTaxDetails; else elseViewTaxDetails">  </div>
                                                                 <ng-template #thenViewTaxDetails>
                                                                     <button type="button"  data-toggle="modal"  
                                                                     (click)="openTaxDetails(k)" class="btn btn-primary"
@@ -737,8 +741,7 @@
                                                                     <button type="button"  data-toggle="modal"  
                                                                     (click)="openTaxDetails(k)" class="btn btn-primary"
                                                                         data-target="#taxDetails" style="width: 40px;text-align: left;">Tax..</button>
-                                                                </ng-template>    
-                                                            </td>
+                                                                </ng-template>                                                                </td>
                                                             <td>
                                                                 <input type="text" class="form-control"
                                                                     formControlName="lineNumber" value={{lineNumber}}
@@ -1120,7 +1123,7 @@
                                     </div>
                                 </div>
                                
-                                <!-- <div class="tab-pane fade" id="taxDetails" role="tabpanel">
+                                 <!-- <div class="tab-pane fade" id="taxDetails" role="tabpanel"> 
                                     <label>Tax Details of Invoice Line No : {{activeLineNo}}</label>
                                     <div class="grid_scroll_1">
                                         <table class="GridFont" cellspacing="0" cellpadding="4" border="0"
@@ -1323,19 +1326,19 @@
                                         
                                     </div>
                                   
-                                </div> -->
+                                </div>  -->
 
                                 <div class="modal fade" id="taxDetails" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                     <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
                                       <div class="modal-content">
                                         <div class="modal-header">
                                           <h5 class="modal-title" id="exampleModalLongTitle">Tax Details Of Line-{{selectedLine}}</h5>
-                                          <!-- <input disabled type="text"  
+                                          <input disabled type="text"  
                                           value={{popDisAmt}} class="form-control" style="width: 170px;font-weight: bold;">
                                           <input disabled type="text" 
                                           value={{popTaxAmt}} class="form-control" style="width: 170px;font-weight: bold;">
                                           <input disabled type="text"
-                                          value={{popTotAmt}} class="form-control" style="width: 170px;font-weight: bold;"> -->
+                                          value={{popTotAmt}} class="form-control" style="width: 170px;font-weight: bold;">
                                         </div>
                                         <div class="modal-body">
                                             <table class="GridFont" cellspacing="0" cellpadding="4" border="0"
@@ -1541,7 +1544,7 @@
                                         </div>
                                       </div>
                                     </div>
-                                  </div>
+                                  </div> 
 
                                 <div class="tab-pane fade" id="tdsDetails" role="tabpanel">
                                     <div class="grid_scroll_1">

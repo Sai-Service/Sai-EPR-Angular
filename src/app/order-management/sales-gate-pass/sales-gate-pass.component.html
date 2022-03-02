@@ -15,35 +15,7 @@
             </tr>
            </table>
     </fieldset> -->
-    <fieldset class="RFS">
-        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
-           Gate Pass Generation</legend>
-    <table class="center" style="width: 100%;">
-        <tr>
-          <td>
-              <table> 
-                  <tr>
-                    <td style="font-weight: bold;" class="LabelFontStyle1"> Order&nbsp;No&nbsp;:&nbsp;  </td>
-                    <td><input  class="form-control" formControlName="orderNumber" style="border:solid 1px black" [(ngModel)]="orderNumber"> </td>&nbsp;&nbsp;
-                    <td style="font-weight: bold;" class="LabelFontStyle1"> Service&nbsp;Location&nbsp;:&nbsp;  </td>
-                    <td>
-                        <select formControlName="shipToLoc" id="shipToLoc" [(ngModel)]="shipToLoc" class="form-control">
-                            <option>--Select--</option>
-                            <option *ngFor="let sc of  BillShipList" [value]="sc.locId">
-                                {{sc.locCode}}
-                            </option>
-                        </select>
-                    </td>
-                    <td>
-                        <button type="button" style="width:fit-content ;" class="btn btn-secondary" data-dismiss="modal" (click)="orderNumberPost(orderNumber,shipToLoc)">Generate&nbsp;Gatepass</button>
-                    </td>
-        
-                  </tr>
-              </table>
-          </td>
-        </tr>
-    </table>
-    </fieldset>
+  
     <fieldset class="RFS">
         <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
            Find</legend>
@@ -103,11 +75,11 @@
         <td style="width: 15%" class="LabelFontStyle">   Order&nbsp;Number&nbsp;: </td>
         <td><input disabled type="text" formControlName="orderNumber" [(ngModel)]='orderNumber' id="orderNumber" value="orderNumber"  class="form-control" style="height: 20px;width: 160px;"></td>
         <td style="width: 15%" class="LabelFontStyle"> Order&nbsp;Date&nbsp;: </td>
-        <td><input disabled type="text" formControlName="dateOfDelv" [ngModel]="dateOfDelv | date:'yyyy-MM-dd'" id="dateOfDelv" value="dateOfDelv"  class="form-control" style="height: 20px;width: 160px;"></td>
+        <td><input disabled type="text" formControlName="dateOfDelv"  id="dateOfDelv" [(ngModel)]="dateOfDelv" value="dateOfDelv"  class="form-control" style="height: 20px;width: 160px;"></td>
         <td style="width: 15%" class="LabelFontStyle"> Invoice&nbsp;Number&nbsp;: </td>
         <td><input disabled type="text" formControlName="invoiceNo" [ngModel]="invoiceNo" id="invoiceNo" value="invoiceNo"  class="form-control" style="height: 20px;width: 160px;"></td>
         <td style="width: 15%" class="LabelFontStyle"> Invoice&nbsp;Date&nbsp;:</td>
-        <td><input disabled type="date" formControlName="invoiceDt" [ngModel]="invoiceDt | date:'yyyy-MM-dd'" id="invoiceDt" value="invoiceDt"  class="form-control" style="height: 20px;width: 160px;"></td>
+        <td><input disabled type="text" formControlName="invoiceDt"  id="invoiceDt" value="invoiceDt" [(ngModel)]="invoiceDt" class="form-control" style="height: 20px;width: 160px;"></td>
     </tr>
     <tr>
         <td style="width: 15%" class="LabelFontStyle"> Registration&nbsp;Number&nbsp;: </td>
@@ -117,21 +89,62 @@
         <td style="width: 15%" class="LabelFontStyle"> Remark&nbsp;: </td>
         <td><input disabled type="text" formControlName="remark" [ngModel]="remark" id="remark" value="remark"  class="form-control" style="height: 20px;width: 160px;"></td>
         <td style="width: 15%" class="LabelFontStyle"> Gatepass&nbsp;No&nbsp;: </td>
-        <td><input disabled type="text" formControlName="gatepassNo" [ngModel]="gatepassNo" id="gatepassNo" value="gatepassNo"  class="form-control" style="height: 20px;width: 160px;"></td>
+        <td><input disabled type="number" formControlName="gatepassNo" [ngModel]="gatepassNo" id="gatepassNo" value="gatepassNo"  class="form-control" style="height: 20px;width: 160px;"></td>
     </tr>
 </table>
     </fieldset>
-    <!-- <fieldset class="RFS">
-        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Excess & Balance Details</legend>
-    <table style="width: 50%;">
-       <tr>
-        <td style="width: 15%" class="LabelFontStyle">  Balance&nbsp;Outstanding&nbsp;: </td>
-        <td><input disabled type="text" formControlName="balOutstandAmt" [ngModel]="balOutstandAmt" id="balOutstandAmt" value="balOutstandAmt"  class="form-control" style="height: 20px;width: 170px;"></td>
-        <td style="width: 15%" class="LabelFontStyle">  Excess&nbsp;Amount&nbsp;: </td>
-        <td><input disabled type="text" formControlName="excessAmt" [ngModel]="excessAmt" id="excessAmt" value="excessAmt"  class="form-control" style="height: 20px;width: 170px;"></td>
-    </tr> 
+    <div [style.display]="isVisiblegatePassVehicleDetails ? 'block' : 'none'">
+    <fieldset class="RFS">
+        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
+           Vehicle Details Updation</legend>
+           <table class="center" style="width: 100%;">
+            <tr>
+                <td style="font-weight: bold;" class="LabelFontStyle1"> Vehicle&nbsp;Item&nbsp;:&nbsp;  </td>
+                <td><input disabled  class="form-control" formControlName="segment" style="border:solid 1px black" [(ngModel)]="segment"> 
+                    <input disabled hidden type="number" class="form-control" formControlName="itemId" [(ngModel)]="itemId" style="border:solid 1px black" >
+                </td>&nbsp;&nbsp; 
+                <td style="font-weight: bold;" class="LabelFontStyle1"> Vehicle&nbsp;No&nbsp;:&nbsp;  </td>
+                <td><input  class="form-control" formControlName="regNo" style="border:solid 1px black" [(ngModel)]="regNo"> </td>
+                <td style="font-weight: bold;" class="LabelFontStyle1"> Vehicle&nbsp;Date&nbsp;:&nbsp;  </td>
+                <td><input type="date"  class="form-control" formControlName="regDate" style="border:solid 1px black" [(ngModel)]="regDate"> </td>
+                <td  class="center">
+                    <button type="submit" class="btn btn-primary" id="register" (click)="vehicleNoupdate(itemId,regNo,regDate)" style="width: fit-content;">vehicle No Update</button> 
+                </td>
+            </tr>   
+           </table>
+    </fieldset>
+</div>
+<div [style.display]="isVisiblegatePassDetails ? 'block' : 'none'">
+    <fieldset class="RFS">
+        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
+           Gate Pass Generation</legend>
+    <table class="center" style="width: 100%;">
+        <tr>
+          <td>
+              <table> 
+                  <tr>
+                    <td style="font-weight: bold;" class="LabelFontStyle1"> Order&nbsp;No&nbsp;:&nbsp;  </td>
+                    <td><input  class="form-control" formControlName="orderNumber" style="border:solid 1px black" [(ngModel)]="orderNumber"> </td>&nbsp;&nbsp;
+                    <td style="font-weight: bold;" class="LabelFontStyle1"> Service&nbsp;Location&nbsp;:&nbsp;  </td>
+                    <td>
+                        <select formControlName="shipToLoc" id="shipToLoc" [(ngModel)]="shipToLoc" class="form-control">
+                            <option>--Select--</option>
+                            <option *ngFor="let sc of  BillShipList" [value]="sc.locId">
+                                {{sc.locCode}}
+                            </option>
+                        </select>
+                    </td>&nbsp;&nbsp;
+                    <td>
+                        <button type="button" style="width:fit-content ;" class="btn btn-secondary" data-dismiss="modal" (click)="orderNumberPost(orderNumber,shipToLoc)">Generate&nbsp;Gatepass</button>
+                    </td>
+        
+                  </tr>
+              </table>
+          </td>
+        </tr>
     </table>
-    </fieldset> -->
+    </fieldset>
+</div>
     <fieldset class="RFS">
         <table class="center">
             <tr>

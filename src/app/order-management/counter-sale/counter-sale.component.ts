@@ -1873,6 +1873,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       }
       if (event.keyCode != 13) {
         if (itemId1 != null && fldName != "locator" && isNewLine === false) {
+          fldName='segment';
           this.addRow(index);
         }
       }
@@ -2503,14 +2504,89 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
         this.displayLineflowStatusCode.push(true);
       }
     }
+   
+  //  if (i != -1 && trxLnArr1[i-1].itemId === null || trxLnArr1[i-1].itemId===''|| trxLnArr1[i-1].itemId=== undefined){
+  //     alert('First Select Item And then add New Line');
+  //     return;
+  //   }
     var disPer = this.CounterSaleOrderBookingForm.get('disPer').value;
 
 
     this.orderlineDetailsArray().push(this.orderlineDetailsGroup());
     var len = this.orderlineDetailsArray().length;
     var patch = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
-    // var currentLn = patch.controls[i].get('lineNumber').value;
-    // alert(currentLn);
+    var refId = uuidv4();
+    (patch.controls[len - 1]).patchValue(
+      {
+        lineNumber: len,
+        flowStatusCode: 'BOOKED',
+        disPer: disPer,
+        invType: 'SS_SPARES',
+        uuidRef: refId
+      }
+    );
+    if (disPer === null) {
+      (patch.controls[len - 1]).patchValue(
+        {
+          disPer: 0,
+        }
+      );
+    }
+    this.displaysegmentInvType.push(true);
+    this.displayRemoveRow[len - 1] = true;
+    this.displayCounterSaleLine.push(true);
+    this.displayLineflowStatusCode.push(true);
+    this.taxCategoryList = this.allTaxCategoryList;
+    this.itemSeg = '';
+    var ln = len - 1;
+    this.setFocus('itemSeg' + ln);
+  }
+
+
+
+  addRow1(i) {
+    var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
+    if (this.op == 'Search') {
+      i = trxLnArr1.length;
+      this.isDisabled10 = true;
+    }
+    if (i > -1) {
+      var len1 = i;
+      if (trxLnArr1[len1] != undefined) {
+        // this.isDisabled10=false;
+        console.log(trxLnArr1[len1].pricingQty);
+        var itemqty = trxLnArr1[len1].pricingQty;
+        var item = trxLnArr1[len1].segment;
+        var itemid = trxLnArr1[len1].itemId;
+        // debugger;
+        if (item === '' || itemqty === '') {
+          alert('Please enter data in blank field');
+          return;
+        }
+        if (!this.itemMap3.has(item)) {
+          this.reservePos(i);
+        }
+        else {
+          // debugger;
+          // this.deleteReserveLinewise(i,itemid);COMMENT BY VINITA
+          this.reservePos(i);
+        }
+        this.displayRemoveRow.push(true);
+        this.displayCounterSaleLine.push(true);
+        this.displayLineflowStatusCode.push(true);
+      }
+    }
+   
+   if (i != -1 && trxLnArr1[i-1].itemId === null || trxLnArr1[i-1].itemId===''|| trxLnArr1[i-1].itemId=== undefined){
+      alert('First Select Item And then add New Line');
+      return;
+    }
+    var disPer = this.CounterSaleOrderBookingForm.get('disPer').value;
+
+
+    this.orderlineDetailsArray().push(this.orderlineDetailsGroup());
+    var len = this.orderlineDetailsArray().length;
+    var patch = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     var refId = uuidv4();
     (patch.controls[len - 1]).patchValue(
       {

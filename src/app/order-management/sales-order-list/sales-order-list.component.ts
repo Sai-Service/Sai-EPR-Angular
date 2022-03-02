@@ -30,7 +30,8 @@ export class SalesOrderListComponent implements OnInit {
   status:string;
   custName:string;
   custNumber:number;
-  custConatctNo:number;
+  custContact:number;
+  isVisibleSearchDetails:boolean=false;
 
   @ViewChild('epltable', { static: false }) epltable: ElementRef;
 
@@ -42,7 +43,7 @@ export class SalesOrderListComponent implements OnInit {
       status:[],
       custName:[],
       custNumber:[],
-      custConatctNo:[],
+      custContact:['', [Validators.pattern('[0-9]*'), Validators.minLength(10),Validators.maxLength(10)]],
     })
   }
 
@@ -59,6 +60,9 @@ export class SalesOrderListComponent implements OnInit {
         if (res.code === 200) {
           this.orderListDetails = res.obj;
           this.storeAllOrderData =res.obj;
+          if (res.obj.length !=0){
+            this.isVisibleSearchDetails=true;
+          }
           for (let x=0; x<this.orderListDetails.length; x++){
             this.totInvAmt = Math.round(((this.totInvAmt += (this.orderListDetails[x].orAmt)) + Number.EPSILON) * 100) / 100;
             console.log(this.totInvAmt);
@@ -88,6 +92,9 @@ export class SalesOrderListComponent implements OnInit {
         this.orderListDetails = res.obj;
         this.storeAllOrderData =res.obj;
         console.log(this.storeAllOrderData);
+        if (res.obj.length !=0){
+          this.isVisibleSearchDetails=true;
+        }
         for (let x=0; x<this.orderListDetails.length; x++){
           this.totInvAmt = Math.round(((this.totInvAmt += (this.orderListDetails[x].orAmt)) + Number.EPSILON) * 100) / 100;
           console.log(this.totInvAmt);
@@ -121,29 +128,50 @@ onSelectCustName(event:any){
   console.log(this.storeAllOrderData);
   let currCustomer = this.storeAllOrderData.filter((orderList) =>(orderList.custName.includes(custName)));
   console.log(currCustomer);
+  if (currCustomer.length===0){
+    alert('Data not found..Please confirm ...!')
+  }
+  else if (currCustomer.length !=0){
   this.orderListDetails=currCustomer;
+}
+
 }
 
 
 onSelectcustNumber(event){
   var custNumber = event.target.value;
-  alert(custNumber);
+  // alert(custNumber);
   console.log(this.storeAllOrderData);
   let currCustomer = this.storeAllOrderData.filter((orderList) => (orderList.custActNo===custNumber));
   // let currCustomer = this.storeAllOrderData.filter((orderList) =>(orderList.custActNo === custNumber));
   console.log(currCustomer);
+  if (currCustomer.length===0){
+    alert('Data not found..Please confirm ...!')
+  }
+  else if (currCustomer.length !=0){
   this.orderListDetails=currCustomer;
+}
 }
 
 
 onSelectcustConatctNo(event){
   var custConatctNo = event.target.value;
   // alert(custConatctNo);
+  if (custConatctNo.length != 10){
+    alert('Please enter proper contact number..!');
+    return;
+  }
+  else{
   console.log(this.storeAllOrderData);
-  let currCustomer = this.storeAllOrderData.filter((orderList) => (orderList.custActNo.includes(custConatctNo)));
-  // let currCustomer = this.storeAllOrderData.filter((orderList) =>(orderList.custActNo === custNumber));
+  let currCustomer = this.storeAllOrderData.filter((orderList) => (orderList.custContact.includes(custConatctNo)));
   console.log(currCustomer);
+  if (currCustomer.length===0){
+    alert('Data not found..Please confirm ...!')
+  }
+  else if (currCustomer.length !=0){
   this.orderListDetails=currCustomer;
+  }
+}
 }
   refresh() {
     window.location.reload();
