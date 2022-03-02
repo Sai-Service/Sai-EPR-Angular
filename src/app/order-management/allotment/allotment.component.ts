@@ -105,11 +105,20 @@ export class AllotmentComponent implements OnInit {
 
 
   onSelectorderNumber(orderNumber1: number) {
-    alert(orderNumber1);
     console.log(this.allAllotmentList);
     let currCustomer = this.allAllotmentList.filter(orderNumber => (orderNumber.orderNumber === orderNumber1));
     console.log(currCustomer);
-    this.allotmentsearchlist = currCustomer
+    this.allotmentsearchlist = currCustomer;
+    for (let i = 0; i < currCustomer.length; i++) {
+      if (currCustomer[i].qtyAvail === 0) {
+        this.displayChassisForm[i] = false;
+      }
+      else {
+        if (currCustomer[i].qtyAvail > 0) {
+          this.displayChassisForm[i] = true;
+        }
+      }
+    }
   }
 
   Select(model: any, color: any, variant: any, locId) {
