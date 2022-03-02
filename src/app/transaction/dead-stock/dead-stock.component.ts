@@ -12,7 +12,7 @@ import { TransactionService } from 'src/app/transaction/transaction.service';
 import { trigger } from '@angular/animations';
 import * as xlsx from 'xlsx';
 
-interface IOrderGen {
+interface IdeadStock {
   segment: string;
   dFlag: string;
 }
@@ -58,11 +58,12 @@ export class DeadStockComponent implements OnInit {
   deptId: number;
   emplId: number;
 
-      nMonths: number=360;
-      stk: string;
-      stkCategory:string;
-      totalValue :number;
-      totalRecords:number;
+  nMonths: number=360;
+  stk: string;
+  stkCategory:string;
+  totalValue :number;
+  totalRecords:number;
+  displayButton = false;
 
    constructor(private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService, private fb: FormBuilder, private router: Router) {
     this.deadStockForm = fb.group({
@@ -283,7 +284,7 @@ export class DeadStockComponent implements OnInit {
 
     deadFlagging() {
 
-      const formValue: IOrderGen = this.transeData(this.deadStockForm.value);
+      const formValue: IdeadStock = this.transeData(this.deadStockForm.value);
       var dDays = this.deadStockForm.get('nMonths').value
       var ouId = this.deadStockForm.get('ouId').value
   
@@ -315,6 +316,39 @@ export class DeadStockComponent implements OnInit {
 
   updateMst(){
     // http://localhost:8081/DedStock/addLine
+
+      const formValue: IdeadStock = this.transeData(this.deadStockForm.value);
+     
+
+    var dedLineArr = this.deadStockForm.get('deadItemList').value;
+    var len1 = dedLineArr.length;
+
+    // for (let i = 0; i < len1; i++) {
+    //   this.CheckTdsLineValidations(i);
+    // }
+
+
+
+    // if (this.tdsLineValidation) {
+    //   alert("TDS data Validation Sucessfull....Posting data...")
+      this.displayButton = false;
+
+      var dedLines = this.deadStockForm.get('deadItemList').value;
+      console.log(dedLines);
+      this.service.deadLineAddUpdate(dedLines).subscribe((res: any) => {
+        if (res.code === 200) {
+          alert(res.message);
+          this.deadStockForm.disable();
+        } else {
+          if (res.code === 400) {
+            alert(res.message);
+            this.displayButton = true;
+          
+          }
+        }
+      });
+    // } else { alert("TDS data Validation Not Sucessfull....\nPosting Not Done...") }
+
   }
 
   resetMast() {
@@ -340,7 +374,7 @@ export class DeadStockComponent implements OnInit {
       } else {
 
         if(index>0) {
-        alert("Incomplete Line -  Part No /  Qty not updated ....Line will be deleted ");
+        alert("Incomplete Line....Line will be deleted ");
         this.lineDetailsArray().removeAt(index);
         }
 

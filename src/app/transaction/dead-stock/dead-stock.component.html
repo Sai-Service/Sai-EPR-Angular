@@ -91,11 +91,11 @@
                            
 
                             <td style="width: 15%" class="LabelFontStyle">&nbsp;Total&nbsp;Value:&nbsp;</td>
-                            <td> <input disabled type ="text" class="form-control" formControlName="totalValue"  [(ngModel)]='totalValue'  value={{totalValue}} > </td> 
+                            <td> <input disabled type ="text" class="form-control" formControlName="totalValue"  [(ngModel)]='totalValue'  value={{totalValue}}  style="text-align: right;"> </td> 
 
               
                             <td style="width: 15%" class="LabelFontStyle">&nbsp;Matching&nbsp;Records:&nbsp;</td>
-                            <td> <input disabled  type ="text" class="form-control" formControlName="totalRecords"  [(ngModel)]='totalRecords'  value={{totalRecords}}  > </td>
+                            <td> <input disabled  type ="text" class="form-control" formControlName="totalRecords"  [(ngModel)]='totalRecords'  value={{totalRecords}}  style="text-align: right;" > </td>
                          
                             <!-- <td> <button style="width: 5rem;" type="button" class="btn btn-primary" (click)="clearSearch()">Reset</button> </td> -->
                           
@@ -133,7 +133,11 @@
                    <ng-container  class="center" formArrayName="deadItemList">
                     <ng-container   *ngFor="let group of lineDetailsArray().controls; let i= index" [formGroupName]="i" class="auto-style5">  
                                 <tr>
-                                    <input  hidden style="width:6rem;height: 25px;text-align: left;" type="number"   formControlName="itemId" class="form-control">
+
+                                    <input  hidden    formControlName="dedId" class="form-control">
+                                    <input  hidden    formControlName="ouId" class="form-control">
+                                    <input  hidden    formControlName="locId" class="form-control">
+                                    <input  hidden    formControlName="itemId" class="form-control">
                                 
                                     <td style="text-align: center;width: 4rem;height: 25px;">{{i+1}}</td>
                                     <td> <input  disabled style="width:8rem;height: 25px;text-align: left;" type="text"   formControlName="locationCode" class="form-control"></td>
