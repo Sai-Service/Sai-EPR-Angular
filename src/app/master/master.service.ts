@@ -3733,5 +3733,14 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
 
           // http://localhost:8081/DedStock?ouId=21&months=10
         }
+
+        public deadLineAddUpdate(deadLineRecord) {
+          const options = {
+            headers: this.headers
+          };
+          const url = (this.ServerUrl + `/DedStock/addLine`);
+          return this.http.post(url, deadLineRecord, options);
+          // http://localhost:8081/DedStock/addLine
+        }
   
 }
