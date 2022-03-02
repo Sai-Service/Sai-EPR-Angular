@@ -325,7 +325,7 @@ alert(docNo);
 
       }
       );
-      (document.getElementById('btnSave') as HTMLInputElement).disabled = true;
+      // (document.getElementById('btnSave') as HTMLInputElement).disabled = true;comment by vinita
     // }
     // else{
     //   // this.transactionService.paymentDocSearch(docNo1).subscribe((res: any) =>
@@ -498,17 +498,17 @@ alert(docNo);
        }
      }
      const totlPayHeaderControls=this.paymentForm.get('obj1').value;
-        if(this.appAmt>totlPayHeaderControls[0].PayAmount || this.appAmt<totlPayHeaderControls[0].PayAmount)
-        {
-          alert('in If');
-          (document.getElementById('btnSave') as HTMLInputElement).disabled = true;
-          alert("You can not apply payment where actual amount is greater than selected Amount");
+        // if(this.appAmt>totlPayHeaderControls[0].PayAmount || this.appAmt<totlPayHeaderControls[0].PayAmount)
+        // {
+        //   alert('in If');
+        //   (document.getElementById('btnSave') as HTMLInputElement).disabled = true;
+        //   alert("You can not apply payment where actual amount is greater than selected Amount");
 
-        }
-        else{
-          alert('in else');
-          (document.getElementById('btnSave') as HTMLInputElement).disabled = false;
-        }
+        // }
+        // else{
+        //   alert('in else');
+        //   (document.getElementById('btnSave') as HTMLInputElement).disabled = false;
+        // }comment by vinita
 
  }
 

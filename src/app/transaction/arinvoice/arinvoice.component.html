@@ -82,7 +82,7 @@
 <table class="center">
     <fieldset class="RFS">
         <legend id="FormsPH_LGAadhaar" class="RFSL"
-            style="font-size: 10px;color: black;">&nbsp;
+            style="font-size: 10px;color: rgb(238, 101, 101);">&nbsp;
         </legend>
     <tr>
         <input hidden type="text" [(ngModel)]="ouId" formControlName="ouId">
@@ -467,22 +467,10 @@
                                             <!-- </td> -->
         <input type="text" hidden formControlName="taxCategoryId">
         <!-- (click)="taxDetails('insert', i, taxCategoryId)" -->
-                                                <td><input  type="number" style="width: 2rem;" class="form-control" formControlName="lineNum" (click)="onOptionTaxCatSelected(i,taxCategoryId,null,basicAmt,'profile-md')"></td>
+                                                <td><input  type="number" style="width: 2rem;" class="form-control" formControlName="lineNum" (click)="openTaxDetails(i)" ></td>
+                                                <!-- (click)="onOptionTaxCatSelected(i,taxCategoryId,null,basicAmt,'profile-md')"comment by vinita on25feb22 -->
                                                 <td>
-                                                    <!-- <select formControlName="invItemId" id="invItemId"
-                                                        (ngModelChange)='onOptioninvItemIdSelected(i)'
-                                                        class="form-control">
-                                                        <option>--Select--</option>
-                                                        <option *ngFor="let sc of  invItemList" [value]="sc.itemId">
-                                                            {{sc.segment}}
-                                                        </option>
-                                                    </select> -->
-
-                                                    <!-- <input type="text" formControlName="segment"
-                                                        (keyup)="getInvItemId($event)" id="invItemIdFirstWay"
-                                                        list="dynmicUserIds1" class="form-control" (ngModelChange)="onOptioninvItemIdSelected($event,i)" /> -->
-
-                                                        <input type="text" list="dynmicUserIds1" (keyup)="filterRecord( $event,i)"
+                                                      <input type="text" list="dynmicUserIds1" (keyup)="filterRecord( $event,i)"
                                                         formControlName="segment" id="invItemIdFirstWay" class="form-control"  (ngModelChange)="onOptioninvItemIdSelected($event,i)" 
                                                         style="height: 20px;width:120px;" />
                                                         <!--  -->
@@ -718,7 +706,7 @@
                                             <ng-container *ngFor="let taxDet of TaxDetailsArray().controls; let j= index"
                                             [formGroupName]="j"  class="auto-style5">
                                           <tr class="ItemStyle" style="text-decoration:none;">
-                                            <input hidden type="text" formControlName="invLineNo">
+                                            <input  type="text" formControlName="invLineNo">
                                             <input hidden type="text" formControlName="taxItemId">
                                             <td> <input disabled formControlName="lineNumber"
                                                 class="form-control" style="width: 2rem;height: 25px;font-size: 10px;">
@@ -954,7 +942,8 @@
                                     <!-- <input hidden type="text" formControlName="invDistributionId"> -->
                                     <td><input class="form-control"  type="number" formControlName="invoiceLineNum" style="width: 40px;height: 25px;"></td>
                                     <td>
-                                        <input disabled formControlName="lineNum" (keydown.shift.arrowdown)="addRowDistribution(k)" class="form-control" style="width: 40px;height: 25px;">
+                                        <input disabled formControlName="lineNum"  class="form-control" style="width: 40px;height: 25px;">
+                                        <!-- (keydown.shift.arrowdown)="addRowDistribution(k)" --comment by vinita>
                                     </td>
                                     <!-- <td> -->
                                         <input type="number" min="0"  hidden formControlName="custTrxLineId"  class="form-control" style="width: 100px;height: 25px;">
@@ -1043,8 +1032,13 @@
 
                         </ng-template>
 
-
+                        <div *ngIf="disabledComplete ; then thenenableComplete; else elsedisableComplete"></div>
+                        <ng-template #thenenableComplete> 
                         <td> <button type="button" class="btn btn-primary"  style="width: 8rem;" (click)="completeInvoice()">Complete</button></td>
+                        </ng-template>
+                        <ng-template #elsedisableComplete> 
+                            <td> <button disabled type="button" class="btn btn-primary"  style="width: 8rem;" (click)="completeInvoice()">Complete</button></td>
+                            </ng-template>
                         <div *ngIf="disabledViewAccounting; then thenBlockViewAccounting; else elseBlockViewAccounting"></div>
                         <ng-template #thenBlockViewAccounting> 
                           <td>
@@ -1054,7 +1048,7 @@
                         <ng-template #elseBlockViewAccounting>
 
                           </ng-template>
-                        <!-- <td><button type="button" class="btn btn-primary"  style="width: 8rem;">Line Destribution</button></td> -->
+                        <td><button type="button" class="btn btn-primary"  style="width: 8rem;" (click)="AllDistribution()">All Destribution</button></td>
                         <td>
                             <button type="button" class="btn btn-primary" (click)="clearFormArray()"
                             style="width: 8rem;">Reset</button>
