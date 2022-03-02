@@ -12,9 +12,9 @@ import { TransactionService } from 'src/app/transaction/transaction.service';
 import { trigger } from '@angular/animations';
 import * as xlsx from 'xlsx';
 
-interface IOrderGen {
+interface IdeadStock {
   segment: string;
-  orderQty: number;
+  dFlag: string;
 }
 
 
@@ -40,9 +40,11 @@ export class DeadStockComponent implements OnInit {
   public locIdList: Array<string> = [];
   public DepartmentList: Array<string> = [];
   public statusList: Array<string> = [];
+
+  lstDeadItems: any;
   
 
-  dataDisplay: any;
+  dataDisplay: any;spinIcon = false;
   loginName: string;
   loginArray: string;
   divisionId: number;
@@ -56,9 +58,12 @@ export class DeadStockComponent implements OnInit {
   deptId: number;
   emplId: number;
 
-      nMonths: string;
-      stk: string;
-      stkCategory:string;
+  nMonths: number=360;
+  stk: string;
+  stkCategory:string;
+  totalValue :number;
+  totalRecords:number;
+  displayButton = false;
 
    constructor(private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService, private fb: FormBuilder, private router: Router) {
     this.deadStockForm = fb.group({
@@ -79,29 +84,8 @@ export class DeadStockComponent implements OnInit {
       stk: [],
       stkCategory: [],
 
-      status: [],
-      orderDate: [],
-      consCriteria: [],
-      currMonthYN: [],
-      orderValue: [],
-      dlrCode: [],
-      cdmsRefNo: [],
-
-      mth1ConWsQty: [],
-      mth2ConWsQty: [],
-      mth3ConWsQty: [],
-      mth1ConsSaleQty: [],
-      mth2ConsSaleQty: [],
-      mth3ConsSaleQty: [],
-
-
-      partNumber: [],
-      partDesc: [],
-
-      currSaleQty: [],
-      consSaleQty: [],
-      currWsQty: [],
-      conWsQty: [],
+      totalValue :[],
+      totalRecords:[],
 
 
 
@@ -111,42 +95,26 @@ export class DeadStockComponent implements OnInit {
   }
   lineDetailsGroup() {
     return this.fb.group({
-      sprOrderId: [''],
-      itemId: [''],
-      segment: ['', [Validators.required]],
-      description: ['', [Validators.required]],
-      unitPrice: ['', [Validators.required]],
+       dedId:[],
+       locId: [],
+       locationCode:[],
+       ouId:[],
+       itemId:[],
+       segment:[],
+       description:[],
+       dflag:[],
+       createdBy:[],
+       creationDate: [],
+       lastUpdatedBy:[],
+       lastUpdationDate: [],
+       attribute1: [],
+       onHandId: [],
+       days:[],
+       quantity:[],
+       averageCost:[],
+       transactionId:[],
+       transDate: [],
 
-      mth1ConWsQty: ['', [Validators.required]],
-      mth2ConWsQty: ['', [Validators.required]],
-      mth3ConWsQty: ['', [Validators.required]],
-      currWsQty: ['', [Validators.required]],
-      conWsQty: ['', [Validators.required]],
-
-      mth1ConsSaleQty: ['', [Validators.required]],
-      mth2ConsSaleQty: ['', [Validators.required]],
-      mth3ConsSaleQty: ['', [Validators.required]],
-      currSaleQty: ['', [Validators.required]],
-      consSaleQty: ['', [Validators.required]],
-
-      lastOrderQty: [],
-      mth1TotalCons: [],
-      mth2TotalCons: [],
-      mth3TotalCons: [],
-      mth4TotalCons: [],
-      totalCons: [],
-
-
-
-      currentStock: ['', [Validators.required]],
-      backOrderQty: ['', [Validators.required]],
-      intransitQty: ['', [Validators.required]],
-      custBackOrder: ['', [Validators.required]],
-
-      orderQty: ['', [Validators.required]],
-      totalValue: ['', [Validators.required]],
-      uom: [],
-      setQty: [],
      });
   }
 
@@ -229,6 +197,216 @@ export class DeadStockComponent implements OnInit {
     
     // this.lstJobcardList = null;
   }
-  getDeadList(){}
+ 
+
+  getDeadList() {
+    this.ShowDeadList();
+
+  }
+
+  ShowDeadList() {
+
+    // alert ("Not Transacted  for Months :"+nMths);
+    var mOrgId = this.deadStockForm.get('ouId').value
+    var nMths = this.deadStockForm.get('nMonths').value
+    this.spinIcon=true;
+    this.dataDisplay ='Loading Data....Pls wait..';
+   
+    this.service.getDeadStockList(mOrgId,'Y')
+      .subscribe(
+        data => {
+          this.lstDeadItems = data;
+          // alert ("Total Items Found :" +data.length);
+          this.totalRecords=data.length;
+          if (data.length > 0) {
+           
+            console.log(this.lstDeadItems);
+            var len = this.lineDetailsArray().length;
+            var y = 0;
+            for (let i = 0; i < this.lstDeadItems.length - len; i++) {
+              var ordLnGrp: FormGroup = this.lineDetailsGroup();
+              this.lineDetailsArray().push(ordLnGrp);
+              y = i;
+
+            }
+
+            this.deadStockForm.get('deadItemList').patchValue(this.lstDeadItems);
+            // this.spinIcon = false;this.dataDisplay = ''; 
+           
+            this.CalculateDeadStcokValue();
+
+          // } else { alert (mOrderNumber+ "  - Order Number doesn't exists");
+          //          this.spinIcon=false; this.dataDisplay=null;
+          //          this.orderGenerationForm.get('orderNumber').enable();}
+        } else { alert ("No Records Found ....");  this.spinIcon = false;  this.dataDisplay = '';   }
+      });
+    }
+
+
+    CalculateDeadStcokValue() {
+      var patch = this.deadStockForm.get('deadItemList') as FormArray;
+      var deadLineArr = this.deadStockForm.get('deadItemList').value;
+      var len = this.lineDetailsArray().length;
+      var deadTotal = 0;
+  
+      for (let i = 0; i < len; i++) {
+        var lineValue = deadLineArr[i].quantity * deadLineArr[i].averageCost;
+  
+        lineValue = Math.round((lineValue + Number.EPSILON) * 100) / 100,
+          // patch.controls[i].patchValue({ totalValue: lineValue });
+          deadTotal = deadTotal + lineValue
+  
+      }
+  
+      deadTotal = Math.round((deadTotal + Number.EPSILON) * 100) / 100,
+        this.deadStockForm.patchValue({ totalValue: deadTotal })
+        this.spinIcon=false;
+        this.dataDisplay=null;
+  
+    }
+
+
+  transeData(val) {
+    delete val.loginArray;
+    delete val.loginName;
+    delete val.divisionId;
+    delete val.division;
+    delete val.ouName;
+    delete val.locName;
+    delete val.locationId;
+    delete val.orgId;
+    delete val.fromDate;
+    delete val.toDate;
+    delete val.orderDate;
+    return val;
+  }
+
+
+    deadFlagging() {
+
+      const formValue: IdeadStock = this.transeData(this.deadStockForm.value);
+      var dDays = this.deadStockForm.get('nMonths').value
+      var ouId = this.deadStockForm.get('ouId').value
+  
+      // alert (  "ts>> Loc Id :" +this.locId + " ," +ordMonths);
+      this.spinIcon = true;
+      this.dataDisplay = 'Dead Stock Flagging in Progress....Please wait';
+  
+      this.service.deadFlg(ouId,dDays).subscribe((res: any) => {
+        if (res.code === 200) {
+          alert('Flagging Done Successfully');
+          this.spinIcon = false;
+          this.dataDisplay = ''; 
+          // this.ShowDeadList()
+        } else {
+          if (res.code === 400) {
+            // alert('Error While Flagging Record:-' + res.obj);
+            alert('Flagging Done Successfully');
+           this.spinIcon = false;
+            this.dataDisplay = '';
+            // this.ShowDeadList()
+
+          }
+        }
+      });
+  
+  
+    }
+
+
+  updateMst(){
+    // http://localhost:8081/DedStock/addLine
+
+      const formValue: IdeadStock = this.transeData(this.deadStockForm.value);
+     
+
+    var dedLineArr = this.deadStockForm.get('deadItemList').value;
+    var len1 = dedLineArr.length;
+
+    // for (let i = 0; i < len1; i++) {
+    //   this.CheckTdsLineValidations(i);
+    // }
+
+
+
+    // if (this.tdsLineValidation) {
+    //   alert("TDS data Validation Sucessfull....Posting data...")
+      this.displayButton = false;
+
+      var dedLines = this.deadStockForm.get('deadItemList').value;
+      console.log(dedLines);
+      this.service.deadLineAddUpdate(dedLines).subscribe((res: any) => {
+        if (res.code === 200) {
+          alert(res.message);
+          this.deadStockForm.disable();
+        } else {
+          if (res.code === 400) {
+            alert(res.message);
+            this.displayButton = true;
+          
+          }
+        }
+      });
+    // } else { alert("TDS data Validation Not Sucessfull....\nPosting Not Done...") }
+
+  }
+
+  resetMast() {
+    window.location.reload();
+  }
+
+  closeMast() {
+    this.router.navigate(['admin']);
+  }
+
+  addNewRow() {
+    var len1 = this.lineDetailsArray().length - 1;
+    this.addRow(len1);
+  }
+
+  addRow(index) {
+  
+    var dedLineArr = this.deadStockForm.get('deadItemList').value;
+    var len1 = this.lineDetailsArray().length - 1;
+    if (len1 === index) {
+      if (dedLineArr[index].itemId > 0 && dedLineArr[index].segment !=null) {
+        this.lineDetailsArray().push(this.lineDetailsGroup());
+      } else {
+
+        if(index>0) {
+        alert("Incomplete Line....Line will be deleted ");
+        this.lineDetailsArray().removeAt(index);
+        }
+
+        // if(index===0) {
+        //   alert("Incomplete Line - Order Part No / Order Qty not updated .... ");
+        // }
+
+      }
+
+
+    }
+  }
+
+  RemoveRow(index) {
+    if (index === 0) { }
+    else {
+
+
+      // this.deleteOrderLine(index)
+
+      this.lineDetailsArray().removeAt(index);
+      // this.CalculateOrdValue();
+    }
+
+  }
+
+  validateItem(index) {}
+
+  enterKeyLock(i) {
+    alert('Enter Not Allowed.!');
+    // this.setFocus('orderQty' + i);
+    return;
+  }
 
 }

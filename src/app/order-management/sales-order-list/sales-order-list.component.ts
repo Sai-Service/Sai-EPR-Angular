@@ -28,6 +28,10 @@ export class SalesOrderListComponent implements OnInit {
   endDt = this.pipe.transform(this.today, 'dd-MMM-yyyy');
   isPending : Array<boolean> = [];
   status:string;
+  custName:string;
+  custNumber:number;
+  custContact:number;
+  isVisibleSearchDetails:boolean=false;
 
   @ViewChild('epltable', { static: false }) epltable: ElementRef;
 
@@ -37,6 +41,9 @@ export class SalesOrderListComponent implements OnInit {
       startDt: [],
       endDt: [],
       status:[],
+      custName:[],
+      custNumber:[],
+      custContact:['', [Validators.pattern('[0-9]*'), Validators.minLength(10),Validators.maxLength(10)]],
     })
   }
 
@@ -53,6 +60,9 @@ export class SalesOrderListComponent implements OnInit {
         if (res.code === 200) {
           this.orderListDetails = res.obj;
           this.storeAllOrderData =res.obj;
+          if (res.obj.length !=0){
+            this.isVisibleSearchDetails=true;
+          }
           for (let x=0; x<this.orderListDetails.length; x++){
             this.totInvAmt = Math.round(((this.totInvAmt += (this.orderListDetails[x].orAmt)) + Number.EPSILON) * 100) / 100;
             console.log(this.totInvAmt);
@@ -82,9 +92,10 @@ export class SalesOrderListComponent implements OnInit {
         this.orderListDetails = res.obj;
         this.storeAllOrderData =res.obj;
         console.log(this.storeAllOrderData);
-        
+        if (res.obj.length !=0){
+          this.isVisibleSearchDetails=true;
+        }
         for (let x=0; x<this.orderListDetails.length; x++){
-         
           this.totInvAmt = Math.round(((this.totInvAmt += (this.orderListDetails[x].orAmt)) + Number.EPSILON) * 100) / 100;
           console.log(this.totInvAmt);
       }
@@ -102,7 +113,7 @@ onSelectStatus(event:any){
   // alert(event);
   console.log(this.orderListDetails);
   var orderList = this.orderListDetails;
-  let currCustomer = this.storeAllOrderData.filter((orderList) => (orderList.orStatus === event));
+  let currCustomer = this.storeAllOrderData.filter((orderList) => (orderList.flStatusCode === event));
   console.log(currCustomer);
   this.orderListDetails=currCustomer;
   for (let x=0; x<currCustomer.length; x++){
@@ -111,7 +122,57 @@ onSelectStatus(event:any){
 }
 }
 
+onSelectCustName(event:any){
+  var custName = event.target.value;
+  // alert(custName);
+  console.log(this.storeAllOrderData);
+  let currCustomer = this.storeAllOrderData.filter((orderList) =>(orderList.custName.includes(custName)));
+  console.log(currCustomer);
+  if (currCustomer.length===0){
+    alert('Data not found..Please confirm ...!')
+  }
+  else if (currCustomer.length !=0){
+  this.orderListDetails=currCustomer;
+}
 
+}
+
+
+onSelectcustNumber(event){
+  var custNumber = event.target.value;
+  // alert(custNumber);
+  console.log(this.storeAllOrderData);
+  let currCustomer = this.storeAllOrderData.filter((orderList) => (orderList.custActNo===custNumber));
+  // let currCustomer = this.storeAllOrderData.filter((orderList) =>(orderList.custActNo === custNumber));
+  console.log(currCustomer);
+  if (currCustomer.length===0){
+    alert('Data not found..Please confirm ...!')
+  }
+  else if (currCustomer.length !=0){
+  this.orderListDetails=currCustomer;
+}
+}
+
+
+onSelectcustConatctNo(event){
+  var custConatctNo = event.target.value;
+  // alert(custConatctNo);
+  if (custConatctNo.length != 10){
+    alert('Please enter proper contact number..!');
+    return;
+  }
+  else{
+  console.log(this.storeAllOrderData);
+  let currCustomer = this.storeAllOrderData.filter((orderList) => (orderList.custContact.includes(custConatctNo)));
+  console.log(currCustomer);
+  if (currCustomer.length===0){
+    alert('Data not found..Please confirm ...!')
+  }
+  else if (currCustomer.length !=0){
+  this.orderListDetails=currCustomer;
+  }
+}
+}
   refresh() {
     window.location.reload();
   }

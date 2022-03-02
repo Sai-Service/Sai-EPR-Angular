@@ -501,6 +501,8 @@ export class OrderGenerationComponent implements OnInit {
 
   }
 
+  
+
 
   // UpdateTotalConsumption() {
 

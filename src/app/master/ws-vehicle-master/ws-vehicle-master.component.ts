@@ -627,10 +627,10 @@ export class WsVehicleMasterComponent implements OnInit {
   SearchByRegNo(mReg: string) {
     // alert ("Search Vehicle by RegNo..... wip :"+mReg);
     mReg=mReg.toUpperCase();
-    this.service.getVehRegDetails(mReg)
+    this.service.getVehRegDetailsNew(mReg)
       .subscribe(
         data => {
-          this.lstcomments = data;
+          this.lstcomments = data.obj;
 
           if (this.lstcomments === null) {
             alert("Registration No : [ " + mReg + " ] not Found...");
@@ -646,7 +646,7 @@ export class WsVehicleMasterComponent implements OnInit {
           }
           else {
             console.log(this.lstcomments);
-            this.wsVehicleMasterForm.patchValue(data);
+            this.wsVehicleMasterForm.patchValue(data.obj);
             this.GetItemDeatils(this.lstcomments.itemId.itemId);
             this.GetCustomerDetails(this.lstcomments.customerId);
             this.GetCustomerSiteDetails(this.lstcomments.customerId);

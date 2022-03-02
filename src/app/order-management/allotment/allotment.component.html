@@ -26,10 +26,11 @@
                     &nbsp;Order&nbsp;Number&nbsp;:&nbsp;  
                 </td>
                 <td>
-                    <input   class="form-control" >
+                    <!-- (keydown.tab)="onSelectorderNumber(orderNumber)" -->
+                    <input type="number" formControlName="orderNumber" [(ngModel)]="orderNumber" value="orderNumber"  class="form-control" >
                 </td>
                 <td>
-                    <button type="button" class="btn-primary" ><i class="fa fa-search" aria-hidden="true"></i></button>
+                    <button type="button" class="btn-primary" (click)="onSelectorderNumber(orderNumber)" ><i class="fa fa-search" aria-hidden="true"></i></button>
                 </td>
             </tr>
            
@@ -39,7 +40,7 @@
             <div class="form-bg">
                 <div class="grid_scroll">
                     <a style="cursor: pointer" (click)="exportexcel()">
-                        cloud_download
+                        Allotment_List_download
                       </a>
                     <table  class="GridFont" id="excel-table" cellspacing="0" cellpadding="4">
                         <thead>

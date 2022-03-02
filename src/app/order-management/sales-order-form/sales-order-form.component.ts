@@ -1333,6 +1333,7 @@ export class SalesOrderFormComponent implements OnInit {
               }
               this.displayVehicleDetails = true;
               var variantNew = data.obj.variant;
+              this.SalesOrderBookingForm.get('model').disable();
               this.SalesOrderBookingForm.patchValue({ color: data.obj.color });
               this.orderManagementService.ColourSearchFn(variantNew)
                 .subscribe(
@@ -1368,7 +1369,6 @@ export class SalesOrderFormComponent implements OnInit {
                   // this.isVisible5 = false;
                 }
                 if (this.lstgetOrderLineDetails[i].flowStatusCode === 'CANCELLED' || this.lstgetOrderLineDetails[i].flowStatusCode==='DE-ALLOTED'){
-               
                   this.isDisabledtaxbtn[i]=true;
                   this.isVisible4 = true;
                   this.isVisible3 = false;
@@ -1387,6 +1387,19 @@ export class SalesOrderFormComponent implements OnInit {
                   this.SalesOrderBookingForm.get('exRegNo').disable();
                   this.SalesOrderBookingForm.get('insCharges').disable();
                   this.SalesOrderBookingForm.get('offerPrice').disable();
+                }
+                if  (this.lstgetOrderLineDetails[i].invType.includes('VEHICLE')|| this.lstgetOrderLineDetails[i].flowStatusCode === 'ALLOTED' || this.lstgetOrderLineDetails[i].flowStatusCode === 'READY FOR INVOICE' ){
+                  this.SalesOrderBookingForm.get('financeType').enable();
+                  this.SalesOrderBookingForm.get('financerName').enable();
+                  this.SalesOrderBookingForm.get('financeAmt').enable();
+                  this.SalesOrderBookingForm.get('emi').enable();
+                  this.SalesOrderBookingForm.get('tenure').enable();
+                  this.SalesOrderBookingForm.get('downPayment').enable();
+                  this.SalesOrderBookingForm.get('exchange').enable();
+                  this.SalesOrderBookingForm.get('loyaltyBonus').enable();
+                  this.SalesOrderBookingForm.get('exRegNo').enable();
+                  this.SalesOrderBookingForm.get('insCharges').enable();
+                  this.SalesOrderBookingForm.get('offerPrice').enable();
                 }
                 if (this.lstgetOrderLineDetails[i].flowStatusCode === 'INVOICED') {
                   this.isVisible4 = true;
@@ -1414,6 +1427,7 @@ export class SalesOrderFormComponent implements OnInit {
                   this.displayRemoveRow[i] = false;
                   this.displayCounterSaleLine[i] = false;
                   this.isDisabledtaxbtn[i] = false;
+                  this.isVisible5=true;
                 }
                 if (this.lstgetOrderLineDetails[i].invType.includes('VEHICLE') === false && this.lstgetOrderLineDetails[i].isTaxable === 'Y' || this.lstgetOrderLineDetails[i].isTaxable === 'N') {
                   this.displaytaxCategoryName[i] = false;
@@ -1446,6 +1460,7 @@ export class SalesOrderFormComponent implements OnInit {
               // }
               if (this.lstgetOrderLineDetails[k].invType.includes('SS_ADDON') === true || this.lstgetOrderLineDetails[k].invType != 'SS_VEHICLE' && this.lstgetOrderLineDetails[k].flowStatusCode != 'ALLOTED' || this.lstgetOrderLineDetails[k].flowStatusCode != 'READY FOR INVOICE' || this.lstgetOrderLineDetails[k].flowStatusCode != 'INVOICED' || this.lstgetOrderLineDetails[k].flowStatusCode === 'CANCELLED') {
                 this.displayVehicleDetails = true;
+                this.SalesOrderBookingForm.get('model').disable();
                 var variantNew = data.obj.variant;
                 this.SalesOrderBookingForm.patchValue({ color: data.obj.color })
                 this.orderManagementService.ColourSearchFn(variantNew)
@@ -1794,20 +1809,57 @@ export class SalesOrderFormComponent implements OnInit {
     let salesObj = Object.assign(new SalesOrderobj(), jsonData);
     salesObj.setoeOrderLinesAllList(orderLines);
     var taxStr = [];
-
+    var financeType = this.SalesOrderBookingForm.get('financeType').value;
+    var financerName=this.SalesOrderBookingForm.get('financeAmt').value;
+    var emi = this.SalesOrderBookingForm.get('emi').value;
+    var tenure = this.SalesOrderBookingForm.get('tenure').value;
+    var  downPayment = this.SalesOrderBookingForm.get('downPayment').value;
+    var  exchange = this.SalesOrderBookingForm.get('exchange').value;
+    var loyaltyBonus = this.SalesOrderBookingForm.get('loyaltyBonus').value;
+    var  exRegNo = this.SalesOrderBookingForm.get('exRegNo').value;
+    var insCharges = this.SalesOrderBookingForm.get('insCharges').value;
+    var offerPrice = this.SalesOrderBookingForm.get('offerPrice').value;
     this.isDisabled11 = true;
     for (let k = 0; k < orderLines.length; k++) {
       if (orderLines[k].isTaxable === 'Y') {
         orderLines[k].taxCategoryName = orderLines[k].taxCategoryName.taxCategoryName;
       }
       if (orderLines[k].invType === 'SS_VEHICLE' && orderLines[k].flowStatusCode != 'INVOICED') {
-        // alert('hhh222')
         if (orderLines[k].invType.includes('SS_ADDON') && orderLines[k].flowStatusCode === 'READY FOR INVOICE') {
           alert('First Create Vehicle Invoice!.');
           this.dataDisplay = 'First Create Vehicle Invoice!.....Do not refresh the Page';
           this.isDisabled11 = false;
           this.OrderFind(this.orderNumber)
           return;
+        }
+      }
+      if (orderLines[k].invType != 'SS_VEHICLE' && orderLines[k].invType.includes('SS_ADDON') && orderLines[k].flowStatusCode === 'READY FOR INVOICE') {
+        alert('First Create Vehicle Invoice!.');
+        this.dataDisplay = 'First Create Vehicle Invoice!.....Do not refresh the Page';
+        this.isDisabled11 = false;
+        this.OrderFind(this.orderNumber);
+        return;
+      }
+      if (orderLines[k].flowStatusCode === 'READY FOR INVOICE'){
+        if (financeType != 'None' ){
+          if ( financerName === null || financerName === undefined || emi === null || emi === undefined || tenure===null || tenure === undefined ||
+            downPayment=== null || downPayment === undefined){
+              alert('Please Enter Finanace or Exchange Details... !');
+              this.isDisabled8 = false;
+              this.dataDisplay = 'Please Enter Finanace or Exchange Details... !'
+              this.closeResetButton = true;
+              return;
+          }
+        }
+        if (exchange === 'Y'){
+          // alert('hiii22222')
+          if ( exRegNo=== null || exRegNo === undefined || insCharges === null || insCharges=== undefined ||  offerPrice=== null || offerPrice === undefined || loyaltyBonus === null || loyaltyBonus === undefined){
+              alert('Please Enter Finanace or Exchange Details... !');
+              this.isDisabled8 = false;
+              this.dataDisplay = 'Please Enter Finanace or Exchange Details... !'
+              this.closeResetButton = true;
+              return;
+          }
         }
       }
     }
@@ -2010,6 +2062,28 @@ export class SalesOrderFormComponent implements OnInit {
     this.progress = 0;
     this.dataDisplay = 'Invoice Creation is progress....Do not refresh the Page'
     this.isDisabled8 = true;
+    var financeType = this.SalesOrderBookingForm.get('financeType').value;
+    var financerName=this.SalesOrderBookingForm.get('financeAmt').value;
+    var emi = this.SalesOrderBookingForm.get('emi').value;
+    var tenure = this.SalesOrderBookingForm.get('tenure').value;
+    var  downPayment = this.SalesOrderBookingForm.get('downPayment').value;
+    var  exchange = this.SalesOrderBookingForm.get('exchange').value;
+    var loyaltyBonus = this.SalesOrderBookingForm.get('loyaltyBonus').value;
+    var  exRegNo = this.SalesOrderBookingForm.get('exRegNo').value;
+    var insCharges = this.SalesOrderBookingForm.get('insCharges').value;
+    var offerPrice = this.SalesOrderBookingForm.get('offerPrice').value;
+    var formArr = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+    if (financeType != 'None' || exchange != 'N'){
+      if ( financerName === null || financerName === undefined || emi === null || emi === undefined || tenure===null || tenure === undefined ||
+        downPayment=== null || downPayment === undefined || loyaltyBonus === null || loyaltyBonus === undefined ||
+        exRegNo=== null || exRegNo === undefined || insCharges === null || insCharges=== undefined ||  offerPrice=== null || offerPrice === undefined ){
+          alert('Please Enter Finanace or Exchange Details... !');
+          this.isDisabled8 = false;
+          this.dataDisplay = 'Please Enter Finanace or Exchange Details... !'
+          this.closeResetButton = true;
+          return;
+      }
+    }
     this.orderManagementService.createInvoiceAll(this.orderNumber, (sessionStorage.getItem('emplId'))).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);

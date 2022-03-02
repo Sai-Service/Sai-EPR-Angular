@@ -1934,10 +1934,6 @@ tdsTaxCategoryList(): Observable<any> {
 }
 
 
-
-
-
-
  public jaiTaxRatesMasterSubmit(JaiTaxRatesMasterRecord) {
   const options = {
     headers: this.headers
@@ -2592,9 +2588,14 @@ OrderCategoryList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/PayType');
   }
 
-  ReceiptMethodList(mPaytype ,mLocId,mStatus): Observable<any> {
+  ReceiptMethodList(mPaytype,mLocId,mStatus): Observable<any> {
     // alert("Master Service :"+ mPaytype+" "+mLocId+" " +mStatus);
     return this.http.get(this.ServerUrl + `/receiptMethod?methodType=${mPaytype}&locId=${mLocId}&status=${mStatus}`);
+  }
+
+  ReceiptMethodListNew(mPaytype,mStatus,deptId,mOrgId): Observable<any> {
+     return this.http.get(this.ServerUrl + `/receiptMethod/rctMethodDeptwise?methodType=${mPaytype}&status=${mStatus}&attribute2=${deptId}&orgId=${mOrgId}`);
+    // http://localhost:8081/receiptMethod/rctMethodDeptwise?methodType=CASH&status=Active&attribute2=1&orgId=22
   }
 
   ///////////////////////////AVERAGE COST UPDATE//////////////////////////
@@ -2863,6 +2864,13 @@ bulkPickTickCSV(formData: FormData ,priceListName:string,taxCategoryName:string,
       // alert(mRegNumber );
       return this.http.get(this.ServerUrl + `/VehAddInfo/RegNo/${mRegNumber}`);
     }
+
+    getVehRegDetailsNew(mRegNumber): Observable<any> {
+        return this.http.get(this.ServerUrl + `/VehAddInfo/ws/RegNo/${mRegNumber}`);
+      // http://localhost:8081/VehAddInfo/ws/RegNo/KL07BV4680
+    }
+
+   
 
 
     getWsVehRegDetails(mRegNumber): Observable<any> {
@@ -3710,5 +3718,32 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
         // http://localhost:8081/shippingNetwork/shipto/2102
     }
 
+    /////////////////////////DEAD STOCK /////////////////////
+    getDeadStockList (mOuId,mFlag): Observable<any> {
+      // if(mth>0) {return this.http.get(this.ServerUrl + `/DedStock?ouId=${mOuId}&months=${mth}`);}
+      return this.http.get(this.ServerUrl + `/DedStock/list?ouId=${mOuId}&dFlag=${mFlag}`); 
+      // http://localhost:8081/DedStock/list?ouId=21&dFlag=Y
+      // http://localhost:8081/DedStock?ouId=21&months=10
+    }
 
+
+        public deadFlg(mOu,dDays) {
+          const options = {
+            headers: this.headers
+          };
+           const url = this.ServerUrl + `/DedStock?ouId=${mOu}&days=${dDays}`;
+          return this.http.post(url, options);
+
+          // http://localhost:8081/DedStock?ouId=21&months=10
+        }
+
+        public deadLineAddUpdate(deadLineRecord) {
+          const options = {
+            headers: this.headers
+          };
+          const url = (this.ServerUrl + `/DedStock/addLine`);
+          return this.http.post(url, deadLineRecord, options);
+          // http://localhost:8081/DedStock/addLine
+        }
+  
 }

@@ -28,6 +28,9 @@
                           </tr>
 
                           <tr>
+                            <td style="width: 15%" class="LabelFontStyle">Division&nbsp;:&nbsp;</td>
+                            <td> <input disabled  type ="text" class="form-control" formControlName="loginArray" [(ngModel)]='loginArray' value={{loginArray}}   > </td>
+
 
                             <td style="width: 15%" class="LabelFontStyle">Operating&nbsp;Unit:&nbsp;</td> 
                             <td>
@@ -42,7 +45,7 @@
                             <td style="width: 15%" class="LabelFontStyle">Location&nbsp;:&nbsp;</td>
 
                                 <td>
-                                <select  formControlName="locId" id="locId" [(ngModel)]="locId"  class="form-control" style="background-color:yellow;width: 300px;"   >
+                                <select  formControlName="locId" id="locId" [(ngModel)]="locId"  class="form-control" style="background-color:yellow;width: 250px;"   >
                                     <option disabled>--Select--</option>
                                     <option *ngFor="let sc of locIdList"  [ngValue]="sc.locId">
                                     {{sc.locCode}}-{{sc.locName}}
@@ -53,7 +56,7 @@
                                 <td style="width: 15%" class="LabelFontStyle">Dept&nbsp;:</td>
 
                                 <td>  
-                                    <select   formControlName="deptId" id="deptId" [(ngModel)]="deptId" class="form-control" style="background-color:yellow;">
+                                    <select disabled  formControlName="deptId" id="deptId" [(ngModel)]="deptId" class="form-control" style="background-color:yellow;">
                                         <option disabled>--Select--</option>
                                         <option *ngFor="let sc of  DepartmentList" [ngValue]="sc.cmnTypeId">
                                             {{sc.code}}
@@ -61,21 +64,40 @@
                                     </select>
                                 </td>
 
-                                <td><button style="width: 5rem;" type="button" class="btn btn-primary"  id="register"   (click)="getDeadList()">Find</button> </td>
+                                
                           </tr>
                           <tr>
 
                            
-                            <td style="width: 15%" class="LabelFontStyle">&nbsp;Stock&nbsp;:&nbsp;</td>
-                            <td> <input  type ="text" class="form-control" formControlName="stk"  [(ngModel)]='stk'  value={{stk}} style="background-color: yellow;"  > </td>
+                            <td style="width: 15%" class="LabelFontStyle">Days&nbsp;:&nbsp;</td>
+                            <!-- <td> <input   type ="text" class="form-control" formControlName="nMonths" [(ngModel)]='nMonths' value={{nMonths}}   style="background-color: yellow;" > </td> -->
 
-                            <td style="width: 15%" class="LabelFontStyle">Not&nbsp;Transacted&nbsp;For&nbsp;:&nbsp;</td>
-                            <td> <input   type ="text" class="form-control" formControlName="nMonths" [(ngModel)]='nMonths' value={{nMonths}}   style="background-color: yellow;width: 300px;" > </td>
+                            <td>
+                                <select type="number"  formControlName="nMonths"  id ="nMonths"  [(ngModel)]='nMonths' value={{nMonths}}   class="form-control" style="background-color: yellow;"  >
+                                    <!-- <option>--Select--</option> -->
+                                    <option value=60>60</option>
+                                    <option value=90>90</option>
+                                    <option value=120>120</option>
+                                    <option value=150>150</option>
+                                    <option value=180>180</option>
+                                    <option value=270>270</option>
+                                    <option value=360>360</option>
+                                                                      
+                                </select>
+                            </td>
+                            <!-- <td></td> -->
+                            <td><button style="width: fit-content;" type="button" class="btn btn-primary"  id="register"   (click)="deadFlagging()">Flag Dead Stock</button> </td>
+                            <td><button style="width: fit-content;" type="button" class="btn btn-primary"  id="register"   (click)="getDeadList()">Show Dead Stock List</button> </td>
+                           
 
-                            <td style="width: 15%" class="LabelFontStyle">&nbsp;Category&nbsp;:&nbsp;</td>
-                            <td> <input  type ="text" class="form-control" formControlName="stkCategory"  [(ngModel)]='stkCategory'  value={{stkCategory}} style="background-color: yellow;"  > </td>
-                        
-                            <td> <button style="width: 5rem;" type="button" class="btn btn-primary" (click)="clearSearch()">Reset</button> </td>
+                            <td style="width: 15%" class="LabelFontStyle">&nbsp;Total&nbsp;Value:&nbsp;</td>
+                            <td> <input disabled type ="text" class="form-control" formControlName="totalValue"  [(ngModel)]='totalValue'  value={{totalValue}}  style="text-align: right;"> </td> 
+
+              
+                            <td style="width: 15%" class="LabelFontStyle">&nbsp;Matching&nbsp;Records:&nbsp;</td>
+                            <td> <input disabled  type ="text" class="form-control" formControlName="totalRecords"  [(ngModel)]='totalRecords'  value={{totalRecords}}  style="text-align: right;" > </td>
+                         
+                            <!-- <td> <button style="width: 5rem;" type="button" class="btn btn-primary" (click)="clearSearch()">Reset</button> </td> -->
                           
                          </tr>
 
@@ -85,7 +107,102 @@
 
             </fieldset>
 
+            <!-- <fieldset class="RFS"> -->
+                <div class="container1">
+                    <div class="grid_scroll_3">
+                        
+                       
+                        <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+                  
+                        <tbody>
+                        <tr class="GridHeader">
+                            <th  scope="col" style="width: 4rem;">Srl&nbsp;No.</th>
+                            <th  scope="col" >Location&nbsp;</th>
+                            <!-- <th  scope="col" >Part&nbsp;Id</th> -->
+                            <th  scope="col" >Part&nbsp;No</th>
+                            <th  scope="col" >Description</th>
+                            <th  scope="col" >Qty&nbsp;</th>
+                            <th  scope="col" >Price&nbsp;</th>
+                            <th  scope="col" >Aging Days</th>
+                            <th  scope="col" >Trans Date&nbsp;</th>
+                            <th  scope="col" >D-Flag</th>
+                            <th  scope="col" >Remark</th>
+                           </tr>
+                   </tbody>
+                   
+                   <ng-container  class="center" formArrayName="deadItemList">
+                    <ng-container   *ngFor="let group of lineDetailsArray().controls; let i= index" [formGroupName]="i" class="auto-style5">  
+                                <tr>
 
+                                    <input  hidden    formControlName="dedId" class="form-control">
+                                    <input  hidden    formControlName="ouId" class="form-control">
+                                    <input  hidden    formControlName="locId" class="form-control">
+                                    <input  hidden    formControlName="itemId" class="form-control">
+                                
+                                    <td style="text-align: center;width: 4rem;height: 25px;">{{i+1}}</td>
+                                    <td> <input  disabled style="width:8rem;height: 25px;text-align: left;" type="text"   formControlName="locationCode" class="form-control"></td>
+                                 
+                                    
+                                    <td> <input disabled  style="width:10rem;height: 25px;text-transform: uppercase;"    type="text" formControlName="segment"  class="form-control"  
+                                                    (keydown.enter)="enterKeyLock(i)"  (change)="validateItem(i)" ></td>
+                                    <td> <input  disabled style="width:16rem;height: 25px;" type="text"   formControlName="description" class="form-control"></td>
+                                   
+                                    <td> <input  disabled style="width:3rem;height: 25px;"  type="number" formControlName="quantity"  class="form-control"></td>
+                                    <td> <input  disabled style="width:6rem;height: 25px;"  type="number" formControlName="averageCost"  class="form-control"></td>
+                                  
+                                    <td> <input  disabled style="width:4rem;height: 25px;"  type="number" formControlName="days" class="form-control"></td>
+                                    
+                                    <td> <input  disabled style="width:8rem;height: 25px;text-align: center;"  type="date" formControlName="transDate" class="form-control"></td>
+                                    <!-- <td> <input   style="width:6rem;height: 25px;"  type="text" formControlName="dflag" class="form-control"></td> -->
+                                    <td>
+                                        <select  formControlName="dflag"  id ="dflag"    class="form-control" style="width: 3rem; height: 25px;background-color: yellow;"  >
+                                            <!-- <option>--Select--</option> -->
+                                            <option value="Y">Y</option>
+                                            <option value="N">N</option>
+                                        </select>
+                                    </td>
+                                    
+                                    <td> <input   style="width:25rem;height: 25px;"  type="text" formControlName="attribute1" class="form-control"></td>
+                                  
+                            </tr>
+                           </ng-container>
+                            </ng-container>
+        
+                    </table>
+                    </div>
+                </div>
+        
+                    <!-- <table>
+                        <tr>
+                            <td> <button style="width:fit-content;" type="submit" class="btn btn-info" id="register" (click)="addNewRow()">Add|Del New Line</button></td>
+                        </tr>
+                    </table> -->
+
+                <!-- </fieldset> -->
+                <br>
+                <table class="center">
+                <tr>
+                        <td> <button type="submit" class="btn btn-info" id="register" (click)="updateMst()">Save</button></td>
+                        <td> <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>
+                        <td> <button type="submit" class="btn btn-info" id="register" (click)="closeMast()">Close</button></td>
+                        <!-- <td> <button style="width:fit-content;" type="submit" class="btn btn-info" id="register" (click)="addNewRow()">Add|Del New Line</button></td> -->
+                    
+
+                        <td>
+                            <div *ngIf="spinIcon; then hList1; else hList2"></div>
+                            <ng-template #hList1> 
+                                <div class="d-flex justify-content-center">
+                                    <div class="spinner-border text-primary" role="status" >
+                                        <span class="sr-only" id="loading"></span>
+                                
+                                    </div>
+                                    </div>
+                            </ng-template>
+                            <ng-template #hList2> </ng-template>
+                        </td>
+                        <td class="LabelFontStyle" style="color: blue;">&nbsp;{{dataDisplay }}&nbsp; </td>
+               </tr>
+                </table>
         </div>
     </div>
 

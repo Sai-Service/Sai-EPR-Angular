@@ -915,6 +915,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
             else {
               this.displaysalesRepName=true;
             }
+            // alert(this.allDatastore.trxNumber+'----trxNumber');
             if (this.allDatastore.createOrderType === 'Pick Ticket' && this.allDatastore.flowStatusCode === 'BOOKED') {
               this.CounterSaleOrderBookingForm.get('custName').disable();
               this.CounterSaleOrderBookingForm.get('mobile1').disable();
@@ -928,7 +929,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
               this.displaypickTicketUpdate = false;
               this.displayViewGatePass = true;
             }
-            else if (this.allDatastore.createOrderType === 'Pick Ticket Invoice' || this.allDatastore.createOrderType === 'Direct Invoice' || this.allDatastore.createOrderType === 'Sales Order') {
+            else if (this.allDatastore.createOrderType === 'Pick Ticket Invoice' || this.allDatastore.createOrderType === 'Direct Invoice') {
               // alert('Pick to Invoice');
               this.displaycounterSaleOrderSave = false;
               // this.displaycounterSaleOrderSave=false;
@@ -943,7 +944,30 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
               this.CounterSaleOrderBookingForm.get('vehNo').enable();
 
             }
-          
+            else if (this.allDatastore.createOrderType === 'Sales Order' && this.allDatastore.trxNumber === null){
+              this.displaycounterSaleOrderSave = false;
+              this.displaycounterSaleAllButtons = false;
+              this.displayaddRow = true;
+              this.displaypickTicketUpdate = false;
+              this.displayViewGatePass = true;
+              this.CounterSaleOrderBookingForm.disable();
+              this.TaxDetailsArray().disable();
+              this.CounterSaleOrderBookingForm.get('boxQty').enable();
+              this.CounterSaleOrderBookingForm.get('driverName').enable();
+              this.CounterSaleOrderBookingForm.get('vehNo').enable();
+            }
+            else if (this.allDatastore.createOrderType === 'Sales Order' && this.allDatastore.trxNumber != null){
+              this.displaycounterSaleOrderSave = false;
+              this.displaycounterSaleAllButtons = false;
+              this.displayaddRow = false;
+              this.displaypickTicketUpdate = false;
+              this.displayViewGatePass = true;
+              this.CounterSaleOrderBookingForm.disable();
+              this.TaxDetailsArray().disable();
+              this.CounterSaleOrderBookingForm.get('boxQty').enable();
+              this.CounterSaleOrderBookingForm.get('driverName').enable();
+              this.CounterSaleOrderBookingForm.get('vehNo').enable();
+            }
             else {
               this.CounterSaleOrderBookingForm.enable();
               this.displaycounterSaleOrderSave = true;
@@ -1001,15 +1025,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                   })
             }
             if (data.obj.orderStatus === 'INVOICED' && data.obj.gatePassYN === 'Y') {
-              // this.displayAfterGatePass = false;
-              // this.isVisible = false;
-              // this.displaypickTicketUpdate = true;
-              // this.displaypickTicketInvoice = true;
-              // this.PaymentButton = true;
-              // this.displaycounterSaleOrderSave = false;
               this.CounterSaleOrderBookingForm.disable();
-              // this.isVisible15=false;
-              // this.isVisible16=false;
               this.isVisibleUpdate = false;
               this.isVisibleGenerateInvoice = false;
               this.isVisibleGenerateGatePass = false;
@@ -1031,15 +1047,6 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
               this.isVisibleViewInvoice = true;
               this.isVisibleViewReceipt = true;
               this.isVisiblePickTiPreview = false;
-              //  alert(data.obj.orderStatus +'---'+data.obj.gatePassYN )
-              // this.displayAfterGatePass = true;
-              // this.isVisible15=false;
-              // this.isVisible16=false;
-              // this.isVisible = true;
-              // this.isVisibleGatePass=true;
-              // this.displaypickTicketUpdate = true;
-              // this.displaycounterSaleAllButtons = false;
-
               this.CounterSaleOrderBookingForm.get('boxQty').enable();
               this.CounterSaleOrderBookingForm.get('driverName').enable();
               this.CounterSaleOrderBookingForm.get('vehNo').enable();
@@ -1826,9 +1833,9 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
             lineTotAmt = Math.round(((baseAmt + sum - disAmt1) + Number.EPSILON) * 100) / 100;
             (patch.controls[index]).patchValue({
               baseAmt: Math.round((baseAmt + Number.EPSILON) * 100) / 100,
-              taxAmt:sum,
+              taxAmt:Math.round((sum + Number.EPSILON) * 100) / 100,
               totAmt: Math.round(((baseAmt + sum - disAmt1) + Number.EPSILON) * 100) / 100,
-              disAmt: (disPer / 100) * baseAmt,
+              disAmt : Math.round((( (disPer / 100) * baseAmt) + Number.EPSILON) * 100) / 100,
             });
             // taxAmt: Math.round((sum + Number.EPSILON) * 100) / 100,
             let controlinv1 = this.CounterSaleOrderBookingForm.get('taxAmounts') as FormArray;
@@ -1873,6 +1880,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       }
       if (event.keyCode != 13) {
         if (itemId1 != null && fldName != "locator" && isNewLine === false) {
+          fldName='segment';
           this.addRow(index);
         }
       }
@@ -2503,14 +2511,93 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
         this.displayLineflowStatusCode.push(true);
       }
     }
+   
+  //  if (i != -1 && trxLnArr1[i-1].itemId === null || trxLnArr1[i-1].itemId===''|| trxLnArr1[i-1].itemId=== undefined){
+  //     alert('First Select Item And then add New Line');
+  //     return;
+  //   }
     var disPer = this.CounterSaleOrderBookingForm.get('disPer').value;
 
 
     this.orderlineDetailsArray().push(this.orderlineDetailsGroup());
     var len = this.orderlineDetailsArray().length;
     var patch = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
-    // var currentLn = patch.controls[i].get('lineNumber').value;
-    // alert(currentLn);
+    var refId = uuidv4();
+    (patch.controls[len - 1]).patchValue(
+      {
+        lineNumber: len,
+        flowStatusCode: 'BOOKED',
+        disPer: disPer,
+        invType: 'SS_SPARES',
+        uuidRef: refId
+      }
+    );
+    if (disPer === null) {
+      (patch.controls[len - 1]).patchValue(
+        {
+          disPer: 0,
+        }
+      );
+    }
+    this.displaysegmentInvType.push(true);
+    this.displayRemoveRow[len - 1] = true;
+    this.displayCounterSaleLine.push(true);
+    this.displayLineflowStatusCode.push(true);
+    this.taxCategoryList = this.allTaxCategoryList;
+    this.itemSeg = '';
+    var ln = len - 1;
+    this.setFocus('itemSeg' + ln);
+  }
+
+
+
+  addRow1(i) {
+    var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
+
+    var trxLnArr2 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+    var formVal = trxLnArr2.getRawValue();
+    if (this.op == 'Search') {
+      i = trxLnArr1.length;
+      this.isDisabled10 = true;
+    }
+    if (i > -1) {
+      var len1 = i;
+      if (trxLnArr1[len1] != undefined) {
+        // this.isDisabled10=false;
+        console.log(trxLnArr1[len1].pricingQty);
+        var itemqty = trxLnArr1[len1].pricingQty;
+        var item = trxLnArr1[len1].segment;
+        var itemid = trxLnArr1[len1].itemId;
+        // debugger;
+        if (item === '' || itemqty === '') {
+          alert('Please enter data in blank field');
+          return;
+        }
+        if (!this.itemMap3.has(item)) {
+          this.reservePos(i);
+        }
+        else {
+          // debugger;
+          // this.deleteReserveLinewise(i,itemid);COMMENT BY VINITA
+          this.reservePos(i);
+        }
+        this.displayRemoveRow.push(true);
+        this.displayCounterSaleLine.push(true);
+        this.displayLineflowStatusCode.push(true);
+      }
+    }
+   var index = trxLnArr1.length;
+   console.log(formVal);
+   if (i < -1){
+   if (formVal[i-1].itemId === null || formVal[i-1].itemId===''|| formVal[i-1].itemId=== undefined){
+      alert('First Select Item And then add New Line');
+      return;
+    }
+  }
+    var disPer = this.CounterSaleOrderBookingForm.get('disPer').value;
+    this.orderlineDetailsArray().push(this.orderlineDetailsGroup());
+    var len = this.orderlineDetailsArray().length;
+    var patch = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     var refId = uuidv4();
     (patch.controls[len - 1]).patchValue(
       {
