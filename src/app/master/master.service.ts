@@ -1479,6 +1479,13 @@ searchByItemSegmentDiv(divId,itemSeg):Observable<any>
   // http://localhost:8081/itemMst/searchBydesc/2/ring
 }
 
+searchByItemSegmentAR(itemSeg):Observable<any>
+{
+    return this.http.get(this.ServerUrl+`/itemMst/nonInv?segment=${itemSeg}&isStock=N&isTax=N&isPur=Y&trxType=AR`)
+
+  // http://localhost:8081/itemMst/searchBydesc/2/ring
+}
+
 searchByItemDescf9(divId,itemDesc):Observable<any>
 {
     return this.http.get(this.ServerUrl+`/itemMst/searchBydesc/${divId}?itemDesc=${itemDesc}`)
