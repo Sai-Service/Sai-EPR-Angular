@@ -837,11 +837,8 @@ export class PaymentArComponent implements OnInit {
     else { this.showRefYellow = true; }
   }
 
-
-
   onPayTypeSelected(payType: any, rmStatus: any) {
     // alert('paytype =' +payType  + " LocId :"+ this.locId + " Ou Id :"+this.ouId + " Deptid : "+ this.deptId + " Status :"+rmStatus);
-
     if (payType === '--Select--' || payType === 'undefined') {
       // alert("null selected");
       return;
@@ -861,7 +858,6 @@ export class PaymentArComponent implements OnInit {
           }
         );
     } else {
-
       // alert("Chq/dd/neft/... selected");
       this.service.ReceiptMethodListNew(payType, this.ouId, rmStatus,this.deptId)
         .subscribe(
@@ -873,7 +869,6 @@ export class PaymentArComponent implements OnInit {
             this.checkDate = this.pipe.transform(Date.now(), 'y-MM-dd'); }
           });
     }
-
   }
 
 

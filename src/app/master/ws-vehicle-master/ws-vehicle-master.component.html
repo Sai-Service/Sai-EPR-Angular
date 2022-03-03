@@ -566,15 +566,12 @@
                     
                 <td style="width: 12%" class="LabelFontStyle">MCP&nbsp;Status:&nbsp;</td>
 
-                <td>
-                <select formControlName="mcpStatus" id="mcpStatus" class="form-control"  
-                                        [ngModel]="mcpStatus" >
-                    <option disabled>--Select--</option>
-                    <option *ngFor="let sc of  statusList" [ngValue] ="sc.code">
-                        {{sc.code}}
-                    </option>
-                </select>
-
+                 <td>
+                    <select type="text"  formControlName="mcpYN"  id ="mcpYN"  [(ngModel)]='mcpYN' value={{mcpYN}}   class="form-control">
+                        <!-- <option>--Select--</option> -->
+                        <option value=Y>Active</option>
+                        <option value=N>Inactive</option>
+                    </select>
                 </td>
 
                 <td style="width: 12%" class="LabelFontStyle">MCP&nbsp;No:&nbsp;</td>

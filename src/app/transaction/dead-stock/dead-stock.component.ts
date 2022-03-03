@@ -58,12 +58,12 @@ export class DeadStockComponent implements OnInit {
   deptId: number;
   emplId: number;
 
-  nMonths: number=360;
+  nMonths: number;
   stk: string;
   stkCategory:string;
   totalValue :number;
   totalRecords:number;
-  displayButton = false;
+  displayButton = true;
 
    constructor(private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService, private fb: FormBuilder, private router: Router) {
     this.deadStockForm = fb.group({
@@ -288,8 +288,9 @@ export class DeadStockComponent implements OnInit {
       var dDays = this.deadStockForm.get('nMonths').value
       var ouId = this.deadStockForm.get('ouId').value
   
-      // alert (  "ts>> Loc Id :" +this.locId + " ," +ordMonths);
-      this.spinIcon = true;
+      if(dDays===null || dDays===undefined || dDays.trim()==='' || dDays <=0) { alert ("Please select Aging Days...."); return;}
+
+       this.spinIcon = true;
       this.dataDisplay = 'Dead Stock Flagging in Progress....Please wait';
   
       this.service.deadFlg(ouId,dDays).subscribe((res: any) => {
@@ -297,20 +298,17 @@ export class DeadStockComponent implements OnInit {
           alert('Flagging Done Successfully');
           this.spinIcon = false;
           this.dataDisplay = ''; 
-          // this.ShowDeadList()
+          this.ShowDeadList()
         } else {
           if (res.code === 400) {
             // alert('Error While Flagging Record:-' + res.obj);
             alert('Flagging Done Successfully');
            this.spinIcon = false;
             this.dataDisplay = '';
-            // this.ShowDeadList()
-
+            this.ShowDeadList()
           }
         }
       });
-  
-  
     }
 
 
@@ -332,6 +330,8 @@ export class DeadStockComponent implements OnInit {
     // if (this.tdsLineValidation) {
     //   alert("TDS data Validation Sucessfull....Posting data...")
       this.displayButton = false;
+      this.spinIcon = true;
+      this.dataDisplay = 'Updating data....Please wait';
 
       var dedLines = this.deadStockForm.get('deadItemList').value;
       console.log(dedLines);
@@ -339,10 +339,14 @@ export class DeadStockComponent implements OnInit {
         if (res.code === 200) {
           alert(res.message);
           this.deadStockForm.disable();
+          this.spinIcon = false;
+          this.dataDisplay = ''; 
         } else {
           if (res.code === 400) {
             alert(res.message);
             this.displayButton = true;
+            this.spinIcon = false;
+            this.dataDisplay = ''; 
           
           }
         }
