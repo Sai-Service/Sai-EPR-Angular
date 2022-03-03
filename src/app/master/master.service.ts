@@ -1479,6 +1479,13 @@ searchByItemSegmentDiv(divId,itemSeg):Observable<any>
   // http://localhost:8081/itemMst/searchBydesc/2/ring
 }
 
+searchByItemSegmentAR(itemSeg):Observable<any>
+{
+    return this.http.get(this.ServerUrl+`/itemMst/nonInv?segment=${itemSeg}&isStock=N&isTax=N&isPur=Y&trxType=AR`)
+
+  // http://localhost:8081/itemMst/searchBydesc/2/ring
+}
+
 searchByItemDescf9(divId,itemDesc):Observable<any>
 {
     return this.http.get(this.ServerUrl+`/itemMst/searchBydesc/${divId}?itemDesc=${itemDesc}`)
@@ -2586,7 +2593,7 @@ OrderCategoryList(): Observable<any> {
     return this.http.get(this.ServerUrl + `/receiptMethod?methodType=${mPaytype}&locId=${mLocId}&status=${mStatus}`);
   }
 
-  ReceiptMethodListNew(mPaytype,mStatus,deptId,mOrgId): Observable<any> {
+  ReceiptMethodListNew(mPaytype,mOrgId,mStatus,deptId): Observable<any> {
      return this.http.get(this.ServerUrl + `/receiptMethod/rctMethodDeptwise?methodType=${mPaytype}&status=${mStatus}&attribute2=${deptId}&orgId=${mOrgId}`);
     // http://localhost:8081/receiptMethod/rctMethodDeptwise?methodType=CASH&status=Active&attribute2=1&orgId=22
   }

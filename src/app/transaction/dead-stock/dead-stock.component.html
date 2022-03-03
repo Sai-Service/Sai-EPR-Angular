@@ -74,7 +74,7 @@
 
                             <td>
                                 <select type="number"  formControlName="nMonths"  id ="nMonths"  [(ngModel)]='nMonths' value={{nMonths}}   class="form-control" style="background-color: yellow;"  >
-                                    <!-- <option>--Select--</option> -->
+                                    <option></option>
                                     <option value=60>60</option>
                                     <option value=90>90</option>
                                     <option value=120>120</option>
@@ -182,7 +182,13 @@
                 <br>
                 <table class="center">
                 <tr>
-                        <td> <button type="submit" class="btn btn-info" id="register" (click)="updateMst()">Save</button></td>
+                        <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
+                        <ng-template #thenBlock1>
+                            <td> <button type="submit" class="btn btn-info" id="register" (click)="updateMst()">Save</button></td>
+                        </ng-template>
+                        <ng-template #elseBlock1>
+                            <td> <button disabled type="submit" class="btn btn-info" id="register" (click)="updateMst()">Save</button></td>
+                        </ng-template>
                         <td> <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>
                         <td> <button type="submit" class="btn btn-info" id="register" (click)="closeMast()">Close</button></td>
                         <!-- <td> <button style="width:fit-content;" type="submit" class="btn btn-info" id="register" (click)="addNewRow()">Add|Del New Line</button></td> -->
