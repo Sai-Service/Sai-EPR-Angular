@@ -34,6 +34,8 @@ export class SalesReportsComponent implements OnInit {
   salesbkregToDt:Date;
   salesAltnotInvToDt:Date;
   ouName:string;
+  frGstSaleReg:Date;
+  toGstSaleReg:Date;
  
 
   isDisabled1 = false;
@@ -50,6 +52,8 @@ export class SalesReportsComponent implements OnInit {
       salesbkregToDt:[''],
       salesbkregFromDt:[''],
       salesAltnotInvToDt:[''],
+      frGstSaleReg:[''],
+      toGstSaleReg:['']
     })
    }
 
@@ -182,4 +186,26 @@ export class SalesReportsComponent implements OnInit {
         this.isDisabled2 = false;
       })
   }
+
+  gstSaleRegister(){
+    this.isDisabled2 = true;
+    this.closeResetButton = false;
+    this.progress = 0;
+    this.dataDisplay = 'Report Is Running....Do not refresh the Page';
+    var fromDate1 = this.salesReportForm.get('frGstSaleReg').value;
+    var fromDate = this.pipe.transform(fromDate1, 'dd-MMM-yyyy');
+    var toDate1 = this.salesReportForm.get('toGstSaleReg').value;
+    var toDate = this.pipe.transform(toDate1, 'dd-MMM-yyyy');
+    const fileName = 'Vehicle Closing Stock-' + sessionStorage.getItem('locName').trim() + '-' +  '-TO-' + '.xls';
+
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.gstSaleRegisterReport(fromDate,toDate,sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'))
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.dataDisplay = ''
+        this.closeResetButton = true;
+        this.isDisabled2 = false;
+      })
+  }
+
 }
