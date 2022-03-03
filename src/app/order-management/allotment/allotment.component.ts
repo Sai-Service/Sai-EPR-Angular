@@ -43,6 +43,7 @@ export class AllotmentComponent implements OnInit {
   orderNumber1: number;
   segment1: string;
   qtyAvail: number;
+  isDisabledChassisItemSelect = false;
 
   public allotedChassisArray = [];
   displayChassisForm: Array<boolean> = [];;
@@ -72,7 +73,7 @@ export class AllotmentComponent implements OnInit {
     this.ouName = sessionStorage.getItem('ouName');
     this.locId = Number(sessionStorage.getItem('locId'));
     this.orgId = Number(sessionStorage.getItem('ouId'));
-
+    // this.isDisabledChassisItemSelect=true;
     console.log(this.orgId);
 
     this.orderManagementService.allotmentSearch(this.orgId, sessionStorage.getItem('locId'), sessionStorage.getItem('divisionId'))
@@ -121,13 +122,15 @@ export class AllotmentComponent implements OnInit {
     }
   }
 
-  Select(model: any, color: any, variant: any, locId) {
+  Select(orderNumber:number, model: any, color: any, variant: any, locId) {
+    // alert(orderNumber)
     //  alert(model+color+variant+this.locId);
     this.orderManagementService.allotmentVehicleSearch(model, color, variant, this.locId)
       .subscribe(
         data => {
           this.allotmentVehiclesearchlist = data;
           console.log(this.allotmentVehiclesearchlist);
+          this.allotmentForm.patchValue({orderNumber:orderNumber});
         }
       );
   }
@@ -137,6 +140,7 @@ export class AllotmentComponent implements OnInit {
     this.orderNumber1 = orderNumber;
     if (e.target.checked) {
       this.selectOrderNumber = 'Y'
+      this.isDisabledChassisItemSelect=false;
     }
     else {
       this.selectOrderNumber = 'N';
@@ -155,9 +159,28 @@ export class AllotmentComponent implements OnInit {
     }
   }
 
-  allotedVehicleSelect() {
-    // alert(this.segment1+' '+ this.orderNumber1);
+  allotedVehicleSelectold() {
+    alert(this.segment1+' '+ this.orderNumber1);
     this.allotedChassisArray.push({ orderNumber: this.orderNumber1, segment: this.segment1 });
+    console.log(this.allotedChassisArray);
+    this.orderManagementService.allotmentSubmit(this.allotedChassisArray).subscribe((res: any) => {
+      if (res.code === 200) {
+        alert(res.message);
+        window.location.reload();
+      } else {
+        if (res.code === 400) {
+          alert(res.message);
+          window.location.reload();
+        }
+      }
+    });
+  }
+
+
+
+  allotedVehicleSelect(orderNumber,segment) {
+    // alert(orderNumber+'-------'+segment);
+    this.allotedChassisArray.push({ orderNumber: orderNumber, segment: segment});
     console.log(this.allotedChassisArray);
     this.orderManagementService.allotmentSubmit(this.allotedChassisArray).subscribe((res: any) => {
       if (res.code === 200) {
