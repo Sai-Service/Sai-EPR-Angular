@@ -1405,7 +1405,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     // alert(custAccountNo);
     this.service.searchCustomerByAccount(custAccountNo)
       .subscribe(
-        data => {
+        data => { 
           if (data.code === 200) {
             this.selCustomer = data.obj;
             this.custSiteList = data.obj.customerSiteMasterList;

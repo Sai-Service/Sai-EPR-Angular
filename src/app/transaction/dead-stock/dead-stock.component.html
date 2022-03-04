@@ -86,15 +86,22 @@
                                 </select>
                             </td>
                             <!-- <td></td> -->
-                            <td><button style="width: fit-content;" type="button" class="btn btn-primary"  id="register"   (click)="deadFlagging()">Flag Dead Stock</button> </td>
-                            <td><button style="width: fit-content;" type="button" class="btn btn-primary"  id="register"   (click)="getDeadList()">Show Dead Stock List</button> </td>
-                           
+                            <div *ngIf="dedFlagButton; then dflg1; else dflg2"></div>
+                            <ng-template #dflg1> 
+                                <td><button style="width: fit-content;" type="button" class="btn btn-primary"  id="register"   (click)="deadFlagging()">Flag Dead Stock</button> </td>
+                                <td><button style="width: fit-content;" type="button" class="btn btn-primary"  id="register"   (click)="getDeadList()">Show Dead Stock List</button> </td>
+                            </ng-template>
+                            <ng-template #dflg2> 
+                                <td><button disabled style="width: fit-content;" type="button" class="btn btn-primary"  id="register"   (click)="deadFlagging()">Flag Dead Stock</button> </td>
+                                <td><button disabled style="width: fit-content;" type="button" class="btn btn-primary"  id="register"   (click)="getDeadList()">Show Dead Stock List</button> </td>
+                            </ng-template>
+
 
                             <td style="width: 15%" class="LabelFontStyle">&nbsp;Total&nbsp;Value:&nbsp;</td>
                             <td> <input disabled type ="text" class="form-control" formControlName="totalValue"  [(ngModel)]='totalValue'  value={{totalValue}}  style="text-align: right;"> </td> 
 
               
-                            <td style="width: 15%" class="LabelFontStyle">&nbsp;Matching&nbsp;Records:&nbsp;</td>
+                            <td style="width: 15%" class="LabelFontStyle">&nbsp;Records:&nbsp;</td>
                             <td> <input disabled  type ="text" class="form-control" formControlName="totalRecords"  [(ngModel)]='totalRecords'  value={{totalRecords}}  style="text-align: right;" > </td>
                          
                             <!-- <td> <button style="width: 5rem;" type="button" class="btn btn-primary" (click)="clearSearch()">Reset</button> </td> -->
@@ -123,6 +130,7 @@
                             <th  scope="col" >Description</th>
                             <th  scope="col" >Qty&nbsp;</th>
                             <th  scope="col" >Price&nbsp;</th>
+                            <th  scope="col" >Amount&nbsp;</th>
                             <th  scope="col" >Aging Days</th>
                             <th  scope="col" >Trans Date&nbsp;</th>
                             <th  scope="col" >D-Flag</th>
@@ -149,7 +157,7 @@
                                    
                                     <td> <input  disabled style="width:3rem;height: 25px;"  type="number" formControlName="quantity"  class="form-control"></td>
                                     <td> <input  disabled style="width:6rem;height: 25px;"  type="number" formControlName="averageCost"  class="form-control"></td>
-                                  
+                                    <td> <input  disabled style="width:6rem;height: 25px;"  type="number" formControlName="totalAmount"  class="form-control"></td>
                                     <td> <input  disabled style="width:4rem;height: 25px;"  type="number" formControlName="days" class="form-control"></td>
                                     
                                     <td> <input  disabled style="width:8rem;height: 25px;text-align: center;"  type="date" formControlName="transDate" class="form-control"></td>
@@ -185,14 +193,31 @@
                         <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
                         <ng-template #thenBlock1>
                             <td> <button type="submit" class="btn btn-info" id="register" (click)="updateMst()">Save</button></td>
-                        </ng-template>
+                           </ng-template>
                         <ng-template #elseBlock1>
                             <td> <button disabled type="submit" class="btn btn-info" id="register" (click)="updateMst()">Save</button></td>
+                                 
                         </ng-template>
                         <td> <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>
                         <td> <button type="submit" class="btn btn-info" id="register" (click)="closeMast()">Close</button></td>
-                        <!-- <td> <button style="width:fit-content;" type="submit" class="btn btn-info" id="register" (click)="addNewRow()">Add|Del New Line</button></td> -->
+                   
+                        <div *ngIf="exportExcel; then xlYes; else xlNo"></div>
+                        <ng-template #xlYes>
+                         <div style="padding-bottom: 10px;padding-top: 10px;">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <button (click)="deadStockListExport()" class="btn btn-success" style="width: fit-content;">Export To Excel</button>
+                                </div>
+                            </div>
+                         </div>
+                        </ng-template>
+                        <ng-template #xlNo></ng-template>
+
+
+
+                         <!-- <td> <button style="width:fit-content;" type="submit" class="btn btn-info" id="register" (click)="addNewRow()">Add|Del New Line</button></td> -->
                     
+                      
 
                         <td>
                             <div *ngIf="spinIcon; then hList1; else hList2"></div>
