@@ -2596,6 +2596,8 @@ OrderCategoryList(): Observable<any> {
   ReceiptMethodListNew(mPaytype,mStatus,deptId,mOrgId): Observable<any> {
      return this.http.get(this.ServerUrl + `/receiptMethod/rctMethodDeptwise?methodType=${mPaytype}&status=${mStatus}&attribute2=${deptId}&orgId=${mOrgId}`);
     // http://localhost:8081/receiptMethod/rctMethodDeptwise?methodType=CASH&status=Active&attribute2=1&orgId=22
+  
+    // http://saihorizon.com:8051/ErpReplica/receiptMethod/rctMethodDeptwise?methodType=CHEQUE&status=5&attribute2=21&orgId=Active
   }
 
   ///////////////////////////AVERAGE COST UPDATE//////////////////////////

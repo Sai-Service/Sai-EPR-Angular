@@ -405,20 +405,22 @@
                         CDMS&nbsp;Customer&nbsp;Number:&nbsp;
                     </td>
                     <td>
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" formControlName="msRefCustNo" value={{msRefCustNo}}
+                        [ngClass]="{ 'is-invalid': submitted && f.msRefCustNo.errors }" style="width:100%;">
                     </td>
                     <td style="width: 15%" class="LabelFontStyle">
                         Ref&nbsp;No&nbsp;CDMS&nbsp;:&nbsp;
                     </td>
                     <td>
-                        <input type="text" class="form-control" formControlName="refCustNo" value={{refCustNo}}
-                            [ngClass]="{ 'is-invalid': submitted && f.refCustNo.errors }" style="width:100%;">
+                        <input type="text" class="form-control" formControlName="msRefNo" value={{msRefNo}}
+                        [ngClass]="{ 'is-invalid': submitted && f.msRefNo.errors }" style="width:100%;">
                     </td>
                     <td style="width: 15%" class="LabelFontStyle">
                         CDMS&nbsp;Transaction&nbsp;Number:&nbsp;
                     </td>
                     <td>
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" formControlName="msRefType" value={{msRefType}}
+                        [ngClass]="{ 'is-invalid': submitted && f.msRefType.errors }" style="width:100%;">
                     </td>
                 </tr>
             </ng-template>
