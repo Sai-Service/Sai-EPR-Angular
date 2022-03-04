@@ -88,6 +88,22 @@ input.ng-valid{
 }
 
 
+.btn-success{
+  width: 5em;
+  /* background-image: linear-gradient(#54b4eb, #2fa4e7 60%, #1d9ce5); */
+  background-image: linear-gradient(rgb(162, 214, 162),rgb(200, 221, 200),rgb(149, 161, 149));
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 3rem;
+  border-color: #2c3e50;
+  height: 22px;
+  font-size: 11px;
+  vertical-align: middle;
+  text-align: center;
+  line-height: 10px; /* Tamaño de linea */
+  width: 5rem;
+}
 
 .btn-info{
     width: 5em;

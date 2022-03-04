@@ -60,7 +60,7 @@ export class OrderGenerationComponent implements OnInit {
   deptId: number;
   emplId: number;
 
-  orderNumber='BJ-2102100001'
+  orderNumber='BJ-2103100001'
   // orderNumber: string;
 
   fromDate = this.pipe.transform(Date.now(), 'y-MM-dd');
@@ -468,6 +468,8 @@ export class OrderGenerationComponent implements OnInit {
             this.orderDate = data[0].orderDate;
             this.consCriteria = data[0].consCriteria;
 
+           if( data[0].locId != Number(sessionStorage.getItem('locId'))) {alert ("Order Number - Location Mismatch..."); this.spinIcon=false; this.dataDisplay='';return;}
+
             if(data[0].cdmsRefNo ==null || data[0].cdmsRefNo ==undefined || data[0].cdmsRefNo.trim() =='' ){
             this.displayButton = true; this.orderUpdateStatus=true;
             } else { 
@@ -488,7 +490,8 @@ export class OrderGenerationComponent implements OnInit {
             }
 
             this.orderGenerationForm.get('orderList').patchValue(this.lstOrderList);
-
+            // this.spinIcon=false;
+            // this.dataDisplay=null;
            
             this.CalculateOrdValue();
 
@@ -603,6 +606,8 @@ export class OrderGenerationComponent implements OnInit {
     var len = this.lineDetailsArray().length;
     var orderTotal = 0;
 
+    // alert ("In calculate ....");
+
     for (let i = 0; i < len; i++) {
       var lineValue = orderLineArr[i].orderQty * orderLineArr[i].unitPrice;
 
@@ -613,7 +618,7 @@ export class OrderGenerationComponent implements OnInit {
     }
 
 
-    orderTotal = Math.round((orderTotal + Number.EPSILON) * 100) / 100,
+      orderTotal = Math.round((orderTotal + Number.EPSILON) * 100) / 100,
       this.orderGenerationForm.patchValue({ orderValue: orderTotal })
       this.spinIcon=false;
       this.dataDisplay=null;

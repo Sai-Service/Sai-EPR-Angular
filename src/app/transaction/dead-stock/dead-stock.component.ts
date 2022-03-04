@@ -17,6 +17,19 @@ interface IdeadStock {
   dFlag: string;
 }
 
+export class dedList {
+  ouId:number;
+  locationCode:string;
+  segment: string;
+  description:string;
+  days:number;
+  quantity: number;
+  averageCost: number;
+  totalAmount: number;
+  transDate:Date;
+  attribute1:string;
+}
+
 
 @Component({
   selector: 'app-dead-stock',
@@ -27,6 +40,12 @@ interface IdeadStock {
 
 export class DeadStockComponent implements OnInit {
   deadStockForm: FormGroup;
+
+  @ViewChild('aForm') aForm: ElementRef;
+
+  @ViewChild('epltable', { static: false }) epltable: ElementRef;
+  @ViewChild('epltable1', { static: false }) epltable1: ElementRef;
+  @ViewChild('orderList', { static: false }) orderList: ElementRef;
 
   pipe = new DatePipe('en-US');
   public minDate = new Date();
@@ -64,6 +83,8 @@ export class DeadStockComponent implements OnInit {
   totalValue :number;
   totalRecords:number;
   displayButton = true;
+  exportExcel=false;
+  dedFlagButton =true;
 
    constructor(private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService, private fb: FormBuilder, private router: Router) {
     this.deadStockForm = fb.group({
@@ -112,6 +133,7 @@ export class DeadStockComponent implements OnInit {
        days:[],
        quantity:[],
        averageCost:[],
+       totalAmount:[],
        transactionId:[],
        transDate: [],
 
@@ -205,7 +227,7 @@ export class DeadStockComponent implements OnInit {
   }
 
   ShowDeadList() {
-
+    this.dedFlagButton=false;
     // alert ("Not Transacted  for Months :"+nMths);
     var mOrgId = this.deadStockForm.get('ouId').value
     var nMths = this.deadStockForm.get('nMonths').value
@@ -219,7 +241,7 @@ export class DeadStockComponent implements OnInit {
           // alert ("Total Items Found :" +data.length);
           this.totalRecords=data.length;
           if (data.length > 0) {
-           
+            this.exportExcel=true;
             console.log(this.lstDeadItems);
             var len = this.lineDetailsArray().length;
             var y = 0;
@@ -284,25 +306,28 @@ export class DeadStockComponent implements OnInit {
 
     deadFlagging() {
 
+      
+
       const formValue: IdeadStock = this.transeData(this.deadStockForm.value);
       var dDays = this.deadStockForm.get('nMonths').value
       var ouId = this.deadStockForm.get('ouId').value
   
       if(dDays===null || dDays===undefined || dDays.trim()==='' || dDays <=0) { alert ("Please select Aging Days...."); return;}
 
+      this.dedFlagButton=false;
        this.spinIcon = true;
       this.dataDisplay = 'Dead Stock Flagging in Progress....Please wait';
   
       this.service.deadFlg(ouId,dDays).subscribe((res: any) => {
         if (res.code === 200) {
-          alert('Flagging Done Successfully');
+          alert('Flagging Completed...');
           this.spinIcon = false;
           this.dataDisplay = ''; 
           this.ShowDeadList()
         } else {
           if (res.code === 400) {
             // alert('Error While Flagging Record:-' + res.obj);
-            alert('Flagging Done Successfully');
+            alert('Flagging Completed...');
            this.spinIcon = false;
             this.dataDisplay = '';
             this.ShowDeadList()
@@ -411,6 +436,45 @@ export class DeadStockComponent implements OnInit {
     alert('Enter Not Allowed.!');
     // this.setFocus('orderQty' + i);
     return;
+  }
+
+  dedHedaerList = [[
+    'Operating Unit',
+    'Location Code',
+    'Part No',
+    'Descreption	',
+    'Aging Days',
+    'Quantity',
+    'Price',
+    'Amount',
+    'Trans Date',
+    'Remark',
+  ]]
+
+  deadStockListExport() {
+    const wb: xlsx.WorkBook = xlsx.utils.book_new();
+    const ws: xlsx.WorkSheet = xlsx.utils.json_to_sheet([]);
+    xlsx.utils.sheet_add_aoa(ws, this.dedHedaerList);
+    var orList = this.deadStockForm.get('deadItemList').value;
+    var xlOrdList: any = [];
+    for (let i = 0; i < orList.length; i++) {
+      var ordLn = new dedList();
+
+      ordLn.ouId = orList[i].ouId;
+      ordLn.locationCode = orList[i].locationCode;
+      ordLn.segment = orList[i].segment;
+      ordLn.description = orList[i].description;
+      ordLn.days = orList[i].days;
+      ordLn.quantity = orList[i].quantity;
+      ordLn.averageCost = orList[i].averageCost;
+      ordLn.totalAmount = orList[i].totalAmount;
+      ordLn.transDate = orList[i].transDate;
+      ordLn.attribute1 = orList[i].attribute1;
+      xlOrdList.push(ordLn);
+    }
+    xlsx.utils.sheet_add_json(ws, xlOrdList, { origin: 'A2', skipHeader: true });
+    xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
+    xlsx.writeFile(wb, 'deadStockList.xlsx');
   }
 
 }
