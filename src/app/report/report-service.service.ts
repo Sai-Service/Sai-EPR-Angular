@@ -81,8 +81,8 @@ export class ReportServiceService {
     });
   }
 
-  spslReturnRegisterReport(invcDt1,invcDt4,locId){
-    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprSalesReturn?fromDate=${invcDt1}&toDate=${invcDt4}&locId=${locId}`;
+  spslReturnRegisterReport(invcDt1,invcDt4,ouId,locId){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprSalesReturn?fromDate=${invcDt1}&toDate=${invcDt4}&ouId=${ouId}&locId=${locId}`;
     return this.http.get(REQUEST_URI, {
       responseType: 'arraybuffer',
       headers: this.headers,
@@ -190,13 +190,15 @@ export class ReportServiceService {
     });
   }
 
-  sppurRegidetailReport(fromDate,toDate,locId,deptId){
-    const REQUEST_URI = this.ServerUrl +`/SparesReports/PurchaseRegisterDtls?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}&deptId=${deptId}`;
+  sppurRegidetailReport(fromDate,toDate,ouId,locId,deptId){
+    const REQUEST_URI = this.ServerUrl +`/AccountsReports/GstPurchaseRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&deptId=${deptId}`;
     return this.http.get(REQUEST_URI, {
       responseType: 'arraybuffer',
       headers: this.headers,
     });
   }
+  // http://localhost:8081/AccountsReports/GstPurchaseRep?fromDate=01-FEB-2022&toDate=02-FEB-2022&ouId=21&locId=&deptId=5
+ 
 
   spclosstrockReport(locId){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/SprClosingStk?locId=${locId}`;
@@ -292,6 +294,17 @@ vhslRegisterReport(fromDate,toDate,locId){
     headers: this.headers,
   });
 }
+
+
+gstSaleRegisterReport(fromDate,toDate,ouId,locId){
+  const REQUEST_URI = this.ServerUrl +`/AccountsReports/GstSaleReg?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
+  return this.http.get(REQUEST_URI, {
+    // params: REQUEST_PARAMS,
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
+}
+
 
 salesINDReport(toDate,locId){
   const REQUEST_URI = this.ServerUrl +`/SalesReports/VehIndReg?toDate=${toDate}&locId=${locId}`;

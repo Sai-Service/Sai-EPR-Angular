@@ -293,7 +293,7 @@ export class AllReportsComponent implements OnInit {
     const fileName = 'Purchase-Register-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
 
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.sppurRegidetailReport(fromDate, toDate, sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
+    this.reportService.sppurRegidetailReport(fromDate, toDate,sessionStorage.getItem('ouId') ,sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
       .subscribe(data => {
         // var blob = new Blob([data], { type: 'application/vnd.ms-excel' });
         // var url = URL.createObjectURL(blob);
@@ -708,7 +708,7 @@ var invcDt2 = this.reportForm.get('spmiscissRecfromDate').value;
 var fromDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
 var invcDt3 = this.reportForm.get('spmiscissRectoDate').value;
 var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');  
-const fileName = 'Spares-Customer-Off-Take-Statement-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+const fileName = 'Spares Misc Issue Receipt Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
 const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
 this.reportService.spSparesMiscIssueReceiptReport(fromDate,invcDt4,sessionStorage.getItem('locId'))
   .subscribe(data => {
@@ -738,7 +738,7 @@ if (spbackOrderQtyCustAccNo===undefined || spbackOrderQtyCustAccNo===null){
 if (orderNumber === undefined || orderNumber=== null){
 orderNumber=''
 }
-const fileName = 'Spares-Customer-Off-Take-Statement-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+const fileName = 'Spares Back Order Qty Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
 const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
 this.reportService.spbackOrderQtyReport(fromDate,invcDt4,sessionStorage.getItem('locId'),spbackOrderQtyCustAccNo,orderNumber)
   .subscribe(data => {
@@ -794,7 +794,7 @@ this.reportService.spbackOrderQtyReport(fromDate,invcDt4,sessionStorage.getItem(
   var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');  
   const fileName = 'Spares Sales Return Register-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
   const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-  this.reportService.spslReturnRegisterReport(fromDate,invcDt4,sessionStorage.getItem('locId'))
+  this.reportService.spslReturnRegisterReport(fromDate,invcDt4,sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'))
     .subscribe(data => {
       saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
       this.isDisabled15 = false;
