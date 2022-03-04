@@ -1285,12 +1285,12 @@
                                                     </div>
                                                     <!-- type="button" -->
                                                     <ng-template #thenaddRow>
-                                                        <button type="submit" class="btn btn-primary" [style.display]="isVisible15 ? 'block' : 'none'"
+                                                        <button type="button" class="btn btn-primary" [style.display]="isVisible15 ? 'block' : 'none'"
                                                             (keydown.tab)="addRow1(i)" style="width: min-content;"><i
                                                                 class="fa fa-plus"></i></button>
                                                     </ng-template>
                                                     <ng-template #elseaddRow>
-                                                        <button disabled type="submit" class="btn btn-primary"
+                                                        <button disabled type="button" class="btn btn-primary"
                                                             (click)="addRow(i)" style="width: min-content;"><i
                                                                 class="fa fa-plus"></i></button>
                                                     </ng-template>
@@ -1300,12 +1300,12 @@
                                                         *ngIf="displayRemoveRow[i]; then thenRemoveRow; else elseRemoveRow">
                                                     </div>
                                                     <ng-template #thenRemoveRow>
-                                                        <button type="submit" class="btn btn-primary"
+                                                        <button type="button" class="btn btn-primary"
                                                             (click)="RemoveRow(i)" style="width: min-content;"><i
                                                                 class="fa fa-trash"></i></button>
                                                     </ng-template>
                                                     <ng-template #elseRemoveRow>
-                                                        <button disabled type="submit" class="btn btn-primary" [style.display]="isVisible16 ? 'block' : 'none'"
+                                                        <button disabled type="button" class="btn btn-primary" [style.display]="isVisible16 ? 'block' : 'none'"
                                                             (click)="RemoveRow(OrderLineIndex)"
                                                             style="width: min-content;"><i
                                                                 class="fa fa-trash"></i></button>
@@ -1808,17 +1808,17 @@
                         [style.display]="isVisibleCreateOrder ? 'block' : 'none'" style="width: fit-content;" (click)="counterSaleOrderSave()">Create Order</button>
                 </td>
                 <td>
-                    <button type="submit" class="btn btn-primary" id="register"
+                    <button type="button" class="btn btn-primary" id="register"
                     (click)="refresh()">Clear</button>
                 </td>
                 <td>
-                    <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
+                    <button type="button" (click)="close()" class="btn btn-primary">Close</button>
                 </td>
                 <td>
                     <button type="button" class="btn btn-primary" [style.display]="isVisiblePickTiPreview ? 'block' : 'none'" (click)="downloadPickTicket()"> Preview</button>
                 </td>
                 <td>
-                    <button type="submit" class="btn btn-primary" id="register" [style.display]="isVisibleUpdate ? 'block' : 'none'"
+                    <button type="button" class="btn btn-primary" id="register" [style.display]="isVisibleUpdate ? 'block' : 'none'"
                                             (click)="pickTicketupdateFunction()" style="width: 6rem;">Update</button>
 
                 </td>
@@ -1950,7 +1950,7 @@
                 <table class="center" style="width: 50%;">
                     <tr>
                         <td>
-                            <button type="submit" class="btn btn-info" data-dismiss="modal" id="register"
+                            <button type="button" class="btn btn-info" data-dismiss="modal" id="register"
                                 (click)="executeAction()">Yes</button>
                         </td>
                         <td>

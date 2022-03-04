@@ -348,7 +348,7 @@ export class ARInvoiceComponent implements OnInit {
 
     // } else {
     var len1 = this.lineDetailsArray.length;
-    alert(len1);
+    // alert(len1);
     if (len1 === 1) {
       alert('You can not delete the line');
       return;
@@ -686,7 +686,7 @@ export class ARInvoiceComponent implements OnInit {
             }
             // alert('second emit call')
             var arinvLnDtlArray = this.arInvoiceForm.get('invDisLines') as FormArray;
-            alert(data.obj.invDisLines.length)
+            // alert(data.obj.invDisLines.length)
             //   for (let index=0;index< data.invDisLines.length;index ++){
             //     alert(data.invDisLines[index].glDate);
             //   arinvLnDtlArray.controls[index].patchValue({
@@ -694,7 +694,7 @@ export class ARInvoiceComponent implements OnInit {
             //   })
             // }
             this.arInvoiceForm.patchValue(data.obj);
-            alert(this.invTypeList.length);
+            // alert(this.invTypeList.length);
             // debugger;
             if (this.invTypeList.length < 1) {
               this.service.arInvoiceList(data.obj.class).subscribe(
@@ -1156,13 +1156,13 @@ export class ARInvoiceComponent implements OnInit {
     formValue.taxableAmount = this.basicAmt;
     this.transactionService.ARInvoiceSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFULLY');
+        alert(res.message);
         this.arInvoiceForm.patchValue({ trxNumber: res.obj.trxNumber })
 
         // window.location.reload();
       } else {
         if (res.code === 400) {
-          alert('Code already present in the data base');
+          alert(res.message);
           // this.CompanyMasterForm.reset();
           // window.location.reload();
         }
@@ -1373,7 +1373,7 @@ export class ARInvoiceComponent implements OnInit {
   }
   onKey(index) {
     console.log(index);
-    alert(index + ' index')
+    // alert(index + ' index')
     var arrayControl = this.arInvoiceForm.get('invLines').value
     var patch = this.arInvoiceForm.get('invLines') as FormArray;
     var patchtaxDetail = this.arInvoiceForm.get('taxLines') as FormArray;
@@ -1431,7 +1431,7 @@ export class ARInvoiceComponent implements OnInit {
     this.service.completeInvoice(invno).subscribe(
       (res: any) => {
         if (res.code === 200) {
-          alert('RECORD POSTED SUCCESSFULLY');
+          alert(res.message);
           this.arInvoiceForm.disable();
           this.TaxDetailsArray().disable();
           this.arInvoiceForm.get('invLines').disable();
@@ -1440,7 +1440,7 @@ export class ARInvoiceComponent implements OnInit {
           // window.location.reload();
         } else {
           if (res.code === 400) {
-            alert('Code already present in the data base');
+            alert(res.message);
             // this.CompanyMasterForm.reset();
             // window.location.reload();
           }
@@ -2213,7 +2213,7 @@ export class ARInvoiceComponent implements OnInit {
     this.TaxDetailsArray().clear();
     // this.lineDistributionArray().clear();
     if (this.taxarr.has(this.selTaxLn)) {
-      alert(i + '---' + this.selTaxLn)
+      // alert(i + '---' + this.selTaxLn)
       var taxValues: any = this.taxarr.get(this.selTaxLn);
       for (let x = 0; x < taxValues.length; x++) {
         if (taxValues[x].invLineNo === i) {
@@ -2232,12 +2232,12 @@ export class ARInvoiceComponent implements OnInit {
     var control = patch.getRawValue();
     console.log(control);
 
-    alert(control[index].basicAmt);
+    // alert(control[index].basicAmt);
     var custTrxTypeId = this.arInvoiceForm.get('custTrxTypeId').value
     var locId = this.arInvoiceForm.get('locId').value;
     var extendedAmount = control[index].basicAmt;
     this.invLineNo=index+1;
-    alert(control[index].taxCategoryName + '--' + control[index].basicAmt);
+    // alert(control[index].taxCategoryName + '--' + control[index].basicAmt);
     if (control[index].taxCategoryName == null && control[index].basicAmt != null) {
       // this.lineDistributionArray().clear();
       // var exDistData = this.distarr.get(i);  
@@ -2252,7 +2252,7 @@ export class ARInvoiceComponent implements OnInit {
             for (let i = 0; i < exLineArr.length; i++) {
               var exLines = exLineArr[i];
               for (let j = 0; j < exLines.length; j++) {
-                alert(exLines[j].invoiceLineNum+'-line no--'+ this.invLineNo)
+                // alert(exLines[j].invoiceLineNum+'-line no--'+ this.invLineNo)
                 if (exLines[j].invoiceLineNum == this.invLineNo) {
                   // Avoid adding duplcate data
                   alert('Duplicate Entry');
@@ -2278,7 +2278,7 @@ export class ARInvoiceComponent implements OnInit {
               var invLnGrp: FormGroup = this.distLineDetails();
               
               this.lineDistributionArray().push(invLnGrp);
-              alert(i);
+              // alert(i);
             }
             var control = this.arInvoiceForm.get('invDisLines') as FormArray;
             for (let i = 0; i < this.lineDistributionArray().length; i++) {
@@ -2297,11 +2297,11 @@ export class ARInvoiceComponent implements OnInit {
       console.log(this.distarr)
       this.distValues = Array.from(this.distarr.values());
       console.log(this.distValues);
-      alert(this.distarr.values.length + '--' + this.distValues.length);
+      // alert(this.distarr.values.length + '--' + this.distValues.length);
       var allDistLn :any =[];
       for (let x = 0; x < this.distValues.length; x++) {
         var exLines = this.distValues[x];
-        alert(exLines.length + '--' + exLines.length);
+        // alert(exLines.length + '--' + exLines.length);
         
         for (let y = 0; y < exLines.length; y++) {
         
