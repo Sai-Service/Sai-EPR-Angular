@@ -596,7 +596,7 @@ export class AllReportsComponent implements OnInit {
   //  alert(toLicId)
     const fileName = 'Stock-Made-Details-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.stockMadeDetailsReport(fromDate, toDate, sessionStorage.getItem('locId'),toLicId)
+    this.reportService.stockMadeDetailsReport(fromDate, toDate, sessionStorage.getItem('locId'),toLicId,this.subInvCode.subInventoryCode)
       .subscribe(data => {
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
         this.isDisabled11 = false;
@@ -620,7 +620,7 @@ export class AllReportsComponent implements OnInit {
     var fromlocId = this.reportForm.get('spstktrfMdSumToLoc').value; 
     const fileName = 'Stock-Made-Summary-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.spstktrfMdSummaryReport(fromDate,invcDt4,sessionStorage.getItem('locId'),fromlocId)
+    this.reportService.spstktrfMdSummaryReport(fromDate,invcDt4,sessionStorage.getItem('locId'),fromlocId,this.subInvCode.subInventoryCode)
       .subscribe(data => {
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
         this.isDisabled12 = false;
@@ -643,7 +643,7 @@ export class AllReportsComponent implements OnInit {
   var fromlocId = this.reportForm.get('SprStkTrfRecdDtlsFromLoc').value; 
   const fileName = 'Stock-Received-Detail-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
   const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-  this.reportService.SprStkTrfRecdDtlsReport(fromDate,invcDt4,sessionStorage.getItem('locId'),fromlocId)
+  this.reportService.SprStkTrfRecdDtlsReport(fromDate,invcDt4,sessionStorage.getItem('locId'),fromlocId,this.subInvCode.subInventoryCode)
     .subscribe(data => {
       saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
       this.isDisabled13 = false;
@@ -667,7 +667,7 @@ var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');
 var fromlocId = this.reportForm.get('SprStkTrfRecdSummaryFromLoc').value; 
 const fileName = 'Stock-Received-Summary-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
 const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-this.reportService.SprStkTrfRecdSummaryReport(fromDate,invcDt4,sessionStorage.getItem('locId'),fromlocId)
+this.reportService.SprStkTrfRecdSummaryReport(fromDate,invcDt4,sessionStorage.getItem('locId'),fromlocId,this.subInvCode.subInventoryCode)
   .subscribe(data => {
     saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
     this.isDisabled14 = false;
