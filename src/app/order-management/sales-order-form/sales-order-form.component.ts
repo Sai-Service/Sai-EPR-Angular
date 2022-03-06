@@ -934,8 +934,7 @@ export class SalesOrderFormComponent implements OnInit {
   }
 
   onOptionsSelectedColor(variant) {
-    // if (this.currentOpration != 'orderSearch') {
-    // alert('variant')
+   
     this.orderManagementService.ColourSearchFn(variant)
       .subscribe(
         data => {

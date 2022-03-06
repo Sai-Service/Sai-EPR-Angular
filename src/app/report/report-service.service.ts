@@ -89,6 +89,16 @@ export class ReportServiceService {
     });
   }
 
+
+  spIncomeStatement(invcDt1,invcDt4,locId){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprIncomeStat?fromDate=${invcDt1}&toDate=${invcDt4}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+
   sspInvAgingReport(spInvAging1,spInvAging2,spInvAging3,locId){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/InventoryAging?age1=${spInvAging1}&age2=${spInvAging2}&age3=${spInvAging3}&locId=${locId}`;
     return this.http.get(REQUEST_URI, {

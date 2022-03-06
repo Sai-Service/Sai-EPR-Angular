@@ -2334,23 +2334,16 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
 
   pickTicketInvoiceFunction() {
-
     this.closeResetButton = false;
     this.progress = 0;
-
     var tcsPer = this.CounterSaleOrderBookingForm.get('tcsPer').value;
     var ordTotAmt = this.CounterSaleOrderBookingForm.get('totAmt').value;
     var tcsCal = Math.round((ordTotAmt * tcsPer / 100 + Number.EPSILON) * 100) / 100;
     this.CounterSaleOrderBookingForm.patchValue({ 'tcsAmt': tcsCal });
     if (tcsCal > 0) {
       alert('Added TCS-->' + tcsCal);
-
     }
     this.dataDisplay = 'Invoice Genration in progress....Do not refresh the Page';
-    // this.isDisabled10 = true;
-    // var formValue = this.CounterSaleOrderBookingForm
-    // const formValue1: ISalesBookingForm = this.transData(this.CounterSaleOrderBookingForm.value);
-    // console.log(formValue);
     var formValue = this.CounterSaleOrderBookingForm.getRawValue();
     var orderLines = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     formValue.ouId = Number(sessionStorage.getItem('ouId'));
