@@ -146,7 +146,7 @@ export class WsVehicleMasterComponent implements OnInit {
   insurerSiteId: string;
   insCompanyName: string;
   inscompanySite: string;
-
+  status :string='Active';
   ewStatus: string;
   mcpStatus: string;
   // ewBookletNo:string;
@@ -287,6 +287,7 @@ export class WsVehicleMasterComponent implements OnInit {
       // ewSchemeId: [],
       // ewDate:[],
       // ewBookletNo:[],
+      status:[],
       vin: [],
       monthYrManf: [],
       regDate: [],
@@ -579,10 +580,10 @@ export class WsVehicleMasterComponent implements OnInit {
 
     const formValue: IWsVehicleMaster =this.transeData( this.wsVehicleMasterForm.value);
     this.CreateItemCode();
-    this.CheckDataValidations()
+    this.CheckDataValidations();
 
     if (this.checkValidation) {
-      alert("Data Validation Sucessfully....\nPosting data  to WS Customer Master")
+      alert("Data Validation Sucessfully....\nPosting Vehicle to WS Customer Master")
 
       // debugger;
       console.log(formValue);
@@ -605,10 +606,32 @@ export class WsVehicleMasterComponent implements OnInit {
     } else { alert("Data Validation Not Sucessfull....\nPosting Not Done...") }
   }
 
+
   updateMast() {
-    // this.newMast();
-   
+    alert ("Update  Vehicle Master Data......")
+    const formValue: IWsVehicleMaster =this.transeData( this.wsVehicleMasterForm.value);
+    this.CreateItemCode();
+    this.CheckDataValidations();
+    var itmId =this.wsVehicleMasterForm.get("itemId").value;
+    var mstat ='Active'
+    if (this.checkValidation) {
+      alert("Data Validation Sucessfully....\nSaveing data to WS Vehicle Master")
+      this.service.UpdateWsVehicleMaster(formValue).subscribe((res: any) => {
+      if (res.code === 200) {
+        alert(res.message);
+        // window.location.reload();
+        this.wsVehicleMasterForm.disable()
+      } else {
+        if (res.code === 400) {
+          alert(res.message);
+          // this.wsVehicleMasterForm.reset();
+        }
+      }
+    });
   }
+  }
+
+
 
   resetMast() {
     window.location.reload();
@@ -632,11 +655,10 @@ export class WsVehicleMasterComponent implements OnInit {
         data => {
           this.lstcomments = data.obj;
 
-          if (this.lstcomments === null) {
+          if (data.code === 400) {
             alert("Registration No : [ " + mReg + " ] not Found...");
             this.displayButton = true;
             this.showCreateCustButton = true;
-
             this.showCreateItemButton = true;
             //  this.resetVehDet();this.resetCustDet();this.resetAddnl();this.resetTv();
             // this.wsVehicleMasterForm.reset();
@@ -645,14 +667,14 @@ export class WsVehicleMasterComponent implements OnInit {
 
           }
           else {
+
+            this.displayButton = false;
             console.log(this.lstcomments);
             this.wsVehicleMasterForm.patchValue(data.obj);
             this.GetItemDeatils(this.lstcomments.itemId.itemId);
             this.GetCustomerDetails(this.lstcomments.customerId);
             this.GetCustomerSiteDetails(this.lstcomments.customerId);
-
-            this.displayButton = false;
-
+            this.CreateItemCode();
           }
         });
   }

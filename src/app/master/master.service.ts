@@ -2935,6 +2935,17 @@ public saveWSVehicle(wsVehicleDetails) {
 }
 
 
+UpdateWsVehicleMaster(wsVehMasterRecord) {
+  alert ("in update...")
+  const options = {
+    headers: this.headers
+  };
+  const url = (this.ServerUrl + `/VehAddInfo/ws`);
+  return this.http.put(url, wsVehMasterRecord, options);
+  // const url = (this.ServerUrl + `/AccountTrf/ArSaveUpdate?docTrfNo=${docTrfNum}`);
+}
+
+
 
    public SaiEwCustomerSubmit(EwCustomerMasterRecord) {
     const options = {
