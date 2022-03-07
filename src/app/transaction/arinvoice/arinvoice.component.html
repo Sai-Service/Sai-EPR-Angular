@@ -69,10 +69,10 @@
         <a class="nav-link active" id="home-tab-md" data-toggle="tab" href="#home-md" role="tab" aria-controls="home-md" aria-selected="true">AR Invoice</a>
       </li>
       <li class="nav-item waves-effect waves-light">
-        <a class="nav-link" id="profile-tab-md" data-toggle="tab" href="#profile-md" role="tab" aria-controls="profile-md" aria-selected="false" (click)="viewARLinedata()">AR Invoice Line</a>
+        <a class="nav-link" id="profile-tab-md" data-toggle="tab" href="#profile-md" role="tab" aria-controls="profile-md" aria-selected="false" (click)="viewARLinedata()" [style.display]="isVisibleArInvoiceLine ? 'block' : 'none'">AR Invoice Line</a>
       </li>
       <li class="nav-item waves-effect waves-light">
-        <a class="nav-link" id="contact-tab-md" data-toggle="tab" href="#contact-md" role="tab" aria-controls="contact-md" aria-selected="false" (click)="viewARDist()" >Distribution</a>
+        <a class="nav-link" id="contact-tab-md" data-toggle="tab" href="#contact-md" role="tab" aria-controls="contact-md" aria-selected="false" (click)="viewARDist()" [style.display]="isVisibleArDist ? 'block' : 'none'">Distribution</a>
     </li>
     </ul>
      <div style="border: 0px;" class="tab-content card " id="myTabContentMD">
@@ -131,7 +131,7 @@
         </td>
         <td style="width: 15%" class="LabelFontStyle">&nbsp;Invoice&nbsp;Date&nbsp;:&nbsp;</td>
         <td>
-            <input disabled type="date" formControlName="invoiceDate" class="form-control">
+            <input disabled type="text" formControlName="invoiceDate" class="form-control" [(ngModel)]="glDate">
         </td>
         <td style="width: 15%" class="LabelFontStyle">&nbsp;Tax&nbsp;:&nbsp;</td>
         <td>
@@ -201,7 +201,7 @@
 
             <td style="width: 15%" class="LabelFontStyle1">&nbsp;Location&nbsp;Name&nbsp;:&nbsp;</td>
             <td>
-                <select formControlName="locId" id="locId" class="form-control">
+                <select formControlName="locId" id="locId" class="form-control" (change)="dispArInvLine()">
                     <option *ngFor="let sc of  locIdList" [ngValue]="sc.locId" >
                         {{sc.locId}}-{{sc.locCode}}
                     </option>
@@ -268,6 +268,7 @@
                 <!-- <input type="number" min="0"  style="width: 5rem;" [(ngModel)]="billToCustNo" formControlName="billToCustNo" (keydown.tab)="accountNoSearchfn(billToCustNo)"  class="form-control"> -->
                 <input type="number" formControlName="billToCustNo" value={{billToCustNo}} [(ngModel)]="billToCustNo" (keydown.tab)="accountNoSearchfn(billToCustNo)"  class="form-control" style="width: 170px;">
               </td>
+              <input hidden formControlName="custtaxCategoryName">
             <td style="width: 15%"  class="LabelFontStyle">&nbsp;Name&nbsp;:&nbsp;</td>
             <td>
                 <!-- <input type="text" formControlName="billToCustName" class="form-control"> -->
@@ -330,13 +331,36 @@
 
             </td>
 
+            <td style="width: 15%" class="LabelFontStyle">Site&nbsp;Name&nbsp;&nbsp;:&nbsp;  </td>
+            <div *ngIf="displayCustomerSite; then thenCustomerSite; else elseCustomerSite"></div>
+            <ng-template #thenCustomerSite>
+            <td>
+                <!-- <input disabled  type="text" formControlName="siteName" [(ngModel)] ="siteName"   class="form-control">  -->
+            <select formControlName="siteName" id="siteName" class="form-control" style="width: 200px;"
+            [ngClass]="{ 'is-invalid': submitted && f.siteName.errors }"
+            (ngModelChange)='onOptionsSelectedcustSiteName($event)'>
+            <option *ngFor="let custSite of accountNoSite" [value]="custSite.siteName">
+                {{custSite.siteName}}
+            </option>
+        </select>
+        <div *ngIf="submitted && f.siteName.errors" class="invalid-feedback">
+            <div *ngIf="f.siteName.errors.required">Site Code cannot be blank</div>
+        </div>
+    </td>
+            </ng-template>
+            <ng-template #elseCustomerSite>
+                <td>
+                    <input disabled type="text" class="form-control" formControlName="siteName" value={{siteName}}
+                        style="width: 160px;">
+                </td>
+            </ng-template>
             <td style="width: 15%"  class="LabelFontStyle">&nbsp;Address&nbsp;:&nbsp;</td>
             <td>
                 <input type="text" disabled  formControlName="billToCustAdd" class="form-control">
             </td>
-            <td style="width: 15%"  class="LabelFontStyle">&nbsp;Contact&nbsp;:&nbsp;</td>
+            <!-- <td style="width: 15%"  class="LabelFontStyle">&nbsp;Contact&nbsp;:&nbsp;</td>comment by vinita -->
             <td>
-                <input type="text" disabled class="form-control" formControlName="billcontactNo">
+                <input type="text" hidden class="form-control" formControlName="billcontactNo">
             </td>
         </tr>
             </fieldset>
@@ -533,7 +557,7 @@
                                                                 (ngModelChange)='onOptionTaxCatSelected(i,null, $event,basicAmt)'
                                                                 class="form-control">
                                                                 <option>--Select--</option>
-                                                                <option *ngFor="let sc of  taxCategoryList" [value]="sc.taxCategoryName">
+                                                                <option *ngFor="let sc of  taxCategoryList[i]" [ngValue]="sc">
                                                                     {{sc.taxCategoryName}}
                                                                 </option>
                                                             </select>
@@ -546,13 +570,13 @@
                                                 <td>
                                                     <!-- <div *ngIf="displayHSN; then thenBlockHSN; else elseBlockHSN"></div>
                 <ng-template #thenBlockHSN> -->
-                                                    <!-- <input type="text" formControlName="hsnSacCode"
+                                                    <!-- <input type="text" formControlName="hsnSacCode" (ngModelChange)='onHsnCodeSelected($event,i)'
                                                         style="width: 4rem;" class="form-control"> -->
                                                         <select  style="width:fit-content" formControlName="hsnSacCode" id="hsnSacCode" class="form-control"
-                                                                                (ngModelChange)='onHsnCodeSelected($event,i)' #hsnSacCode1>
+                                                                                 #hsnSacCode1>
                                                                                 <option></option>
                                                                                 <option *ngFor="let sc of hsnSacCodeList" [ngValue]="sc.hsnsaccode">
-                                                                                    {{sc.hsnsaccode}}-{{sc.description}}
+                                                                                    {{sc.hsnsaccode}}
                                                                                 </option>
                                                                             </select>
 
@@ -592,13 +616,13 @@
                                                     </div>
                                                     <!-- type="button" -->
                                                     <ng-template #thenaddRow>
-                                                    <button type="submit" class="btn btn-primary" id="addinvln"
+                                                    <button type="button" class="btn btn-primary" id="addinvln"
                                                         (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)"
                                                         style="width: min-content;"><i
                                                             class="fa fa-plus"></i></button>
                                                     </ng-template>
                                                     <ng-template #elseaddRow>
-                                                        <button disabled type="submit" class="btn btn-primary" id="addinvln"
+                                                        <button disabled type="button" class="btn btn-primary" id="addinvln"
                                                             (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)"
                                                             style="width: min-content;"><i
                                                                 class="fa fa-plus"></i></button>
@@ -609,12 +633,12 @@
                                                         *ngIf="displayRemoveRow; then thenRemoveRow; else elseRemoveRow">
                                                     </div>
                                                     <ng-template #thenRemoveRow>
-                                                    <button type="submit" class="btn btn-primary"
+                                                    <button type="button" class="btn btn-primary"
                                                         (click)="RemoveRow(i)" style="width: min-content;"><i
                                                             class="fa fa-trash"></i></button>
                                                     </ng-template>
                                                     <ng-template #elseRemoveRow>
-                                                        <button disabled type="submit" class="btn btn-primary"
+                                                        <button disabled type="button" class="btn btn-primary"
                                                             (click)="RemoveRow(i)" style="width: min-content;"><i
                                                                 class="fa fa-trash"></i></button>
                                                         </ng-template>
@@ -980,12 +1004,12 @@
                                         *ngIf="displayRmDistRow; then thenRmDistRow; else elseRmDistRow">
                                     </div>
                                     <ng-template #thenRmDistRow>
-                                    <button type="submit" class="btn btn-primary"
+                                    <button type="button" class="btn btn-primary"
                                                                     (click)="RemoveDistributionRow(k)" style="width: min-content;"><i
                                                                         class="fa fa-trash"></i></button>
                                     </ng-template>
                                     <ng-template #elseRmDistRow>
-                                        <button disabled type="submit" class="btn btn-primary"
+                                        <button disabled type="button" class="btn btn-primary"
                                                                         (click)="RemoveDistributionRow(k)" style="width: min-content;"><i
                                                                             class="fa fa-trash"></i></button>
                                         </ng-template>
@@ -1048,13 +1072,13 @@
                         <ng-template #elseBlockViewAccounting>
 
                           </ng-template>
-                        <td><button type="button" class="btn btn-primary"  style="width: 8rem;" (click)="AllDistribution()">All Destribution</button></td>
+                        <td><button type="button" class="btn btn-primary"  style="width: 8rem;" (click)="AllDistribution()">All Distribution</button></td>
                         <td>
                             <button type="button" class="btn btn-primary" (click)="clearFormArray()"
                             style="width: 8rem;">Reset</button>
                             </td>
                         <td>
-                            <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close</button>
+                            <button type="button" class="btn btn-primary" id="register" (click)="closeMast()">Close</button>
                         </td>
 
                         </tr>
@@ -1288,7 +1312,7 @@
                                    </tr>
                                 </tbody>
 
-                                <ng-container  class="center" formArrayName="invLine">
+                                <ng-container  class="center" formArrayName="invApplyList">
                                     <ng-container   *ngFor="let group of invLineArray().controls; let k= index" [formGroupName]="k" class="auto-style5">
                                             <!-- <tr *ngFor="let com of lstinvoices let i=index" class="ItemStyle" style="text-decoration:none;"> -->
                                                <tr>

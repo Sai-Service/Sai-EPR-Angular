@@ -7,7 +7,8 @@ import { OrderManagementService } from 'src/app/order-management/order-managemen
 import { TransactionService } from '../transaction.service';
 import { ManualARInvoiceObj } from './manual-arinvoice-obj';
 import { DatePipe } from '@angular/common';
-import { log } from 'util';
+import { stringify } from '@angular/compiler/src/util';
+// import { log } from 'util';
 // import { ManualInvoiceObj } from '../po-invoice/manual-invoice-obglDatej';
 // import { ManualARInvoiceObj } from '../manual-arinvoice-obj';
 
@@ -42,6 +43,8 @@ interface IArInvoice {
   shipcontactNo: number;
   // invoiceAmount:number;
   emplId: number;
+  custtaxCategoryName:string;
+  siteName:string;
 }
 @Component({
   selector: 'app-arinvoice',
@@ -106,6 +109,7 @@ export class ARInvoiceComponent implements OnInit {
   // public minDate = new Date();
   now = new Date();
   glDate = this.pipe.transform(this.now, 'dd-MM-yyyy')
+  invoiceDate=this.pipe.transform(this.now,'dd-MM-yyyy');
   glDateLine: Date;
   // glDateLine = this.pipe.transform(this.now, 'y-MM-dd');comment by vinita
   // glDateLine = this.pipe.transform(this.now, 'dd-MM-yyyy');
@@ -126,6 +130,8 @@ export class ARInvoiceComponent implements OnInit {
   public NaturalAccountList: Array<string> = [];
   public InterBrancList: Array<string> = [];
   accountNoSearch: any;
+  accountNoSite:any;
+  displayCustomerSite=true;
   invItemList: any[];
 
   lstinvoices: any[];
@@ -135,7 +141,7 @@ export class ARInvoiceComponent implements OnInit {
   userList1: any[] = [];
   userList2: any[] = [];
   lastkeydown1: number = 0;
-  public taxCategoryList: any;
+  public taxCategoryList: any = [];
   public segmentNameList: any;
   subscription: any;
   public taxUistatus: boolean = false;
@@ -178,6 +184,7 @@ export class ARInvoiceComponent implements OnInit {
   customerSiteId: number;
   custAccountNo: number;
   custName: string;
+  siteName:string;
 
   hsnSacCodeList: any = [];
 
@@ -198,6 +205,13 @@ export class ARInvoiceComponent implements OnInit {
   disabledViewAccounting = false;
   disabledComplete = false;
   compId: number;
+  custtaxCategoryName:string;
+  addonDescList: any;
+  public allTaxCategoryList: any = [];
+
+
+  isVisibleArInvoiceLine: boolean = false;
+  isVisibleArDist:boolean=false;
 
   search(activeTab) {
     this.activeTab = activeTab;
@@ -281,12 +295,13 @@ export class ARInvoiceComponent implements OnInit {
       ledgerId: [],
       description: [],
       docSeqValue: [],
-
+      custtaxCategoryName:[],
+      siteName:[],
 
       invLines: this.fb.array([this.lineDetailsGroup()]),
       invDisLines: this.fb.array([this.distLineDetails()]),
       taxLines: this.fb.array([this.TaxDetailsGroup()]),
-      invLine: this.fb.array([this.invLineDetails()])
+      invApplyList: this.fb.array([this.invLineDetails()])
     });
   }
 
@@ -316,10 +331,21 @@ export class ARInvoiceComponent implements OnInit {
   }
 
   invLineArray(): FormArray {
-    return <FormArray>this.arInvoiceForm.get('invLine')
+    return <FormArray>this.arInvoiceForm.get('invApplyList')
   }
   addRow(k) {
-    // alert('k '+ k);
+  //   alert('k '+ k);
+  //   var trxLnArr1 = this.arInvoiceForm.get('invLines').value;
+  //   var item=trxLnArr1[k-1].segment;
+  //   var desc = trxLnArr1[k-1].description;
+  //   var itemqty=trxLnArr1[k-1].orderedQty;
+  //   var price=trxLnArr1[k-1].unitSellingPrice
+  //   var taxCat=trxLnArr1[k-1]. taxCategoryName
+  //   alert(item+''+desc+''+itemqty+''+price+''+taxCat);
+  //   if((item===null|| desc===null||item===undefined|| desc===undefined) && (itemqty===null && price===null && taxCat===''))
+  //  { alert('Please enter data in blank field');
+  //  return;
+  // }
     this.lineDetailsArray.push(this.lineDetailsGroup());
     var len = this.lineDetailsArray.length;
     var patch = this.arInvoiceForm.get('invLines') as FormArray;
@@ -333,6 +359,7 @@ export class ARInvoiceComponent implements OnInit {
 
   }
   addRowDistribution(k) {
+   
     this.lineDistributionArray().push(this.distLineDetails());
     var len = this.lineDistributionArray().length;
     var patch = this.arInvoiceForm.get('invDisLines') as FormArray;
@@ -348,7 +375,7 @@ export class ARInvoiceComponent implements OnInit {
 
     // } else {
     var len1 = this.lineDetailsArray.length;
-    alert(len1);
+    // alert(len1);
     if (len1 === 1) {
       alert('You can not delete the line');
       return;
@@ -532,6 +559,11 @@ export class ARInvoiceComponent implements OnInit {
 
         //(<any>this.newRow.controls.segment).nativeElement.focus();
       });
+      // this.service.searchByItemSegmentAR('TCS')
+      // .subscribe((data) => {
+      //   this.invItemList = data;
+        
+      // });
     // this.transactionService.invTypeListFN().subscribe(data => {
     //   this.invTypeList = data;
     //   console.log(this.invTypeList);
@@ -598,6 +630,11 @@ export class ARInvoiceComponent implements OnInit {
     }
   }
   viewARLinedata() {
+     this.service.searchByItemSegmentAR('TCS')
+      .subscribe((data) => {
+        this.invItemList = data;
+        
+      });
     if (this.hsnSacCodeList == '') {
       this.service.hsnSacCodeData('HSN').subscribe(
         data => {
@@ -615,6 +652,61 @@ export class ARInvoiceComponent implements OnInit {
         );
     }
   }
+  // filterRecord(event, i) {
+  //   alert(event+'Filter');
+  //   var invTyp = this.arInvoiceForm.get('source').value;
+
+  //   var itemCode = event.target.value;
+  //   alert(itemCode)
+  //   if (event.keyCode == 13) {
+  //     // enter keycode
+  //     if (itemCode.length == 8) {
+  //       if (this.invItemList.length <= 1) {
+  //         if (invTyp === 'Manual') {
+  //           // alert('inside if--');
+  //           this.service.searchByItemSegmentAR(itemCode.toUpperCase())
+  //             .subscribe((data) => {
+  //               this.invItemList = data;
+  //               this.onOptioninvItemIdSelected(itemCode, i);
+  //             });
+  //         } else {
+  //           this.service
+  //             .searchByItemSegmentDiv(this.divisionId, itemCode.toUpperCase())
+  //             .subscribe((data) => {
+  //               this.invItemList = data;
+  //               // this.Select(data[0].itemId);
+  //               this.onOptioninvItemIdSelected(itemCode, i);
+  //             });
+  //         }
+  //       }else{
+  //         this.onOptioninvItemIdSelected(itemCode, i);
+  //       }
+
+  //       return;
+  //     } else if (itemCode.length >= 4) {
+  //       // alert(trxType);
+  //       if (invTyp === 'Manual') {
+  //         // alert('inside if');
+  //         this.service.searchByItemSegmentAR(itemCode.toUpperCase())
+  //         .subscribe((data) => {
+  //           this.invItemList = data;
+            
+  //         });
+  //       } else {
+  //         this.service
+  //           .searchByItemSegmentDiv(this.divisionId, itemCode.toUpperCase())
+  //           .subscribe((data) => {
+  //             this.invItemList = data;
+  //             // this.Select(data[0].itemId);
+  //             //  this.onOptiongetItem(itemCode, i);
+  //           });
+  //       }
+  //     } else {
+  //       alert('Please Enter 4 characters of item number!!');
+  //       return;
+  //     }
+  //   }
+  // }
   filterRecord(event, i) {
     var itemCode = event.target.value;
     var invTyp = this.arInvoiceForm.get('source').value;
@@ -641,7 +733,7 @@ export class ARInvoiceComponent implements OnInit {
             this.onOptioninvItemIdSelected(itemCode, i);
           });
         // }
-        //  } 
+        //  }   
       } else {
         alert('Please Enter 4 characters of item number!!');
         return;
@@ -649,12 +741,12 @@ export class ARInvoiceComponent implements OnInit {
     }
   }
 
-
   arInvoice(arInvoiceForm) { }
 
   searchByInvoiceNo(trxNumber1) {
 
     this.displaySaveButton = false;
+    this.displayCustomerSite = false;
     this.TaxDetailsArray().clear();
     // this.arInvoiceForm.get('invLines').clear();
     this.lineDistributionArray().clear();
@@ -664,6 +756,8 @@ export class ARInvoiceComponent implements OnInit {
           if (data.code === 200) {
             this.lstcomments = data.obj;
             console.log(this.lstcomments);
+            this.isVisibleArInvoiceLine=true;
+            this.isVisibleArDist=true;
             this.taxUistatus = true;
             this.arInvoiceForm.patchValue(this.lstcomments, { emitEvent: false });
             // alert('after emit');
@@ -686,7 +780,7 @@ export class ARInvoiceComponent implements OnInit {
             }
             // alert('second emit call')
             var arinvLnDtlArray = this.arInvoiceForm.get('invDisLines') as FormArray;
-            alert(data.obj.invDisLines.length)
+            // alert(data.obj.invDisLines.length)
             //   for (let index=0;index< data.invDisLines.length;index ++){
             //     alert(data.invDisLines[index].glDate);
             //   arinvLnDtlArray.controls[index].patchValue({
@@ -694,7 +788,7 @@ export class ARInvoiceComponent implements OnInit {
             //   })
             // }
             this.arInvoiceForm.patchValue(data.obj);
-            alert(this.invTypeList.length);
+            // alert(this.invTypeList.length);
             // debugger;
             if (this.invTypeList.length < 1) {
               this.service.arInvoiceList(data.obj.class).subscribe(
@@ -716,11 +810,12 @@ export class ARInvoiceComponent implements OnInit {
               this.arInvoiceForm.patchValue({ custTrxTypeId: seltrxtyp.custTrxTypeId });
             }
             this.disabledViewAccounting = true;
-            // this.disabledComplete=true;
+            this.disabledComplete=true;
             if (data.obj.invStatus == 'Complete') {
               this.displayaddRow = false;
               this.displayRemoveRow = false;
               this.displayRmDistRow = false;
+              this.disabledComplete=false; 
               this.arInvoiceForm.disable();
             }
           }
@@ -761,6 +856,16 @@ export class ARInvoiceComponent implements OnInit {
         console.log(this.invTypeList);
 
       });
+      if(this.billToCustNo!=null && this.arInvoiceForm.get('source').value!=null && this.arInvoiceForm.get('class').value!=null  && this.arInvoiceForm.get('custTrxTypeId').value!=null && this.arInvoiceForm.get('locId').value!=null){
+        this.isVisibleArInvoiceLine=true;
+      }
+     
+  }
+  dispArInvLine(){
+    if(this.billToCustNo!=null && this.arInvoiceForm.get('source').value!=null && this.arInvoiceForm.get('class').value!=null  && this.arInvoiceForm.get('custTrxTypeId').value!=null && this.arInvoiceForm.get('locId').value!=null){
+      this.isVisibleArInvoiceLine=true;
+    }
+   
   }
   displayTaxDetail(i) {
     for (let i = 0; i < this.lstcomments.taxLines.length; i++) {
@@ -799,6 +904,99 @@ export class ARInvoiceComponent implements OnInit {
       diss1: 0,
 
     })
+    var custaxTaxCatName=this.arInvoiceForm.get('custtaxCategoryName').value;
+    // alert(custaxTaxCatName+'custaxTaxCatName')
+    if (custaxTaxCatName === 'Sales-IGST') {
+      // alert(custaxTaxCatName);
+      this.orderManagementService.addonDescList2(itemId, custaxTaxCatName,1,'N')
+        .subscribe(
+          data => {
+            if (data.code === 200) {
+              this.addonDescList = data.obj;
+              for (let i = 0; i < data.obj.length; i++) {
+                var itemtaxCatNm: string = data.obj[i].taxCategoryName;
+                if (itemtaxCatNm.includes('Sale-I-GST')) {
+                  // alert(itemtaxCatNm);
+                  (patch.controls[index]).patchValue({
+                    // itemId: data.obj[i].itemId,
+                    // orderedItem: data.obj[i].description,
+                    hsnSacCode: data.obj[i].hsnSacCode,
+                    uom: data.obj[i].uom,
+                    // unitSellingPrice: data.obj[0].priceValue,by vinita
+                  });
+                  this.orderManagementService.getTaxCategoriesForSales(custaxTaxCatName, data.obj[i].taxPercentage)
+                    .subscribe(
+                      data1 => {
+                        this.taxCategoryList[index] = data1;
+                        console.log(this.taxCategoryList[index]);
+                        console.log(data.obj[i].taxCategoryName);
+                        this.allTaxCategoryList[index] = data1;
+                        let itemCateNameList = this.taxCategoryList[index].find(d => d.taxCategoryName === data.obj[i].taxCategoryName);
+                        console.log(itemCateNameList);
+
+                        (patch.controls[index]).patchValue({
+                          taxCategoryId: itemCateNameList.taxCategoryId,
+                          taxCategoryName: itemCateNameList,
+                        })
+                      }
+                    );
+                }
+              }
+           
+            }
+            else if (data.code === 400) {
+              alert(data.message)
+            }
+          })
+        ;
+
+    }
+    else{
+      // alert(custaxTaxCatName+'custaxTaxCatName in else')
+      this.orderManagementService.addonDescList2(itemId, custaxTaxCatName,1,'N')
+        .subscribe(
+          data => {
+            if (data.code === 200) {
+              this.addonDescList = data.obj;
+              // for (let i = 0; i < data.obj.length; i++) {
+                var itemtaxCatNm: string = data.obj[0].taxCategoryName;
+                // alert(data.obj[0].taxCategoryName+'TAX IN FOR'+itemtaxCatNm+data.obj[0].taxPercentage)
+                if (itemtaxCatNm.includes('Sale-S&C-GST') ) {
+                  // alert(itemtaxCatNm+'--in If'+custaxTaxCatName);
+                  (patch.controls[index]).patchValue({
+                    // itemId: data.obj[i].itemId,
+                    // orderedItem: data.obj[i].description,
+                    hsnSacCode: data.obj[0].hsnSacCode,
+                    uom: data.obj[0].uom,
+                    // unitSellingPrice: data.obj[0].priceValue,by vinita
+                  });
+                  // alert(custaxTaxCatName +'-------'+ data.obj[0].taxPercentage);
+                  this.orderManagementService.getTaxCategoriesForSales(custaxTaxCatName, data.obj[0].taxPercentage)
+                    .subscribe(
+                      data1 => {
+                        this.taxCategoryList[index] = data1;
+                        console.log(this.taxCategoryList[index]);
+                        console.log(data.obj[0].taxCategoryName);
+                        this.allTaxCategoryList[index] = data1;
+                        let itemCateNameList = this.taxCategoryList[index].find(d => d.taxCategoryName === data.obj[0].taxCategoryName);
+                        console.log(itemCateNameList);
+
+                        (patch.controls[index]).patchValue({
+                          taxCategoryId: itemCateNameList.taxCategoryId,
+                          taxCategoryName: itemCateNameList,
+                        })
+                      }
+                    );
+                }
+              // }
+           
+            }
+            else if (data.code === 400) {
+              alert(data.message)
+            }
+          })
+        ;
+    }
     // }
   }
   getInvItemId($event) {
@@ -1156,13 +1354,13 @@ export class ARInvoiceComponent implements OnInit {
     formValue.taxableAmount = this.basicAmt;
     this.transactionService.ARInvoiceSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFULLY');
+        alert(res.message);
         this.arInvoiceForm.patchValue({ trxNumber: res.obj.trxNumber })
 
         // window.location.reload();
       } else {
         if (res.code === 400) {
-          alert('Code already present in the data base');
+          alert(res.message);
           // this.CompanyMasterForm.reset();
           // window.location.reload();
         }
@@ -1171,7 +1369,7 @@ export class ARInvoiceComponent implements OnInit {
   }
   invDisLinesInTax: any = [];
   onOptionTaxCatSelected(i, taxcatid, taxCategoryName, basicAmt, activeTab) {
-
+    // alert(taxCategoryName.taxCategoryName);
     var len1 = this.TaxDetailsArray().length;
     this.invLineNo = i + 1;
     if (this.taxUistatus === false) {
@@ -1180,10 +1378,11 @@ export class ARInvoiceComponent implements OnInit {
       var arrayControl = this.arInvoiceForm.get('invLines').value;
       var patchtaxDetail = this.arInvoiceForm.get('taxLines') as FormArray;
       if (taxcatid === null) {
-        let selectedValue = this.taxCategoryList.find(v => v.taxCategoryName == taxCategoryName);
+        let selectedValue = this.taxCategoryList.find(v => v.taxCategoryName == taxCategoryName.taxCategoryName);
         this.taxCategoryId = selectedValue.taxCategoryId
       }
       else {
+        // alert('in else')
         this.taxCategoryId = taxcatid;
       }
       var patch = this.arInvoiceForm.get('invLines') as FormArray;
@@ -1255,7 +1454,7 @@ export class ARInvoiceComponent implements OnInit {
                     for (let i = 0; i < exLineArr.length; i++) {
                       var exLines = exLineArr[i];
                       for (let j = 0; j < exLines.length; j++) {
-                        alert(exLines[j].invoiceLineNum+'-line no in tax--'+ this.invLineNo)
+                        // alert(exLines[j].invoiceLineNum+'-line no in tax--'+ this.invLineNo)
                         if (exLines[j].invoiceLineNum <=this.invLineNo ) {
                          
                         } else {
@@ -1304,6 +1503,7 @@ export class ARInvoiceComponent implements OnInit {
       // this.patchResultList(i, this.taxCalforItem);
     }
     this.activeTab = activeTab;
+    this.isVisibleArDist=true;
   }
 
   taxDetails(op, i, taxCategoryId) {
@@ -1373,7 +1573,7 @@ export class ARInvoiceComponent implements OnInit {
   }
   onKey(index) {
     console.log(index);
-    alert(index + ' index')
+    // alert(index + ' index')
     var arrayControl = this.arInvoiceForm.get('invLines').value
     var patch = this.arInvoiceForm.get('invLines') as FormArray;
     var patchtaxDetail = this.arInvoiceForm.get('taxLines') as FormArray;
@@ -1394,7 +1594,7 @@ export class ARInvoiceComponent implements OnInit {
     var itemId = arrayControl[index].itemId;
     var taxId = arrayControl[index].taxCategoryId
     // alert(itemId);
-    // alert(this.taxCategoryId)
+    // alert(taxId)
     var diss = 0;
     var sum = 0;
     // var baseAmount = arrayControl[index].basicAmt
@@ -1407,6 +1607,7 @@ export class ARInvoiceComponent implements OnInit {
     var len1 = this.TaxDetailsArray().length;
     // comment need tgo replace
     if (baseAmount != null && taxId != undefined) {
+      // alert('in if');
       this.onOptionTaxCatSelected(index, taxId, null, baseAmount, 'profile-md')
     }
     // console.log(this.poMasterDtoForm.value);
@@ -1431,7 +1632,7 @@ export class ARInvoiceComponent implements OnInit {
     this.service.completeInvoice(invno).subscribe(
       (res: any) => {
         if (res.code === 200) {
-          alert('RECORD POSTED SUCCESSFULLY');
+          alert(res.message);
           this.arInvoiceForm.disable();
           this.TaxDetailsArray().disable();
           this.arInvoiceForm.get('invLines').disable();
@@ -1440,7 +1641,7 @@ export class ARInvoiceComponent implements OnInit {
           // window.location.reload();
         } else {
           if (res.code === 400) {
-            alert('Code already present in the data base');
+            alert(res.message);
             // this.CompanyMasterForm.reset();
             // window.location.reload();
           }
@@ -1513,30 +1714,76 @@ export class ARInvoiceComponent implements OnInit {
       .subscribe(
         data => {
           this.accountNoSearch = data.obj[0];
+          this.accountNoSite=data.obj;
           console.log(this.accountNoSearch);
           let selectedValue = this.paymentTermList.find(v => v.lookupValue === this.accountNoSearch.paymentType);
           this.arInvoiceForm.patchValue({
             billToCustNo: this.accountNoSearch.accountNo,
             billToCustName: this.accountNoSearch.custName,
-            billToCustAdd: this.accountNoSearch.billToAddress,
             shipToCustNo: this.accountNoSearch.accountNo,
             shipToCustName: this.accountNoSearch.custName,
-            shipToCustAdd: this.accountNoSearch.shipToAddress,
             shipToCustId: this.accountNoSearch.customerId,
-            shipToSiteId: this.accountNoSearch.shipToLocId,
-            billToSiteId: this.accountNoSearch.billToLocId,
-            billToCustId: this.accountNoSearch.customerId,
-            billcontactNo: this.accountNoSearch.mobile1,
-            shipcontactNo: this.accountNoSearch.mobile1,
-            // paymentTerm:this.accountNoSearch.paymentTerm,
             paymentTerm: selectedValue.lookupValueId,
           });
 
-
+          for (let i = 0; i < this.accountNoSite.length; i++) {
+            // alert(this.custSiteList.length + '----' + this.custSiteList[i].ouId + '-----' + sessionStorage.getItem('ouId'));
+            if (this.accountNoSite.length === 1 && Number(this.accountNoSite[i].ouId) === Number(sessionStorage.getItem('ouId'))) {
+              this.arInvoiceForm.patchValue({ siteName: this.accountNoSite[0].siteName });
+              this.onOptionsSelectedcustSiteName(this.accountNoSite[0].siteName);
+            }
+            if (this.accountNoSite.length > 1) {
+              if (Number(this.accountNoSite[i].ouId) === Number(sessionStorage.getItem('ouId'))) {
+                this.arInvoiceForm.patchValue({ siteName: this.accountNoSite[i].siteName });
+                //  this.onOptionsSelectedcustSiteName(this.custSiteList[i].siteName);
+              }
+            }
+            // else if (this.accountNoSite[i].ouId != (sessionStorage.getItem('ouId'))) {
+            //   alert('Please Create/Select Operating Unit wise Site to continue process!')
+            // }
+          }
 
         }
       );
+      alert(this.arInvoiceForm.get('source').value)
+      if(this.billToCustNo!=null && this.arInvoiceForm.get('source').value!=null && this.arInvoiceForm.get('class').value!=null  && this.arInvoiceForm.get('custTrxTypeId').value!=null && this.arInvoiceForm.get('locId').value!=null){
+        this.isVisibleArInvoiceLine=true;
+      }
+     
   }
+
+  onOptionsSelectedcustSiteName(siteName) {
+    let selSite = this.accountNoSite.find(d => d.siteName === siteName);
+    console.log(selSite);
+    console.log(this.accountNoSite);
+
+    // alert(selSite.ouId +'-----' + sessionStorage.getItem('ouId'));
+
+    // if (selSite.ouId != (sessionStorage.getItem('ouId'))) {
+    //   alert('First Create OU wise Site to continue process!')
+    // }
+    // else {
+      // alert(this.selCustomer)
+      this.arInvoiceForm.patchValue({
+      billToCustAdd: selSite.billToAddress,
+      shipToCustAdd: selSite.shipToAddress,
+      shipToSiteId: selSite.shipToLocId,
+      billToSiteId: selSite.billToLocId,
+      billToCustId: selSite.customerId,
+      billcontactNo: selSite.mobile1,
+      shipcontactNo: selSite.mobile1,
+      custtaxCategoryName:selSite.taxCategoryName,
+      // paymentTerm:this.accountNoSearch.paymentTerm,
+    })
+      
+    // }
+    if(this.billToCustNo!=null && this.arInvoiceForm.get('source').value!=null && this.arInvoiceForm.get('class').value!=null  && this.arInvoiceForm.get('custTrxTypeId').value!=null && this.arInvoiceForm.get('locId').value!=null){
+      this.isVisibleArInvoiceLine=true;
+    }
+   
+      
+  }
+
   distribution1(k) {
     var arrayControl = this.arInvoiceForm.get('invLines').value;
     var amount = arrayControl[k].extendedAmount;
@@ -1708,11 +1955,11 @@ export class ARInvoiceComponent implements OnInit {
               this.invLineArray().push(invLnGrp);
             }
 
-            this.arInvoiceForm.get('invLine').patchValue(this.lstinvoices);
+            this.arInvoiceForm.get('invApplyList').patchValue(this.lstinvoices);
 
             /////////////////////////////////////////////////////////
-            var patch = this.arInvoiceForm.get('invLine') as FormArray;
-            var invLineArr = this.arInvoiceForm.get('invLine').value;
+            var patch = this.arInvoiceForm.get('invApplyList') as FormArray;
+            var invLineArr = this.arInvoiceForm.get('invApplyList').value;
 
             for (let i = 0; i < this.lstinvoices.length - len; i++) {
               y = invLineArr[i].balDueAmt.toFixed(2);
@@ -1749,8 +1996,8 @@ export class ARInvoiceComponent implements OnInit {
     var LineApplAmount = 0;
     var invBalAmt = 0;
     var applyReceiptFlag;
-    var invLineArr = this.arInvoiceForm.get('invLine').value;
-    var patch = this.arInvoiceForm.get('invLine') as FormArray;
+    var invLineArr = this.arInvoiceForm.get('invApplyList').value;
+    var patch = this.arInvoiceForm.get('invApplyList') as FormArray;
 
     this.invLineArray().controls[index].get('applyrcptFlag').enable();
     this.applySaveButton = false;
@@ -1805,8 +2052,8 @@ export class ARInvoiceComponent implements OnInit {
 
   CalculateBalance() {
 
-    var patch = this.arInvoiceForm.get('invLine') as FormArray;
-    var invLineArr = this.arInvoiceForm.get('invLine').value;
+    var patch = this.arInvoiceForm.get('invApplyList') as FormArray;
+    var invLineArr = this.arInvoiceForm.get('invApplyList').value;
 
     // alert ("CalculateBalance...");
     var appCount = 0;
@@ -1853,8 +2100,8 @@ export class ARInvoiceComponent implements OnInit {
     var invBalAmt = 0;
     var lineBalDueAmt = 0
 
-    var invLineArr = this.arInvoiceForm.get('invLine').value;
-    var patch = this.arInvoiceForm.get('invLine') as FormArray;
+    var invLineArr = this.arInvoiceForm.get('invApplyList').value;
+    var patch = this.arInvoiceForm.get('invApplyList') as FormArray;
 
     lineBalDueAmt = Number(invLineArr[index].balance1);
     totUnAppAmt = Number(this.tUapplAmt);
@@ -1941,8 +2188,8 @@ export class ARInvoiceComponent implements OnInit {
     // alert("GL Period : " + this.pipe.transform(this.GLPeriodCheck.startDate, 'dd-MM-y') + " - " + this.pipe.transform(this.GLPeriodCheck.endDate, 'dd-MM-y'));
 
 
-    var patch = this.arInvoiceForm.get('invLine') as FormArray;
-    var applLineArr = this.arInvoiceForm.get('invLine').value;
+    var patch = this.arInvoiceForm.get('invApplyList') as FormArray;
+    var applLineArr = this.arInvoiceForm.get('invApplyList').value;
     var gld = applLineArr[i].glDateLine;
     // alert("index :"+i + "  gl date - " +gld);
     var tglDate = new Date(gld);
@@ -1965,7 +2212,7 @@ export class ARInvoiceComponent implements OnInit {
       return;
     }
 
-    var applLineArr = this.arInvoiceForm.get('invLine').value;
+    var applLineArr = this.arInvoiceForm.get('invApplyList').value;
     var len1 = applLineArr.length;
 
     this.validateStatus = false;
@@ -1988,8 +2235,8 @@ export class ARInvoiceComponent implements OnInit {
 
     //  }
 
-    var applLineArr1 = this.arInvoiceForm.get('invLine').value;
-    var patch = this.arInvoiceForm.get('invLine') as FormArray;
+    var applLineArr1 = this.arInvoiceForm.get('invApplyList').value;
+    var patch = this.arInvoiceForm.get('invApplyList') as FormArray;
 
     for (let i = 0; i < applLineArr1.length; i++) {
 
@@ -2016,7 +2263,7 @@ export class ARInvoiceComponent implements OnInit {
 
     // alert('addrow index '+i);
 
-    var applLineArr = this.arInvoiceForm.get('invLine').value;
+    var applLineArr = this.arInvoiceForm.get('invApplyList').value;
     var lineValue1 = applLineArr[i].applAmt;
     var tglDate = new Date(applLineArr[i].glDate);
     var chkFlag = applLineArr[i].applyrcptFlag;
@@ -2070,8 +2317,8 @@ export class ARInvoiceComponent implements OnInit {
       return;
     }
 
-    var patch = this.arInvoiceForm.get('invLine') as FormArray;
-    var applLineArr = this.arInvoiceForm.get('invLine').value;
+    var patch = this.arInvoiceForm.get('invApplyList') as FormArray;
+    var applLineArr = this.arInvoiceForm.get('invApplyList').value;
 
     this.applLineValidation = false;
     var len1 = applLineArr.length;
@@ -2213,7 +2460,7 @@ export class ARInvoiceComponent implements OnInit {
     this.TaxDetailsArray().clear();
     // this.lineDistributionArray().clear();
     if (this.taxarr.has(this.selTaxLn)) {
-      alert(i + '---' + this.selTaxLn)
+      // alert(i + '---' + this.selTaxLn)
       var taxValues: any = this.taxarr.get(this.selTaxLn);
       for (let x = 0; x < taxValues.length; x++) {
         if (taxValues[x].invLineNo === i) {
@@ -2232,12 +2479,12 @@ export class ARInvoiceComponent implements OnInit {
     var control = patch.getRawValue();
     console.log(control);
 
-    alert(control[index].basicAmt);
+    // alert(control[index].basicAmt);
     var custTrxTypeId = this.arInvoiceForm.get('custTrxTypeId').value
     var locId = this.arInvoiceForm.get('locId').value;
     var extendedAmount = control[index].basicAmt;
     this.invLineNo=index+1;
-    alert(control[index].taxCategoryName + '--' + control[index].basicAmt);
+    // alert(control[index].taxCategoryName + '--' + control[index].basicAmt);
     if (control[index].taxCategoryName == null && control[index].basicAmt != null) {
       // this.lineDistributionArray().clear();
       // var exDistData = this.distarr.get(i);  
@@ -2252,7 +2499,7 @@ export class ARInvoiceComponent implements OnInit {
             for (let i = 0; i < exLineArr.length; i++) {
               var exLines = exLineArr[i];
               for (let j = 0; j < exLines.length; j++) {
-                alert(exLines[j].invoiceLineNum+'-line no--'+ this.invLineNo)
+                // alert(exLines[j].invoiceLineNum+'-line no--'+ this.invLineNo)
                 if (exLines[j].invoiceLineNum == this.invLineNo) {
                   // Avoid adding duplcate data
                   alert('Duplicate Entry');
@@ -2278,7 +2525,7 @@ export class ARInvoiceComponent implements OnInit {
               var invLnGrp: FormGroup = this.distLineDetails();
               
               this.lineDistributionArray().push(invLnGrp);
-              alert(i);
+              // alert(i);
             }
             var control = this.arInvoiceForm.get('invDisLines') as FormArray;
             for (let i = 0; i < this.lineDistributionArray().length; i++) {
@@ -2292,31 +2539,30 @@ export class ARInvoiceComponent implements OnInit {
     }
     
   }
-  AllDistribution(){
+  AllDistribution() {
     this.lineDistributionArray().clear();
-      console.log(this.distarr)
-      this.distValues = Array.from(this.distarr.values());
-      console.log(this.distValues);
-      alert(this.distarr.values.length + '--' + this.distValues.length);
-      var allDistLn :any =[];
-      for (let x = 0; x < this.distValues.length; x++) {
-        var exLines = this.distValues[x];
-        alert(exLines.length + '--' + exLines.length);
-        
-        for (let y = 0; y < exLines.length; y++) {
-        
-         
-          allDistLn.push(exLines[y]);
-          
-        }
-      }
-      var control = this.arInvoiceForm.get('invDisLines') as FormArray;
-      for (let y = 0; y < allDistLn.length; y++) {
-        // alert(allDistLn[y]);
-        this.lineDisdetails.push(this.distLineDetails());
-      control.controls[y].patchValue(allDistLn[y]);
+    var distValues1 = Array.from(this.distarr.values());
+    var allDistLn: any = [];
+
+    for (let x = 0; x < distValues1.length; x++) {
+      var exLines =distValues1[x];
+      for (let y = 0; y < exLines.length; y++) {
+        allDistLn.push(exLines[y]);
+        var invLnGrp: FormGroup = this.distLineDetails();
+        this.lineDistributionArray().push(invLnGrp);
       }
     }
+
+var control = this.arInvoiceForm.get('invDisLines') as FormArray;
+// alert(allDistLn.length +'--allDistLn' +  this.lineDistributionArray().length);
+    for (let y = 0; y < allDistLn.length; y++) {
+      // alert(allDistLn[y]);
+     
+      control.controls[y].patchValue(allDistLn[y]);
+    }
+  this.isVisibleArDist=true;
+  }
+  
   
     
   }

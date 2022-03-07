@@ -21,6 +21,7 @@ import { CounterSalePerformaInvComponent } from './counter-sale-performa-inv/cou
 import { SalesOrderListComponent } from './sales-order-list/sales-order-list.component';
 import { ClosingStockGridComponent } from './closing-stock-grid/closing-stock-grid.component';
 import { ShippingNetworkComponent } from './shipping-network/shipping-network.component';
+import { SalesOrderProformaComponent } from './sales-order-proforma/sales-order-proforma.component';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { ShippingNetworkComponent } from './shipping-network/shipping-network.co
      CounterSalePerformaInvComponent,
      SalesOrderListComponent,
      ClosingStockGridComponent,
-     ShippingNetworkComponent ],
+     ShippingNetworkComponent,
+     SalesOrderProformaComponent ],
   imports: [
     CommonModule,
     OrderManagementRoutingModule,
