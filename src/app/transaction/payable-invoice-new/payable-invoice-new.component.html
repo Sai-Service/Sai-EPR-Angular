@@ -735,12 +735,12 @@
                                                                 <ng-template #thenViewTaxDetails>
                                                                     <button type="button"  data-toggle="modal"  
                                                                     (click)="openTaxDetails(k)" class="btn btn-primary"
-                                                                        data-target="#taxDetails" style="width: 40px;text-align: left;">Tax..</button>
+                                                                        data-target="#taxDetailsModel" style="width: 40px;text-align: left;">Tax..</button>
                                                                 </ng-template>
                                                                 <ng-template #elseViewTaxDetails>
                                                                     <button type="button"  data-toggle="modal"  
                                                                     (click)="openTaxDetails(k)" class="btn btn-primary"
-                                                                        data-target="#taxDetails" style="width: 40px;text-align: left;">Tax..</button>
+                                                                        data-target="#taxDetailsModel" style="width: 40px;text-align: left;">Tax..</button>
                                                                 </ng-template>                                                                </td>
                                                             <td>
                                                                 <input type="text" class="form-control"
@@ -815,12 +815,12 @@
                                                                     formControlName="hsnSacCode" id="hsnSacCode"
                                                                     class="form-control"
                                                                     (ngModelChange)='onHsnCodeSelected($event,k)'
-                                                                    style="width: 150px;height: 25px;font-size: 10px;text-align: center;"
+                                                                    style="width: fit-content;height: 25px;font-size: 10px;text-align: center;"
                                                                     #hsnSacCode1>
                                                                     <option>--Select--</option>
                                                                     <option *ngFor="let sc of hsnSacCodeList"
                                                                         [ngValue]="sc.hsnsaccode">
-                                                                        {{sc.hsnsaccode}}-{{sc.description}}
+                                                                        {{sc.hsnsaccode}}
                                                                     </option>
                                                                 </select>
                                                                 <input hidden type="number"  formControlName="gstPercentage" style="width: 5rem;"  class="form-control">
@@ -1328,7 +1328,7 @@
                                   
                                 </div>  
 
-                                <!-- <div class="modal fade" id="taxDetails" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <!-- <div class="modal fade" id="taxDetailsModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                     <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
                                       <div class="modal-content">
                                         <div class="modal-header">
@@ -1384,13 +1384,12 @@
                                                     <th scope="col">Currency</th>
                                                     <th scope="col">Tax Rate</th>
                                                     <th scope="col">Tax Amount</th>
-                                                    <th scope="col">Recoverabl </th>
+                                                    <th scope="col">Recoverable</th>
                                                     <th scope="col">Inclusive</th>
-                                                    <th scope="col">Self Assesed/Reverse Charge </th>
+                                                    <th scope="col">Self Assesed/Reverse Charge</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                
                                                 <ng-container class="center" formArrayName="taxLines">
                                                     <ng-container
                                                         *ngFor="let taxDet of TaxDetailsArray().controls; let j= index"
@@ -1532,8 +1531,9 @@
                                                         </tr>
                                                     </ng-container>
                                                 </ng-container>
-                                                    </tbody>    
-                                                </table>
+                                            </tbody>
+
+                                        </table>
                                                 <button type="button" class="btn btn-primary"
                                                     (click)="addDiscount(selTaxLn)"
                                                     style="width: 8rem; border: solid 1px Gray">Apply
@@ -1544,7 +1544,7 @@
                                         </div>
                                       </div>
                                     </div>
-                                  </div>  -->
+                                  </div> -->
 
                                 <div class="tab-pane fade" id="tdsDetails" role="tabpanel">
                                     <div class="grid_scroll_1">
@@ -1816,8 +1816,7 @@
                                                             </ng-template>
                                                         </tr>
                                                         <tr>
-                                                            <!-- <input hidden type="text" formControlName="invLineItemId"
-                                                                style="width: 4rem; text-align: right; height: 25px;font-size: 10px;"> -->
+                                                          
                                                             <input hidden type="text" class="form-control"
                                                                 formControlName="invLineNo"
                                                                 style="width: 4rem; text-align: right; height: 25px;font-size: 10px;">
