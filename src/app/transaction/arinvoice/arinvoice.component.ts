@@ -1680,7 +1680,7 @@ export class ARInvoiceComponent implements OnInit {
     this.service.completeInvoice(invno).subscribe(
       (res: any) => {
         if (res.code === 200) {
-          alert('RECORD POSTED SUCCESSFULLY');
+          alert(res.message);
           this.arInvoiceForm.disable();
           this.TaxDetailsArray().disable();
           this.arInvoiceForm.get('invLines').disable();
@@ -1689,7 +1689,7 @@ export class ARInvoiceComponent implements OnInit {
           // window.location.reload();
         } else {
           if (res.code === 400) {
-            alert('Code already present in the data base');
+            alert(res.message);
             // this.CompanyMasterForm.reset();
             // window.location.reload();
           }

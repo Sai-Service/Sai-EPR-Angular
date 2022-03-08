@@ -1367,11 +1367,25 @@ export class PayableInvoiceNewComponent implements OnInit {
       (controlinv.controls[k]).patchValue({ taxCategoryId: select.taxCategoryId });
       (controlinv.controls[k]).patchValue({ locId: objarray[0].locationId });
       var disAm = 0;
+      var sum = 0;
       this.transactionService.getTaxDetails(select.taxCategoryId, sessionStorage.getItem('ouId'), disAm, amount)
         .subscribe(
           data => {
             this.lstInvLineDeatails1 = data;
             console.log(this.lstInvLineDeatails1);
+            alert(this.lstInvLineDeatails1.taxLines.length)
+            for (let i = 0; i < this.lstInvLineDeatails1.taxLines.length; i++) {
+              alert(this.lstInvLineDeatails1.taxLines[i].totTaxPer)
+              if (this.lstInvLineDeatails1.taxLines[i].totTaxPer != 0) {
+                sum = sum + this.lstInvLineDeatails1.taxLines[i].totTaxAmt;
+              }
+            }
+            alert(sum + '----'+ (amount+sum));
+            var patch = this.poInvoiceForm.get('obj') as FormArray;
+            (patch.controls[0]).patchValue({ invoiceAmt: (amount+sum)});
+            (patch.controls[0]).patchValue({ taxAmt: sum});
+           
+          
             for (let i = 0; i < data.miscLines.length; i++) {
               var invLnGrp: FormGroup = this.invLineDetails();
               this.invLineDetailsArray().push(invLnGrp);
@@ -1981,7 +1995,7 @@ export class PayableInvoiceNewComponent implements OnInit {
   display = 'none';
 
   openTaxDetails(i: number) {
-   
+    alert(i);
     this.selTaxLn = String(i);
     
     var invLnNo = Number(i + 1);

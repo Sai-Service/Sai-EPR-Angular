@@ -255,7 +255,7 @@ export class DeadStockComponent implements OnInit {
             this.deadStockForm.get('deadItemList').patchValue(this.lstDeadItems);
             // this.spinIcon = false;this.dataDisplay = ''; 
            
-            this.CalculateDeadStcokValue();
+            this.CalculateDeadStockValue();
 
           // } else { alert (mOrderNumber+ "  - Order Number doesn't exists");
           //          this.spinIcon=false; this.dataDisplay=null;
@@ -265,7 +265,7 @@ export class DeadStockComponent implements OnInit {
     }
 
 
-    CalculateDeadStcokValue() {
+    CalculateDeadStockValue() {
       var patch = this.deadStockForm.get('deadItemList') as FormArray;
       var deadLineArr = this.deadStockForm.get('deadItemList').value;
       var len = this.lineDetailsArray().length;
@@ -305,9 +305,6 @@ export class DeadStockComponent implements OnInit {
 
 
     deadFlagging() {
-
-      
-
       const formValue: IdeadStock = this.transeData(this.deadStockForm.value);
       var dDays = this.deadStockForm.get('nMonths').value
       var ouId = this.deadStockForm.get('ouId').value

@@ -801,7 +801,6 @@ export class SalesOrderFormComponent implements OnInit {
                         pricingQty: 1,
                         // unitSellingPrice: data.obj[0].priceValue,by vinita
                       });
-
                       this.orderManagementService.getTaxCategoriesForSales(custtaxCategoryName, data.obj[i].taxPercentage)
                         .subscribe(
                           data1 => {
@@ -885,6 +884,7 @@ export class SalesOrderFormComponent implements OnInit {
     this.invItemList1 = this.itemMap.get(orderType);
     this.isVisible2 = true;
     // alert(this.isVisible2)
+    let controlinv = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     var variant = this.SalesOrderBookingForm.get('variant').value;
     this.orderManagementService.getItemByCatTypeNew(orderType, sessionStorage.getItem('divisionId'), variant)
       .subscribe(
@@ -893,6 +893,7 @@ export class SalesOrderFormComponent implements OnInit {
           // this.orderedItem=data.description;
           this.itemMap.set(orderType, data);
           this.itemMap2.set(lnNo, this.itemMap.get(orderType));
+          (controlinv.controls[lnNo]).patchValue({ 'segment': '--Select--' });
         }
       );
     if (orderType.includes('VEHICLE')) {
@@ -933,8 +934,7 @@ export class SalesOrderFormComponent implements OnInit {
   }
 
   onOptionsSelectedColor(variant) {
-    // if (this.currentOpration != 'orderSearch') {
-    // alert('variant')
+   
     this.orderManagementService.ColourSearchFn(variant)
       .subscribe(
         data => {

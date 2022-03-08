@@ -36,6 +36,8 @@ interface IWsVehicleMaster {
   divisionName:string;
   dealerCode:string;
   itemTypeForCat:string;
+  lastRunKm:number;
+  endDate:Date;
 }
 
 @Component({
@@ -146,7 +148,7 @@ export class WsVehicleMasterComponent implements OnInit {
   insurerSiteId: string;
   insCompanyName: string;
   inscompanySite: string;
-
+  status :string='Active';
   ewStatus: string;
   mcpStatus: string;
   // ewBookletNo:string;
@@ -219,7 +221,7 @@ export class WsVehicleMasterComponent implements OnInit {
   // checkNo: string;
   // checkDate: string;
 
-  displayInactive = true;
+  displayInactive = false;
   Status1: any;
   inactiveDate: Date;
   display = true;
@@ -249,7 +251,8 @@ export class WsVehicleMasterComponent implements OnInit {
 
   itemTypeForCat: string='SS_VEHICLE' ;
   categoryId: number;
-
+  lastRunKm:number;
+  endDate:Date;
  
 
   public ServiceModelList   :Array<string> = [];
@@ -287,6 +290,7 @@ export class WsVehicleMasterComponent implements OnInit {
       // ewSchemeId: [],
       // ewDate:[],
       // ewBookletNo:[],
+      status:[],
       vin: [],
       monthYrManf: [],
       regDate: [],
@@ -382,7 +386,7 @@ export class WsVehicleMasterComponent implements OnInit {
       // ewTotalAmt: [],
 
       // ewSaleDate: [],
-      // ewStartDate: [],
+      ewStartDate: [],
 
 
       // payType: [],
@@ -416,13 +420,15 @@ export class WsVehicleMasterComponent implements OnInit {
 
       itemTypeForCat: [],
       categoryId: [],
+      lastRunKm:[],
+      endDate:[],
 
     });
 
   }
 
   ngOnInit(): void {
-
+    $("#wrapper").toggleClass("toggled");
     this.name = sessionStorage.getItem('name');
     this.loginArray = sessionStorage.getItem('divisionName');
     this.divisionId = Number(sessionStorage.getItem('divisionId'));
@@ -538,8 +544,18 @@ export class WsVehicleMasterComponent implements OnInit {
           console.log(this.statusList);
         }
       );
+  }
 
-
+  onStatusSelected(event: any) {
+    this.Status1 = this.wsVehicleMasterForm.get('status').value;
+    if (this.Status1 === 'Inactive') {
+      this.displayInactive = true;
+      this.endDate = new Date();
+    }
+    else if (this.Status1 === 'Active') {
+      this.wsVehicleMasterForm.get('endDate').reset();
+      this.displayInactive=false;
+    }
   }
 
   transeData(val) {
@@ -549,13 +565,13 @@ export class WsVehicleMasterComponent implements OnInit {
     delete val.ouName;
     delete val.locName;
 
-    delete val.custName;
+    // delete val.custName;
     delete val.address1;
     delete val.address2;
     delete val.address3;
     delete val.city;
     delete val.state;
-    delete val.mobile1;
+    // delete val.mobile1;
     delete val.mobile2;
     delete val.contactNo;
     delete val.pinCd;
@@ -579,10 +595,10 @@ export class WsVehicleMasterComponent implements OnInit {
 
     const formValue: IWsVehicleMaster =this.transeData( this.wsVehicleMasterForm.value);
     this.CreateItemCode();
-    this.CheckDataValidations()
+    this.CheckDataValidations();
 
     if (this.checkValidation) {
-      alert("Data Validation Sucessfully....\nPosting data  to WS Customer Master")
+      alert("Data Validation Sucessfully....\nPosting Vehicle to WS Customer Master")
 
       // debugger;
       console.log(formValue);
@@ -605,10 +621,31 @@ export class WsVehicleMasterComponent implements OnInit {
     } else { alert("Data Validation Not Sucessfull....\nPosting Not Done...") }
   }
 
+
   updateMast() {
-    // this.newMast();
+    // alert ("Update  Vehicle Master Data......")
+    const formValue: IWsVehicleMaster =this.transeData( this.wsVehicleMasterForm.value);
+    // this.CreateItemCode();
+    this.CheckDataValidations();
    
+    if (this.checkValidation) {
+      alert("Data Validation Sucessfully....\nSaveing data to WS Vehicle Master")
+      this.service.UpdateWsVehicleMaster(formValue).subscribe((res: any) => {
+      if (res.code === 200) {
+        alert(res.message);
+        // window.location.reload();
+        this.wsVehicleMasterForm.disable()
+      } else {
+        if (res.code === 400) {
+          alert(res.message);
+          // this.wsVehicleMasterForm.reset();
+        }
+      }
+    });
   }
+  }
+
+
 
   resetMast() {
     window.location.reload();
@@ -632,11 +669,10 @@ export class WsVehicleMasterComponent implements OnInit {
         data => {
           this.lstcomments = data.obj;
 
-          if (this.lstcomments === null) {
+          if (data.code === 400) {
             alert("Registration No : [ " + mReg + " ] not Found...");
             this.displayButton = true;
             this.showCreateCustButton = true;
-
             this.showCreateItemButton = true;
             //  this.resetVehDet();this.resetCustDet();this.resetAddnl();this.resetTv();
             // this.wsVehicleMasterForm.reset();
@@ -645,14 +681,14 @@ export class WsVehicleMasterComponent implements OnInit {
 
           }
           else {
-            console.log(this.lstcomments);
-            this.wsVehicleMasterForm.patchValue(data.obj);
-            this.GetItemDeatils(this.lstcomments.itemId.itemId);
-            this.GetCustomerDetails(this.lstcomments.customerId);
-            this.GetCustomerSiteDetails(this.lstcomments.customerId);
 
             this.displayButton = false;
-
+            console.log(this.lstcomments);
+            this.wsVehicleMasterForm.patchValue(data.obj);
+            this.GetItemDeatils(this.lstcomments.itemId);
+            this.GetCustomerDetails(this.lstcomments.custAccountNo);
+            // this.GetCustomerSiteDetails(this.lstcomments.customerId);
+            this.CreateItemCode();
           }
         });
   }
@@ -674,14 +710,16 @@ export class WsVehicleMasterComponent implements OnInit {
     } else { this.showCreateItemButton = true; }
   }
 
-  GetCustomerDetails(mCustId: any) {
-    if (mCustId > 0) {
+
+
+  GetCustomerDetails(mCustAcNo: any) {
+    if (mCustAcNo > 0) {
       this.showCreateCustButton = false;
 
-      this.service.ewInsSiteList(mCustId)
+      this.service.searchCustomerByAccount(mCustAcNo)
         .subscribe(
           data1 => {
-            this.CustomerDetailsList = data1;
+            this.CustomerDetailsList = data1.obj;
             console.log(this.CustomerDetailsList);
             this.wsVehicleMasterForm.patchValue({
               custAccountNo: this.CustomerDetailsList.custAccountNo,
@@ -698,7 +736,7 @@ export class WsVehicleMasterComponent implements OnInit {
               contactNo: this.CustomerDetailsList.contactNo,
               emailId1: this.CustomerDetailsList.emailId,
               custType: this.CustomerDetailsList.custType,
-              custTaxCategoryName:this.CustomerDetailsList.customerSiteMasterList.taxCategoryName,
+              custTaxCategoryName:this.CustomerDetailsList.customerSiteMasterList[0].taxCategoryName,
 
             });
           }
@@ -706,8 +744,9 @@ export class WsVehicleMasterComponent implements OnInit {
     } else { this.showCreateCustButton = true; }
   }
 
+
   GetCustomerSiteDetails(mCustId: any) {
-    // alert("Customer Id: " + mCustId);
+    alert("Customer Id: " + mCustId);
     this.service.GetCustomerSiteDetails(mCustId, this.ouId)
       .subscribe(
         data1 => {
@@ -728,9 +767,6 @@ export class WsVehicleMasterComponent implements OnInit {
                 this.CustomerDetailsList.city + "," +
                 this.CustomerDetailsList.state + "-" +
                 this.CustomerDetailsList.pinCd,
-
-
-
             });
 
           }
@@ -763,9 +799,7 @@ export class WsVehicleMasterComponent implements OnInit {
               custPhone: this.CustomerSiteDetails.mobile1,
               customerType: this.CustomerSiteDetails.customerId.custType,
               custTaxCategoryName: this.CustomerSiteDetails.taxCategoryName,
-
             });
-
           }
         });
   }
@@ -1095,6 +1129,7 @@ export class WsVehicleMasterComponent implements OnInit {
       alert("CUSTOMER NO: Should not be null");
     }
 
+    
     if (formValue.mobile1 < 0 || formValue.mobile1 === undefined || formValue.mobile1 === null) {
       this.checkValidation = false;
       alert("CUSTOMER PHONE1: Should not be null");
@@ -1106,17 +1141,17 @@ export class WsVehicleMasterComponent implements OnInit {
       return;
     }
 
-    if (formValue.address1 === undefined || formValue.address1 === null || formValue.address1.trim() === '') {
-      this.checkValidation = false;
-      alert("ADDRESS1 : Should not be null....");
-      return;
-    }
+    // if (formValue.address1 === undefined || formValue.address1 === null || formValue.address1.trim() === '') {
+    //   this.checkValidation = false;
+    //   alert("ADDRESS1 : Should not be null....");
+    //   return;
+    // }
 
-    if (formValue.address2 === undefined || formValue.address2 === null || formValue.address2.trim() === '') {
-      this.checkValidation = false;
-      alert("ADDRESS2: Should not be null....");
-      return;
-    }
+    // if (formValue.address2 === undefined || formValue.address2 === null || formValue.address2.trim() === '') {
+    //   this.checkValidation = false;
+    //   alert("ADDRESS2: Should not be null....");
+    //   return;
+    // }
 
     // if (formValue.address3 === undefined || formValue.address3 === null || formValue.address3.trim() === '') {
     //   this.checkValidation = false;
@@ -1124,21 +1159,21 @@ export class WsVehicleMasterComponent implements OnInit {
     //   return;
     // }
 
-    if (formValue.city === undefined || formValue.city === null || formValue.city.trim() === '') {
-      this.checkValidation = false;
-      alert("CITY : Should not be null....");
-      return;
-    }
-    if (formValue.state === undefined || formValue.state === null || formValue.state.trim() === '') {
-      this.checkValidation = false;
-      alert("STATE : Should not be null....");
-      return;
-    }
-    if (formValue.pinCd === undefined || formValue.pinCd === null ) {
-      this.checkValidation = false;
-      alert("PIN : Should not be null....");
-      return;
-    }
+    // if (formValue.city === undefined || formValue.city === null || formValue.city.trim() === '') {
+    //   this.checkValidation = false;
+    //   alert("CITY : Should not be null....");
+    //   return;
+    // }
+    // if (formValue.state === undefined || formValue.state === null || formValue.state.trim() === '') {
+    //   this.checkValidation = false;
+    //   alert("STATE : Should not be null....");
+    //   return;
+    // }
+    // if (formValue.pinCd === undefined || formValue.pinCd === null ) {
+    //   this.checkValidation = false;
+    //   alert("PIN : Should not be null....");
+    //   return;
+    // }
 
 
     this.checkValidation = true

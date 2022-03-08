@@ -155,6 +155,12 @@ export class CounterSalePerformaInvComponent implements OnInit {
   id:number;
   resveQty:number;
   frmLocatorId:number;
+  model:string;
+  fuelType:string;
+  variant:string;
+  color:string;
+  basicValue:number;
+  isVisibleModelDeatils: boolean = false;
 
   constructor(private fb: FormBuilder, private location1: Location, private service: MasterService, private orderManagementService: OrderManagementService) {
     this.CounterSaleOrderBookingForm = fb.group({
@@ -214,6 +220,11 @@ export class CounterSalePerformaInvComponent implements OnInit {
       daysMsg: [],
       msRefNo:[],
       msRefCustNo:[],
+      model:[],
+      fuelType:[],
+      variant:[],
+      color:[],
+      basicValue:[],
       oeOrderLinesAllList: this.fb.array([this.orderlineDetailsGroup()]),
     })
   }
@@ -279,6 +290,9 @@ export class CounterSalePerformaInvComponent implements OnInit {
       this.CounterSaleOrderBookingForm.patchValue({ issueCodeType: concatissuetypecode });
       this.transactionTypeName = 'Proforma Invoice';
     }
+    if (Number(sessionStorage.getItem('deptId'))===1){
+      this.isVisibleModelDeatils=true;
+    }
     this.CounterSaleOrderBookingForm.patchValue({ discType: 'No Discount' })
 
     this.dept = Number(sessionStorage.getItem('deptId'));
@@ -315,6 +329,13 @@ export class CounterSalePerformaInvComponent implements OnInit {
         }
       );
 
+      this.service.mainModelListDivisionWise(sessionStorage.getItem('divisionId'))
+      .subscribe(
+        data => {
+          this.mainModelList = data;
+          console.log(this.mainModelList);
+        }
+      );
 
     this.orderManagementService.orderTypeList((sessionStorage.getItem('deptId')), sessionStorage.getItem('ouId'))
       .subscribe(
@@ -337,10 +358,18 @@ export class CounterSalePerformaInvComponent implements OnInit {
           this.priceListNameList = data;
           // console.log(this.priceListNameList);
           for (let i = 0; i < data.length; i++) {
+            if (Number(sessionStorage.getItem('deptId'))!=1){
             if (data[i].ouId === 999) {
               this.CounterSaleOrderBookingForm.patchValue({ priceListName: data[i].priceListName })
               this.CounterSaleOrderBookingForm.patchValue({ priceListId: data[i].priceListHeaderId })
             }
+          }
+          else if (Number(sessionStorage.getItem('deptId'))===1){
+            if (data[i].priceListName.includes('Sales')) {
+              this.CounterSaleOrderBookingForm.patchValue({ priceListName: data[i].priceListName })
+              this.CounterSaleOrderBookingForm.patchValue({ priceListId: data[i].priceListHeaderId })
+            }
+          }
           }
         }
       );
@@ -827,7 +856,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
                   for (let i = 0; i < data.obj.length; i++) {
                     var taxCatNm: string = data.obj[i].taxCategoryName;
                     var mrp = Math.round(((data.obj[0].mrp) + Number.EPSILON) * 100) / 100;
-                    if (taxCatNm.includes('Sale-S&C')) {
+                    if (taxCatNm.includes('Sale-S&C')|| taxCatNm.includes('Sales-S&C')) {
                       (controlinv.controls[k]).patchValue({
                         itemId: data.obj[i].itemId,
                         orderedItem: data.obj[i].description,
@@ -1040,7 +1069,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
     // }
     var arrayControlNew = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     var arrayControl = arrayControlNew.getRawValue();
-    // alert(arrayControl[index].taxCategoryId)
+    // alert(arrayControl[index].taxCategoryId) 
     var itemId = arrayControl[index].itemId;
     var taxcatName = arrayControl[index].taxCategoryName;
    var  taxCategoryId = arrayControl[index].taxCategoryId;
@@ -1292,6 +1321,52 @@ export class CounterSalePerformaInvComponent implements OnInit {
       })
   }
   
+  public ColourSearch: any;
+  onOptionsSelectedColor(variant) {
+    // if (this.currentOpration != 'orderSearch') {
+    // alert('variant')
+    this.orderManagementService.ColourSearchFn(variant)
+      .subscribe(
+        data => {
+          this.ColourSearch = data;
+          console.log(this.ColourSearch);
+          let select = this.ColourSearch.find(d => d.variant === variant);
+          this.fuelType = select.fuelType;
+        }
+      );
+  
+    // }
+  }
+  public mainModelList: Array<string>[];
+  public VariantSearch: Array<string>[];
+  onOptionsSelectedVariant(mainModel) {
+    // if (this.currentOpration != 'orderSearch') {
+    // alert('mainModel')
+    this.orderManagementService.VariantSearchFn(mainModel)
+      .subscribe(
+        data => {
+          this.VariantSearch = data;
+          console.log(this.VariantSearch);
+        }
+      );
+    // }
+  }
+
+  onOptionsSelectedBasicPrice(color:any){
+    // alert(color)
+    if (Number(sessionStorage.getItem('divisionId')) === 2) {
+      var model = this.CounterSaleOrderBookingForm.get('model').value;
+      var variant = this.CounterSaleOrderBookingForm.get('variant').value;
+      this.orderManagementService.dealerShipBaseAmt(model, variant,color)
+        .subscribe(
+          data => {
+            this.CounterSaleOrderBookingForm.patchValue({ basicValue: data.obj[0].basicValue })
+          }
+        );
+    }
+  }
+
+
 
 }
 

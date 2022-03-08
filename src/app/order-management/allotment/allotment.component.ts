@@ -52,6 +52,7 @@ export class AllotmentComponent implements OnInit {
   allotmentsearchlist: any[];
   allotmentVehiclesearchlist: any[];
   allAllotmentList: any[];
+  orderNumber2:number;
 
 
   constructor(private fb: FormBuilder, private location: Location, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService) {
@@ -63,6 +64,7 @@ export class AllotmentComponent implements OnInit {
       selectOrderNumber: [''],
       selectChasisNumber: [''],
       qtyAvail: [],
+      orderNumber2:[''],
     })
   }
 
@@ -130,7 +132,7 @@ export class AllotmentComponent implements OnInit {
         data => {
           this.allotmentVehiclesearchlist = data;
           console.log(this.allotmentVehiclesearchlist);
-          this.allotmentForm.patchValue({orderNumber:orderNumber});
+          this.allotmentForm.patchValue({orderNumber2:orderNumber});
         }
       );
   }
@@ -178,9 +180,11 @@ export class AllotmentComponent implements OnInit {
 
 
 
-  allotedVehicleSelect(orderNumber,segment) {
-    // alert(orderNumber+'-------'+segment);
-    this.allotedChassisArray.push({ orderNumber: orderNumber, segment: segment});
+  allotedVehicleSelect(orderNumber2,segment) {
+    alert(orderNumber2)
+  // var orderNumber=  this.allotmentForm.get('orderNumber2').value
+  //   alert(orderNumber+'-------'+segment);
+    this.allotedChassisArray.push({ orderNumber: orderNumber2, segment: segment});
     console.log(this.allotedChassisArray);
     this.orderManagementService.allotmentSubmit(this.allotedChassisArray).subscribe((res: any) => {
       if (res.code === 200) {

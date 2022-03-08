@@ -40,6 +40,7 @@ interface IPaymentRcptAr {
   bounceReasonCode:string;
   reversalCategory: string;
   status: string;
+  bounceCharges :number;
 
   tdsAmount:number;
   tdstrxNumber:string;
@@ -180,6 +181,7 @@ export class PaymentArComponent implements OnInit {
   reversalReasonCode: number;
   reversalCategory: string;
   bounceReasonCode:string;
+  bounceCharges:number;
   // status : string;
   status = 'Open';
   cancelDate = null;
@@ -377,6 +379,7 @@ export class PaymentArComponent implements OnInit {
       reversalDate: [],
       reversalCategory: [],
       bounceReasonCode:[],
+      bounceCharges:[],
 
       cancelReason: [],
       cancelDate: [],
@@ -2214,6 +2217,13 @@ export class PaymentArComponent implements OnInit {
       alert("CHQ BOUNCE REASON: Should not be null....");
       return;
     }
+
+    if (formValue.bounceCharges === undefined || formValue.bounceCharges === null || formValue.bounceCharges<0) {
+      this.cancelValidation = false;
+      alert("CHQ BOUNCE CHARGES: Should not be null....");
+      return;
+    }
+
   }
 
     //  alert("formValue.reversalDate :"+formValue.reversalDate);

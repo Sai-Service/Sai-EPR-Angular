@@ -105,6 +105,8 @@ export class AllReportsComponent implements OnInit {
   spInvAging1:number;
   spInvAging2:number;
   spInvAging3:number;
+  spIncomeStatementfromDate:Date;
+  spIncomeStatementtoDate:Date;
 
   closeResetButton = true;
   dataDisplay: any;
@@ -201,6 +203,8 @@ export class AllReportsComponent implements OnInit {
       spInvAging1:[],
       spInvAging2:[],
       spInvAging3:[],
+      spIncomeStatementtoDate:[],
+      spIncomeStatementfromDate:[],
     })
   }
 
@@ -596,7 +600,7 @@ export class AllReportsComponent implements OnInit {
   //  alert(toLicId)
     const fileName = 'Stock-Made-Details-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.stockMadeDetailsReport(fromDate, toDate, sessionStorage.getItem('locId'),toLicId)
+    this.reportService.stockMadeDetailsReport(fromDate, toDate, sessionStorage.getItem('locId'),toLicId,this.subInvCode.subInventoryCode)
       .subscribe(data => {
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
         this.isDisabled11 = false;
@@ -620,7 +624,7 @@ export class AllReportsComponent implements OnInit {
     var fromlocId = this.reportForm.get('spstktrfMdSumToLoc').value; 
     const fileName = 'Stock-Made-Summary-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.spstktrfMdSummaryReport(fromDate,invcDt4,sessionStorage.getItem('locId'),fromlocId)
+    this.reportService.spstktrfMdSummaryReport(fromDate,invcDt4,sessionStorage.getItem('locId'),fromlocId,this.subInvCode.subInventoryCode)
       .subscribe(data => {
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
         this.isDisabled12 = false;
@@ -643,7 +647,7 @@ export class AllReportsComponent implements OnInit {
   var fromlocId = this.reportForm.get('SprStkTrfRecdDtlsFromLoc').value; 
   const fileName = 'Stock-Received-Detail-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
   const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-  this.reportService.SprStkTrfRecdDtlsReport(fromDate,invcDt4,sessionStorage.getItem('locId'),fromlocId)
+  this.reportService.SprStkTrfRecdDtlsReport(fromDate,invcDt4,sessionStorage.getItem('locId'),fromlocId,this.subInvCode.subInventoryCode)
     .subscribe(data => {
       saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
       this.isDisabled13 = false;
@@ -667,7 +671,7 @@ var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');
 var fromlocId = this.reportForm.get('SprStkTrfRecdSummaryFromLoc').value; 
 const fileName = 'Stock-Received-Summary-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
 const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-this.reportService.SprStkTrfRecdSummaryReport(fromDate,invcDt4,sessionStorage.getItem('locId'),fromlocId)
+this.reportService.SprStkTrfRecdSummaryReport(fromDate,invcDt4,sessionStorage.getItem('locId'),fromlocId,this.subInvCode.subInventoryCode)
   .subscribe(data => {
     saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
     this.isDisabled14 = false;
@@ -837,4 +841,29 @@ this.reportService.spbackOrderQtyReport(fromDate,invcDt4,sessionStorage.getItem(
       this.dataDisplay = ''
     })
   }
+
+
+
+
+
+  spIncomeStatement(){
+    this.isDisabled15 = true;
+    this.closeResetButton = false;
+    this.progress = 0;
+    this.dataDisplay = 'Report Is Running....Do not refresh the Page';
+  var invcDt2 = this.reportForm.get('spIncomeStatementfromDate').value;
+  var fromDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
+  var invcDt3 = this.reportForm.get('spIncomeStatementtoDate').value;
+  var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');  
+  const fileName = 'Spares Income Statement-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+  const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+  this.reportService.spIncomeStatement(fromDate,invcDt4,sessionStorage.getItem('locId'))
+    .subscribe(data => {
+      saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+      this.isDisabled15 = false;
+      this.closeResetButton = true;
+      this.dataDisplay = ''
+    })
+  }
+
 }

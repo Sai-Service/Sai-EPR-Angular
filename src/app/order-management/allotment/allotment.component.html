@@ -71,13 +71,13 @@
                                 </td> -->
                                 
                                 <td style="border: 1px solid black;">{{com.orderNumber}}</td>
-                               <td style="border: 1px solid black;">{{com.orderedDate | date:'yyyy-MM-dd  hh:mm:ss'}}</td>
+                               <td style="border: 1px solid black;">{{com.orderedDate | date:'dd-MM-yyyy  hh:mm:ss'}}</td>
                                <td style="border: 1px solid black;">{{com.transactionTypeName}}</td>
                                <td style="border: 1px solid black;">{{com.custName}}</td>
                                <td style="border: 1px solid black;">{{com.model}}</td>
                                <td style="border: 1px solid black;">{{com.variant}}</td>
                                <td style="border: 1px solid black;">{{com.color}}</td>
-                               <td style="text-align: right;border: 1px solid black;padding-right: 10px;">{{com.paidAmount}}</td>
+                               <td style="text-align: right;border: 1px solid black;padding-right: 10px;">{{com.paidAmount}}.00</td>
                                <td style="border: 1px solid black;">{{com.aging}}</td>
                                <td style="border: 1px solid black;">{{com.qtyAvail}}</td>
                                <td style="border: 1px solid black;">{{com.taxiYN}}</td>
@@ -90,14 +90,26 @@
                                     <div class="modal-dialog modal-xl" role="document">
                                       <div class="modal-content">
                                         <div class="modal-header modal-xl">
+                                            
                                             <label style="width: 100%;text-align: center;font-size: 14px;font-weight: bold;">
                                                 &nbsp;Vehicle&nbsp;Items&nbsp;List&nbsp;
-                                            </label>
+                                            </label>&nbsp;
+                                            
                                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                           </button>
+                                         
                                         </div>
+                                       
                                         <div class="modal-body">
+                                            <table class="center" style="width: 20%;">
+                                                <tr>
+                                                    <td style="width: 100%;text-align: center;font-size: 14px;font-weight: bold;border: none;">Order&nbsp;Number&nbsp;:&nbsp;</td>
+                                                    <td style="border: none;text-align: left;">
+                                                        <input disabled type="number" formControlName="orderNumber2" [(ngModel)]="orderNumber2"  class="form-control" style="width: 120px;">
+                                                    </td>
+                                                </tr>
+                                            </table>
                                             <table  class="GridFont" cellspacing="0" cellpadding="4"   style="border-color:#959595;border-collapse:collapse;width: 100%; ">
                                                 <thead>
                                                     <tr class="GridHeader">
@@ -126,14 +138,14 @@
                                                             (change)="selectChasisNumberEvent($event,com.segment)">
                                                         </td> -->
                                                       
-                                                            <input hidden type="text" formControlName="orderNumber">
+                                                            <input hidden type="number" formControlName="orderNumber">
                                                        
                                                         <td style="border: 1px solid black;">{{com.segment}}</td>
                                                         <td style="border: 1px solid black;">{{com.description}}</td>
                                                         <td style="border: 1px solid black;">{{com.chassisNo}}</td>
                                                         <td style="border: 1px solid black;">{{com.engineNo}}</td>
                                                         <td style="border: 1px solid black;">{{com.colorCode}}</td>
-                                                        <td style="border: 1px solid black;">{{com.dateOfPurchase  | date:'yyyy-MM-dd  hh:mm:ss'}}</td>
+                                                        <td style="border: 1px solid black;">{{com.dateOfPurchase  | date:'dd-MM-yyyy  hh:mm:ss'}}</td>
                                                         <td style="border: 1px solid black;">{{com.dealerCode}}</td>
                                                         <td style="border: 1px solid black;">{{com.rips}}</td>
                                                         <td style="border: 1px solid black;">{{com.interiors}}</td>
@@ -142,7 +154,7 @@
                                                         <td style="border: 1px solid black;">{{com.holdReason}}</td>
                                                         <td style="border: 1px solid black;">{{com.fuelType}}</td>
                                                         <td style="border: 1px solid black;">{{com.destinationTypeCode}}</td>
-                                                        <td style="border: 1px solid black;"> <button type="button"  class="btn btn-primary" data-dismiss="modal" (click)="allotedVehicleSelect(orderNumber,com.segment)">Allocate</button></td>
+                                                        <td style="border: 1px solid black;"> <button type="button"  class="btn btn-primary" data-dismiss="modal" (click)="allotedVehicleSelect(this.orderNumber2,com.segment)">Allocate</button></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
