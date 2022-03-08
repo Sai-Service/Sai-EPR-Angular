@@ -1481,11 +1481,10 @@ searchByItemSegmentDiv(divId,itemSeg):Observable<any>
 
 searchByItemSegmentAR(itemSeg):Observable<any>
 {
-    return this.http.get(this.ServerUrl+`/itemMst/nonInv?segment=${itemSeg}&isStock=N&isTax=N&isPur=Y&trxType=AR`)
+  var divId = sessionStorage.getItem("divisionId")  ;
+  return this.http.get(this.ServerUrl+`/itemMst/${divId}/bycond?segment=${itemSeg}&isStock=N`)
 
-  // http://localhost:8081/itemMst/searchBydesc/2/ring
 }
-
 searchByItemDescf9(divId,itemDesc):Observable<any>
 {
     return this.http.get(this.ServerUrl+`/itemMst/searchBydesc/${divId}?itemDesc=${itemDesc}`)
