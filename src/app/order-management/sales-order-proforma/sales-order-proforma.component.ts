@@ -258,11 +258,11 @@ export class SalesOrderProformaComponent implements OnInit {
       disPer: [''],
       disAmt: [0],
       taxPer: [''],
-      sgst: [''],
-      cgst: [''],
+      sgst: [0],
+      cgst: [0],
       igst: [''],
-      taxAmt: [''],
-      totAmt: [''],
+      taxAmt: [0],
+      totAmt: [0],
       mrp: [''],
       flowStatusCode: [''],
       uom: [''],
@@ -459,11 +459,11 @@ export class SalesOrderProformaComponent implements OnInit {
         pricingQty:1,
         unitSellingPrice:data.obj[0].basicValue,
         baseAmt:this.basicChassisPrice,
-        taxPer:28,
-        taxAmt:(this.basicChassisPrice*28/100),
-        sgst:((this.basicChassisPrice*28/100)/2),
-        cgst:((this.basicChassisPrice*28/100)/2),
-        totAmt:(this.basicChassisPrice+(this.basicChassisPrice*28/100))
+        taxPer:data.obj[0].gstPercentage,
+        taxAmt:(this.basicChassisPrice*data.obj[0].gstPercentage/100),
+        sgst:((this.basicChassisPrice*data.obj[0].gstPercentage/100)/2),
+        cgst:((this.basicChassisPrice*data.obj[0].gstPercentage/100)/2),
+        totAmt:(this.basicChassisPrice+(this.basicChassisPrice*data.obj[0].gstPercentage/100))
       });
       this.updateTotAmtPerline(0)
       this.addRow(0)
@@ -745,7 +745,9 @@ export class SalesOrderProformaComponent implements OnInit {
 
 
   onOptionsSelectedCategory(orderType: string, lnNo: number) {
-    let controlinv1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
+    // let controlinv1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
+    let controlInv2=  this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+    let controlinv1= controlInv2.getRawValue();
     let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     if (controlinv1[lnNo].invType !='SS_VEHICLE'){
     if (this.CounterSaleOrderBookingForm.get('model').value===undefined || this.CounterSaleOrderBookingForm.get('model').value==null ||
@@ -917,11 +919,10 @@ export class SalesOrderProformaComponent implements OnInit {
                   });
 
                 }
-
               }
               let controForPrice = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
               // alert(controForPrice[k].pricingQty)
-              this.onKey(k, controForPrice[k].pricingQty)
+              this.onKey(k, 1)
             }
             else if (data.code === 400) {
               alert(data.message);
@@ -934,7 +935,9 @@ export class SalesOrderProformaComponent implements OnInit {
   }
 
   onKey(index, fldName){
-    var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
+    // var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
+    var trxLnArr3 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+    let trxLnArr1=trxLnArr3.getRawValue();
     var custtaxCategoryName = this.CounterSaleOrderBookingForm.get('taxCategoryName').value;
     var baseAmt = Math.round(((trxLnArr1[index].pricingQty * trxLnArr1[index].unitSellingPrice) + Number.EPSILON) * 100) / 100;
     var disAmt = (baseAmt * trxLnArr1[index].disPer) / 100;
@@ -1041,6 +1044,7 @@ export class SalesOrderProformaComponent implements OnInit {
     this.itemSeg = '';
     var ln = len - 1;
     // alert(ln)
+    this.updateTotAmtPerline(ln)
     this.setFocus('itemSeg' + ln);
   }
 
@@ -1101,16 +1105,6 @@ export class SalesOrderProformaComponent implements OnInit {
     this.CounterSaleOrderBookingForm.patchValue({ 'tcsAmt': tcsAmt1 });
     var newln = lineIndex + 1;
     this.setFocus('itemSeg' + newln);
-    var crdAmt = this.CounterSaleOrderBookingForm.get('creditAmt').value;
-    if (crdAmt != undefined && crdAmt != null && crdAmt != '') {
-      if (totAmt >= crdAmt) {
-        alert('Credit Amount is exceeded.! ... Credit Amount is' + ' ' + crdAmt + ' ' + 'Total Amount is' + ' ' + totAmt + '.!');
-        this.setFocus('itemSeg' + lineIndex);
-        return;
-      }
-
-    }
-
   }
 
 
@@ -1160,7 +1154,7 @@ export class SalesOrderProformaComponent implements OnInit {
   downloadProformaInv(){
     const fileName = 'Proforma Invoice-' + sessionStorage.getItem('locName').trim() + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.orderManagementService.proformaInv(this.orderNumber, sessionStorage.getItem('locId'))
+    this.orderManagementService.salesproformaInv(this.orderNumber, sessionStorage.getItem('locId'))
       .subscribe(data => {
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
       })

@@ -106,7 +106,7 @@
                                                 <tr>
                                                     <td style="width: 100%;text-align: center;font-size: 14px;font-weight: bold;border: none;">Order&nbsp;Number&nbsp;:&nbsp;</td>
                                                     <td style="border: none;text-align: left;">
-                                                        <input disabled type="number" formControlName="orderNumber2"  class="form-control" style="width: 120px;">
+                                                        <input disabled type="number" formControlName="orderNumber2" [(ngModel)]="orderNumber2"  class="form-control" style="width: 120px;">
                                                     </td>
                                                 </tr>
                                             </table>
@@ -154,7 +154,7 @@
                                                         <td style="border: 1px solid black;">{{com.holdReason}}</td>
                                                         <td style="border: 1px solid black;">{{com.fuelType}}</td>
                                                         <td style="border: 1px solid black;">{{com.destinationTypeCode}}</td>
-                                                        <td style="border: 1px solid black;"> <button type="button"  class="btn btn-primary" data-dismiss="modal" (click)="allotedVehicleSelect(orderNumber,com.segment)">Allocate</button></td>
+                                                        <td style="border: 1px solid black;"> <button type="button"  class="btn btn-primary" data-dismiss="modal" (click)="allotedVehicleSelect(this.orderNumber2,com.segment)">Allocate</button></td>
                                                     </tr>
                                                 </tbody>
                                             </table>

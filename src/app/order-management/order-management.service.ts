@@ -359,6 +359,16 @@ export class OrderManagementService {
     });
   }
 
+  salesproformaInv(orderNumber, locId) {
+    const REQUEST_URI = this.ServerUrl + `/SalesReports/PrintProforma?orderNumber=${orderNumber}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+
 
   accountNoSearchFn2(accountNo, divisionId): Observable<any> {
     return this.http.get(this.ServerUrl + `/Customer/getByAccountNo1?accountNo=${accountNo}&divisionId=${divisionId}`);
