@@ -36,6 +36,8 @@ interface IWsVehicleMaster {
   divisionName:string;
   dealerCode:string;
   itemTypeForCat:string;
+  lastRunKm:number;
+  endDate:Date;
 }
 
 @Component({
@@ -219,7 +221,7 @@ export class WsVehicleMasterComponent implements OnInit {
   // checkNo: string;
   // checkDate: string;
 
-  displayInactive = true;
+  displayInactive = false;
   Status1: any;
   inactiveDate: Date;
   display = true;
@@ -249,7 +251,8 @@ export class WsVehicleMasterComponent implements OnInit {
 
   itemTypeForCat: string='SS_VEHICLE' ;
   categoryId: number;
-
+  lastRunKm:number;
+  endDate:Date;
  
 
   public ServiceModelList   :Array<string> = [];
@@ -383,7 +386,7 @@ export class WsVehicleMasterComponent implements OnInit {
       // ewTotalAmt: [],
 
       // ewSaleDate: [],
-      // ewStartDate: [],
+      ewStartDate: [],
 
 
       // payType: [],
@@ -417,6 +420,8 @@ export class WsVehicleMasterComponent implements OnInit {
 
       itemTypeForCat: [],
       categoryId: [],
+      lastRunKm:[],
+      endDate:[],
 
     });
 
@@ -539,8 +544,18 @@ export class WsVehicleMasterComponent implements OnInit {
           console.log(this.statusList);
         }
       );
+  }
 
-
+  onStatusSelected(event: any) {
+    this.Status1 = this.wsVehicleMasterForm.get('status').value;
+    if (this.Status1 === 'Inactive') {
+      this.displayInactive = true;
+      this.endDate = new Date();
+    }
+    else if (this.Status1 === 'Active') {
+      this.wsVehicleMasterForm.get('endDate').reset();
+      this.displayInactive=false;
+    }
   }
 
   transeData(val) {
@@ -608,12 +623,11 @@ export class WsVehicleMasterComponent implements OnInit {
 
 
   updateMast() {
-    alert ("Update  Vehicle Master Data......")
+    // alert ("Update  Vehicle Master Data......")
     const formValue: IWsVehicleMaster =this.transeData( this.wsVehicleMasterForm.value);
     // this.CreateItemCode();
     this.CheckDataValidations();
-    var itmId =this.wsVehicleMasterForm.get("itemId").value;
-    var mstat ='Active'
+   
     if (this.checkValidation) {
       alert("Data Validation Sucessfully....\nSaveing data to WS Vehicle Master")
       this.service.UpdateWsVehicleMaster(formValue).subscribe((res: any) => {
