@@ -423,7 +423,7 @@ export class WsVehicleMasterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    $("#wrapper").toggleClass("toggled");
     this.name = sessionStorage.getItem('name');
     this.loginArray = sessionStorage.getItem('divisionName');
     this.divisionId = Number(sessionStorage.getItem('divisionId'));
@@ -550,13 +550,13 @@ export class WsVehicleMasterComponent implements OnInit {
     delete val.ouName;
     delete val.locName;
 
-    delete val.custName;
+    // delete val.custName;
     delete val.address1;
     delete val.address2;
     delete val.address3;
     delete val.city;
     delete val.state;
-    delete val.mobile1;
+    // delete val.mobile1;
     delete val.mobile2;
     delete val.contactNo;
     delete val.pinCd;
@@ -610,7 +610,7 @@ export class WsVehicleMasterComponent implements OnInit {
   updateMast() {
     alert ("Update  Vehicle Master Data......")
     const formValue: IWsVehicleMaster =this.transeData( this.wsVehicleMasterForm.value);
-    this.CreateItemCode();
+    // this.CreateItemCode();
     this.CheckDataValidations();
     var itmId =this.wsVehicleMasterForm.get("itemId").value;
     var mstat ='Active'
@@ -671,9 +671,9 @@ export class WsVehicleMasterComponent implements OnInit {
             this.displayButton = false;
             console.log(this.lstcomments);
             this.wsVehicleMasterForm.patchValue(data.obj);
-            this.GetItemDeatils(this.lstcomments.itemId.itemId);
-            this.GetCustomerDetails(this.lstcomments.customerId);
-            this.GetCustomerSiteDetails(this.lstcomments.customerId);
+            this.GetItemDeatils(this.lstcomments.itemId);
+            this.GetCustomerDetails(this.lstcomments.custAccountNo);
+            // this.GetCustomerSiteDetails(this.lstcomments.customerId);
             this.CreateItemCode();
           }
         });
@@ -696,14 +696,16 @@ export class WsVehicleMasterComponent implements OnInit {
     } else { this.showCreateItemButton = true; }
   }
 
-  GetCustomerDetails(mCustId: any) {
-    if (mCustId > 0) {
+
+
+  GetCustomerDetails(mCustAcNo: any) {
+    if (mCustAcNo > 0) {
       this.showCreateCustButton = false;
 
-      this.service.ewInsSiteList(mCustId)
+      this.service.searchCustomerByAccount(mCustAcNo)
         .subscribe(
           data1 => {
-            this.CustomerDetailsList = data1;
+            this.CustomerDetailsList = data1.obj;
             console.log(this.CustomerDetailsList);
             this.wsVehicleMasterForm.patchValue({
               custAccountNo: this.CustomerDetailsList.custAccountNo,
@@ -720,7 +722,7 @@ export class WsVehicleMasterComponent implements OnInit {
               contactNo: this.CustomerDetailsList.contactNo,
               emailId1: this.CustomerDetailsList.emailId,
               custType: this.CustomerDetailsList.custType,
-              custTaxCategoryName:this.CustomerDetailsList.customerSiteMasterList.taxCategoryName,
+              custTaxCategoryName:this.CustomerDetailsList.customerSiteMasterList[0].taxCategoryName,
 
             });
           }
@@ -728,8 +730,9 @@ export class WsVehicleMasterComponent implements OnInit {
     } else { this.showCreateCustButton = true; }
   }
 
+
   GetCustomerSiteDetails(mCustId: any) {
-    // alert("Customer Id: " + mCustId);
+    alert("Customer Id: " + mCustId);
     this.service.GetCustomerSiteDetails(mCustId, this.ouId)
       .subscribe(
         data1 => {
@@ -750,9 +753,6 @@ export class WsVehicleMasterComponent implements OnInit {
                 this.CustomerDetailsList.city + "," +
                 this.CustomerDetailsList.state + "-" +
                 this.CustomerDetailsList.pinCd,
-
-
-
             });
 
           }
@@ -785,9 +785,7 @@ export class WsVehicleMasterComponent implements OnInit {
               custPhone: this.CustomerSiteDetails.mobile1,
               customerType: this.CustomerSiteDetails.customerId.custType,
               custTaxCategoryName: this.CustomerSiteDetails.taxCategoryName,
-
             });
-
           }
         });
   }
@@ -1117,6 +1115,7 @@ export class WsVehicleMasterComponent implements OnInit {
       alert("CUSTOMER NO: Should not be null");
     }
 
+    
     if (formValue.mobile1 < 0 || formValue.mobile1 === undefined || formValue.mobile1 === null) {
       this.checkValidation = false;
       alert("CUSTOMER PHONE1: Should not be null");
@@ -1128,17 +1127,17 @@ export class WsVehicleMasterComponent implements OnInit {
       return;
     }
 
-    if (formValue.address1 === undefined || formValue.address1 === null || formValue.address1.trim() === '') {
-      this.checkValidation = false;
-      alert("ADDRESS1 : Should not be null....");
-      return;
-    }
+    // if (formValue.address1 === undefined || formValue.address1 === null || formValue.address1.trim() === '') {
+    //   this.checkValidation = false;
+    //   alert("ADDRESS1 : Should not be null....");
+    //   return;
+    // }
 
-    if (formValue.address2 === undefined || formValue.address2 === null || formValue.address2.trim() === '') {
-      this.checkValidation = false;
-      alert("ADDRESS2: Should not be null....");
-      return;
-    }
+    // if (formValue.address2 === undefined || formValue.address2 === null || formValue.address2.trim() === '') {
+    //   this.checkValidation = false;
+    //   alert("ADDRESS2: Should not be null....");
+    //   return;
+    // }
 
     // if (formValue.address3 === undefined || formValue.address3 === null || formValue.address3.trim() === '') {
     //   this.checkValidation = false;
@@ -1146,21 +1145,21 @@ export class WsVehicleMasterComponent implements OnInit {
     //   return;
     // }
 
-    if (formValue.city === undefined || formValue.city === null || formValue.city.trim() === '') {
-      this.checkValidation = false;
-      alert("CITY : Should not be null....");
-      return;
-    }
-    if (formValue.state === undefined || formValue.state === null || formValue.state.trim() === '') {
-      this.checkValidation = false;
-      alert("STATE : Should not be null....");
-      return;
-    }
-    if (formValue.pinCd === undefined || formValue.pinCd === null ) {
-      this.checkValidation = false;
-      alert("PIN : Should not be null....");
-      return;
-    }
+    // if (formValue.city === undefined || formValue.city === null || formValue.city.trim() === '') {
+    //   this.checkValidation = false;
+    //   alert("CITY : Should not be null....");
+    //   return;
+    // }
+    // if (formValue.state === undefined || formValue.state === null || formValue.state.trim() === '') {
+    //   this.checkValidation = false;
+    //   alert("STATE : Should not be null....");
+    //   return;
+    // }
+    // if (formValue.pinCd === undefined || formValue.pinCd === null ) {
+    //   this.checkValidation = false;
+    //   alert("PIN : Should not be null....");
+    //   return;
+    // }
 
 
     this.checkValidation = true

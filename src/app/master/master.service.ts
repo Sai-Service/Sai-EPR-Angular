@@ -2936,7 +2936,7 @@ public saveWSVehicle(wsVehicleDetails) {
 
 
 UpdateWsVehicleMaster(wsVehMasterRecord) {
-  alert ("in update...")
+  // alert ("in update...")
   const options = {
     headers: this.headers
   };
