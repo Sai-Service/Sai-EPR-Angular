@@ -1437,6 +1437,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
               if (this.custSiteList.length > 1) {
                 if (Number(this.custSiteList[i].ouId) === Number(sessionStorage.getItem('ouId'))) {
                   this.CounterSaleOrderBookingForm.patchValue({ name: this.custSiteList[i].siteName });
+                  this.CounterSaleOrderBookingForm.get('name').enable()
                   //  this.onOptionsSelectedcustSiteName(this.custSiteList[i].siteName);
                 }
               }
@@ -3124,7 +3125,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
         let createOrderList = this.createOrderTypeAllList.filter((customer) => (customer.codeDesc.includes('Direct Invoice')==false));
           console.log(createOrderList);
           this.createOrderTypeList=createOrderList;
-        this.CounterSaleOrderBookingForm.get('name').disable();
+        // this.CounterSaleOrderBookingForm.get('name').disable();
       }
 
     }
