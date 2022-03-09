@@ -1089,6 +1089,7 @@ export class PayableInvoiceNewComponent implements OnInit {
             this.displayapInvCancelled = false;
             this.isVisibleUpdateBtn = false;
             this.isVisibleValidate = false;
+            this.isVisibleSaveTDS=false;
           }
           if (data.source == 'MANUAL') {
             this.apInvoiceTyp = 'MANUAL';
@@ -1139,6 +1140,7 @@ export class PayableInvoiceNewComponent implements OnInit {
       this.isVisible = true;
       //  this.isVisible1=false;
       this.displayapInvCancelled = false;
+      this.isVisibleSaveTDS=true;
     }
     if (this.currentOP === 'Search') {
       // alert('in if search')
@@ -1373,14 +1375,14 @@ export class PayableInvoiceNewComponent implements OnInit {
           data => {
             this.lstInvLineDeatails1 = data;
             console.log(this.lstInvLineDeatails1);
-            alert(this.lstInvLineDeatails1.taxLines.length)
+            // alert(this.lstInvLineDeatails1.taxLines.length)
             for (let i = 0; i < this.lstInvLineDeatails1.taxLines.length; i++) {
-              alert(this.lstInvLineDeatails1.taxLines[i].totTaxPer)
+              // alert(this.lstInvLineDeatails1.taxLines[i].totTaxPer)
               if (this.lstInvLineDeatails1.taxLines[i].totTaxPer != 0) {
                 sum = sum + this.lstInvLineDeatails1.taxLines[i].totTaxAmt;
               }
             }
-            alert(sum + '----'+ (amount+sum));
+            // alert(sum + '----'+ (amount+sum));
             var patch = this.poInvoiceForm.get('obj') as FormArray;
             (patch.controls[0]).patchValue({ invoiceAmt: (amount+sum)});
             (patch.controls[0]).patchValue({ taxAmt: sum});
@@ -1418,8 +1420,8 @@ export class PayableInvoiceNewComponent implements OnInit {
               // var headerTotTaxAmt = sum(taxLinesData[j].totTaxAmt)
               alert('Tax Details Has Been Patched... Please Confirm!');
               var lno:String = String(this.invLineNo);
-              let taxMapData = this.poInvoiceForm.get('taxLines').value;
-              this.taxMap.set(String(lno), taxMapData);
+              // let taxMapData = this.poInvoiceForm.get('taxLines').value;
+              this.taxMap.set(String(lno), taxLinesData);
               console.log(this.taxMap.get(String(lno)));
             }
             // var ln: string = String(this.invLineNo);
