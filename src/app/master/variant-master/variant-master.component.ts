@@ -31,6 +31,7 @@ interface IVariantMaster {
   cylinder:string;
   startDate:Date;
   endDate:string;
+  oemWarrantyPeriod:number;
 
 
 }
@@ -100,6 +101,7 @@ cylinder:string;
 startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
 endDate:Date;
 // startDate = new Date();
+oemWarrantyPeriod:number;
   
   checkValidation=false;
   displayInactive = true;
@@ -154,9 +156,7 @@ endDate:Date;
       cylinder:[],
       startDate:[],
       endDate:[],
-
-     
-
+      oemWarrantyPeriod:[],
       });
 
       }
@@ -312,11 +312,12 @@ endDate:Date;
             this.service.UpdateVariantMaster(formValue).subscribe((res: any) => {
             if (res.code === 200) {
               alert('RECORD UPDATED SUCCESSFUILY');
-              window.location.reload();
+              // window.location.reload();
+              this.variantMasterForm.disable();
             } else {
               if (res.code === 400) {
                 alert('ERROR OCCOURED IN PROCEESS');
-                this.variantMasterForm.reset();
+                // this.variantMasterForm.reset();
               }
             }
           });

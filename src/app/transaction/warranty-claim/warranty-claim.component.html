@@ -41,7 +41,7 @@
                     <select   formControlName="lineStatus" id="lineStatus" [(ngModel)]="lineStatus"  class="form-control"  style="background-color: yellow;" >     
                     <option disabled>--Select--</option>
                     <option *ngFor="let sc of  lineStatusList" [ngValue]="sc.code">
-                    {{sc.cmnDesc}}
+                    {{sc.code}}
                     </option>
                     </select>
                 </td>
@@ -57,7 +57,7 @@
                     <select   formControlName="itemType" id="itemType" [(ngModel)]="itemType"  class="form-control"  style="background-color: yellow;" >     
                     <option disabled>--Select--</option>
                     <option *ngFor="let sc of  itemTypeList" [ngValue]="sc.code">
-                    {{sc.cmnDesc}}
+                    {{sc.codeDesc}}
                     </option>
                     </select>
                 </td>

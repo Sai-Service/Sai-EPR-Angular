@@ -263,6 +263,7 @@ getAvgHistoryList(mLocId,mitemId,frmDate,toDate): Observable<any> {
   itemTypeLst(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/CmnType/ITEM_TYPE');
    }
+   
 
     warrDataList(fromDt,toDt,ouId,lineStat,itmType):Observable<any> {
       const REQUEST_PARAMS = new HttpParams().set('fromDate', fromDt)

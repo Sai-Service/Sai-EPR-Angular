@@ -40,7 +40,7 @@ interface IPaymentRcptAr {
   bounceReasonCode:string;
   reversalCategory: string;
   status: string;
-  bounceCharges :number;
+  minbouncecharge :number;
 
   tdsAmount:number;
   tdstrxNumber:string;
@@ -181,7 +181,7 @@ export class PaymentArComponent implements OnInit {
   reversalReasonCode: number;
   reversalCategory: string;
   bounceReasonCode:string;
-  bounceCharges:number;
+  minbouncecharge:number;
   // status : string;
   status = 'Open';
   cancelDate = null;
@@ -379,7 +379,7 @@ export class PaymentArComponent implements OnInit {
       reversalDate: [],
       reversalCategory: [],
       bounceReasonCode:[],
-      bounceCharges:[],
+      minbouncecharge:[],
 
       cancelReason: [],
       cancelDate: [],
@@ -2218,7 +2218,7 @@ export class PaymentArComponent implements OnInit {
       return;
     }
 
-    if (formValue.bounceCharges === undefined || formValue.bounceCharges === null || formValue.bounceCharges<0) {
+    if (formValue.minbouncecharge === undefined || formValue.minbouncecharge === null || formValue.minbouncecharge<0) {
       this.cancelValidation = false;
       alert("CHQ BOUNCE CHARGES: Should not be null....");
       return;
@@ -2319,7 +2319,9 @@ export class PaymentArComponent implements OnInit {
       if(mReasonCode ==='ChqBounce' && pymtType ==='CHEQUE' ){
         // alert ("in Reason fn..chq bounc")
           this.chqBounceStatus=true;
-          this.service.RcptChqBounceReasonList('ChqBncRsn')
+          // this.service.RcptChqBounceReasonList('ChqBncRsn')
+          this.service.RcptChqBounceReasonListNew(this.ouId)
+          
           .subscribe(
             data => {
               this.ChqBounceReasonList = data;
@@ -2327,12 +2329,19 @@ export class PaymentArComponent implements OnInit {
             }
           );
       } 
-
-     
      
     }
   
+    onBounceRsnSelected(bncRsn) {
+      let selectedValue = this.ChqBounceReasonList.find(d => d.code === bncRsn);
+       var bncCharge;
+      if( selectedValue != undefined){
+       bncCharge =selectedValue.minbouncecharge;} 
+      else { bncCharge=0;}
 
+      this.paymentArForm.patchValue({minbouncecharge : bncCharge})
+
+     }
   
 
 

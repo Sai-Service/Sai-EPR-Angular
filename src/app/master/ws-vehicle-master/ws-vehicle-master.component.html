@@ -23,14 +23,15 @@
                             class="form-control" [(ngModel)]="deptId" placeholder="">
                             <input  style="width:30px ;"   type="text" hidden formControlName="emplId"
                             class="form-control" [(ngModel)]="emplId" placeholder="">
-                            <input  style="width:50px ;"   type="text"  hidden formControlName="itemId"
+                            <input  style="width:50px ;"   type="text"  hidden  formControlName="itemId"
                             class="form-control" [(ngModel)]="itemId">
                            <input  style="width:30px ;"   type="text" hidden formControlName="customerSiteId"
                             class="form-control" [(ngModel)]="customerSiteId" placeholder="">
+                            <input  style="width:30px ;"  hidden  type="number"  formControlName="oemWarrantyPeriod"
+                            class="form-control" [(ngModel)]="oemWarrantyPeriod" >
 
 
-                   
-
+                            
               
                 <div class="auto-style103" >
                     <div class="classic-tabs">
@@ -89,7 +90,7 @@
                                     <td>&nbsp;Registration&nbsp;No:&nbsp;</td>
                                    <td>
                                         <input class="form-control" formControlName="vehRegNo" [(ngModel)]='vehRegNo'
-                                            value={{vehRegNo}} style="text-transform:uppercase;">
+                                            value={{vehRegNo}} style="text-transform:uppercase;width: 210px;">
                                          
                                     </td>
 
@@ -98,11 +99,13 @@
                                                 aria-hidden="true"></i></button>
                                     </td>
 
+                                    <td></td><td></td>
+
                                                      
-                                    <td style="width: 12%" class="LabelFontStyle">Model&nbsp;:&nbsp;</td>
+                                    <td style="width: 12%" class="LabelFontStyle">Model&nbsp;Name:&nbsp;</td>
                         
                                     <td>  
-                                        <select formControlName="mainModel" id="mainModel" [(ngModel)]="mainModel" class="form-control"  >
+                                        <select formControlName="mainModel" id="mainModel" [(ngModel)]="mainModel" class="form-control" style="width: 350px;"  >
                                             <!-- (ngModelChange)="onOptionsSelectedModel($event)" -->
                                             <option disabled>--Select--</option>
                                             <option *ngFor="let mm of mainModelList"  [ngValue]="mm.code">
@@ -115,7 +118,7 @@
                                     <td>
                                         <input   type="text"  formControlName="chassisNo"  id="chassisNo" 
                                         [ngClass]="{ 'is-invalid': submitted && f.chassisNo.errors }" 
-                                        [(ngModel)]="chassisNo" class="form-control" style="text-transform:uppercase;" >
+                                        [(ngModel)]="chassisNo" class="form-control" style="text-transform:uppercase;width: 210px;" >
                                         <div *ngIf="submitted && f.chassisNo.errors" class="invalid-feedback">
                                             <div *ngIf="f.chassisNo.errors.required">Chassis No. cannot be</div>
                                         </div>
@@ -336,7 +339,7 @@
                         <input  style="width: 100%"  disabled   type="text"  formControlName="dealerName"  id="dealerName" [(ngModel)]="dealerName" class="form-control" >
                     </td> -->
 
-                    <td style="width: 12%" class="LabelFontStyle">Dealer&nbsp;Site:&nbsp;</td>
+                    <td style="width: 12%" class="LabelFontStyle">Dealer&nbsp;Loc:&nbsp;</td>
 
                     <td>
                         <input    type="text"  formControlName="dealerSite"  id="dealerSite" [(ngModel)]="dealerSite" class="form-control" >
@@ -414,16 +417,11 @@
                                 <input   type="text"  formControlName="dmsInvoiceNo"  id="dmsInvoiceNo" [(ngModel)]="dmsInvoiceNo" class="form-control" (keyup)="onInput($event)">
                             </td>
                        
-                       
-                       
-                        <td style="width: 12%" class="LabelFontStyle">Cust&nbsp;No:&nbsp;</td>
-                        <td>
-                            <input   disabled  type="text"  formControlName="custAccountNo"  id="custAccountNo" [(ngModel)]="custAccountNo" class="form-control" style="background-color: greenyellow;" >
-                        </td>
-                        <td style="width: 12%" class="LabelFontStyle">&nbsp;Name:&nbsp;</td>
-                        <td>
+                      
+                        <td style="width: 12%" class="LabelFontStyle">Customer&nbsp;Name:&nbsp;</td>
+                        <td colspan="3">
                             <input   hidden  type="text"  formControlName="customerId"/>
-                            <input disabled type="text"  formControlName="custName"  id="custName" [(ngModel)]="custName" class="form-control" >
+                            <input disabled type="text"  formControlName="custName"  id="custName" [(ngModel)]="custName" class="form-control" style="width: 100%;" >
                         </td>
 
                       
@@ -432,6 +430,11 @@
                 </tr>
 
                 <tr>
+                    <td style="width: 12%" class="LabelFontStyle">Customer&nbsp;No:&nbsp;</td>
+                    <td>
+                        <input   disabled  type="text"  formControlName="custAccountNo"  id="custAccountNo" [(ngModel)]="custAccountNo" class="form-control" style="background-color: greenyellow;" >
+                    </td>
+
                     <td style="width: 12%" class="LabelFontStyle">&nbsp;Status:&nbsp;</td>
 
                     <!-- <input  style="width:50px ;"   type="text"  formControlName="status"
@@ -448,7 +451,13 @@
                 <div *ngIf="displayInactive; then Block1; else Block2"></div>
                 <ng-template #Block1> 
                     <td style="width: 18%" class="LabelFontStyle"> Inactive&nbsp;Date:&nbsp;</td>
-                    <td> <input disabled type="text" formControlName="endDate"  [ngModel]="endDate" class="form-control" [ngModel]="endDate | date:'dd/MM/yyyy'"> </td>
+                    <!-- <td> <input disabled type="date" formControlName="inactiveDate"  [(ngModel)]="inactiveDate" class="form-control" > </td> -->
+                    
+                    <td>
+                        <input  disabled  type="date"  formControlName="inactiveDate"  id="inactiveDate" [(ngModel)]="inactiveDate"  value={{inactiveDate}} class="form-control" >
+                    </td>
+
+
                 </ng-template>
                 <ng-template #Block2> </ng-template>
 
@@ -581,7 +590,7 @@
                 <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Insurer&nbsp;:&nbsp;</td>
     
                 <td colspan="3">
-                    <select  formControlName="ewInsurerId" id="ewInsurerId"  (ngModelChange)='onInsurerNameSelected($event)' class="form-control" style="width: 100%;">
+                    <select  formControlName="ewInsurerId" id="ewInsurerId"  (ngModelChange)='onEwInsurerNameSelected($event)' class="form-control" style="width: 100%;">
                     <option></option>
                     <option *ngFor="let sc of insNameList"
                         [ngValue]="sc.customerId">
@@ -595,7 +604,7 @@
            <td colspan="3">
             <select  formControlName="ewInsurerSite" id="ewInsurerSite" class="form-control" style="width: 100%;">
             <option>--Select--</option>
-            <option *ngFor="let sc of insSiteList"
+            <option *ngFor="let sc of ewInsSiteList"
                 [ngValue]="sc.customerSiteId">
                 {{sc.address1}}{{sc.address2}}-{{sc.address3}}-{{sc.location}}-{{sc.city}}-{{sc.pinCd}}-{{sc.state}}
             </option>

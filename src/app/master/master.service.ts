@@ -2450,6 +2450,13 @@ OrderCategoryList(): Observable<any> {
     // http://localhost:8081/cmnLookup/CmnType/ChqBncRsn
   }
 
+  RcptChqBounceReasonListNew(ouId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/chqBounceReason/reasonList/${ouId}`);
+   //  http://localhost:8081/chqBounceReason/reasonList/21
+
+  }
+ 
+
   RefReasonLst(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/CmnType/REFUND_REASON');
   }

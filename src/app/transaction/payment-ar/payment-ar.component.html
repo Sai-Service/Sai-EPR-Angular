@@ -563,17 +563,18 @@
                                 <td style="width: 15%" class="LabelFontStyle">&nbsp;Bounce&nbsp;Reason:&nbsp;</td>
 
                                 <td >
-                                    <select formControlName="reversalComment" id="reversalComment" [(ngModel)]="reversalComment"  value={{reversalComment}} class="form-control" style="width: 300px;" >
+                                    <select formControlName="reversalComment" id="reversalComment" [(ngModel)]="reversalComment"  value={{reversalComment}} 
+                                    (ngModelChange)='onBounceRsnSelected($event)' class="form-control" style="width: 300px;" >
                                         <option disabled>--Select--</option>
-                                        <option *ngFor="let sc of  ChqBounceReasonList" [value]="sc.code"  >
+                                        <option *ngFor="let sc of  ChqBounceReasonList" [value]="sc.code">
                                            <!-- {{sc.code}}- -->
-                                           {{sc.codeDesc}}
+                                           {{sc.codedesc}}
                                         </option>
                                     </select>
                                 </td>
 
                                 <td style="width: 15%" class="LabelFontStyle">&nbsp;Bounce&nbsp;Charges:&nbsp;</td>
-                                <td><input  style="text-align: right;" type="number" formControlName="bounceCharges"  id="bounceCharges" [(ngModel)] ="bounceCharges" class="form-control"></td>
+                                <td><input  style="text-align: right;" type="number" formControlName="minbouncecharge"  id="minbouncecharge" [(ngModel)] ="minbouncecharge" class="form-control"></td>
                                 
 
                               </tr>
