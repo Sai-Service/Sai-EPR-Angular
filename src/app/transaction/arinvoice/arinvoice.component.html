@@ -90,7 +90,7 @@
         <td>
             <!-- <input type="text" class="form-control" formControlName="source"> -->
             <select
-            formControlName="source" name="source" id="source" class="form-control" (ngModelChange)="onOptionType($event)">
+            formControlName="source" name="source" id="source" class="form-control" >
                                     <option *ngFor="let sc of sourceList" [ngValue]="sc.code">
                                         {{sc.code}}
                                     </option>
@@ -468,6 +468,7 @@
                                             <th scope="col">Quantity</th>
                                             <th scope="col">Price</th>
                                             <th scope="col">Base Amount</th>
+                                            <th scope="col">Tax %</th>
                                             <th scope="col">Tax Category</th>
                                             <th scope="col">Tax Amount</th>
                                             <th scope="col">Total Amont</th>
@@ -547,6 +548,9 @@
                                                 <td> <input disabled type="number" formControlName="basicAmt"
                                                         (keyup)="onKey(i)" style="width: 4rem;"
                                                         class="form-control"></td>
+                                                        <td> <input  type="number" formControlName="taxPer" [disabled]="isDisabledPer"
+                                                             style="width: 4rem;" (change)="onOptionTaxPerSel($event,i)"
+                                                            class="form-control"></td>
                                                         <td>
                                                             <!-- <input type="text" formControlName="taxCategoryName"
                                                                 class="form-control"> -->
@@ -555,7 +559,7 @@
 
                                                             <select formControlName="taxCategoryName" id="taxCategoryName"
                                                                 (ngModelChange)='onOptionTaxCatSelected(i,null, $event,basicAmt)'
-                                                                class="form-control">
+                                                                class="form-control" >
                                                                 <option>--Select--</option>
                                                                 <option *ngFor="let sc of  taxCategoryList[i]" [ngValue]="sc">
                                                                     {{sc.taxCategoryName}}
@@ -1035,11 +1039,11 @@
                         <ng-template #thenBlock1>
                             <td> <button type="button" class="btn btn-primary" (click)="Save()" style="width: 8rem;">Save</button></td>
 
-                            <td>
+                            <!-- <td>
                                 <button disabled type="button"  class="btn btn-primary"
                                 data-toggle="modal" data-target="#exampleModal2"  (click)="SearchInvoices()" style="width: 8rem;">
                                 &nbsp;Apply</button>
-                            </td>
+                            </td> -->
 
                         </ng-template>
 
@@ -1047,14 +1051,20 @@
                             <td> <button disabled type="button" class="btn btn-primary" (click)="Save()" style="width: 8rem;">Save</button></td>
                             <!-- <td> <button   type="butt on" class="btn btn-primary" (click)="creditMemoApply()" style="width: 8rem;">Apply</button></td> -->
 
-                            <td>
+                            <!-- <td>
                                 <button  type="button"  class="btn btn-primary"
                                 data-toggle="modal" data-target="#exampleModal2"  (click)="SearchInvoices()" style="width: 8rem;">
                                 &nbsp;Apply</button>
-                            </td>
+                            </td> -->
 
 
                         </ng-template>
+                        <td>
+                            <button  type="button"  class="btn btn-primary"
+                            data-toggle="modal" data-target="#exampleModal2"  (click)="SearchInvoices()"  [style.display]="isVisibleApply ? 'block' : 'none'" style="width: 8rem;">
+                            &nbsp;Apply</button>
+                        </td>
+                        <td> <button disabled type="button" class="btn btn-primary" style="width: 8rem;" [style.display]="isVisibleUpdate ? 'block' : 'none'">Update</button></td>
 
                         <div *ngIf="disabledComplete ; then thenenableComplete; else elsedisableComplete"></div>
                         <ng-template #thenenableComplete> 

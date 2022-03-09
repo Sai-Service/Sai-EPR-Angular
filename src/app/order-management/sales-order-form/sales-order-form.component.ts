@@ -1401,7 +1401,7 @@ export class SalesOrderFormComponent implements OnInit {
                   this.SalesOrderBookingForm.get('insCharges').enable();
                   this.SalesOrderBookingForm.get('offerPrice').enable();
                 }
-                if (this.lstgetOrderLineDetails[i].flowStatusCode === 'INVOICED') {
+                if (this.lstgetOrderLineDetails[i].flowStatusCode === 'INVOICED' ) {
                   this.isVisible4 = true;
                   this.isVisible3 = false;
                   // this.isVisible3 = false;
@@ -1805,6 +1805,8 @@ export class SalesOrderFormComponent implements OnInit {
     this.progress = 0;
     this.dataDisplay = 'Order Line Save is progress....Do not refresh the Page'
     var orderLines = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value;
+    var orderLinesNew = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+    var orderLinesNew1 =orderLinesNew.getRawValue();
     let jsonData = this.SalesOrderBookingForm.value;
     let salesObj = Object.assign(new SalesOrderobj(), jsonData);
     salesObj.setoeOrderLinesAllList(orderLines);
@@ -1833,13 +1835,28 @@ export class SalesOrderFormComponent implements OnInit {
           return;
         }
       }
-      if (orderLines[k].invType != 'SS_VEHICLE' && orderLines[k].invType.includes('SS_ADDON') && orderLines[k].flowStatusCode === 'READY FOR INVOICE') {
-        alert('First Create Vehicle Invoice!.');
-        this.dataDisplay = 'First Create Vehicle Invoice!.....Do not refresh the Page';
-        this.isDisabled11 = false;
-        this.OrderFind(this.orderNumber);
-        return;
-      }
+      // for (let n=0; n < orderLinesNew1.length; n++){
+      // if (orderLinesNew1[n].invType != 'SS_VEHICLE' || orderLinesNew1[n].flowStatusCode != 'INVOICED') {
+      //   alert('hiii')
+      //   alert(orderLinesNew1.length);
+      //     alert(orderLinesNew1[n].invType)
+      //     if (orderLines[k].invType.includes('SS_ADDON') && orderLines[k].flowStatusCode === 'READY FOR INVOICE') {
+      //       alert('First Create Vehicle Invoice!.');
+      //       this.dataDisplay = 'First Create Vehicle Invoice!.....Do not refresh the Page';
+      //       this.isDisabled11 = false;
+      //       this.OrderFind(this.orderNumber)
+      //       return;
+      //     }
+      //   }
+      // }
+
+      // if (orderLines[k].invType != 'SS_VEHICLE' && orderLines[k].invType.includes('SS_ADDON') && orderLines[k].flowStatusCode === 'READY FOR INVOICE') {
+      //   alert('First Create Vehicle Invoice!.');
+      //   this.dataDisplay = 'First Create Vehicle Invoice!.....Do not refresh the Page';
+      //   this.isDisabled11 = false;
+      //   this.OrderFind(this.orderNumber);
+      //   return;
+      // }
       if (orderLines[k].flowStatusCode === 'READY FOR INVOICE'){
         if (financeType != 'None' ){
           if ( financerName === null || financerName === undefined || emi === null || emi === undefined || tenure===null || tenure === undefined ||

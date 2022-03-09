@@ -33,7 +33,7 @@ interface IStockTransfer {
 
   emplId:number;
   uuidRef: string;
-
+  totVal:number;
 }
 interface IEway{
   ewayBill: string;
@@ -127,7 +127,7 @@ export class StockTransferComponent implements OnInit {
   userList2: any[] = [];
   lastkeydown1: number = 0;
   public itemMap = new Map<string, StockTransferRow >();
-  
+  totVal:number;
 
   // public itemMap3 = new Map<string, StockTransferRow>();
 
@@ -157,6 +157,7 @@ export class StockTransferComponent implements OnInit {
       status: ['', [Validators.required]],
       transReference:[''],
       emplId:[],
+      totVal:[],
       trxLinesList: this.fb.array([]),
 
     }
@@ -513,7 +514,7 @@ validate(i:number,qty1)
     alert('Please enter correct No');
     trxLnArr1.controls[i].patchValue({primaryQty:''});
   }}
-
+  this.updateTotAmtPerline(i);
 }
 
 
@@ -960,5 +961,26 @@ viewStockgatePass() {
     this.deleteReserve();
     return;
   }
+
+ 
+    updateTotAmtPerline(lineIndex) {
+      var formArr = this.stockTranferForm.get('trxLinesList') as FormArray;
+      var formVal = formArr.getRawValue();
+      var totAmt = 0;
+      for (let i = 0; i < formVal.length; i++) {
+         
+          if (formVal[i].transCost == undefined || formVal[i].transCost == null || formVal[i].transCost == '') {
+  
+          } else {
+            totAmt = totAmt + Number((formVal[i].transCost)*(formVal[i].primaryQty));
+           
+          }
+  
+        }
+       
+       totAmt = Math.round(((totAmt) + Number.EPSILON) * 100) / 100;
+      this.stockTranferForm.patchValue({ 'totVal': totAmt });
+    
+    }
 }
 

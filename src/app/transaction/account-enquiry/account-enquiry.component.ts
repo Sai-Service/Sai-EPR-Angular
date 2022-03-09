@@ -13,6 +13,9 @@ interface IAccountEnquiry
   periodNameTo:string;
   segmentNameFrm:string;
   postedDate:string;
+  postedDateto:string;
+  postedDatefrm:string;
+
 }
 
 @Component({
@@ -67,6 +70,11 @@ public InterBrancList:Array<string>=[];
   runningTotalCr: number;
   runningTotalDr: number;
   JVBaldata: any;
+  postedDateto:string;
+  postedDatefrm:string;
+  min=new Date();
+  max=new Date();
+
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService)  {
     this.AccountEnquiryForm=fb.group({
       runningTotalDr:[],
@@ -92,6 +100,9 @@ public InterBrancList:Array<string>=[];
       lookupValueDesc5:[''],
       jeSource:[],
       name:[],
+      postedDateto:[],
+  postedDatefrm:[],
+
       // codeCombinationId:[],
     })
    }
@@ -246,8 +257,10 @@ public InterBrancList:Array<string>=[];
           showJournalDetail()
           {
             var formValue:IAccountEnquiry=this.AccountEnquiryForm.value;
-            var postedDate = this.pipe.transform(formValue.postedDate, 'dd-MMM-yyyy');
-            formValue.postedDate=postedDate;
+            var postedDatefrm = this.pipe.transform(formValue.postedDatefrm, 'dd-MMM-yyyy');
+            var postedDateto = this.pipe.transform(formValue.postedDateto, 'dd-MMM-yyyy');
+            formValue.postedDatefrm=postedDatefrm;
+            formValue.postedDateto=postedDateto;
             this.service.AccountEnquirySearch(formValue).subscribe
             ((res:any) => {
               if(res.code===200)
@@ -322,5 +335,17 @@ viewAccounting(event:any){
     this.router.navigate(['admin']);
   }
 
+  onOptionGlPeriod(event){
+
+    var selPer=this.PeriodName.find(d=>d.periodName===event);
+    console.log(selPer.startDate)
+    if(selPer!=undefined){
+   (document.getElementById('postedDatefrm') as HTMLInputElement).setAttribute('min',selPer.startDate);
+   (document.getElementById('postedDatefrm') as HTMLInputElement).setAttribute('max',selPer.endDate);
+   
+   (document.getElementById('postedDateto') as HTMLInputElement).setAttribute('min',selPer.startDate);
+   (document.getElementById('postedDateto') as HTMLInputElement).setAttribute('max',selPer.endDate);
+ }
+  }
 }
 

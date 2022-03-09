@@ -62,7 +62,7 @@
                                                             </td>
 
                                                                     <td >
-                                                                            <select class="form-control"  formControlName="periodNameFrm" >
+                                                                            <select class="form-control"  formControlName="periodNameFrm" (ngModelChange)="onOptionGlPeriod($event)">
                                                                                 <option>--Select--</option>
                                                                                 <option *ngFor="let fy of PeriodName" [ngValue]="fy.periodName">{{fy.periodName}}</option>
                                                                             </select>
@@ -244,7 +244,8 @@
                     </div>
                                                                         </td>
                                                     </tr>
-                                                    <tr>
+                                                    <tr><td></td></tr>
+                                                    <!-- <tr>
                                                                         <td style="width: 15%"class="LabelFontStyle">
                                                                           Transaction&nbsp;Date:
                                                                   </td>
@@ -253,13 +254,40 @@
                                                                                   <input type="date" class="form-control"  formControlName="postedDate" >
                                                                           </td>
                                                     </tr>
-
+ -->
 
                                                 </table>
                                                 </fieldset>
                                         </td>
                                     </tr>
                                 </table>
+                    </td>
+                    <td>
+                        <fieldset class="RFS">
+                            <legend id="FormsPH_LGAadhaar" class="RFSL"
+                            style="font-size: 10px;color: black;">
+                            <b> Transaction&nbsp;Date&nbsp;</b>
+                        </legend>
+                        <table>
+                            <tr>
+                                    <td style="width: 15%"class="LabelFontStyle">
+                                            From&nbsp;Date:
+                                    </td>
+                                    <td >
+                                      <input type="date" class="form-control" formControlName="postedDatefrm" [(ngModel)]="postedDatefrm"
+                                      >
+                                    </td>
+                            </tr>
+                            <tr>
+                                    <td style="width: 15%"class="LabelFontStyle">
+                                            To&nbsp;Date:
+                                    </td>
+                                    <td >
+                                      <input type="date" class="form-control" formControlName="postedDateto"[(ngModel)]="postedDateto">
+                                    </td>
+                            </tr>
+                        </table>
+                        </fieldset>
                     </td>
                 </tr>
             </table>
