@@ -857,10 +857,12 @@ export class PayableInvoiceNewComponent implements OnInit {
       this.lineDistributionArray().removeAt(index);
     }
   }
-
+  currop='Save';
   currentOP = 'Search'
   apInvFind(content) {
-    this.currentOP = 'Search'
+    // alert(content)
+    this.currentOP = 'Search';
+    // alert(this.currop)
     this.lineDetailsArray().clear();
     this.TaxDetailsArray().clear();
     this.TdsDetailsArray().clear();
@@ -869,6 +871,9 @@ export class PayableInvoiceNewComponent implements OnInit {
     let jsonData = this.poInvoiceForm.value;
     let invSearch: ISearch = Object.assign({}, jsonData);
     var searchObj: InvoiceSearchNew = new InvoiceSearchNew();
+    if (this.currop==='Save'){
+      searchObj.invoiceNum==='content';
+    }
     if (this.poInvoiceForm.get('segment1').value != null) { searchObj.segment1 = this.poInvoiceForm.get('segment1').value }
     if (this.poInvoiceForm.get('suppNo').value != null) { searchObj.suppNo = this.poInvoiceForm.get('suppNo').value }
     if (this.poInvoiceForm.get('invoiceNum').value != null) { searchObj.invoiceNum = this.poInvoiceForm.get('invoiceNum').value }
@@ -1036,7 +1041,7 @@ export class PayableInvoiceNewComponent implements OnInit {
             var invLnGrp: FormGroup = this.tdsLineDetails();
             this.TdsDetailsArray().push(invLnGrp);
           }
-          alert(data.taxLines.length)
+          // alert(data.taxLines.length)
           for (let i = 0; i < data.taxLines.length; i++) {
             var invLnGrp: FormGroup = this.TaxDetailsGroup();
             this.TaxDetailsArray().push(invLnGrp);
@@ -1194,7 +1199,7 @@ export class PayableInvoiceNewComponent implements OnInit {
   }
 
   onOptionViewTaxDetails(taxCategoryId, k) {
-    alert(k)
+    // alert(k)
     var arrayControl = this.poInvoiceForm.get('invLines').value;
     var linetaxCategoryId = arrayControl[k].taxCategoryId
   }
@@ -1419,7 +1424,10 @@ export class PayableInvoiceNewComponent implements OnInit {
               console.log(taxLinesData);
               // var headerTotTaxAmt = sum(taxLinesData[j].totTaxAmt)
               alert('Tax Details Has Been Patched... Please Confirm!');
-              var lno:String = String(this.invLineNo);
+              var lnv = this.indexVal;
+              // alert(this.indexVal+'----index value---')
+              var lno:String = String(lnv);
+              // alert(lno+'----taxcategory' );
               // let taxMapData = this.poInvoiceForm.get('taxLines').value;
               this.taxMap.set(String(lno), taxLinesData);
               console.log(this.taxMap.get(String(lno)));
@@ -1739,15 +1747,12 @@ export class PayableInvoiceNewComponent implements OnInit {
         taxStr.push(taxlinval[i]);
       }
     }
-
     var disStr = [];
     for (let dislinval of this.distarr.values()) {
       for (let i = 0; i < dislinval.length; i++) {
         disStr.push(dislinval[i]);
       }
     }
-
-    
     let manInvObj = Object.assign(new ManualInvoiceObjNew(), jsonData);
     manInvObj.setinvLines(this.poInvoiceForm.get('invLines').value);
     manInvObj.setinvDisLines(this.poInvoiceForm.get('distribution').value);
@@ -1765,13 +1770,24 @@ export class PayableInvoiceNewComponent implements OnInit {
         alert(res.message);
         this.internalSeqNum = res.obj;
         var patch = this.poInvoiceForm.get('obj') as FormArray;
+        var haederDtls = this.poInvoiceForm.get('obj').value;
         patch.controls[0].patchValue({ invoiceId: res.obj });
+        var invNum= haederDtls[0].invoiceNum;
+        // alert(invNum);
         this.poInvoiceForm.patchValue({ invoiceId: res.obj })
         this.displayTdsButton = true;
         this.showTdsLines(res.obj);
         this.isVisibleSave = false;
         this.isVisibleUpdateBtn = true;
         this.isVisibleValidate = true;
+        // this.poInvoiceForm.reset();
+        window.location.reload();
+        // this.apInvFind(invNum);
+        // this.TaxDetailsArray().clear();
+        // this.TdsDetailsArray().clear();
+        // // this.lineDetailsArray().clear();
+        // this.tdsTaxDetailsArray().clear();
+        // this.invLineDetailsArray().clear();
       } else {
         if (res.code === 400) {
           alert(res.message);
@@ -1997,14 +2013,16 @@ export class PayableInvoiceNewComponent implements OnInit {
   display = 'none';
 
   openTaxDetails(i: number) {
-    alert(i);
+    // alert(i);
     this.selTaxLn = String(i);
-    
     var invLnNo = Number(i + 1);
+    // debugger;
     this.lineTaxdetails = this.TaxDetailsArray() as FormArray;
-    this.lineTaxdetails.clear();
+    console.log(this.lineTaxdetails);
+    // this.lineTaxdetails.clear();
     if (this.taxMap.has(this.selTaxLn)) {
       var taxValues: any = this.taxMap.get(this.selTaxLn);
+      // alert(taxValues.length+'----taxValues----length')
       for (let x = 0; x < taxValues.length; x++) {
         if (taxValues[x].invLineNo === invLnNo) {
           this.lineTaxdetails.push(this.TaxDetailsGroup());
