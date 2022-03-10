@@ -675,7 +675,7 @@ export class CashBankTransferComponent implements OnInit {
               }  
             }
          
-          glCodeBalance(gcode,prd) {
+          xxxglCodeBalance(gcode,prd) {
             const formValue: ICashBankTransfer =this.transeData(this.cashBankTransferForm.value);
              this.service.getGlAccountBalance(gcode,prd).subscribe((res: any) => {
               if (res.code === 200) {
@@ -690,8 +690,21 @@ export class CashBankTransferComponent implements OnInit {
                 }
               }
             });
-    
-            
+        }
+
+
+        glCodeBalance(){
+         var glCode=this.cashBankTransferForm.get('fromAcctCode').value;
+        var prdName=this.cashBankTransferForm.get('openPeriod').value;
+        this.service.getGlAccountBalanceNew(glCode,prdName)
+        .subscribe(
+          data => {
+            this.payAccountCode = data.obj;
+            console.log(this.payAccountCode);
+            this.fromAcctCode =this.payAccountCode.name;
+            this.fromGlCodeId=this.payAccountCode.id;
+         });
+        
         }
 
           onSelectionToAc(methodId :number) { 
@@ -725,6 +738,7 @@ export class CashBankTransferComponent implements OnInit {
                 // this.toAcctCode='12PU.101.21.13998.0001';
                 // this.toGlCodeId=10651;
           }
+
 
           clearSearch() {
            
