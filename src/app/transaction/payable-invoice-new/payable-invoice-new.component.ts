@@ -1780,12 +1780,14 @@ export class PayableInvoiceNewComponent implements OnInit {
         this.isVisibleSave = false;
         this.isVisibleUpdateBtn = true;
         this.isVisibleValidate = true;
-        this.apInvFind(invNum);
-        this.TaxDetailsArray().clear();
-        this.TdsDetailsArray().clear();
-        // this.lineDetailsArray().clear();
-        this.tdsTaxDetailsArray().clear();
-        this.invLineDetailsArray().clear();
+        // this.poInvoiceForm.reset();
+        window.location.reload();
+        // this.apInvFind(invNum);
+        // this.TaxDetailsArray().clear();
+        // this.TdsDetailsArray().clear();
+        // // this.lineDetailsArray().clear();
+        // this.tdsTaxDetailsArray().clear();
+        // this.invLineDetailsArray().clear();
       } else {
         if (res.code === 400) {
           alert(res.message);
