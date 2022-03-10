@@ -743,10 +743,10 @@ export class PaymentArComponent implements OnInit {
 
   serchByRegNo(mRegNo) {
     // alert(mRegNo +'Search vehicle');
-    this.service.getVehRegDetails(mRegNo)
+    this.service.getVehRegDetailsNew(mRegNo)
       .subscribe(
         data => {
-          this.getVehRegDetails = data;
+          this.getVehRegDetails = data.obj;
           console.log(this.getVehRegDetails);
           
           if(this.getVehRegDetails !=null){

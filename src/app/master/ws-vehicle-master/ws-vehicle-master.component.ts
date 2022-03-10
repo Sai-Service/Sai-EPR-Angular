@@ -671,6 +671,24 @@ export class WsVehicleMasterComponent implements OnInit {
     alert("Search Vehicle by Model+Chassis..... wip - " + mdl + "+" + chas);
   }
 
+
+  CheckRegNo(mReg: string) { 
+    mReg=mReg.toUpperCase();
+    this.service.getVehRegDetailsNew(mReg)
+    .subscribe(
+      data => {
+       if( data.obj != null)  { alert ("Vehicle Registration No : "+ mReg + " Already Exists...") 
+            this.displayButton = false;
+            console.log(this.lstcomments);
+            this.wsVehicleMasterForm.patchValue(data.obj);
+            this.GetItemDeatils(this.lstcomments.itemId);
+            this.GetCustomerDetails(this.lstcomments.custAccountNo);
+           if(this.lstcomments.status ==='Inactive') { this.wsVehicleMasterForm.disable();}
+      
+      }
+
+      });
+    }
   
 
   SearchByRegNo(mReg: string) {
@@ -702,8 +720,6 @@ export class WsVehicleMasterComponent implements OnInit {
             this.GetCustomerDetails(this.lstcomments.custAccountNo);
             // this.GetCustomerSiteDetails(this.lstcomments.customerId);
             // this.CreateItemCode();
-
-           
 
             if(this.lstcomments.status ==='Inactive') { this.wsVehicleMasterForm.disable();}
 
