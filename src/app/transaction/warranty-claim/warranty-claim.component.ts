@@ -301,7 +301,48 @@ export class WarrantyClaimComponent implements OnInit {
   closeMast() {
     this.router.navigate(['admin']);
   }
-  newMast(){}
+
+  
+  updateMast() {
+    const formValue: IWarrantyClaim = this.transeData(this.warrantyClaimForm.value);
+    var cdmsNum = this.warrantyClaimForm.get('warrLines').value;
+    this.displayButton = false;
+    this.lineValidation = false;
+    var orderLineArr = this.warrantyClaimForm.get('warrLines').value;
+    var len1 = orderLineArr.length;
+
+    // for (let i = 0; i < len1; i++) {
+    //   this.CheckLineValidations(i);
+    //   if (this.lineValidation === false) { break; }
+    // }
+
+    this.lineValidation=true;
+    if (this.lineValidation) {
+      let variants = <FormArray>this.lineDetailsArray();
+      var div = Number(sessionStorage.getItem('divisionId'))
+      var ou = Number(sessionStorage.getItem('ouId'));
+      var loc = Number(sessionStorage.getItem('locId'));
+
+      for (let i = 0; i < this.lineDetailsArray().length; i++) {
+        let variantFormGroup = <FormGroup>variants.controls[i];
+        variantFormGroup.addControl('divisionId', new FormControl(div, Validators.required));
+        variantFormGroup.addControl('ouId', new FormControl(ou, Validators.required));
+        variantFormGroup.addControl('LocId', new FormControl(loc, Validators.required));
+
+      }
+      console.log(variants.value);
+
+      // this.service.OrderLineAddUpdate(formValue).subscribe((res: any) => {
+      this.transactionService.UpdateWarrClaim(variants.value).subscribe((res: any) => {
+        if (res.code === 200) { alert(res.message); } else {
+          if (res.code === 400) { alert(res.message); this.displayButton = true; }
+        }
+
+      });
+    } else { alert("Incomplete line details. Save Failed....") }
+  }
+
+
 
   SearchByDate(){}
 

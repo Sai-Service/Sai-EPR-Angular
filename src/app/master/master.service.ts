@@ -2483,6 +2483,8 @@ OrderCategoryList(): Observable<any> {
     const url = (this.ServerUrl + `/arCashReceipts/ArReceiptReversal`);
     return this.http.put(url, ArReceiptReversalRecord, options);
     // http://localhost:8081/arCashReceipts/ArReceiptReversal
+
+    // http://localhost:8081/arCashReceipts/ArReceiptReversal--PUT METHOD
   }
 
 

@@ -40,7 +40,7 @@ interface IPaymentRcptAr {
   bounceReasonCode:string;
   reversalCategory: string;
   status: string;
-  minbouncecharge :number;
+  chqBounceCharge :number;
 
   tdsAmount:number;
   tdstrxNumber:string;
@@ -181,7 +181,7 @@ export class PaymentArComponent implements OnInit {
   reversalReasonCode: number;
   reversalCategory: string;
   bounceReasonCode:string;
-  minbouncecharge:number;
+  chqBounceCharge:number;
   // status : string;
   status = 'Open';
   cancelDate = null;
@@ -379,7 +379,7 @@ export class PaymentArComponent implements OnInit {
       reversalDate: [],
       reversalCategory: [],
       bounceReasonCode:[],
-      minbouncecharge:[],
+      chqBounceCharge:[],
 
       cancelReason: [],
       cancelDate: [],
@@ -2218,7 +2218,7 @@ export class PaymentArComponent implements OnInit {
       return;
     }
 
-    if (formValue.minbouncecharge === undefined || formValue.minbouncecharge === null || formValue.minbouncecharge<0) {
+    if (formValue.chqBounceCharge === undefined || formValue.chqBounceCharge === null || formValue.chqBounceCharge<0) {
       this.cancelValidation = false;
       alert("CHQ BOUNCE CHARGES: Should not be null....");
       return;
@@ -2335,11 +2335,9 @@ export class PaymentArComponent implements OnInit {
     onBounceRsnSelected(bncRsn) {
       let selectedValue = this.ChqBounceReasonList.find(d => d.code === bncRsn);
        var bncCharge;
-      if( selectedValue != undefined){
-       bncCharge =selectedValue.minbouncecharge;} 
-      else { bncCharge=0;}
+      if( selectedValue != undefined){ bncCharge =selectedValue.minbouncecharge;} else { bncCharge=0;}
 
-      this.paymentArForm.patchValue({minbouncecharge : bncCharge})
+      this.paymentArForm.patchValue({chqBounceCharge : bncCharge})
 
      }
   
