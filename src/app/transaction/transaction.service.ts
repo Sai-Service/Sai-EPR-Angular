@@ -254,7 +254,7 @@ getAvgHistoryList(mLocId,mitemId,frmDate,toDate): Observable<any> {
   return this.http.get(this.ServerUrl + `/averageCost/avghistory?locationId=${mLocId}&itemId=${mitemId}&startDate=${frmDate}&endDate=${toDate}`);
   }
 
-  ///////////////////////////////////////////////////// warrany claim /////////////////////
+  ///////////////////////////////////////////////////// warranty claim /////////////////////
 
   lineStatusLst(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/CmnType/WARRANTY_STATUS');
@@ -263,6 +263,7 @@ getAvgHistoryList(mLocId,mitemId,frmDate,toDate): Observable<any> {
   itemTypeLst(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/CmnType/ITEM_TYPE');
    }
+   
 
     warrDataList(fromDt,toDt,ouId,lineStat,itmType):Observable<any> {
       const REQUEST_PARAMS = new HttpParams().set('fromDate', fromDt)
@@ -274,6 +275,16 @@ getAvgHistoryList(mLocId,mitemId,frmDate,toDate): Observable<any> {
       return this.http.get(REQUEST_URI, {
         params: REQUEST_PARAMS,
       });
+    }
+
+
+    UpdateWarrClaim(warrClaimRecord) {
+      const options = {
+        headers: this.headers
+      };
+      const url = (this.ServerUrl + `/oemWarranty`);
+      return this.http.put(url, warrClaimRecord, options);
+      // http://localhost:8081/oemWarranty
     }
 
 

@@ -139,8 +139,11 @@ export class MasterService {
     return this.http.get(this.ServerUrl +'/cmnLookup/TitleList');
   }
   DepartmentList(): Observable<any> {
-
     return this.http.get(this.ServerUrl +'/cmnLookup/DeptList');
+  }
+
+  DepartmentListNew(): Observable<any> {
+    return this.http.get(this.ServerUrl +'/cmnLookup/CmnType/Dept');
   }
   empIdListFn(): Observable<any> {
     return this.http.get(this.ServerUrl +'/empMst/All');
@@ -2449,6 +2452,13 @@ OrderCategoryList(): Observable<any> {
     // http://localhost:8081/cmnLookup/CmnType/ChqBncRsn
   }
 
+  RcptChqBounceReasonListNew(ouId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/chqBounceReason/reasonList/${ouId}`);
+   //  http://localhost:8081/chqBounceReason/reasonList/21
+
+  }
+ 
+
   RefReasonLst(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/CmnType/REFUND_REASON');
   }
@@ -2476,6 +2486,8 @@ OrderCategoryList(): Observable<any> {
     const url = (this.ServerUrl + `/arCashReceipts/ArReceiptReversal`);
     return this.http.put(url, ArReceiptReversalRecord, options);
     // http://localhost:8081/arCashReceipts/ArReceiptReversal
+
+    // http://localhost:8081/arCashReceipts/ArReceiptReversal--PUT METHOD
   }
 
 

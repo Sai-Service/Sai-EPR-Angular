@@ -464,7 +464,7 @@ export class AllReportsComponent implements OnInit {
     //const fileName = 'download.pdf';
     const fileName = 'SP-Debtors-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.SPDebtorReport(fromDate, sessionStorage.getItem('locId'))
+    this.reportService.SPDebtorReport(fromDate,sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
       .subscribe(data => {
         // var blob = new Blob([data], { type: 'application/pdf' });
         // var url = URL.createObjectURL(blob);
@@ -833,7 +833,7 @@ this.reportService.spbackOrderQtyReport(fromDate,invcDt4,sessionStorage.getItem(
     }
   const fileName = 'Spares Inventory Aging Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
   const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-  this.reportService.sspInvAgingReport(spInvAging1,spInvAging2,spInvAging3,sessionStorage.getItem('locId'))
+  this.reportService.sspInvAgingReport(spInvAging1,spInvAging2,spInvAging3,sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'))
     .subscribe(data => {
       saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
       this.isDisabled15 = false;

@@ -56,7 +56,7 @@
                     <td style="width: 15%" class="LabelFontStyle1">Model&nbsp;:&nbsp;</td>
 
                     <td>  
-                        <select formControlName="mainModel" id="mainModel" [(ngModel)]="mainModel" class="form-control" >
+                        <select formControlName="mainModel" id="mainModel" [(ngModel)]="mainModel" class="form-control"  style="background-color: yellow;">
                             <option disabled>--Select--</option>
                             <option *ngFor="let mm of mainModelList"  [ngValue]="mm.cmnId">
                                 {{mm.code}}
@@ -66,12 +66,12 @@
 
                     <td style="width: 15%" class="LabelFontStyle1">Variant&nbsp;:&nbsp;</td>
                     <td>
-                        <input type="text" formControlName="variant"  [(ngModel)]="variant"   class="form-control" placeholder="" > 
+                        <input type="text" formControlName="variant"  [(ngModel)]="variant"   class="form-control" placeholder=""  style="background-color: yellow;"> 
                     </td> 
 
                     <td style="width: 15%" class="LabelFontStyle1">Variant&nbsp;Desc:&nbsp;</td>
-                    <td>
-                        <input style="width: 280%;" type="text" formControlName="varDescription"  [(ngModel)]="varDescription"   class="form-control" placeholder="" > 
+                    <td colspan="3"> 
+                        <input  type="text" formControlName="varDescription"  [(ngModel)]="varDescription"   class="form-control" placeholder="" style="background-color: yellow;width: 100%;" > 
                     </td> 
                    
                 </tr>
@@ -81,20 +81,20 @@
                     <td style="width: 15%" class="LabelFontStyle">Chassis&nbsp;Prefix:&nbsp;</td>
 
                     <td>
-                        <input   type="text"  formControlName="chasPrefix"  id="chasPrefix" [(ngModel)]="chasPrefix" class="form-control" >
+                        <input   type="text"  formControlName="chasPrefix"  id="chasPrefix" [(ngModel)]="chasPrefix" class="form-control" style="background-color: yellow;" >
                     </td>
 
                     <td style="width: 15%" class="LabelFontStyle">&nbsp;Engine&nbsp;Prefix:&nbsp;</td>
 
                     <td>
-                        <input   type="text"  formControlName="engPrefix"  id="engPrefix" [(ngModel)]="engPrefix" class="form-control" >
+                        <input   type="text"  formControlName="engPrefix"  id="engPrefix" [(ngModel)]="engPrefix" class="form-control" style="background-color: yellow;" >
                     </td>
     
                     <td style="width: 15%" class="LabelFontStyle">Engine&nbsp;Type:&nbsp;</td>
     
                     
                     <td>  
-                        <select formControlName="fuelType" id="fuelType" [(ngModel)]="fuelType" class="form-control" >
+                        <select formControlName="fuelType" id="fuelType" [(ngModel)]="fuelType" class="form-control"  style="background-color: yellow;">
                             <option disabled>--Select--</option>
                             <option *ngFor="let mm of fuelTypeList" [ngValue]="mm.code" >
                                 {{mm.code}}
@@ -106,7 +106,7 @@
                     <td style="width: 15%" class="LabelFontStyle">Vehicle&nbsp;Class:&nbsp;</td>
 
                     <td>
-                        <input   type="text"  formControlName="variantClass"  id="variantClass" [(ngModel)]="variantClass" class="form-control" placeholder="lov-saloon" >
+                        <input   type="text"  formControlName="variantClass"  id="variantClass" [(ngModel)]="variantClass" class="form-control" placeholder="lov-saloon" style="background-color: yellow;" >
                     </td>
                 </tr>
                
@@ -114,22 +114,22 @@
                    <td style="width: 15%" class="LabelFontStyle">Vehicle&nbsp;Type:&nbsp;</td>
 
                     <td>
-                        <input   type="text"  formControlName="vehicleType"  id="vehicleType" [(ngModel)]="vehicleType" class="form-control" placeholder="LOV" >
+                        <input   type="text"  formControlName="vehicleType"  id="vehicleType" [(ngModel)]="vehicleType" class="form-control" placeholder="LOV" style="background-color: yellow;">
                     </td>
 
                     <td style="width: 15%" class="LabelFontStyle">Cubic&nbsp;Capacity:&nbsp;</td>
                     <td>
-                        <input   type="text"  formControlName="cubicCapacity"  id="cubicCapacity" [(ngModel)]="cubicCapacity" class="form-control" >
+                        <input   type="text"  formControlName="cubicCapacity"  id="cubicCapacity" [(ngModel)]="cubicCapacity" class="form-control" style="background-color: yellow;" >
                     </td>
 
                     <td style="width: 15%" class="LabelFontStyle">Seating&nbsp;:&nbsp;</td>
                     <td>
-                        <input   type="text"  formControlName="seating"  id="seating" [(ngModel)]="seating" class="form-control" >
+                        <input   type="text"  formControlName="seating"  id="seating" [(ngModel)]="seating" class="form-control" style="background-color: yellow;">
                     </td>
             
                     <td style="width: 15%" class="LabelFontStyle">Unladen&nbsp;Weight:&nbsp;</td>
                     <td>
-                        <input   type="text"  formControlName="unladenWeight"  id="unladenWeight" [(ngModel)]="unladenWeight" class="form-control" >
+                        <input   type="text"  formControlName="unladenWeight"  id="unladenWeight" [(ngModel)]="unladenWeight" class="form-control" style="background-color: yellow;">
                     </td>
                    
                     </tr>    
@@ -138,24 +138,24 @@
                     <td style="width: 15%" class="LabelFontStyle">Gross&nbsp;Weight:&nbsp;</td>
 
                     <td>
-                        <input   type="text"  formControlName="grossWeight"  id="grossWeight" [(ngModel)]="grossWeight" class="form-control" >
+                        <input   type="text"  formControlName="grossWeight"  id="grossWeight" [(ngModel)]="grossWeight" class="form-control" style="background-color: yellow;">
                     </td>
 
                     <td style="width: 15%" class="LabelFontStyle">Fitted&nbsp;With:&nbsp;</td>
 
                     <td>
-                        <input   type="text"  formControlName="fittedWith"  id="fittedWith" [(ngModel)]="fittedWith" class="form-control" >
+                        <input   type="text"  formControlName="fittedWith"  id="fittedWith" [(ngModel)]="fittedWith" class="form-control" style="background-color: yellow;">
                     </td>
 
                     <td style="width: 15%" class="LabelFontStyle">Service&nbsp;Model:&nbsp;</td>
 
                     <td>
-                        <input   type="text"  formControlName="serviceModel"  id="serviceModel" [(ngModel)]="serviceModel" class="form-control" placeholder="LOV" >
+                        <input   type="text"  formControlName="serviceModel"  id="serviceModel" [(ngModel)]="serviceModel" class="form-control" placeholder="LOV" style="background-color: yellow;">
                     </td>
 
                     <td style="width: 15%" class="LabelFontStyle">MFG&nbsp;Year:&nbsp;</td>
                     <td>
-                        <input   type="text"  formControlName="mfgYearPrint"  id="mfgYearPrint" [(ngModel)]="mfgYearPrint" class="form-control" >
+                        <input   type="text"  formControlName="mfgYearPrint"  id="mfgYearPrint" [(ngModel)]="mfgYearPrint" class="form-control" style="background-color: yellow;">
                     </td>
                         
                     </tr>
@@ -166,17 +166,17 @@
                     <td style="width: 15%" class="LabelFontStyle1">Cylinder&nbsp;No:&nbsp;</td>
 
                     <td>
-                        <input   type="text"  formControlName="cylinder"  id="cylinder" [(ngModel)]="cylinder" class="form-control" >
+                        <input   type="text"  formControlName="cylinder"  id="cylinder" [(ngModel)]="cylinder" class="form-control" style="background-color: yellow;">
                     </td>
                     <td style="width: 15%" class="LabelFontStyle">BS&nbsp;Norms:&nbsp;</td>
 
                     <td>
-                        <input  type="text"  formControlName="bharatStageNorms"  id="bharatStageNorms" [(ngModel)]="bharatStageNorms" class="form-control" >
+                        <input  type="text"  formControlName="bharatStageNorms"  id="bharatStageNorms" [(ngModel)]="bharatStageNorms" class="form-control" style="background-color: yellow;">
                     </td>
 
-                    <td style="width: 15%" class="LabelFontStyle1">Satus&nbsp;:&nbsp;</td>
+                    <td style="width: 15%" class="LabelFontStyle1">Status&nbsp;:&nbsp;</td>
                     <td>  
-                        <select formControlName="status" id="status" [(ngModel)]="status" class="form-control" (ngModelChange)='onOptionsSelected($event)'>
+                        <select formControlName="status" id="status" [(ngModel)]="status" class="form-control" (ngModelChange)='onOptionsSelected($event)' style="background-color: yellow;">
                             <option disabled>--Select--</option>
                             <option *ngFor="let mm of statusList" [ngValue]="mm.code" >
                                 {{mm.code}}
@@ -192,7 +192,7 @@
                 
                                         <td>
                                             <input   type="date"   id="startDate"  formControlName="startDate" [ngModel]="startDate"  class="form-control"
-                                                max="{{minDate | date:'yyyy-MM-dd'}}">
+                                                max="{{minDate | date:'yyyy-MM-dd'}}" style="background-color: yellow;">
                                         </td>
                                         
                                     </ng-template>
@@ -208,6 +208,13 @@
                                             </td>
                                    
                                     </ng-template>
+               </tr>
+
+               <tr>
+                <td style="width: 15%" class="LabelFontStyle">OEM&nbsp;WR&nbsp;Period:&nbsp;</td>
+                <td>
+                    <input   type="text"  formControlName="oemWarrantyPeriod"  id="oemWarrantyPeriod" [(ngModel)]="oemWarrantyPeriod" class="form-control" style="background-color: yellow;" >
+                </td>
                </tr>
             </table>
             </fieldset>

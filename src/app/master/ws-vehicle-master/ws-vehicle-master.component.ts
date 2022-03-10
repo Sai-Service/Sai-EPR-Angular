@@ -38,6 +38,9 @@ interface IWsVehicleMaster {
   itemTypeForCat:string;
   lastRunKm:number;
   endDate:Date;
+  oemWarrantyPeriod:number;
+  inactiveDate:string;
+ 
 }
 
 @Component({
@@ -223,7 +226,8 @@ export class WsVehicleMasterComponent implements OnInit {
 
   displayInactive = false;
   Status1: any;
-  inactiveDate: Date;
+  inactiveDate: string;
+  // inactiveDate = this.pipe.transform(Date.now(), 'dd-MM-y');
   display = true;
   displayButton = true;
   showBankDetails = false;
@@ -253,11 +257,14 @@ export class WsVehicleMasterComponent implements OnInit {
   categoryId: number;
   lastRunKm:number;
   endDate:Date;
+  oemWarrantyPeriod:number;
  
 
   public ServiceModelList   :Array<string> = [];
   public insNameList: Array<string>[];
   public insSiteList: Array<string>[];
+  public ewInsSiteList: Array<string>[];
+  
 
   get f() { return this.wsVehicleMasterForm.controls; }
 
@@ -422,6 +429,8 @@ export class WsVehicleMasterComponent implements OnInit {
       categoryId: [],
       lastRunKm:[],
       endDate:[],
+      inactiveDate:[],
+      oemWarrantyPeriod:[],
 
     });
 
@@ -548,12 +557,15 @@ export class WsVehicleMasterComponent implements OnInit {
 
   onStatusSelected(event: any) {
     this.Status1 = this.wsVehicleMasterForm.get('status').value;
+    // alert ( "this.Status1  :"+ this.Status1);
     if (this.Status1 === 'Inactive') {
       this.displayInactive = true;
-      this.endDate = new Date();
+      // this.inactiveDate = new Date();
+      this.inactiveDate=this.pipe.transform(Date.now(), 'y-MM-dd');
+      // alert (this.inactiveDate);
     }
     else if (this.Status1 === 'Active') {
-      this.wsVehicleMasterForm.get('endDate').reset();
+      this.wsVehicleMasterForm.get('inactiveDate').reset();
       this.displayInactive=false;
     }
   }
@@ -629,7 +641,7 @@ export class WsVehicleMasterComponent implements OnInit {
     this.CheckDataValidations();
    
     if (this.checkValidation) {
-      alert("Data Validation Sucessfully....\nSaveing data to WS Vehicle Master")
+      // alert("Data Validation Sucessfully....")
       this.service.UpdateWsVehicleMaster(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
@@ -682,17 +694,25 @@ export class WsVehicleMasterComponent implements OnInit {
           }
           else {
 
+            // alert ( "Status :"+this.lstcomments.status);
             this.displayButton = false;
             console.log(this.lstcomments);
             this.wsVehicleMasterForm.patchValue(data.obj);
             this.GetItemDeatils(this.lstcomments.itemId);
             this.GetCustomerDetails(this.lstcomments.custAccountNo);
             // this.GetCustomerSiteDetails(this.lstcomments.customerId);
-            this.CreateItemCode();
+            // this.CreateItemCode();
+
+           
+
+            if(this.lstcomments.status ==='Inactive') { this.wsVehicleMasterForm.disable();}
+
           }
         });
   }
+
   GetItemDeatils(mItemId) {
+    // alert ("Item Id :"+mItemId);
     if (mItemId > 0) {
       this.showCreateItemButton = false;
       this.service.getItemDetail(mItemId)
@@ -707,7 +727,7 @@ export class WsVehicleMasterComponent implements OnInit {
 
             });
           });
-    } else { this.showCreateItemButton = true; }
+    } else { this.showCreateItemButton = true; alert ("Item details not found in Item Master...."); }
   }
 
 
@@ -741,12 +761,12 @@ export class WsVehicleMasterComponent implements OnInit {
             });
           }
         );
-    } else { this.showCreateCustButton = true; }
+    } else { this.showCreateCustButton = true; alert ("Customer Details Not Found....");}
   }
 
 
   GetCustomerSiteDetails(mCustId: any) {
-    alert("Customer Id: " + mCustId);
+    // alert("Customer Id: " + mCustId);
     this.service.GetCustomerSiteDetails(mCustId, this.ouId)
       .subscribe(
         data1 => {
@@ -924,9 +944,6 @@ export class WsVehicleMasterComponent implements OnInit {
   }
 
 
-
-
-
   onOptionsSelectedVariant(modelVariant) {
     if(modelVariant != undefined){
      
@@ -940,6 +957,7 @@ export class WsVehicleMasterComponent implements OnInit {
             variantDesc: this.variantDetailsList.varDescription,
             serviceModel: this.variantDetailsList.serviceModel,
             fuelType : this.variantDetailsList.fuelType,
+            oemWarrantyPeriod :this.variantDetailsList.oemWarrantyPeriod,
 
           });
           this.service.colorCodeListByVariant(modelVariant)
@@ -979,9 +997,12 @@ export class WsVehicleMasterComponent implements OnInit {
     } else {
     // ------------Date-----------
     var stDate = new Date(mDelDate);
-    var prd = 2;
+    var prd =this.wsVehicleMasterForm.get("oemWarrantyPeriod").value
+    if(prd ===null || prd===undefined || prd <0) {prd=0;}
+
     var date2 = this.addDays(stDate, prd * 365);
     this.oemWarrentyEndDate = this.pipe.transform(date2, 'y-MM-dd');
+    
     // ------------Date-----------
 
   } }
@@ -1202,6 +1223,22 @@ export class WsVehicleMasterComponent implements OnInit {
         }
       );
   } }
+
+
+  onEwInsurerNameSelected(customerId: number) {
+    // alert('in '+ customerId)
+    if(customerId >0) {
+    this.service.insSiteList(customerId)
+      .subscribe(
+        data => {
+          this.ewInsSiteList = data.customerSiteMasterList;
+          console.log(this.ewInsSiteList);
+        }
+      );
+  } }
+
+
+
 
 
  
