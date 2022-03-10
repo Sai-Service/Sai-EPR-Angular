@@ -1928,6 +1928,7 @@ export class SalesOrderFormComponent implements OnInit {
         var url = URL.createObjectURL(blob);
         var printWindow = window.open(url, '', 'width=800,height=500');
         printWindow.open
+        this.isDisabled7=false;
         // saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
       });
   }

@@ -139,8 +139,11 @@ export class MasterService {
     return this.http.get(this.ServerUrl +'/cmnLookup/TitleList');
   }
   DepartmentList(): Observable<any> {
-
     return this.http.get(this.ServerUrl +'/cmnLookup/DeptList');
+  }
+
+  DepartmentListNew(): Observable<any> {
+    return this.http.get(this.ServerUrl +'/cmnLookup/CmnType/Dept');
   }
   empIdListFn(): Observable<any> {
     return this.http.get(this.ServerUrl +'/empMst/All');
