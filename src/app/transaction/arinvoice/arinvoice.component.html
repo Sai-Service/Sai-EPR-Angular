@@ -1093,21 +1093,20 @@
 
                         </tr>
                 </table>
-                <div *ngIf="displayModal; then thenBlockModal; else elseBlockModal">
+                <!-- <div *ngIf="displayModal; then thenBlockModal; else elseBlockModal">
                 </div>
                 <ng-template #thenBlockModal>
                 </ng-template>
-                <ng-template #elseBlockModal>
-                    <div id="myModel" [style.display]="showModal ? 'block' : 'none'" class="modal fade" tabindex="-1" role="dialog"
+                <ng-template #elseBlockModal> -->
+                    <div id="myModel"  class="modal fade" tabindex="-1" role="dialog"
                         aria-hidden="true" style="width: 500px; margin-left:350px">
-
+                        <!-- [style.display]="showModal ? 'block' : 'none'" -->
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h4 class="modal-title" id="myModalLabel"
                                         style="text-align: center; font-size: medium; margin-left: 20%; font-family: Verdana,Sans-serif, Arial, Helvetica;font-weight: bold;">
-                                        Code
-                                        Combination for + {{ title }}</h4>
+                                        {{ title }}</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                 </div>
                                 <div class="modal-body text-center pagination-centered">
@@ -1179,14 +1178,13 @@
                                                 Natural&nbsp;Account&nbsp;:&nbsp;
                                             </td>
                                             <td>
-                                                <select formControlName="segment4" id="segment4" class="form-control"
-                                                    [(ngModel)]="segment4"
-                                                    (ngModelChange)="onOptionsSelectedBranch($event,'NaturalAccount')">
-                                                    <option>--Select--</option>
-                                                    <option *ngFor="let sc of  NaturalAccountList">
-                                                        {{sc.lookupValue}}
-                                                    </option>
-                                                </select>
+                                                 <input type="text" (keyup)="getNaturalAccount($event)" formControlName="segment4" id="NaturalAccountFirstWay" list="dynmicUserIds3" class="form-control"   (ngModelChange)="onOptionsSelectedBranch($event,'NaturalAccount')"/>
+                                                    <datalist id="dynmicUserIds3">
+                                                         <!-- <option>--Select--</option> -->
+                                                       <option *ngFor="let sc of  NaturalAccountList" >
+                                                           {{sc.naturalaccount}}--{{sc.description}}
+                                                       </option>
+                                                    </datalist>
                                             </td>
                                             <td>
                                                 <input type="text" style="width: 150px; background-color: white; border: none;"
@@ -1221,11 +1219,10 @@
                                     </table>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="fnCancatination(content)" >&times;</button>
+                                    <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="fnCancatination(content)" >&times;</button> -->
                                     <!-- [disabled]="(segment6.value === null || segment5.value=== null)" -->
                                     <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true"
-                                    [disabled]="!segment11 || !segment2 || !segment3 || !segment4 || !segment5"
-                                        (click)="fnCancatination(content)">OK</button>
+                                      (click)="fnCancatination(content)">OK</button>
                                     <!-- <button type="button" class="btn btn-primary"
                                         [disabled]="!segment11 || !segment2 || !segment3 || !segment4 || !segment5"
                                         (click)="fnCancatination(content)" data-dismiss="modal">Ok</button> -->
@@ -1233,7 +1230,7 @@
                             </div>
                         </div>
                     </div>
-                </ng-template>
+                <!-- </ng-template> -->
 
                 <!-- ------------------------apply modal start-------------------- -->
 
