@@ -157,11 +157,12 @@ export class WsVehicleMasterComponent implements OnInit {
   // ewBookletNo:string;
   ewInsurerId: number;
   ewInsurerSite: number;
-  ewEndDate: Date;
+  ewEndDate: string;
   ewBalanceDays: number;
 
   mcpNo: string;
   mcpEndDate: string;
+  mcpStartDate:string;
   mcpYN: string;
   mcpPackage: string;
 
@@ -215,7 +216,7 @@ export class WsVehicleMasterComponent implements OnInit {
   oemWarrentyEndDate: string;
   regDate: string;
   contractEndDate = this.pipe.transform(this.now, 'y-MM-dd');
-  ewStartDate: Date
+  ewStartDate: String
   // payType: number;
   // receiptMethodId: number;
   // paymentAmt: number;
@@ -331,6 +332,7 @@ export class WsVehicleMasterComponent implements OnInit {
       mcpNo: [],
       mcpPackage: [],
       mcpEndDate: [],
+      mcpStartDate:[],
       mcpYN: [],
 
       cngCylinderNo: [],
@@ -1035,6 +1037,79 @@ export class WsVehicleMasterComponent implements OnInit {
     date1.setDate(date1.getDate() + days1);
     return date1;
   }
+
+  onChangeEwStartDate(mEwStDate){
+    var oemEndDate =this.wsVehicleMasterForm.get("oemWarrentyEndDate").value;
+    if(oemEndDate===undefined || oemEndDate ===null) { 
+      alert ("Please enter Vehicle Sale Date ....");this.ewStartDate=null;return;
+    } 
+    
+    // var currDate = new Date();
+    oemEndDate =new Date(oemEndDate);
+    mEwStDate=new Date(mEwStDate);
+    // alert ("OEM End date :"+oemEndDate +" ewstdate :"+mEwStDate);
+
+    if(mEwStDate <= oemEndDate) { alert ("EW Start Date should be above OEM Expiry Date");
+    var date1 = this.addDays(oemEndDate, 1);
+    this.ewStartDate = this.pipe.transform(date1, 'y-MM-dd');
+  } 
+
+    var ewStDt =this.wsVehicleMasterForm.get("ewStartDate").value;
+    var date2 = this.addDays(new Date(ewStDt), 365);
+    this.ewEndDate = this.pipe.transform(date2, 'y-MM-dd');
+  
+
+  }
+
+  onChangeEwEndDate(ewEndDt){
+    var ewEndDt =this.wsVehicleMasterForm.get("ewEndDate").value;
+    var ewStDt =this.wsVehicleMasterForm.get("ewStartDate").value;
+
+    if(ewStDt===undefined || ewStDt ===null) { 
+      alert ("Please enter EW Start Date....");this.ewEndDate=null;return;
+    } 
+    // var currDate = new Date();
+    ewEndDt =new Date(ewEndDt);
+    ewStDt=new Date(ewStDt);
+    var ewValidEndDate =this.addDays(ewStDt, 365);
+
+    if(ewEndDt < ewValidEndDate) { alert ("EW End Date should be above EW Start Date");
+     this.ewEndDate = this.pipe.transform(ewValidEndDate, 'y-MM-dd');
+  }
+   
+  }
+
+
+  onChangMcpStartDate(mcpstDt){
+    var delDate =this.wsVehicleMasterForm.get("deliveryDate").value;
+    if(delDate===undefined || delDate ===null) { 
+      alert ("Please enter Vehicle Sale Date ....");this.mcpStartDate=null;return;
+    } 
+    delDate =new Date(delDate);
+    mcpstDt=new Date(mcpstDt);
+    if(mcpstDt < delDate) { alert ("MCP Start Date should not be below Sale Date");
+     this.mcpStartDate = this.pipe.transform(delDate, 'y-MM-dd');
+  } 
+
+  }
+
+  onChangMcpEndDate(mcpendDt){
+    var mcpstDt =this.wsVehicleMasterForm.get("mcpStartDate").value;
+    if(mcpstDt===undefined || mcpstDt ===null) { 
+      alert ("Please enter MCP start Date ....");this.mcpEndDate=null;return;
+    } 
+
+    mcpendDt =new Date(mcpendDt);
+    mcpstDt=new Date(mcpstDt);
+    if(mcpendDt <= mcpstDt) { alert ("MCP End Date should be above MCP start Date");
+    var date2 = this.addDays(new Date(mcpstDt), 365);
+     this.mcpEndDate = this.pipe.transform(date2, 'y-MM-dd');
+  } 
+
+  }
+  
+
+
 
 
   tvFlag(e) {
