@@ -1817,18 +1817,20 @@ export class OPMasterDtoComponent implements OnInit {
   UpdatePOMast() {
     this.supplierCode = this.poMasterDtoForm.get('supplierCode').value
 
-    const formValue: IpostPO = this.transUpdateData(this.poMasterDtoForm.value);
+    // const formValue: IpostPO = this.transUpdateData(this.poMasterDtoForm.value);
+    const formValue: IpostPO = this.transUpdateData(this.poMasterDtoForm.getRawValue());
     console.log(formValue);
 
     formValue.supplierCode = this.supplierCode;
     formValue.ouId = this.ouId;
     formValue.currencyCode = 'INR';
     formValue.divisionId = Number(sessionStorage.getItem('divisionId'));
-    var arrayControl = this.poMasterDtoForm.get('poLines').value
+    // var arrayControl = this.poMasterDtoForm.get('poLines').value;
+    var arrayControl1 = this.poMasterDtoForm.get('poLines') as FormArray;
+    var arrayControl = arrayControl1.getRawValue();
     this.baseAmount = 0;
     this.totTaxAmt = 0;
     this.totalAmt = 0;
-
     for (var i = 0; i < arrayControl.length; i++) {
       this.baseAmount = this.baseAmount + arrayControl[i].baseAmtLineWise;
       this.totTaxAmt = this.totTaxAmt + arrayControl[i].taxAmtLineWise;
@@ -1853,7 +1855,7 @@ export class OPMasterDtoComponent implements OnInit {
       } else {
         if (res.code === 400) {
           alert('ERROR OCCOURED IN PROCEESS');
-          this.poMasterDtoForm.reset();
+          // this.poMasterDtoForm.reset();
         }
       }
     });

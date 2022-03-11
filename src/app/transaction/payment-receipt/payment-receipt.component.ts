@@ -149,7 +149,7 @@ export class PaymentReceiptComponent implements OnInit  {
       // methodType:[],
       bankName :['',Validators.required],
       bankBranch :['',Validators.required],
-      checkNo :['',[Validators.required]],
+      checkNo :['',[Validators.required,Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
       checkDate:['',Validators.required],
       searchByRcptNo  : [],
       searchByOrderNo  : [],
@@ -608,6 +608,16 @@ export class PaymentReceiptComponent implements OnInit  {
     var orderNumber = this.paymentReceiptForm.get('orderNumber').value;
     const fileName = 'download.pdf';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    if (Number(sessionStorage.getItem('deptId'))===1){
+      this.orderManagementService.viewSalesReceipt(orderNumber)
+      .subscribe(data => {
+        var blob = new Blob([data], { type: 'application/pdf' });
+        var url = URL.createObjectURL(blob);
+        var printWindow = window.open(url, '', 'width=800,height=500');
+        printWindow.open
+      })
+    }
+    else{
     this.orderManagementService.viewReceipt(orderNumber)
       .subscribe(data => {
         var blob = new Blob([data], { type: 'application/pdf' });
@@ -615,6 +625,7 @@ export class PaymentReceiptComponent implements OnInit  {
         var printWindow = window.open(url, '', 'width=800,height=500');
         printWindow.open
       })
+    }
   }
 
 
