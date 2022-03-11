@@ -237,6 +237,9 @@ export class WsVehicleMasterComponent implements OnInit {
   showCreateItemButton = true;
   showCreateCustButton = true;
   checkValidation = false;
+  enableEwDetails =false;
+  enableMcpDetails =false;
+  enableCngDetails=true;
 
   variantItemId: number;
 
@@ -568,6 +571,10 @@ export class WsVehicleMasterComponent implements OnInit {
       this.wsVehicleMasterForm.get('inactiveDate').reset();
       this.displayInactive=false;
     }
+
+      // this.divisionId=1;
+    if(this.divisionId===2) { this.enableCngDetails=false;} 
+    if(this.divisionId===1) { this.enableCngDetails=true;} 
   }
 
   transeData(val) {
@@ -992,7 +999,8 @@ export class WsVehicleMasterComponent implements OnInit {
     var currDate = new Date();
     var regDate =new Date(mRegDate);
     var delDate=new Date(this.deliveryDate);
-
+    // alert(delDate+","+regDate);
+    
     if(regDate < delDate || this.deliveryDate===undefined) {
       alert ("REGISTRATION DATE :" + "Should not be below Sale Date");
       this.regDate = this.deliveryDate;
@@ -1252,6 +1260,17 @@ export class WsVehicleMasterComponent implements OnInit {
         }
       );
   } }
+
+
+  onSelectEwStatus(evnt) {
+     if(evnt==='Active') { this.enableEwDetails=true;  } else {this.enableEwDetails=false;}
+   } 
+
+   onSelectMcpStatus(evnt) {
+      if(evnt==='Y') { this.enableMcpDetails=true;  } else {this.enableMcpDetails=false;}
+   } 
+
+  
 
 
 

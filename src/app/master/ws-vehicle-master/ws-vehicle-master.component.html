@@ -558,35 +558,41 @@
                 <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Status&nbsp;:&nbsp;</td>
                 <td>
                 <select formControlName="ewStatus" id="ewStatus" class="form-control"  
-                                        [ngModel]="ewStatus" >
+                                        [ngModel]="ewStatus"  (ngModelChange)='onSelectEwStatus($event)' >
                     <option disabled>--Select--</option>
                     <option *ngFor="let sc of  statusList" [ngValue] ="sc.code">
                         {{sc.code}}
                     </option>
                 </select>
                 </td>
-                <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Booklet&nbsp;No:&nbsp;</td>
 
-                <td>
-                    <input   type="text"  formControlName="ewBookletNo"  id="ewBookletNo" [(ngModel)]="ewBookletNo" class="form-control" (keyup)="onInput($event)" >
-                </td>
+            
+                <div *ngIf="enableEwDetails; then ewBlock1; else ewBlock2"></div>
+                <ng-template #ewBlock1> 
+                    <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Booklet&nbsp;No:&nbsp;</td>
+                    <td><input   type="text"  formControlName="ewBookletNo"  id="ewBookletNo" [(ngModel)]="ewBookletNo" class="form-control" (keyup)="onInput($event)" > </td>
+                    <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Start&nbsp;Date:&nbsp;</td>
+                    <td><input   type="date"  formControlName="ewStartDate"  id="ewStartDate" [(ngModel)]="ewStartDate" class="form-control" > </td>
+                    <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Expiry&nbsp;:&nbsp;</td>
+                    <td> <input   type="date"  formControlName="ewEndDate"  id="ewEndDate" [(ngModel)]="ewEndDate" class="form-control" > </td>
+                </ng-template>
 
-                <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Start&nbsp;Date:&nbsp;</td>
+                <ng-template #ewBlock2> 
+                    <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Booklet&nbsp;No:&nbsp;</td>
+                    <td><input disabled  type="text"  formControlName="ewBookletNo"  id="ewBookletNo" [(ngModel)]="ewBookletNo" class="form-control" (keyup)="onInput($event)" > </td>
+                    <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Start&nbsp;Date:&nbsp;</td>
+                    <td><input disabled  type="date"  formControlName="ewStartDate"  id="ewStartDate" [(ngModel)]="ewStartDate" class="form-control" > </td>
+                    <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Expiry&nbsp;:&nbsp;</td>
+                    <td> <input disabled  type="date"  formControlName="ewEndDate"  id="ewEndDate" [(ngModel)]="ewEndDate" class="form-control" > </td>
+                </ng-template>
 
-                <td>
-                    <input   type="date"  formControlName="ewStartDate"  id="ewStartDate" [(ngModel)]="ewStartDate" class="form-control" >
-                </td>
 
-                <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Expiry&nbsp;:&nbsp;</td>
-
-                <td>
-                    <input   type="date"  formControlName="ewEndDate"  id="ewEndDate" [(ngModel)]="ewEndDate" class="form-control" >
-                </td>
-
-             </tr>
+            </tr>
 
              <tr>
-
+            
+                <div *ngIf="enableEwDetails; then ewBlock11; else ewBlock21"></div>
+                <ng-template #ewBlock11> 
                 <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Insurer&nbsp;:&nbsp;</td>
     
                 <td colspan="3">
@@ -610,33 +616,68 @@
             </option>
             </select>
            </td>
-             </tr>
+                
+             </ng-template>
+             <ng-template #ewBlock21> 
+                <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Insurer&nbsp;:&nbsp;</td>
+                <td colspan="3">
+                    <select disabled formControlName="ewInsurerId" id="ewInsurerId"  (ngModelChange)='onEwInsurerNameSelected($event)' class="form-control" style="width: 100%;">
+                    <option></option>
+                    <option *ngFor="let sc of insNameList"
+                        [ngValue]="sc.customerId">
+                        {{sc.custName}}
+                    </option>
+                    </select>
+                </td>
+                <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Ins&nbsp;Site:&nbsp;</td>
+                <td colspan="3">
+                    <select disabled formControlName="ewInsurerSite" id="ewInsurerSite" class="form-control" style="width: 100%;">
+                    <option>--Select--</option>
+                    <option *ngFor="let sc of ewInsSiteList"
+                        [ngValue]="sc.customerSiteId">
+                        {{sc.address1}}{{sc.address2}}-{{sc.address3}}-{{sc.location}}-{{sc.city}}-{{sc.pinCd}}-{{sc.state}}
+                    </option>
+                    </select>
+                   </td> 
+            
+             </ng-template>
+
+            </tr>
+
+
              
              <tr>
+
                     
                 <td style="width: 12%" class="LabelFontStyle">MCP&nbsp;Status:&nbsp;</td>
 
                  <td>
-                    <select type="text"  formControlName="mcpYN"  id ="mcpYN"  [(ngModel)]='mcpYN' value={{mcpYN}}   class="form-control">
+                    <select type="text"  formControlName="mcpYN"  id ="mcpYN"  [(ngModel)]='mcpYN' value={{mcpYN}}   class="form-control"  (ngModelChange)='onSelectMcpStatus($event)'>
                         <!-- <option>--Select--</option> -->
                         <option value=Y>Active</option>
                         <option value=N>Inactive</option>
                     </select>
                 </td>
 
-                <td style="width: 12%" class="LabelFontStyle">MCP&nbsp;No:&nbsp;</td>
+                <div *ngIf="enableMcpDetails; then mcpBlock1; else mcpBlock2"></div>
+                <ng-template #mcpBlock1> 
+                    <td style="width: 12%" class="LabelFontStyle">MCP&nbsp;No:&nbsp;</td>
+                    <td>  <input type="text"  formControlName="mcpNo"  id="mcpNo" [(ngModel)]="mcpNo" class="form-control" (keyup)="onInput($event)" > </td>
+                    <td class="LabelFontStyle">MCP&nbsp;Expiry:&nbsp;</td>
+                    <td> <input   type="date"  formControlName="mcpEndDate"  id="mcpEndDate" [(ngModel)]="mcpEndDate" class="form-control" > </td>
+                </ng-template>
 
-                <td>
-                    <input     type="text"  formControlName="mcpNo"  id="mcpNo" [(ngModel)]="mcpNo" class="form-control" (keyup)="onInput($event)" >
-                </td>
-
-                <td  class="LabelFontStyle">MCP&nbsp;Expiry:&nbsp;</td>
-
-                <td>
-                    <input   type="date"  formControlName="mcpEndDate"  id="mcpEndDate" [(ngModel)]="mcpEndDate" class="form-control" >
-                </td>
+                <ng-template #mcpBlock2> 
+                    <td style="width: 12%" class="LabelFontStyle">MCP&nbsp;No:&nbsp;</td>
+                    <td>  <input disabled type="text"  formControlName="mcpNo"  id="mcpNo" [(ngModel)]="mcpNo" class="form-control" (keyup)="onInput($event)" > </td>
+                    <td class="LabelFontStyle">MCP&nbsp;Expiry:&nbsp;</td>
+                    <td> <input  disabled type="date"  formControlName="mcpEndDate"  id="mcpEndDate" [(ngModel)]="mcpEndDate" class="form-control" > </td>
+                </ng-template>
 
                 </tr>
+
+                <div *ngIf="enableCngDetails; then cngBlock1; else cngBlock2"></div>
+                <ng-template #cngBlock1> 
 
                 <tr>
                     
@@ -659,10 +700,13 @@
                 </td>
                 </tr>
 
-                    <tr>
-                        <td  style="width: 15%" class="LabelFontStyle">TrueValue&nbsp;Vehicle&nbsp;:</td>
-                        <td><input  type="checkbox"   formControlName="tvStatus" [(ngModel)]="tvStatus"  (change)="tvFlag($event)"></td>
-                    </tr>
+                <tr>
+                    <td  style="width: 15%" class="LabelFontStyle">TrueValue&nbsp;Vehicle&nbsp;:</td>
+                    <td><input  type="checkbox"   formControlName="tvStatus" [(ngModel)]="tvStatus"  (change)="tvFlag($event)"></td>
+                </tr>
+                </ng-template>
+                <ng-template #cngBlock2></ng-template>
+
            
             </table>
 
