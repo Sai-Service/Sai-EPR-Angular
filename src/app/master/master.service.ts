@@ -3543,6 +3543,11 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
           return this.http.post(url, options);
           // http://localhost:8081/AccountTrf/AcctTrfPost?emplId=216
         }
+
+        getGlAccountBalanceNew(glCode,prdName): Observable<any> {
+          return this.http.get(this.ServerUrl+`/glHeader/accGlBalances?segmentNameFrm=${glCode}&periodName=${prdName}`);
+          // http://localhost:8081/glHeader/accGlBalances?segmentNameFrm=12MU.2103.00.21751.0000&periodName=Jan-21-22
+        }
         
 
       public CashBankTrfSaveSubmit(CashBankTrfRecord,mEmplId) {
