@@ -1851,6 +1851,7 @@ export class PayableInvoiceNewComponent implements OnInit {
       this.transactionService.PoInvoiceTdsDataSubmit(tdsLines).subscribe((res: any) => {
         if (res.code === 200) {
           alert(res.message);
+          window.location.reload();
         } else {
           if (res.code === 400) {
             alert(res.message);

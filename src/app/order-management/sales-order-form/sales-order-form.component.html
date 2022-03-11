@@ -808,7 +808,7 @@
                                 style="width: 150px; font-weight: bold;">
                             </td>
                             <td colspan="3">
-                                <button type="submit" class="btn btn-primary" (click)="modelDetailsUpdate()"  style="width: fit-content;height: fit-content;">Model Details Update</button>
+                                <button type="submit" class="btn btn-primary" (click)="modelDetailsUpdate()"  [style.display]="isVisiblemodelDetailsUpdate ? 'block' : 'none'" style="width: fit-content;height: fit-content;">Model Details Update</button>
                                 <!-- [style.display]="isVisible5 ? 'block' : 'none'" [disabled]="isDisabled5" -->
                             </td>
                         </tr>
@@ -1471,24 +1471,34 @@
                                                             style="height: 20px;width:65px;text-align: left;">
                                                     </td>
                                                     <td>
-                                                        <div
-                                                            *ngIf="displayLineflowStatusCode[i]; then thenLineflowStatusCode; else elseLineflowStatusCode">
-                                                        </div>
+                                                        <div  *ngIf="displayLineflowStatusCode[i]; then thenLineflowStatusCode; else elseLineflowStatusCode"> </div>
                                                         <ng-template #thenLineflowStatusCode>
                                                             <input disabled type="text" formControlName="flowStatusCode"
                                                                 class="form-control" style="height: 20px;width:145px;">
                                                         </ng-template>
                                                         <ng-template #elseLineflowStatusCode>
-                                                            <!-- <select formControlName="flowStatusCode" id="flowStatusCode"
+                                                            <div  *ngIf="displayLineflowStatusCodeVehicle[i]; then thenLineflowStatusCodeVehicle; else elseLineflowStatusCodeVehicle"> </div>
+                                                            <ng-template #thenLineflowStatusCodeVehicle>
+                                                            <select formControlName="flowStatusCode" id="flowStatusCode"  (ngModelChange)="updateLineOnCancel(i,flowStatusCode)"
+                                                                class="form-control"
+                                                                style="width: 120px;height: 25px;font-size: 10px;">
+                                                                <option>--Select--</option>
+                                                                <option *ngFor="let lineLevelOrderStatus of  lineLevelOrderStatusVehicleList" [value]="lineLevelOrderStatus.code">
+                                                                    {{lineLevelOrderStatus.code}}
+                                                                </option>
+                                                            </select>
+                                                            </ng-template>
+                                                            <ng-template #elseLineflowStatusCodeVehicle>
+                                                                <select formControlName="flowStatusCode" id="flowStatusCode"  (ngModelChange)="updateLineOnCancel(i,flowStatusCode)"
                                                                 class="form-control"
                                                                 style="width: 120px;height: 25px;font-size: 10px;">
                                                                 <option>--Select--</option>
                                                                 <option *ngFor="let lineLevelOrderStatus of  lineLevelOrderStatusList" [value]="lineLevelOrderStatus.code">
                                                                     {{lineLevelOrderStatus.code}}
                                                                 </option>
-                                                            </select> -->
-
-                                                            <select formControlName="flowStatusCode"
+                                                            </select>
+                                                            </ng-template>
+                                                            <!-- <select formControlName="flowStatusCode"
                                                                 class="form-control"  (ngModelChange)="updateLineOnCancel(i,flowStatusCode)"
                                                                 style="width: fit-content;height: 25px;font-size: 10px;">
                                                                 <option value="BOOKED">BOOKED</option>
@@ -1497,7 +1507,7 @@
                                                                 <option value="ALLOTED" hidden>ALLOTED</option>
                                                                 <option value="DE-ALLOTED" hidden>DE-ALLOTED</option>
                                                                 <option value="READY FOR INVOICE">READY FOR INVOICE</option>
-                                                            </select>
+                                                            </select> -->
                                                         </ng-template>
                                                     </td>
                                                     <td>
