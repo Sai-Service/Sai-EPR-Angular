@@ -11,6 +11,7 @@ import { DatePipe } from '@angular/common';
 import { ManualInvoiceObjNew } from './manual-invoice-obj-new';
 import { InvoiceSearchNew } from './invoice-search-new';
 
+
 interface IpoInvoice {
   suppInvDate: Date;
   invoiceDate: Date;
@@ -178,7 +179,8 @@ export class PayableInvoiceNewComponent implements OnInit {
   isVisibleValidate: boolean = false;
   isVisibleSaveTDS: boolean = false;
 
-  invoiceDate = this.pipe.transform(this.now, 'yyyy-MM-ddTHH:mm');
+  // invoiceDate = this.pipe.transform(this.now, 'yyyy-MM-ddTHH:mm');
+  invoiceDate =this.pipe.transform(this.now, 'dd-MM-yyyy');
   // accountingDate = new Date();
   suppInvDate: Date;
   termsDate: Date;
@@ -2178,5 +2180,29 @@ export class PayableInvoiceNewComponent implements OnInit {
 
   }
 
+  isVisibleinvoiceDateText:boolean=false;
+  isVisibleinvoiceDateDate:boolean=false;
+
+  prepaymentDate(event:any){
+    alert(event.target.value);
+    if (event.target.value==='Prepayment'){
+      this.isVisibleinvoiceDateText=true;
+      this.isVisibleinvoiceDateDate=false;
+    var patch = this.poInvoiceForm.get('obj') as FormArray;
+    // this.invoiceDate=new Date();
+    (patch.controls[0]).patchValue(
+      {
+        invoiceDate: (this.invoiceDate),
+      }
+    );
+    console.log(this.invoiceDate);  
+    this.lineDetailsArray().controls[0].get('invoiceDate').disable();
+  }
+  else {
+    this.isVisibleinvoiceDateText=false;
+    this.isVisibleinvoiceDateDate=true;
+    this.lineDetailsArray().controls[0].get('invoiceDate').enable();
+  }
+}
 }
 
