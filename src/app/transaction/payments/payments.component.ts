@@ -8,7 +8,8 @@ import { IDateRange, IDateRangePickerOptions } from 'ngx-daterange';
 import { MasterService } from 'src/app/master/master.service';
 import { TransactionService } from 'src/app/transaction/transaction.service';
 import { DatePipe } from '@angular/common';
-
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { InvSearchNew } from './inv-search-new';
 import {PaymentObj} from './payment-obj';
 import { Location } from "@angular/common";
 
@@ -38,6 +39,7 @@ searchByToDate:Date;
 searchByFrmDate:Date;
 searchBySuppName:string;
 }
+
 
 @Component({
   selector: 'app-payments',
@@ -99,8 +101,11 @@ searchBySuppName:string;
   paymentData:any[]=[];
   displayselect:boolean=false;
   pipe = new DatePipe('en-US');
+  displaysiteName=true;
+  // invoiceNum:number;
 // public invAmtArr : any [];
-  constructor(private fb: FormBuilder, private transactionService :TransactionService,private location: Location,private service :MasterService,private router: Router) {
+private sub: any;
+  constructor(private fb: FormBuilder,private router1: ActivatedRoute, private transactionService :TransactionService,private location: Location,private service :MasterService,private router: Router) {
     this.paymentForm = fb.group({
       suppNo:[],
       ouName: [],
@@ -164,6 +169,9 @@ voucherNo:[],
       partyId:[],
       totAmount:[],
       // appAmt:[],
+      docCategory:[],
+      payStatus:[],
+
     });
    }
 
@@ -216,8 +224,39 @@ voucherNo:[],
         console.log(this.paymentIdListList);
       }
     );
+  
+  
+    this.sub = this.router1.params.subscribe(params => {
+      this.INVNO = params['invNumber'];
+      // alert(this.INVNO +'---invno');
+      var searchObj: InvSearchNew = new InvSearchNew();
+      { searchObj.invoiceNum = this.INVNO }
+      if (this.INVNO != undefined) {
+        this.displaysiteName=true;
+        this.displaysiteAddress=true;
+        this.transactionService.getsearchByApINV(JSON.stringify(searchObj)).subscribe((res: any) => {
+          if (res.code === 200) { 
+            this.payHeaderLineDtlArray().clear();
+            this.payInvoiceLineDtlArray().clear();
+            if (res.obj.length === 0) {
+              alert('AP Invoice Details not Find !...');
+              window.location.reload();
+            }
+            else if (res.obj.length != 0 ) {
+              this.lstsearchpayminv=res.obj;
+              console.log(res.obj);
+             
+              this.lstsearchpayminv.forEach(f => {
+                var payLnGrp: FormGroup = this.payHeaderLineDtl();
+                this.payHeaderLineDtlArray().push(payLnGrp);
+              });
+              this.paymentForm.get('obj1').patchValue(this.lstsearchpayminv);
+            }
+          }
+      });  
   }
-
+})
+}
   SearchINVNO(INVNO){
     // alert(INVNO)
     // alert(this.paymentForm.get('INVNO').value);

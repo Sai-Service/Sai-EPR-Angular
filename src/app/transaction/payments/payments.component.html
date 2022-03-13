@@ -163,7 +163,7 @@
                         <div *ngIf="displaysiteName; then thensiteName; else elsesiteName"></div>
                         <ng-template #thensiteName>
                             <input hidden formControlName="suppSiteId" >
-                            <input disabled type="text" class="form-control" formControlName="siteName" value={{siteName}}  style="width: 40px;height: 25px;font-size: 10px;">
+                            <input disabled type="text" class="form-control" formControlName="siteName" value={{siteName}}  style="width: 160px;height: 25px;font-size: 10px;">
                         </ng-template>
                         <ng-template #elsesiteName>
                         <select formControlName="supplierSiteId" id="supplierSiteId" #myinput
@@ -180,7 +180,7 @@
                         <div *ngIf="displaysiteAddress; then thensiteAddress; else elsesiteAddress"></div>
                         <ng-template #thensiteAddress>
                             <input hidden formControlName="suppSiteId" >
-                            <input disabled type="text" class="form-control" formControlName="siteName" value={{siteName}}  style="width: 40px;height: 25px;font-size: 10px;">
+                            <input disabled type="text" class="form-control" formControlName="siteName" value={{siteName}}  style="width: 160px;height: 25px;font-size: 10px;">
                         </ng-template>
                         <ng-template #elsesiteAddress>
                         <select formControlName="supplierSiteId" id="supplierSiteId" #myinput
