@@ -189,6 +189,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   displayremarks = true;
 
   displayPerson: boolean;
+  displaycustPoDate=true;
   public minDate = new Date();
   public cityList: Array<string>[];
   public issueCodeTypeList: any[];
@@ -818,6 +819,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           if (data.code === 200) {
+            this.displaycustPoDate=false;
             this.isVisibleCreateOrder = false;
             this.isVisiblePickTiPreview = true;
             this.isVisibleUpdate = true;
@@ -825,6 +827,8 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
             this.lstgetOrderLineDetails = data.obj.oeOrderLinesAllList;
             this.lstgetOrderTaxDetails = data.obj.taxAmounts;
             this.allDatastore = data.obj;
+            
+            // alert(data.obj.orderStatus +'----'+data.obj.gatePassYN)
             this.custClassCode = data.obj.classCodeType;
             if (data.obj.discType === 'Header Level Discount') {
               this.onOptionsSelectedDiscountType(data.obj.discType);
@@ -938,7 +942,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
               // alert('Pick to Invoice');
               this.displaycounterSaleOrderSave = false;
               // this.displaycounterSaleOrderSave=false;
-              this.displaycounterSaleAllButtons = false;
+              // this.displaycounterSaleAllButtons = false;
               this.displayaddRow = false;
               this.displaypickTicketUpdate = false;
               this.displayViewGatePass = true;
@@ -951,9 +955,9 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
             }
             else if (this.allDatastore.createOrderType === 'Sales Order' && this.allDatastore.trxNumber === null) {
               this.displaycounterSaleOrderSave = false;
-              this.displaycounterSaleAllButtons = false;
+              // this.displaycounterSaleAllButtons = false;
               this.displayaddRow = true;
-              this.displaypickTicketUpdate = false;
+              // this.displaypickTicketUpdate = false;
               this.displayViewGatePass = true;
               this.CounterSaleOrderBookingForm.disable();
               this.TaxDetailsArray().disable();
@@ -963,10 +967,10 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
             }
             else if (this.allDatastore.createOrderType === 'Sales Order' && this.allDatastore.trxNumber != null) {
               this.displaycounterSaleOrderSave = false;
-              this.displaycounterSaleAllButtons = false;
+              // this.displaycounterSaleAllButtons = false;
               this.displayaddRow = false;
-              this.displaypickTicketUpdate = false;
-              this.displayViewGatePass = true;
+              // this.displaypickTicketUpdate = false;
+              // this.displayViewGatePass = true;
               this.CounterSaleOrderBookingForm.disable();
               this.TaxDetailsArray().disable();
               this.CounterSaleOrderBookingForm.get('boxQty').enable();
@@ -994,16 +998,15 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                 this.displaysalesRepName = true;
               }
             }
-
-            if (data.obj.custName.includes(('CSCash Customer')) && Number(sessionStorage.getItem('divisionId')) === 2) {
-              // alert(data.obj.custName);
+            if (data.obj.custName.includes(('CSCash Customer')) && Number(sessionStorage.getItem('divisionId')) === 2 ) {    
               this.displaywalkingCustomer = false;
+              if ( data.obj.cntrOrdCustName !=null){
               var temp = data.obj.cntrOrdCustName.split('#');
               this.CounterSaleOrderBookingForm.patchValue({ walkCustName: temp[0] });
               this.CounterSaleOrderBookingForm.patchValue({ walkCustPan: temp[1] });
               this.CounterSaleOrderBookingForm.patchValue({ walkCustaddres: temp[2] });
             }
-            // alert(data.obj.orderStatus);
+            }
             if (data.obj.orderStatus === 'BOOKED' && Number(sessionStorage.getItem('divisionId')) === 2) {
               this.service.crediteLimitFn(this.allDatastore.customerId, sessionStorage.getItem('locId'), this.allDatastore.customerSiteId)
                 .subscribe(
@@ -1020,16 +1023,33 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                       }
                       else if (this.allDatastore.totAmt >= data.obj.outStandingAmt) {
                         alert('Credit Amount is exceeded.! ... Credit Amount is' + ' ' + this.allDatastore.crdAmt + ' ' + 'Total Amount is' + ' ' + this.allDatastore.totAmt + '.!')
-                        // this.isDisabled10 = true;
-                        return;
                       }
-                      // else {
-                      //   this.isDisabled10 = false;
-                      // }
                     }
                   })
             }
-            if (data.obj.orderStatus === 'INVOICED' && data.obj.gatePassYN === 'Y') {
+            else {
+              this.displayAfterGatePass = true;
+              this.isVisible = true;
+              this.isVisible15 = true;
+              this.isVisible16 = true;
+            }
+            if (data.obj.orderStatus === 'INVOICED' && data.obj.gatePassYN === 'N') { 
+             this.isVisibleUpdate = false;
+             this.isVisibleGenerateInvoice = false;
+             this.isVisibleGenerateGatePass = true;
+             this.isVisiblePayment = true;
+             this.isVisibleViewInvoice = true;
+             this.isVisibleViewReceipt = true;
+             this.isVisiblePickTiPreview = false;
+             this.CounterSaleOrderBookingForm.get('boxQty').enable();
+             this.CounterSaleOrderBookingForm.get('driverName').enable();
+             this.CounterSaleOrderBookingForm.get('vehNo').enable();
+             this.CounterSaleOrderBookingForm.get('remarks').disable();
+             for (let i = 0; data.obj.oeOrderLinesAllList.length; i++) {
+               control.controls[i].get('flowStatusCode').disable();
+             }
+           }
+           else if (data.obj.orderStatus === 'INVOICED' && data.obj.gatePassYN === 'Y') {
               this.CounterSaleOrderBookingForm.disable();
               this.isVisibleUpdate = false;
               this.isVisibleGenerateInvoice = false;
@@ -1044,23 +1064,8 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                 control.controls[i].get('flowStatusCode').disable();
               }
             }
-            else if (data.obj.orderStatus === 'INVOICED' && data.obj.gatePassYN === 'N') {
-              this.isVisibleUpdate = false;
-              this.isVisibleGenerateInvoice = false;
-              this.isVisibleGenerateGatePass = true;
-              this.isVisiblePayment = true;
-              this.isVisibleViewInvoice = true;
-              this.isVisibleViewReceipt = true;
-              this.isVisiblePickTiPreview = false;
-              this.CounterSaleOrderBookingForm.get('boxQty').enable();
-              this.CounterSaleOrderBookingForm.get('driverName').enable();
-              this.CounterSaleOrderBookingForm.get('vehNo').enable();
-              this.CounterSaleOrderBookingForm.get('remarks').disable();
-              for (let i = 0; data.obj.oeOrderLinesAllList.length; i++) {
-                control.controls[i].get('flowStatusCode').disable();
-              }
-            }
-            else if (data.obj.orderStatus === 'CANCELLED' || data.obj.orderStatus === 'CLOSED') {
+        
+         else  if (data.obj.orderStatus === 'CANCELLED' || data.obj.orderStatus === 'CLOSED') {
               this.displayAfterGatePass = false;
               // this.isVisible = false;
               this.displaypickTicketUpdate = true;
@@ -1077,12 +1082,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                 control.controls[i].get('flowStatusCode').disable();
               }
             }
-            else {
-              this.displayAfterGatePass = true;
-              this.isVisible = true;
-              this.isVisible15 = true;
-              this.isVisible16 = true;
-            }
+          
             if (data.obj.transactionTypeName === 'Accessories Sale - Cash' || data.obj.transactionTypeName === 'Spares Sale - Cash') {
               // this.paymentButton.nativeElement.hidden = true;
               //  alert(this.PaymentViewReceipt)
@@ -1098,8 +1098,11 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
             }
             var orderedDate1 = data.obj.orderedDate;
             var orderedDate2 = this.pipe.transform(orderedDate1, 'dd-MM-yyyy');
+            var custPoDate1 = data.obj.custPoDate;
+            var custPoDate2 = this.pipe.transform(custPoDate1, 'dd-MM-yyyy');
             // alert(orderedDate2)
             this.CounterSaleOrderBookingForm.patchValue(({ orderedDate: orderedDate2 }));
+            this.CounterSaleOrderBookingForm.patchValue(({ custPoDate: custPoDate2 }));
           }
           else {
             if (data.code) {
