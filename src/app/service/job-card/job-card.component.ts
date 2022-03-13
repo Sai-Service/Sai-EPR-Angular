@@ -2632,6 +2632,10 @@ validatePromisedDate() {
   var promDate=this.jobcardForm.get('promiseDate').value;
   var currDate = new Date();
   var pDt = new Date(promDate);
+  pDt.setHours(0,0,0,0);
+  currDate.setHours(0,0,0,0);
+
+  // alert ("promdate,currdate :"+pDt +","+currDate);
   if (pDt < currDate) {
     alert("PROMISED  DATE :" + "Should not be below Today's Date");
     this.promiseDate = this.pipe.transform(this.now, 'y-MM-dd');
