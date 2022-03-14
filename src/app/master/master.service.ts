@@ -3683,7 +3683,11 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
         // http://localhost:8081/ceStateHdr/161273
       }
 
-
+      viewAccountingApReceipt(paymentNo): Observable<any> {
+        return this.http.get(this.ServerUrl + `/glHeader/docSequenceValue/${paymentNo}`);
+        
+      }
+    
 
       public bankReconPostSubmit(BankReconRecord) {
         const options = {

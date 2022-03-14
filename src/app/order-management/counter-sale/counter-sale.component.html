@@ -391,14 +391,21 @@
                     <td>
                         <input type="text" class="form-control" formControlName="custPoNumber" value={{custPoNumber}}
                             [ngClass]="{ 'is-invalid': submitted && f.custPoNumber.errors }" style="width:100%;">
-                    </td>
+                        </td>
                     <td style="width: 15%" class="LabelFontStyle">
                         Customer&nbsp;PO&nbsp;Date&nbsp;:&nbsp;
                     </td>
                     <td>
+                        <div *ngIf="displaycustPoDate; then thencustPoDate; else elsecustPoDate"></div>
+                        <ng-template #thencustPoDate>
                         <input type="date" class="form-control" formControlName="custPoDate" value={{custPoDate}}
                             [ngClass]="{ 'is-invalid': submitted && f.custPoDate.errors }" style="width:100%;">
-                    </td>
+                        </ng-template>
+                        <ng-template #elsecustPoDate>
+                            <input type="text" class="form-control" formControlName="custPoDate" value={{custPoDate}}
+                            [ngClass]="{ 'is-invalid': submitted && f.custPoDate.errors }" style="width:100%;">
+                        </ng-template>
+                        </td>
                 </tr>
                 <tr>
                     <td style="width: 15%" class="LabelFontStyle">

@@ -450,7 +450,7 @@ var segment = temp1[0];}
     searchFromArray1(arr, regex) {
       let matches = [], i;
       for (i = 0; i < arr.length; i++) {
-        alert(arr[i]+'Array i');
+        // alert(arr[i]+'Array i');
         if (arr[i].match(regex)) {
           matches.push(arr[i]);
         }
@@ -510,9 +510,9 @@ var segment = temp1[0];}
             // this.displayaddButton=false;
            var len= this.JournalVoucherForm.get('glLines')as FormArray;
             // var len=this.glLines.length;
-            alert(len.length);
+            // alert(len.length);
             for(var i=0;i<len.length;i++){
-              alert('For Loop'+i);
+              // alert('For Loop'+i);
               // var btnrm =document.getElementById("btnrm"+i) as HTMLInputElement;
             (document.getElementById("btnAdd"+i) as HTMLInputElement).disabled = true;
             (document.getElementById("btnRm"+i) as HTMLInputElement).disabled = true;
@@ -557,7 +557,7 @@ var segment = temp1[0];}
 
 copyGl()
 {
-    const formValue:IJournalVoucher=this.JournalVoucherForm.value;
+    const formValue:IJournalVoucher=this.JournalVoucherForm.getRawValue();
     this.service.glCopy(formValue).subscribe((res:any)=>{
       if(res.code===200)
       {
@@ -631,7 +631,7 @@ copyGl()
             // // var len=this.glLines.length;
             // // alert(len.length);
             for(var i=0;i<len.length;i++){
-              alert('For Loop'+i);
+              // alert('For Loop'+i);
             //   // var btnrm =document.getElementById("btnrm"+i) as HTMLInputElement;
             (document.getElementById("btnAdd"+i) as HTMLInputElement).disabled = true;
             (document.getElementById("btnRm"+i) as HTMLInputElement).disabled = true;
@@ -690,7 +690,7 @@ else
     }
   }
   OnSelectJournalType(event:any){
-    alert(event);
+    // alert(event);
     this.JournalVoucherForm.patchValue({'jeSource':event});
   }
     resetJv()
@@ -703,19 +703,19 @@ else
       }
 
       CheckForDuplicateLineItem(codeCombId,i){
-        alert(codeCombId+'code in func'+i);
+        // alert(codeCombId+'code in func'+i);
         var glcombArr = this.JournalVoucherForm.get('glLines').value;
         var patch = this.JournalVoucherForm.get('glLines') as FormArray;
         var len1=glcombArr.length;
-        alert("line item array length :"+len1 + "," +codeCombId);
+        // alert("line item array length :"+len1 + "," +codeCombId);
 
         for (let j = 0; j < len1 ; j++)
           {
-            alert("inside for loop");
+            // alert("inside for loop");
             var lineCombinationId=glcombArr[j].codeCombinationId;
-            alert(lineCombinationId);
+            // alert(lineCombinationId);
              if(i != j) {
-               alert('Inside 1st If');
+              //  alert('Inside 1st If');
 
              if (lineCombinationId===codeCombId ) {
                this.duplicateLineItem=true;
