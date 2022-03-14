@@ -1,10 +1,9 @@
-import { asLiteral } from '@angular/compiler/src/render3/view/util';
+// import { asLiteral } from '@angular/compiler/src/render3/view/util';
 import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener } from '@angular/core';
 import { FormBuilder, FormGroup, Validators ,FormArray} from '@angular/forms';
 import { Router } from '@angular/router';
-import * as moment from 'moment';
-import { DateRangePickerComponent } from 'ngx-daterange';
-import { IDateRange, IDateRangePickerOptions } from 'ngx-daterange';
+// import * as moment from 'moment';
+// import { DateRangePickerComponent } from 'ngx-daterange';
 import { MasterService } from 'src/app/master/master.service';
 import { TransactionService } from 'src/app/transaction/transaction.service';
 import { DatePipe } from '@angular/common';
@@ -99,6 +98,22 @@ searchBySuppName:string;
   paymentData:any[]=[];
   displayselect:boolean=false;
   pipe = new DatePipe('en-US');
+  viewAccountingApRcpt: any;
+
+  jeSource: string;
+  name1: string;
+  ledgerName: string;
+  jeCategory: string;
+  postedDate: Date;
+  periodName: string;
+  runningTotalDr: number;
+  runningTotalCr: number;
+  viewAccounting1: any;
+  description: string;
+  ledgerId: string;
+  docSeqValue: string;
+  payStatus:string;
+
 // public invAmtArr : any [];
   constructor(private fb: FormBuilder, private transactionService :TransactionService,private location: Location,private service :MasterService,private router: Router) {
     this.paymentForm = fb.group({
@@ -111,6 +126,18 @@ searchBySuppName:string;
       searchByToDate:[],
 searchByFrmDate:[],
 searchBySuppName:[],
+jeSource: [],
+  name1: [],
+  ledgerName: [],
+  jeCategory: [],
+  postedDate: [],
+  periodName: [],
+  runningTotalDr: [],
+  runningTotalCr: [],
+  description: [],
+  ledgerId: [],
+  docSeqValue: [],
+  payStatus:[],
       obj1: this.fb.array([this.payHeaderLineDtl()]),
       obj: this.fb.array([this.payInvoiceLineDtl()]),
     })
@@ -513,6 +540,10 @@ alert(docNo);
  }
 
 paymentSave(){
+  var applAmt=this.paymentForm.get('appAmt').value;
+
+  var patch=this.paymentForm.get('obj1') as FormArray;
+  patch.controls[0].patchValue({PayAmount:applAmt});
   this.totAmt=0;
   const totlCalControls=this.paymentForm.get('obj').value;
   for (var k=0;k<this.payInvoiceLineDtlArray.length;k++)   {
@@ -566,7 +597,7 @@ console.log(jsonData);
       // alert(res.obj);
       console.log(res.obj);
 
-      this.PaymentReturnArr =res.obj;
+      this.PaymentReturnArr =res.obj[0];
       console.log(this.PaymentReturnArr);
       patch.controls[0].patchValue({docNo: this.PaymentReturnArr.docSeqValue})
       this.paymentForm.get('obj1').disable();
@@ -653,6 +684,39 @@ refresh()
           this.paymentForm.patchValue({paymentTypeFlag:select.paymentTypeFlag});
           this.paymentForm.disable();
         }
+      }
+
+      viewAcc(){
+        var docVal=this.paymentForm.get('obj').value;
+        var docNo=docVal[0].docNo
+        this.service.viewAccountingApReceipt(docNo).subscribe((res: any) => {
+          if (res.code === 200) {
+            this.viewAccountingApRcpt = res.obj;
+            this.description = res.obj.description;
+            this.periodName = res.obj.periodName;
+            this.postedDate = res.obj.postedDate;
+            this.jeCategory = res.obj.jeCategory;
+            this.name1 = res.obj.name;
+            this.ledgerId = res.obj.ledgerId;
+            this.runningTotalDr = res.obj.runningTotalDr;
+            this.runningTotalCr = res.obj.runningTotalCr;
+            this.docSeqValue = res.obj.docSeqValue;
+            console.log(this.description);
+  
+            this.viewAccounting1 = res.obj.glLines;
+            console.log(this.viewAccounting1);
+  
+            // this.viewAccountingLines = res.obj[0].glLines;
+    
+            console.log(this.viewAccountingApRcpt);
+          
+            // alert(res.message);
+          } else {
+            if (res.code === 400) {
+              alert(res.message);
+            }
+          }
+        });
       }
 
     }
