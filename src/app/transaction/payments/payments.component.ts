@@ -491,7 +491,7 @@ export class PaymentsComponent implements OnInit {
 
   onAddressSelected(name: any) {
     var name = name.target.value;
-    alert(name);
+    // alert(name);
     this.service.supplierCodeList1()
       .subscribe(
         data => {
@@ -519,7 +519,7 @@ export class PaymentsComponent implements OnInit {
   }
 
   onSiteSelected(siteId: any) {
-    alert(siteId);
+    // alert(siteId);
     var siteId = siteId.target.value;
     this.service.siteIdList(siteId)
       .subscribe(
@@ -532,7 +532,7 @@ export class PaymentsComponent implements OnInit {
 
 
   selectFlag1(e) {
-    alert(e + '----checkbox')
+    // alert(e + '----checkbox')
     if (e.target.checked === true) {
       this.selectFlag = 'Y'
     }
@@ -645,7 +645,7 @@ export class PaymentsComponent implements OnInit {
   }
   cancelPayment() {
     var arr = this.paymentForm.get('obj1').value;
-    alert(this.PaymentReturnArr[0].documentNo);
+    // alert(this.PaymentReturnArr[0].documentNo);
     console.log(this.paymentData);
     this.selectedPayment = this.paymentData.find(d => Number(d.docNo) === this.PaymentReturnArr[0].documentNo);
     console.log(this.selectedPayment);
@@ -666,7 +666,7 @@ export class PaymentsComponent implements OnInit {
 
 
   searchPayment(searchBySuppName, searchByFrmDate, searchByToDate) {
-    alert('searchPayment')
+    // alert('searchPayment')
     // frmDate = this.pipe.transform(searchByFrmDate, 'dd-MMM-yyyy');
     // toDate = this.pipe.transform(searchByToDate, 'dd-MMM-yyyy');
     var suppNo = this.supplierCodeList.find(d => d.name === searchBySuppName)
