@@ -146,13 +146,6 @@ jeSource: [],
   docSeqValue: [],
   payStatus:[],
       docNo: [],
-      paymentAmt: [],
-      totAmt: [],
-      INVNO: [],
-      appAmt: [],
-      searchByToDate: [],
-      searchByFrmDate: [],
-      searchBySuppName: [],
       obj1: this.fb.array([this.payHeaderLineDtl()]),
       obj: this.fb.array([this.payInvoiceLineDtl()]),
     })
@@ -847,6 +840,6 @@ console.log(jsonData);
       }
 
     }
-  }
 
-}
+
+
