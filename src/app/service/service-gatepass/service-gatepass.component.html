@@ -130,7 +130,7 @@
                                 <td  class="LabelFontStyle1">&nbsp;Delivery&nbsp;&nbsp;Type:&nbsp;</td>
                                 <!-- <td> <input type="text" disabled  class="form-control" placeholder=""  formControlName="delvType"> </td> -->
                                 <td>
-                                     <select formControlName="delvType" id="delvType"  [(ngModel)]="delvType" class="form-control" style="background-color: yellow;">
+                                     <select formControlName="delvType" id="delvType"  [(ngModel)]="delvType" class="form-control" >
                                         <option></option>
                                         <option *ngFor="let sc of  pickupTypeList">
                                             {{sc.codeDesc}}

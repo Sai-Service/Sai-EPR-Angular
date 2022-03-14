@@ -105,13 +105,11 @@
                                                         </select>
                                                     </td>
                                                     <td>
-                                                        <select formControlName="invTypeLookupCode"
-                                                            name="invTypeLookupCode" id="invTypeLookupCode"
-                                                            class="form-control"
+                                                        <select formControlName="invTypeLookupCode" id="invTypeLookupCode"
+                                                            class="form-control" (change)="prepaymentDate($event)" 
                                                             style="width: 160px;height: 25px;font-size: 10px;">
                                                             <option>--Select--</option>
-                                                            <option *ngFor="let sc of  poTypeList"
-                                                                [ngValue]="sc.codeDesc" [selected]="sc.cmnId===60">
+                                                            <option *ngFor="let sc of  poTypeList" [value]="sc.codeDesc">
                                                                 {{sc.codeDesc}}
                                                             </option>
                                                         </select>
@@ -157,7 +155,10 @@
                                                             style="width: 150px;height: 25px;font-size: 11px;">
                                                     </td>
                                                     <td>
-                                                        <input type="date" formControlName="invoiceDate"
+                                                        <input type="text"  formControlName="invoiceDate" [style.display]="isVisibleinvoiceDateText ? 'block' : 'none'" 
+                                                            class="form-control"
+                                                            style="width: 150px;height: 25px;font-size: 11px;">
+                                                            <input type="date" formControlName="invoiceDate" [style.display]="isVisibleinvoiceDateDate ? 'block' : 'none'" 
                                                             class="form-control"
                                                             style="width: 150px;height: 25px;font-size: 11px;">
                                                     </td>
@@ -1868,6 +1869,9 @@
                                 data-target="#viewAccountingModel" style="width: 8rem;" (click)="viewAccounting()">
                                 View Accounting
                             </button>
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-primary"  (click)="paymentNavigation()"  [style.display]="isVisiblePayment ? 'block' : 'none'">Payment</button>
                         </td>
                         </tr>
                     </table>

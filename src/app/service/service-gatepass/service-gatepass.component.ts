@@ -202,6 +202,8 @@ export class ServiceGatepassComponent implements OnInit {
 
         serchByRegNo(mRegNo) {
         
+
+          // alert ("hello..")
           var mreg1=this.serviceGatepassForm.get('regNo').value
           if(mreg1==null || mreg1==undefined || mreg1.trim()=='') {
             alert ("Enter Valid Vehicle Registration No."); return;
@@ -209,10 +211,10 @@ export class ServiceGatepassComponent implements OnInit {
 
           var mreg=mreg1.toUpperCase();
           // alert(mreg);
-          this.service.getVehRegDetails(mreg)
+          this.service.getVehRegDetailsNew(mreg)
             .subscribe(
               data => {
-                this.getVehRegDetails = data;
+                this.getVehRegDetails = data.obj;
   
                 if(this.getVehRegDetails !=null){
                 console.log(this.getVehRegDetails);
@@ -321,17 +323,17 @@ CheckGPvalidation() {
     return;
   }
 
-  if (formValue.delvType === undefined || formValue.delvType === null || formValue.delvType.trim()=='') {
-    this.checkValidation = false;
-    alert("DELIVERY TYPE: Should not be null....");
-    return;
-  }
+  // if (formValue.delvType === undefined || formValue.delvType === null || formValue.delvType.trim()=='') {
+  //   this.checkValidation = false;
+  //   alert("DELIVERY TYPE: Should not be null....");
+  //   return;
+  // }
 
-  if (formValue.driverName === undefined || formValue.driverName === null || formValue.driverName.trim()=='') {
-    this.checkValidation = false;
-    alert("DRIVER NAME: Should not be null....");
-    return;
-  }
+  // if (formValue.driverName === undefined || formValue.driverName === null || formValue.driverName.trim()=='') {
+  //   this.checkValidation = false;
+  //   alert("DRIVER NAME: Should not be null....");
+  //   return;
+  // }
 
   if (formValue.delvTakenBy === undefined || formValue.delvTakenBy === null || formValue.delvTakenBy.trim()=='') {
     this.checkValidation = false;
