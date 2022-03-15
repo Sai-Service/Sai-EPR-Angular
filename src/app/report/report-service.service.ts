@@ -99,8 +99,24 @@ export class ReportServiceService {
   }
 
 
+  sprClsAsonDtReport(toDate,locId){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprClsAsonDt?toDate=${toDate}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
   sspInvAgingReport(spInvAging1,spInvAging2,spInvAging3,ouId,locId){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/InventoryAging?age1=${spInvAging1}&age2=${spInvAging2}&age3=${spInvAging3}&ouId=${ouId}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+  gltrialBalanceReport(ouCode,periodName){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprClsAsonDt?ouCode=${ouCode}&periodName=${periodName}`;
     return this.http.get(REQUEST_URI, {
       responseType: 'arraybuffer',
       headers: this.headers,

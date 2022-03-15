@@ -27,8 +27,6 @@
                     <td style="text-align: center;" class="SubHeading2">Search&nbsp;Payment&nbsp;</td>
                 </tr>
             </table>
-
-
             <table class="center" style="width:100%; background-color:beige">
                 <tr>
                     <td style="width: 15%" class="LabelFontStyle">Supplier&nbsp;Name:&nbsp;</td>
@@ -547,6 +545,7 @@
                 </tr>
             </table>
 
+<<<<<<< HEAD
             <!-- =====================================================Search for all filed wise========================= -->
             <!-- Modal Start Here  -->
             <div class="modal fade" id="myModel" role="dialog" aria-hidden="true" style="width: 100%;margin-left: 0;">
@@ -557,6 +556,103 @@
                                 style="text-align: left; font-size: medium; margin-left: 45%; font-family: Verdana,Sans-serif, Arial, Helvetica;font-weight: bold;">
                                 Find Payments</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+=======
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal" id="btnSave" (click)="paymentSave()">Save</button>
+        </div>
+<!-- 
+      </div>
+    </div>
+  </div> -->
+  <br>
+  <table style="width: 100%; background-color: #FFE4B5;">
+    <tr>
+
+        <td style="width: 15%" class="LabelFontStyle">Document&nbsp;Number&nbsp;:</td>
+        <td>
+            <input disabled type="text" formControlName="docNo"  class="form-control">
+        </td>
+        <td style="width: 15%" class="LabelFontStyle">Payment&nbsp;Status&nbsp;:</td>
+        <td style="font-weight: bold;">
+            <!-- {{INVStatus}} -->
+            <input disabled type="text" formControlName="payStatus"  class="form-control">
+        </td>
+
+    </tr>
+
+</table>
+<br>
+
+  <!--======================================== After Save respose display  ==================================-->
+
+  <table class="GridFont" cellspacing="0" cellpadding="4" border="0"  style="width:100%;border-collapse:collapse;">
+    <thead>
+        <tr class="GridHeader">
+            <th scope="col">Invoice Number</th>
+            <th scope="col">Date</th>
+            <th scope="col">Amount</th>
+            <th scope="col">GL Date</th>
+            <th scope="col">Payment Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let com of PaymentReturnArr" class="ItemStyle" style="text-decoration:none;">
+            <td style="width: 107px;text-align: center;">{{com.invoiceNum}}</td>
+            <td style="width: 107px;text-align: center;">{{com.invDate}}</td>
+            <td style="width: 80px;text-align: right;">{{com.invoiceAmt}}</td>
+            <td style="width: 107px;text-align: center;">{{com.glDate  | date:'yyyy-MM-dd'}}</td>
+            <td style="width: 80px;text-align: right;">{{com.payAmount }}</td>
+        </tr>
+    </tbody>
+  </table>
+  <table class="center">
+      <tr>
+        <td>
+            <button type="button" (click)="close()" class="btn btn-primary">Close</button>
+        </td>
+        <td>
+            <button type="button" class="btn btn-primary" id="register"
+                (click)="refresh()">
+                Clear
+            </button>
+        </td>
+        <td>
+            <button type="button" class="btn btn-primary" id="register" data-toggle="modal" data-target="#viewAccountingModel"
+                (click)="viewAcc()">
+                View Accounting
+            </button>
+        </td>
+        <td>
+          <button type="button" class="btn btn-primary" id="register"
+              (click)="cancelPayment()">
+              Cancel
+          </button>
+      </td>
+      </tr>
+  </table>
+
+<!-- =====================================================Search for all filed wise========================= -->
+        <!-- Modal Start Here  -->
+        <div class="modal fade" id="myModel" role="dialog" aria-hidden="true" style="width: 100%;margin-left: 0;">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+ <h4 class="modal-title" id="myModalLabel" style="text-align: left; font-size: medium; margin-left: 45%; font-family: Verdana,Sans-serif, Arial, Helvetica;font-weight: bold;">
+ Find Payments</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="modal-body">
+                            <table  style="width: 100%;" >
+                                <tr>
+<td  class="LabelFontStyle">&nbsp;Supplier&nbsp;No&nbsp;:</td>
+<td>
+ <input type="number" min="0"  formControlName="suppNo" value={{suppNo}} [(ngModel)]="suppNo"  class="form-control">
+ </td>
+                                </tr>
+                            </table>
+>>>>>>> 079c9e43fc9b155c1a9972e80d5e623e7778584b
                         </div>
                         <div class="modal-body">
                             <div class="modal-body">
@@ -697,6 +793,7 @@
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
               </div>
             </div>
+<<<<<<< HEAD
           </div>
         </div>
       </div> 
@@ -705,5 +802,14 @@
 
 
         </form>
+=======
+          </div> 
+<br><br>
+     
+>>>>>>> 079c9e43fc9b155c1a9972e80d5e623e7778584b
     </div>
+</form>
+</div> 
+
 </div>
+<!-- </div> -->

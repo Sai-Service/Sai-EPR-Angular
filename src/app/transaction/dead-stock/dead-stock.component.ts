@@ -82,7 +82,7 @@ export class DeadStockComponent implements OnInit {
   stkCategory:string;
   totalValue :number;
   totalRecords:number;
-  displayButton = true;
+  displayButton = false;
   exportExcel=false;
   dedFlagButton =true;
 
@@ -241,6 +241,7 @@ export class DeadStockComponent implements OnInit {
           // alert ("Total Items Found :" +data.length);
           this.totalRecords=data.length;
           if (data.length > 0) {
+            
             this.exportExcel=true;
             console.log(this.lstDeadItems);
             var len = this.lineDetailsArray().length;
@@ -254,7 +255,7 @@ export class DeadStockComponent implements OnInit {
 
             this.deadStockForm.get('deadItemList').patchValue(this.lstDeadItems);
             // this.spinIcon = false;this.dataDisplay = ''; 
-           
+            this.displayButton=true;
             this.CalculateDeadStockValue();
 
           // } else { alert (mOrderNumber+ "  - Order Number doesn't exists");
@@ -312,7 +313,7 @@ export class DeadStockComponent implements OnInit {
       if(dDays===null || dDays===undefined || dDays.trim()==='' || dDays <=0) { alert ("Please select Aging Days...."); return;}
 
       this.dedFlagButton=false;
-       this.spinIcon = true;
+      this.spinIcon = true;
       this.dataDisplay = 'Dead Stock Flagging in Progress....Please wait';
   
       this.service.deadFlg(ouId,dDays).subscribe((res: any) => {
@@ -337,20 +338,16 @@ export class DeadStockComponent implements OnInit {
   updateMst(){
     // http://localhost:8081/DedStock/addLine
 
-      const formValue: IdeadStock = this.transeData(this.deadStockForm.value);
-     
-
+    const formValue: IdeadStock = this.transeData(this.deadStockForm.value);
     var dedLineArr = this.deadStockForm.get('deadItemList').value;
     var len1 = dedLineArr.length;
 
     // for (let i = 0; i < len1; i++) {
     //   this.CheckTdsLineValidations(i);
     // }
-
-
-
     // if (this.tdsLineValidation) {
     //   alert("TDS data Validation Sucessfull....Posting data...")
+
       this.displayButton = false;
       this.spinIcon = true;
       this.dataDisplay = 'Updating data....Please wait';

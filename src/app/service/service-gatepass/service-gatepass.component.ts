@@ -201,8 +201,6 @@ export class ServiceGatepassComponent implements OnInit {
 
 
         serchByRegNo(mRegNo) {
-        
-
           // alert ("hello..")
           var mreg1=this.serviceGatepassForm.get('regNo').value
           if(mreg1==null || mreg1==undefined || mreg1.trim()=='') {

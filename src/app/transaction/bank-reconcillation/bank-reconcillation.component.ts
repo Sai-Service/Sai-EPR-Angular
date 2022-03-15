@@ -174,23 +174,15 @@ export class BankReconcillationComponent implements OnInit {
           })
         }
 
-
-
-      
         invLineArray(): FormArray {
           return <FormArray>this.bankReconcillationForm.get('ceLineList')
         }
-
         avlLineArray(): FormArray {
           return <FormArray>this.bankReconcillationForm.get('avlList')
         }
-  
-
-
-
-
+        
         ngOnInit(): void {
-
+          $("#wrapper").toggleClass("toggled");
           this.name=  sessionStorage.getItem('name');
           this.loginArray=sessionStorage.getItem('divisionName');
           this.divisionId=Number(sessionStorage.getItem('divisionId'));
