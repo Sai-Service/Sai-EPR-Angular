@@ -265,6 +265,10 @@ export class PricelistMasterComponent implements OnInit {
       // endDate: ['', [Validators.required]],
       segment: ['', [Validators.required]],
       mrp:[],
+      // startDate:[],
+      // lastUpdatedDate:[],
+      attribute10:[],
+      tax:[],
     });
   }
 
@@ -587,6 +591,8 @@ export class PricelistMasterComponent implements OnInit {
     delete val.searchBy;
     delete val.searchValue;
     delete val.searchItemId;
+    // delete val.lastUpdatedDate;
+    // delete val.startDate
 
 
     return val;
@@ -833,24 +839,22 @@ export class PricelistMasterComponent implements OnInit {
 
 
   validatePrice(index: any) {
-    // alert("price validation " +index);
-
     var priceLineArr = this.priceListMasterForm.get('priceListDetailList').value;
     var linePrice = priceLineArr[index].priceValue;
+    var lineTax = priceLineArr[index].tax;
+    var newMrp=linePrice + (linePrice*lineTax/100);
+    newMrp=Math.round((Number(newMrp)+Number.EPSILON)*100)/100;
 
-
+    var patch = this.priceListMasterForm.get('priceListDetailList') as FormArray;
+    patch.controls[index].patchValue({ attribute10: newMrp });
     if (linePrice <= 0) {
       alert(linePrice + " << Invalid Price Rate.Price value should be above 0")
-
-      var patch = this.priceListMasterForm.get('priceListDetailList') as FormArray;
-      patch.controls[index].patchValue({ priceValue: '' })
+        patch.controls[index].patchValue({ priceValue: '' });
+        patch.controls[index].patchValue({ attribute10: '' })
     }
-    // return;
-
-  }
-
-
-
+   }
+   
+  
 
   // ===============================================================================
 

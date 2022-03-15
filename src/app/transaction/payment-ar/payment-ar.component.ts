@@ -621,6 +621,7 @@ export class PaymentArComponent implements OnInit {
     this.getTdsAmount(this.custTdsPer);
 
     }
+    
 
   validateAmt(rcptAmt: any) {
 

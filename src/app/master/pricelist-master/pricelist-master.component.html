@@ -396,8 +396,11 @@
                                                       <th style="width:8rem" scope="col">Item Category</th>
                                                       <th style="width:3rem" scope="col">UOM</th>
                                                       <th style="width:6rem" scope="col">Batch Code</th>
-                                                      <th style="width:8rem" scope="col">Taxable Price</th>
-                                                      <th style="width:8rem" scope="col">MRP</th>
+                                                      <th style="width:7rem" scope="col">Taxable Price</th>
+                                                      <th style="width:4rem" scope="col">Tax%</th>
+                                                      <th style="width:7rem" scope="col">MRP</th>
+                                                      <!-- <th style="width:8rem" scope="col">Start Date</th> -->
+                                                      <!-- <th style="width:8rem" scope="col">Last Update Date</th> -->
                                                       <th style="width:2rem" scope="col">Add+</th>
                                                       <th style="width:2rem" scope="col">Del-</th>
                                                   </tr>
@@ -432,14 +435,10 @@
                                                 
                                             <input type="text" hidden formControlName="priceListLineId">
                                             <input type="text" hidden  formControlName="itemId" >
-                                             
                                             <td style="text-align: center;width: 4rem;">{{i+1}}</td>
-                                             
                                       
-
-                                                <div *ngIf="addNew; then B1; else B2"></div>
+                                            <div *ngIf="addNew; then B1; else B2"></div>
                                                 <ng-template #B1>
-                                                
                                                     <!-- <td><input type="text" formControlName="segment"
                                                         (keyup)="getInvItemId($event)" id="invItemIdFirstWay"
                                                         list="dynmicUserIds1" class="form-control"  style="width: 16rem;"
@@ -464,27 +463,18 @@
                                                  <td><input disabled style="width:15rem;" type="text" formControlName="segment" class="form-control"  /></td> 
                                                 </ng-template>
                                               
-                                                <td>
-                                                    <input disabled style="width:20rem;"  type="text" formControlName="itemDescription" class="form-control"   placeholder="Item Description "  >
-                                                </td>
-
-                                                <td>
-                                                    <input style="width:10rem;" disabled  type="text" formControlName="itemCategory"  class="form-control" placeholder="Item Category "  >
-                                                </td>
-                                                <td>
-                                                    <input style="width: 5rem;" disabled  type="text" formControlName="uom"  class="form-control" placeholder="Uom "  >
-                                                </td>
-                                                <td>
-                                                    <input style="width:6rem;background-color: yellow;"  type="text" formControlName="batchCode"  class="form-control" placeholder="Batch Code"  (change)="validateitemWithBatchCode(i)"  >
-                                                </td>
-                                                <td>
-                                                    <input style="text-align: right;width:8rem;background-color: yellow;"  type="number" formControlName="priceValue"  class="form-control" (change)="validatePrice(i)" placeholder="Price "  >
-                                                </td>
-
-                                                <td>
-                                                    <input disabled style="text-align: right;width:8rem;"  type="number" formControlName="mrp"  class="form-control"  placeholder="MRP "  >
-                                                </td>
-                                               
+                                                <td><input disabled style="width:20rem;"  type="text" formControlName="itemDescription" class="form-control"   placeholder="Item Description "  ></td>
+                                                <td><input style="width:10rem;" disabled  type="text" formControlName="itemCategory"  class="form-control" placeholder="Item Category "  > </td>
+                                                <td><input style="width: 5rem;" disabled  type="text" formControlName="uom"  class="form-control" placeholder="Uom "  > </td>
+                                                <td><input style="width:6rem;background-color: yellow;"  type="text" formControlName="batchCode"  class="form-control" placeholder="Batch Code"  (change)="validateitemWithBatchCode(i)"  > </td>
+                                                <td><input style="text-align: right;width:7rem;background-color: yellow;"  type="number" formControlName="priceValue"  class="form-control" (change)="validatePrice(i)" placeholder="Price "  > </td>
+                                                <td><input disabled style="text-align: right;width:4rem;"  type="number" formControlName="tax"  class="form-control"  placeholder="TAX"></td>
+                                                <!-- <td><input disabled style="text-align: right;width:7rem;"  type="number" formControlName="mrp"  class="form-control"  placeholder="MRP"></td> -->
+                                                <td><input disabled style="text-align: right;width:7rem;"  type="number" formControlName="attribute10"  class="form-control"  placeholder="MRP"></td>
+                                            
+                                                <!-- <td><input disabled style="text-align: right;width:9rem;"  type="date"   formControlName="startDate"  class="form-control"></td>
+                                                <td><input disabled style="text-align: right;width:9rem;"  type="date"   formControlName="lastUpdatedDate"  class="form-control"></td>
+                                               -->
                                                 <div *ngIf="addNew; then  showyes; else showNo"> </div>
                                                 <ng-template #showyes> 
                                                     <td><button  type="submit" class="btn btn-info" (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i class="fa fa-plus"></i></button>  </td>
@@ -494,7 +484,6 @@
                                                     <td><button disabled type="submit" class="btn btn-info" (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i class="fa fa-plus"></i></button>  </td>
                                                     <td><button disabled type="submit" class="btn btn-info" (click)="RemoveRow(i)" style="width: min-content;"><i class="fa fa-trash"></i></button>  </td>
                                                 </ng-template>
-
 
                                               </tr>
                                             <!-- </div> -->
