@@ -422,13 +422,13 @@ export class SalesOrderProformaComponent implements OnInit {
   }
 
   onOptionsSelectedVariant(mainModel) {
-    var issuedBy=this.CounterSaleOrderBookingForm.get('issuedBy').value;
+    var issuedBy = this.CounterSaleOrderBookingForm.get('issuedBy').value;
     // alert(issuedBy);
-      if (issuedBy===undefined || issuedBy ===null || issuedBy===''){
-        alert('First Select Sales Person ...!');
-        window.location.reload();
-        return;
-      }
+    if (issuedBy === undefined || issuedBy === null || issuedBy === '') {
+      alert('First Select Sales Person ...!');
+      window.location.reload();
+      return;
+    }
     this.orderManagementService.VariantSearchFn(mainModel)
       .subscribe(
         data => {
@@ -1017,11 +1017,17 @@ export class SalesOrderProformaComponent implements OnInit {
 
 
   addRow(i) {
+    alert(i)
     var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
+    var trxLnArr2 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+    var trxLnArr3 = trxLnArr2.getRawValue();
     if (this.op == 'Search') {
       i = trxLnArr1.length;
     }
-
+    if (trxLnArr3[i].invType === '' || trxLnArr3[i].invType === null || trxLnArr3[i].invType === undefined || trxLnArr3[i].segment === '' || trxLnArr3[i].segment === null || trxLnArr3[i].segment === undefined) {
+      alert('Please enter data in blank field');
+      return;
+    }
     var disPer = this.CounterSaleOrderBookingForm.get('disPer').value;
     this.orderlineDetailsArray().push(this.orderlineDetailsGroup());
     var len = this.orderlineDetailsArray().length;
@@ -1159,10 +1165,19 @@ export class SalesOrderProformaComponent implements OnInit {
   downloadProformaInv() {
     const fileName = 'Proforma Invoice-' + sessionStorage.getItem('locName').trim() + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    // this.orderManagementService.salesproformaInv(this.orderNumber, sessionStorage.getItem('locId'))
+    //   .subscribe(data => {
+    //     saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+    //   })
     this.orderManagementService.salesproformaInv(this.orderNumber, sessionStorage.getItem('locId'))
       .subscribe(data => {
-        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-      })
+        // saveAs(new Blob([data], { type: MIME_TYPES[EXT] }));ng 
+        var blob = new Blob([data], { type: 'application/pdf' });
+        var url = URL.createObjectURL(blob);
+        var printWindow = window.open(url, '', 'width=800,height=500');
+        printWindow.open
+      });
+
   }
 
 

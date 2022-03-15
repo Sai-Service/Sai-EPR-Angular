@@ -46,6 +46,10 @@
               <a class="dropdown-item" data-toggle="collapse" href="#panelspInvAgging" role="tab"
                 (click)="reportDetails('spInvAgging')">Spares Inventory Aging</a>
             </li>
+            <li>
+              <a class="dropdown-item" data-toggle="collapse" href="#panelgltrialBalance" role="tab"
+                (click)="reportDetails('gltrialBalance')">GL Trial Balance</a>
+            </li>
           </ul>
         </li>
         <!-- <li class="nav-item dropdown">
@@ -398,6 +402,74 @@
               </td>
             </tr>
 
+            <tr>
+              <td colspan="4">
+                <table class="center">
+                  <tr>
+                    <td colspan="4">
+                      <table class="center">
+                        <tr>
+                          <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                          <ng-template #hList2>
+                            <div class="d-flex justify-content-center">
+                              <div class="spinner-border text-primary" role="status">
+                                <span class="sr-only" id="loading"></span>
+                              </div>
+                            </div>
+                          </ng-template>
+                          <ng-template #hList1> </ng-template>
+                          <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">
+                            &nbsp;{{dataDisplay}}&nbsp; </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <button class="btn-primary" [disabled]="isDisabled1" (click)="reportParameter(reportName)">View
+                        Report</button>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+    <table style="margin-left: auto;margin-right: auto;" [style.display]="isVisiblepanelgltrialBalance ? 'block' : 'none'" class="collapse" id="panelgltrialBalance">
+      <tr>
+        <td>
+          <table class="center">
+            <tr>
+              <td colspan="4" class="LabelFontStyle" style="width: 100%;">
+                {{reportName}}
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table class="center">
+            <tr>
+              <td style="width: 15%" class="LabelFontStyle">
+                Operating&nbsp;Unit&nbsp;:&nbsp;
+              </td>
+              <td>
+                <input type="text" disabled class="form-control" formControlName="OUCode" style="width: fit-content;">
+              </td>
+              <td style="width: 15%" class="LabelFontStyle">GL&nbsp;Period&nbsp;:&nbsp;</td>
+              <td>
+                <select formControlName="periodName" id="periodName" class="form-control">
+                <option>--Select--</option>
+                <option *ngFor="let sc of  periodNameList" [value]="sc.periodName">
+                  {{sc.periodName}}
+                </option>
+              </select>
+              </td>
+            </tr>
+         
             <tr>
               <td colspan="4">
                 <table class="center">

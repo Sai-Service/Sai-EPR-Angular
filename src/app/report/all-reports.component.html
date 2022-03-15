@@ -662,6 +662,31 @@
                     <button class="btn-primary" [disabled]="isDisabled16" (click)="spIncomeStatement()">View Report</button>
                 </td>
             </tr>
+
+
+            <tr>
+                <td style="border: 1px solid black;padding-left: 5px;">Spares Closing Stock As On Date</td>
+                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>Location&nbsp;Code&nbsp;:&nbsp;</td>&nbsp;
+                            <td>
+                                <input disabled type="text" class="form-control"  formControlName="stockMadeToLocName">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="sprClsAsonDttoDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="border: 1px solid black;padding-left: 5px;">
+                    <button class="btn-primary" [disabled]="isDisabled16" (click)="sprClsAsonDt()">View Report</button>
+                </td>
+            </tr>
+
         </table>
     </div>
         <table class="center">
