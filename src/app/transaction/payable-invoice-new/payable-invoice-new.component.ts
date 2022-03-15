@@ -1004,8 +1004,6 @@ export class PayableInvoiceNewComponent implements OnInit {
 
 
   selectINVLineDtl(i) {
-    // alert(i +'----selectINVLineDtl----');
-    // alert(this.currentOP);
     this.tdsTaxDetailsArray().clear();
     this.lineDistributionArray().clear();
     this.invLineDetailsArray().clear();
@@ -1016,14 +1014,15 @@ export class PayableInvoiceNewComponent implements OnInit {
     this.selectedLine = i;
     this.displaydescription = false;
     var arrayControl = this.poInvoiceForm.get('obj').value;
-    var invoiceStatus = arrayControl[this.selectedLine].invoiceStatus;
-    var invoiceStatus = arrayControl[this.selectedLine].invoiceStatus;
+    // var invoiceStatus = arrayControl[this.selectedLine].invoiceStatus;
+    // var invoiceStatus = arrayControl[this.selectedLine].invoiceStatus;
     var invoiceStatus1 = this.poInvoiceForm.get('invoiceStatus').value;
     // var invTypeLookupCode=this.poInvoiceForm.get('invTypeLookupCode').value;
     var arraybaseNew = this.poInvoiceForm.get('obj') as FormArray;
-    var arraybaseNew1=arraybaseNew.getRawValue()
-   var invTypeLookupCode  = arraybaseNew1[i].invTypeLookupCode
-   
+    var arraybaseNew1=arraybaseNew.getRawValue();
+   var invTypeLookupCode  = arraybaseNew1[i].invTypeLookupCode;
+    var invoiceStatus =arraybaseNew1[i].invoiceStatus;
+    alert(invoiceStatus)
     var invoiceNum = this.lineDetailsArray().controls[i].get('invoiceNum').value;
     this.invLineDetailsArray().clear();
     this.transactionService.getApInvLineDetails(invoiceNum)
@@ -1099,12 +1098,13 @@ export class PayableInvoiceNewComponent implements OnInit {
             this.displayTdsButton = false;
             this.showTdsLineDetails = true;
           }
-          if (data.invoicestatus == '' || data.invoiceStatus==null) {
+          if (data.invoicestatus == '' || data.invoiceStatus==null || data.invoiceStatus===undefined ) {
             this.isVisibleSave = false;
             this.isVisibleUpdateBtn = true;
             this.isVisibleValidate = true;
           }
-          if (data.invoiceStatus == 'Validated' || data.invoiceStatus==='Unpaid' || invTypeLookupCode !='CREDIT' || invTypeLookupCode !='STANDARD') {
+          // || invTypeLookupCode !='CREDIT' || invTypeLookupCode !='STANDARD'
+          if (data.invoiceStatus == 'Validated' || data.invoiceStatus==='Unpaid' ) {
             this.poInvoiceForm.disable();
             this.displayAddNewLine = false;
             this.invoiceStatus = data.invoiceStatus;
@@ -1115,6 +1115,7 @@ export class PayableInvoiceNewComponent implements OnInit {
             this.TaxDetailsArray().disable();
             this.TdsDetailsArray().disable();
           }
+        
           if (data.source == 'MANUAL') {
             this.apInvoiceTyp = 'MANUAL';
             this.dispStatus = true;
@@ -1135,15 +1136,16 @@ export class PayableInvoiceNewComponent implements OnInit {
             this.poInvoiceForm.get('taxLines').disable();
           }
           // debugger;
-          if (data.invoiceStatus === 'Validated' || data.invoiceStatus==='Unpaid' || invTypeLookupCode !='CREDIT' || invTypeLookupCode !='STANDARD') {
-            this.displayapInvCancelled = false;
-            this.isVisible = false;
-            this.poInvoiceForm.disable();
-            this.isVisible1 = true;
-            this.displayapInvCancelled = false;
-            this.TdsDetailsArray().disable();
-          }
-          else if (data.invoiceStatus === 'CANCELLED') {
+          // || invTypeLookupCode !='CREDIT' || invTypeLookupCode !='STANDARD'
+          // if (data.invoiceStatus === 'Validated' || data.invoiceStatus==='Unpaid' ) {
+          //   this.displayapInvCancelled = false;
+          //   this.isVisible = false;
+          //   this.poInvoiceForm.disable();
+          //   this.isVisible1 = true;
+          //   this.displayapInvCancelled = false;
+          //   this.TdsDetailsArray().disable();
+          // }
+         if (data.invoiceStatus === 'CANCELLED') {
             this.displayapInvCancelled = true;
             this.isVisible = false;
             this.poInvoiceForm.disable();
@@ -1190,8 +1192,8 @@ export class PayableInvoiceNewComponent implements OnInit {
   }
 
   showTdsLines(mInvId) {
-
     var invId;
+    alert(invId)
     if (mInvId === 0) {
       var arraybase = this.poInvoiceForm.get('obj').value;
       invId = arraybase[0].invoiceId;
@@ -1810,7 +1812,7 @@ export class PayableInvoiceNewComponent implements OnInit {
         // alert(invNum);
         this.poInvoiceForm.patchValue({ invoiceId: res.obj.id });
         var invNumber = res.obj.name;
-        alert(invNumber)
+        // alert(invNumber)
         this.displayTdsButton = true;
         this.showTdsLines(res.obj.id);
         this.isVisibleSave = false;

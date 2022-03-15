@@ -85,7 +85,7 @@
                                                         <button type="button"
                                                             (click)="selectINVLineDtl(i)">Select</button>
                                                     </td>
-                                                    <input hidden type="number" formControlName="invoiceId"
+                                                    <input  type="number" formControlName="invoiceId"
                                                         class="form-control" style="width: 50px;height: 25px;">
                                                     <td>
                                                         <input disabled type="text" formControlName="ouName"
@@ -168,7 +168,7 @@
                                                             style="width: 120px;height: 25px;font-size: 10px;">
                                                     </td>
                                                     <td>
-                                                        <input hidden type="number" min="0" class="form-control"
+                                                        <input  type="number" min="0" class="form-control"
                                                             formControlName="invoiceId1" value={{invoiceId1}} disabled
                                                             style="width: 120px;height: 25px;font-size: 10px;">
                                                         <input disabled type="number" min="0" class="form-control"
@@ -321,6 +321,8 @@
                                                         <button type="button"
                                                             (click)="selectINVLineDtl(i)">Select</button>
                                                     </td>
+                                                    <input  type="number" formControlName="invoiceId"
+                                                    class="form-control" style="width: 50px;height: 25px;">
                                                     <td>
                                                         <input type="text" disabled formControlName="ouName"
                                                             value={{ouName}} class="form-control"
@@ -375,7 +377,7 @@
 
                                                     </td>
                                                     <td>
-                                                        <input hidden type="number" min="0" class="form-control"
+                                                        <input  type="number" min="0" class="form-control"
                                                             formControlName="invoiceId1" value={{invoiceId1}} disabled
                                                             style="width: 120px;height: 25px;font-size: 10px;">
                                                         <input disabled type="number" min="0" class="form-control"

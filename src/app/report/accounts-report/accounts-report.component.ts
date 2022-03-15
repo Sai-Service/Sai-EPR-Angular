@@ -27,6 +27,7 @@ export class AccountsReportComponent implements OnInit {
   locCode:string;
   locId:number;
   public BillShipToList: Array<string> = [];
+  periodNameList: any=[];
   
   public DepartmentList: any=[];
   pipe = new DatePipe('en-US');
@@ -38,11 +39,13 @@ export class AccountsReportComponent implements OnInit {
   spInvAging1:number;
   spInvAging2:number;
   spInvAging3:number;
+  periodName:string;
   isDisabled1 = false;
   isVisibleGSTSaleRegister: boolean = false;
   isVisibleGSTPurchaseRegister: boolean=false;
   isVisibleSparesdebtors:boolean=false;
   isVisiblespInvAgging:boolean=false;
+  isVisiblepanelgltrialBalance:boolean=false;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) {
     this.reportForm = this.fb.group({
@@ -55,6 +58,7 @@ export class AccountsReportComponent implements OnInit {
       spInvAging1:[''],
       spInvAging2:[''],
       spInvAging3:[''],
+      periodName:[''],
     })
    }
    
@@ -90,6 +94,13 @@ this.service.DepartmentListNew()
 .subscribe(
   data => {
     this.DepartmentList = data;
+  }
+);
+
+this.service.FinancialPeriod()
+.subscribe(
+  data => {
+    this.periodNameList = data.obj;
   }
 );
 
@@ -133,6 +144,7 @@ reportName:string;
     this.isVisibleGSTPurchaseRegister=true;
     this.isVisibleSparesdebtors=false;
     this.isVisiblespInvAgging=false;
+    this.isVisiblepanelgltrialBalance=false;
   }
   else if (reportName==='gstPurSummary'){
     this.reportName='Purchase Register Summary';
@@ -143,6 +155,7 @@ reportName:string;
     this.isVisibleGSTPurchaseRegister=true;
     this.isVisibleSparesdebtors=false;
     this.isVisiblespInvAgging=false;
+    this.isVisiblepanelgltrialBalance=false;
   }
   else if (reportName==='receiptRegisterReport'){
     this.reportName='Receipt Register Report';
@@ -153,6 +166,7 @@ reportName:string;
     this.isVisibleGSTPurchaseRegister=true;
     this.isVisibleSparesdebtors=false;
     this.isVisiblespInvAgging=false;
+    this.isVisiblepanelgltrialBalance=false;
   }
   else if (reportName==='gSTSaleRegister'){
     this.reportName='GST Sales Register';
@@ -163,6 +177,7 @@ reportName:string;
     this.isVisibleGSTPurchaseRegister=false;
     this.isVisibleSparesdebtors=false;
     this.isVisiblespInvAgging=false;
+    this.isVisiblepanelgltrialBalance=false;
   }
   else if (reportName==='sparesdebtors'){
     this.reportName='Spares Debtors';
@@ -174,6 +189,7 @@ reportName:string;
     this.isVisibleGSTSaleRegister=false;
     this.isVisibleSparesdebtors=true;
     this.isVisiblespInvAgging=false;
+    this.isVisiblepanelgltrialBalance=false;
   }
   else if (reportName==='spInvAgging'){
     this.reportName='Spares Inventory Aging';
@@ -182,6 +198,16 @@ reportName:string;
     this.isVisibleGSTSaleRegister=false;
     this.isVisibleSparesdebtors=false;
     this.isVisiblespInvAgging=true;
+    this.isVisiblepanelgltrialBalance=false;
+  }
+  else if (reportName==='gltrialBalance'){
+    this.reportName='GL Trial Balance';
+    this.isVisibleGSTSaleRegister=false;
+    this.isVisibleGSTPurchaseRegister=false;
+    this.isVisibleGSTSaleRegister=false;
+    this.isVisibleSparesdebtors=false;
+    this.isVisiblespInvAgging=false;
+    this.isVisiblepanelgltrialBalance=true;
   }
   }
 
@@ -288,6 +314,20 @@ reportName:string;
         this.dataDisplay = ''
         this.isDisabled1=false;
       })
+    }
+    else if (reportName ==='GL Trial Balance'){
+     var ouName = sessionStorage.getItem('locCode');
+     var ouCode= ouName.substring(0,4)
+      var periodName= this.reportForm.get('periodName').value;
+      const fileName = 'GL Trial Balance-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.gltrialBalanceReport(ouCode,periodName)
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.closeResetButton = true;
+        this.dataDisplay = ''
+        this.isDisabled1=false;
+      })      
     }
   }
 
