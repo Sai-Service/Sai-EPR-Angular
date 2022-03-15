@@ -109,8 +109,8 @@ export class ReturnToVendorComponent implements OnInit {
       // searchReceiptNo=1000158;
 
       // searchReceiptNo=22111720;
-      searchReceiptNo=52121101142;
-      // searchReceiptNo:number;
+      // searchReceiptNo=52121101142;
+      searchReceiptNo:number;
 
       poStatus:string;
       shipHeaderId:number
@@ -146,8 +146,8 @@ export class ReturnToVendorComponent implements OnInit {
       rtnDocDate=this.pipe.transform(Date.now(), 'dd-MM-yyyy');
       rtnFromDate=this.pipe.transform(Date.now(), 'y-MM-dd');
       rtnToDate=this.pipe.transform(Date.now(), 'y-MM-dd');
-      // remarks:string;
-      remarks="52121101175";
+      remarks:string;
+      // remarks="52121101175";
                
       returnTo='Supplier'
 
