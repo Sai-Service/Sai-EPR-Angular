@@ -827,18 +827,18 @@ console.log(jsonData);
         this.service.viewAccountingApReceipt(documentNo).subscribe((res: any) => {
           if (res.code === 200) {
             this.viewAccountingApRcpt = res.obj;
-            this.description = res.obj.description;
-            this.periodName = res.obj.periodName;
-            this.postedDate = res.obj.postedDate;
-            this.jeCategory = res.obj.jeCategory;
-            this.name1 = res.obj.name;
-            this.ledgerId = res.obj.ledgerId;
-            this.runningTotalDr = res.obj.runningTotalDr;
-            this.runningTotalCr = res.obj.runningTotalCr;
-            this.docSeqValue = res.obj.docSeqValue;
+            this.description = res.obj[0].description;
+            this.periodName = res.obj[0].periodName;
+            this.postedDate = res.obj[0].postedDate;
+            this.jeCategory = res.obj[0].jeCategory;
+            this.name1 = res.obj[0].name;
+            this.ledgerId = res.obj[0].ledgerId;
+            this.runningTotalDr = res.obj[0].runningTotalDr;
+            this.runningTotalCr = res.obj[0].runningTotalCr;
+            this.docSeqValue = res.obj[0].docSeqValue;
             console.log(this.description);
   
-            this.viewAccounting1 = res.obj.glLines;
+            this.viewAccounting1 = res.obj[0].glLines;
             console.log(this.viewAccounting1);
   
             // this.viewAccountingLines = res.obj[0].glLines;

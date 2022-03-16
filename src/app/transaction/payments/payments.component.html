@@ -33,7 +33,7 @@
                     <td>
                         <!-- <input   type="text" formControlName="searchBySuppNo"  [(ngModel)]="searchBySuppName" [(ngModel)]="searchBySuppNo"   class="form-control" placeholder="Enter Supplier Name" > -->
                         <select formControlName="searchBySuppName" id="searchBySuppName" class="form-control"
-                            style="width: 160px;height: 25px;font-size: 10px;">
+                            [(ngModel)]="searchBySuppName" style="width: 160px;height: 25px;font-size: 10px;">
                             <option>--Select--</option>
                             <option *ngFor="let sup of  supplierCodeList" [value]="sup.name">
                                 {{sup.name}}
@@ -121,8 +121,7 @@
                                         <!-- [(ngModel)]="paymentTypeFlag" -->
                                         <ng-template #thentype>
                                             <input disabled type="text" class="form-control"
-                                                formControlName="paymentTypeFlag"
-                                                value={{paymentTypeFlag}}
+                                                formControlName="paymentTypeFlag" value={{paymentTypeFlag}}
                                                 style="width: 100px;height: 25px;font-size: 10px;">
                                         </ng-template>
                                         <ng-template #elsetype>
@@ -225,7 +224,7 @@
                                         <input type="text" disabled class="form-control" formControlName="country"
                                             value={{country}} style="width: 100px;height: 25px;font-size: 10px;">
                                     </td>
-                                   
+
                                     <td>
                                         <input disabled formControlName="payDate" value={{payDate}} class="form-control"
                                             [ngModel]="payDate | date:'dd-MM-yyyy'"
@@ -508,15 +507,23 @@
                         <th scope="col">Amount</th>
                         <th scope="col">GL Date</th>
                         <th scope="col">Payment Amount</th>
+                        <th>View Accounting</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let com of PaymentReturnArr" class="ItemStyle" style="text-decoration:none;">
                         <td style="width: 107px;text-align: center;">{{com.invoiceNum}}</td>
                         <td style="width: 107px;text-align: center;">{{com.invDate}}</td>
-                        <td style="width: 80px;text-align: right;">{{com.invoiceAmt}}</td>
+                        <td style="width: 107px;text-align: center;">{{com.invoiceAmt}}</td>
                         <td style="width: 107px;text-align: center;">{{com.glDate | date:'yyyy-MM-dd'}}</td>
-                        <td style="width: 80px;text-align: right;">{{com.payAmount }}</td>
+                        <td style="width: 107px;text-align: center;">{{com.payAmount }}</td>
+                        <td style="width: 107px;text-align: center;">
+                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#viewAccountingModel" style="width: 8rem;"
+                                (click)="viewAcc(com.documentNo)">
+                                View Accounting
+                            </button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -538,101 +545,91 @@
                 </tr>
             </table>
 
-        <!-- Modal footer -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal" id="btnSave" (click)="paymentSave()">Save</button>
-        </div>
-<!-- 
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" id="btnSave"
+                    (click)="paymentSave()">Save</button>
+            </div>
+            <!-- 
       </div>
     </div>
   </div> -->
-  <br>
-  <table style="width: 100%; background-color: #FFE4B5;">
-    <tr>
+            <br>
+            <table style="width: 100%; background-color: #FFE4B5;">
+                <tr>
 
-        <td style="width: 15%" class="LabelFontStyle">Document&nbsp;Number&nbsp;:</td>
-        <td>
-            <input disabled type="text" formControlName="docNo"  class="form-control">
-        </td>
-        <td style="width: 15%" class="LabelFontStyle">Payment&nbsp;Status&nbsp;:</td>
-        <td style="font-weight: bold;">
-            <!-- {{INVStatus}} -->
-            <input disabled type="text" formControlName="payStatus"  class="form-control">
-        </td>
+                    <td style="width: 15%" class="LabelFontStyle">Document&nbsp;Number&nbsp;:</td>
+                    <td>
+                        <input disabled type="text" formControlName="docNo" class="form-control">
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle">Payment&nbsp;Status&nbsp;:</td>
+                    <td style="font-weight: bold;">
+                        <!-- {{INVStatus}} -->
+                        <input disabled type="text" formControlName="payStatus" class="form-control">
+                    </td>
 
-    </tr>
+                </tr>
 
-</table>
-<br>
+            </table>
+            <br>
 
-  <!--======================================== After Save respose display  ==================================-->
+            <!--======================================== After Save respose display  ==================================-->
 
-  <table class="GridFont" cellspacing="0" cellpadding="4" border="0"  style="width:100%;border-collapse:collapse;">
-    <thead>
-        <tr class="GridHeader">
-            <th scope="col">Invoice Number</th>
-            <th scope="col">Date</th>
-            <th scope="col">Amount</th>
-            <th scope="col">GL Date</th>
-            <th scope="col">Payment Amount</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let com of PaymentReturnArr" class="ItemStyle" style="text-decoration:none;">
-            <td style="width: 107px;text-align: center;">{{com.invoiceNum}}</td>
-            <td style="width: 107px;text-align: center;">{{com.invDate}}</td>
-            <td style="width: 80px;text-align: right;">{{com.invoiceAmt}}</td>
-            <td style="width: 107px;text-align: center;">{{com.glDate  | date:'yyyy-MM-dd'}}</td>
-            <td style="width: 80px;text-align: right;">{{com.payAmount }}</td>
-        </tr>
-    </tbody>
-  </table>
-  <table class="center">
-      <tr>
-        <td>
-            <button type="button" (click)="close()" class="btn btn-primary">Close</button>
-        </td>
-        <td>
-            <button type="button" class="btn btn-primary" id="register"
-                (click)="refresh()">
-                Clear
-            </button>
-        </td>
-        <td>
+            <table class="GridFont" cellspacing="0" cellpadding="4" border="0"
+                style="width:100%;border-collapse:collapse;">
+                <thead>
+                    <tr class="GridHeader">
+                        <th scope="col">Invoice Number</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">GL Date</th>
+                        <th scope="col">Payment Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let com of PaymentReturnArr" class="ItemStyle" style="text-decoration:none;">
+                        <td style="width: 107px;text-align: center;">{{com.invoiceNum}}</td>
+                        <td style="width: 107px;text-align: center;">{{com.invDate}}</td>
+                        <td style="width: 80px;text-align: right;">{{com.invoiceAmt}}</td>
+                        <td style="width: 107px;text-align: center;">{{com.glDate | date:'yyyy-MM-dd'}}</td>
+                        <td style="width: 80px;text-align: right;">{{com.payAmount }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="center">
+                <tr>
+                    <td>
+                        <button type="button" (click)="close()" class="btn btn-primary">Close</button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary" id="register" (click)="refresh()">
+                            Clear
+                        </button>
+                    </td>
+                    <!-- <td>
             <button type="button" class="btn btn-primary" id="register" data-toggle="modal" data-target="#viewAccountingModel"
                 >
                 View Accounting
             </button>
-        </td>
-        <td>
-          <button type="button" class="btn btn-primary" id="register"
-              (click)="cancelPayment()">
-              Cancel
-          </button>
-      </td>
-      </tr>
-  </table>
+        </td> -->
+                    <td>
+                        <button type="button" class="btn btn-primary" id="register" (click)="cancelPayment()">
+                            Cancel
+                        </button>
+                    </td>
+                </tr>
+            </table>
 
-<!-- =====================================================Search for all filed wise========================= -->
-        <!-- Modal Start Here  -->
-        <div class="modal fade" id="myModel" role="dialog" aria-hidden="true" style="width: 100%;margin-left: 0;">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
- <h4 class="modal-title" id="myModalLabel" style="text-align: left; font-size: medium; margin-left: 45%; font-family: Verdana,Sans-serif, Arial, Helvetica;font-weight: bold;">
- Find Payments</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="modal-body">
-                            <table  style="width: 100%;" >
-                                <tr>
-<td  class="LabelFontStyle">&nbsp;Supplier&nbsp;No&nbsp;:</td>
-<td>
- <input type="number" min="0"  formControlName="suppNo" value={{suppNo}} [(ngModel)]="suppNo"  class="form-control">
- </td>
-                                </tr>
-                            </table>
+            <!-- =====================================================Search for all filed wise========================= -->
+            <!-- Modal Start Here  -->
+            <div class="modal fade" id="myModel" role="dialog" aria-hidden="true" style="width: 100%;margin-left: 0;">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel"
+                                style="text-align: left; font-size: medium; margin-left: 45%; font-family: Verdana,Sans-serif, Arial, Helvetica;font-weight: bold;">
+                                Find Payments</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
                         <div class="modal-body">
                             <div class="modal-body">
@@ -646,138 +643,144 @@
                                     </tr>
                                 </table>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-dismiss="modal"
-                                    (click)="paymentFind(suppNo)">Find</button>
+                            <div class="modal-body">
+                                <div class="modal-body">
+                                    <table style="width: 100%;">
+                                        <tr>
+                                            <td class="LabelFontStyle">&nbsp;Supplier&nbsp;No&nbsp;:</td>
+                                            <td>
+                                                <input type="number" min="0" formControlName="suppNo" value={{suppNo}}
+                                                    [(ngModel)]="suppNo" class="form-control">
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                        (click)="paymentFind(suppNo)">Find</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- Modal End Here  -->
+                <!-- Modal End Here  -->
 
-         <div class="grid_scroll2">
-            <!-- Modal -->
-            <div class="modal fade" id="viewAccountingModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-              <div class="modal-dialog modal-xl" role="document">
-                  <!-- modal-dialog-scrollable -->
-                <div class="modal-content">
-                  <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLongTitle" style="margin-left: 40%;">Accounting Effect</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                      <table class="center">
-                          <tr>
-                              <td style="width: 18%" class="LabelFontStyle">
-                                  Invoice&nbsp;No&nbsp;:&nbsp;
-                              </td> 
-                              <td>
-                                  <input disabled  formControlName="name1" id="name1" class="form-control" [(ngModel)]="name1" style="width: fit-content;">
-                              </td>
-                              <td style="width: 18%" class="LabelFontStyle">
-                                  Doc&nbsp;Srl&nbsp;No&nbsp;:&nbsp;
-                              </td>
-                              <td>
-                                  <input disabled formControlName="docSeqValue" class="form-control" [ngModel]="docSeqValue" >
-                              </td>
-                              
-                              <td style="width: 18%" class="LabelFontStyle">
-                                  Ledger&nbsp;:&nbsp;
-                              </td>
-                              <td>
-                                  <input disabled formControlName="description" class="form-control" [ngModel]="description" >
-                              </td>
-                          </tr>
-                          <tr>
-                              <td style="width: 18%" class="LabelFontStyle">
-                                  Category&nbsp;:&nbsp;
-                              </td> 
-                              <td>
-                                  <input disabled formControlName="jeCategory" id="jeCategory" class="form-control" [ngModel]="jeCategory" >
-                              </td>
-                              <td style="width: 18%" class="LabelFontStyle">
-                                  Date&nbsp;:&nbsp;
-                              </td> 
-                              <td>
-                                  <input disabled formControlName="postedDate" id="postedDate" class="form-control" [ngModel]="postedDate" >
-                              </td>
-                              <td style="width: 18%" class="LabelFontStyle">
-                                  Period&nbsp;:&nbsp;
-                              </td> 
-                              <td>
-                                  <input disabled  formControlName="periodName" id="periodName" class="form-control" [ngModel]="periodName" >
-                              </td>
-                          </tr>
-                          <br>
-                          </table>
-                          <div class="grid_scroll2">
-                          <table class="auto-style4" class="GridFont"   style="border-color:#959595;width:100%;">
-                              <thead>
-                                <tr class="GridHeader">
-                                <th>Line</th>
-                                <th>Account</th>
-                                <th>Debit(INR)</th>
-                                <th>Credit(INR)</th>
-                                <th>Description</th>
-                                <th>Account Description</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                  <tr *ngFor="let com of viewAccounting1" class="ItemStyle" style="text-decoration:none;position: initial;">
-                                    <td>{{com.jeLineNum}}</td>
-                                    <td >{{com.segmentName}}</td>
-                                    <td style="text-align: right;padding-right: 5px;" >{{com.enteredDr}}</td>
-                                    <td style="text-align: right;padding-right: 5px;">{{com.enteredCr}}</td>
-                                    <td >{{com.description}}</td>
-                                    <td >{{com.accountDesc}}</td>
-                                  </tr>
-                              </tbody>
-                              <tr>
-                                  <td></td>
-                                  <td>Total:&nbsp;</td>
-                                  <td >
-                                      <input disabled  formControlName="runningTotalDr" id="runningTotalDr" class="form-control" [ngModel]="runningTotalDr" style="text-align: right;height: 22px;width: 100px;font-weight: bold;">
-                                  </td>
-                                  <td >
-                                      <input disabled  formControlName="runningTotalCr" id="runningTotalCr" class="form-control" [ngModel]="runningTotalCr" style="text-align: right;height: 22px;width: 100px;font-weight: bold;">
-                                  </td>
-                              </tr>
-                                </table>
-                                <!-- <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
-                                  <tr class="ItemStyle">
-                                      <td style="width: 4rem;"></td>
-                                      <td  style="width: 8rem;">Total:&nbsp;</td>
-                                      <td style="width: 4rem;">
-                                          <input disabled  formControlName="runningTotalDr" id="runningTotalDr" class="form-control" [ngModel]="runningTotalDr" style="text-align: right;height: 22px;width: 100px;">
-                                      </td>
-                                      <td style="width: 2rem;">
-                                          <input disabled  formControlName="runningTotalCr" id="runningTotalCr" class="form-control" [ngModel]="runningTotalCr" style="text-align: right;height: 22px;width: 100px;">
-                                      </td>
-                                      <td style="width: 8rem;">
-                                      </td>
-                                      <td style="width: 8rem;" hidden>    SS-C-GST Liability Standard-11PU</td>
-                                      <td style="width: 8rem;" hidden>    SS-C-GST Liability Standard-11PU</td>
-                                  </tr>
-                                 
-                               </table>  -->
-                              </div>
-                  </div>
-                  
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  </div>
-                </div>
-              </div>
+
+                <br><br>
+
             </div>
-          </div> 
-<br><br>
-     
+            <div class="modal fade" id="viewAccountingModel" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-xl" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle" style="margin-left: 40%;">Accounting
+                                Effect</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <table class="center">
+                                <tr>
+                                    <td style="width: 18%" class="LabelFontStyle">
+                                        Desc/GRR&nbsp;No&nbsp;:&nbsp;
+                                    </td>
+                                    <td>
+                                        <input disabled formControlName="name1" id="name1" class="form-control"
+                                            [ngModel]="name1" style="width: fit-content;">
+                                    </td>
+                                    <td style="width: 18%" class="LabelFontStyle">
+                                        Doc&nbsp;Srl&nbsp;No&nbsp;:&nbsp;
+                                    </td>
+                                    <td>
+                                        <input disabled formControlName="docSeqValue" class="form-control"
+                                            [ngModel]="docSeqValue">
+                                    </td>
+
+                                    <td style="width: 18%" class="LabelFontStyle">
+                                        Ledger&nbsp;:&nbsp;
+                                    </td>
+                                    <td>
+                                        <input disabled formControlName="description" class="form-control"
+                                            [ngModel]="description">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 18%" class="LabelFontStyle">
+                                        Category&nbsp;:&nbsp;
+                                    </td>
+                                    <td>
+                                        <input disabled formControlName="jeCategory" id="jeCategory"
+                                            class="form-control" [ngModel]="jeCategory">
+                                    </td>
+                                    <td style="width: 18%" class="LabelFontStyle">
+                                        Date&nbsp;:&nbsp;
+                                    </td>
+                                    <td>
+                                        <input disabled formControlName="postedDate" id="postedDate"
+                                            class="form-control" [ngModel]="postedDate">
+                                    </td>
+                                    <td style="width: 18%" class="LabelFontStyle">
+                                        Period&nbsp;:&nbsp;
+                                    </td>
+                                    <td>
+                                        <input disabled formControlName="periodName" id="periodName"
+                                            class="form-control" [ngModel]="periodName">
+                                    </td>
+                                </tr>
+                                <br>
+                            </table>
+                            <div class="grid_scroll2">
+                                <table class="auto-style4" class="GridFont" style="border-color:#959595;width:100%;">
+                                    <thead>
+                                        <tr class="GridHeader">
+                                            <th>Line</th>
+                                            <th>Account</th>
+                                            <th>Debit(INR)</th>
+                                            <th>Credit(INR)</th>
+                                            <th>Description</th>
+                                            <th>Account Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let com of viewAccounting1" class="ItemStyle"
+                                            style="text-decoration:none;position: initial;">
+                                            <td>{{com.jeLineNum}}</td>
+                                            <td>{{com.segmentName}}</td>
+                                            <td style="text-align: right;padding-right: 5px;">{{com.enteredDr}}
+                                            </td>
+                                            <td style="text-align: right;padding-right: 5px;">{{com.enteredCr}}
+                                            </td>
+                                            <td>{{com.description}}</td>
+                                            <td>{{com.accountDesc}}</td>
+                                        </tr>
+                                    </tbody>
+                                    <tr>
+                                        <td></td>
+                                        <td>Total:&nbsp;</td>
+                                        <td>
+                                            <input disabled formControlName="runningTotalDr" id="runningTotalDr"
+                                                class="form-control" [ngModel]="runningTotalDr"
+                                                style="text-align: right;height: 22px;width: 100px;font-weight: bold;">
+                                        </td>
+                                        <td>
+                                            <input disabled formControlName="runningTotalCr" id="runningTotalCr"
+                                                class="form-control" [ngModel]="runningTotalCr"
+                                                style="text-align: right;height: 22px;width: 100px;font-weight: bold;">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
-</form>
-</div> 
 
 </div>
 <!-- </div> -->
