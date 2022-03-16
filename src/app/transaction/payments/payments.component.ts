@@ -775,7 +775,7 @@ console.log(jsonData);
 
 
   searchPayment(searchBySuppName, searchByFrmDate, searchByToDate) {
-    alert(searchBySuppName);
+    // alert(searchBySuppName);
     console.log(this.supplierCodeList)
     // frmDate = this.pipe.transform(searchByFrmDate, 'dd-MMM-yyyy');
     // toDate = this.pipe.transform(searchByToDate, 'dd-MMM-yyyy');
@@ -793,13 +793,13 @@ console.log(jsonData);
         if (res.code === 200) {
           alert(res.message);
           this.paymentData = res.obj;
-          alert(this.paymentData.length+'----this.paymentData.length')
+          // alert(this.paymentData.length+'----this.paymentData.length')
           for (let i = 0; i < this.paymentData.length; i++) {
             var payLnGrp: FormGroup = this.payHeaderLineDtl();
             this.payHeaderLineDtlArray().push(payLnGrp);
             
           }
-          alert(this.payHeaderLineDtlArray().length+'len');
+          // alert(this.payHeaderLineDtlArray().length+'len');
           // for (let j = 0; j < this.payHeaderLineDtlArray().length; j++) {
           //   var patch=this.paymentForm.get('obj1') as FormArray;
           //   // var selPay=this.suppIdList.find(d=>d.suppSiteId===res.obj[j])
@@ -821,7 +821,7 @@ console.log(jsonData);
   }
 
       viewAcc(documentNo){
-        alert(documentNo)
+        // alert(documentNo)
         var docVal=this.paymentForm.get('obj').value;
         var docNo=docVal[0].docNo
         this.service.viewAccountingApReceipt(documentNo).subscribe((res: any) => {
@@ -837,15 +837,9 @@ console.log(jsonData);
             this.runningTotalCr = res.obj[0].runningTotalCr;
             this.docSeqValue = res.obj[0].docSeqValue;
             console.log(this.description);
-  
             this.viewAccounting1 = res.obj[0].glLines;
             console.log(this.viewAccounting1);
-  
-            // this.viewAccountingLines = res.obj[0].glLines;
-    
             console.log(this.viewAccountingApRcpt);
-          
-            // alert(res.message);
           } else {
             if (res.code === 400) {
               alert(res.message);
