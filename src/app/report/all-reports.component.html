@@ -56,7 +56,18 @@
                     </table>
                 </td>
                 <td style="border: 1px solid black;padding-left: 5px;">
-                    <button class="btn-primary" [disabled]="isDisabled1" (click)="spPurReg()">View Report</button>
+                    <table class="center" style="width: 100%;">
+                        <tr>
+                            <td >
+                                <button class="btn-primary" [disabled]="isDisabled1" (click)="spPurReg()">View Report</button>
+                            </td>
+                           </tr>
+                           <tr>
+                            <td >
+                                <button class="btn-primary" [disabled]="isDisabled1" (click)="spPurRegDownLoad()">DownLoad</button>
+                            </td>
+                           </tr>
+                    </table>
                 </td>
             </tr>
 
@@ -227,7 +238,6 @@
                     </table>
                 </td>
                 <td style="border: 1px solid black;padding-left: 5px;">
-                    <!-- <a   (click)="SPdebtorsReport()" href="ViewReport">View Report</a> -->
                     <button class="btn-primary" [disabled]="isDisabled6" (click)="SPdebtorsReport()">View Report</button>
                 </td>
             </tr>

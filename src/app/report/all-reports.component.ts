@@ -312,6 +312,19 @@ export class AllReportsComponent implements OnInit {
       })
   }
 
+
+  spPurRegDownLoad(){
+    const fileName = 'Purchase-Register-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.spPurRegDownLoadReport(sessionStorage.getItem('ouId'))
+    .subscribe(data => {
+      saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+      this.dataDisplay = ''
+      this.closeResetButton = true;
+      this.isDisabled1 = false;
+    })
+  }
+
   sppurRegiSumm() {
     this.isDisabled11 = true;
     this.closeResetButton = false;
