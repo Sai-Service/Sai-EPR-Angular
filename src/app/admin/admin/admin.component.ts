@@ -360,6 +360,35 @@ export class AdminComponent implements OnInit {
       this.isVisibleAccountsRepor=false;
     }
 
+    if (Number(sessionStorage.getItem('divisionId')) === 2 && sessionStorage.getItem('deptName')==='Accessories' && Number(sessionStorage.getItem('roleId'))===4){
+      // alert((sessionStorage.getItem('roleId')))
+      this.isVisible11=true;
+      this.isVisible12=false;
+      this.isVisible13=false;
+      this.isVisible14=true;
+      this.isVisible15=true;
+      this.isVisible16=true;
+      this.isVisible17=true;
+      this.isVisible18=true;
+      this.isVisible19=true;
+      this.isVisible20=false;
+      this.isVisible21=false;
+      this.isVisible37=true;
+      this.isVisible22=false;
+      this.isVisible23=false;
+      this.isVisible24=true;
+      this.isVisible25=true;
+      this.isVisible26=true;
+      this.isVisible27=true;
+      this.isVisible28=true;
+      this.isVisible29=true;
+      this.isVisible30=true;
+      this.isVisible31=true;
+      this.isVisible32=false;
+      this.isVisible35=false;
+      this.isVisible36=false;
+      this.isVisibleAccountsRepor=false;
+    }
     if (Number(sessionStorage.getItem('deptId'))===4){
       this.isVisibleAccountsRepor=true;
     }
