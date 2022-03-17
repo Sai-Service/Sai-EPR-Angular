@@ -30,11 +30,12 @@ export class dedList {
   quantity: number;
   averageCost: number;
   totalAmount: number;
-  transDate:string;
   attribute1:string;
   printDateTime:string;
   grrNum :string;
-  grrDate :string;
+  transDate:string;
+  transType:string;
+
   }
 
 
@@ -137,6 +138,8 @@ export class DeadStockComponent implements OnInit {
        lastUpdatedBy:[],
        lastUpdationDate: [],
        attribute1: [],
+       attribute4:[],
+       attribute5:[],
        onHandId: [],
        days:[],
        quantity:[],
@@ -454,9 +457,10 @@ export class DeadStockComponent implements OnInit {
     'Quantity',
     'Price',
     'Amount',
-    'Purchase Date',
-    // 'GRR No',
-    // 'GRR Date',
+    // 'Purchase Date',
+    'GRR No',
+    'GRR Date',
+    'Transaction Type',
     'Remark',
     "PrintDateTime",
   ]]
@@ -481,12 +485,14 @@ export class DeadStockComponent implements OnInit {
       ordLn.quantity = orList[i].quantity;
       ordLn.averageCost = orList[i].averageCost;
       ordLn.totalAmount = orList[i].totalAmount;
+      ordLn.grrNum = orList[i].attribute4;
       ordLn.transDate = this.pipe.transform(orList[i].transDate, 'dd-MM-y');
+      ordLn.transType = orList[i].attribute5;
       ordLn.attribute1 = orList[i].attribute1;
       ordLn.printDateTime = this.pipe.transform(Date.now(), 'dd-MM-y hh:mm:ss');  
-
       xlOrdList.push(ordLn);
     }
+
     xlsx.utils.sheet_add_json(ws, xlOrdList, { origin: 'A2', skipHeader: true });
     xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
     xlsx.writeFile(wb, 'deadStockList.xlsx');

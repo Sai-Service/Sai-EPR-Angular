@@ -3598,23 +3598,30 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
 
 
 
-
-      getBnkTrfSearchByDate(fDate,tDate): Observable<any> {
+    getBnkTrfSearchByDocNum(docNo): Observable<any> {
+        return this.http.get(this.ServerUrl+`/AccountTrf/trfDocSearch/${docNo}`);
+        // http://localhost:8081/AccountTrf/trfDocSearch/2125210210009
+     }
+     
+    getBnkTrfSearchByDate(fDate,tDate): Observable<any> {
         return this.http.get(this.ServerUrl+`/AccountTrf/TrfDtList?frmDate=${fDate}&toDate=${tDate}`);
         // http://localhost:8081/AccountTrf/TrfDtList?frmDate=2021-10-25&toDate=2021-10-25
      }
 
      getBnkChqList(bankId,rcptMthId,locId): Observable<any> {
-    //  alert(bankId +","+rcptMthId +","+locId);
-      return this.http.get(this.ServerUrl+`/AccountTrf/CounterList?bankId=${bankId}&receiptMethodId=${rcptMthId}&locId=${locId}`);
+          return this.http.get(this.ServerUrl+`/AccountTrf/CounterList?bankId=${bankId}&receiptMethodId=${rcptMthId}&locId=${locId}`);
       // http://localhost:8081/AccountTrf/CounterList?bankId=902&receiptMethodId=58&locId=2102
-   }
+      }
 
+      getBnkChqListDocNum(locId,rcptMthId,docTrf): Observable<any> {
+      return this.http.get(this.ServerUrl+`/AccountTrf/trfRcptUpdate?locId=${locId}&receiptMethodId=${rcptMthId}&docTrfNo=${docTrf}`);
+      // http://localhost:8081/AccountTrf/trfRcptUpdate?locId=2102&receiptMethodId=58&docTrfNo=2125210210010
+      }
    
-   viewAccountingBankTransfer(trfNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/glHeader/AccountTrf/${trfNo}`);
-    // http://localhost:8081/glHeader/AccountTrf/2125210510008
-  }
+      viewAccountingBankTransfer(trfNo): Observable<any> {
+        return this.http.get(this.ServerUrl + `/glHeader/AccountTrf/${trfNo}`);
+        // http://localhost:8081/glHeader/AccountTrf/2125210510008
+      }
 
 
     ////////////////////////// Pending Shipment Lis///////////

@@ -80,7 +80,8 @@
                                 <div *ngIf="displayButton; then opn1; else opn2"></div>
                                 <ng-template #opn1> 
                                 <td>  
-                                    <select   formControlName="openPeriod" id="openPeriod" [(ngModel)]="openPeriod"  class="form-control" style="background-color: yellow;" >                                    <option disabled>--Select--</option>
+                                    <select   formControlName="openPeriod" id="openPeriod" [(ngModel)]="openPeriod"  class="form-control" style="background-color: yellow;" >                                    
+                                    <option disabled>--Select--</option>
                                     <option *ngFor="let sc of  PeriodList" [ngValue]="sc.periodName">
                                     {{sc.periodName}}
                                     </option>
@@ -88,7 +89,7 @@
                                 </td>
                                 </ng-template>
                                 <ng-template #opn2> 
-                                    <input  disabled  type="text"  formControlName="openPeriod"  id="openPeriod" [(ngModel)]="openPeriod" class="form-control" style=" width: 100%;" >
+                                   <td><input  disabled  type="text"  formControlName="openPeriod"  id="openPeriod" [(ngModel)]="openPeriod" class="form-control" ></td> 
                                 </ng-template>
 
                                 <td style="width: 15%" class="LabelFontStyle">Transfer&nbsp;Desc:&nbsp;</td>
@@ -210,22 +211,22 @@
                         <table class="center"> -->
 
                             <tr>
-                              
+                                <input  hidden  type="text"  formControlName="fromAcctDescp"  id="fromAcctDescp" [(ngModel)]="fromAcctDescp" class="form-control"  >
+                                <input  hidden  type="text"  formControlName="bankId"  id="bankId" [(ngModel)]="bankId" class="form-control"  >
+                                 
                                 <div *ngIf="selectdisp; then disp1; else disp2"></div>
                                  <ng-template #disp2> 
-                                    <input  hidden  type="text"  formControlName="fromAcctDescp"  id="fromAcctDescp" [(ngModel)]="fromAcctDescp" class="form-control"  >
-                                    <input  hidden  type="text"  formControlName="bankId"  id="bankId" [(ngModel)]="bankId" class="form-control"  >
-                                      
-                                    <td style="width: 15%" class="LabelFontStyle">From&nbsp;A/c:&nbsp;</td>
-                               
-                                    <td>
-                                    <table>
-                                        
-                                    <tr>
+                                       
+                                <td style="width: 15%" class="LabelFontStyle">From&nbsp;A/c:&nbsp;</td>
+                            
+                                <td>
+                                <table>
+                                <tr>
                                   
                                            
                                 <td>  
-                                    <select   formControlName="fromAcctDescpId" id="fromAcctDescpId" [(ngModel)]="fromAcctDescpId"  class="form-control"   
+                                    <!-- <select   formControlName="fromAcctDescpId" id="fromAcctDescpId" [(ngModel)]="fromAcctDescpId"  class="form-control"    -->
+                                    <select   formControlName="receiptMethodId" id="receiptMethodId" [(ngModel)]="receiptMethodId"  class="form-control"   
                                     (ngModelChange)="onSelectionFromAc($event)" style="background-color: yellow;" >     
                                     <option >--Select--</option>
                                     <option *ngFor="let sc of  fromAcctList" [ngValue]="sc.bankAccountId">
@@ -264,7 +265,23 @@
 
                                  <ng-template #disp1> 
                                     <td style="width: 15%" class="LabelFontStyle">From&nbsp;A/c:&nbsp;</td>
-                                    <td><input  disabled  type="text"  formControlName="fromAcctDescp"  id="fromAcctDescp" [(ngModel)]="fromAcctDescp" class="form-control"></td> 
+                                   
+                                   
+                                        <td>
+                                        <table>
+                                        <tr>
+                                              
+                                        <td><input  disabled  type="text"  formControlName="fromAcctDescp"  id="fromAcctDescp" [(ngModel)]="fromAcctDescp" class="form-control"></td> 
+                                        <td>
+                                            <button type="button"  class="btn btn-primary" 
+                                            data-toggle="modal" data-target="#ChqListModal" (click)="LoadRcptList()"  style="width: 2rem;color: black;">
+                                            &nbsp;...&nbsp;</button>
+                                        </td> 
+                                     
+                                        </tr>
+                                        </table>
+                                        </td>
+                                    
                                     <td style="width: 15%" class="LabelFontStyle">To&nbsp;A/c:&nbsp;</td>
                                     <td><input  disabled  type="text"  formControlName="toAcctDescp"  id="toAcctDescp" [(ngModel)]="toAcctDescp" class="form-control"></td>
                                 </ng-template>
@@ -373,6 +390,8 @@
                                     </ng-template>
                                         
                                     <ng-template #Block12> 
+                                        <td> <button type="button" class="btn btn-info" (click)="cashBnkTrfUpdate()" >Update</button> </td> 
+                                   
                                         <div *ngIf="statusPost; then Block2; else Block21"></div>
                                         <ng-template #Block2> 
                                           <td> <button  type="button" class="btn btn-info" (click)="cashBnkTrfPost()" >Post</button>  </td>
@@ -581,6 +600,7 @@
             <th style="width:10rem" scope="col">Amount</th>
             <th style="width:15rem" scope="col">Bank Name</th>
             <th style="width:15rem" scope="col">Bank Branch</th>
+            <th style="width:15rem" scope="col">Doc Number</th>
           
        </tr>
    </tbody>
@@ -592,12 +612,13 @@
                 <td><input  type="checkbox"  style="text-align: center;width: 3rem;"  formControlName="selectFlag" 
                     (change)="selectFlagEvent($event,k)"></td>  
                 <td><input style="width: 8rem;height: 25px;text-align: center;"   disabled  type="text" formControlName="receiptNumber" class="form-control"></td>
-                <td><input style="width: 9rem;height: 25px;text-align:center;"    disabled  type="date" formControlName="receiptDate"   class="form-control"  > </td>
+                <td><input style="width: 8rem;height: 25px;text-align:center;"    disabled  type="date" formControlName="receiptDate"   class="form-control"  > </td>
                 <td><input style="width: 7rem;height: 25px;text-align: center;" disabled  type="text" formControlName="checkNo"       class="form-control"></td>
-                <td><input style="width: 9rem;height: 25px;text-align: center;" disabled  type="date" formControlName="checkDate"     class="form-control"></td>
+                <td><input style="width: 8rem;height: 25px;text-align: center;" disabled  type="date" formControlName="checkDate"     class="form-control"></td>
                 <td><input style="width: 7rem;height: 25px;text-align: right;"  disabled  type="number" formControlName="amount"      class="form-control"></td>
-                <td><input style="width: 25rem;height: 25px;text-align: left;"  disabled  type="text" formControlName="bankName"      class="form-control" > </td>
-                <td><input style="width: 21rem;height: 25px;text-align: left;"  disabled  type="text" formControlName="branchName"      class="form-control" > </td>
+                <td><input style="width: 15rem;height: 25px;text-align: left;"  disabled  type="text" formControlName="bankName"      class="form-control" > </td>
+                <td><input style="width: 11rem;height: 25px;text-align: left;"  disabled  type="text" formControlName="branchName"      class="form-control" > </td>
+                <td><input style="width: 8rem;height: 25px;text-align: left;"  disabled  type="text" formControlName="actTrfDocNo"      class="form-control" > </td>
             </tr>
             </ng-container>
             </ng-container>
