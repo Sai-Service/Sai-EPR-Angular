@@ -205,8 +205,8 @@
                                         </div>
                                         <ng-template #thensiteAddress>
                                             <input hidden formControlName="suppSiteId">
-                                            <input disabled type="text" class="form-control" formControlName="siteName"
-                                                value={{siteName}} style="width: 160px;height: 25px;font-size: 10px;">
+                                            <input disabled type="text" class="form-control" formControlName="payAddress"
+                                                value={{payAddress}} style="width: 160px;height: 25px;font-size: 10px;">
                                         </ng-template>
                                         <ng-template #elsesiteAddress>
                                             <select formControlName="supplierSiteId" id="supplierSiteId" #myinput
@@ -227,7 +227,7 @@
 
                                     <td>
                                         <input disabled formControlName="payDate" value={{payDate}} class="form-control"
-                                            [ngModel]="payDate | date:'dd-MM-yyyy'"
+                                            [ngModel]="payDate | date:'dd-MMM-yyyy'"
                                             style="width: 100px;height: 25px;font-size: 10px;">
                                     </td>
                                     <td>
@@ -242,7 +242,7 @@
                                         <!-- [ngValue]="paymentDoc.lookupValueId" -->
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" formControlName="PayAmount"
+                                        <input type="number" class="form-control" formControlName="PayAmount"
                                             style="width: 100px;height: 25px;font-size: 10px;">
                                     </td>
                                     <td>
@@ -546,80 +546,17 @@
             </table>
 
             <!-- Modal footer -->
-            <div class="modal-footer">
+            <!-- <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal" id="btnSave"
                     (click)="paymentSave()">Save</button>
-            </div>
+            </div> -->
             <!-- 
       </div>
     </div>
   </div> -->
             <br>
-            <table style="width: 100%; background-color: #FFE4B5;">
-                <tr>
-
-                    <td style="width: 15%" class="LabelFontStyle">Document&nbsp;Number&nbsp;:</td>
-                    <td>
-                        <input disabled type="text" formControlName="docNo" class="form-control">
-                    </td>
-                    <td style="width: 15%" class="LabelFontStyle">Payment&nbsp;Status&nbsp;:</td>
-                    <td style="font-weight: bold;">
-                        <!-- {{INVStatus}} -->
-                        <input disabled type="text" formControlName="payStatus" class="form-control">
-                    </td>
-
-                </tr>
-
-            </table>
-            <br>
-
-            <!--======================================== After Save respose display  ==================================-->
-
-            <table class="GridFont" cellspacing="0" cellpadding="4" border="0"
-                style="width:100%;border-collapse:collapse;">
-                <thead>
-                    <tr class="GridHeader">
-                        <th scope="col">Invoice Number</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Amount</th>
-                        <th scope="col">GL Date</th>
-                        <th scope="col">Payment Amount</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let com of PaymentReturnArr" class="ItemStyle" style="text-decoration:none;">
-                        <td style="width: 107px;text-align: center;">{{com.invoiceNum}}</td>
-                        <td style="width: 107px;text-align: center;">{{com.invDate}}</td>
-                        <td style="width: 80px;text-align: right;">{{com.invoiceAmt}}</td>
-                        <td style="width: 107px;text-align: center;">{{com.glDate | date:'yyyy-MM-dd'}}</td>
-                        <td style="width: 80px;text-align: right;">{{com.payAmount }}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="center">
-                <tr>
-                    <td>
-                        <button type="button" (click)="close()" class="btn btn-primary">Close</button>
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-primary" id="register" (click)="refresh()">
-                            Clear
-                        </button>
-                    </td>
-                    <!-- <td>
-            <button type="button" class="btn btn-primary" id="register" data-toggle="modal" data-target="#viewAccountingModel"
-                (click)="viewAcc()">
-                View Accounting
-            </button>
-        </td> -->
-                    <td>
-                        <button type="button" class="btn btn-primary" id="register" (click)="cancelPayment()">
-                            Cancel
-                        </button>
-                    </td>
-                </tr>
-            </table>
-
+ 
+       
             <!-- =====================================================Search for all filed wise========================= -->
             <!-- Modal Start Here  -->
             <div class="modal fade" id="myModel" role="dialog" aria-hidden="true" style="width: 100%;margin-left: 0;">

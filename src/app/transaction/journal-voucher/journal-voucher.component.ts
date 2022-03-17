@@ -2,8 +2,6 @@ import { PathLocationStrategy, DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener, ValueProvider, ElementRef } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { controllers } from 'chart.js';
-import { data } from 'jquery';
 import { MasterService } from 'src/app/master/master.service';
 import { min } from 'moment';
 import { formatDate } from '@angular/common'
@@ -75,10 +73,10 @@ export class JournalVoucherComponent implements OnInit {
   reversalDate:Date;
 
   public InterBrancList:Array<string>=[];
-  public BranchList:Array<string>=[];
+  public BranchList:Array<any>=[];
   public CostCenterList:Array<string>=[];
   public NaturalAccountList:any=[];
-  public locIdList:Array<string>=[];
+  public locIdList:Array<any>=[];
   public TypeList:Array<string>=[];
   public issueByList:Array<string>=[];
   public FinancialYear:any=[];
@@ -317,6 +315,9 @@ var segment = temp1[0];}
         }
         if (lType === 'SS_Branch') {
           this.lookupValueDesc1 = this.branch.lookupValueDesc;
+          var sellBr= this.BranchList.find(d => d.lookupValue === segment);           
+            this.locIdList = this.locIdList.filter((br => br.lookupValue.includes(sellBr.parentValue) ||br.lookupValue === "000"));
+
         }
       }
 
@@ -406,7 +407,10 @@ var segment = temp1[0];}
 
       if(SegmentName1===null)
       {
-        this.JournalVoucherForm.get('segment11').reset();
+       this.JournalVoucherForm.get('segment11').reset();
+       var branchNM = sessionStorage.getItem('locCode').split('.');
+       this.BranchList = this.BranchList.filter((br => br.lookupValue === branchNM[0]));
+       //  / this.BranchList = this.BranchList.filter();
       this.JournalVoucherForm.get('segment2').reset();
       this.JournalVoucherForm.get('segment3').reset();
       this.JournalVoucherForm.get('segment4').reset();

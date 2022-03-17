@@ -100,9 +100,9 @@ export class OPMasterDtoComponent implements OnInit {
   // @ViewChild('poMasterDtoForm') poMasterDtoForm: ElementRef;
   supSelCnt: number;
   isDisabled = true;
-  discLineAmt:number;
+  discLineAmt: number;
   docType: string;
-  discheadrAmt:number;
+  discheadrAmt: number;
   private sub: any;
   selectedLine = 0;
   compileType: number;
@@ -178,6 +178,8 @@ export class OPMasterDtoComponent implements OnInit {
   hsnSacCode: string;
   // taxCategoryName: string;
   taxCategoryName: any;
+  selSuppTaxCatId: number;
+  selSuppTaxCatNm: string;
   divisionName: string;
   taxCategoryId: number;
   itemType: string;
@@ -318,12 +320,18 @@ export class OPMasterDtoComponent implements OnInit {
   public priorDate = new Date().setDate(this.today.getDate() - 30)
   public data1: any[];
   public selectedInvItem = new Array();
+  itList: any[];
+
+
 
   @ViewChild("myinput") myInputField: ElementRef;
   @ViewChild("suppCode1") suppCode1: ElementRef;
+  @ViewChild('poForm') poForm: ElementRef;
+
   ngAfterViewInit() {
     this.myInputField.nativeElement.focus();
   }
+
 
 
   @ViewChild('fileInput') fileInput;
@@ -350,7 +358,7 @@ export class OPMasterDtoComponent implements OnInit {
       // poDate: ['', [Validators.required]],
       // poType: ['', [Validators.required]],
       ouId: [''],
-      discheadrAmt:[''],
+      discheadrAmt: [''],
       poDate: [''],
       poType: [''],
       segment1: [''],
@@ -649,6 +657,8 @@ export class OPMasterDtoComponent implements OnInit {
         }
       );
 
+    this.itList = [
+      { name: 'GOODS' }, { name: 'EXPENCE' }]
     this.sub = this.router1.params.subscribe(params => {
       //  alert(params);
       this.poNo = params['poNo'];
@@ -743,7 +753,7 @@ export class OPMasterDtoComponent implements OnInit {
       invDescription: [],
       invCategory: [],
       uom: [],
-      discLineAmt:[],
+      discLineAmt: [0],
       hsnSacCode: [],
       gstPercentage: [],
       taxCategoryName: [],
@@ -753,7 +763,7 @@ export class OPMasterDtoComponent implements OnInit {
       // orderedQty: ['', [Validators.required, Validators.pattern("^[-]{1}[0-9]*$")]],    //^[0-9]\d*(\.\d+)?$
       // orderedQty: ['', [Validators.pattern("^[-]{1}[0-9]*$")]],    //^[0-9]\d*(\.\d+)?$
       orderedQty: [''],
-      baseAmtLineWise: [],
+      baseAmtLineWise: [0],
       poChargeAcc: [],
       taxCategoryId: [],
       segmentName: [],
@@ -814,6 +824,10 @@ export class OPMasterDtoComponent implements OnInit {
 
   }
 
+  testfn() {
+    alert("Hi")
+  }
+
   addRow1(index, totxt) {
     // totxt.focus();
 
@@ -828,10 +842,10 @@ export class OPMasterDtoComponent implements OnInit {
   }
 
   addRow(index) {
-    var arrayControl = this.poMasterDtoForm.get('poLines').value
-
+    // var arrayControl = this.poMasterDtoForm.get('poLines').value;
+    var arrayControlNew = this.poMasterDtoForm.get('poLines') as FormArray;
+    var arrayControl=arrayControlNew.getRawValue();
     var invItemId = arrayControl[index].invItemId;
-
     if (invItemId != null) {
       this.lineDetailsArray.push(this.lineDetailsGroup());
       // arrayControl[index].itemType.focus();
@@ -845,23 +859,96 @@ export class OPMasterDtoComponent implements OnInit {
     (patch.controls[index]).patchValue(
       {
         polineNum: aa,
+        // itemType: 'EXPENCE',
       }
     );
     // this.displayPoLine[aa] = true;
     this.displayPoLine.push(true);
     this.hideArray[index] = true;
-    // val1+index.focus();
+    //alert(document.activeElement);
+
   }
+
   RemoveRow(index) {
     if (index === 0) {
 
     } else {
       this.lineDetailsArray.removeAt(index);
     }
-    this.lineDetailsArray.removeAt(index);
+
     this.displayPoLine[index] = true;
     this.hideArray[index] = true;
+
+    var formArr = this.poMasterDtoForm.get('poLines') as FormArray;
+    var formVal = this.poMasterDtoForm.get('poLines').value;
+    for (let i = 0; i < formVal.length; i++) {
+      (formArr.controls[i]).patchValue({
+        lineNumber: i + 1,
+      });
+    }
+    this.updateTotAmtPerline();
   }
+
+
+  setFocus(name) {
+
+    const ele = this.poForm.nativeElement[name];
+    if (ele) {
+      ele.focus();
+    }
+  }
+
+
+  updateTotAmtPerline() {
+    var formArr = this.poMasterDtoForm.get('poLines') as FormArray;
+    var formVal = formArr.getRawValue();
+    var basicAmt = 0;
+    var taxAmt1 = 0;
+    var totAmt = 0;
+    var disAmt = 0;
+    var tcsAmt1 = 0;
+    for (let i = 0; i < formVal.length; i++) {
+      if (formVal[i].baseAmtLineWise == undefined || formVal[i].baseAmtLineWise == null || formVal[i].baseAmtLineWise == '') {
+      } else {
+        basicAmt = basicAmt + Number(formVal[i].baseAmtLineWise);
+      }
+
+      if (formVal[i].discLineAmt == undefined || formVal[i].discLineAmt == null || formVal[i].discLineAmt == '') {
+      } else {
+        disAmt = disAmt + Number(formVal[i].discLineAmt);
+      }
+
+      if (formVal[i].taxAmtLineWise == undefined || formVal[i].taxAmtLineWise == null || formVal[i].taxAmtLineWise == '') {
+      } else {
+        taxAmt1 = taxAmt1 + Number(formVal[i].taxAmtLineWise);
+      }
+      if (formVal[i].totAmtLineWise == undefined || formVal[i].totAmtLineWise == null || formVal[i].totAmtLineWise == '') {
+      } else {
+        totAmt = totAmt + Number(formVal[i].totAmtLineWise);
+      }
+
+
+      console.log(formArr);
+      var ln = i
+      if (ln < formArr.length - 1) {
+        formArr.controls[i].disable();
+        // formArr.controls[i].get('orderedQty').enable();
+        // formArr.controls[i].get('baseAmtLineWise').enable();
+      }
+
+    }
+
+    basicAmt = Math.round(((basicAmt) + Number.EPSILON) * 100) / 100;
+    this.poMasterDtoForm.patchValue({ 'baseAmount': basicAmt });
+    disAmt = Math.round(((disAmt) + Number.EPSILON) * 100) / 100;
+    //this.poMasterDtoForm.patchValue({ 'discAmt': disAmt });
+    taxAmt1 = Math.round(((taxAmt1) + Number.EPSILON) * 100) / 100;
+    this.poMasterDtoForm.patchValue({ 'totTaxAmt': taxAmt1 });
+    totAmt = Math.round(((totAmt) + Number.EPSILON) * 100) / 100;
+    this.poMasterDtoForm.patchValue({ 'totalAmt': totAmt });
+
+  }
+
 
 
 
@@ -911,6 +998,7 @@ export class OPMasterDtoComponent implements OnInit {
             this.poMasterDtoForm.patchValue({ poDate: poDate2 });
             // alert(approveDate2);
             const status = this.lstcomments1.authorizationStatus;
+            this.selSuppTaxCatNm = data.obj.taxCategoryName;
             if (status === 'Inprogress') {
               this.displayFirstButtonDisplay = true;
               this.displaySecondButtonDisplay = false;
@@ -925,7 +1013,6 @@ export class OPMasterDtoComponent implements OnInit {
 
               for (let i = 0; i <= this.lstcomments1.poLines.length - lenC; i++) {
                 var poLine: FormGroup = this.lineDetailsGroup();
-                let control1 = this.lineDetailsArray.controls[i].get('taxAmounts') as FormArray
                 this.displayPoLine[i] = false;
                 this.hideArray[i] = true;
                 control.push(poLine);
@@ -933,18 +1020,22 @@ export class OPMasterDtoComponent implements OnInit {
               var len = this.lstcomments1.poLines.length - 1
               this.lineDetailsArray.removeAt(len);
               this.poMasterDtoForm.patchValue(this.lstcomments1, { emitEvent: false });
+
               for (var j = 0; j < this.lstcomments1.poLines.length; j++) {
-                let selectedtaxValue = this.taxCategoryList[j].find(v => v.taxCategoryName == this.lstcomments1.poLines[j].taxCategoryName);
-                console.log(selectedtaxValue);
-                console.log(selectedtaxValue.taxCategoryName);
-                (taxcatecontrol.controls[j]).patchValue(
-                  {
-                    taxCategoryName: selectedtaxValue.taxCategoryName,
-                    taxCategoryId: selectedtaxValue.taxCategoryId,
-                  }
-                );
+                if (this.taxCategoryList[j] != undefined) {
+                  let selectedtaxValue = this.taxCategoryList[j].find(v => v.taxCategoryName == this.lstcomments1.poLines[j].taxCategoryName);
+                  console.log(selectedtaxValue);
+                  console.log(selectedtaxValue.taxCategoryName);
+                  (taxcatecontrol.controls[j]).patchValue(
+                    {
+                      taxCategoryName: selectedtaxValue.taxCategoryName,
+                      taxCategoryId: selectedtaxValue.taxCategoryId,
+                    }
+                  );
+                }
                 // this.lineDetailsArray.controls[j].get('taxCategoryId').setValue(this.lstcomments1.poLines[j].taxCategoryId, { emitEvent: false });
                 // this.lineDetailsArray.controls[j].get('taxCategoryName').setValue(this.lstcomments1.poLines[j].taxCategoryName), { emitEvent: false };
+
                 (control.controls[j]).patchValue(
                   {
                     diss1: this.lstcomments1.poLines[j].taxAmounts[0].totTaxAmt,
@@ -1142,8 +1233,8 @@ export class OPMasterDtoComponent implements OnInit {
   //   console.log(this.supplierCodeList);
   //   console.log(this.supplierCodeList[index].supplierSiteMasterList);
 
-  //   let selectedValue = this.supplierCodeList[index].supplierSiteMasterList.find(v => v.suppSiteId == supplierSiteId);
-  //   console.log(selectedValue);
+  // let selectedValue = this.supplierCodeList[index].supplierSiteMasterList.find(v => v.suppSiteId == supplierSiteId);
+  // console.log(selectedValue);
   //  this.service.ItemDetailsList(invItemId, selectedValue.taxCategoryName, this.billToLoc).subscribe((res: any) => {
   //   if (res.code === 200) {
   //     this.ItemDetailsList = res.obj;
@@ -1152,7 +1243,7 @@ export class OPMasterDtoComponent implements OnInit {
   //   }
 
   goReceiptForm(segment1) {
-    
+
     this.router.navigate(['/admin/master/PoReceiptForm', segment1]);
     // alert(segment1);
   }
@@ -1334,23 +1425,23 @@ export class OPMasterDtoComponent implements OnInit {
     formValue.divisionId = this.divisionId;
     formValue.currencyCode = 'INR';
     var arrayControl = this.poMasterDtoForm.get('poLines').value
-    this.baseAmount = 0;
-    this.totTaxAmt = 0;
-    this.totalAmt = 0;
-    this.discheadrAmt=0;
+    // this.baseAmount = 0;
+    // this.totTaxAmt = 0;
+    // this.totalAmt = 0;
+    // this.discheadrAmt = 0;
 
-    for (var i = 0; i < arrayControl.length; i++) {
-      this.baseAmount = (this.baseAmount + (arrayControl[i].baseAmtLineWise-arrayControl[i].discLineAmt));
-      this.totTaxAmt = (this.totTaxAmt + arrayControl[i].taxAmtLineWise);
-      this.totalAmt = (this.baseAmount + this.totTaxAmt);
-    }
-    console.log(this.discLineAmt);
-    console.log(this.baseAmount);
-    console.log( this.totalAmt);  
+    // for (var i = 0; i < arrayControl.length; i++) {
+    //   this.baseAmount = (this.baseAmount + (arrayControl[i].baseAmtLineWise - arrayControl[i].discLineAmt));
+    //   this.totTaxAmt = (this.totTaxAmt + arrayControl[i].taxAmtLineWise);
+    //   this.totalAmt = (this.baseAmount + this.totTaxAmt);
+    // }
+    // console.log(this.discLineAmt);
+    // console.log(this.baseAmount);
+    // console.log(this.totalAmt);
     // this.totalAmt = ((this.baseAmount-this.discLineAmt) + this.totTaxAmt);
-    formValue.totalAmt = this.totalAmt;
-    formValue.baseAmount = this.baseAmount;
-    formValue.totTaxAmt = this.totTaxAmt;
+    // formValue.totalAmt = this.totalAmt;
+    // formValue.baseAmount = this.baseAmount;
+    // formValue.totTaxAmt = this.totTaxAmt;
     formValue.poType = this.poType;
     formValue.dept = Number(this.dept);
     formValue.supplierCode = this.supplierCode;
@@ -1388,29 +1479,37 @@ export class OPMasterDtoComponent implements OnInit {
       var value = supp.substr(supp.indexOf('@') + 1, supp.length);
       // alert(value)
       let selectedValue = this.supplierCodeList.find(v => v.suppNo == value);
+      if (selectedValue != undefined) {
 
-      console.log(selectedValue, value);
-      this.supplierCode = selectedValue.suppId;
-      this.service.suppIdList(selectedValue.suppId, this.ouId)
-        .subscribe(
-          data => {
 
-            this.suppIdList = data;
-            if (this.suppIdList.length == 0) {
-              alert('Supplier site not attached to supplier');
-            } else {
-              console.log(this.suppIdList);
+        console.log(selectedValue, value);
+        this.supplierCode = selectedValue.suppId;
+        this.service.suppIdList(selectedValue.suppId, this.ouId)
+          .subscribe(
+            data => {
+
+              this.suppIdList = data;
+              if (this.suppIdList.length == 0) {
+                alert('Supplier site not attached to supplier');
+              } else {
+                console.log(this.suppIdList);
+              }
             }
-          }
-        );
+          );
+      }
     }
   }
-  onOptionTaxCatSelected(i) {
-    var tacCategoryControl = this.poMasterDtoForm.get('poLines').value;
-    var taxCategoryName = tacCategoryControl[i].taxCategoryName;
+  onOptionTaxCatSelected(i,event) {
+    // alert(i)
+    // alert(event.target.value +'----taxcate')
+    var taxCategoryName=event.target.value
+    // var tacCategoryControl = this.poMasterDtoForm.get('poLines').value;
+    var tacCategoryControlNew = this.poMasterDtoForm.get('poLines') as FormArray;
+    var tacCategoryControl = tacCategoryControlNew.getRawValue;
+    // var taxCategoryName = tacCategoryControl[i].taxCategoryName;
+    // alert(taxCategoryName+'----taxarrcntl');
     let selectedTaxCatId = this.taxCategoryList[i].find(v => v.taxCategoryName == taxCategoryName);
     console.log(selectedTaxCatId);
-
     var taxCategoryId = selectedTaxCatId.taxCategoryId;
     // var taxCategoryName=this.poMasterDtoForm.get('taxCategoryName').value;
     // alert('******'+ i+'----'+ taxCategoryName);
@@ -1448,8 +1547,8 @@ export class OPMasterDtoComponent implements OnInit {
               (patch.controls[i]).patchValue({
                 baseAmtLineWise: arrayControl[i].baseAmtLineWise,
                 taxAmtLineWise: sum,
-                discLineAmt:diss,
-                totAmtLineWise: arrayControl[i].baseAmtLineWise-diss + sum,
+                discLineAmt: diss,
+                totAmtLineWise: arrayControl[i].baseAmtLineWise - diss + sum,
               });
             });
 
@@ -1466,16 +1565,18 @@ export class OPMasterDtoComponent implements OnInit {
       if (selectedValue != undefined) {
         console.log(selectedValue);
         this.selectedInvItem.push(selectedValue);
-        var arrayControl = this.poMasterDtoForm.get('poLines').value
+        // var arrayControl = this.poMasterDtoForm.get('poLines').value;
+        var arrayControlNew = this.poMasterDtoForm.get('poLines') as FormArray;
+        var arrayControl = arrayControlNew.getRawValue()
         var patch = this.poMasterDtoForm.get('poLines') as FormArray;
-        this.itemType = arrayControl[index].itemType
+        this.itemType = arrayControl[index].itemType;
         this.invItemId = selectedValue.itemId;
         console.log(this.invItemId, this.taxCat);
         this.lineDetailsArray.controls[index].get('taxCategoryName').enable();
         this.lineDetailsArray.controls[index].get('orderedQty').enable();
         this.lineDetailsArray.controls[index].get('unitPrice').enable();
         if (this.itemType === "GOODS") {
-          this.service.ItemDetailsList(this.invItemId, this.taxCat, this.billToLoc).subscribe((res: any) => {
+          this.service.ItemDetailsList(this.invItemId, this.selSuppTaxCatNm, this.billToLoc).subscribe((res: any) => {
             if (res.code === 200) {
               if (res.obj.itemId === null) {
                 alert('Item Or PO Charge Account Not Found in Master !')
@@ -1502,12 +1603,13 @@ export class OPMasterDtoComponent implements OnInit {
                 this.taxCategoryId = this.ItemDetailsList.taxCategoryId;
                 var gstPercentage = this.ItemDetailsList.gstPercentage;
                 // alert(gstPercentage)
-                var supplierSiteId = this.poMasterDtoForm.get('supplierSiteId').value;
-                console.log(this.suppIdList);
-                let selectedValue = this.suppIdList.find(v => v.suppSiteId == supplierSiteId);
-                console.log(selectedValue);
-                if (selectedValue.taxCategoryName != null && gstPercentage != null) {
-                  this.service.taxCategoryListNew(selectedValue.taxCategoryName, gstPercentage)
+                // var supplierSiteId = this.poMasterDtoForm.get('supplierSiteId').value;
+                // console.log(this.suppIdList);
+                // let selectedValue = this.suppIdList.find(v => v.suppSiteId == supplierSiteId);
+                // console.log(selectedValue);
+
+                if (this.selSuppTaxCatNm != null && gstPercentage != null) {
+                  this.service.taxCategoryListNew(this.selSuppTaxCatNm, gstPercentage)
                     .subscribe(
                       data1 => {
                         // this.taxCategoryMap.set(index,data1);
@@ -1644,22 +1746,13 @@ export class OPMasterDtoComponent implements OnInit {
         .subscribe(
           data => {
             this.siteIdList = data;
-            console.log(this.siteIdList);
-            this.taxCat = this.siteIdList.taxCategoryName
-            var taxCategoryName = data.taxCategoryName;
-            if (this.taxCat == null) {
-              alert("Tax not attached to site")
+            this.selSuppTaxCatNm = this.siteIdList.taxCategoryName;
+            var suppTaxCatNm = this.siteIdList.taxCategoryName;
+            if (suppTaxCatNm == null) {
+              alert("Tax Category is assigned to selected Supplier site !")
               this.displayNewButton = false;
               const sitWithOutTax = 'y';
             }
-            // if (taxCategoryName.includes('Purchase-S&CGST')){
-            //   // alert(taxCategoryName);
-            //   this.taxCategoryList = this.taxCategoryList.(taxCategoryName.includes('Purchase-S&CGST'));
-            // }
-            // else if (taxCategoryName.includes('Purchase-I&CGST')){
-            //   alert(taxCategoryName);
-            //   this.taxCategoryList = this.taxCategoryList.filter(taxCategoryName.includes('Purchase-I&CGST'));
-            // }
           }
         );
     }
@@ -1719,13 +1812,16 @@ export class OPMasterDtoComponent implements OnInit {
   }
 
 
-  onKey(index) {
+  onKey(index,event) {
+    // alert(index)
     // alert('Hi')
     console.log(index);
-
-    var trxLnArr = this.poMasterDtoForm.get('poLines').value;
+    if (event.keyCode != 13) {
+    var trxLnArrNew = this.poMasterDtoForm.get('poLines') as FormArray;
+    var trxLnArr = trxLnArrNew.getRawValue();
     var trxLnArr1 = this.poMasterDtoForm.get('poLines') as FormArray
     var orderedQty = trxLnArr[index].orderedQty;
+    // alert(orderedQty);
     var uomCode = trxLnArr[index].uom;
     if (uomCode === 'NO') {
       // alert(Number.isInteger(qty1)+'Status');
@@ -1745,21 +1841,33 @@ export class OPMasterDtoComponent implements OnInit {
     var patch = this.poMasterDtoForm.get('poLines') as FormArray;
     console.log(arrayControl);
 
-
-    arrayControl[index].baseAmtLineWise = Math.round(((arrayControl[index].unitPrice * arrayControl[index].orderedQty) + Number.EPSILON) * 100) / 100;
+    trxLnArr[index].baseAmtLineWise = Math.round(((trxLnArr[index].unitPrice * trxLnArr[index].orderedQty) + Number.EPSILON) * 100) / 100;
+    // arrayControl[index].baseAmtLineWise = Math.round(((arrayControl[index].unitPrice * arrayControl[index].orderedQty) + Number.EPSILON) * 100) / 100;
     // var baseAmount = arrayControl[index].baseAmtLineWise;
-    var baseAmount = Math.round(((arrayControl[index].baseAmtLineWise) + Number.EPSILON) * 100) / 100;
-    var taxCategoryId = arrayControl[index].taxCategoryId;
-    // alert(taxCategoryId)
+    var baseAmount = Math.round(((trxLnArr[index].baseAmtLineWise) + Number.EPSILON) * 100) / 100;
+    var taxCategoryId = trxLnArr[index].taxCategoryId;
+    var taxCatName = trxLnArr[index].taxCategoryName;
+    // alert(taxCatName+'---taxCategoryId'+ taxCategoryId)
+    if (taxCatName.includes('Disc')) {
+      var discLineAmt = trxLnArr[index].discLineAmt;
+      var diss = discLineAmt;
+      this.lineDetailsArray.controls[index].get('discLineAmt').enable();
+    }
+    else {
+      this.lineDetailsArray.controls[index].get('discLineAmt').disable();
+      var discLineAmt = trxLnArr[index].discLineAmt;
+      var diss = discLineAmt;
+    }
     if (baseAmount != null) {
-      console.log(arrayControl[index].baseAmtLineWise);
+      console.log(trxLnArr[index].baseAmtLineWise);
 
       console.log((this.poMasterDtoForm.controls['poLines'][index]));
-
-      var itemId = this.ItemDetailsList.itemId;
+      var itemId = trxLnArr[index].invItemId;
+    
+      // var itemId = this.ItemDetailsList.itemId;
       // var taxCategoryId = taxCategoryId;
       // this.taxCatId = taxCategoryId;
-      var diss = 0;
+
       var sum = 0;
 
       var vorAmt: number = 0;
@@ -1782,16 +1890,19 @@ export class OPMasterDtoComponent implements OnInit {
               // baseAmtLineWise: arrayControl[index].baseAmtLineWise,
               // taxAmtLineWise: sum,
               // totAmtLineWise: arrayControl[index].baseAmtLineWise + sum,
-              baseAmtLineWise: Math.round(((arrayControl[index].baseAmtLineWise) + Number.EPSILON) * 100) / 100,
+              baseAmtLineWise: Math.round(((trxLnArr[index].baseAmtLineWise) + Number.EPSILON) * 100) / 100,
               taxAmtLineWise: Math.round(((sum) + Number.EPSILON) * 100) / 100,
-              totAmtLineWise: Math.round(((arrayControl[index].baseAmtLineWise + sum) + Number.EPSILON) * 100) / 100,
+              totAmtLineWise: Math.round(((trxLnArr[index].baseAmtLineWise + sum-diss) + Number.EPSILON) * 100) / 100,
             });
             this.patchResultList(index, this.taxCalforItem);
+            this.updateTotAmtPerline();
           });
       console.log(this.poMasterDtoForm.value);
 
       this.baseAmountCal(baseAmount);
+
     }
+  }
   }
 
 
@@ -1828,22 +1939,23 @@ export class OPMasterDtoComponent implements OnInit {
     // var arrayControl = this.poMasterDtoForm.get('poLines').value;
     var arrayControl1 = this.poMasterDtoForm.get('poLines') as FormArray;
     var arrayControl = arrayControl1.getRawValue();
-    this.baseAmount = 0;
-    this.totTaxAmt = 0;
-    this.totalAmt = 0;
-    for (var i = 0; i < arrayControl.length; i++) {
-      this.baseAmount = this.baseAmount + arrayControl[i].baseAmtLineWise;
-      this.totTaxAmt = this.totTaxAmt + arrayControl[i].taxAmtLineWise;
-    }
-    this.totalAmt = (this.baseAmount + this.totTaxAmt);
-    formValue.totalAmt = this.totalAmt;
-    formValue.baseAmount = this.baseAmount;
-    formValue.totTaxAmt = this.totTaxAmt;
+    // this.baseAmount = 0;
+    // this.totTaxAmt = 0;
+    // this.totalAmt = 0;
+    // for (var i = 0; i < arrayControl.length; i++) {
+    //   this.baseAmount = this.baseAmount + arrayControl[i].baseAmtLineWise;
+    //   this.totTaxAmt = this.totTaxAmt + arrayControl[i].taxAmtLineWise;
+    // }
+    // this.totalAmt = (this.baseAmount + this.totTaxAmt);
+    // formValue.totalAmt = this.totalAmt;
+    // formValue.baseAmount = this.baseAmount;
+    // formValue.totTaxAmt = this.totTaxAmt;
 
 
     this.service.UpdatePoDetails(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
+        this.Search(this.segment1);
         // this.authorizationStatus = 'APPROVED';
         this.displayNewButton = false;
         this.displayFirstButtonDisplay = true;
@@ -1854,7 +1966,7 @@ export class OPMasterDtoComponent implements OnInit {
         // window.location.reload();
       } else {
         if (res.code === 400) {
-          alert('ERROR OCCOURED IN PROCEESS');
+          alert(res.message);
           // this.poMasterDtoForm.reset();
         }
       }
@@ -1914,14 +2026,12 @@ export class OPMasterDtoComponent implements OnInit {
     var displayTaxPanel: Boolean = this.hideArray[i];
     this.hideArray[i] = !displayTaxPanel;
 
-    if (this.currentOp === 'Search') {
+    if (this.currentOp === 'Search' && this.lstcomments1.poLines[i] != undefined) {
 
       let taxControl = this.lineDetailsArray.controls[i].get('taxAmounts') as FormArray
       taxControl.clear();
       var TaxLine: FormGroup = this.TaxDetailsGroup();
-
       var taxItems: any[] = this.lstcomments1.poLines[i].taxAmounts;
-
       taxItems.forEach(x => {
         console.log('in patch' + taxItems);
         console.log(x.totTaxAmt);
@@ -1957,7 +2067,9 @@ export class OPMasterDtoComponent implements OnInit {
       this.taxCatId = taxCategoryId;
       // var diss = 0;
       var arrayControl = this.poMasterDtoForm.get('poLines').value
-      var diss = arrayControl[i].diss1;
+      var discLineAmt = arrayControl[i].discLineAmt;
+      var diss = discLineAmt;
+      // alert(discLineAmt)
       var taxCategoryId = arrayControl[i].taxCategoryId;
       // alert(arrayControl[i].taxCategoryId)
       var baseAmount = arrayControl[this.poLineTax].baseAmtLineWise;
@@ -2038,25 +2150,26 @@ export class OPMasterDtoComponent implements OnInit {
             } else if (this.taxCalforItem[i].taxRateName.includes('Disc')) {
 
               dissAmt = dissAmt + this.taxCalforItem[i].totTaxAmt;
-            } 
+            }
             else {
               sum = sum + this.taxCalforItem[i].totTaxAmt;
             }
           }
           var TotAmtLineWise1 = arrayControl[this.poLineTax].baseAmtLineWise;
 
-          var tolAmoutLine = (sum + TotAmtLineWise1 + vorcharges)-diss1;
+          var tolAmoutLine = (sum + TotAmtLineWise1 + vorcharges) - diss1;
 
           var patch = this.poMasterDtoForm.get('poLines') as FormArray;
           (patch.controls[aa]).patchValue(
             {
               diss1: dissAmt,
               taxAmtLineWise: sum,
-              discLineAmt:diss1,
+              discLineAmt: diss1,
               totAmtLineWise: tolAmoutLine,
             }
           );
           this.patchResultList(this.poLineTax, this.taxCalforItem);
+          this.updateTotAmtPerline();
         });
   }
 
@@ -2097,7 +2210,10 @@ export class OPMasterDtoComponent implements OnInit {
     this.lineDetailsArray.controls[lineNum].reset();
     this.lineDetailsArray.controls[lineNum].get('itemType').setValue(itemType);
     this.lineDetailsArray.controls[lineNum].get('polineNum').setValue(lineNum + 1);
-    if (this.poMasterDtoForm.get('supplierCode').value === '' || this.poMasterDtoForm.get('shipToLoc').value === null || this.poMasterDtoForm.get('suppInvNo').value === null || this.poMasterDtoForm.get('suppInvDate').value === null || this.poMasterDtoForm.get('billToLoc').value === undefined || this.poMasterDtoForm.get('suppInvNo').value === undefined || this.poMasterDtoForm.get('suppInvDate').value === undefined) {
+    if (this.poMasterDtoForm.get('supplierCode').value === '' || this.poMasterDtoForm.get('shipToLoc').value === null
+      || this.poMasterDtoForm.get('suppInvNo').value === null || this.poMasterDtoForm.get('suppInvDate').value === null
+      || this.poMasterDtoForm.get('billToLoc').value === undefined || this.poMasterDtoForm.get('suppInvNo').value === undefined
+      || this.poMasterDtoForm.get('suppInvDate').value === undefined) {
       alert('Please Select Header Deatils !');
       this.lineDetailsArray.controls[lineNum].get('itemType').setValue('--Select--');
       (<any>this.poMasterDtoForm.get('supplierCode')).nativeElement.focus();
@@ -2105,13 +2221,13 @@ export class OPMasterDtoComponent implements OnInit {
     }
     else {
       if (itemType === 'GOODS') {
-
         var deptName1 = this.poMasterDtoForm.get('dept').value;
         this.lineDetailsArray.controls[lineNum].get('segment').disable();
         this.lineDetailsArray.controls[lineNum].get('segmentName').disable();
 
         this.displayHSN[lineNum] = true;
-
+        this.lineDetailsArray.controls[lineNum].patchValue({ discLineAmt: 0 })
+        this.lineDetailsArray.controls[lineNum].patchValue({ baseAmtLineWise: 0 })
         this.service.invItemList2New(itemType, (sessionStorage.getItem('deptName')), (sessionStorage.getItem('divisionId')), '36DH1601')
           .subscribe(
             data => {
@@ -2176,8 +2292,8 @@ export class OPMasterDtoComponent implements OnInit {
   filterRecord(event, i) {
     var itemCode = event.target.value;
     if (event.keyCode == 13) {
-    if (itemCode.length === 4) {
-      // if (event.keyCode == 13) {
+      if (itemCode.length === 4) {
+        // if (event.keyCode == 13) {
         this.service.invItemList2New('GOODS', (sessionStorage.getItem('deptName')), (sessionStorage.getItem('divisionId')), itemCode.toUpperCase())
           .subscribe((data) => {
             if (data.length === 0) {
@@ -2188,31 +2304,31 @@ export class OPMasterDtoComponent implements OnInit {
               this.invItemList = data;
             }
           });
-      // }
-    }
+        // }
+      }
 
-    if (itemCode.length === 8) {
-      alert('1hiii')
-      // if (event.keyCode == 13) {
-            console.log(this.invItemList);
-            this.service.invItemList2New('GOODS', (sessionStorage.getItem('deptName')), (sessionStorage.getItem('divisionId')), itemCode.toUpperCase())
-              .subscribe((data) => {
-                if (data.length === 0) {
-                  alert('Item Not Present in Master');
-                  return;
-                }
-                else {
-                  this.invItemList = data;
-                  alert('2hiiiiii')
-                }
-              });
-            // }
-          }
-    else if (itemCode.length === 3) {
-      alert('Please Enter 4 characters of item number!!');
-      return;
+      if (itemCode.length === 8) {
+
+        // if (event.keyCode == 13) {
+        console.log(this.invItemList);
+        this.service.invItemList2New('GOODS', (sessionStorage.getItem('deptName')), (sessionStorage.getItem('divisionId')), itemCode.toUpperCase())
+          .subscribe((data) => {
+            if (data.length === 0) {
+              alert('Item Not Present in Master');
+              return;
+            }
+            else {
+              this.invItemList = data;
+
+            }
+          });
+        // }
+      }
+      else if (itemCode.length === 3) {
+        alert('Please Enter 4 characters of item number!!');
+        return;
+      }
     }
-  }
   }
 
 

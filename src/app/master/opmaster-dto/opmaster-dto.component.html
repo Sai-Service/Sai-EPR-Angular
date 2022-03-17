@@ -1,5 +1,5 @@
 <div class="center">
-    <form [formGroup]="poMasterDtoForm" (ngSubmit)="poMasterDto(poMasterDtoForm.value)">
+    <form [formGroup]="poMasterDtoForm" (ngSubmit)="poMasterDto(poMasterDtoForm.value)" #poForm>
         <table style="width: 100%;background-color: white;">
             <tr>
                 <td class="PageHeader">
@@ -12,7 +12,7 @@
                             <input type="text" formControlName="poNo" [(ngModel)]="poNo" class="form-control" #myinput>
                         </td>
                         <td colspan="8" style="text-align: left; width: 100%;">
-                            <button type="submit" [disabled]="!poNo" (click)="Search(poNo)" class="btn btn-primary"><i
+                            <button type="button" [disabled]="!poNo" (click)="Search(poNo)" class="btn btn-primary"><i
                                     class="fa fa-search"></i></button>
 
                         </td>
@@ -248,7 +248,7 @@
                                         <input disabled type="number" formControlName="totalAmt" [(ngModel)]="totalAmt"
                                             class="form-control" placeholder=" " style="width: 120px;">
                                     </td>
-                                        
+
                                 </tr>
                                 <tr>
                                     <td style="width: 15%" class="LabelFontStyle1">
@@ -293,13 +293,13 @@
                                         <div *ngIf="dispbut; then thenBlockdispbut; else elseBlockdispbut">
                                         </div>
                                         <ng-template #thenBlockdispbut>
-                                            <button data-toggle="modal" class="btn btn-primary"
+                                            <button type="button" data-toggle="modal" class="btn btn-primary"
                                                 data-target="#exampleModalScrollable"
                                                 style="width: fit-content;">Additional
                                                 Details</button>
                                         </ng-template>
                                         <ng-template #elseBlockdispbut>
-                                            <button class="btn btn-primary" style="width: fit-content;">Additional
+                                            <button type="button" class="btn btn-primary" style="width: fit-content;">Additional
                                                 Details</button>
                                         </ng-template>
                                         <!-- <button class="btn btn-primary" data-toggle="modal"
@@ -520,7 +520,7 @@
                                     <input type="text" formControlName="poNo" [(ngModel)]="poNo" class="form-control">
                                 </td>
                                 <td colspan="8" style="text-align: left; width: 100%;">
-                                    <button type="submit" [disabled]="!poNo" (click)="Search(poNo)"
+                                    <button type="button" [disabled]="!poNo" (click)="Search(poNo)"
                                         class="btn btn-primary"><i class="fa fa-search"></i></button>
 
                                 </td>
@@ -803,7 +803,7 @@
                                                     <!-- <table class="center" style="margin-left: 30%;">
                                                         <tr>
                                                             <td>
-                                                                <button type="submit" class="btn btn-primary"
+                                                                <button type="button" class="btn btn-primary"
                                                                     (click)="Submit()">Submit</button>
                                                             </td>
 
@@ -852,7 +852,7 @@
                                     <div class="center" formArrayName="poLines">
                                         <div class="grid_scroll">
                                             <table style="width: 100%; border: solid 1px Gray" class="auto-style4"
-                                                cellspacing="0" cellpadding="4" rules="all" class="center">
+                                                cellspacing="0" cellpadding="2" rules="all" class="center">
                                                 <thead>
                                                     <tr>
                                                         <th scope="col">No.</th>
@@ -862,7 +862,7 @@
                                                         <th scope="col">Description</th>
                                                         <th scope="col">UOM</th>
                                                         <th scope="col" style="width: fit-content;text-align: center;">
-                                                            &nbsp;HSN&nbsp;/&nbsp;SAC&nbsp;code&nbsp;</th>
+                                                            HSN/SAC Code</th>
                                                         <th scope="col">Tax Category</th>
                                                         <th scope="col">Quantity</th>
                                                         <th scope="col">Price</th>
@@ -900,8 +900,7 @@
                                                                         href="#collapseExample+{{i}}" role="button"
                                                                         aria-expanded="true"
                                                                         aria-controls="collapseExample+{{i}}"
-                                                                        (click)="taxDetails('insert', i, taxCategoryId)">
-                                                                        {{i+1}}
+                                                                        (click)="taxDetails('insert', i, taxCategoryId)">{{i+1}}
                                                                     </a>
                                                                 </ng-template>
                                                                 <ng-template #elseBlockPoLine>
@@ -910,7 +909,8 @@
                                                                         href="#collapseExample+{{i}}" role="button"
                                                                         aria-expanded="true"
                                                                         aria-controls="collapseExample+{{i}}"
-                                                                        (click)="taxDetails('Search', i, taxCategoryId)">
+                                                                        (click)="taxDetails('Search', i, taxCategoryId)"
+                                                                        onshow="testfn()">
                                                                         {{i+1}}
                                                                     </a>
                                                                 </ng-template>
@@ -918,11 +918,15 @@
                                                             <!-- <td> <input type="text"  formControlName="itemType"
                                                         class="form-control"></td> -->
                                                             <td> <select formControlName="itemType" class="form-control"
-                                                                    style="width: 5rem;"
+                                                                    style="width: 5rem;" name="itemType{{i}}"
                                                                     (change)='onOptioninvitemTypeSelected($event,i)'>
+
                                                                     <option value="">--Select--</option>
                                                                     <option value="GOODS">GOODS</option>
                                                                     <option value="EXPENCE">EXPENSE</option>
+                                                                    <!-- <option *ngFor="let it of itList" [value]="it.name">
+                                                                        {{it.name}}
+                                                                    </option> -->
                                                                 </select>
                                                             </td>
                                                             <td>
@@ -944,7 +948,7 @@
                                                                     <input disabled type="text" formControlName="segment" class="form-control">
                                                                 </ng-template> -->
                                                             </td>
-                                                            <input hidden type="number" formControlName="invItemId">
+                                                            <input hidden  type="number" formControlName="invItemId">
                                                             <td> <input disabled type="text"
                                                                     formControlName="invCategory" class="form-control"
                                                                     style="width: 4rem;"></td>
@@ -964,7 +968,7 @@
 
                                                             </td>
                                                             <td> <input disabled type="text" formControlName="uom"
-                                                                    style="width: 3rem;" class="form-control"></td>
+                                                                    style="width: 2rem;" class="form-control"></td>
                                                             <td>
 
                                                                 <div
@@ -972,7 +976,7 @@
                                                                 </div>
                                                                 <ng-template #thenBlockHSN>
                                                                     <input disabled type="text"
-                                                                        style="width: 100%;text-align: center;"
+                                                                        style="width: 100%;text-align: left;"
                                                                         formControlName="hsnSacCode"
                                                                         class="form-control">
                                                                     <input hidden type="number"
@@ -998,43 +1002,40 @@
 
                                                             </td>
                                                             <td>
-                                                                <select formControlName="taxCategoryName"
-                                                                    id="taxCategoryName"
-                                                                    (change)='onOptionTaxCatSelected(i)'
+                                                                <select formControlName="taxCategoryName" id="taxCategoryName"
+                                                                    (change)='onOptionTaxCatSelected(i,$event)' 
                                                                     class="form-control">
                                                                     <option>--Select--</option>
-                                                                    <option *ngFor="let sc of  taxCategoryList[i]"
-                                                                        [ngValue]="sc.taxCategoryName">
+                                                                    <option *ngFor="let sc of  taxCategoryList[i]"  [value]="sc.taxCategoryName">
                                                                         {{sc.taxCategoryName}}
                                                                     </option>
                                                                 </select>
                                                             </td>
                                                             <td> <input type="number" min="0.00"
                                                                     formControlName="orderedQty"
-                                                                    (keydown.tab)="onKey(i)"
-                                                                    style="width: 4rem;" class="form-control">
+                                                                    (keydown.tab)="onKey(i,$event)" style="width: 3.5rem;"
+                                                                    class="form-control">
                                                             </td>
                                                             <!-- oninput="this.value = Math.abs(this.value)" -->
 
                                                             <input hidden formControlName="diss1" value={{diss1}}>
-
+                                                            <!-- oninput="this.value = Math.abs(this.value)" -->
                                                             <td> <input type="number" min="0"
-                                                                    oninput="this.value = Math.abs(this.value)"
-                                                                    formControlName="unitPrice" style="width: 6rem;"
-                                                                    class="form-control" (change)="onKey(i)"></td>
+                                                                    formControlName="unitPrice" style="width: 4rem;"
+                                                                    class="form-control" (keydown.tab)="onKey(i,$event)"></td>
 
                                                             <td> <input disabled type="number"
-                                                                    formControlName="baseAmtLineWise" (keyup)="onKey(i)"
-                                                                    style="width: 6rem;" class="form-control"></td>
-                                                                    <td> <input disabled type="number"
-                                                                        formControlName="discLineAmt"
-                                                                        style="width: 4rem;" class="form-control"></td>
-                                                                    <td> <input disabled type="number"
+                                                                    formControlName="baseAmtLineWise" (keydown.tab)="onKey(i,$event)"
+                                                                    style="width: 5rem;" class="form-control"></td>
+                                                            <td> <input  type="number" (keydown.tab)="onKey(i,$event)"
+                                                                    formControlName="discLineAmt" style="width: 4rem;"
+                                                                    class="form-control"></td>
+                                                            <td> <input disabled type="number"
                                                                     formControlName="taxAmtLineWise"
-                                                                    style="width: 6rem;" class="form-control"></td>
+                                                                    style="width: 4rem;" class="form-control"></td>
                                                             <td> <input disabled type="number"
                                                                     formControlName="totAmtLineWise"
-                                                                    style="width: 6rem;" class="form-control"></td>
+                                                                    style="width: 5rem;" class="form-control"></td>
 
                                                             <!-- <td>
                                                         <input formControlName="segmentName" value={{segmentName}}
@@ -1062,15 +1063,15 @@
                                                             <input hidden formControlName="poChargeAcc">
 
                                                             <td>
-                                                                <button type="submit" class="btn btn-primary"
-                                                                    (click)="addRow(i)"
+                                                                <button type="button" class="btn btn-primary"
+                                                                    (click)="addRow(i)" id='addrow'
                                                                     (keydown.shift.arrowdown)="addRow(i)"
                                                                     style="width: min-content;"><i
                                                                         class="fa fa-plus"></i></button>
                                                             </td>
                                                             <td>
-                                                                <button type="submit" class="btn btn-primary"
-                                                                    (click)="RemoveRow(i)"
+                                                                <button type="button" class="btn btn-primary"
+                                                                    (click)="RemoveRow(i)" id='rmrow'
                                                                     style="width: min-content;"><i
                                                                         class="fa fa-trash"></i></button>
                                                             </td>
@@ -1116,7 +1117,7 @@
                                                                     formControlName="invDescription"
                                                                     class="form-control"></td>
                                                             <td> <input disabled type="text" formControlName="uom"
-                                                                    class="form-control" style="width: 3rem;"></td>
+                                                                    class="form-control" style="width: 2rem;"></td>
                                                             <td>
 
                                                                 <div
@@ -1151,29 +1152,29 @@
                                                                     class="form-control">
                                                             </td>
                                                             <td> <input disabled type="number"
-                                                                    formControlName="orderedQty" style="width: 4rem;"
+                                                                    formControlName="orderedQty" style="width: 3rem;"
                                                                     class="form-control">
 
                                                             </td>
                                                             <!-- <input  formControlName="diss1" value={{diss1}}> -->
                                                             <td> <input disabled type="number"
                                                                     formControlName="unitPrice" style="width: 4rem;"
-                                                                    class="form-control" (change)="onKey(i)"></td>
+                                                                    class="form-control" (keydown.tab)="onKey(i,$event)"></td>
 
                                                             <td> <input disabled type="number"
-                                                                    formControlName="baseAmtLineWise" (keyup)="onKey(i)"
-                                                                    style="width: 4rem;" class="form-control">
+                                                                    formControlName="baseAmtLineWise" (keydown.tab)="onKey(i,$event)"
+                                                                    style="width: 5rem;" class="form-control">
                                                             </td>
                                                             <td> <input disabled type="number"
-                                                                formControlName="discLineAmt"
-                                                                style="width: 4rem;" class="form-control"></td>
+                                                                    formControlName="discLineAmt" style="width: 4rem;"
+                                                                    class="form-control"></td>
                                                             <td> <input disabled type="number"
                                                                     formControlName="taxAmtLineWise"
                                                                     style="width: 4rem;" class="form-control"></td>
-                                                            
+
                                                             <td> <input disabled type="number"
                                                                     formControlName="totAmtLineWise"
-                                                                    style="width: 4rem;" class="form-control"></td>
+                                                                    style="width: 5rem;" class="form-control"></td>
 
                                                             <input hidden formControlName="poChargeAcc">
                                                             <td>
@@ -1694,7 +1695,7 @@
     <table class="center">
         <tr>
             <!-- <td>
-                <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close1</button>
+                <button type="button" class="btn btn-primary" id="register" (click)="closeMast()">Close1</button>
             </td>
             <td>
                 <button type="button" class="btn btn-primary" (click)="clearFormArray()" style="width: 4rem;">Reset</button>
@@ -1703,18 +1704,18 @@
                 <button type="button" class="btn btn-primary" (click)="newPOMast()" style="width: 4rem;">Save</button>
             </td> -->
             <td class="center">
-                <button type="submit" class="btn btn-primary" id="saveBtn" data-toggle="modal"
+                <button type="button" class="btn btn-primary" id="saveBtn" data-toggle="modal"
                     data-target="#confirmAlert" (click)="getMessage('Save')">Save</button>
                 <!-- [disabled]="!itemCategoryMasterForm.valid"  -->
 
             </td>
             <td>
-                <button type="submit" class="btn btn-primary" id="resetBtn" data-toggle="modal"
+                <button type="button" class="btn btn-primary" id="resetBtn" data-toggle="modal"
                     data-target="#confirmAlert" (click)="getMessage('Reset')">Reset</button>
                 <!-- (click)="resetItemCatMast()" -->
             </td>
             <td>
-                <button type="submit" class="btn btn-primary" id="closeBtn" data-toggle="modal"
+                <button type="button" class="btn btn-primary" id="closeBtn" data-toggle="modal"
                     data-target="#confirmAlert" (click)="getMessage('Close')">Close</button>
             </td>
             <td>
@@ -1729,19 +1730,19 @@
     <table class="center">
         <tr>
             <!-- <td>
-            <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close2</button>
+            <button type="button" class="btn btn-primary" id="register" (click)="closeMast()">Close2</button>
         </td>
         <td>
             <button type="button" class="btn btn-primary" (click)="clearFormArray()" style="width: 4rem;">Reset</button>
         </td> -->
             <td>
                 <!-- <button type="button"  class="btn btn-primary" (click)="UpdatePOMast()" style="width: 8rem;">Update</button> -->
-                <button type="submit" class="btn btn-primary" id="UpdateBtn" data-toggle="modal"
+                <button type="button" class="btn btn-primary" id="UpdateBtn" data-toggle="modal"
                     data-target="#confirmAlert" (click)="getMessage('Update')">Update</button>
             </td>
             <td>
                 <!-- <button type="button" class="btn btn-primary" (click)="Approve()" style="width: 8rem;">Approve</button> -->
-                <button type="submit" class="btn btn-primary" id="UpdateBtn" data-toggle="modal"
+                <button type="button" class="btn btn-primary" id="UpdateBtn" data-toggle="modal"
                     data-target="#confirmAlert" (click)="getMessage('Approve')">Approve</button>
             </td>
             <td>
@@ -1749,7 +1750,7 @@
                 <input hidden type="text" disabled formControlName="segment1" class="form-control"
                     [(ngModel)]='segment1' placeholder="">
                 <!-- <button type="button" class="btn btn-primary" (click)="poCancel(segment1)" style="width: 8rem;">PO Cancelled</button> -->
-                <button type="submit" class="btn btn-primary" id="poCancel" style="width: fit-content;"
+                <button type="button" class="btn btn-primary" id="poCancel" style="width: fit-content;"
                     data-toggle="modal" data-target="#confirmAlert" (click)="getMessage('poCancel(segment1)')"
                     #poCancel1>PO Cancelled</button>
 
@@ -1757,12 +1758,12 @@
 
             <td>
 
-                <button type="submit" class="btn btn-primary" id="resetBtn" data-toggle="modal"
+                <button type="button" class="btn btn-primary" id="resetBtn" data-toggle="modal"
                     data-target="#confirmAlert" (click)="getMessage('Reset')">Reset</button>
                 <!-- (click)="resetItemCatMast()" -->
             </td>
             <td>
-                <button type="submit" class="btn btn-primary" id="closeBtn" data-toggle="modal"
+                <button type="button" class="btn btn-primary" id="closeBtn" data-toggle="modal"
                     data-target="#confirmAlert" (click)="getMessage('Close')">Close</button>
             </td>
             <td>
@@ -1777,7 +1778,7 @@
     <table class="center">
         <tr>
             <!-- <td>
-                <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close3</button>
+                <button type="button" class="btn btn-primary" id="register" (click)="closeMast()">Close3</button>
             </td>
             <td>
                 <button type="button" class="btn btn-primary" (click)="clearFormArray()" style="width: 4rem;">Reset</button>
@@ -1788,7 +1789,7 @@
                     [(ngModel)]='segment1' placeholder="">
                 <!-- <button type="button" class="btn btn-primary" (click)="poCancel(segment1)" style="width: 8rem;">PO Cancelled</button> -->
                 <div [style.display]="isVisible ? 'block' : 'none'">
-                    <button type="submit" class="btn btn-primary" id="poCancel" style="width: fit-content;"
+                    <button type="button" class="btn btn-primary" id="poCancel" style="width: fit-content;"
                         data-toggle="modal" data-target="#confirmAlert" (click)="getMessage('poCancel(segment1)')"
                         #poCancel1>PO Cancelled</button>
                 </div>
@@ -1796,18 +1797,18 @@
             <td>
                 <div [style.display]="isVisible1 ? 'block' : 'none'">
                     <!-- <button class="btn btn-primary" (click)="goReceiptForm(segment1)" style="width: fit-content;">New Receipt Creation</button> -->
-                    <button type="submit" class="btn btn-primary" id="goReceiptForm" style="width: fit-content;"
+                    <button type="button" class="btn btn-primary" id="goReceiptForm" style="width: fit-content;"
                         data-toggle="modal" data-target="#confirmAlert"
                         (click)="getMessage('goReceiptForm(segment1))')">View GRR</button>
                 </div>
             </td>
             <td>
-                <button type="submit" class="btn btn-primary" id="resetBtn" data-toggle="modal"
+                <button type="button" class="btn btn-primary" id="resetBtn" data-toggle="modal"
                     data-target="#confirmAlert" (click)="getMessage('Reset')">Reset</button>
                 <!-- (click)="resetItemCatMast()" -->
             </td>
             <td>
-                <button type="submit" class="btn btn-primary" id="closeBtn" data-toggle="modal"
+                <button type="button" class="btn btn-primary" id="closeBtn" data-toggle="modal"
                     data-target="#confirmAlert" (click)="getMessage('Close')">Close</button>
             </td>
             <td>
@@ -2041,7 +2042,7 @@
                 <table class="center">
                     <tr>
                         <td>
-                            <button type="submit" class="btn btn-info" data-dismiss="modal" id="register"
+                            <button type="button" class="btn btn-info" data-dismiss="modal" id="register"
                                 (click)="executeAction()">Yes</button>
                         </td>
                         <td>
