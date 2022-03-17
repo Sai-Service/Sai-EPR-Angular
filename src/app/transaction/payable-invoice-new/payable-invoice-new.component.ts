@@ -1200,7 +1200,7 @@ export class PayableInvoiceNewComponent implements OnInit {
       console.log(arraybase);
       this.invoiceId = arraybase[0].invoiceId;
 
-    } else { invId = mInvId; }
+    } else { invId = mInvId;}
     console.log(this.invoiceDistId);
 
     this.service.getTdsDetails(invId)

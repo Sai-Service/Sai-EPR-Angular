@@ -18,17 +18,24 @@ interface IdeadStock {
 }
 
 export class dedList {
+  srlNo:number;
+  division :string;
   ouId:number;
+  ouName:string;
   locationCode:string;
+  locationName:string;
   segment: string;
   description:string;
   days:number;
   quantity: number;
   averageCost: number;
   totalAmount: number;
-  transDate:Date;
+  transDate:string;
   attribute1:string;
-}
+  printDateTime:string;
+  grrNum :string;
+  grrDate :string;
+  }
 
 
 @Component({
@@ -48,6 +55,7 @@ export class DeadStockComponent implements OnInit {
   @ViewChild('orderList', { static: false }) orderList: ElementRef;
 
   pipe = new DatePipe('en-US');
+  now = Date.now();
   public minDate = new Date();
 
   // lstClearBackOrder: any;
@@ -136,7 +144,7 @@ export class DeadStockComponent implements OnInit {
        totalAmount:[],
        transactionId:[],
        transDate: [],
-
+     
      });
   }
 
@@ -267,25 +275,28 @@ export class DeadStockComponent implements OnInit {
 
 
     CalculateDeadStockValue() {
-      var patch = this.deadStockForm.get('deadItemList') as FormArray;
-      var deadLineArr = this.deadStockForm.get('deadItemList').value;
-      var len = this.lineDetailsArray().length;
-      var deadTotal = 0;
+          var patch = this.deadStockForm.get('deadItemList') as FormArray;
+          var deadLineArr = this.deadStockForm.get('deadItemList').value;
+          var len = this.lineDetailsArray().length;
+          var deadTotal = 0;
+        
+        for (let i = 0; i < len; i++) {
+          if (deadLineArr[i].dflag ==='Y') {
+            var lineTotal = deadLineArr[i].quantity * deadLineArr[i].averageCost;
+            lineTotal = Math.round((lineTotal + Number.EPSILON) * 100) / 100,
+            patch.controls[i].patchValue({ totalAmount: lineTotal });
+            deadTotal = deadTotal + lineTotal
+          }
+        }
   
-      for (let i = 0; i < len; i++) {
-        var lineValue = deadLineArr[i].quantity * deadLineArr[i].averageCost;
-  
-        lineValue = Math.round((lineValue + Number.EPSILON) * 100) / 100,
-          // patch.controls[i].patchValue({ totalValue: lineValue });
-          deadTotal = deadTotal + lineValue
-  
-      }
-  
-      deadTotal = Math.round((deadTotal + Number.EPSILON) * 100) / 100,
+        deadTotal = Math.round((deadTotal + Number.EPSILON) * 100) / 100,
         this.deadStockForm.patchValue({ totalValue: deadTotal })
         this.spinIcon=false;
         this.dataDisplay=null;
-  
+    }
+
+    reCalcDtotal(index) {
+      this.CalculateDeadStockValue();
     }
 
 
@@ -433,16 +444,21 @@ export class DeadStockComponent implements OnInit {
   }
 
   dedHedaerList = [[
+    'Srl No',
+    'Division',
     'Operating Unit',
-    'Location Code',
+    'Location',
     'Part No',
     'Descreption	',
     'Aging Days',
     'Quantity',
     'Price',
     'Amount',
-    'Trans Date',
+    'Purchase Date',
+    // 'GRR No',
+    // 'GRR Date',
     'Remark',
+    "PrintDateTime",
   ]]
 
   deadStockListExport() {
@@ -454,7 +470,10 @@ export class DeadStockComponent implements OnInit {
     for (let i = 0; i < orList.length; i++) {
       var ordLn = new dedList();
 
-      ordLn.ouId = orList[i].ouId;
+      ordLn.srlNo=i+1;
+      ordLn.division=sessionStorage.getItem('divisionName');
+      ordLn.ouName=sessionStorage.getItem('ouName');
+      // ordLn.ouId = orList[i].ouId;
       ordLn.locationCode = orList[i].locationCode;
       ordLn.segment = orList[i].segment;
       ordLn.description = orList[i].description;
@@ -462,8 +481,10 @@ export class DeadStockComponent implements OnInit {
       ordLn.quantity = orList[i].quantity;
       ordLn.averageCost = orList[i].averageCost;
       ordLn.totalAmount = orList[i].totalAmount;
-      ordLn.transDate = orList[i].transDate;
+      ordLn.transDate = this.pipe.transform(orList[i].transDate, 'dd-MM-y');
       ordLn.attribute1 = orList[i].attribute1;
+      ordLn.printDateTime = this.pipe.transform(Date.now(), 'dd-MM-y hh:mm:ss');  
+
       xlOrdList.push(ordLn);
     }
     xlsx.utils.sheet_add_json(ws, xlOrdList, { origin: 'A2', skipHeader: true });

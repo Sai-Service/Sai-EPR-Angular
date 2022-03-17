@@ -116,7 +116,7 @@ export class ReportServiceService {
   }
 
   gltrialBalanceReport(ouCode,periodName){
-    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprClsAsonDt?ouCode=${ouCode}&periodName=${periodName}`;
+    const REQUEST_URI = this.ServerUrl +`/AccountsReports/GLTrailBal?ouPara=${ouCode}&periodName=${periodName}`;
     return this.http.get(REQUEST_URI, {
       responseType: 'arraybuffer',
       headers: this.headers,

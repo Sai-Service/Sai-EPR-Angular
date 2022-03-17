@@ -1017,7 +1017,7 @@ export class SalesOrderProformaComponent implements OnInit {
 
 
   addRow(i) {
-    alert(i)
+    // alert(i)
     var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     var trxLnArr2 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     var trxLnArr3 = trxLnArr2.getRawValue();
