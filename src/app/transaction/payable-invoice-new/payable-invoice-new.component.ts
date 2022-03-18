@@ -1022,7 +1022,7 @@ export class PayableInvoiceNewComponent implements OnInit {
     var arraybaseNew1=arraybaseNew.getRawValue();
    var invTypeLookupCode  = arraybaseNew1[i].invTypeLookupCode;
     var invoiceStatus =arraybaseNew1[i].invoiceStatus;
-    alert(invoiceStatus)
+    // alert(invoiceStatus)
     var invoiceNum = this.lineDetailsArray().controls[i].get('invoiceNum').value;
     this.invLineDetailsArray().clear();
     this.transactionService.getApInvLineDetails(invoiceNum)
@@ -1185,7 +1185,7 @@ export class PayableInvoiceNewComponent implements OnInit {
   paymentNavigation(){
     var arraybaseNew = this.poInvoiceForm.get('obj') as FormArray;
     var arraybaseNew1=arraybaseNew.getRawValue();
-    alert(arraybaseNew1[0].invoiceNum);
+    // alert(arraybaseNew1[0].invoiceNum);
     var invNumber=arraybaseNew1[0].invoiceNum;
     // [routerLink]="['/admin/transaction/Payment']"
     this.router.navigate(['/admin/transaction/Payment',invNumber]);
@@ -1193,7 +1193,7 @@ export class PayableInvoiceNewComponent implements OnInit {
 
   showTdsLines(mInvId) {
     var invId;
-    alert(invId)
+    // alert(invId)
     if (mInvId === 0) {
       var arraybase = this.poInvoiceForm.get('obj').value;
       invId = arraybase[0].invoiceId;
@@ -1838,7 +1838,7 @@ export class PayableInvoiceNewComponent implements OnInit {
 
 
   apInvFindAfterSave(invNumber) {
-    alert(invNumber+'-----FindButton')
+    // alert(invNumber+'-----FindButton')
     this.currentOP = 'Search';
     // alert(this.currop)
     this.lineDetailsArray().clear();

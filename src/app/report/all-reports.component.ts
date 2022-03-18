@@ -1,8 +1,8 @@
-import { Component, OnInit} from '@angular/core';
-import { FormGroup, FormBuilder} from '@angular/forms';
-import { Router, ActivatedRoute} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ReportServiceService } from 'src/app/report/report-service.service'
-import { DatePipe,Location } from '@angular/common';
+import { DatePipe, Location } from '@angular/common';
 import { MasterService } from 'src/app/master/master.service';
 import { saveAs } from 'file-saver';
 
@@ -86,28 +86,32 @@ export class AllReportsComponent implements OnInit {
   stockMadeToDate: Date;
   stockMadeToLocName: string;
   stockMadeToFromLoc: string;
-  SprStkTrfRecdDtlsfromDate:Date;
-  SprStkTrfRecdDtlstoDate:Date;
-  SprStkTrfRecdDtlsFromLoc:number;
-  SprStkTrfRecdSummaryfromDate:Date;
-  SprStkTrfRecdSummarytoDate:Date;
-  SprStkTrfRecdSummaryFromLoc:number;
-  SprcusttakestatfromDate:Date;
-  SprcusttakestattoDate:Date;
-  spbackOrderQtyfromDate:Date;
-  spbackOrderQtytoDate:Date;
-  spbackOrderQtyCustAccNo:number;
-  spbackOrderQtyOrderNumber:number;
-  spmiscissRecfromDate:Date;
-  spmiscissRectoDate:Date;
-  spslReturnRegistertoDate:Date;
-  spslReturnRegisterfromDate:Date;
-  spInvAging1:number;
-  spInvAging2:number;
-  spInvAging3:number;
-  spIncomeStatementfromDate:Date;
-  spIncomeStatementtoDate:Date;
-  sprClsAsonDttoDate:Date;
+  SprStkTrfRecdDtlsfromDate: Date;
+  SprStkTrfRecdDtlstoDate: Date;
+  SprStkTrfRecdDtlsFromLoc: number;
+  SprStkTrfRecdSummaryfromDate: Date;
+  SprStkTrfRecdSummarytoDate: Date;
+  SprStkTrfRecdSummaryFromLoc: number;
+  SprcusttakestatfromDate: Date;
+  SprcusttakestattoDate: Date;
+  spbackOrderQtyfromDate: Date;
+  spbackOrderQtytoDate: Date;
+  spbackOrderQtyCustAccNo: number;
+  spbackOrderQtyOrderNumber: number;
+  spmiscissRecfromDate: Date;
+  spmiscissRectoDate: Date;
+  spslReturnRegistertoDate: Date;
+  spslReturnRegisterfromDate: Date;
+  spInvAging1: number;
+  spInvAging2: number;
+  spInvAging3: number;
+  spIncomeStatementfromDate: Date;
+  spIncomeStatementtoDate: Date;
+  sprClsAsonDttoDate: Date;
+  spProforDtfromDate: Date;
+  spProforDttoDate: Date;
+  chequebouncefromDate: Date;
+  chequebouncetoDate: Date;
 
   closeResetButton = true;
   dataDisplay: any;
@@ -137,9 +141,9 @@ export class AllReportsComponent implements OnInit {
       deptId: [],
       purRegFromDt: [],
       purRegToDt: [],
-      sprClsAsonDttoDate:[],
-      spmiscissRectoDate:[],
-      spmiscissRecfromDate:[],
+      sprClsAsonDttoDate: [],
+      spmiscissRectoDate: [],
+      spmiscissRecfromDate: [],
       stockLedgerToLocName: [],
       spreceiptfromDate: [],
       spreceipttoDate: [],
@@ -188,25 +192,29 @@ export class AllReportsComponent implements OnInit {
       stockMadeToDate: [],
       stockMadeToLocName: [],
       stockMadeToFromLoc: [],
-      SprStkTrfRecdDtlsfromDate:[],
-      SprStkTrfRecdDtlstoDate:[],
-      SprStkTrfRecdDtlsFromLoc:[],
-      SprStkTrfRecdSummaryfromDate:[],
-      SprStkTrfRecdSummarytoDate:[],
-      SprStkTrfRecdSummaryFromLoc:[],
-      SprcusttakestatfromDate:[],
-      SprcusttakestattoDate:[],
-      spbackOrderQtyfromDate:[],
-      spbackOrderQtytoDate:[],
-      spbackOrderQtyCustAccNo:[],
-      spbackOrderQtyOrderNumber:[],
-      spslReturnRegistertoDate:[],
-      spslReturnRegisterfromDate:[],
-      spInvAging1:[],
-      spInvAging2:[],
-      spInvAging3:[],
-      spIncomeStatementtoDate:[],
-      spIncomeStatementfromDate:[],
+      SprStkTrfRecdDtlsfromDate: [],
+      SprStkTrfRecdDtlstoDate: [],
+      SprStkTrfRecdDtlsFromLoc: [],
+      SprStkTrfRecdSummaryfromDate: [],
+      SprStkTrfRecdSummarytoDate: [],
+      SprStkTrfRecdSummaryFromLoc: [],
+      SprcusttakestatfromDate: [],
+      SprcusttakestattoDate: [],
+      spbackOrderQtyfromDate: [],
+      spbackOrderQtytoDate: [],
+      spbackOrderQtyCustAccNo: [],
+      spbackOrderQtyOrderNumber: [],
+      spslReturnRegistertoDate: [],
+      spslReturnRegisterfromDate: [],
+      spInvAging1: [],
+      spInvAging2: [],
+      spInvAging3: [],
+      spIncomeStatementtoDate: [],
+      spIncomeStatementfromDate: [],
+      spProforDtfromDate: [],
+      spProforDttoDate: [],
+      chequebouncefromDate: [],
+      chequebouncetoDate: [],
     })
   }
 
@@ -299,7 +307,7 @@ export class AllReportsComponent implements OnInit {
     const fileName = 'Purchase-Register-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
 
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.sppurRegidetailReport(fromDate, toDate,sessionStorage.getItem('ouId') ,sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
+    this.reportService.sppurRegidetailReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
       .subscribe(data => {
         // var blob = new Blob([data], { type: 'application/vnd.ms-excel' });
         // var url = URL.createObjectURL(blob);
@@ -313,16 +321,16 @@ export class AllReportsComponent implements OnInit {
   }
 
 
-  spPurRegDownLoad(){
+  spPurRegDownLoad() {
     const fileName = 'Purchase-Register-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.spPurRegDownLoadReport(sessionStorage.getItem('ouId'))
-    .subscribe(data => {
-      saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-      this.dataDisplay = ''
-      this.closeResetButton = true;
-      this.isDisabled1 = false;
-    })
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.dataDisplay = ''
+        this.closeResetButton = true;
+        this.isDisabled1 = false;
+      })
   }
 
   sppurRegiSumm() {
@@ -337,7 +345,7 @@ export class AllReportsComponent implements OnInit {
     const fileName = 'Purchase-Register-Summary-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
 
-    this.reportService.sppurRegiSummReport(fromDate, toDate, sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
+    this.reportService.sppurRegiSummReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
       .subscribe(data => {
         // var blob = new Blob([data], { type: 'application/pdf' });
         // var url = URL.createObjectURL(blob);
@@ -453,7 +461,7 @@ export class AllReportsComponent implements OnInit {
     var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
     const fileName = 'SP-Receipt-Register-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.spReceiptRegisterReport(fromDate, toDate, sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
+    this.reportService.spReceiptRegisterReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
       .subscribe(data => {
         // var blob = new Blob([data], { type: 'application/pdf' });
         // var url = URL.createObjectURL(blob);
@@ -479,7 +487,7 @@ export class AllReportsComponent implements OnInit {
     //const fileName = 'download.pdf';
     const fileName = 'SP-Debtors-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.SPDebtorReport(fromDate,sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
+    this.reportService.SPDebtorReport(fromDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
       .subscribe(data => {
         // var blob = new Blob([data], { type: 'application/pdf' });
         // var url = URL.createObjectURL(blob);
@@ -602,7 +610,7 @@ export class AllReportsComponent implements OnInit {
 
 
   stockMade() {
-   
+
     this.isDisabled11 = true;
     this.closeResetButton = false;
     this.progress = 0;
@@ -611,11 +619,11 @@ export class AllReportsComponent implements OnInit {
     var fromDate = this.pipe.transform(spreceiptfromDate2, 'dd-MMM-yyyy');
     var spreceipttoDate2 = this.reportForm.get('stockMadeToDate').value;
     var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
-   var  toLicId = this.reportForm.get('stockMadeToFromLoc').value;
-  //  alert(toLicId)
+    var toLicId = this.reportForm.get('stockMadeToFromLoc').value;
+    //  alert(toLicId)
     const fileName = 'Stock-Made-Details-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.stockMadeDetailsReport(fromDate, toDate, sessionStorage.getItem('locId'),toLicId,this.subInvCode.subInventoryCode)
+    this.reportService.stockMadeDetailsReport(fromDate, toDate, sessionStorage.getItem('locId'), toLicId, this.subInvCode.subInventoryCode)
       .subscribe(data => {
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
         this.isDisabled11 = false;
@@ -627,19 +635,19 @@ export class AllReportsComponent implements OnInit {
 
 
 
-    spstktrfMdSummary(){
-      this.isDisabled12 = true;
-      this.closeResetButton = false;
-      this.progress = 0;
-      this.dataDisplay = 'Report Is Running....Do not refresh the Page';
+  spstktrfMdSummary() {
+    this.isDisabled12 = true;
+    this.closeResetButton = false;
+    this.progress = 0;
+    this.dataDisplay = 'Report Is Running....Do not refresh the Page';
     var invcDt2 = this.reportForm.get('spstktrfMdSumfromDate').value;
     var fromDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
     var invcDt3 = this.reportForm.get('spstktrfMdSumtoDate').value;
-    var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');  
-    var fromlocId = this.reportForm.get('spstktrfMdSumToLoc').value; 
+    var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');
+    var fromlocId = this.reportForm.get('spstktrfMdSumToLoc').value;
     const fileName = 'Stock-Made-Summary-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.spstktrfMdSummaryReport(fromDate,invcDt4,sessionStorage.getItem('locId'),fromlocId,this.subInvCode.subInventoryCode)
+    this.reportService.spstktrfMdSummaryReport(fromDate, invcDt4, sessionStorage.getItem('locId'), fromlocId, this.subInvCode.subInventoryCode)
       .subscribe(data => {
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
         this.isDisabled12 = false;
@@ -650,123 +658,123 @@ export class AllReportsComponent implements OnInit {
 
 
 
-  SprStkTrfRecdDtls(){
+  SprStkTrfRecdDtls() {
     this.isDisabled13 = true;
     this.closeResetButton = false;
     this.progress = 0;
     this.dataDisplay = 'Report Is Running....Do not refresh the Page';
-  var invcDt2 = this.reportForm.get('SprStkTrfRecdDtlsfromDate').value;
-  var fromDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
-  var invcDt3 = this.reportForm.get('SprStkTrfRecdDtlstoDate').value;
-  var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');  
-  var fromlocId = this.reportForm.get('SprStkTrfRecdDtlsFromLoc').value; 
-  const fileName = 'Stock-Received-Detail-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
-  const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-  this.reportService.SprStkTrfRecdDtlsReport(fromDate,invcDt4,sessionStorage.getItem('locId'),fromlocId,this.subInvCode.subInventoryCode)
-    .subscribe(data => {
-      saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-      this.isDisabled13 = false;
-      this.closeResetButton = true;
-      this.dataDisplay = ''
-    })
-}
+    var invcDt2 = this.reportForm.get('SprStkTrfRecdDtlsfromDate').value;
+    var fromDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
+    var invcDt3 = this.reportForm.get('SprStkTrfRecdDtlstoDate').value;
+    var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');
+    var fromlocId = this.reportForm.get('SprStkTrfRecdDtlsFromLoc').value;
+    const fileName = 'Stock-Received-Detail-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.SprStkTrfRecdDtlsReport(fromDate, invcDt4, sessionStorage.getItem('locId'), fromlocId, this.subInvCode.subInventoryCode)
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.isDisabled13 = false;
+        this.closeResetButton = true;
+        this.dataDisplay = ''
+      })
+  }
 
 
 
 
-SprStkTrfRecdSummary(){
-  this.isDisabled14 = true;
-  this.closeResetButton = false;
-  this.progress = 0;
-  this.dataDisplay = 'Report Is Running....Do not refresh the Page';
-var invcDt2 = this.reportForm.get('SprStkTrfRecdSummaryfromDate').value;
-var fromDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
-var invcDt3 = this.reportForm.get('SprStkTrfRecdSummarytoDate').value;
-var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');  
-var fromlocId = this.reportForm.get('SprStkTrfRecdSummaryFromLoc').value; 
-const fileName = 'Stock-Received-Summary-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
-const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-this.reportService.SprStkTrfRecdSummaryReport(fromDate,invcDt4,sessionStorage.getItem('locId'),fromlocId,this.subInvCode.subInventoryCode)
-  .subscribe(data => {
-    saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-    this.isDisabled14 = false;
-    this.closeResetButton = true;
-    this.dataDisplay = ''
-  })
-}
+  SprStkTrfRecdSummary() {
+    this.isDisabled14 = true;
+    this.closeResetButton = false;
+    this.progress = 0;
+    this.dataDisplay = 'Report Is Running....Do not refresh the Page';
+    var invcDt2 = this.reportForm.get('SprStkTrfRecdSummaryfromDate').value;
+    var fromDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
+    var invcDt3 = this.reportForm.get('SprStkTrfRecdSummarytoDate').value;
+    var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');
+    var fromlocId = this.reportForm.get('SprStkTrfRecdSummaryFromLoc').value;
+    const fileName = 'Stock-Received-Summary-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.SprStkTrfRecdSummaryReport(fromDate, invcDt4, sessionStorage.getItem('locId'), fromlocId, this.subInvCode.subInventoryCode)
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.isDisabled14 = false;
+        this.closeResetButton = true;
+        this.dataDisplay = ''
+      })
+  }
 
 
 
 
-Sprcusttakestat(){
-  this.isDisabled15 = true;
-  this.closeResetButton = false;
-  this.progress = 0;
-  this.dataDisplay = 'Report Is Running....Do not refresh the Page';
-var invcDt2 = this.reportForm.get('SprcusttakestatfromDate').value;
-var fromDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
-var invcDt3 = this.reportForm.get('SprcusttakestattoDate').value;
-var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');  
-const fileName = 'Spares-Customer-Off-Take-Statement-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
-const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-this.reportService.SprcusttakestatReport(fromDate,invcDt4,sessionStorage.getItem('locId'))
-  .subscribe(data => {
-    saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-    this.isDisabled15 = false;
-    this.closeResetButton = true;
-    this.dataDisplay = ''
-  })
-}
+  Sprcusttakestat() {
+    this.isDisabled15 = true;
+    this.closeResetButton = false;
+    this.progress = 0;
+    this.dataDisplay = 'Report Is Running....Do not refresh the Page';
+    var invcDt2 = this.reportForm.get('SprcusttakestatfromDate').value;
+    var fromDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
+    var invcDt3 = this.reportForm.get('SprcusttakestattoDate').value;
+    var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');
+    const fileName = 'Spares-Customer-Off-Take-Statement-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.SprcusttakestatReport(fromDate, invcDt4, sessionStorage.getItem('locId'))
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.isDisabled15 = false;
+        this.closeResetButton = true;
+        this.dataDisplay = ''
+      })
+  }
 
-spSparesMiscIssueReceipt(){
-  this.isDisabled15 = true;
-  this.closeResetButton = false;
-  this.progress = 0;
-  this.dataDisplay = 'Report Is Running....Do not refresh the Page';
-var invcDt2 = this.reportForm.get('spmiscissRecfromDate').value;
-var fromDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
-var invcDt3 = this.reportForm.get('spmiscissRectoDate').value;
-var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');  
-const fileName = 'Spares Misc Issue Receipt Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
-const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-this.reportService.spSparesMiscIssueReceiptReport(fromDate,invcDt4,sessionStorage.getItem('locId'))
-  .subscribe(data => {
-    saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-    this.isDisabled15 = false;
-    this.closeResetButton = true;
-    this.dataDisplay = ''
-  })
-}
+  spSparesMiscIssueReceipt() {
+    this.isDisabled15 = true;
+    this.closeResetButton = false;
+    this.progress = 0;
+    this.dataDisplay = 'Report Is Running....Do not refresh the Page';
+    var invcDt2 = this.reportForm.get('spmiscissRecfromDate').value;
+    var fromDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
+    var invcDt3 = this.reportForm.get('spmiscissRectoDate').value;
+    var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');
+    const fileName = 'Spares Misc Issue Receipt Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.spSparesMiscIssueReceiptReport(fromDate, invcDt4, sessionStorage.getItem('locId'))
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.isDisabled15 = false;
+        this.closeResetButton = true;
+        this.dataDisplay = ''
+      })
+  }
 
 
 
-spbackOrderQty(spbackOrderQtyCustAccNo,spbackOrderQtyOrderNumber){
-  // alert(spbackOrderQtyCustAccNo+'----'+spbackOrderQtyOrderNumber)
-  this.isDisabled16 = true;
-  this.closeResetButton = false;
-  this.progress = 0;
-  this.dataDisplay = 'Report Is Running....Do not refresh the Page';
-var invcDt2 = this.reportForm.get('spbackOrderQtyfromDate').value;
-var fromDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
-var invcDt3 = this.reportForm.get('spbackOrderQtytoDate').value;
-var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');  
-var orderNumber = spbackOrderQtyOrderNumber;
-if (spbackOrderQtyCustAccNo===undefined || spbackOrderQtyCustAccNo===null){
-  spbackOrderQtyCustAccNo='';
-}
-if (orderNumber === undefined || orderNumber=== null){
-orderNumber=''
-}
-const fileName = 'Spares Back Order Qty Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
-const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-this.reportService.spbackOrderQtyReport(fromDate,invcDt4,sessionStorage.getItem('locId'),spbackOrderQtyCustAccNo,orderNumber)
-  .subscribe(data => {
-    saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-    this.isDisabled16 = false;
-    this.closeResetButton = true;
-    this.dataDisplay = ''
-  })
-}
+  spbackOrderQty(spbackOrderQtyCustAccNo, spbackOrderQtyOrderNumber) {
+    // alert(spbackOrderQtyCustAccNo+'----'+spbackOrderQtyOrderNumber)
+    this.isDisabled16 = true;
+    this.closeResetButton = false;
+    this.progress = 0;
+    this.dataDisplay = 'Report Is Running....Do not refresh the Page';
+    var invcDt2 = this.reportForm.get('spbackOrderQtyfromDate').value;
+    var fromDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
+    var invcDt3 = this.reportForm.get('spbackOrderQtytoDate').value;
+    var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');
+    var orderNumber = spbackOrderQtyOrderNumber;
+    if (spbackOrderQtyCustAccNo === undefined || spbackOrderQtyCustAccNo === null) {
+      spbackOrderQtyCustAccNo = '';
+    }
+    if (orderNumber === undefined || orderNumber === null) {
+      orderNumber = ''
+    }
+    const fileName = 'Spares Back Order Qty Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.spbackOrderQtyReport(fromDate, invcDt4, sessionStorage.getItem('locId'), spbackOrderQtyCustAccNo, orderNumber)
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.isDisabled16 = false;
+        this.closeResetButton = true;
+        this.dataDisplay = ''
+      })
+  }
 
   filterRecord(event) {
     var itemCode = event.target.value;
@@ -802,103 +810,144 @@ this.reportService.spbackOrderQtyReport(fromDate,invcDt4,sessionStorage.getItem(
   }
 
 
-  spslReturnRegister(){
+  spslReturnRegister() {
     this.isDisabled15 = true;
     this.closeResetButton = false;
     this.progress = 0;
     this.dataDisplay = 'Report Is Running....Do not refresh the Page';
-  var invcDt2 = this.reportForm.get('spslReturnRegisterfromDate').value;
-  var fromDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
-  var invcDt3 = this.reportForm.get('spslReturnRegistertoDate').value;
-  var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');  
-  const fileName = 'Spares Sales Return Register-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
-  const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-  this.reportService.spslReturnRegisterReport(fromDate,invcDt4,sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'))
-    .subscribe(data => {
-      saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-      this.isDisabled15 = false;
-      this.closeResetButton = true;
-      this.dataDisplay = ''
-    })
+    var invcDt2 = this.reportForm.get('spslReturnRegisterfromDate').value;
+    var fromDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
+    var invcDt3 = this.reportForm.get('spslReturnRegistertoDate').value;
+    var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');
+    const fileName = 'Spares Sales Return Register-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.spslReturnRegisterReport(fromDate, invcDt4, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.isDisabled15 = false;
+        this.closeResetButton = true;
+        this.dataDisplay = ''
+      })
   }
 
 
-  spInvAging(){
+  spInvAging() {
     this.isDisabled15 = true;
     this.closeResetButton = false;
     this.progress = 0;
     this.dataDisplay = 'Report Is Running....Do not refresh the Page';
-    var spInvAging1= this.reportForm.get('spInvAging1').value;
-    var spInvAging2= this.reportForm.get('spInvAging2').value;
-    var spInvAging3= this.reportForm.get('spInvAging3').value;
-    if ( spInvAging1 > spInvAging2){
+    var spInvAging1 = this.reportForm.get('spInvAging1').value;
+    var spInvAging2 = this.reportForm.get('spInvAging2').value;
+    var spInvAging3 = this.reportForm.get('spInvAging3').value;
+    if (spInvAging1 > spInvAging2) {
       alert('Please check Aging.!');
       this.dataDisplay = 'Please check Aging.';
       return;
     }
-    else if (spInvAging1 >spInvAging3){
+    else if (spInvAging1 > spInvAging3) {
       alert('Please check Aging.!');
       this.dataDisplay = 'Please check Aging.';
       return;
     }
-    else if (spInvAging2 > spInvAging3){
+    else if (spInvAging2 > spInvAging3) {
       alert('Please check Aging.!');
       this.dataDisplay = 'Please check Aging.';
       return;
     }
-  const fileName = 'Spares Inventory Aging Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
-  const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-  this.reportService.sspInvAgingReport(spInvAging1,spInvAging2,spInvAging3,sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'))
-    .subscribe(data => {
-      saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-      this.isDisabled15 = false;
-      this.closeResetButton = true;
-      this.dataDisplay = ''
-    })
+    const fileName = 'Spares Inventory Aging Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.sspInvAgingReport(spInvAging1, spInvAging2, spInvAging3, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.isDisabled15 = false;
+        this.closeResetButton = true;
+        this.dataDisplay = ''
+      })
   }
 
 
 
 
 
-  spIncomeStatement(){
+  spIncomeStatement() {
     this.isDisabled15 = true;
     this.closeResetButton = false;
     this.progress = 0;
     this.dataDisplay = 'Report Is Running....Do not refresh the Page';
-  var invcDt2 = this.reportForm.get('spIncomeStatementfromDate').value;
-  var fromDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
-  var invcDt3 = this.reportForm.get('spIncomeStatementtoDate').value;
-  var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');  
-  const fileName = 'Spares Income Statement-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
-  const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-  this.reportService.spIncomeStatement(fromDate,invcDt4,sessionStorage.getItem('locId'))
-    .subscribe(data => {
-      saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-      this.isDisabled15 = false;
-      this.closeResetButton = true;
-      this.dataDisplay = ''
-    })
+    var invcDt2 = this.reportForm.get('spIncomeStatementfromDate').value;
+    var fromDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
+    var invcDt3 = this.reportForm.get('spIncomeStatementtoDate').value;
+    var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');
+    const fileName = 'Spares Income Statement-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.spIncomeStatement(fromDate, invcDt4, sessionStorage.getItem('locId'))
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.isDisabled15 = false;
+        this.closeResetButton = true;
+        this.dataDisplay = ''
+      })
   }
 
 
 
-  sprClsAsonDt(){
+  sprClsAsonDt() {
     this.isDisabled15 = true;
     this.closeResetButton = false;
     this.progress = 0;
     this.dataDisplay = 'Report Is Running....Do not refresh the Page';
-  var invcDt2 = this.reportForm.get('sprClsAsonDttoDate').value;
-  var toDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
-  const fileName = 'Spares Income Statement-' + sessionStorage.getItem('locName').trim() + '-' + toDate + '.xls';
-  const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-  this.reportService.sprClsAsonDtReport(toDate,sessionStorage.getItem('locId'))
-    .subscribe(data => {
-      saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-      this.isDisabled15 = false;
-      this.closeResetButton = true;
-      this.dataDisplay = ''
-    })
+    var invcDt2 = this.reportForm.get('sprClsAsonDttoDate').value;
+    var toDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
+    const fileName = 'Spares Income Statement-' + sessionStorage.getItem('locName').trim() + '-' + toDate + '.xls';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.sprClsAsonDtReport(toDate, sessionStorage.getItem('locId'))
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.isDisabled15 = false;
+        this.closeResetButton = true;
+        this.dataDisplay = ''
+      })
+  }
+
+  spProforDt() {
+    this.isDisabled15 = true;
+    this.closeResetButton = false;
+    this.progress = 0;
+    this.dataDisplay = 'Report Is Running....Do not refresh the Page';
+    var invcDt2 = this.reportForm.get('spProforDtfromDate').value;
+    var fromDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
+    var invcDt3 = this.reportForm.get('spProforDttoDate').value;
+    var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');
+    const fileName = 'Spares Proforma Details Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.spProforDtReport(fromDate, invcDt4, sessionStorage.getItem('locId'))
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.isDisabled15 = false;
+        this.closeResetButton = true;
+        this.dataDisplay = ''
+      })
+  }
+
+
+  chequebounce() {
+    this.isDisabled15 = true;
+    this.closeResetButton = false;
+    this.progress = 0;
+    this.dataDisplay = 'Report Is Running....Do not refresh the Page';
+    var invcDt2 = this.reportForm.get('chequebouncefromDate').value;
+    var fromDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
+    var invcDt3 = this.reportForm.get('chequebouncetoDate').value;
+    var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');
+    const fileName = 'Cheque Bounce Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.chequebounceReport(fromDate, invcDt4, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.isDisabled15 = false;
+        this.closeResetButton = true;
+        this.dataDisplay = ''
+      })
   }
 
 }

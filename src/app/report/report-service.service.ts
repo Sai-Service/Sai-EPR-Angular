@@ -98,6 +98,21 @@ export class ReportServiceService {
     });
   }
 
+  spProforDtReport(invcDt1,invcDt4,locId){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/ProformaIssueDtls?fromDate=${invcDt1}&toDate=${invcDt4}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+  chequebounceReport(fromDate,invcDt4,ouId,locId){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/CheqBounce?fromDate=${fromDate}&toDate=${invcDt4}&ouId=${ouId}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
 
   sprClsAsonDtReport(toDate,locId){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/SprClsAsonDt?toDate=${toDate}&locId=${locId}`;
