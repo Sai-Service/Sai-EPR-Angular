@@ -207,6 +207,8 @@ constructor(private service : MasterService, private fb: FormBuilder, private ro
       }else{ alert("Data Validation Not Sucessfull....\nData not Saved...")  }
   }
 
+  
+
   onOptionsSelected(event: any) {
     this.Status1 = this.jaiRegimeMasterForm.get('status').value;
     // alert(this.Status1);

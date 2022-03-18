@@ -16,6 +16,7 @@ interface IWsVehicleMaster {
   mainModel: string;
   variantCode: string;
   segment: string;
+  vin:string;
   colorCode: string;
   chassisNo: string;
   engineNo: string;
@@ -1192,6 +1193,12 @@ export class WsVehicleMasterComponent implements OnInit {
     if (formValue.variantCode === undefined || formValue.variantCode === null || formValue.variantCode.trim() === '') {
       this.checkValidation = false;
       alert("VARIANT CODE : Should not be null....");
+      return;
+    }
+
+    if (formValue.vin === undefined || formValue.vin === null || formValue.vin.trim() === '') {
+      this.checkValidation = false;
+      alert("VIN : Should not be null....");
       return;
     }
 

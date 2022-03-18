@@ -390,8 +390,13 @@
                                     </ng-template>
                                         
                                     <ng-template #Block12> 
-                                        <td> <button type="button" class="btn btn-info" (click)="cashBnkTrfUpdate()" >Update</button> </td> 
-                                   
+
+                                        <div *ngIf="updateButton; then Upd1; else Upd2"></div>
+                                        <ng-template #Upd1> 
+                                             <td> <button type="button" class="btn btn-info" (click)="cashBnkTrfUpdate()">Update</button> </td> 
+                                        </ng-template>
+                                        <ng-template #Upd2></ng-template>
+
                                         <div *ngIf="statusPost; then Block2; else Block21"></div>
                                         <ng-template #Block2> 
                                           <td> <button  type="button" class="btn btn-info" (click)="cashBnkTrfPost()" >Post</button>  </td>
@@ -490,6 +495,19 @@
                                     </div>
                                     </div>
                                 </div>
+
+                                <!-- <div *ngIf="exportExcel; then xlYes; else xlNo"></div>
+                                <ng-template #xlYes>
+                                 <div style="padding-bottom: 10px;padding-top: 10px;">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <button (click)="rcptListExport()" class="btn btn-success" style="width: fit-content;">Export To Excel</button>
+                                        </div>
+                                    </div>
+                                 </div>
+                                </ng-template>
+                                <ng-template #xlNo></ng-template> -->
+
   
                                 </tr>
                               </table>
@@ -592,7 +610,17 @@
             <th style="width:3rem" scope="col">Srl#</th>
             <!-- <th style="width:3rem;text-align: center;" scope="col"><input  type="checkbox" formControlName="selectAllflag1" [(ngModel)]="selectAllflag1" (change)="applyReceiptFlagAll($event)"></th> -->
             <!-- <th style="width:3rem" scope="col">Select</th> -->
-            <th style="width:3rem;text-align: center;" scope="col"><input  type="checkbox" formControlName="selectAllFlag" [(ngModel)]="selectAllFlag" (change)="selectAllFlagEvent($event)"></th>
+            
+            <div *ngIf="selectAllButton; then chk1; else chk2"></div>
+            <ng-template #chk1> 
+                <th style="width:3rem;text-align: center;" scope="col">
+                <input  type="checkbox" formControlName="selectAllFlag" [(ngModel)]="selectAllFlag" (change)="selectAllFlagEvent($event)"></th>
+            </ng-template>
+            <ng-template #chk2> 
+                <th style="width:3rem;text-align: center;" scope="col">
+                <input  type="checkbox" disabled formControlName="selectAllFlag" [(ngModel)]="selectAllFlag" (change)="selectAllFlagEvent($event)"></th>
+            </ng-template>
+
             <th style="width:10rem" scope="col">Receipt No</th>
             <th style="width:6rem" scope="col">Receipt Date</th>
             <th style="width:10rem" scope="col">Cheque No</th>
@@ -627,7 +655,18 @@
     </div>
     </div>
 
-        <div class="modal-footer">
+        <div class="modal-footer"> <div *ngIf="exportExcel; then xlYes; else xlNo"></div>
+        <ng-template #xlYes>
+         <div style="padding-bottom: 10px;padding-top: 10px;">
+            <div class="row">
+                <div class="col-sm-12">
+                    <button (click)="rcptListExport()" class="btn btn-success" style="width: fit-content;">Export To Excel</button>
+                </div>
+            </div>
+         </div>
+        </ng-template>
+        <ng-template #xlNo></ng-template>
+
         <button type="button" class="btn btn-info" data-dismiss="modal"  (click)="removeRcptLines()">Close</button>
         </div>
 

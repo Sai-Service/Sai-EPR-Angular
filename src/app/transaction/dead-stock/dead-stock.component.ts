@@ -17,6 +17,7 @@ interface IdeadStock {
   dFlag: string;
 }
 
+
 export class dedList {
   srlNo:number;
   division :string;

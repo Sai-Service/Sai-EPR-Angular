@@ -3550,78 +3550,94 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
         }
         
 
-      public CashBankTrfSaveSubmit(CashBankTrfRecord,mEmplId) {
-        const options = {
-          headers: this.headers
-        };
-        const url = this.ServerUrl + `/AccountTrf/AcctTrfSave?emplId=${mEmplId}`;
-        return this.http.post(url, CashBankTrfRecord, options);
-      }
+        public CashBankTrfSaveSubmit(CashBankTrfRecord,mEmplId) {
+          const options = {
+            headers: this.headers
+          };
+          const url = this.ServerUrl + `/AccountTrf/AcctTrfSave?emplId=${mEmplId}`;
+          return this.http.post(url, CashBankTrfRecord, options);
+        }
 
 
-      arRcptUpdate(ArRcptUpdateRecord,docTrfNum) {
-        const options = {
-          headers: this.headers
-        };
-        const url = (this.ServerUrl + `/AccountTrf/ArSaveUpdate?docTrfNo=${docTrfNum}`);
-        return this.http.put(url, ArRcptUpdateRecord, options);
+      
+        UpdateCashBankTrf(CashBankTrfRecord,docNum) {
+          const options = {
+            headers: this.headers
+          };
+          const url = (this.ServerUrl + `/AccountTrf/CounterListUpd?docTrfNo=${docNum}`);
+          return this.http.put(url, CashBankTrfRecord, options);
 
-        // new - http://localhost:8081/AccountTrf/ArSaveUpdate?docTrfNo=2125210510003
+          // http://localhost:8081/AccountTrf/CounterListUpd?docTrfNo=2125210510009
 
-        // http://localhost:8081/AccountTrf/ArSaveUpdate  Parameter <Your Rcptline Array> , String docTrfNo
-      }
+        }
 
 
-      public CashBankTrfPostSubmit(CashBankTrfRecord,mEmplId) {
-        const options = {
-          headers: this.headers
-        };
-        const url = this.ServerUrl + `/AccountTrf/AcctTrfPost?emplId=${mEmplId}`;
-        return this.http.post(url, CashBankTrfRecord, options);
+        arRcptUpdate(ArRcptUpdateRecord,docTrfNum) {
+          const options = {
+            headers: this.headers
+          };
+          const url = (this.ServerUrl + `/AccountTrf/ArSaveUpdate?docTrfNo=${docTrfNum}`);
+          return this.http.put(url, ArRcptUpdateRecord, options);
 
-        // http://localhost:8081/AccountTrf/AcctTrfPost?emplId=216
+          // new - http://localhost:8081/AccountTrf/ArSaveUpdate?docTrfNo=2125210510003
 
-      }
+          // http://localhost:8081/AccountTrf/ArSaveUpdate  Parameter <Your Rcptline Array> , String docTrfNo
+        }
+
+
+        public CashBankTrfPostSubmit(CashBankTrfRecord,mEmplId) {
+          const options = {
+            headers: this.headers
+          };
+          const url = this.ServerUrl + `/AccountTrf/AcctTrfPost?emplId=${mEmplId}`;
+          return this.http.post(url, CashBankTrfRecord, options);
+
+          // http://localhost:8081/AccountTrf/AcctTrfPost?emplId=216
+
+        }
 
      
 
       
 
-      public CashBankTrfReversalSubmit(CashBankTrfRecord,mEmplId,docTrfNo) {
-        const options = {
-          headers: this.headers
-        };
-        const url = this.ServerUrl + `/AccountTrf/Reversed?docTrfNo=${docTrfNo}&emplId=${mEmplId}`;
-        return this.http.post(url, CashBankTrfRecord, options);
+        public CashBankTrfReversalSubmit(CashBankTrfRecord,mEmplId,docTrfNo) {
+          const options = {
+            headers: this.headers
+          };
+          const url = this.ServerUrl + `/AccountTrf/Reversed?docTrfNo=${docTrfNo}&emplId=${mEmplId}`;
+          return this.http.post(url, CashBankTrfRecord, options);
 
-      }
+        }
 
-
-
-    getBnkTrfSearchByDocNum(docNo): Observable<any> {
-        return this.http.get(this.ServerUrl+`/AccountTrf/trfDocSearch/${docNo}`);
-        // http://localhost:8081/AccountTrf/trfDocSearch/2125210210009
-     }
+        getBnkTrfSearchByDocNum(docNo): Observable<any> {
+            return this.http.get(this.ServerUrl+`/AccountTrf/trfDocSearch/${docNo}`);
+            // http://localhost:8081/AccountTrf/trfDocSearch/2125210210009
+        }
      
-    getBnkTrfSearchByDate(fDate,tDate): Observable<any> {
-        return this.http.get(this.ServerUrl+`/AccountTrf/TrfDtList?frmDate=${fDate}&toDate=${tDate}`);
-        // http://localhost:8081/AccountTrf/TrfDtList?frmDate=2021-10-25&toDate=2021-10-25
-     }
+        getBnkTrfSearchByDate(fDate,tDate): Observable<any> {
+            return this.http.get(this.ServerUrl+`/AccountTrf/TrfDtList?frmDate=${fDate}&toDate=${tDate}`);
+            // http://localhost:8081/AccountTrf/TrfDtList?frmDate=2021-10-25&toDate=2021-10-25
+        }
 
-     getBnkChqList(bankId,rcptMthId,locId): Observable<any> {
-          return this.http.get(this.ServerUrl+`/AccountTrf/CounterList?bankId=${bankId}&receiptMethodId=${rcptMthId}&locId=${locId}`);
-      // http://localhost:8081/AccountTrf/CounterList?bankId=902&receiptMethodId=58&locId=2102
-      }
+        getBnkChqListPosted(docNumber): Observable<any> {
+          return this.http.get(this.ServerUrl+`/AccountTrf/trfRcptSearch/${docNumber}`);
+            // http://localhost:8081/AccountTrf/trfRcptSearch/2125210210010
+        }
 
-      getBnkChqListDocNum(locId,rcptMthId,docTrf): Observable<any> {
-      return this.http.get(this.ServerUrl+`/AccountTrf/trfRcptUpdate?locId=${locId}&receiptMethodId=${rcptMthId}&docTrfNo=${docTrf}`);
-      // http://localhost:8081/AccountTrf/trfRcptUpdate?locId=2102&receiptMethodId=58&docTrfNo=2125210210010
-      }
+        getBnkChqList(bankId,rcptMthId,locId): Observable<any> {
+            return this.http.get(this.ServerUrl+`/AccountTrf/CounterList?bankId=${bankId}&receiptMethodId=${rcptMthId}&locId=${locId}`);
+        // http://localhost:8081/AccountTrf/CounterList?bankId=902&receiptMethodId=58&locId=2102
+        }
+
+        getBnkChqListDocNum(locId,rcptMthId,docTrf): Observable<any> {
+        return this.http.get(this.ServerUrl+`/AccountTrf/trfRcptUpdate?locId=${locId}&receiptMethodId=${rcptMthId}&docTrfNo=${docTrf}`);
+        // http://localhost:8081/AccountTrf/trfRcptUpdate?locId=2102&receiptMethodId=58&docTrfNo=2125210210010
+        }
    
-      viewAccountingBankTransfer(trfNo): Observable<any> {
-        return this.http.get(this.ServerUrl + `/glHeader/AccountTrf/${trfNo}`);
-        // http://localhost:8081/glHeader/AccountTrf/2125210510008
-      }
+        viewAccountingBankTransfer(trfNo): Observable<any> {
+          return this.http.get(this.ServerUrl + `/glHeader/AccountTrf/${trfNo}`);
+          // http://localhost:8081/glHeader/AccountTrf/2125210510008
+        }
 
 
     ////////////////////////// Pending Shipment Lis///////////
