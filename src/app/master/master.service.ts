@@ -2883,6 +2883,12 @@ bulkPickTickCSV(formData: FormData ,priceListName:string,taxCategoryName:string,
       // http://localhost:8081/VehAddInfo/ws/RegNo/KL07BV4680
     }
 
+    getVehDetailsByModelChassis(mdl,chas): Observable<any> {
+      return this.http.get(this.ServerUrl + `/VehAddInfo/ws/mdlChs?mainModel=${mdl}&chassisNo=${chas}`);
+     //http://localhost:8081/VehAddInfo/ws/mdlChs?mainModel=AVENGER&chassisNo=234568
+    
+  }
+
    
 
 
@@ -3694,11 +3700,15 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
          return this.http.get(this.ServerUrl + `/ceStateHdr/accoutWiseHdrList?bankAccountId=${bnkId}&orgId=${ouId}`);
       }
 
-      getAvlBankReconLines(bnkNo,vchNo,dt1,dt2,amt1,amt2): Observable<any> {
-        // alert("ms >>account no:"+bnkId+","+ouId );
+      getAvlBankReconLines(bnkNo,vchNo,dt1,dt2,amt1,amt2,transType): Observable<any> {
+        // alert("ms >>Trans Type :" + transType );
+        if(transType==='appymt'){
          return this.http.get(this.ServerUrl + `/apInvPayment/apPaymentDetails?bankAccNo=${bnkNo}&vouNo=${vchNo}&frmDt=${dt1}&toDate1=${dt2}&frmAmt=${amt1}&toAmt=${amt2}`);
-         }
-
+        }
+        if(transType==='arrcpt'){
+        return this.http.get(this.ServerUrl + `/arCashReceipts/arReceiptDetails?bankAccNo=${bnkNo}&vouNo=${vchNo}&frmDt=${dt1}&toDate1=${dt2}&frmAmt=${amt1}&toAmt=${amt2}`);
+        }
+      }
 
       getBankStatementDetails(sHeaderId): Observable<any> {
         // alert("ms >>account no:"+bnkId+","+ouId );

@@ -21,6 +21,10 @@ interface IBankRecon { }
 export class BankReconcillationComponent implements OnInit {
     bankReconcillationForm : FormGroup;
   
+        closeResetButton=true;
+        dataDisplay: any;
+        msg:any;
+        updStatus=true;
         pipe = new DatePipe('en-US');
         now = Date.now();
         public minDate = new Date();
@@ -78,6 +82,8 @@ export class BankReconcillationComponent implements OnInit {
         showReconButton3=false;
         showValidateButton=false;
         fndButton3=true;
+        optType:string;
+        transType:string='apPymt';
 
 
 
@@ -132,7 +138,8 @@ export class BankReconcillationComponent implements OnInit {
             date2:[],
             amount1:[],
             amount2:[],
-
+            optType:[],
+            transType:[],
 
             ceLineList: this.fb.array([this.invLineDetails()]),
             avlList: this.fb.array([this.avlLineDetails()]),
@@ -245,6 +252,10 @@ export class BankReconcillationComponent implements OnInit {
           });
        }
 
+       ImportBnkStmnt() {
+         alert ("Import Bank Staement ....Work in Progress...");
+       }
+
        Select(hdrId) {
         //  alert("Statement Header Id :"+hdrId);
 
@@ -285,20 +296,38 @@ export class BankReconcillationComponent implements OnInit {
        }
 
 
+       resetMast() {
+        window.location.reload();
+      }
+    
+      closeMast() {
+        this.router.navigate(['admin']);
+      }
 
        LoadValues(){}
 
        reconciledBnk(){alert ("Bank Statement -Reconciled -wip");}
+
+
        availableBnk(){alert ("Bank Statement -Availiable -wip");}
 
-      
+       radioEvent(event:any){
+        // alert(event.target.value);
+        
+        if( event.target.value==='appymt')   { this.bankReconcillationForm.patchValue({transType  : 'appymt'}); }
+        if( event.target.value==='arrcpt')   { this.bankReconcillationForm.patchValue({transType  : 'arrcpt'}); }
+        if( event.target.value==='cashflow') { this.bankReconcillationForm.patchValue({transType: 'cashflow'}); }
+       }
 
-       FindAvl(){
-
+       FindAvl(event:any){
+        // var avlType =this.bankReconcillationForm.controls['optType'].value;
+        var trnType=this.bankReconcillationForm.get("transType").value
         var bnkAcNo=this.bankReconcillationForm.get("bankAccountNo").value
         var dt1=this.pipe.transform(this.date1, 'dd-MMM-y');
         var dt2=this.pipe.transform(this.date2, 'dd-MMM-y');
-        this.service.getAvlBankReconLines(bnkAcNo, this.transNo1,dt1,dt2,this.amount1,this.amount2)
+
+       
+        this.service.getAvlBankReconLines(bnkAcNo, this.transNo1,dt1,dt2,this.amount1,this.amount2,trnType)
           .subscribe(
             data => {
               this.lstAvlBnkLines = data.obj;

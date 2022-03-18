@@ -428,6 +428,8 @@ radioEvent(event:any){
    else {this.showPrintForm=true;this.showGenForm=false;}
    }
 
+   
+
  clearForm() {
    this.regNo=null;this.gpNumber=null;this.dateOfDelv=null;this.gpByName=null;
    this.vin=null;this.mainModel=null;this.custAccountNo=null;this.customerType=null;
