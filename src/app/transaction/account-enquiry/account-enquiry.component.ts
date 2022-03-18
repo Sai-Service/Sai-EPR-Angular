@@ -12,6 +12,7 @@ interface IAccountEnquiry
   periodNameFrm:string;
   periodNameTo:string;
   segmentNameFrm:string;
+  segmentNameTo:string;
   postedDate:string;
   postedDateto:string;
   postedDatefrm:string;
@@ -31,18 +32,24 @@ periodNameFrm:string;
 enteredCr:number;
 periodNameTo:string;
 enteredDr:number;
- segment11:string;
+segmentFrm1:string;
+segmentTo1:string;
   lookupValueDesc1:string;
-  segment2:number;
+  segmentFrm2:number;
+  segmentTo2:number
   lookupValueDesc2:string;
-  segment3:number;
+  segmentFrm3:number;
+  segmentTo3:number;
   trans:string;
   lookupValueDesc3:string;
-  segment4:number;
+  segmentFrm4:number;
+  segmentTo4:number;
   lookupValueDesc4:string;
-  segment5:string;
+  segmentFrm5:string;
+  segmentTo5:string
   lookupValueDesc5:string;
   segmentNameFrm:string;
+  segmentNameTo:string;
 public PeriodName:any;
 public InterBrancList:Array<string>=[];
   public BranchList:Array<string>=[];
@@ -51,6 +58,7 @@ public InterBrancList:Array<string>=[];
   public locIdList:Array<string>=[];
   segmentNameList:any;
   codeCombinationId:number;
+  codeCombinationIdTo:number;
   branch:any;
   jeSource:string;
   name:string;
@@ -86,17 +94,23 @@ public InterBrancList:Array<string>=[];
       periodNameFrm:[],
       periodNameTo:[],
       segmentNameFrm:[],
-      segment11:[''],
+      segmentNameTo:[],
+      segmentFrm1:[''],
+      segmentTo1:[],
       periodName:[],
-      segment2:[''],
-      segment3:[''],
+      segmentFrm2:[''],
+      segmentTo2:[],
+      segmentFrm3:[''],
+      segmentTo3:[],
       // periodName:[],
-      segment4:[''],
+      segmentFrm4:[''],
+      segmentTo4:[],
       lookupValueDesc1:[''],
       lookupValueDesc2:[''],
       lookupValueDesc3:[''],
       lookupValueDesc4:[''],
-      segment5:[''],
+      segmentFrm5:[''],
+      segmentTo5:[],
       lookupValueDesc5:[''],
       jeSource:[],
       name:[],
@@ -150,18 +164,19 @@ public InterBrancList:Array<string>=[];
       );
   }
 
-  openCodeCombination()
+  accType:string =''
+  openCodeCombination( accType:string)
       {
-
+        this.accType = accType;
         let SegmentName1=this.AccountEnquiryForm.get('segmentNameFrm').value;
         alert(SegmentName1);
 
         if(SegmentName1===null)
-        {this.AccountEnquiryForm.get('segment11').reset();
-        this.AccountEnquiryForm.get('segment2').reset();
-        this.AccountEnquiryForm.get('segment3').reset();
-        this.AccountEnquiryForm.get('segment4').reset();
-        this.AccountEnquiryForm.get('segment5').reset();
+        {this.AccountEnquiryForm.get('segmentFrm1').reset();
+        this.AccountEnquiryForm.get('segmentFrm2').reset();
+        this.AccountEnquiryForm.get('segmentFrm3').reset();
+        this.AccountEnquiryForm.get('segmentFrm4').reset();
+        this.AccountEnquiryForm.get('segmentFrm5').reset();
 
         this.AccountEnquiryForm.get('lookupValueDesc1').reset();
         this.AccountEnquiryForm.get('lookupValueDesc2').reset();
@@ -169,30 +184,35 @@ public InterBrancList:Array<string>=[];
         this.AccountEnquiryForm.get('lookupValueDesc4').reset();
         this.AccountEnquiryForm.get('lookupValueDesc5').reset();
       }
-      if(SegmentName1!=null)
-      {
-        var temp = SegmentName1.split('.');
-        // alert(temp[0]);
-        this.segment11 = temp[0];
-        this.segment2 = temp[1];
-        this.segment3 = temp[2];
-        this.segment4 = temp[3];
-        this.segment5 = temp[4];
-      }
+      // if(SegmentName1!=null)
+      // {
+      //   var temp = SegmentName1.split('.');
+      //   // alert(temp[0]);
+      //   this.segmentFrm1 = temp[0];
+      //   this.segmentFrm2 = temp[1];
+      //   this.segmentFrm3 = temp[2];
+      //   this.segmentFrm4 = temp[3];
+      //   this.segmentFrm5 = temp[4];
+      // }
         this.showModal = true;
 
       }
       fnCancatination()
       {
-        this.segmentNameFrm=this.AccountEnquiryForm.get('segment11').value+'.'+
-                         this.AccountEnquiryForm.get('segment2').value+'.'+
-                         this.AccountEnquiryForm.get('segment3').value+'.'+
-                         this.AccountEnquiryForm.get('segment4').value+'.'+
-                         this.AccountEnquiryForm.get('segment5').value;
 
-        alert(this.segmentNameFrm);
+        alert(this.accType);
+        var segmentDtls :string =''
+        if(this.accType === 'frmAcc'){
+        this.segmentNameFrm=this.AccountEnquiryForm.get('segmentFrm1').value+'.'+
+                         this.AccountEnquiryForm.get('segmentFrm2').value+'.'+
+                         this.AccountEnquiryForm.get('segmentFrm3').value+'.'+
+                         this.AccountEnquiryForm.get('segmentFrm4').value+'.'+
+                         this.AccountEnquiryForm.get('segmentFrm5').value;
 
-        this.service.segmentNameList(this.segmentNameFrm)
+                         segmentDtls = this.segmentNameFrm;
+                         alert(this.segmentNameFrm);
+                         
+        this.service.segmentNameList(segmentDtls)
         .subscribe(
           data => {
 
@@ -204,10 +224,138 @@ public InterBrancList:Array<string>=[];
               } else {
                 console.log(this.segmentNameList);
                 this.codeCombinationId = Number(this.segmentNameList.codeCombinationId)
+                var temp = this.AccountEnquiryForm.get('segmentNameFrm').value.split('.');
+                alert(temp[0]+''+temp[1]+''+temp[2]+''+temp[3]+''+temp[4]);
+                this.segmentFrm1 = temp[0];
+                //this.segmentFrm2 = Number(temp[1]);
+                this.segmentFrm3 = Number(temp[2]);
+                this.segmentFrm4 = Number(temp[3]);
+                this.segmentFrm5 = temp[4];
+                this.AccountEnquiryForm.patchValue({segmentFrm2: Number(temp[1])});
+                // this.AccountEnquiryForm.patchValue({segmentNameFrm:''});
 
               }
             } else if (this.segmentNameList.code === 400) {
               this.AccountEnquiryForm.patchValue({segmentNameFrm:''});
+             
+
+            }
+          }
+        );
+        }
+
+        if(this.accType === 'toAcc'){
+          this.segmentNameTo=this.AccountEnquiryForm.get('segmentFrm1').value+'.'+
+                           this.AccountEnquiryForm.get('segmentFrm2').value+'.'+
+                           this.AccountEnquiryForm.get('segmentFrm3').value+'.'+
+                           this.AccountEnquiryForm.get('segmentFrm4').value+'.'+
+                           this.AccountEnquiryForm.get('segmentFrm5').value;
+  
+                           segmentDtls = this.segmentNameTo;
+                           alert(segmentDtls);
+
+          
+
+        this.service.segmentNameList(segmentDtls)
+        .subscribe(
+          data => {
+
+            this.segmentNameList = data;
+            if (this.segmentNameList.code === 200) {
+              // this.AccountEnquiryForm.patchValue({codeCombinationId:this.segmentNameList.obj.codeCombinationId});
+              if (this.segmentNameList.length == 0) {
+                alert('Invalid Code Combination');
+              } else {
+                console.log(this.segmentNameList);
+                this.codeCombinationId = Number(this.segmentNameList.codeCombinationId)
+                var temp = segmentDtls.split('.');
+                alert(temp[0]+'-'+temp[1]+'-'+temp[2]+'-'+temp[3]+'-'+temp[4]);
+                this.segmentTo1 = temp[0];
+                this.segmentTo2 = Number(temp[1]);
+                this.segmentTo3 = Number(temp[2]);
+                this.segmentTo4 = Number(temp[3]);
+                this.segmentTo5 = temp[4];
+                // this.AccountEnquiryForm.patchValue({segmentNameTo:''});
+
+              }
+            } else if (this.segmentNameList.code === 400) {
+              this.AccountEnquiryForm.patchValue({segmentNameTo:''});
+             
+
+            }
+          }
+        );
+        }
+        // this.AccountEnquiryForm.get('segment11').reset();
+        // this.AccountEnquiryForm.get('segment2').reset();
+        // this.AccountEnquiryForm.get('segment3').reset();
+        // this.AccountEnquiryForm.get('segment4').reset();
+        // this.AccountEnquiryForm.get('segment5').reset();
+
+        // this.AccountEnquiryForm.get('lookupValueDesc1').reset();
+        // this.AccountEnquiryForm.get('lookupValueDesc2').reset();
+        // this.AccountEnquiryForm.get('lookupValueDesc3').reset();
+        // this.AccountEnquiryForm.get('lookupValueDesc4').reset();
+        // this.AccountEnquiryForm.get('lookupValueDesc5').reset();
+      }
+      openCodeCombinationTo()
+      {
+
+        let SegmentName1=this.AccountEnquiryForm.get('segmentNameTo').value;
+        alert(SegmentName1);
+
+        if(SegmentName1===null)
+        {this.AccountEnquiryForm.get('segmentTo1').reset();
+        this.AccountEnquiryForm.get('segmentTo2').reset();
+        this.AccountEnquiryForm.get('segmentTo3').reset();
+        this.AccountEnquiryForm.get('segmentTo4').reset();
+        this.AccountEnquiryForm.get('segmentTo5').reset();
+
+        this.AccountEnquiryForm.get('lookupValueDesc1').reset();
+        this.AccountEnquiryForm.get('lookupValueDesc2').reset();
+        this.AccountEnquiryForm.get('lookupValueDesc3').reset();
+        this.AccountEnquiryForm.get('lookupValueDesc4').reset();
+        this.AccountEnquiryForm.get('lookupValueDesc5').reset();
+      }
+      if(SegmentName1!=null)
+      {
+        var temp = SegmentName1.split('.');
+        // alert(temp[0]);
+        this.segmentTo1 = temp[0];
+        this.segmentTo2 = temp[1];
+        this.segmentTo3 = temp[2];
+        this.segmentTo4 = temp[3];
+        this.segmentTo5 = temp[4];
+      }
+        this.showModal = true;
+
+      }
+      fnCancatinationTo()
+      {
+        this.segmentNameTo=this.AccountEnquiryForm.get('segmentTo1').value+'.'+
+                         this.AccountEnquiryForm.get('segmentTo2').value+'.'+
+                         this.AccountEnquiryForm.get('segmentTo3').value+'.'+
+                         this.AccountEnquiryForm.get('segmentTo4').value+'.'+
+                         this.AccountEnquiryForm.get('segmentTo5').value;
+
+        alert(this.segmentNameTo);
+
+        this.service.segmentNameList(this.segmentNameTo)
+        .subscribe(
+          data => {
+
+            this.segmentNameList = data;
+            if (this.segmentNameList.code === 200) {
+              // this.AccountEnquiryForm.patchValue({codeCombinationId:this.segmentNameList.obj.codeCombinationId});
+              if (this.segmentNameList.length == 0) {
+                alert('Invalid Code Combination');
+              } else {
+                console.log(this.segmentNameList);
+                this.codeCombinationIdTo = Number(this.segmentNameList.codeCombinationId)
+
+              }
+            } else if (this.segmentNameList.code === 400) {
+              this.AccountEnquiryForm.patchValue({segmentNameTo:''});
               // alert(this.segmentNameList.message);
 
             }
@@ -343,8 +491,21 @@ viewAccounting(event:any){
    (document.getElementById('postedDatefrm') as HTMLInputElement).setAttribute('min',selPer.startDate);
    (document.getElementById('postedDatefrm') as HTMLInputElement).setAttribute('max',selPer.endDate);
    
+  //  (document.getElementById('postedDateto') as HTMLInputElement).setAttribute('min',selPer.startDate);
+  //  (document.getElementById('postedDateto') as HTMLInputElement).setAttribute('max',selPer.endDate);
+ }
+  }
+  onOptiontoPeriod(event){
+
+    var selPer=this.PeriodName.find(d=>d.periodName===event);
+    console.log(selPer.startDate)
+    if(selPer!=undefined){
+      alert(selPer.startDate+'---'+selPer.endDate);
    (document.getElementById('postedDateto') as HTMLInputElement).setAttribute('min',selPer.startDate);
    (document.getElementById('postedDateto') as HTMLInputElement).setAttribute('max',selPer.endDate);
+   
+  //  (document.getElementById('postedDateto') as HTMLInputElement).setAttribute('min',selPer.startDate);
+  //  (document.getElementById('postedDateto') as HTMLInputElement).setAttribute('max',selPer.endDate);
  }
   }
 }

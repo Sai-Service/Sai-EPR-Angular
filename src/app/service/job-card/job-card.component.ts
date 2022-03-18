@@ -1402,6 +1402,8 @@ export class JobCardComponent implements OnInit {
           var x =jdate.toDateString();
           var y=tdate.toDateString();
             if (this.lstcomments.jobStatus === 'Opened' ){
+              this.jobcardForm.get('jobCardLabLines').enable();
+              this.jobcardForm.get('jobCardMatLines').enable();
             this.dispReadyInvoice = true; this.dispButtonStatus=false;this.preInvButton=true; 
               if(x===y) { this.cancelButton=true;}else {this.cancelButton=false;}
           }

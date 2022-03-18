@@ -59,7 +59,10 @@ export class PaymentsComponent implements OnInit {
   supplierSiteId: number;
   suppId: number;
   country: 'India';
-  payDate = new Date();
+  pipe = new DatePipe('en-US');
+  todaydate = new Date();
+
+  payDate = this.pipe.transform(this.todaydate, 'dd-MMM-yyyy');
   invTypeLookupCode: string;
   invoiceAmt: number;
   // invoiceNum:string;
@@ -102,7 +105,7 @@ export class PaymentsComponent implements OnInit {
   searchBySuppName: string;
   paymentData: any[] = [];
   displayselect: boolean = false;
-  pipe = new DatePipe('en-US');
+  // pipe = new DatePipe('en-US');
   viewAccountingApRcpt: any;
 
   jeSource: string;
@@ -120,6 +123,7 @@ export class PaymentsComponent implements OnInit {
   // payStatus:string;
   displaysiteName = false;
   displayname = false;
+  payAddress:string;
 
   private sub: any;
   constructor(private fb: FormBuilder, private router1: ActivatedRoute, private transactionService: TransactionService, private location: Location, private service: MasterService, private router: Router) {

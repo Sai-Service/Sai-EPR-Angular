@@ -111,6 +111,8 @@
                                     <!-- <th style="width:10rem" scope="col">Bank&nbsp;Branch</th> -->
                                     <!-- <th style="width:10rem" scope="col">&nbsp;HeaderId</th> -->
                                     <th style="width:6rem" scope="col">Select</th>
+                                    <th style="width:6rem" scope="col">Import</th>
+
                                 </tr>
                             </tbody>
                             <tr *ngFor="let com of lstStatementList let i=index" class="ItemStyle" style="text-decoration:none;font-size: small;">
@@ -135,6 +137,14 @@
                                         data-toggle="modal" data-target="#bankStatement1"  (click)="Select(com.statementHeaderId)" style="width: 5rem;color: black;text-align: center;">
                                         &nbsp;Select</button>
                                     </td> 
+
+                                    <td>
+                                        <button  type="button"  class="btn btn-primary" 
+                                        data-toggle="modal" data-target="#ImportbankStatement1"  (click)="ImportBankStmnt(com.statementHeaderId)" style="width: 5rem;color: black;text-align: center;">
+                                        &nbsp;Import</button>
+                                    </td> 
+
+
                             </tr> 
                         </table>
                     </div>
@@ -169,19 +179,18 @@
             <table class="center" style="width: 100%;">
                  <tr>
                     <td > Account &nbsp;No&nbsp;:&nbsp;</td> 
-                    <td ><input disabled  type="text" class="form-control" formControlName="bankAccountNo"  [(ngModel)]="bankAccountNo"  style="background-color: lightgray;width: 200px;"></td>
+                    <td ><input readonly  type="text" class="form-control" formControlName="bankAccountNo"  [(ngModel)]="bankAccountNo"  style="background-color: lightgray;width: 200px;"></td>
                     <td > Statement &nbsp;No&nbsp;:&nbsp;</td> 
                     <!-- <td style="font-weight: bold;">{{this.statementNumber}}</td> -->
-                    <td><input disabled  type="text" class="form-control" formControlName="statementNumber"  [(ngModel)]="statementNumber"  style="background-color: lightgray;"></td>
+                    <td><input readonly  type="text" class="form-control" formControlName="statementNumber"  [(ngModel)]="statementNumber"  style="background-color: lightgray;"></td>
                     <td > Branch &nbsp;:&nbsp;</td> 
-                    <td><input disabled  type="text" class="form-control" formControlName="branchName"  [(ngModel)]="branchName"  style="background-color: lightgray;width: 200px;"></td>
+                    <td><input readonly  type="text" class="form-control" formControlName="branchName"  [(ngModel)]="branchName"  style="background-color: lightgray;width: 200px;"></td>
                    </tr>
 
                 <tr>
                     <td > Account &nbsp;Name&nbsp;:&nbsp;</td>
-                    <td ><input disabled  type="text" class="form-control" formControlName="bankAccountName"  [(ngModel)]="bankAccountName"  style="background-color: lightgray;width: 200px;"></td>
-                    
-                  
+                    <td ><input readonly  type="text" class="form-control" formControlName="bankAccountName"  [(ngModel)]="bankAccountName"  style="background-color: lightgray;width: 200px;"></td>
+                                      
                     <td > Statement &nbsp;Date&nbsp;:&nbsp;</td> 
                     <!-- <td style="font-weight: bold;">{{this.statementDate}}</td> -->
                     <td><input disabled  type="text" class="form-control" formControlName="statementDate"  [(ngModel)]="statementDate"  style="background-color: lightgray;"></td>
@@ -347,6 +356,8 @@
     </div>
 </div>
 
+
+
 <!-- ------------------------------------------------------------------------------- -->
 <div class="modal fade" id="bankStmtAvailable" tabindex="-1" role="dialog" aria-labelledby="bankStmtAvailableLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -371,10 +382,12 @@
             <table class="center" >
 
                 <tr>
-                    <td style="font-weight:bold;"><input type="radio" id="arPymt"   name="optType" value="arPymt"  checked>&nbsp;AR&nbsp;Payment&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                    <td style="font-weight:bold;"><input type="radio" id="arRcpt"   name="optType" value="arRcpt">&nbsp;AR&nbsp;Receipt&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                    <td style="font-weight:bold;"><input type="radio" id="cashFlow" name="optType" value="cashFlow" >&nbsp;Cash&nbsp;Payment&nbsp;Cash&nbsp;Flow</td>
-                </tr>
+                    <td style="font-weight:bold;"><input type="radio" id="appymt"   name="optType" value="appymt"   checked  (change)="radioEvent($event)" >&nbsp;AP&nbsp;Payment&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td style="font-weight:bold;"><input type="radio" id="arrcpt"   name="optType" value="arrcpt"   (change)="radioEvent($event)" >&nbsp;AR&nbsp;Receipt&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td style="font-weight:bold;"><input type="radio" id="cashflow" name="optType" value="cashflow" (change)="radioEvent($event)">&nbsp;Cash&nbsp;Payment&nbsp;Cash&nbsp;Flow</td>
+                    <input hidden  formControlName="transType"  [(ngModel)]="transType" >
+                
+                </tr>
                     <br>
                  <tr>
                     
@@ -488,6 +501,114 @@
     </div>
 </div>
 
+
+
+<div class="modal fade" id="ImportbankStatement1" tabindex="-1" role="dialog" aria-labelledby="ImportbankStatement1Label" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+         <div class="modal-header" >
+            <!-- style="background-color: darkcyan;" -->
+          <!-- <h5 class="modal-title" id="exampleModal2Label">AR&nbsp;Receipt&nbsp;Application&nbsp;-&nbsp;Receipt&nbsp;No:&nbsp;{{this.receiptNumber}}&nbsp;BillToSite:&nbsp;{{this.billToSiteId}} </h5> -->
+          <h5 class="modal-title" id="ImportbankStatement1Label" style="text-align: center;color:blue"  >Import&nbsp;Bank&nbsp;Statement&nbsp; </h5>
+         
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+         </div>
+        
+         <div class="modal-body">
+            <fieldset class="RFS">
+                <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
+                   Import Bank Statement</legend>
+            <table class="center">
+        
+                <!-- <input  hidden style="width:60px ;"   type="text" formControlName="locId"  [(ngModel)]="locId" class="form-control"  >
+                   
+                <tr>
+                    <td class="LabelFontStyle"> &nbsp;&nbsp;Location&nbsp;&nbsp;Code:&nbsp;</td>
+                    <td> <input  readonly style="width:100px ;"   type="text" formControlName="locCode"  [(ngModel)]="locCode" class="form-control"  ></td>
+                </tr>
+                <tr>
+                    <td class="LabelFontStyle"> &nbsp;&nbsp;Back&nbsp;Order&nbsp;&nbsp;Status:&nbsp;</td>
+                    <td> <input  readonly style="width:200px ;"   type="text" formControlName="msg"  [(ngModel)]="msg" class="form-control"  ></td>
+                </tr> -->
+        
+                <tr>
+                    <td class="LabelFontStyle">Select&nbsp;Upload&nbsp;File(.CSV&nbsp;only):&nbsp; </td>
+                    <td>
+                    <input  type="file"  accept=".csv"  #fileInput class="form-control" style="vertical-align: middle;margin-top: 22px;width: 350px;background-color: yellow;">&nbsp;&nbsp;  
+                    </td>
+                    
+                    <div *ngIf ="updStatus;then ButtonNo;else ButtonYes"></div>
+                    <ng-template #ButtonNo>  
+                    <td>
+                        <button  disabled class="btn btn-primary" (click)="uploadFile();" style="width: 5rem;font-size: 11px;">Submit&nbsp;</button>
+                    </td>
+                    </ng-template>
+                    <ng-template #ButtonYes>  
+                    <td>
+                        <button   class="btn btn-primary" (click)="ImportBnkStmnt();" style="width: 5rem;font-size: 11px;">Submit&nbsp;</button>
+                    </td>
+                    </ng-template>
+        
+                </tr>
+        
+                <tr>
+                    <!-- <td colspan="10">
+                    <div class="progress">
+        
+                        <div class="progress-bar progress-bar-success" role="progressbar"  
+                          attr.aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100"
+                        [ngStyle]="{ width: progress + '%' }">
+                        {{progress}}%
+                        </div>
+        
+                      </div>
+                    </td> -->
+        
+                                        <!-- <h1>GeeksforGeeks</h1> -->
+                            
+                            <!-- spinnner element is 
+                                defined with id loading -->
+                                <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                                <ng-template #hList2> 
+                                    <div class="d-flex justify-content-center">
+                                        <div class="spinner-border text-primary" role="status" >
+                                              <span class="sr-only" id="loading"></span>
+                                       
+                                        </div>
+                                    </div>
+                              </ng-template>
+                              <ng-template #hList1> </ng-template>
+        
+                              <!-- <h5 style="text-align: center;color:blue" > {{dataDisplay }}</h5> -->
+                              <td class="LabelFontStyle" style="color: blue;">&nbsp;{{dataDisplay }}&nbsp; </td>
+                           
+                                   
+                </tr>
+        
+            </table>
+          
+            
+        
+            <!-- <table class="center">
+                <tr> -->
+                     <!-- <td> <button type="submit" class="btn btn-primary" id="register" (click)="ImportBnkStmnt()" style="width: fit-content;">Import</button></td> -->
+                     <!-- <td> <button  type="submit" class="btn btn-primary" id="register" (click)="ImportBnkStmnt()" style="width: fit-content;">Import</button></td> -->
+                     <!-- <td><button type="submit" class="btn btn-primary" id="register" (click)="resetMast()" style="width: fit-content;">Reset</button> </td> -->
+                     <!-- <td> <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()" style="width: fit-content;">Close</button> </td> -->
+                <!-- </tr>
+            </table> -->
+            </fieldset>
+
+         </div>
+
+         <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+        </div>
+    </div>
+</div>
 
 
 <!-- ------------------------------------------------------------------ -->

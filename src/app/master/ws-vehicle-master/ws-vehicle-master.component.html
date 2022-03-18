@@ -126,7 +126,7 @@
                                   
                                                       
                                     <td style="background-color: #FFE4B5;">
-                                        <button type="button" class="btn-primary" (click)="SearchByModelChas(mainModel,chassisNo)"><i class="fa fa-search"
+                                        <button type="button" class="btn-primary" (click)="SearchByModelChass(mainModel,chassisNo)"><i class="fa fa-search"
                                                 aria-hidden="true"></i></button>
                                     </td>
                                    
@@ -158,7 +158,7 @@
                         <input type="text" formControlName="vin"  [(ngModel)]="vin"   class="form-control" placeholder="Enter VIN" (keyup)="onInput($event)" style="text-transform: uppercase;" > 
                     </td> 
 
-                    <td style="width: 12%" class="LabelFontStyle">Model&nbsp;:&nbsp;</td>
+                    <td style="width: 12%" class="LabelFontStyle1">Model&nbsp;:&nbsp;</td>
                     <td>  
                         <select formControlName="mainModel" id="mainModel" [(ngModel)]="mainModel" class="form-control"  
                             (ngModelChange)="onOptionsSelectedModel($event)"  style="background-color: yellow" >
@@ -180,7 +180,7 @@
 
                 <tr>
                     
-                    <td style="width: 12%" class="LabelFontStyle">&nbsp;Variant&nbsp;:</td>
+                    <td style="width: 12%" class="LabelFontStyle1">&nbsp;Variant&nbsp;:</td>
                    <td>
 
                     <select formControlName="variantCode" id="variantCode" class="form-control" [(ngModel)]="variantCode" 
@@ -197,7 +197,7 @@
                     <td colspan="3"> <input disabled  type="text"  formControlName="variantDesc"  id="variantDesc" [(ngModel)]="variantDesc" class="form-control"  style="width: 100%;"> </td>
                    
 
-                    <td style="width: 12%" class="LabelFontStyle">Colour&nbsp;:&nbsp;</td>
+                    <td style="width: 12%" class="LabelFontStyle1">Colour&nbsp;:&nbsp;</td>
 
                     <td>
                         <select formControlName="colorCode" id="colorCode"  [(ngModel)]="colorCode" class="form-control" (change)="CreateItemCode()"
@@ -215,12 +215,12 @@
                    
 
 
-                    <td style="width: 12%" class="LabelFontStyle">Chassis&nbsp;No:&nbsp;</td>
+                    <td style="width: 12%" class="LabelFontStyle1">Chassis&nbsp;No:&nbsp;</td>
 
                     <td>
                         <input   type="text"  formControlName="chassisNo"  id="chassisNo" [(ngModel)]="chassisNo" class="form-control" (change)="CreateItemCode()" (keyup)="onInput($event)" style="background-color: yellow" >
                     </td>
-                    <td style="width: 12%" class="LabelFontStyle">Engine&nbsp;No:&nbsp;</td>
+                    <td style="width: 12%" class="LabelFontStyle1">Engine&nbsp;No:&nbsp;</td>
 
                     <td>
                         <input   type="text"  formControlName="engineNo"  id="engineNo" [(ngModel)]="engineNo" (keyup)="onInput($event)" class="form-control" style="background-color: yellow"  >
@@ -256,7 +256,7 @@
                     
                     </td> --> 
 
-                    <td style="width: 12%" class="LabelFontStyle">Sale&nbsp;Date:&nbsp;</td>
+                    <td style="width: 12%" class="LabelFontStyle1">Sale&nbsp;Date:&nbsp;</td>
 
                     <td>
                         <input   type="date"  formControlName="deliveryDate"  id="deliveryDate" [(ngModel)]="deliveryDate" 
@@ -264,7 +264,7 @@
                         placeholder="" max="{{minDate | date:'yyyy-MM-dd'}}">
                     </td>
 
-                    <td style="width: 12%" class="LabelFontStyle">Reg.&nbsp;Date&nbsp;:&nbsp;</td>
+                    <td style="width: 12%" class="LabelFontStyle1">Reg.&nbsp;Date&nbsp;:&nbsp;</td>
 
                     <td>
                         <input   type="date"  formControlName="regDate"  id="regDate" [(ngModel)]="regDate" class="form-control" 
@@ -315,7 +315,7 @@
                         </select>
                     </td>
                    
-                    <td style="width: 12%" class="LabelFontStyle">Dealer&nbsp;Code:&nbsp;</td>
+                    <td style="width: 12%" class="LabelFontStyle1">Dealer&nbsp;Code:&nbsp;</td>
 
                     <!-- <td>
                         <input   type="text"  formControlName="dealerCode"  id="dealerCode" [(ngModel)]="dealerCode" class="form-control" >
@@ -430,12 +430,12 @@
                 </tr>
 
                 <tr>
-                    <td style="width: 12%" class="LabelFontStyle">Customer&nbsp;No:&nbsp;</td>
+                    <td style="width: 12%" class="LabelFontStyle1">Customer&nbsp;No:&nbsp;</td>
                     <td>
                         <input   disabled  type="text"  formControlName="custAccountNo"  id="custAccountNo" [(ngModel)]="custAccountNo" class="form-control" style="background-color: greenyellow;" >
                     </td>
 
-                    <td style="width: 12%" class="LabelFontStyle">&nbsp;Status:&nbsp;</td>
+                    <td style="width: 12%" class="LabelFontStyle1">&nbsp;Status:&nbsp;</td>
 
                     <!-- <input  style="width:50px ;"   type="text"  formControlName="status"
                     class="form-control" [(ngModel)]="status"> -->

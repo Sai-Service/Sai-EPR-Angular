@@ -62,7 +62,7 @@ export class ServiceGatepassComponent implements OnInit {
 
 
     gpNumber :string;
-    gpDate=this.pipe.transform(Date.now(), 'y-MM-dd');  
+    dateOfDelv=this.pipe.transform(Date.now(), 'y-MM-dd');  
     gpByName:string;
     regNo:string;
     vin :string;
@@ -115,7 +115,7 @@ export class ServiceGatepassComponent implements OnInit {
         orgId:[''],
 
         gpNumber :[],
-        gpDate:[],
+        dateOfDelv:[],
         gpByName:[],
         regNo:[],
         vin :[],
@@ -377,7 +377,6 @@ GetJobcardList() {
     
 }
 
-
 GenerateGatePass() { 
   this.CheckGPvalidation();
 if(this.checkValidation===false) {
@@ -395,7 +394,7 @@ this.serviceService.generateServiceGatePass(regNum,sessionStorage.getItem('locId
     } else {
       if (res.code === 400) {
         this.printGPbutton=false;
-         alert(res.message);
+         alert(res.message +  res.obj);
       }
     }
   });
@@ -425,17 +424,27 @@ radioEvent(event:any){
   // alert(event.target.value);
   this.clearForm();
   if( event.target.value==='genGp') {this.showGenForm=true;this.showPrintForm=false;
-          this.gpDate=this.pipe.transform(Date.now(), 'y-MM-dd');   }
+          this.dateOfDelv=this.pipe.transform(Date.now(), 'y-MM-dd');   }
    else {this.showPrintForm=true;this.showGenForm=false;}
    }
 
+   
+
  clearForm() {
-   this.regNo=null;this.gpNumber=null;this.gpDate=null;this.gpByName=null;
+   this.regNo=null;this.gpNumber=null;this.dateOfDelv=null;this.gpByName=null;
    this.vin=null;this.mainModel=null;this.custAccountNo=null;this.customerType=null;
    this.custAddress=null;this.custCity=null;this.custState=null;this.custPincode=null;
    this.custPhone=null;this.custEmail=null;this.custContact=null;this.delvType=null;
    this.delvTakenBy=null;this.driverName=null;
    this.lstJobcardList=null;this.custName=null;
+ }
+
+ onSelectGatePassNum(gpNum) {
+   alert ("Gate Pass num :"+gpNum);
+  let select = this.lstJobcardList.find(d => d.gatepassId === gpNum);
+  if(select) {
+    this.serviceGatepassForm.patchValue({dateOfDelv : select.dateOfDelv});
+   }
  }
  
         

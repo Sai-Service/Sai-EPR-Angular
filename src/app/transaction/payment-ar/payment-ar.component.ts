@@ -741,6 +741,7 @@ export class PaymentArComponent implements OnInit {
     }
     return matches;
   };
+  
 
   serchByRegNo(mRegNo) {
     // alert(mRegNo +'Search vehicle');
