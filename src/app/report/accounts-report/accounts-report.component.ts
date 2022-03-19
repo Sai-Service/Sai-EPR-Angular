@@ -146,6 +146,17 @@ reportName:string;
     this.isVisiblespInvAgging=false;
     this.isVisiblepanelgltrialBalance=false;
   }
+  else if (reportName==='chequebounceReport'){
+    this.reportName='Cheque Bounce Report';
+    this.reportForm.get('fromDate').reset();
+    this.reportForm.get('toDate').reset();
+    this.reportForm.get('locCode').reset();
+    this.isVisibleGSTSaleRegister=true;
+    this.isVisibleGSTPurchaseRegister=false;
+    this.isVisibleSparesdebtors=false;
+    this.isVisiblespInvAgging=false;
+    this.isVisiblepanelgltrialBalance=false;
+  }
   else if (reportName==='gstPurSummary'){
     this.reportName='Purchase Register Summary';
     this.reportForm.get('fromDate').reset();
@@ -237,6 +248,17 @@ reportName:string;
         this.closeResetButton = true;
         this.isDisabled1 = false;
       })
+    }
+    else if (reportName==='Cheque Bounce Report'){
+      const fileName = 'Cheque Bounce Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      this.reportService.chequebounceReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId)
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.dataDisplay = ''
+          this.closeResetButton = true;
+          this.isDisabled1 = false;
+        })
     }
     else if (reportName==='Purchase Register Summary'){
       const fileName = 'Purchase Register Summary-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
