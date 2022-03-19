@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+// import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, NumberValueAccessor } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Validators , FormArray } from '@angular/forms';
@@ -10,7 +11,10 @@ import { InteractionModeRegistry } from 'chart.js';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 import { mapToMapExpression } from '@angular/compiler/src/render3/util';
 
-interface IBankRecon { }
+interface IBankRecon { 
+  stNumber : string;
+  bankAccountId:number;
+}
 
 @Component({
   selector: 'app-bank-reconcillation',
@@ -21,10 +25,18 @@ interface IBankRecon { }
 export class BankReconcillationComponent implements OnInit {
     bankReconcillationForm : FormGroup;
   
-        closeResetButton=true;
+        importButton=true;
         dataDisplay: any;
         msg:any;
         updStatus=true;
+        fileValidation=false;
+        fileName :string; 
+        docType :string;
+        resMsg : string;
+        lstMessage: any;
+        viewLogFile=false;
+        
+
         pipe = new DatePipe('en-US');
         now = Date.now();
         public minDate = new Date();
@@ -46,9 +58,9 @@ export class BankReconcillationComponent implements OnInit {
         deptId:number; 
         emplId :number;
 
-        bankAccountId :string;
+        bankAccountId :number;
         docNumber:number;
-        stNumber:number;
+        stNumber:string;
         complete:string;
 
         bankAccountNo:string;
@@ -84,11 +96,19 @@ export class BankReconcillationComponent implements OnInit {
         fndButton3=true;
         optType:string;
         transType:string='apPymt';
+        showImportModalForm=false;
 
+        statementHeaderId1:number;
+        statementLineId:number;
+        referenceType:string;
+        referenceId:number;
+       
 
 
         get f() { return this.bankReconcillationForm.controls; }
         bankReconcillation(bankReconcillationForm:any) {  }
+
+        @ViewChild('fileInput') fileInput;
   
         constructor(private service: MasterService,private orderManagementService:OrderManagementService,private  fb: FormBuilder, private router: Router) {
           this.bankReconcillationForm = fb.group({ 
@@ -141,6 +161,11 @@ export class BankReconcillationComponent implements OnInit {
             optType:[],
             transType:[],
 
+            statementHeaderId1:[],
+            statementLineId:[],
+            referenceType:[],
+            referenceId:[],
+
             ceLineList: this.fb.array([this.invLineDetails()]),
             avlList: this.fb.array([this.avlLineDetails()]),
           });
@@ -149,6 +174,7 @@ export class BankReconcillationComponent implements OnInit {
         invLineDetails() {
           return this.fb.group({
             lineNumber:[],
+            statementHeaderId:[],
             statementLineId:[],
             trxType:[],
             trxCode:[],
@@ -159,10 +185,7 @@ export class BankReconcillationComponent implements OnInit {
             amtRecon:[],
             charges:[],
             status:[],
-           
-           
-      
-          })
+          });
         }
 
         avlLineDetails() {
@@ -171,12 +194,34 @@ export class BankReconcillationComponent implements OnInit {
             checkId:[],
             invTypeLookupCode:[],
             bankAccountNo:[],
-            appAmt:[],
             glDate:[],
             date1:[],
             docNo:[],
             voucherNo:[],
-           
+
+            statementReconId:[],
+            statementHeaderId:[],
+            statementLineId:[],
+            referenceType:[],
+            referenceId:[],
+            createdBy:[],
+            creationDate:[],
+            lastUpdatedBy:[],
+            lastUpdateDate:[],
+            jeHeaderId:[],
+            orgId:[],
+            referenceStatus:[],
+            statusFlag:[],
+            actionFlag:[],
+            currentRecordFlag:[],
+            autoReconciledFlag:[],
+            amount:[],
+            requestId:[],
+            programApplicationId:[],
+            programId:[],
+            programUpdateDate:[],
+            legalEntityId:[],
+            emplId:[],
                 
           })
         }
@@ -252,14 +297,13 @@ export class BankReconcillationComponent implements OnInit {
           });
        }
 
-       ImportBnkStmnt() {
-         alert ("Import Bank Staement ....Work in Progress...");
-       }
+      
 
        Select(hdrId) {
         //  alert("Statement Header Id :"+hdrId);
 
         let select = this.lstStatementList.find(d => d.statementHeaderId === hdrId);
+
         this.branchName=select.branchName;
         this.bankAccountName=select.bankAccountName;
         this.bankAccountNo=select.bankAccountNo;
@@ -368,6 +412,12 @@ export class BankReconcillationComponent implements OnInit {
          var tranAmt = LineArr[index].amount;
          this.transNo1=tranNum;this.transNo2=tranNum
          this.amount1=tranAmt;this.amount2=tranAmt
+
+         this.statementHeaderId1=LineArr[index].statementHeaderId;
+         this.statementLineId=LineArr[index].statementLineId;
+         this.referenceType=LineArr[index].trxType;
+        //  this.referenceId=LineArr[index].referenceId;
+
         //  this.showValidateButton=true;
       }
 
@@ -437,8 +487,87 @@ export class BankReconcillationComponent implements OnInit {
               }
             }
           });
-           
-    
       }
+
+      ImportBankStmnt(bankAccountId){
+        this.dataDisplay='';
+        const formValue: IBankRecon = this.bankReconcillationForm.value;
+        // alert(formValue.bankAccountId +","+formValue.stNumber);
+
+        if (formValue.bankAccountId === undefined || formValue.bankAccountId === null || formValue.bankAccountId<=0) {
+          this.fileValidation=false;
+          alert("ACCOUNT NO : Should not be null....");
+          this.showImportModalForm=false;
+          return;
+        }
+
+        if (formValue.stNumber === undefined || formValue.stNumber === null || formValue.stNumber.trim() === '') {
+          this.fileValidation=false;
+          alert("STATEMENT NO : Should not be null....");
+          this.showImportModalForm=false;
+          return;
+        }
+
+          this.showImportModalForm=true;
+      }
+
+      CheckValidations() {
+        const formValue: IBankRecon = this.bankReconcillationForm.value;
+   
+        var csvFileName=this.fileInput.nativeElement.files[0];
+
+        if (formValue.stNumber === undefined || formValue.stNumber === null || formValue.stNumber.trim() === '') {
+          this.fileValidation=false;
+          alert("STATEMENT NO : Should not be null....");
+          return;
+        }
+    
+        if(csvFileName==null || csvFileName==undefined) {
+          alert ("Select CSV File Name..."+csvFileName );
+          this.fileValidation=false;
+          this.importButton=false;
+          return;
+        }
+
+
+
+          this.fileValidation=true;
+          this.importButton=true;
+      }
+
+      uploadFile() {
+        this.CheckValidations()
+       
+        if (this.fileValidation===true) {
+          this.updStatus=true; 
+          this.importButton=false;
+          // this.progress = 0;
+
+        this.dataDisplay ='File Upload in progress....Do not refresh the Page'
+        var bnkAcId=this.bankReconcillationForm.get("bankAccountId").value
+        var stNum=this.bankReconcillationForm.get("stNumber").value
+
+        var event=this.fileInput.nativeElement.files[0];
+        console.log('doctype-check'+this.docType)
+        let formData = new FormData();
+        formData.append('file', event)
+           this.service.UploadExcelBankStatement(formData,this.docType,this.ouId,bnkAcId,stNum).subscribe((res: any) => {
+            if (res.code === 200) {
+                this.resMsg = res.message+",  Code : "+res.code;;
+              //  this.lstMessage=res.obj.priceListDetailList;
+                this.dataDisplay ='File Uploaded Sucessfully....'
+               this.importButton=false;
+               this.viewLogFile=true;
+            } else {
+              // if (res.code === 400) {
+                 this.resMsg = res.message +",  Code : "+res.code;
+                // this.lstMessage=res.obj.priceListDetailList;
+                this.updStatus=false;
+                this.dataDisplay ='File Uploading Failed....'
+                this.importButton=false;
+                // this.viewLogFile=false;
+              // }
+            } });
+         } }
 
 }
