@@ -3730,6 +3730,21 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
         return this.http.post(url, BankReconRecord, options);
       }
 
+      
+      ///////////////////Back order File upload/////////////////////
+      UploadExcelBankStatement(formData: FormData,docType:string,mouId ,bnkAcccountId,stNumber) {
+          alert ("Org Id :"+mouId + "  BankAccountId :"+bnkAcccountId);
+          let headers1 = new HttpHeaders();
+          var userId1=sessionStorage.getItem('userId');
+          console.log(docType);
+          var docType1=formData.get('docType');
+          formData.append('orgId', mouId);
+          formData.append('bankAccountId', bnkAcccountId);
+          formData.append('statementNumber', stNumber);
+          return this.http.post(this.ServerUrl + `/fileImport/uploadBankStmt`,formData)
+          // http://localhost:8081/fileImport/uploadBankStmt/
+        }
+
         ////////////////////customer relation manager master //////////////////////
         employeeLst(locId,divId,deptId): Observable<any> {
              return this.http.get(this.ServerUrl + `/empMst/EmpLocDept?locId=${locId}&divisionId=${divId}&deptId=${deptId}`);
@@ -3738,13 +3753,13 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
 
         getCustomerEmpMapList(empId,p1,s1): Observable<any> {
           return this.http.get(this.ServerUrl + `/empCust?emplId=${empId}&page=${p1}&size=${s1}`);
-       // http://localhost:8081/empCust?emplId=334&page=0&size=1
+          // http://localhost:8081/empCust?emplId=334&page=0&size=1
         }
 
-    customerEmpMapSearch(custNo,locId): Observable<any> {
-      return this.http.get(this.ServerUrl + `/empCust/exeDtls?accountNo=${custNo}&locId=${locId}`);
-   // http://localhost:8081/empCust/exeDtls?accountNo=1931&locId=2102
-    }
+        customerEmpMapSearch(custNo,locId): Observable<any> {
+          return this.http.get(this.ServerUrl + `/empCust/exeDtls?accountNo=${custNo}&locId=${locId}`);
+          // http://localhost:8081/empCust/exeDtls?accountNo=1931&locId=2102
+        }
 
 
 

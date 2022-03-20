@@ -42,8 +42,10 @@ export class BackorderSparesImportBajajComponent implements OnInit {
   selectFile?: File;
   pipe = new DatePipe('en-US');
   now = Date.now();
+  
   resMsg : string;
   lstMessage: any;
+  viewLogFile=false;
 
   fileName :string; 
   docType :string;
@@ -53,7 +55,6 @@ export class BackorderSparesImportBajajComponent implements OnInit {
   updStatus =false;
   closeResetButton =true;
   fileValidation=false;
-  viewLogFile=false;
   backorderStatus=false;
   msg:string;
   
