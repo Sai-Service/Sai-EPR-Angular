@@ -750,7 +750,13 @@ console.log(jsonData);
   }
 
   close() {
+    // alert(this.INVNO)
+    if (this.INVNO != null){
+      this.router.navigate(['/admin/transaction/payableInvoice',this.INVNO]);
+    }
+    else{
     this.location.back();
+  }
   }
 
   refresh() {
