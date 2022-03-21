@@ -421,16 +421,17 @@
                 </tr>   
 
                 <tr>
-                    <td > Statement HdrId &nbsp;:&nbsp;</td> 
-                    <td><input   type="number" class="form-control" formControlName="statementHeaderId1"  [(ngModel)]="statementHeaderId1"></td>
-                    <td > Statement LineId &nbsp;:&nbsp;</td> 
-                    <td><input   type="number" class="form-control" formControlName="statementLineId"    [(ngModel)]="statementLineId"></td>
-                    <td > Ref Type &nbsp;:&nbsp;</td> 
-                    <td><input   type="text" class="form-control"   formControlName="referenceType"      [(ngModel)]="referenceType"></td>
-                    <td > Ref Id &nbsp;:&nbsp;</td> 
-                    <td><input   type="text" class="form-control"   formControlName="referenceId"      [(ngModel)]="referenceId"></td>
-                
-               
+                    <!-- <td >  HdrId &nbsp;:&nbsp;</td>  -->
+                    <input  hidden  type="number" class="form-control" formControlName="statementHeaderId1"  [(ngModel)]="statementHeaderId1">
+                    <!-- <td > LineId &nbsp;:&nbsp;</td>  -->
+                    <input  hidden  type="number" class="form-control" formControlName="statementLineId"     [(ngModel)]="statementLineId">
+                    <!-- <td > Ref Type &nbsp;:&nbsp;</td>  -->
+                    <input hidden  type="text" class="form-control"   formControlName="referenceType"        [(ngModel)]="referenceType">
+                    <!-- <td > Ref Id &nbsp;:&nbsp;</td>  -->
+                    <input hidden  type="text" class="form-control"   formControlName="referenceId"          [(ngModel)]="referenceId">
+                    <!-- <td > Amt &nbsp;:&nbsp;</td>  -->
+                    <input hidden  type="text" class="form-control"   formControlName="amount"               [(ngModel)]="amount">
+  
                 </tr>
 
             </table>
@@ -448,8 +449,8 @@
                         <th style="width:6rem" scope="col">CheckId</th>
                         <th style="width:6rem" scope="col">Doc No</th>
                         <th style="width:6rem" scope="col">VoucherNo</th>
-                        <th style="width:6rem" scope="col">Type</th>
-                        <th style="width:10rem" scope="col">Number</th>
+                      
+                        <th style="width:10rem" scope="col">Bank AcNo</th>
                         <!-- <th style="width:10rem" scope="col">Currency</th> -->
                         <th style="width:10rem" scope="col">Amount</th>
                         <!-- <th style="width:10rem" scope="col">Amount</th>
@@ -458,6 +459,7 @@
                         <th style="width:10rem" scope="col">Value Date</th> -->
                         <th style="width:10rem" scope="col">GL Date</th>
                         <!-- <th style="width:10rem" scope="col">Date</th> -->
+                        <th style="width:6rem" scope="col">Name</th>
                    </tr>
                </tbody>
                                 
@@ -468,10 +470,11 @@
                                 <td><input disabled style="width: 100px;height: 25px;text-align: center;" type="text"    formControlName="checkId" class="form-control"></td>
                                 <td><input disabled style="width: 210px;height: 25px;text-align: center;" type="text"    formControlName="docNo" class="form-control"></td>
                                 <td><input disabled style="width: 160px;height: 25px;text-align: center;" type="text"    formControlName="voucherNo" class="form-control"></td>
-                                <td><input disabled style="width: 200px;height: 25px;text-align: center;" type="text"    formControlName="invTypeLookupCode" class="form-control"></td>
                                 <td><input disabled style="width: 210px;height: 25px;text-align: center;" type="text"    formControlName="bankAccountNo" class="form-control"></td>
-                                <td><input disabled style="width: 150px;height: 25px;text-align: right;"  type="text"    formControlName="amount" class="form-control"></td>
+                                <td><input disabled style="width: 150px;height: 25px;text-align: right;"  type="number"    formControlName="appAmt" class="form-control"></td>
                                 <td><input disabled style="width: 150px;height: 25px;text-align: center;" type="date"    formControlName="glDate" class="form-control"></td>
+                                <td><input disabled style="width: 200px;height: 25px;text-align: center;" type="text"    formControlName="name" class="form-control"></td>
+                           
                             </tr>
                     </ng-container>
                     </ng-container>

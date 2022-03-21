@@ -102,6 +102,7 @@ export class BankReconcillationComponent implements OnInit {
         statementLineId:number;
         referenceType:string;
         referenceId:number;
+        amount :number;
        
 
 
@@ -160,6 +161,7 @@ export class BankReconcillationComponent implements OnInit {
             amount2:[],
             optType:[],
             transType:[],
+            amount:[],
 
             statementHeaderId1:[],
             statementLineId:[],
@@ -198,30 +200,30 @@ export class BankReconcillationComponent implements OnInit {
             date1:[],
             docNo:[],
             voucherNo:[],
-
+            name:[],
             statementReconId:[],
-            statementHeaderId:[],
-            statementLineId:[],
-            referenceType:[],
-            referenceId:[],
-            createdBy:[],
-            creationDate:[],
-            lastUpdatedBy:[],
-            lastUpdateDate:[],
+            // statementHeaderId:[],
+            // statementLineId:[],
+            // referenceType:[],
+            // referenceId:[],
+            // createdBy:[],
+            // creationDate:[],
+            // lastUpdatedBy:[],
+            // lastUpdateDate:[],
             jeHeaderId:[],
-            orgId:[],
+            // orgId:[],
             referenceStatus:[],
-            statusFlag:[],
+            statusFlag:[]='M',
             actionFlag:[],
-            currentRecordFlag:[],
-            autoReconciledFlag:[],
-            amount:[],
+            currentRecordFlag:[]='Y',
+            autoReconciledFlag:[]='N',
+            appAmt:[],
             requestId:[],
             programApplicationId:[],
             programId:[],
             programUpdateDate:[],
             legalEntityId:[],
-            emplId:[],
+            // emplId:[],
                 
           })
         }
@@ -388,11 +390,17 @@ export class BankReconcillationComponent implements OnInit {
                 this.avlLineArray().push(avlLnGrp);
               }
               this.bankReconcillationForm.get('avlList').patchValue(this.lstAvlBnkLines);
+
+              // this.addHeaderDetails();
+
               this.showValidateButton=true;
               this.fndButton3=false;
         });
 
        }
+
+     
+       
 
 
        avlTrans(){
@@ -416,7 +424,8 @@ export class BankReconcillationComponent implements OnInit {
          this.statementHeaderId1=LineArr[index].statementHeaderId;
          this.statementLineId=LineArr[index].statementLineId;
          this.referenceType=LineArr[index].trxType;
-        //  this.referenceId=LineArr[index].referenceId;
+         this.referenceId=LineArr[index].checkId;
+         this.amount=LineArr[index].amount;
 
         //  this.showValidateButton=true;
       }
@@ -424,10 +433,28 @@ export class BankReconcillationComponent implements OnInit {
       LineSelectFlag(e,index){ }
 
       ValidatebnkRecon(){
+
      
         var avlLineArr = this.bankReconcillationForm.get('avlList').value;
         var len1 = avlLineArr.length;
         // alert ("avlLineArr.length :"+ avlLineArr.length);
+        var lineTot =0;
+         for (let i = 0; i < len1; i++) { 
+         var sFlag= this.avlLineArray().controls[i].get('selectFlag').value
+         if(sFlag===true) {
+          lineTot =lineTot+this.avlLineArray().controls[i].get('appAmt').value
+         }
+        }
+
+        var headerAmt= this.amount;
+        // alert ("Header Amt :" +headerAmt  + " ,  Line Total :" +lineTot);
+
+        if(headerAmt === lineTot) { 
+          this.showReconButton3 = true; } 
+        else {
+          this.showReconButton3 = false; 
+          alert ("Amount Mismatch......\nStatement Amount not matching with Line Amount.");
+        return;  } 
 
   
         var lrm=0;
@@ -471,11 +498,33 @@ export class BankReconcillationComponent implements OnInit {
 
       bnkReconcilePost() {
         // alert("SAVE TDS DETAILS.....WIP")
+        const formValue: IBankRecon = this.bankReconcillationForm.value;
         this.showReconButton3=false;
         var avlLines = this.bankReconcillationForm.get('avlList').value;
+        var patch = this.bankReconcillationForm.get('avlList') as FormArray;
         var len1 = avlLines.length;
-          console.log(avlLines);
-          this.service.bankReconPostSubmit(avlLines).subscribe((res: any) => {
+
+          let variants = <FormArray>this.avlLineArray();
+
+          var stHdrId = this.bankReconcillationForm.get('statementHeaderId1').value;
+          var stLineId = this.bankReconcillationForm.get('statementLineId').value;
+          var refType = this.bankReconcillationForm.get('referenceType').value;
+    
+          for (let i = 0; i < this.avlLineArray().length; i++) {
+            let variantFormGroup = <FormGroup>variants.controls[i];
+            var refId = avlLines[i].checkId;
+            variantFormGroup.addControl('statementHeaderId', new FormControl(stHdrId, Validators.required));
+            variantFormGroup.addControl('statementLineId', new FormControl(stLineId, Validators.required));
+            variantFormGroup.addControl('referenceType', new FormControl(refType, Validators.required));
+            variantFormGroup.addControl('referenceId', new FormControl(refId, Validators.required));
+            variantFormGroup.addControl('emplId', new FormControl(Number(sessionStorage.getItem('emplId')), Validators.required));
+            variantFormGroup.addControl('orgId', new FormControl(Number(sessionStorage.getItem('ouId')), Validators.required));
+            variantFormGroup.addControl('amount', new FormControl(avlLines[i].appAmt, Validators.required));
+          }
+          
+          console.log(variants.value);
+          // console.log(avlLines);
+          this.service.bankReconPostSubmit(variants.value).subscribe((res: any) => {
             if (res.code === 200) {
               alert(res.message);
               // this.poInvoiceForm.reset();

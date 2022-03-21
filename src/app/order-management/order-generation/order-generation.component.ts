@@ -336,9 +336,6 @@ export class OrderGenerationComponent implements OnInit {
   }
 
 
-
-
-
   deleteOrderLine(i) {
     // alert ("Deleting line")
     var ordArr = this.orderGenerationForm.get('orderList').value;
@@ -367,13 +364,9 @@ export class OrderGenerationComponent implements OnInit {
     delete val.locName;
     delete val.locationId;
     delete val.orgId;
-
     delete val.fromDate;
     delete val.toDate;
     delete val.orderDate;
-
-
-
     delete val.orderList;
 
     return val;
@@ -588,6 +581,7 @@ export class OrderGenerationComponent implements OnInit {
         variantFormGroup.addControl('cdmsRefNo', new FormControl(cdmsNo, Validators.required));
 
       }
+      
       console.log(variants.value);
 
       // this.service.OrderLineAddUpdate(formValue).subscribe((res: any) => {
