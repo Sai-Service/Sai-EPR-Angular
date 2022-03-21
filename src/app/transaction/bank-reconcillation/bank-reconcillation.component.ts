@@ -94,6 +94,7 @@ export class BankReconcillationComponent implements OnInit {
         showReconButton3=false;
         showValidateButton=false;
         fndButton3=true;
+        showReconciledGrid =false;
         optType:string;
         transType:string='apPymt';
         showImportModalForm=false;
@@ -352,21 +353,30 @@ export class BankReconcillationComponent implements OnInit {
 
        LoadValues(){}
 
-       reconciledBnk(){alert ("Bank Statement -Reconciled -wip");}
-
+      
 
        availableBnk(){alert ("Bank Statement -Availiable -wip");}
 
        radioEvent(event:any){
         // alert(event.target.value);
         
-        if( event.target.value==='appymt')   { this.bankReconcillationForm.patchValue({transType  : 'appymt'}); }
-        if( event.target.value==='arrcpt')   { this.bankReconcillationForm.patchValue({transType  : 'arrcpt'}); }
-        if( event.target.value==='cashflow') { this.bankReconcillationForm.patchValue({transType: 'cashflow'}); }
-       }
+        if( event.target.value==='payment')   { this.bankReconcillationForm.patchValue({transType  : 'PAYMENT' }); }
+        if( event.target.value==='receipt')   { this.bankReconcillationForm.patchValue({transType  : 'RECEIPT' }); }
+        if( event.target.value==='cashflow')  { this.bankReconcillationForm.patchValue({transType  : 'CASHFLOW'}); }
+        // alert ("this.transType : " +this.transType);
+      }
 
        FindAvl(event:any){
         // var avlType =this.bankReconcillationForm.controls['optType'].value;
+        this.showReconciledGrid=false;
+        var refType =this.bankReconcillationForm.get('referenceType').value;
+        var ptype =this.bankReconcillationForm.get('transType').value;
+
+        // alert ("refType ,ptype: " +refType  + "," + ptype);
+
+        if(ptype===refType) {
+          // alert ("if refType ,ptype: " +refType  + "," + ptype);
+
         var trnType=this.bankReconcillationForm.get("transType").value
         var bnkAcNo=this.bankReconcillationForm.get("bankAccountNo").value
         var dt1=this.pipe.transform(this.date1, 'dd-MMM-y');
@@ -397,6 +407,36 @@ export class BankReconcillationComponent implements OnInit {
               this.fndButton3=false;
         });
 
+      } else { alert ("Transaction type mismatch . Please select correct search parameters.");}
+       }
+
+
+       reconciledBnk(){
+        var stLineId=this.bankReconcillationForm.get("statementLineId").value
+        // alert (" stLineId :"+  stLineId);
+
+        this.service.getReconciledDetails(stLineId)
+        .subscribe(
+          data => {
+            this.lstAvlBnkLines = data.obj;
+            if(this.lstAvlBnkLines.length==0) {
+              alert ("No Record Found.");
+                return;
+            }
+            console.log(this.lstAvlBnkLines);
+            this.showReconciledGrid=true;
+            this.showValidateButton=false;
+            this.fndButton3=false;
+
+            var len = this.avlLineArray().length;
+            for (let i = 0; i < this.lstAvlBnkLines.length - len; i++) {
+              var avlLnGrp: FormGroup = this.avlLineDetails();
+              this.avlLineArray().push(avlLnGrp);
+            }
+            this.bankReconcillationForm.get('avlList').patchValue(this.lstAvlBnkLines);
+            // this.showValidateButton=true;
+            // this.fndButton3=false;
+          });
        }
 
      

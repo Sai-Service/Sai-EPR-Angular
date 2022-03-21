@@ -3702,12 +3702,19 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
 
       getAvlBankReconLines(bnkNo,vchNo,dt1,dt2,amt1,amt2,transType): Observable<any> {
         // alert("ms >>Trans Type :" + transType );
-        if(transType==='appymt'){
+        if(transType==='PAYMENT'){
          return this.http.get(this.ServerUrl + `/apInvPayment/apPaymentDetails?bankAccNo=${bnkNo}&vouNo=${vchNo}&frmDt=${dt1}&toDate1=${dt2}&frmAmt=${amt1}&toAmt=${amt2}`);
         }
-        if(transType==='arrcpt'){
+        if(transType==='RECEIPT'){
         return this.http.get(this.ServerUrl + `/arCashReceipts/arReceiptDetails?bankAccNo=${bnkNo}&vouNo=${vchNo}&frmDt=${dt1}&toDate1=${dt2}&frmAmt=${amt1}&toAmt=${amt2}`);
         }
+      }
+
+
+      getReconciledDetails(sLineId): Observable<any> {
+        // alert("ms >>account no:"+bnkId+","+ouId );
+        return this.http.get(this.ServerUrl+`/ceStateHdr/recoDetails/${sLineId}`);
+        // http://localhost:8081/ceStateHdr/recoDetails/103772
       }
 
       getBankStatementDetails(sHeaderId): Observable<any> {
