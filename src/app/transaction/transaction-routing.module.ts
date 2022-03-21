@@ -53,6 +53,7 @@ const routes: Routes = [
   {path:'TdsInvoice',component:TdsInvoiceComponent},
   {path:'Payment',component:PaymentsComponent},
   {path:'Payment/:invNumber',component:PaymentsComponent},
+  {path:'payableInvoice/:invNumber',component:PayableInvoiceNewComponent},
   {path:'ARInvoice', component:ARInvoiceComponent},
   {path:'AvgCostUpdate',component:AvgCostUpdateComponent},
   {path:'PaymentReceipt',component:PaymentReceiptComponent},
