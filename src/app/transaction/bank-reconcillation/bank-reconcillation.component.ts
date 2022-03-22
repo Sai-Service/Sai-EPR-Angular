@@ -61,7 +61,7 @@ export class BankReconcillationComponent implements OnInit {
         bankAccountId :number;
         docNumber:number;
         stNumber:string;
-        complete:string;
+        complete:string ='No';
 
         bankAccountNo:string;
         bankAccountName:string;
@@ -188,6 +188,7 @@ export class BankReconcillationComponent implements OnInit {
             amtRecon:[],
             charges:[],
             status:[],
+            reconDate:[],
           });
         }
 
@@ -407,7 +408,7 @@ export class BankReconcillationComponent implements OnInit {
               this.fndButton3=false;
         });
 
-      } else { alert ("Transaction type mismatch . Please select correct search parameters.");}
+      } else { alert ("Transaction Type Mismatch.\nPlease Select Correct Search Parameters.");}
        }
 
 

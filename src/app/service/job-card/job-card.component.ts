@@ -1416,7 +1416,9 @@ export class JobCardComponent implements OnInit {
           }
          
          
-          if (this.lstcomments.jobStatus === 'Invoiced' || this.lstcomments.matStatus === 'Compeleted' || this.lstcomments.jobStatus === 'Closed' ) {
+          // if (this.lstcomments.jobStatus === 'Invoiced' || this.lstcomments.matStatus === 'Compeleted' || this.lstcomments.jobStatus === 'Closed' ) {
+          if (this.lstcomments.jobStatus === 'Invoiced' || this.lstcomments.jobStatus === 'Closed' ) {
+           
             this.jobcardForm.disable();
             this.jobcardForm.get('jobCardLabLines').disable();
             this.jobcardForm.get('jobCardMatLines').disable();
