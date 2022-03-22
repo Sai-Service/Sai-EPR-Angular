@@ -61,7 +61,7 @@ export class BankReconcillationComponent implements OnInit {
         bankAccountId :number;
         docNumber:number;
         stNumber:string;
-        complete:string;
+        complete:string ='No';
 
         bankAccountNo:string;
         bankAccountName:string;
