@@ -800,7 +800,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
       this.service
         .getCostDetail(Number(sessionStorage.getItem('locId')), select1.itemId)
         .subscribe((data) => {
-          this.CostDetail = data;
+          this.CostDetail = data; 
           trxLnArr1.controls[i].patchValue({
             itemUnitCost: this.CostDetail.rate,
           });
@@ -1375,7 +1375,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
         } else {
           if (res.code === 400) {
             alert('ERROR OCCOURED IN PROCEESS');
-            this.miscellaneousForm.reset();
+            // this.miscellaneousForm.reset();
           }
         }
       });
@@ -1389,6 +1389,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
     // alert(event);
     // var reasname=this.miscellaneousForm.get('reason').value;
     // this.service.reasonaccCode(this.locId,reasname).subscribe(
+      if(event!=undefined){
     var reasonArr = event.split('-');
     // alert(reasonArr.length);
     this.service
@@ -1398,7 +1399,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
         // this.miscellaneousForm.patchValue({reason:this.acccodedesc.segmentName});
         this.segmentName = this.acccodedesc.segmentName;
       });
-  }
+  }}
 
   HeaderValidation() {
     var isValid: boolean = false;
