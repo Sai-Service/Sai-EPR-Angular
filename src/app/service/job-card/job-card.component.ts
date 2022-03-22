@@ -1402,6 +1402,8 @@ export class JobCardComponent implements OnInit {
           var x =jdate.toDateString();
           var y=tdate.toDateString();
             if (this.lstcomments.jobStatus === 'Opened' ){
+              this.jobcardForm.get('jobCardLabLines').enable();
+              this.jobcardForm.get('jobCardMatLines').enable();
             this.dispReadyInvoice = true; this.dispButtonStatus=false;this.preInvButton=true; 
               if(x===y) { this.cancelButton=true;}else {this.cancelButton=false;}
           }
@@ -1414,7 +1416,9 @@ export class JobCardComponent implements OnInit {
           }
          
          
-          if (this.lstcomments.jobStatus === 'Invoiced' || this.lstcomments.matStatus === 'Compeleted' || this.lstcomments.jobStatus === 'Closed' ) {
+          // if (this.lstcomments.jobStatus === 'Invoiced' || this.lstcomments.matStatus === 'Compeleted' || this.lstcomments.jobStatus === 'Closed' ) {
+          if (this.lstcomments.jobStatus === 'Invoiced' || this.lstcomments.jobStatus === 'Closed' ) {
+           
             this.jobcardForm.disable();
             this.jobcardForm.get('jobCardLabLines').disable();
             this.jobcardForm.get('jobCardMatLines').disable();

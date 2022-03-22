@@ -19,9 +19,6 @@
                         </tr>
                     </table>
                 </td>
-
-
-
             </tr>
         </table>
 
@@ -3209,7 +3206,7 @@
                         <option value="Opened">Opened</option>
                         <option value="Ready for Invoice">Ready for Invoice</option>
                         <option value="Invoiced">Invoiced</option>
-                        <option value="Closed">Closed</option>
+                        <!-- <option value="Closed">Closed</option> -->
                         </select>
                     </td>
                    
@@ -3245,8 +3242,10 @@
                                         <th  scope="col">Status&nbsp;</th>
                                         <th  scope="col">Service&nbsp;Advisor</th>
                                         <th  scope="col">Cust&nbsp;Name</th>
-                                        <th  scope="col">Cust&nbsp;No&nbsp;</th>
-
+                                        <th  scope="col">Invoice&nbsp;No&nbsp;</th>
+                                        <th  scope="col">Invoice&nbsp;Amt&nbsp;</th>
+                                        <th  scope="col">Balance&nbsp;Amt&nbsp;</th>
+                                       
                                         <!-- <th style="width:7rem" scope="col"> Conatct&nbsp;No</th> -->
                                         <th style="width:6rem" scope="col">Select</th>
                                     </tr>
@@ -3259,9 +3258,12 @@
                                         <td style="text-align: center;width: 3rem;">{{com.gatepassId}}</td>
                                         <td style="text-align: center;width: 5rem;">{{com.attribute1}}</td>
                                         <td style="text-align: center;width: 8rem;">{{com.status}}</td>
-                                        <td style="text-align: left;width: 16rem;">{{com.fullName}}</td>
-                                        <td style="text-align: left;width: 16rem;">{{com.custName}}</td>
-                                        <td style="text-align: center;width: 2rem;">{{com.custAccountNo}}</td> 
+                                        <td style="text-align: left;width: 12rem;">{{com.fullName}}</td>
+                                        <td style="text-align: left;width: 15rem;">{{com.custName}}</td>
+                                        <!-- <td style="text-align: center;width: 2rem;">{{com.custAccountNo}}</td>  -->
+                                        <td style="text-align: center;width: 2rem;">{{com.trxNumber}}</td> 
+                                        <td style="text-align: right;width: 2rem;">{{com.invoiceAmount}}</td> 
+                                        <td style="text-align: right;width: 2rem;">{{com.balance}}</td> 
                                         <button  type="submit" class="btn btn-secondary" data-dismiss="modal" id="register"   (click)="Search(com.jobCardNum)">Select</button>
                                 </tr> 
                             </table>

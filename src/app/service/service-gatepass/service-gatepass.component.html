@@ -44,7 +44,7 @@
                                         <!-- <td><input  type="text" class="form-control" formControlName="gpNumber" [(ngModel)]='gpNumber' value={{gpNumber}} style="background-color: yellow;" > </td> -->
                                    
                                         <td>
-                                            <select formControlName="gpNumber" id="gpNumber" class="form-control" style="background-color: yellow;">
+                                            <select formControlName="gpNumber" id="gpNumber" class="form-control" style="background-color: yellow;" (ngModelChange)="onSelectGatePassNum($event)">
                                                <!-- <option></option> -->
                                                <option *ngFor="let sc of  lstJobcardList"  [ngValue]="sc.gatepassId">
                                                    {{sc.gatepassId}} /{{sc.jobCardNum}}
@@ -59,8 +59,8 @@
                                     <td class="LabelFontStyle">&nbsp;GP&nbsp;&nbsp;Date:&nbsp;</td>
                                     
                                     <td>
-                                        <input disabled type="date" class="form-control" formControlName="gpDate" [(ngModel)]='gpDate'
-                                            value={{gpDate}} max="{{minDate | date:'yyyy-MM-dd'}}">
+                                        <input disabled type="date" class="form-control" formControlName="dateOfDelv" [(ngModel)]='dateOfDelv'
+                                            value={{dateOfDelv}} max="{{minDate | date:'yyyy-MM-dd'}}">
                                     </td>
     
                                     <td class="LabelFontStyle">&nbsp;Created&nbsp;By:&nbsp;</td>
@@ -202,8 +202,9 @@
                                     <th  scope="col">Job&nbsp;Type</th>
                                     <th  scope="col">Status&nbsp;</th>
                                     <th  scope="col">GP&nbsp;No</th>
+                                    <th  scope="col">GP&nbsp;Date</th>
                                     <th  scope="col">Service&nbsp;Advisor</th>
-                                    <th  scope="col">Group&nbsp;</th>
+                                    <!-- <th  scope="col">Group&nbsp;</th> -->
                                     <th  scope="col">Invoice&nbsp;No</th>
                                     <th  scope="col">Invoice&nbsp;Amt&nbsp;</th>
                                     <th  scope="col">Balance&nbsp;Amt&nbsp;</th>
@@ -220,11 +221,12 @@
                                     <td style="text-align: center;width: 5rem;">{{com.attribute1}}</td>
                                     <td style="text-align: center;width: 8rem;">{{com.status}}</td>
                                     <td style="text-align: center;width: 3rem;">{{com.gatepassId}}</td>
-                                    <td style="text-align: left;width: 11rem;">{{com.fullName}}</td>
-                                    <td style="text-align: center;width: 2rem;">{{com.custAccountNo}}</td>
-                                    <td style="text-align: center;width: 2rem;">{{com.custAccountNo}}</td>
-                                    <td style="text-align: center;width: 2rem;">{{com.custAccountNo}}</td>
-                                    <td style="text-align: center;width: 2rem;">{{com.custAccountNo}}</td>
+                                    <td style="text-align: center;width: 3rem;">{{com.dateOfDelv |date:'dd-MM-y'}}</td>
+                                    <td style="text-align: center;width: 8rem;">{{com.fullName}}</td>
+                                    <td style="text-align: center;width: 2rem;">{{com.trxNumber}}</td>
+                                    <td style="text-align: right;width: 2rem;">{{com.invoiceAmount}}</td>
+                                    <td style="text-align: right;width: 2rem;">{{com.balance}}</td>
+                                    <!-- <td style="text-align: center;width: 2rem;">{{com.custAccountNo}}</td> -->
                                     <!-- <td style="text-align: left;width: 16rem;">{{com.custName}}</td>
                                     <td style="text-align: center;width: 2rem;">{{com.custAccountNo}}</td>  -->
                                     <!-- <button  type="submit" class="btn btn-secondary" data-dismiss="modal" id="register"   (click)="Search(com.jobCardNum)">Select</button> -->

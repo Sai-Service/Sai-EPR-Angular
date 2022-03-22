@@ -1073,7 +1073,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
     var itemId = arrayControl[index].itemId;
     var taxcatName = arrayControl[index].taxCategoryName;
    var  taxCategoryId = arrayControl[index].taxCategoryId;
-   var disAmt1 = arrayControl[index].disAmt;
+   var disAmt1 = Math.round(((disAmt) + Number.EPSILON) * 100) / 100;
    var sum = 0;
    var lineTotAmt = 0;
    var disPer = arrayControl[index].disPer;
@@ -1095,7 +1095,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
           sgst:sum/2,
           cgst:sum/2,
           totAmt: Math.round(((baseAmt + sum - disAmt1) + Number.EPSILON) * 100) / 100,
-          disAmt: (disPer / 100) * baseAmt,
+          disAmt: disAmt1,
         });
         let distAmtArray = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
         var disValue = data[0].totTaxAmt;

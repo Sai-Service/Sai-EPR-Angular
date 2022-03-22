@@ -16,6 +16,7 @@ interface IWsVehicleMaster {
   mainModel: string;
   variantCode: string;
   segment: string;
+  vin:string;
   colorCode: string;
   chassisNo: string;
   engineNo: string;
@@ -698,6 +699,9 @@ export class WsVehicleMasterComponent implements OnInit {
 
       });
     }
+
+
+    
   
 
   SearchByRegNo(mReg: string) {
@@ -735,6 +739,49 @@ export class WsVehicleMasterComponent implements OnInit {
           }
         });
   }
+
+
+  SearchByModelChass(mdl, chas) {
+    // alert ("Search Vehicle by RegNo..... wip :"+mReg);
+    var mdl=this.wsVehicleMasterForm.get("mainModel").value
+    var chas=this.wsVehicleMasterForm.get("chassisNo").value
+     chas=chas.toUpperCase();
+       this.service.getVehDetailsByModelChassis(mdl,chas)
+      .subscribe(
+        data => {
+          this.lstcomments = data.obj;
+
+          if (data.code === 400) {
+            alert("Model+Chassis : " + mdl + " +" +chas + "not Found...");
+            this.displayButton = true;
+            this.showCreateCustButton = true;
+            this.showCreateItemButton = true;
+            //  this.resetVehDet();this.resetCustDet();this.resetAddnl();this.resetTv();
+            // this.wsVehicleMasterForm.reset();
+            // this.VariantSearch=null;
+            this.resetMast();
+
+          }
+          else {
+
+            // alert ( "Status :"+this.lstcomments.status);
+            this.displayButton = false;
+            console.log(this.lstcomments);
+            this.wsVehicleMasterForm.patchValue(data.obj);
+            this.vehRegNo=data.obj.regNo;
+            this.GetItemDeatils(this.lstcomments.itemId);
+            this.GetCustomerDetails(this.lstcomments.custAccountNo);
+            // this.GetCustomerSiteDetails(this.lstcomments.customerId);
+            // this.CreateItemCode();
+
+            if(this.lstcomments.status ==='Inactive') { this.wsVehicleMasterForm.disable();}
+
+          }
+        });
+  }
+
+
+
 
   GetItemDeatils(mItemId) {
     // alert ("Item Id :"+mItemId);
@@ -1192,6 +1239,12 @@ export class WsVehicleMasterComponent implements OnInit {
     if (formValue.variantCode === undefined || formValue.variantCode === null || formValue.variantCode.trim() === '') {
       this.checkValidation = false;
       alert("VARIANT CODE : Should not be null....");
+      return;
+    }
+
+    if (formValue.vin === undefined || formValue.vin === null || formValue.vin.trim() === '') {
+      this.checkValidation = false;
+      alert("VIN : Should not be null....");
       return;
     }
 

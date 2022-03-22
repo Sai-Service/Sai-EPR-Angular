@@ -464,7 +464,7 @@ export class SalesOrderProformaComponent implements OnInit {
               pricingQty: 1,
               unitSellingPrice: data.obj[0].basicValue,
               baseAmt: this.basicChassisPrice,
-              taxPer: data.obj[0].gstPercentage,
+              taxPer: (data.obj[0].gstPercentage+data.obj[0].cessPer+data.obj[0].tcsPer),
               taxAmt: (this.basicChassisPrice * data.obj[0].gstPercentage / 100),
               sgst: ((this.basicChassisPrice * data.obj[0].gstPercentage / 100) / 2),
               cgst: ((this.basicChassisPrice * data.obj[0].gstPercentage / 100) / 2),

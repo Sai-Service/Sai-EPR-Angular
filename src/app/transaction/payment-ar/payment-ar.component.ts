@@ -741,31 +741,9 @@ export class PaymentArComponent implements OnInit {
     }
     return matches;
   };
+  
 
-  serchByRegNo(mRegNo) {
-    // alert(mRegNo +'Search vehicle');
-    this.service.getVehRegDetailsNew(mRegNo)
-      .subscribe(
-        data => {
-          this.getVehRegDetails = data.obj;
-          console.log(this.getVehRegDetails);
-          
-          if(this.getVehRegDetails !=null){
-          console.log(this.getVehRegDetails);
-
-          this.paymentArForm.patchValue({
-            customerId: this.getVehRegDetails.customerId,
-          });
-          this.enableCustAccount = false;
-          this.GetCustomerDetails(this.customerId);
-          this.GetCustomerSiteDetails(this.customerId);
-        }  else { alert("Vehicle Regno. Not Found...."); 
-        // this.resetMast(); 
-      }
-
-        });
-      
-  }
+ 
 
 
 
@@ -1628,43 +1606,33 @@ export class PaymentArComponent implements OnInit {
   }
 
 
-
-
-  CustAccountNoSearch_Testing(accountNo) {
-    alert("CustAccountNoSearch:"+accountNo);
-    if (accountNo <= 0) {
-      this.custName = null;
-      this.custSiteAddress = null;
-    } else {
-
-      this.service.searchCustomerByAccount(accountNo)
-        .subscribe(
-          data => {
-            this.accountNoSearch = data.obj;
-            alert (data.code);
-           if (data.code != 200) {
-              this.custName = null;
-              this.custSiteAddress = null;
-              alert("Customer Account no doesn't Exists.\nDivision/OpUnit -" + this.loginArray + "(" + this.divisionId + ") / " + this.ouName + "(" + this.ouId + ")")
-            }
-            else {
-              this.paymentArForm.patchValue({custAccountNo:data.obj.custAccountNo});
-              console.log(this.accountNoSearch);
-              this.paymentArForm.patchValue({
-                customerId: this.accountNoSearch.customerId,
-                custName: this.accountNoSearch.custName,
-                //  custSiteAddress: this.accountNoSearch.billToAddress,
-                // billToSiteId: this.accountNoSearch.billToLocId,
-              });
-              this.GetCustomerSiteDetails(this.accountNoSearch.customerId);
-              this.getTdsAmount(this.accountNoSearch.tdsPer)
-            
-            }
-
-          });
-    }
-  }
+  serchByRegNo(mRegNo) {
+    // alert(mRegNo +'Search vehicle');
+    this.service.getVehRegDetailsNew(mRegNo)
+      .subscribe(
+        data => {
+          this.getVehRegDetails = data.obj;
+          console.log(this.getVehRegDetails);
           
+          if(this.getVehRegDetails !=null){
+          console.log(this.getVehRegDetails);
+
+          this.paymentArForm.patchValue({
+            customerId: this.getVehRegDetails.customerId,
+            custAccountNo :this.getVehRegDetails.custAccountNo
+          });
+          this.enableCustAccount = false;
+          // this.GetCustomerDetails(this.customerId);
+          // this.GetCustomerSiteDetails(this.customerId);
+          this.CustAccountNoSearch(this.getVehRegDetails.custAccountNo);
+
+        }  else { alert("Vehicle Regno. Not Found...."); 
+        // this.resetMast(); 
+      }
+
+        });
+      
+  }
   
 
   CustAccountNoSearch(accountNo) {

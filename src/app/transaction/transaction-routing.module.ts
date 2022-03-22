@@ -40,6 +40,7 @@ import { AmcEnrollmentComponent } from './amc-enrollment/amc-enrollment.componen
 import { WarrantyClaimComponent } from './warranty-claim/warranty-claim.component';
 import { PayableInvoiceNewComponent } from './payable-invoice-new/payable-invoice-new.component';
 import { DeadStockComponent } from './dead-stock/dead-stock.component';
+import { PoInvListComponent } from './po-inv-list/po-inv-list.component';
 // import { ShippingNetworkComponent } from './shipping-network/shipping-network.component';cd..
 
 
@@ -53,6 +54,7 @@ const routes: Routes = [
   {path:'TdsInvoice',component:TdsInvoiceComponent},
   {path:'Payment',component:PaymentsComponent},
   {path:'Payment/:invNumber',component:PaymentsComponent},
+  {path:'payableInvoice/:invNumber',component:PayableInvoiceNewComponent},
   {path:'ARInvoice', component:ARInvoiceComponent},
   {path:'AvgCostUpdate',component:AvgCostUpdateComponent},
   {path:'PaymentReceipt',component:PaymentReceiptComponent},
@@ -89,6 +91,7 @@ const routes: Routes = [
 {path :'WarrantyClaim',component:WarrantyClaimComponent},
 {path:'payableInvoice',component:PayableInvoiceNewComponent},
 {path:'DeadStock',component:DeadStockComponent},
+{path:'poInvList',component:PoInvListComponent},
 // {path :'ShippingNetwork',component:ShippingNetworkComponent},
 // {path:'CounterSaleReturn',component:CounterSaleReturnComponent},
  {path : '' ,redirectTo: 'Dashboard', pathMatch: 'full'}

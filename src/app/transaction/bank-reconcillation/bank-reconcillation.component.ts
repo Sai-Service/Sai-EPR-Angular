@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+// import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, NumberValueAccessor } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Validators , FormArray } from '@angular/forms';
@@ -10,7 +11,10 @@ import { InteractionModeRegistry } from 'chart.js';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 import { mapToMapExpression } from '@angular/compiler/src/render3/util';
 
-interface IBankRecon { }
+interface IBankRecon { 
+  stNumber : string;
+  bankAccountId:number;
+}
 
 @Component({
   selector: 'app-bank-reconcillation',
@@ -21,6 +25,18 @@ interface IBankRecon { }
 export class BankReconcillationComponent implements OnInit {
     bankReconcillationForm : FormGroup;
   
+        importButton=true;
+        dataDisplay: any;
+        msg:any;
+        updStatus=true;
+        fileValidation=false;
+        fileName :string; 
+        docType :string;
+        resMsg : string;
+        lstMessage: any;
+        viewLogFile=false;
+        
+
         pipe = new DatePipe('en-US');
         now = Date.now();
         public minDate = new Date();
@@ -42,10 +58,10 @@ export class BankReconcillationComponent implements OnInit {
         deptId:number; 
         emplId :number;
 
-        bankAccountId :string;
+        bankAccountId :number;
         docNumber:number;
-        stNumber:number;
-        complete:string;
+        stNumber:string;
+        complete:string ='No';
 
         bankAccountNo:string;
         bankAccountName:string;
@@ -78,11 +94,23 @@ export class BankReconcillationComponent implements OnInit {
         showReconButton3=false;
         showValidateButton=false;
         fndButton3=true;
+        showReconciledGrid =false;
+        optType:string;
+        transType:string='apPymt';
+        showImportModalForm=false;
 
+        statementHeaderId1:number;
+        statementLineId:number;
+        referenceType:string;
+        referenceId:number;
+        amount :number;
+       
 
 
         get f() { return this.bankReconcillationForm.controls; }
         bankReconcillation(bankReconcillationForm:any) {  }
+
+        @ViewChild('fileInput') fileInput;
   
         constructor(private service: MasterService,private orderManagementService:OrderManagementService,private  fb: FormBuilder, private router: Router) {
           this.bankReconcillationForm = fb.group({ 
@@ -132,7 +160,14 @@ export class BankReconcillationComponent implements OnInit {
             date2:[],
             amount1:[],
             amount2:[],
+            optType:[],
+            transType:[],
+            amount:[],
 
+            statementHeaderId1:[],
+            statementLineId:[],
+            referenceType:[],
+            referenceId:[],
 
             ceLineList: this.fb.array([this.invLineDetails()]),
             avlList: this.fb.array([this.avlLineDetails()]),
@@ -142,6 +177,7 @@ export class BankReconcillationComponent implements OnInit {
         invLineDetails() {
           return this.fb.group({
             lineNumber:[],
+            statementHeaderId:[],
             statementLineId:[],
             trxType:[],
             trxCode:[],
@@ -152,10 +188,8 @@ export class BankReconcillationComponent implements OnInit {
             amtRecon:[],
             charges:[],
             status:[],
-           
-           
-      
-          })
+            reconDate:[],
+          });
         }
 
         avlLineDetails() {
@@ -164,12 +198,34 @@ export class BankReconcillationComponent implements OnInit {
             checkId:[],
             invTypeLookupCode:[],
             bankAccountNo:[],
-            appAmt:[],
             glDate:[],
             date1:[],
             docNo:[],
             voucherNo:[],
-           
+            name:[],
+            statementReconId:[],
+            // statementHeaderId:[],
+            // statementLineId:[],
+            // referenceType:[],
+            // referenceId:[],
+            // createdBy:[],
+            // creationDate:[],
+            // lastUpdatedBy:[],
+            // lastUpdateDate:[],
+            jeHeaderId:[],
+            // orgId:[],
+            referenceStatus:[],
+            statusFlag:[]='M',
+            actionFlag:[],
+            currentRecordFlag:[]='Y',
+            autoReconciledFlag:[]='N',
+            appAmt:[],
+            requestId:[],
+            programApplicationId:[],
+            programId:[],
+            programUpdateDate:[],
+            legalEntityId:[],
+            // emplId:[],
                 
           })
         }
@@ -245,10 +301,13 @@ export class BankReconcillationComponent implements OnInit {
           });
        }
 
+      
+
        Select(hdrId) {
         //  alert("Statement Header Id :"+hdrId);
 
         let select = this.lstStatementList.find(d => d.statementHeaderId === hdrId);
+
         this.branchName=select.branchName;
         this.bankAccountName=select.bankAccountName;
         this.bankAccountNo=select.bankAccountNo;
@@ -285,20 +344,47 @@ export class BankReconcillationComponent implements OnInit {
        }
 
 
+       resetMast() {
+        window.location.reload();
+      }
+    
+      closeMast() {
+        this.router.navigate(['admin']);
+      }
 
        LoadValues(){}
 
-       reconciledBnk(){alert ("Bank Statement -Reconciled -wip");}
-       availableBnk(){alert ("Bank Statement -Availiable -wip");}
-
       
 
-       FindAvl(){
+       availableBnk(){alert ("Bank Statement -Availiable -wip");}
 
+       radioEvent(event:any){
+        // alert(event.target.value);
+        
+        if( event.target.value==='payment')   { this.bankReconcillationForm.patchValue({transType  : 'PAYMENT' }); }
+        if( event.target.value==='receipt')   { this.bankReconcillationForm.patchValue({transType  : 'RECEIPT' }); }
+        if( event.target.value==='cashflow')  { this.bankReconcillationForm.patchValue({transType  : 'CASHFLOW'}); }
+        // alert ("this.transType : " +this.transType);
+      }
+
+       FindAvl(event:any){
+        // var avlType =this.bankReconcillationForm.controls['optType'].value;
+        this.showReconciledGrid=false;
+        var refType =this.bankReconcillationForm.get('referenceType').value;
+        var ptype =this.bankReconcillationForm.get('transType').value;
+
+        // alert ("refType ,ptype: " +refType  + "," + ptype);
+
+        if(ptype===refType) {
+          // alert ("if refType ,ptype: " +refType  + "," + ptype);
+
+        var trnType=this.bankReconcillationForm.get("transType").value
         var bnkAcNo=this.bankReconcillationForm.get("bankAccountNo").value
         var dt1=this.pipe.transform(this.date1, 'dd-MMM-y');
         var dt2=this.pipe.transform(this.date2, 'dd-MMM-y');
-        this.service.getAvlBankReconLines(bnkAcNo, this.transNo1,dt1,dt2,this.amount1,this.amount2)
+
+       
+        this.service.getAvlBankReconLines(bnkAcNo, this.transNo1,dt1,dt2,this.amount1,this.amount2,trnType)
           .subscribe(
             data => {
               this.lstAvlBnkLines = data.obj;
@@ -315,11 +401,47 @@ export class BankReconcillationComponent implements OnInit {
                 this.avlLineArray().push(avlLnGrp);
               }
               this.bankReconcillationForm.get('avlList').patchValue(this.lstAvlBnkLines);
+
+              // this.addHeaderDetails();
+
               this.showValidateButton=true;
               this.fndButton3=false;
         });
 
+      } else { alert ("Transaction Type Mismatch.\nPlease Select Correct Search Parameters.");}
        }
+
+
+       reconciledBnk(){
+        var stLineId=this.bankReconcillationForm.get("statementLineId").value
+        // alert (" stLineId :"+  stLineId);
+
+        this.service.getReconciledDetails(stLineId)
+        .subscribe(
+          data => {
+            this.lstAvlBnkLines = data.obj;
+            if(this.lstAvlBnkLines.length==0) {
+              alert ("No Record Found.");
+                return;
+            }
+            console.log(this.lstAvlBnkLines);
+            this.showReconciledGrid=true;
+            this.showValidateButton=false;
+            this.fndButton3=false;
+
+            var len = this.avlLineArray().length;
+            for (let i = 0; i < this.lstAvlBnkLines.length - len; i++) {
+              var avlLnGrp: FormGroup = this.avlLineDetails();
+              this.avlLineArray().push(avlLnGrp);
+            }
+            this.bankReconcillationForm.get('avlList').patchValue(this.lstAvlBnkLines);
+            // this.showValidateButton=true;
+            // this.fndButton3=false;
+          });
+       }
+
+     
+       
 
 
        avlTrans(){
@@ -339,16 +461,41 @@ export class BankReconcillationComponent implements OnInit {
          var tranAmt = LineArr[index].amount;
          this.transNo1=tranNum;this.transNo2=tranNum
          this.amount1=tranAmt;this.amount2=tranAmt
+
+         this.statementHeaderId1=LineArr[index].statementHeaderId;
+         this.statementLineId=LineArr[index].statementLineId;
+         this.referenceType=LineArr[index].trxType;
+         this.referenceId=LineArr[index].checkId;
+         this.amount=LineArr[index].amount;
+
         //  this.showValidateButton=true;
       }
 
       LineSelectFlag(e,index){ }
 
       ValidatebnkRecon(){
+
      
         var avlLineArr = this.bankReconcillationForm.get('avlList').value;
         var len1 = avlLineArr.length;
         // alert ("avlLineArr.length :"+ avlLineArr.length);
+        var lineTot =0;
+         for (let i = 0; i < len1; i++) { 
+         var sFlag= this.avlLineArray().controls[i].get('selectFlag').value
+         if(sFlag===true) {
+          lineTot =lineTot+this.avlLineArray().controls[i].get('appAmt').value
+         }
+        }
+
+        var headerAmt= this.amount;
+        // alert ("Header Amt :" +headerAmt  + " ,  Line Total :" +lineTot);
+
+        if(headerAmt === lineTot) { 
+          this.showReconButton3 = true; } 
+        else {
+          this.showReconButton3 = false; 
+          alert ("Amount Mismatch......\nStatement Amount not matching with Line Amount.");
+        return;  } 
 
   
         var lrm=0;
@@ -392,11 +539,33 @@ export class BankReconcillationComponent implements OnInit {
 
       bnkReconcilePost() {
         // alert("SAVE TDS DETAILS.....WIP")
+        const formValue: IBankRecon = this.bankReconcillationForm.value;
         this.showReconButton3=false;
         var avlLines = this.bankReconcillationForm.get('avlList').value;
+        var patch = this.bankReconcillationForm.get('avlList') as FormArray;
         var len1 = avlLines.length;
-          console.log(avlLines);
-          this.service.bankReconPostSubmit(avlLines).subscribe((res: any) => {
+
+          let variants = <FormArray>this.avlLineArray();
+
+          var stHdrId = this.bankReconcillationForm.get('statementHeaderId1').value;
+          var stLineId = this.bankReconcillationForm.get('statementLineId').value;
+          var refType = this.bankReconcillationForm.get('referenceType').value;
+    
+          for (let i = 0; i < this.avlLineArray().length; i++) {
+            let variantFormGroup = <FormGroup>variants.controls[i];
+            var refId = avlLines[i].checkId;
+            variantFormGroup.addControl('statementHeaderId', new FormControl(stHdrId, Validators.required));
+            variantFormGroup.addControl('statementLineId', new FormControl(stLineId, Validators.required));
+            variantFormGroup.addControl('referenceType', new FormControl(refType, Validators.required));
+            variantFormGroup.addControl('referenceId', new FormControl(refId, Validators.required));
+            variantFormGroup.addControl('emplId', new FormControl(Number(sessionStorage.getItem('emplId')), Validators.required));
+            variantFormGroup.addControl('orgId', new FormControl(Number(sessionStorage.getItem('ouId')), Validators.required));
+            variantFormGroup.addControl('amount', new FormControl(avlLines[i].appAmt, Validators.required));
+          }
+          
+          console.log(variants.value);
+          // console.log(avlLines);
+          this.service.bankReconPostSubmit(variants.value).subscribe((res: any) => {
             if (res.code === 200) {
               alert(res.message);
               // this.poInvoiceForm.reset();
@@ -408,8 +577,87 @@ export class BankReconcillationComponent implements OnInit {
               }
             }
           });
-           
-    
       }
+
+      ImportBankStmnt(bankAccountId){
+        this.dataDisplay='';
+        const formValue: IBankRecon = this.bankReconcillationForm.value;
+        // alert(formValue.bankAccountId +","+formValue.stNumber);
+
+        if (formValue.bankAccountId === undefined || formValue.bankAccountId === null || formValue.bankAccountId<=0) {
+          this.fileValidation=false;
+          alert("ACCOUNT NO : Should not be null....");
+          this.showImportModalForm=false;
+          return;
+        }
+
+        if (formValue.stNumber === undefined || formValue.stNumber === null || formValue.stNumber.trim() === '') {
+          this.fileValidation=false;
+          alert("STATEMENT NO : Should not be null....");
+          this.showImportModalForm=false;
+          return;
+        }
+
+          this.showImportModalForm=true;
+      }
+
+      CheckValidations() {
+        const formValue: IBankRecon = this.bankReconcillationForm.value;
+   
+        var csvFileName=this.fileInput.nativeElement.files[0];
+
+        if (formValue.stNumber === undefined || formValue.stNumber === null || formValue.stNumber.trim() === '') {
+          this.fileValidation=false;
+          alert("STATEMENT NO : Should not be null....");
+          return;
+        }
+    
+        if(csvFileName==null || csvFileName==undefined) {
+          alert ("Select CSV File Name..."+csvFileName );
+          this.fileValidation=false;
+          this.importButton=false;
+          return;
+        }
+
+
+
+          this.fileValidation=true;
+          this.importButton=true;
+      }
+
+      uploadFile() {
+        this.CheckValidations()
+       
+        if (this.fileValidation===true) {
+          this.updStatus=true; 
+          this.importButton=false;
+          // this.progress = 0;
+
+        this.dataDisplay ='File Upload in progress....Do not refresh the Page'
+        var bnkAcId=this.bankReconcillationForm.get("bankAccountId").value
+        var stNum=this.bankReconcillationForm.get("stNumber").value
+
+        var event=this.fileInput.nativeElement.files[0];
+        console.log('doctype-check'+this.docType)
+        let formData = new FormData();
+        formData.append('file', event)
+           this.service.UploadExcelBankStatement(formData,this.docType,this.ouId,bnkAcId,stNum).subscribe((res: any) => {
+            if (res.code === 200) {
+                this.resMsg = res.message+",  Code : "+res.code;;
+              //  this.lstMessage=res.obj.priceListDetailList;
+                this.dataDisplay ='File Uploaded Sucessfully....'
+               this.importButton=false;
+               this.viewLogFile=true;
+            } else {
+              // if (res.code === 400) {
+                 this.resMsg = res.message +",  Code : "+res.code;
+                // this.lstMessage=res.obj.priceListDetailList;
+                this.updStatus=false;
+                this.dataDisplay ='File Uploading Failed....'
+                this.importButton=false;
+                // this.viewLogFile=false;
+              // }
+            } });
+         } }
 
 }
