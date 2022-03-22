@@ -747,9 +747,7 @@
                                                                     </a>
                                                                 </ng-template>   -->
 
-                                                                <div
-                                                                    *ngIf="displayViewTaxDetails; then thenViewTaxDetails; else elseViewTaxDetails">
-                                                                </div>
+                                                                <div *ngIf="displayViewTaxDetails; then thenViewTaxDetails; else elseViewTaxDetails"> </div>
                                                                 <ng-template #thenViewTaxDetails>
                                                                     <button type="button" data-toggle="modal"
                                                                         (click)="openTaxDetails(k)"
@@ -774,7 +772,6 @@
                                                                     style="width: 50px;height: 25px;font-size: 10px;"
                                                                     (click)="selectDisLineDtl(k)" #val1
                                                                     (change)="move(val1,val2)" [disabled]="isDisabled">
-
                                                             </td>
                                                             <td>
 

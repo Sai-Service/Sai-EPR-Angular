@@ -367,6 +367,9 @@ export class PayableInvoiceNewComponent implements OnInit {
   addonDescList: any;
   public allTaxCategoryList: any = [];
 
+
+  displaylineNumber=true;
+
   constructor(private fb: FormBuilder, private router1: ActivatedRoute,private orderManagementService: OrderManagementService, private transactionService: TransactionService, private service: MasterService, private router: Router) {
     this.poInvoiceForm = fb.group({
       emplId: [],
@@ -930,9 +933,6 @@ export class PayableInvoiceNewComponent implements OnInit {
     let jsonData = this.poInvoiceForm.value;
     let invSearch: ISearch = Object.assign({}, jsonData);
     var searchObj: InvoiceSearchNew = new InvoiceSearchNew();
-    if (this.currop === 'Save') {
-      searchObj.invoiceNum === 'content';
-    }
     if (this.poInvoiceForm.get('segment1').value != null) { searchObj.segment1 = this.poInvoiceForm.get('segment1').value }
     if (this.poInvoiceForm.get('suppNo').value != null) { searchObj.suppNo = this.poInvoiceForm.get('suppNo').value }
     if (this.poInvoiceForm.get('invoiceNum').value != null) { searchObj.invoiceNum = this.poInvoiceForm.get('invoiceNum').value }
@@ -1717,19 +1717,13 @@ export class PayableInvoiceNewComponent implements OnInit {
               var patch = this.poInvoiceForm.get('obj') as FormArray;
               var taxLinesData = this.poInvoiceForm.get('taxLines').value;
               console.log(taxLinesData);
-              // var headerTotTaxAmt = sum(taxLinesData[j].totTaxAmt)
               alert('Tax Details Has Been Patched... Please Confirm!');
-            
-              // this.invLineDetailsArray().get('lineNumber').disable()
+              this.displaylineNumber=false;
               var lnv = this.indexVal;
               var lno: String = String(lnv);
-              // alert(lno+'----taxcategory' );
-              // let taxMapData = this.poInvoiceForm.get('taxLines').value;
               this.taxMap.set(String(lno), taxLinesData);
               console.log(this.taxMap.get(String(lno)));
             }
-              // this.distribution1(k,lineTypeLookupCode,amount)
-            // var ln: string = String(this.invLineNo);
             this.invLineNo = k + 1;
             this.taxarr.set(this.invLineNo, this.poInvoiceForm.get('taxLines').value);
             let controlDist = this.poInvoiceForm.get('distribution') as FormArray;
