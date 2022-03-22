@@ -602,12 +602,7 @@ paymentSave(){
   var arrcon=this.paymentForm.get('obj1').value;
   var invTyp=arrcon[0].invTypeLookupCode;
   var patch=this.paymentForm.get('obj1') as FormArray;
-  if(arrcon[0].invTypeLookupCode==='Prepayment' &&arrcon[0].docNo===null)
-  {}
-  else{
-  patch.controls[0].patchValue({PayAmount:applAmt});
-  }
-  this.totAmt=0;
+   this.totAmt=0;
   const totlCalControls=this.paymentForm.get('obj').value;
   for (var k=0;k<this.payInvoiceLineDtlArray.length;k++)   {
     this.totAmt=this.totAmt+totlCalControls[k].totAmt;
@@ -644,6 +639,14 @@ paymentSave(){
       amount:arrayControle[i].invoiceAmt,
     })
   }
+  }
+  if(arrcon[0].invTypeLookupCode==='Prepayment' &&arrcon[0].docNo===null)
+  {
+    this.paymentForm.patchValue({appAmt:arrcon[0].PayAmount})
+    this.totAmount=arrcon[0].PayAmount
+  }
+  else{
+  patch.controls[0].patchValue({PayAmount:applAmt});
   }
 
   jsonData.totAmount = this.totAmount;

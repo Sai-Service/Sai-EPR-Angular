@@ -799,9 +799,9 @@ export class InternalConsumptionComponent implements OnInit {
     var trxLnArr1 = this.InternalConsumptionForm.get('cycleLinesList').value;
     const formValue: InternalConsumption = this.InternalConsumptionForm.value;
     let variants = <FormArray>this.cycleLinesList();
-    alert( this.InternalConsumptionForm.get('compileType').value)
+    // alert( this.InternalConsumptionForm.get('compileType').value)
     var transtypeid = this.InternalConsumptionForm.get('compileType').value;
-    alert(transtypeid +'trans')
+    // alert(transtypeid +'trans')
     // var seltranstyp = this.transType.find(d => d.transactionTypeId === transtypeid);
     // alert(seltranstyp.transactionTypeName);
     var locId1 = this.InternalConsumptionForm.get('locId').value
@@ -915,7 +915,7 @@ export class InternalConsumptionComponent implements OnInit {
     )
   }
   search(compNo) {
-    alert('In Search' + compNo);
+    // alert('In Search' + compNo);
     if (compNo != undefined) {
       this.currentOp = 'SEARCH';
       var compno = this.InternalConsumptionForm.get('compNo').value;
@@ -967,10 +967,10 @@ export class InternalConsumptionComponent implements OnInit {
       const formValue: InternalConsumption = this.InternalConsumptionForm.getRawValue();
       formValue.attribute2 = this.InternalConsumptionForm.get('compileDate').value;
       formValue.compileType = this.InternalConsumptionForm.get('compileId').value;
-      alert(this.InternalConsumptionForm.get('attribute1').value+'In save')
+      // alert(this.InternalConsumptionForm.get('attribute1').value+'In save')
       var itemCode = this.InternalConsumptionForm.get('attribute1').value;
-      alert(itemCode+'after')
-      debugger;
+      // alert(itemCode+'after')
+      // debugger;
       if (itemCode != null || itemCode != undefined) {
         var itemCode1=itemCode.split('--');
         formValue.attribute1 = itemCode1[0];
