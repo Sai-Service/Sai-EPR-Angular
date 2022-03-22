@@ -309,10 +309,6 @@ export class AllReportsComponent implements OnInit {
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.sppurRegidetailReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
       .subscribe(data => {
-        // var blob = new Blob([data], { type: 'application/vnd.ms-excel' });
-        // var url = URL.createObjectURL(blob);
-        // var printWindow = window.open(url, fileName, 'width=800,height=500');
-        // printWindow.open
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
         this.dataDisplay = ''
         this.closeResetButton = true;
@@ -347,10 +343,6 @@ export class AllReportsComponent implements OnInit {
 
     this.reportService.sppurRegiSummReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
       .subscribe(data => {
-        // var blob = new Blob([data], { type: 'application/pdf' });
-        // var url = URL.createObjectURL(blob);
-        // var printWindow = window.open(url, '', 'width=800,height=500');
-        // printWindow.open
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
         this.isDisabled11 = false;
         this.closeResetButton = true;
