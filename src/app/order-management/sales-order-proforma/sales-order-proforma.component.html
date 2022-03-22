@@ -620,7 +620,7 @@
         <div class="tab-content rounded-bottom">
             <div class="tab-pane fade in show active" id="panel1002">
                 <!-- <div class="grid_scroll"> -->
-                <table style="width: 100%; border: solid 1px Gray" class="auto-style4" cellspacing="0" cellpadding="4"
+                <table style="border: solid 1px Gray" class="auto-style4" cellspacing="0" cellpadding="4"
                     rules="all" class="center">
                     <thead>
                         <tr class="GridHeader">
@@ -632,14 +632,14 @@
                             <!-- <th scope="col">HSN/SAC code</th> -->
                             <th scope="col">Qty</th>
                             <th scope="col">Unit Price</th>
-                            <th scope="col">Base Amount</th>
+                            <th scope="col" hidden>Base Amount</th>
                             <!-- <th scope="col">Disc %</th> -->
                             <!-- <th scope="col">Disc Amt</th> -->
-                            <th scope="col">Tax %</th>
-                            <th scope="col">SGST</th>
-                            <th scope="col">CGST</th>
-                            <th scope="col">IGST</th>
-                            <th scope="col">Taxable Amount</th>
+                            <th scope="col" hidden>Tax %</th>
+                            <th scope="col" hidden>SGST</th>
+                            <th scope="col" hidden>CGST</th>
+                            <th scope="col" hidden>IGST</th>
+                            <th scope="col" hidden>Taxable Amount</th>
                             <th scope="col">Total Amount</th>
                             <!-- <th scope="col">MRP</th> -->
                             <!-- <th scope="col">Status</th> -->
@@ -670,7 +670,7 @@
 
                                             <select formControlName="invType" id="invType{{i}}"
                                                 (ngModelChange)='onOptionsSelectedCategory($event, i)'
-                                                class="form-control" style="width: 130px;height: 25px;font-size: 10px;">
+                                                class="form-control" style="width: 250px;height: 25px;font-size: 10px;">
                                                 <option>--Select--</option>
                                                 <option *ngFor="let cate of  categoryList" [value]="cate.itemType">
                                                     {{cate.itemType}}
@@ -692,7 +692,7 @@
 
                                             <select formControlName="segment" id="segment{{i}}"
                                                 (ngModelChange)='onOptionsSelectedDescription($event,i)'
-                                                class="form-control" style="width:180px;height: 25px;font-size: 10px;">
+                                                class="form-control" style="width:250px;height: 25px;font-size: 10px;">
                                                 <option>--Select--</option>
                                                 <option *ngFor="let item of  itemMap2.get(i) | keyvalue"
                                                     [value]="item.value.segment">
@@ -704,7 +704,7 @@
                                         <td>
                                             <input disabled type="text" formControlName="orderedItem"
                                                 value="orderedItem" [ngValue]="orderedItem" class="form-control"
-                                                style="height: 20px;width:180px;">
+                                                style="height: 20px;width:250px;">
                                         </td>
                                         <!-- <td>
                                             <input disabled type="text" formControlName="hsnSacCode"
@@ -714,7 +714,7 @@
                                         <td>
                                             <input disabled type="number" formControlName="pricingQty"
                                                 name="pricingQty{{i}}" class="form-control" (change)="onKey(i,'prc')"
-                                                (keydown.enter)="enterKeyLock(i)" style="height: 20px;width:50px;"
+                                                (keydown.enter)="enterKeyLock(i)" style="height: 20px;width:100px;"
                                                 min="0" oninput="this.value = Math.abs(this.value)">
                                             <input hidden type="text" formControlName="uom" class="form-control"
                                                 style="height: 20px;width: 70px;" min="0"
@@ -723,71 +723,67 @@
                                         <td>
                                             <input disabled type="number" formControlName="unitSellingPrice"
                                                 class="form-control" min="0" step="0.01"
-                                                style="height: 20px; width:80px;" (change)="onKey(i,'usprc')">
+                                                style="height: 20px; width:100px;" (change)="onKey(i,'usprc')">
                                         </td>
-                                        <td>
+                                        <td hidden>
                                             <input disabled type="number" formControlName="baseAmt" class="form-control"
-                                                (change)="onKey(i,'ba')" style="height: 20px;width: 80px;">
+                                                (change)="onKey(i,'ba')" style="height: 20px;width: 100px;">
                                         </td>
-                                        <td>
+                                        <td hidden>
                                             <input hidden type="number" disabled formControlName="disAmt"
                                                 class="form-control" min="0.00" (keydown.tab)="onKey(i)"
                                                 style="height: 20px;width: 80px;">
                                             <input hidden disabled type="text" formControlName="isTaxable"
                                                 class="form-control" style="height: 20px;width: 70px;">
-                                            <input disabled type="number" formControlName="taxPer" class="form-control"
+                                            <input disabled hidden type="number" formControlName="taxPer" class="form-control"
                                                 style="height: 20px;width: 40px;">
                                             <input disabled hidden type="number" formControlName="taxCategoryId"
                                                 class="form-control" style="height: 20px;width: 40px;">
                                         </td>
-                                        <td>
+                                        <td hidden>
                                             <input disabled type="number" formControlName="sgst" class="form-control"
                                                 style="height: 20px;width: 80px;">
                                         </td>
-                                        <td>
+                                        <td hidden>
                                             <input disabled type="number" formControlName="cgst" class="form-control"
                                                 style="height: 20px;width: 80px;">
                                         </td>
-                                        <td>
+                                        <td hidden>
                                             <input disabled type="number" formControlName="igst" class="form-control"
                                                 style="height: 20px;width: 80px;">
                                         </td>
-                                        <td>
+                                        <td hidden>
                                             <input disabled type="number" formControlName="taxAmt" class="form-control"
                                                 style="height: 20px;width: 80px;">
                                         </td>
                                         <td>
                                             <input disabled type="number" formControlName="totAmt" class="form-control"
-                                                style="height: 20px;width: 80px;">
+                                                style="height: 20px;width: 100px;">
                                         </td>
-                                        <!-- <td>
-                                            <input disabled type="number" formControlName="mrp"
-                                                class="form-control" style="height: 20px;width: 80px;">
-                                        </td> -->
                                         <td hidden>
                                             <input disabled type="text" formControlName="flowStatusCode"
-                                                class="form-control" style="height: 20px;width: 100px;">
+                                                class="form-control" style="height: 20px;width: 250px;">
                                         </td>
                                     </ng-template>
                                     <ng-template #elsesegmentInvType>
                                         <td>
                                             <a id="line{{i}}" data-toggle="tab" href="#panel1006"
-                                                style="width: fit-content;" [value]="i+1">{{i+1}}</a>
+                                                style="width: 100px;" [value]="i+1">{{i+1}}</a>
 
                                         </td>
                                         <td>
                                             <input disabled type="text" class="form-control" formControlName="invType"
-                                            style="width: 130px;height: 25px;font-size: 10px;">
+                                            style="width: 250px;height: 25px;font-size: 10px;">
                                         </td>
                                         <td>
                                             <input disabled type="text" formControlName="segment" value="segment"
                                                 [ngValue]="segment" class="form-control"
-                                                style="height: 20px;width: 180px;">
+                                                style="height: 20px;width: 250px;">
                                         </td>
                                         <td>
                                             <input disabled type="text" formControlName="orderedItem"
                                                 value="orderedItem" [ngValue]="orderedItem" class="form-control"
-                                                style="height: 20px;width:180px;">
+                                                style="height: 20px;width:250px;">
                                         </td>
                                         <!-- <td>
                                             <input disabled type="text" formControlName="hsnSacCode"
@@ -797,7 +793,7 @@
                                         <td>
                                             <input disabled type="number" formControlName="pricingQty"
                                                 name="pricingQty{{i}}" class="form-control" (change)="onKey(i,'prc')"
-                                                (keydown.enter)="enterKeyLock(i)" style="height: 20px;width:50px;"
+                                                (keydown.enter)="enterKeyLock(i)" style="height: 20px;width:100px;"
                                                 min="0" oninput="this.value = Math.abs(this.value)">
                                             <input hidden type="text" formControlName="uom" class="form-control"
                                                 style="height: 20px;width: 70px;" min="0"
@@ -808,7 +804,7 @@
                                                 class="form-control" min="0" step="0.01"
                                                 style="height: 20px; width:80px;" (change)="onKey(i,'usprc')">
                                         </td>
-                                        <td>
+                                        <td hidden>
                                             <input disabled type="number" formControlName="baseAmt" class="form-control"
                                                 (change)="onKey(i,'ba')" style="height: 20px;width: 80px;">
                                         </td>
@@ -824,23 +820,23 @@
                                         <!-- </td> -->
                                         <input hidden disabled type="text" formControlName="isTaxable"
                                             class="form-control" style="height: 20px;width: 70px;">
-                                        <td>
+                                        <td hidden>
                                             <input disabled type="number" formControlName="taxPer" class="form-control"
                                                 style="height: 20px;width: 40px;">
                                         </td>
-                                        <td>
+                                        <td hidden>
                                             <input disabled type="number" formControlName="sgst" class="form-control"
                                                 style="height: 20px;width: 80px;">
                                         </td>
-                                        <td>
+                                        <td hidden>
                                             <input disabled type="number" formControlName="cgst" class="form-control"
                                                 style="height: 20px;width: 80px;">
                                         </td>
-                                        <td>
+                                        <td hidden>
                                             <input disabled type="number" formControlName="igst" class="form-control"
                                                 style="height: 20px;width: 80px;">
                                         </td>
-                                        <td>
+                                        <td hidden>
                                             <input disabled type="number" formControlName="taxAmt" class="form-control"
                                                 style="height: 20px;width: 80px;">
                                         </td>
