@@ -380,10 +380,6 @@ export class AllReportsComponent implements OnInit {
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.spIssueDetailsReport(fromDate, toDate, sessionStorage.getItem('locId'))
       .subscribe(data => {
-        // var blob = new Blob([data], { type: 'application/pdf' });
-        // var url = URL.createObjectURL(blob);
-        // var printWindow = window.open(url, '', 'width=800,height=500');
-        // printWindow.open
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
         this.isDisabled2 = false;
         this.closeResetButton = true;
@@ -406,10 +402,6 @@ export class AllReportsComponent implements OnInit {
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.spIssueSummaryReport(fromDate, toDate, sessionStorage.getItem('locId'))
       .subscribe(data => {
-        // var blob = new Blob([data], { type: 'application/pdf' });
-        // var url = URL.createObjectURL(blob);
-        // var printWindow = window.open(url, '', 'width=800,height=500');
-        // printWindow.open
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
         this.isDisabled3 = false;
         this.closeResetButton = true;
@@ -427,14 +419,9 @@ export class AllReportsComponent implements OnInit {
     this.progress = 0;
     this.dataDisplay = 'Report Is Running....Do not refresh the Page';
     const fileName = 'SP-Closing-Stock-' + sessionStorage.getItem('locName').trim() + '.xls';
-
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.spclosstrockReport(sessionStorage.getItem('locId'))
       .subscribe(data => {
-        // var blob = new Blob([data], { type: 'application/pdf' });
-        // var url = URL.createObjectURL(blob);
-        // var printWindow = window.open(url, '', 'width=800,height=500');
-        // printWindow.open
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
         this.isDisabled4 = false;
         this.closeResetButton = true;
@@ -455,10 +442,6 @@ export class AllReportsComponent implements OnInit {
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.spReceiptRegisterReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
       .subscribe(data => {
-        // var blob = new Blob([data], { type: 'application/pdf' });
-        // var url = URL.createObjectURL(blob);
-        // var printWindow = window.open(url, '', 'width=800,height=500');
-        // printWindow.open
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
         this.isDisabled5 = false;
         this.closeResetButton = true;
@@ -481,10 +464,6 @@ export class AllReportsComponent implements OnInit {
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.SPDebtorReport(fromDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
       .subscribe(data => {
-        // var blob = new Blob([data], { type: 'application/pdf' });
-        // var url = URL.createObjectURL(blob);
-        // var printWindow = window.open(url, '', 'width=800,height=500');
-        // printWindow.open
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
         this.isDisabled6 = false;
         this.closeResetButton = true;
