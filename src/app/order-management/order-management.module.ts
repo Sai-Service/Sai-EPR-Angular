@@ -22,6 +22,7 @@ import { SalesOrderListComponent } from './sales-order-list/sales-order-list.com
 import { ClosingStockGridComponent } from './closing-stock-grid/closing-stock-grid.component';
 import { ShippingNetworkComponent } from './shipping-network/shipping-network.component';
 import { SalesOrderProformaComponent } from './sales-order-proforma/sales-order-proforma.component';
+import { PriceUpdationComponent } from './price-updation/price-updation.component';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { SalesOrderProformaComponent } from './sales-order-proforma/sales-order-
      SalesOrderListComponent,
      ClosingStockGridComponent,
      ShippingNetworkComponent,
-     SalesOrderProformaComponent ],
+     SalesOrderProformaComponent,
+     PriceUpdationComponent ],
   imports: [
     CommonModule,
     OrderManagementRoutingModule,

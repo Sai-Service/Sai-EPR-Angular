@@ -294,6 +294,10 @@ export class OrderManagementService {
     return this.http.post(url, BookRecord, options);
   }
 
+  getOnHandQty(locId,invItemId,subInventoryId):Observable<any>{
+    return this.http.get(this.ServerUrl+`/onhandqty/onhandPrchng?locId=${locId}&itemCode=${invItemId}&subInventoryId=${subInventoryId}`)
+  }
+
   public AccLineSave(AccLineRecord) {
     const options = {
       headers: this.headers
@@ -608,6 +612,14 @@ export class OrderManagementService {
     };
     const url = (this.ServerUrl + `/orderHeader/salesOrderOtherLineSave`);
     return this.http.put(url, UpdateSaleUpdateRecord, options);
+  }
+
+  UpdatePrice(UpdatePrice){
+    const options = {
+      headers: this.headers
+    };
+    const url = (this.ServerUrl + `/onhandqty/onHandPrcChng`);
+    return this.http.put(url, UpdatePrice, options);
   }
 
 

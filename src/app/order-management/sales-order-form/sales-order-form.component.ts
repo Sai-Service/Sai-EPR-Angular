@@ -1870,7 +1870,7 @@ export class SalesOrderFormComponent implements OnInit {
     salesObj.setoeOrderLinesAllList(orderLines);
     var taxStr = [];
     var financeType = this.SalesOrderBookingForm.get('financeType').value;
-    var financerName=this.SalesOrderBookingForm.get('financeAmt').value;
+    var financerName=this.SalesOrderBookingForm.get('financerName').value;
     var emi = this.SalesOrderBookingForm.get('emi').value;
     var tenure = this.SalesOrderBookingForm.get('tenure').value;
     var  downPayment = this.SalesOrderBookingForm.get('downPayment').value;
@@ -1915,10 +1915,12 @@ export class SalesOrderFormComponent implements OnInit {
       //   this.OrderFind(this.orderNumber);
       //   return;
       // }
+      // || emi === null || emi === undefined || tenure===null || tenure === undefined ||
+      //       downPayment=== null || downPayment === undefined
       if (orderLines[k].flowStatusCode === 'READY FOR INVOICE'){
+        alert(financeType+'---'+financerName)
         if (financeType != 'None' ){
-          if ( financerName === null || financerName === undefined || emi === null || emi === undefined || tenure===null || tenure === undefined ||
-            downPayment=== null || downPayment === undefined){
+          if ( financeType === null || financeType === undefined || financeType===''|| financerName===null ||financerName===undefined||financerName=='' ){
               alert('Please Enter Finanace or Exchange Details... !');
               this.isDisabled8 = false;
               this.dataDisplay = 'Please Enter Finanace or Exchange Details... !'

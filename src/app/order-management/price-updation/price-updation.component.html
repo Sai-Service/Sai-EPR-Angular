@@ -1,0 +1,71 @@
+<form [formGroup]="PriceUpdationForm" (ngSubmit)="PriceUpdation(PriceUpdationForm.value)">
+    <table style="width: 100%;background-color: rgb(255, 255, 255);">
+        <tr>
+            <td colspan="4" class="PageHeader" style="width: 100%;">
+                &nbsp;Price&nbsp;UpdationForm&nbsp;
+            </td>
+        </tr>
+    </table>
+    <fieldset class="RFS">
+        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Item&nbsp;Details </legend>
+    <table class="center">
+        
+        <tr>
+            <td style="width: 22%" class="LabelFontStyle">
+                Item&nbsp;Code&nbsp;:&nbsp;
+            </td>
+            <td>
+                <input type="text" style="height: 20px;width: 100px;text-transform: uppercase;"
+                    class="form-control" formControlName="itemSeg" [(ngModel)]='itemSeg' 
+                    (keydown.tab)="searchByItemSegmentDiv(itemSeg)" />
+            </td>
+            <td>
+                <input disabled type="text" formControlName="description" value="description" 
+                    class="form-control" style="height: 20px;width:220px;">
+            </td>
+            <td>
+                <button type="submit" (click)="itemDetails(itemSeg)" class="btn btn-primary">Search</button>
+            </td>
+        </tr>
+        <tr>
+          <td colspan="4">
+              <table class="center">
+                <tr class="GridHeader" style="font-size: 11px;">
+                    <th >SR No.</th>
+                    <th >Locator</th>
+                    <th >On Hand Qty</th>
+                    <th >Current Price</th>
+                    <th >New Price</th>
+                    <th> Update</th>
+                  </tr>
+                <tr *ngFor="let com of itemDetailsList ; let i= index" class="ItemStyle" style="text-decoration:none;font-size: 11px;">
+                    <td style="padding-left: 5px; text-align: center;">{{com.ROWNUM}}</td>
+                    <td style="padding-left: 5px; text-align: center;">{{com.segmentName}}</td>
+                    <td style="padding-left: 5px; text-align: center;">{{com.onHandQty}}</td>
+                    <td style="padding-left: 5px; text-align: center;">{{com.prc}}</td>
+                    <td hidden style="padding-left: 5px; text-align: center;">{{com.id}}</td>
+                     <td>
+                        <input type="number" Value={{attribute1}}  formControlName="attribute1"  class="form-control" style="height: 20px;width: 100px;">
+                     </td>  
+                     <td>
+                        <button type="submit" (click)="update(com.id)" class="btn btn-primary">Update</button>
+                    </td> 
+                </tr>
+              </table>
+          </td>
+        </tr>
+            
+    </table>
+    <table class="center">
+        <tr>
+            <td>
+                <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
+            </td>
+            <td>
+                <button type="submit" class="btn btn-primary" id="register"
+                    (click)="refresh()">Clear</button>
+            </td>
+        </tr>
+    </table>
+    </fieldset>
+</form>
