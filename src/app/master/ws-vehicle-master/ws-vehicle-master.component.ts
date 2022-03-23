@@ -242,6 +242,8 @@ export class WsVehicleMasterComponent implements OnInit {
   enableEwDetails =false;
   enableMcpDetails =false;
   enableCngDetails=true;
+  saveButton=true;
+  updateButton=false;
 
   variantItemId: number;
 
@@ -618,11 +620,14 @@ export class WsVehicleMasterComponent implements OnInit {
     const formValue: IWsVehicleMaster =this.transeData( this.wsVehicleMasterForm.value);
     this.CreateItemCode();
     this.CheckDataValidations();
-
+     this.saveButton=false;
+     this.updateButton=false;
+     this.displayButton=false;
+ 
     if (this.checkValidation) {
-      alert("Data Validation Sucessfully....")
+      alert("Data Validation done Sucessfully....")
 
-      // debugger;
+     
       console.log(formValue);
       formValue.divisionId =Number(sessionStorage.getItem('divisionId'));
       formValue.divisionName =sessionStorage.getItem('divisionName');
@@ -631,12 +636,13 @@ export class WsVehicleMasterComponent implements OnInit {
           alert('RECORD INSERTED SUCCESSFUILY');
           this.displaySuccess = true;
            this.wsVehicleMasterForm.patchValue(res);
+           this.wsVehicleMasterForm.disable();
           
         } else {
           if (res.code === 400) {
             this.displaySuccess = false;
             alert('Code already present in the data base');
-            
+            this.saveButton=true;
           }
         }
       });
@@ -651,15 +657,17 @@ export class WsVehicleMasterComponent implements OnInit {
     this.CheckDataValidations();
    
     if (this.checkValidation) {
+      this.updateButton=false;
       // alert("Data Validation Sucessfully....")
       this.service.UpdateWsVehicleMaster(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
         // window.location.reload();
-        this.wsVehicleMasterForm.disable()
+        this.wsVehicleMasterForm.disable();
       } else {
         if (res.code === 400) {
           alert(res.message);
+          this.updateButton=true;
           // this.wsVehicleMasterForm.reset();
         }
       }
@@ -696,7 +704,6 @@ export class WsVehicleMasterComponent implements OnInit {
            if(this.lstcomments.status ==='Inactive') { this.wsVehicleMasterForm.disable();}
       
       }
-
       });
     }
 
@@ -726,9 +733,13 @@ export class WsVehicleMasterComponent implements OnInit {
           else {
 
             // alert ( "Status :"+this.lstcomments.status);
+            this.updateButton=true;
             this.displayButton = false;
             console.log(this.lstcomments);
             this.wsVehicleMasterForm.patchValue(data.obj);
+            // this.dlrInvoiceNo=data.obj.dlrInvNo;
+            // this.dmsInvoiceNo=data.obj.dmsInvNo;
+
             this.GetItemDeatils(this.lstcomments.itemId);
             this.GetCustomerDetails(this.lstcomments.custAccountNo);
             // this.GetCustomerSiteDetails(this.lstcomments.customerId);
@@ -765,6 +776,7 @@ export class WsVehicleMasterComponent implements OnInit {
           else {
 
             // alert ( "Status :"+this.lstcomments.status);
+            this.updateButton=true;
             this.displayButton = false;
             console.log(this.lstcomments);
             this.wsVehicleMasterForm.patchValue(data.obj);
@@ -1032,6 +1044,7 @@ export class WsVehicleMasterComponent implements OnInit {
             oemWarrantyPeriod :this.variantDetailsList.oemWarrantyPeriod,
 
           });
+          
           this.service.colorCodeListByVariant(modelVariant)
           .subscribe(
             data => {
