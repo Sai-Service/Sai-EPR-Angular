@@ -1207,10 +1207,10 @@ export class CustomerMasterComponent implements OnInit {
     var validdata: boolean;
     const formValue: IcustomerMaster = this.customerMasterForm.value;
     if (formValue.custType === 'Person') {
-      if (formValue.birthDate === undefined) {
-        alert('Please enter Birth Date');
-        validdata = false;
-      }
+      // if (formValue.birthDate === undefined) {
+      //   alert('Please enter Birth Date');
+      //   validdata = false;
+      // }
       if (formValue.title === undefined) {
         alert('Please select Title');
         validdata = false;
