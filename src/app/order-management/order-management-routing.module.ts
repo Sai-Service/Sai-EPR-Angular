@@ -20,6 +20,7 @@ import { SalesOrderListComponent } from './sales-order-list/sales-order-list.com
 import { ClosingStockGridComponent } from './closing-stock-grid/closing-stock-grid.component';
 import { ShippingNetworkComponent } from './shipping-network/shipping-network.component';
 import { SalesOrderProformaComponent } from './sales-order-proforma/sales-order-proforma.component';
+import { PriceUpdationComponent } from './price-updation/price-updation.component';
 
 const routes: Routes = [
   {path:'salesOrderBooking', component:SalesOrderBookingComponent},
@@ -45,6 +46,7 @@ const routes: Routes = [
   {path:'GatePass/:orderNumber',component:SalesGatePassComponent},
   {path:'ShippingNetwork',component:ShippingNetworkComponent},
   {path:'SalesProforma',component:SalesOrderProformaComponent},
+  {path:'priceUpdation',component:PriceUpdationComponent},
   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];
 

@@ -4,6 +4,7 @@ import { AccountsReportComponent } from './accounts-report/accounts-report.compo
 import { AllReportsComponent } from './all-reports.component';
 import { SalesReportsComponent } from './sales-reports/sales-reports.component';
 import { ServiceReportComponent } from './service-report/service-report.component';
+import { SparesReportsComponent } from './spares-reports/spares-reports.component';
 
 
 
@@ -12,6 +13,7 @@ const routes: Routes = [
   {path:'ServiceReport',component:ServiceReportComponent},
   {path:'SalesReports',component:SalesReportsComponent},
   {path:'AccountsRepor',component:AccountsReportComponent},
+  {path:'SparesReportsNew',component:SparesReportsComponent},
   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];
 

@@ -3835,5 +3835,15 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
           return this.http.post(url, deadLineRecord, options);
           // http://localhost:8081/DedStock/addLine
         }
+
+        // //////////////AR Invoice////////////////////
+viewInvnote(trxNumber){
+ const REQUEST_URI = this.ServerUrl +`/arInv/ManualInvPrint/${trxNumber}`;
+  return this.http.get(REQUEST_URI, {
+    // params: REQUEST_PARAMS,
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
+}
   
 }
