@@ -1918,7 +1918,7 @@ export class SalesOrderFormComponent implements OnInit {
       // || emi === null || emi === undefined || tenure===null || tenure === undefined ||
       //       downPayment=== null || downPayment === undefined
       if (orderLines[k].flowStatusCode === 'READY FOR INVOICE'){
-        alert(financeType+'---'+financerName)
+        // alert(financeType+'---'+financerName)
         if (financeType != 'None' ){
           if ( financeType === null || financeType === undefined || financeType===''|| financerName===null ||financerName===undefined||financerName=='' ){
               alert('Please Enter Finanace or Exchange Details... !');
