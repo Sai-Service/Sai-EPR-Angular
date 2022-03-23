@@ -8,6 +8,7 @@ import { DatePipe } from '@angular/common';
 
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { relativeTimeRounding } from 'moment';
 
 
 interface IPaymentRcptAr {
@@ -178,10 +179,11 @@ export class PaymentArComponent implements OnInit {
   // reversalDate= this.pipe.transform(this.now, 'dd-MM-y');
   reversalDate: string;
   reversalComment: string;
-  reversalReasonCode: number;
+  reversalReasonCode: string;
   reversalCategory: string;
   bounceReasonCode:string;
   chqBounceCharge:number;
+  chqBncTrxNo:number;
   // status : string;
   status = 'Open';
   cancelDate = null;
@@ -246,7 +248,7 @@ export class PaymentArComponent implements OnInit {
   applHistory=false;
   chqBounceStatus=false;
   printButton=true;
-
+  fromJc=false;
 
   showInvoiceGrid = false;
   showRefundGrid = false;
@@ -380,6 +382,7 @@ export class PaymentArComponent implements OnInit {
       reversalCategory: [],
       bounceReasonCode:[],
       chqBounceCharge:[],
+      chqBncTrxNo:[],
 
       cancelReason: [],
       cancelDate: [],
@@ -466,13 +469,15 @@ export class PaymentArComponent implements OnInit {
     this.sub = this.router1.params.subscribe(params => {
       this.vehRegNo = params['regNo'];
       this.attribute1=this.vehRegNo;
+     
       if (this.vehRegNo != undefined){
+        this.fromJc=true;
       this.serchByRegNo(this.attribute1);
       }
     });
   /////////////////////////////////////////////////////
 
-   
+  //  alert ("this.fromJc :" +this.fromJc);
 
     this.service.RegNoListFN()
       .subscribe(
@@ -889,6 +894,9 @@ export class PaymentArComponent implements OnInit {
 
 
   SearchByRcptNo(rcptNo: any) {
+    // alert ("Receipt Num : " +rcptNo);
+    if(rcptNo ===undefined || rcptNo===null || rcptNo<=0 ) {return;}
+
     this.status = null;
     this.service.getArReceiptSearchByRcptNoByloc(rcptNo,sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
       .subscribe(
@@ -898,17 +906,15 @@ export class PaymentArComponent implements OnInit {
           if (data.code === 400) {
             alert(data.obj)
             this.lstcomments = null;
-          }
+      } });}
 
-        }
-      );
-  }
-
-  SearchRcptByCustNoDate( custActNo: any, rcptdate: any) {
-    // alert("SearchByRcptNo-Receipt No : "+ rcptNo+","+custActNo +","+ rcptdate );
+    SearchRcptByCustNo(custActNo: any) {
+    // alert ("custActNo Num : " +custActNo);
+    if(custActNo ===undefined || custActNo===null || custActNo<=0 ) {return;}
+   
     this.status = null;
-    var mDate = this.pipe.transform(rcptdate, 'dd-MMM-y');
-    this.service.SearchRcptByCustNoDate(custActNo, mDate,sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
+    // var mDate = this.pipe.transform(rcptdate, 'dd-MMM-y');
+    this.service.SearchRcptByCustNo(custActNo, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
       .subscribe(
         data => {
           this.lstcomments = data.obj;
@@ -916,16 +922,28 @@ export class PaymentArComponent implements OnInit {
           if (data.message === "Record Not Found ") {
             alert("No Receipt Found for this date...")
             this.lstcomments = null;
-          }
+      } } ); }
 
-        }
-      );
-  }
+     
+   SearchRcptByRcptDate( rcptdate: any) {
+    
+    // alert ("rcptdate  : " +rcptdate);
+    if(rcptdate ===undefined || rcptdate===null  ) {return;}
+   
+    this.status = null;
+    var mDate = this.pipe.transform(rcptdate, 'dd-MMM-y');
+    this.service.SearchRcptByDate(mDate,sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
+      .subscribe(
+        data => {
+          this.lstcomments = data.obj;
+          console.log(this.lstcomments);
+          if (data.code === 400) {
+            alert("No Receipts Found for this date...")
+            this.lstcomments = null;
+         }  } ); }
 
 
-
-
-
+      
 
   Select(receiptNumber: any) {
     // alert ("Receipt Number : " +receiptNumber );
@@ -958,11 +976,14 @@ export class PaymentArComponent implements OnInit {
           // this.locId=Number(this.locationId);
           //  alert("this.status  "+this.status);
 
+         
+          this.chqBncTrxNo=data.obj.oePayList[0].chqBncTrxNo;
           this.totAppliedtAmount = data.obj.oePayList[0].totAppliedtAmount.toFixed(2);
           this.totUnAppliedtAmount = data.obj.oePayList[0].totUnAppliedtAmount.toFixed(2);
           this.balanceAmount = data.obj.oePayList[0].balanceAmount.toFixed(2);
           this.GetCustomerDetails(data.obj.oePayList[0].customerId)
           this.GetCustomerSiteDetails(data.obj.oePayList[0].customerId)
+          
 
 
           // this.reversalReasonCode=data.obj.oePayList[0].reversalReasonCode;
@@ -1024,47 +1045,13 @@ export class PaymentArComponent implements OnInit {
             return;
 
            }
-
-          
-
-
-
-          //  if (data.obj.oePayList[0].reversalReasonCode === null) {
-
-          //   this.showModalForm = true;
-          //   this.enableApplyButton = true;
-          //   this.enableCancelButton = true;
-          //   this.showReasonDetails=true;
-            
-          //   this.paymentArForm.get('bankName').disable();
-          //   this.paymentArForm.get('bankBranch').disable();
-          //   this.paymentArForm.get('checkNo').disable();
-          //   this.paymentArForm.get('checkDate').disable();
-          //   this.paymentArForm.get('comments').disable();
-
-          //   this.paymentArForm.get('reversalReasonCode').enable();
-          //   this.paymentArForm.get('reversalCategory').enable();
-          //   this.paymentArForm.get('reversalComment').enable();
-          //    this.paymentArForm.get('selectAllflag1').enable();
-
-          //   if (data.obj.oePayList[0].paymentAmt === data.obj.oePayList[0].balanceAmount  ) {
-          //     this.enableCancelButton = true;
-          //   }
-          //   else {
-          //     this.enableCancelButton = false;
-          //     this.showReasonDetails=false;
-          //     this.paymentArForm.get('reversalReasonCode').disable();
-          //     this.paymentArForm.get('reversalCategory').disable();
-          //     this.paymentArForm.get('reversalComment').disable();
-          //   }
-
-          // } 
-
-       
+      
           
           
           if( data.obj.oePayList[0].reversalReasonCode !=null) {
-            // alert ("in...not null section");
+            //  alert ("reversalReasonCode :"+data.obj.oePayList[0].reversalReasonCode);
+            if(data.obj.oePayList[0].reversalReasonCode ==='ChqBounce') {this.chqBounceStatus=true; }
+
             this.printButton=false;
             this.showModalForm = false;
             this.enableApplyButton = false;
@@ -1077,6 +1064,9 @@ export class PaymentArComponent implements OnInit {
             this.reversalCategory=data.obj.oePayList[0].reversalCategory;
             // this.paymentArForm.patchValue({reversalComment:data.obj.oePayList[0].reversalComment});
             this.paymentArForm.disable();
+
+          
+
           }
         } );
 
@@ -1085,6 +1075,7 @@ export class PaymentArComponent implements OnInit {
         this.paymentArForm.get('searchByDate').enable();
         this.paymentArForm.get('applyTo').enable();
 
+       
           
   }
 
@@ -2279,6 +2270,8 @@ export class PaymentArComponent implements OnInit {
       this.reversalCategory = 'Receipt Reversed'
       this.status = 'REVERSED'
       this.enableApplyButton = false;
+      
+     
     
     }
 
@@ -2288,6 +2281,7 @@ export class PaymentArComponent implements OnInit {
       if(mReasonCode ==='ChqBounce' && pymtType ==='CHEQUE' ){
         // alert ("in Reason fn..chq bounc")
           this.chqBounceStatus=true;
+          this.reversalComment =mReasonCode;
           // this.service.RcptChqBounceReasonList('ChqBncRsn')
           this.service.RcptChqBounceReasonListNew(this.ouId)
           

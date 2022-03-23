@@ -151,7 +151,7 @@ export class WsVehicleMasterComponent implements OnInit {
   insurerCompId: string;
   insurerSiteId: string;
   insCompanyName: string;
-  inscompanySite: string;
+  insCompanySite: string;
   status :string='Active';
   ewStatus: string;
   mcpStatus: string;
@@ -328,7 +328,7 @@ export class WsVehicleMasterComponent implements OnInit {
       insuDate: [],
       policyNo: [],
       insCompanyName: [],
-      inscompanySite: [],
+      insCompanySite: [],
 
       mcpNo: [],
       mcpPackage: [],
@@ -620,7 +620,7 @@ export class WsVehicleMasterComponent implements OnInit {
     this.CheckDataValidations();
 
     if (this.checkValidation) {
-      alert("Data Validation Sucessfully....\nPosting Vehicle to WS Customer Master")
+      alert("Data Validation Sucessfully....")
 
       // debugger;
       console.log(formValue);
@@ -1205,7 +1205,7 @@ export class WsVehicleMasterComponent implements OnInit {
     this.wsVehicleMasterForm.get('ewStatus').reset();
     this.wsVehicleMasterForm.get('mcpStatus').reset();
     this.policyNo = null; this.insuDate = null; this.insCompanyName = null;
-    this.inscompanySite = null; this.ewBookletNo = null;
+    this.insCompanySite = null; this.ewBookletNo = null;
     this.ewInsurerId = null; this.ewEndDate = null;
     this.ewBalanceDays = null; this.ewInsurerSite = null;
     this.mcpNo = null; this.mcpEndDate = null;
