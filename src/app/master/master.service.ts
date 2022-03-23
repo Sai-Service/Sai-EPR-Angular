@@ -2534,20 +2534,22 @@ OrderCategoryList(): Observable<any> {
 
   }
 
-  SearchRcptByCustNoDate(custActNo,rcptDate,ouId,locId): Observable<any>
+  SearchRcptByDate(rcptDate,ouId,locId): Observable<any>
   {
-    // alert("MS>>RCPT NO -getArReceiptSearchByRcptNo: CustNo,RcptDate :" +custActNo +','+rcptDate  );
+    return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptDate='${rcptDate}'&orgId=${ouId}&locId=${locId}`)
+   
+  }
 
-    if(rcptDate !=undefined || rcptDate !=null){
-      // alert ("receipt date only");
-        return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptDate='${rcptDate}'&orgId=${ouId}&locId=${locId}`)
-      }
 
-      if(custActNo !=undefined || custActNo !=null){
-        // alert("cust account no");
-         return this.http.get(this.ServerUrl + `/arCashReceipts/Search?accountNo=${custActNo}&orgId=${ouId}&locId=${locId}`);
-        }
+  SearchRcptByCustNo(custActNo,ouId,locId): Observable<any>
+    {
+      return this.http.get(this.ServerUrl + `/arCashReceipts/Search?accountNo=${custActNo}&orgId=${ouId}&locId=${locId}`);
+        
     }
+
+
+   
+
 
 
     getArReceiptDetailsByRcptNo (rcptNumber): Observable<any> {

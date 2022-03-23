@@ -107,22 +107,49 @@
                         <ng-template #blk11>
 
                         <td style="width: 15%" class="LabelFontStyle">Vehicle&nbsp;No:&nbsp;</td>
-                        <td>
-                         <input type="text" autofocus   formControlName="attribute1" [(ngModel)]="attribute1" (change)="serchByRegNo(attribute1)"
-                            (keyup)="getUserIdsFirstWay($event)"  id="userIdFirstWay"  list="dynmicUserIds" class="form-control" />
-                            <datalist id="dynmicUserIds">
-                                <option *ngFor="let item of VehRegNoList" [ngValue]="item.regNo">
-                                    {{item.regNo}}
-                                </option>
-                            </datalist>
 
-                        </td> 
+                        <div *ngIf="fromJc ,then jc1; else jc2")></div>
+                        <ng-template #jc1>
+                            <td>
+                            <input disabled type="text" autofocus   formControlName="attribute1" [(ngModel)]="attribute1" (change)="serchByRegNo(attribute1)"
+                                (keyup)="getUserIdsFirstWay($event)"  id="userIdFirstWay"  list="dynmicUserIds" class="form-control" />
+                                <datalist id="dynmicUserIds">
+                                    <option *ngFor="let item of VehRegNoList" [ngValue]="item.regNo">
+                                        {{item.regNo}}
+                                    </option>
+                                </datalist>
+
+                            </td> 
+                        </ng-template>
+                        <ng-template #jc2>
+                            <td>
+                            <input type="text" autofocus   formControlName="attribute1" [(ngModel)]="attribute1" (change)="serchByRegNo(attribute1)"
+                                (keyup)="getUserIdsFirstWay($event)"  id="userIdFirstWay"  list="dynmicUserIds" class="form-control" />
+                                <datalist id="dynmicUserIds">
+                                    <option *ngFor="let item of VehRegNoList" [ngValue]="item.regNo">
+                                        {{item.regNo}}
+                                    </option>
+                                </datalist>
+
+                            </td> 
+                        </ng-template>
+
+
 
                         <td style="width: 15%" class="LabelFontStyle">Customer&nbsp;Name:&nbsp;</td>
                         <td>
                            <table style="width: 100%;">
                             <tr>
-                                <td><input type="text" formControlName="custName" [(ngModel)]='custName' value={{custName}}  class="form-control" style="width:260px;" data-bs-toggle="modal"  data-bs-target="#customerNameSearchModel"></td>
+
+                                <div *ngIf="fromJc ,then jc11; else jc21")></div>
+                                <ng-template #jc11>
+                                     <td><input disabled type="text" formControlName="custName" [(ngModel)]='custName' value={{custName}}  class="form-control" style="width:260px;" data-bs-toggle="modal"  data-bs-target="#customerNameSearchModel"></td>
+                                </ng-template>
+                                <ng-template #jc21>
+                                    <td><input  type="text" formControlName="custName" [(ngModel)]='custName' value={{custName}}  class="form-control" style="width:260px;" data-bs-toggle="modal"  data-bs-target="#customerNameSearchModel"></td>
+                                </ng-template>
+   
+                                
                                 <td>
                                     <button type="button" class="btn btn-primary" (click)="custNameSearch(custName)"
                                         data-toggle="modal" data-target="#customerNameSearchModel"
@@ -563,7 +590,7 @@
                                 <td style="width: 15%" class="LabelFontStyle">&nbsp;Bounce&nbsp;Reason:&nbsp;</td>
 
                                 <td >
-                                    <select formControlName="reversalComment" id="reversalComment" [(ngModel)]="reversalComment"  value={{reversalComment}} 
+                                    <select formControlName="bounceReasonCode" id="bounceReasonCode" [(ngModel)]="bounceReasonCode"  value={{bounceReasonCode}} 
                                     (ngModelChange)='onBounceRsnSelected($event)' class="form-control" style="width: 300px;" >
                                         <option disabled>--Select--</option>
                                         <option *ngFor="let sc of  ChqBounceReasonList" [value]="sc.code">
@@ -575,7 +602,12 @@
 
                                 <td style="width: 15%" class="LabelFontStyle">&nbsp;Bounce&nbsp;Charges:&nbsp;</td>
                                 <td><input  style="text-align: right;" type="number" formControlName="chqBounceCharge"  id="chqBounceCharge" [(ngModel)] ="chqBounceCharge" class="form-control"></td>
-                                
+                              
+                                <td style="width: 15%" class="LabelFontStyle">&nbsp;Bounce&nbsp;Inv&nbsp;No:&nbsp;</td>
+                                <td><input  style="text-align: right;" type="number" formControlName="chqBncTrxNo"  id="chqBncTrxNo" [(ngModel)] ="chqBncTrxNo" class="form-control"></td>
+                              
+                              
+                                <input hidden  style="text-transform:uppercase;width: 300px;"  type="text"  formControlName="reversalComment"  id="reversalComment"  [(ngModel)]="reversalComment" class="form-control" >
 
                               </tr>
                             </ng-template>
@@ -1126,43 +1158,27 @@
                       <td >
                           <table class="center">
                               <tr>
-
-                                
                                 <!-- <td  style="background-color: #FFE4B5;"> &nbsp;Receipt&nbsp;No&nbsp;:&nbsp; </td> -->
                                 <td style="width: 15%" class="LabelFontStyle">&nbsp;Receipt&nbsp;No&nbsp;:&nbsp; </td>
                                 <td style="background-color: #FFE4B5;">
-                                    <input class="form-control" formControlName="searchByRcptNo" [(ngModel)]='searchByRcptNo'
-                                        value={{searchByRcptNo}}>
-                                </td>
-
+                                <input class="form-control" formControlName="searchByRcptNo" [(ngModel)]='searchByRcptNo' value={{searchByRcptNo}}> </td>
                                 <td style="background-color: #FFE4B5;">
-                                    <button type="button" class="btn-primary" (click)="SearchByRcptNo(searchByRcptNo)"><i class="fa fa-search"
-                                            aria-hidden="true"></i></button>
-                                </td>
+                                <button type="button" class="btn-primary" (click)="SearchByRcptNo(searchByRcptNo)"><i class="fa fa-search"  aria-hidden="true"></i></button> </td>
 
                                 
                                 <td style="width: 15%" class="LabelFontStyle">&nbsp;Customer&nbsp;No:&nbsp;</td>
-                    
-                                <td>
-                                    <input   type="text"  formControlName="searchByCustNo"  id="searchByCustNo" [(ngModel)]="searchByCustNo" class="form-control"  >
-                                    <!-- (change)='OnEnterCustNo(searchByCustNo)' -->
-                                </td>
-
+                                <td><input   type="text"  formControlName="searchByCustNo"  id="searchByCustNo" [(ngModel)]="searchByCustNo" class="form-control"  > </td>
+                                <td style="background-color: #FFE4B5;">
+                                <button type="button" class="btn-primary" (click)="SearchRcptByCustNo(searchByCustNo)"><i class="fa fa-search"  aria-hidden="true"></i></button> </td>
+    
                                 <td style="width: 15%" class="LabelFontStyle">&nbsp;Receipt&nbsp;Date:&nbsp;</td>
-                    
-                                <td>
-                                    <input   type="date"  formControlName="searchByDate"  id="searchByDate" [(ngModel)]="searchByDate" class="form-control"  max="{{minDate | date:'yyyy-MM-dd'}}" >
-                                </td>
+                                <td> <input   type="date"  formControlName="searchByDate"  id="searchByDate" [(ngModel)]="searchByDate" class="form-control"  max="{{minDate | date:'yyyy-MM-dd'}}" > </td>
 
                                 <td style="background-color: #FFE4B5;">
-                                    <button type="button" class="btn-primary" (click)="SearchRcptByCustNoDate(searchByCustNo,searchByDate)">
-                                        <i class="fa fa-search"
-                                            aria-hidden="true"></i></button>
+                                    <button type="button" class="btn-primary" (click)="SearchRcptByRcptDate(searchByDate)"> <i class="fa fa-search" aria-hidden="true"></i></button>
                                 </td>
                                
-                                <td>
-                                    <button style="width: 5em;" type="button" class="btn btn-info" (click)="clearSearch()">Reset</button>
-                                </td>
+                                <td> <button style="width: 5em;" type="button" class="btn btn-info" (click)="clearSearch()">Reset</button> </td>
                                 
                               </tr>
                           </table>
@@ -1274,21 +1290,23 @@
     <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;font-size: small;">
    <tbody>
         <tr class="GridHeader">
-            <th style="width:6rem" scope="col">Srl No</th>
-            <th style="width:6rem" scope="col">Operating Unit</th>
-            <th style="width:15rem" scope="col">Cust No/Site/Name</th>
+            <th style="width:3rem" scope="col">Srl No</th>
+            <th style="width:7rem" scope="col">Operating Unit</th>
+            <th style="width:6rem" scope="col">Location</th>
+            <th style="width:20rem" scope="col">Cust No/Site/Name</th>
             <th style="width:8rem" scope="col">Receipt No</th>
             <th style="width:6rem" scope="col">Receipt Date</th>
             <th style="width:10rem" scope="col">Payment Type</th>
-             <th style="width:10rem" scope="col">Receipt Amt</th>
-            <th style="width:10rem" scope="col">Reference Type</th>
-            <th style="width:10rem" scope="col">Status</th>
-            <th style="width:6rem"  scope="col">Select</th>
+             <th style="width:8rem" scope="col">Receipt Amt</th>
+            <th style="width:8rem" scope="col">Reference Type</th>
+            <th style="width:5rem" scope="col">Status</th>
+            <th style="width:4rem"  scope="col">Select</th>
     </tr>
    </tbody>
             <tr *ngFor="let com of lstcomments let i=index" class="ItemStyle" style="text-decoration:none;">
                 <td style="text-align: center;">{{i+1}}</td>
-                <td style="text-align: center;">{{com.orgId}}</td>
+                <td style="text-align: center;">{{com.ouName}}</td>
+                <td style="text-align: center;">{{com.locCode}}</td>
                 <td>{{com.custAccountNo}}/{{com.custSiteId}}/{{com.custName}}-</td>
                 <td style="text-align: center;">{{com.receiptNumber}}</td>
                 <td style="text-align: center;">{{com.receiptDate  |date:'dd-MM-y'}}</td>
