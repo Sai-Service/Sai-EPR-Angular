@@ -7,8 +7,8 @@ import { OrderManagementService } from 'src/app/order-management/order-managemen
 import { TransactionService } from '../transaction.service';
 import { ManualARInvoiceObj } from './manual-arinvoice-obj';
 import { DatePipe } from '@angular/common';
-import { stringify } from '@angular/compiler/src/util';
-import { event } from 'jquery';
+// import { stringify } from '@angular/compiler/src/util';
+// import { event } from 'jquery';
 // import { log } from 'util';
 // import { ManualInvoiceObj } from '../po-invoice/manual-invoice-obglDatej';
 // import { ManualARInvoiceObj } from '../manual-arinvoice-obj';
@@ -139,6 +139,7 @@ export class ARInvoiceComponent implements OnInit {
   invItemList: any[];
   taxPer: number;
   lstinvoices: any[];
+  isVisibleInvoice: boolean = false;
 
   billToCustNo: number;
   public taxCalforItem: any;
@@ -869,6 +870,9 @@ export class ARInvoiceComponent implements OnInit {
               this.displayRmDistRow = false;
               this.disabledComplete = false;
               this.arInvoiceForm.disable();
+            }
+            if(data.obj.invStatus == 'Complete'){
+              this.isVisibleInvoice=true;
             }
             if (data.obj.class == 'Credit Memo') {
               this.isVisibleApply = true;
@@ -2642,7 +2646,18 @@ export class ARInvoiceComponent implements OnInit {
     this.isVisibleArDist = true;
   }
 
-
+  ViewInvoice(){
+    var trxNumber = this.arInvoiceForm.get('trxNumber').value;
+    const fileName = 'download.pdf';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.service.viewInvnote(trxNumber)
+      .subscribe(data => {
+        var blob = new Blob([data], { type: 'application/pdf' });
+        var url = URL.createObjectURL(blob);
+        var printWindow = window.open(url, '', 'width=800,height=500');
+        printWindow.open
+      })
+  }
 
 }
 
