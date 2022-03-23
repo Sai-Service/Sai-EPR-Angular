@@ -2534,20 +2534,22 @@ OrderCategoryList(): Observable<any> {
 
   }
 
-  SearchRcptByCustNoDate(custActNo,rcptDate,ouId,locId): Observable<any>
+  SearchRcptByDate(rcptDate,ouId,locId): Observable<any>
   {
-    // alert("MS>>RCPT NO -getArReceiptSearchByRcptNo: CustNo,RcptDate :" +custActNo +','+rcptDate  );
+    return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptDate='${rcptDate}'&orgId=${ouId}&locId=${locId}`)
+   
+  }
 
-    if(rcptDate !=undefined || rcptDate !=null){
-      // alert ("receipt date only");
-        return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptDate='${rcptDate}'&orgId=${ouId}&locId=${locId}`)
-      }
 
-      if(custActNo !=undefined || custActNo !=null){
-        // alert("cust account no");
-         return this.http.get(this.ServerUrl + `/arCashReceipts/Search?accountNo=${custActNo}&orgId=${ouId}&locId=${locId}`);
-        }
+  SearchRcptByCustNo(custActNo,ouId,locId): Observable<any>
+    {
+      return this.http.get(this.ServerUrl + `/arCashReceipts/Search?accountNo=${custActNo}&orgId=${ouId}&locId=${locId}`);
+        
     }
+
+
+   
+
 
 
     getArReceiptDetailsByRcptNo (rcptNumber): Observable<any> {
@@ -3833,5 +3835,15 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
           return this.http.post(url, deadLineRecord, options);
           // http://localhost:8081/DedStock/addLine
         }
+
+        // //////////////AR Invoice////////////////////
+viewInvnote(trxNumber){
+ const REQUEST_URI = this.ServerUrl +`/arInv/ManualInvPrint/${trxNumber}`;
+  return this.http.get(REQUEST_URI, {
+    // params: REQUEST_PARAMS,
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
+}
   
 }

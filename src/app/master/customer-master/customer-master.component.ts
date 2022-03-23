@@ -1,13 +1,13 @@
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+// import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, PatternValidator, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MasterService } from '../master.service';
 import { Location } from "@angular/common";
 import { DatePipe } from '@angular/common';
-import { formatDate } from '@angular/common';
+// import { formatDate } from '@angular/common';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
-import { data } from 'jquery';
+// import { data } from 'jquery';
 
 
 interface IcustomerMaster {
@@ -76,7 +76,7 @@ interface IcustomerMaster {
   creditAmt: number;
   highAmt: number;
   disPer: number;
-  tdsPer:number;
+  tdsPer: number;
   screditAmt: number;
   shighAmt: number;
   sdisPer: number;
@@ -85,10 +85,10 @@ interface IcustomerMaster {
   dealerType: string;
   siteName: string;
   tcsYN: string;
-  tcsPer:number;
+  tcsPer: number;
   aadharNo: number;
-  tdsApplDate:string;
-  staxCategoryName:string;
+  tdsApplDate: string;
+  staxCategoryName: string;
 }
 
 @Component({
@@ -164,7 +164,7 @@ export class CustomerMasterComponent implements OnInit {
   public status = "Active";
   displayInactive = true;
   displaystatus = true;
-  dispstatus=true;
+  dispstatus = true;
   displayNewButton = true;
   displayNewButton1 = true;
   displayNewButtonWithSite = false;
@@ -210,7 +210,7 @@ export class CustomerMasterComponent implements OnInit {
   screditAmt: number;
   shighAmt: number;
   disPer: number;
-  tdsPer:number;
+  tdsPer: number;
   sdisPer: number;
   displayadditional = true;
   termId: number;
@@ -229,12 +229,12 @@ export class CustomerMasterComponent implements OnInit {
   // startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   customerNameSearch: any[];
   tdsPercentage: any;
-  tdsApplDate:string;
-  staxCategoryName:string;
-  tcsPer:number;
+  tdsApplDate: string;
+  staxCategoryName: string;
+  tcsPer: number;
   displayTcsPer: boolean;
 
-  constructor(private fb: FormBuilder, private router: Router,private orderManagementService: OrderManagementService, private location1: Location, private service: MasterService) {
+  constructor(private fb: FormBuilder, private router: Router, private orderManagementService: OrderManagementService, private location1: Location, private service: MasterService) {
     this.customerMasterForm = fb.group({
       customerId1: [''],
       emplId: [''],
@@ -249,12 +249,12 @@ export class CustomerMasterComponent implements OnInit {
       // lName: ['', [Validators.required,Validators.pattern('[a-zA-Z ]*'),Validators.minLength(1)]],
       lName: ['', [Validators.pattern('[a-zA-Z ]*'), Validators.minLength(1), Validators.maxLength(50)]],
       custName: ['', [Validators.required, Validators.maxLength(150)]],
-         address1: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(100), Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
+      address1: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(100), Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
       // address1: ['',[Validators.required, Validators.minLength(5),Validators.maxLength(100),Validators.pattern('[a-zA-Z 0-9]*')]],
       // address2: ['', [Validators.required,Validators.minLength(3), Validators.maxLength(100),Validators.pattern('[a-zA-Z 0-9/-]*')]],
       address2: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100), Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
-      address3: ['', [Validators.maxLength(100),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
-      address4: ['', [Validators.maxLength(100),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
+      address3: ['', [Validators.maxLength(100), Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
+      address4: ['', [Validators.maxLength(100), Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
       location: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100), Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
       city: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50), Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
       taxCategoryName: ['', Validators.required],
@@ -274,8 +274,8 @@ export class CustomerMasterComponent implements OnInit {
       weddingDate: [''],
       startDate: [''],
       endDate: [''],
-      gstNo: ['', [Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{1}[A-Z0-9]{1}$"), Validators.minLength(15), Validators.maxLength(15)]],
-      // gstNo:['', [Validators.required, Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"), Validators.maxLength(15)]],
+      // gstNo: ['', [Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{1}[A-Z0-9]{1}$"), Validators.minLength(15), Validators.maxLength(15)]],
+      gstNo: ['', [Validators.maxLength(15)]],
       panNo: ['', [Validators.required, Validators.pattern("^[A-Z]{5}[0-9]{4}[A-Z]{1}$"), Validators.minLength(10), Validators.maxLength(10)]],
       tanNo: [''],
       status: [''],
@@ -284,7 +284,7 @@ export class CustomerMasterComponent implements OnInit {
       locId: [''],
       saddress1: ['', [Validators.minLength(10), Validators.maxLength(100), Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
       saddress2: ['', [Validators.minLength(3), Validators.maxLength(100), Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
-      saddress3: ['', [Validators.maxLength(100),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
+      saddress3: ['', [Validators.maxLength(100), Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
       scity: ['', [Validators.minLength(3), Validators.maxLength(50), Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
       spinCd: ['', [Validators.minLength(6), Validators.maxLength(6), Validators.pattern('[0-9]*')]],
       sstate: [''],
@@ -309,7 +309,7 @@ export class CustomerMasterComponent implements OnInit {
       stanNo: [],
       spanNo: ['', [Validators.pattern("^[A-Z]{5}[0-9]{4}[A-Z]{1}$"), Validators.minLength(10), Validators.maxLength(10)]],
       // sGstNo: ['', [Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{1}[A-Z0-9]{1}$"), Validators.minLength(15), Validators.maxLength(15)]],
-      sGstNo:['', [Validators.minLength(15), Validators.maxLength(15)]],
+      sGstNo: ['', [Validators.minLength(15), Validators.maxLength(15)]],
       // sGstNo: ['', [Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"), Validators.minLength(15), Validators.maxLength(15)]],
       souId: [],
       souName: [],
@@ -319,7 +319,7 @@ export class CustomerMasterComponent implements OnInit {
       screditAmt: [],
       shighAmt: [],
       disPer: [],
-      tdsPer:[],
+      tdsPer: [],
       sdisPer: [],
       termId: [],
       dealerCode: [],
@@ -327,8 +327,8 @@ export class CustomerMasterComponent implements OnInit {
       siteName: [],
       tcsYN: [],
       aadharNo: [],
-      tdsApplDate:[],
-      tcsPer:[],
+      tdsApplDate: [],
+      tcsPer: [],
     })
 
   }
@@ -440,16 +440,16 @@ export class CustomerMasterComponent implements OnInit {
           console.log(this.payTermDescList);
         }
       );
-      this.service.getTDSPercentage().subscribe(
-        data=>{
-          this.tdsPercentage=data;
-          this.originalTdsPer=data;
-        }
+    this.service.getTDSPercentage().subscribe(
+      data => {
+        this.tdsPercentage = data;
+        this.originalTdsPer = data;
+      }
 
-      )
+    )
     // this.PersonType='Person';
   }
-  originalTdsPer : any;
+  originalTdsPer: any;
   customerMaster(customerMaster: any) {
   }
 
@@ -529,7 +529,7 @@ export class CustomerMasterComponent implements OnInit {
     // console.log(this.lstcomments2);
     // let select = this.lstcomments2.find(d => d.customerSiteId === customerSiteId);
 
-    if (event != undefined && this.customerSiteId ===undefined) {
+    if (event != undefined && this.customerSiteId === undefined) {
       this.service.taxCategoryList1(this.locId, event)
         .subscribe(
           data => {
@@ -589,10 +589,31 @@ export class CustomerMasterComponent implements OnInit {
 
   gstVerification(event: any) {
     var gstno = this.customerMasterForm.get('gstNo').value
-    const gstNo1 = gstno.substr(2, 10);
-    this.panNo = gstNo1;
-    // alert('Gst verificaition');
-    this.customerMasterForm.patchValue({'panNo':gstNo1});
+    if (gstno === '') {
+      this.customerMasterForm.patchValue({ 'gstNo': 'GSTUNREGISTERED' });
+      return;
+    }
+    else {
+      var regex: string = "\d{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}";
+      // var regex:string="^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{1}[A-Z0-9]{1}$";
+      var p = new PatternValidator();
+      var patt = new RegExp(regex);
+      let validgst = patt.test(gstno);
+      if (validgst === false) {
+        alert('Please enter valid GST Number');
+        this.customerMasterForm.patchValue({ 'gstNo': '' });
+        return false;
+      }
+      // else {
+      //   alert('Please enter valid PAN Number');
+      //   return false;
+      // }
+      // return validgst;
+    }
+    const GstNo1 = gstno.substr(2, 10);
+    this.panNo = GstNo1;
+    //  alert('Gst verificaition2');
+    this.customerMasterForm.patchValue({ 'panNo': GstNo1 });
     var res = gstno.substr(0, 2);
     console.log(res);
     const state = this.customerMasterForm.get('state').value;
@@ -642,31 +663,29 @@ export class CustomerMasterComponent implements OnInit {
   }
 
   gstVerification2(event: any) {
-
+alert('In gstverification2')
     var sGstnoVal = this.customerMasterForm.get('sGstNo').value
-    if(sGstnoVal===''){
-      this.customerMasterForm.patchValue({'sGstNo':'GSTUNREGISTERED'});
+    if (sGstnoVal === '') {
+      this.customerMasterForm.patchValue({ 'sGstNo': 'GSTUNREGISTERED' });
       return;
     }
-    else{
-    var regex: string = "{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}";
-       var p = new PatternValidator();
-       var patt = new RegExp('{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}');
+    else {
+      var regex: string = "\d{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}";
+      var p = new PatternValidator();
+      var patt = new RegExp(regex);
       let validgst = patt.test(sGstnoVal);
       if (validgst === false) {
         alert('Please enter valid GST Number');
+        this.customerMasterForm.patchValue({'sGstNo':''});
+        return false;
       }
 
-    else{
-      alert('Please enter valid PAN Number');
-      return false;
-    }
-    // return validgst;
+   
     }
     const sGstNo1 = sGstnoVal.substr(2, 10);
     this.spanNo = sGstNo1;
     //  alert('Gst verificaition2');
-    this.customerMasterForm.patchValue({'spanNo':sGstNo1});
+    this.customerMasterForm.patchValue({ 'spanNo': sGstNo1 });
     var res = sGstnoVal.substr(0, 2);
     console.log(res);
     const state = this.customerMasterForm.get('sstate').value;
@@ -771,8 +790,8 @@ export class CustomerMasterComponent implements OnInit {
       return;
     }
     const formValue: IcustomerMaster = this.transDataForSite(this.customerMasterForm.value);
-    if(formValue.sGstNo===''){
-      formValue.sGstNo='GSTUNREGISTERED';
+    if (formValue.sGstNo === '') {
+      formValue.sGstNo = 'GSTUNREGISTERED';
     }
 
     this.service.CustMasterOnlySitSubmit(formValue).subscribe((res: any) => {
@@ -793,10 +812,10 @@ export class CustomerMasterComponent implements OnInit {
     });
   }
   newMast() {
-    alert('validating')
+    // alert('validating')
     var isvaliddata = this.validation();
     if (isvaliddata === false) {
-      alert('In Validation (v)');
+      // alert('In Validation (v)');
       return;
     }
 
@@ -814,12 +833,12 @@ export class CustomerMasterComponent implements OnInit {
     if (formValue.custType === 'Organization') {
       formValue.title = 'M/S';
     }
-    if(formValue.gstNo===''){
-      formValue.sGstNo='GSTUNREGISTERED';
-      formValue.gstNo='GSTUNREGISTERED';
+    if (formValue.gstNo === '') {
+      formValue.sGstNo = 'GSTUNREGISTERED';
+      formValue.gstNo = 'GSTUNREGISTERED';
     }
-    else{
-      formValue.sGstNo=formValue.gstNo;
+    else {
+      formValue.sGstNo = formValue.gstNo;
 
     }
     this.service.CustMasterSubmit(formValue).subscribe((res: any) => {
@@ -851,9 +870,9 @@ export class CustomerMasterComponent implements OnInit {
 
   UpdateSiteCustMastExeSite() {
 
-    const formValue: IcustomerMaster =  this.transDataForSite(this.customerMasterForm.value);
+    const formValue: IcustomerMaster = this.transDataForSite(this.customerMasterForm.value);
     formValue.termId = this.customerMasterForm.get('paymentType').value;
-    formValue.staxCategoryName=this.customerMasterForm.get('staxCatName').value;
+    formValue.staxCategoryName = this.customerMasterForm.get('staxCatName').value;
     this.service.UpdateCustExeSiteMasterById(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD UPDATED SUCCESSFULLY');
@@ -1038,9 +1057,9 @@ export class CustomerMasterComponent implements OnInit {
           this.customerMasterForm.get('creditAmt').disable();
           this.customerMasterForm.get('highAmt').disable();
           this.customerMasterForm.get('disPer').disable();
-          this.dispstatus=false;
+          this.dispstatus = false;
 
-           }   );
+        });
 
 
 
@@ -1083,15 +1102,17 @@ export class CustomerMasterComponent implements OnInit {
       this.customerMasterForm.patchValue({ screditAmt: select.creditAmt });
       this.customerMasterForm.patchValue({ shighAmt: select.highAmt });
       this.customerMasterForm.patchValue({ sdisPer: select.disPer });
-      this.customerMasterForm.patchValue({staxCatName:select.taxCategoryName});
-      this.customerMasterForm.patchValue({spinCd : select.pinCd});
+      this.customerMasterForm.patchValue({ staxCatName: select.taxCategoryName });
+      this.customerMasterForm.patchValue({ spinCd: select.pinCd });
       // this.sstatus=select.status
       // ticketNo not in  json
       let selstatus = this.statusList.find(d => d.codeDesc === select.status);
 
       this.customerMasterForm.patchValue({ sstatus: selstatus.codeDesc, slocation: select.location });
-      this.customerMasterForm.patchValue({ contactPerson: this.lstcomments.contactPerson,
-                                           contactNo:this.lstcomments.contactNo });
+      this.customerMasterForm.patchValue({
+        contactPerson: this.lstcomments.contactPerson,
+        contactNo: this.lstcomments.contactNo
+      });
 
       // this.displayButton = false;
     }
@@ -1117,16 +1138,16 @@ export class CustomerMasterComponent implements OnInit {
   tcssel(e) {
     if (e.target.checked === true) {
       this.tcsYN = 'Y'
-      this.displayTcsPer=true;
+      this.displayTcsPer = true;
     }
     if (e.target.checked === false) {
       this.tcsYN = 'N'
-      this.displayTcsPer=false;
+      this.displayTcsPer = false;
     }
   }
   onOptionSelOuLimit(event) {
     var custId = this.customerMasterForm.get('customerId').value;
-    if (custId != null &&  this.customerSiteId ===undefined) {
+    if (custId != null && this.customerSiteId === undefined) {
       this.service.Limitdata(event, custId).subscribe((res: any) => {
         if (res.code === 200) {
           // alert(res.message);
@@ -1176,8 +1197,8 @@ export class CustomerMasterComponent implements OnInit {
 
   public validation(): boolean {
     var validdata: boolean;
-      const formValue: IcustomerMaster = this.customerMasterForm.value;
-      if (formValue.custType === 'Person') {
+    const formValue: IcustomerMaster = this.customerMasterForm.value;
+    if (formValue.custType === 'Person') {
       if (formValue.birthDate === undefined) {
         alert('Please enter Birth Date');
         validdata = false;
@@ -1225,7 +1246,7 @@ export class CustomerMasterComponent implements OnInit {
       }
       return validdata;
 
-    }else{
+    } else {
       alert('Please enter valid PAN Number');
       return false;
     }
@@ -1239,7 +1260,7 @@ export class CustomerMasterComponent implements OnInit {
       var isvaliddata = this.validation();
       if (isvaliddata === false) {
         alert('Validation Errors !!');
-        this.msgType ='Error';
+        this.msgType = 'Error';
         (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '');
         return;
       }
@@ -1260,7 +1281,7 @@ export class CustomerMasterComponent implements OnInit {
       var isvaliddata = this.validation();
       if (isvaliddata === false) {
         alert('Validation Errors !!');
-        this.msgType ='Error';
+        this.msgType = 'Error';
         (document.getElementById('updateBtn') as HTMLInputElement).setAttribute('data-target', '');
         return;
       }
@@ -1281,7 +1302,7 @@ export class CustomerMasterComponent implements OnInit {
       var isvaliddata = this.validation();
       if (isvaliddata === false) {
         alert('Validation Errors New Site !!');
-        this.msgType ='Error';
+        this.msgType = 'Error';
         (document.getElementById('NewSite') as HTMLInputElement).setAttribute('data-target', '');
         return;
       }
@@ -1325,7 +1346,7 @@ export class CustomerMasterComponent implements OnInit {
     }
 
     if (this.msgType.includes("NewSite")) {
-       this.newOnlySiteMast();
+      this.newOnlySiteMast();
       // this.router.navigate(['admin']);
     }
     return;
@@ -1338,7 +1359,7 @@ export class CustomerMasterComponent implements OnInit {
   }
 
   custNameSearch(custName) {
-    alert(custName)
+    // alert(custName)
     this.orderManagementService.custNameSearchFn1(custName, sessionStorage.getItem('divisionId'))
       .subscribe(
         data => {
@@ -1356,27 +1377,26 @@ export class CustomerMasterComponent implements OnInit {
       );
   }
 
-  now=new Date();
+  now = new Date();
 
-  onTdsPerSel(event){
+  onTdsPerSel(event) {
     // alert(event);
-    if(event>0){
-      this.tdsApplDate= this.pipe.transform(this.now,'dd-MM-yyyy')
+    if (event > 0) {
+      this.tdsApplDate = this.pipe.transform(this.now, 'dd-MM-yyyy')
       // this.customerMasterForm.patchValue({tdsApplDate:this.pipe.transform(this.now,'dd-MM-yyyy')});
     }
   }
 
-  onSelectPan(event){
+  onSelectPan(event) {
 
-    event=event.target.value;
-    if(event===''|| event==='APPLIEDFOR')
-    {
-      alert("INSIDE IF ")
-      let currTdsList = this.tdsPercentage.filter((tdscode) => (tdscode.code!=20));
-      this.tdsPercentage=currTdsList;
-    }else{
-     // let currTdsList = this.tdsPercentage.filter((tdscode) => (tdscode.code===20));
-      this.tdsPercentage=this.originalTdsPer;
+    event = event.target.value;
+    if (event === '' || event === 'APPLIEDFOR') {
+      // alert("INSIDE IF ")
+      let currTdsList = this.tdsPercentage.filter((tdscode) => (tdscode.code != 20));
+      this.tdsPercentage = currTdsList;
+    } else {
+      // let currTdsList = this.tdsPercentage.filter((tdscode) => (tdscode.code===20));
+      this.tdsPercentage = this.originalTdsPer;
     }
   }
 }

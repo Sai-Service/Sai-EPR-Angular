@@ -291,6 +291,7 @@ jeSource: [],
               arrcontrol.controls[x].patchValue(this.lstsearchpayminvNew[x]);
               arrcontrol.controls[x].patchValue({ paymentTypeFlag: 'Quick' });
               arrcontrol.controls[x].patchValue({ PayAmount: this.lstsearchpayminvNew[x].invoiceAmt });
+              arrcontrol.controls[x].patchValue({ supplierSiteId: this.lstsearchpayminvNew[x].suppSiteId });
             }
           }
         });

@@ -326,7 +326,7 @@
                                                                             <td>
                                                                                 <input type="number" min="0" style="background-color: yellow;"
                                                                                     class="form-control" placeholder=""
-                                                                                    formControlName="lastRunKms" (change)="validateKm($event)">
+                                                                                    formControlName="lastRunKms" (change)="validateKm($event)" (keyup)="kmValidate($event)">
                                                                             </td>
                                                                           
                                                                            
@@ -632,7 +632,7 @@
                                                                                         <td>
                                                                                             <input type="number" min="0"
                                                                                                 class="form-control" placeholder=""
-                                                                                                formControlName="lastRunKms" (change)="validateKm()">
+                                                                                                formControlName="lastRunKms" [(ngModel)]="lastRunKms"   (change)="validateKm()" (keyup)="kmValidate($event)">
                                                                                         </td>
 
                                                                                         <td style="width: 15%"

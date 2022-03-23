@@ -174,7 +174,7 @@ export class JobCardComponent implements OnInit {
   // lstcomments: any;
   RegNoList: any;
   RegNoList1: any[];
-  RegNoList2: any;
+  public RegNoList2: any;
   userList1: any[] = [];
   userList2: any[] = [];
   ecaAmt: number = 0;
@@ -2433,12 +2433,16 @@ export class JobCardComponent implements OnInit {
 
   }
 
+  kmValidate(event: any) { this.validateKm() ; }
 
   validateKm() {
+
     var vehRegno=this.jobcardForm.get('regNo').value;
     this.getLastRunKms(vehRegno);
     var storeKm = this.RegNoList2.lastRunKms;
     var kmEmtered=this.jobcardForm.get('lastRunKms').value;
+
+    // alert ("Last km :"+storeKm + " , Entered km :"+kmEmtered);
 
     if (kmEmtered < storeKm || kmEmtered<=0) {
       alert("Please Enter a Valid KMR .It should not be less than Last run KMR.\nLst Run KMR :"+storeKm);
@@ -2453,7 +2457,7 @@ export class JobCardComponent implements OnInit {
     this.serviceService.getByRegNo(RegNo, sessionStorage.getItem('ouId'),jcType)
       .subscribe(
         data => {
-          this.RegNoList2 = data;
+          this.RegNoList2 = data.obj;
           console.log(this.RegNoList2);
           // this.jobcardForm.patchValue(this.RegNoList);
         }

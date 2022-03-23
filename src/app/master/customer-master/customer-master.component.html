@@ -743,7 +743,7 @@
                                         placeholder="Enter gstNo"> -->
 
                                     <input formControlName="gstNo" value={{gstNo}} class="form-control"
-                                        [ngClass]="{ 'is-invalid': submitted && f.gstNo.errors }" (keyup)="gstVerification($event)"
+                                        [ngClass]="{ 'is-invalid': submitted && f.gstNo.errors }" (change)="gstVerification($event)"
                                         placeholder="Please enter GSTN no">
                                     <div *ngIf="submitted && f.gstNo.errors" class="invalid-feedback">
                                         <div *ngIf="f.gstNo.errors.pattern">Invalid GSTIN number format</div>
@@ -1236,7 +1236,7 @@
                                             placeholder="Enter GSTN"
                                             [ngClass]="{ 'is-invalid': submitted && f.sGstNo.errors }"> -->
                                             <input formControlName="sGstNo" value={{sGstNo}} class="form-control"
-                                            [ngClass]="{ 'is-invalid': submitted && f.sGstNo.errors }" (keyup)="gstVerification2($event)"
+                                            [ngClass]="{ 'is-invalid': submitted && f.sGstNo.errors }" (change)="gstVerification2($event)"
                                             placeholder="Enter GSTN no">
 
                                             <div *ngIf="submitted && f.sGstNo.errors" class="invalid-feedback">
