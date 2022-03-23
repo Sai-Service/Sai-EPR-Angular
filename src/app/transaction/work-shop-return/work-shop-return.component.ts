@@ -1,8 +1,8 @@
-import { PathLocationStrategy } from '@angular/common';
-import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener } from '@angular/core';
-import { FormArray, FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
+// import { PathLocationStrategy } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { data } from 'jquery';
+// import { data } from 'jquery';
 import { MasterService } from 'src/app/master/master.service';
 import { DatePipe } from '@angular/common';
 
@@ -169,7 +169,7 @@ reqNo:string;
     this.frmSubInvCode='WIP';
     if(this.frmSubInvCode==='WIP')
     {
-      alert('Hello');
+      // alert('Hello');
       this.service.getdivsubInv(this.frmSubInvCode,this.divisionId).subscribe(
         data=>{
           this.subInvdetail=data;
@@ -235,7 +235,7 @@ removenewtrxLinesList(trxLineIndex){
 
 onSelectjob(event)
 {
-  alert(event);
+  // alert(event);
   // var jobno=event.target.value;
   this.service.returnBillableType(event).subscribe(
     data=>{
@@ -246,8 +246,8 @@ onSelectjob(event)
 onSelectType(event)
 {
   var jobno=this.WorkshopReturnForm.get('repairNo').value;
-  alert(this.subInvdetail.subInventoryId+'SubInv');
-  alert(jobno+'job'+event);
+  // alert(this.subInvdetail.subInventoryId+'SubInv');
+  // alert(jobno+'job'+event);
   this.service.itemLst(jobno,event,this.subInvdetail.subInventoryId).subscribe(
     data=>{
       this.ItemIdList=data;
@@ -346,7 +346,7 @@ closeReurn()
   // let select1= this.subInvCode.find(d=>d.subInventoryCode===this.frmSubInvCode);
   // alert(this.subInvCode.subInventoryId+'ID');
   var subInv=this.subInvdetail.subInventoryId;
-  alert(subInv+'sub');
+  // alert(subInv+'sub');
   
 
   let locId1=this.WorkshopReturnForm.get('locId');
@@ -354,7 +354,7 @@ closeReurn()
   var trxLnArr1 = this.WorkshopReturnForm.get('trxLinesList').value;
   var trxLnArr2 = this.WorkshopReturnForm.get('trxLinesList') as FormArray;
   var itemid=trxLnArr1[i].invItemId;
-  alert (itemid);
+  // alert (itemid);
   // var frmSubCode=trxLnArr1[i].frmSubInvCode;
   // alert("FromSub"+frmSubCode);
   // alert(select1);
@@ -407,14 +407,14 @@ closeReurn()
 
  AvailQty(event:any,i:number) 
  {
-   alert(event);
+  //  alert(event);
    var trxLnArr1=this.WorkshopReturnForm.get('trxLinesList')as FormArray;
    var trxLnArr = this.WorkshopReturnForm.get('trxLinesList').value;
    var itemid=trxLnArr[i].invItemId;
    var locId=trxLnArr[i].frmLocatorId;
    var onhandid=trxLnArr[i].id;
    // trxLnArr1.controls[i].patchValue({locatorId:locId});
-  alert(locId+'locatorID');
+  // alert(locId+'locatorID');
   //  var subcode=this.WorkshopReturnForm.get('subInventoryCode').value;
    var subInv=this.subInvdetail.subInventoryId;
   // alert(subcode);
@@ -425,7 +425,7 @@ closeReurn()
        this.onhand1 = data;
        console.log(this.onhand1);
       //  alert(this.onHandId);
-       alert(this.onhand1);
+      //  alert(this.onhand1);
        trxLnArr1.controls[i].patchValue({onHandQty:data.obj});
      // var trxLnArr=this.stockTranferForm.get('trxLinesList').value;
      let onHand=data.obj;

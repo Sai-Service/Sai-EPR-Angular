@@ -146,6 +146,16 @@ export class ReportServiceService {
     });
   }
 
+  spDebtorExicutiveWise(toDate,ouId,locId,ticketNo,custAcctNo){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/DebtorsExecWise?toDate=${toDate}&ouId=${ouId}&locId=${locId}&ticketNo=${ticketNo}&custAcctNo=${custAcctNo}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+ 
+
   JobCardSummaryReport(invcDt1,invcDt4,locId){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/JobCardSummary?fromDate=${invcDt1}&toDate=${invcDt4}&fromLoc=${locId}`;
     return this.http.get(REQUEST_URI, {
