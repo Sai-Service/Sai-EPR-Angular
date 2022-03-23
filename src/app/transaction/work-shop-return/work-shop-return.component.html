@@ -211,13 +211,13 @@
           <table class="center">
             <tr>
                   <td>
-                  <button  type="submit" class="btn btn-primary" (click)="newmoveOrder()">Save</button>
+                  <button  type="button" class="btn btn-primary" (click)="newmoveOrder()" [style.display]="isVisibleSave ? 'block' : 'none'">Save</button>
                 </td>
                 <td>
-                  <button  type="submit" class="btn btn-primary" (click)="resetReturn()">Reset</button>
+                  <button  type="button" class="btn btn-primary" (click)="resetReturn()">Reset</button>
                 </td>
                 <td>
-                  <button  type="submit" class="btn btn-primary" (click)="closeReurn()">Close</button>
+                  <button  type="button" class="btn btn-primary" (click)="closeReurn()">Close</button>
                 </td>
             </tr>
           </table>
