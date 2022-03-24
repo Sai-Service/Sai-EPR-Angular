@@ -312,6 +312,7 @@ export class JobCardComponent implements OnInit {
   genBillButton=false;
   reopenButton=false;
   cancelButton=false;
+  openStatus=true;
 
   cancellationStatus=false;
   showLabdisP=false;
@@ -1157,10 +1158,12 @@ export class JobCardComponent implements OnInit {
 
 
   checkLabLineValidation(index){
-    // alert ( " checkLabLineValidation..."+index);
-
+  
     var arrayControl = this.jobcardForm.get('jobCardLabLines').value
     var invItemId = arrayControl[index].itemId;
+    var genItem =arrayControl[index].genericItem;
+    // alert ( " checkLabLineValidation...genItem"+genItem);
+   
     this.labLineValidation=false
 
     if(Number(arrayControl[index].billableTyId)<=0)
@@ -1169,11 +1172,13 @@ export class JobCardComponent implements OnInit {
     if(invItemId===null || invItemId==undefined || invItemId<=0)
     { this.labLineValidation=false;return; }
 
-    if(Number(arrayControl[index].qty)<=0 ||arrayControl[index].qty===null || arrayControl[index].qty===undefined )
-     { this.labLineValidation=false;return; }
+    if (genItem==='N') {
+      if(Number(arrayControl[index].qty)<=0 ||arrayControl[index].qty===null || arrayControl[index].qty===undefined )
+      { this.labLineValidation=false;return; }
 
-     if(Number(arrayControl[index].unitPrice)<=0 ||arrayControl[index].unitPrice===null || arrayControl[index].unitPrice===undefined )
-     { this.labLineValidation=false;return; }
+      if(Number(arrayControl[index].unitPrice)<=0 ||arrayControl[index].unitPrice===null || arrayControl[index].unitPrice===undefined )
+      { this.labLineValidation=false;return; }
+    }
 
     //  if(Number(arrayControl[index].basicAmt)<=0 ||arrayControl[index].basicAmt===null || arrayControl[index].basicAmt===undefined )
     //  { this.labLineValidation=false;return; }
@@ -1229,7 +1234,6 @@ export class JobCardComponent implements OnInit {
   }
 
 
-
   // RemoveRow(index) {
   //   if (index === 0) {
 
@@ -1239,16 +1243,34 @@ export class JobCardComponent implements OnInit {
   //   this.lineDetailsArray.removeAt(index);
   // }
 
-  RemoveRow(index) {
+  RemoveRowold(index) {
     if (index===0){ }
     else {
        this.lineDetailsArray.removeAt(index);
     }
-  
   }
 
+  RemoveRow(index) {
+    var ordLineArr = this.jobcardForm.get('jobCardLabLines').value;
+    var len1 = this.lineDetailsArray.length;
+    alert ("jobcard lines :" +len1);
+    if(len1>1) {
+      this.lineDetailsArray.removeAt(index);
+    } else {
+      alert("Not Allowed..... ");
+    }
+    
+  }
+  
+
+  onInput(event) {
+    event.target.value = event.target.value.toLocaleUpperCase();
+  }
 
   serchByRegNo(RegNo) {
+   
+    // RegNo=RegNo.toUpperCase();
+    // alert ("Regno :" + RegNo);
     var jcType=this.jobcardForm.get('jcType').value;
     if(jcType ==='--Select--' || jcType ===null ) {alert ("Please Select Job Card Type...");return;}
  
@@ -1410,9 +1432,16 @@ export class JobCardComponent implements OnInit {
           var x =jdate.toDateString();
           var y=tdate.toDateString();
             if (this.lstcomments.jobStatus === 'Opened' ){
-              this.jobcardForm.get('jobCardLabLines').enable();
-              this.jobcardForm.get('jobCardMatLines').enable();
-            this.dispReadyInvoice = true; this.dispButtonStatus=false;this.preInvButton=true; 
+              // this.jobcardForm.get('jobCardLabLines').enable();
+              // this.jobcardForm.get('jobCardMatLines').enable();
+              if(data.obj.jobCardLabLines.length >0) {
+                this.dispReadyInvoice = true; this.preInvButton=true;} else{
+                this.dispReadyInvoice = false; this.preInvButton=false;}
+              
+
+            this.dispButtonStatus=false;
+            
+            this.openStatus=true;
               if(x===y) { this.cancelButton=true;}else {this.cancelButton=false;}
           }
        
@@ -1441,6 +1470,7 @@ export class JobCardComponent implements OnInit {
             this.saveMatButton=false;
             this.preInvButton=false;
             this.cancelButton=false;
+            this.openStatus=false;
                          
           }
 
@@ -1460,7 +1490,7 @@ export class JobCardComponent implements OnInit {
             this.saveMatButton=false;
             this.preInvButton=true;
             this.cancelButton=false;
-           
+            this.openStatus=false;
           }
 
 
@@ -1823,8 +1853,7 @@ export class JobCardComponent implements OnInit {
     if (formValue.lastRunKms === undefined || formValue.lastRunKms === null || formValue.lastRunKms <=0) {this.jobHeaderValidation = false;
       msg1="OMR: Should be above zero....";alert(msg1);return;
     }
-
-    this.validateKm()
+    this.validateKm();
 
     if (formValue.jcType === undefined || formValue.jcType === null ) {this.jobHeaderValidation = false;
       msg1="JOB TYPE: Should not be null....";alert(msg1);return;
@@ -1884,7 +1913,7 @@ export class JobCardComponent implements OnInit {
     //  formValue.matStatus= (this.jobcardForm.get('matStatus').value);
     this.serviceService.jobcardHeaderSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        this.preInvButton=true;
+        this.preInvButton=false;
         this.dispButtonStatus=false
         this.cancelButton=true;
         this.saveMatButton=false;
@@ -2558,12 +2587,14 @@ searchFromArray1(arr, regex) {
       }
 
 
-onKey(index) {
+ onKey(index) {
+
   
-    console.log(index);
     var arrayControl = this.jobcardForm.get('jobCardLabLines').value
     var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
-
+    var genItem =arrayControl[index].genericItem;
+    if(genItem==='N') {
+     console.log(index);
     var mQty =arrayControl[index].qty;
     var taxP =arrayControl[index].taxPer;
     if(mQty <=0 )    // || Number.isInteger(mQty)==false 
@@ -2575,6 +2606,7 @@ onKey(index) {
     var baseAmtLineWise = arrayControl[index].unitPrice * arrayControl[index].qty;
     var txAmt =baseAmtLineWise *taxP/100;
     (patch.controls[index]).patchValue({ basicAmt: baseAmtLineWise,taxAmt:txAmt, laborAmt: baseAmtLineWise+txAmt, })
+  }
 }
 
 validateLabQty(index: any){
@@ -2584,7 +2616,7 @@ validateLabQty(index: any){
   var baseAmtLineWise = arrayControl[index].unitPrice * arrayControl[index].qty;
 
  var x= arrayControl[index].qty
- alert(x);
+//  alert(x);
 
   (patch.controls[index]).patchValue({ basicAmt: baseAmtLineWise, laborAmt: baseAmtLineWise })
 
@@ -2796,7 +2828,7 @@ SearchPartNum(){
   if(sType ==='ITEM CODE') {
   var itmCd=this.jobcardForm.get('searchByItemCode').value;
  
-  alert (itmCd);
+  // alert (itmCd);
   if(itmCd ===null || itmCd ===undefined || itmCd.trim()==='') {this.lstcomments1=null;return;}
   itmCd=itmCd.toUpperCase();
       this.service.searchByItemCodeInclude(itmCd).subscribe(
