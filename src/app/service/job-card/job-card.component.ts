@@ -74,6 +74,7 @@ interface IjobCard {
  
   promiseDate: Date;
   lastRunKms: number;
+  storedKmr:number;
   itemId: number;
   ouId: number;
   deptId: number;
@@ -294,14 +295,16 @@ export class JobCardComponent implements OnInit {
   vehRegNo:string;
   jcStatus:string;
   pickupType: string=null;
-  dispReadyInvoice = false;
+ 
   dispButtonStatus = true;
   dispfreezeDetail = true;
   saveBillValidation=false;
   jobHeaderValidation=false;
   labLineValidation =false;
   matLineValidation=false;
+
   preInvButton=false;
+  dispReadyInvoice = false;
   printInvoiceButton=false;
   saveLabButton=true;
   saveMatButton=true;
@@ -309,6 +312,7 @@ export class JobCardComponent implements OnInit {
   genBillButton=false;
   reopenButton=false;
   cancelButton=false;
+
   cancellationStatus=false;
   showLabdisP=false;
   showMatDisCol=false;
@@ -439,6 +443,7 @@ export class JobCardComponent implements OnInit {
       pickupDate: [],
       promiseDate: [],
       lastRunKms: [],
+      storedKmr:[],
       itemId: [],
 
       customerId: [],
@@ -1264,6 +1269,7 @@ export class JobCardComponent implements OnInit {
             deptId: Number(sessionStorage.getItem('deptId')),
             locId: Number(sessionStorage.getItem('locId')),
             status: 'Opened',
+            storedKmr : this.RegNoList.lastRunKms,
           });
         } 
       );
@@ -1308,6 +1314,8 @@ export class JobCardComponent implements OnInit {
     })
   }
   
+  // JOBCARD SEARCH BY  JCNO
+
   Search(jobCardNo) {
 
     var  jcNum=jobCardNo.toUpperCase();
@@ -2436,17 +2444,17 @@ export class JobCardComponent implements OnInit {
   kmValidate(event: any) { this.validateKm() ; }
 
   validateKm() {
-
     var vehRegno=this.jobcardForm.get('regNo').value;
-    this.getLastRunKms(vehRegno);
-    var storeKm = this.RegNoList2.lastRunKms;
     var kmEmtered=this.jobcardForm.get('lastRunKms').value;
 
-    // alert ("Last km :"+storeKm + " , Entered km :"+kmEmtered);
+    // this.getLastRunKms(vehRegno);   
+    // var storeKm = this.RegNoList2.lastRunKms;
+     var storeKm =this.jobcardForm.get('storedKmr').value;;
+    //  alert ("Last  km :"+storeKm + " , Entered km :"+kmEmtered);
 
     if (kmEmtered < storeKm || kmEmtered<=0) {
       alert("Please Enter a Valid KMR .It should not be less than Last run KMR.\nLst Run KMR :"+storeKm);
-      this.jobcardForm.patchValue({ lastRunKms: this.RegNoList2.lastRunKms });
+      this.jobcardForm.patchValue({ lastRunKms: storeKm });
       this.jobHeaderValidation=false;
     }
   }
@@ -2708,7 +2716,7 @@ getMessage(msgType:string){
           this.jobcardForm.get('jobCardNum2').reset();
           this.jobcardForm.get('regNo1').reset();
           this.jobcardForm.get('JobOpenDt').reset();
-          this.jobcardForm.get('jobStatus1').enable();
+          this.jobcardForm.get('jobStatus1').reset();
           
           this.lstJobcardList = null;
         }

@@ -15,7 +15,7 @@
         <div class="collapse navbar-collapse" id="main_nav">
             <ul class="navbar-nav">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown"> Spares </a>
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" (click)="department('Sales')"> Sales </a>
                     <ul class="dropdown-menu">
                         <li>
                             <a class="dropdown-item" data-toggle="collapse" href="#panelVehicleSaleRegister" role="tab"
@@ -187,6 +187,26 @@
                         </td>
                     </tr>
                     <tr>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            &nbsp;Cust&nbsp;Account&nbsp;No&nbsp;:&nbsp;
+                        </td>
+                        <td>
+                            <input  type="number" class="form-control"  formControlName="custAccNo" [(ngModel)]="custAccNo">
+                        </td>
+                        <td colspan="4">
+                            <table [style.display]="isVisibleDepartmentList ? 'block' : 'none'">
+                             
+                              <td style="width: 15%" class="LabelFontStyle">
+                                  &nbsp;Department&nbsp;:&nbsp;
+                              </td>
+                              <td>
+                                  <input type="text" disabled class="form-control" formControlName="department">
+                                  <input hidden type="number" class="form-control" formControlName="deptId">
+                              </td>
+                            </table>
+                        </td>
+                      </tr>
+                    <tr>
                         <td colspan="4">
                           <table class="center">
                             <tr>
@@ -250,7 +270,7 @@
                         <td style="width: 15%" class="LabelFontStyle">
                             &nbsp;Operating&nbsp;Unit&nbsp;:&nbsp;
                         </td>
-                        <td [style.display]="isVisiblelocationInput ? 'block' : 'none'">
+                        <td>
                             <input  disabled  type="text" class="form-control" formControlName="OUCode">
                         </td>
                     </tr>

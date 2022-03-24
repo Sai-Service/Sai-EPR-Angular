@@ -3,13 +3,11 @@ import { FormGroup, FormControl, FormBuilder} from '@angular/forms';
 import { Router } from '@angular/router';
 import { Validators, FormArray } from '@angular/forms';
 import { MasterService } from '../../master/master.service';
-
 import { DatePipe } from '@angular/common';
-
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { relativeTimeRounding } from 'moment';
-
+import { ServiceService } from 'src/app/service/service.service';
 
 interface IPaymentRcptAr {
 
@@ -466,15 +464,29 @@ export class PaymentArComponent implements OnInit {
     console.log(this.locId);
 
     ////////////// Navigate from JobCard form /////////
+
+    // this.sub = this.router1.params.subscribe(params => {
+    //   this.vehRegNo = params['regNo'];
+    //   this.attribute1=this.vehRegNo;
+    //   if (this.vehRegNo != undefined){
+    //     this.fromJc=true;
+    //     this.refType='Service-Order'
+    //   this.serchByRegNo(this.attribute1);
+    //      }
+    // });
+
+
     this.sub = this.router1.params.subscribe(params => {
-      this.vehRegNo = params['regNo'];
-      this.attribute1=this.vehRegNo;
-     
-      if (this.vehRegNo != undefined){
+       var jcNum = params['jobCardNum'];
+      if (jcNum != undefined){
         this.fromJc=true;
-      this.serchByRegNo(this.attribute1);
-      }
+        this.refType='Service-Order'
+      this.GetJobCardDetails(jcNum);}
+      // alert ("JC Number : "+jcNum);
     });
+
+
+    
   /////////////////////////////////////////////////////
 
   //  alert ("this.fromJc :" +this.fromJc);
@@ -590,46 +602,38 @@ export class PaymentArComponent implements OnInit {
     this.glPrdStartDate = this.GLPeriodCheck.startDate;
     this.glPrdEndDate = this.GLPeriodCheck.endDate
 
-
-    // this.sub = this.router1.params.subscribe(params => {
-    //   this.vehRegNo = params['vehRegNo'];
-    //   alert(this.vehRegNo);
-    //   return;
-
-      // this.orderManagementService.getOmReceiptSearchByOrdNo(this.orderNumber)
-      // .subscribe(
-      // data => {
-        // this.lstcomments = data.obj.oePayList;
-        // this.custName=data.obj.custName;
-        // this.customerId=data.obj.customerId;
-        // this.balancePay=data.obj.balancePay.toFixed(2);
-      
-      //   console.log(this.lstcomments);
-      //  }
-       
-      // );
-      // });
-
-
-     
-
   }
 
+      GetJobCardDetails(jcNum) {
+      this.service.getJonCardNoSearch(jcNum)
+      .subscribe(
+        data => {
+          // this.lstcomments = data.obj;
+          if (data.code===200) {    
+            this.attribute1=data.obj.regNo;
+            this.serchByRegNo(data.obj.regNo);
+            this.paymentAmt = data.obj.balanceAmt;
+            this.referenceNo=data.obj.jobCardNum + '/' + data.obj.invoiceNumber ;
+            this.referenceDate=data.obj.jobCardDate;
+            
+            // console.log(this.lstcomments);
+          } else { alert (jcNum + " Job Card Details Not Found...");return;}
+          
+        }); 
+      }
+
+
   onKey(event: any) {
-    
     if(this.custAccountNo==null || this.custAccountNo==undefined) {
       alert("CUSTOMER :  Select Customer.");
       this.paymentAmt = null;
       return;
     }
-
     this.getTdsAmount(this.custTdsPer);
-
     }
     
 
   validateAmt(rcptAmt: any) {
-
     // if(this.custAccountNo==null || this.custAccountNo==undefined) {
     //   alert("CUSTOMER :  Select Customer.");
     //   this.paymentAmt = null;
@@ -2262,6 +2266,8 @@ export class PaymentArComponent implements OnInit {
         this.paymentArForm.get('reversalReasonCode').reset();
         this.reversalReasonCode=null;
         alert ("Please select proper Reversal Reason...")
+        this.reversalComment='';
+        this.reversalCategory='';
         return;
       }
 

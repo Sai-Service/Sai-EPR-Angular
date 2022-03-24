@@ -299,7 +299,7 @@ reportName:string;
     else if (reportName==='Spares Debtors'){
       const fileName = 'Spares Debtors-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      this.reportService.SPDebtorReport(toDate,sessionStorage.getItem('ouId'), locId)
+      this.reportService.SPDebtorReport(toDate,sessionStorage.getItem('ouId'), locId,locId,locId)
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
           this.dataDisplay = ''
