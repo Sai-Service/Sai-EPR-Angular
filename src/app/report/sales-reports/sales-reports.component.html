@@ -187,6 +187,26 @@
                         </td>
                     </tr>
                     <tr>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            &nbsp;Cust&nbsp;Account&nbsp;No&nbsp;:&nbsp;
+                        </td>
+                        <td>
+                            <input  type="number" class="form-control"  formControlName="custAccNo" [(ngModel)]="custAccNo">
+                        </td>
+                        <td colspan="4">
+                            <table [style.display]="isVisibleDepartmentList ? 'block' : 'none'">
+                             
+                              <td style="width: 15%" class="LabelFontStyle">
+                                  &nbsp;Department&nbsp;:&nbsp;
+                              </td>
+                              <td>
+                                  <input type="text" disabled class="form-control" formControlName="department">
+                                  <input hidden type="number" class="form-control" formControlName="deptId">
+                              </td>
+                            </table>
+                        </td>
+                      </tr>
+                    <tr>
                         <td colspan="4">
                           <table class="center">
                             <tr>

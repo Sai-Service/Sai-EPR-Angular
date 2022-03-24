@@ -354,6 +354,25 @@
                     </td>
                 </tr>
                 <tr>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        &nbsp;Cust&nbsp;Account&nbsp;No&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <input  type="number" class="form-control"  formControlName="custAccNo" [(ngModel)]="custAccNo">
+                    </td>
+                  <td colspan="4">
+                      <table [style.display]="isVisibleDepartmentList ? 'block' : 'none'">
+                        <td style="width: 15%" class="LabelFontStyle">
+                            &nbsp;Department&nbsp;:&nbsp;
+                        </td>
+                        <td>
+                            <input type="text" disabled class="form-control" formControlName="department">
+                            <input hidden type="number" class="form-control" formControlName="deptId">
+                        </td>
+                      </table>
+                  </td>
+                </tr>
+                <tr>
                     <td colspan="4">
                       <table class="center">
                         <tr>
@@ -966,7 +985,7 @@ style="margin-left: 10%;" id="panelSparesDebtorsExecutiveWise">
                     &nbsp;Ticket&nbsp;No&nbsp;:&nbsp;
                 </td>
                 <td>
-                    <input  type="text" class="form-control"  formControlName="userName">
+                    <input  type="text" class="form-control"  formControlName="userName1">
                 </td>
                 <td style="width: 15%" class="LabelFontStyle">
                     &nbsp;Cust&nbsp;Account&nbsp;No&nbsp;:&nbsp;
@@ -983,12 +1002,14 @@ style="margin-left: 10%;" id="panelSparesDebtorsExecutiveWise">
                                 &nbsp;Department&nbsp;List&nbsp;:&nbsp;
                             </td>
                             <td>
-                                <select formControlName="deptId" id="deptId" class="form-control">
+                                <!-- <select formControlName="deptId" id="deptId" class="form-control">
                                 <option>--Select--</option>
                                 <option *ngFor="let sc of  DepartmentList" [value]="sc.cmnTypeId">
                                     {{sc.code}}
                                 </option>
-                            </select>
+                            </select> -->
+                            <input type="text" disabled class="form-control" formControlName="department">
+                            <input hidden type="number" class="form-control" formControlName="deptId">
                             </td>
                         </tr>
                     </table>

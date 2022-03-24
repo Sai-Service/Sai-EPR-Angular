@@ -49,12 +49,15 @@ export class SalesReportsComponent implements OnInit {
   isVisibleVehicleSaleRegister:boolean=false;
   isVisiblelocationLOV:boolean=false;
   isVisiblelocationInput:boolean=false;
+  isVisibleDepartmentList:boolean=false;
   fromDate:Date;
   toDate:Date;
   locId:number;
   isVisibleSaleIND:boolean=false;
   isSaleClosingStock:boolean=false;
   OUCode:string;
+  custAccNo:string;
+  deptId:number;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) {
     this.salesReportForm = this.fb.group({
@@ -62,6 +65,9 @@ export class SalesReportsComponent implements OnInit {
       toDate:[''],
       locId:[''],
       OUCode:[''],
+      custAccNo:[''],
+      deptId:[''],
+      department:[''],
 
 
       vhslRegisterFromDt: [''],
@@ -86,6 +92,9 @@ export class SalesReportsComponent implements OnInit {
   ngOnInit(): void {
     this.salesReportForm.patchValue({ OUCode: sessionStorage.getItem('ouId') + '-' + sessionStorage.getItem('ouName') })
     this.salesReportForm.patchValue({ locCode: sessionStorage.getItem('locId') + '-' + sessionStorage.getItem('locName') })
+    this.salesReportForm.patchValue({department:'Spares'});
+    this.salesReportForm.patchValue({department:'5'});
+    
     // Prevent closing from click inside dropdown
     $(document).on('click', '.dropdown-menu', function (e) {
       e.stopPropagation();
@@ -184,6 +193,9 @@ export class SalesReportsComponent implements OnInit {
       this.isVisibleVehicleSaleRegister=false;
       this.isVisibleSaleIND=true;
       this.isSaleClosingStock=false;
+      if (Number(sessionStorage.getItem('deptId'))===4){
+        this.isVisibleDepartmentList=true;
+      }
     }
   }
 
@@ -336,10 +348,15 @@ export class SalesReportsComponent implements OnInit {
       } 
     }
     else if (reportName==='Spares Sai Debtors'){
+      var custAccNo = this.salesReportForm.get('custAccNo').value;
+      var deptId = this.salesReportForm.get('deptId').value;
+      if (custAccNo === undefined || custAccNo === null) {
+        custAccNo = '';
+      }
       const fileName = 'Spares Sai Debtors-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.SPDebtorReport(fromDate, sessionStorage.getItem('ouId'), locId)
+        this.reportService.SPDebtorReport(toDate, sessionStorage.getItem('ouId'), locId,custAccNo,deptId)
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
           this.isDisabled1 = false;
@@ -348,7 +365,7 @@ export class SalesReportsComponent implements OnInit {
         })
       }
       else  if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.SPDebtorReport(fromDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
+        this.reportService.SPDebtorReport(toDate, sessionStorage.getItem('ouId'), locId,custAccNo,deptId)
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
           this.isDisabled2 = false;
@@ -517,7 +534,7 @@ export class SalesReportsComponent implements OnInit {
     //const fileName = 'download.pdf';
     const fileName = 'SP-Debtors-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.SPDebtorReport(fromDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
+    this.reportService.SPDebtorReport(fromDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'),sessionStorage.getItem('deptId'),sessionStorage.getItem('deptId'))
       .subscribe(data => {
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
         this.isDisabled2 = false;
