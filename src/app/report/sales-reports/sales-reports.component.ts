@@ -360,6 +360,14 @@ export class SalesReportsComponent implements OnInit {
   }
 
 
+  department(department){
+    if (department==='Sales'){
+      let department = this.DepartmentList.filter((customer) => ((customer.codeDesc.includes('Sales')==true)));
+      console.log(department);
+      this.DepartmentList=department;
+    }
+    }
+
   onOptionsLocation(event) {
     // alert(event);
     this.salesReportForm.patchValue({ locId: event })

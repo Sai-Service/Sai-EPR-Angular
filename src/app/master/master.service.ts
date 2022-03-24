@@ -1651,6 +1651,13 @@ returnBillableType(repno):Observable<any>{
       return this.http.get(this.ServerUrl+`/subInvMst/subinvname?subInventoryCode=${subId}&divisionId=${divId}`);
     }
 
+    getSearchByWorkReturn(reqNo):Observable<any>{
+
+      return this.http.get(this.ServerUrl+`/mtrlIssue/reqNumRet/${reqNo}`)
+    
+    }
+    
+
     getretfrmSubLoc(locId,itemId,subId,jobno):Observable<any>{
       return this.http.get(this.ServerUrl+`/onhandqty/onhandJobNo/?locId=${locId}&itemId=${itemId}&subInventoryId=${subId}&jobNo=${jobno}`);
     }

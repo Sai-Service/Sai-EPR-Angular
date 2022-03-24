@@ -35,30 +35,31 @@ export class SparesReportsComponent implements OnInit {
   dataDisplay: any;
   progress = 0;
   deptId: number;
-  userName:string;
-  subInventory:string;
+  userName: string;
+  subInventory: string;
   subInvCode: any;
-  segment:string;
-  tolocCode:string;
-  tolocId:number;
-  orderNumber:number;
-  custAccNo:number;
-  spInvAging1:number;
-  spInvAging2:number;
-  spInvAging3:number;
+  segment: string;
+  tolocCode: string;
+  tolocId: number;
+  orderNumber: number;
+  custAccNo: number;
+  spInvAging1: number;
+  spInvAging2: number;
+  spInvAging3: number;
   invItemList = new Array();
   isVisibleGSTPurchaseRegister: boolean = false;
   isVisiblelocationInput: boolean = false;
   isVisiblelocationLOV: boolean = false;
   isVisiblespPurRegDownLoad: boolean = false;
-  isVisibleonlyLocationCode:boolean=false;
-  isVisiblegstsaiDebtors:boolean=false;
-  isVisibleStockLedger:boolean=false;
-  isVisiblestockTransfer:boolean=false;
-  isVisibleSparesBackOrderQty:boolean=false;
-  isVisiblesparesMiscIssueReceipt:boolean=false;
-  isVisiblesparesInventoryAging:boolean=false;
-  isVisibleSparesDebtorsExecutiveWise:boolean=false;
+  isVisibleonlyLocationCode: boolean = false;
+  isVisiblegstsaiDebtors: boolean = false;
+  isVisibleStockLedger: boolean = false;
+  isVisiblestockTransfer: boolean = false;
+  isVisibleSparesBackOrderQty: boolean = false;
+  isVisiblesparesMiscIssueReceipt: boolean = false;
+  isVisiblesparesInventoryAging: boolean = false;
+  isVisibleSparesDebtorsExecutiveWise: boolean = false;
+  isVisibleDepartmentList: boolean = false;
   isDisabled1 = false;
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) {
     this.sparesReportForm = this.fb.group({
@@ -68,16 +69,17 @@ export class SparesReportsComponent implements OnInit {
       locCode: [''],
       locId: [''],
       deptId: [''],
-      userName:[''],
-  subInventory:[''],
-  segment:[''],
-  tolocCode:[''],
-  tolocId:[''],
-  custAccNo:[''],
-  orderNumber:[''],
-  spInvAging1:[''],
-  spInvAging2:[''],
-  spInvAging3:[''],
+      userName: [''],
+      subInventory: [''],
+      segment: [''],
+      tolocCode: [''],
+      tolocId: [''],
+      custAccNo: [''],
+      orderNumber: [''],
+      spInvAging1: [''],
+      spInvAging2: [''],
+      spInvAging3: [''],
+      department: [''],
     })
   }
 
@@ -88,6 +90,8 @@ export class SparesReportsComponent implements OnInit {
   ngOnInit(): void {
     this.sparesReportForm.patchValue({ OUCode: sessionStorage.getItem('ouId') + '-' + sessionStorage.getItem('ouName') })
     this.sparesReportForm.patchValue({ locCode: sessionStorage.getItem('locId') + '-' + sessionStorage.getItem('locName') })
+    this.sparesReportForm.patchValue({ department: 'Spares' });
+    this.sparesReportForm.patchValue({ deptId: 5 })
     // Prevent closing from click inside dropdown
     $(document).on('click', '.dropdown-menu', function (e) {
       e.stopPropagation();
@@ -127,7 +131,8 @@ export class SparesReportsComponent implements OnInit {
         }
       );
 
-      this.sparesReportForm.patchValue({userName:sessionStorage.getItem('ticketNo')})
+
+    this.sparesReportForm.patchValue({ userName: sessionStorage.getItem('ticketNo') })
 
     if (Number(sessionStorage.getItem('deptId')) === 4) {
       this.isVisiblelocationLOV = true;
@@ -143,13 +148,13 @@ export class SparesReportsComponent implements OnInit {
       data => {
         this.subInvCode = data;
         console.log(this.subInvCode);
-        if (this.subInvCode.subInventoryCode != null){
-        this.subInventory = this.subInvCode.subInventoryCode;
-        this.sparesReportForm.patchValue({ subInventory: this.subInvCode.subInventoryCode })
-      }
+        if (this.subInvCode.subInventoryCode != null) {
+          this.subInventory = this.subInvCode.subInventoryCode;
+          this.sparesReportForm.patchValue({ subInventory: this.subInvCode.subInventoryCode })
+        }
       });
 
-      this.service.invItemList2New('GOODS', (sessionStorage.getItem('deptName')), (sessionStorage.getItem('divisionId')), '36DH1601')
+    this.service.invItemList2New('GOODS', (sessionStorage.getItem('deptName')), (sessionStorage.getItem('divisionId')), '36DH1601')
       .subscribe(
         data => {
           this.invItemList = data;
@@ -173,267 +178,279 @@ export class SparesReportsComponent implements OnInit {
       if (this.reportName === 'Purchase Register Details') {
         this.isVisiblespPurRegDownLoad = true;
       }
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.isVisibleDepartmentList = true;
+      }
       this.isVisibleGSTPurchaseRegister = true;
-      this.isVisibleonlyLocationCode=false;
-      this.isVisiblegstsaiDebtors=false;
-      this.isVisibleStockLedger=false;
-      this.isVisiblestockTransfer=false;
-      this.isVisibleSparesBackOrderQty=false;
-      this.isVisiblesparesMiscIssueReceipt=false;
-      this.isVisiblesparesInventoryAging=false;
-      this.isVisibleSparesDebtorsExecutiveWise=false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
     }
     else if (reportName === 'gstpurRegSumm') {
       this.reportName = 'Spares Purchase Register - Summary';
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.isVisibleDepartmentList = true;
+      }
       this.isVisibleGSTPurchaseRegister = true;
-      this.isVisibleonlyLocationCode=false;
-      this.isVisiblegstsaiDebtors=false;
-      this.isVisibleStockLedger=false;
-      this.isVisiblestockTransfer=false;
-      this.isVisibleSparesBackOrderQty=false;
-      this.isVisiblesparesMiscIssueReceipt=false;
-      this.isVisiblesparesInventoryAging=false;
-      this.isVisibleSparesDebtorsExecutiveWise=false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
     }
     else if (reportName === 'gstIssueDetails') {
       this.reportName = 'Spares Issue Details Report';
       this.isVisibleGSTPurchaseRegister = true;
-      this.isVisibleonlyLocationCode=false;
-      this.isVisiblegstsaiDebtors=false;
-      this.isVisibleStockLedger=false;
-      this.isVisiblestockTransfer=false;
-      this.isVisibleSparesBackOrderQty=false;
-      this.isVisiblesparesMiscIssueReceipt=false;
-      this.isVisiblesparesInventoryAging=false;
-      this.isVisibleSparesDebtorsExecutiveWise=false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
     }
     else if (reportName === 'gstIssueSummary') {
       this.reportName = 'Spares Issue Summary';
       this.isVisibleGSTPurchaseRegister = true;
-      this.isVisibleonlyLocationCode=false;
-      this.isVisiblegstsaiDebtors=false;
-      this.isVisibleStockLedger=false;
-      this.isVisiblestockTransfer=false;
-      this.isVisibleSparesBackOrderQty=false;
-      this.isVisiblesparesMiscIssueReceipt=false;
-      this.isVisiblesparesInventoryAging=false;
-      this.isVisibleSparesDebtorsExecutiveWise=false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
     }
     else if (reportName === 'gstReceiptRegister') {
       this.reportName = 'Spares Receipt Register';
-      this.isVisibleonlyLocationCode=false;
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.isVisibleDepartmentList = true;
+      }
+      this.isVisibleonlyLocationCode = false;
       this.isVisibleGSTPurchaseRegister = true;
-      this.isVisiblegstsaiDebtors=false;
-      this.isVisibleStockLedger=false;
-      this.isVisiblestockTransfer=false;
-      this.isVisibleSparesBackOrderQty=false;
-      this.isVisiblesparesMiscIssueReceipt=false;
-      this.isVisiblesparesInventoryAging=false;
-      this.isVisibleSparesDebtorsExecutiveWise=false;
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
     }
-    else if (reportName==='gstClosingReport'){
+    else if (reportName === 'gstClosingReport') {
       this.reportName = 'Spares Closing Stock Report';
-      this.isVisibleonlyLocationCode=true;
-      this.isVisiblegstsaiDebtors=false;
+      this.isVisibleonlyLocationCode = true;
+      this.isVisiblegstsaiDebtors = false;
       this.isVisibleGSTPurchaseRegister = false;
-      this.isVisibleStockLedger=false;
-      this.isVisiblestockTransfer=false;
-      this.isVisibleSparesBackOrderQty=false;
-      this.isVisiblesparesMiscIssueReceipt=false;
-      this.isVisiblesparesInventoryAging=false;
-      this.isVisibleSparesDebtorsExecutiveWise=false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
     }
-    else if (reportName==='gstsaiDebtors'){
+    else if (reportName === 'gstsaiDebtors') {
       this.reportName = 'Sai Debtors';
-      this.isVisibleonlyLocationCode=false;
-      this.isVisiblegstsaiDebtors=true;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblegstsaiDebtors = true;
       this.isVisibleGSTPurchaseRegister = false;
-      this.isVisibleStockLedger=false;
-      this.isVisiblestockTransfer=false;
-      this.isVisibleSparesBackOrderQty=false;
-      this.isVisiblesparesMiscIssueReceipt=false;
-      this.isVisiblesparesInventoryAging=false;
-      this.isVisibleSparesDebtorsExecutiveWise=false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
     }
-    else if (reportName==='gstStockLedger'){
+    else if (reportName === 'gstStockLedger') {
       this.reportName = 'Stock Ledger';
-      this.isVisibleonlyLocationCode=false;
-      this.isVisiblegstsaiDebtors=false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblegstsaiDebtors = false;
       this.isVisibleGSTPurchaseRegister = false;
-      this.isVisibleStockLedger=true;
-      this.isVisiblestockTransfer=false;
-      this.isVisibleSparesBackOrderQty=false;
-      this.isVisiblesparesMiscIssueReceipt=false;
-      this.isVisiblesparesInventoryAging=false;
-      this.isVisibleSparesDebtorsExecutiveWise=false;
+      this.isVisibleStockLedger = true;
+      this.isVisiblestockTransfer = false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
     }
-    else if (reportName==='gststockTransfer'){
+    else if (reportName === 'gststockTransfer') {
       this.reportName = 'Stock Transfer Made Detail Report';
-      this.isVisibleonlyLocationCode=false;
-      this.isVisiblegstsaiDebtors=false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblegstsaiDebtors = false;
       this.isVisibleGSTPurchaseRegister = false;
-      this.isVisibleStockLedger=false;
-      this.isVisiblestockTransfer=true;
-      this.isVisibleSparesBackOrderQty=false;
-      this.isVisiblesparesMiscIssueReceipt=false;
-      this.isVisiblesparesInventoryAging=false;
-      this.isVisibleSparesDebtorsExecutiveWise=false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = true;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
     }
-    else if (reportName==='gststockTransferSummary'){
+    else if (reportName === 'gststockTransferSummary') {
       this.reportName = 'Stock Transfer Made Summary Report';
-      this.isVisibleonlyLocationCode=false;
-      this.isVisiblegstsaiDebtors=false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblegstsaiDebtors = false;
       this.isVisibleGSTPurchaseRegister = false;
-      this.isVisibleStockLedger=false;
-      this.isVisiblestockTransfer=true;
-      this.isVisibleSparesBackOrderQty=false;
-      this.isVisiblesparesMiscIssueReceipt=false;
-      this.isVisiblesparesInventoryAging=false;
-      this.isVisibleSparesDebtorsExecutiveWise=false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = true;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
     }
-    else if (reportName==='gststockTransferReceivedDetails'){
+    else if (reportName === 'gststockTransferReceivedDetails') {
       this.reportName = 'Stock Transfer Received Detail Report';
-      this.isVisibleonlyLocationCode=false;
-      this.isVisiblegstsaiDebtors=false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblegstsaiDebtors = false;
       this.isVisibleGSTPurchaseRegister = false;
-      this.isVisibleStockLedger=false;
-      this.isVisiblestockTransfer=true;
-      this.isVisibleSparesBackOrderQty=false;
-      this.isVisiblesparesMiscIssueReceipt=false;
-      this.isVisiblesparesInventoryAging=false;
-      this.isVisibleSparesDebtorsExecutiveWise=false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = true;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
     }
-    else if (reportName==='gststockTransferReceivedSummary'){
+    else if (reportName === 'gststockTransferReceivedSummary') {
       this.reportName = 'Spares Stock Transfer Received Summary Report';
-      this.isVisibleonlyLocationCode=false;
-      this.isVisiblegstsaiDebtors=false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblegstsaiDebtors = false;
       this.isVisibleGSTPurchaseRegister = false;
-      this.isVisibleStockLedger=false;
-      this.isVisiblestockTransfer=true;
-      this.isVisibleSparesBackOrderQty=false;
-      this.isVisiblesparesMiscIssueReceipt=false;
-      this.isVisiblesparesInventoryAging=false;
-      this.isVisibleSparesDebtorsExecutiveWise=false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = true;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
     }
-    else if (reportName==='gstsparesCustomerOffTakeStatment'){
+    else if (reportName === 'gstsparesCustomerOffTakeStatment') {
       this.reportName = 'Spares Customer Off Take Statement';
       this.isVisibleGSTPurchaseRegister = true;
-      this.isVisibleonlyLocationCode=false;
-      this.isVisiblegstsaiDebtors=false;
-      this.isVisibleStockLedger=false;
-      this.isVisiblestockTransfer=false;
-      this.isVisibleSparesBackOrderQty=false;
-      this.isVisiblesparesMiscIssueReceipt=false;
-      this.isVisiblesparesInventoryAging=false;
-      this.isVisibleSparesDebtorsExecutiveWise=false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
     }
-    else if (reportName==='gstSparesBackOrderQty'){
+    else if (reportName === 'gstSparesBackOrderQty') {
       this.reportName = 'Spares Back Order Qty Report';
       this.isVisibleGSTPurchaseRegister = false;
-      this.isVisibleonlyLocationCode=false;
-      this.isVisiblegstsaiDebtors=false;
-      this.isVisibleStockLedger=false;
-      this.isVisiblestockTransfer=false;
-      this.isVisibleSparesBackOrderQty=true;
-      this.isVisiblesparesMiscIssueReceipt=false;
-      this.isVisiblesparesInventoryAging=false;
-      this.isVisibleSparesDebtorsExecutiveWise=false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisibleSparesBackOrderQty = true;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
     }
-    else if (reportName==='gstsparesMiscIssueReceipt'){
+    else if (reportName === 'gstsparesMiscIssueReceipt') {
       this.reportName = 'Spares Misc Issue Receipt Report';
       this.isVisibleGSTPurchaseRegister = false;
-      this.isVisibleonlyLocationCode=false;
-      this.isVisiblegstsaiDebtors=false;
-      this.isVisibleStockLedger=false;
-      this.isVisiblestockTransfer=false;
-      this.isVisibleSparesBackOrderQty=false;
-      this.isVisiblesparesMiscIssueReceipt=true;
-      this.isVisiblesparesInventoryAging=false;
-      this.isVisibleSparesDebtorsExecutiveWise=false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = true;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
     }
-    else if (reportName==='gstSaleReturnRegister'){
+    else if (reportName === 'gstSaleReturnRegister') {
       this.reportName = 'Spares Sales Return Register';
       this.isVisibleGSTPurchaseRegister = false;
-      this.isVisibleonlyLocationCode=false;
-      this.isVisiblegstsaiDebtors=false;
-      this.isVisibleStockLedger=false;
-      this.isVisiblestockTransfer=false;
-      this.isVisibleSparesBackOrderQty=false;
-      this.isVisiblesparesMiscIssueReceipt=true;
-      this.isVisiblesparesInventoryAging=false;
-      this.isVisibleSparesDebtorsExecutiveWise=false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = true;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
     }
-    else if (reportName==='gstIncomeStatement'){
+    else if (reportName === 'gstIncomeStatement') {
       this.reportName = 'Income Statement';
       this.isVisibleGSTPurchaseRegister = false;
-      this.isVisibleonlyLocationCode=false;
-      this.isVisiblegstsaiDebtors=false;
-      this.isVisibleStockLedger=false;
-      this.isVisiblestockTransfer=false;
-      this.isVisibleSparesBackOrderQty=false;
-      this.isVisiblesparesMiscIssueReceipt=true;
-      this.isVisiblesparesInventoryAging=false;
-      this.isVisibleSparesDebtorsExecutiveWise=false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = true;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
     }
-    else if (reportName==='gstSparesClosingStockAsOnDate'){
+    else if (reportName === 'gstSparesClosingStockAsOnDate') {
       this.reportName = 'Spares Closing Stock As On Date';
-      this.isVisibleonlyLocationCode=false;
-      this.isVisiblegstsaiDebtors=true;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblegstsaiDebtors = true;
       this.isVisibleGSTPurchaseRegister = false;
-      this.isVisibleStockLedger=false;
-      this.isVisiblestockTransfer=false;
-      this.isVisibleSparesBackOrderQty=false;
-      this.isVisiblesparesMiscIssueReceipt=false;
-      this.isVisiblesparesInventoryAging=false;
-      this.isVisibleSparesDebtorsExecutiveWise=false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
     }
-    else if (reportName==='gstSpresProformaDetailsReports'){
+    else if (reportName === 'gstSpresProformaDetailsReports') {
       this.reportName = 'Spares Proforma Details Report';
       this.isVisibleGSTPurchaseRegister = false;
-      this.isVisibleonlyLocationCode=false;
-      this.isVisiblegstsaiDebtors=false;
-      this.isVisibleStockLedger=false;
-      this.isVisiblestockTransfer=false;
-      this.isVisibleSparesBackOrderQty=false;
-      this.isVisiblesparesMiscIssueReceipt=true;
-      this.isVisiblesparesInventoryAging=false;
-      this.isVisibleSparesDebtorsExecutiveWise=false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = true;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
     }
-    else if (reportName==='gstChequeBounceReport'){
+    else if (reportName === 'gstChequeBounceReport') {
       this.reportName = 'Cheque Bounce Report';
       this.isVisibleGSTPurchaseRegister = false;
-      this.isVisibleonlyLocationCode=false;
-      this.isVisiblegstsaiDebtors=false;
-      this.isVisibleStockLedger=false;
-      this.isVisiblestockTransfer=false;
-      this.isVisibleSparesBackOrderQty=false;
-      this.isVisiblesparesMiscIssueReceipt=true;
-      this.isVisiblesparesInventoryAging=false;
-      this.isVisibleSparesDebtorsExecutiveWise=false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = true;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
     }
-    else if (reportName==='gstsparesInventoryAging'){
+    else if (reportName === 'gstsparesInventoryAging') {
       this.reportName = 'Spares Inventory Aging Report';
       this.isVisibleGSTPurchaseRegister = false;
-      this.isVisibleonlyLocationCode=false;
-      this.isVisiblegstsaiDebtors=false;
-      this.isVisibleStockLedger=false;
-      this.isVisiblestockTransfer=false;
-      this.isVisibleSparesBackOrderQty=false;
-      this.isVisiblesparesMiscIssueReceipt=false;
-      this.isVisiblesparesInventoryAging=true;
-      this.isVisibleSparesDebtorsExecutiveWise=false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = true;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
     }
-    else if (reportName==='gstSparesDebtorsExecutiveWise'){
+    else if (reportName === 'gstSparesDebtorsExecutiveWise') {
       this.reportName = 'Spares Debtors Executive Wise report';
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.isVisibleDepartmentList = true;
+      }
       this.isVisibleGSTPurchaseRegister = false;
-      this.isVisibleonlyLocationCode=false;
-      this.isVisiblegstsaiDebtors=false;
-      this.isVisibleStockLedger=false;
-      this.isVisiblestockTransfer=false;
-      this.isVisibleSparesBackOrderQty=false;
-      this.isVisiblesparesMiscIssueReceipt=false;
-      this.isVisiblesparesInventoryAging=false;
-      this.isVisibleSparesDebtorsExecutiveWise=true;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = true;
     }
   }
 
@@ -444,7 +461,7 @@ export class SparesReportsComponent implements OnInit {
     this.sparesReportForm.patchValue({ locId: event })
   }
 
-  onOptionsToLocation(event){
+  onOptionsToLocation(event) {
     this.sparesReportForm.patchValue({ tolocId: event })
   }
 
@@ -467,63 +484,63 @@ export class SparesReportsComponent implements OnInit {
     var toDate1 = this.sparesReportForm.get('toDate').value;
     var toDate = this.pipe.transform(toDate1, 'dd-MMM-yyyy');
     var locId = this.sparesReportForm.get('locId').value;
-    var tolocId=this.sparesReportForm.get('tolocId').value;
+    var tolocId = this.sparesReportForm.get('tolocId').value;
     var deptId = this.sparesReportForm.get('deptId').value;
     var userName = this.sparesReportForm.get('userName').value;
     var segment = this.sparesReportForm.get('segment').value;
-    var subInventory=this.sparesReportForm.get('subInventory').value;
-    var tolocId=this.sparesReportForm.get('tolocId').value;
+    var subInventory = this.sparesReportForm.get('subInventory').value;
+    var tolocId = this.sparesReportForm.get('tolocId').value;
+    // alert(deptId);
     if (locId === null) {
       alert('Please Select location Code.!');
       return;
     }
-  //   alert(reportName.includes('Spares Closing Stock'))
-  // if ( reportName.includes('Spares Closing Stock') ===false || reportName.includes('Sai Debtors')===false){
-  //   if (fromDate === null ||fromDate ===undefined|| fromDate==='' ) {
-  //     alert('Please Select From Date.!');
-  //     this.isDisabled1 = false;
-  //     this.closeResetButton = false;
-  //     this.progress = 0;
-  //     this.dataDisplay = 'Please Select From Date.!';
-  //     return;
-  //   }
-  // }
-  // else if (reportName !='Spares Closing Stock Report'){
-  //   if (toDate === null || toDate===undefined || toDate ==='') {
-  //     alert('Please Select To Date.!');
-  //     this.isDisabled1 = false;
-  //     this.closeResetButton = false;
-  //     this.progress = 0;
-  //     this.dataDisplay = 'Please Select To Date.!';
-  //     return;
-  //   }
-  // }
-  if (reportName ==='Stock Ledger'){
-  if (userName===null || userName === undefined || userName==='' || segment ===null || segment===undefined|| segment===''){
-    alert('Please Enter userName.!');
-      this.isDisabled1 = false;
-      this.closeResetButton = false;
-      this.progress = 0;
-      this.dataDisplay = 'Please Enter userName.!';
-      return;
-  }
- }
- else if (reportName===''){
-   if (tolocId===null|| tolocId === undefined || tolocId===''){
-    alert('Please Select To Location.!');
-    this.isDisabled1 = false;
-    this.closeResetButton = false;
-    this.progress = 0;
-    this.dataDisplay = 'Please Select To Location.!';
-    return;
-   }
- } 
- if (reportName === 'Purchase Register Details') 
-   {
+    //   alert(reportName.includes('Spares Closing Stock'))
+    // if ( reportName.includes('Spares Closing Stock') ===false || reportName.includes('Sai Debtors')===false){
+    //   if (fromDate === null ||fromDate ===undefined|| fromDate==='' ) {
+    //     alert('Please Select From Date.!');
+    //     this.isDisabled1 = false;
+    //     this.closeResetButton = false;
+    //     this.progress = 0;
+    //     this.dataDisplay = 'Please Select From Date.!';
+    //     return;
+    //   }
+    // }
+    // else if (reportName !='Spares Closing Stock Report'){
+    //   if (toDate === null || toDate===undefined || toDate ==='') {
+    //     alert('Please Select To Date.!');
+    //     this.isDisabled1 = false;
+    //     this.closeResetButton = false;
+    //     this.progress = 0;
+    //     this.dataDisplay = 'Please Select To Date.!';
+    //     return;
+    //   }
+    // }
+    if (reportName === 'Stock Ledger') {
+      if (userName === null || userName === undefined || userName === '' || segment === null || segment === undefined || segment === '') {
+        alert('Please Enter userName.!');
+        this.isDisabled1 = false;
+        this.closeResetButton = false;
+        this.progress = 0;
+        this.dataDisplay = 'Please Enter userName.!';
+        return;
+      }
+    }
+    else if (reportName === '') {
+      if (tolocId === null || tolocId === undefined || tolocId === '') {
+        alert('Please Select To Location.!');
+        this.isDisabled1 = false;
+        this.closeResetButton = false;
+        this.progress = 0;
+        this.dataDisplay = 'Please Select To Location.!';
+        return;
+      }
+    }
+    if (reportName === 'Purchase Register Details') {
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         const fileName = 'Purchase Register Details-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
         const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-        this.reportService.sppurRegidetailReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, sessionStorage.getItem('deptId'))
+        this.reportService.sppurRegidetailReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.dataDisplay = ''
@@ -547,7 +564,7 @@ export class SparesReportsComponent implements OnInit {
       const fileName = 'Spares Purchase Register - Summary-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.sppurRegiSummReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, sessionStorage.getItem('deptId'))
+        this.reportService.sppurRegiSummReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -613,7 +630,7 @@ export class SparesReportsComponent implements OnInit {
       const fileName = 'Spares Receipt Register-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.spReceiptRegisterReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, sessionStorage.getItem('deptId'))
+        this.reportService.spReceiptRegisterReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -631,407 +648,407 @@ export class SparesReportsComponent implements OnInit {
           })
       }
     }
-    else if (reportName==='Spares Closing Stock Report'){
+    else if (reportName === 'Spares Closing Stock Report') {
       const fileName = 'SP-Closing-Stock-' + sessionStorage.getItem('locName').trim() + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.spclosstrockReport(locId)
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.isDisabled1 = false;
-          this.closeResetButton = true;
-          this.dataDisplay = ''
-        })
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
       }
-      else  if (Number(sessionStorage.getItem('deptId')) != 4) {
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
         this.reportService.spclosstrockReport(sessionStorage.getItem('locId'))
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.isDisabled1 = false;
-          this.closeResetButton = true;
-          this.dataDisplay = ''
-        })
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
       }
     }
-    else if (reportName==='Sai Debtors'){
+    else if (reportName === 'Sai Debtors') {
       const fileName = 'SP-Debtors-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.SPDebtorReport(fromDate, sessionStorage.getItem('ouId'), locId)
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.isDisabled1 = false;
-          this.closeResetButton = true;
-          this.dataDisplay = ''
-        })
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
         this.reportService.SPDebtorReport(fromDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.isDisabled1 = false;
-          this.closeResetButton = true;
-          this.dataDisplay = ''
-        })
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
       }
     }
-    else if (reportName==='Stock Ledger'){
+    else if (reportName === 'Stock Ledger') {
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.stockLedgerReport(fromDate, toDate, subInventory, segment, locId, userName)
-      .subscribe(data => {
-        var blob = new Blob([data], { type: 'application/pdf' });
-        var url = URL.createObjectURL(blob);
-        var printWindow = window.open(url, '', 'width=800,height=500');
-        printWindow.open;
-        this.isDisabled1 = false;
-        this.closeResetButton = true;
-        this.dataDisplay = ''
-      })
+          .subscribe(data => {
+            var blob = new Blob([data], { type: 'application/pdf' });
+            var url = URL.createObjectURL(blob);
+            var printWindow = window.open(url, '', 'width=800,height=500');
+            printWindow.open;
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
       }
-      else  if (Number(sessionStorage.getItem('deptId')) != 4){
-      this.reportService.stockLedgerReport(fromDate, toDate, subInventory, segment, sessionStorage.getItem('locId'), userName)
-      .subscribe(data => {
-        var blob = new Blob([data], { type: 'application/pdf' });
-        var url = URL.createObjectURL(blob);
-        var printWindow = window.open(url, '', 'width=800,height=500');
-        printWindow.open;
-        this.isDisabled1 = false;
-        this.closeResetButton = true;
-        this.dataDisplay = ''
-      })
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.stockLedgerReport(fromDate, toDate, subInventory, segment, sessionStorage.getItem('locId'), userName)
+          .subscribe(data => {
+            var blob = new Blob([data], { type: 'application/pdf' });
+            var url = URL.createObjectURL(blob);
+            var printWindow = window.open(url, '', 'width=800,height=500');
+            printWindow.open;
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
     }
-  }
-  else if (reportName==='Stock Transfer Made Detail Report'){
-    const fileName = 'Stock Transfer Made Detail Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
-    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    if (Number(sessionStorage.getItem('deptId')) === 4) {
-      this.reportService.stockMadeDetailsReport(fromDate, toDate, locId, tolocId, subInventory)
-      .subscribe(data => {
-        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-        this.isDisabled1 = false;
-        this.closeResetButton = true;
-        this.dataDisplay = ''
-      })
+    else if (reportName === 'Stock Transfer Made Detail Report') {
+      const fileName = 'Stock Transfer Made Detail Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.stockMadeDetailsReport(fromDate, toDate, locId, tolocId, subInventory)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.stockMadeDetailsReport(fromDate, toDate, sessionStorage.getItem('locId'), tolocId, subInventory)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
     }
-    else if (Number(sessionStorage.getItem('deptId')) != 4) {
-      this.reportService.stockMadeDetailsReport(fromDate, toDate, sessionStorage.getItem('locId'), tolocId, subInventory)
-      .subscribe(data => {
-        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-        this.isDisabled1 = false;
-        this.closeResetButton = true;
-        this.dataDisplay = ''
-      })
+    else if (reportName === 'Stock Transfer Made Summary Report') {
+      const fileName = 'Stock Transfer Made Summary Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.spstktrfMdSummaryReport(fromDate, toDate, locId, tolocId, subInventory)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.spstktrfMdSummaryReport(fromDate, toDate, sessionStorage.getItem('locId'), tolocId, subInventory)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
     }
-  }
-  else if (reportName==='Stock Transfer Made Summary Report'){
-    const fileName = 'Stock Transfer Made Summary Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
-    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    if (Number(sessionStorage.getItem('deptId')) === 4) {
-      this.reportService.spstktrfMdSummaryReport(fromDate, toDate, locId, tolocId, subInventory)
-      .subscribe(data => {
-        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-        this.isDisabled1 = false;
-        this.closeResetButton = true;
-        this.dataDisplay = ''
-      })
+    else if (reportName === 'Stock Transfer Received Detail Report') {
+      const fileName = 'Stock Transfer Received Detail Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.SprStkTrfRecdDtlsReport(fromDate, toDate, locId, tolocId, subInventory)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.SprStkTrfRecdDtlsReport(fromDate, toDate, sessionStorage.getItem('locId'), tolocId, subInventory)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
     }
-    else  if (Number(sessionStorage.getItem('deptId')) != 4) {
-      this.reportService.spstktrfMdSummaryReport(fromDate, toDate, sessionStorage.getItem('locId'), tolocId, subInventory)
-      .subscribe(data => {
-        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-        this.isDisabled1 = false;
-        this.closeResetButton = true;
-        this.dataDisplay = ''
-      })
+    else if (reportName === 'Spares Stock Transfer Received Summary Report') {
+      const fileName = 'Spares Stock Transfer Received Summary Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.SprStkTrfRecdSummaryReport(fromDate, toDate, locId, tolocId, subInventory)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.SprStkTrfRecdSummaryReport(fromDate, toDate, sessionStorage.getItem('locId'), tolocId, subInventory)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
     }
-  }
-  else if (reportName==='Stock Transfer Received Detail Report'){
-    const fileName = 'Stock Transfer Received Detail Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
-    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    if (Number(sessionStorage.getItem('deptId')) === 4) {
-      this.reportService.SprStkTrfRecdDtlsReport(fromDate, toDate, locId, tolocId, subInventory)
-      .subscribe(data => {
-        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-        this.isDisabled1 = false;
-        this.closeResetButton = true;
-        this.dataDisplay = ''
-      })
+    else if (reportName === 'Spares Customer Off Take Statement') {
+      const fileName = 'Spares-Customer-Off-Take-Statement-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.SprcusttakestatReport(fromDate, toDate, locId)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.SprcusttakestatReport(fromDate, toDate, sessionStorage.getItem('locId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
     }
-    else  if (Number(sessionStorage.getItem('deptId')) != 4) {
-      this.reportService.SprStkTrfRecdDtlsReport(fromDate, toDate, sessionStorage.getItem('locId'), tolocId, subInventory)
-      .subscribe(data => {
-        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-        this.isDisabled1 = false;
-        this.closeResetButton = true;
-        this.dataDisplay = ''
-      })
+    else if (reportName === 'Spares Back Order Qty Report') {
+      var custAccNo = this.sparesReportForm.get('custAccNo').value;
+      var orderNumber = this.sparesReportForm.get('orderNumber').value;
+      if (custAccNo === undefined || custAccNo === null) {
+        custAccNo = '';
+      }
+      if (orderNumber === undefined || orderNumber === null) {
+        orderNumber = ''
+      }
+      const fileName = 'Spares Back Order Qty Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.spbackOrderQtyReport(fromDate, toDate, locId, custAccNo, orderNumber)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.spbackOrderQtyReport(fromDate, toDate, sessionStorage.getItem('locId'), custAccNo, orderNumber)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
     }
-  }
-  else if (reportName==='Spares Stock Transfer Received Summary Report'){
-    const fileName = 'Spares Stock Transfer Received Summary Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
-    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    if (Number(sessionStorage.getItem('deptId')) === 4) {
-      this.reportService.SprStkTrfRecdSummaryReport(fromDate, toDate, locId, tolocId, subInventory)
-      .subscribe(data => {
-        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-        this.isDisabled1 = false;
-        this.closeResetButton = true;
-        this.dataDisplay = ''
-      })
+    else if (reportName === 'Spares Misc Issue Receipt Report') {
+      const fileName = 'Spares Misc Issue Receipt Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.spSparesMiscIssueReceiptReport(fromDate, toDate, locId)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.spSparesMiscIssueReceiptReport(fromDate, toDate, sessionStorage.getItem('locId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
     }
-    else  if (Number(sessionStorage.getItem('deptId')) != 4) {
-      this.reportService.SprStkTrfRecdSummaryReport(fromDate, toDate, sessionStorage.getItem('locId'), tolocId, subInventory)
-      .subscribe(data => {
-        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-        this.isDisabled1 = false;
-        this.closeResetButton = true;
-        this.dataDisplay = ''
-      })
+    else if (reportName === 'Spares Sales Return Register') {
+      const fileName = 'Spares Sales Return Register-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.spslReturnRegisterReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.spslReturnRegisterReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
     }
-  }
-  else if (reportName==='Spares Customer Off Take Statement'){
-    const fileName = 'Spares-Customer-Off-Take-Statement-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
-    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    if (Number(sessionStorage.getItem('deptId')) === 4) {
-      this.reportService.SprcusttakestatReport(fromDate, toDate, locId)
-      .subscribe(data => {
-        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-        this.isDisabled1 = false;
-        this.closeResetButton = true;
-        this.dataDisplay = ''
-      })
+    else if (reportName === 'Income Statement') {
+      const fileName = 'Spares Income Statement-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.spIncomeStatement(fromDate, toDate, locId)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.spIncomeStatement(fromDate, toDate, sessionStorage.getItem('locId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
     }
-    else  if (Number(sessionStorage.getItem('deptId')) != 4) {
-      this.reportService.SprcusttakestatReport(fromDate, toDate, sessionStorage.getItem('locId'))
-      .subscribe(data => {
-        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-        this.isDisabled1 = false;
-        this.closeResetButton = true;
-        this.dataDisplay = ''
-      })
+    else if (reportName === 'Spares Closing Stock As On Date') {
+      const fileName = 'Spares Income Statement-' + sessionStorage.getItem('locName').trim() + '-' + toDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.sprClsAsonDtReport(toDate, locId)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) { }
     }
-  }
-  else if (reportName==='Spares Back Order Qty Report'){
-    var custAccNo = this.sparesReportForm.get('custAccNo').value;
-    var orderNumber=this.sparesReportForm.get('orderNumber').value;
-    if (custAccNo === undefined || custAccNo === null) {
-      custAccNo = '';
+    else if (reportName === 'Spares Proforma Details Report') {
+      const fileName = 'Spares Proforma Details Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.spProforDtReport(fromDate, toDate, locId)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.spProforDtReport(fromDate, toDate, sessionStorage.getItem('locId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
     }
-    if (orderNumber === undefined || orderNumber === null) {
-      orderNumber = ''
+    else if (reportName === 'Spares Proforma Details Report') {
+      const fileName = 'Cheque Bounce Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.chequebounceReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.chequebounceReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
     }
-    const fileName = 'Spares Back Order Qty Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
-    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    if (Number(sessionStorage.getItem('deptId')) === 4) {
-      this.reportService.spbackOrderQtyReport(fromDate, toDate, locId,custAccNo, orderNumber)
-      .subscribe(data => {
-        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-        this.isDisabled1 = false;
-        this.closeResetButton = true;
-        this.dataDisplay = ''
-      })
+    else if (reportName === 'Spares Inventory Aging Report') {
+      var spInvAging1 = this.sparesReportForm.get('spInvAging1').value;
+      var spInvAging2 = this.sparesReportForm.get('spInvAging2').value;
+      var spInvAging3 = this.sparesReportForm.get('spInvAging3').value;
+      if (spInvAging1 > spInvAging2) {
+        alert('Please check Aging.!');
+        this.dataDisplay = 'Please check Aging.';
+        return;
+      }
+      else if (spInvAging1 > spInvAging3) {
+        alert('Please check Aging.!');
+        this.dataDisplay = 'Please check Aging.';
+        return;
+      }
+      else if (spInvAging2 > spInvAging3) {
+        alert('Please check Aging.!');
+        this.dataDisplay = 'Please check Aging.';
+        return;
+      }
+      const fileName = 'Spares Inventory Aging Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.sspInvAgingReport(spInvAging1, spInvAging2, spInvAging3, sessionStorage.getItem('ouId'), locId)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.sspInvAgingReport(spInvAging1, spInvAging2, spInvAging3, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
     }
-    else if (Number(sessionStorage.getItem('deptId')) != 4) {
-      this.reportService.spbackOrderQtyReport(fromDate, toDate, sessionStorage.getItem('locId'), custAccNo, orderNumber)
-      .subscribe(data => {
-        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-        this.isDisabled1 = false;
-        this.closeResetButton = true;
-        this.dataDisplay = ''
-      })
+    else if (reportName === 'Spares Debtors Executive Wise report') {
+      var custAcctNo = this.sparesReportForm.get('custAccNo').value;
+      var ticketNo = this.sparesReportForm.get('userName').value
+      if (custAcctNo === undefined || custAcctNo === null) {
+        custAcctNo = '';
+      }
+      const fileName = 'Spares Debtors Executive Wise report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.spDebtorExicutiveWise(toDate, sessionStorage.getItem('ouId'), locId, ticketNo, custAcctNo, deptId)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.spDebtorExicutiveWise(toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), ticketNo, custAcctNo, sessionStorage.getItem('deptId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
     }
-  }
-  else if (reportName==='Spares Misc Issue Receipt Report'){
-    const fileName = 'Spares Misc Issue Receipt Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
-    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    if (Number(sessionStorage.getItem('deptId')) === 4) {
-      this.reportService.spSparesMiscIssueReceiptReport(fromDate, toDate, locId)
-      .subscribe(data => {
-        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-        this.isDisabled1 = false;
-        this.closeResetButton = true;
-        this.dataDisplay = ''
-      })
-    }
-    if (Number(sessionStorage.getItem('deptId')) != 4) {
-      this.reportService.spSparesMiscIssueReceiptReport(fromDate, toDate, sessionStorage.getItem('locId'))
-      .subscribe(data => {
-        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-        this.isDisabled1 = false;
-        this.closeResetButton = true;
-        this.dataDisplay = ''
-      })
-    }
-  }
-  else if (reportName==='Spares Sales Return Register'){
-    const fileName = 'Spares Sales Return Register-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
-    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    if (Number(sessionStorage.getItem('deptId')) === 4) {
-      this.reportService.spslReturnRegisterReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId)
-      .subscribe(data => {
-        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-        this.isDisabled1 = false;
-        this.closeResetButton = true;
-        this.dataDisplay = ''
-      })
-    }
-    else if (Number(sessionStorage.getItem('deptId')) != 4) {
-      this.reportService.spslReturnRegisterReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
-      .subscribe(data => {
-        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-        this.isDisabled1 = false;
-        this.closeResetButton = true;
-        this.dataDisplay = ''
-      })
-  }
-  }
-  else if (reportName==='Income Statement'){
-    const fileName = 'Spares Income Statement-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
-    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    if (Number(sessionStorage.getItem('deptId')) === 4) {
-      this.reportService.spIncomeStatement(fromDate, toDate, locId)
-      .subscribe(data => {
-        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-        this.isDisabled1 = false;
-        this.closeResetButton = true;
-        this.dataDisplay = ''
-      })
-    }
-    else if (Number(sessionStorage.getItem('deptId')) != 4) {
-      this.reportService.spIncomeStatement(fromDate, toDate, sessionStorage.getItem('locId'))
-      .subscribe(data => {
-        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-        this.isDisabled1 = false;
-        this.closeResetButton = true;
-        this.dataDisplay = ''
-      })
-  }
-}
-else if (reportName ==='Spares Closing Stock As On Date'){
-  const fileName = 'Spares Income Statement-' + sessionStorage.getItem('locName').trim() + '-' + toDate + '.xls';
-  const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-  if (Number(sessionStorage.getItem('deptId')) === 4) {
-    this.reportService.sprClsAsonDtReport(toDate, locId)
-    .subscribe(data => {
-      saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-      this.isDisabled1 = false;
-      this.closeResetButton = true;
-      this.dataDisplay = ''
-    })
-  }
-  else  if (Number(sessionStorage.getItem('deptId')) != 4) {}
-}
-else if (reportName ==='Spares Proforma Details Report'){
-  const fileName = 'Spares Proforma Details Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
-  const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-  if (Number(sessionStorage.getItem('deptId')) === 4) {
-    this.reportService.spProforDtReport(fromDate, toDate, locId)
-    .subscribe(data => {
-      saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-      this.isDisabled1 = false;
-      this.closeResetButton = true;
-      this.dataDisplay = ''
-    })
-  }
- else if (Number(sessionStorage.getItem('deptId')) != 4) {
-  this.reportService.spProforDtReport(fromDate, toDate, sessionStorage.getItem('locId'))
-  .subscribe(data => {
-    saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-    this.isDisabled1 = false;
-    this.closeResetButton = true;
-    this.dataDisplay = ''
-  })
- }
-}
-else if (reportName ==='Spares Proforma Details Report'){
-  const fileName = 'Cheque Bounce Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
-  const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-  if (Number(sessionStorage.getItem('deptId')) === 4) {
-    this.reportService.chequebounceReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId)
-    .subscribe(data => {
-      saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-      this.isDisabled1 = false;
-      this.closeResetButton = true;
-      this.dataDisplay = ''
-    })
-  }
-  else  if (Number(sessionStorage.getItem('deptId')) != 4) {
-    this.reportService.chequebounceReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
-    .subscribe(data => {
-      saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-      this.isDisabled1 = false;
-      this.closeResetButton = true;
-      this.dataDisplay = ''
-    })
-  }
-}
-else if (reportName==='Spares Inventory Aging Report'){
-  var spInvAging1 = this.sparesReportForm.get('spInvAging1').value;
-    var spInvAging2 = this.sparesReportForm.get('spInvAging2').value;
-    var spInvAging3 = this.sparesReportForm.get('spInvAging3').value;
-    if (spInvAging1 > spInvAging2) {
-      alert('Please check Aging.!');
-      this.dataDisplay = 'Please check Aging.';
-      return;
-    }
-    else if (spInvAging1 > spInvAging3) {
-      alert('Please check Aging.!');
-      this.dataDisplay = 'Please check Aging.';
-      return;
-    }
-    else if (spInvAging2 > spInvAging3) {
-      alert('Please check Aging.!');
-      this.dataDisplay = 'Please check Aging.';
-      return;
-    }
-    const fileName = 'Spares Inventory Aging Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
-    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-  if (Number(sessionStorage.getItem('deptId')) === 4) {
-    this.reportService.sspInvAgingReport(spInvAging1, spInvAging2, spInvAging3, sessionStorage.getItem('ouId'), locId)
-    .subscribe(data => {
-      saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-      this.isDisabled1 = false;
-      this.closeResetButton = true;
-      this.dataDisplay = ''
-    })
-  }
-  else if (Number(sessionStorage.getItem('deptId')) != 4) {
-    this.reportService.sspInvAgingReport(spInvAging1, spInvAging2, spInvAging3, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
-    .subscribe(data => {
-      saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-      this.isDisabled1 = false;
-      this.closeResetButton = true;
-      this.dataDisplay = ''
-    })
-  }
-}
-else if (reportName==='Spares Debtors Executive Wise report'){
-  var custAcctNo = this.sparesReportForm.get('custAccNo').value;
-  var ticketNo=this.sparesReportForm.get('userName').value
-    if (custAcctNo === undefined || custAcctNo === null) {
-      custAcctNo = '';
-    }
-    const fileName = 'Spares Debtors Executive Wise report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
-    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    if (Number(sessionStorage.getItem('deptId')) === 4) {
-      this.reportService.spDebtorExicutiveWise(toDate,sessionStorage.getItem('ouId'), locId,ticketNo,custAcctNo)
-      .subscribe(data => {
-        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-        this.isDisabled1 = false;
-        this.closeResetButton = true;
-        this.dataDisplay = ''
-      })
-    }
-    else if (Number(sessionStorage.getItem('deptId')) != 4) {
-      this.reportService.spDebtorExicutiveWise(toDate,sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'),ticketNo,custAcctNo)
-      .subscribe(data => {
-        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-        this.isDisabled1 = false;
-        this.closeResetButton = true;
-        this.dataDisplay = ''
-      })
-    }
-}
   }
   spPurRegDownLoad() {
     const fileName = 'Purchase-Register-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
@@ -1065,6 +1082,14 @@ else if (reportName==='Spares Debtors Executive Wise report'){
     else if (itemCode.length === 3) {
       alert('Please Enter 4 characters of item number!!');
       return;
+    }
+  }
+
+  department(department) {
+    if (department === 'Spares') {
+      let department = this.DepartmentList.filter((customer) => ((customer.codeDesc.includes('Spares') == true)));
+      console.log(department);
+      this.DepartmentList = department;
     }
   }
 

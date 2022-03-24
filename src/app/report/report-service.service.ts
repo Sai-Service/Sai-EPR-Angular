@@ -146,8 +146,8 @@ export class ReportServiceService {
     });
   }
 
-  spDebtorExicutiveWise(toDate,ouId,locId,ticketNo,custAcctNo){
-    const REQUEST_URI = this.ServerUrl +`/SparesReports/DebtorsExecWise?toDate=${toDate}&ouId=${ouId}&locId=${locId}&ticketNo=${ticketNo}&custAcctNo=${custAcctNo}`;
+  spDebtorExicutiveWise(toDate,ouId,locId,ticketNo,custAcctNo,deptId){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/DebtorsExecWise?toDate=${toDate}&ouId=${ouId}&locId=${locId}&ticketNo=${ticketNo}&custAcctNo=${custAcctNo}&deptId=${deptId}`;
     return this.http.get(REQUEST_URI, {
       responseType: 'arraybuffer',
       headers: this.headers,

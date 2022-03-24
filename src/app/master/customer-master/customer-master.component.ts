@@ -588,17 +588,23 @@ export class CustomerMasterComponent implements OnInit {
   }
 
   gstVerification(event: any) {
-    var gstno = this.customerMasterForm.get('gstNo').value
+    // var gstno = this.customerMasterForm.get('gstNo').value
+    var gstno=event.target.value;
+    alert(gstno+'gst');
     if (gstno === '') {
       this.customerMasterForm.patchValue({ 'gstNo': 'GSTUNREGISTERED' });
       return;
     }
     else {
-      var regex: string = "\d{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}";
+      // debugger;
+      // "27AAACI7573H1ZP"
+      var regex: string = '\\d{2}[A-Z]{5}\\d{4}[A-Z]{1}[A-Z\\d]{1}[Z]{1}[A-Z\\d]{1}';
       // var regex:string="^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{1}[A-Z0-9]{1}$";
       var p = new PatternValidator();
       var patt = new RegExp(regex);
+      
       let validgst = patt.test(gstno);
+      alert(validgst);
       if (validgst === false) {
         alert('Please enter valid GST Number');
         this.customerMasterForm.patchValue({ 'gstNo': '' });
@@ -610,10 +616,7 @@ export class CustomerMasterComponent implements OnInit {
       // }
       // return validgst;
     }
-    const GstNo1 = gstno.substr(2, 10);
-    this.panNo = GstNo1;
-    //  alert('Gst verificaition2');
-    this.customerMasterForm.patchValue({ 'panNo': GstNo1 });
+   
     var res = gstno.substr(0, 2);
     console.log(res);
     const state = this.customerMasterForm.get('state').value;
@@ -659,21 +662,26 @@ export class CustomerMasterComponent implements OnInit {
     }
 
 
-
+    const GstNo1 = gstno.substr(2, 10);
+    this.panNo = GstNo1;
+    //  alert('Gst verificaition2');
+    this.customerMasterForm.patchValue({ 'panNo': GstNo1 });
   }
 
   gstVerification2(event: any) {
-alert('In gstverification2')
+// alert('In gstverification2')
     var sGstnoVal = this.customerMasterForm.get('sGstNo').value
     if (sGstnoVal === '') {
       this.customerMasterForm.patchValue({ 'sGstNo': 'GSTUNREGISTERED' });
       return;
     }
     else {
-      var regex: string = "\d{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}";
+      var regex: string = "\\d{2}[A-Z]{5}\\d{4}[A-Z]{1}[A-Z\\d]{1}[Z]{1}[A-Z\\d]{1}";
       var p = new PatternValidator();
       var patt = new RegExp(regex);
       let validgst = patt.test(sGstnoVal);
+
+
       if (validgst === false) {
         alert('Please enter valid GST Number');
         this.customerMasterForm.patchValue({'sGstNo':''});
@@ -682,10 +690,7 @@ alert('In gstverification2')
 
    
     }
-    const sGstNo1 = sGstnoVal.substr(2, 10);
-    this.spanNo = sGstNo1;
-    //  alert('Gst verificaition2');
-    this.customerMasterForm.patchValue({ 'spanNo': sGstNo1 });
+   
     var res = sGstnoVal.substr(0, 2);
     console.log(res);
     const state = this.customerMasterForm.get('sstate').value;
@@ -730,7 +735,10 @@ alert('In gstverification2')
         break;
     }
 
-
+    const sGstNo1 = sGstnoVal.substr(2, 10);
+    this.spanNo = sGstNo1;
+    //  alert('Gst verificaition2');
+    this.customerMasterForm.patchValue({ 'spanNo': sGstNo1 });
 
   }
 

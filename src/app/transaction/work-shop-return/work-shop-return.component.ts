@@ -100,7 +100,7 @@ reqNo:string;
  now=new Date();
  creationDate=this.pipe.transform(this.now,'dd-MM-yyyy')
   subInvdetail: any;
-
+  isVisibleSave:Boolean=true;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) { 
     this.WorkshopReturnForm=fb.group({
@@ -262,7 +262,7 @@ search(reqNo)
    var reqNo=(this.WorkshopReturnForm.get('reqNo').value);
    // alert(reqNo);
  //  this.moveOrderForm.reset();
-  this.service.getSearchByTrans(reqNo).subscribe
+  this.service.getSearchByWorkReturn(reqNo).subscribe
   (data =>
    {
      console.log(data);
@@ -274,11 +274,19 @@ search(reqNo)
      {
        this.lstcomment=data.obj;
        let control=this.WorkshopReturnForm.get('trxLinesList') as FormArray;
-       data.obj.trxLinesList.forEach(f => {
-         var trxList:FormGroup=this.newtrxLinesList();
-         this.trxLinesList().push(trxList);
+       this.trxLinesList().clear();
+      //  data.obj.trxLinesList.forEach(f => {
+      //    var trxList:FormGroup=this.newtrxLinesList();
+      //    this.trxLinesList().push(trxList);
 
-       });
+      //  });
+      // this.
+      // alert(data.obj.trxLinesList.length)
+      debugger;
+      for (let j = 0; j <= data.obj.trxLinesList.length; j++) {
+        var trxLinesList: FormGroup = this.newtrxLinesList();
+        control.push(trxLinesList);
+      }
        this.WorkshopReturnForm.patchValue(data.obj);
        this.WorkshopReturnForm.patchValue(data.obj.trxLinesList);
       //  this.displayButton=false;
@@ -315,6 +323,7 @@ newmoveOrder()
 
       }
       this.displayButton=false;
+      this.isVisibleSave=false;
       this.WorkshopReturnForm.disable();
       
       // this.moveOrderForm.reset();
