@@ -752,8 +752,64 @@ onlocationissueselect(event){
   if(this.currentOp==='SEARCH'){
     return;
   }
+  
+  // alert(this.stockTranferForm.get('transferOrgId').value)
+  // alert(this.stockTranferForm.get('issueTo').value)
   var loc=this.stockTranferForm.get('transferOrgId').value;
-  if(loc===undefined){}
+  var issTo=this.stockTranferForm.get('issueTo').value;
+  this.service.issueByList(loc, this.deptId, this.divisionId).subscribe
+  (data => {
+    this.issueByList = data;
+    console.log(this.issueByList);
+  });
+  if((loc===undefined && issTo===undefined) || issTo===''){}
+  else{
+    // alert('event');
+    this.addnewtrxLinesList(-1);
+
+    var patch = this.stockTranferForm.get('trxLinesList') as  FormArray
+      (patch.controls[0]).patchValue(
+     {
+       lineNumber: 1,
+       uuidRef: uuidv4()
+     });
+    // this.service.Shipmentdue(Number(sessionStorage.getItem('locId')),loc,this.subInvCode.subInventoryCode).subscribe
+    // ((res:any)=>{
+    //   //  var obj=res.obj;
+    //    if(res.code===200)
+    //    {
+    //     alert(res.message);
+    //    }
+    //    else{
+    //     if(res.code === 400) {
+    //       // alert(res.message);
+    //       // this.stockTranferForm.reset();
+    //       // window.location.reload();
+    //     }
+    //    }
+    //   }
+    // )
+
+   
+  this.service.ItemIdListDept(this.deptId,Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId).subscribe(
+    data => {
+      this.ItemIdList = data;
+      (document.getElementById('btnrm0') as HTMLInputElement).disabled = true;
+      // console.log(this.invItemId);
+    });
+
+
+}
+
+}
+onIssueSelect(event){
+  if(this.currentOp==='SEARCH'){
+    return;
+  }
+  // alert(event+'--'+event.target.value)
+  var loc=this.stockTranferForm.get('transferOrgId').value;
+  var issTo=this.stockTranferForm.get('issueTo').value;
+  if(loc===undefined && issTo===undefined){}
   else{
     // alert('event');
     this.addnewtrxLinesList(-1);
@@ -781,12 +837,7 @@ onlocationissueselect(event){
       }
     )
 
-    this.service.issueByList(loc, this.deptId, this.divisionId).subscribe
-  (data => {
-    this.issueByList = data;
-    console.log(this.issueByList);
-  });
-  this.service.ItemIdListDept(this.deptId,Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId).subscribe(
+   this.service.ItemIdListDept(this.deptId,Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId).subscribe(
     data => {
       this.ItemIdList = data;
       (document.getElementById('btnrm0') as HTMLInputElement).disabled = true;
@@ -795,7 +846,6 @@ onlocationissueselect(event){
 
 
 }
-
 }
 
 HeaderValidation() {
