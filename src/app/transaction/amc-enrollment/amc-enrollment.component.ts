@@ -229,6 +229,9 @@ lineDetailsGroup() {
   couponCode:[],
   gstpercentage:[],
   couponActualCode:[],
+  cpnNumber:[],
+  utilQty:[],
+  balQty:[],
  });
 }
 
@@ -295,10 +298,10 @@ closeMast() {
 
         //  alert ("Reg No :" +mRegNo)
 
-        this.service.getVehRegDetails(mRegNo)
+        this.service.getVehRegDetailsNew(mRegNo)
           .subscribe(
             data => {
-              this.getVehRegDetails = data;
+              this.getVehRegDetails = data.obj;
 
               if(this.getVehRegDetails !=null){
               console.log(this.getVehRegDetails);

@@ -164,6 +164,7 @@ lineDetailsGroup() {
     couponCode:[],
     gstpercentage:[],
     couponActualCode:[],
+    cpnNumber:[],
    });
 }
 
@@ -237,6 +238,7 @@ addRow(index) {
       }
   }
  }
+
 
 checkAmcSchLineValidation(index){
  
@@ -325,19 +327,17 @@ transeData(val) {
               
               for (let i=0; i<select.amcItemList.length;i++)
                 {
-               
-                  alert ("in for loop :"+select.amcItemList.length);
+                  var control = this.amcSchemeMasterForm.get('amcItemList') as FormArray;
                   var amcItemList:FormGroup=this.lineDetailsGroup();
                   control.push(amcItemList);
                 }
 
-               
+                this.amcSchemeMasterForm.patchValue(select);
            }
-
            this.displayButton = false;
            this.schemeId=select.schemeId;
            this.amcSchemeMasterForm.get('amcItemList').patchValue(select.amcItemList);
-           this.amcSchemeMasterForm.patchValue(select);
+          //  this.amcSchemeMasterForm.patchValue(select);
         }
 
      updateMast(){alert("Update AMC scheme ....wip");}
