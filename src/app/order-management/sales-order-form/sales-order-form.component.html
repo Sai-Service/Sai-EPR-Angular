@@ -520,6 +520,21 @@
                                     [(ngModel)]='paymentTermId' value={{paymentTermId}} class="form-control"
                                     style="width: 160px;">
                             </td>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Price&nbsp;List&nbsp;:&nbsp;
+                            </td>
+                            <td colspan="1">
+                                <!-- <select formControlName="priceListName" id="priceListName" class="form-control" style="width: 170px;">
+                                <option>--Select--</option>
+                                <option *ngFor="let pl of priceListNameList">
+                                    {{pl.priceListName}}
+                                </option>
+                            </select> -->
+                                <input type="text" disabled formControlName="priceListName" class="form-control"
+                                    style="width: 100%;">
+                                <input hidden type="number" disabled formControlName="priceListHeaderId"
+                                    class="form-control" style="width: 100%;">
+                            </td>
                         </tr>
                         <tr>
                             <td style="width: 22%" class="LabelFontStyle">
@@ -563,29 +578,26 @@
                             </td>
                         </tr>
                         <tr>
-                            <td style="width: 15%" class="LabelFontStyle1">
-                                Price&nbsp;List&nbsp;:&nbsp;
-                            </td>
-                            <td colspan="1">
-                                <!-- <select formControlName="priceListName" id="priceListName" class="form-control" style="width: 170px;">
-                                <option>--Select--</option>
-                                <option *ngFor="let pl of priceListNameList">
-                                    {{pl.priceListName}}
-                                </option>
-                            </select> -->
-                                <input type="text" disabled formControlName="priceListName" class="form-control"
-                                    style="width: 100%;">
-                                <input hidden type="number" disabled formControlName="priceListHeaderId"
-                                    class="form-control" style="width: 100%;">
-                            </td>
+                          
                             <td style="width: 15%" class="LabelFontStyle">
                                 Remark&nbsp;:&nbsp;
                             </td>
                             <td>
                                 <input type="text" formControlName="remarks" class="form-control" style="width: 170px;">
                             </td>
+                            <!-- <td style="width: 15%" class="LabelFontStyle">
+                                Broker&nbsp;Type&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                <select formControlName="subDealerId" id="subDealerId" class="form-control" style="width: 170px;" (change)="onOptionsSelectedBrokerType($event)">
+                                <option>--Select--</option>
+                                <option *ngFor="let mm of brokerTypeList" [value]="mm.codeDesc">
+                                    {{mm.codeDesc}}
+                                </option>
+                            </select>
+                            </td> -->
                             <td style="width: 15%" class="LabelFontStyle">
-                                Broker&nbsp;:&nbsp;
+                                Broker&nbsp;Dealer&nbsp;:&nbsp;
                             </td>
                             <td>
                                 <select formControlName="subDealerId" id="subDealerId" class="form-control" style="width: 170px;">
@@ -658,6 +670,15 @@
                                 <input disabled type="text" class="form-control" formControlName="payTermDesc"
                                     [(ngModel)]='payTermDesc' value={{payTermDesc}} style="width: 170px;">
                             </td>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Price&nbsp;List&nbsp;:&nbsp;
+                            </td>
+                            <td colspan="1">
+                                <input type="text" disabled formControlName="priceListName" class="form-control"
+                                    style="width: 100%;">
+                                <input hidden type="number" disabled formControlName="priceListHeaderId"
+                                    class="form-control" style="width: 100%;">
+                            </td>
                         </tr>
                         <tr>
                             <td style="width: 22%" class="LabelFontStyle">
@@ -696,30 +717,30 @@
                         </tr>
                         <tr>
                             <td style="width: 15%" class="LabelFontStyle">
-                                Price&nbsp;List&nbsp;:&nbsp;
-                            </td>
-                            <td>
-                                <input disabled type="text" class="form-control" formControlName="priceListName"
-                                    [(ngModel)]='priceListName' value={{priceListName}} style="width: 170px;">
-                                <input hidden type="number" disabled formControlName="priceListHeaderId" class="form-control"
-                                    style="width: 100%;">
-                            </td>
-                            <td style="width: 15%" class="LabelFontStyle">
                                 Remark&nbsp;:&nbsp;
                             </td>
                             <td>
                                 <input disabled type="text" formControlName="remarks" [(ngModel)]='remarks'
                                     value={{remarks}} class="form-control" style="width: 170px;">
                             </td>
-                            <td style="width: 15%" class="LabelFontStyle">
-                                Broker&nbsp;:&nbsp;
+                            <!-- <td style="width: 15%" class="LabelFontStyle">
+                                Broker&nbsp;Type&nbsp;:&nbsp;
                             </td>
                             <td>
                             <input disabled type="text" formControlName="subDealerDesc" [(ngModel)]='subDealerDesc'
                             value={{subDealerDesc}} class="form-control" style="width: 170px;">
                             <input hidden disabled type="text" formControlName="subDealerId" [(ngModel)]='subDealerId'
                             value={{subDealerId}} class="form-control" style="width: 170px;">
+                        </td> -->
+                        <td style="width: 15%" class="LabelFontStyle">
+                            Broker&nbsp;Dealer&nbsp;:&nbsp;
                         </td>
+                        <td>
+                        <input disabled type="text" formControlName="subDealerDesc" [(ngModel)]='subDealerDesc'
+                        value={{subDealerDesc}} class="form-control" style="width: 170px;">
+                        <input hidden disabled type="text" formControlName="subDealerId" [(ngModel)]='subDealerId'
+                        value={{subDealerId}} class="form-control" style="width: 170px;">
+                    </td>
                         </tr>
                         <tr>
                             <td style="width: 15%;font-weight: bold;" class="LabelFontStyle">
@@ -774,7 +795,7 @@
                                 <select formControlName="variant" id="variant" class="form-control"
                                     style="width:fit-content;" (ngModelChange)="onOptionsSelectedColor($event)">
                                     <option>--Select--</option>
-                                    <option *ngFor="let mm of VariantSearch" [value]="mm.variant">
+                                    <option *ngFor="let mm of VariantSearch" [ngValue]="mm.variant">
                                         {{mm.variant}}--{{mm.varDescription}}
                                     </option>
                                 </select>
@@ -920,7 +941,7 @@
                                                 <select type="text" formControlName="financerName" id="financerName"
                                                     class="form-control" style="width: 170px;">
                                                     <option>--Select--</option>
-                                                    <option *ngFor="let sc of  financerNameList" [value]="sc.codeDesc">{{sc.codeDesc}}
+                                                    <option *ngFor="let finName of  financerNameList" [ngValue]="finName.codeDesc">{{finName.codeDesc}}
                                                     </option>
                                                 </select>
                                             </td>
@@ -1011,9 +1032,28 @@
                                                 <input type="text" formControlName="offerPrice" class="form-control"
                                                     style="width: 100px;">
                                             </td>
-                                            </ng-template>
+                                        </ng-template>
+                                          
                                         </tr>
-
+                                        <!-- <div *ngIf="Displayexchange1; then thenexchange1; else elseexchange1"></div>
+                                            <ng-template #thenexchange1>
+                                            </ng-template>
+                                            <ng-template #elseexchange1>
+                                        <tr>
+                                            <td style="width: 15%" class="LabelFontStyle">
+                                                Dealer&nbsp;Name&nbsp;:&nbsp;
+                                            </td>
+                                            <td>
+                                                <select type="text" formControlName="dealerName" id="dealerName"
+                                                class="form-control" style="width: 120px;" >
+                                                <option>--Select--</option>
+                                                <option *ngFor="let sc of  truValueList" [value]="sc.cmnDesc">
+                                                    {{sc.cmnDesc}}
+                                                </option>
+                                            </select>
+                                            </td>
+                                        </tr>
+                                            </ng-template> -->
                                     </table>
                                 </div>
                                 <!-- </div> -->
@@ -1200,7 +1240,13 @@
                         </div>
                     </ng-template>
                 </div>
-
+               <table class="center">
+                   <tr>
+                    <td>
+                        <button type="submit" class="btn btn-primary" [style.display]="isVisible5 ? 'block' : 'none'" (click)="finexchangeUpdate()" [disabled]="isDisabled5" style="width: fit-content;height: fit-content;">Finanace/Exchange Update</button>
+                    </td>
+                   </tr>
+               </table>
             </fieldset>
             <div *ngIf="displayCreateOrderButton; then thenCreateOrderButton; else elseCreateOrderButton"> </div>
             <ng-template #thenCreateOrderButton>
@@ -2050,9 +2096,9 @@
                                 <button type="submit" class="btn btn-primary" (click)="SOA()" [disabled]="isDisabled7">SOA</button>
                             </td>
 
-                            <td>
+                            <!-- <td>
                                 <button type="submit" class="btn btn-primary" [style.display]="isVisible5 ? 'block' : 'none'" (click)="finexchangeUpdate()" [disabled]="isDisabled5" style="width: fit-content;height: fit-content;">Finanace/Exchange Update</button>
-                            </td>
+                            </td> -->
                             <!-- <div [style.display]="isVisible2 ? 'block' : 'none'" style="display: inline-block;"> -->
                             <td>
                                 <button type="submit" class="btn btn-primary" (click)="orderLineUpdate()" [disabled]="isDisabled11" [style.display]="isVisible2 ? 'block' : 'none'">Update</button>

@@ -343,6 +343,16 @@ export class ReportServiceService {
   }
 
 
+  seviceDeliverySummaryReport(fromDate,toDate,ouId,locId){
+    const REQUEST_URI = this.ServerUrl +`/ServiceReports/ServDelvRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+
 ///////////////////// Sales Reports API Starts ////////////////////
 
 vhslRegisterReport(fromDate,toDate,locId){

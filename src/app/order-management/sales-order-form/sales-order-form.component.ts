@@ -264,6 +264,8 @@ export class SalesOrderFormComponent implements OnInit {
   adhocISL: number;
   public transactionTypeNameList: any;
   brokerList: any;
+  brokerTypeList:any;
+  truValueList:any;
   public payTermDescList: any;
   public salesRepNameList: any;
   public taxCategoryList: any = [];
@@ -275,7 +277,7 @@ export class SalesOrderFormComponent implements OnInit {
   public allTaxCategoryList: any = [];
   public ColourSearch: any;
   public financeTypeList: any;
-  public financerNameList: any;
+  public financerNameList: any=[];
   public lineLevelOrderStatusList: any = [];
   lineLevelOrderStatusVehicleList: any = [];
   invItemList1: any[];
@@ -337,6 +339,7 @@ export class SalesOrderFormComponent implements OnInit {
   DisplayfinanceSelectionYes = true;
   DisplayfinanceSelectionYes1 = true;
   Displayexchange = true;
+  Displayexchange1=true;
   @ViewChild("myinput") myInputField: ElementRef;
 
 
@@ -583,11 +586,12 @@ export class SalesOrderFormComponent implements OnInit {
         }
       );
 
-    this.service.brokerListFn()
+ 
+      this.service.brokerTypeListFn()
       .subscribe(
         data => {
-          this.brokerList = data;
-          console.log(this.brokerList);
+          this.brokerTypeList = data;
+          console.log(this.brokerTypeList);
         }
       );
 
@@ -665,6 +669,15 @@ export class SalesOrderFormComponent implements OnInit {
         this.OrderFind(this.orderNumber);
       }
     });
+
+
+    this.service.brokerListFn()
+    .subscribe(
+      data => {
+        this.brokerList = data;
+        console.log(this.brokerList);
+      }
+    );
 
   }
 
@@ -1314,16 +1327,19 @@ export class SalesOrderFormComponent implements OnInit {
             if (data.obj.financeType != 'None') {
               this.DisplayfinanceSelectionYes = false;
               this.DisplayfinanceSelectionYes1 = false;
-              this.SalesOrderBookingForm.patchValue({ financerName: data.obj.financerName });
+              // this.SalesOrderBookingForm.patchValue({ financerName: data.obj.financerName });
               this.SalesOrderBookingForm.patchValue({ financeAmt: data.obj.financeAmt });
               this.SalesOrderBookingForm.patchValue({ tenure: data.obj.tenure });
               this.SalesOrderBookingForm.patchValue({ emi: data.obj.emi });
               this.SalesOrderBookingForm.patchValue({ downPayment: data.obj.emi });
               this.orderManagementService.finananceList(data.obj.financeType, sessionStorage.getItem('divisionId'))
                 .subscribe(
-                  data => {
-                    this.financerNameList = data;
+                  (res: any=[])=> {
+                    this.financerNameList = res;
                     console.log(this.financerNameList);
+                    let selectColo = this.financerNameList.find(d => d.codeDesc === data.obj.financerName);
+                    console.log(selectColo.codeDesc);  
+                    this.SalesOrderBookingForm.patchValue({ financerName: selectColo.codeDesc })
                   }
                 );
             }
@@ -1337,6 +1353,7 @@ export class SalesOrderFormComponent implements OnInit {
             }
             if (data.obj.exchangeYes === 'Y') {
               this.Displayexchange = false;
+              this.Displayexchange1=false;
             }
             let control = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
             // alert(this.lstgetOrderLineDetails.length);
@@ -1410,17 +1427,17 @@ export class SalesOrderFormComponent implements OnInit {
                   this.displayLineflowStatusCode[i] = true;
                   this.displayRemoveRow[i] = false;
                   this.displaytaxCategoryName[i] = false;
-                  this.SalesOrderBookingForm.get('financeType').disable();
-                  this.SalesOrderBookingForm.get('financerName').disable();
-                  this.SalesOrderBookingForm.get('financeAmt').disable();
-                  this.SalesOrderBookingForm.get('emi').disable();
-                  this.SalesOrderBookingForm.get('tenure').disable();
-                  this.SalesOrderBookingForm.get('downPayment').disable();
-                  this.SalesOrderBookingForm.get('exchange').disable();
-                  this.SalesOrderBookingForm.get('loyaltyBonus').disable();
-                  this.SalesOrderBookingForm.get('exRegNo').disable();
-                  this.SalesOrderBookingForm.get('insCharges').disable();
-                  this.SalesOrderBookingForm.get('offerPrice').disable();
+                  // this.SalesOrderBookingForm.get('financeType').disable();
+                  // this.SalesOrderBookingForm.get('financerName').disable();
+                  // this.SalesOrderBookingForm.get('financeAmt').disable();
+                  // this.SalesOrderBookingForm.get('emi').disable();
+                  // this.SalesOrderBookingForm.get('tenure').disable();
+                  // this.SalesOrderBookingForm.get('downPayment').disable();
+                  // this.SalesOrderBookingForm.get('exchange').disable();
+                  // this.SalesOrderBookingForm.get('loyaltyBonus').disable();
+                  // this.SalesOrderBookingForm.get('exRegNo').disable();
+                  // this.SalesOrderBookingForm.get('insCharges').disable();
+                  // this.SalesOrderBookingForm.get('offerPrice').disable();
                 }
                 if  (this.lstgetOrderLineDetails[i].invType.includes('VEHICLE')|| this.lstgetOrderLineDetails[i].flowStatusCode === 'ALLOTED' || this.lstgetOrderLineDetails[i].flowStatusCode === 'READY FOR INVOICE'){
                 //  alert(this.lstgetOrderLineDetails[i].invType)
@@ -1746,6 +1763,7 @@ export class SalesOrderFormComponent implements OnInit {
       if (res.code === 200) {
         alert(res.message);
         this.OrderFind(this.orderNumber);
+        this.isDisabled5 = false;
       } else {
         if (res.code === 400) {
           alert(res.message);
@@ -2357,9 +2375,18 @@ export class SalesOrderFormComponent implements OnInit {
     //  alert(event.target.value);
     if (event.target.value === 'Y') {
       this.Displayexchange = false;
+      this.Displayexchange1=false;
+      this.service.truValueListFn()
+      .subscribe(
+        data1 => {
+          this.truValueList=data1;
+          console.log(this.truValueList);
+        }
+      );
     }
     else {
       this.Displayexchange = true;
+      this.Displayexchange1=true;
     }
     if (event.target.value === 'N') {
       this.SalesOrderBookingForm.get('loyaltyBonus').reset();
@@ -2466,4 +2493,17 @@ export class SalesOrderFormComponent implements OnInit {
         }
       );
   }
+
+
+  onOptionsSelectedBrokerType(event:any){
+    alert(event.target.value);
+  var  brokerType=event.target.value;
+    this.service.brokerListFnNew(brokerType)
+      .subscribe(
+        data => {
+          this.brokerList = data;
+          console.log(this.brokerList);
+        }
+      );
+    }
 }
