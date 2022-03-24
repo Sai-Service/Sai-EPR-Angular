@@ -101,7 +101,7 @@
             Request&nbsp;To&nbsp;:&nbsp;
           </td>
           <td>
-            <select type="text" class="form-control" formControlName="issueTo">
+            <select type="text" class="form-control" formControlName="issueTo" (ngModelChange)="onIssueSelect($event)">
               <option>--Select--</option>
               <option *ngFor="let ib of issueByList">{{ib.fullName}}</option>
               </select>

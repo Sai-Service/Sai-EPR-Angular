@@ -265,10 +265,10 @@
                                                                                     <tr>
 
                                                                             <td>
-                                                                                <input type="text" style="text-transform: uppercase;background-color: yellow;"
-                                                                                    formControlName="regNo"
+                                                                                <input type="text" style="background-color: yellow;"
+                                                                                    formControlName="regNo" 
                                                                                     [(ngModel)]="regNo"
-                                                                                    (change)="serchByRegNo(regNo)"
+                                                                                    (change)="serchByRegNo(regNo)" (keyup)="onInput($event)" 
                                                                                     (keyup)="getUserIdsFirstWay($event)"
                                                                                     id="userIdFirstWay"
                                                                                     list="dynmicUserIds"
@@ -1462,17 +1462,32 @@
                                                                                 </select>
                                                                             </td> -->
 
+                                                                            <div *ngIf="openStatus; then opnYes; else opnNo"> </div>
+                                                                            <ng-template #opnYes>
+                                                                                <td><input  type="text" formControlName="segment" value={{segment}}
+                                                                                    (keyup)="getInvItemId($event)" id="invItemIdFirstWay"
+                                                                                    list="dynmicUserIds1" class="form-control"  style="width: 8rem;"
+                                                                                    (change)="serchByitemId(segment,i)" />
+                                                                                    <datalist id="dynmicUserIds1">
+                                                                                        <option *ngFor="let item of LabourItemList" [ngValue]="item.segment">
+                                                                                                {{item.segment}}
+                                                                                        </option>
+                                                                                    </datalist> 
+                                                                                </td>  
+                                                                            </ng-template>
+                                                                            <ng-template #opnNo>
+                                                                                <td><input  disabled type="text" formControlName="segment" value={{segment}}
+                                                                                    (keyup)="getInvItemId($event)" id="invItemIdFirstWay"
+                                                                                    list="dynmicUserIds1" class="form-control"  style="width: 8rem;"
+                                                                                    (change)="serchByitemId(segment,i)" />
+                                                                                    <datalist id="dynmicUserIds1">
+                                                                                        <option *ngFor="let item of LabourItemList" [ngValue]="item.segment">
+                                                                                                {{item.segment}}
+                                                                                        </option>
+                                                                                    </datalist> 
+                                                                                </td>  
+                                                                            </ng-template>
 
-                                                                            <td><input type="text" formControlName="segment" value={{segment}}
-                                                                                (keyup)="getInvItemId($event)" id="invItemIdFirstWay"
-                                                                                list="dynmicUserIds1" class="form-control"  style="width: 8rem;"
-                                                                                (change)="serchByitemId(segment,i)" />
-                                                                                <datalist id="dynmicUserIds1">
-                                                                                    <option *ngFor="let item of LabourItemList" [ngValue]="item.segment">
-                                                                                            {{item.segment}}
-                                                                                    </option>
-                                                                                </datalist> 
-                                                                            </td>  
                                                                         
                                                                             <input hidden  type="number"  formControlName="itemId"  class="form-control" style="width: 50px;"  >
                                                                         
