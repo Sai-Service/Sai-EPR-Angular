@@ -287,6 +287,6 @@ getAvgHistoryList(mLocId,mitemId,frmDate,toDate): Observable<any> {
       // http://localhost:8081/oemWarranty
     }
 
-
+   
   
  }

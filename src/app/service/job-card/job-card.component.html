@@ -296,10 +296,13 @@
                                                                                     formControlName="customerId">
                                                                                 <input type="number" min="0"  hidden
                                                                                     formControlName="emplId" value={{emplId}}>
-                                                                                    <input type="number" min="0"  hidden
+                                                                                <input type="number" min="0"  hidden
                                                                                     formControlName="deptName">
-                                                                                    <input type="number" min="0"  hidden
+                                                                                 <input type="number" min="0"  hidden
                                                                                     formControlName="serviceModel">
+
+                                                                                 <input type="number"   hidden
+                                                                                    formControlName="storedKmr" [(ngModel)]="storedKmr">
                                                                             </td>
 
                                                                             <td>
@@ -324,12 +327,13 @@
                                                                                 class="LabelFontStyle1">
                                                                                 OMR&nbsp;/Current&nbsp;KMS&nbsp;:</td>
                                                                             <td>
-                                                                                <input type="number" min="0" style="background-color: yellow;"
+                                                                                <input type="number" style="background-color: yellow;"
                                                                                     class="form-control" placeholder=""
-                                                                                    formControlName="lastRunKms" (change)="validateKm($event)" (keyup)="kmValidate($event)">
+                                                                                    formControlName="lastRunKms" (change)="validateKm($event)" >
+                                                                                    <!-- (keyup)="kmValidate($event)" -->
                                                                             </td>
-                                                                          
-                                                                           
+
+
                                                                         </tr>
 
                                                                        
@@ -630,9 +634,9 @@
                                                                                         </td> -->
 
                                                                                         <td>
-                                                                                            <input type="number" min="0"
-                                                                                                class="form-control" placeholder=""
-                                                                                                formControlName="lastRunKms" [(ngModel)]="lastRunKms"   (change)="validateKm()" (keyup)="kmValidate($event)">
+                                                                                            <input type="number" 
+                                                                                                class="form-control" 
+                                                                                                formControlName="lastRunKms" [(ngModel)]="lastRunKms"   (change)="validateKm()" >
                                                                                         </td>
 
                                                                                         <td style="width: 15%"
@@ -2703,10 +2707,16 @@
                                                                 style="width: fit-content;" (click)="printWSInvoice()">Print invoice</button>
                                                         </td>
 
-                                                         <td>
+                                                         <!-- <td>
                                                             <button type="submit" class="btn btn-primary" id="register"
                                                                 style="width: fit-content;" [routerLink]="['/admin/transaction/PaymentAr',this.regNo]">Receipt</button>
+                                                        </td>  -->
+
+                                                        <td>
+                                                            <button type="submit" class="btn btn-primary" id="register"
+                                                                style="width: fit-content;" [routerLink]="['/admin/transaction/PaymentAr',this.jobCardNum]">Receipt</button>
                                                         </td> 
+                                                        
                                                         <!-- (click)="showReceiptScreen()" -->
                                                         <!-- <td>
                                                             <button class="btn btn-primary" [routerLink]="['/admin/transaction/PaymentAr']">Payment</button>

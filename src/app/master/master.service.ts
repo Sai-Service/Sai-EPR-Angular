@@ -3845,5 +3845,9 @@ viewInvnote(trxNumber){
     headers: this.headers,
   });
 }
+
+getJonCardNoSearch(jonCardNo): Observable<any> {
+  return this.http.get(this.ServerUrl +`/jobCard/jobDtls/${jonCardNo}`);
+}
   
 }
