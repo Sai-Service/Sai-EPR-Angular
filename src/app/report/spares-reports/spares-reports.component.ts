@@ -61,6 +61,7 @@ export class SparesReportsComponent implements OnInit {
   isVisibleSparesDebtorsExecutiveWise: boolean = false;
   isVisibleDepartmentList: boolean = false;
   isDisabled1 = false;
+  userName1:string;
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) {
     this.sparesReportForm = this.fb.group({
       fromDate: [''],
@@ -80,6 +81,7 @@ export class SparesReportsComponent implements OnInit {
       spInvAging2: [''],
       spInvAging3: [''],
       department: [''],
+      userName1:[''],
     })
   }
 
@@ -154,7 +156,7 @@ export class SparesReportsComponent implements OnInit {
         }
       });
 
-    this.service.invItemList2New('GOODS', (sessionStorage.getItem('deptName')), (sessionStorage.getItem('divisionId')), '36DH1601')
+    this.service.invItemList2New('GOODS', 'Spares', (sessionStorage.getItem('divisionId')), '36DH1601')
       .subscribe(
         data => {
           this.invItemList = data;
@@ -259,6 +261,9 @@ export class SparesReportsComponent implements OnInit {
     }
     else if (reportName === 'gstsaiDebtors') {
       this.reportName = 'Sai Debtors';
+      if (Number(sessionStorage.getItem('deptId'))===4){
+        this.isVisibleDepartmentList=true;
+      }
       this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = true;
       this.isVisibleGSTPurchaseRegister = false;
@@ -605,7 +610,7 @@ export class SparesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Spares Issue Summary') {
-      const fileName = 'Spares Issue Details Report-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
+      const fileName = 'Spares Issue Summary Report-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.spIssueSummaryReport(fromDate, toDate, locId)
@@ -671,10 +676,14 @@ export class SparesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Sai Debtors') {
+      var custAccNo = this.sparesReportForm.get('custAccNo').value;
+      if (custAccNo === undefined || custAccNo === null) {
+        custAccNo = '';
+      }
       const fileName = 'SP-Debtors-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.SPDebtorReport(fromDate, sessionStorage.getItem('ouId'), locId)
+        this.reportService.SPDebtorReport(toDate, sessionStorage.getItem('ouId'), locId,custAccNo,deptId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -683,7 +692,7 @@ export class SparesReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.SPDebtorReport(fromDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
+        this.reportService.SPDebtorReport(fromDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'),custAcctNo,deptId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -960,7 +969,7 @@ export class SparesReportsComponent implements OnInit {
           })
       }
     }
-    else if (reportName === 'Spares Proforma Details Report') {
+    else if (reportName === 'Cheque Bounce Report') {
       const fileName = 'Cheque Bounce Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
@@ -1024,9 +1033,12 @@ export class SparesReportsComponent implements OnInit {
     }
     else if (reportName === 'Spares Debtors Executive Wise report') {
       var custAcctNo = this.sparesReportForm.get('custAccNo').value;
-      var ticketNo = this.sparesReportForm.get('userName').value
+      var ticketNo = this.sparesReportForm.get('userName1').value
       if (custAcctNo === undefined || custAcctNo === null) {
         custAcctNo = '';
+      }
+      if (ticketNo === undefined || ticketNo === null) {
+        ticketNo = '';
       }
       const fileName = 'Spares Debtors Executive Wise report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
@@ -1067,7 +1079,7 @@ export class SparesReportsComponent implements OnInit {
     var itemCode = event.target.value;
     if (itemCode.length === 4) {
       // if (event.keyCode == 13) {
-      this.service.invItemList2New('GOODS', (sessionStorage.getItem('deptName')), (sessionStorage.getItem('divisionId')), itemCode.toUpperCase())
+      this.service.invItemList2New('GOODS', 'Spares', (sessionStorage.getItem('divisionId')), itemCode.toUpperCase())
         .subscribe((data) => {
           if (data.length === 0) {
             alert('Item Not Present in Master');

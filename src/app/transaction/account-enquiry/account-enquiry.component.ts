@@ -87,6 +87,8 @@ public InterBrancList:Array<string>=[];
   postedDatefrm:string;
   min=new Date();
   max=new Date();
+  userList3: any[] = [];
+  lastkeydown3: number = 0;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService)  {
     this.AccountEnquiryForm=fb.group({
@@ -204,14 +206,15 @@ public InterBrancList:Array<string>=[];
       }
       fnCancatination()
       {
-
+        var natacc1 = this.AccountEnquiryForm.get('segmentFrm4').value.split('--');
         alert(this.accType);
         var segmentDtls :string =''
         if(this.accType === 'frmAcc'){
         this.segmentNameFrm=this.AccountEnquiryForm.get('segmentFrm1').value+'.'+
                          this.AccountEnquiryForm.get('segmentFrm2').value+'.'+
                          this.AccountEnquiryForm.get('segmentFrm3').value+'.'+
-                         this.AccountEnquiryForm.get('segmentFrm4').value+'.'+
+                        //  this.AccountEnquiryForm.get('segmentFrm4').value+'.'+
+                        natacc1+'.'+
                          this.AccountEnquiryForm.get('segmentFrm5').value;
 
                          segmentDtls = this.segmentNameFrm;
@@ -230,7 +233,7 @@ public InterBrancList:Array<string>=[];
                 console.log(this.segmentNameList);
                 this.codeCombinationId = Number(this.segmentNameList.codeCombinationId)
                 var temp = this.AccountEnquiryForm.get('segmentNameFrm').value.split('.');
-                alert(temp[0]+''+temp[1]+''+temp[2]+''+temp[3]+''+temp[4]);
+                // alert(temp[0]+''+temp[1]+''+temp[2]+''+temp[3]+''+temp[4]);
                 this.segmentFrm1 = temp[0];
                 //this.segmentFrm2 = Number(temp[1]);
                 this.segmentFrm3 = Number(temp[2]);
@@ -253,11 +256,12 @@ public InterBrancList:Array<string>=[];
           this.segmentNameTo=this.AccountEnquiryForm.get('segmentFrm1').value+'.'+
                            this.AccountEnquiryForm.get('segmentFrm2').value+'.'+
                            this.AccountEnquiryForm.get('segmentFrm3').value+'.'+
-                           this.AccountEnquiryForm.get('segmentFrm4').value+'.'+
+                          //  this.AccountEnquiryForm.get('segmentFrm4').value+'.'+
+                          natacc1+'.'+
                            this.AccountEnquiryForm.get('segmentFrm5').value;
   
                            segmentDtls = this.segmentNameTo;
-                           alert(segmentDtls);
+                          //  alert(segmentDtls);
 
           
 
@@ -274,7 +278,7 @@ public InterBrancList:Array<string>=[];
                 console.log(this.segmentNameList);
                 this.codeCombinationId = Number(this.segmentNameList.codeCombinationId)
                 var temp = segmentDtls.split('.');
-                alert(temp[0]+'-'+temp[1]+'-'+temp[2]+'-'+temp[3]+'-'+temp[4]);
+                // alert(temp[0]+'-'+temp[1]+'-'+temp[2]+'-'+temp[3]+'-'+temp[4]);
                 this.segmentTo1 = temp[0];
                 this.segmentTo2 = Number(temp[1]);
                 this.segmentTo3 = Number(temp[2]);
@@ -520,5 +524,27 @@ viewAccounting(event:any){
   //  (document.getElementById('postedDateto') as HTMLInputElement).setAttribute('max',selPer.endDate);
  }
   }
+
+  getNaturalAccount($event) {
+    let userId = (<HTMLInputElement>document.getElementById('NaturalAccountFirstWay')).value;
+    this.userList3 = [];
+    if (userId.length > 2) {
+      if ($event.timeStamp - this.lastkeydown3 > 200) {
+        this.userList3 = this.searchFromArray2(this.NaturalAccountList, userId);
+      }
+    }
+  }
+
+  searchFromArray2(arr, regex) {
+    let matches = [], i;
+    for (i = 0; i < arr.length; i++) {
+      // alert(arr[i] + 'Array i');
+      if (arr[i].match(regex)) {
+        matches.push(arr[i]);
+      }
+    }
+    return matches;
+  };
+
 }
 

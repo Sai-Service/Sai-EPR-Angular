@@ -101,6 +101,9 @@ reqNo:string;
  creationDate=this.pipe.transform(this.now,'dd-MM-yyyy')
   subInvdetail: any;
   isVisibleSave:Boolean=true;
+  displaytrxLinesList:Boolean=true;
+  displayjobcard:boolean=true;
+  displayIssue:boolean=true;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) { 
     this.WorkshopReturnForm=fb.group({
@@ -180,6 +183,8 @@ reqNo:string;
     this.service.transTypereturn().subscribe(
       data =>{ this.transType = data;
         this.transactionTypeId=this.transType[0].transactionTypeId;
+        this.transactionTypeName=this.transType[0].transactionTypeName;
+
        } );
 
     this.service.subInvCode2(this.deptId,this.divisionId).subscribe(
@@ -257,11 +262,12 @@ onSelectType(event)
 
 search(reqNo)
 {
- this.trxLinesList().clear();
+//  this.trxLinesList().clear();
 //  this.display=true;
    var reqNo=(this.WorkshopReturnForm.get('reqNo').value);
    // alert(reqNo);
  //  this.moveOrderForm.reset();
+ 
   this.service.getSearchByWorkReturn(reqNo).subscribe
   (data =>
    {
@@ -272,23 +278,28 @@ search(reqNo)
      }
      if(data.code===200)
      {
+       this.displaytrxLinesList=false;
+       this.displayjobcard=false;
+       this.displayIssue=false;
        this.lstcomment=data.obj;
        let control=this.WorkshopReturnForm.get('trxLinesList') as FormArray;
        this.trxLinesList().clear();
-      //  data.obj.trxLinesList.forEach(f => {
-      //    var trxList:FormGroup=this.newtrxLinesList();
-      //    this.trxLinesList().push(trxList);
-
-      //  });
-      // this.
-      // alert(data.obj.trxLinesList.length)
-      debugger;
-      for (let j = 0; j <= data.obj.trxLinesList.length; j++) {
+       for (let j = 0; j <= data.obj.trxLinesList.length-1; j++) {
         var trxLinesList: FormGroup = this.newtrxLinesList();
         control.push(trxLinesList);
       }
+      let patch=this.WorkshopReturnForm.get('trxLinesList') as FormArray;
+      for (let j = 0; j <this.trxLinesList().length; j++) {
+        // var trxLinesList: FormGroup = this.newtrxLinesList();
+
+        patch.controls[j].patchValue(data.obj.trxLinesList[j]);
+        
+      }
+      
        this.WorkshopReturnForm.patchValue(data.obj);
-       this.WorkshopReturnForm.patchValue(data.obj.trxLinesList);
+       this.WorkshopReturnForm.disable();
+       this.isVisibleSave=false;
+      //  this.WorkshopReturnForm.patchValue(data.obj.trxLinesList);
       //  this.displayButton=false;
       // this.display=false;
      }

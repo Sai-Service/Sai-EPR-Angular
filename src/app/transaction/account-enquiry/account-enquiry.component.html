@@ -248,7 +248,7 @@
                                                                                                 Natural&nbsp;Account&nbsp;:
                                                                                             </td>
                                                                                             <td>
-                                                                                                <select
+                                                                                                <!-- <select
                                                                                                     formControlName="segmentFrm4"
                                                                                                     id="segmentFrm4"
                                                                                                     class="form-control"
@@ -260,7 +260,14 @@
                                                                                                         *ngFor="let sc of  NaturalAccountList">
                                                                                                         {{sc.lookupValue}}
                                                                                                     </option>
-                                                                                                </select>
+                                                                                                </select> -->
+                                                                                                <input type="text" (keyup)="getNaturalAccount($event)" formControlName="segmentFrm4" id="NaturalAccountFirstWay" list="dynmicUserIds3" class="form-control"   (ngModelChange)="onOptionsSelectedBranch($event,'NaturalAccount')"/>
+                                                                                                <datalist id="dynmicUserIds3">
+                                                                                                     <!-- <option>--Select--</option> -->
+                                                                                                   <option *ngFor="let sc of  NaturalAccountList" >
+                                                                                                       {{sc.naturalaccount}}--{{sc.description}}
+                                                                                                   </option>
+                                                                                                </datalist>
                                                                                             </td>
                                                                                             <td>
                                                                                                 <input type="text"
