@@ -15,7 +15,7 @@
         <div class="collapse navbar-collapse" id="main_nav">
             <ul class="navbar-nav">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown"> Spares </a>
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" (click)="department('Sales')"> Sales </a>
                     <ul class="dropdown-menu">
                         <li>
                             <a class="dropdown-item" data-toggle="collapse" href="#panelVehicleSaleRegister" role="tab"
@@ -250,7 +250,7 @@
                         <td style="width: 15%" class="LabelFontStyle">
                             &nbsp;Operating&nbsp;Unit&nbsp;:&nbsp;
                         </td>
-                        <td [style.display]="isVisiblelocationInput ? 'block' : 'none'">
+                        <td>
                             <input  disabled  type="text" class="form-control" formControlName="OUCode">
                         </td>
                     </tr>
