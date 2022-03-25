@@ -1253,7 +1253,7 @@ export class JobCardComponent implements OnInit {
   RemoveRow(index) {
     var ordLineArr = this.jobcardForm.get('jobCardLabLines').value;
     var len1 = this.lineDetailsArray.length;
-    alert ("jobcard lines :" +len1);
+    // alert ("jobcard lines :" +len1);
     if(len1>1) {
       this.lineDetailsArray.removeAt(index);
     } else {

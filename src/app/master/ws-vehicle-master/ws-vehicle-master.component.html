@@ -157,7 +157,7 @@
                 <ng-template #A1>        
                   <tr>
                     <td style="width: 15%" class="LabelFontStyle1">Reg&nbsp;No:&nbsp;</td>
-                    <td><input type="text"  formControlName="regNo"  [(ngModel)]="regNo"   class="form-control" placeholder="Enter Veh Reg no" (keyup)="onInput($event)"  (change)="SearchByRegNo(regNo)"  style="background-color: yellow ;text-transform: uppercase;"  >   </td> 
+                    <td><input type="text"  formControlName="regNo"  [(ngModel)]="regNo"   class="form-control" placeholder="Enter Veh Reg no" (keyup)="onInput($event)"  (change)="CheckRegNo(regNo)"  style="background-color: yellow ;text-transform: uppercase;"  >   </td> 
                   
                     <td style="width: 15%" class="LabelFontStyle1">VIN&nbsp;:&nbsp;</td>
                     <td><input type="text" formControlName="vin"  [(ngModel)]="vin"   class="form-control" placeholder="Enter VIN" (keyup)="onInput($event)" style="text-transform: uppercase;" > </td> 
