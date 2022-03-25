@@ -50,6 +50,8 @@ deptId:number;
 department:string;
 isVisiblegstsaiDebtors:boolean=false;
 custAccNo:number;
+isVisiblepaneltolocation:boolean=false;
+
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) { 
     this.serviceReportForm = this.fb.group({
@@ -141,25 +143,7 @@ custAccNo:number;
   }
 
 
-  servind(){
-    this.isDisabled2 = true;
-    this.closeResetButton = false;
-    this.progress = 0;
-    this.dataDisplay = 'Report Is Running....Do not refresh the Page';
-    var purStDt = this.serviceReportForm.get('servindFromDt').value;
-    var fromDate = this.pipe.transform(purStDt, 'dd-MMM-yyyy');
-    var spreceipttoDate2 = this.serviceReportForm.get('servindToDt').value;
-    var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
-    const fileName = 'Invoice-Not-Delivery-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
-    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.servindToDtReport(fromDate, toDate, sessionStorage.getItem('locId'))
-      .subscribe(data => {
-        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-        this.dataDisplay = ''
-        this.closeResetButton = true;
-        this.isDisabled2 = false;
-      })
-  }
+
 
 
 
@@ -205,29 +189,34 @@ custAccNo:number;
       this.isVisiblepanelfromtolocation=true;
       this.isVisiblefromtolocationdepartment=false;
       this.isVisiblegstsaiDebtors=false;
+      this.isVisiblepaneltolocation=false;
     }
     else if (reportName ==='serviceInvNotDelivery'){
       this.reportName='Service Invoice Not Delivered';
-      this.isVisiblepanelfromtolocation=true;
+      this.isVisiblepanelfromtolocation=false;
       this.isVisiblefromtolocationdepartment=false;
       this.isVisiblegstsaiDebtors=false;
+      this.isVisiblepaneltolocation=true;
     }
     else if (reportName==='servicePendingVehicle'){
       this.reportName='Service Pending Vehicle Report';
       this.isVisiblepanelfromtolocation=true;
       this.isVisiblefromtolocationdepartment=false;
       this.isVisiblegstsaiDebtors=false;
+      this.isVisiblepaneltolocation=false;
     }
     else if (reportName==='serviceDeliverySummary'){
       this.reportName='Service Delivery Summary';
       this.isVisiblepanelfromtolocation=true;
       this.isVisiblefromtolocationdepartment=false;
       this.isVisiblegstsaiDebtors=false;
+      this.isVisiblepaneltolocation=false;
     }
     else if (reportName==='gstReceiptRegister'){
       this.reportName='Receipt Register';
       this.isVisiblepanelfromtolocation=false;
       this.isVisiblefromtolocationdepartment=true;
+      this.isVisiblepaneltolocation=false;
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.isVisibleDepartmentList = true;
         this.isVisiblegstsaiDebtors=false;
@@ -241,6 +230,7 @@ custAccNo:number;
       this.isVisiblegstsaiDebtors=true;
       this.isVisiblepanelfromtolocation=false;
       this.isVisiblefromtolocationdepartment=false;
+      this.isVisiblepaneltolocation=false;
     }
   }
 
@@ -286,7 +276,7 @@ custAccNo:number;
       const fileName = 'Invoice-Not-Delivery-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
         const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.servindToDtReport(fromDate, toDate, locId)
+        this.reportService.servindToDtReport(toDate, locId)
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
           this.dataDisplay = ''
@@ -295,7 +285,7 @@ custAccNo:number;
         })
       }
       else  if (Number(sessionStorage.getItem('deptId')) != 4) {       
-        this.reportService.servindToDtReport(fromDate, toDate, sessionStorage.getItem('locId'))
+        this.reportService.servindToDtReport(toDate, sessionStorage.getItem('locId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.dataDisplay = ''

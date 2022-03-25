@@ -45,23 +45,26 @@
         <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Details</legend>
   <table class="center" style="width: 100%;">
     <tr>
-        <td style="width: 15%" class="LabelFontStyle"> Item&nbsp;Number&nbsp;: </td>
-        <input disabled type="text" formControlName="segment" value="segment" [(ngModel)]='segment'  class="form-control" style="height: 20px;width: 160px;">
-        <td style="width: 15%" class="LabelFontStyle">   Vehicle&nbsp;Id&nbsp;(VIN)&nbsp;:  </td>
-        <input disabled type="text" formControlName="vin" value="vin"  [(ngModel)]='vin' class="form-control" style="height: 20px;width: 160px;">
+        <td style="width: 15%" class="LabelFontStyle"> Vehicle&nbsp;No&nbsp;: </td>
+       <td> <input disabled type="text" formControlName="segment" value="segment" [(ngModel)]='segment'  class="form-control" style="height: 20px;width: 160px;"></td>
+        <td style="width: 15%" class="LabelFontStyle">   Chassis&nbsp;No/&nbsp;(VIN)&nbsp;:  </td>
+       <td> <input disabled type="text" formControlName="vin" value="vin"  [(ngModel)]='vin' class="form-control" style="height: 20px;width: 160px;"></td>
         <td style="width: 15%" class="LabelFontStyle">  Model&nbsp;/&nbsp;Variant&nbsp;/&nbsp;Color: </td>
-        <input disabled type="text" formControlName="modelVarClr" value="modelVarClr" [(ngModel)]='modelVarClr' class="form-control" style="height: 20px;width: 160px;">
-        <td style="width: 15%" class="LabelFontStyle">  Delivery&nbsp;Location&nbsp;:  </td>
-        <input disabled type="text" formControlName="deliveryLoc" [(ngModel)]='deliveryLoc' id="deliveryLoc" value="deliveryLoc"  class="form-control" style="height: 20px;width: 160px;">
-
+        <td colspan="4">
+            <input disabled type="text" formControlName="modelVarClr" value="modelVarClr" [(ngModel)]='modelVarClr' class="form-control" style="height: 20px;width: 100%;">
+        </td>
     </tr>
     <tr>
-        <td style="width: 15%" class="LabelFontStyle">  Servicing&nbsp;Location&nbsp;: </td>
-        <td><input disabled type="text" formControlName="deliveryLoc" [(ngModel)]='serviceLoc' id="serviceLoc" value="serviceLoc"  class="form-control" style="height: 20px;width: 160px;"></td>
         <td style="width: 15%" class="LabelFontStyle">  Customer&nbsp;Name&nbsp;: </td>
         <td><input disabled type="text" formControlName="custName" [(ngModel)]='custName' id="custName" value="custName"  class="form-control" style="height: 20px;width: 160px;"></td>
         <td style="width: 15%" class="LabelFontStyle">  Customer&nbsp;Address&nbsp;: </td>
         <td colspan="3"><input disabled type="text" formControlName="custAdd" [(ngModel)]='custAdd' id="custAdd" value="custAdd"  class="form-control" style="height: 20px;width: 100%;"></td>
+    </tr>
+    <tr>
+        <td style="width: 15%" class="LabelFontStyle">  Delivery&nbsp;Location&nbsp;:  </td>
+      <td><input disabled type="text" formControlName="deliveryLoc" [(ngModel)]='deliveryLoc' id="deliveryLoc" value="deliveryLoc"  class="form-control" style="height: 20px;width: 160px;"></td>
+        <td style="width: 15%" class="LabelFontStyle">  Servicing&nbsp;Location&nbsp;: </td>
+        <td><input disabled type="text" formControlName="deliveryLoc" [(ngModel)]='serviceLoc' id="serviceLoc" value="serviceLoc"  class="form-control" style="height: 20px;width: 160px;"></td>
     </tr>
     <tr>
         <td style="width: 15%" class="LabelFontStyle">  Contact&nbsp;Number&nbsp;: </td> 

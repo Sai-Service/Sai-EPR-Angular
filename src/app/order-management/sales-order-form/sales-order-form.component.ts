@@ -26,11 +26,13 @@ interface ISalesBookingForm {
   locCode: string,
   basicValue: number;
   ticketNo: string,
+  brokerType:string;
   emplId: number;
   orderNumber: number,
   accountNo: number,
   custName: string,
   orderedDate: Date,
+  tvBroker:string;
   transactionTypeName: string,
   // broker:string;
   subDealerId: number;
@@ -140,6 +142,7 @@ export class IFinanaceExchangeForm {
   downPayment: number;
   taxiYN: string;
   exchangeYN: string;
+  tvBroker:string;
   loyaltyBonus: number;
   exRegNo: string;
   insCharges: string;
@@ -169,6 +172,7 @@ export class SalesOrderFormComponent implements OnInit {
   emailId1: string;
   basicValue: number;
   isTaxable: string;
+  perAdd:string;
   priceListHeaderId: number;
   emailId: string;
   state: string;
@@ -176,7 +180,7 @@ export class SalesOrderFormComponent implements OnInit {
   weddingDate: Date;
   paymentTermId: number;
   deptName: string;
-  exchange: string;
+  exchangeYN: string;
   loyaltyBonus: string;
   taxiYN: string;
   exRegNo: string;
@@ -265,6 +269,7 @@ export class SalesOrderFormComponent implements OnInit {
   public transactionTypeNameList: any;
   brokerList: any;
   brokerTypeList:any;
+  brokerType:string;
   truValueList:any;
   public payTermDescList: any;
   public salesRepNameList: any;
@@ -362,8 +367,10 @@ export class SalesOrderFormComponent implements OnInit {
       ouName: [''],
       subDealerDesc: [],
       variantDesc: [''],
+      brokerType:[''],
+      tvBroker:[''],
       colorCode: [''],
-      exchange: ['', [Validators.required]],
+      exchangeYN: ['', [Validators.required]],
       priceListHeaderId: [''],
       taxiYN: [''],
       basicValue: [''],
@@ -387,6 +394,7 @@ export class SalesOrderFormComponent implements OnInit {
       locationId: [''],
       ticketNo: [''],
       orderNumber: [''],
+      perAdd:[''],
       accountNo: ['', [Validators.required]],
       custName: ['', [Validators.required]],
       orderedDate: [''],
@@ -531,7 +539,7 @@ export class SalesOrderFormComponent implements OnInit {
     this.divisionId = Number(sessionStorage.getItem('divisionId'))
     this.orderlineDetailsArray().controls[0].patchValue({ flowStatusCode: 'BOOKED' });
     this.SalesOrderBookingForm.patchValue({ financeType: 'None' });
-    this.SalesOrderBookingForm.patchValue({ exchange: 'N' });
+    this.SalesOrderBookingForm.patchValue({ exchangeYN: 'N' });
 
     if (Number(sessionStorage.getItem('divisionId')) === 1) {
       this.displayDMSCDMS = true;
@@ -671,13 +679,13 @@ export class SalesOrderFormComponent implements OnInit {
     });
 
 
-    this.service.brokerListFn()
-    .subscribe(
-      data => {
-        this.brokerList = data;
-        console.log(this.brokerList);
-      }
-    );
+    // this.service.brokerListFn()
+    // .subscribe(
+    //   data => {
+    //     this.brokerList = data;
+    //     console.log(this.brokerList);
+    //   }
+    // );
 
   }
 
@@ -1228,6 +1236,30 @@ export class SalesOrderFormComponent implements OnInit {
   }
 
 
+  // goReceiptForm() {
+  //   this.router.navigate(['/admin/master/PoReceiptForm', segment1]);
+  // }
+
+  navigateGatePass(orderNumber){
+    // alert(orderNumber)
+    var trxLnArr = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+    var trxLnArr1=trxLnArr.getRawValue();
+    var isAllInvoiceDone :boolean=true;
+    for (let x=0; x< trxLnArr1.length;x++){
+      if (trxLnArr1[x].flowStatusCode==='BOOKED' || trxLnArr1[x].flowStatusCode==='READY FOR INVOICE'){
+        alert('Line Pening For Invoicing. Line No ' + (x+1) + '   And Item No:- ' + trxLnArr1[x].segment);
+        isAllInvoiceDone=false;
+      }
+    } 
+    if (isAllInvoiceDone){
+      this.router.navigate(['/admin/OrderManagement/GatePass', orderNumber]); 
+    }
+  }
+
+ 
+
+
+
   // order Save Function 
   transData(val) {
     // delete val.categoryId;
@@ -1351,7 +1383,7 @@ export class SalesOrderFormComponent implements OnInit {
               this.isVisible6 = false;
               this.isDisabled6 = true;
             }
-            if (data.obj.exchangeYes === 'Y') {
+            if (data.obj.exchangeYN === 'Y') {
               this.Displayexchange = false;
               this.Displayexchange1=false;
             }
@@ -1447,7 +1479,7 @@ export class SalesOrderFormComponent implements OnInit {
                   this.SalesOrderBookingForm.get('emi').enable();
                   this.SalesOrderBookingForm.get('tenure').enable();
                   this.SalesOrderBookingForm.get('downPayment').enable();
-                  this.SalesOrderBookingForm.get('exchange').enable();
+                  this.SalesOrderBookingForm.get('exchangeYN').enable();
                   this.SalesOrderBookingForm.get('loyaltyBonus').enable();
                   this.SalesOrderBookingForm.get('exRegNo').enable();
                   this.SalesOrderBookingForm.get('insCharges').enable();
@@ -1486,7 +1518,7 @@ export class SalesOrderFormComponent implements OnInit {
                   this.SalesOrderBookingForm.get('emi').disable();
                   this.SalesOrderBookingForm.get('tenure').disable();
                   this.SalesOrderBookingForm.get('downPayment').disable();
-                  this.SalesOrderBookingForm.get('exchange').disable();
+                  this.SalesOrderBookingForm.get('exchangeYN').disable();
                   this.SalesOrderBookingForm.get('loyaltyBonus').disable();
                   this.SalesOrderBookingForm.get('exRegNo').disable();
                   this.SalesOrderBookingForm.get('insCharges').disable();
@@ -1892,7 +1924,7 @@ export class SalesOrderFormComponent implements OnInit {
     var emi = this.SalesOrderBookingForm.get('emi').value;
     var tenure = this.SalesOrderBookingForm.get('tenure').value;
     var  downPayment = this.SalesOrderBookingForm.get('downPayment').value;
-    var  exchange = this.SalesOrderBookingForm.get('exchange').value;
+    var  exchange = this.SalesOrderBookingForm.get('exchangeYN').value;
     var loyaltyBonus = this.SalesOrderBookingForm.get('loyaltyBonus').value;
     var  exRegNo = this.SalesOrderBookingForm.get('exRegNo').value;
     var insCharges = this.SalesOrderBookingForm.get('insCharges').value;
@@ -1948,7 +1980,7 @@ export class SalesOrderFormComponent implements OnInit {
         }
         if (exchange === 'Y'){
           // alert('hiii22222')
-          if ( exRegNo=== null || exRegNo === undefined || insCharges === null || insCharges=== undefined ||  offerPrice=== null || offerPrice === undefined || loyaltyBonus === null || loyaltyBonus === undefined){
+          if ( exRegNo=== null || exRegNo === undefined ||   offerPrice=== null || offerPrice === undefined ){
               alert('Please Enter Finanace or Exchange Details... !');
               this.isDisabled8 = false;
               this.dataDisplay = 'Please Enter Finanace or Exchange Details... !'
@@ -2163,17 +2195,17 @@ export class SalesOrderFormComponent implements OnInit {
     // var emi = this.SalesOrderBookingForm.get('emi').value;
     // var tenure = this.SalesOrderBookingForm.get('tenure').value;
     // var  downPayment = this.SalesOrderBookingForm.get('downPayment').value;
-    var  exchange = this.SalesOrderBookingForm.get('exchange').value;
+    var  exchange = this.SalesOrderBookingForm.get('exchangeYN').value;
     // var loyaltyBonus = this.SalesOrderBookingForm.get('loyaltyBonus').value;
-    // var  exRegNo = this.SalesOrderBookingForm.get('exRegNo').value;
+    var  exRegNo = this.SalesOrderBookingForm.get('exRegNo').value;
     // var insCharges = this.SalesOrderBookingForm.get('insCharges').value;
-    // var offerPrice = this.SalesOrderBookingForm.get('offerPrice').value;
+    var offerPrice = this.SalesOrderBookingForm.get('offerPrice').value;
     var formArr = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     // || emi === null || emi === undefined || tenure===null || tenure === undefined ||
         // downPayment=== null || downPayment === undefined || loyaltyBonus === null || loyaltyBonus === undefined ||
         // exRegNo=== null || exRegNo === undefined || insCharges === null || insCharges=== undefined ||  offerPrice=== null || offerPrice === undefined 
     if (financeType != 'None' || exchange != 'N'){
-      if ( financerName === null || financerName === undefined ){
+      if ( financerName === null || financerName === undefined ||exRegNo===null||exRegNo===undefined){
           alert('Please Enter Finanace or Exchange Details... !');
           this.isDisabled8 = false;
           this.dataDisplay = 'Please Enter Finanace or Exchange Details... !'

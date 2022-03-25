@@ -136,6 +136,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   tcsYN: string;
   tcsPer: number;
   tcsAmt: number;
+  perAdd:string;
   creditDays: number;
   daysMsg: string;
   amountMsg: string;
@@ -418,6 +419,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       classCodeType: [''],
       // uuidRef: [''],
       taxCategoryName: [''],
+      perAdd:[''],
       disPer: [''],
       issueCodeType1: [''],
       issueCode: [''],
@@ -1441,6 +1443,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                 if (Number(this.custSiteList[i].ouId) === Number(sessionStorage.getItem('ouId'))) {
                   this.CounterSaleOrderBookingForm.patchValue({ name: this.custSiteList[i].siteName });
                   this.CounterSaleOrderBookingForm.get('name').enable()
+                  alert('Selected Customer Multiple Sites.. Please confirm.!')
                   //  this.onOptionsSelectedcustSiteName(this.custSiteList[i].siteName);
                 }
               }
