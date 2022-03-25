@@ -118,6 +118,8 @@ export class SaiEwSchemeMasterComponent implements OnInit {
         display = true;
         displayButton = true;
         showBankDetails=false;
+        updateButton=false;
+        saveButton=true;
 
         get f() { return this.saiEwSchemeMasterForm.controls; }
 
@@ -211,7 +213,15 @@ export class SaiEwSchemeMasterComponent implements OnInit {
             }
           );
           
-          this.service.ewInsNameList()
+          // this.service.ewInsNameList()
+          // .subscribe(
+          //   data => {
+          //     this.ewInsNameList = data;
+          //     console.log(this.ewInsNameList);
+          //   }
+          // );
+
+          this.service.insNameList()
           .subscribe(
             data => {
               this.ewInsNameList = data;
@@ -319,9 +329,8 @@ export class SaiEwSchemeMasterComponent implements OnInit {
             }
              );
 
-                  if(this.mviewFlag===0) {
-            
-                    this.ewSchemeNo=this.ewType +"EW"+this.premiumPeriod+"-"+this.ewSchemeName+"-"+ this.slab+"-"+this.variant
+              if(this.mviewFlag===0) {
+              this.ewSchemeNo=this.ewType +"EW"+this.premiumPeriod+"-"+this.ewSchemeName+"-"+ this.slab+"-"+this.variant
               this.ewSchemeDesc=this.ewSchemeNo;
             }
         }
@@ -337,6 +346,7 @@ export class SaiEwSchemeMasterComponent implements OnInit {
             this.saiEwSchemeMasterForm.patchValue(select);
             this.ewSchemeId = select.ewSchemeId;
             this.displayButton = false;
+            this.updateButton=true;
             this.premiumPeriod=select.premiumPeriod;
             // alert("premium period : ,schemeStartDate ,slab : "+this.premiumPeriod +","+this.schemeStartDate +","+this.slab);
 
@@ -369,8 +379,9 @@ export class SaiEwSchemeMasterComponent implements OnInit {
           this.CheckDataValidations();
          
           if (this.checkValidation===true) {
-          alert("Data Validation Sucessfull....\nPosting data  to EW SCHEME MASTER TABLE")
-
+          alert("Data Validation Sucessfull....")
+            this.displayButton=false;
+            this.updateButton=false;
 
         // const formValue: IPaymentRcpt =this.paymentReceiptForm.value;
         const formValue: IEwScheme =this.transeData(this.saiEwSchemeMasterForm.value);
@@ -385,7 +396,8 @@ export class SaiEwSchemeMasterComponent implements OnInit {
             if (res.code === 400) {
               alert('Code already present in the data base');
               // this.saiEwSchemeMasterForm.reset();
-              window.location.reload();
+              this.displayButton=true;
+              // window.location.reload();
             }
           }
         });
@@ -398,18 +410,20 @@ export class SaiEwSchemeMasterComponent implements OnInit {
          this.CheckDataValidations();
          
           if (this.checkValidation===true) {
-          alert("Data Validation Sucessfull....\nPutting data  to EW SCHEME MASTER TABLE")
-          
+          alert("Data Validation Sucessfull....\n")
+          this.updateButton=false;
         const formValue: IEwScheme =this.transeData(this.saiEwSchemeMasterForm.value);
         
           this.service.UpdateSaiEwScheme(formValue).subscribe((res: any) => {
           if (res.code === 200) {
             alert('RECORD UPDATED SUCCESSFUILY');
-            window.location.reload();
+            this.saiEwSchemeMasterForm.disable();
+            // window.location.reload();
           } else {
             if (res.code === 400) {
               alert('ERROR OCCOURED IN PROCEESS');
-              this.saiEwSchemeMasterForm.reset();
+              this.updateButton=true;
+              // this.saiEwSchemeMasterForm.reset();
             }
           }
         });
