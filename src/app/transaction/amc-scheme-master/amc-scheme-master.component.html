@@ -68,10 +68,10 @@
                     <td> <input  type ="number" class="form-control" formControlName="discOnLabour" [(ngModel)]='discOnLabour'  
                         value={{discOnLabour}} (change)=validateDisL()  style="background-color: yellow;"> </td>
                     <td>&nbsp;Start&nbsp;Date:&nbsp;</td>
-                    <td> <input  type ="date" class="form-control" formControlName="startDate" [(ngModel)]='startDate'  
+                    <td> <input  type ="date" class="form-control" formControlName="startDate" [(ngModel)]='startDate'  placeholder="dd-MMM-yy"
                         value={{startDate}} max="{{minDate | date:'yyyy-MM-dd'}}" style="background-color: yellow;"> </td>
                     <td>&nbsp;End&nbsp;Date:&nbsp;</td>
-                    <td> <input  type ="date" class="form-control" formControlName="endDate" [(ngModel)]='endDate'
+                    <td> <input  type ="date" class="form-control" formControlName="endDate" [(ngModel)]='endDate' placeholder="dd-MM-yyyy"
                             value={{endDate}} max="{{minDate | date:'yyyy-MM-dd'}}" > </td>
                 </tr>
 

@@ -333,7 +333,7 @@ export class JobCardComponent implements OnInit {
   // now = Date.now();
   // pickupDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   pickupDate=Date.now();
-  jobCardDate = this.pipe.transform(Date.now(), 'dd-MM-y');
+  jobCardDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   // jobCardDate = Date.now();
   // jobCardDate = this.pipe.transform(this.now, 'y-MM-d');
   
@@ -2593,20 +2593,22 @@ searchFromArray1(arr, regex) {
     var arrayControl = this.jobcardForm.get('jobCardLabLines').value
     var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
     var genItem =arrayControl[index].genericItem;
-    if(genItem==='N') {
+   
      console.log(index);
     var mQty =arrayControl[index].qty;
     var taxP =arrayControl[index].taxPer;
+    if(genItem==='N') {
     if(mQty <=0 )    // || Number.isInteger(mQty)==false 
-    { 
-      alert ("Please Enter a Valid Qty.");
-      (patch.controls[index]).patchValue({ qty:'',basicAmt:0,taxAmt:0,laborAmt:0});return;
-    }
-
+      { 
+        alert ("Please Enter a Valid Qty.");
+        (patch.controls[index]).patchValue({ qty:'',basicAmt:0,taxAmt:0,laborAmt:0});return;
+      }
+     }
+   
     var baseAmtLineWise = arrayControl[index].unitPrice * arrayControl[index].qty;
     var txAmt =baseAmtLineWise *taxP/100;
     (patch.controls[index]).patchValue({ basicAmt: baseAmtLineWise,taxAmt:txAmt, laborAmt: baseAmtLineWise+txAmt, })
-  }
+  
 }
 
 validateLabQty(index: any){
