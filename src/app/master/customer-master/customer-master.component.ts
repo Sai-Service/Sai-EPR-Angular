@@ -276,7 +276,8 @@ export class CustomerMasterComponent implements OnInit {
       endDate: [''],
       // gstNo: ['', [Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{1}[A-Z0-9]{1}$"), Validators.minLength(15), Validators.maxLength(15)]],
       gstNo: ['', [Validators.maxLength(15)]],
-      panNo: ['', [Validators.required, Validators.pattern("^[A-Z]{5}[0-9]{4}[A-Z]{1}$"), Validators.minLength(10), Validators.maxLength(10)]],
+      // panNo: ['', [Validators.required, Validators.pattern("^[A-Z]{5}[0-9]{4}[A-Z]{1}$"), Validators.minLength(10), Validators.maxLength(10)]],
+      panNo: ['', [ Validators.minLength(10), Validators.maxLength(10)]],
       tanNo: [''],
       status: [''],
       // classCodeType: [''],
@@ -307,7 +308,7 @@ export class CustomerMasterComponent implements OnInit {
       divId: [],
       staxCatName: [],
       stanNo: [],
-      spanNo: ['', [Validators.pattern("^[A-Z]{5}[0-9]{4}[A-Z]{1}$"), Validators.minLength(10), Validators.maxLength(10)]],
+      spanNo: ['', [Validators.minLength(10), Validators.maxLength(10)]],
       // sGstNo: ['', [Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{1}[A-Z0-9]{1}$"), Validators.minLength(15), Validators.maxLength(15)]],
       sGstNo: ['', [Validators.minLength(15), Validators.maxLength(15)]],
       // sGstNo: ['', [Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"), Validators.minLength(15), Validators.maxLength(15)]],
@@ -849,6 +850,14 @@ export class CustomerMasterComponent implements OnInit {
       formValue.sGstNo = formValue.gstNo;
 
     }
+    if (formValue.panNo === '') {
+      formValue.spanNo = 'APPLIEDFOR';
+      formValue.panNo = 'APPLIEDFOR';
+    }
+    else {
+      formValue.spanNo = formValue.panNo;
+
+    }
     this.service.CustMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD INSERTED SUCCESSFULLY ' + res.obj);
@@ -1174,6 +1183,24 @@ export class CustomerMasterComponent implements OnInit {
         // this.country = 'INDIA';
       }
       );
+    }
+  }
+
+  onPanSelect(event){
+    if (event.target.value!= '') {
+
+      var regex: string = "[A-Z]{5}[0-9]{4}[A-Z]{1}";
+      var p = new PatternValidator();
+      var patt = new RegExp('[A-Z]{5}[0-9]{4}[A-Z]{1}');
+      var validdata = patt.test(event.target.value);
+      if (validdata === false) {
+        alert('Please enter valid PAN Number');
+      }
+      return validdata;
+
+    } else {
+      alert('Please enter valid PAN Number');
+      return false;
     }
   }
   onOptionsiteSelectedCity(event) {

@@ -720,6 +720,20 @@ brokerListFn(): Observable<any> {
   return this.http.get(this.ServerUrl +`/Customer/ClassCode/BROKER`);
 }
 
+brokerListFnNew(classCodeType): Observable<any> {
+  return this.http.get(this.ServerUrl +`/Customer/ClassCode/${classCodeType}`);
+}
+
+brokerTypeListFn(): Observable<any> {
+  return this.http.get(this.ServerUrl +`/cmnLookup/CmnType/ClassCodeSL`);
+}
+
+truValueListFn(): Observable<any> {
+  return this.http.get(this.ServerUrl +`/Customer/ClassCode/TRUE VALUE`);
+}
+
+
+
 variantCodeList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
 }
