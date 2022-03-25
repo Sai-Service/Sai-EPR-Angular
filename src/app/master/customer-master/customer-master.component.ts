@@ -14,6 +14,7 @@ interface IcustomerMaster {
   custType: string;
   customerId: number;
   title: string;
+  perAdd:string;
   customerId1: number;
   customerAcc1: number;
   fName: string;
@@ -104,6 +105,7 @@ export class CustomerMasterComponent implements OnInit {
   customerId: number;
   custType: string;
   PersonType: any;
+  perAdd:string;
   taxCategoryName: string;
   displayPerson: boolean;
   displayOrgnization: boolean;
@@ -259,6 +261,7 @@ export class CustomerMasterComponent implements OnInit {
       city: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50), Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
       taxCategoryName: ['', Validators.required],
       pinCd: ['', [Validators.required, Validators.minLength(6), Validators.maxLength, Validators.pattern("^[0-9]{6}$")]],
+      perAdd:[''],
       state: ['', Validators.required],
       mobile1: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.minLength(10), Validators.maxLength(10)]],
       mobile2: ['', [Validators.minLength(10), Validators.maxLength(10), Validators.pattern('[0-9]*')]],
@@ -1074,6 +1077,7 @@ export class CustomerMasterComponent implements OnInit {
           this.customerMasterForm.get('creditAmt').disable();
           this.customerMasterForm.get('highAmt').disable();
           this.customerMasterForm.get('disPer').disable();
+          this.customerMasterForm.get('perAdd').disable();
           this.dispstatus = false;
 
         });

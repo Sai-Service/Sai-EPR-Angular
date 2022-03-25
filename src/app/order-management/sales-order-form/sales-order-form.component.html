@@ -113,20 +113,17 @@
                                                         style="width: 150px;">
                                                 </td>
                                             </tr>
-                                            <!-- <tr>
-                                    <td style="width: 15%" class="LabelFontStyle">
-                                        DMS&nbsp;INS&nbsp;:&nbsp;
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control" style="width: 150px;">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">
-                                        DMS&nbsp;Transaction&nbsp;No&nbsp;:&nbsp;
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control" style="width: 150px;">
-                                    </td>
-                                </tr> -->
+                                        <tr>
+                                            <td style="width: 15%" class="LabelFontStyle">
+                                                Permanent&nbsp;Add&nbsp;:&nbsp;
+                                            </td>
+                                            <td colspan="4">
+                                                <input disabled type="text" class="form-control"
+                                                    formControlName="perAdd" [(ngModel)]='perAdd' value={{perAdd}}
+                                                    style="width: 100%;">
+                                                    <!-- 14622 -->
+                                            </td>
+                                        </tr>
                                         </table>
                                     </div>
                                     <div class="modal-footer">
@@ -585,17 +582,17 @@
                             <td>
                                 <input type="text" formControlName="remarks" class="form-control" style="width: 170px;">
                             </td>
-                            <!-- <td style="width: 15%" class="LabelFontStyle">
+                            <td style="width: 15%" class="LabelFontStyle">
                                 Broker&nbsp;Type&nbsp;:&nbsp;
                             </td>
                             <td>
-                                <select formControlName="subDealerId" id="subDealerId" class="form-control" style="width: 170px;" (change)="onOptionsSelectedBrokerType($event)">
+                                <select formControlName="brokerType" id="brokerType" class="form-control" style="width: 170px;" (change)="onOptionsSelectedBrokerType($event)">
                                 <option>--Select--</option>
                                 <option *ngFor="let mm of brokerTypeList" [value]="mm.codeDesc">
                                     {{mm.codeDesc}}
                                 </option>
                             </select>
-                            </td> -->
+                            </td>
                             <td style="width: 15%" class="LabelFontStyle">
                                 Broker&nbsp;Dealer&nbsp;:&nbsp;
                             </td>
@@ -633,14 +630,6 @@
                                 <input disabled type="text" formControlName="totAmt" [(ngModel)]='totAmt'
                                     value={{totAmt}} class="form-control" style="width: 170px;font-weight: bold;">
                             </td>
-                            <!-- <td style="width: 15%" class="LabelFontStyle">
-                            Allotment&nbsp;flag&nbsp;:&nbsp;
-                        </td>
-                        <td>
-                           
-                                <input type="text" class="form-control" style="width: 170px;">
-                           
-                        </td> -->
                         </tr>
                     </table>
                 </ng-template>
@@ -723,15 +712,13 @@
                                 <input disabled type="text" formControlName="remarks" [(ngModel)]='remarks'
                                     value={{remarks}} class="form-control" style="width: 170px;">
                             </td>
-                            <!-- <td style="width: 15%" class="LabelFontStyle">
+                            <td style="width: 15%" class="LabelFontStyle">
                                 Broker&nbsp;Type&nbsp;:&nbsp;
                             </td>
                             <td>
-                            <input disabled type="text" formControlName="subDealerDesc" [(ngModel)]='subDealerDesc'
-                            value={{subDealerDesc}} class="form-control" style="width: 170px;">
-                            <input hidden disabled type="text" formControlName="subDealerId" [(ngModel)]='subDealerId'
-                            value={{subDealerId}} class="form-control" style="width: 170px;">
-                        </td> -->
+                            <input disabled type="text" formControlName="brokerType" [(ngModel)]='brokerType'
+                            value={{brokerType}} class="form-control" style="width: 170px;">
+                        </td>
                         <td style="width: 15%" class="LabelFontStyle">
                             Broker&nbsp;Dealer&nbsp;:&nbsp;
                         </td>
@@ -992,7 +979,7 @@
                                             </td>
                                             <td>
                                                 <!-- <input  type="text"  formControlName="exchange"  class="form-control" style="width: 120px;"> -->
-                                                <select type="text" formControlName="exchange" id="exchange"
+                                                <select type="text" formControlName="exchangeYN" id="exchangeYN"
                                                     class="form-control" style="width: 120px;" (change)="exchangeYes($event)">
                                                     <option>--Select--</option>
                                                     <option *ngFor="let sc of  YesNoList" [value]="sc.cmnDesc">
@@ -1035,7 +1022,7 @@
                                         </ng-template>
                                           
                                         </tr>
-                                        <!-- <div *ngIf="Displayexchange1; then thenexchange1; else elseexchange1"></div>
+                                        <div *ngIf="Displayexchange1; then thenexchange1; else elseexchange1"></div>
                                             <ng-template #thenexchange1>
                                             </ng-template>
                                             <ng-template #elseexchange1>
@@ -1044,7 +1031,7 @@
                                                 Dealer&nbsp;Name&nbsp;:&nbsp;
                                             </td>
                                             <td>
-                                                <select type="text" formControlName="dealerName" id="dealerName"
+                                                <select type="text" formControlName="tvBroker" id="tvBroker"
                                                 class="form-control" style="width: 120px;" >
                                                 <option>--Select--</option>
                                                 <option *ngFor="let sc of  truValueList" [value]="sc.cmnDesc">
@@ -1053,7 +1040,7 @@
                                             </select>
                                             </td>
                                         </tr>
-                                            </ng-template> -->
+                                            </ng-template>
                                     </table>
                                 </div>
                                 <!-- </div> -->
@@ -2174,7 +2161,7 @@
                           
                                 <td>
                                     <button class="btn btn-primary" [style.display]="isVisible7 ? 'block' : 'none'" style="width: fit-content;height: fit-content;" 
-                                        [routerLink]="['/admin/OrderManagement/GatePass',orderNumber]">Generate Gate Pass</button>
+                                    (click)="navigateGatePass(orderNumber)">Generate Gate Pass</button>
                                 </td>
                         </tr>
                     </table>

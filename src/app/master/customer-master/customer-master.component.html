@@ -538,14 +538,14 @@
                                 <td style="width: 10%" class="LabelFontStyle1">&nbsp;Tax&nbsp;Category&nbsp;:&nbsp;</td>
                                 <td>
                                   <input disabled formControlName="taxCategoryName" id="taxCategoryName" class="form-control"  [ngModel]="taxCategoryName">
-                                    <!-- <select formControlName="taxCategoryName" id="taxCategoryName" class="form-control" [ngModel]="taxCategoryName">
-                                    <option>--Select--</option>
-                                    <option *ngFor="let taxcate of  taxCategoryNameList">
-                                        {{taxcate.taxCategoryName}}
-                                    </option>
-                                </select> -->
                                 </td>
                             </tr>
+                            <tr>
+                                <td style="width: 10%" class="LabelFontStyle">&nbsp;Permanent&nbsp;Address&nbsp;:&nbsp;
+                                    <td colspan="5">
+                                        <input type="text" formControlName="perAdd" value={{perAdd}} class="form-control" style="width: 100%;">
+                                    </td>
+                                </tr>
                             <tr style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;">
                                 <td style="width: 10%" class="LabelFontStyle1">&nbsp;Mobile&nbsp;1&nbsp;:&nbsp;</td>
                                 <td>

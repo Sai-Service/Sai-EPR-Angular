@@ -103,20 +103,17 @@
                                             [(ngModel)]='panNo' value={{panNo}} style="width: 150px;">
                                     </td>
                                 </tr>
-                                <!-- <tr>
+                                <tr>
                                     <td style="width: 15%" class="LabelFontStyle">
-                                        DMS&nbsp;INS&nbsp;:&nbsp;
+                                        Permanent&nbsp;Add&nbsp;:&nbsp;
                                     </td>
-                                    <td>
-                                        <input type="text" class="form-control" style="width: 150px;">
+                                    <td colspan="4">
+                                        <input disabled type="text" class="form-control"
+                                            formControlName="perAdd" [(ngModel)]='perAdd' value={{perAdd}}
+                                            style="width: 100%;">
+                                            <!-- 14622 -->
                                     </td>
-                                    <td style="width: 15%" class="LabelFontStyle">
-                                        DMS&nbsp;Transaction&nbsp;No&nbsp;:&nbsp;
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control" style="width: 150px;">
-                                    </td>
-                                </tr> -->
+                                </tr>
                             </table>
                         </div>
                         <div class="modal-footer">
