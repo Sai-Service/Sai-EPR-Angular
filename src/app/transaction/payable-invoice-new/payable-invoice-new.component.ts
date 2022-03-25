@@ -204,8 +204,8 @@ export class PayableInvoiceNewComponent implements OnInit {
   // now = Date.now();
   // glDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
 
-  glDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
-  accountingDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
+  glDate = this.pipe.transform(this.now, 'dd-MMM-yyyy');
+  accountingDate = this.pipe.transform(this.now, 'dd-MMM-yyyy');
   // paymentMethod = 'CHEQUE';
 
 
@@ -1056,7 +1056,7 @@ export class PayableInvoiceNewComponent implements OnInit {
 
 
   selectINVLineDtl(i) {
-    alert(i);
+    // alert(i);
     this.tdsTaxDetailsArray().clear();
     this.lineDistributionArray().clear();
     this.invLineDetailsArray().clear();
@@ -1082,7 +1082,7 @@ export class PayableInvoiceNewComponent implements OnInit {
       .subscribe(
         data => {
           console.log(data);
-          alert(data.payGroup)
+          // alert(data.payGroup)
           this.isSearchPatch = true;
           this.displayitemName = true;
           this.displayTaxCategory = false;
@@ -1240,7 +1240,7 @@ export class PayableInvoiceNewComponent implements OnInit {
 
 
   openTDSTab() {
-    alert('hiii')
+    // alert('hiii')
     this.displayapInvCancelled = false;
     this.isVisibleUpdateBtn = false;
     this.isVisibleValidate = false;
@@ -1449,7 +1449,7 @@ export class PayableInvoiceNewComponent implements OnInit {
     // var invTyp = this.arInvoiceForm.get('source').value;
 
     var itemCode = event.target.value;
-    alert(itemCode)
+    // alert(itemCode)
     if (event.keyCode == 13) {
       // enter keycode
       if (itemCode.length == 8) {
@@ -1483,12 +1483,12 @@ export class PayableInvoiceNewComponent implements OnInit {
   }
 
   onOptioninvItemIdSelected(itemId, index) {
-    // alert(itemId)
+    // alert(index+'---Index')
     console.log(this.invItemList);
     let selectedValue = this.invItemList.find(v => v.segment == itemId);
     console.log(selectedValue)
     var patch = this.poInvoiceForm.get('invLines') as FormArray;
-    patch.controls[index].get('description').disable();
+    debugger;
     patch.controls[index].patchValue({
       itemId: selectedValue.itemId,
       description: selectedValue.description,
@@ -1498,6 +1498,7 @@ export class PayableInvoiceNewComponent implements OnInit {
       poChargeAcc: selectedValue.poChargeAccount,
       diss1: 0,
     })
+    patch.controls[index].get('description').disable();
     // alert(selectedValue.isTaxable +'selectedValue.isTaxable')
     if (selectedValue.isTaxable == 'N') {
       // alert('In If');
@@ -1693,6 +1694,10 @@ export class PayableInvoiceNewComponent implements OnInit {
               this.invLineDetailsArray().push(invLnGrp);
             }
             (controlinv.controls[0]).patchValue({ lineNumber: 1 });
+            var accDate=data.miscLines[k].accountingDate;
+            // alert(accDate);
+          var accDate1=  this.pipe.transform(accDate, 'dd-MMM-yyyy');
+            (controlinv.controls[k]).patchValue({ accountingDate: accDate1});
             var x = controlinv.length + 1;
             for (let z = existlinecnt, j = 1; z < this.invLineDetailsArray().length; j++, z++) {
               controlinv.controls[z].patchValue(data.miscLines[j - 1]);
@@ -1730,14 +1735,13 @@ export class PayableInvoiceNewComponent implements OnInit {
             var controlPatchDist = this.poInvoiceForm.get('distribution').value;
             var x1 = Number((this.lineDistributionArray().length));
             var len = this.lineDistributionArray().length
-            var totalLen = len + Number(data.invDisLines.length)
-
+            var totalLen = len + Number(data.invDisLines.length);
+            (controlDist.controls[k]).patchValue({ accountingDate :accDate1});
             if (len == 1) {
 
               if (controlPatchDist[0].distLineNumber != null) {
 
                 for (let i = len; i <= data.invDisLines.length; i++) {
-
                   var invLnGrp: FormGroup = this.distLineDetails();
                   this.lineDistributionArray().push(invLnGrp);
 
@@ -1763,7 +1767,6 @@ export class PayableInvoiceNewComponent implements OnInit {
                 for (let i = 0, z = len; i < data.invDisLines.length; i++, z++) {
                   controlDist.controls[z].patchValue(data.invDisLines[i]);
                   (controlDist.controls[z]).patchValue({ invoiceLineNum: Number(this.invoiceLineNo), distLineNumber: z + 1 });
-
                 }
               }
               else {

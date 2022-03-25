@@ -240,18 +240,18 @@
                                                         </select>
                                                     </td>
                                                     <td>
-                                                        <input type="text" disabled class="form-control"
+                                                        <!-- <input type="text" disabled class="form-control"
                                                             formControlName="payGroup" value={{payGroup}}
-                                                            style="width: 120px;height: 25px;font-size: 10px;">
-                                                        <!-- <select formControlName="payGroup" value={{payGroup}}
+                                                            style="width: 120px;height: 25px;font-size: 10px;"> -->
+                                                        <select formControlName="payGroup" value={{payGroup}}
                                                             class="form-control"
                                                             style="width: 120px;height: 25px;font-size: 10px;">
                                                             <option>--Select--</option>
                                                             <option *ngFor="let ts of tdsSectionList"
-                                                                [ngValue]="ts.lookupValueDesc">
+                                                                [value]="ts.lookupValueDesc">
                                                                 {{ts.lookupValueDesc}}
                                                             </option>
-                                                        </select> -->
+                                                        </select>
                                                     </td>
 
 
@@ -808,10 +808,10 @@
                                                                         </option>
                                                                     </select> -->
                                                                     <input type="text" list="dynmicUserIds1"
-                                                                        (keyup)="filterRecord( $event,i)"
+                                                                        (keyup)="filterRecord(k,$event)"
                                                                         formControlName="segment" id="invItemIdFirstWay"
                                                                         class="form-control"
-                                                                        (ngModelChange)="onOptioninvItemIdSelected($event,i)"
+                                                                        (ngModelChange)="onOptioninvItemIdSelected($event,k)"
                                                                         style="height: 25px;width:120px;" />
                                                                     <!--  -->
                                                                     <datalist id="dynmicUserIds1" autocomplete="off">
