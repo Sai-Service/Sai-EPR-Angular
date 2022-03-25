@@ -862,7 +862,7 @@ export class JobCardComponent implements OnInit {
 }
 
   MatImptWip(jobCardNum) {
-    alert(jobCardNum);
+    // alert(jobCardNum);
     var len = this.lineDistributionArray().length;
     this.serviceService.MatImptWipFn(jobCardNum, sessionStorage.getItem('locId'))
       .subscribe(
@@ -909,6 +909,7 @@ export class JobCardComponent implements OnInit {
   serchByitemId(x,index){
     var arrayControl = this.jobcardForm.get('jobCardLabLines').value
     var event = arrayControl[index].segment;
+    event=event.toUpperCase();
     this.serchByitemIdPrice(event,index)
 
   }
@@ -2842,7 +2843,7 @@ SearchPartNum(){
 
   if(sType ==='ITEM DESCRIPTION') {
     var itmDesc=this.jobcardForm.get('searchByItemDesc').value;
-    alert (itmDesc);
+    // alert (itmDesc);
     if(itmDesc ===null || itmDesc ===undefined || itmDesc.trim()==='') {this.lstcomments1=null;  return;}
     itmDesc=itmDesc.toUpperCase();    
     this.service.searchByItemDescInclude(itmDesc,sessionStorage.getItem('divisionId')).subscribe(
