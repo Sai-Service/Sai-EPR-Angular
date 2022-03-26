@@ -1971,9 +1971,9 @@ export class SalesOrderFormComponent implements OnInit {
         // alert(financeType+'---'+financerName)
         if (financeType != 'None' ){
           if ( financeType === null || financeType === undefined || financeType===''|| financerName===null ||financerName===undefined||financerName=='' ){
-              alert('Please Enter Finanace or Exchange Details... !');
+              alert('Please Enter Finanace Details... !');
               this.isDisabled8 = false;
-              this.dataDisplay = 'Please Enter Finanace or Exchange Details... !'
+              this.dataDisplay = 'Please Enter Finanace Details... !'
               this.closeResetButton = true;
               return;
           }
@@ -1981,9 +1981,9 @@ export class SalesOrderFormComponent implements OnInit {
         if (exchange === 'Y'){
           // alert('hiii22222')
           if ( exRegNo=== null || exRegNo === undefined ||   offerPrice=== null || offerPrice === undefined ){
-              alert('Please Enter Finanace or Exchange Details... !');
+              alert('Please Enter Exchange Details... !');
               this.isDisabled8 = false;
-              this.dataDisplay = 'Please Enter Finanace or Exchange Details... !'
+              this.dataDisplay = 'Please Enter Finanace Details... !'
               this.closeResetButton = true;
               return;
           }
@@ -2201,17 +2201,23 @@ export class SalesOrderFormComponent implements OnInit {
     // var insCharges = this.SalesOrderBookingForm.get('insCharges').value;
     var offerPrice = this.SalesOrderBookingForm.get('offerPrice').value;
     var formArr = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
-    // || emi === null || emi === undefined || tenure===null || tenure === undefined ||
-        // downPayment=== null || downPayment === undefined || loyaltyBonus === null || loyaltyBonus === undefined ||
-        // exRegNo=== null || exRegNo === undefined || insCharges === null || insCharges=== undefined ||  offerPrice=== null || offerPrice === undefined 
-    if (financeType != 'None' || exchange != 'N'){
-      if ( financerName === null || financerName === undefined ||exRegNo===null||exRegNo===undefined){
-          alert('Please Enter Finanace or Exchange Details... !');
+    if (financeType != 'None'){
+      if ( financerName === null || financerName === undefined){
+          alert('Please Enter Finanace Details... !');
           this.isDisabled8 = false;
-          this.dataDisplay = 'Please Enter Finanace or Exchange Details... !'
+          this.dataDisplay = 'Please Enter Finanace Details... !'
           this.closeResetButton = true;
           return;
       }
+    }
+    else if (exchange != 'N'){
+      if (exRegNo===null||exRegNo===undefined){
+        alert('Please Enter Exchange Details... !');
+        this.isDisabled8 = false;
+        this.dataDisplay = 'Please Enter Exchange Details... !'
+        this.closeResetButton = true;
+        return;
+    }
     }
     this.orderManagementService.createInvoiceAll(this.orderNumber, (sessionStorage.getItem('emplId'))).subscribe((res: any) => {
       if (res.code === 200) {
