@@ -89,6 +89,7 @@ export class ServiceGatepassComponent implements OnInit {
     checkValidation=false;
     gpButton=false;
     printGPbutton=false;
+    osStatus=true;
 
     showGenForm=true;
     showPrintForm=false;
@@ -96,7 +97,9 @@ export class ServiceGatepassComponent implements OnInit {
     optType:string;
     genGp :string;
     prnGp:string;
-          
+    delAuthBy:string;
+    osAmt:number;
+
     get f() { return this.serviceGatepassForm.controls; }
     serviceGatepass(serviceGatepassForm:any) {  }
 
@@ -143,6 +146,8 @@ export class ServiceGatepassComponent implements OnInit {
         optType:[],
         genGp :[],
         prnGp:[],
+        delAuthBy:[],
+        osAmt:[],
 
         });
     }
@@ -347,10 +352,12 @@ GetJobcardList() {
   var jLocId=this.locId;
   var jcNum=null;
   var jDate=null;
+  var balAmt=0;
   // var jStatus ='Invoiced'
   var jStatus =null;
   var jRegNo=this.serviceGatepassForm.get('regNo').value
   jRegNo=jRegNo.toUpperCase();
+
 
   this.serviceService.getPendingjcListForGP(jRegNo,jLocId)
   .subscribe(
@@ -364,13 +371,16 @@ GetJobcardList() {
             this.gpButton=false;
             break;
           }
+            balAmt=balAmt+ Number(this.lstJobcardList[i].balance);
            this.gpButton=true;
           } 
-
           // alert ("gpButton : :"+this.gpButton);
-      
-      this.jobCardNum=data[0].jobCardNum;
-      console.log(this.lstJobcardList); 
+     
+          this.osAmt=balAmt
+          if(balAmt >0) {this.osStatus=true;} else {this.osStatus=false;}
+
+          this.jobCardNum=data[0].jobCardNum;
+          console.log(this.lstJobcardList); 
 
       } else {alert ("No Jobcard available to Gatepass...");this.gpButton=false;}
      });
@@ -395,6 +405,7 @@ this.serviceService.generateServiceGatePass(regNum,sessionStorage.getItem('locId
       if (res.code === 400) {
         this.printGPbutton=false;
          alert(res.message +  res.obj);
+         this.gpButton=true;
       }
     }
   });
@@ -440,7 +451,7 @@ radioEvent(event:any){
  }
 
  onSelectGatePassNum(gpNum) {
-   alert ("Gate Pass num :"+gpNum);
+  //  alert ("Gate Pass num :"+gpNum);
   let select = this.lstJobcardList.find(d => d.gatepassId === gpNum);
   if(select) {
     this.serviceGatepassForm.patchValue({dateOfDelv : select.dateOfDelv});
