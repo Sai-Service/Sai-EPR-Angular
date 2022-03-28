@@ -240,12 +240,12 @@
                                                         </select>
                                                     </td>
                                                     <td >
+                                                       
                                                         <select formControlName="payGroup" value={{payGroup}}
                                                             class="form-control" 
                                                             style="width: 120px;height: 25px;font-size: 10px;">
                                                             <option>--Select--</option>
-                                                            <option *ngFor="let ts of tdsSectionList"
-                                                                [value]="ts.lookupValueDesc">
+                                                            <option *ngFor="let ts of tdsSectionList" [value]="ts.lookupValueDesc">
                                                                 {{ts.lookupValueDesc}}
                                                             </option>
                                                         </select>
@@ -450,7 +450,7 @@
                                                         </select>
                                                     </td>
                                                     <td>
-                                                        <select disabled formControlName="payGroup" value={{payGroup}}
+                                                        <!-- <select disabled formControlName="payGroup" value={{payGroup}}
                                                             class="form-control"
                                                             style="width: 120px;height: 25px;font-size: 10px;">
                                                             <option>--Select--</option>
@@ -458,7 +458,10 @@
                                                                 [ngValue]="ts.code">
                                                                 {{ts.lookupValueDesc}}
                                                             </option>
-                                                        </select>
+                                                        </select> -->
+                                                        <input type="text" disabled class="form-control"
+                                                        formControlName="payGroup" value={{payGroup}}
+                                                        style="width: 120px;height: 25px;font-size: 10px;">
                                                     </td>
 
 

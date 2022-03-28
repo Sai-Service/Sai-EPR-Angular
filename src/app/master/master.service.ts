@@ -720,6 +720,10 @@ brokerListFn(): Observable<any> {
   return this.http.get(this.ServerUrl +`/Customer/ClassCode/BROKER`);
 }
 
+insTypeListFn(): Observable<any> {
+  return this.http.get(this.ServerUrl +`/cmnLookup/CmnType/insType`);
+}
+
 brokerListFnNew(classCodeType): Observable<any> {
   return this.http.get(this.ServerUrl +`/Customer/ClassCode/${classCodeType}`);
 }

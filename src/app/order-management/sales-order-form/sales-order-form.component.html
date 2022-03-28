@@ -604,6 +604,17 @@
                                 </option>
                             </select>
                             </td>
+                            <td style="width: 15%" class="LabelFontStyle">
+                                Insurance&nbsp;Type&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                <select formControlName="insType" id="insType" class="form-control" style="width: 170px;">
+                                <option>--Select--</option>
+                                <option *ngFor="let mm of insTypeList">
+                                    {{mm.code}}--{{mm.codeDesc}}
+                                </option>
+                            </select>
+                            </td>
                         </tr>
                         <tr>
 
@@ -727,6 +738,13 @@
                         value={{subDealerDesc}} class="form-control" style="width: 170px;">
                         <input hidden disabled type="text" formControlName="subDealerId" [(ngModel)]='subDealerId'
                         value={{subDealerId}} class="form-control" style="width: 170px;">
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        Insurance&nbsp;Type&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <input disabled type="text" formControlName="insType" [(ngModel)]='insType'
+                        value={{insType}} class="form-control" style="width: 170px;">
                     </td>
                         </tr>
                         <tr>
@@ -1034,8 +1052,8 @@
                                                 <select type="text" formControlName="tvBroker" id="tvBroker"
                                                 class="form-control" style="width: 120px;" >
                                                 <option>--Select--</option>
-                                                <option *ngFor="let sc of  truValueList" [value]="sc.cmnDesc">
-                                                    {{sc.cmnDesc}}
+                                                <option *ngFor="let sc of  truValueList" [value]="sc.custName">
+                                                    {{sc.custName}}
                                                 </option>
                                             </select>
                                             </td>
