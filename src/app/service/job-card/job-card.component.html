@@ -431,14 +431,24 @@
                                                                          
 
                                                                             <td></td>
-
+<!-- 
                                                                             <td>
                                                                                 <button data-toggle="modal"
                                                                                     class="btn btn-primary"
                                                                                     data-target="#exampleModalScrollable"
                                                                                     style="width: 140px">Additional
                                                                                     Details</button>
+                                                                            </td> -->
+
+                                                                            <td>
+                                                                                <button data-toggle="modal"
+                                                                                    class="btn btn-primary"
+                                                                                    data-target="#vehAddtionalDetails"
+                                                                                    style="width: 140px">Additional 
+                                                                                    Details</button>
                                                                             </td>
+
+
 
                                                                             <!-- <td style="width: 15%"
                                                                                 class="LabelFontStyle">&nbsp;</td>
@@ -1260,19 +1270,14 @@
                                                                                 style="width: 5rem;">Save</button></td>
                                                                     </ng-template>
                                                                     <ng-template #B2>
-                                                                        <div *ngIf="dispReadyInvoice; then UR1; else UR2"></div>
+                                                                        <div *ngIf="updateButton; then UR1; else UR2"></div>
                                                                         <ng-template #UR1>
-                                                                        <td> <button  type="button"
+                                                                        <td> <button   type="button"
                                                                                 class="btn btn-primary" style="width: 5rem;"
                                                                                 (click)="updateArInvoice()">Update</button></td>
                                                                               
                                                                         </ng-template>
-                                                                    <ng-template #UR2>
-                                                                            <td> <button disabled  type="button" style="width: 5rem;"
-                                                                                    class="btn btn-primary"
-                                                                                    (click)="updateArInvoice()">Update</button></td>
-                                                                                    
-                                                                    </ng-template>
+                                                                        <ng-template #UR2></ng-template>
 
 
                                                                     </ng-template>
@@ -2549,9 +2554,8 @@
                                                                     </option>
                                                                 </select>
                                                             </td>
-                                                            <td style="width: 15%" class="LabelFontStyle">Authorized&nbsp;By:&nbsp;</td>
 
-                                                           
+                                                            <td style="width: 15%" class="LabelFontStyle">Authorized&nbsp;By:&nbsp;</td>
                                                             <td>
                                                                 <select class="form-control" style="width: 12em;font-weight: bold;font-size: small;"
                                                                     formControlName="disAuthBy">
@@ -2757,7 +2761,7 @@
                             <!-- formControlName="divisionName" -->
 
                         </table>
-                        <table class="center">
+                        <!-- <table class="center">
                             <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog"
                                 aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
@@ -2773,121 +2777,74 @@
                                         </div>
                                         <div class="modal-body">
                                             <div class="grid_scroll1">
-                                                <table class="center" style="width: 100%;">
+                                                     <table>
+
+                                                        <tr>
+                                                            <input hidden formControlName="insurerCompId">
+                                                            <input hidden formControlName="insurerCompNo">
+                                                            <input hidden type="text" class="form-control"  formControlName="insurerSiteId">
+    
+                                                            <td  class="LabelFontStyle">Vehicle&nbsp;Insurance&nbsp;:</td>
+                                                            <td><input type="text" class="form-control" disabled  formControlName="insStatus"> </td>
+    
+                                                            <td  class="LabelFontStyle">Comp&nbsp;Name&nbsp;:</td>
+                                                            <td colspan="6" ><input disabled  type="text" class="form-control" formControlName="insurerCompName" style="width: 100%;">  </td>
+                                                           
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width: 15%" class="LabelFontStyle">Address:</td>
+                                                            <td colspan="8"> <input type="text" class="form-control" disabled  formControlName="insurerSite" style="width:100%"> </td>
+                                                            <td style="width: 15%" class="LabelFontStyle">Expiry&nbsp;Date:</td>
+                                                            <td> <input type="date" class="form-control" disabled  formControlName="insuDate"> </td>
+                                                     
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td  class="LabelFontStyle">OEM&nbsp;Warranty&nbsp;:</td>
+                                                            <td><input type="text" class="form-control" disabled  formControlName="oemWarrStatus"> </td>
+                                                            <td  class="LabelFontStyle">Expiry&nbsp;Date:</td>
+                                                            <td><input type="date" class="form-control" disabled formControlName="oemExpiryDate"> </td>
+                                                        </tr>
+                                                 
+
+                                                  
+
                                                     <tr>
-                                                        <td style="width: 15%" class="LabelFontStyle">
-                                                            Vehicle&nbsp;Insurance&nbsp;:</td>
-                                                        <td>
-                                                            <input type="text" class="form-control" disabled
-                                                                placeholder="" formControlName="insStatus">
-                                                        </td>
-                                                        <td>
-                                                            <input hidden type="text" class="form-control" disabled formControlName="insurerCompId">
-                                                                <input  type="text" class="form-control" disabled
-                                                                placeholder="Insurance Company name"
-                                                                formControlName="insurerCompName">
-                                                        </td>
-                                                        <input hidden formControlName="insurerCompNo">
-                                                        <td>
-                                                            <input hidden type="text" class="form-control" disabled
-                                                                placeholder="Site" formControlName="insurerSiteId">
-                                                                <input type="text" class="form-control" disabled
-                                                                placeholder="Site" formControlName="insurerSite">
-                                                        </td>
-                                                        <td>
-                                                            <input type="date" class="form-control" disabled
-                                                                placeholder="Expiry Date" formControlName="insuDate">
+                                                        <td style="width: 15%" class="LabelFontStyle"> Extended&nbsp;Warranty&nbsp;:</td>
+                                                        <td><input type="text" class="form-control" disabled  formControlName="ewStatus">  </td>
+                                                        <td> <input type="text" class="form-control" formControlName="ewStatus" disabled> </td>
+                                                        <td><input type="date" class="form-control" disabled  formControlName="ewStartDate"> </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td style="width: 15%" class="LabelFontStyle"> MCP &nbsp;&nbsp;:</td>
+                                                        <td><input type="text" class="form-control" disabled placeholder="">  </td>
+                                                        <td><input type="text" class="form-control" disabled placeholder="MCP Number"></td>
+                                                        <td><input type="date" class="form-control" disabled placeholder="Expiry Date"> </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 15%" class="LabelFontStyle">CNG &nbsp;&nbsp;:</td>
+                                                        <td><input type="text" class="form-control" disabled formControlName="cngCylinderNo"> </td>
+                                                        <td><input type="text" class="form-control" disabled  formControlName="cngKitNumber"> </td>
+                                                        <td> <input type="date" class="form-control" disabled  placeholder="Expiry Date">
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td style="width: 15%" class="LabelFontStyle">
-                                                            OEM&nbsp;Warranty&nbsp;:</td>
-                                                        <td>
-                                                            <input type="text" class="form-control" disabled
-                                                                placeholder="" formControlName="oemWarrStatus">
-                                                        </td>
-                                                        <td>
-                                                            <input type="date" class="form-control" disabled
-                                                                placeholder="Expiry Date"
-                                                                formControlName="oemExpiryDate">
-                                                        </td>
+                                                        <td style="width: 15%" class="LabelFontStyle">Govt&nbsp;Vehicle&nbsp;(Y/N)&nbsp;:</td>
+                                                        <td> <input type="text" class="form-control" disabled placeholder=""> </td>
+                                                        <td style="width: 15%" class="LabelFontStyle">  VIP&nbsp;:</td>
+                                                        <td><input type="text" class="form-control" disabled    placeholder=""> </td>   
                                                     </tr>
-                                                    <tr>
-                                                        <td style="width: 15%" class="LabelFontStyle">
-                                                            Extended&nbsp;Warranty&nbsp;:</td>
-                                                        <td>
-                                                            <input type="text" class="form-control" disabled
-                                                                placeholder="" formControlName="ewStatus">
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" class="form-control" disabled
-                                                                placeholder="EW Number">
-                                                        </td>
-                                                        <td>
-                                                            <input type="date" class="form-control" disabled
-                                                                placeholder="Expiry Date" formControlName="ewStartDate">
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="width: 15%" class="LabelFontStyle">
-                                                            MCP &nbsp;&nbsp;:</td>
-                                                        <td>
-                                                            <input type="text" class="form-control" disabled
-                                                                placeholder="">
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" class="form-control" disabled
-                                                                placeholder="MCP Number">
-                                                        </td>
-                                                        <td>
-                                                            <input type="date" class="form-control" disabled
-                                                                placeholder="Expiry Date">
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="width: 15%" class="LabelFontStyle">
-                                                            CNG &nbsp;&nbsp;:</td>
-                                                        <td>
-                                                            <input type="text" class="form-control" disabled
-                                                                placeholder="Cylinder No "
-                                                                formControlName="cngCylinderNo">
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" class="form-control" disabled
-                                                                placeholder="Kit No" formControlName="cngKitNumber">
-                                                        </td>
-                                                        <td>
-                                                            <input type="date" class="form-control" disabled
-                                                                placeholder="Expiry Date">
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="width: 15%" class="LabelFontStyle">
-                                                            Govt&nbsp;Vehicle&nbsp;(Y/N)&nbsp;:</td>
-                                                        <td>
-                                                            <input type="text" class="form-control" disabled
-                                                                placeholder="">
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="width: 15%" class="LabelFontStyle">
-                                                            VIP&nbsp;:</td>
-                                                        <td>
-                                                            <input type="text" class="form-control" disabled
-                                                                placeholder="">
-                                                        </td>
-                                                    </tr>
+                                                   
                                                 </table>
                                                 <div class="modal-footer">
-                                                    <!--  -->
-                                                    <table>
+                                                     <table>
                                                         <tr>
 
                                                             <td style="margin-right: 20%;"><button type="button"
                                                                     class="btn btn-primary" data-dismiss="modal"
                                                                     class="close">Ok</button></td>
-                                                            <!-- (click)="Submit()" -->
-                                                        </tr>
+                                                              </tr>
                                                     </table>
                                                 </div>
                                             </div>
@@ -2895,7 +2852,9 @@
                                     </div>
                                 </div>
                             </div>
-                        </table>
+                        </table> -->
+
+
                         <div *ngIf="displayModal; then thenBlockModal; else elseBlockModal">
                         </div>
                         <ng-template #thenBlockModal>
@@ -3402,5 +3361,115 @@
     </div>
 </div>
 </div>
+
+<!-- ----------------------------------------------------------- -->
+<div class="modal fade" id="vehAddtionalDetails" tabindex="-1" role="dialog" aria-labelledby="vehAddtionalDetailsLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="max-width: fit-content;">
+        <div class="modal-content">
+         <div class="modal-header">
+
+          <h6 class="modal-title" id="vehAddtionalDetailsLabel">Reg&nbsp;Number:&nbsp;{{this.regNo}}</h6>
+          
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+         </div>
+        
+         <div class="modal-body">
+            <table class="center" style="width: 100%;">
+                <tr>
+
+                    <fieldset class="RFS">
+                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">INSURANCE DETAILS</legend>
+                    <table class="center">
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">&nbsp;Status:&nbsp;</td>
+                        <td><input disabled    type="text"  formControlName="insStatus"  id="insStatus"  class="form-control" > </td>
+
+                        <td style="width: 15%" class="LabelFontStyle">&nbsp;Comp&nbsp;Name:&nbsp;</td>
+                        <td><input disabled  type="text"  formControlName="insurerCompName"  id="insurerCompName" class="form-control"  style="width: 300px;"> </td>
+                       
+                        <td style="width: 15%" class="LabelFontStyle">&nbsp;Expiry:&nbsp;</td>
+                        <td><input disabled    type="date"  formControlName="insuDate"  id="insuDate"  class="form-control" > </td>
+
+                    </tr>
+
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">&nbsp;Site&nbsp;:&nbsp;</td>
+                        <td colspan="5"> <input disabled  type="text"  formControlName="insurerSite"  id="insurerSite" [(ngModel)]="insurerSite" class="form-control" style="width: 100%;"> </td>
+                    </tr>
+   
+                    </table>
+                    </fieldset>
+
+                    <fieldset class="RFS">
+                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">WARRANTY DETAILS</legend>
+                    <table class="center">
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">OEM&nbsp;WR&nbsp;Status:&nbsp;</td>
+                        <td><input disabled    type="text"  formControlName="oemWarrStatus"  id="oemWarrStatus"  class="form-control" > </td>
+
+                        <td style="width: 15%" class="LabelFontStyle">&nbsp;OEM&nbsp;Expiry:&nbsp;</td>
+                        <td><input disabled  type="date"  formControlName="oemExpiryDate"  id="oemExpiryDate" class="form-control"> </td>
+                     
+                    </tr>
+
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">EW&nbsp;Status:&nbsp;</td>
+                        <td><input disabled    type="text"  formControlName="ewStatus"  id="ewStatus"  class="form-control" > </td>
+
+                        <td style="width: 15%" class="LabelFontStyle">&nbsp;EW&nbsp;Start&nbsp;Date:&nbsp;</td>
+                        <td><input disabled  type="date"  formControlName="ewStartDate"  id="ewStartDate" class="form-control"> </td>
+                
+                        <td style="width: 15%" class="LabelFontStyle">&nbsp;EW&nbsp;Expiry:&nbsp;</td>
+                        <td><input disabled  type="date"  formControlName="ewEndDate"  id="ewEndDate" class="form-control"> </td>
+                    </tr>
+
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">CNG&nbsp;Kit&nbsp;No:&nbsp;</td>
+                        <td><input disabled    type="text"  formControlName="cngKitNumber"  id="cngKitNumber"  class="form-control" > </td>
+
+                        <td style="width: 15%" class="LabelFontStyle">&nbsp;CNG&nbsp;Cylinder&nbsp;No:&nbsp;</td>
+                        <td><input disabled  type="text"  formControlName="cngCylinderNo"  id="cngCylinderNo" class="form-control"> </td>
+                
+                        <td style="width: 15%" class="LabelFontStyle">&nbsp;CNG&nbsp;Expiry:&nbsp;</td>
+                        <!-- <td><input disabled  type="date"  formControlName="cngEndDate"  id="cngEndDate" class="form-control"> </td> -->
+                    </tr>
+
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">MCP&nbsp;Status&nbsp;:&nbsp;</td>
+                        <!-- <td><input disabled    type="text"  formControlName="cngKitNumber"  id="cngKitNumber"  class="form-control" > </td> -->
+
+                        <td style="width: 15%" class="LabelFontStyle">&nbsp;MCP&nbsp;Start&nbsp;Date:&nbsp;</td>
+                        <!-- <td><input disabled  type="text"  formControlName="cngCylinderNo"  id="cngCylinderNo" class="form-control"> </td> -->
+                
+                        <td style="width: 15%" class="LabelFontStyle">&nbsp;MCP&nbsp;Expiry:&nbsp;</td>
+                        <!-- <td><input disabled  type="date"  formControlName="cngEndDate"  id="cngEndDate" class="form-control"> </td> -->
+                    </tr>
+
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">Govt&nbsp;Vehicle&nbsp;:&nbsp;</td>
+                        <!-- <td><input disabled    type="text"  formControlName="cngKitNumber"  id="cngKitNumber"  class="form-control" > </td> -->
+
+                        <td style="width: 15%" class="LabelFontStyle">&nbsp;VIP&nbsp;:&nbsp;</td>
+                        <!-- <td><input disabled  type="text"  formControlName="cngCylinderNo"  id="cngCylinderNo" class="form-control"> </td> -->
+                
+                     </tr>
+
+                    </table>
+                    </fieldset>
+
+                    <div class="modal-footer">
+                       <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+                    </div>
+
+
+                </tr>
+            </table>
+         </div>
+        </div>
+    </div>
+   </div>
+
 </form>
 

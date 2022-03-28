@@ -980,7 +980,8 @@ export class PaymentArComponent implements OnInit {
           // this.locId=Number(this.locationId);
           //  alert("this.status  "+this.status);
 
-         
+          this.bounceReasonCode=data.obj.oePayList[0].bounceReasonCode;
+          this.chqBounceCharge=data.obj.oePayList[0].chqBounceCharge;
           this.chqBncTrxNo=data.obj.oePayList[0].chqBncTrxNo;
           this.totAppliedtAmount = data.obj.oePayList[0].totAppliedtAmount.toFixed(2);
           this.totUnAppliedtAmount = data.obj.oePayList[0].totUnAppliedtAmount.toFixed(2);
@@ -2226,7 +2227,7 @@ export class PaymentArComponent implements OnInit {
 
     this.CheckCancelValidation();
     if (this.cancelValidation) {
-      alert("Data Validation Sucessfull....\nCancelling Receipt.")
+      // alert("Data Validation Sucessfull....\nCancelling Receipt.")
       this.enableCancelButton = false;
 
       // const formValue: IPaymentRcptAr =this.transeData(this.paymentArForm.value);
@@ -2234,7 +2235,7 @@ export class PaymentArComponent implements OnInit {
       // debugger;
       this.service.ReverseArReceiptSubmit(formValue).subscribe((res: any) => {
         if (res.code === 200) {
-          alert('RECORD UPDATED SUCCESSFUILY');
+          alert('Receipt Reversal done Successfully');
           this.paymentArForm.disable()
           // this.paymentArForm.get('receiptNumber').disable();
 
@@ -2244,7 +2245,9 @@ export class PaymentArComponent implements OnInit {
           // window.location.reload();
         } else {
           if (res.code === 400) {
-            alert('ERROR OCCOURED IN PROCEESS');
+            // alert('ERROR OCCOURED IN PROCEESS');
+            alert(res.message + "\n" +res.obj);
+            this.enableCancelButton = true;
             // this.paymentArForm.reset();
           }
         }
@@ -2629,6 +2632,8 @@ export class PaymentArComponent implements OnInit {
         this.viewAccountingArRcpt=null;
         this.viewAccountingLines=null;
         this.showViewActLine=false;
+        this.runningTotalCr=null;
+        this.runningTotalDr=null;
 
       this.service.viewAccountingArReceipt(receiptNo).subscribe((res: any) => {
       if (res.code === 200) {

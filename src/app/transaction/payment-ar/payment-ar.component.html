@@ -608,8 +608,7 @@
                                     (ngModelChange)='onBounceRsnSelected($event)' class="form-control" style="width: 300px;" >
                                         <option disabled>--Select--</option>
                                         <option *ngFor="let sc of  ChqBounceReasonList" [value]="sc.code">
-                                           <!-- {{sc.code}}- -->
-                                           {{sc.codedesc}}
+                                           {{sc.code}}-{{sc.codedesc}}
                                         </option>
                                     </select>
                                 </td>
@@ -618,7 +617,7 @@
                                 <td><input  style="text-align: right;" type="number" formControlName="chqBounceCharge"  id="chqBounceCharge" [(ngModel)] ="chqBounceCharge" class="form-control"></td>
                               
                                 <td style="width: 15%" class="LabelFontStyle">&nbsp;Bounce&nbsp;Inv&nbsp;No:&nbsp;</td>
-                                <td><input  style="text-align: right;" type="number" formControlName="chqBncTrxNo"  id="chqBncTrxNo" [(ngModel)] ="chqBncTrxNo" class="form-control"></td>
+                                <td><input  disabled style="text-align: left;" type="number" formControlName="chqBncTrxNo"  id="chqBncTrxNo" [(ngModel)] ="chqBncTrxNo" class="form-control"></td>
                               
                               
                                 <input hidden  style="text-transform:uppercase;width: 300px;"  type="text"  formControlName="reversalComment"  id="reversalComment"  [(ngModel)]="reversalComment" class="form-control" >
@@ -801,7 +800,8 @@
                             <div class="modal-dialog modal-lg" role="document">
                                 <div class="modal-content">
                                  <div class="modal-header">
-                                  <h5 class="modal-title" id="exampleModal2Label">AR&nbsp;Receipt&nbsp;Application&nbsp;-&nbsp;Receipt&nbsp;No:&nbsp;{{this.receiptNumber}}&nbsp;BillToSite:&nbsp;{{this.billToSiteId}} </h5>
+                                  <h5 class="modal-title" id="exampleModal2Label">AR&nbsp;Receipt&nbsp;Application&nbsp;-&nbsp;Receipt&nbsp;No:&nbsp;{{this.receiptNumber}} </h5>
+                                  <!-- &nbsp;BillToSite:&nbsp;{{this.billToSiteId}} -->
                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                   </button>
