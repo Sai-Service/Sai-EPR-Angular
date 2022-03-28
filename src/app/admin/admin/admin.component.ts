@@ -89,6 +89,7 @@ export class AdminComponent implements OnInit {
   isVisible35:boolean=true;
   isVisible36:boolean=true;
   isVisible37:boolean=true;
+ isVisibleAccessories:boolean=true;
   isVisibleAccountsRepor:boolean=true;
   public show: boolean = false;
   isShown: boolean = false;
@@ -269,6 +270,7 @@ export class AdminComponent implements OnInit {
       this.isVisible36=true;
       this.isVisible37=true;
       this.isVisibleAccountsRepor=false;
+      this.isVisibleAccessories=false;
     }
     if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId'))===2 && sessionStorage.getItem('deptName')==='Service'){
       this.isVisible11=false;
@@ -297,6 +299,7 @@ export class AdminComponent implements OnInit {
       this.isVisible35=true;
       this.isVisible36=false;
       this.isVisibleAccountsRepor=false;
+      this.isVisibleAccessories=false;
     }
 
 
@@ -328,6 +331,7 @@ export class AdminComponent implements OnInit {
       this.isVisible35=false;
       this.isVisible36=false;
       this.isVisibleAccountsRepor=false;
+      this.isVisibleAccessories=true;
     }
 
     if (Number(sessionStorage.getItem('divisionId')) === 2 && sessionStorage.getItem('deptName')==='Spares' && Number(sessionStorage.getItem('roleId'))===4){
@@ -358,6 +362,7 @@ export class AdminComponent implements OnInit {
       this.isVisible35=false;
       this.isVisible36=false;
       this.isVisibleAccountsRepor=false;
+      this.isVisibleAccessories=false;
     }
 
     if (Number(sessionStorage.getItem('divisionId')) === 2 && sessionStorage.getItem('deptName')==='Accessories' && Number(sessionStorage.getItem('roleId'))===4){
@@ -388,9 +393,44 @@ export class AdminComponent implements OnInit {
       this.isVisible35=false;
       this.isVisible36=false;
       this.isVisibleAccountsRepor=false;
+      this.isVisibleAccessories=true;
+    }
+
+
+
+    if (Number(sessionStorage.getItem('divisionId')) === 2 && sessionStorage.getItem('deptName')==='Accessories' && Number(sessionStorage.getItem('roleId'))===1){
+      // alert('roleId  1' + this.isVisible20)
+      this.isVisible11=true;
+      this.isVisible12=false;
+      this.isVisible37=true;
+      this.isVisible13=false;
+      this.isVisible14=true;
+      this.isVisible15=true;
+      this.isVisible16=true;
+      this.isVisible17=true;
+      this.isVisible18=true;
+      this.isVisible19=true;
+      this.isVisible20=true;
+      this.isVisible21=false;
+      this.isVisible22=false;
+      this.isVisible23=false;
+      this.isVisible24=true;
+      this.isVisible25=true;
+      this.isVisible26=true;
+      this.isVisible27=true;
+      this.isVisible28=true;
+      this.isVisible29=true;
+      this.isVisible30=true;
+      this.isVisible31=true;
+      this.isVisible32=false;
+      this.isVisible35=false;
+      this.isVisible36=false;
+      this.isVisibleAccountsRepor=false;
+      this.isVisibleAccessories=true;
     }
     if (Number(sessionStorage.getItem('deptId'))===4){
       this.isVisibleAccountsRepor=true;
+      // this.isVisibleAccessories=true;
     }
 
     if (
