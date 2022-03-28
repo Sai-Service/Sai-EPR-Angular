@@ -2534,7 +2534,7 @@ export class SalesOrderFormComponent implements OnInit {
 
 
   onOptionsSelectedBrokerType(event:any){
-    alert(event.target.value);
+    // alert(event.target.value);
   var  brokerType=event.target.value;
     this.service.brokerListFnNew(brokerType)
       .subscribe(
