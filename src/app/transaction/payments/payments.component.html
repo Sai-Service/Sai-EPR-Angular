@@ -75,7 +75,7 @@
                             <th scope="col">Supplier Number</th>
                             <th scope="col">Supplier Site</th>
                             <th scope="col">Supplier Address</th>
-                            <th scope="col">Country</th>
+                            <!-- <th scope="col">Country</th> -->
                             <th scope="col">Payment Date</th>
                             <th scope="col">Payment Method</th>
                             <th scope="col">Payment Amount</th>
@@ -86,7 +86,7 @@
                             <!-- <th scope="col">Document Number</th> -->
                             <th scope="col">Payment Address</th>
                             <th scope="col">Document Category</th>
-                            <th scope="col">Voucher Number</th>
+                            <th scope="col">Cheque Number</th>
                             <th scope="col">Status</th>
                             <th scope="col">Payment Narration</th>
                         </tr>
@@ -98,7 +98,7 @@
                                 <tr>
                                     <td>
                                         <button type="button" class="btn btn-primary" data-toggle="modal"
-                                            data-target="#myModal" (click)="paymentInvoiceFind(suppNo,ouId)"
+                                            data-target="#myModal" (click)="paymentInvoiceFind(suppNo,ouId,i)"
                                             id="btnSelect">Select</button>
                                     </td>
                                     <td>
@@ -106,7 +106,7 @@
                                             <tr>
                                                 <td>
                                                     <input class="form-control" disabled formControlName="docNo"
-                                                        style="width: 60px;height: 25px;font-size: 10px;">
+                                                        style="width: 100px;height: 25px;font-size: 10px;">
                                                 </td>
                                                 <td>
                                                     <button type="button" class="btn btn-primary"
@@ -126,7 +126,7 @@
                                         </ng-template>
                                         <ng-template #elsetype>
                                             <select formControlName="paymentTypeFlag" id="paymentTypeFlag"
-                                                class="form-control" style="width: 120px;height: 25px;font-size: 10px;">
+                                                class="form-control" style="width: 60px;height: 25px;font-size: 10px;">
                                                 <option>--Select--</option>
                                                 <option value="Quick">Quick</option>
                                                 <option value="Manual">Manual</option>
@@ -137,7 +137,7 @@
                                     <td>
                                         <input type="text" disabled class="form-control"
                                             formControlName="invTypeLookupCode" value={{invTypeLookupCode}}
-                                            style="width: 100px;height: 25px;font-size: 10px;">
+                                            style="width: 80px;height: 25px;font-size: 10px;">
                                     </td>
                                     <td>
                                         <div *ngIf="displayouId; then thenouId; else elseouId"></div>
@@ -194,7 +194,7 @@
                                                 data-live-search="true" (change)='onSiteSelected($event)'
                                                 class="form-control" style="width: 70px;height: 25px;font-size: 10px;">
                                                 <option>--Select--</option>
-                                                <option *ngFor="let sc of  suppIdList" [ngValue]="sc.suppSiteId">
+                                                <option *ngFor="let sc of  suppIdList" [value]="sc.suppSiteId">
                                                     {{sc.siteName}}
                                                 </option>
                                             </select>
@@ -220,10 +220,10 @@
                                             </select>
                                         </ng-template>
                                     </td>
-                                    <td>
+                                    <!-- <td>
                                         <input type="text" disabled class="form-control" formControlName="country"
                                             value={{country}} style="width: 100px;height: 25px;font-size: 10px;">
-                                    </td>
+                                    </td> -->
 
                                     <td>
                                         <input disabled formControlName="payDate" value={{payDate}} class="form-control"
@@ -242,13 +242,16 @@
                                         <!-- [ngValue]="paymentDoc.lookupValueId" -->
                                     </td>
                                     <td>
-                                        <input type="number" class="form-control" formControlName="PayAmount"
+                                        <input type="number" class="form-control" formControlName="payAmount"
                                             style="width: 100px;height: 25px;font-size: 10px;">
                                     </td>
                                     <td>
                                         <input disabled class="form-control" formControlName="currency"
                                             value={{currency}} style="width: 60px;height: 25px;font-size: 10px;">
                                     </td>
+                                    <div *ngIf="displayDetail; then thenDetail; else elseDetail"></div>
+                                    <!-- [(ngModel)]="paymentTypeFlag" -->
+                                    <ng-template #thenDetail>
                                     <td>
                                         <!-- (ngModelChange)='onOptionsSelected($event)'  [ngModel]="bankAccountNo"  -->
                                         <!-- <input type="text" class="form-control" formControlName="bankAccountNum" value={{bankAccountNum}}  style="width: 100px;height: 25px;font-size: 10px;">   -->
@@ -286,10 +289,24 @@
                                         </select>
                                         <!-- <input class="form-control" formControlName="paymentDocName" value={{paymentDocName}} style="width: 60px;height: 25px;font-size: 10px;"> -->
                                     </td>
-                                    <!-- <td>
-                        <input  class="form-control" disabled formControlName="docNo" style="width: 60px;height: 25px;font-size: 10px;">
-                    </td> -->
-                                    <td>
+                                    </ng-template>
+                                    <ng-template #elseDetail>
+                                        <td>
+                                            <input formControlName="bankAccountNo" id="bankAccountNo" class="form-control"
+                                                style="width: 140px;height: 25px;font-size: 10px;">
+                                        </td>
+                                        <td>
+                                            <!-- [ngModel]="docCategoryCode"  -->
+                                            <input formControlName="docCategoryCode" id="docCategoryCode"
+                                                class="form-control"
+                                                style="width: 140px;height: 25px;font-size: 10px;">
+                                       </td>
+                                        <td>
+                                            <input formControlName="paymentDocName" id="paymentDocName"
+                                                class="form-control" style="width: 140px;height: 25px;font-size: 10px;">
+                                                   </td>
+                                        </ng-template>
+                               <td>
                                         <input class="form-control" formControlName="payAddress"
                                             style="width: 200px;height: 25px;font-size: 10px;">
                                     </td>
@@ -302,13 +319,13 @@
                                             style="width: 60px;height: 25px;font-size: 10px;">
                                     </td>
                                     <td>
-                                        <div *ngIf="displaystatus; then thenstatus; else elsestatus"></div>
-                                        <ng-template #thenstatus>
+                                        <!-- <div *ngIf="displaystatus; then thenstatus; else elsestatus"></div>
+                                        <ng-template #thenstatus> -->
                                             <input type="text" class="form-control" formControlName="statusLookupCode"
-                                                value={{statusLookupCode}}
+                                                value={{statusLookupCode}} id="statusLookupCode" 
                                                 style="width: 100px;height: 25px;font-size: 10px;">
-                                        </ng-template>
-                                        <ng-template #elsestatus>
+                                        <!-- </ng-template> -->
+                                        <!-- <ng-template #elsestatus>
                                             <select formControlName="statusLookupCode" id="statusLookupCode"
                                                 class="form-control" style="width: 120px;height: 25px;font-size: 10px;">
                                                 <option>--Select--</option>
@@ -317,12 +334,12 @@
                                                     {{paymentDoc.lookupValue}}
                                                 </option>
                                             </select>
-                                            <!-- <select formControlName="statusLookupCode"  id="statusLookupCode" class="form-control" style="width: 120px;height: 25px;font-size: 10px;">
-                                <option>--Select--</option>
+                                             <select formControlName="statusLookupCode"  id="statusLookupCode" class="form-control" style="width: 120px;height: 25px;font-size: 10px;"> -->
+                                <!-- <option>--Select--</option>
                                 <option value="Negotiable">Negotiable</option>
                                 <option value="Reconciled">Reconciled</option>
                             </select> -->
-                                        </ng-template>
+                                        <!-- </ng-template>  -->
                                     </td>
                                     <td>
                                         <input class="form-control" formControlName="paymentNarration"
@@ -530,15 +547,15 @@
             <table class="center">
                 <tr>
                     <td>
-                        <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
+                        <button type="button" (click)="close()" class="btn btn-primary">Close</button>
                     </td>
                     <td>
-                        <button type="submit" class="btn btn-primary" id="register" (click)="refresh()">
+                        <button type="button" class="btn btn-primary" id="register" (click)="refresh()"> 
                             Clear
                         </button>
                     </td>
                     <td>
-                        <button type="submit" class="btn btn-primary" id="register" (click)="cancelPayment()">
+                        <button type="button" class="btn btn-primary" id="register" (click)="cancelPayment()">
                             Cancel
                         </button>
                     </td>

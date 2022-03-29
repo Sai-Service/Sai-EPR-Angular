@@ -1483,7 +1483,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
             }
           }
         });
-
+        var locid=sessionStorage.getItem('locId');
     this.service.exicutiveNameByCustName(custAccountNo, sessionStorage.getItem('locId'))
       .subscribe(
         data => {
@@ -1493,6 +1493,13 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
             this.CounterSaleOrderBookingForm.patchValue({ salesRepId: data.obj.emplId });
             this.CounterSaleOrderBookingForm.patchValue({ salesRepName: salesExicustive })
           }
+          else if  (data.code=== 400){
+            this.CounterSaleOrderBookingForm.patchValue({ salesRepId: Number(sessionStorage.getItem('emplId')) });
+             this.CounterSaleOrderBookingForm.patchValue({ salesRepName: (sessionStorage.getItem('ticketNo'))}); 
+             if (sessionStorage.getItem('locId') === '2102' || sessionStorage.getItem('locId') === '2103'){
+              alert('Please Map Executive Name with customer master.!');
+             }
+            }
         })
   }
 
@@ -2757,11 +2764,9 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     if (itemid != null || itemid != undefined) {
       this.deleteReserveLinewise(OrderLineIndex, itemid1, uuidref);
       this.itemMap3.delete(itemid);
-
     }
     var formVal = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     var formArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
-
     var basicAmt = 0;
     var taxAmt1 = 0;
     var totAmt = 0;

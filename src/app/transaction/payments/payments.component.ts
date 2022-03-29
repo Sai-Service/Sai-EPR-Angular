@@ -37,6 +37,7 @@ interface Ipayment {
   searchByToDate: Date;
   searchByFrmDate: Date;
   searchBySuppName: string;
+  
 }
 
 
@@ -123,6 +124,7 @@ export class PaymentsComponent implements OnInit {
   // payStatus:string;
   displaysiteName = false;
   displayname = false;
+  displayDetail=true;
   payAddress:string;
 
   private sub: any;
@@ -195,7 +197,7 @@ jeSource: [],
       invTypeLookupCode: [],
       suppSiteId: [],
       siteName: [],
-      PayAmount: [],
+      payAmount: [],
       docNo: [],
       payAddress: [],
       // docCategory:[],
@@ -289,8 +291,8 @@ jeSource: [],
               this.payHeaderLineDtlArray().push(payLnGrp);
               var arrcontrol = this.payHeaderLineDtlArray() as FormArray;
               arrcontrol.controls[x].patchValue(this.lstsearchpayminvNew[x]);
-              arrcontrol.controls[x].patchValue({ paymentTypeFlag: 'Quick' });
-              arrcontrol.controls[x].patchValue({ PayAmount: this.lstsearchpayminvNew[x].invoiceAmt });
+              arrcontrol.controls[x].patchValue({ paymentTypeFlag: 'Quick',statusLookupCode:'NEGOTIABLE' });
+              arrcontrol.controls[x].patchValue({ payAmount: this.lstsearchpayminvNew[x].invoiceAmt });
               arrcontrol.controls[x].patchValue({ supplierSiteId: this.lstsearchpayminvNew[x].suppSiteId });
             }
           }
@@ -332,16 +334,17 @@ jeSource: [],
 
   paymentFind(suppNo: number) {
     // alert('--paymentFind---')
+    // alert('paymentFind-----')
     this.payHeaderLineDtlArray().clear();
     this.displaytype = true;
     this.displaysuppNo = true;
     this.displayouId = true;
     this.displaysiteAddress = true;
     this.displaystatus = true; 
-    //  this.transactionService.getsearchByPayment(suppNo).subscribe((res: any) => {
-
     this.transactionService.getsearchByInvDtls(suppNo, sessionStorage.getItem('ouId')).subscribe((res: any) => {
       this.lstsearchpayminv = res.obj;
+      this.displayDetail=false;
+      this.displaystatus=true;
       console.log(res.obj);
       this.lstsearchpayminv.forEach(f => {
         var payLnGrp: FormGroup = this.payHeaderLineDtl();
@@ -380,7 +383,9 @@ jeSource: [],
 
   }
 
-  paymentInvoiceFind(suppNo: number, ouId: number) {
+  selectPayment:number=0;
+  paymentInvoiceFind(suppNo: number, ouId: number,index) {
+    this.selectPayment=index;
     //  alert('--paymentInvoiceFind---')
     //  var arr=this.paymentForm.get('obj1').value;
     //  console.log(arr);
@@ -388,12 +393,21 @@ jeSource: [],
     //  alert(docNo1)
     // console.log(docNo1);
     // if(docNo1===''){
-    var suppNo1 = this.paymentForm.get('obj1').value;
+     var suppNo1 = this.paymentForm.get('obj1').value;
     this.payInvoiceLineDtlArray().clear();
-    if(suppNo1[0].invTypeLookupCode==='Prepayment' &&suppNo1[0].docNo===null)
-{}
+    if(suppNo1[index].invTypeLookupCode==='Prepayment' &&suppNo1[index].docNo===null)
+{
+  var payLnGrp: FormGroup = this.payInvoiceLineDtl();
+  this.payInvoiceLineDtlArray().push(payLnGrp);
+  alert(this.lstsearchpayminvNew[index].invoiceId+'--'+this.lstsearchpayminvNew[index].invoiceAmt)
+  // this.paymentForm.patchValue({'invoiceId':this.lstsearchpayminvNew[0].invoiceId,'invoiceAmt':this.lstsearchpayminvNew[0].invoiceAmt});
+  var dataobj1 = this.paymentForm.get('obj') as FormArray;
+  dataobj1.controls[index].patchValue({'invoiceNum': this.lstsearchpayminvNew[index].invoiceNum,
+                                          'invoiceAmt':this.lstsearchpayminvNew[index].invoiceAmt,
+                                          'invoiceId':this.lstsearchpayminvNew[index].invoiceId   });
+}
 else{
-    this.transactionService.getsearchByInvDtls(suppNo1[0].suppNo, this.ouId).subscribe((res: any) => {
+    this.transactionService.getsearchByInvDtls(suppNo1[index].suppNo, this.ouId).subscribe((res: any) => {
       this.lstinvoiceDetls = res.obj;
       var sum = 0;
       for (let i = 0; i < this.lstinvoiceDetls.length; i++) {
@@ -498,6 +512,7 @@ else{
     // alert(name);
     let selectedValue = this.supplierCodeList.find(v => v.name == name);
     var dataobj1 = this.paymentForm.get('obj1') as FormArray;
+    alert(selectedValue.suppNo)
     dataobj1.controls[0].patchValue(
       {
         suppNo: selectedValue.suppNo,
@@ -529,30 +544,31 @@ else{
         data => {
           this.supplierCodeList1 = data;
           console.log(this.supplierCodeList1);
-          this.suppNo = name;
+          // this.suppNo = name; 25-Mar-2022
           console.log(this.supplierCodeList1);
 
         }
       );
-    let selectedValue = this.supplierCodeList.find(v => v.suppNo == name);
-    this.suppId = selectedValue.suppId;
-    this.service.suppIdList1(selectedValue.suppId, this.ouId)
-      .subscribe(
-        data => {
+    // let selectedValue = this.supplierCodeList.find(v => v.suppNo == name);
+    // this.suppId = selectedValue.suppId;
+    // this.service.suppIdList1(selectedValue.suppId, this.ouId)
+    //   .subscribe(
+    //     data => {
 
-          this.suppIdList1 = data;
-          if (this.suppIdList1.length == 0) {
-            alert('Supplier site not attached to supplier');
-          } else {
-            console.log(this.suppIdList1);
-          }
-        }
-      );
+    //       this.suppIdList1 = data;
+    //       if (this.suppIdList1.length == 0) {
+    //         alert('Supplier site not attached to supplier');
+    //       } else {
+    //         console.log(this.suppIdList1);
+    //       }
+    //     }
+    //   );
   }
 
-  onSiteSelected(siteId: any) {
-    // alert(siteId);
-    var siteId = siteId.target.value;
+  onSiteSelected(event: any) {
+    alert(event);
+    var siteId = event.target.value;
+    alert(siteId);
     this.service.siteIdList(siteId)
       .subscribe(
         data => {
@@ -584,7 +600,7 @@ else{
        }
      }
      const totlPayHeaderControls=this.paymentForm.get('obj1').value;
-        // if(this.appAmt>totlPayHeaderControls[0].PayAmount || this.appAmt<totlPayHeaderControls[0].PayAmount)
+        // if(this.appAmt>totlPayHeaderControls[0].payAmount || this.appAmt<totlPayHeaderControls[0].payAmount)
         // {
         //   alert('in If');
         //   (document.getElementById('btnSave') as HTMLInputElement).disabled = true;
@@ -601,7 +617,7 @@ else{
 paymentSave(){
   var applAmt=this.paymentForm.get('appAmt').value;
   var arrcon=this.paymentForm.get('obj1').value;
-  var invTyp=arrcon[0].invTypeLookupCode;
+  var invTyp=arrcon[this.selectPayment].invTypeLookupCode;
   var patch=this.paymentForm.get('obj1') as FormArray;
    this.totAmt=0;
   const totlCalControls=this.paymentForm.get('obj').value;
@@ -609,15 +625,17 @@ paymentSave(){
     this.totAmt=this.totAmt+totlCalControls[k].totAmt;
   }
   const formValue: Ipayment = this.paymentForm.value;
-  console.log(formValue.suppId);
-  var jsonData=this.paymentForm.value.obj1[0];
+  console.log(this.paymentForm.value.obj1[this.selectPayment].statusLookupCode);
+  var jsonData=this.paymentForm.value.obj1[this.selectPayment];
+console.log(jsonData);
   if(jsonData.bankAccountNo != undefined){
   var value=jsonData.bankAccountNo.split('/');
-  jsonData.bankAccountNo= value[0];
+  jsonData.bankAccountNo= value[this.selectPayment];
   }
   jsonData.country ='India';
   jsonData.currency='INR';
   jsonData.ouId= this.ouId ;
+  // jsonData.statusLookupCode=totlCalControls[0].statusLookupCode;
   // jsonData.bankAccountNum.delete;
   // jsonData.bankAccountId.delete;
   var invPayment:any=[];
@@ -634,20 +652,24 @@ paymentSave(){
     var id = {"invoiceId": arrayControle[i].invoiceId}
     var id2 = {"amount": arrayControle[i].invoiceAmt}
     // invPayment.push(id)
-    //
+    // 
     invPayment.push({
       invoiceId:arrayControle[i].invoiceId,
       amount:arrayControle[i].invoiceAmt,
     })
   }
   }
-  if(arrcon[0].invTypeLookupCode==='Prepayment' &&arrcon[0].docNo===null)
+  if(arrcon[this.selectPayment].invTypeLookupCode==='Prepayment' &&arrcon[this.selectPayment].docNo===null)
   {
-    this.paymentForm.patchValue({appAmt:arrcon[0].PayAmount})
-    this.totAmount=arrcon[0].PayAmount
+    this.paymentForm.patchValue({appAmt:arrcon[this.selectPayment].payAmount})
+    this.totAmount=arrcon[this.selectPayment].payAmount
   }
   else{
-  patch.controls[0].patchValue({PayAmount:applAmt});
+    if(arrcon[this.selectPayment].invTypeLookupCode==='Prepayment' &&arrcon[this.selectPayment].docNo!=null){
+
+    }
+else{
+  patch.controls[this.selectPayment].patchValue({payAmount:applAmt});}
   }
 
   jsonData.totAmount = this.totAmount;
@@ -676,7 +698,7 @@ console.log(jsonData);
       }
     }
     const totlPayHeaderControls = this.paymentForm.get('obj1').value;
-    // if(this.appAmt>totlPayHeaderControls[0].PayAmount || this.appAmt<totlPayHeaderControls[0].PayAmount)
+    // if(this.appAmt>totlPayHeaderControls[0].payAmount || this.appAmt<totlPayHeaderControls[0].payAmount)
     // {
     //   alert('in If');
     //   (document.getElementById('btnSave') as HTMLInputElement).disabled = true;
@@ -691,72 +713,7 @@ console.log(jsonData);
   });
 }
 
-  // paymentSave() {
-  //   this.totAmt = 0;
-  //   const totlCalControls = this.paymentForm.get('obj').value;
-  //   for (var k = 0; k < this.payInvoiceLineDtlArray.length; k++) {
-  //     this.totAmt = this.totAmt + totlCalControls[k].totAmt;
-  //   }
-  //   const formValue: Ipayment = this.paymentForm.value;
-  //   console.log(formValue.suppId);
-  //   var jsonData = this.paymentForm.value.obj1[0];
-  //   if (jsonData.bankAccountNo != undefined) {
-  //     var value = jsonData.bankAccountNo.split('/');
-  //     jsonData.bankAccountNo = value[0];
-  //   }
-  //   jsonData.country = 'India';
-  //   jsonData.currency = 'INR';
-  //   jsonData.ouId = this.ouId;
-  //   // jsonData.bankAccountNum.delete;
-  //   // jsonData.bankAccountId.delete;
-  //   var invPayment: any = [];
-  //   this.totAmount = 0;
-  //   var arrayControle = this.paymentForm.get('obj').value;
-  //   var patch = this.paymentForm.get('obj1') as FormArray;
-  //   for (let i = 0; i < this.payInvoiceLineDtlArray().length; i++) {
-  //     // alert(arrayControle[i].selectFlag);
-  //     if (arrayControle[i].selectFlag == true) {
-  //       //  alert('yyyy '+arrayControle[i].invoiceAmt)
-  //       this.totAmount = this.totAmount + Number(arrayControle[i].invoiceAmt);
-  //       // alert(this.totAmount);
-  //       var id = { "invoiceId": arrayControle[i].invoiceId }
-  //       var id2 = { "amount": arrayControle[i].invoiceAmt }
-  //       // invPayment.push(id)
-  //       //
-  //       invPayment.push({
-  //         invoiceId: arrayControle[i].invoiceId,
-  //         amount: arrayControle[i].invoiceAmt,
-  //       })
-  //     }
-  //   }
-
-  //   jsonData.totAmount = this.totAmount;
-  //   jsonData.appAmt = this.appAmt;
-  //   // alert(this.totAmount);
-  //   jsonData.invPayment = invPayment;
-  //   // let paymentObject=Object.assign(new PaymentObj(),jsonData);
-  //   // paymentObject.setInvPayment(this.paymentForm.value.)
-  //   console.log(jsonData);
-
-  //   this.transactionService.paymentSaveSubmit(JSON.stringify(jsonData)).subscribe((res: any) => {
-  //     if (res.code === 200) {
-  //       // alert(res.message);
-  //       // alert(res.obj);
-  //       console.log(res.obj);
-
-  //       this.PaymentReturnArr = res.obj;
-  //       console.log(this.PaymentReturnArr);
-  //       patch.controls[0].patchValue({ docNo: this.PaymentReturnArr.docSeqValue })
-  //       this.paymentForm.get('obj1').disable();
-  //       (document.getElementById('btnSelect') as HTMLInputElement).disabled = true;
-  //     } else {
-  //       if (res.code === 400) {
-  //         alert(res.msg);
-  //         // this.poReceiptForm.reset();
-  //       }
-  //     }
-  //   });
-  // }
+ 
   closeRefresh() {
     this.paymentForm.get('appAmt').reset();
   }
@@ -773,6 +730,7 @@ console.log(jsonData);
 
   refresh() {
     window.location.reload();
+    
   }
   cancelPayment() {
     var arr = this.paymentForm.get('obj1').value;
@@ -797,7 +755,7 @@ console.log(jsonData);
 
 
   searchPayment(searchBySuppName, searchByFrmDate, searchByToDate) {
-    // alert(searchBySuppName);
+    alert('searchPayment----');
     console.log(this.supplierCodeList)
     // frmDate = this.pipe.transform(searchByFrmDate, 'dd-MMM-yyyy');
     // toDate = this.pipe.transform(searchByToDate, 'dd-MMM-yyyy');
@@ -815,18 +773,20 @@ console.log(jsonData);
         if (res.code === 200) {
           alert(res.message);
           this.paymentData = res.obj;
+          this.displayDetail=false;
+          this.displaystatus=true;
           // alert(this.paymentData.length+'----this.paymentData.length')
           for (let i = 0; i < this.paymentData.length; i++) {
             var payLnGrp: FormGroup = this.payHeaderLineDtl();
             this.payHeaderLineDtlArray().push(payLnGrp);
             
           }
-          // alert(this.payHeaderLineDtlArray().length+'len');
-          // for (let j = 0; j < this.payHeaderLineDtlArray().length; j++) {
-          //   var patch=this.paymentForm.get('obj1') as FormArray;
+          alert(this.payHeaderLineDtlArray().length+'len');
+          for (let j = 0; j < this.payHeaderLineDtlArray().length; j++) {
+            var patch=this.paymentForm.get('obj1') as FormArray;
           //   // var selPay=this.suppIdList.find(d=>d.suppSiteId===res.obj[j])
-          //   patch.controls[j].patchValue(this.paymentData)
-          // }
+            patch.controls[j].patchValue(this.paymentData)
+          }
 
           this.paymentForm.get('obj1').patchValue(this.paymentData);
        
