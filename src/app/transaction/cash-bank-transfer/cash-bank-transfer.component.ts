@@ -418,7 +418,7 @@ export class CashBankTransferComponent implements OnInit {
          cashBnkTrfSave() {
           const formValue: ICashBankTransfer =this.transeData(this.cashBankTransferForm.value);
           this.CheckDataValidations();
-          alert ("Validation Status :"+this.checkValidation);
+          // alert ("Validation Status :"+this.checkValidation);
           if (this.checkValidation===true) {
             this.displayButton=false;
         

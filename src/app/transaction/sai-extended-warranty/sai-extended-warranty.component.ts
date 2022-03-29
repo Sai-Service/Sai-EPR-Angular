@@ -382,7 +382,15 @@ export class SaiExtendedWarrantyComponent implements OnInit {
             }
           );
 
-          this.service.ewInsNameList()
+          // this.service.ewInsNameList()
+          // .subscribe(
+          //   data => {
+          //     this.ewInsNameList = data;
+          //     console.log(this.ewInsNameList);
+          //   }
+          // );
+
+          this.service.insNameList()
           .subscribe(
             data => {
               this.ewInsNameList = data;
@@ -451,7 +459,6 @@ export class SaiExtendedWarrantyComponent implements OnInit {
       onReasonSelected(reasonCode : any){
         // alert( "Cance Flag: "+ this.cancelledFlag + " Reaseon Code : "+reasonCode);
         // alert(reasonCode);
-    
        
         if(this.cancelledFlag===false && reasonCode !=null && reasonCode != '--Select--'  ) {
           this.ewCancelDate = this.pipe.transform(this.now, 'y-MM-dd');
@@ -574,6 +581,8 @@ export class SaiExtendedWarrantyComponent implements OnInit {
                 ewPeriod :this.lstEwSchemeDetails.premiumPeriod,
                 ewType:this.lstEwSchemeDetails.ewType,
                 paymentAmt: this.lstEwSchemeDetails.schemeAmount,
+                ewInsurerId: this.lstEwSchemeDetails.ewInsId,
+                
 
                 
            });
@@ -778,11 +787,13 @@ export class SaiExtendedWarrantyComponent implements OnInit {
 
 
         serchByRegNo(mRegNo) {
-          // alert("in serchByRegNo...");
-          this.service.getVehRegDetails(mRegNo)
+          
+          mRegNo=mRegNo.toUpperCase();
+          // alert("in serchByRegNo..."+mRegNo);
+          this.service.getVehRegDetailsNew(mRegNo)
           .subscribe(
             data => {
-              this.getVehRegDetails = data;
+              this.getVehRegDetails = data.obj;
               if(this.getVehRegDetails !=null){
                 this.dispCustButton=true;
               
@@ -794,7 +805,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
                 variantDesc: this.getVehRegDetails.mainModel,
                 chassisNo: this.getVehRegDetails.chassisNo,
                 engineNo: this.getVehRegDetails.engineNo,
-                deliveryDate: this.getVehRegDetails.vehicleDelvDate,
+                deliveryDate: this.getVehRegDetails.deliveryDate,
                 dealerCode: this.getVehRegDetails.dealerCode,
                 vehicleId: this.getVehRegDetails.vin,
                 variantItemId: this.getVehRegDetails.itemId.itemId,
@@ -1332,6 +1343,10 @@ getInvItemId($event) {
     addDays(date1: Date, days1: number): Date {
       date1.setDate(date1.getDate() + days1);
       return date1;
+  }
+
+  onInput(event) {
+    event.target.value = event.target.value.toLocaleUpperCase();
   }
 
    CheckDataValidations(){

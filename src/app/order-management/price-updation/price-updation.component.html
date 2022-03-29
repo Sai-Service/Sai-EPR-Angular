@@ -31,23 +31,23 @@
           <td colspan="4">
               <table class="center">
                 <tr class="GridHeader" style="font-size: 11px;">
-                    <th >SR No.</th>
-                    <th >Locator</th>
-                    <th >On Hand Qty</th>
-                    <th >Current Price</th>
-                    <th >New Price</th>
-                    <th> Update</th>
+                    <th scope="col" style="border: 1px solid black;">SR No.</th>
+                    <th scope="col" style="border: 1px solid black;">Locator</th>
+                    <th scope="col" style="border: 1px solid black;">On Hand Qty</th>
+                    <th scope="col" style="border: 1px solid black;">Current Price</th>
+                    <th scope="col" style="border: 1px solid black;">New Price</th>
+                    <th scope="col" style="border: 1px solid black;"> Update</th>
                   </tr>
                 <tr *ngFor="let com of itemDetailsList ; let i= index" class="ItemStyle" style="text-decoration:none;font-size: 11px;">
-                    <td style="padding-left: 5px; text-align: center;">{{com.ROWNUM}}</td>
-                    <td style="padding-left: 5px; text-align: center;">{{com.segmentName}}</td>
-                    <td style="padding-left: 5px; text-align: center;">{{com.onHandQty}}</td>
-                    <td style="padding-left: 5px; text-align: center;">{{com.prc}}</td>
-                    <td hidden style="padding-left: 5px; text-align: center;">{{com.id}}</td>
-                     <td>
-                        <input type="number" Value={{attribute1}}  formControlName="attribute1"  class="form-control" style="height: 20px;width: 100px;">
+                    <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.ROWNUM}}</td>
+                    <td style="padding-left: 5px; text-align: center;border: 1px solid black;width: 180px;">{{com.segmentName}}</td>
+                    <td style="padding-left: 5px; text-align: center;border: 1px solid black;width: 180px;">{{com.onHandQty}}</td>
+                    <td style="padding-left: 5px; text-align: center;border: 1px solid black;width: 180px;">{{com.prc}}</td>
+                    <td hidden style="padding-left: 5px; text-align: center;border: 1px solid black;width: 180px;">{{com.id}}</td>
+                     <td style="padding-left: 5px; text-align: center;border: 1px solid black;width: 180px;">
+                        <input type="number" Value={{attribute1}}  formControlName="attribute1"  class="form-control" style="height: 20px;width: 180px;">
                      </td>  
-                     <td>
+                     <td style="padding-left: 5px; text-align: center;border: 1px solid black;width: 180px;">
                         <button type="submit" (click)="update(com.id)" class="btn btn-primary">Update</button>
                     </td> 
                 </tr>

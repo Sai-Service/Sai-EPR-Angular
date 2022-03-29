@@ -23,7 +23,13 @@
 	.dropdown-menu > li:hover > .submenu{
 		display: block;
 	}
+    .dropdown-item{
+        font-size: 14px;
+    }
 }
+
+
+
 
 .navbar-expand-lg{
 	background-color: rgb(56, 55, 55);

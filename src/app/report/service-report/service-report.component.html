@@ -1,122 +1,451 @@
 <form [formGroup]="serviceReportForm" (ngSubmit)="serviceReport(serviceReportForm.value)">
-    <table class="center">
-        <tr>
-            <div *ngIf="closeResetButton; then hList1; else hList2"></div>
-            <ng-template #hList2>
-                <div class="d-flex justify-content-center">
-                    <div class="spinner-border text-primary" role="status">
-                        <span class="sr-only" id="loading"></span>
-                    </div>
-                </div>
-            </ng-template>
-            <ng-template #hList1> </ng-template>
-            <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">&nbsp;{{dataDisplay}}&nbsp;
-            </td>
-        </tr>
-    </table>
-    <table style="width: 100%;background-color: white;">
-        <tr>
-            <td class="PageHeader">
-                Service&nbsp;Report&nbsp;
-            </td>
-        </tr>
-    </table>
-    <br>
-    <div class="grid_scroll">
-        <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" style="border-color:#959595;border-collapse:collapse;width: 100%;">
-            <tr class="GridHeader" style="font-size: 14px;">
-                <th scope="col"> Report&nbsp;Name</th>
-                <th scope="col">Parameters</th>
-                <th scope="col">View Report</th>
-            </tr>
+    <div class="center">
+        <table style="width: 100%;background-color: white;">
             <tr>
-                <td style="border: 1px solid black;padding-left: 5px;">Job Card Summary</td>
-                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
-                    <table style="width: 100%;">
-                        <tr>
-                            <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
-                            <td>
-                                <input type="date" class="form-control"  formControlName="jobSumFromDt"  max="{{minDate | date:'yyyy-MM-dd'}}" >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
-                            <td>
-                                <input type="date" class="form-control"  formControlName="jobSumToDt"  max="{{minDate | date:'yyyy-MM-dd'}}" >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Location&nbsp;Code&nbsp;</td>&nbsp;
-                            <td>
-                                <input disabled type="text" class="form-control"  formControlName="joblocCode" >
-                            </td>
-                        </tr>
-                    </table> 
-                </td>
-                <td style="border: 1px solid black;padding-left: 5px;">
-                    <button class="btn-primary" [disabled]="isDisabled1" (click)="jobSummary()">View Report</button>
-                </td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black;padding-left: 5px;">Service Invoice Not Delivered</td>
-                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
-                    <table style="width: 100%;">
-                        <tr>
-                            <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
-                            <td>
-                                <input type="date" class="form-control"  formControlName="servindFromDt"  max="{{minDate | date:'yyyy-MM-dd'}}" >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
-                            <td>
-                                <input type="date" class="form-control"  formControlName="servindToDt"  max="{{minDate | date:'yyyy-MM-dd'}}" >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Location&nbsp;Code&nbsp;</td>&nbsp;
-                            <td>
-                                <input disabled type="text" class="form-control"  formControlName="joblocCode" >
-                            </td>
-                        </tr>
-                    </table> 
-                </td>
-                <td style="border: 1px solid black;padding-left: 5px;">
-                    <button class="btn-primary" [disabled]="isDisabled2" (click)="servind()">View Report</button>
-                </td>
-            </tr>
-       
-       
-            <tr>
-                <td style="border: 1px solid black;padding-left: 5px;">Service Pending Vehicle Report</td>
-                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
-                    <table style="width: 100%;">
-                        <tr>
-                            <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
-                            <td>
-                                <input type="date" class="form-control"  formControlName="serPendingVehicleFromDt"  max="{{minDate | date:'yyyy-MM-dd'}}" >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
-                            <td>
-                                <input type="date" class="form-control"  formControlName="serPendingVehicleToDt"  max="{{minDate | date:'yyyy-MM-dd'}}" >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Location&nbsp;Code&nbsp;</td>&nbsp;
-                            <td>
-                                <input disabled type="text" class="form-control"  formControlName="joblocCode" >
-                            </td>
-                        </tr>
-                    </table> 
-                </td>
-                <td style="border: 1px solid black;padding-left: 5px;">
-                    <button class="btn-primary" [disabled]="isDisabled2" (click)="serPendingVehicle()">View Report</button>
+                <td class="PageHeader">
+                    &nbsp;Service&nbsp;Reports&nbsp;&nbsp;
                 </td>
             </tr>
         </table>
     </div>
+    <nav class="navbar navbar-expand-lg bg-primary" style="margin-top: 5px;">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_nav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="main_nav">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" > Service </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelfromtolocation" role="tab"
+                                (click)="reportDetails('jobcardsummary')">Job Card Summary</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" data-toggle="collapse" href="#paneltolocation" role="tab"
+                                (click)="reportDetails('serviceInvNotDelivery')">Service Invoice Not Delivered</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelfromtolocation" role="tab"
+                                (click)="reportDetails('servicePendingVehicle')">Service Pending Vehicle Report</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelfromtolocation" role="tab"
+                                (click)="reportDetails('serviceDeliverySummary')">Service Delivery Summary</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelfromtolocationdepartment" role="tab"
+                                (click)="reportDetails('gstReceiptRegister')">Receipt Register</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelgstsaiDebtors" role="tab"
+                                (click)="reportDetails('gstsaiDebtors')">Sai Debtors</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <fieldset class="RFS">
+        <table class="center"   style="margin-left: 10%;"
+        [style.display]="isVisiblepanelfromtolocation ? 'block' : 'none'" class="collapse"
+        id="panelfromtolocation">
+        <tr>
+            <td>
+                <table class="center">  
+                    <tr>
+                        <td colspan="4" class="LabelFontStyle" style="width: 100%;">
+                            {{reportName}}
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table class="center">
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            &nbsp;From&nbsp;Date&nbsp;:&nbsp;
+                        </td>
+                        <td>
+                            <input type="date" class="form-control" formControlName="fromDate"
+                                max="{{minDate | date:'yyyy-MM-dd'}}">
+                        </td>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            &nbsp;To&nbsp;Date&nbsp;:&nbsp;
+                        </td>
+                        <td>
+                            <input type="date" class="form-control" formControlName="toDate"
+                                max="{{minDate | date:'yyyy-MM-dd'}}">
+                        </td>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            &nbsp;Location&nbsp;Code&nbsp;:&nbsp;
+                        </td>
+                        <td [style.display]="isVisiblelocationInput ? 'block' : 'none'">
+                            <input type="text" disabled class="form-control" formControlName="locCode">
+                        </td>
+                        <td [style.display]="isVisiblelocationLOV ? 'block' : 'none'">
+                            <select formControlName="locCode" id="locCode" class="form-control"
+                                (ngModelChange)='onOptionsLocation($event)'>
+                                <option>--Select--</option>
+                                <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
+                                    {{sc.locCode}}
+                                </option>
+                            </select>
+                            <input  disabled hidden type="number" class="form-control" formControlName="locId">
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                          <table class="center">
+                            <tr>
+                              <td colspan="4">
+                                <table class="center" style="width: 100%;">
+                                  <tr>
+                                    <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                                    <ng-template #hList2>
+                                      <div class="d-flex justify-content-center">
+                                        <div class="spinner-border text-primary" role="status">
+                                          <span class="sr-only" id="loading"></span>
+                                        </div>
+                                      </div>
+                                    </ng-template>
+                                    <ng-template #hList1> </ng-template>
+                                    <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">
+                                      &nbsp;{{dataDisplay}}&nbsp; </td>
+                                  </tr>
+                                </table>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td colspan="4">
+                                  <table class="center" style="width: 100%;margin-left: 50%;">
+                                      <tr>
+                                        <td>
+                                            <button class="btn-primary" [disabled]="isDisabled1" (click)="reportParameter(reportName)">View
+                                              Report</button>
+                                          </td>
+                                      </tr>
+                                  </table>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+
+
+    <table class="center"   style="margin-left: 10%;"
+    [style.display]="isVisiblepaneltolocation ? 'block' : 'none'" class="collapse"
+    id="paneltolocation">
+    <tr>
+        <td>
+            <table class="center">  
+                <tr>
+                    <td colspan="4" class="LabelFontStyle" style="width: 100%;">
+                        {{reportName}}
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="center">
+                <tr>
+                    
+                    <td style="width: 15%" class="LabelFontStyle">
+                        &nbsp;To&nbsp;Date&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <input type="date" class="form-control" formControlName="toDate"
+                            max="{{minDate | date:'yyyy-MM-dd'}}">
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        &nbsp;Location&nbsp;Code&nbsp;:&nbsp;
+                    </td>
+                    <td [style.display]="isVisiblelocationInput ? 'block' : 'none'">
+                        <input type="text" disabled class="form-control" formControlName="locCode">
+                    </td>
+                    <td [style.display]="isVisiblelocationLOV ? 'block' : 'none'">
+                        <select formControlName="locCode" id="locCode" class="form-control"
+                            (ngModelChange)='onOptionsLocation($event)'>
+                            <option>--Select--</option>
+                            <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
+                                {{sc.locCode}}
+                            </option>
+                        </select>
+                        <input  disabled hidden type="number" class="form-control" formControlName="locId">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                      <table class="center">
+                        <tr>
+                          <td colspan="4">
+                            <table class="center" style="width: 100%;">
+                              <tr>
+                                <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                                <ng-template #hList2>
+                                  <div class="d-flex justify-content-center">
+                                    <div class="spinner-border text-primary" role="status">
+                                      <span class="sr-only" id="loading"></span>
+                                    </div>
+                                  </div>
+                                </ng-template>
+                                <ng-template #hList1> </ng-template>
+                                <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">
+                                  &nbsp;{{dataDisplay}}&nbsp; </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="4">
+                              <table class="center" style="width: 100%;margin-left: 50%;">
+                                  <tr>
+                                    <td>
+                                        <button class="btn-primary" [disabled]="isDisabled1" (click)="reportParameter(reportName)">View
+                                          Report</button>
+                                      </td>
+                                  </tr>
+                              </table>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+
+    <table class="center"   style="margin-left: 10%;"
+    [style.display]="isVisiblefromtolocationdepartment ? 'block' : 'none'" class="collapse"
+    id="panelfromtolocationdepartment">
+    <tr>
+        <td>
+            <table class="center">  
+                <tr>
+                    <td colspan="4" class="LabelFontStyle" style="width: 100%;">
+                        {{reportName}}
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="center">
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        &nbsp;From&nbsp;Date&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <input type="date" class="form-control" formControlName="fromDate"
+                            max="{{minDate | date:'yyyy-MM-dd'}}">
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        &nbsp;To&nbsp;Date&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <input type="date" class="form-control" formControlName="toDate"
+                            max="{{minDate | date:'yyyy-MM-dd'}}">
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        &nbsp;Location&nbsp;Code&nbsp;:&nbsp;
+                    </td>
+                    <td [style.display]="isVisiblelocationInput ? 'block' : 'none'">
+                        <input type="text" disabled class="form-control" formControlName="locCode">
+                    </td>
+                    <td [style.display]="isVisiblelocationLOV ? 'block' : 'none'">
+                        <select formControlName="locCode" id="locCode" class="form-control"
+                            (ngModelChange)='onOptionsLocation($event)'>
+                            <option>--Select--</option>
+                            <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
+                                {{sc.locCode}}
+                            </option>
+                        </select>
+                        <input  disabled hidden type="number" class="form-control" formControlName="locId">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <table [style.display]="isVisibleDepartmentList ? 'block' : 'none'" >
+                            <tr>
+                                <td style="width: 15%" class="LabelFontStyle" >
+                                    &nbsp;Department&nbsp;List&nbsp;:&nbsp;
+                                </td>
+                                <td>
+                                    <!-- <select formControlName="deptId" id="deptId" class="form-control">
+                                    <option>--Select--</option>
+                                    <option *ngFor="let sc of  DepartmentList" [value]="sc.cmnTypeId">
+                                        {{sc.code}}
+                                    </option>
+                                </select> -->
+                                <input type="text" disabled class="form-control" formControlName="department">
+                                <input hidden type="number" class="form-control" formControlName="deptId">
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                   
+                </tr>
+                <tr>
+                    <td colspan="4">
+                      <table class="center">
+                        <tr>
+                          <td colspan="4">
+                            <table class="center" style="width: 100%;">
+                              <tr>
+                                <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                                <ng-template #hList2>
+                                  <div class="d-flex justify-content-center">
+                                    <div class="spinner-border text-primary" role="status">
+                                      <span class="sr-only" id="loading"></span>
+                                    </div>
+                                  </div>
+                                </ng-template>
+                                <ng-template #hList1> </ng-template>
+                                <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">
+                                  &nbsp;{{dataDisplay}}&nbsp; </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="4">
+                              <table class="center" style="width: 100%;margin-left: 50%;">
+                                  <tr>
+                                    <td>
+                                        <button class="btn-primary" [disabled]="isDisabled1" (click)="reportParameter(reportName)">View
+                                          Report</button>
+                                      </td>
+                                  </tr>
+                              </table>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+
+<table class="center" [style.display]="isVisiblegstsaiDebtors ? 'block' : 'none'" class="collapse"
+style="margin-left: 20%;" id="panelgstsaiDebtors">
+<tr>
+    <td>
+        <table class="center">
+            <tr>
+                <td colspan="4" class="LabelFontStyle" style="width: 100%;">
+                    {{reportName}}
+                </td>
+            </tr>
+        </table>
+    </td>
+</tr>
+<tr>
+    <td>
+        <table class="center">
+            <tr>
+                <td style="width: 15%" class="LabelFontStyle">
+                    &nbsp;To&nbsp;Date&nbsp;:&nbsp;
+                </td>
+                <td>
+                    <input type="date" class="form-control" formControlName="toDate"
+                        max="{{minDate | date:'yyyy-MM-dd'}}">
+                </td>
+                <td style="width: 15%" class="LabelFontStyle">
+                    &nbsp;Location&nbsp;Code&nbsp;:&nbsp;
+                </td>
+                <td [style.display]="isVisiblelocationInput ? 'block' : 'none'">
+                    <input type="text" disabled class="form-control" formControlName="locCode">
+                </td>
+                <td [style.display]="isVisiblelocationLOV ? 'block' : 'none'">
+                    <select formControlName="locCode" id="locCode" class="form-control"
+                        (ngModelChange)='onOptionsLocation($event)'>
+                        <option>--Select--</option>
+                        <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
+                            {{sc.locCode}}
+                        </option>
+                    </select>
+                    <input  disabled hidden type="number" class="form-control" formControlName="locId">
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 15%" class="LabelFontStyle">
+                    &nbsp;Cust&nbsp;Account&nbsp;No&nbsp;:&nbsp;
+                </td>
+                <td>
+                    <input  type="number" class="form-control"  formControlName="custAccNo" [(ngModel)]="custAccNo">
+                </td>
+              <td colspan="4">
+                  <table [style.display]="isVisibleDepartmentList ? 'block' : 'none'">
+                    <td style="width: 15%" class="LabelFontStyle">
+                        &nbsp;Department&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <input type="text" disabled class="form-control" formControlName="department">
+                        <input hidden type="number" class="form-control" formControlName="deptId">
+                    </td>
+                  </table>
+              </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                  <table class="center">
+                    <tr>
+                      <td colspan="4">
+                        <table class="center" style="width: 100%;">
+                          <tr>
+                            <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                            <ng-template #hList2>
+                              <div class="d-flex justify-content-center">
+                                <div class="spinner-border text-primary" role="status">
+                                  <span class="sr-only" id="loading"></span>
+                                </div>
+                              </div>
+                            </ng-template>
+                            <ng-template #hList1> </ng-template>
+                            <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">
+                              &nbsp;{{dataDisplay}}&nbsp; </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="4">
+                          <table class="center" style="width: 100%;margin-left: 50%;">
+                              <tr>
+                                <td>
+                                    <button class="btn-primary" [disabled]="isDisabled1" (click)="reportParameter(reportName)">View
+                                      Report</button>
+                                  </td>
+                                 
+                              </tr>
+                          </table>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+        </table>
+    </td>
+</tr>
+</table>
+    </fieldset>
     <table class="center">
         <tr>
             <td>

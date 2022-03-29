@@ -189,7 +189,7 @@
                             <td style="width: 15%" class="LabelFontStyle1">Reg&nbsp;No:&nbsp;</td>
     
                             <td>
-                             <input style="font-weight: bold;background-color: yellow;" type="text"
+                             <input style="font-weight: bold;background-color: yellow; text-transform: uppercase;" type="text"
                                 formControlName="vehRegNo"
                                 [(ngModel)]="vehRegNo"
                                 (change)="serchByRegNo(vehRegNo)"
@@ -645,11 +645,12 @@
     
                             
                             <td>  
-                                <select   formControlName="ewInsurerId" id="ewInsurerId" [(ngModel)]="ewInsurerId"  class="form-control" (change) ="onEwInsurerSalected(ewInsurerId)" style="background-color: yellow;">
-                                <option disabled>--Select--</option>
-                                <option *ngFor="let sc of  ewInsNameList" [ngValue]="sc.customerId">
-                                {{sc.customerId}}-{{sc.custName}}
-                                </option>
+                                <select disabled  formControlName="ewInsurerId" id="ewInsurerId" [(ngModel)]="ewInsurerId"  class="form-control" (change) ="onEwInsurerSalected(ewInsurerId)" style="background-color:lightgreen;">
+                                    <option></option>
+                                    <option *ngFor="let sc of ewInsNameList"
+                                        [ngValue]="sc.customerId">
+                                        {{sc.custName}}
+                                    </option>
                                 </select>
                             </td>
                             

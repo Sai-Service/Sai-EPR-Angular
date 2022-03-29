@@ -218,7 +218,7 @@
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Extended Warranty</a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/SaiEwSchemeMaster']">Sai EW Scheme Master</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/SaiExtendedWarranty']">Sai Extended Warranty</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/SaiExtendedWarranty']">Sai EW Enrollment</a></li>
           </ul>
         </li>
 
@@ -274,7 +274,7 @@
      
       <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <div [style.display]="isVisible30 ? 'block' : 'none'">
-            <li><a class="dropdown-submenu" [routerLink]="['/admin/Report/SparesReports']">Spares Reports</a></li>
+            <!-- <li><a class="dropdown-submenu" [routerLink]="['/admin/Report/SparesReports']">Spares Reports</a></li> -->
             <li><a class="dropdown-submenu" [routerLink]="['/admin/Report/SparesReportsNew']">Spares Reports-New</a></li>
           </div>
           <div [style.display]="isVisible35 ? 'block' : 'none'">
@@ -286,6 +286,9 @@
         <div [style.display]="isVisibleAccountsRepor ? 'block' : 'none'">
         <li><a class="dropdown-submenu" [routerLink]="['/admin/Report/AccountsRepor']">Accounts Reports</a></li>
         </div>
+        <div [style.display]="isVisibleAccessories ? 'block' : 'none'">
+          <li><a class="dropdown-submenu" [routerLink]="['/admin/Report/AccessoriesReport']">Accessories Reports</a></li>
+          </div>
       </ul>
       
       <!-- <div [style.display]="isVisible35 ? 'block' : 'none'">

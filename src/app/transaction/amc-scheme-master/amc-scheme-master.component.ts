@@ -64,8 +64,8 @@ export class AmcSchemeMasterComponent implements OnInit {
   schemeId:number;
   schemeNumber:string;
   // startDate:Date;
-  startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
-  
+  // startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+  startDate = this.pipe.transform(Date.now(), 'dd/MM/yyyy hh:mm:ss');
   endDate:Date;
   schemeDesc:string;
   schemeValidYears:number;

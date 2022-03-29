@@ -239,22 +239,19 @@
                                                             </option>
                                                         </select>
                                                     </td>
-                                                    <td>
-                                                        <input type="text" disabled class="form-control"
-                                                            formControlName="payGroup" value={{payGroup}}
-                                                            style="width: 120px;height: 25px;font-size: 10px;">
-                                                        <!-- <select formControlName="payGroup" value={{payGroup}}
-                                                            class="form-control"
+                                                    <td >
+                                                       
+                                                        <select formControlName="payGroup" value={{payGroup}}
+                                                            class="form-control" 
                                                             style="width: 120px;height: 25px;font-size: 10px;">
                                                             <option>--Select--</option>
-                                                            <option *ngFor="let ts of tdsSectionList"
-                                                                [ngValue]="ts.lookupValueDesc">
+                                                            <option *ngFor="let ts of tdsSectionList" [value]="ts.lookupValueDesc">
                                                                 {{ts.lookupValueDesc}}
                                                             </option>
-                                                        </select> -->
+                                                        </select>
                                                     </td>
-
-
+                                                   
+                                                   
                                                     <td>
 
                                                         <select formControlName="prepayType" class="form-control"
@@ -453,7 +450,7 @@
                                                         </select>
                                                     </td>
                                                     <td>
-                                                        <select disabled formControlName="payGroup" value={{payGroup}}
+                                                        <!-- <select disabled formControlName="payGroup" value={{payGroup}}
                                                             class="form-control"
                                                             style="width: 120px;height: 25px;font-size: 10px;">
                                                             <option>--Select--</option>
@@ -461,7 +458,10 @@
                                                                 [ngValue]="ts.code">
                                                                 {{ts.lookupValueDesc}}
                                                             </option>
-                                                        </select>
+                                                        </select> -->
+                                                        <input type="text" disabled class="form-control"
+                                                        formControlName="payGroup" value={{payGroup}}
+                                                        style="width: 120px;height: 25px;font-size: 10px;">
                                                     </td>
 
 
@@ -808,10 +808,10 @@
                                                                         </option>
                                                                     </select> -->
                                                                     <input type="text" list="dynmicUserIds1"
-                                                                        (keyup)="filterRecord( $event,i)"
+                                                                        (keyup)="filterRecord(k,$event)"
                                                                         formControlName="segment" id="invItemIdFirstWay"
                                                                         class="form-control"
-                                                                        (ngModelChange)="onOptioninvItemIdSelected($event,i)"
+                                                                        (ngModelChange)="onOptioninvItemIdSelected($event,k)"
                                                                         style="height: 25px;width:120px;" />
                                                                     <!--  -->
                                                                     <datalist id="dynmicUserIds1" autocomplete="off">
@@ -1069,17 +1069,18 @@
                                                                     *ngIf="dispaccountingDate; then thenaccountingDate; else elseaccountingDate">
                                                                 </div>
                                                                 <ng-template #thenaccountingDate>
-                                                                    <input type="text" class="form-control"
-                                                                        formControlName="accountingDate"
-                                                                        style="width: 90px;height: 25px;font-size: 10px;">
+                                                                    <input type="text" 
+                                                                    formControlName="accountingDate"
+                                                                    value={{accountingDate}} class="form-control"
+                                                                    style="width: 130px;height: 25px;font-size: 10px;">
                                                                 </ng-template>
                                                                 <ng-template #elseaccountingDate>
                                                                     <input type="text" disabled
                                                                         formControlName="accountingDate"
                                                                         value={{accountingDate}} class="form-control"
-                                                                        [(ngModel)]='accountingDate'
                                                                         style="width: 130px;height: 25px;font-size: 10px;">
                                                                 </ng-template>
+                                                                <!-- [(ngModel)]='accountingDate' -->
                                                             </td>
                                                             <td>
                                                                 <div

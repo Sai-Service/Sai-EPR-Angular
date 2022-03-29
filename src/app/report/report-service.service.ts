@@ -333,8 +333,8 @@ export class ReportServiceService {
     });
   }
 
-  servindToDtReport(fromDate,toDate,locId){
-    const REQUEST_URI = this.ServerUrl +`/ServiceReports/ServiceIndRep?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}`;
+  servindToDtReport(toDate,locId){
+    const REQUEST_URI = this.ServerUrl +`/ServiceReports/ServiceIndRep?toDate=${toDate}&locId=${locId}`;
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
@@ -342,6 +342,41 @@ export class ReportServiceService {
     });
   }
 
+
+  seviceDeliverySummaryReport(fromDate,toDate,ouId,locId){
+    const REQUEST_URI = this.ServerUrl +`/ServiceReports/ServDelvRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+  spInvTransRecFuc(fromDate,toDate,locId,subInvCode){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SubInvTrfRep?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}&subInvCode=${subInvCode}`;
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+  spInvTransMadeFuc(fromDate,toDate,locId,subInvCode){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SubInvTrfMadeRep?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}&subInvCode=${subInvCode}`;
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+  internalConsuptionReport(fromDate,toDate,locId,subInvCode){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/ICReport?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}&subInvCode=${subInvCode}`;
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
 
 ///////////////////// Sales Reports API Starts ////////////////////
 

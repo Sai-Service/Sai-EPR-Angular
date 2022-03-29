@@ -12,12 +12,13 @@ const MIME_TYPES = {
   xlsx: 'application/vnc.openxmlformats-officedocument.spreadsheetxml.sheet'
 };
 
+
 @Component({
-  selector: 'app-spares-reports',
-  templateUrl: './spares-reports.component.html',
-  styleUrls: ['./spares-reports.component.css']
+  selector: 'app-accessories-report',
+  templateUrl: './accessories-report.component.html',
+  styleUrls: ['./accessories-report.component.css']
 })
-export class SparesReportsComponent implements OnInit {
+export class AccessoriesReportComponent implements OnInit {
   sparesReportForm: FormGroup;
   public minDate = new Date();
   fromDate: Date;
@@ -84,17 +85,18 @@ export class SparesReportsComponent implements OnInit {
       department: [''],
       userName1:[''],
     })
+   }
+
+   sparesReport(sparesReportForm) {
   }
 
-
-  sparesReport(sparesReportForm) {
-  }
 
   ngOnInit(): void {
-    this.sparesReportForm.patchValue({ OUCode: sessionStorage.getItem('ouId') + '-' + sessionStorage.getItem('ouName') })
+
+   this.sparesReportForm.patchValue({ OUCode: sessionStorage.getItem('ouId') + '-' + sessionStorage.getItem('ouName') })
     this.sparesReportForm.patchValue({ locCode: sessionStorage.getItem('locId') + '-' + sessionStorage.getItem('locName') })
-    this.sparesReportForm.patchValue({ department: 'Spares' });
-    this.sparesReportForm.patchValue({ deptId: 5 })
+    this.sparesReportForm.patchValue({ department: 'Accessories' });
+    this.sparesReportForm.patchValue({ deptId: 6 })
     // Prevent closing from click inside dropdown
     $(document).on('click', '.dropdown-menu', function (e) {
       e.stopPropagation();
@@ -140,7 +142,7 @@ export class SparesReportsComponent implements OnInit {
     if (Number(sessionStorage.getItem('deptId')) === 4) {
       this.isVisiblelocationLOV = true;
       this.isVisiblelocationInput = false;
-      this.sparesReportForm.patchValue({ subInventory: 'SP' })
+      this.sparesReportForm.patchValue({ subInventory: 'AC' })
     }
     else {
       this.isVisiblelocationLOV = false;

@@ -136,6 +136,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   tcsYN: string;
   tcsPer: number;
   tcsAmt: number;
+  perAdd:string;
   creditDays: number;
   daysMsg: string;
   amountMsg: string;
@@ -418,6 +419,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       classCodeType: [''],
       // uuidRef: [''],
       taxCategoryName: [''],
+      perAdd:[''],
       disPer: [''],
       issueCodeType1: [''],
       issueCode: [''],
@@ -1441,6 +1443,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                 if (Number(this.custSiteList[i].ouId) === Number(sessionStorage.getItem('ouId'))) {
                   this.CounterSaleOrderBookingForm.patchValue({ name: this.custSiteList[i].siteName });
                   this.CounterSaleOrderBookingForm.get('name').enable()
+                  alert('Selected Customer Multiple Sites.. Please confirm.!')
                   //  this.onOptionsSelectedcustSiteName(this.custSiteList[i].siteName);
                 }
               }
@@ -1480,7 +1483,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
             }
           }
         });
-
+        var locid=sessionStorage.getItem('locId');
     this.service.exicutiveNameByCustName(custAccountNo, sessionStorage.getItem('locId'))
       .subscribe(
         data => {
@@ -1490,6 +1493,13 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
             this.CounterSaleOrderBookingForm.patchValue({ salesRepId: data.obj.emplId });
             this.CounterSaleOrderBookingForm.patchValue({ salesRepName: salesExicustive })
           }
+          else if  (data.code=== 400){
+            this.CounterSaleOrderBookingForm.patchValue({ salesRepId: Number(sessionStorage.getItem('emplId')) });
+             this.CounterSaleOrderBookingForm.patchValue({ salesRepName: (sessionStorage.getItem('ticketNo'))}); 
+             if (sessionStorage.getItem('locId') === '2102' || sessionStorage.getItem('locId') === '2103'){
+              alert('Please Map Executive Name with customer master.!');
+             }
+            }
         })
   }
 
@@ -2754,11 +2764,9 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     if (itemid != null || itemid != undefined) {
       this.deleteReserveLinewise(OrderLineIndex, itemid1, uuidref);
       this.itemMap3.delete(itemid);
-
     }
     var formVal = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     var formArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
-
     var basicAmt = 0;
     var taxAmt1 = 0;
     var totAmt = 0;
