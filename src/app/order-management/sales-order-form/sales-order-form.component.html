@@ -1052,7 +1052,7 @@
                                                 <select type="text" formControlName="tvBroker" id="tvBroker"
                                                 class="form-control" style="width: 120px;" >
                                                 <option>--Select--</option>
-                                                <option *ngFor="let sc of  truValueList" [value]="sc.custName">
+                                                <option *ngFor="let sc of  truValueList" [ngValue]="sc.custName">
                                                     {{sc.custName}}
                                                 </option>
                                             </select>

@@ -84,18 +84,22 @@ export class PriceUpdationComponent implements OnInit {
   }
 
   itemDetailsList:any=[];
+  prc:number;
   itemDetails(itemSeg){
-    alert(itemSeg)
-  //  var segmet= this.PriceUpdationForm.get('itemSeg').value();
     this.orderManagementService.getOnHandQty(sessionStorage.getItem('locId'),itemSeg,6).subscribe((res: any) => {
         this.itemDetailsList=res;
+      //   for (let i=0;i<res.length;i++){
+      //   alert(res[i].prc);
+      //   if (res[i].prc===null){
+      //     this.prc=0;
+      //   }
+      // }
         // this.PriceUpdationForm.patchValue({id:res.id})
     })
   }
 
 update(id){
   var attribute1 = this.PriceUpdationForm.get('attribute1').value;
-  // alert(id+'----'+attribute1)
   var onhandPrc:any=[];
   onhandPrc.push({ id: id, attribute1: attribute1});
   // const formValue: ISalesBookingForm = this.transData(this.PriceUpdationForm.getRawValue());
