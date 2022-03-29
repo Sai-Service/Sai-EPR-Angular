@@ -306,7 +306,7 @@
                                                                             </td>
 
                                                                             <td>
-                                                                                <button type="button" class="btn-primary" (click)="createNew()">Create New</button>
+                                                                                <button type="button" class="btn-primary" (click)="createNew()" style="width: fit-content;">Create</button>
                                                                             </td>
 
                                                                         </tr>
@@ -554,25 +554,18 @@
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td style="width: 15%"
-                                                                                class="LabelFontStyle">
-                                                                                &nbsp;Demanded&nbsp;Job&nbsp;:
-                                                                            </td>
-
+                                                                            <td style="width: 15%" class="LabelFontStyle">&nbsp;Demanded&nbsp;Job&nbsp;:</td>
+                                                                           
                                                                             <!-- <td colspan="3" >
                                                                                 <input type="text" class="form-control"
                                                                                 formControlName="demandJob" placeholder="" style="width: 100%;">
                                                                             </td>  -->
                                                                             <td colspan="3">
-                                                                            <textarea id="demandJob" formControlName="demandJob" rows="2" style="width: 100%;resize: none;"></textarea>
-                                                                            </td>
-                                                                            <td style="width: 15%"
-                                                                                class="LabelFontStyle">
-                                                                                Recommendation&nbsp;:</td>
-
-                                                                                <td colspan="3">
-                                                                                    <textarea id="recomJob" formControlName="recomJob" rows="2" style="width: 100%; resize: none;"></textarea>
-                                                                                </td>
+                                                                            <textarea id="demandJob" formControlName="demandJob" rows="2" style="width: 100%;resize: none; font-size: small;"></textarea> </td>
+                                                                           
+                                                                            <td style="width: 15%"  class="LabelFontStyle">Recommendation&nbsp;:</td>
+                                                                            <td colspan="3"><textarea id="recomJob" formControlName="recomJob" rows="2" style="width: 100%; resize: none;font-size: small;"></textarea> </td>
+                                                                               
 
                                                                             <!-- <td colspan="3"> 
                                                                                 <input type="text" class="form-control"
@@ -1725,7 +1718,7 @@
                                                 <table class="center">
                                                     <tr>
 
-                                                        <div *ngIf="saveMatButton; then MI1; else MI2"></div>
+                                                        <!-- <div *ngIf="saveMatButton; then MI1; else MI2"></div>
                                                         <ng-template #MI1>
 
                                                         <td>
@@ -1735,19 +1728,32 @@
                                                                 Material from WIP</button>
                                                         </td>
                                                         </ng-template>
-                                                        <ng-template #MI2></ng-template>
+                                                        <ng-template #MI2> </ng-template> -->
+
 
                                                         <div *ngIf="saveMatButton; then M1; else M2"></div>
                                                         <ng-template #M1>
-                                                            <td>
-                                                                <button type="butt on" class="btn btn-primary" (click)="saveMaterial()" style="width: 8rem;">Save  Material</button>
-                                                            </td>
+                                                            <td><button type="butt on" class="btn btn-primary" (click)="saveMaterial()" style="width: 8rem;">Save  Material</button> </td>
                                                         </ng-template>
+
                                                         <ng-template #M2>
+                                                           <td><button disabled type="butt on" class="btn btn-primary" (click)="saveMaterial()" style="width: 8rem;">Save  Material</button>   </td>
+                                                        </ng-template>
+
+                                                        <div *ngIf="importMatButton; then imp1; else imp2"></div>
+                                                        <ng-template #imp1>
                                                             <td>
-                                                                <button disabled type="butt on" class="btn btn-primary" (click)="saveMaterial()" style="width: 8rem;">Save  Material</button>
+                                                                <button type="butt on" class="btn btn-primary"  (click)="MatImptWip(jobCardNum)"
+                                                                    style="width: fit-content; text-align: center;">Import Material from WIP</button>
                                                             </td>
                                                         </ng-template>
+                                                        <ng-template #imp2>
+                                                            <td>
+                                                                <button disabled type="butt on" class="btn btn-primary"  (click)="MatImptWip(jobCardNum)"
+                                                                    style="width: fit-content; text-align: center;">Import Material from WIP</button>
+                                                            </td>
+                                                        </ng-template>
+
 
 
                                                     </tr>

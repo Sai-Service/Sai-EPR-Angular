@@ -2941,7 +2941,13 @@ bulkPickTickCSV(formData: FormData ,priceListName:string,taxCategoryName:string,
 
     }
 
-
+    getVehicleOrderDetailsNew(mOrderNumber): Observable<any> {
+      // alert("ms order number>>"+mOrderNumber);
+      return this.http.get(this.ServerUrl + `/SsMcpEnqMst/SalesEW/${mOrderNumber}`);
+      //   http://localhost:8081/SsMcpEnqMst/SalesEW/21221014600015
+      }
+      
+  
   getEWStatusVehcile(mRegno): Observable<any> {
     // alert("ms>>"+mRegno);
     return this.http.get(this.ServerUrl + `/ewmaster/ewvehicle/${mRegno}`);
