@@ -208,6 +208,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
   compileDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
   currentOp: string;
   dispRow: boolean = true;
+  displayCost:boolean=true;
 
   public itemMap = new Map<string, miscTrans>();
 
@@ -701,56 +702,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
     this.deleteReserve();
   }
 
-  // onOptionItemDetails(event:any,i){
-
-  //    var trxLnArr=this.miscellaneousForm.get('cycleLinesList').value;
-  //   // var itemid=trxLnArr[i].itemId;
-  //   // alert(event);
-  //   let select1=this.ItemIdList.find(d=>d.SEGMENT===event);
-  //    if(select1!=undefined)
-  //    {
-  //   console.log(select1);
-  //   // alert(select1.itemId+"itemId")
-  //   var itemId= select1.itemId
-  //   var trxLnArr1=this.miscellaneousForm.get('cycleLinesList')as FormArray;
-  //   trxLnArr1.controls[i].patchValue({invItemId:select1.itemId});
-  //   var subcode=this.miscellaneousForm.get('subInventory').value;
-  //   // alert(subcode+'Subcode');
-  //  this.service.getItemDetail(select1.itemId).subscribe
-  // (data => {this.getItemDetail = data;
-  //   // alert("this.getItemDetail.description" + this.getItemDetail.description);
-  //   if(this.getItemDetail.description !=undefined){
-  //     trxLnArr1.controls[i].patchValue({description: this.getItemDetail.description});
-  //     trxLnArr1.controls[i].patchValue({uom:this.getItemDetail.uom});
-  //     trxLnArr1.controls[i].patchValue({entryStatusCode:"Manual"});
-  //     trxLnArr1.controls[i].patchValue({subInventory:subcode})
-  //     trxLnArr1.controls[i].patchValue({locId:Number(sessionStorage.getItem('locId'))})
-  //   }
-  // } );
-  // // alert(itemId +'ItemName');
-  // this.service.getCostDetail(Number(sessionStorage.getItem('locId')),itemId).subscribe
-  // (data =>{
-  //   this.CostDetail=data;
-  //   trxLnArr1.controls[i].patchValue({itemUnitCost:this.CostDetail.rate});
-  // });
-  // //   ////////////////
-  // //   alert(this.locId +"Loc");
-  // //   alert('this.itemId '+this.itemId )
-  // //   var subInvCode = this.miscellaneousForm.get('subInventory').value;
-  // //   // var itemId = this.miscellaneousForm.get('itemId').value;
-  // //   alert(select1.itemId)
-  // //   alert(subInvCode);
-  // //   this.service.getItemDetail11(Number(sessionStorage.getItem('locId')),itemId,subInvCode).subscribe
-  // //   (data =>{ this.getItemDetail1 = data
-  // // var sysQty = this.getItemDetail1.onHnQty
-  // // var LocName=this.getItemDetail1.locatorName
-  // //      trxLnArr1.controls[i].patchValue({systemQty: sysQty });
-  // //      trxLnArr1.controls[i].patchValue({LocatorSegment:LocName});
-  // //      trxLnArr1.controls[i].patchValue({entryStatusCode:'Process'});
-  // //     })
-
-  //   }
-  // }
+ 
 
   onOptiongetItem(event: any, i) {
     if (this.currentOp === 'SEARCH') {
@@ -803,9 +755,19 @@ export class MiscellaneousTransactionComponent implements OnInit {
           this.CostDetail = data; 
           trxLnArr1.controls[i].patchValue({
             itemUnitCost: this.CostDetail.rate,
+            
           });
           if (this.CostDetail.rate === 0.0) {
+            // alert('In elseIF');
             alert(this.CostDetail.segment);
+            // this.displayCost=false;
+          }
+          if (this.CostDetail.rate > 0.0 && this.miscellaneousForm.get('compileType').value === 13) {
+            // alert('IN IF'+this.CostDetail.rate)
+            this.displayCost=true;
+          }
+          else{
+            this.displayCost=false;
           }
         });
       this.service
