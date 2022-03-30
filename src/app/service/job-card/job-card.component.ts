@@ -326,6 +326,18 @@ export class JobCardComponent implements OnInit {
   techTotalValidation=false;
   duplicateLabLineItem=false;
   genericItemLab=false;
+
+  labBasTotal:number;
+  labDisTotal:number;
+  labSubTotal:number;
+  labTaxTotal:number;
+  labNetTotal:number;
+
+  matBasTotal:number;
+  matDisTotal:number;
+  matSubtotal:number;
+  matTaxTotal:number;
+  matNetTotal:number;
   
 
   // public minDatetime = new Date();
@@ -531,6 +543,19 @@ export class JobCardComponent implements OnInit {
       labDiscountIns:[],
       matDiscoutIns:[],
       lineBasicAmt:[],
+
+      labBasTotal:[],
+      labSubTotal:[],
+      labDisTotal:[],
+      labTaxTotal:[],
+      labNetTotal:[],
+
+      matBasTotal:[],
+      matDisTotal:[],
+      matSubtotal:[],
+      matTaxTotal:[],
+      matNetTotal:[],
+
 
       jobCardLabLines: this.fb.array([this.lineDetailsGroup()]),
       jobCardMatLines: this.fb.array([this.distLineDetails()]),
@@ -1379,6 +1404,7 @@ export class JobCardComponent implements OnInit {
             this.jobCardDate= data.obj.jobCardDate;
             this.jobCardNum1=data.obj.jobCardNum;
             this.arInvNum=data.obj.invoiceNumber;
+            this.estTotal=data.obj.estMaterial+data.obj.estLabor;
           } else { alert (jcNum + " Job Card Not Found...");return;}
 
 
@@ -1510,6 +1536,12 @@ export class JobCardComponent implements OnInit {
          
           var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
           // alert('jobCardLabLines length---'+data.jobCardLabLines.length)
+          
+            var lbr1=0;
+            var lbr2=0;
+            var lbr3=0;
+            var lbr4=0;
+            var lbr5=0;
 
           for (let ln=0; ln < data.obj.jobCardLabLines.length; ln++) {
             // alert('inside loop'+ln)
@@ -1519,7 +1551,38 @@ export class JobCardComponent implements OnInit {
             var lbrAmt=(data.obj.jobCardLabLines[ln].totAmt).toFixed(2);
             patch.controls[ln].patchValue({laborAmt:lbrAmt});
 
+            lbr1 =lbr1+data.obj.jobCardLabLines[ln].basicAmt;
+            lbr2 =lbr2+data.obj.jobCardLabLines[ln].taxableAmt;
+            lbr3 =lbr3+data.obj.jobCardLabLines[ln].taxAmt;
+            lbr4 =lbr4+data.obj.jobCardLabLines[ln].totAmt;
+            lbr5 =lbr5+data.obj.jobCardLabLines[ln].disAmt;
           }
+
+          this.labBasTotal =lbr1;
+          this.labSubTotal =lbr2;
+          this.labTaxTotal =lbr3;
+          this.labNetTotal =lbr4;
+          this.labDisTotal =lbr5;
+
+          var matr1=0;
+          var matr2=0;
+          var matr3=0;
+          var matr4=0;
+          var matr5=0;
+
+          for (let ln=0; ln < data.obj.jobCardMatLines.length; ln++) {
+            matr1 =matr1+data.obj.jobCardMatLines[ln].basicAmt;
+            matr2 =matr2+data.obj.jobCardMatLines[ln].taxableAmt;
+            matr3 =matr3+data.obj.jobCardMatLines[ln].taxAmt;
+            matr4 =matr4+data.obj.jobCardMatLines[ln].totAmt;
+            matr5 =matr5+data.obj.jobCardMatLines[ln].disAmt;
+          }
+
+            this.matBasTotal =matr1;
+            this.matSubtotal =matr2;
+            this.matTaxTotal =matr3;
+            this.matNetTotal= matr4;
+            this.matDisTotal= matr5;
 
           ///// disable/enable descreption column
 

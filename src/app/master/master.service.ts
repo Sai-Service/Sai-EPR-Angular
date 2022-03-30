@@ -2820,8 +2820,11 @@ bulkPickTickCSV(formData: FormData ,priceListName:string,taxCategoryName:string,
     }
 
 
-    EwTypeList(): Observable<any> {
-      return this.http.get(this.ServerUrl +'/cmnLookup/type/EWType');
+    EwTypeList(divId): Observable<any> {
+      // return this.http.get(this.ServerUrl +'/cmnLookup/type/EWType');
+      return this.http.get(this.ServerUrl + `/cmnLookup/Catgtype?cmnType=EWType&divisionId=${divId}`);
+      // http://localhost:8081/cmnLookup/Catgtype?cmnType=EWType&divisionId=2
+
     }
 
     EwCancelReasonList(): Observable<any> {

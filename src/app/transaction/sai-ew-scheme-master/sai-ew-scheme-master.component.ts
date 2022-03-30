@@ -230,7 +230,7 @@ export class SaiEwSchemeMasterComponent implements OnInit {
           );
       
 
-          this.service.EwTypeList()
+          this.service.EwTypeList(sessionStorage.getItem('divisionId'))
           .subscribe(
             data => {
               this.EwTypeList = data;

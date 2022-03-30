@@ -125,22 +125,19 @@
                                
                             </tr>
                           
-
+                            <div *ngIf="showPrintForm; then print1; else print2"></div>
+                            <ng-template #print2> 
+                            
                             <tr>
                                 <td  class="LabelFontStyle">&nbsp;Delivery&nbsp;&nbsp;Type:&nbsp;</td>
-                                <!-- <td> <input type="text" disabled  class="form-control" placeholder=""  formControlName="delvType"> </td> -->
-                                <td>
+                                 <td>
                                      <select formControlName="delvType" id="delvType"  [(ngModel)]="delvType" class="form-control" >
-                                        <option></option>
                                         <option *ngFor="let sc of  pickupTypeList">
                                             {{sc.codeDesc}}
                                         </option>
                                     </select>
                                 </td>
 
-                                <td   class="LabelFontStyle">&nbsp;Driver&nbsp;&nbsp;Name:&nbsp;</td>
-                                <td> <input type="text"   class="form-control" placeholder=""  formControlName="driverName" [(ngModel)]="driverName" > </td>
-                             
                                 <td  class="LabelFontStyle1">&nbsp;Delivery&nbsp;&nbsp;Taken&nbsp;By:&nbsp;</td>
                                 <td colspan="3"> <input type="text"   class="form-control" placeholder=""  formControlName="delvTakenBy" [(ngModel)]="delvTakenBy" style="background-color: yellow;width: 100%;"> </td>
                              </tr>
@@ -154,20 +151,35 @@
                                     <td>
                                         <select class="form-control" style="font-weight: bold;font-size: small;"
                                             formControlName="delAuthBy" [(ngModel)]="delAuthBy" >
-                                            <option value="wm">Works&nbsp;Manager</option>
-                                            <option value="bsm">BS&nbsp;Manager  </option>
-                                            <option value="agm">AGM&nbsp;Service</option>
-                                            <option value="gm">GM&nbsp;Service</option>
+                                            <option value="WM">Works&nbsp;Manager</option>
+                                            <option value="BSM">BS&nbsp;Manager  </option>
+                                            <option value="AGM">AGM&nbsp;Service</option>
+                                            <option value="GM">GM&nbsp;Service</option>
                                         </select>
                                     </td>
                                 </ng-template> <ng-template #osNo></ng-template>
                               </tr>
-                              <!-- <tr>
-                                <td   class="LabelFontStyle">&nbsp;JC&nbsp;&nbsp;No:&nbsp;</td>
-                                <td> <input  type="text"   class="form-control" placeholder=""  formControlName="jobCardNum" value={{jobCardNum}} [(ngModel)]="jobCardNum" > </td>
-                            
-                              </tr> -->
-                           
+
+                            </ng-template>
+                            <ng-template #print1>
+                                <tr>
+
+                                <td  class="LabelFontStyle">&nbsp;Delivery&nbsp;&nbsp;Type:&nbsp;</td>
+                                <td > <input disabled type="text"   class="form-control" placeholder=""  formControlName="delvType" [(ngModel)]="delvType"> </td>
+                             
+                                <td  class="LabelFontStyle1">&nbsp;Delivery&nbsp;&nbsp;Taken&nbsp;By:&nbsp;</td>
+                                <td > <input type="text" disabled  class="form-control" placeholder=""  formControlName="custName" [(ngModel)]="custName"> </td>
+                             
+                                <td  class="LabelFontStyle1">&nbsp;Outstanding&nbsp;&nbsp;Amt:&nbsp;</td>
+                                <td > <input disabled type="number"   class="form-control" placeholder=""  formControlName="osAmt" [(ngModel)]="osAmt"> </td>
+                             
+                                <td style="width: 15%" class="LabelFontStyle">Authorized&nbsp;By:&nbsp;</td>
+                                <td > <input disabled type="text"   class="form-control" placeholder=""  formControlName="delAuthBy" [(ngModel)]="delAuthBy"> </td>
+                             
+                            </tr>
+
+                            </ng-template>
+                                                        
                     </table>
                     <br>
 
