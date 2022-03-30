@@ -365,8 +365,8 @@ export class SaiExtendedWarrantyComponent implements OnInit {
               console.log(this.ewCancelReasonList);
             }
           );
-
-          this.service.EwTypeList()
+ 
+          this.service.EwTypeList(sessionStorage.getItem('divisionId'))
           .subscribe(
             data => {
               this.EwTypeList = data;
@@ -406,29 +406,29 @@ export class SaiExtendedWarrantyComponent implements OnInit {
               console.log(this.issueByList);
             });
 
-            this.service.RegNoListFN()
-            .subscribe(
-              data1 => {
-                this.VehRegNoList = data1;
-                console.log(this.VehRegNoList);
-              }
-            ); 
+            // this.service.RegNoListFN()
+            // .subscribe(
+            //   data1 => {
+            //     this.VehRegNoList = data1;
+            //     console.log(this.VehRegNoList);
+            //   }
+            // ); 
 
-            this.service.VehVinList()
-            .subscribe(
-              data1 => {
-                this.VehVinList = data1;
-                console.log(this.VehVinList);
-              }
-            ); 
+            // this.service.VehVinList()
+            // .subscribe(
+            //   data1 => {
+            //     this.VehVinList = data1;
+            //     console.log(this.VehVinList);
+            //   }
+            // ); 
             
-            this.service.itemIdList()
-            .subscribe(
-              data => {
-                this.ItemEWList = data;
-                console.log(this.ItemEWList);
-        }
-        );
+        //     this.service.itemIdList()
+        //     .subscribe(
+        //       data => {
+        //         this.ItemEWList = data;
+        //         console.log(this.ItemEWList);
+        // }
+        // );
 
 
       }
@@ -780,7 +780,8 @@ export class SaiExtendedWarrantyComponent implements OnInit {
         serchByRegNo(mRegNo) {
           
           mRegNo=mRegNo.toUpperCase();
-          // alert("in serchByRegNo..."+mRegNo);
+          this.vehRegNo=mRegNo;
+          // alert(".vehRegNo..."+ this.vehRegNo);
           this.service.getVehRegDetailsNew(mRegNo)
           .subscribe(
             data => {
@@ -1182,6 +1183,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
                   this.saiEwForm.get('ewCancelReason').enable();
                 }
 
+            this.saiEwForm.patchValue({vehRegNo : select.vehRegNo,orderNumber : select.orderNo});
             this.saiEwForm.patchValue(select);
             // this.ewId = select.ewId;
              this.GetVehicleRegInfomation(this.vehRegNo);
@@ -1245,6 +1247,10 @@ export class SaiExtendedWarrantyComponent implements OnInit {
             console.log(formValue);
             this.service.SaiEwCustomerSubmit(formValue).subscribe((res: any) => {
             if (res.code === 200) {
+            
+              this.ewInvoiceNo=res.obj.obj.ewInvoiceNo;
+              this.ewId=res.obj.obj.ewId;
+              this.receiptNumber=res.obj.obj.receiptNumber;
               alert('RECORD INSERTED SUCCESSFUILY');
               // this.displayButton=false;
               // window.location.reload();
@@ -1252,6 +1258,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
             } else {
               if (res.code === 400) {
                 this.displayButton=true;
+               
                 alert('Code already present in the data base');
                 // window.location.reload();
               }
@@ -1526,9 +1533,14 @@ getInvItemId($event) {
             executeAlertMsg(msg1) 
             {
               if (this.checkValidation==false){
-                (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
-                 this.message = msg1;
+                (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target','#confirmAlert');
+                this.message=msg1;
               }
             }
+
+
+            PrintDoc(){ alert ("Not Available...")}
+
+          
  
 }

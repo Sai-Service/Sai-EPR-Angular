@@ -1695,8 +1695,18 @@
                                                         </table>
                                                     </div>
                                                     </fieldset>
-                                                  
+                                                    <table>
+                                                        <tr>
+                                                            <td class="LabelFontStyle" >&nbsp;Labour&nbsp;:&nbsp;&nbsp;&nbsp;
+                                                            <td>&nbsp;Basic&nbsp;Total:&nbsp;</td> <td  class="LabelFontStyle"> {{this.labBasTotal | number:'0.00'}}</td>
+                                                            <td>&nbsp;Discount&nbsp;Total:&nbsp;</td> <td  class="LabelFontStyle"> {{this.labDisTotal | number:'0.00'}}</td>
+                                                            <td>&nbsp;Taxable&nbsp;Amt:&nbsp;</td> <td  class="LabelFontStyle"> {{this.labSubTotal | number:'0.00'}}</td> 
+                                                            <td>&nbsp;Tax&nbsp;Amt:&nbsp;</td>     <td  class="LabelFontStyle"> {{this.labTaxTotal | number:'0.00'}}</td>
+                                                            <td>&nbsp;Total&nbsp;Amt:&nbsp;</td>   <td  class="LabelFontStyle"> {{this.labNetTotal | number:'0.00'}}</td> 
+                                                        </tr>
+                                                    </table>
 
+                                                   
 
 
                                                 </div>
@@ -1971,6 +1981,17 @@
 
                                                 </div>
                                                 </fieldset>
+
+                                                <table>
+                                                    <tr>
+                                                        <td   class="LabelFontStyle">&nbsp;Material&nbsp;:&nbsp;&nbsp;&nbsp;
+                                                        <td>&nbsp;Basic&nbsp;Total:&nbsp;</td>  <td class="LabelFontStyle">  {{this.matBasTotal | number:'0.00'}}</td>
+                                                        <td>&nbsp;Discount&nbsp;Total:&nbsp;</td>  <td class="LabelFontStyle"> {{this.matDisTotal | number:'0.00'}}</td>
+                                                        <td>&nbsp;Taxable&nbsp;Amt:&nbsp;</td>  <td class="LabelFontStyle">  {{this.matSubtotal | number:'0.00'}}</td> 
+                                                        <td>&nbsp;Tax&nbsp;Amt:&nbsp;</td>      <td class="LabelFontStyle">  {{this.matTaxTotal | number:'0.00'}}</td>
+                                                        <td>&nbsp;Total&nbsp;Amt:&nbsp;</td>    <td class="LabelFontStyle">  {{this.matNetTotal | number:'0.00'}}</td> 
+                                                    </tr>
+                                                </table>
                                              
                                             </div>
                                         </div>
