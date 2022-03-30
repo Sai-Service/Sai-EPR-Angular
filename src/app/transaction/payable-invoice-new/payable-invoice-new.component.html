@@ -990,7 +990,7 @@
                                                                     formControlName="segment1" value={{segment1}}
                                                                     style="width: 100px;height: 25px;font-size: 10px;">
                                                             </td>
-                                                            <td>
+                                                            <td [style.display]="isVisiblelineDetialsDeleteButton ? 'block' : 'none'">
                                                                 <button type="submit"
                                                                     class="btn btn-primary fa fa-trash"
                                                                     (click)="Delete(trxLineIndex)"></button>
@@ -1157,9 +1157,7 @@
                                                                     style="width: fit-content;height: 25px;">
                                                             </td>
                                                             <td>
-                                                                <div
-                                                                    *ngIf="disDeleteButton; then thendisDeleteButton; else elsedisDeleteButton">
-                                                                </div>
+                                                                <div   *ngIf="disDeleteButton; then thendisDeleteButton; else elsedisDeleteButton"> </div>
                                                                 <ng-template #thendisDeleteButton>
                                                                     <button type="submit" class="btn btn-primary"
                                                                         (click)="RemoveDistributionRow(k)"
@@ -1469,7 +1467,15 @@
                                         </table>
 
                                     </div>
-
+                                    <table class="center">
+                                        <tr>
+                                            <td>
+                                                <button type="submit" class="btn btn-primary" (click)="SaveTdsDetails()"
+                                                    [style.display]="isVisibleSaveTDS ? 'block' : 'none'">Save Tds</button>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                   
                                 </div>
 
                                 <div class="modal fade" id="taxDetailsModel" tabindex="-1" role="dialog"
@@ -1763,10 +1769,10 @@
                                 <button type="submit" class="btn btn-primary" (click)="Validate()"
                                     [style.display]="isVisibleValidate ? 'block' : 'none'">Validate</button>
                             </td>
-                            <td>
+                            <!-- <td>
                                 <button type="submit" class="btn btn-primary" (click)="SaveTdsDetails()"
                                     [style.display]="isVisibleSaveTDS ? 'block' : 'none'">Save Tds</button>
-                            </td>
+                            </td> -->
                             <td>
                                 <button type="button" class="btn btn-primary" data-toggle="modal"
                                     [style.display]="isVisibleviewAccounting ? 'block' : 'none'"
