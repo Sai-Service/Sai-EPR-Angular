@@ -276,7 +276,7 @@
                                     <td>
                                         <input type="date" formControlName="suppInvDate" class="form-control"
                                             [(ngModel)]="suppInvDate" style="width: 100%;"
-                                            max="{{minDate | date:'yyyy-MM-dd'}}" onkeydown=" return false"
+                                            max="{{minDate | date:'yyyy-MM-dd'}}" onkeydown="return false"
                                             [ngClass]="{ 'is-invalid': submitted && f.suppInvDate.errors }">
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle1">Description:</td>

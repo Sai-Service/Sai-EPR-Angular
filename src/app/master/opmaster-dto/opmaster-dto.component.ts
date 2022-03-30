@@ -870,28 +870,31 @@ export class OPMasterDtoComponent implements OnInit {
   }
 
   RemoveRow(index) {
+    alert(index)
     if (index === 0) {
 
-    } else {
-      this.lineDetailsArray.removeAt(index);
-    }
-
+    } 
+    // else {
+    //   this.lineDetailsArray.removeAt(index);
+    // }
+debugger
     this.displayPoLine[index] = true;
     this.hideArray[index] = true;
-
+    this.lineDetailsArray.removeAt(index);
+    this.TaxDetailsArray(index).removeAt(index);
     var formArr = this.poMasterDtoForm.get('poLines') as FormArray;
     var formVal = this.poMasterDtoForm.get('poLines').value;
     for (let i = 0; i < formVal.length; i++) {
       (formArr.controls[i]).patchValue({
         lineNumber: i + 1,
       });
+      alert(formArr[i].taxCategoryName);
     }
     this.updateTotAmtPerline();
   }
 
 
   setFocus(name) {
-
     const ele = this.poForm.nativeElement[name];
     if (ele) {
       ele.focus();
