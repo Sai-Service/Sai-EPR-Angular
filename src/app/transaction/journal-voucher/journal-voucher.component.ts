@@ -11,7 +11,7 @@ interface IJournalVoucher{
   segmentName:string;
   codeCombinationId:number;
   docSeqValue:number;
-  postedDate:Date;
+  postedDate:string;
   emplId:number;
   // lineNumber:number;
   enteredDr:number;
@@ -51,7 +51,7 @@ export class JournalVoucherComponent implements OnInit {
   segment11:string;
   lookupValueDesc1:string;
   segment2:number;
-  postedDate = new Date();
+  postedDate :string;
   lookupValueDesc2:string;
   segment3:number;
   lookupValueDesc3:string;
@@ -110,6 +110,7 @@ export class JournalVoucherComponent implements OnInit {
   }
 
   duplicateLineItem=false;
+  min=new Date();
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.JournalVoucherForm=fb.group({
@@ -226,7 +227,7 @@ export class JournalVoucherComponent implements OnInit {
     (document.getElementById("btnRev") as HTMLInputElement).disabled = true;
     // alert('employee'+this.emplId);
 
-    this.JournalVoucherForm.controls.postedDate.setValue(formatDate(this.postedDate,'yyyy-MM-dd','en'));
+    // this.JournalVoucherForm.controls.postedDate.setValue(formatDate(this.postedDate,'yyyy-MM-dd','en'));
     this.addnewglLines(-1);
     var patch=this.JournalVoucherForm.get('glLines') as FormArray
      (patch.controls[0]).patchValue(
@@ -689,8 +690,8 @@ else
 
        var selPer=this.PeriodName.find(d=>d.periodName===event);
        if(selPer!=undefined){
-      (document.getElementById('postDate') as HTMLInputElement).setAttribute('min',selPer.startDate);
-      (document.getElementById('postDate') as HTMLInputElement).setAttribute('max',selPer.endDate);
+      (document.getElementById('postedDate') as HTMLInputElement).setAttribute('min',selPer.startDate);
+      (document.getElementById('postedDate') as HTMLInputElement).setAttribute('max',selPer.endDate);
     }
   }
   OnSelectJournalType(event:any){
@@ -735,4 +736,7 @@ else
 
 
       }
+
+
+    
   }

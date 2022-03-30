@@ -43,7 +43,7 @@
                                         <td >
                                             <input type="text" class="form-control" formControlName="OUName" [(ngModel)]='OUName'>
                                             <input hidden formControlName="ouId" [(ngModel)]='ouId'>
-                                            <input  formControlName="emplId" [(ngModel)]='emplId'>
+                                            <input hidden formControlName="emplId" [(ngModel)]='emplId'>
                                         </td>
                                         <td style="width: 15%"class="LabelFontStyle1">
                                                 Period&nbsp;:
@@ -119,7 +119,7 @@
                                                 Reversal&nbsp;Date&nbsp;:
                                         </td>
                                         <td >
-                                            <input type="Date" class="form-control" formControlName="reversalDate">
+                                            <input type="Date" class="form-control" formControlName="reversalDate" id="reversalDate">
                                         </td>
                                     </tr>
                                 </table>

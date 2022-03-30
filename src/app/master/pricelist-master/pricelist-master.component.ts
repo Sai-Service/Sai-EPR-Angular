@@ -663,7 +663,7 @@ export class PricelistMasterComponent implements OnInit {
       }
     }
 
-    alert("Line Validation :" + this.lineValidation);
+    // alert("Line Validation :" + this.lineValidation);
 
     if (this.lineValidation === false) {
       alert("Line Validation Failed...\nPlease check all  line data fields are updated properly..\nCheck for Duplicate line items.")
@@ -1013,7 +1013,7 @@ export class PricelistMasterComponent implements OnInit {
                 itemId: data.itemId,
                 itemName: data.segment,
                 segment: mSegment,
-
+                tax : data.attribute1,
               } );
 
 
@@ -1056,7 +1056,7 @@ export class PricelistMasterComponent implements OnInit {
             this.lineDetailsArray().controls[index].get('itemDescription').reset();
             this.lineDetailsArray().controls[index].get('itemCategory').reset();
             this.lineDetailsArray().controls[index].get('uom').reset();
-
+            this.lineDetailsArray().controls[index].get('tax').reset();
             return;
           }
         }

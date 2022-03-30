@@ -299,8 +299,16 @@
                             formControlName="description" #desc></td>
                         <td><input disabled type="text" class="form-control" style="height: 20px;width: 70px;"
                             formControlName="uom"></td>
+                            <div *ngIf="displayCost; then thendicost; else elseencost">
+                            </div>
+                            <ng-template #thendicost>
                         <td><input disabled type="number" class="form-control" style="height: 20px;width: 70px;"
                             formControlName="itemUnitCost"></td>
+                            </ng-template>
+                            <ng-template #elseencost>
+                              <td><input  type="number" class="form-control" style="height: 20px;width: 70px;"
+                                  formControlName="itemUnitCost"></td>
+                                  </ng-template>
                         <td><input disabled class="form-control" style="height: 20px; width: 110px;"
                             formControlName="subInventory" [(ngModel)]="subInventory">
                           <!-- <option>--Select--</option>

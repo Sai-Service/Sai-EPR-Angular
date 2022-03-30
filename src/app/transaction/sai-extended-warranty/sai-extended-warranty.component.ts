@@ -67,8 +67,8 @@ export class SaiExtendedWarrantyComponent implements OnInit {
   pipe = new DatePipe('en-US');
   resMsg : string;
 
-  message: string = "Please Fix the Errors !";
-  msgType:string ="Close";
+  message:string="PleaseFixtheErrors!";
+  msgType:string="Close";
 
   invItemListEw: any[];
   VehicleRegDetails:any;
@@ -583,8 +583,6 @@ export class SaiExtendedWarrantyComponent implements OnInit {
                 paymentAmt: this.lstEwSchemeDetails.schemeAmount,
                 ewInsurerId: this.lstEwSchemeDetails.ewInsId,
                 
-
-                
            });
           //  alert(this.lstEwSchemeDetails.schemeAmount+","+this.lstEwSchemeDetails.premiumPeriod);
 
@@ -662,19 +660,12 @@ export class SaiExtendedWarrantyComponent implements OnInit {
                 bankBranch: this.ewReceiptDeails.bankBranch,
                 checkNo: this.ewReceiptDeails.checkNo,
                 checkDate: this.ewReceiptDeails.checkDate,
-
-                
-
               }); } else { alert("Receipt Details not found....");}
               // alert("pay type ="+this.ewReceiptDeails.payType);
               // alert("BANK ="+this.ewReceiptDeails.bankName);
-            }
-             );
-
-        }
-
-        
-
+            });}
+             
+      
         GetLastRunKmsSearch(mRegNo){
            var z=0;
           this.service.getLastRunKms(mRegNo)
@@ -1063,16 +1054,16 @@ export class SaiExtendedWarrantyComponent implements OnInit {
           } 
           
         }
-
        
 
         GetOrderDetails(mOrderNumber:any) {
-          // alert("order details...."+ mOrderNumber);
+          // alert("Order Number : "+ mOrderNumber);
 
-          this.service.getVehicleOrderDetails(mOrderNumber)
+          this.service.getVehicleOrderDetailsNew(mOrderNumber)
           .subscribe(
             data => {
-              this.vehicleSaleOrderDetails = data.obj;
+              // this.vehicleSaleOrderDetails = data.obj;
+              this.vehicleSaleOrderDetails = data
               console.log(this.vehicleSaleOrderDetails);
               
 
@@ -1248,18 +1239,19 @@ export class SaiExtendedWarrantyComponent implements OnInit {
           this.CheckDataValidations();
 
           if (this.checkValidation===true) {
+            this.displayButton=false;
             // alert("Data Validation Sucessfull....\nPosting data  to EW CUSTOMER TABLE")
             const formValue: IExtendedWarranty =this.transeData(this.saiEwForm.value);
             console.log(formValue);
             this.service.SaiEwCustomerSubmit(formValue).subscribe((res: any) => {
             if (res.code === 200) {
               alert('RECORD INSERTED SUCCESSFUILY');
-              this.displaySuccess=true;
+              // this.displayButton=false;
               // window.location.reload();
               this.saiEwForm.disable();
             } else {
               if (res.code === 400) {
-                this.displaySuccess=false;
+                this.displayButton=true;
                 alert('Code already present in the data base');
                 // window.location.reload();
               }
