@@ -25,9 +25,17 @@ getJonCardNoSearchLoc(jcNum,jDate,jStatus,jRegNo,jLocId): Observable<any> {
   return this.http.get(this.ServerUrl +`/jobCard/jobList?jobDate=${jDate}&status=${jStatus}&locId=${jLocId}&jobCardNum=${jcNum}&regNo=${jRegNo}`);
   }
 
-getPendingjcListForGP(jRegNo,jLocId): Observable<any> {
+
+  getPendingjcListForGP(jRegNo,jLocId): Observable<any> {
   return this.http.get(this.ServerUrl +`/jobCard/pendingList?locId=${jLocId}&regNo=${jRegNo}`);
  }
+
+ getGatePassIdDetails(gpId): Observable<any> {
+  return this.http.get(this.ServerUrl +`/SRGatepass/byGatepassId/${gpId}`);
+  // http://localhost:8081/SRGatepass/byGatepassId/181
+
+ }
+
 
 
 
@@ -167,13 +175,14 @@ public lineWISESubmit(Record) {
 }
 
 
-generateServiceGatePass(regNo,mlocId){
+generateServiceGatePass(regNo,mlocId,balAmt,authBy,dType){
   const options = {
     headers: this.headers
   };
   // const url = this.ServerUrl + `/SRGatepass/postSRVGatepass?jobCardNum=${jcNo}`;
-  const url = this.ServerUrl + `/SRGatepass/SRVGatepass?regNo=${regNo}&locId=${mlocId}`;
+  const url = this.ServerUrl + `/SRGatepass/SRVGatepass?regNo=${regNo}&locId=${mlocId}&osAmt=${balAmt}&delAuthBy=${authBy}&delvType=${dType}`;
   return this.http.post(url, options);
+
   // old -- http://localhost:8081/SRGatepass/postSRVGatepass?jobCardNum=12PU.101-40
   // new -- http://localhost:8081/SRGatepass/SRVGatepass?regNo=MH12SV4124&locId=2202
 }

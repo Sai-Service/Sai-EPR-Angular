@@ -503,6 +503,7 @@ export class CashBankTransferComponent implements OnInit {
         var postEmplId=Number(sessionStorage.getItem('emplId'));
         const formValue: ICashBankTransfer =this.transeData(this.cashBankTransferForm.value);
         this.statusPost=false;
+        this.updateButton=false;
         
         this.service.CashBankTrfPostSubmit(formValue,postEmplId).subscribe((res: any) => {
           if (res.code === 200) {
@@ -1332,17 +1333,17 @@ export class CashBankTransferComponent implements OnInit {
            
   cntrRcptHeaderList = [[
     // 'SrlNo',
-    'receiptNumber',
-    'receiptDate',
-    'receiptMethodId',
-    'locId',
-    'checkNo',
-    'checkDate',
-    'bankName',
-    'branchName',
-    'amount',
-    'actTrfDocNo',
-    'PrintDateTime',
+    'Receipt Number',
+    'Receipt Date',
+    // 'receiptMethodId',
+    'Loc Code',
+    'ChequeNo',
+    'Cheque Date',
+    'Bank Name',
+    'Branch Name',
+    'Amount',
+    'ActTrf DocNo',
+    'Print DateTime',
   ]]
 
 
@@ -1366,9 +1367,9 @@ export class CashBankTransferComponent implements OnInit {
       // ordLn.ouName=sessionStorage.getItem('ouName');
       // ordLn.ouId = orList[i].ouId;
       // if( orList[i].actTrfDocNo === docNum) {
-      ordLn.receiptNumber = orList[i].receiptNumber;
+      ordLn.receiptNumber = orList[i].receiptNumber.toString();
       ordLn.receiptDate = this.pipe.transform(orList[i].receiptDate, 'dd-MM-y');
-      ordLn.receiptMethodId = orList[i].receiptMethodId;
+      // ordLn.receiptMethodId = orList[i].receiptMethodId;
       ordLn.locId = orList[i].locId;
       ordLn.checkNo = orList[i].checkNo;
       ordLn.checkDate = this.pipe.transform(orList[i].checkDate, 'dd-MM-y');

@@ -67,8 +67,8 @@ export class SaiExtendedWarrantyComponent implements OnInit {
   pipe = new DatePipe('en-US');
   resMsg : string;
 
-  message: string = "Please Fix the Errors !";
-  msgType:string ="Close";
+  message:string="PleaseFixtheErrors!";
+  msgType:string="Close";
 
   invItemListEw: any[];
   VehicleRegDetails:any;
@@ -365,8 +365,8 @@ export class SaiExtendedWarrantyComponent implements OnInit {
               console.log(this.ewCancelReasonList);
             }
           );
-
-          this.service.EwTypeList()
+ 
+          this.service.EwTypeList(sessionStorage.getItem('divisionId'))
           .subscribe(
             data => {
               this.EwTypeList = data;
@@ -406,29 +406,29 @@ export class SaiExtendedWarrantyComponent implements OnInit {
               console.log(this.issueByList);
             });
 
-            this.service.RegNoListFN()
-            .subscribe(
-              data1 => {
-                this.VehRegNoList = data1;
-                console.log(this.VehRegNoList);
-              }
-            ); 
+            // this.service.RegNoListFN()
+            // .subscribe(
+            //   data1 => {
+            //     this.VehRegNoList = data1;
+            //     console.log(this.VehRegNoList);
+            //   }
+            // ); 
 
-            this.service.VehVinList()
-            .subscribe(
-              data1 => {
-                this.VehVinList = data1;
-                console.log(this.VehVinList);
-              }
-            ); 
+            // this.service.VehVinList()
+            // .subscribe(
+            //   data1 => {
+            //     this.VehVinList = data1;
+            //     console.log(this.VehVinList);
+            //   }
+            // ); 
             
-            this.service.itemIdList()
-            .subscribe(
-              data => {
-                this.ItemEWList = data;
-                console.log(this.ItemEWList);
-        }
-        );
+        //     this.service.itemIdList()
+        //     .subscribe(
+        //       data => {
+        //         this.ItemEWList = data;
+        //         console.log(this.ItemEWList);
+        // }
+        // );
 
 
       }
@@ -583,8 +583,6 @@ export class SaiExtendedWarrantyComponent implements OnInit {
                 paymentAmt: this.lstEwSchemeDetails.schemeAmount,
                 ewInsurerId: this.lstEwSchemeDetails.ewInsId,
                 
-
-                
            });
           //  alert(this.lstEwSchemeDetails.schemeAmount+","+this.lstEwSchemeDetails.premiumPeriod);
 
@@ -662,19 +660,12 @@ export class SaiExtendedWarrantyComponent implements OnInit {
                 bankBranch: this.ewReceiptDeails.bankBranch,
                 checkNo: this.ewReceiptDeails.checkNo,
                 checkDate: this.ewReceiptDeails.checkDate,
-
-                
-
               }); } else { alert("Receipt Details not found....");}
               // alert("pay type ="+this.ewReceiptDeails.payType);
               // alert("BANK ="+this.ewReceiptDeails.bankName);
-            }
-             );
-
-        }
-
-        
-
+            });}
+             
+      
         GetLastRunKmsSearch(mRegNo){
            var z=0;
           this.service.getLastRunKms(mRegNo)
@@ -789,7 +780,8 @@ export class SaiExtendedWarrantyComponent implements OnInit {
         serchByRegNo(mRegNo) {
           
           mRegNo=mRegNo.toUpperCase();
-          // alert("in serchByRegNo..."+mRegNo);
+          this.vehRegNo=mRegNo;
+          // alert(".vehRegNo..."+ this.vehRegNo);
           this.service.getVehRegDetailsNew(mRegNo)
           .subscribe(
             data => {
@@ -1063,16 +1055,16 @@ export class SaiExtendedWarrantyComponent implements OnInit {
           } 
           
         }
-
        
 
         GetOrderDetails(mOrderNumber:any) {
-          // alert("order details...."+ mOrderNumber);
+          // alert("Order Number : "+ mOrderNumber);
 
-          this.service.getVehicleOrderDetails(mOrderNumber)
+          this.service.getVehicleOrderDetailsNew(mOrderNumber)
           .subscribe(
             data => {
-              this.vehicleSaleOrderDetails = data.obj;
+              // this.vehicleSaleOrderDetails = data.obj;
+              this.vehicleSaleOrderDetails = data
               console.log(this.vehicleSaleOrderDetails);
               
 
@@ -1191,6 +1183,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
                   this.saiEwForm.get('ewCancelReason').enable();
                 }
 
+            this.saiEwForm.patchValue({vehRegNo : select.vehRegNo,orderNumber : select.orderNo});
             this.saiEwForm.patchValue(select);
             // this.ewId = select.ewId;
              this.GetVehicleRegInfomation(this.vehRegNo);
@@ -1248,18 +1241,24 @@ export class SaiExtendedWarrantyComponent implements OnInit {
           this.CheckDataValidations();
 
           if (this.checkValidation===true) {
+            this.displayButton=false;
             // alert("Data Validation Sucessfull....\nPosting data  to EW CUSTOMER TABLE")
             const formValue: IExtendedWarranty =this.transeData(this.saiEwForm.value);
             console.log(formValue);
             this.service.SaiEwCustomerSubmit(formValue).subscribe((res: any) => {
             if (res.code === 200) {
+            
+              this.ewInvoiceNo=res.obj.obj.ewInvoiceNo;
+              this.ewId=res.obj.obj.ewId;
+              this.receiptNumber=res.obj.obj.receiptNumber;
               alert('RECORD INSERTED SUCCESSFUILY');
-              this.displaySuccess=true;
+              // this.displayButton=false;
               // window.location.reload();
               this.saiEwForm.disable();
             } else {
               if (res.code === 400) {
-                this.displaySuccess=false;
+                this.displayButton=true;
+               
                 alert('Code already present in the data base');
                 // window.location.reload();
               }
@@ -1534,9 +1533,14 @@ getInvItemId($event) {
             executeAlertMsg(msg1) 
             {
               if (this.checkValidation==false){
-                (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
-                 this.message = msg1;
+                (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target','#confirmAlert');
+                this.message=msg1;
               }
             }
+
+
+            PrintDoc(){ alert ("Not Available...")}
+
+          
  
 }

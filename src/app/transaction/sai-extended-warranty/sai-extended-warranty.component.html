@@ -142,12 +142,15 @@
                                 <table>
                                     <tr>
                                       <td>
-                                        <input   type="text"  formControlName="orderNumber"  id="orderNumber" [(ngModel)]="orderNumber" class="form-control" style="background-color: yellow;" placeholder="Enter Order No & click click on button right ." >
+                                        <input   type="text"  formControlName="orderNumber"  id="orderNumber" [(ngModel)]="orderNumber" class="form-control"  (change)="GetOrderDetails(orderNumber)" style="background-color: yellow;" placeholder="Enter Order No " >
                                       </td>
+                                      <!-- <td>
+                                        <input disabled  type="text"  formControlName="vehRegNo"  id="vehRegNo" [(ngModel)]="vehRegNo" class="form-control" >
+                                    </td> -->
 
-                                      <td colspan="8" style="text-align: left; width: 100%;height: 26px;">
+                                      <!-- <td colspan="8" style="text-align: left; width: 100%;height: 26px;">
                                         <button type="submit" class="btn btn-primary" (click)="GetOrderDetails(orderNumber)" >...</button>
-                                      </td>
+                                      </td> -->
 
                                         <!-- <td colspan="8" style="text-align: left; width: 100%;">
                                         <button type="submit"  (click)= "GetOrderDetails()" class="btn btn-primary"><i
@@ -160,7 +163,7 @@
                             <td style="width: 15%" class="LabelFontStyle1">Reg&nbsp;No:&nbsp;</td>
     
                             <td>
-                             <input disabled style="font-weight: bold;" type="text"
+                             <input disabled style="font-weight: bold;text-transform: uppercase;" type="text"
                                 formControlName="vehRegNo"
                                 [(ngModel)]="vehRegNo"
                                 (change)="serchByRegNo(vehRegNo)"
@@ -220,9 +223,9 @@
     
                             <td>
                              <input disabled style="font-weight: bold;" type="text"
-                                formControlName="regNo"
-                                [(ngModel)]="regNo"
-                                (change)="serchByRegNo(regNo)"
+                                formControlName="vehRegNo"
+                                [(ngModel)]="vehRegNo"
+                                (change)="serchByRegNo(vehRegNo)"
                                 (keyup)="getUserIdsFirstWay($event)"
                                 id="userIdFirstWay"
                                 list="dynmicUserIds"
@@ -781,23 +784,23 @@
                             <td style="width: 15%" class="LabelFontStyle1">Bank&nbsp;Name:&nbsp;</td>
 
                             <td>
-                                <input   type="text" formControlName="bankName"  id="bankName" [(ngModel)] ="bankName" class="form-control"  placeholder="Bank Name">
+                                <input   type="text" formControlName="bankName"  id="bankName" [(ngModel)] ="bankName" class="form-control"  placeholder="Bank Name" style="background-color: yellow;">
                             </td>
 
                             <td style="width: 15%" class="LabelFontStyle1">Branch&nbsp;:&nbsp;</td>
 
                             <td>
-                                <input   type="text" formControlName="bankBranch"  id="bankBranch" [(ngModel)] ="bankBranch" class="form-control" placeholder="Branch">
+                                <input   type="text" formControlName="bankBranch"  id="bankBranch" [(ngModel)] ="bankBranch" class="form-control" placeholder="Branch" style="background-color: yellow;">
                             </td>
 
 
                             <td style="width: 15%" class="LabelFontStyle1">&nbsp;DD/Chq.&nbsp;No:&nbsp;</td>
                             <td>
-                                <input    type="text" formControlName="checkNo"  id="checkNo"  [(ngModel)] ="checkNo"  class="form-control"  placeholder="DD/Cheque No..">
+                                <input    type="text" formControlName="checkNo"  id="checkNo"  [(ngModel)] ="checkNo"  class="form-control"  placeholder="DD/Cheque No.." style="background-color: yellow;">
                             </td>
                             <td style="width: 15%" class="LabelFontStyle1">DD/Chq.&nbsp;Date:&nbsp;</td>
                             <td>
-                                <input    type="date" formControlName="checkDate"  id="checkDate"  [(ngModel)] ="checkDate" class="form-control"  placeholder="Bank Name">
+                                <input    type="date" formControlName="checkDate"  id="checkDate"  [(ngModel)] ="checkDate" class="form-control"  placeholder="Cheque Date" style="background-color: yellow;">
                             </td>
                             
                         </ng-template>
@@ -939,14 +942,14 @@
                                 <!-- <div *ngIf="checkValidation; then thenBlockValidate; else elseBlockValidate"></div>
                                 <ng-template #thenBlockValidate> -->
 
-                                    <!-- <td>
-                                        <button type="button" class="btn btn-info" (click)="newMast()" [disabled]="!saiEwForm">Save</button>
-                                    </td> -->
-
                                     <td>
+                                        <button type="button" class="btn btn-info" (click)="newMast()" >Save</button>
+                                    </td>
+
+                                    <!-- <td>
                                         <button type="button" id="saveBtn" data-toggle="modal" 
                                         data-target="#confirmAlert" class="btn btn-info" (click)="newMast()" [disabled]="!saiEwForm">Save</button>
-                                    </td>
+                                    </td> -->
 
 
                                 <!-- </ng-template>
@@ -976,6 +979,8 @@
                                 <td>
                                     <button type="button" class="btn btn-info" (click)="searchMast()">Search</button>
                                 </td>
+
+                               
 
                                     <!-- ====================Reset Dialog ======================== -->
 
@@ -1043,11 +1048,20 @@
                                   
                                     <ng-template #elseBlock1>
                                    
-                                            <td>
+                                            <!-- <td>
                                                 <button type="button" class="btn btn-info" (click)="updateMast()"[disabled]="!saiEwForm">Update</button>
+                                            </td> -->
+
+                                            <td>
+                                                <button disabled type="button" class="btn btn-info" (click)="newMast()" >Save</button>
                                             </td>
+
                                             <td>
                                                 <button type="button" class="btn btn-info" (click)="searchMast()">Search</button>
+                                            </td>
+
+                                            <td>
+                                                <button type="button" class="btn btn-info" (click)="PrintDoc()">Print</button>
                                             </td>
 
                                              <!-- <td>

@@ -306,7 +306,7 @@
                                                                             </td>
 
                                                                             <td>
-                                                                                <button type="button" class="btn-primary" (click)="createNew()">Create New</button>
+                                                                                <button type="button" class="btn-primary" (click)="createNew()" style="width: fit-content;">Create</button>
                                                                             </td>
 
                                                                         </tr>
@@ -554,25 +554,18 @@
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td style="width: 15%"
-                                                                                class="LabelFontStyle">
-                                                                                &nbsp;Demanded&nbsp;Job&nbsp;:
-                                                                            </td>
-
+                                                                            <td style="width: 15%" class="LabelFontStyle">&nbsp;Demanded&nbsp;Job&nbsp;:</td>
+                                                                           
                                                                             <!-- <td colspan="3" >
                                                                                 <input type="text" class="form-control"
                                                                                 formControlName="demandJob" placeholder="" style="width: 100%;">
                                                                             </td>  -->
                                                                             <td colspan="3">
-                                                                            <textarea id="demandJob" formControlName="demandJob" rows="2" style="width: 100%;resize: none;"></textarea>
-                                                                            </td>
-                                                                            <td style="width: 15%"
-                                                                                class="LabelFontStyle">
-                                                                                Recommendation&nbsp;:</td>
-
-                                                                                <td colspan="3">
-                                                                                    <textarea id="recomJob" formControlName="recomJob" rows="2" style="width: 100%; resize: none;"></textarea>
-                                                                                </td>
+                                                                            <textarea id="demandJob" formControlName="demandJob" rows="2" style="width: 100%;resize: none; font-size: small;"></textarea> </td>
+                                                                           
+                                                                            <td style="width: 15%"  class="LabelFontStyle">Recommendation&nbsp;:</td>
+                                                                            <td colspan="3"><textarea id="recomJob" formControlName="recomJob" rows="2" style="width: 100%; resize: none;font-size: small;"></textarea> </td>
+                                                                               
 
                                                                             <!-- <td colspan="3"> 
                                                                                 <input type="text" class="form-control"
@@ -1702,8 +1695,18 @@
                                                         </table>
                                                     </div>
                                                     </fieldset>
-                                                  
+                                                    <table>
+                                                        <tr>
+                                                            <td class="LabelFontStyle" >&nbsp;Labour&nbsp;:&nbsp;&nbsp;&nbsp;
+                                                            <td>&nbsp;Basic&nbsp;Total:&nbsp;</td> <td  class="LabelFontStyle"> {{this.labBasTotal | number:'0.00'}}</td>
+                                                            <td>&nbsp;Discount&nbsp;Total:&nbsp;</td> <td  class="LabelFontStyle"> {{this.labDisTotal | number:'0.00'}}</td>
+                                                            <td>&nbsp;Taxable&nbsp;Amt:&nbsp;</td> <td  class="LabelFontStyle"> {{this.labSubTotal | number:'0.00'}}</td> 
+                                                            <td>&nbsp;Tax&nbsp;Amt:&nbsp;</td>     <td  class="LabelFontStyle"> {{this.labTaxTotal | number:'0.00'}}</td>
+                                                            <td>&nbsp;Total&nbsp;Amt:&nbsp;</td>   <td  class="LabelFontStyle"> {{this.labNetTotal | number:'0.00'}}</td> 
+                                                        </tr>
+                                                    </table>
 
+                                                   
 
 
                                                 </div>
@@ -1725,7 +1728,7 @@
                                                 <table class="center">
                                                     <tr>
 
-                                                        <div *ngIf="saveMatButton; then MI1; else MI2"></div>
+                                                        <!-- <div *ngIf="saveMatButton; then MI1; else MI2"></div>
                                                         <ng-template #MI1>
 
                                                         <td>
@@ -1735,19 +1738,32 @@
                                                                 Material from WIP</button>
                                                         </td>
                                                         </ng-template>
-                                                        <ng-template #MI2></ng-template>
+                                                        <ng-template #MI2> </ng-template> -->
+
 
                                                         <div *ngIf="saveMatButton; then M1; else M2"></div>
                                                         <ng-template #M1>
-                                                            <td>
-                                                                <button type="butt on" class="btn btn-primary" (click)="saveMaterial()" style="width: 8rem;">Save  Material</button>
-                                                            </td>
+                                                            <td><button type="butt on" class="btn btn-primary" (click)="saveMaterial()" style="width: 8rem;">Save  Material</button> </td>
                                                         </ng-template>
+
                                                         <ng-template #M2>
+                                                           <td><button disabled type="butt on" class="btn btn-primary" (click)="saveMaterial()" style="width: 8rem;">Save  Material</button>   </td>
+                                                        </ng-template>
+
+                                                        <div *ngIf="importMatButton; then imp1; else imp2"></div>
+                                                        <ng-template #imp1>
                                                             <td>
-                                                                <button disabled type="butt on" class="btn btn-primary" (click)="saveMaterial()" style="width: 8rem;">Save  Material</button>
+                                                                <button type="butt on" class="btn btn-primary"  (click)="MatImptWip(jobCardNum)"
+                                                                    style="width: fit-content; text-align: center;">Import Material from WIP</button>
                                                             </td>
                                                         </ng-template>
+                                                        <ng-template #imp2>
+                                                            <td>
+                                                                <button disabled type="butt on" class="btn btn-primary"  (click)="MatImptWip(jobCardNum)"
+                                                                    style="width: fit-content; text-align: center;">Import Material from WIP</button>
+                                                            </td>
+                                                        </ng-template>
+
 
 
                                                     </tr>
@@ -1965,6 +1981,17 @@
 
                                                 </div>
                                                 </fieldset>
+
+                                                <table>
+                                                    <tr>
+                                                        <td   class="LabelFontStyle">&nbsp;Material&nbsp;:&nbsp;&nbsp;&nbsp;
+                                                        <td>&nbsp;Basic&nbsp;Total:&nbsp;</td>  <td class="LabelFontStyle">  {{this.matBasTotal | number:'0.00'}}</td>
+                                                        <td>&nbsp;Discount&nbsp;Total:&nbsp;</td>  <td class="LabelFontStyle"> {{this.matDisTotal | number:'0.00'}}</td>
+                                                        <td>&nbsp;Taxable&nbsp;Amt:&nbsp;</td>  <td class="LabelFontStyle">  {{this.matSubtotal | number:'0.00'}}</td> 
+                                                        <td>&nbsp;Tax&nbsp;Amt:&nbsp;</td>      <td class="LabelFontStyle">  {{this.matTaxTotal | number:'0.00'}}</td>
+                                                        <td>&nbsp;Total&nbsp;Amt:&nbsp;</td>    <td class="LabelFontStyle">  {{this.matNetTotal | number:'0.00'}}</td> 
+                                                    </tr>
+                                                </table>
                                              
                                             </div>
                                         </div>

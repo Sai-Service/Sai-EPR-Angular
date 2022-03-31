@@ -308,7 +308,8 @@ export class JobCardComponent implements OnInit {
   dispReadyInvoice = false;
   printInvoiceButton=false;
   saveLabButton=true;
-  saveMatButton=true;
+  saveMatButton=false; 
+  importMatButton=true;
   saveBillButton=false;
   genBillButton=false;
   reopenButton=false;
@@ -325,6 +326,18 @@ export class JobCardComponent implements OnInit {
   techTotalValidation=false;
   duplicateLabLineItem=false;
   genericItemLab=false;
+
+  labBasTotal:number;
+  labDisTotal:number;
+  labSubTotal:number;
+  labTaxTotal:number;
+  labNetTotal:number;
+
+  matBasTotal:number;
+  matDisTotal:number;
+  matSubtotal:number;
+  matTaxTotal:number;
+  matNetTotal:number;
   
 
   // public minDatetime = new Date();
@@ -530,6 +543,19 @@ export class JobCardComponent implements OnInit {
       labDiscountIns:[],
       matDiscoutIns:[],
       lineBasicAmt:[],
+
+      labBasTotal:[],
+      labSubTotal:[],
+      labDisTotal:[],
+      labTaxTotal:[],
+      labNetTotal:[],
+
+      matBasTotal:[],
+      matDisTotal:[],
+      matSubtotal:[],
+      matTaxTotal:[],
+      matNetTotal:[],
+
 
       jobCardLabLines: this.fb.array([this.lineDetailsGroup()]),
       jobCardMatLines: this.fb.array([this.distLineDetails()]),
@@ -866,12 +892,13 @@ export class JobCardComponent implements OnInit {
 
   MatImptWip(jobCardNum) {
     // alert(jobCardNum);
+    this.importMatButton=false;
+    this.saveMatButton=true;
     var len = this.lineDistributionArray().length;
     this.serviceService.MatImptWipFn(jobCardNum, sessionStorage.getItem('locId'))
       .subscribe(
         data1 => {
           console.log(data1);
-
           for (let i = 0; i < data1.length - len; i++) {
             // alert('in for')
             var invLnGrp: FormGroup = this.distLineDetails();
@@ -889,6 +916,7 @@ export class JobCardComponent implements OnInit {
           }
           // this.jobCarStatusList = data1;
           // console.log(this.jobCarStatusList);  lineNum
+         
         }
       );
   }
@@ -1376,6 +1404,7 @@ export class JobCardComponent implements OnInit {
             this.jobCardDate= data.obj.jobCardDate;
             this.jobCardNum1=data.obj.jobCardNum;
             this.arInvNum=data.obj.invoiceNumber;
+            this.estTotal=data.obj.estMaterial+data.obj.estLabor;
           } else { alert (jcNum + " Job Card Not Found...");return;}
 
 
@@ -1507,6 +1536,12 @@ export class JobCardComponent implements OnInit {
          
           var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
           // alert('jobCardLabLines length---'+data.jobCardLabLines.length)
+          
+            var lbr1=0;
+            var lbr2=0;
+            var lbr3=0;
+            var lbr4=0;
+            var lbr5=0;
 
           for (let ln=0; ln < data.obj.jobCardLabLines.length; ln++) {
             // alert('inside loop'+ln)
@@ -1516,7 +1551,38 @@ export class JobCardComponent implements OnInit {
             var lbrAmt=(data.obj.jobCardLabLines[ln].totAmt).toFixed(2);
             patch.controls[ln].patchValue({laborAmt:lbrAmt});
 
+            lbr1 =lbr1+data.obj.jobCardLabLines[ln].basicAmt;
+            lbr2 =lbr2+data.obj.jobCardLabLines[ln].taxableAmt;
+            lbr3 =lbr3+data.obj.jobCardLabLines[ln].taxAmt;
+            lbr4 =lbr4+data.obj.jobCardLabLines[ln].totAmt;
+            lbr5 =lbr5+data.obj.jobCardLabLines[ln].disAmt;
           }
+
+          this.labBasTotal =lbr1;
+          this.labSubTotal =lbr2;
+          this.labTaxTotal =lbr3;
+          this.labNetTotal =lbr4;
+          this.labDisTotal =lbr5;
+
+          var matr1=0;
+          var matr2=0;
+          var matr3=0;
+          var matr4=0;
+          var matr5=0;
+
+          for (let ln=0; ln < data.obj.jobCardMatLines.length; ln++) {
+            matr1 =matr1+data.obj.jobCardMatLines[ln].basicAmt;
+            matr2 =matr2+data.obj.jobCardMatLines[ln].taxableAmt;
+            matr3 =matr3+data.obj.jobCardMatLines[ln].taxAmt;
+            matr4 =matr4+data.obj.jobCardMatLines[ln].totAmt;
+            matr5 =matr5+data.obj.jobCardMatLines[ln].disAmt;
+          }
+
+            this.matBasTotal =matr1;
+            this.matSubtotal =matr2;
+            this.matTaxTotal =matr3;
+            this.matNetTotal= matr4;
+            this.matDisTotal= matr5;
 
           ///// disable/enable descreption column
 
@@ -1671,7 +1737,7 @@ export class JobCardComponent implements OnInit {
   }
 
   tranceFun(val) {
-    val.billToCust = {
+       val.billToCust = {
       "customerId": this.bcustomerId,
       "accountNo": this.bCustAcct,
       "custName": this.bName,
@@ -1687,6 +1753,7 @@ export class JobCardComponent implements OnInit {
     }
     return val
   }
+
   accountNoSearchfn1(accountNo) {
     this.orderManagementService.accountNoSearchFn1(accountNo, sessionStorage.getItem('ouId'))
       .subscribe(
@@ -1725,7 +1792,7 @@ export class JobCardComponent implements OnInit {
 
   saveLine() {
 
-    if( this.jobStatus != 'Opened') { alert (" JC status is 'Ready For Invoice'\nLabour add/update not allowed ...");return;}
+  if( this.jobStatus != 'Opened') { alert (" JC status is 'Ready For Invoice'\nLabour add/update not allowed ...");return;}
 
   var jclArr = this.jobcardForm.get('jobCardLabLines').value;
   var len1=jclArr.length;
@@ -1740,7 +1807,9 @@ export class JobCardComponent implements OnInit {
      this.saveLabButton=false;
 
     const formValue: IjobCard = this.tranceFun(this.jobcardForm.value);
+
     formValue.emplId = Number(sessionStorage.getItem('emplId'));
+
     this.serviceService.lineWISESubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
@@ -1792,6 +1861,7 @@ export class JobCardComponent implements OnInit {
       }
 
       if(this.matLineValidation) {
+        this.saveMatButton=false;
 
     const formValue: IjobCard = this.tranceFun(this.jobcardForm.value);
     formValue.emplId = Number(sessionStorage.getItem('emplId'));
@@ -1805,6 +1875,7 @@ export class JobCardComponent implements OnInit {
         var jobNo = this.jobcardForm.get('jobCardNum').value;
         this.Search(jobNo);
         this.dispReadyInvoice = true;
+        this.importMatButton=true;
         // for(let i=0 ; i<res.obj.jobCardLinesList.length; i++){
         //      var invLnGrp: FormGroup = this.distLineDetails();
         //         this.lineDistributionArray().push(invLnGrp);
@@ -1817,6 +1888,7 @@ export class JobCardComponent implements OnInit {
         // this.jobcardForm.get('jobCardMatLines').patchValue(res.obj.jobCardLinesList);comment by vinita
       } else {
         if (res.code === 400) {
+          this.saveMatButton=true;
           alert(res.message);
         }
       }
@@ -2595,7 +2667,6 @@ searchFromArray1(arr, regex) {
 
 
  onKey(index) {
-
   
     var arrayControl = this.jobcardForm.get('jobCardLabLines').value
     var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
@@ -2613,7 +2684,7 @@ searchFromArray1(arr, regex) {
      }
    
     var baseAmtLineWise = arrayControl[index].unitPrice * arrayControl[index].qty;
-    var txAmt =baseAmtLineWise *taxP/100;
+    var txAmt =baseAmtLineWise * taxP/100;
     (patch.controls[index]).patchValue({ basicAmt: baseAmtLineWise,taxAmt:txAmt, laborAmt: baseAmtLineWise+txAmt, })
   
 }

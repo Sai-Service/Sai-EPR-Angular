@@ -68,7 +68,7 @@ export class ServiceGatepassComponent implements OnInit {
     vin :string;
     mainModel:string;
 
-    delvType:string;
+    delvType:string='Self';
     delvTakenBy:string;
     driverName:string;
 
@@ -124,7 +124,7 @@ export class ServiceGatepassComponent implements OnInit {
         vin :[],
         mainModel :[],
 
-        delvType:[],
+        delvType:[]='Self',
         delvTakenBy:[],
         driverName:[],
 
@@ -151,10 +151,6 @@ export class ServiceGatepassComponent implements OnInit {
 
         });
     }
-  
-   
-
-
   
     ngOnInit(): void {
       $("#wrapper").toggleClass("toggled");
@@ -253,13 +249,7 @@ export class ServiceGatepassComponent implements OnInit {
               this.lstJobcardList = data;
               console.log(this.lstJobcardList); } else {this.printGPbutton=false; alert ("No Record Found...");}
              });
-
       }
-      
-
-        
-    
-
   
         GetCustomerDetails(mCustId: any) {
           // alert("Customer Id: "+mCustId);
@@ -292,8 +282,6 @@ export class ServiceGatepassComponent implements OnInit {
 resetMast() {
   window.location.reload();
 }
-          
-
 
 
 message1:string="PleaseFixtheErrors!";
@@ -393,9 +381,14 @@ if(this.checkValidation===false) {
   return;
 }
 this.gpButton=false;
+var delAuthBy;
 var jcNum=this.serviceGatepassForm.get('jobCardNum').value;
 var regNum=this.serviceGatepassForm.get('regNo').value;
-this.serviceService.generateServiceGatePass(regNum,sessionStorage.getItem('locId')).subscribe((res: any) => {
+var osAmt=this.serviceGatepassForm.get('osAmt').value;
+var delType=this.serviceGatepassForm.get('delvType').value;
+if (osAmt<=0) {delAuthBy=null} else { delAuthBy=this.serviceGatepassForm.get('delAuthBy').value; }
+
+this.serviceService.generateServiceGatePass(regNum,sessionStorage.getItem('locId'),osAmt,delAuthBy,delType).subscribe((res: any) => {
     if (res.code === 200) {
       this.printGPbutton=true;
       alert(res.message);
@@ -413,6 +406,7 @@ this.serviceService.generateServiceGatePass(regNum,sessionStorage.getItem('locId
 
 printGP(){
 
+  
   var regNum=this.serviceGatepassForm.get('regNo').value
   var gpNum=this.serviceGatepassForm.get('gpNumber').value
   if(gpNum==undefined || gpNum==null || gpNum<=0) {alert("Gate Pass Number not Selected..."); return;}
@@ -445,19 +439,29 @@ radioEvent(event:any){
    this.regNo=null;this.gpNumber=null;this.dateOfDelv=null;this.gpByName=null;
    this.vin=null;this.mainModel=null;this.custAccountNo=null;this.customerType=null;
    this.custAddress=null;this.custCity=null;this.custState=null;this.custPincode=null;
-   this.custPhone=null;this.custEmail=null;this.custContact=null;this.delvType=null;
+   this.custPhone=null;this.custEmail=null;this.custContact=null;this.delvType='Self';
    this.delvTakenBy=null;this.driverName=null;
    this.lstJobcardList=null;this.custName=null;
  }
 
  onSelectGatePassNum(gpNum) {
-  //  alert ("Gate Pass num :"+gpNum);
-  let select = this.lstJobcardList.find(d => d.gatepassId === gpNum);
-  if(select) {
-    this.serviceGatepassForm.patchValue({dateOfDelv : select.dateOfDelv});
-   }
- }
- 
-        
+  //   alert ("Gate Pass num :"+gpNum);
+  //   let select = this.lstJobcardList.find(d => d.gatepassId === gpNum);
+  //   if(select) {
+  //     this.serviceGatepassForm.patchValue({dateOfDelv : select.dateOfDelv});
+  //    }
+  //  }
 
-}
+ this.serviceService.getGatePassIdDetails(gpNum)
+ .subscribe(
+   data => {
+      //  this.lstJobcardList = data; 
+        this.serviceGatepassForm.patchValue({
+        delAuthBy: data.obj.delAuthBy,
+        delvTakenBy: data.obj.custName,
+        osAmt: data.obj.osAmt,
+        dateOfDelv :data.obj.dateOfDelv, delvType:data.obj.delvType });
+       });
+    }
+
+ }
