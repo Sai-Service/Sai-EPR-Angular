@@ -61,6 +61,7 @@
             </table>
             <br>
             <br>
+            <input hidden formControlName="emplId">
             <div class="grid_scroll2">
                 <table class="GridFont" cellspacing="0" cellpadding="4" border="0"
                     style="width:100%;border-collapse:collapse;">
@@ -450,7 +451,7 @@
                                                 <td>
                                                     <input type="checkbox" name="selectFlag"
                                                         formControlName="selectFlag" ([ngModel])="selectFlag"
-                                                        (change)="selectFlag1($event)"
+                                                        (change)="selectFlag1($event,k)"
                                                         style="width: 50px;height: 20px;font-size: 10px;">
                                                 </td>
                                                 <td>
@@ -521,7 +522,7 @@
                     <tr class="GridHeader">
                         <th scope="col">Invoice Number</th>
                         <th scope="col">Date</th>
-                        <th scope="col">Amount</th>
+                        <th scope="col">Apply Amount</th>
                         <th scope="col">GL Date</th>
                         <th scope="col">Payment Amount</th>
                         <th>View Accounting</th>
@@ -531,7 +532,7 @@
                     <tr *ngFor="let com of PaymentReturnArr" class="ItemStyle" style="text-decoration:none;">
                         <td style="width: 107px;text-align: center;">{{com.invoiceNum}}</td>
                         <td style="width: 107px;text-align: center;">{{com.invDate}}</td>
-                        <td style="width: 107px;text-align: center;">{{com.invoiceAmt}}</td>
+                        <td style="width: 107px;text-align: center;">{{com.amount}}</td>
                         <td style="width: 107px;text-align: center;">{{com.glDate | date:'yyyy-MM-dd'}}</td>
                         <td style="width: 107px;text-align: center;">{{com.payAmount }}</td>
                         <td style="width: 107px;text-align: center;">

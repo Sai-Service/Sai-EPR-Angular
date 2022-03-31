@@ -24,6 +24,7 @@ interface IinterState {
   remarks: string;
   custAccountNo: number;
   locatorId:number;
+  emplId:number
 }
 
 
@@ -133,7 +134,7 @@ export class InterStateComponent implements OnInit {
   getItemDetail: any;
   getfrmSubLoc: any;
   custtaxCategoryName: string;
-  custClassCode:string;
+  // custClassCode:string;
   public itemMap2 = new Map<number, any[]>();
   public itemMap3 = new Map<string, StockTransferRow>();
   public taxMap = new Map<string, any>();
@@ -185,7 +186,7 @@ export class InterStateComponent implements OnInit {
       createOrderType: [],
       locCode: [],
       custtaxCategoryName: [],
-      custClassCode:[],
+      // custClassCode:[],
       customerId: [],
       oeOrderLinesAllList: this.fb.array([this.orderlineDetailsGroup()]),
       taxAmounts: this.fb.array([this.TaxDetailsGroup()]),
@@ -426,10 +427,10 @@ export class InterStateComponent implements OnInit {
       this.state = select1.state;
       this.gstNo = select1.gstNo;
       this.billToLocId = select1.toLocationId;
-      this.custClassCode = select1.classCodeType;
+      // this.custClassCode = select1.classCodeType;
       this.InterStateForm.patchValue({ 
         custtaxCategoryName: select1.taxCategoryName,
-        custClassCode:select1.classCodeType,
+        // custClassCode:select1.classCodeType,
         customerSiteId: select1.customerSiteId,
         customerId: select1.customerId
       })
@@ -527,26 +528,37 @@ export class InterStateComponent implements OnInit {
 
   }
   onOptionsSelectedDescription(event: any, k) {
+    alert('event---'+event)
     let controlinv = this.InterStateForm.get('oeOrderLinesAllList') as FormArray;
-    let isExportCust ="N";
-    if(this.custClassCode.includes("EXPORTER") && Number(sessionStorage.getItem('ouId'))===22){
-      isExportCust ="Y";
-    }
-   let select = this.ItemIdList.find(d => d.SEGMENT === event);
+    // let isExportCust ="N";
+    // if(this.custClassCode.includes("EXPORTER") && Number(sessionStorage.getItem('ouId'))===22){
+    //   isExportCust ="Y";
+    // }
+    
+    
+    var priceListId = this.InterStateForm.get('priceListId').value;
+   let select = this.ItemIdList.find(d => d.SEGMENT === event); 
+   console.log(select);
    if(select!=undefined){
    controlinv.controls[k].patchValue({ itemId: select.itemId});
     if (event != undefined) {
-   this.orderManagementService.addonDescList1(event, this.custtaxCategoryName, this.priceListId)
+  //  this.orderManagementService.addonDescList1(event, this.custtaxCategoryName, this.priceListId)
+  alert(event+'----'+this.custtaxCategoryName+'------'+priceListId)
+   this.orderManagementService.addonDescList2(event, this.custtaxCategoryName, priceListId, 'N')
         .subscribe(
           data => {
             if (data.code === 200) {
+              // debugger;
               this.addonDescList = data.obj; //// item iformation
               console.log(data.obj);
-              
+              alert(data.obj.length)
               for (let i = 0; i < data.obj.length; i++) {
+                alert(data.obj[0].description)
                 var taxCatNm: string = data.obj[i].taxCategoryName;
                 // alert(taxCatNm.includes)
-                if (taxCatNm.includes('Sale-S&C')) {
+                alert(taxCatNm)
+                if (taxCatNm.includes('S&C-GST')  || taxCatNm.includes('Sales-S&C')) {
+                  alert('in if'+taxCatNm);
                   (controlinv.controls[k]).patchValue({
                     itemId: data.obj[i].itemId,
                     orderedItem: data.obj[i].description,

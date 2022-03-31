@@ -37,6 +37,7 @@ interface Ipayment {
   searchByToDate: Date;
   searchByFrmDate: Date;
   searchBySuppName: string;
+  emplId:number;
   
 }
 
@@ -126,7 +127,7 @@ export class PaymentsComponent implements OnInit {
   displayname = false;
   displayDetail=true;
   payAddress:string;
-
+  emplId:number;
   private sub: any;
   constructor(private fb: FormBuilder, private router1: ActivatedRoute, private transactionService: TransactionService, private location: Location, private service: MasterService, private router: Router) {
     this.paymentForm = fb.group({
@@ -152,6 +153,7 @@ jeSource: [],
   docSeqValue: [],
   payStatus:[],
       docNo: [],
+      emplId:[],
       obj1: this.fb.array([this.payHeaderLineDtl()]),
       obj: this.fb.array([this.payInvoiceLineDtl()]),
     })
@@ -220,7 +222,7 @@ jeSource: [],
     // this.currency='INR';
     this.ouName = (sessionStorage.getItem('ouName'));
     this.ouId = Number(sessionStorage.getItem('ouId'));
-
+    this.emplId=Number(sessionStorage.getItem('emplId'));
 
     // alert(currentOP)  
     this.service.supplierCodeList()
@@ -579,13 +581,35 @@ else{
   }
 
 
-  selectFlag1(e) {
+  selectFlag1(e,k) {
+    alert(k);
     // alert(e + '----checkbox')
     if (e.target.checked === true) {
       this.selectFlag = 'Y'
-    }
+     }
     if (e.target.checked === false) {
       this.selectFlag = 'N'
+    }
+    if(this.selectFlag='Y'){
+      alert((this.selectFlag));
+      // debugger;
+      var arrcon = this.paymentForm.get('obj').value;
+      var arrobj = this.paymentForm.get('obj1').value;
+      var patch = this.paymentForm.get('obj') as FormArray;
+      var invAmt=arrcon[k].invoiceAmt;
+      var unAmt=arrcon[k].unPaidAmt;
+      // alert(arrobj[this.selectPayment].invTypeLookupCode+'----this.selectPayment---'+this.selectPayment)
+      if(arrobj[this.selectPayment].invTypeLookupCode==='Prepayment' && arrobj[this.selectPayment].docNo===null)
+      {
+        
+      }
+    else{
+      if(invAmt>unAmt){
+        alert('Can not enter amount more than unpaid ammount')
+        patch.controls[k].patchValue({'invoiceAmt':''});
+        return;
+      }
+    }
     }
     this.appAmt = 0;
     var arrayControle = this.paymentForm.get('obj').value;
@@ -625,7 +649,7 @@ paymentSave(){
     this.totAmt=this.totAmt+totlCalControls[k].totAmt;
   }
   const formValue: Ipayment = this.paymentForm.value;
-  console.log(this.paymentForm.value.obj1[this.selectPayment].statusLookupCode);
+  console.log(this.paymentForm.get('emplId').value);
   var jsonData=this.paymentForm.value.obj1[this.selectPayment];
 console.log(jsonData);
   if(jsonData.bankAccountNo != undefined){
@@ -635,6 +659,7 @@ console.log(jsonData);
   jsonData.country ='India';
   jsonData.currency='INR';
   jsonData.ouId= this.ouId ;
+ jsonData.emplId=Number(sessionStorage.getItem('emplId'));
   // jsonData.statusLookupCode=totlCalControls[0].statusLookupCode;
   // jsonData.bankAccountNum.delete;
   // jsonData.bankAccountId.delete;
