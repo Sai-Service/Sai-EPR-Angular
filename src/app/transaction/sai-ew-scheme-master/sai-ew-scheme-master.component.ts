@@ -8,6 +8,7 @@ import { NgForm } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { InteractionModeRegistry } from 'chart.js';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
+import { isDate } from 'moment';
 
 interface IEwScheme {
   
@@ -21,9 +22,9 @@ interface IEwScheme {
   ewSchemeNo:string;
   ewSchemeDesc:string;
   ewInsId : number;
-  schemeStartDate:Date;
+  schemeStartDate:string;
   
-  schemeEndDate:Date;
+  schemeEndDate:string;
   schemeKms:number;
   validFromKms:number;
   validToKms:number;
@@ -97,7 +98,7 @@ export class SaiEwSchemeMasterComponent implements OnInit {
       
         // schemeStartDate:Date;
         schemeStartDate = this.pipe.transform(Date.now(), 'y-MM-dd');
-        schemeEndDate:Date;
+        schemeEndDate:string;
       
         premiumPeriod:number;
         schemeKms:number;
@@ -527,6 +528,13 @@ export class SaiEwSchemeMasterComponent implements OnInit {
                    alert ("SCHEME START DATE: Should not be null value...");
                    return;
                 } 
+
+                if (formValue.schemeStartDate===undefined || formValue.schemeStartDate===null || formValue.schemeStartDate >formValue.schemeEndDate)
+                {
+                    this.checkValidation=false;  
+                    alert ("SCHEME START DATE: Should not be null value/greater than Scheme End Date...");
+                    return;
+                 } 
   
                 if (formValue.schemeEndDate===undefined || formValue.schemeEndDate===null || formValue.schemeEndDate<=formValue.schemeStartDate)
                 {
@@ -567,6 +575,38 @@ export class SaiEwSchemeMasterComponent implements OnInit {
                 
                   this.checkValidation=true
         }
+
+
+        validateSch1Date(frmDate){
+          var stDate =this.saiEwSchemeMasterForm.get("schemeStartDate").value;
+          var endDate =this.saiEwSchemeMasterForm.get("schemeEndDate").value;
+          stDate =new Date(stDate);
+          endDate=new Date(endDate);
+       
+          if(stDate>endDate) { alert ("Scheme Start Date should not be above End Date.");
+           this.schemeStartDate = this.pipe.transform(Date.now(), 'y-MM-dd');}
+        
+        }
+
+        validateSch2Date(toDate){
+          var stDate =this.saiEwSchemeMasterForm.get("schemeStartDate").value;
+          var endDate =this.saiEwSchemeMasterForm.get("schemeEndDate").value;
+          stDate =new Date(stDate);
+          endDate=new Date(endDate);
+       
+          if(endDate < stDate) { alert ("Scheme End Date should not be below Start Date.");
+           this.schemeEndDate = this.pipe.transform(Date.now(), 'y-MM-dd');}
+        }
+
+
+      
+        // isValidDate(year, month, day) {
+        //   var d = new Date(year, month, day);
+        //   if (d.getFullYear() == year && d.getMonth() == month && d.getDate() == day) {
+        //       return true;
+        //   }
+        //   return false;
+        // }
       
 
   }

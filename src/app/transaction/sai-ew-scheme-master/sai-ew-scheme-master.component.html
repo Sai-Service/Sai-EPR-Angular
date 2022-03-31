@@ -246,13 +246,13 @@
                                 <td style="width: 15%" class="LabelFontStyle1">Scheme&nbsp;Start&nbsp;Date:&nbsp;</td>
         
                                 <td>
-                                    <input   type="date"  formControlName="schemeStartDate"  id="schemeStartDate" [(ngModel)]="schemeStartDate" class="form-control" style="background-color: yellow;">
+                                    <input   type="date"  formControlName="schemeStartDate"  id="schemeStartDate" [(ngModel)]="schemeStartDate" class="form-control" (change)="validateSch1Date(schemeStartDate)" onkeydown="return false" style="background-color: yellow;">
                                 </td>
     
                                 <td style="width: 15%" class="LabelFontStyle">Scheme&nbsp;End&nbsp;Date:&nbsp;</td>
         
                                 <td>
-                                    <input   type="date"  formControlName="schemeEndDate"  id="schemeEndDate" [(ngModel)]="schemeEndDate" class="form-control"  >
+                                    <input   type="date"  formControlName="schemeEndDate"  id="schemeEndDate" [(ngModel)]="schemeEndDate" class="form-control"  (change)="validateSch2Date(schemeEndDate)" onkeydown="return false">
                                 </td>
                                 <td style="width: 15%" class="LabelFontStyle1">Scheme&nbsp;Kms&nbsp;Limit:&nbsp;</td>
                                 <td>
