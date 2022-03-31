@@ -719,6 +719,28 @@ export class OrderManagementService {
     return this.http.post(url, rtnRecord, options);
   }
 
+
+  // rtnSalesOrderReversal(orderNumber, emplId, reversalReason) {
+  //   alert(orderNumber+'----'+emplId+'-----'+reversalReason)
+  //   const REQUEST_PARAMS = new HttpParams().set('orderNumber', orderNumber)
+  //     .set('emplId', emplId)
+  //     .set('reversalReason', reversalReason)
+  //   const REQUEST_URI = this.ServerUrl + `/arInv/orderReversal?orderNumber=${orderNumber}&emplId=${emplId}&reversalReason=${reversalReason}`;
+  //   return this.http.put(REQUEST_URI, {
+  //     params: REQUEST_PARAMS,
+
+  //   });
+  // }
+
+
+  public rtnSalesOrderReversal(rtnRecord) {
+    const options = {
+      headers: this.headers
+    };
+    const url = this.ServerUrl + '/arInv/OMVHSalesReversal';
+    return this.http.post(url, rtnRecord, options);
+  }
+
   printCSRtndocument(mRtnNumber) {
     const REQUEST_URI = this.ServerUrl + `/orderHeader/csReversalPrint/${mRtnNumber}`;
     // http://localhost:8081/orderHeader/csReversalPrint/12121101811 

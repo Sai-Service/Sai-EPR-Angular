@@ -21,6 +21,7 @@ import { ClosingStockGridComponent } from './closing-stock-grid/closing-stock-gr
 import { ShippingNetworkComponent } from './shipping-network/shipping-network.component';
 import { SalesOrderProformaComponent } from './sales-order-proforma/sales-order-proforma.component';
 import { PriceUpdationComponent } from './price-updation/price-updation.component';
+import { SalesOrderModelWisePriceComponent } from './sales-order-model-wise-price/sales-order-model-wise-price.component';
 
 const routes: Routes = [
   {path:'salesOrderBooking', component:SalesOrderBookingComponent},
@@ -47,6 +48,7 @@ const routes: Routes = [
   {path:'ShippingNetwork',component:ShippingNetworkComponent},
   {path:'SalesProforma',component:SalesOrderProformaComponent},
   {path:'priceUpdation',component:PriceUpdationComponent},
+  {path:'modelWisePrice',component:SalesOrderModelWisePriceComponent},
   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];
 
