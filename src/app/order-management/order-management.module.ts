@@ -23,6 +23,7 @@ import { ClosingStockGridComponent } from './closing-stock-grid/closing-stock-gr
 import { ShippingNetworkComponent } from './shipping-network/shipping-network.component';
 import { SalesOrderProformaComponent } from './sales-order-proforma/sales-order-proforma.component';
 import { PriceUpdationComponent } from './price-updation/price-updation.component';
+import { SalesOrderModelWisePriceComponent } from './sales-order-model-wise-price/sales-order-model-wise-price.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { PriceUpdationComponent } from './price-updation/price-updation.componen
      ClosingStockGridComponent,
      ShippingNetworkComponent,
      SalesOrderProformaComponent,
-     PriceUpdationComponent ],
+     PriceUpdationComponent,
+     SalesOrderModelWisePriceComponent ],
   imports: [
     CommonModule,
     OrderManagementRoutingModule,
