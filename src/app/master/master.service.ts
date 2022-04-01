@@ -2761,6 +2761,9 @@ formData.append('location', locCode);
     return this.http.get(this.ServerUrl + `/orderHeader/getByDateOM?startDt=${startDt}&endDt=${endDt}&locId=${locId}&dept=${deptId}`)
   }
 
+getModelWisePrice(){
+  return this.http.get(this.ServerUrl + `/orderHeader/priceModelwise`)
+}
 
   bulkpouploadSpares(formData: FormData) {
       return this.http.post(this.ServerUrl + `/fileImport/uploadSpAcPO`, formData)

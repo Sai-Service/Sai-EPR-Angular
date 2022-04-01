@@ -357,6 +357,7 @@ export class SalesOrderFormComponent implements OnInit {
   isVisible5: boolean = false;
   isVisible6: boolean = false;
   isVisible7: boolean = false;
+  isVisibleform21:boolean=false;
   isVisiblemodelDetailsUpdate: boolean = false;
 
   closeResetButton = true;
@@ -544,6 +545,7 @@ export class SalesOrderFormComponent implements OnInit {
     this.orderlineDetailsArray().controls[0].patchValue({ flowStatusCode: 'BOOKED' });
     this.SalesOrderBookingForm.patchValue({ financeType: 'None' });
     this.SalesOrderBookingForm.patchValue({ exchangeYN: 'N' });
+    this.isVisibleform21=false;
 
     if (Number(sessionStorage.getItem('divisionId')) === 1) {
       this.displayDMSCDMS = true;
@@ -1531,6 +1533,7 @@ export class SalesOrderFormComponent implements OnInit {
                   this.displayRemoveRow[i] = false;
                   this.displaytaxCategoryName[i] = false;
                   this.isDisabledtaxbtn[i] = false;
+                  this.isVisibleform21=true;
                   this.SalesOrderBookingForm.get('financeType').disable();
                   this.SalesOrderBookingForm.get('financerName').disable();
                   this.SalesOrderBookingForm.get('financeAmt').disable();
@@ -1608,6 +1611,7 @@ export class SalesOrderFormComponent implements OnInit {
                 // alert('hi')
                 if (this.lstgetOrderLineDetails[x].flowStatusCode === 'INVOICED' && data.obj.gatepassYN === 'N') {
                   this.isVisible7 = true;
+                  this.isVisibleform21=true;
                 }
                 if (this.lstgetOrderLineDetails[x].flowStatusCode === 'ALLOTED' && this.lstgetOrderLineDetails[x].invType === 'SS_VEHICLE') {
                   //  this.onOptionsSelectedDescription(this.lstgetOrderLineDetails[i].segment,i)
@@ -2059,6 +2063,19 @@ export class SalesOrderFormComponent implements OnInit {
         printWindow.open
         this.isDisabled7 = false;
         // saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+      });
+  }
+
+  form21(){
+    this.isDisabled7 = true;
+    const fileName = 'download.pdf';
+    this.orderManagementService.form21(this.orderNumber)
+      .subscribe(data => {
+        var blob = new Blob([data], { type: 'application/pdf' });
+        var url = URL.createObjectURL(blob);
+        var printWindow = window.open(url, '', 'width=800,height=500');
+        printWindow.open
+        this.isDisabled7 = false;
       });
   }
 

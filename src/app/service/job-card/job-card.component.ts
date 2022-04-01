@@ -1059,8 +1059,10 @@ export class JobCardComponent implements OnInit {
  
 
   onOptionsplitRatioSelect(i, splitCateId) {
+  
     let select = this.splitRatioList.find(d => d.splitCateId === splitCateId);
     var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
+    // alert( "Labor split catid : " + select.splitCateId);
     // (patch.controls[i]).patchValue(select)
     (patch.controls[i]).patchValue(
       {
@@ -1072,9 +1074,10 @@ export class JobCardComponent implements OnInit {
       }
     );
   }
+
   onOptionsplitRatioSelect1(i, splitCateId) {
     let select = this.splitRatioList.find(d => d.splitCateId === splitCateId);
-    // alert(select.splitCateId);
+    // alert( "Mateial split catid : " + select.splitCateId);
     var patch = this.jobcardForm.get('jobCardMatLines') as FormArray;
     // (patch.controls[i]).patchValue(select)
     (patch.controls[i]).patchValue(
@@ -1571,6 +1574,12 @@ export class JobCardComponent implements OnInit {
           var matr5=0;
 
           for (let ln=0; ln < data.obj.jobCardMatLines.length; ln++) {
+
+            this.onOptionsplitRatioSelect1(ln,data.obj.jobCardMatLines[ln].splitCateId);
+
+            // var lbrAmt=(data.obj.jobCardLabLines[ln].totAmt).toFixed(2);
+            // patch.controls[ln].patchValue({laborAmt:lbrAmt});
+
             matr1 =matr1+data.obj.jobCardMatLines[ln].basicAmt;
             matr2 =matr2+data.obj.jobCardMatLines[ln].taxableAmt;
             matr3 =matr3+data.obj.jobCardMatLines[ln].taxAmt;
