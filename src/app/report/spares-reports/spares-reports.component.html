@@ -90,7 +90,7 @@
                                 (click)="reportDetails('gstIncomeStatement')">Income Statement</a>
                         </li>
                         <li>
-                            <a class="dropdown-item" data-toggle="collapse" href="#panelgstsaiDebtors" role="tab"
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelspClosingStockAsOndate" role="tab"
                                 (click)="reportDetails('gstSparesClosingStockAsOnDate')">Spares Closing Stock As On Date</a>
                         </li>
                         <li>
@@ -426,6 +426,94 @@
         </td>
     </tr>
 </table>
+
+
+
+<table class="center" [style.display]="isVisiblespClosingStockAsOndate ? 'block' : 'none'" class="collapse"
+style="margin-left: 20%;" id="panelspClosingStockAsOndate">
+<tr>
+    <td>
+        <table class="center">
+            <tr>
+                <td colspan="4" class="LabelFontStyle" style="width: 100%;">
+                    {{reportName}}
+                </td>
+            </tr>
+        </table>
+    </td>
+</tr>
+<tr>
+    <td>
+        <table class="center">
+            <tr>
+                <td style="width: 15%" class="LabelFontStyle">
+                    &nbsp;To&nbsp;Date&nbsp;:&nbsp;
+                </td>
+                <td>
+                    <input type="date" class="form-control" formControlName="toDate"
+                        max="{{minDate | date:'yyyy-MM-dd'}}">
+                </td>
+                <td style="width: 15%" class="LabelFontStyle">
+                    &nbsp;Location&nbsp;Code&nbsp;:&nbsp;
+                </td>
+                <td [style.display]="isVisiblelocationInput ? 'block' : 'none'">
+                    <input type="text" disabled class="form-control" formControlName="locCode">
+                </td>
+                <td [style.display]="isVisiblelocationLOV ? 'block' : 'none'">
+                    <select formControlName="locCode" id="locCode" class="form-control"
+                        (ngModelChange)='onOptionsLocation($event)'>
+                        <option>--Select--</option>
+                        <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
+                            {{sc.locCode}}
+                        </option>
+                    </select>
+                    <input  disabled hidden type="number" class="form-control" formControlName="locId">
+                </td>
+            </tr>
+         
+            <tr>
+                <td colspan="4">
+                  <table class="center">
+                    <tr>
+                      <td colspan="4">
+                        <table class="center" style="width: 100%;">
+                          <tr>
+                            <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                            <ng-template #hList2>
+                              <div class="d-flex justify-content-center">
+                                <div class="spinner-border text-primary" role="status">
+                                  <span class="sr-only" id="loading"></span>
+                                </div>
+                              </div>
+                            </ng-template>
+                            <ng-template #hList1> </ng-template>
+                            <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">
+                              &nbsp;{{dataDisplay}}&nbsp; </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="4">
+                          <table class="center" style="width: 100%;margin-left: 50%;">
+                              <tr>
+                                <td>
+                                    <button class="btn-primary" [disabled]="isDisabled1" (click)="reportParameter(reportName)">View
+                                      Report</button>
+                                  </td>
+                                 
+                              </tr>
+                          </table>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+        </table>
+    </td>
+</tr>
+</table>
+
 
 <table class="center"   style="margin-left: 10%;"
 [style.display]="isVisibleStockLedger ? 'block' : 'none'" class="collapse"

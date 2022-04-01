@@ -182,6 +182,15 @@ export class OrderManagementService {
     });
   }
 
+  form21(orderNumber) {
+    const REQUEST_URI = this.ServerUrl + `/orderHeader/Form21/${orderNumber}`;
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
 
   downloadAddonINV(InvoiceNumber) {
     // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/orderHeader/addonTaxInv/${InvoiceNumber}`;  
