@@ -798,9 +798,8 @@ export class SalesOrderProformaComponent implements OnInit {
     }
   }
 
-  onOptionsSelectedDescription(segment: string, k) {
-    // alert(segment +'---'+ k)
-    // alert('HI')
+  onOptionsSelectedDescription(event: any, k) {
+    var segment=event.target.value;
     let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     var itemType = (controlinv.controls[k]).get('invType').value;
     if (itemType != 'SS_VEHICLE') {
@@ -1054,7 +1053,7 @@ export class SalesOrderProformaComponent implements OnInit {
     this.displayLineflowStatusCode.push(true);
     this.itemSeg = '';
     var ln = len - 1;
-    // alert(ln)
+    alert(ln)
     this.updateTotAmtPerline(ln)
     this.setFocus('itemSeg' + ln);
   }
@@ -1099,6 +1098,7 @@ export class SalesOrderProformaComponent implements OnInit {
       var ln = i;
       if (ln < formArr.length - 1) {
         formArr.controls[i].disable();
+        this.displaysegmentInvType[ln] = false;
         // formArr.controls[i].get('pricingQty').enable();
         // formArr.controls[i].get('flowStatusCode').enable();
       }

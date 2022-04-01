@@ -339,6 +339,7 @@ isVisiblepaneltolocation:boolean=false;
       }
     }
     else if (reportName === 'Sai Debtors') {
+      alert(toDate)
       var custAccNo = this.serviceReportForm.get('custAccNo').value;
       if (custAccNo === undefined || custAccNo === null) {
         custAccNo = '';
@@ -355,7 +356,7 @@ isVisiblepaneltolocation:boolean=false;
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.SPDebtorReport(fromDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'),custAccNo,deptId)
+        this.reportService.SPDebtorReport(toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'),custAccNo,deptId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
