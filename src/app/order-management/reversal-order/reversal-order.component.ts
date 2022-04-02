@@ -110,7 +110,7 @@ export class ReversalOrderComponent implements OnInit {
   flowStatusCode: string;
   tlName: string;
   // remarks :string;
-  remarks = '2021101121227';
+  // remarks = '2021101121227';
 
   othRefNo: string;
   issuedBy: string;
@@ -157,6 +157,7 @@ export class ReversalOrderComponent implements OnInit {
   orderedItem: string;
   taxCategoryName: string;
   reversalReasonList: any = [];
+  remark:string;
   constructor(private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService, private fb: FormBuilder, private router: Router) {
     this.counterSaleReturnOrderForm = fb.group({
 
@@ -215,7 +216,8 @@ export class ReversalOrderComponent implements OnInit {
       salesRepName: [],
       flowStatusCode: [],
       tlName: [],
-      remarks: [],
+      // remarks: [],
+      remark:[],
       othRefNo: [],
       issuedBy: [],
       mobile1: [],
@@ -391,13 +393,17 @@ export class ReversalOrderComponent implements OnInit {
             return;
           } else {
             for (let i = 0; i < data.obj.oeOrderLinesAllList.length; i++) {
-              
                 this.lstOrderItemLinesNew = data.obj.oeOrderLinesAllList;
                 let lineLevelOrderStatusListVehicle = this.lstOrderItemLinesNew.filter((vehicleDtls) => ((vehicleDtls.invType.includes('VEHICLE') == true)) );
                console.log(lineLevelOrderStatusListVehicle); 
-                this.lstOrderItemLines= lineLevelOrderStatusListVehicle;
-               
+                this.lstOrderItemLines= lineLevelOrderStatusListVehicle;  
             }
+            if (data.obj.remarks !=null && data.obj.remarks != undefined){
+            if (data.obj.remarks.includes('REV-') && data.obj.orderStatus==='CLOSED'){
+              alert('Vehicle Already Reverse. Please confirm Order Number.!');
+              this.displayButton = false;
+            }
+          }
             this.lstCreditNotes = data.obj.cmList;
             console.log(this.lstOrderHeader);
             this.dispOrderDetails = true;
@@ -536,7 +542,7 @@ lstOrderLinesNew:any=[];
             var patch = this.counterSaleReturnOrderForm.get('oeOrderLinesAllList') as FormArray;
             var varLineArr = this.counterSaleReturnOrderForm.get('oeOrderLinesAllList').value;
             for (let i = 0; i <  this.lineDetailsArray.length ; i++) {
-              patch.controls[i].patchValue({cancelledQty:data.obj.oeOrderLinesAllList[i].pricingQty});
+              patch.controls[i].patchValue({cancelledQty:1});
               patch.controls[i].get('cancelledQty').disable();
               this.lineDetailsArray.controls[i].get('selectFlag').enable();
             }
@@ -872,7 +878,13 @@ lstOrderLinesNew:any=[];
 
   cntrSaleOrderRtnSave() {
     // const formValue: ISalesBookingForm = this.transData(this.counterSaleReturnOrderForm.getRawValue());
-    const formValue: IRtnToVendor = this.transeData(this.counterSaleReturnOrderForm.getRawValue());
+    const formValue  = this.transeData(this.counterSaleReturnOrderForm.getRawValue());
+    var revres= this.counterSaleReturnOrderForm.get('reversalReason').value;
+    var reversaRes= 'REV-'+revres;
+    // alert(reversaRes)
+    formValue.reversalReason = reversaRes;
+    console.log(formValue);
+    
     this.orderManagementService.rtnSalesOrderReversal(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         this.rtnDocNo = res.obj;
