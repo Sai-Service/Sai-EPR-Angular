@@ -339,7 +339,7 @@ isVisiblepaneltolocation:boolean=false;
       }
     }
     else if (reportName === 'Sai Debtors') {
-      alert(toDate)
+      // alert(toDate)
       var custAccNo = this.serviceReportForm.get('custAccNo').value;
       if (custAccNo === undefined || custAccNo === null) {
         custAccNo = '';

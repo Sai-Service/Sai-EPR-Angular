@@ -798,8 +798,8 @@ export class SalesOrderProformaComponent implements OnInit {
     }
   }
 
-  onOptionsSelectedDescription(event: any, k) {
-    var segment=event.target.value;
+  onOptionsSelectedDescription(segment: string, k) {
+    // var segment=event.target.value;
     let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     var itemType = (controlinv.controls[k]).get('invType').value;
     if (itemType != 'SS_VEHICLE') {

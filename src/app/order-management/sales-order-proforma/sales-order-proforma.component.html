@@ -691,7 +691,7 @@
                                             <input hidden type="number" formControlName="itemId"> -->
 
                                             <select formControlName="segment" id="segment{{i}}"
-                                                (change)='onOptionsSelectedDescription($event,i)'
+                                                (ngModelChange)='onOptionsSelectedDescription($event,i)'
                                                 class="form-control" style="width:250px;height: 25px;font-size: 10px;">
                                                 <option>--Select--</option>
                                                 <option *ngFor="let item of  itemMap2.get(i) | keyvalue"
