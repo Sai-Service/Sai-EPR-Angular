@@ -346,8 +346,27 @@ export class JobCardComponent implements OnInit {
   labCustSubTotal:number;
   labCustTaxTotal:number;
   labCustNetTotal:number;
+ 
+  labInsBasTotal:number;
+  labInsDisTotal:number;
+  labInsSubTotal:number;
+  labInsTaxTotal:number;
+  labInsNetTotal:number;
 
-  
+  matCustBasTotal:number;
+  matCustDisTotal:number;
+  matCustSubTotal:number;
+  matCustTaxTotal:number;
+  matCustNetTotal:number;
+ 
+  matInsBasTotal:number;
+  matInsDisTotal:number;
+  matInsSubTotal:number;
+  matInsTaxTotal:number;
+  matInsNetTotal:number;
+
+
+
 
   // public minDatetime = new Date();
   // promiseDate = new Date();
@@ -571,6 +590,25 @@ export class JobCardComponent implements OnInit {
       labCustSubTotal:[],
       labCustTaxTotal:[],
       labCustNetTotal:[],
+
+      labInsBasTotal:[],
+      labInsDisTotal:[],
+      labInsSubTotal:[],
+      labInsTaxTotal:[],
+      labInsNetTotal:[],
+
+      matCustBasTotal:[],
+      matCustDisTotal:[],
+      matCustSubTotal:[],
+      matCustTaxTotal:[],
+      matCustNetTotal:[],
+     
+      matInsBasTotal:[],
+      matInsDisTotal:[],
+      matInsSubTotal:[],
+      matInsTaxTotal:[],
+      matInsNetTotal:[],
+
 
 
       jobCardLabLines: this.fb.array([this.lineDetailsGroup()]),
@@ -1567,12 +1605,15 @@ export class JobCardComponent implements OnInit {
             var custLbr4=0;
             var custLbr5=0;
             var lbCustTax=0
+            var lbCustDisAmt=0;
 
             var insLbr1=0;
             var insLbr2=0;
             var insLbr3=0;
             var insLbr4=0;
             var insLbr5=0;
+            var lbInsTax=0;
+            var lbInsDisAmt=0;
             
 
 
@@ -1584,19 +1625,32 @@ export class JobCardComponent implements OnInit {
             var lbrAmt=(data.obj.jobCardLabLines[ln].totAmt).toFixed(2);
             patch.controls[ln].patchValue({laborAmt:lbrAmt});
 
-            custLbr1 =custLbr1+data.obj.jobCardLabLines[ln].basicAmt;
-            custLbr2 =custLbr2+data.obj.jobCardLabLines[ln].disAmt;
-            custLbr3 =custLbr3+data.obj.jobCardLabLines[ln].taxableAmt;
-            custLbr4 =custLbr4+data.obj.jobCardLabLines[ln].taxAmt;
-            custLbr5 =custLbr5+data.obj.jobCardLabLines[ln].totAmt;
+            // custLbr1 =custLbr1+data.obj.jobCardLabLines[ln].basicAmt;
+            // custLbr2 =custLbr2+data.obj.jobCardLabLines[ln].disAmt;
+            // custLbr3 =custLbr3+data.obj.jobCardLabLines[ln].taxableAmt;
+            // custLbr4 =custLbr4+data.obj.jobCardLabLines[ln].taxAmt;
+            // custLbr5 =custLbr5+data.obj.jobCardLabLines[ln].totAmt;
            
 
-            // custLbr1=custLbr1+data.obj.jobCardLabLines[ln].custBasicAmt;
-            // custLbr2=custLbr2+data.obj.jobCardLabLines[ln].disAmt;
-            // custLbr3=custLbr3+(data.obj.jobCardLabLines[ln].custBasicAmt-data.obj.jobCardLabLines[ln].disAmt);
-            // lbCustTax= (custLbr3 * data.obj.jobCardLabLines[ln].taxPer)/100;
-            // custLbr4=custLbr4+lbCustTax;
-            // custLbr5=custLbr3+custLbr4;
+            custLbr1=custLbr1+data.obj.jobCardLabLines[ln].custBasicAmt;
+            lbCustDisAmt=(data.obj.jobCardLabLines[ln].custBasicAmt*data.obj.jobCardLabLines[ln].disPer)/100;
+            custLbr2=custLbr2+lbCustDisAmt;
+
+            custLbr3=custLbr3+(data.obj.jobCardLabLines[ln].custBasicAmt-lbCustDisAmt);
+            lbCustTax= ((data.obj.jobCardLabLines[ln].custBasicAmt-lbCustDisAmt) * (data.obj.jobCardLabLines[ln].taxPer))/100;
+            custLbr4=custLbr4+lbCustTax;
+            custLbr5=custLbr3+custLbr4;
+
+            insLbr1=insLbr1+data.obj.jobCardLabLines[ln].insBasicAmt;
+            lbInsDisAmt=(data.obj.jobCardLabLines[ln].insBasicAmt*data.obj.jobCardLabLines[ln].disPer)/100;
+            insLbr2=insLbr2+ lbInsDisAmt
+
+            insLbr3=insLbr3+(data.obj.jobCardLabLines[ln].insBasicAmt-lbInsDisAmt);
+            lbInsTax= ((data.obj.jobCardLabLines[ln].insBasicAmt-lbInsDisAmt) * (data.obj.jobCardLabLines[ln].taxPer))/100;
+            insLbr4=insLbr4+lbInsTax;
+            insLbr5=insLbr3+insLbr4;
+
+
           }
 
           // this.labBasTotal =lbr1;
@@ -1605,18 +1659,40 @@ export class JobCardComponent implements OnInit {
           // this.labNetTotal =lbr4;
           // this.labDisTotal =lbr5;
 
-          this.labCustBasTotal=custLbr1;
-          this.labCustDisTotal=custLbr2;
-          this.labCustSubTotal=custLbr3;
-          this.labCustTaxTotal=custLbr4;
-          this.labCustNetTotal=custLbr5;
+          this.labCustBasTotal=Math.round((custLbr1+Number.EPSILON)*100)/100;
+          this.labCustDisTotal=Math.round((custLbr2+Number.EPSILON)*100)/100;
+          this.labCustSubTotal=Math.round((custLbr3+Number.EPSILON)*100)/100;
+          this.labCustTaxTotal=Math.round((custLbr4+Number.EPSILON)*100)/100;
+          this.labCustNetTotal=Math.round((custLbr5+Number.EPSILON)*100)/100;
+
+          // Math.round((this.lstcomments.insTotBasicAmt+Number.EPSILON)*100)/100,
+
+          this.labInsBasTotal=Math.round((insLbr1+Number.EPSILON)*100)/100 ;
+          this.labInsDisTotal=Math.round((insLbr2+Number.EPSILON)*100)/100 ;
+          this.labInsSubTotal=Math.round((insLbr3+Number.EPSILON)*100)/100 ;
+          this.labInsTaxTotal=Math.round((insLbr4+Number.EPSILON)*100)/100 ;
+          this.labInsNetTotal=Math.round((insLbr5+Number.EPSILON)*100)/100 ;
 
 
-          var matr1=0;
-          var matr2=0;
-          var matr3=0;
-          var matr4=0;
-          var matr5=0;
+          // var matr1=0;
+          // var matr2=0;
+          // var matr3=0;
+          // var matr4=0;
+          // var matr5=0;
+
+          var custMatr1=0;
+          var custMatr2=0;
+          var custMatr3=0;
+          var custMatr4=0;
+          var custMatr5=0;
+          var matCustTax=0
+
+          var insMat1=0;
+          var insMat2=0;
+          var insMat3=0;
+          var insMat4=0;
+          var insMat5=0;
+          var matInsTax=0;
 
           for (let ln=0; ln < data.obj.jobCardMatLines.length; ln++) {
 
@@ -1625,18 +1701,46 @@ export class JobCardComponent implements OnInit {
             // var lbrAmt=(data.obj.jobCardLabLines[ln].totAmt).toFixed(2);
             // patch.controls[ln].patchValue({laborAmt:lbrAmt});
 
-            matr1 =matr1+data.obj.jobCardMatLines[ln].basicAmt;
-            matr2 =matr2+data.obj.jobCardMatLines[ln].taxableAmt;
-            matr3 =matr3+data.obj.jobCardMatLines[ln].taxAmt;
-            matr4 =matr4+data.obj.jobCardMatLines[ln].totAmt;
-            matr5 =matr5+data.obj.jobCardMatLines[ln].disAmt;
+            // matr1 =matr1+data.obj.jobCardMatLines[ln].basicAmt;
+            // matr2 =matr2+data.obj.jobCardMatLines[ln].taxableAmt;
+            // matr3 =matr3+data.obj.jobCardMatLines[ln].taxAmt;
+            // matr4 =matr4+data.obj.jobCardMatLines[ln].totAmt;
+            // matr5 =matr5+data.obj.jobCardMatLines[ln].disAmt;
+
+            custMatr1=custMatr1+data.obj.jobCardMatLines[ln].custBasicAmt;
+            custMatr2=custMatr2+data.obj.jobCardMatLines[ln].disAmt;
+            custMatr3=custMatr3+(data.obj.jobCardMatLines[ln].custBasicAmt-data.obj.jobCardMatLines[ln].disAmt);
+            matCustTax= ((data.obj.jobCardMatLines[ln].custBasicAmt-data.obj.jobCardMatLines[ln].disAmt) * (data.obj.jobCardMatLines[ln].taxPer))/100;
+            custMatr4=custMatr4+matCustTax;
+            custMatr5=custMatr3+custMatr4;
+
+            insMat1=insMat1+data.obj.jobCardMatLines[ln].insBasicAmt;
+            insMat2=insMat2+data.obj.jobCardMatLines[ln].disAmt;
+            insMat3=insMat3+(data.obj.jobCardMatLines[ln].insBasicAmt-data.obj.jobCardMatLines[ln].disAmt);
+            matInsTax= ((data.obj.jobCardMatLines[ln].insBasicAmt-data.obj.jobCardMatLines[ln].disAmt) * (data.obj.jobCardMatLines[ln].taxPer))/100;
+            insMat4=insMat4+matInsTax;
+            insMat5=insMat3+insMat4;
+
+
           }
 
-            this.matBasTotal =matr1;
-            this.matSubtotal =matr2;
-            this.matTaxTotal =matr3;
-            this.matNetTotal= matr4;
-            this.matDisTotal= matr5;
+            // this.matBasTotal =matr1;
+            // this.matSubtotal =matr2;
+            // this.matTaxTotal =matr3;
+            // this.matNetTotal= matr4;
+            // this.matDisTotal= matr5;
+
+            this.matCustBasTotal=Math.round((custMatr1+Number.EPSILON)*100)/100 ;
+            this.matCustDisTotal=Math.round((custMatr2+Number.EPSILON)*100)/100 ;
+            this.matCustSubTotal=Math.round((custMatr3+Number.EPSILON)*100)/100 ;
+            this.matCustTaxTotal=Math.round((custMatr4+Number.EPSILON)*100)/100 ; 
+            this.matCustNetTotal=Math.round((custMatr5+Number.EPSILON)*100)/100 ; 
+          
+            this.matInsBasTotal=Math.round((insMat1+Number.EPSILON)*100)/100 ;  
+            this.matInsDisTotal=Math.round((insMat2+Number.EPSILON)*100)/100 ;  
+            this.matInsSubTotal=Math.round((insMat3+Number.EPSILON)*100)/100 ;  
+            this.matInsTaxTotal=Math.round((insMat4+Number.EPSILON)*100)/100 ;  
+            this.matInsNetTotal=Math.round((insMat5+Number.EPSILON)*100)/100 ;  
 
           ///// disable/enable descreption column
 

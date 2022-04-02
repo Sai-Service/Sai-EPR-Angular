@@ -1696,13 +1696,21 @@
                                                     </fieldset>
                                                     <table>
                                                         <tr>
-                                                            <td class="LabelFontStyle" >&nbsp;LABOUR&nbsp;TOTAL:&nbsp;&nbsp;&nbsp;
-                                                            <td class="LabelFontStyle" >&nbsp;Basic&nbsp;:&nbsp;</td>    <td  class="LabelFontStyle" style="color: blue;"> {{this.labCustBasTotal | number:'0.00'}}</td>
-                                                            <td class="LabelFontStyle">&nbsp;Discount&nbsp;:&nbsp;</td>  <td  class="LabelFontStyle" style="color: blue;"> {{this.labCustDisTotal | number:'0.00'}}</td>
-                                                            <td class="LabelFontStyle">&nbsp;Taxable&nbsp;:&nbsp;</td>     <td  class="LabelFontStyle" style="color: blue;"> {{this.labCustSubTotal | number:'0.00'}}</td> 
-                                                            <td class="LabelFontStyle">&nbsp;Tax&nbsp;:&nbsp;</td>         <td  class="LabelFontStyle" style="color: blue;"> {{this.labCustTaxTotal | number:'0.00'}}</td>
-                                                            <td class="LabelFontStyle">&nbsp;Total&nbsp;:&nbsp;</td>       <td  class="LabelFontStyle" style="color: blue;"> {{this.labCustNetTotal | number:'0.00'}}</td> 
+                                                            <td class="LabelFontStyle" style="font-style: italic;">&nbsp;LABOUR&nbsp;TOTAL:&nbsp;&nbsp;&nbsp;CUSTOMER:&nbsp;&nbsp;&nbsp;
+                                                            <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Basic&nbsp;:&nbsp;</td>       <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.labCustBasTotal | number:'0.00'}}</td>
+                                                            <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Discount&nbsp;:&nbsp;</td>    <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.labCustDisTotal | number:'0.00'}}</td>
+                                                            <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Taxable&nbsp;:&nbsp;</td>     <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.labCustSubTotal | number:'0.00'}}</td> 
+                                                            <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Tax&nbsp;:&nbsp;</td>         <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.labCustTaxTotal | number:'0.00'}}</td>
+                                                            <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Total&nbsp;:&nbsp;</td>       <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.labCustNetTotal | number:'0.00'}}</td> 
+                                                       
+                                                            <td class="LabelFontStyle" style="font-style: italic;">&nbsp;&nbsp;&nbsp;&nbsp;INSURANCE:&nbsp;&nbsp;&nbsp;
+                                                            <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Basic&nbsp;:&nbsp;</td>       <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.labInsBasTotal | number:'0.00'}}</td>
+                                                            <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Discount&nbsp;:&nbsp;</td>    <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.labInsDisTotal | number:'0.00'}}</td>
+                                                            <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Taxable&nbsp;:&nbsp;</td>     <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.labInsSubTotal | number:'0.00'}}</td> 
+                                                            <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Tax&nbsp;:&nbsp;</td>         <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.labInsTaxTotal | number:'0.00'}}</td>
+                                                            <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Total&nbsp;:&nbsp;</td>       <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.labInsNetTotal | number:'0.00'}}</td> 
                                                         </tr>
+
                                                     </table>
 
                                                    
@@ -1983,13 +1991,21 @@
 
                                                 <table>
                                                     <tr>
-                                                        <td class="LabelFontStyle">&nbsp;MATERIAL&nbsp;TOTAL:&nbsp;&nbsp;&nbsp;
-                                                        <td class="LabelFontStyle">&nbsp;Basic&nbsp;:&nbsp;</td>     <td class="LabelFontStyle" style="color: blue;">  {{this.matBasTotal | number:'0.00'}}</td>
-                                                        <td class="LabelFontStyle">&nbsp;Discount&nbsp;:&nbsp;</td>  <td class="LabelFontStyle" style="color: blue;"> {{this.matDisTotal | number:'0.00'}}</td>
-                                                        <td class="LabelFontStyle">&nbsp;Taxable&nbsp;:&nbsp;</td>     <td class="LabelFontStyle" style="color: blue;">  {{this.matSubtotal | number:'0.00'}}</td> 
-                                                        <td class="LabelFontStyle">&nbsp;Tax&nbsp;:&nbsp;</td>         <td class="LabelFontStyle" style="color: blue;">  {{this.matTaxTotal | number:'0.00'}}</td>
-                                                        <td class="LabelFontStyle">&nbsp;Total&nbsp;:&nbsp;</td>       <td class="LabelFontStyle" style="color: blue;">  {{this.matNetTotal | number:'0.00'}}</td> 
+                                                        <td class="LabelFontStyle" style="font-style: italic;">&nbsp;MATERIAL&nbsp;TOTAL:&nbsp;&nbsp;&nbsp;CUSTOMER:&nbsp;&nbsp;&nbsp;
+                                                        <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Basic&nbsp;:&nbsp;</td>       <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.matCustBasTotal | number:'0.00'}}</td>
+                                                        <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Discount&nbsp;:&nbsp;</td>    <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.matCustDisTotal | number:'0.00'}}</td>
+                                                        <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Taxable&nbsp;:&nbsp;</td>     <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.matCustSubTotal | number:'0.00'}}</td> 
+                                                        <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Tax&nbsp;:&nbsp;</td>         <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.matCustTaxTotal | number:'0.00'}}</td>
+                                                        <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Total&nbsp;:&nbsp;</td>       <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.matCustNetTotal | number:'0.00'}}</td> 
+                                                   
+                                                        <td class="LabelFontStyle" style="font-style: italic;">&nbsp;&nbsp;&nbsp;&nbsp;INSURANCE:&nbsp;&nbsp;&nbsp;
+                                                        <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Basic&nbsp;:&nbsp;</td>       <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.matInsBasTotal | number:'0.00'}}</td>
+                                                        <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Discount&nbsp;:&nbsp;</td>    <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.matInsDisTotal | number:'0.00'}}</td>
+                                                        <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Taxable&nbsp;:&nbsp;</td>     <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.matInsSubTotal | number:'0.00'}}</td> 
+                                                        <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Tax&nbsp;:&nbsp;</td>         <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.matInsTaxTotal | number:'0.00'}}</td>
+                                                        <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Total&nbsp;:&nbsp;</td>       <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.matInsNetTotal | number:'0.00'}}</td> 
                                                     </tr>
+
                                                 </table>
                                              
                                             </div>
