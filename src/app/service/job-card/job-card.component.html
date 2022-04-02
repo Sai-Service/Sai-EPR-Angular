@@ -259,10 +259,9 @@
                                                                             <td style="width: 15%"
                                                                                 class="LabelFontStyle1">
                                                                                 Registration&nbsp;No&nbsp;:</td>
-                                                                            
-                                                                            <td>
+                                                                               <td>
                                                                                 <table>
-                                                                                    <tr>
+                                                                                <tr>
 
                                                                             <td>
                                                                                 <input type="text" style="background-color: yellow;"
@@ -1697,12 +1696,12 @@
                                                     </fieldset>
                                                     <table>
                                                         <tr>
-                                                            <td class="LabelFontStyle" >&nbsp;LABOUR&nbsp;:&nbsp;&nbsp;&nbsp;
-                                                            <td class="LabelFontStyle" >&nbsp;Basic&nbsp;Total:&nbsp;</td>    <td  class="LabelFontStyle" style="color: blue;"> {{this.labBasTotal | number:'0.00'}}</td>
-                                                            <td class="LabelFontStyle">&nbsp;Discount&nbsp;Total:&nbsp;</td>  <td  class="LabelFontStyle" style="color: blue;"> {{this.labDisTotal | number:'0.00'}}</td>
-                                                            <td class="LabelFontStyle">&nbsp;Taxable&nbsp;Amt:&nbsp;</td>     <td  class="LabelFontStyle" style="color: blue;"> {{this.labSubTotal | number:'0.00'}}</td> 
-                                                            <td class="LabelFontStyle">&nbsp;Tax&nbsp;Amt:&nbsp;</td>         <td  class="LabelFontStyle" style="color: blue;"> {{this.labTaxTotal | number:'0.00'}}</td>
-                                                            <td class="LabelFontStyle">&nbsp;Total&nbsp;Amt:&nbsp;</td>       <td  class="LabelFontStyle" style="color: blue;"> {{this.labNetTotal | number:'0.00'}}</td> 
+                                                            <td class="LabelFontStyle" >&nbsp;LABOUR&nbsp;TOTAL:&nbsp;&nbsp;&nbsp;
+                                                            <td class="LabelFontStyle" >&nbsp;Basic&nbsp;:&nbsp;</td>    <td  class="LabelFontStyle" style="color: blue;"> {{this.labCustBasTotal | number:'0.00'}}</td>
+                                                            <td class="LabelFontStyle">&nbsp;Discount&nbsp;:&nbsp;</td>  <td  class="LabelFontStyle" style="color: blue;"> {{this.labCustDisTotal | number:'0.00'}}</td>
+                                                            <td class="LabelFontStyle">&nbsp;Taxable&nbsp;:&nbsp;</td>     <td  class="LabelFontStyle" style="color: blue;"> {{this.labCustSubTotal | number:'0.00'}}</td> 
+                                                            <td class="LabelFontStyle">&nbsp;Tax&nbsp;:&nbsp;</td>         <td  class="LabelFontStyle" style="color: blue;"> {{this.labCustTaxTotal | number:'0.00'}}</td>
+                                                            <td class="LabelFontStyle">&nbsp;Total&nbsp;:&nbsp;</td>       <td  class="LabelFontStyle" style="color: blue;"> {{this.labCustNetTotal | number:'0.00'}}</td> 
                                                         </tr>
                                                     </table>
 
@@ -1984,12 +1983,12 @@
 
                                                 <table>
                                                     <tr>
-                                                        <td class="LabelFontStyle">&nbsp;MATERIAL&nbsp;:&nbsp;&nbsp;&nbsp;
-                                                        <td class="LabelFontStyle">&nbsp;Basic&nbsp;Total:&nbsp;</td>     <td class="LabelFontStyle" style="color: blue;">  {{this.matBasTotal | number:'0.00'}}</td>
-                                                        <td class="LabelFontStyle">&nbsp;Discount&nbsp;Total:&nbsp;</td>  <td class="LabelFontStyle" style="color: blue;"> {{this.matDisTotal | number:'0.00'}}</td>
-                                                        <td class="LabelFontStyle">&nbsp;Taxable&nbsp;Amt:&nbsp;</td>     <td class="LabelFontStyle" style="color: blue;">  {{this.matSubtotal | number:'0.00'}}</td> 
-                                                        <td class="LabelFontStyle">&nbsp;Tax&nbsp;Amt:&nbsp;</td>         <td class="LabelFontStyle" style="color: blue;">  {{this.matTaxTotal | number:'0.00'}}</td>
-                                                        <td class="LabelFontStyle">&nbsp;Total&nbsp;Amt:&nbsp;</td>       <td class="LabelFontStyle" style="color: blue;">  {{this.matNetTotal | number:'0.00'}}</td> 
+                                                        <td class="LabelFontStyle">&nbsp;MATERIAL&nbsp;TOTAL:&nbsp;&nbsp;&nbsp;
+                                                        <td class="LabelFontStyle">&nbsp;Basic&nbsp;:&nbsp;</td>     <td class="LabelFontStyle" style="color: blue;">  {{this.matBasTotal | number:'0.00'}}</td>
+                                                        <td class="LabelFontStyle">&nbsp;Discount&nbsp;:&nbsp;</td>  <td class="LabelFontStyle" style="color: blue;"> {{this.matDisTotal | number:'0.00'}}</td>
+                                                        <td class="LabelFontStyle">&nbsp;Taxable&nbsp;:&nbsp;</td>     <td class="LabelFontStyle" style="color: blue;">  {{this.matSubtotal | number:'0.00'}}</td> 
+                                                        <td class="LabelFontStyle">&nbsp;Tax&nbsp;:&nbsp;</td>         <td class="LabelFontStyle" style="color: blue;">  {{this.matTaxTotal | number:'0.00'}}</td>
+                                                        <td class="LabelFontStyle">&nbsp;Total&nbsp;:&nbsp;</td>       <td class="LabelFontStyle" style="color: blue;">  {{this.matNetTotal | number:'0.00'}}</td> 
                                                     </tr>
                                                 </table>
                                              
@@ -2531,31 +2530,32 @@
                                                                 </tr>
                                                                 
 
-                                                                <div *ngIf="dispSplitRatio ; then salv1; else salv2"></div>
+                                                            <div *ngIf="bajajDivision ; then bajajDiv; else marutiDiv"></div>
+                                                            <ng-template #marutiDiv>
+                                                               <div *ngIf="dispSplitRatio ; then salv1; else salv2"></div>
                                                                 <ng-template #salv1>
                                                               
-                                                                <tr class="ItemStyle" style="text-decoration:none;">
-                                                                  
-                                                                    <td style="width: 15%;text-align: center;" class="LabelFontStyle"> Deductibles&nbsp;</td>
-                                                                       
-                                                                    <td>
-                                                                        <input type="number" min="0"   style="width:7em;font-weight: bold;font-size: small;"
-                                                                            placeholder="" formControlName="ecaAmt" class="form-control">
-                                                                    </td>
-                                                                </tr>
-                                                                <tr class="ItemStyle" style="text-decoration:none;">
-                                                                    <td style="width: 15%;text-align: center;" class="LabelFontStyle">Salvage&nbsp;</td>
-                                                                       
-                                                                    <td>
-                                                                        <input type="number" min="0"   style="width: 7em;font-weight: bold;font-size: small;"
-                                                                            placeholder="" formControlName="salvage" class="form-control">
-                                                                    </td>
+                                                                    <tr class="ItemStyle" style="text-decoration:none;">
+                                                                    
+                                                                        <td style="width: 15%;text-align: center;" class="LabelFontStyle"> Deductibles&nbsp;</td>
+                                                                        
+                                                                        <td>
+                                                                            <input type="number" min="0"   style="width:7em;font-weight: bold;font-size: small;"
+                                                                                placeholder="" formControlName="ecaAmt" class="form-control">
+                                                                        </td>
+                                                                     </tr>
+                                                                      <tr class="ItemStyle" style="text-decoration:none;">
+                                                                        <td style="width: 15%;text-align: center;" class="LabelFontStyle">Salvage&nbsp;</td>
+                                                                        
+                                                                        <td>
+                                                                            <input type="number" min="0"   style="width: 7em;font-weight: bold;font-size: small;"
+                                                                                placeholder="" formControlName="salvage" class="form-control">
+                                                                        </td>
 
-                                                                </tr>
-                                                            </ng-template>
-                                                            <ng-template #salv2>
-                                                            </ng-template>
-                                                                                                                            
+                                                                      </tr>
+                                                            </ng-template><ng-template #salv2></ng-template>
+                                                            </ng-template><ng-template #bajajDiv> </ng-template>
+                                                                                                                                                                
                                                             </tbody>
                                                         </table>
                                                     </fieldset>

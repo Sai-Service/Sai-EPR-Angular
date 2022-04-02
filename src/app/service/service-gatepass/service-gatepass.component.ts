@@ -68,7 +68,7 @@ export class ServiceGatepassComponent implements OnInit {
     vin :string;
     mainModel:string;
 
-    delvType:string='Self';
+    delvType:string;
     delvTakenBy:string;
     driverName:string;
 
@@ -124,7 +124,7 @@ export class ServiceGatepassComponent implements OnInit {
         vin :[],
         mainModel :[],
 
-        delvType:[]='Self',
+        delvType:[],
         delvTakenBy:[],
         driverName:[],
 
