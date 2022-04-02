@@ -2139,16 +2139,16 @@
                                                                                         <td>
                                                                                             <input type="text" disabled class="form-control"
                                                                                                 formControlName="custName" [(ngModel)]="custName"
-                                                                                                placeholder="" style="width: 375px;">
+                                                                                                placeholder="" style="width: 380px;">
                                                                                         </td>
 
                                                                                         <td style="width: 15%" class="LabelFontStyle">
-                                                                                            Account &nbsp;No:&nbsp;</td>
+                                                                                            Cust&nbsp;No:&nbsp;</td>
 
                                                                                     <td>
                                                                                         <input disabled type="text" class="form-control" placeholder=""
                                                                                             formControlName="accountNo" [(ngModel)]="accountNo"
-                                                                                            (keydown.tab)="accountNoSearchfn1(accountNo)"  >
+                                                                                            (keydown.tab)="accountNoSearchfn1(accountNo)"  style="width: 120px;" >
                                                                                           
                                                                                         <input type="text" hidden formControlName="customerId">
                                                                                     </td>
@@ -2167,7 +2167,7 @@
                                                                                                     disabled
                                                                                                     class="form-control"
                                                                                                     placeholder=""
-                                                                                                    formControlName="billToAddress" style="width: 375px;">
+                                                                                                    formControlName="billToAddress" style="width: 380px;">
                                                                                             </td>
                                                                                             <td style="width: 15%"
                                                                                                 class="LabelFontStyle">
@@ -2178,7 +2178,7 @@
                                                                                                     disabled
                                                                                                     class="form-control"
                                                                                                     placeholder=""
-                                                                                                    formControlName="contact1" >
+                                                                                                    formControlName="contact1" style="width: 120px;" >
                                                                                             </td>
                                                                                             <!-- <td style="width: 15%"
                                                                                                 class="LabelFontStyle">
@@ -2201,14 +2201,14 @@
                                                                                                 disabled
                                                                                                 class="form-control"
                                                                                                 placeholder=""
-                                                                                                formControlName="shipToAddress" style="width: 375px;">
+                                                                                                formControlName="shipToAddress" style="width: 380px;">
                                                                                         </td>
                                                                                            
 
                                                                                             <td style="width: 15%" class="LabelFontStyle">
                                                                                                 &nbsp;Type:&nbsp;</td>
                                                                                             <td><input type="text" disabled formControlName="custType"
-                                                                                                    [(ngModel)]="custType" class="form-control" >
+                                                                                                    [(ngModel)]="custType" class="form-control" style="width: 120px;" >
                                                                                            </td>
                                                                                         </tr>
 
@@ -2265,7 +2265,7 @@
                                                                                 
                                                                             <td> <input disabled type="text"  class="form-control"
                                                                             placeholder=""   formControlName="insurerCompName" style="width: 375px;" > </td>
-                                                                            <td style="width: 15%" class="LabelFontStyle"> Account &nbsp;No:&nbsp;</td>
+                                                                            <td style="width: 15%" class="LabelFontStyle"> Cust &nbsp;No:&nbsp;</td>
                                                                             <td><input disabled type="number" min="0" class="form-control"   placeholder=""  formControlName="insurerCompNo"  >  </td>
                                                                         </tr>
 
@@ -2645,20 +2645,22 @@
                                                             <input type="number" disabled class="form-control"
                                                                 placeholder="" formControlName="balanceAmt">
                                                         </td>
-                                                        <td>
+
+                                                        <!-- <td>
                                                             <button type="submit" class="btn btn-primary" id="register"
                                                                 style="width: fit-content;">Details</button>
-                                                        </td>
+                                                        </td> -->
+
                                                         <td style="width: 15%" class="LabelFontStyle">
                                                             Advance&nbsp;Amount&nbsp;:</td>
                                                         <td>
                                                             <input type="number" disabled class="form-control"
                                                                 placeholder="" formControlName="advAmt">
                                                         </td>
-                                                        <td>
+                                                        <!-- <td>
                                                             <button type="submit" class="btn btn-primary" id="register"
                                                                 style="width: fit-content;">Details</button>
-                                                        </td>
+                                                        </td> -->
                                                     </tr>
 
                                                 </fieldset>

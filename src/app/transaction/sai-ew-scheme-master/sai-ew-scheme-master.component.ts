@@ -596,7 +596,11 @@ export class SaiEwSchemeMasterComponent implements OnInit {
        
           if(endDate < stDate) { alert ("Scheme End Date should not be below Start Date.");
            this.schemeEndDate = this.pipe.transform(Date.now(), 'y-MM-dd');}
+
+           
+           
         }
+
 
 
       

@@ -31,8 +31,8 @@
 
                                     <td class="LabelFontStyle1">&nbsp;Reg&nbsp;&nbsp;Number:&nbsp;</td>
                                         
-                                    <td> <input  type ="text" class="form-control" formControlName="regNo" [(ngModel)]='regNo' value={{regNo}} (change)="serchByRegNo(regNo)"
-                                        style="background-color: yellow;text-transform: uppercase;" placeholder="Regno"> </td>
+                                    <td> <input  type ="text" class="form-control" formControlName="regNo" [(ngModel)]='regNo' value={{regNo}} (change)="serchByRegNo(regNo)" (keyup)="onInput($event)"
+                                        style="background-color: yellow;" placeholder="Regno"> </td>
 
                                     <td  class="LabelFontStyle">&nbsp;GP&nbsp;Number&nbsp;:&nbsp;</td>
                                     
