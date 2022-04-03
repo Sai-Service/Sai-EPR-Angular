@@ -51,7 +51,8 @@ department:string;
 isVisiblegstsaiDebtors:boolean=false;
 custAccNo:number;
 isVisiblepaneltolocation:boolean=false;
-
+isVisibleGSTPurchaseRegister:boolean=false;
+isVisiblespPurRegDownLoad: boolean = false;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) { 
     this.serviceReportForm = this.fb.group({
@@ -190,6 +191,7 @@ isVisiblepaneltolocation:boolean=false;
       this.isVisiblefromtolocationdepartment=false;
       this.isVisiblegstsaiDebtors=false;
       this.isVisiblepaneltolocation=false;
+      this.isVisibleGSTPurchaseRegister=false;
     }
     else if (reportName ==='serviceInvNotDelivery'){
       this.reportName='Service Invoice Not Delivered';
@@ -231,6 +233,20 @@ isVisiblepaneltolocation:boolean=false;
       this.isVisiblepanelfromtolocation=false;
       this.isVisiblefromtolocationdepartment=false;
       this.isVisiblepaneltolocation=false;
+    }
+    else if (reportName === 'gstpurRegSumm') {
+      this.reportName='Purchase Register - Summary';
+      this.isVisiblepanelfromtolocation=false;
+      this.isVisiblefromtolocationdepartment=false;
+      this.isVisiblegstsaiDebtors=false;
+      this.isVisiblepaneltolocation=false;
+      this.isVisibleGSTPurchaseRegister=true;
+      if (this.reportName === 'Purchase Register Details') {
+        this.isVisiblespPurRegDownLoad = true;
+      }
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.isVisibleDepartmentList = true;
+      }
     }
   }
 
@@ -387,6 +403,41 @@ isVisiblepaneltolocation:boolean=false;
       })
     } 
     }
+    else if (reportName === 'Purchase Register - Summary') {
+      const fileName = 'Purchase Register - Summary-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.sppurRegiSummReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if ((Number(sessionStorage.getItem('deptId'))) != 4) {
+        this.reportService.sppurRegiSummReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+    }
+  }
+
+
+  spPurRegDownLoad() {
+    const fileName = 'Purchase-Register-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.spPurRegDownLoadReport(sessionStorage.getItem('ouId'))
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.dataDisplay = ''
+        this.closeResetButton = true;
+        this.isDisabled1 = false;
+      })
   }
 
 }
