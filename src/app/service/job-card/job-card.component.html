@@ -1315,30 +1315,37 @@
                                                                         </td>
                                                                     </ng-template>
                                                                     <ng-template #elseBlockRFI>
-                                                                        <td>
+                                                                        <!-- <td>
                                                                             <button disabled type="submit"
                                                                                 class="btn btn-primary"
                                                                                 style="width: fit-content;"
                                                                                 (click)="jobCardStatusClose()"
                                                                                 id="register">Ready for invoice</button>
-                                                                        </td>
+                                                                        </td> -->
                                                                     </ng-template>
+
+
+                                                                    <div *ngIf="showBodyshopCustomer; then dpcustYes; else dpcustNo"></div>
+                                                                    <ng-template #dpcustNo>
 
                                                                     <div *ngIf="preInvButton; then Pre1; else Pre2"></div>
                                                                     <ng-template #Pre1>
-                                                                    <td>
-                                                                        <button  type="submit" class="btn btn-primary"
-                                                                            style="width: fit-content;"
-                                                                            id="register" (click)="printPreInvoice()" >Pre-Invoice</button>
-                                                                    </td>
+                                                                        <td><button  type="submit" class="btn btn-primary"   style="width: fit-content;" id="register" (click)="printPreInvoice()" >Pre-Invoice</button> </td>
                                                                     </ng-template>
                                                                     <ng-template #Pre2>
-                                                                        <td>
-                                                                            <button disabled type="submit" class="btn btn-primary"
-                                                                                style="width: fit-content;"
-                                                                                id="register" (click)="printPreInvoice()" >Pre-Invoice</button>
-                                                                        </td>
+                                                                        <!-- <td><button  disabled type="submit" class="btn btn-primary"   style="width: fit-content;" id="register" (click)="printPreInvoice()" >Pre-Invoice</button> </td> -->
                                                                     </ng-template>
+                                                                    </ng-template>
+                                                                    <ng-template #dpcustYes>
+                                                                        <div *ngIf="preInvButton; then Pre11; else Pre21"></div>
+                                                                        <ng-template #Pre11>
+                                                                            <td> <button  type="submit" class="btn btn-primary" style="width: fit-content;" id="register" (click)="printPreInvoiceDp('cust')" >DP-PreInvoice(Cust)</button> </td>
+                                                                            <td> <button  type="submit" class="btn btn-primary" style="width: fit-content;" id="register" (click)="printPreInvoiceDp('ins')" >DP-PreInvoice(Ins)</button> </td>
+                                                                        </ng-template>
+                                                                        <ng-template #Pre21></ng-template>
+                                                                    </ng-template>
+
+
 
                                                                    </tr>
                                                                 </table>
@@ -2704,10 +2711,10 @@
                                                         </td>
                                                        </ng-template>
                                                         <ng-template #SB2>
-                                                        <td>
+                                                        <!-- <td>
                                                             <button disabled type="butt on" class="btn btn-primary"
                                                                 style="width: 7rem;" (click)="BillingCal()">Save Bill</button>
-                                                        </td>
+                                                        </td> -->
                                                          </ng-template>
 
 
@@ -2720,10 +2727,10 @@
                                                            </td>
                                                         </ng-template>
                                                          <ng-template #RE2>
-                                                                <td>
+                                                                <!-- <td>
                                                                     <button disabled  type="submit" class="btn btn-primary"
                                                                     style="width: fit-content;" (click)="ReopenMaterialIssue()"  id="register">Reopen-Material Issue</button>
-                                                            </td>
+                                                            </td> -->
 
 
                                                           </ng-template>
@@ -2738,12 +2745,15 @@
                                                         </td>
                                                         </ng-template>
                                                         <ng-template #G2>
-                                                            <td>
+                                                            <!-- <td>
                                                                 <button disabled  type="submit" class="btn btn-primary"
                                                                     (click)="GenerateInvoice(jobCardNum)" id="register" style="width: fit-content;">Generate Invoice</button>
-                                                            </td>
+                                                            </td> -->
                                                         </ng-template>
 
+                                                        <div *ngIf="showBodyshopCustomer; then dpcustYes; else dpcustNo"></div>
+                                                        <ng-template #dpcustNo>
+                                                        
 
                                                         <div *ngIf="preInvButton; then Pre11; else Pre21"></div>
                                                         <ng-template #Pre11>
@@ -2754,46 +2764,57 @@
                                                         </td>
                                                         </ng-template>
                                                         <ng-template #Pre21>
-                                                            <td>
+                                                            <!-- <td>
                                                                 <button disabled type="submit" class="btn btn-primary"
                                                                     style="width: fit-content;"
                                                                     id="register" (click)="printPreInvoice()" >Pre-Invoice</button>
-                                                            </td>
+                                                            </td> -->
                                                         </ng-template>
+                                                        </ng-template>
+                                                        <ng-template #dpcustYes>
+
+                                                            <div *ngIf="preInvButton; then Pre11; else Pre21"></div>
+                                                            <ng-template #Pre11>
+                                                            <td> <button  type="submit" class="btn btn-primary" style="width: fit-content;" id="register" (click)="printPreInvoiceDp('cust')" >DP-PreInvoice(Cust)</button> </td>
+                                                            <td> <button  type="submit" class="btn btn-primary" style="width: fit-content;" id="register" (click)="printPreInvoiceDp('ins')" >DP-PreInvoice(Ins)</button> </td>
+                                                           
+                                                            </ng-template>
+                                                            <ng-template #Pre21>
+                                                                <!-- <td> <button disabled type="submit" class="btn btn-primary" style="width: fit-content;" id="register" (click)="printPreInvoice()" >DP-PreInvoice(Cust)</button> </td>
+                                                                <td> <button disabled type="submit" class="btn btn-primary" style="width: fit-content;" id="register" (click)="printPreInvoice()" >DP-PreInvoice(Ins)</button> </td>
+                                                                -->
+                                                            </ng-template>
+
+
+                                                        </ng-template>
+
+
+
                                                        
                                                        
                                                     
+                                                    <div *ngIf="showBodyshopCustomer; then dpcustInvYes; else dpcustInvNo"></div>
+                                                    <ng-template #dpcustInvNo>
                                              
                                                     <div *ngIf="printInvoiceButton; then P1; else P2"></div>
                                                     <ng-template #P1>
-                                                        <td>
-                                                            <button type="submit" class="btn btn-primary" id="register"
-                                                                style="width: fit-content;" (click)="printWSInvoice()">Print invoice</button>
-                                                        </td>
-
-                                                         <!-- <td>
-                                                            <button type="submit" class="btn btn-primary" id="register"
-                                                                style="width: fit-content;" [routerLink]="['/admin/transaction/PaymentAr',this.regNo]">Receipt</button>
-                                                        </td>  -->
-
-                                                        <td>
-                                                            <button type="submit" class="btn btn-primary" id="register"
-                                                                style="width: fit-content;" [routerLink]="['/admin/transaction/PaymentAr',this.jobCardNum]">Receipt</button>
-                                                        </td> 
-                                                        
-                                                        <!-- (click)="showReceiptScreen()" -->
-                                                        <!-- <td>
-                                                            <button class="btn btn-primary" [routerLink]="['/admin/transaction/PaymentAr']">Payment</button>
-                                                        </td> -->
+                                                        <td><button type="submit" class="btn btn-primary" id="register" style="width: fit-content;" (click)="printWSInvoice()">Print invoice</button> </td>
+                                                        <td> <button type="submit" class="btn btn-primary" id="register"  style="width: fit-content;" [routerLink]="['/admin/transaction/PaymentAr',this.jobCardNum]">Receipt</button> </td> 
+                                                    </ng-template>
+                                                    <ng-template #P2></ng-template>
 
                                                     </ng-template>
-
-                                                    <ng-template #P2>
-                                                        <td>
-                                                            <button disabled type="submit" class="btn btn-primary" id="register"
-                                                                style="width: fit-content;" (click)="printWSInvoice()">Print invoice</button>
-                                                        </td>
+                                                    <ng-template #dpcustInvYes>
+                                                        <div *ngIf="printInvoiceButton; then P3; else P4"></div>
+                                                        <ng-template #P3>
+                                                            <td><button type="submit" class="btn btn-primary" id="register" style="width: fit-content;" (click)="printWSInvoiceDp('cust')">DP invoice(Cust)</button> </td>
+                                                            <td><button type="submit" class="btn btn-primary" id="register" style="width: fit-content;" (click)="printWSInvoiceDp('ins')">DP invoice(Ins)</button> </td>
+                                                          
+                                                            <td> <button type="submit" class="btn btn-primary" id="register"  style="width: fit-content;" [routerLink]="['/admin/transaction/PaymentAr',this.jobCardNum]">Receipt</button> </td> 
+                                                        </ng-template>
+                                                        <ng-template #P4></ng-template>
                                                     </ng-template>
+
 
                                                       
                                                     </tr>

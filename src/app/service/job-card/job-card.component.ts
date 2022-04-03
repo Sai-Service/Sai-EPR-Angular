@@ -327,6 +327,7 @@ export class JobCardComponent implements OnInit {
   duplicateLabLineItem=false;
   genericItemLab=false;
   bajajDivision=false;
+  bsJobCard=false;
 
   labBasTotal:number;
   labDisTotal:number;
@@ -1477,6 +1478,7 @@ export class JobCardComponent implements OnInit {
             this.dispSplitRatio=false; 
             this.showServiceCustomer=true;
             this.showBodyshopCustomer=false;
+
           }
            else {
              this.dispSplitRatio=true;
@@ -2463,6 +2465,9 @@ export class JobCardComponent implements OnInit {
       if (res.code === 200) {
         this.genBillButton=true;this.reopenButton=false;
         alert(res.message);
+        // var jobNo = this.jobcardForm.get('jobCardNum').value;
+        // this.Search(jobNo);
+
         this.jobcardForm.disable();
       } else {
         if (res.code === 400) {
@@ -2877,8 +2882,26 @@ printPreInvoice(){
       printWindow.open
       
     });
-
 }
+
+printPreInvoiceDp(custTp){
+
+  var jcNum=this.jobcardForm.get('jobCardNum').value
+  var jctype=this.jobcardForm.get('jcType').value
+
+  const fileName = 'download.pdf';
+  const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+  this.serviceService.printWsPreInvdocumentDp(jcNum,jctype,custTp)
+    .subscribe(data => {
+      var blob = new Blob([data], { type: 'application/pdf' });
+      var url = URL.createObjectURL(blob);
+      var printWindow = window.open(url, '', 'width=800,height=500');
+      printWindow.open
+      
+    });
+}
+
+
 
 
 
@@ -2896,6 +2919,22 @@ printWSInvoice(){
       
     });
 }
+
+printWSInvoiceDp(custtp){
+  var jcNum=this.jobcardForm.get('jobCardNum').value
+  var jctype=this.jobcardForm.get('jcType').value
+  const fileName = 'download.pdf';
+  const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+  this.serviceService.printWsInvoicedocumentDp(jcNum,jctype,custtp)
+    .subscribe(data => {
+      var blob = new Blob([data], { type: 'application/pdf' });
+      var url = URL.createObjectURL(blob);
+      var printWindow = window.open(url, '', 'width=800,height=500');
+      printWindow.open
+      
+    });
+}
+
 
 showReceiptScreen(){
   var mVehNo =this.jobcardForm.get('regNo').value;
