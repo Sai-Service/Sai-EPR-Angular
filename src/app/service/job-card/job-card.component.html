@@ -1315,30 +1315,37 @@
                                                                         </td>
                                                                     </ng-template>
                                                                     <ng-template #elseBlockRFI>
-                                                                        <td>
+                                                                        <!-- <td>
                                                                             <button disabled type="submit"
                                                                                 class="btn btn-primary"
                                                                                 style="width: fit-content;"
                                                                                 (click)="jobCardStatusClose()"
                                                                                 id="register">Ready for invoice</button>
-                                                                        </td>
+                                                                        </td> -->
                                                                     </ng-template>
+
+
+                                                                    <div *ngIf="showBodyshopCustomer; then dpcustYes; else dpcustNo"></div>
+                                                                    <ng-template #dpcustNo>
 
                                                                     <div *ngIf="preInvButton; then Pre1; else Pre2"></div>
                                                                     <ng-template #Pre1>
-                                                                    <td>
-                                                                        <button  type="submit" class="btn btn-primary"
-                                                                            style="width: fit-content;"
-                                                                            id="register" (click)="printPreInvoice()" >Pre-Invoice</button>
-                                                                    </td>
+                                                                        <td><button  type="submit" class="btn btn-primary"   style="width: fit-content;" id="register" (click)="printPreInvoice()" >Pre-Invoice</button> </td>
                                                                     </ng-template>
                                                                     <ng-template #Pre2>
-                                                                        <td>
-                                                                            <button disabled type="submit" class="btn btn-primary"
-                                                                                style="width: fit-content;"
-                                                                                id="register" (click)="printPreInvoice()" >Pre-Invoice</button>
-                                                                        </td>
+                                                                        <!-- <td><button  disabled type="submit" class="btn btn-primary"   style="width: fit-content;" id="register" (click)="printPreInvoice()" >Pre-Invoice</button> </td> -->
                                                                     </ng-template>
+                                                                    </ng-template>
+                                                                    <ng-template #dpcustYes>
+                                                                        <div *ngIf="preInvButton; then Pre11; else Pre21"></div>
+                                                                        <ng-template #Pre11>
+                                                                            <td> <button  type="submit" class="btn btn-primary" style="width: fit-content;" id="register" (click)="printPreInvoiceDp('cust')" >DP-PreInvoice(Cust)</button> </td>
+                                                                            <td> <button  type="submit" class="btn btn-primary" style="width: fit-content;" id="register" (click)="printPreInvoiceDp('ins')" >DP-PreInvoice(Ins)</button> </td>
+                                                                        </ng-template>
+                                                                        <ng-template #Pre21></ng-template>
+                                                                    </ng-template>
+
+
 
                                                                    </tr>
                                                                 </table>
@@ -1696,13 +1703,21 @@
                                                     </fieldset>
                                                     <table>
                                                         <tr>
-                                                            <td class="LabelFontStyle" >&nbsp;LABOUR&nbsp;TOTAL:&nbsp;&nbsp;&nbsp;
-                                                            <td class="LabelFontStyle" >&nbsp;Basic&nbsp;:&nbsp;</td>    <td  class="LabelFontStyle" style="color: blue;"> {{this.labCustBasTotal | number:'0.00'}}</td>
-                                                            <td class="LabelFontStyle">&nbsp;Discount&nbsp;:&nbsp;</td>  <td  class="LabelFontStyle" style="color: blue;"> {{this.labCustDisTotal | number:'0.00'}}</td>
-                                                            <td class="LabelFontStyle">&nbsp;Taxable&nbsp;:&nbsp;</td>     <td  class="LabelFontStyle" style="color: blue;"> {{this.labCustSubTotal | number:'0.00'}}</td> 
-                                                            <td class="LabelFontStyle">&nbsp;Tax&nbsp;:&nbsp;</td>         <td  class="LabelFontStyle" style="color: blue;"> {{this.labCustTaxTotal | number:'0.00'}}</td>
-                                                            <td class="LabelFontStyle">&nbsp;Total&nbsp;:&nbsp;</td>       <td  class="LabelFontStyle" style="color: blue;"> {{this.labCustNetTotal | number:'0.00'}}</td> 
+                                                            <td class="LabelFontStyle" style="font-style: italic;">&nbsp;LABOUR&nbsp;TOTAL:&nbsp;&nbsp;&nbsp;CUSTOMER:&nbsp;&nbsp;&nbsp;
+                                                            <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Basic&nbsp;:&nbsp;</td>       <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.labCustBasTotal | number:'0.00'}}</td>
+                                                            <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Discount&nbsp;:&nbsp;</td>    <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.labCustDisTotal | number:'0.00'}}</td>
+                                                            <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Taxable&nbsp;:&nbsp;</td>     <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.labCustSubTotal | number:'0.00'}}</td> 
+                                                            <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Tax&nbsp;:&nbsp;</td>         <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.labCustTaxTotal | number:'0.00'}}</td>
+                                                            <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Total&nbsp;:&nbsp;</td>       <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.labCustNetTotal | number:'0.00'}}</td> 
+                                                       
+                                                            <td class="LabelFontStyle" style="font-style: italic;">&nbsp;&nbsp;&nbsp;&nbsp;INSURANCE:&nbsp;&nbsp;&nbsp;
+                                                            <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Basic&nbsp;:&nbsp;</td>       <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.labInsBasTotal | number:'0.00'}}</td>
+                                                            <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Discount&nbsp;:&nbsp;</td>    <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.labInsDisTotal | number:'0.00'}}</td>
+                                                            <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Taxable&nbsp;:&nbsp;</td>     <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.labInsSubTotal | number:'0.00'}}</td> 
+                                                            <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Tax&nbsp;:&nbsp;</td>         <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.labInsTaxTotal | number:'0.00'}}</td>
+                                                            <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Total&nbsp;:&nbsp;</td>       <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.labInsNetTotal | number:'0.00'}}</td> 
                                                         </tr>
+
                                                     </table>
 
                                                    
@@ -1983,13 +1998,21 @@
 
                                                 <table>
                                                     <tr>
-                                                        <td class="LabelFontStyle">&nbsp;MATERIAL&nbsp;TOTAL:&nbsp;&nbsp;&nbsp;
-                                                        <td class="LabelFontStyle">&nbsp;Basic&nbsp;:&nbsp;</td>     <td class="LabelFontStyle" style="color: blue;">  {{this.matBasTotal | number:'0.00'}}</td>
-                                                        <td class="LabelFontStyle">&nbsp;Discount&nbsp;:&nbsp;</td>  <td class="LabelFontStyle" style="color: blue;"> {{this.matDisTotal | number:'0.00'}}</td>
-                                                        <td class="LabelFontStyle">&nbsp;Taxable&nbsp;:&nbsp;</td>     <td class="LabelFontStyle" style="color: blue;">  {{this.matSubtotal | number:'0.00'}}</td> 
-                                                        <td class="LabelFontStyle">&nbsp;Tax&nbsp;:&nbsp;</td>         <td class="LabelFontStyle" style="color: blue;">  {{this.matTaxTotal | number:'0.00'}}</td>
-                                                        <td class="LabelFontStyle">&nbsp;Total&nbsp;:&nbsp;</td>       <td class="LabelFontStyle" style="color: blue;">  {{this.matNetTotal | number:'0.00'}}</td> 
+                                                        <td class="LabelFontStyle" style="font-style: italic;">&nbsp;MATERIAL&nbsp;TOTAL:&nbsp;&nbsp;&nbsp;CUSTOMER:&nbsp;&nbsp;&nbsp;
+                                                        <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Basic&nbsp;:&nbsp;</td>       <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.matCustBasTotal | number:'0.00'}}</td>
+                                                        <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Discount&nbsp;:&nbsp;</td>    <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.matCustDisTotal | number:'0.00'}}</td>
+                                                        <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Taxable&nbsp;:&nbsp;</td>     <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.matCustSubTotal | number:'0.00'}}</td> 
+                                                        <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Tax&nbsp;:&nbsp;</td>         <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.matCustTaxTotal | number:'0.00'}}</td>
+                                                        <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Total&nbsp;:&nbsp;</td>       <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.matCustNetTotal | number:'0.00'}}</td> 
+                                                   
+                                                        <td class="LabelFontStyle" style="font-style: italic;">&nbsp;&nbsp;&nbsp;&nbsp;INSURANCE:&nbsp;&nbsp;&nbsp;
+                                                        <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Basic&nbsp;:&nbsp;</td>       <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.matInsBasTotal | number:'0.00'}}</td>
+                                                        <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Discount&nbsp;:&nbsp;</td>    <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.matInsDisTotal | number:'0.00'}}</td>
+                                                        <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Taxable&nbsp;:&nbsp;</td>     <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.matInsSubTotal | number:'0.00'}}</td> 
+                                                        <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Tax&nbsp;:&nbsp;</td>         <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.matInsTaxTotal | number:'0.00'}}</td>
+                                                        <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Total&nbsp;:&nbsp;</td>       <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.matInsNetTotal | number:'0.00'}}</td> 
                                                     </tr>
+
                                                 </table>
                                              
                                             </div>
@@ -2688,10 +2711,10 @@
                                                         </td>
                                                        </ng-template>
                                                         <ng-template #SB2>
-                                                        <td>
+                                                        <!-- <td>
                                                             <button disabled type="butt on" class="btn btn-primary"
                                                                 style="width: 7rem;" (click)="BillingCal()">Save Bill</button>
-                                                        </td>
+                                                        </td> -->
                                                          </ng-template>
 
 
@@ -2704,10 +2727,10 @@
                                                            </td>
                                                         </ng-template>
                                                          <ng-template #RE2>
-                                                                <td>
+                                                                <!-- <td>
                                                                     <button disabled  type="submit" class="btn btn-primary"
                                                                     style="width: fit-content;" (click)="ReopenMaterialIssue()"  id="register">Reopen-Material Issue</button>
-                                                            </td>
+                                                            </td> -->
 
 
                                                           </ng-template>
@@ -2722,12 +2745,15 @@
                                                         </td>
                                                         </ng-template>
                                                         <ng-template #G2>
-                                                            <td>
+                                                            <!-- <td>
                                                                 <button disabled  type="submit" class="btn btn-primary"
                                                                     (click)="GenerateInvoice(jobCardNum)" id="register" style="width: fit-content;">Generate Invoice</button>
-                                                            </td>
+                                                            </td> -->
                                                         </ng-template>
 
+                                                        <div *ngIf="showBodyshopCustomer; then dpcustYes; else dpcustNo"></div>
+                                                        <ng-template #dpcustNo>
+                                                        
 
                                                         <div *ngIf="preInvButton; then Pre11; else Pre21"></div>
                                                         <ng-template #Pre11>
@@ -2738,46 +2764,57 @@
                                                         </td>
                                                         </ng-template>
                                                         <ng-template #Pre21>
-                                                            <td>
+                                                            <!-- <td>
                                                                 <button disabled type="submit" class="btn btn-primary"
                                                                     style="width: fit-content;"
                                                                     id="register" (click)="printPreInvoice()" >Pre-Invoice</button>
-                                                            </td>
+                                                            </td> -->
                                                         </ng-template>
+                                                        </ng-template>
+                                                        <ng-template #dpcustYes>
+
+                                                            <div *ngIf="preInvButton; then Pre11; else Pre21"></div>
+                                                            <ng-template #Pre11>
+                                                            <td> <button  type="submit" class="btn btn-primary" style="width: fit-content;" id="register" (click)="printPreInvoiceDp('cust')" >DP-PreInvoice(Cust)</button> </td>
+                                                            <td> <button  type="submit" class="btn btn-primary" style="width: fit-content;" id="register" (click)="printPreInvoiceDp('ins')" >DP-PreInvoice(Ins)</button> </td>
+                                                           
+                                                            </ng-template>
+                                                            <ng-template #Pre21>
+                                                                <!-- <td> <button disabled type="submit" class="btn btn-primary" style="width: fit-content;" id="register" (click)="printPreInvoice()" >DP-PreInvoice(Cust)</button> </td>
+                                                                <td> <button disabled type="submit" class="btn btn-primary" style="width: fit-content;" id="register" (click)="printPreInvoice()" >DP-PreInvoice(Ins)</button> </td>
+                                                                -->
+                                                            </ng-template>
+
+
+                                                        </ng-template>
+
+
+
                                                        
                                                        
                                                     
+                                                    <div *ngIf="showBodyshopCustomer; then dpcustInvYes; else dpcustInvNo"></div>
+                                                    <ng-template #dpcustInvNo>
                                              
                                                     <div *ngIf="printInvoiceButton; then P1; else P2"></div>
                                                     <ng-template #P1>
-                                                        <td>
-                                                            <button type="submit" class="btn btn-primary" id="register"
-                                                                style="width: fit-content;" (click)="printWSInvoice()">Print invoice</button>
-                                                        </td>
-
-                                                         <!-- <td>
-                                                            <button type="submit" class="btn btn-primary" id="register"
-                                                                style="width: fit-content;" [routerLink]="['/admin/transaction/PaymentAr',this.regNo]">Receipt</button>
-                                                        </td>  -->
-
-                                                        <td>
-                                                            <button type="submit" class="btn btn-primary" id="register"
-                                                                style="width: fit-content;" [routerLink]="['/admin/transaction/PaymentAr',this.jobCardNum]">Receipt</button>
-                                                        </td> 
-                                                        
-                                                        <!-- (click)="showReceiptScreen()" -->
-                                                        <!-- <td>
-                                                            <button class="btn btn-primary" [routerLink]="['/admin/transaction/PaymentAr']">Payment</button>
-                                                        </td> -->
+                                                        <td><button type="submit" class="btn btn-primary" id="register" style="width: fit-content;" (click)="printWSInvoice()">Print invoice</button> </td>
+                                                        <td> <button type="submit" class="btn btn-primary" id="register"  style="width: fit-content;" [routerLink]="['/admin/transaction/PaymentAr',this.jobCardNum]">Receipt</button> </td> 
+                                                    </ng-template>
+                                                    <ng-template #P2></ng-template>
 
                                                     </ng-template>
-
-                                                    <ng-template #P2>
-                                                        <td>
-                                                            <button disabled type="submit" class="btn btn-primary" id="register"
-                                                                style="width: fit-content;" (click)="printWSInvoice()">Print invoice</button>
-                                                        </td>
+                                                    <ng-template #dpcustInvYes>
+                                                        <div *ngIf="printInvoiceButton; then P3; else P4"></div>
+                                                        <ng-template #P3>
+                                                            <td><button type="submit" class="btn btn-primary" id="register" style="width: fit-content;" (click)="printWSInvoiceDp('cust')">DP invoice(Cust)</button> </td>
+                                                            <td><button type="submit" class="btn btn-primary" id="register" style="width: fit-content;" (click)="printWSInvoiceDp('ins')">DP invoice(Ins)</button> </td>
+                                                          
+                                                            <td> <button type="submit" class="btn btn-primary" id="register"  style="width: fit-content;" [routerLink]="['/admin/transaction/PaymentAr',this.jobCardNum]">Receipt</button> </td> 
+                                                        </ng-template>
+                                                        <ng-template #P4></ng-template>
                                                     </ng-template>
+
 
                                                       
                                                     </tr>
