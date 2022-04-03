@@ -497,6 +497,7 @@
             <th style="width:10rem" scope="col">Receipt Method</th>
             <!-- <th style="width:10rem" scope="col">Payment For</th> -->
         <th style="width:6rem" scope="col">Select</th>
+        <th style="width:6rem" scope="col">View Receipt</th>
     </tr>
    </tbody>
             <tr *ngFor="let com of lstcomments" class="ItemStyle" style="text-decoration:none;">
@@ -512,7 +513,8 @@
                 <td>{{com.paymentAmt}}</td>
                 <td> {{com.receiptMethodName}}</td>
                 
-                <td><button class="btn btn-secondary" (click)="Select(com.receiptNumber)">Select</button></td>   
+                <td><button class="btn btn-secondary" (click)="Select(com.receiptNumber)">Select</button></td>
+                <td><button class="btn btn-secondary" (click)="receiptView(com.receiptNumber)" style="width: fit-content;">View</button></td>   
             </tr>
     </table>
 </div>

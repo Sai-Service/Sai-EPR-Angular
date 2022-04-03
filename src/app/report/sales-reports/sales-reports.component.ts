@@ -58,6 +58,7 @@ export class SalesReportsComponent implements OnInit {
   OUCode:string;
   custAccNo:string;
   deptId:number;
+  isVisiblefromtolocationdepartment:boolean=false;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) {
     this.salesReportForm = this.fb.group({
@@ -157,44 +158,61 @@ export class SalesReportsComponent implements OnInit {
       this.isVisibleVehicleSaleRegister=true;
       this.isVisibleSaleIND=false;
       this.isSaleClosingStock=false;
+      this.isVisiblefromtolocationdepartment=false;
     }
   else  if (reportName === 'gstSaleIND') {
       this.reportName='Sales Invoiced Not Delivered'
       this.isVisibleVehicleSaleRegister=false;
       this.isVisibleSaleIND=true;
       this.isSaleClosingStock=false;
+      this.isVisiblefromtolocationdepartment=false;
     }
     else if (reportName==='gstVehicleBookingReg'){
       this.reportName='Vehicle Booking Register'
       this.isVisibleVehicleSaleRegister=true;
       this.isVisibleSaleIND=false;
       this.isSaleClosingStock=false;
+      this.isVisiblefromtolocationdepartment=false;
     }
     else if (reportName==='gstSaleAllotNotInv'){
       this.reportName='Sales Alloted Not Invoiced Report'
       this.isVisibleVehicleSaleRegister=false;
       this.isVisibleSaleIND=true;
       this.isSaleClosingStock=false;
+      this.isVisiblefromtolocationdepartment=false;
     }
     else if (reportName==='gstSaleClosingStock'){
       this.reportName='Vehicle Closing Stock'
       this.isVisibleVehicleSaleRegister=false;
       this.isVisibleSaleIND=false;
       this.isSaleClosingStock=true;
+      this.isVisiblefromtolocationdepartment=false;
     }
     else if (reportName==='gstSaleRegister'){
       this.reportName='GST Sales Register'
       this.isVisibleVehicleSaleRegister=true;
       this.isVisibleSaleIND=false;
       this.isSaleClosingStock=false;
+      this.isVisiblefromtolocationdepartment=false;
     }
     else if (reportName==='gstSparesSaiDebtors'){
       this.reportName='Spares Sai Debtors'
       this.isVisibleVehicleSaleRegister=false;
       this.isVisibleSaleIND=true;
       this.isSaleClosingStock=false;
+      this.isVisiblefromtolocationdepartment=false;
       if (Number(sessionStorage.getItem('deptId'))===4){
         this.isVisibleDepartmentList=true;
+      }
+    }
+    else if (reportName==='gstReceiptRegister'){
+      this.reportName='Receipt Register';
+      this.isVisiblefromtolocationdepartment=true;
+      this.isVisibleVehicleSaleRegister=false;
+      this.isVisibleSaleIND=false;
+      this.isSaleClosingStock=false;
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.isVisibleDepartmentList = true;
       }
     }
   }
@@ -372,6 +390,28 @@ export class SalesReportsComponent implements OnInit {
           this.closeResetButton = true;
           this.dataDisplay = ''
         })
+      }
+    }
+    else if (reportName === 'Receipt Register') {
+      const fileName = 'Receipt Register-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.spReceiptRegisterReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.spReceiptRegisterReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
       }
     }
   }
