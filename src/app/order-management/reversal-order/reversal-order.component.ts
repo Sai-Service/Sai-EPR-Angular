@@ -35,6 +35,7 @@ export class ReversalOrderComponent implements OnInit {
   lstOrderItemLines: any;
   unitSellingPrice: number;
   baseAmt: number;
+  reversalReason1:string;
   selectFlag:string;
   taxAmt: number;
   resveQty:number;
@@ -173,7 +174,7 @@ export class ReversalOrderComponent implements OnInit {
       deptId: [],
       emplId: [''],
       orgId: [''],
-
+      reversalReason1:[''],
       orderNumber: [],
       orderedDate: [],
       orderTypeId: [],
@@ -880,11 +881,12 @@ lstOrderLinesNew:any=[];
     // const formValue: ISalesBookingForm = this.transData(this.counterSaleReturnOrderForm.getRawValue());
     const formValue  = this.transeData(this.counterSaleReturnOrderForm.getRawValue());
     var revres= this.counterSaleReturnOrderForm.get('reversalReason').value;
-    var reversaRes= 'REV-'+revres;
-    // alert(reversaRes)
-    formValue.reversalReason = reversaRes;
+    // var reversaRes= ('REV-'+revres);
+    // // alert(reversaRes)
+    // formValue.reversalReason = reversaRes;
+    // alert(formValue.remarks)
     console.log(formValue);
-    
+    // return;
     this.orderManagementService.rtnSalesOrderReversal(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         this.rtnDocNo = res.obj;
@@ -1006,6 +1008,10 @@ lstOrderLinesNew:any=[];
     this.saveButton = true;
   }
 
-
+  selectreason(event){
+    alert(event.target.value);
+    var revReas='REV'+'-'+event.target.value;
+    this.counterSaleReturnOrderForm.patchValue({reversalReason:revReas})
+  }
 
 }

@@ -162,6 +162,16 @@ export class OrderManagementService {
   }
 
 
+  receiptView(receiptNo){
+    const REQUEST_URI = this.ServerUrl + `/omPayment/omSingleReceipt?receiptNumber=${receiptNo}`;
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+
   downloadVehicleINV(InvoiceNumber) {
     // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/orderHeader/salesTaxInv/${InvoiceNumber}`;  
     // local
