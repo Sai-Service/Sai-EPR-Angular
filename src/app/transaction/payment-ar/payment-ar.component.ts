@@ -155,6 +155,7 @@ export class PaymentArComponent implements OnInit {
   accountNo: number;
   vehRegNo: string;
   attribute1: string;
+  vehNo:string;
 
   // billToSiteId:number;
   custAddr: string;
@@ -335,6 +336,7 @@ export class PaymentArComponent implements OnInit {
       accountNo: [],
       vehRegNo: [],
       attribute1: [],
+      vehNo:[],
 
       checkNo: [],
       checkDate: [],
@@ -610,7 +612,7 @@ export class PaymentArComponent implements OnInit {
         data => {
           // this.lstcomments = data.obj;
           if (data.code===200) {    
-            this.attribute1=data.obj.regNo;
+            this.vehNo=data.obj.regNo;
             this.serchByRegNo(data.obj.regNo);
             this.paymentAmt = data.obj.balanceAmt;
             this.referenceNo=data.obj.jobCardNum + '/' + data.obj.invoiceNumber ;
@@ -978,8 +980,8 @@ export class PaymentArComponent implements OnInit {
           this.paymentArForm.patchValue(this.receiptDetails);
 
           // this.locId=Number(this.locationId);
-          //  alert("this.status  "+this.status);
-
+          //  alert("this.data.obj.oePayList[0].vehNo;  "+data.obj.oePayList[0].vehNo);
+          this.vehNo=data.obj.oePayList[0].vehNo;
           this.bounceReasonCode=data.obj.oePayList[0].bounceReasonCode;
           this.chqBounceCharge=data.obj.oePayList[0].chqBounceCharge;
           this.chqBncTrxNo=data.obj.oePayList[0].chqBncTrxNo;
@@ -1805,7 +1807,7 @@ export class PaymentArComponent implements OnInit {
     delete val.payType;
     delete val.referenceNo;
     delete val.checkNo;
-    delete val.vehNo;
+    // delete val.vehNo;
     delete val.bankName;
     delete val.bankBranch;
     delete val.bankBranch;

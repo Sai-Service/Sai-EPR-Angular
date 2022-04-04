@@ -111,7 +111,7 @@
                         <div *ngIf="fromJc ,then jc1; else jc2")></div>
                         <ng-template #jc1>
                             <td>
-                            <input disabled type="text" autofocus   formControlName="attribute1" [(ngModel)]="attribute1" (change)="serchByRegNo(attribute1)"
+                            <input disabled type="text" autofocus   formControlName="vehNo" [(ngModel)]="vehNo" (change)="serchByRegNo(vehNo)"
                                 (keyup)="getUserIdsFirstWay($event)"  id="userIdFirstWay"  list="dynmicUserIds" class="form-control" />
                                 <datalist id="dynmicUserIds">
                                     <option *ngFor="let item of VehRegNoList" [ngValue]="item.regNo">
@@ -123,7 +123,7 @@
                         </ng-template>
                         <ng-template #jc2>
                             <td>
-                            <input type="text" autofocus   formControlName="attribute1" [(ngModel)]="attribute1" (change)="serchByRegNo(attribute1)"
+                            <input type="text" autofocus   formControlName="vehNo" [(ngModel)]="vehNo" (change)="serchByRegNo(vehNo)"
                                 (keyup)="getUserIdsFirstWay($event)"  id="userIdFirstWay"  list="dynmicUserIds" class="form-control" />
                                 <datalist id="dynmicUserIds">
                                     <option *ngFor="let item of VehRegNoList" [ngValue]="item.regNo">
@@ -193,7 +193,7 @@
                         </ng-template>
                         <ng-template #blk21>
                             <td style="width: 15%" class="LabelFontStyle">Vehicle&nbsp;No:&nbsp;</td>
-                            <td> <input  disabled type="number" formControlName="attribute1"  id="attribute1" [(ngModel)]="attribute1"    class="form-control"  ></td>
+                            <td> <input  disabled type="text" formControlName="vehNo"  id="vehNo" [(ngModel)]="vehNo"    class="form-control"  ></td>
                             <td style="width: 15%" class="LabelFontStyle">Cust&nbsp;Name:&nbsp;</td>
                             <td>
                                 <table>
