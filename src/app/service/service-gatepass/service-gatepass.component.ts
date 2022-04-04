@@ -68,7 +68,7 @@ export class ServiceGatepassComponent implements OnInit {
     vin :string;
     mainModel:string;
 
-    delvType:string='Self';
+    delvType:string;
     delvTakenBy:string;
     driverName:string;
 
@@ -124,7 +124,7 @@ export class ServiceGatepassComponent implements OnInit {
         vin :[],
         mainModel :[],
 
-        delvType:[]='Self',
+        delvType:[],
         delvTakenBy:[],
         driverName:[],
 
@@ -386,6 +386,9 @@ var jcNum=this.serviceGatepassForm.get('jobCardNum').value;
 var regNum=this.serviceGatepassForm.get('regNo').value;
 var osAmt=this.serviceGatepassForm.get('osAmt').value;
 var delType=this.serviceGatepassForm.get('delvType').value;
+
+// alert ("reg no :" +regNum);
+
 if (osAmt<=0) {delAuthBy=null} else { delAuthBy=this.serviceGatepassForm.get('delAuthBy').value; }
 
 this.serviceService.generateServiceGatePass(regNum,sessionStorage.getItem('locId'),osAmt,delAuthBy,delType).subscribe((res: any) => {
@@ -409,6 +412,8 @@ printGP(){
   
   var regNum=this.serviceGatepassForm.get('regNo').value
   var gpNum=this.serviceGatepassForm.get('gpNumber').value
+  
+ 
   if(gpNum==undefined || gpNum==null || gpNum<=0) {alert("Gate Pass Number not Selected..."); return;}
   if(regNum==undefined || regNum==null || regNum.trim()==''){return;}
 
@@ -462,6 +467,10 @@ radioEvent(event:any){
         osAmt: data.obj.osAmt,
         dateOfDelv :data.obj.dateOfDelv, delvType:data.obj.delvType });
        });
+    }
+
+    onInput(event) {
+      event.target.value = event.target.value.toLocaleUpperCase();
     }
 
  }

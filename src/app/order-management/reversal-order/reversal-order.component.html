@@ -199,14 +199,16 @@
                         <tr>
                             <td style="width: 15%" class="LabelFontStyle1"> Reversal&nbsp;Reason&nbsp;:&nbsp;</td> 
                             <td>
-                                 <select formControlName="reversalReason" id="reversalReason" class="form-control" style="width: 170px;background-color: yellow;" >
+                                 <select formControlName="reversalReason" id="reversalReason" class="form-control" style="width: 170px;background-color: yellow;"  >
                                      <option>--Select--</option>
                                      <option *ngFor="let rr of reversalReasonList">
                                          {{rr.codeDesc}}
                                      </option>
                                  </select>
+                                 <!-- <input disabled type="text" formControlName="reversalReason"  value={{reversalReason}} (change)="selectreason($event)"
+                                    class="form-control" style="text-align: right;" > -->
                              </td>
-
+                             
                             <!-- <td style="width: 15%" class="LabelFontStyle"> Remarks&nbsp;&nbsp;&nbsp;:&nbsp;</td>
                             <td colspan="4">
                                 <input  formControlName="remarks" [(ngModel)]="remarks" value={{remarks}} 
@@ -445,7 +447,7 @@
                                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button>
                                    </td>
                                     <!-- Modal -->
-                                       <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width:600px;">
+                                       <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width:250px;margin-left: 40%;">
                                            <div class="modal-dialog" role="document">
                                            <div class="modal-content">
                                                <div class="modal-body">
@@ -475,7 +477,7 @@
                                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalLong">Close</button>
                                            </td>
                                            <!-- Modal -->
-                                           <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" style="width:600px;">
+                                           <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" style="width:250px;margin-left: 40%;">
                                                <div class="modal-dialog" role="document">
                                                <div class="modal-content">
                                                    <div class="modal-body">
@@ -521,7 +523,7 @@
                                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button>
                                        </td>
                                        <!-- Modal -->
-                                                   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width:600px;">
+                                                   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width:250px;margin-left: 40%;">
                                                        <div class="modal-dialog" role="document">
                                            <div class="modal-content">
                                                <div class="modal-body">
@@ -551,7 +553,7 @@
                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalLong">Close</button>
                                    </td>
                                            <!-- Modal -->
-                                       <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" style="width:600px;">
+                                       <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" style="width:250px;margin-left: 40%;">
                                            <div class="modal-dialog" role="document">
                                            <div class="modal-content">
                                                <div class="modal-body">

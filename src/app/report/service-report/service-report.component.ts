@@ -51,6 +51,8 @@ department:string;
 isVisiblegstsaiDebtors:boolean=false;
 custAccNo:number;
 isVisiblepaneltolocation:boolean=false;
+isVisibleGSTPurchaseRegister:boolean=false;
+isVisiblespPurRegDownLoad: boolean = false;
 
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) { 
@@ -190,6 +192,7 @@ isVisiblepaneltolocation:boolean=false;
       this.isVisiblefromtolocationdepartment=false;
       this.isVisiblegstsaiDebtors=false;
       this.isVisiblepaneltolocation=false;
+     
     }
     else if (reportName ==='serviceInvNotDelivery'){
       this.reportName='Service Invoice Not Delivered';
@@ -197,6 +200,7 @@ isVisiblepaneltolocation:boolean=false;
       this.isVisiblefromtolocationdepartment=false;
       this.isVisiblegstsaiDebtors=false;
       this.isVisiblepaneltolocation=true;
+      
     }
     else if (reportName==='servicePendingVehicle'){
       this.reportName='Service Pending Vehicle Report';
@@ -204,6 +208,7 @@ isVisiblepaneltolocation:boolean=false;
       this.isVisiblefromtolocationdepartment=false;
       this.isVisiblegstsaiDebtors=false;
       this.isVisiblepaneltolocation=false;
+     
     }
     else if (reportName==='serviceDeliverySummary'){
       this.reportName='Service Delivery Summary';
@@ -211,12 +216,14 @@ isVisiblepaneltolocation:boolean=false;
       this.isVisiblefromtolocationdepartment=false;
       this.isVisiblegstsaiDebtors=false;
       this.isVisiblepaneltolocation=false;
+      
     }
     else if (reportName==='gstReceiptRegister'){
       this.reportName='Receipt Register';
       this.isVisiblepanelfromtolocation=false;
       this.isVisiblefromtolocationdepartment=true;
       this.isVisiblepaneltolocation=false;
+     
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.isVisibleDepartmentList = true;
         this.isVisiblegstsaiDebtors=false;
@@ -231,7 +238,9 @@ isVisiblepaneltolocation:boolean=false;
       this.isVisiblepanelfromtolocation=false;
       this.isVisiblefromtolocationdepartment=false;
       this.isVisiblepaneltolocation=false;
+     
     }
+
   }
 
 
@@ -339,6 +348,7 @@ isVisiblepaneltolocation:boolean=false;
       }
     }
     else if (reportName === 'Sai Debtors') {
+      // alert(toDate)
       var custAccNo = this.serviceReportForm.get('custAccNo').value;
       if (custAccNo === undefined || custAccNo === null) {
         custAccNo = '';
@@ -386,6 +396,41 @@ isVisiblepaneltolocation:boolean=false;
       })
     } 
     }
+   else     if (reportName === 'Sales Register'){
+    const fileName = 'Sales Register-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+ const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    if (Number(sessionStorage.getItem('deptId')) === 4) {
+      this.reportService.vhslRegisterReport(fromDate, toDate, locId)
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.dataDisplay = ''
+        this.closeResetButton = true;
+        this.isDisabled1 = false;
+      })
+    }
+    else  if (Number(sessionStorage.getItem('deptId')) != 4) {
+      this.reportService.vhslRegisterReport(fromDate, toDate, sessionStorage.getItem('locId'))
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.dataDisplay = ''
+        this.closeResetButton = true;
+        this.isDisabled1 = false;
+      })
+    }
+  }
+  }
+
+
+  spPurRegDownLoad() {
+    const fileName = 'Purchase-Register-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.spPurRegDownLoadReport(sessionStorage.getItem('ouId'))
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.dataDisplay = ''
+        this.closeResetButton = true;
+        this.isDisabled1 = false;
+      })
   }
 
 }

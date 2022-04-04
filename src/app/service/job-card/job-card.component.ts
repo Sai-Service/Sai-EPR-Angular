@@ -326,6 +326,8 @@ export class JobCardComponent implements OnInit {
   techTotalValidation=false;
   duplicateLabLineItem=false;
   genericItemLab=false;
+  bajajDivision=false;
+  bsJobCard=false;
 
   labBasTotal:number;
   labDisTotal:number;
@@ -338,7 +340,34 @@ export class JobCardComponent implements OnInit {
   matSubtotal:number;
   matTaxTotal:number;
   matNetTotal:number;
-  
+
+
+  labCustBasTotal:number;
+  labCustDisTotal:number;
+  labCustSubTotal:number;
+  labCustTaxTotal:number;
+  labCustNetTotal:number;
+ 
+  labInsBasTotal:number;
+  labInsDisTotal:number;
+  labInsSubTotal:number;
+  labInsTaxTotal:number;
+  labInsNetTotal:number;
+
+  matCustBasTotal:number;
+  matCustDisTotal:number;
+  matCustSubTotal:number;
+  matCustTaxTotal:number;
+  matCustNetTotal:number;
+ 
+  matInsBasTotal:number;
+  matInsDisTotal:number;
+  matInsSubTotal:number;
+  matInsTaxTotal:number;
+  matInsNetTotal:number;
+
+
+
 
   // public minDatetime = new Date();
   // promiseDate = new Date();
@@ -557,6 +586,32 @@ export class JobCardComponent implements OnInit {
       matNetTotal:[],
 
 
+      labCustBasTotal:[],
+      labCustDisTotal:[],
+      labCustSubTotal:[],
+      labCustTaxTotal:[],
+      labCustNetTotal:[],
+
+      labInsBasTotal:[],
+      labInsDisTotal:[],
+      labInsSubTotal:[],
+      labInsTaxTotal:[],
+      labInsNetTotal:[],
+
+      matCustBasTotal:[],
+      matCustDisTotal:[],
+      matCustSubTotal:[],
+      matCustTaxTotal:[],
+      matCustNetTotal:[],
+     
+      matInsBasTotal:[],
+      matInsDisTotal:[],
+      matInsSubTotal:[],
+      matInsTaxTotal:[],
+      matInsNetTotal:[],
+
+
+
       jobCardLabLines: this.fb.array([this.lineDetailsGroup()]),
       jobCardMatLines: this.fb.array([this.distLineDetails()]),
       splitAmounts: this.fb.array([this.splitDetailsGroup()])
@@ -719,6 +774,8 @@ export class JobCardComponent implements OnInit {
     this.deptName=sessionStorage.getItem('deptName');
     this.ouId=Number(sessionStorage.getItem('ouId'));
     this.locId=Number(sessionStorage.getItem('locId'));
+
+    if(Number(sessionStorage.getItem('divisionId'))===2) {this.bajajDivision=true;} else {this.bajajDivision=false;}
 
     // alert(this.emplId);
     // alert ("Location Id :" +Number(sessionStorage.getItem('locId')));
@@ -1207,19 +1264,22 @@ export class JobCardComponent implements OnInit {
     if(invItemId===null || invItemId==undefined || invItemId<=0)
     { this.labLineValidation=false;return; }
 
-    if (genItem==='N') {
-      if(Number(arrayControl[index].qty)<=0 ||arrayControl[index].qty===null || arrayControl[index].qty===undefined )
-      { this.labLineValidation=false;return; }
+    if(Number(arrayControl[index].qty)<=0 ||arrayControl[index].qty===null || arrayControl[index].qty===undefined )
+    { this.labLineValidation=false;return; }
 
-      if(Number(arrayControl[index].unitPrice)<=0 ||arrayControl[index].unitPrice===null || arrayControl[index].unitPrice===undefined )
-      { this.labLineValidation=false;return; }
+    // if (genItem==='N') {
+      // if(Number(arrayControl[index].qty)<=0 ||arrayControl[index].qty===null || arrayControl[index].qty===undefined )
+      // { this.labLineValidation=false;return; }
 
-      if(Number(arrayControl[index].basicAmt)<=0 ||arrayControl[index].basicAmt===null || arrayControl[index].basicAmt===undefined )
-      { this.labLineValidation=false;return; }
+      // if(Number(arrayControl[index].unitPrice)<=0 ||arrayControl[index].unitPrice===null || arrayControl[index].unitPrice===undefined )
+      // { this.labLineValidation=false;return; }
+
+      // if(Number(arrayControl[index].basicAmt)<=0 ||arrayControl[index].basicAmt===null || arrayControl[index].basicAmt===undefined )
+      // { this.labLineValidation=false;return; }
  
-      if(Number(arrayControl[index].laborAmt)<=0 ||arrayControl[index].laborAmt===null || arrayControl[index].laborAmt===undefined )
-      { this.labLineValidation=false;return; }
-    }
+      // if(Number(arrayControl[index].laborAmt)<=0 ||arrayControl[index].laborAmt===null || arrayControl[index].laborAmt===undefined )
+      // { this.labLineValidation=false;return; }
+    // }
 
    
 
@@ -1418,6 +1478,7 @@ export class JobCardComponent implements OnInit {
             this.dispSplitRatio=false; 
             this.showServiceCustomer=true;
             this.showBodyshopCustomer=false;
+
           }
            else {
              this.dispSplitRatio=true;
@@ -1540,11 +1601,23 @@ export class JobCardComponent implements OnInit {
           var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
           // alert('jobCardLabLines length---'+data.jobCardLabLines.length)
           
-            var lbr1=0;
-            var lbr2=0;
-            var lbr3=0;
-            var lbr4=0;
-            var lbr5=0;
+            var custLbr1=0;
+            var custLbr2=0;
+            var custLbr3=0;
+            var custLbr4=0;
+            var custLbr5=0;
+            var lbCustTax=0
+            var lbCustDisAmt=0;
+
+            var insLbr1=0;
+            var insLbr2=0;
+            var insLbr3=0;
+            var insLbr4=0;
+            var insLbr5=0;
+            var lbInsTax=0;
+            var lbInsDisAmt=0;
+            
+
 
           for (let ln=0; ln < data.obj.jobCardLabLines.length; ln++) {
             // alert('inside loop'+ln)
@@ -1554,24 +1627,74 @@ export class JobCardComponent implements OnInit {
             var lbrAmt=(data.obj.jobCardLabLines[ln].totAmt).toFixed(2);
             patch.controls[ln].patchValue({laborAmt:lbrAmt});
 
-            lbr1 =lbr1+data.obj.jobCardLabLines[ln].basicAmt;
-            lbr2 =lbr2+data.obj.jobCardLabLines[ln].taxableAmt;
-            lbr3 =lbr3+data.obj.jobCardLabLines[ln].taxAmt;
-            lbr4 =lbr4+data.obj.jobCardLabLines[ln].totAmt;
-            lbr5 =lbr5+data.obj.jobCardLabLines[ln].disAmt;
+            // custLbr1 =custLbr1+data.obj.jobCardLabLines[ln].basicAmt;
+            // custLbr2 =custLbr2+data.obj.jobCardLabLines[ln].disAmt;
+            // custLbr3 =custLbr3+data.obj.jobCardLabLines[ln].taxableAmt;
+            // custLbr4 =custLbr4+data.obj.jobCardLabLines[ln].taxAmt;
+            // custLbr5 =custLbr5+data.obj.jobCardLabLines[ln].totAmt;
+           
+
+            custLbr1=custLbr1+data.obj.jobCardLabLines[ln].custBasicAmt;
+            lbCustDisAmt=(data.obj.jobCardLabLines[ln].custBasicAmt*data.obj.jobCardLabLines[ln].disPer)/100;
+            custLbr2=custLbr2+lbCustDisAmt;
+
+            custLbr3=custLbr3+(data.obj.jobCardLabLines[ln].custBasicAmt-lbCustDisAmt);
+            lbCustTax= ((data.obj.jobCardLabLines[ln].custBasicAmt-lbCustDisAmt) * (data.obj.jobCardLabLines[ln].taxPer))/100;
+            custLbr4=custLbr4+lbCustTax;
+            custLbr5=custLbr3+custLbr4;
+
+            insLbr1=insLbr1+data.obj.jobCardLabLines[ln].insBasicAmt;
+            lbInsDisAmt=(data.obj.jobCardLabLines[ln].insBasicAmt*data.obj.jobCardLabLines[ln].disPer)/100;
+            insLbr2=insLbr2+ lbInsDisAmt
+
+            insLbr3=insLbr3+(data.obj.jobCardLabLines[ln].insBasicAmt-lbInsDisAmt);
+            lbInsTax= ((data.obj.jobCardLabLines[ln].insBasicAmt-lbInsDisAmt) * (data.obj.jobCardLabLines[ln].taxPer))/100;
+            insLbr4=insLbr4+lbInsTax;
+            insLbr5=insLbr3+insLbr4;
+
+
           }
 
-          this.labBasTotal =lbr1;
-          this.labSubTotal =lbr2;
-          this.labTaxTotal =lbr3;
-          this.labNetTotal =lbr4;
-          this.labDisTotal =lbr5;
+          // this.labBasTotal =lbr1;
+          // this.labSubTotal =lbr2;
+          // this.labTaxTotal =lbr3;
+          // this.labNetTotal =lbr4;
+          // this.labDisTotal =lbr5;
 
-          var matr1=0;
-          var matr2=0;
-          var matr3=0;
-          var matr4=0;
-          var matr5=0;
+          this.labCustBasTotal=Math.round((custLbr1+Number.EPSILON)*100)/100;
+          this.labCustDisTotal=Math.round((custLbr2+Number.EPSILON)*100)/100;
+          this.labCustSubTotal=Math.round((custLbr3+Number.EPSILON)*100)/100;
+          this.labCustTaxTotal=Math.round((custLbr4+Number.EPSILON)*100)/100;
+          this.labCustNetTotal=Math.round((custLbr5+Number.EPSILON)*100)/100;
+
+          // Math.round((this.lstcomments.insTotBasicAmt+Number.EPSILON)*100)/100,
+
+          this.labInsBasTotal=Math.round((insLbr1+Number.EPSILON)*100)/100 ;
+          this.labInsDisTotal=Math.round((insLbr2+Number.EPSILON)*100)/100 ;
+          this.labInsSubTotal=Math.round((insLbr3+Number.EPSILON)*100)/100 ;
+          this.labInsTaxTotal=Math.round((insLbr4+Number.EPSILON)*100)/100 ;
+          this.labInsNetTotal=Math.round((insLbr5+Number.EPSILON)*100)/100 ;
+
+
+          // var matr1=0;
+          // var matr2=0;
+          // var matr3=0;
+          // var matr4=0;
+          // var matr5=0;
+
+          var custMatr1=0;
+          var custMatr2=0;
+          var custMatr3=0;
+          var custMatr4=0;
+          var custMatr5=0;
+          var matCustTax=0
+
+          var insMat1=0;
+          var insMat2=0;
+          var insMat3=0;
+          var insMat4=0;
+          var insMat5=0;
+          var matInsTax=0;
 
           for (let ln=0; ln < data.obj.jobCardMatLines.length; ln++) {
 
@@ -1580,18 +1703,46 @@ export class JobCardComponent implements OnInit {
             // var lbrAmt=(data.obj.jobCardLabLines[ln].totAmt).toFixed(2);
             // patch.controls[ln].patchValue({laborAmt:lbrAmt});
 
-            matr1 =matr1+data.obj.jobCardMatLines[ln].basicAmt;
-            matr2 =matr2+data.obj.jobCardMatLines[ln].taxableAmt;
-            matr3 =matr3+data.obj.jobCardMatLines[ln].taxAmt;
-            matr4 =matr4+data.obj.jobCardMatLines[ln].totAmt;
-            matr5 =matr5+data.obj.jobCardMatLines[ln].disAmt;
+            // matr1 =matr1+data.obj.jobCardMatLines[ln].basicAmt;
+            // matr2 =matr2+data.obj.jobCardMatLines[ln].taxableAmt;
+            // matr3 =matr3+data.obj.jobCardMatLines[ln].taxAmt;
+            // matr4 =matr4+data.obj.jobCardMatLines[ln].totAmt;
+            // matr5 =matr5+data.obj.jobCardMatLines[ln].disAmt;
+
+            custMatr1=custMatr1+data.obj.jobCardMatLines[ln].custBasicAmt;
+            custMatr2=custMatr2+data.obj.jobCardMatLines[ln].disAmt;
+            custMatr3=custMatr3+(data.obj.jobCardMatLines[ln].custBasicAmt-data.obj.jobCardMatLines[ln].disAmt);
+            matCustTax= ((data.obj.jobCardMatLines[ln].custBasicAmt-data.obj.jobCardMatLines[ln].disAmt) * (data.obj.jobCardMatLines[ln].taxPer))/100;
+            custMatr4=custMatr4+matCustTax;
+            custMatr5=custMatr3+custMatr4;
+
+            insMat1=insMat1+data.obj.jobCardMatLines[ln].insBasicAmt;
+            insMat2=insMat2+data.obj.jobCardMatLines[ln].disAmt;
+            insMat3=insMat3+(data.obj.jobCardMatLines[ln].insBasicAmt-data.obj.jobCardMatLines[ln].disAmt);
+            matInsTax= ((data.obj.jobCardMatLines[ln].insBasicAmt-data.obj.jobCardMatLines[ln].disAmt) * (data.obj.jobCardMatLines[ln].taxPer))/100;
+            insMat4=insMat4+matInsTax;
+            insMat5=insMat3+insMat4;
+
+
           }
 
-            this.matBasTotal =matr1;
-            this.matSubtotal =matr2;
-            this.matTaxTotal =matr3;
-            this.matNetTotal= matr4;
-            this.matDisTotal= matr5;
+            // this.matBasTotal =matr1;
+            // this.matSubtotal =matr2;
+            // this.matTaxTotal =matr3;
+            // this.matNetTotal= matr4;
+            // this.matDisTotal= matr5;
+
+            this.matCustBasTotal=Math.round((custMatr1+Number.EPSILON)*100)/100 ;
+            this.matCustDisTotal=Math.round((custMatr2+Number.EPSILON)*100)/100 ;
+            this.matCustSubTotal=Math.round((custMatr3+Number.EPSILON)*100)/100 ;
+            this.matCustTaxTotal=Math.round((custMatr4+Number.EPSILON)*100)/100 ; 
+            this.matCustNetTotal=Math.round((custMatr5+Number.EPSILON)*100)/100 ; 
+          
+            this.matInsBasTotal=Math.round((insMat1+Number.EPSILON)*100)/100 ;  
+            this.matInsDisTotal=Math.round((insMat2+Number.EPSILON)*100)/100 ;  
+            this.matInsSubTotal=Math.round((insMat3+Number.EPSILON)*100)/100 ;  
+            this.matInsTaxTotal=Math.round((insMat4+Number.EPSILON)*100)/100 ;  
+            this.matInsNetTotal=Math.round((insMat5+Number.EPSILON)*100)/100 ;  
 
           ///// disable/enable descreption column
 
@@ -2314,6 +2465,9 @@ export class JobCardComponent implements OnInit {
       if (res.code === 200) {
         this.genBillButton=true;this.reopenButton=false;
         alert(res.message);
+        // var jobNo = this.jobcardForm.get('jobCardNum').value;
+        // this.Search(jobNo);
+
         this.jobcardForm.disable();
       } else {
         if (res.code === 400) {
@@ -2636,6 +2790,7 @@ onOptioninvItemIdSelectedNew(itemSeg,index){
 
 getInvItemId($event)
 {
+  this.onInput($event)
   // alert('in getInvItemId')
    let userId=(<HTMLInputElement>document.getElementById('invItemIdFirstWay')).value;
    this.userList2=[];
@@ -2728,8 +2883,26 @@ printPreInvoice(){
       printWindow.open
       
     });
-
 }
+
+printPreInvoiceDp(custTp){
+
+  var jcNum=this.jobcardForm.get('jobCardNum').value
+  var jctype=this.jobcardForm.get('jcType').value
+
+  const fileName = 'download.pdf';
+  const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+  this.serviceService.printWsPreInvdocumentDp(jcNum,jctype,custTp)
+    .subscribe(data => {
+      var blob = new Blob([data], { type: 'application/pdf' });
+      var url = URL.createObjectURL(blob);
+      var printWindow = window.open(url, '', 'width=800,height=500');
+      printWindow.open
+      
+    });
+}
+
+
 
 
 
@@ -2747,6 +2920,22 @@ printWSInvoice(){
       
     });
 }
+
+printWSInvoiceDp(custtp){
+  var jcNum=this.jobcardForm.get('jobCardNum').value
+  var jctype=this.jobcardForm.get('jcType').value
+  const fileName = 'download.pdf';
+  const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+  this.serviceService.printWsInvoicedocumentDp(jcNum,jctype,custtp)
+    .subscribe(data => {
+      var blob = new Blob([data], { type: 'application/pdf' });
+      var url = URL.createObjectURL(blob);
+      var printWindow = window.open(url, '', 'width=800,height=500');
+      printWindow.open
+      
+    });
+}
+
 
 showReceiptScreen(){
   var mVehNo =this.jobcardForm.get('regNo').value;

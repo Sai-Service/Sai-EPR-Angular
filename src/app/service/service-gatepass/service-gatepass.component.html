@@ -31,8 +31,8 @@
 
                                     <td class="LabelFontStyle1">&nbsp;Reg&nbsp;&nbsp;Number:&nbsp;</td>
                                         
-                                    <td> <input  type ="text" class="form-control" formControlName="regNo" [(ngModel)]='regNo' value={{regNo}} (change)="serchByRegNo(regNo)"
-                                        style="background-color: yellow;text-transform: uppercase;" placeholder="Regno"> </td>
+                                    <td> <input  type ="text" class="form-control" formControlName="regNo" [(ngModel)]='regNo' value={{regNo}} (change)="serchByRegNo(regNo)" (keyup)="onInput($event)"
+                                        style="background-color: yellow;" placeholder="Regno"> </td>
 
                                     <td  class="LabelFontStyle">&nbsp;GP&nbsp;Number&nbsp;:&nbsp;</td>
                                     
@@ -251,11 +251,11 @@
                                     <td style="text-align: center;width: 5rem;">{{com.attribute1}}</td>
                                     <td style="text-align: center;width: 8rem;">{{com.status}}</td>
                                     <td style="text-align: center;width: 3rem;">{{com.gatepassId}}</td>
-                                    <td style="text-align: center;width: 3rem;">{{com.dateOfDelv |date:'dd-MM-y'}}</td>
+                                    <td style="text-align: center;width: 5rem;">{{com.dateOfDelv |date:'dd-MM-y'}}</td>
                                     <td style="text-align: center;width: 8rem;">{{com.fullName}}</td>
-                                    <td style="text-align: center;width: 2rem;">{{com.trxNumber}}</td>
-                                    <td style="text-align: right;width: 2rem;">{{com.invoiceAmount}}</td>
-                                    <td style="text-align: right;width: 2rem;">{{com.balance}}</td>
+                                    <td style="text-align: center;width: 8rem;">{{com.trxNumber}}</td>
+                                    <td style="text-align: right;width: 5rem;">{{com.invoiceAmount}}</td>
+                                    <td style="text-align: right;width: 5rem;">{{com.balance}}</td>
                                     <!-- <td style="text-align: center;width: 2rem;">{{com.custAccountNo}}</td> -->
                                     <!-- <td style="text-align: left;width: 16rem;">{{com.custName}}</td>
                                     <td style="text-align: center;width: 2rem;">{{com.custAccountNo}}</td>  -->

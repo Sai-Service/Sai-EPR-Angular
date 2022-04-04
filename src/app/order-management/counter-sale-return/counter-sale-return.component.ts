@@ -96,8 +96,8 @@ export class CounterSaleReturnComponent implements OnInit {
   salesRepName:string;
   flowStatusCode :string;
   tlName :string;
-  // remarks :string;
-  remarks='2021101121227';
+  remarks :string;
+  // remarks='2021101121227';
 
   othRefNo :string;
   issuedBy:string;

@@ -259,10 +259,9 @@
                                                                             <td style="width: 15%"
                                                                                 class="LabelFontStyle1">
                                                                                 Registration&nbsp;No&nbsp;:</td>
-                                                                            
-                                                                            <td>
+                                                                               <td>
                                                                                 <table>
-                                                                                    <tr>
+                                                                                <tr>
 
                                                                             <td>
                                                                                 <input type="text" style="background-color: yellow;"
@@ -1316,30 +1315,37 @@
                                                                         </td>
                                                                     </ng-template>
                                                                     <ng-template #elseBlockRFI>
-                                                                        <td>
+                                                                        <!-- <td>
                                                                             <button disabled type="submit"
                                                                                 class="btn btn-primary"
                                                                                 style="width: fit-content;"
                                                                                 (click)="jobCardStatusClose()"
                                                                                 id="register">Ready for invoice</button>
-                                                                        </td>
+                                                                        </td> -->
                                                                     </ng-template>
+
+
+                                                                    <div *ngIf="showBodyshopCustomer; then dpcustYes; else dpcustNo"></div>
+                                                                    <ng-template #dpcustNo>
 
                                                                     <div *ngIf="preInvButton; then Pre1; else Pre2"></div>
                                                                     <ng-template #Pre1>
-                                                                    <td>
-                                                                        <button  type="submit" class="btn btn-primary"
-                                                                            style="width: fit-content;"
-                                                                            id="register" (click)="printPreInvoice()" >Pre-Invoice</button>
-                                                                    </td>
+                                                                        <td><button  type="submit" class="btn btn-primary"   style="width: fit-content;" id="register" (click)="printPreInvoice()" >Pre-Invoice</button> </td>
                                                                     </ng-template>
                                                                     <ng-template #Pre2>
-                                                                        <td>
-                                                                            <button disabled type="submit" class="btn btn-primary"
-                                                                                style="width: fit-content;"
-                                                                                id="register" (click)="printPreInvoice()" >Pre-Invoice</button>
-                                                                        </td>
+                                                                        <!-- <td><button  disabled type="submit" class="btn btn-primary"   style="width: fit-content;" id="register" (click)="printPreInvoice()" >Pre-Invoice</button> </td> -->
                                                                     </ng-template>
+                                                                    </ng-template>
+                                                                    <ng-template #dpcustYes>
+                                                                        <div *ngIf="preInvButton; then Pre11; else Pre21"></div>
+                                                                        <ng-template #Pre11>
+                                                                            <td> <button  type="submit" class="btn btn-primary" style="width: fit-content;" id="register" (click)="printPreInvoiceDp('cust')" >DP-PreInvoice(Cust)</button> </td>
+                                                                            <td> <button  type="submit" class="btn btn-primary" style="width: fit-content;" id="register" (click)="printPreInvoiceDp('ins')" >DP-PreInvoice(Ins)</button> </td>
+                                                                        </ng-template>
+                                                                        <ng-template #Pre21></ng-template>
+                                                                    </ng-template>
+
+
 
                                                                    </tr>
                                                                 </table>
@@ -1514,7 +1520,7 @@
                                                                             <ng-template #splt21>
                                                                                 <!-- <div *ngIf="genericItemLab; then genYes2; else genNo2"> </div>
                                                                                 <ng-template #genYes2> -->
-                                                                                     <td><input  type="text" formControlName="description"  class="form-control"  style="height: 25px; width:350px" ></td>
+                                                                                     <td><input  type="text" formControlName="description"  class="form-control"  style="height: 25px; width:350px" (keyup)="onInput($event)"  ></td>
                                                                                <!-- </ng-template>
                                                                                <ng-template #genNo2>
                                                                                     <td><input disabled type="text" formControlName="description"  class="form-control"  style="height: 25px; width:350px" ></td>
@@ -1523,7 +1529,7 @@
 
 
 
-                                                                            <td><input disabled type="text" formControlName="genericItem"  class="form-control"  style="height: 25px; width:30px" ></td>
+                                                                            <td><input disabled type="text" formControlName="genericItem"  class="form-control"  style="height: 25px; width:30px" (keyup)="onInput($event)"  ></td>
 
 
                                                                           
@@ -1697,13 +1703,21 @@
                                                     </fieldset>
                                                     <table>
                                                         <tr>
-                                                            <td class="LabelFontStyle" >&nbsp;LABOUR&nbsp;:&nbsp;&nbsp;&nbsp;
-                                                            <td class="LabelFontStyle" >&nbsp;Basic&nbsp;Total:&nbsp;</td>    <td  class="LabelFontStyle" style="color: blue;"> {{this.labBasTotal | number:'0.00'}}</td>
-                                                            <td class="LabelFontStyle">&nbsp;Discount&nbsp;Total:&nbsp;</td>  <td  class="LabelFontStyle" style="color: blue;"> {{this.labDisTotal | number:'0.00'}}</td>
-                                                            <td class="LabelFontStyle">&nbsp;Taxable&nbsp;Amt:&nbsp;</td>     <td  class="LabelFontStyle" style="color: blue;"> {{this.labSubTotal | number:'0.00'}}</td> 
-                                                            <td class="LabelFontStyle">&nbsp;Tax&nbsp;Amt:&nbsp;</td>         <td  class="LabelFontStyle" style="color: blue;"> {{this.labTaxTotal | number:'0.00'}}</td>
-                                                            <td class="LabelFontStyle">&nbsp;Total&nbsp;Amt:&nbsp;</td>       <td  class="LabelFontStyle" style="color: blue;"> {{this.labNetTotal | number:'0.00'}}</td> 
+                                                            <td class="LabelFontStyle" style="font-style: italic;">&nbsp;LABOUR&nbsp;TOTAL:&nbsp;&nbsp;&nbsp;CUSTOMER:&nbsp;&nbsp;&nbsp;
+                                                            <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Basic&nbsp;:&nbsp;</td>       <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.labCustBasTotal | number:'0.00'}}</td>
+                                                            <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Discount&nbsp;:&nbsp;</td>    <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.labCustDisTotal | number:'0.00'}}</td>
+                                                            <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Taxable&nbsp;:&nbsp;</td>     <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.labCustSubTotal | number:'0.00'}}</td> 
+                                                            <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Tax&nbsp;:&nbsp;</td>         <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.labCustTaxTotal | number:'0.00'}}</td>
+                                                            <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Total&nbsp;:&nbsp;</td>       <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.labCustNetTotal | number:'0.00'}}</td> 
+                                                       
+                                                            <td class="LabelFontStyle" style="font-style: italic;">&nbsp;&nbsp;&nbsp;&nbsp;INSURANCE:&nbsp;&nbsp;&nbsp;
+                                                            <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Basic&nbsp;:&nbsp;</td>       <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.labInsBasTotal | number:'0.00'}}</td>
+                                                            <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Discount&nbsp;:&nbsp;</td>    <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.labInsDisTotal | number:'0.00'}}</td>
+                                                            <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Taxable&nbsp;:&nbsp;</td>     <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.labInsSubTotal | number:'0.00'}}</td> 
+                                                            <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Tax&nbsp;:&nbsp;</td>         <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.labInsTaxTotal | number:'0.00'}}</td>
+                                                            <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Total&nbsp;:&nbsp;</td>       <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.labInsNetTotal | number:'0.00'}}</td> 
                                                         </tr>
+
                                                     </table>
 
                                                    
@@ -1984,13 +1998,21 @@
 
                                                 <table>
                                                     <tr>
-                                                        <td class="LabelFontStyle">&nbsp;MATERIAL&nbsp;:&nbsp;&nbsp;&nbsp;
-                                                        <td class="LabelFontStyle">&nbsp;Basic&nbsp;Total:&nbsp;</td>     <td class="LabelFontStyle" style="color: blue;">  {{this.matBasTotal | number:'0.00'}}</td>
-                                                        <td class="LabelFontStyle">&nbsp;Discount&nbsp;Total:&nbsp;</td>  <td class="LabelFontStyle" style="color: blue;"> {{this.matDisTotal | number:'0.00'}}</td>
-                                                        <td class="LabelFontStyle">&nbsp;Taxable&nbsp;Amt:&nbsp;</td>     <td class="LabelFontStyle" style="color: blue;">  {{this.matSubtotal | number:'0.00'}}</td> 
-                                                        <td class="LabelFontStyle">&nbsp;Tax&nbsp;Amt:&nbsp;</td>         <td class="LabelFontStyle" style="color: blue;">  {{this.matTaxTotal | number:'0.00'}}</td>
-                                                        <td class="LabelFontStyle">&nbsp;Total&nbsp;Amt:&nbsp;</td>       <td class="LabelFontStyle" style="color: blue;">  {{this.matNetTotal | number:'0.00'}}</td> 
+                                                        <td class="LabelFontStyle" style="font-style: italic;">&nbsp;MATERIAL&nbsp;TOTAL:&nbsp;&nbsp;&nbsp;CUSTOMER:&nbsp;&nbsp;&nbsp;
+                                                        <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Basic&nbsp;:&nbsp;</td>       <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.matCustBasTotal | number:'0.00'}}</td>
+                                                        <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Discount&nbsp;:&nbsp;</td>    <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.matCustDisTotal | number:'0.00'}}</td>
+                                                        <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Taxable&nbsp;:&nbsp;</td>     <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.matCustSubTotal | number:'0.00'}}</td> 
+                                                        <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Tax&nbsp;:&nbsp;</td>         <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.matCustTaxTotal | number:'0.00'}}</td>
+                                                        <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Total&nbsp;:&nbsp;</td>       <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.matCustNetTotal | number:'0.00'}}</td> 
+                                                   
+                                                        <td class="LabelFontStyle" style="font-style: italic;">&nbsp;&nbsp;&nbsp;&nbsp;INSURANCE:&nbsp;&nbsp;&nbsp;
+                                                        <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Basic&nbsp;:&nbsp;</td>       <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.matInsBasTotal | number:'0.00'}}</td>
+                                                        <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Discount&nbsp;:&nbsp;</td>    <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.matInsDisTotal | number:'0.00'}}</td>
+                                                        <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Taxable&nbsp;:&nbsp;</td>     <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.matInsSubTotal | number:'0.00'}}</td> 
+                                                        <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Tax&nbsp;:&nbsp;</td>         <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.matInsTaxTotal | number:'0.00'}}</td>
+                                                        <td class="LabelFontStyle" style="font-style: italic;">&nbsp;Total&nbsp;:&nbsp;</td>       <td  class="LabelFontStyle" style="color: blue;font-style: italic;"> {{this.matInsNetTotal | number:'0.00'}}</td> 
                                                     </tr>
+
                                                 </table>
                                              
                                             </div>
@@ -2139,16 +2161,16 @@
                                                                                         <td>
                                                                                             <input type="text" disabled class="form-control"
                                                                                                 formControlName="custName" [(ngModel)]="custName"
-                                                                                                placeholder="" style="width: 375px;">
+                                                                                                placeholder="" style="width: 380px;">
                                                                                         </td>
 
                                                                                         <td style="width: 15%" class="LabelFontStyle">
-                                                                                            Account &nbsp;No:&nbsp;</td>
+                                                                                            Cust&nbsp;No:&nbsp;</td>
 
                                                                                     <td>
                                                                                         <input disabled type="text" class="form-control" placeholder=""
                                                                                             formControlName="accountNo" [(ngModel)]="accountNo"
-                                                                                            (keydown.tab)="accountNoSearchfn1(accountNo)"  >
+                                                                                            (keydown.tab)="accountNoSearchfn1(accountNo)"  style="width: 120px;" >
                                                                                           
                                                                                         <input type="text" hidden formControlName="customerId">
                                                                                     </td>
@@ -2167,7 +2189,7 @@
                                                                                                     disabled
                                                                                                     class="form-control"
                                                                                                     placeholder=""
-                                                                                                    formControlName="billToAddress" style="width: 375px;">
+                                                                                                    formControlName="billToAddress" style="width: 380px;">
                                                                                             </td>
                                                                                             <td style="width: 15%"
                                                                                                 class="LabelFontStyle">
@@ -2178,7 +2200,7 @@
                                                                                                     disabled
                                                                                                     class="form-control"
                                                                                                     placeholder=""
-                                                                                                    formControlName="contact1" >
+                                                                                                    formControlName="contact1" style="width: 120px;" >
                                                                                             </td>
                                                                                             <!-- <td style="width: 15%"
                                                                                                 class="LabelFontStyle">
@@ -2201,14 +2223,14 @@
                                                                                                 disabled
                                                                                                 class="form-control"
                                                                                                 placeholder=""
-                                                                                                formControlName="shipToAddress" style="width: 375px;">
+                                                                                                formControlName="shipToAddress" style="width: 380px;">
                                                                                         </td>
                                                                                            
 
                                                                                             <td style="width: 15%" class="LabelFontStyle">
                                                                                                 &nbsp;Type:&nbsp;</td>
                                                                                             <td><input type="text" disabled formControlName="custType"
-                                                                                                    [(ngModel)]="custType" class="form-control" >
+                                                                                                    [(ngModel)]="custType" class="form-control" style="width: 120px;" >
                                                                                            </td>
                                                                                         </tr>
 
@@ -2265,7 +2287,7 @@
                                                                                 
                                                                             <td> <input disabled type="text"  class="form-control"
                                                                             placeholder=""   formControlName="insurerCompName" style="width: 375px;" > </td>
-                                                                            <td style="width: 15%" class="LabelFontStyle"> Account &nbsp;No:&nbsp;</td>
+                                                                            <td style="width: 15%" class="LabelFontStyle"> Cust &nbsp;No:&nbsp;</td>
                                                                             <td><input disabled type="number" min="0" class="form-control"   placeholder=""  formControlName="insurerCompNo"  >  </td>
                                                                         </tr>
 
@@ -2531,31 +2553,32 @@
                                                                 </tr>
                                                                 
 
-                                                                <div *ngIf="dispSplitRatio ; then salv1; else salv2"></div>
+                                                            <div *ngIf="bajajDivision ; then bajajDiv; else marutiDiv"></div>
+                                                            <ng-template #marutiDiv>
+                                                               <div *ngIf="dispSplitRatio ; then salv1; else salv2"></div>
                                                                 <ng-template #salv1>
                                                               
-                                                                <tr class="ItemStyle" style="text-decoration:none;">
-                                                                  
-                                                                    <td style="width: 15%;text-align: center;" class="LabelFontStyle"> Deductibles&nbsp;</td>
-                                                                       
-                                                                    <td>
-                                                                        <input type="number" min="0"   style="width:7em;font-weight: bold;font-size: small;"
-                                                                            placeholder="" formControlName="ecaAmt" class="form-control">
-                                                                    </td>
-                                                                </tr>
-                                                                <tr class="ItemStyle" style="text-decoration:none;">
-                                                                    <td style="width: 15%;text-align: center;" class="LabelFontStyle">Salvage&nbsp;</td>
-                                                                       
-                                                                    <td>
-                                                                        <input type="number" min="0"   style="width: 7em;font-weight: bold;font-size: small;"
-                                                                            placeholder="" formControlName="salvage" class="form-control">
-                                                                    </td>
+                                                                    <tr class="ItemStyle" style="text-decoration:none;">
+                                                                    
+                                                                        <td style="width: 15%;text-align: center;" class="LabelFontStyle"> Deductibles&nbsp;</td>
+                                                                        
+                                                                        <td>
+                                                                            <input type="number" min="0"   style="width:7em;font-weight: bold;font-size: small;"
+                                                                                placeholder="" formControlName="ecaAmt" class="form-control">
+                                                                        </td>
+                                                                     </tr>
+                                                                      <tr class="ItemStyle" style="text-decoration:none;">
+                                                                        <td style="width: 15%;text-align: center;" class="LabelFontStyle">Salvage&nbsp;</td>
+                                                                        
+                                                                        <td>
+                                                                            <input type="number" min="0"   style="width: 7em;font-weight: bold;font-size: small;"
+                                                                                placeholder="" formControlName="salvage" class="form-control">
+                                                                        </td>
 
-                                                                </tr>
-                                                            </ng-template>
-                                                            <ng-template #salv2>
-                                                            </ng-template>
-                                                                                                                            
+                                                                      </tr>
+                                                            </ng-template><ng-template #salv2></ng-template>
+                                                            </ng-template><ng-template #bajajDiv> </ng-template>
+                                                                                                                                                                
                                                             </tbody>
                                                         </table>
                                                     </fieldset>
@@ -2645,20 +2668,22 @@
                                                             <input type="number" disabled class="form-control"
                                                                 placeholder="" formControlName="balanceAmt">
                                                         </td>
-                                                        <td>
+
+                                                        <!-- <td>
                                                             <button type="submit" class="btn btn-primary" id="register"
                                                                 style="width: fit-content;">Details</button>
-                                                        </td>
+                                                        </td> -->
+
                                                         <td style="width: 15%" class="LabelFontStyle">
                                                             Advance&nbsp;Amount&nbsp;:</td>
                                                         <td>
                                                             <input type="number" disabled class="form-control"
                                                                 placeholder="" formControlName="advAmt">
                                                         </td>
-                                                        <td>
+                                                        <!-- <td>
                                                             <button type="submit" class="btn btn-primary" id="register"
                                                                 style="width: fit-content;">Details</button>
-                                                        </td>
+                                                        </td> -->
                                                     </tr>
 
                                                 </fieldset>
@@ -2686,10 +2711,10 @@
                                                         </td>
                                                        </ng-template>
                                                         <ng-template #SB2>
-                                                        <td>
+                                                        <!-- <td>
                                                             <button disabled type="butt on" class="btn btn-primary"
                                                                 style="width: 7rem;" (click)="BillingCal()">Save Bill</button>
-                                                        </td>
+                                                        </td> -->
                                                          </ng-template>
 
 
@@ -2702,10 +2727,10 @@
                                                            </td>
                                                         </ng-template>
                                                          <ng-template #RE2>
-                                                                <td>
+                                                                <!-- <td>
                                                                     <button disabled  type="submit" class="btn btn-primary"
                                                                     style="width: fit-content;" (click)="ReopenMaterialIssue()"  id="register">Reopen-Material Issue</button>
-                                                            </td>
+                                                            </td> -->
 
 
                                                           </ng-template>
@@ -2720,12 +2745,15 @@
                                                         </td>
                                                         </ng-template>
                                                         <ng-template #G2>
-                                                            <td>
+                                                            <!-- <td>
                                                                 <button disabled  type="submit" class="btn btn-primary"
                                                                     (click)="GenerateInvoice(jobCardNum)" id="register" style="width: fit-content;">Generate Invoice</button>
-                                                            </td>
+                                                            </td> -->
                                                         </ng-template>
 
+                                                        <div *ngIf="showBodyshopCustomer; then dpcustYes; else dpcustNo"></div>
+                                                        <ng-template #dpcustNo>
+                                                        
 
                                                         <div *ngIf="preInvButton; then Pre11; else Pre21"></div>
                                                         <ng-template #Pre11>
@@ -2736,46 +2764,57 @@
                                                         </td>
                                                         </ng-template>
                                                         <ng-template #Pre21>
-                                                            <td>
+                                                            <!-- <td>
                                                                 <button disabled type="submit" class="btn btn-primary"
                                                                     style="width: fit-content;"
                                                                     id="register" (click)="printPreInvoice()" >Pre-Invoice</button>
-                                                            </td>
+                                                            </td> -->
                                                         </ng-template>
+                                                        </ng-template>
+                                                        <ng-template #dpcustYes>
+
+                                                            <div *ngIf="preInvButton; then Pre11; else Pre21"></div>
+                                                            <ng-template #Pre11>
+                                                            <td> <button  type="submit" class="btn btn-primary" style="width: fit-content;" id="register" (click)="printPreInvoiceDp('cust')" >DP-PreInvoice(Cust)</button> </td>
+                                                            <td> <button  type="submit" class="btn btn-primary" style="width: fit-content;" id="register" (click)="printPreInvoiceDp('ins')" >DP-PreInvoice(Ins)</button> </td>
+                                                           
+                                                            </ng-template>
+                                                            <ng-template #Pre21>
+                                                                <!-- <td> <button disabled type="submit" class="btn btn-primary" style="width: fit-content;" id="register" (click)="printPreInvoice()" >DP-PreInvoice(Cust)</button> </td>
+                                                                <td> <button disabled type="submit" class="btn btn-primary" style="width: fit-content;" id="register" (click)="printPreInvoice()" >DP-PreInvoice(Ins)</button> </td>
+                                                                -->
+                                                            </ng-template>
+
+
+                                                        </ng-template>
+
+
+
                                                        
                                                        
                                                     
+                                                    <div *ngIf="showBodyshopCustomer; then dpcustInvYes; else dpcustInvNo"></div>
+                                                    <ng-template #dpcustInvNo>
                                              
                                                     <div *ngIf="printInvoiceButton; then P1; else P2"></div>
                                                     <ng-template #P1>
-                                                        <td>
-                                                            <button type="submit" class="btn btn-primary" id="register"
-                                                                style="width: fit-content;" (click)="printWSInvoice()">Print invoice</button>
-                                                        </td>
-
-                                                         <!-- <td>
-                                                            <button type="submit" class="btn btn-primary" id="register"
-                                                                style="width: fit-content;" [routerLink]="['/admin/transaction/PaymentAr',this.regNo]">Receipt</button>
-                                                        </td>  -->
-
-                                                        <td>
-                                                            <button type="submit" class="btn btn-primary" id="register"
-                                                                style="width: fit-content;" [routerLink]="['/admin/transaction/PaymentAr',this.jobCardNum]">Receipt</button>
-                                                        </td> 
-                                                        
-                                                        <!-- (click)="showReceiptScreen()" -->
-                                                        <!-- <td>
-                                                            <button class="btn btn-primary" [routerLink]="['/admin/transaction/PaymentAr']">Payment</button>
-                                                        </td> -->
+                                                        <td><button type="submit" class="btn btn-primary" id="register" style="width: fit-content;" (click)="printWSInvoice()">Print invoice</button> </td>
+                                                        <td> <button type="submit" class="btn btn-primary" id="register"  style="width: fit-content;" [routerLink]="['/admin/transaction/PaymentAr',this.jobCardNum]">Receipt</button> </td> 
+                                                    </ng-template>
+                                                    <ng-template #P2></ng-template>
 
                                                     </ng-template>
-
-                                                    <ng-template #P2>
-                                                        <td>
-                                                            <button disabled type="submit" class="btn btn-primary" id="register"
-                                                                style="width: fit-content;" (click)="printWSInvoice()">Print invoice</button>
-                                                        </td>
+                                                    <ng-template #dpcustInvYes>
+                                                        <div *ngIf="printInvoiceButton; then P3; else P4"></div>
+                                                        <ng-template #P3>
+                                                            <td><button type="submit" class="btn btn-primary" id="register" style="width: fit-content;" (click)="printWSInvoiceDp('cust')">DP invoice(Cust)</button> </td>
+                                                            <td><button type="submit" class="btn btn-primary" id="register" style="width: fit-content;" (click)="printWSInvoiceDp('ins')">DP invoice(Ins)</button> </td>
+                                                          
+                                                            <td> <button type="submit" class="btn btn-primary" id="register"  style="width: fit-content;" [routerLink]="['/admin/transaction/PaymentAr',this.jobCardNum]">Receipt</button> </td> 
+                                                        </ng-template>
+                                                        <ng-template #P4></ng-template>
                                                     </ng-template>
+
 
                                                       
                                                     </tr>
