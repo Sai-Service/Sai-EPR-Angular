@@ -426,7 +426,7 @@
                                 <div *ngIf="rtnSearch ,then rtn1; else rtn2")></div>
                                 <ng-template #rtn1> 
                                     <td>
-                                        <button type="button" class="btn btn-info" (click)="printDoc()"[disabled]="!counterSaleReturnOrderForm">Print</button>
+                                        <button type="button" class="btn btn-info" (click)="printDoc()">Print</button>
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#viewAccountingModel"  style="width: 8rem;" (click)="viewAccounting()" >
@@ -528,7 +528,7 @@
                                        <ng-template #elseBlock1>
                                       
                                                <td>
-                                                   <button type="button" class="btn btn-info" (click)="printDoc()"[disabled]="!counterSaleReturnOrderForm">Print</button>
+                                                   <button type="button" class="btn btn-info" (click)="printDoc()">Print</button>
                                                </td>
                                                <td>
                                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#viewAccountingModel"  style="width: 8rem;" (click)="viewAccounting(searchCntrSaleOrderNo)" >
