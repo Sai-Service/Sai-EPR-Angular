@@ -703,6 +703,7 @@
                                                     <th scope="col">View Tax Details</th>
                                                     <th scope="col">No.</th>
                                                     <th scope="col">Type</th>
+                                                    <th scope="col">Item Search</th>
                                                     <th scope="col">Item</th>
                                                     <th scope="col">Description</th>
                                                     <th scope="col">Amount</th>
@@ -786,7 +787,13 @@
                                                                     </option>
                                                                 </select>
                                                             </td>
-
+                                                            <td>
+                                                                <input type="text"
+                                                                    style="height: 20px;width: 100px;text-transform: uppercase;"
+                                                                    class="form-control" formControlName="itemSeg"  style="width: 140px;height: 25px;font-size: 10px;"
+                                                                    [(ngModel)]='itemSeg' name="itemSeg{{k}}"
+                                                                    (keydown.tab)="searchByItemSegmentDetails(itemSeg,k)" />
+                                                            </td>
                                                             <td>
                                                                 <div
                                                                     *ngIf="displayitemName; then thenitemName; else elseitemName">
@@ -798,28 +805,30 @@
                                                                         style="width: 140px;height: 25px;font-size: 10px;">
                                                                 </ng-template>
                                                                 <ng-template #elseitemName>
-                                                                    <!-- <select formControlName="segment" id="segment"
-                                                                        (ngModelChange)='InventIdSelected($event, k)'
+                                                                    <select formControlName="segment" id="segment"
+                                                                        (ngModelChange)='onOptioninvItemIdSelected($event, k)'
                                                                         class="form-control"
                                                                         style="width: 140px;height: 25px;font-size: 10px;">
                                                                         <option>--Select--</option>
                                                                         <option *ngFor="let sc of  invItemList1">
                                                                             {{sc.segment}}
                                                                         </option>
-                                                                    </select> -->
-                                                                    <input type="text" list="dynmicUserIds1"
+                                                                    </select>
+                                                                    <!-- commented by Jyoti K 04-Apr-2022 -->
+                                                                    <!-- <input type="text" list="dynmicUserIds1"
                                                                         (keyup)="filterRecord(k,$event)"
                                                                         formControlName="segment" id="invItemIdFirstWay"
                                                                         class="form-control"
                                                                         (ngModelChange)="onOptioninvItemIdSelected($event,k)"
                                                                         style="height: 25px;width:120px;" />
-                                                                    <!--  -->
                                                                     <datalist id="dynmicUserIds1" autocomplete="off">
                                                                         <option *ngFor="let item of invItemList"
                                                                             [ngValue]="item.itemId">{{item.segment}}
                                                                         </option>
                                                                     </datalist>
-                                                                    <input hidden type="text" formControlName="itemId">
+                                                                    <input hidden type="text" formControlName="itemId"> -->
+                                                                  
+                                                                <input hidden type="number" formControlName="itemId">
                                                                 </ng-template>
                                                             </td>
                                                             <input hidden type="text" formControlName="itemId">

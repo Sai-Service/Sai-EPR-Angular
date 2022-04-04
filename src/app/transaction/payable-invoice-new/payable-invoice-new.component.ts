@@ -95,6 +95,7 @@ export class PayableInvoiceNewComponent implements OnInit {
   locCode: string;
   userList3: any[] = [];
   lastkeydown3: number = 0;
+  itemSeg:string;
   firstFieldEmittedValue: IDateRange;
   isSearchPatch: boolean = false;
   firstFieldOptions: IDateRangePickerOptions = {
@@ -495,6 +496,7 @@ export class PayableInvoiceNewComponent implements OnInit {
       locCode: [],
       lineTypeLookupCode: ['', [Validators.required]],
       segment1: [],
+      itemSeg:[],
       amount: ['', [Validators.required]],
       poNumber: [],
       poLineId: [],
@@ -902,7 +904,7 @@ export class PayableInvoiceNewComponent implements OnInit {
     if (lineTypeLookupCode === 'OTHER') {
       this.displayitemName = true
     }
-    else if (lineTypeLookupCode === 'OTHER') {
+    else if (lineTypeLookupCode === 'ITEM') {
       this.displayitemName = false;
     }
   }
@@ -1463,10 +1465,8 @@ export class PayableInvoiceNewComponent implements OnInit {
 
   filterRecord(event, i) {
     // alert(event+'Filter');
-    // var invTyp = this.arInvoiceForm.get('source').value;
-
-    var itemCode = event.target.value;
-    // alert(itemCode)
+   var itemCode = event.target.value;
+    // alert(itemCode+'-----'+itemCode.length)
     if (event.keyCode == 13) {
       // enter keycode
       if (itemCode.length == 8) {
@@ -1499,10 +1499,27 @@ export class PayableInvoiceNewComponent implements OnInit {
     }
   }
 
+  orderedItem: string;
+  public itemMap = new Map<string, any[]>();
+  public itemMap2 = new Map<number, any[]>();
+  searchByItemSegmentDetails(itemDesc,k){
+    // alert(itemDesc)
+    var itemDesc = itemDesc.toUpperCase();
+    this.service.searchByItemSegmentAR(itemDesc.toUpperCase())
+    .subscribe(
+      data => {
+        this.invItemList1 = data.obj;
+        console.log(data.invItemList1);
+        // this.itemMap.set(itemDesc, data.obj);
+        // this.itemMap2.set(k, this.itemMap.get(itemDesc));
+      }
+    );
+  }
+
   onOptioninvItemIdSelected(itemId, index) {
-    // alert(index+'---Index')
+    // alert(index+'---Index----'+itemId)
     console.log(this.invItemList);
-    let selectedValue = this.invItemList.find(v => v.segment == itemId);
+    let selectedValue = this.invItemList1.find(v => v.segment == itemId);
     console.log(selectedValue)
     var patch = this.poInvoiceForm.get('invLines') as FormArray;
     // debugger;
@@ -1518,16 +1535,12 @@ export class PayableInvoiceNewComponent implements OnInit {
     patch.controls[index].get('description').disable();
     // alert(selectedValue.isTaxable +'selectedValue.isTaxable')
     if (selectedValue.isTaxable == 'N') {
-      // alert('In If');
       patch.controls[index].get('taxPer').disable();
       patch.controls[index].get('taxCategoryName').disable();
-      // this.isDisabledName=false;
-      // this.isDisabledPer=true;
     }
-    var custaxTaxCatName = this.poInvoiceForm.get('custtaxCategoryName').value;
+    var custaxTaxCatName = patch[index].get('taxCategoryName').value;
     // alert(custaxTaxCatName+'custaxTaxCatName')
     if (custaxTaxCatName === 'Sales-IGST') {
-      // alert(custaxTaxCatName);
       this.orderManagementService.addonDescList2(itemId, custaxTaxCatName, 1, 'N')
         .subscribe(
           data => {
@@ -1536,13 +1549,9 @@ export class PayableInvoiceNewComponent implements OnInit {
               for (let i = 0; i < data.obj.length; i++) {
                 var itemtaxCatNm: string = data.obj[i].taxCategoryName;
                 if (itemtaxCatNm.includes('Sale-I-GST')) {
-                  // alert(itemtaxCatNm);
                   (patch.controls[index]).patchValue({
-                    // itemId: data.obj[i].itemId,
-                    // orderedItem: data.obj[i].description,
                     hsnSacCode: data.obj[i].hsnSacCode,
                     uom: data.obj[i].uom,
-                    // unitSellingPrice: data.obj[0].priceValue,by vinita
                   });
                   this.orderManagementService.getTaxCategoriesForSales(custaxTaxCatName, data.obj[i].taxPercentage)
                     .subscribe(
@@ -1800,7 +1809,7 @@ export class PayableInvoiceNewComponent implements OnInit {
               }
 
             }
-            alert(accDate1)
+            // alert(accDate1)
             this.distarr.set(this.invLineNo, this.poInvoiceForm.get('distribution').value);
 
           })
