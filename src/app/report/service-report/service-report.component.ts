@@ -54,6 +54,7 @@ isVisiblepaneltolocation:boolean=false;
 isVisibleGSTPurchaseRegister:boolean=false;
 isVisiblespPurRegDownLoad: boolean = false;
 
+
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) { 
     this.serviceReportForm = this.fb.group({
       jobSumFromDt:[''],
@@ -191,7 +192,7 @@ isVisiblespPurRegDownLoad: boolean = false;
       this.isVisiblefromtolocationdepartment=false;
       this.isVisiblegstsaiDebtors=false;
       this.isVisiblepaneltolocation=false;
-      this.isVisibleGSTPurchaseRegister=false;
+     
     }
     else if (reportName ==='serviceInvNotDelivery'){
       this.reportName='Service Invoice Not Delivered';
@@ -199,6 +200,7 @@ isVisiblespPurRegDownLoad: boolean = false;
       this.isVisiblefromtolocationdepartment=false;
       this.isVisiblegstsaiDebtors=false;
       this.isVisiblepaneltolocation=true;
+      
     }
     else if (reportName==='servicePendingVehicle'){
       this.reportName='Service Pending Vehicle Report';
@@ -206,6 +208,7 @@ isVisiblespPurRegDownLoad: boolean = false;
       this.isVisiblefromtolocationdepartment=false;
       this.isVisiblegstsaiDebtors=false;
       this.isVisiblepaneltolocation=false;
+     
     }
     else if (reportName==='serviceDeliverySummary'){
       this.reportName='Service Delivery Summary';
@@ -213,12 +216,14 @@ isVisiblespPurRegDownLoad: boolean = false;
       this.isVisiblefromtolocationdepartment=false;
       this.isVisiblegstsaiDebtors=false;
       this.isVisiblepaneltolocation=false;
+      
     }
     else if (reportName==='gstReceiptRegister'){
       this.reportName='Receipt Register';
       this.isVisiblepanelfromtolocation=false;
       this.isVisiblefromtolocationdepartment=true;
       this.isVisiblepaneltolocation=false;
+     
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.isVisibleDepartmentList = true;
         this.isVisiblegstsaiDebtors=false;
@@ -233,21 +238,9 @@ isVisiblespPurRegDownLoad: boolean = false;
       this.isVisiblepanelfromtolocation=false;
       this.isVisiblefromtolocationdepartment=false;
       this.isVisiblepaneltolocation=false;
+     
     }
-    else if (reportName === 'gstpurRegSumm') {
-      this.reportName='Purchase Register - Summary';
-      this.isVisiblepanelfromtolocation=false;
-      this.isVisiblefromtolocationdepartment=false;
-      this.isVisiblegstsaiDebtors=false;
-      this.isVisiblepaneltolocation=false;
-      this.isVisibleGSTPurchaseRegister=true;
-      if (this.reportName === 'Purchase Register Details') {
-        this.isVisiblespPurRegDownLoad = true;
-      }
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.isVisibleDepartmentList = true;
-      }
-    }
+
   }
 
 
@@ -403,28 +396,28 @@ isVisiblespPurRegDownLoad: boolean = false;
       })
     } 
     }
-    else if (reportName === 'Purchase Register - Summary') {
-      const fileName = 'Purchase Register - Summary-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
-      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.sppurRegiSummReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
-          .subscribe(data => {
-            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-            this.isDisabled1 = false;
-            this.closeResetButton = true;
-            this.dataDisplay = ''
-          })
-      }
-      else if ((Number(sessionStorage.getItem('deptId'))) != 4) {
-        this.reportService.sppurRegiSummReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
-          .subscribe(data => {
-            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-            this.isDisabled1 = false;
-            this.closeResetButton = true;
-            this.dataDisplay = ''
-          })
-      }
+   else     if (reportName === 'Sales Register'){
+    const fileName = 'Sales Register-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+ const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    if (Number(sessionStorage.getItem('deptId')) === 4) {
+      this.reportService.vhslRegisterReport(fromDate, toDate, locId)
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.dataDisplay = ''
+        this.closeResetButton = true;
+        this.isDisabled1 = false;
+      })
     }
+    else  if (Number(sessionStorage.getItem('deptId')) != 4) {
+      this.reportService.vhslRegisterReport(fromDate, toDate, sessionStorage.getItem('locId'))
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.dataDisplay = ''
+        this.closeResetButton = true;
+        this.isDisabled1 = false;
+      })
+    }
+  }
   }
 
 

@@ -931,6 +931,7 @@ export class PayableInvoiceNewComponent implements OnInit {
     this.TaxDetailsArray().clear();
     this.TdsDetailsArray().clear();
     this.lineDistributionArray().clear();
+    this.tdsTaxDetailsArray().clear();
     this.displayHeaderData = false;
     let jsonData = this.poInvoiceForm.value;
     let invSearch: ISearch = Object.assign({}, jsonData);
@@ -1182,6 +1183,7 @@ export class PayableInvoiceNewComponent implements OnInit {
             this.displayapInvCancelled = false;
             this.disDeleteButton=false;
             this.isVisiblelineDetialsDeleteButton=false;
+            this.isVisibleSaveTDS=false;
           }
           if (data.invoiceStatus ===undefined) {
             if (arraybaseNew1[i].invTypeLookupCode === 'CREDIT' || arraybaseNew1[i].invTypeLookupCode === 'STANDARD') {
@@ -1203,6 +1205,7 @@ export class PayableInvoiceNewComponent implements OnInit {
             this.tdsLineDetails().disable();
             this.disDeleteButton=false;
             this.isVisiblelineDetialsDeleteButton=false;
+            this.isVisibleSaveTDS=false;
             }
           }
 
@@ -2439,7 +2442,7 @@ export class PayableInvoiceNewComponent implements OnInit {
           // this.apInvFindAfterSave(arrayControl1[0].invNumber);
           this.apInvFind(res.obj)
           // this.TaxDetailsArray().clear();
-          // this.tdsTaxDetailsArray().clear();
+          this.tdsTaxDetailsArray().clear();
           // this.TdsDetailsArray().clear();
           // this.invLineDetailsArray().clear();
           // this.lineDistributionArray().clear();
