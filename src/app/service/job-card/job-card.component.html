@@ -1520,7 +1520,7 @@
                                                                             <ng-template #splt21>
                                                                                 <!-- <div *ngIf="genericItemLab; then genYes2; else genNo2"> </div>
                                                                                 <ng-template #genYes2> -->
-                                                                                     <td><input  type="text" formControlName="description"  class="form-control"  style="height: 25px; width:350px" ></td>
+                                                                                     <td><input  type="text" formControlName="description"  class="form-control"  style="height: 25px; width:350px" (keyup)="onInput($event)"  ></td>
                                                                                <!-- </ng-template>
                                                                                <ng-template #genNo2>
                                                                                     <td><input disabled type="text" formControlName="description"  class="form-control"  style="height: 25px; width:350px" ></td>
@@ -1529,7 +1529,7 @@
 
 
 
-                                                                            <td><input disabled type="text" formControlName="genericItem"  class="form-control"  style="height: 25px; width:30px" ></td>
+                                                                            <td><input disabled type="text" formControlName="genericItem"  class="form-control"  style="height: 25px; width:30px" (keyup)="onInput($event)"  ></td>
 
 
                                                                           

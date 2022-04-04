@@ -2790,6 +2790,7 @@ onOptioninvItemIdSelectedNew(itemSeg,index){
 
 getInvItemId($event)
 {
+  this.onInput($event)
   // alert('in getInvItemId')
    let userId=(<HTMLInputElement>document.getElementById('invItemIdFirstWay')).value;
    this.userList2=[];
