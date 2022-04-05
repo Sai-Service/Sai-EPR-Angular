@@ -990,12 +990,8 @@ export class PaymentArComponent implements OnInit {
           this.GetCustomerDetails(data.obj.oePayList[0].customerId)
           this.GetCustomerSiteDetails(data.obj.oePayList[0].customerId)
           
-
-
-        
-            var rcptdt =data.obj.oePayList[0].receiptDate
-            var tDate = this.pipe.transform(Date.now() ,'y-MM-dd');
-
+          var rcptdt =data.obj.oePayList[0].receiptDate
+          var tDate = this.pipe.transform(Date.now() ,'y-MM-dd');
                     
           //  alert ( "Receipt Date :"+rcptdt + "  Today :" +tDate);
 

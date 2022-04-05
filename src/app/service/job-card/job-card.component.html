@@ -560,10 +560,10 @@
                                                                                 formControlName="demandJob" placeholder="" style="width: 100%;">
                                                                             </td>  -->
                                                                             <td colspan="3">
-                                                                            <textarea id="demandJob" formControlName="demandJob" rows="2" style="width: 100%;resize: none; font-size: small;"></textarea> </td>
+                                                                            <textarea id="demandJob" formControlName="demandJob" rows="2" style="width: 100%;resize: none; font-size: small;" (keyup)="onInput($event)"></textarea> </td>
                                                                            
                                                                             <td style="width: 15%"  class="LabelFontStyle">Recommendation&nbsp;:</td>
-                                                                            <td colspan="3"><textarea id="recomJob" formControlName="recomJob" rows="2" style="width: 100%; resize: none;font-size: small;"></textarea> </td>
+                                                                            <td colspan="3"><textarea id="recomJob" formControlName="recomJob" rows="2" style="width: 100%; resize: none;font-size: small;" (keyup)="onInput($event)"></textarea> </td>
                                                                                
 
                                                                             <!-- <td colspan="3"> 
@@ -1162,14 +1162,11 @@
                                                                                     placeholder=""
                                                                                     formControlName="pickupDate" [(ngModel)]="pickupDate" (change)="validatePickupDate()" >
                                                                             </td>
-                                                                            <td style="width: 15%"
-                                                                                class="LabelFontStyle">
-                                                                                Pickup&nbsp;Location&nbsp;:</td>
-                                                                            <td>
-                                                                                <input type="text" class="form-control"
-                                                                                    placeholder=""
-                                                                                    formControlName="pickupLoc">
-                                                                            </td>
+                                                                           
+
+                                                                            <td style="width: 15%" class="LabelFontStyle1"> Promise&nbsp;Date&nbsp;/&nbsp;Time&nbsp;: </td>
+                                                                            <td> <input type="date" class="form-control"  placeholder="" formControlName="promiseDate" [(ngModel)]="promiseDate" (change)="validatePromisedDate()"  min="{{minDate | date:'yyyy-MM-dd'}}"></td>
+                                                                        
                                                                         </tr>
                                                                         <tr>
                                                                             <td style="width: 15%"
@@ -1177,7 +1174,7 @@
                                                                             <td>
                                                                                 <input type="text" class="form-control"
                                                                                     placeholder=""
-                                                                                    formControlName="driverName">
+                                                                                    formControlName="driverName"  (keyup)="onInput($event)">
                                                                             </td>
                                                                             <td style="width: 15%"
                                                                                 class="LabelFontStyle">
@@ -1185,15 +1182,27 @@
                                                                             <td>
                                                                                 <input type="text" class="form-control"
                                                                                     placeholder=""
-                                                                                    formControlName="pickupRemark">
+                                                                                    formControlName="pickupRemark" (keyup)="onInput($event)">
                                                                             </td>
+
+                                                                            <td style="width: 15%"
+                                                                            class="LabelFontStyle">
+                                                                            Pickup&nbsp;Location&nbsp;:</td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control"
+                                                                                placeholder=""
+                                                                                formControlName="pickupLoc" (keyup)="onInput($event)">
+                                                                        </td>
+
+                                                                             
                                                                         </tr>
                                                                     </fieldset>
                                                                     <fieldset class="RFS">
                                                                         <legend id="FormsPH_LGAadhaar" class="RFSL"
                                                                             style="font-size: 10px;color: black;">
-                                                                            <b> Estimated&nbsp;</b>
+                                                                            <b> Other Details&nbsp;</b>
                                                                         </legend>
+                                                                        <table class="center">
                                                                         <tr>
 
                                                                             <!-- <td>
@@ -1203,8 +1212,15 @@
                                                                                     Labor</button>
                                                                             </td> -->
 
+                                                                            <div *ngIf="fscCoupon; then fscYes; else fscNo"></div>
+                                                                            <ng-template #fscYes>
+                                                                                <td style="width: 15%" class="LabelFontStyle"> FSC&nbsp;Coupon&nbsp;No&nbsp;: </td>
+                                                                                <td> <input type="text" class="form-control"  placeholder="Fsc Coupon No." formControlName="fscCouponNo" [(ngModel)]="fscCouponNo" (keyup)="onInput($event)" ></td>
+                                                                            </ng-template>
+                                                                            <ng-template #fscNo></ng-template>
+
                                                                             <td style="width: 15%"  class="LabelFontStyle1">
-                                                                                Estimated&nbsp;Labour:&nbsp;
+                                                                                Est.&nbsp;Labour:&nbsp;
                                                                             </td>
 
                                                                             <td>
@@ -1220,7 +1236,7 @@
                                                                             </td> -->
 
                                                                             <td style="width: 15%"  class="LabelFontStyle1">
-                                                                                Estimated&nbsp;Material:&nbsp;
+                                                                                Est.&nbsp;Material:&nbsp;
                                                                             </td>
 
                                                                             <td>
@@ -1229,26 +1245,20 @@
                                                                             </td>
                                                                             <td style="width: 15%"
                                                                                 class="LabelFontStyle">
-                                                                                Total&nbsp;:</td>
+                                                                                Est.&nbsp;Total&nbsp;:</td>
                                                                             <td>
                                                                                 <input type="number" disabled formControlName="estTotal" [(ngModel)]="estTotal"
                                                                                     class="form-control" placeholder="">
                                                                             </td>
-                                                                            <td style="width: 15%"
-                                                                                class="LabelFontStyle1">
-                                                                                Promise&nbsp;Date&nbsp;&&nbsp;Time&nbsp;:
-                                                                            </td>
+
+                                                                          
                                                                             <!-- <td>
                                                                                 <input type="datetime-local" class="form-control" style="width: fit-content;"
                                                                                     placeholder="" formControlName="promiseDate" [(ngModel)]="promiseDate" min="{{minDatetime}}">
                                                                             </td> -->
-
-                                                                            <td>
-                                                                                <input type="date" class="form-control"
-                                                                                    placeholder=""
-                                                                                    formControlName="promiseDate" [(ngModel)]="promiseDate" (change)="validatePromisedDate()"  min="{{minDate | date:'yyyy-MM-dd'}}">
-                                                                            </td>
+                                                                          
                                                                         </tr>
+                                                                    </table>
                                                                     </fieldset>
 
                                                                 </table>
