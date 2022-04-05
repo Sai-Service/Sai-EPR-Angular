@@ -115,6 +115,7 @@
                                                                 {{sc.codeDesc}}
                                                             </option>
                                                         </select>
+                                                       
                                                     </td>
                                                     <td>
                                                         <input type="text" class="form-control"
@@ -344,7 +345,10 @@
                                                     <td>
                                                         <input disabled type="text" formControlName="invTypeLookupCode"
                                                             class="form-control" style="width: 150px;height: 25px;">
-                                                    </td>
+                                                            <input type="text" disabled hidden class="form-control"
+                                                            formControlName="source" 
+                                                            style="width: 90px;height: 25px;font-size: 10px;">
+                                                        </td>
                                                     <td>
                                                         <input type="text" disabled class="form-control"
                                                             formControlName="segment1" placeholder="Enter Po no"

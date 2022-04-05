@@ -93,6 +93,7 @@ export class PayableInvoiceNewComponent implements OnInit {
   indexVal: number;
   locId: number;
   locCode: string;
+  source:string;
   userList3: any[] = [];
   lastkeydown3: number = 0;
   itemSeg:string;
@@ -415,7 +416,7 @@ export class PayableInvoiceNewComponent implements OnInit {
       docSeqValue: [],
       runningTotalCr: [],
       name1: [],
-
+      source:[],
       obj: this.fb.array([this.lineDetailsGroup()]),
       invLines: this.fb.array([this.invLineDetails()]),
       distribution: this.fb.array([this.distLineDetails()]),
@@ -531,6 +532,7 @@ export class PayableInvoiceNewComponent implements OnInit {
       locationId: ['', [Validators.required]],
       emplId: [],
       ouName: [],
+      source:[],
       invoiceId: [],
       invoiceStatus: [],
       payGroup: [],
@@ -964,8 +966,8 @@ export class PayableInvoiceNewComponent implements OnInit {
             let payDate = moment(this.lstsearchapinv[i].paymentRateDate, 'dd-MM-yyyy hh:mm:ss');
             let payDtString = payDate.format('dd-MMM-yyyy');
             let select = this.tdsSectionList.find(d => d.lookupValueDesc === res.obj[i].payGroup);
-            console.log(select);
-            console.log(select.lookupValueDesc);  
+            // console.log(select);
+            // console.log(select.lookupValueDesc);  
             this.lineDetailsArray().controls[i].patchValue({ paymentRateDate: payDtString, invoiceId1: this.lstsearchapinv[i].invoiceId, internalSeqNum: this.lstsearchapinv[i].internalSeqNum });
             this.lineDetailsArray().controls[i].patchValue({ glDate: res.obj[i].glDate });
             patch.controls[i].patchValue({payGroup:res.obj[i].payGroup})
@@ -1216,7 +1218,7 @@ export class PayableInvoiceNewComponent implements OnInit {
             this.isVisible = false;
             this.poInvoiceForm.disable();
           }
-          if (arraybaseNew1[i].invTypeLookupCode === 'Prepayment' && data.invoiceStatus == 'Validated' || data.invoiceStatus === 'Unpaid') {
+          if (arraybaseNew1[i].invTypeLookupCode === 'Prepayment'  && data.invoiceStatus == 'Validated' || data.invoiceStatus === 'Unpaid' ) {
             if (arraybaseNew1[i].invTypeLookupCode != 'CREDIT' || arraybaseNew1[i].invTypeLookupCode != 'STANDARD') {
               this.isVisiblePayment = true;
             }
@@ -1245,16 +1247,20 @@ export class PayableInvoiceNewComponent implements OnInit {
   paymentNavigation() {
     var arraybaseNew = this.poInvoiceForm.get('obj') as FormArray;
     var arraybaseNew1 = arraybaseNew.getRawValue();
-    // alert(arraybaseNew1[0].invoiceNum);
-    var invNumber = arraybaseNew1[0].invoiceNum;
-    // [routerLink]="['/admin/transaction/Payment']"
-    var invType = arraybaseNew1[0].invTypeLookupCode;
-    if (invType === 'Prepayment') {
+    // var invNumber = arraybaseNew1[0].invoiceNum;
+    // var sourceType=arraybaseNew1[0].source;
+    // var invType = arraybaseNew1[0].invTypeLookupCode;
+    for (let i=0; i<arraybaseNew1.length;i++){
+      var invNumber = arraybaseNew1[i].invoiceNum;
+    var sourceType=arraybaseNew1[i].source;
+    var invType = arraybaseNew1[i].invTypeLookupCode;
+    if (invType === 'Prepayment' || sourceType==='REFUND') {
       this.router.navigate(['/admin/transaction/Payment', invNumber]);
     }
     else {
       this.router.navigate(['/admin/transaction/Payment']);
     }
+  }
   }
 
 

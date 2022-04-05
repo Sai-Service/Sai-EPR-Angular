@@ -85,6 +85,8 @@ interface ISalesBookingForm {
   panNo: string;
   custTaxCat: string;
   invType: string;
+  lesseeAccNo:number;
+  lesseeCustId:number;
   taxAmounts: IterableIterator<any[]>;
 }
 
@@ -273,6 +275,7 @@ export class SalesOrderFormComponent implements OnInit {
   brokerTypeList: any;
   brokerType: string;
   truValueList: any;
+  lesseeAccNo:number;
   public payTermDescList: any;
   public salesRepNameList: any;
   public taxCategoryList: any = [];
@@ -364,6 +367,8 @@ export class SalesOrderFormComponent implements OnInit {
   dataDisplay: any;
   progress = 0;
   colorCode: string;
+  lesseeCustId:number;
+  lesseeAccName:string;
 
   constructor(private fb: FormBuilder, private router1: ActivatedRoute, private location: Location, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService) {
     this.SalesOrderBookingForm = fb.group({
@@ -380,6 +385,7 @@ export class SalesOrderFormComponent implements OnInit {
       basicValue: [''],
       weddingDate: [''],
       name: [''],
+      lesseeAccName:[''],
       customerSiteId: [''],
       insType: [''],
       custTaxCat: [''],
@@ -387,6 +393,8 @@ export class SalesOrderFormComponent implements OnInit {
       birthDate: [''],
       emailId1: [''],
       emailId: [''],
+      lesseeAccNo:[''],
+      lesseeCustId:[''],
       state: [''],
       loyaltyBonus: [''],
       exRegNo: [''],
@@ -2299,6 +2307,9 @@ export class SalesOrderFormComponent implements OnInit {
   // }
   // }
 
+  lesseeaccountNoSearchNew(custAccountNo){
+    alert(custAccountNo)
+  }
 
 
   accountNoSearchNew(custAccountNo) {
