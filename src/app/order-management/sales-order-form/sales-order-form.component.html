@@ -483,9 +483,9 @@
                                     </tr>
                                 </table>
                             </td>
-
+                            <!-- (click)="selecorderType(transactionTypeName)" -->
                             <td>
-                                <select formControlName="transactionTypeName" id="transactionTypeName"
+                                <select formControlName="transactionTypeName" id="transactionTypeName"  (change)="selecorderType($event)"
                                     class="form-control" style="width: 170px;">
                                     <option>--Select--</option>
                                     <option *ngFor="let tt of transactionTypeNameList">
@@ -774,25 +774,32 @@
                     </table>
                 </ng-template>
             </fieldset>
-            <fieldset class="RFS">
+            <fieldset class="RFS" [style.display]="isVisibleCSDDetails ? 'block' : 'none'" >
                 <legend id="FormsPH_LGAadhaar" class="RFSL" data-toggle="collapse" data-target="#radios"
                     style="font-size: 12px;color: black;font-weight: bold;">CSD Details</legend>
                     <td style="width: 15%" class="LabelFontStyle1">
                         CSD&nbsp;Cust&nbsp;No&nbsp;:&nbsp;
                     </td>
                     <td>
-                        <input  type="number" formControlName="lesseeAccNo" value="lesseeAccNo"  (keydown.tab)="lesseeaccountNoSearchNew(lesseeAccNo)"
+                        <input  type="number" formControlName="lesseeAccNo" value="lesseeAccNo" [(ngModel)]="lesseeAccNo" (keydown.tab)="lesseeaccountNoSearchNew(lesseeAccNo)"
                             class="form-control" style="width: 150px; ">
                     </td>
                     <td style="width: 15%" class="LabelFontStyle1">
                         CSD&nbsp;Cust&nbsp;Name&nbsp;:&nbsp;
                     </td>
                     <td>
-                        <input  type="text" formControlName="lesseeAccName" [(ngModel)]='lesseeAccName'
+                        <input disabled type="text" formControlName="lesseeAccName" 
+                            class="form-control" style="width: 150px; ">
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle1">
+                        CSD&nbsp;Cust&nbsp;Mobile&nbsp;No&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <input disabled type="number" formControlName="lesseeMobile" 
                             class="form-control" style="width: 150px; ">
                     </td>
                     <td>
-                        <input  type="number" formControlName="lesseeCustId" [(ngModel)]='lesseeCustId'
+                        <input disabled  type="number" formControlName="lesseeCustId" [(ngModel)]='lesseeCustId'
                             class="form-control" style="width: 150px; ">
                     </td>
             </fieldset>
@@ -1423,7 +1430,7 @@
                                                         <td>
                                                             <input  disabled type="number"
                                                                 formControlName="unitSellingPrice" class="form-control"
-                                                                style="height: 20px;width: 80px;" (change)="onKey(i)">
+                                                                style="height: 20px;width: 70px;" (change)="onKey(i)">
                                                         </td>
                                                     </ng-template>
                                                     <ng-template #elsesegmentInvType>
@@ -1547,7 +1554,7 @@
                                                         <div  *ngIf="displayLineflowStatusCode[i]; then thenLineflowStatusCode; else elseLineflowStatusCode"> </div>
                                                         <ng-template #thenLineflowStatusCode>
                                                             <input disabled type="text" formControlName="flowStatusCode"
-                                                                class="form-control" style="height: 20px;width:145px;">
+                                                                class="form-control" style="height: 20px;width:120px;">
                                                         </ng-template>
                                                         <ng-template #elseLineflowStatusCode>
                                                             <div  *ngIf="displayLineflowStatusCodeVehicle[i]; then thenLineflowStatusCodeVehicle; else elseLineflowStatusCodeVehicle"> </div>
