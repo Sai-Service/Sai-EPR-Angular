@@ -233,6 +233,7 @@ export class JobCardComponent implements OnInit {
 
   showServiceCustomer =true;
   showBodyshopCustomer=false;
+  amcLabour=false;
 
   insurerCompId: number;
   insurerSiteId: number;
@@ -994,29 +995,44 @@ export class JobCardComponent implements OnInit {
       })
   }
 
+
+
+
   serchByitemId(x,index){
     var arrayControl = this.jobcardForm.get('jobCardLabLines').value
+    // var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
+    var billTp =arrayControl[index].billableTyId;
     var event = arrayControl[index].segment;
+   
     event=event.toUpperCase();
-    this.serchByitemIdPrice(event,index)
+    this.serchByitemIdPrice(event,index,billTp)
+    }
 
-  }
 
-  serchByitemIdPrice(event, i) {
-   
-    // let select = this.LaborItemList.find(d => d.itemId === event);
+  serchByitemIdPrice(event,i,billTp) {
     var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
-   
-    // alert ("serchByitemId-event : "+event + " index :"+i);
+    var vehNo =this.jobcardForm.get('regNo').value;
     var serModel=this.jobcardForm.get('serviceModel').value;
+   
+
+    //  ----------------------------AMC Labor Validation--------------------------------
+    if (billTp===3) { 
+      this.service.getDealerAMCLabStatus(vehNo,event)
+      .subscribe(
+        data1 => { if (data1.code===200) { this.amcLabour= true; } else {
+          this.amcLabour=false; alert(data1.message);
+          patch.controls[i].patchValue({ itemId: '' });
+          patch.controls[i].patchValue({ segment: '' });
+          patch.controls[i].patchValue({ description: '' });
+          return;
+        }  });
+      } 
+  //  --------------------------------------------------------------------------------------
 
     let select = this.LaborItemList.find(d => d.segment === event);
    
     if(select) {
-      // alert ("SELECT >>event : "+event + " index :"+i + ","+select.description);
     if(select.genericItem==='Y') {this.genericItemLab=true;} else {this.genericItemLab=false;}
-
-    // alert ("select.genericItem : "+select.genericItem);
 
     if(select.genericItem==='N') {
     this.CheckForDuplicateLineItem(select.itemId,i)
@@ -1254,15 +1270,19 @@ export class JobCardComponent implements OnInit {
     var arrayControl = this.jobcardForm.get('jobCardLabLines').value
     var invItemId = arrayControl[index].itemId;
     var genItem =arrayControl[index].genericItem;
-    // alert ( " checkLabLineValidation...genItem"+genItem);
+    var itemSeg=arrayControl[index].segment;
+    var itemDesc=arrayControl[index].description;
+
+    // alert ( " checkLabLineValidation...genItem"+itemSeg +","+itemDesc);
    
     this.labLineValidation=false
 
-    if(Number(arrayControl[index].billableTyId)<=0)
-    { this.labLineValidation=false;return; }
+    if(Number(arrayControl[index].billableTyId)<=0) { this.labLineValidation=false;return; }
+    if(invItemId===null || invItemId==undefined || invItemId<=0){ this.labLineValidation=false;return; }
+   
+    if(itemSeg===null || itemSeg===undefined || itemSeg.trim()===''){this.labLineValidation=false;return;}
 
-    if(invItemId===null || invItemId==undefined || invItemId<=0)
-    { this.labLineValidation=false;return; }
+    if(itemDesc===null || itemDesc===undefined || itemDesc.trim()===''){this.labLineValidation=false;return;}
 
     if(Number(arrayControl[index].qty)<=0 ||arrayControl[index].qty===null || arrayControl[index].qty===undefined )
     { this.labLineValidation=false;return; }
@@ -3016,8 +3036,12 @@ getMessage(msgType:string){
         this.serviceService.getJonCardNoSearchLoc(jcNum,jDate,jStatus,jRegNo,jLocId)
         .subscribe(
           data => {
+            // alert ("data.length :"+data.length);
+            if(data.length >0) {
             this.lstJobcardList = data;
             console.log(this.lstJobcardList); 
+            } else {  alert("No Jobcard found for the given criteria...")}
+
            });
         
         }
@@ -3075,7 +3099,9 @@ getMessage(msgType:string){
       }
 
     getItem(itemSeg, i){
-      this.serchByitemIdPrice(itemSeg,i)
+      var arrayControl = this.jobcardForm.get('jobCardLabLines').value
+      var billTp =arrayControl[i].billableTyId;
+      this.serchByitemIdPrice(itemSeg,i,billTp)
   }
 
    
