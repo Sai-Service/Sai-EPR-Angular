@@ -1044,7 +1044,6 @@
                                                             class="form-control" style="height: 20px;width:120px;"
                                                             (ngModelChange)='onOptionsSelectedDescription($event,i)'>
                                                         <datalist id="dynmicUserIds1">
-                                                            <!-- <option>--Select--</option> -->
                                                             <option *ngFor="let item of  itemMap2.get(i)"
                                                                 [value]="item.segment">
                                                                 {{item.segment}}

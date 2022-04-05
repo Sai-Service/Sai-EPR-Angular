@@ -927,7 +927,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
               this.displaysalesRepName = true;
             }
             // alert(this.allDatastore.trxNumber+'----trxNumber');
-            if (this.allDatastore.createOrderType === 'Pick Ticket' && this.allDatastore.flowStatusCode === 'BOOKED') {
+            if (this.allDatastore.createOrderType === 'Pick Ticket' || this.allDatastore.createOrderType === 'Sales Order' && this.allDatastore.flowStatusCode === 'BOOKED') {
               this.CounterSaleOrderBookingForm.get('custName').disable();
               this.CounterSaleOrderBookingForm.get('mobile1').disable();
               this.CounterSaleOrderBookingForm.get('refCustNo').disable();

@@ -35,6 +35,7 @@ interface IworkshopReturn
     frmLocator:string;
     avlqty:number;
     JobNo:string;
+    attribute1:number;
 }
 
 @Component({
@@ -104,6 +105,7 @@ reqNo:string;
   displaytrxLinesList:Boolean=true;
   displayjobcard:boolean=true;
   displayIssue:boolean=true;
+  attribute1:number;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) { 
     this.WorkshopReturnForm=fb.group({
@@ -158,6 +160,7 @@ reqNo:string;
         toLocator:[],
         onHandQty:[],
         id:[],
+        attribute1:[],
     })
   }
 
@@ -400,6 +403,7 @@ closeReurn()
           trxLnArr2.controls[i].patchValue({frmLocator:getfrmSubLoc[0].segmentName});
           trxLnArr2.controls[i].patchValue({onHandQty:getfrmSubLoc[0].onHandQty});
           trxLnArr2.controls[i].patchValue({id:getfrmSubLoc[0].id});
+          trxLnArr2.controls[i].patchValue({attribute1:getfrmSubLoc[0].attribute17});
           }
           else
           {
@@ -408,6 +412,7 @@ closeReurn()
          trxLnArr2.controls[i].patchValue({frmLocator:getfrmSubLoc[0].segmentName});
          trxLnArr2.controls[i].patchValue({onHandQty:getfrmSubLoc[0].onHandQty})
          trxLnArr2.controls[i].patchValue({id:getfrmSubLoc[0].id});
+         trxLnArr2.controls[i].patchValue({attribute1:getfrmSubLoc[0].attribute17});
           }
   
       });
@@ -429,7 +434,7 @@ closeReurn()
  {
   //  alert(event);
    var trxLnArr1=this.WorkshopReturnForm.get('trxLinesList')as FormArray;
-   var trxLnArr = this.WorkshopReturnForm.get('trxLinesList').value;
+   var trxLnArr = this.WorkshopReturnForm.get('trxLinesList').value; 
    var itemid=trxLnArr[i].invItemId;
    var locId=trxLnArr[i].frmLocatorId;
    var onhandid=trxLnArr[i].id;

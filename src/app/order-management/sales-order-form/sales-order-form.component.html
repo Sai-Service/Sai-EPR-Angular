@@ -776,6 +776,28 @@
             </fieldset>
             <fieldset class="RFS">
                 <legend id="FormsPH_LGAadhaar" class="RFSL" data-toggle="collapse" data-target="#radios"
+                    style="font-size: 12px;color: black;font-weight: bold;">CSD Details</legend>
+                    <td style="width: 15%" class="LabelFontStyle1">
+                        CSD&nbsp;Cust&nbsp;No&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <input  type="number" formControlName="lesseeAccNo" value="lesseeAccNo"  (keydown.tab)="lesseeaccountNoSearchNew(lesseeAccNo)"
+                            class="form-control" style="width: 150px; ">
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle1">
+                        CSD&nbsp;Cust&nbsp;Name&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <input  type="text" formControlName="lesseeAccName" [(ngModel)]='lesseeAccName'
+                            class="form-control" style="width: 150px; ">
+                    </td>
+                    <td>
+                        <input  type="number" formControlName="lesseeCustId" [(ngModel)]='lesseeCustId'
+                            class="form-control" style="width: 150px; ">
+                    </td>
+            </fieldset>
+            <fieldset class="RFS">
+                <legend id="FormsPH_LGAadhaar" class="RFSL" data-toggle="collapse" data-target="#radios"
                     style="font-size: 12px;color: black;font-weight: bold;">Vehicle Details</legend>
                 <div *ngIf="displayVehicleDetails; then thenVehicleDetails; else elseVehicleDetails"> </div>
                 <ng-template #thenVehicleDetails>

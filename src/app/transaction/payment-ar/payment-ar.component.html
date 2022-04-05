@@ -557,8 +557,8 @@
                             </fieldset>
                        
 
-                        <div *ngIf="showReasonDetails; then rsnBlock1; else rsnBlock2"></div>
-                        <ng-template #rsnBlock1>
+                        <!-- <div *ngIf="showReasonDetails; then rsnBlock1; else rsnBlock2"></div>
+                        <ng-template #rsnBlock1> -->
 
                         <fieldset class="RFS">
                         <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Reversal Details</legend>
@@ -636,8 +636,8 @@
                              
                         </table>
                         </fieldset>
-                        </ng-template>
-                        <ng-template #rsnBlock2></ng-template>
+                        <!-- </ng-template>
+                        <ng-template #rsnBlock2></ng-template> -->
 
                         </ng-template>
                         <ng-template #showTotalYes> </ng-template>
@@ -730,17 +730,17 @@
                             </ng-template>
                             <ng-template #elseBlock1>
                         
-                                    <div *ngIf="enableCancelButton; then CancelButtonYes; else CancelButtonNo"></div>
-                                    <ng-template #CancelButtonYes>
+                                    <!-- <div *ngIf="enableCancelButton; then CancelButtonYes; else CancelButtonNo"></div>
+                                    <ng-template #CancelButtonYes> -->
                                     <td>
                                         <button  type="button" class="btn btn-info" (click)="reverseReceipt()">Reverse</button>
                                     </td>
-                                    </ng-template>
+                                    <!-- </ng-template>
                                     <ng-template #CancelButtonNo>
                                         <td>
                                             <button disabled type="button" class="btn btn-info" (click)="reverseReceipt()">Reverse</button>
                                         </td>
-                                    </ng-template>
+                                    </ng-template> -->
 
                                       <div *ngIf="applHistory; then hList1; else hList2"></div>
                                       <ng-template #hList1>  
