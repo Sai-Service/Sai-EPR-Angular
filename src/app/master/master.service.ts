@@ -1913,6 +1913,14 @@ getItemDetailsByCode(itmCode): Observable<any>
   return this.http.get(this.ServerUrl +`/itemMst/itemName/${itmCode}`);
 }
 
+
+getDealerAMCLabStatus(regNo,labCode): Observable<any>
+{
+  return this.http.get(this.ServerUrl +`/jobCard/amcLabValidation?regNo=${regNo}&labCode=${labCode}`);
+  // http://localhost:8081/jobCard/amcLabValidation?regNo=MH01DC0007&labCode=AMSR
+}
+
+
 /////////////////////////////////////////////////////////
 taxTypeNameList(taxTypeId): Observable<any>
 {
