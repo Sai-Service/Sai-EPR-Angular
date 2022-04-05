@@ -234,6 +234,7 @@ export class JobCardComponent implements OnInit {
   showServiceCustomer =true;
   showBodyshopCustomer=false;
   amcLabour=false;
+  fscCoupon=false;
 
   insurerCompId: number;
   insurerSiteId: number;
@@ -242,6 +243,7 @@ export class JobCardComponent implements OnInit {
   insurerCompNo: number;
   demandJob:string;
   recomJob:string;
+  fscCouponNo:string;
 
   lineBasicAmt:number;
 
@@ -513,6 +515,7 @@ export class JobCardComponent implements OnInit {
       estLabor: [],
       estMaterial: [],
       estTotal: [],
+      fscCouponNo:[],
 
       labBasicAmt: [],
       matBasicAmt: [],
@@ -1013,8 +1016,7 @@ export class JobCardComponent implements OnInit {
     var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
     var vehNo =this.jobcardForm.get('regNo').value;
     var serModel=this.jobcardForm.get('serviceModel').value;
-   
-
+ 
     //  ----------------------------AMC Labor Validation--------------------------------
     if (billTp===3) { 
       this.service.getDealerAMCLabStatus(vehNo,event)
@@ -1035,8 +1037,8 @@ export class JobCardComponent implements OnInit {
     if(select.genericItem==='Y') {this.genericItemLab=true;} else {this.genericItemLab=false;}
 
     if(select.genericItem==='N') {
-    this.CheckForDuplicateLineItem(select.itemId,i)
-    if(this.duplicateLabLineItem) { return;}
+        this.CheckForDuplicateLineItem(select.itemId,i)
+        if(this.duplicateLabLineItem) { return;}
     }
    
     (patch.controls[i]).patchValue({ itemId: select.itemId });
@@ -1282,7 +1284,9 @@ export class JobCardComponent implements OnInit {
    
     if(itemSeg===null || itemSeg===undefined || itemSeg.trim()===''){this.labLineValidation=false;return;}
 
-    if(itemDesc===null || itemDesc===undefined || itemDesc.trim()===''){this.labLineValidation=false;return;}
+    if (genItem==='Y') {
+        if(itemDesc===null || itemDesc===undefined || itemDesc.trim()===''){this.labLineValidation=false;return;}
+    }
 
     if(Number(arrayControl[index].qty)<=0 ||arrayControl[index].qty===null || arrayControl[index].qty===undefined )
     { this.labLineValidation=false;return; }
@@ -1419,6 +1423,8 @@ export class JobCardComponent implements OnInit {
 
   onOptionsSelectedsrTypeId(srTypeId) {
     // alert( "srTypeId :"+ srTypeId);
+    if(srTypeId===1){ this.fscCoupon=true;} else {this.fscCoupon=false;}
+
     if(srTypeId !=null){
     this.serviceService.getSubSrTypeIdList(srTypeId)
       .subscribe(
@@ -1433,7 +1439,8 @@ export class JobCardComponent implements OnInit {
       this.displayInsheader = false;
       this.displayInslinedetails = false;
     }
-  }}
+  }
+ }
 
   totalActualLabMat() {
     var sum = 0;
@@ -3080,6 +3087,10 @@ getMessage(msgType:string){
             if (lineItemId===mCpnId) {
               this.duplicateLabLineItem=true;
                alert(lineItemId+" DUPLICATE line item. Please check item in Line - " +(i+1));
+
+               patch.controls[mIndex].patchValue({ itemId: '' });
+               patch.controls[mIndex].patchValue({ segment: '' });
+               patch.controls[mIndex].patchValue({ description: '' });
                break;
               }
 
