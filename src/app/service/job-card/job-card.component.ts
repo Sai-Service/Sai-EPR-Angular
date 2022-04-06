@@ -234,7 +234,7 @@ export class JobCardComponent implements OnInit {
   showServiceCustomer =true;
   showBodyshopCustomer=false;
   amcLabour=false;
-  fscCoupon=false;
+  fscCouponStatus=false;
 
   insurerCompId: number;
   insurerSiteId: number;
@@ -243,7 +243,7 @@ export class JobCardComponent implements OnInit {
   insurerCompNo: number;
   demandJob:string;
   recomJob:string;
-  fscCouponNo:string;
+  fscCoupon :string;
 
   lineBasicAmt:number;
 
@@ -515,7 +515,7 @@ export class JobCardComponent implements OnInit {
       estLabor: [],
       estMaterial: [],
       estTotal: [],
-      fscCouponNo:[],
+      fscCoupon :[],
 
       labBasicAmt: [],
       matBasicAmt: [],
@@ -1423,7 +1423,7 @@ export class JobCardComponent implements OnInit {
 
   onOptionsSelectedsrTypeId(srTypeId) {
     // alert( "srTypeId :"+ srTypeId);
-    if(srTypeId===1){ this.fscCoupon=true;} else {this.fscCoupon=false;}
+    if(srTypeId===1){ this.fscCouponStatus =true;} else {this.fscCouponStatus=false;}
 
     if(srTypeId !=null){
     this.serviceService.getSubSrTypeIdList(srTypeId)
@@ -2090,7 +2090,8 @@ export class JobCardComponent implements OnInit {
       var matDis=this.jobcardForm.get('matDiscout').value;
       var labDis=this.jobcardForm.get('labDiscount').value;
         // alert ( "matDis,labDis :" +matDis +","+labDis);
-      if(this.dispReadyInvoice===false) {alert( "Updation Not allowed...");  return;}
+
+      // if(this.dispReadyInvoice===false) {alert( "Updation Not allowed...");  return;}
 
         var jcId =this.jobcardForm.get("jobCardId").value
         var jtype =this.jobcardForm.get('jcType').value

@@ -1212,10 +1212,10 @@
                                                                                     Labor</button>
                                                                             </td> -->
 
-                                                                            <div *ngIf="fscCoupon; then fscYes; else fscNo"></div>
+                                                                            <div *ngIf="fscCouponStatus; then fscYes; else fscNo"></div>
                                                                             <ng-template #fscYes>
                                                                                 <td style="width: 15%" class="LabelFontStyle"> FSC&nbsp;Coupon&nbsp;No&nbsp;: </td>
-                                                                                <td> <input type="text" class="form-control"  placeholder="Fsc Coupon No." formControlName="fscCouponNo" [(ngModel)]="fscCouponNo" (keyup)="onInput($event)" ></td>
+                                                                                <td> <input type="text" class="form-control"  placeholder="Fsc Coupon No." formControlName="fscCoupon " [(ngModel)]="fscCoupon " (keyup)="onInput($event)" ></td>
                                                                             </ng-template>
                                                                             <ng-template #fscNo></ng-template>
 
