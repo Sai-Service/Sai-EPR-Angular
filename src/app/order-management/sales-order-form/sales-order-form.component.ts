@@ -332,6 +332,7 @@ export class SalesOrderFormComponent implements OnInit {
   isDisabled9 = false;
   isDisabled10 = false;
   isDisabled11 = false;
+  isDisabledlesseeCustName=false;
   isDisabledtaxbtn: Array<boolean> = [];
   // isDisabledtaxbtn=false;
 
@@ -1340,6 +1341,15 @@ export class SalesOrderFormComponent implements OnInit {
     var model = this.SalesOrderBookingForm.get('model').value;
     var variant = this.SalesOrderBookingForm.get('variant').value;
     var color = this.SalesOrderBookingForm.get('color').value;
+    var transactionTypeName= this.SalesOrderBookingForm.get('transactionTypeName').value;
+    var lesseeAccNo=this.SalesOrderBookingForm.get('lesseeAccNo').value;
+    var lesseeCustName=this.SalesOrderBookingForm.get('lesseeCustName').value;
+    if (transactionTypeName.includes('CSD')){
+      if (lesseeCustName ===undefined|| lesseeCustName===null||lesseeCustName==='' || lesseeAccNo===undefined||lesseeAccNo===null||lesseeAccNo===''){
+        alert('Please Enter CSD Customer Details.!');
+        return;
+      }
+    }
     // alert(accountNo+'---transactionTypeName'+transactionTypeName+'---salesRepName--'+salesRepName+'--model--'+model) ;
     if (accountNo === undefined || accountNo === null || accountNo === '' || transactionTypeName === undefined || transactionTypeName === null || transactionTypeName === '' || salesRepName === undefined || salesRepName === null || salesRepName === ''
       || model === undefined || model === null || model === '' || variant === undefined || variant === null || variant === '' ||
@@ -1391,6 +1401,7 @@ export class SalesOrderFormComponent implements OnInit {
     this.isDisabled3 = true;
     this.isDisabled4 = true;
     this.isDisabled8 = false;
+    this.isDisabledlesseeCustName=true;
     this.currentOpration = 'orderSearch';
     this.SalesOrderBookingForm.get('custName').disable();
     this.SalesOrderBookingForm.get('mobile1').disable();
@@ -2328,7 +2339,7 @@ export class SalesOrderFormComponent implements OnInit {
   // }
 
   lesseeaccountNoSearchNew(custAccountNo) {
-    alert(custAccountNo)
+    // alert(custAccountNo)
     this.service.searchCustomerByAccount(custAccountNo)
     .subscribe(
       data => {
@@ -2336,6 +2347,10 @@ export class SalesOrderFormComponent implements OnInit {
           this.SalesOrderBookingForm.patchValue({ lesseeCustName: data.obj.custName });
           this.SalesOrderBookingForm.patchValue({ lesseeCustId: data.obj.customerId });
           this.SalesOrderBookingForm.patchValue({ lesseeContactNo: data.obj.mobile1 });
+          console.log(this.customerNameSearch);
+          // this.customerNameSearch.splice(0, this.customerNameSearch.length);
+          this.SalesOrderBookingForm.patchValue({lesseeAccNo:custAccountNo})
+          this.SalesOrderBookingForm.get('accountNo').disable();
         }
         else if(data.code===400){
           alert(data.message+'-'+data.obj)
@@ -2467,6 +2482,29 @@ export class SalesOrderFormComponent implements OnInit {
         }
       );
   }
+
+
+
+  lesseeCustNameSearch(custName) {
+    // alert(custName)
+    this.orderManagementService.custNameSearchFn1(custName, sessionStorage.getItem('divisionId'))
+      .subscribe(
+        data => {
+          if (data.code === 200) {
+            this.customerNameSearch = data.obj;
+            console.log(this.accountNoSearch);
+            this.isDisabledlesseeCustName=false;
+          }
+          else {
+            if (data.code === 400) {
+              alert(data.message);
+              this.display = 'block';
+            }
+          }
+        }
+      );
+  }
+
 
   financeSelectionYes(event: any) {
     // alert(event.target.value)

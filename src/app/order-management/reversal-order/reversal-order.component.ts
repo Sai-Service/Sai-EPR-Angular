@@ -387,7 +387,7 @@ export class ReversalOrderComponent implements OnInit {
       .subscribe(
         data => {
           this.lstOrderHeader = data.obj;
-          if (data.code == 400 && data.message == "Order Number Not Found ") {
+          if (data.code == 400) {
             alert(data.message + "-" + data.obj);
             this.dispOrderDetails = false;
             this.headerFound = false;
