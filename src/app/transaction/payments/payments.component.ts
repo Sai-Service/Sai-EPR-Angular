@@ -38,6 +38,7 @@ interface Ipayment {
   searchByFrmDate: Date;
   searchBySuppName: string;
   emplId:number;
+  // partyId:number;
   
 }
 
@@ -63,6 +64,7 @@ export class PaymentsComponent implements OnInit {
   country: 'India';
   pipe = new DatePipe('en-US');
   todaydate = new Date();
+  partyId:number;
 
   payDate = this.pipe.transform(this.todaydate, 'dd-MMM-yyyy');
   invTypeLookupCode: string;
@@ -73,7 +75,7 @@ export class PaymentsComponent implements OnInit {
   bankAccountId: number;
   docCategoryCode: number;
   invoiceId: number;
-  partyId: number;
+  // partyId: number;
   totAmount: number;
   unPaidAmt: number;
   statusLookupCode: string;
@@ -182,6 +184,7 @@ jeSource: [],
     return this.fb.group({
       // invoiceNum:[],
       paymentTypeFlag: [],
+      // partyId:[],
       ouId: [],
       suppNo: [],
       // bankAccountNum:[],
@@ -296,6 +299,7 @@ jeSource: [],
               arrcontrol.controls[x].patchValue({ paymentTypeFlag: 'Quick',statusLookupCode:'NEGOTIABLE' });
               arrcontrol.controls[x].patchValue({ payAmount: this.lstsearchpayminvNew[x].invoiceAmt });
               arrcontrol.controls[x].patchValue({ supplierSiteId: this.lstsearchpayminvNew[x].suppSiteId });
+              arrcontrol.controls[x].patchValue({partyId:this.lstsearchpayminvNew[x].partyId});
             }
           }
         });
@@ -343,7 +347,7 @@ jeSource: [],
     this.displayouId = true;
     this.displaysiteAddress = true;
     this.displaystatus = true; 
-    this.transactionService.getsearchByInvDtls(suppNo, sessionStorage.getItem('ouId')).subscribe((res: any) => {
+    this.transactionService.getsearchByInvDtls(suppNo, sessionStorage.getItem('ouId'),this.partyId).subscribe((res: any) => {
       this.lstsearchpayminv = res.obj;
       this.displayDetail=false;
       this.displaystatus=true;
@@ -409,7 +413,7 @@ jeSource: [],
                                           'invoiceId':this.lstsearchpayminvNew[index].invoiceId   });
 }
 else{
-    this.transactionService.getsearchByInvDtls(suppNo1[index].suppNo, this.ouId).subscribe((res: any) => {
+    this.transactionService.getsearchByInvDtls(suppNo1[index].suppNo, this.ouId,this.partyId).subscribe((res: any) => {
       this.lstinvoiceDetls = res.obj;
       var sum = 0;
       for (let i = 0; i < this.lstinvoiceDetls.length; i++) {

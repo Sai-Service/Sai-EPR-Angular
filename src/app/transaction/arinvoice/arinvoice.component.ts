@@ -2289,7 +2289,7 @@ export class ARInvoiceComponent implements OnInit {
   }
 
   validateSave() {
-debugger;
+// debugger;
     if (this.GLPeriodCheck === null) {
       this.checkValidation = false;
       alert("GL PERIOD is null. Please update GL period.");
