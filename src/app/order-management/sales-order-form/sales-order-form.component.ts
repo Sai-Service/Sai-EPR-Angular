@@ -142,7 +142,7 @@ export class IFinanaceExchangeForm {
   financeAmt: number;
   emi: number;
   tenure: number;
-  lesseeMobile:number;
+  lesseeContactNo:number;
   downPayment: number;
   taxiYN: string;
   exchangeYN: string;
@@ -370,7 +370,7 @@ export class SalesOrderFormComponent implements OnInit {
   progress = 0;
   colorCode: string;
   lesseeCustId: number;
-  lesseeAccName: string;
+  lesseeCustName: string;
 
   constructor(private fb: FormBuilder, private router1: ActivatedRoute, private location: Location, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService) {
     this.SalesOrderBookingForm = fb.group({
@@ -381,14 +381,14 @@ export class SalesOrderFormComponent implements OnInit {
       brokerType: [''],
       tvBroker: [''],
       colorCode: [''],
-      lesseeMobile:[''],
+      lesseeContactNo:[''],
       exchangeYN: ['', [Validators.required]],
       priceListHeaderId: [''],
       taxiYN: [''],
       basicValue: [''],
       weddingDate: [''],
       name: [''],
-      lesseeAccName: [''],
+      lesseeCustName: [''],
       customerSiteId: [''],
       insType: [''],
       custTaxCat: [''],
@@ -1451,9 +1451,7 @@ export class SalesOrderFormComponent implements OnInit {
                 );
             }
             let control = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
-            // alert(this.lstgetOrderLineDetails.length);
             if (this.lstgetOrderLineDetails.length === 0 && this.lstgetOrderTaxDetails.length === 0) {
-              // alert('0 length')
               this.orderlineDetailsArray().push(this.orderlineDetailsGroup());
               this.TaxDetailsArray().push(this.TaxDetailsGroup());
               this.displayLineTaxDetails = true;
@@ -1474,7 +1472,6 @@ export class SalesOrderFormComponent implements OnInit {
                 this.isVisible5 = true;
               }
               if (data.obj.flowStatusCode === 'ENTERED') {
-                // this.isVisible2 = true;
                 this.isVisible3 = false;
               }
               this.displayVehicleDetails = true;
@@ -1511,7 +1508,6 @@ export class SalesOrderFormComponent implements OnInit {
                 }
                 if (this.lstgetOrderLineDetails[i].flowStatusCode === 'BOOKED') {
                   this.isVisible2 = true;
-                  // this.isVisible5 = false;
                 }
                 if (this.lstgetOrderLineDetails[i].flowStatusCode === 'CANCELLED' || this.lstgetOrderLineDetails[i].flowStatusCode === 'DE-ALLOTED') {
                   this.isDisabledtaxbtn[i] = true;
@@ -1522,20 +1518,8 @@ export class SalesOrderFormComponent implements OnInit {
                   this.displayLineflowStatusCode[i] = true;
                   this.displayRemoveRow[i] = false;
                   this.displaytaxCategoryName[i] = false;
-                  // this.SalesOrderBookingForm.get('financeType').disable();
-                  // this.SalesOrderBookingForm.get('financerName').disable();
-                  // this.SalesOrderBookingForm.get('financeAmt').disable();
-                  // this.SalesOrderBookingForm.get('emi').disable();
-                  // this.SalesOrderBookingForm.get('tenure').disable();
-                  // this.SalesOrderBookingForm.get('downPayment').disable();
-                  // this.SalesOrderBookingForm.get('exchange').disable();
-                  // this.SalesOrderBookingForm.get('loyaltyBonus').disable();
-                  // this.SalesOrderBookingForm.get('exRegNo').disable();
-                  // this.SalesOrderBookingForm.get('insCharges').disable();
-                  // this.SalesOrderBookingForm.get('offerPrice').disable();
                 }
                 if (this.lstgetOrderLineDetails[i].invType.includes('VEHICLE') || this.lstgetOrderLineDetails[i].flowStatusCode === 'ALLOTED' || this.lstgetOrderLineDetails[i].flowStatusCode === 'READY FOR INVOICE') {
-                  //  alert(this.lstgetOrderLineDetails[i].invType)
                   this.SalesOrderBookingForm.get('financeType').enable();
                   this.SalesOrderBookingForm.get('financerName').enable();
                   this.SalesOrderBookingForm.get('financeAmt').enable();
@@ -1548,7 +1532,6 @@ export class SalesOrderFormComponent implements OnInit {
                   this.SalesOrderBookingForm.get('insCharges').enable();
                   this.SalesOrderBookingForm.get('offerPrice').enable();
                   this.isVisiblemodelDetailsUpdate = false;
-
                 }
                 if (this.lstgetOrderLineDetails[i].invType.includes('VEHICLE') && this.lstgetOrderLineDetails[i].flowStatusCode === 'ALLOTED') {
                   this.displayLineflowStatusCodeVehicle[i] = true;
@@ -1557,7 +1540,6 @@ export class SalesOrderFormComponent implements OnInit {
                   console.log(lineLevelOrderStatusListVehicle);
                   this.lineLevelOrderStatusVehicleList = lineLevelOrderStatusListVehicle;
                 }
-                // alert(this.lstgetOrderLineDetails[i].flowStatusCode)
                 if (this.lstgetOrderLineDetails[i].invType.includes('VEHICLE') == false && this.lstgetOrderLineDetails[i].flowStatusCode != 'ALLOTED') {
                   this.displayLineflowStatusCodeVehicle[i] = false;
                   console.log(this.lineLevelOrderStatusList);
@@ -1568,7 +1550,6 @@ export class SalesOrderFormComponent implements OnInit {
                 if (this.lstgetOrderLineDetails[i].flowStatusCode === 'INVOICED') {
                   this.isVisible4 = true;
                   this.isVisible3 = false;
-                  // this.isVisible3 = false;
                   this.isVisible5 = false;
                   this.isVisiblemodelDetailsUpdate = false;
                   this.displayLineflowStatusCode[i] = true;
@@ -1607,7 +1588,6 @@ export class SalesOrderFormComponent implements OnInit {
             for (let x = 0; x < this.lstgetOrderTaxDetails.length; x++) {
               var invLnNo = (this.lstgetOrderTaxDetails[x].invLineNo);
               var invLn = Number(invLnNo - 1);
-              // alert(this.lstgetOrderLineDetails[invLn].flowStatusCode)
               if (this.lstgetOrderLineDetails[invLn].flowStatusCode != 'DE-ALLOTED' || this.lstgetOrderLineDetails[invLn].flowStatusCode != 'CANCELLED') {
                 control1.push(this.TaxDetailsGroup());
                 var lenNo = x + 1;
@@ -1617,7 +1597,6 @@ export class SalesOrderFormComponent implements OnInit {
             }
             this.SalesOrderBookingForm.patchValue(data.obj);
             for (let k = 0; k < this.lstgetOrderLineDetails.length; k++) {
-              // alert(this.lstgetOrderLineDetails[k].flowStatusCode)
               if (this.lstgetOrderLineDetails[k].flowStatusCode === 'READY FOR INVOICE') {
                 this.displaytaxCategoryName[k] = false;
                 this.displayLineflowStatusCode[k] = true;
@@ -1650,7 +1629,6 @@ export class SalesOrderFormComponent implements OnInit {
                 }
               }
               for (let x = 0; x < this.lstgetOrderLineDetails.length; x++) {
-                // alert('hi')
                 if (this.lstgetOrderLineDetails[x].flowStatusCode === 'INVOICED' && data.obj.gatepassYN === 'N') {
                   this.isVisible7 = true;
                   this.isVisibleform21 = true;
@@ -1663,12 +1641,20 @@ export class SalesOrderFormComponent implements OnInit {
 
               this.salesRepName = data.obj.salesRepName;
             }
+            if (data.obj.transactionTypeName.includes('CSD')){
+              this.isVisibleCSDDetails=true;
+              this.SalesOrderBookingForm.get('lesseeAccNo').disable();
+              this.SalesOrderBookingForm.get('lesseeCustName').disable();
+              this.SalesOrderBookingForm.get('lesseeContactNo').disable();
+              this.SalesOrderBookingForm.get('custPoNumber').disable();
+              this.SalesOrderBookingForm.get('custPoDate').disable();
+              this.SalesOrderBookingForm.get('refCustNo').disable();
+            }
           }
         })
 
     this.SalesOrderBookingForm.get('accountNo').disable();
     this.displayorderDetails = false;
-    // this.displayVehicleDetails = false;
     this.displayCreateOrderButton = true;
   }
 
@@ -2347,9 +2333,9 @@ export class SalesOrderFormComponent implements OnInit {
     .subscribe(
       data => {
         if (data.code === 200) {
-          this.SalesOrderBookingForm.patchValue({ lesseeAccName: data.obj.custName });
+          this.SalesOrderBookingForm.patchValue({ lesseeCustName: data.obj.custName });
           this.SalesOrderBookingForm.patchValue({ lesseeCustId: data.obj.customerId });
-          this.SalesOrderBookingForm.patchValue({ lesseeMobile: data.obj.mobile1 });
+          this.SalesOrderBookingForm.patchValue({ lesseeContactNo: data.obj.mobile1 });
         }
         else if(data.code===400){
           alert(data.message+'-'+data.obj)
