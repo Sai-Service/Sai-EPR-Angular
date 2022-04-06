@@ -532,6 +532,11 @@ closeMast() {
     }
 
 
+    onInput(event) {
+      event.target.value = event.target.value.toLocaleUpperCase();
+    }
+
+    
     SearchByEnrollNo(x) {
 
       var enrollNum =this.amcEnrollmentForm.get('enrollmentNo').value

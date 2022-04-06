@@ -288,7 +288,7 @@
                            <td>&nbsp;Enrollment&nbsp;No:&nbsp;</td>
                            <td>
                                 <input type ="text" class="form-control" formControlName="enrollmentNo" [(ngModel)]='enrollmentNo'
-                                    value={{enrollmentNo}} style="text-transform: uppercase;" >
+                                    value={{enrollmentNo}} style="text-transform: uppercase;" (keyup)="onInput($event)"  >
                                  
                             </td>
 
