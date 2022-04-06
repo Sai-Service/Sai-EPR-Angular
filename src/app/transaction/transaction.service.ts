@@ -103,15 +103,15 @@ apInvoiceCancellation(invoiceNum,emplId): Observable<any> {
       headers: this.headers
     };
     const url = this.ServerUrl + '/apInv/insertTdsDtls';
-    return this.http.post(url, poTdsRecord, options);
+    return this.http.post(url, poTdsRecord, options); 
   }
 //=======================================Payment Componanat==============================
 getsearchByPayment(suppNo,ouId): Observable<any> {
   return this.http.get(this.ServerUrl + `/apInvPayment/paymentSupp?suppNo=${suppNo}&ouId=${ouId}`);
 }
 
-getsearchByInvDtls(suppNo,ouId): Observable<any> {
-  return this.http.get(this.ServerUrl + `/apInvPayment/paymentSupp?suppNo=${suppNo}&ouId=${ouId}`);
+getsearchByInvDtls(suppNo,ouId,partyId): Observable<any> {
+  return this.http.get(this.ServerUrl + `/apInvPayment/paymentSupp?suppNo=${suppNo}&ouId=${ouId}&partyId=${partyId}`);
 }
 
 

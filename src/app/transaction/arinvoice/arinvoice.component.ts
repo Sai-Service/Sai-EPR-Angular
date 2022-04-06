@@ -2269,16 +2269,17 @@ export class ARInvoiceComponent implements OnInit {
   glPrdValidateLine(i: any) {
 
     // alert("GL Period : " + this.pipe.transform(this.GLPeriodCheck.startDate, 'dd-MM-y') + " - " + this.pipe.transform(this.GLPeriodCheck.endDate, 'dd-MM-y'));
-
+    alert("GL Period : " + this.GLPeriodCheck.startDate + " - " +this.GLPeriodCheck.endDate);
 
     var patch = this.arInvoiceForm.get('invApplyList') as FormArray;
     var applLineArr = this.arInvoiceForm.get('invApplyList').value;
     var gld = applLineArr[i].glDateLine;
-    // alert("index :"+i + "  gl date - " +gld);
+    alert("index :"+i + "  gl date - " +gld);
     var tglDate = new Date(gld);
-    var sDate = new Date(this.GLPeriodCheck.startDate);
+     var sDate = new Date(this.GLPeriodCheck.startDate);
     var tDate = new Date(this.GLPeriodCheck.endDate);
-    if (tglDate < sDate || tglDate > tDate) {
+    alert(tglDate+'--'+ sDate+'--'+tDate);
+    if (gld < sDate || gld > tDate) {
       alert("Line :" + (i + 1) + " GL date is not valid.. should be within GL period\nGL Period : " + this.pipe.transform(this.GLPeriodCheck.startDate, 'dd-MM-y') + " - " + this.pipe.transform(this.GLPeriodCheck.endDate, 'dd-MM-y'));
       // var z = this.pipe.transform(this.now, 'y-MM-dd');comment y vinita
       // patch.controls[i].patchValue({ glDateLine: z })comment by vinita
@@ -2288,7 +2289,7 @@ export class ARInvoiceComponent implements OnInit {
   }
 
   validateSave() {
-
+// debugger;
     if (this.GLPeriodCheck === null) {
       this.checkValidation = false;
       alert("GL PERIOD is null. Please update GL period.");
@@ -2324,7 +2325,7 @@ export class ARInvoiceComponent implements OnInit {
     for (let i = 0; i < applLineArr1.length; i++) {
 
       patch.controls[i].patchValue({ applAmt: applLineArr1[i].applAmtNew });
-      //  patch.controls[i].patchValue({ glDate: applLineArr1[i].glDateLine });comment by vinita
+       patch.controls[i].patchValue({ glDate: applLineArr1[i].glDateLine });
 
       this.invLineArray().controls[i].get('applyrcptFlag').disable();
       this.invLineArray().controls[i].get('applAmtNew').disable();
