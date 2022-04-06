@@ -196,7 +196,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblefromtolocationdepartment=false;
     }
     else if (reportName==='gstSparesSaiDebtors'){
-      this.reportName='Spares Sai Debtors'
+      this.reportName='Sai Debtors'
       this.isVisibleVehicleSaleRegister=false;
       this.isVisibleSaleIND=true;
       this.isSaleClosingStock=false;
@@ -365,13 +365,13 @@ export class SalesReportsComponent implements OnInit {
         })
       } 
     }
-    else if (reportName==='Spares Sai Debtors'){
+    else if (reportName==='Sai Debtors'){
       var custAccNo = this.salesReportForm.get('custAccNo').value;
       var deptId = this.salesReportForm.get('deptId').value;
       if (custAccNo === undefined || custAccNo === null) {
         custAccNo = '';
       }
-      const fileName = 'Spares Sai Debtors-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+      const fileName = 'Sai Debtors-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.SPDebtorReport(toDate, sessionStorage.getItem('ouId'), locId,custAccNo,deptId)
@@ -383,7 +383,7 @@ export class SalesReportsComponent implements OnInit {
         })
       }
       else  if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.SPDebtorReport(toDate, sessionStorage.getItem('ouId'), locId,custAccNo,deptId)
+        this.reportService.SPDebtorReport(toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'),custAccNo,sessionStorage.getItem('deptId'))
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
           this.isDisabled2 = false;
