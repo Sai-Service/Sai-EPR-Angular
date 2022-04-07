@@ -276,36 +276,44 @@
             </tr>
         </table>
 
+       
         <fieldset class="RFS">
             <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
-               Search </legend>
+               SEARCH</legend>
+        <table class="center" style="background-color: #FFE4B5;">
+            <tr>
+              <td >
+                  <table class="center">
+                      <tr>
+                        <!-- <td  style="background-color: #FFE4B5;"> &nbsp;Receipt&nbsp;No&nbsp;:&nbsp; </td> -->
+                        <td style="width: 15%" class="LabelFontStyle">&nbsp;Registration&nbsp;No&nbsp;:&nbsp; </td>
+                        <td style="background-color: #FFE4B5;">
+                       
+                        <input class="form-control" formControlName="regNo" [(ngModel)]='regNo' value={{regNo}} (keyup)="onInput($event)"> </td>
+                        <td style="background-color: #FFE4B5;">
+                        <button type="button" class="btn-primary" (click)="serchEnrollByRegNo(regNo)"><i class="fa fa-search"  aria-hidden="true"></i></button> </td>
 
-         <table class="center" style="width: 100%;background-color: #FFE4B5;">
-                 <tr>
-                  <td >
-                      <table class="center">
-                          <tr> 
-                           <td>&nbsp;Enrollment&nbsp;No:&nbsp;</td>
-                           <td>
-                                <input type ="text" class="form-control" formControlName="enrollmentNo" [(ngModel)]='enrollmentNo'
-                                    value={{enrollmentNo}} style="text-transform: uppercase;" (keyup)="onInput($event)"  >
-                                 
-                            </td>
+                        
+                        <td style="width: 15%" class="LabelFontStyle">&nbsp;Enrollment&nbsp;No:&nbsp;</td>
+                        <td><input   type="text"  formControlName="enrollmentNo"  id="enrollmentNo" [(ngModel)]="enrollmentNo" class="form-control" (keyup)="onInput($event)"> </td>
+                       
+                        <td style="background-color: #FFE4B5;">
+                        <button type="button" class="btn-primary" (click)="SearchByEnrollNo(enrollmentNo)"><i class="fa fa-search"  aria-hidden="true"></i></button> </td>
 
-                            <td>
-                                <button type="button" class="btn-primary" (click)="SearchByEnrollNo(enrollmentNo)"><i class="fa fa-search"
-                                        aria-hidden="true"></i></button>
-                            </td>
+                        <!-- <td style="width: 15%" class="LabelFontStyle">&nbsp;Enrollment&nbsp;Date:&nbsp;</td>
+                        <td> <input disabled  type="date"  formControlName="enrollmentNo"  id="enrollmentNo" [(ngModel)]="enrollmentNo" class="form-control"  max="{{minDate | date:'yyyy-MM-dd'}}" > </td>
 
-                                                  
-                           
-                          </tr>
-                      </table>
-                  </td>
-                </tr>
-
-               
-            </table>
+                        <td style="background-color: #FFE4B5;">
+                            <button disabled type="button" class="btn-primary" (click)="SearchByEnrollNo(enrollmentNo)"> <i class="fa fa-search" aria-hidden="true"></i></button>
+                        </td> -->
+                       
+                        <!-- <td> <button style="width: 5em;" type="button" class="btn btn-info" (click)="clearSearch()">Reset</button> </td> -->
+                        
+                      </tr>
+                  </table>
+              </td>
+            </tr>
+        </table>
         </fieldset>
 
 

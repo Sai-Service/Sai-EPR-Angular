@@ -819,6 +819,11 @@ AmcEnrollmentDetails(enrollNo): Observable<any> {
   // http://localhost:8081/McpEnrollMst/amcEnrollNo/AMC2209-2
 }
 
+AmcEnrollmentDetailsRegNo(regNum): Observable<any> {
+  return this.http.get(this.ServerUrl +`/McpEnrollMst/amcDtls/${regNum}`);
+  // http://localhost:8081/McpEnrollMst/amcDtls/MH01DC0007
+}
+
 
 
 
