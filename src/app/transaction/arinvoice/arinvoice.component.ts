@@ -617,7 +617,7 @@ export class ARInvoiceComponent implements OnInit {
   searchFromArray2(arr, regex) {
     let matches = [], i;
     for (i = 0; i < arr.length; i++) {
-      alert(arr[i] + 'Array i');
+      // alert(arr[i] + 'Array i');
       if (arr[i].match(regex)) {
         matches.push(arr[i]);
       }
@@ -1397,7 +1397,7 @@ export class ARInvoiceComponent implements OnInit {
     console.log(JSON.stringify(manArInvObj));
     this.transactionService.ARInvoiceSubmit(JSON.stringify(manArInvObj)).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFULLY');
+        alert(res.message);
         this.displaySaveButton = false;
         this.arInvoiceForm.patchValue({ trxNumber: res.obj.trxNumber })
         this.disabledComplete = true;
@@ -1409,7 +1409,7 @@ export class ARInvoiceComponent implements OnInit {
         // window.location.reload();
       } else {
         if (res.code === 400) {
-          alert('Code already present in the data base');
+          alert(res.message);
           // this.CompanyMasterForm.reset();
           // window.location.reload();
         }
@@ -2274,11 +2274,11 @@ export class ARInvoiceComponent implements OnInit {
     var patch = this.arInvoiceForm.get('invApplyList') as FormArray;
     var applLineArr = this.arInvoiceForm.get('invApplyList').value;
     var gld = applLineArr[i].glDateLine;
-    alert("index :"+i + "  gl date - " +gld);
+    // alert("index :"+i + "  gl date - " +gld);
     var tglDate = new Date(gld);
      var sDate = new Date(this.GLPeriodCheck.startDate);
     var tDate = new Date(this.GLPeriodCheck.endDate);
-    alert(tglDate+'--'+ sDate+'--'+tDate);
+    // alert(tglDate+'--'+ sDate+'--'+tDate);
     if (gld < sDate || gld > tDate) {
       alert("Line :" + (i + 1) + " GL date is not valid.. should be within GL period\nGL Period : " + this.pipe.transform(this.GLPeriodCheck.startDate, 'dd-MM-y') + " - " + this.pipe.transform(this.GLPeriodCheck.endDate, 'dd-MM-y'));
       // var z = this.pipe.transform(this.now, 'y-MM-dd');comment y vinita
@@ -2451,7 +2451,7 @@ export class ARInvoiceComponent implements OnInit {
 
     this.service.CreditMemmoApplySubmit(variants.value, crnNumber).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFUILY');
+        alert(res.message);
 
         this.arInvoiceForm.disable();
 

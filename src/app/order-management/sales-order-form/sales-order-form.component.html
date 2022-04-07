@@ -407,7 +407,7 @@
                                 </tr>
                             </ng-template>
                             <ng-template #elseDMSCDMS>
-                                <!-- <tr>
+                                <tr>
                                     <td style="width: 15%" class="LabelFontStyle">
                                         Customer&nbsp;PO&nbsp;No:&nbsp;
                                     </td>
@@ -426,7 +426,14 @@
                                             [ngClass]="{ 'is-invalid': submitted && f.custPoDate.errors }"
                                             style="width:100%;">
                                     </td>
-                                </tr> -->
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        &nbsp;Reference&nbsp;No&nbsp;:&nbsp;
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" formControlName="refCustNo" value={{refCustNo}}
+                                            style="width:100%;">
+                                    </td>
+                                </tr>
                                 <!-- <tr>
                                     <td style="width: 15%" class="LabelFontStyle">
                                         CDMS&nbsp;Customer&nbsp;NO:&nbsp;
@@ -788,6 +795,84 @@
                             <input disabled type="text" formControlName="lesseeCustName" class="form-control"
                                 style="width: 100%; ">
                         </td>
+                        <!-- <table>
+                            <tr>
+                                <td>
+                                    <input type="text" formControlName="lesseeCustName" [(ngModel)]='lesseeCustName'
+                                        value={{lesseeCustName}} class="form-control" style="width: 170px;"
+                                        data-bs-toggle="modal" data-bs-target="#lesseeCustNameModel">
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-primary" 
+                                        (click)="lesseeCustNameSearch(lesseeCustName)" data-toggle="modal" [disabled]="isDisabledlesseeCustName"
+                                        data-target="#lesseeCustNameModel"
+                                        style="width: 2rem;color: white;">
+                                        <i class="fa fa-search"></i> </button>
+                                    <div class="modal fade" id="lesseeCustNameModel" tabindex="-1"
+                                        role="dialog" aria-labelledby="lesseeCustNameModel"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog modal-xl" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="customerNameSearchModel">
+                                                        Additional&nbsp;Details</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <table>
+                                                        <tr>
+                                                            <table class="GridFont" id="excel-table"
+                                                                cellspacing="0" cellpadding="4">
+                                                                <tbody>
+                                                                    <tr class="GridHeader">
+                                                                        <th scope="col">Customer No</th>
+                                                                        <th scope="col">Customer Name</th>
+                                                                        <th scope="col">Address</th>
+                                                                        <th scope="col">GST No</th>
+                                                                        <th scope="col">Pan No</th>
+                                                                        <th scope="col">Mobile</th>
+                                                                        <th scope="col">Select</th>
+                                                                    </tr>
+                                                                    <tr *ngFor="let com of customerNameSearch"
+                                                                        class="ItemStyle"
+                                                                        style="text-decoration:none;">
+                                                                        <td style="width: 195px;">
+                                                                            {{com.accountNo}}</td>
+                                                                        <td style="width: 195px;">
+                                                                            {{com.custName}}</td>
+                                                                        <td style="width: 195px;">
+                                                                            {{com.billToAddress}}</td>
+                                                                        <td style="width: 195px;">
+                                                                            {{com.gstNo}}</td>
+                                                                        <td style="width: 195px;">
+                                                                            {{com.panNo}}</td>
+                                                                        <td style="width: 195px;">
+                                                                            {{com.mobile1}}</td>
+                                                                        <td><button class="btn-primary"
+                                                                                style="width: fit-content;"
+                                                                                (click)="lesseeaccountNoSearchNew(com.accountNo)"
+                                                                                data-dismiss="modal">Select</button>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary"
+                                                        data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </td>
+                            </tr>
+                        </table> -->
                         <td style="width: 15%" class="LabelFontStyle">
                             Cust&nbsp;Mobile&nbsp;No&nbsp;:&nbsp;
                         </td>
