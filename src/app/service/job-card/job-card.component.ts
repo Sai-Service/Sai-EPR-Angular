@@ -1204,7 +1204,8 @@ export class JobCardComponent implements OnInit {
               (patch.controls[0]).patchValue(
                 {
                   lineNum: 1,
-                  billableTyId: selectbilTy.billableTyId,
+                  // billableTyId: selectbilTy.billableTyId,
+
                   // billableTyName:selectbilTy.billableTyName
                   // billableTyId:selectbilTy.billableTyName
                   // ,comment by vinita
@@ -1530,22 +1531,17 @@ export class JobCardComponent implements OnInit {
             this.lineDistributionArray().push(payInvGrp);
           }
 
+
           var len1 = this.lineDetailsArray.length;
-
-          // alert("lineDetailsArray.length :"+len1);
-
 
           for (let i = 0; i < this.lstcomments.jobCardLabLines.length - len1; i++) {
             var payInvGrp: FormGroup = this.lineDetailsGroup();
             this.lineDetailsArray.push(payInvGrp);
           }
-
-          
-
+    
           if (this.lstcomments.lineCnt > 0) {
             this.dispReadyInvoice = true;
             this.dispButtonStatus = false; 
-            
           }
          
           if (this.lstcomments.jobCardNum != undefined) {
@@ -1622,7 +1618,7 @@ export class JobCardComponent implements OnInit {
 
 
         
-      
+          // debugger;
           this.jobcardForm.patchValue(this.lstcomments);
          
           var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
@@ -1649,17 +1645,15 @@ export class JobCardComponent implements OnInit {
           for (let ln=0; ln < data.obj.jobCardLabLines.length; ln++) {
             // alert('inside loop'+ln)
             // let selectbilTy = this.billableTyIdList.find(d => d.billableTyId === data.jobCardLabLines[ln].billableTyId);
-            // patch.controls[ln].patchValue({ billableTyId: selectbilTy.billableTyName });
+          //  alert ("selectbilTy.billableTyId :"+data.jobCardLabLines[ln].billableTyId);
+            // patch.controls[ln].patchValue({ billableTyId: data.jobCardLabLines[ln].billableTyId });
+            
             this.onOptionsplitRatioSelect(ln,data.obj.jobCardLabLines[ln].splitCateId);
             var lbrAmt=(data.obj.jobCardLabLines[ln].totAmt).toFixed(2);
             patch.controls[ln].patchValue({laborAmt:lbrAmt});
 
-            // custLbr1 =custLbr1+data.obj.jobCardLabLines[ln].basicAmt;
-            // custLbr2 =custLbr2+data.obj.jobCardLabLines[ln].disAmt;
-            // custLbr3 =custLbr3+data.obj.jobCardLabLines[ln].taxableAmt;
-            // custLbr4 =custLbr4+data.obj.jobCardLabLines[ln].taxAmt;
-            // custLbr5 =custLbr5+data.obj.jobCardLabLines[ln].totAmt;
-           
+            // var xyz = data.obj.jobCardLabLines[ln].billableTyId;
+            // patch.controls[ln].patchValue({ billableTyId: xyz});
 
             custLbr1=custLbr1+data.obj.jobCardLabLines[ln].custBasicAmt;
             lbCustDisAmt=(data.obj.jobCardLabLines[ln].custBasicAmt*data.obj.jobCardLabLines[ln].disPer)/100;
@@ -1682,11 +1676,7 @@ export class JobCardComponent implements OnInit {
 
           }
 
-          // this.labBasTotal =lbr1;
-          // this.labSubTotal =lbr2;
-          // this.labTaxTotal =lbr3;
-          // this.labNetTotal =lbr4;
-          // this.labDisTotal =lbr5;
+        
 
           this.labCustBasTotal=Math.round((custLbr1+Number.EPSILON)*100)/100;
           this.labCustDisTotal=Math.round((custLbr2+Number.EPSILON)*100)/100;
@@ -1703,11 +1693,6 @@ export class JobCardComponent implements OnInit {
           this.labInsNetTotal=Math.round((insLbr5+Number.EPSILON)*100)/100 ;
 
 
-          // var matr1=0;
-          // var matr2=0;
-          // var matr3=0;
-          // var matr4=0;
-          // var matr5=0;
 
           var custMatr1=0;
           var custMatr2=0;
@@ -1727,14 +1712,7 @@ export class JobCardComponent implements OnInit {
 
             this.onOptionsplitRatioSelect1(ln,data.obj.jobCardMatLines[ln].splitCateId);
 
-            // var lbrAmt=(data.obj.jobCardLabLines[ln].totAmt).toFixed(2);
-            // patch.controls[ln].patchValue({laborAmt:lbrAmt});
-
-            // matr1 =matr1+data.obj.jobCardMatLines[ln].basicAmt;
-            // matr2 =matr2+data.obj.jobCardMatLines[ln].taxableAmt;
-            // matr3 =matr3+data.obj.jobCardMatLines[ln].taxAmt;
-            // matr4 =matr4+data.obj.jobCardMatLines[ln].totAmt;
-            // matr5 =matr5+data.obj.jobCardMatLines[ln].disAmt;
+          
 
             custMatr1=custMatr1+data.obj.jobCardMatLines[ln].custBasicAmt;
             custMatr2=custMatr2+data.obj.jobCardMatLines[ln].disAmt;
@@ -1753,11 +1731,7 @@ export class JobCardComponent implements OnInit {
 
           }
 
-            // this.matBasTotal =matr1;
-            // this.matSubtotal =matr2;
-            // this.matTaxTotal =matr3;
-            // this.matNetTotal= matr4;
-            // this.matDisTotal= matr5;
+           
 
             this.matCustBasTotal=Math.round((custMatr1+Number.EPSILON)*100)/100 ;
             this.matCustDisTotal=Math.round((custMatr2+Number.EPSILON)*100)/100 ;
@@ -2543,6 +2517,10 @@ export class JobCardComponent implements OnInit {
         this.displaybilling = false;  this.dispButtonStatus = false;this.reopenButton=true;
         this.saveLabButton=false;
         this.saveMatButton=false;
+
+        var jobNo = this.jobcardForm.get('jobCardNum').value;
+        this.Search(jobNo);
+
       
         // this.jobcardForm.patchValue({jobCardNum:res.obj.jobCardNum})
       } else {

@@ -712,9 +712,6 @@ export class WsVehicleMasterComponent implements OnInit {
     }
 
 
-    
-  
-
   SearchByRegNo(mReg: string) {
     // alert ("Search Vehicle by RegNo..... wip :"+mReg);
     mReg=mReg.toUpperCase();
