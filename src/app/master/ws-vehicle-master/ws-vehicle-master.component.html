@@ -680,7 +680,7 @@
              <tr>
 
                     
-                <td style="width: 12%" class="LabelFontStyle">MCP&nbsp;Status:&nbsp;</td>
+                <td style="width: 12%" class="LabelFontStyle">MCP|AMC&nbsp;Status:&nbsp;</td>
 
                  <td>
                     <select type="text"  formControlName="mcpYN"  id ="mcpYN"  [(ngModel)]='mcpYN' value={{mcpYN}}   class="form-control"  (ngModelChange)='onSelectMcpStatus($event)'>
@@ -692,25 +692,25 @@
 
                 <div *ngIf="enableMcpDetails; then mcpBlock1; else mcpBlock2"></div>
                 <ng-template #mcpBlock1> 
-                    <td style="width: 12%" class="LabelFontStyle">MCP&nbsp;No:&nbsp;</td>
+                    <td style="width: 12%" class="LabelFontStyle">MCP|AMC&nbsp;No:&nbsp;</td>
                     <td>  <input type="text"  formControlName="mcpNo"  id="mcpNo" [(ngModel)]="mcpNo" class="form-control" (keyup)="onInput($event)" > </td>
                    
-                    <td class="LabelFontStyle">MCP&nbsp;Start&nbsp;Date:&nbsp;</td>
+                    <td class="LabelFontStyle">MCP|AMC&nbsp;Start&nbsp;Date:&nbsp;</td>
                     <td> <input   type="date"  formControlName="mcpStartDate"  id="mcpStartDate" [(ngModel)]="mcpStartDate" class="form-control" (change)="onChangMcpStartDate(mcpStartDate)" > </td>
            
 
-                    <td class="LabelFontStyle">MCP&nbsp;Expiry:&nbsp;</td>
+                    <td class="LabelFontStyle">MCP|AMC&nbsp;Expiry:&nbsp;</td>
                     <td> <input   type="date"  formControlName="mcpEndDate"  id="mcpEndDate" [(ngModel)]="mcpEndDate" class="form-control" (change)="onChangMcpEndDate(mcpEndDate)"> </td>
                 </ng-template>
 
                 <ng-template #mcpBlock2> 
-                    <td style="width: 12%" class="LabelFontStyle">MCP&nbsp;No:&nbsp;</td>
+                    <td style="width: 12%" class="LabelFontStyle">MCP|AMC&nbsp;No:&nbsp;</td>
                     <td>  <input disabled type="text"  formControlName="mcpNo"  id="mcpNo" [(ngModel)]="mcpNo" class="form-control" (keyup)="onInput($event)" > </td>
                    
-                    <td class="LabelFontStyle">MCP&nbsp;Start&nbsp;Date:&nbsp;</td>
+                    <td class="LabelFontStyle">MCP|AMC&nbsp;Start&nbsp;Date:&nbsp;</td>
                     <td> <input disabled  type="date"  formControlName="mcpStartDate"  id="mcpStartDate" [(ngModel)]="mcpStartDate" class="form-control" > </td>
            
-                    <td class="LabelFontStyle">MCP&nbsp;Expiry:&nbsp;</td>
+                    <td class="LabelFontStyle">MCP|AMC&nbsp;Expiry:&nbsp;</td>
                     <td> <input  disabled type="date"  formControlName="mcpEndDate"  id="mcpEndDate" [(ngModel)]="mcpEndDate" class="form-control" > </td>
                 </ng-template>
 

@@ -1191,12 +1191,12 @@ export class JobCardComponent implements OnInit {
     // if (regno != undefined) {
       this.serviceService.billableTyIdLstFN(event, regno)
         .subscribe(
-          data1 => {
-
-            this.billableTyIdList = data1;
-            console.log(data1);
+          data2 => {
+            this.billableTyIdList = data2;
+            // console.log(data1);
             console.log(this.billableTyIdList);
-            // alert("-----"+jcStatus);
+
+          
             if (jcStatus === 'New') {
               let selectbilTy = this.billableTyIdList.find(d => d.billableTyName === 'Customer');
               this.lineDetailsGroup();
@@ -1653,8 +1653,8 @@ export class JobCardComponent implements OnInit {
             var lbrAmt=(data.obj.jobCardLabLines[ln].totAmt).toFixed(2);
             patch.controls[ln].patchValue({laborAmt:lbrAmt});
 
-            // var xyz = data.obj.jobCardLabLines[ln].billableTyId;
-            // patch.controls[ln].patchValue({ billableTyId: xyz});
+            var xyz = data.obj.jobCardLabLines[ln].billableTyId;
+            patch.controls[ln].patchValue({ billableTyId: xyz});
 
             custLbr1=custLbr1+data.obj.jobCardLabLines[ln].custBasicAmt;
             lbCustDisAmt=(data.obj.jobCardLabLines[ln].custBasicAmt*data.obj.jobCardLabLines[ln].disPer)/100;
