@@ -7,6 +7,9 @@ export class SalesOrderobj {
     loyaltyBonus:string;
     exRegNo:string;
     insCharges:string;
+    csdIndexNo:number;
+    csdPoNo:string;
+    csdDate:Date;
     offerPrice:number;
     paymentTermId:number;
     locCode: string;
