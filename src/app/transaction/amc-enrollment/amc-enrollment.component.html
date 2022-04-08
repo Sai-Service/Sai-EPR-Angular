@@ -71,22 +71,26 @@
                     <td> <input  type ="text" class="form-control" formControlName="schemeGrp"  value={{schemeGrp}} style="background-color: yellow;"  > </td>
                      -->
                      <td style="width: 15%" class="LabelFontStyle">&nbsp;Scheme&nbsp;Name:&nbsp;</td>
-                     <td>  
-                        <select formControlName="schemeNumber" id="schemeNumber" [(ngModel)]="schemeNumber"  class="form-control" style="background-color: yellow;"
+                     <td colspan="3">  
+                        <select formControlName="schemeNumber" id="schemeNumber" [(ngModel)]="schemeNumber"  class="form-control" style="background-color: yellow;width: 100%;"
                             (ngModelChange)='onSelectAmcScheme($event)'>
                             <option disabled>--Select--</option>
                             <option *ngFor="let sc of  lstAmcSchemeList" [(ngValue)]="sc.schemeNumber"  >
-                                {{sc.schemeNumber}}
+                                {{sc.schemeNumber}} - Rs.{{sc.amcSchemeTotal}} - {{sc.schemeDesc}}
                              </option>
                         </select>
                     </td>
 
                     <input hidden type ="text" class="form-control" formControlName="schemeId" [(ngModel)]='schemeId' value={{schemeId}} >
 
+                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Curr&nbsp;Kms:&nbsp;</td>
+                    <td> <input  type ="number" class="form-control" formControlName="currentKms" [(ngModel)]="currentKms" value={{currentKms}} (change)="validateStartKms()" style="background-color: yellow;"  > </td>
                    
-                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Scheme&nbsp;Desc:&nbsp;</td>
+                    <!-- <td style="width: 15%" class="LabelFontStyle">&nbsp;Scheme&nbsp;Desc:&nbsp;</td>
                     <td colspan="3"> <input disabled  style="width: 100%;" type ="text" class="form-control" formControlName="schemeDesc" [(ngModel)]='schemeDesc' value={{schemeDesc}} > </td>
-                   
+                    -->
+
+                    <!-- <td><td>  -->
 
                     <td style="width: 15%" class="LabelFontStyle">&nbsp;End&nbsp;Date:&nbsp;</td>
                     <td> <input  disabled type ="date" class="form-control" formControlName="endDate"  value={{endDate}}   > </td>
@@ -99,9 +103,7 @@
                     <td style="width: 15%" class="LabelFontStyle">&nbsp;Labour&nbsp;Dis(%):&nbsp;</td>
                     <td> <input disabled type ="number" class="form-control" formControlName="discOnLabour" [(ngModel)]='discOnLabour'  value={{discOnLabour}} > </td>
                     
-                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Curr&nbsp;Kms:&nbsp;</td>
-                    <td> <input  type ="number" class="form-control" formControlName="currentKms" [(ngModel)]="currentKms" value={{currentKms}} (change)="validateStartKms()" style="background-color: yellow;"  > </td>
-                   
+                  
                     <td style="width: 15%" class="LabelFontStyle">&nbsp;End&nbsp;Kms:&nbsp;</td>
                     <td> <input disabled type ="number" class="form-control" formControlName="schemeValidKm"  value={{schemeValidKm}}   > </td>
                              
