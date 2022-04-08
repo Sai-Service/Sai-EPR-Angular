@@ -398,8 +398,8 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
   pipe = new DatePipe('en-US');
   now = new Date();
-  orderedDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
-  custPoDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
+  orderedDate = this.pipe.transform(this.now, 'dd-MMM-yyyy');
+  custPoDate = this.pipe.transform(this.now, 'dd-MMM-yyyy');
 
   closeResetButton = true;
   dataDisplay: any;
@@ -907,7 +907,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
               });
               this.TaxDetailsArray().disabled;
             }
-            this.CounterSaleOrderBookingForm.patchValue({ orderedDate: data.obj.orderedDate });
+            // this.CounterSaleOrderBookingForm.patchValue({ orderedDate: data.obj.orderedDate });
             this.CounterSaleOrderBookingForm.get('orderedDate').disable();
             // alert( data.obj.orderStatus +'-----' + data.obj.trxNumber);
             if (data.obj.orderStatus != 'BOOKED' && data.obj.trxNumber != null) {
@@ -1099,10 +1099,9 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
               this.PaymentViewReceipt = true;
             }
             var orderedDate1 = data.obj.orderedDate;
-            var orderedDate2 = this.pipe.transform(orderedDate1, 'dd-MM-yyyy');
+            var orderedDate2 = this.pipe.transform(data.obj.orderedDate, 'dd-MM-yyyy');
             var custPoDate1 = data.obj.custPoDate;
             var custPoDate2 = this.pipe.transform(custPoDate1, 'dd-MM-yyyy');
-            // alert(orderedDate2)
             this.CounterSaleOrderBookingForm.patchValue(({ orderedDate: orderedDate2 }));
             this.CounterSaleOrderBookingForm.patchValue(({ custPoDate: custPoDate2 }));
           }
@@ -1936,7 +1935,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
         let selPayTerm = this.payTermDescList.find(d => d.lookupValueId === this.selCustomer.termId);
         this.paymentType = selPayTerm.lookupValue;
       }
-      var orderedDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
+      var orderedDate = this.pipe.transform(this.now, 'dd-MMM-yyyy');
       this.CounterSaleOrderBookingForm.patchValue({ orderedDate: orderedDate });
       if (this.CounterSaleOrderBookingForm.get('createOrderType').value === 'Sales Order' && this.CounterSaleOrderBookingForm.get('othRefNo').value === undefined) {
         alert('Please Enter Reference Number First !');
@@ -2418,6 +2417,20 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     this.isDisabled = true;
     var orderLines1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     var orderLines = orderLines1.getRawValue();
+    var custName = this.CounterSaleOrderBookingForm.get('custName').value;
+    var walkCustName=this.CounterSaleOrderBookingForm.get('walkCustName').value;
+    var walkCustPan=this.CounterSaleOrderBookingForm.get('walkCustPan').value;
+    var walkCustaddres=this.CounterSaleOrderBookingForm.get('walkCustaddres').value;
+    if (custName.includes('CSCash')){
+      if (walkCustName===undefined || walkCustName===''|| walkCustName===null|| walkCustPan===undefined || walkCustPan===''|| walkCustPan===null||
+      walkCustaddres===undefined || walkCustaddres===''|| walkCustaddres===null){
+        alert('Enter Walking Customer Details.!');
+        this.progress = 0;
+        this.dataDisplay = 'Enter Walking Customer Details.';
+        this.isDisabled = false;
+        return;
+      }
+    }
     for (let j = 0; j < orderLines.length; j++) {
       if (orderLines[j].segment === '' && orderLines[j].taxCategoryName === '' && orderLines[j].pricingQty === '') {
         alert('First Select Line Details..!');
