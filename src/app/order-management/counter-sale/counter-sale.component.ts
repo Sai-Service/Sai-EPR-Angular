@@ -1099,10 +1099,10 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
               this.PaymentViewReceipt = true;
             }
             var orderedDate1 = data.obj.orderedDate;
-            var orderedDate2 = this.pipe.transform(data.obj.orderedDate, 'dd-MM-yyyy');
+            var orderedDate2 = this.pipe.transform(data.obj.orderedDate, 'dd-MMM-yyyy');
             var custPoDate1 = data.obj.custPoDate;
             var custPoDate2 = this.pipe.transform(custPoDate1, 'dd-MM-yyyy');
-            this.CounterSaleOrderBookingForm.patchValue(({ orderedDate: orderedDate2 }));
+            this.CounterSaleOrderBookingForm.patchValue(({ orderedDate: data.obj.orderedDate }));
             this.CounterSaleOrderBookingForm.patchValue(({ custPoDate: custPoDate2 }));
           }
           else {
