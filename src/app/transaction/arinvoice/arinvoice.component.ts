@@ -2269,16 +2269,16 @@ export class ARInvoiceComponent implements OnInit {
   glPrdValidateLine(i: any) {
 
     // alert("GL Period : " + this.pipe.transform(this.GLPeriodCheck.startDate, 'dd-MM-y') + " - " + this.pipe.transform(this.GLPeriodCheck.endDate, 'dd-MM-y'));
-    alert("GL Period : " + this.GLPeriodCheck.startDate + " - " +this.GLPeriodCheck.endDate);
+    // alert("GL Period : " + this.GLPeriodCheck.startDate + " - " +this.GLPeriodCheck.endDate);
 
     var patch = this.arInvoiceForm.get('invApplyList') as FormArray;
     var applLineArr = this.arInvoiceForm.get('invApplyList').value;
     var gld = applLineArr[i].glDateLine;
-    alert("index :"+i + "  gl date - " +gld);
+    // alert("index :"+i + "  gl date - " +gld);
     var tglDate = new Date(gld);
      var sDate = new Date(this.GLPeriodCheck.startDate);
     var tDate = new Date(this.GLPeriodCheck.endDate);
-    alert(tglDate+'--'+ sDate+'--'+tDate);
+    // alert(tglDate+'--'+ sDate+'--'+tDate);
     if (gld < sDate || gld > tDate) {
       alert("Line :" + (i + 1) + " GL date is not valid.. should be within GL period\nGL Period : " + this.pipe.transform(this.GLPeriodCheck.startDate, 'dd-MM-y') + " - " + this.pipe.transform(this.GLPeriodCheck.endDate, 'dd-MM-y'));
       // var z = this.pipe.transform(this.now, 'y-MM-dd');comment y vinita
