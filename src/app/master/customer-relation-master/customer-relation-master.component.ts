@@ -108,6 +108,7 @@ export class CustomerRelationMasterComponent implements OnInit {
         custName:['', [Validators.required]],
         address1: ['', [Validators.required]],
         contactNo: ['', [Validators.required]],
+        mobile1: ['', [Validators.required]],
         startDate: ['', [Validators.required]],
         endDate: ['', [Validators.required]],
         emplId:[],
@@ -166,6 +167,7 @@ export class CustomerRelationMasterComponent implements OnInit {
     this.employeeId=selectedValue.emplId
     this.lineDetailsArray().reset();
     this.displayButton=true;
+    this.searchMast(0);
     }
   }
 
@@ -209,6 +211,7 @@ export class CustomerRelationMasterComponent implements OnInit {
         newMast()  {
       
           this.CheckHeaderValidations();
+
           if (this.headerValidation==false ) {alert("Header Validation Failed... Please Check");  return;}
     
           this.lineValidation=false;
@@ -233,6 +236,7 @@ export class CustomerRelationMasterComponent implements OnInit {
               if (res.code === 200) {
 
                 alert(res.message);
+                this.custRelationMasterForm.disable();
                 } else {
                 if (res.code === 400) {
                   this.displayButton=true;
@@ -247,7 +251,7 @@ export class CustomerRelationMasterComponent implements OnInit {
 
 
   searchMast(pageNo) {
-    this.CheckHeaderValidations();
+    // this.CheckHeaderValidations();
     if (this.headerValidation==false ) {return;}
 
     this.service.getCustomerEmpMapList(this.employeeId,pageNo,50)
@@ -316,12 +320,13 @@ export class CustomerRelationMasterComponent implements OnInit {
 
                 this.duplicateLineCheck(this.lstCustDetails.customerId,index,this.lstCustDetails.custAccountNo);
                 if (this.lineItemRepeated){ this.lineDetailsArray().removeAt(index);}
+
                 (patch.controls[index]).patchValue(
                   {
                     customerId:  this.lstCustDetails.customerId,
                     custName:  this.lstCustDetails.custName,
                     address1: this.lstCustDetails.address1,
-                    contactNo: this.lstCustDetails.contactNo,
+                    contactNo: this.lstCustDetails.mobile1,
                     startDate: this.lstCustDetails.startDate,
                     endDate:this.lstCustDetails.endDate,
                     emplId:this.employeeId,

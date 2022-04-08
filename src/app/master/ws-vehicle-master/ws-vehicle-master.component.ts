@@ -696,7 +696,10 @@ export class WsVehicleMasterComponent implements OnInit {
     this.service.getVehRegDetailsNew(mReg)
     .subscribe(
       data => {
-       if( data.obj != null)  { alert ("Vehicle Registration No : "+ mReg + " Already Exists...") 
+
+       if(data.code===400) { alert (data.message + "." +data.obj); return; }
+
+       if( data.code ===200)  { alert ("Vehicle Registration No : "+ mReg + " Already Exists...") 
             this.displayButton = false;
             console.log(this.lstcomments);
             this.wsVehicleMasterForm.patchValue(data.obj);
@@ -704,13 +707,10 @@ export class WsVehicleMasterComponent implements OnInit {
             this.GetCustomerDetails(this.lstcomments.custAccountNo);
            if(this.lstcomments.status ==='Inactive') { this.wsVehicleMasterForm.disable();}
       
-      }
+      } 
       });
     }
 
-
-    
-  
 
   SearchByRegNo(mReg: string) {
     // alert ("Search Vehicle by RegNo..... wip :"+mReg);

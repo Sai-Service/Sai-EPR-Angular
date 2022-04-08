@@ -532,6 +532,11 @@ closeMast() {
     }
 
 
+    onInput(event) {
+      event.target.value = event.target.value.toLocaleUpperCase();
+    }
+
+    
     SearchByEnrollNo(x) {
 
       var enrollNum =this.amcEnrollmentForm.get('enrollmentNo').value
@@ -558,6 +563,41 @@ closeMast() {
             this.amcEnrollmentForm.patchValue(this.lstcomments);
             this.GetCustomerDetails(this.lstcomments.customerId);
             this.GetCustomerSiteDetails(this.lstcomments.customerId);
+            this.amcEnrollmentForm.disable();
+           
+         }  else { alert ("No Data found....");this.lstcomments=null}
+        } ); 
+    
+    }
+
+
+    
+    serchEnrollByRegNo(x) {
+      var regNum =this.amcEnrollmentForm.get('regNo').value
+      if(regNum ===undefined || regNum===null || regNum.trim()==='') {
+        alert ("Please Enter Registration Number...");return;
+      }
+     
+      this.displayButton=false;
+      regNum=regNum.toUpperCase();
+      this.service.AmcEnrollmentDetailsRegNo(regNum)
+      .subscribe(
+        data => {
+          this.lstcomments = data;
+          if(data !=null) {
+          console.log(this.lstcomments);
+          var control = this.amcEnrollmentForm.get('amcItemList') as FormArray;
+          this.lineDetailsArray().clear();
+          
+          for (let i=0; i<this.lstcomments.amcItemList.length;i++)
+            {
+              var amcItemList:FormGroup=this.lineDetailsGroup();
+              control.push(amcItemList);
+            }
+            this.amcEnrollmentForm.patchValue(this.lstcomments);
+            this.GetCustomerDetails(this.lstcomments.customerId);
+            this.GetCustomerSiteDetails(this.lstcomments.customerId);
+            this.amcEnrollmentForm.disable();
            
          }  else { alert ("No Data found....");}
         } ); 

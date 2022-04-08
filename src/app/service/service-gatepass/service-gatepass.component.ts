@@ -19,6 +19,8 @@ interface IServiceGatePass {
   delvTakenBy:string;
   driverName:string;
   custAccountNo: number;
+  delAuthBy:string;
+  osAmt:number;
 }
 
 @Component({
@@ -68,7 +70,7 @@ export class ServiceGatepassComponent implements OnInit {
     vin :string;
     mainModel:string;
 
-    delvType:string;
+    delvType:string='Self';
     delvTakenBy:string;
     driverName:string;
 
@@ -314,18 +316,21 @@ CheckGPvalidation() {
     return;
   }
 
-  // if (formValue.delvType === undefined || formValue.delvType === null || formValue.delvType.trim()=='') {
-  //   this.checkValidation = false;
-  //   alert("DELIVERY TYPE: Should not be null....");
-  //   return;
-  // }
+  if (formValue.delvType === undefined || formValue.delvType === null || formValue.delvType.trim()=='') {
+    this.checkValidation = false;
+    alert("DELIVERY TYPE: Should not be null....");
+    return;
+  }
 
-  // if (formValue.driverName === undefined || formValue.driverName === null || formValue.driverName.trim()=='') {
-  //   this.checkValidation = false;
-  //   alert("DRIVER NAME: Should not be null....");
-  //   return;
-  // }
+    if(formValue.osAmt>0) {
+    if (formValue.delAuthBy === undefined || formValue.delAuthBy === null || formValue.delAuthBy.trim()=='') {
+      this.checkValidation = false;
+      alert("AUTHORISED BY: Should not be null....");
+      return;
+    } 
+   }
 
+ 
   if (formValue.delvTakenBy === undefined || formValue.delvTakenBy === null || formValue.delvTakenBy.trim()=='') {
     this.checkValidation = false;
     alert("DELIVERY TAKEN BY: Should not be null....");
@@ -444,7 +449,7 @@ radioEvent(event:any){
    this.regNo=null;this.gpNumber=null;this.dateOfDelv=null;this.gpByName=null;
    this.vin=null;this.mainModel=null;this.custAccountNo=null;this.customerType=null;
    this.custAddress=null;this.custCity=null;this.custState=null;this.custPincode=null;
-   this.custPhone=null;this.custEmail=null;this.custContact=null;this.delvType='Self';
+   this.custPhone=null;this.custEmail=null;this.custContact=null;this.delvType=null;
    this.delvTakenBy=null;this.driverName=null;
    this.lstJobcardList=null;this.custName=null;
  }

@@ -522,6 +522,12 @@
                                 <input style="font-weight: bold;" disabled   type="text" formControlName="ewInvoiceNo"  id="ewInvoiceNo" [(ngModel)]="ewInvoiceNo" class="form-control">
                             </td>
 
+                            <td   style="width: 15%" class="LabelFontStyle1">Reference&nbsp;No(EW/CWI):&nbsp;</td>
+
+                            <td>
+                                <input  style="font-weight: bold;"   type="text" formControlName="bajajCwiNo"  id="bajajCwiNo"  [(ngModel)]="bajajCwiNo" class="form-control" placeholder="Reference No" style="background-color: yellow;" >
+                            </td>
+
                             <!-- <td style="width: 15%" class="LabelFontStyle">EW&nbsp;Status:&nbsp;</td> -->
             
                             <!-- <td>  
@@ -558,13 +564,16 @@
                                 </option>
                                 </select>
                             </td>
+                        </tr>
+
+                        <tr>
 
                             <td style="width: 15%" class="LabelFontStyle1">EW&nbsp;Scheme:&nbsp;</td>
     
                             <div *ngIf="displayButton; then thenBlock902; else elseBlock902"></div>
                             <ng-template #thenBlock902>
-                            <td>  
-                                <select  formControlName="ewSchemeId" id="ewSchemeId" [(ngModel)]="ewSchemeId" class="form-control" (ngModelChange)="GetSchemeDetails($event)"  style="background-color: yellow;">
+                            <td colspan="3">  
+                                <select  formControlName="ewSchemeId" id="ewSchemeId" [(ngModel)]="ewSchemeId" class="form-control" (ngModelChange)="GetSchemeDetails($event)"  style="background-color: yellow;width: 100%;">
                                     <option disabled>--Select--</option>
                                     <option *ngFor="let sc of EwSchemeItemList" [ngValue] ="sc.ewSchemeId" >
                                         {{sc.ewSchemeNo}}
@@ -574,8 +583,8 @@
                             </ng-template>
 
                             <ng-template #elseBlock902>
-                                <td>  
-                                    <select disabled formControlName="ewSchemeId" id="ewSchemeId" [(ngModel)]="ewSchemeId" class="form-control" (ngModelChange)="GetSchemeDetails($event)"  >
+                                <td colspan="3">  
+                                    <select disabled formControlName="ewSchemeId" id="ewSchemeId" [(ngModel)]="ewSchemeId" class="form-control" (ngModelChange)="GetSchemeDetails($event)" style="width: 100%;background-color: lightgreen;"  >
                                         <option disabled>--Select--</option>
                                         <option *ngFor="let sc of EwSchemeItemList" [ngValue] ="sc.ewSchemeId" >
                                             {{sc.ewSchemeNo}}
@@ -585,70 +594,50 @@
                                 </ng-template>
 
 
+                                <td   style="width: 15%" class="LabelFontStyle1">EW&nbsp;Item&nbsp;Code:&nbsp;</td>
 
-                        </tr>
-                        <tr>
-                            <td   style="width: 15%" class="LabelFontStyle1">EW&nbsp;Item&nbsp;Code:&nbsp;</td>
-
-                            <!-- <td>
-                            
-                                <input type="text" formControlName="segment"
-                                (keyup)="getInvItemId($event)" id="invItemIdFirstWay" 
-                                list="dynmicUserIds2" class="form-control"
-                                (ngModelChange)="onOptioninvItemIdSelectedSingle($event)" >
-                                <datalist id="dynmicUserIds2">
-                                    <option *ngFor="let item of invItemListEw"
-                                        [ngValue]="item.itemId"> 
-                                        {{item.segment}}
-                                    </option>
-                                </datalist>
-                
-                            </td>  -->
-
-                            <div *ngIf="displayButton; then thenBlock903; else elseBlock903"></div>
-                            <ng-template #thenBlock903>
-
-                            <td>  
-                                <select   formControlName="itemId" id="itemId" [(ngModel)]="itemId"  class="form-control" style="background-color: yellow;">
-                                <option disabled>--Select--</option>
-                                <option *ngFor="let sc of  invItemListEw" [ngValue]="sc.ITEMID">
-                                <!-- {{sc.itemId}}- -->
-                                 {{sc.ITEMID}}-{{sc.SEGMENT}}
-                                </option>
-                                </select>
-                            </td>
-                            </ng-template>
-                            <ng-template #elseBlock903>
-
-                                <td>  
-                                    <select disabled  formControlName="itemId" id="itemId" [(ngModel)]="itemId"  class="form-control">
+                                <div *ngIf="displayButton; then thenBlock903; else elseBlock903"></div>
+                                <ng-template #thenBlock903>
+    
+                                <td >  
+                                    <select   formControlName="itemId" id="itemId" [(ngModel)]="itemId"  class="form-control" style="background-color: yellow;">
                                     <option disabled>--Select--</option>
                                     <option *ngFor="let sc of  invItemListEw" [ngValue]="sc.ITEMID">
-                                    <!-- {{sc.itemId}}- -->
-                                     {{sc.ITEMID}}-{{sc.SEGMENT}}
+                                      <!-- {{sc.ITEMID}}- -->
+                                     {{sc.SEGMENT}}
+                                    </option>
+                                    </select>
+                                </td>
+                                </ng-template>
+                                <ng-template #elseBlock903>
+    
+                                <td >  
+                                    <select disabled  formControlName="itemId" id="itemId" [(ngModel)]="itemId"  class="form-control" style="background-color: lightgreen;" >
+                                    <option disabled>--Select--</option>
+                                    <option *ngFor="let sc of  invItemListEw" [ngValue]="sc.ITEMID">
+                                    
+                                        <!-- {{sc.ITEMID}}- -->
+                                        {{sc.SEGMENT}}
                                     </option>
                                     </select>
                                 </td>
                                 </ng-template>
 
-   
-                            <!-- <td>
-                                <input  style="font-weight: bold;text-align: right;"   type="text" formControlName="ewItemCode"  id="ewItemCode"  [(ngModel)]="ewItemCode" class="form-control" placeholder="EW item Code">
-                            </td> -->
+                                <td style="width: 15%" class="LabelFontStyle1">EW&nbsp;Booklet&nbsp;No:&nbsp;</td>
+                                <td><input   type="text"  formControlName="ewBookletNo"  id="ewBookletNo" [(ngModel)]="ewBookletNo" class="form-control" style="background-color: yellow;"></td>
+                          
+                        </tr>
 
 
-
-                            <td style="width: 15%" class="LabelFontStyle1">EW&nbsp;Booklet&nbsp;No:&nbsp;</td>
-    
-                            <td>
-                                <input   type="text"  formControlName="ewBookletNo"  id="ewBookletNo" [(ngModel)]="ewBookletNo" class="form-control" style="background-color: yellow;">
-                            </td>
+                        <tr>
+                        
+                           
 
                             <td style="width: 15%" class="LabelFontStyle1">EW&nbsp;Insurance:&nbsp;</td>
     
                             
-                            <td>  
-                                <select disabled  formControlName="ewInsurerId" id="ewInsurerId" [(ngModel)]="ewInsurerId"  class="form-control" (change) ="onEwInsurerSalected(ewInsurerId)" style="background-color:lightgreen;">
+                            <td colspan="3">  
+                                <select disabled  formControlName="ewInsurerId" id="ewInsurerId" [(ngModel)]="ewInsurerId"  class="form-control" (change) ="onEwInsurerSalected(ewInsurerId)" style="background-color:lightgreen;width: 100%;">
                                     <option></option>
                                     <option *ngFor="let sc of ewInsNameList"
                                         [ngValue]="sc.customerId">
@@ -688,15 +677,17 @@
                             <td>
                                 <input disabled style="font-weight: bold;text-align: right;"   type="number" formControlName="ewSchemeAmt"  id="ewSchemeAmt"  [(ngModel)]="ewSchemeAmt" class="form-control" placeholder=" Premium Amt" >
                             </td>
+
           
                           </tr>
-
-                          <!-- <tr>
-                            <td   style="width: 15%" class="LabelFontStyle">Date&nbsp;:&nbsp;</td>
-                            <input type="date" value="fsd" id="startdateId" class="form-control" required>
-                          </tr> -->
+                        
                     </table>
                     </fieldset>
+
+                    
+                   <!-- ---------------------------------------  not in use -->
+                    <div *ngIf="receiptDetails; then RcptYes; else RcptNo"></div>
+                    <ng-template #RcptYes>
 
                     <fieldset class="RFS">
                         <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Payment Details</legend>
@@ -840,6 +831,7 @@
                      </tr>
                     </table>
                 </fieldset>
+                </ng-template> <ng-template #RcptNo></ng-template>
 
                 <div *ngIf="showCancelDetails; then thenBlock13; else elseBlock13"></div>
                     <ng-template #thenBlock13>

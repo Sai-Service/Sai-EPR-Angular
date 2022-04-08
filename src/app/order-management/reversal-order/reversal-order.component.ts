@@ -159,6 +159,9 @@ export class ReversalOrderComponent implements OnInit {
   taxCategoryName: string;
   reversalReasonList: any = [];
   remark:string;
+  isVisiblereversalReasonSelect:boolean=false;
+  isVisiblereversalReasonInput:boolean=false;
+  showorderDetailsAfterReversal=true;
   constructor(private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService, private fb: FormBuilder, private router: Router) {
     this.counterSaleReturnOrderForm = fb.group({
 
@@ -310,6 +313,8 @@ export class ReversalOrderComponent implements OnInit {
 
   ngOnInit(): void {
     $("#wrapper").toggleClass("toggled");
+    this.isVisiblereversalReasonSelect=true;
+    this.isVisiblereversalReasonInput=false;
     this.name = sessionStorage.getItem('name');
     this.loginArray = sessionStorage.getItem('divisionName');
     this.loginName = sessionStorage.getItem('name');
@@ -387,7 +392,8 @@ export class ReversalOrderComponent implements OnInit {
       .subscribe(
         data => {
           this.lstOrderHeader = data.obj;
-          if (data.code == 400 && data.message == "Order Number Not Found ") {
+          this.lstOrderLines = data.obj.oeOrderLinesAllList;
+          if (data.code == 400) {
             alert(data.message + "-" + data.obj);
             this.dispOrderDetails = false;
             this.headerFound = false;
@@ -403,8 +409,28 @@ export class ReversalOrderComponent implements OnInit {
             if (data.obj.remarks.includes('REV-') && data.obj.orderStatus==='CLOSED'){
               alert('Vehicle Already Reverse. Please confirm Order Number.!');
               this.displayButton = false;
+              this.counterSaleReturnOrderForm.disable();
+              this.isVisiblereversalReasonInput=true;
+              this.isVisiblereversalReasonSelect=false;
+              this.counterSaleReturnOrderForm.patchValue({reversalReason:data.obj.remarks});
+              this.showorderDetailsAfterReversal=false;
+              let control = this.counterSaleReturnOrderForm.get('oeOrderLinesAllList') as FormArray;
+              for (let i = 0; i < this.lstOrderLines.length; i++) {
+                 if (this.lstOrderLinesNew[i].invType.includes('VEHICLE')) {
+                  var oeOrderLinesAllList: FormGroup = this.lineDetailsGroup();
+                  control.push(oeOrderLinesAllList);
+                 }
+              }
+              let lineLevelOrderStatusListVehicle = this.lstOrderLinesNew.filter((vehicleDtls) => ((vehicleDtls.invType.includes('VEHICLE') == true)) );
+              console.log(lineLevelOrderStatusListVehicle); 
+               this.lstOrderLines= lineLevelOrderStatusListVehicle;
             }
           }
+          else{
+            this.isVisiblereversalReasonSelect=true;
+            this.isVisiblereversalReasonInput=false;
+          }
+        
             this.lstCreditNotes = data.obj.cmList;
             console.log(this.lstOrderHeader);
             this.dispOrderDetails = true;

@@ -71,22 +71,26 @@
                     <td> <input  type ="text" class="form-control" formControlName="schemeGrp"  value={{schemeGrp}} style="background-color: yellow;"  > </td>
                      -->
                      <td style="width: 15%" class="LabelFontStyle">&nbsp;Scheme&nbsp;Name:&nbsp;</td>
-                     <td>  
-                        <select formControlName="schemeNumber" id="schemeNumber" [(ngModel)]="schemeNumber"  class="form-control" style="background-color: yellow;"
+                     <td colspan="3">  
+                        <select formControlName="schemeNumber" id="schemeNumber" [(ngModel)]="schemeNumber"  class="form-control" style="background-color: yellow;width: 100%;"
                             (ngModelChange)='onSelectAmcScheme($event)'>
                             <option disabled>--Select--</option>
                             <option *ngFor="let sc of  lstAmcSchemeList" [(ngValue)]="sc.schemeNumber"  >
-                                {{sc.schemeNumber}}
+                                {{sc.schemeNumber}} - Rs.{{sc.amcSchemeTotal}} - {{sc.schemeDesc}}
                              </option>
                         </select>
                     </td>
 
                     <input hidden type ="text" class="form-control" formControlName="schemeId" [(ngModel)]='schemeId' value={{schemeId}} >
 
+                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Curr&nbsp;Kms:&nbsp;</td>
+                    <td> <input  type ="number" class="form-control" formControlName="currentKms" [(ngModel)]="currentKms" value={{currentKms}} (change)="validateStartKms()" style="background-color: yellow;"  > </td>
                    
-                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Scheme&nbsp;Desc:&nbsp;</td>
+                    <!-- <td style="width: 15%" class="LabelFontStyle">&nbsp;Scheme&nbsp;Desc:&nbsp;</td>
                     <td colspan="3"> <input disabled  style="width: 100%;" type ="text" class="form-control" formControlName="schemeDesc" [(ngModel)]='schemeDesc' value={{schemeDesc}} > </td>
-                   
+                    -->
+
+                    <!-- <td><td>  -->
 
                     <td style="width: 15%" class="LabelFontStyle">&nbsp;End&nbsp;Date:&nbsp;</td>
                     <td> <input  disabled type ="date" class="form-control" formControlName="endDate"  value={{endDate}}   > </td>
@@ -99,9 +103,7 @@
                     <td style="width: 15%" class="LabelFontStyle">&nbsp;Labour&nbsp;Dis(%):&nbsp;</td>
                     <td> <input disabled type ="number" class="form-control" formControlName="discOnLabour" [(ngModel)]='discOnLabour'  value={{discOnLabour}} > </td>
                     
-                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Curr&nbsp;Kms:&nbsp;</td>
-                    <td> <input  type ="number" class="form-control" formControlName="currentKms" [(ngModel)]="currentKms" value={{currentKms}} (change)="validateStartKms()" style="background-color: yellow;"  > </td>
-                   
+                  
                     <td style="width: 15%" class="LabelFontStyle">&nbsp;End&nbsp;Kms:&nbsp;</td>
                     <td> <input disabled type ="number" class="form-control" formControlName="schemeValidKm"  value={{schemeValidKm}}   > </td>
                              
@@ -276,36 +278,44 @@
             </tr>
         </table>
 
+       
         <fieldset class="RFS">
             <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
-               Search </legend>
+               SEARCH</legend>
+        <table class="center" style="background-color: #FFE4B5;">
+            <tr>
+              <td >
+                  <table class="center">
+                      <tr>
+                        <!-- <td  style="background-color: #FFE4B5;"> &nbsp;Receipt&nbsp;No&nbsp;:&nbsp; </td> -->
+                        <td style="width: 15%" class="LabelFontStyle">&nbsp;Registration&nbsp;No&nbsp;:&nbsp; </td>
+                        <td style="background-color: #FFE4B5;">
+                       
+                        <input class="form-control" formControlName="regNo" [(ngModel)]='regNo' value={{regNo}} (keyup)="onInput($event)"> </td>
+                        <td style="background-color: #FFE4B5;">
+                        <button type="button" class="btn-primary" (click)="serchEnrollByRegNo(regNo)"><i class="fa fa-search"  aria-hidden="true"></i></button> </td>
 
-         <table class="center" style="width: 100%;background-color: #FFE4B5;">
-                 <tr>
-                  <td >
-                      <table class="center">
-                          <tr> 
-                           <td>&nbsp;Enrollment&nbsp;No:&nbsp;</td>
-                           <td>
-                                <input type ="text" class="form-control" formControlName="enrollmentNo" [(ngModel)]='enrollmentNo'
-                                    value={{enrollmentNo}} style="text-transform: uppercase;" >
-                                 
-                            </td>
+                        
+                        <td style="width: 15%" class="LabelFontStyle">&nbsp;Enrollment&nbsp;No:&nbsp;</td>
+                        <td><input   type="text"  formControlName="enrollmentNo"  id="enrollmentNo" [(ngModel)]="enrollmentNo" class="form-control" (keyup)="onInput($event)"> </td>
+                       
+                        <td style="background-color: #FFE4B5;">
+                        <button type="button" class="btn-primary" (click)="SearchByEnrollNo(enrollmentNo)"><i class="fa fa-search"  aria-hidden="true"></i></button> </td>
 
-                            <td>
-                                <button type="button" class="btn-primary" (click)="SearchByEnrollNo(enrollmentNo)"><i class="fa fa-search"
-                                        aria-hidden="true"></i></button>
-                            </td>
+                        <!-- <td style="width: 15%" class="LabelFontStyle">&nbsp;Enrollment&nbsp;Date:&nbsp;</td>
+                        <td> <input disabled  type="date"  formControlName="enrollmentNo"  id="enrollmentNo" [(ngModel)]="enrollmentNo" class="form-control"  max="{{minDate | date:'yyyy-MM-dd'}}" > </td>
 
-                                                  
-                           
-                          </tr>
-                      </table>
-                  </td>
-                </tr>
-
-               
-            </table>
+                        <td style="background-color: #FFE4B5;">
+                            <button disabled type="button" class="btn-primary" (click)="SearchByEnrollNo(enrollmentNo)"> <i class="fa fa-search" aria-hidden="true"></i></button>
+                        </td> -->
+                       
+                        <!-- <td> <button style="width: 5em;" type="button" class="btn btn-info" (click)="clearSearch()">Reset</button> </td> -->
+                        
+                      </tr>
+                  </table>
+              </td>
+            </tr>
+        </table>
         </fieldset>
 
 
