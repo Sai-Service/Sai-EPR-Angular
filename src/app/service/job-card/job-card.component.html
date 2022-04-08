@@ -2040,6 +2040,11 @@
                                                                                                 formControlName="emailId" style="width: 250px;">
                                                                                         </td>
                                                                                         </tr>
+
+                                                                                        <tr>
+                                                                                            <td style="width: 15%" class="LabelFontStyle"> Invoice&nbsp;No&nbsp;:</td>
+                                                                                            <td> <input type="text" disabled class="form-control" formControlName="arInvNum"  value="{{arInvNum}}" style="width: 250px;"> </td>
+                                                                                          </tr>
                                                                              </table>
 
 
@@ -2125,6 +2130,10 @@
                                                                         </td>
 
 
+                                                                        </tr>
+                                                                        <tr>
+                                                                          <td style="width: 15%" class="LabelFontStyle"> Invoice&nbsp;No&nbsp;:</td>
+                                                                          <td> <input type="text" disabled class="form-control" formControlName="arInvNum"  value="{{arInvNum}}" style="width: 250px;"> </td> 
                                                                         </tr>
                                                                      
                                                                     </table>
@@ -2462,6 +2471,10 @@
                                                             <button type="submit" class="btn btn-primary" id="register"
                                                                 style="width: fit-content;">Details</button>
                                                         </td> -->
+
+                                                        <!-- <td style="width: 15%" class="LabelFontStyle"> Invoice&nbsp;Number&nbsp;:</td>
+                                                        <td> <input type="text" disabled class="form-control" formControlName="arInvNum"  value="{{arInvNum}}"> </td>
+                                                     -->
                                                     </tr>
 
                                                 </fieldset>
@@ -3081,7 +3094,7 @@
                                 <tr *ngFor="let com of lstJobcardList let i=index" class="ItemStyle" style="text-decoration:none;font-size:small;">
                                         <td style="text-align: center;width: 2rem;">{{i+1}}</td>
                                         <td style="text-align: center;width: 6rem;">{{com.regNo}}</td>
-                                        <td style="text-align: center;width: 6rem;">{{com.jobCardNum}}</td>
+                                        <td style="text-align: center;width: 7rem;">{{com.jobCardNum}}</td>
                                         <td style="text-align: center;width: 5rem;">{{com.jobCardDate |date:'dd-MM-y' }}</td>
                                         <td style="text-align: center;width: 3rem;">{{com.gatepassId}}</td>
                                         <td style="text-align: center;width: 5rem;">{{com.attribute1}}</td>

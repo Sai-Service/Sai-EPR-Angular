@@ -1099,6 +1099,7 @@ export class JobCardComponent implements OnInit {
 
 
   getUserIdsFirstWay($event) {
+    this.onInput($event);
     let userId = (<HTMLInputElement>document.getElementById('userIdFirstWay')).value;
     this.userList1 = [];
 
@@ -1393,6 +1394,8 @@ export class JobCardComponent implements OnInit {
    
     // RegNo=RegNo.toUpperCase();
     // alert ("Regno :" + RegNo);
+    // RegNo=RegNo.trim();
+
     var jcType=this.jobcardForm.get('jcType').value;
     if(jcType ==='--Select--' || jcType ===null ) {alert ("Please Select Job Card Type...");return;}
  
