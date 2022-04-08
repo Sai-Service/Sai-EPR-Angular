@@ -378,6 +378,16 @@ export class ReportServiceService {
     });
   }
 
+
+  customerLedger(custAccNo,ouId,deptId){
+    const REQUEST_URI = this.ServerUrl +`/AccountsReports/CustomerLedger?custAcctNo=${custAccNo}&ouId=${ouId}&deptId=${deptId}`;
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
 ///////////////////// Sales Reports API Starts ////////////////////
 
 vhslRegisterReport(fromDate,toDate,locId){

@@ -62,6 +62,7 @@ export class SparesReportsComponent implements OnInit {
   isVisibleDepartmentList: boolean = false;
   isVisiblefromtosubinventory:boolean=false;
   isVisiblespClosingStockAsOndate:boolean=false;
+  isVisiblecustomerLedger:boolean=false;
   isDisabled1 = false;
   userName1:string;
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) {
@@ -196,6 +197,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDebtorsExecutiveWise = false;
       this.isVisiblefromtosubinventory=false;
       this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblecustomerLedger=false;
     }
     else if (reportName === 'gstpurRegSumm') {
       this.reportName = 'Spares Purchase Register - Summary';
@@ -213,6 +215,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
       this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
     }
     else if (reportName === 'gstIssueDetails') {
       this.reportName = 'Spares Issue Details Report';
@@ -227,6 +230,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
       this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
     }
     else if (reportName === 'gstIssueSummary') {
       this.reportName = 'Spares Issue Summary';
@@ -241,6 +245,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
       this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
     }
     else if (reportName === 'gstReceiptRegister') {
       this.reportName = 'Spares Receipt Register';
@@ -258,6 +263,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
       this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
     }
     else if (reportName === 'gstClosingReport') {
       this.reportName = 'Spares Closing Stock Report';
@@ -272,6 +278,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
       this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
     }
     else if (reportName === 'gstsaiDebtors') {
       this.reportName = 'Sai Debtors';
@@ -289,6 +296,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
       this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
     }
     else if (reportName === 'gstStockLedger') {
       this.reportName = 'Stock Ledger';
@@ -303,6 +311,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
       this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
     }
     else if (reportName === 'gststockTransfer') {
       this.reportName = 'Stock Transfer Made Detail Report';
@@ -317,6 +326,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
       this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
     }
     else if (reportName === 'gststockTransferSummary') {
       this.reportName = 'Stock Transfer Made Summary Report';
@@ -331,6 +341,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
       this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
     }
     else if (reportName === 'gststockTransferReceivedDetails') {
       this.reportName = 'Stock Transfer Received Detail Report';
@@ -345,6 +356,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDebtorsExecutiveWise = false;
       this.isVisiblefromtosubinventory=false;
       this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblecustomerLedger=false;
     }
     else if (reportName === 'gststockTransferReceivedSummary') {
       this.reportName = 'Spares Stock Transfer Received Summary Report';
@@ -359,6 +371,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDebtorsExecutiveWise = false;
       this.isVisiblefromtosubinventory=false;
       this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblecustomerLedger=false;
     }
     else if (reportName === 'gstsparesCustomerOffTakeStatment') {
       this.reportName = 'Spares Customer Off Take Statement';
@@ -373,6 +386,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDebtorsExecutiveWise = false;
       this.isVisiblefromtosubinventory=false;
        this.isVisiblespClosingStockAsOndate=false;
+       this.isVisiblecustomerLedger=false;
     }
     else if (reportName === 'gstSparesBackOrderQty') {
       this.reportName = 'Spares Back Order Qty Report';
@@ -387,6 +401,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
       this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
     }
     else if (reportName === 'gstsparesMiscIssueReceipt') {
       this.reportName = 'Spares Misc Issue Receipt Report';
@@ -401,6 +416,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
       this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
     }
     else if (reportName === 'gstSaleReturnRegister') {
       this.reportName = 'Spares Sales Return Register';
@@ -415,6 +431,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
       this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
     }
     else if (reportName === 'gstIncomeStatement') {
       this.reportName = 'Income Statement';
@@ -429,6 +446,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
       this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
     }
     else if (reportName === 'gstSparesClosingStockAsOnDate') {
       this.reportName = 'Spares Closing Stock As On Date';
@@ -443,6 +461,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
       this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
     }
     else if (reportName === 'gstSpresProformaDetailsReports') {
       this.reportName = 'Spares Proforma Details Report';
@@ -457,6 +476,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
       this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
     }
     else if (reportName === 'gstChequeBounceReport') {
       this.reportName = 'Cheque Bounce Report';
@@ -471,6 +491,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
       this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
     }
     else if (reportName === 'gstsparesInventoryAging') {
       this.reportName = 'Spares Inventory Aging Report';
@@ -485,6 +506,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblesparesInventoryAging = true;
       this.isVisibleSparesDebtorsExecutiveWise = false;
       this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
     }
     else if (reportName === 'gstSparesDebtorsExecutiveWise') {
       this.reportName = 'Spares Debtors Executive Wise report';
@@ -502,6 +524,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = true;
       this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
     }
     else if (reportName === 'sparesSubinvTransReceived') {
       this.reportName = 'Sub Inventory Transfer Received Report';
@@ -516,6 +539,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
       this.isVisiblefromtosubinventory=true;
+      this.isVisiblecustomerLedger=false;
     }
     else if (reportName === 'sparesSubinvTransMade') {
       this.reportName = 'Sub Inventory Transfer Made Report';
@@ -530,6 +554,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
       this.isVisiblefromtosubinventory=true;
+      this.isVisiblecustomerLedger=false;
     }
     else if (reportName === 'internalConsumptionReport') {
       this.reportName = 'Internal Consumption Report';
@@ -544,6 +569,25 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
       this.isVisiblefromtosubinventory=true;
+      this.isVisiblecustomerLedger=false;
+    }
+    else if (reportName === 'customerLedger') {
+      this.reportName = 'Customer Ledger Report';
+      this.isVisibleGSTPurchaseRegister = false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=true;
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.isVisibleDepartmentList = true;
+      }
     }
   }
 
@@ -1217,6 +1261,33 @@ export class SparesReportsComponent implements OnInit {
       }
       else if ((Number(sessionStorage.getItem('deptId')))!=4){
         this.reportService.internalConsuptionReport(fromDate,toDate, sessionStorage.getItem('locId'), subInventory)
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.isDisabled1 = false;
+          this.closeResetButton = true;
+          this.dataDisplay = ''
+        })
+      } 
+    }
+    else if (reportName ==='Customer Ledger Report'){
+      var custAccNo = this.sparesReportForm.get('custAccNo').value;
+      if (custAccNo===undefined || custAccNo===''|| custAccNo===null){
+        alert('First Enter customer Account No.!');
+        return;
+      }
+      const fileName = 'Customer Ledger Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if ((Number(sessionStorage.getItem('deptId'))===4)){
+        this.reportService.customerLedger(custAccNo,sessionStorage.getItem('ouId'),deptId)
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.isDisabled1 = false;
+          this.closeResetButton = true;
+          this.dataDisplay = ''
+        })
+      }
+      else if ((Number(sessionStorage.getItem('deptId')))!=4){
+        this.reportService.customerLedger(custAccNo,sessionStorage.getItem('ouId'),sessionStorage.getItem('deptId'))
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
           this.isDisabled1 = false;

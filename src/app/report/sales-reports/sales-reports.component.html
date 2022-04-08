@@ -49,6 +49,10 @@
                             <a class="dropdown-item" data-toggle="collapse" href="#panelfromtolocationdepartment" role="tab"
                                 (click)="reportDetails('gstReceiptRegister')">Receipt Register</a>
                         </li>
+                        <li>
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelcustomerLedger" role="tab"
+                                (click)="reportDetails('customerLedger')">Customer Ledger Report</a>
+                        </li>
                     </ul>
                 </li>
                
@@ -436,6 +440,95 @@
     </tr>
 </table>
 
+
+
+<table class="center"   style="margin-left: 10%;"
+[style.display]="isVisiblecustomerLedger ? 'block' : 'none'" class="collapse"
+id="panelcustomerLedger">
+<tr>
+    <td>
+        <table class="center">  
+            <tr>
+                <td colspan="4" class="LabelFontStyle" style="width: 100%;">
+                    {{reportName}}
+                </td>
+            </tr>
+        </table>
+    </td>
+</tr>
+<tr>
+    <td>
+        <table class="center">
+            <tr>
+                <td style="width: 15%" class="LabelFontStyle">
+                    &nbsp;Cust&nbsp;Account&nbsp;No&nbsp;:&nbsp;
+                </td>
+                <td>
+                    <input  type="number" class="form-control"  formControlName="custAccNo" [(ngModel)]="custAccNo">
+                </td>
+                <td style="width: 15%" class="LabelFontStyle">
+                    &nbsp;Operating&nbsp;Unit&nbsp;:&nbsp;
+                </td>
+                <td>
+                    <input  type="text" disabled class="form-control"  formControlName="OUCode" >
+                </td>
+              <td colspan="4">
+                  <table [style.display]="isVisibleDepartmentList ? 'block' : 'none'">
+                    <td style="width: 15%" class="LabelFontStyle">
+                        &nbsp;Department&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <input type="text" disabled class="form-control" formControlName="department">
+                        <input hidden type="number" class="form-control" formControlName="deptId">
+                    </td>
+                  </table>
+              </td>   
+            </tr>
+          
+            <tr>
+                <td colspan="4">
+                  <table class="center">
+                    <tr>
+                      <td colspan="4">
+                        <table class="center" style="width: 100%;">
+                          <tr>
+                            <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                            <ng-template #hList2>
+                              <div class="d-flex justify-content-center">
+                                <div class="spinner-border text-primary" role="status">
+                                  <span class="sr-only" id="loading"></span>
+                                </div>
+                              </div>
+                            </ng-template>
+                            <ng-template #hList1> </ng-template>
+                            <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">
+                              &nbsp;{{dataDisplay}}&nbsp; </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="4">
+                          <table class="center" style="width: 100%;margin-left: 50%;">
+                              <tr>
+                                <td>
+                                    <button class="btn-primary" [disabled]="isDisabled1" (click)="reportParameter(reportName)">View
+                                      Report</button>
+                                  </td>
+                                  <td [style.display]="isVisiblespPurRegDownLoad ? 'block' : 'none'">
+                                    <button class="btn-primary" [disabled]="isDisabled1" (click)="spPurRegDownLoad()">DownLoad</button>
+                                </td>
+                              </tr>
+                          </table>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+        </table>
+    </td>
+</tr>
+</table>
     </fieldset>
     <table class="center">
         <tr>
