@@ -32,19 +32,18 @@
             <table class="center" >
 
                 <tr>
-                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Reg&nbsp;No:&nbsp;</td>
-                    <td> <input autofocus type ="text" class="form-control" formControlName="regNo"  value={{regNo}} (change)="serchByRegNo(regNo)"
-                        style="background-color: yellow; text-transform: uppercase;" placeholder="Regno"> </td>
-                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Enrollment&nbsp;No:&nbsp;</td>
+                      <td style="width: 15%" class="LabelFontStyle">&nbsp;Enrollment&nbsp;No:&nbsp;</td>
                     <td> <input  disabled type ="text" class="form-control" formControlName="enrollmentNo"  value={{enrollmentNo}}  > </td>
                     <td style="width: 15%" class="LabelFontStyle">&nbsp;Enrollment&nbsp;Date:&nbsp;</td>
                     <td> <input  disabled type ="date" class="form-control" formControlName="enrollmentDate" [(ngModel)]='enrollmentDate'  
                         value={{enrollmentDate}} > </td>
-                        <td style="width: 15%" class="LabelFontStyle">&nbsp;Start&nbsp;Date:&nbsp;</td>
-                        <td> <input disabled type ="date" class="form-control" formControlName="startDate"  value={{startDate}}   > </td>
                       
-                       
-                       
+                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Invoice&nbsp;No:&nbsp;</td>
+                    <td> <input  disabled type ="text" class="form-control" formControlName="invoiceNo"  value={{invoiceNo}}  > </td>
+                      
+                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Invoice&nbsp;Date:&nbsp;</td>
+                    <td> <input disabled type ="date" class="form-control" formControlName="invoiceDate"  value={{invoiceDate}}   > </td>
+              
                 </tr>
                
                 <tr>
@@ -67,9 +66,10 @@
                
             <table class="center" > -->
                 <tr>
-                    <!-- <td>&nbsp;Group&nbsp;Name:&nbsp;</td>
-                    <td> <input  type ="text" class="form-control" formControlName="schemeGrp"  value={{schemeGrp}} style="background-color: yellow;"  > </td>
-                     -->
+                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Reg&nbsp;No:&nbsp;</td>
+                    <td> <input autofocus type ="text" class="form-control" formControlName="regNo"  value={{regNo}} (change)="serchByRegNo(regNo)"
+                        style="background-color: yellow; text-transform: uppercase;" placeholder="Regno"> </td>
+                     
                      <td style="width: 15%" class="LabelFontStyle">&nbsp;Scheme&nbsp;Name:&nbsp;</td>
                      <td colspan="3">  
                         <select formControlName="schemeNumber" id="schemeNumber" [(ngModel)]="schemeNumber"  class="form-control" style="background-color: yellow;width: 100%;"
@@ -91,11 +91,7 @@
                     -->
 
                     <!-- <td><td>  -->
-
-                    <td style="width: 15%" class="LabelFontStyle">&nbsp;End&nbsp;Date:&nbsp;</td>
-                    <td> <input  disabled type ="date" class="form-control" formControlName="endDate"  value={{endDate}}   > </td>
-         
-            </tr>
+                    </tr>
                 <tr>
 
                     <td style="width: 15%" class="LabelFontStyle">&nbsp;Material&nbsp;Dis(%):&nbsp;</td>
@@ -106,8 +102,11 @@
                   
                     <td style="width: 15%" class="LabelFontStyle">&nbsp;End&nbsp;Kms:&nbsp;</td>
                     <td> <input disabled type ="number" class="form-control" formControlName="schemeValidKm"  value={{schemeValidKm}}   > </td>
-                             
+               
+                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Start&nbsp;Date:&nbsp;</td>
+                    <td> <input disabled type ="date" class="form-control" formControlName="startDate"  value={{startDate}}   > </td>
 
+             
                 </tr>
 
                 <tr>
@@ -121,6 +120,9 @@
                     <td style="width: 15%" class="LabelFontStyle">&nbsp;Total&nbsp;Period:&nbsp;</td>
                     <td> <input disabled type ="number" class="form-control" formControlName="totalPeriod" [(ngModel)]='totalPeriod'
                         value={{totalPeriod}} > </td>
+                    <td style="width: 15%" class="LabelFontStyle">&nbsp;End&nbsp;Date:&nbsp;</td>
+                    <td> <input  disabled type ="date" class="form-control" formControlName="endDate"  value={{endDate}}   > </td>
+        
                 </tr>
 
                 <tr>

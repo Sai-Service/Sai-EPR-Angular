@@ -1676,11 +1676,7 @@ export class JobCardComponent implements OnInit {
             lbInsTax= ((data.obj.jobCardLabLines[ln].insBasicAmt-lbInsDisAmt) * (data.obj.jobCardLabLines[ln].taxPer))/100;
             insLbr4=insLbr4+lbInsTax;
             insLbr5=insLbr3+insLbr4;
-
-
           }
-
-        
 
           this.labCustBasTotal=Math.round((custLbr1+Number.EPSILON)*100)/100;
           this.labCustDisTotal=Math.round((custLbr2+Number.EPSILON)*100)/100;
@@ -1716,8 +1712,6 @@ export class JobCardComponent implements OnInit {
 
             this.onOptionsplitRatioSelect1(ln,data.obj.jobCardMatLines[ln].splitCateId);
 
-          
-
             custMatr1=custMatr1+data.obj.jobCardMatLines[ln].custBasicAmt;
             custMatr2=custMatr2+data.obj.jobCardMatLines[ln].disAmt;
             custMatr3=custMatr3+(data.obj.jobCardMatLines[ln].custBasicAmt-data.obj.jobCardMatLines[ln].disAmt);
@@ -1731,12 +1725,7 @@ export class JobCardComponent implements OnInit {
             matInsTax= ((data.obj.jobCardMatLines[ln].insBasicAmt-data.obj.jobCardMatLines[ln].disAmt) * (data.obj.jobCardMatLines[ln].taxPer))/100;
             insMat4=insMat4+matInsTax;
             insMat5=insMat3+insMat4;
-
-
           }
-
-           
-
             this.matCustBasTotal=Math.round((custMatr1+Number.EPSILON)*100)/100 ;
             this.matCustDisTotal=Math.round((custMatr2+Number.EPSILON)*100)/100 ;
             this.matCustSubTotal=Math.round((custMatr3+Number.EPSILON)*100)/100 ;

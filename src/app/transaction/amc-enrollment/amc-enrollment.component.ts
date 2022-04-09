@@ -34,6 +34,8 @@ interface IAmcEnroll {
   schemeValidYears:number;
   gracePeriod:number;
   totalPeriod:number;
+  invoiceNo:string;
+  invoiceDate:string;
 }
 
 @Component({
@@ -133,6 +135,9 @@ export class AmcEnrollmentComponent implements OnInit {
   amcHeaderValidation =false;
   displayButton=true;
 
+  invoiceNo :string;
+  invoiceDate:string;
+
   constructor(private service: MasterService,private orderManagementService:OrderManagementService,private transactionService: TransactionService ,private serviceService: ServiceService, private  fb: FormBuilder, private router: Router) {
     this.amcEnrollmentForm = fb.group({
 
@@ -206,6 +211,9 @@ export class AmcEnrollmentComponent implements OnInit {
 
     utilQty:[],
     balQty:[],
+
+    invoiceNo:[],
+    invoiceDate:[],
   
     amcItemList: this.fb.array([this.lineDetailsGroup()])   
 
@@ -469,8 +477,9 @@ closeMast() {
               if (res.code === 200) {
                 alert('RECORD INSERTED SUCCESSFUILY');
                 // this.mcpPackageMasterForm.reset();
-                this.enrollmentNo=  res.obj.enrollmentNo
-              
+                this.enrollmentNo=  res.obj.enrollmentNo;
+                this.invoiceNo=  res.obj.InvoiceNo;
+                this.invoiceDate= this.pipe.transform(Date.now(), 'y-MM-dd');
                 this.amcEnrollmentForm.disable();
               } else {
                 if (res.code === 400) {
