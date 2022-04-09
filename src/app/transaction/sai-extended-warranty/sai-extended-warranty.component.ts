@@ -39,6 +39,7 @@ interface IExtendedWarranty {
   ewCancelReason:string;
   ewCancelDate :Date;
   ewClaimStatus1:string;
+  bajajCwiNo:string;
 
 }
 
@@ -205,6 +206,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
   cancelledFlag=false;
   dispCustButton=false;
   showCustModal=false;
+  receiptDetails=false;
 
   variantItemId : number;
 
@@ -212,6 +214,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
  
   ewCancelReason:string;
   ewClaimStatus1:string;
+  bajajCwiNo:string;
 
   get f() { return this.saiEwForm.controls; }
 
@@ -315,6 +318,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
       ewCancelDate:[],
       ewCancelReason:[],
       ewClaimStatus1:[],
+      bajajCwiNo:[],
 
       });
 
@@ -1167,7 +1171,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
           if (select) {
              this.ewId = select.ewId;
              this.displayButton = false;
-            this.showCancelDetails=true;
+            this.showCancelDetails=false;
             if (this.displayButton===false) {
               this.ewCancelDate=select.ewCancelDate;
               this.ewCancelReason=select.ewCancelReason;   }
@@ -1389,6 +1393,15 @@ getInvItemId($event) {
             return;
          } 
 
+         if (formValue.bajajCwiNo===undefined || formValue.bajajCwiNo===null)
+         {
+            this.checkValidation=false; 
+            msg1="REFERENCE NO(EW/CWI): Should not be null....";
+            // this.executeAlertMsg(msg1);
+            alert(msg1);
+             return;
+          } 
+
          if (formValue.soldByEmpId===undefined || formValue.soldByEmpId===null)
          {
             this.checkValidation=false; 
@@ -1454,77 +1467,70 @@ getInvItemId($event) {
 
                
 
-               if (formValue.paymentAmt <=0 || formValue.paymentAmt===undefined || formValue.paymentAmt===null )
-               {
-                   this.checkValidation=false;  
-                   msg1="RECEIPT AMT: Should be above Zero";
-                  //  this.executeAlertMsg(msg1);
-                  alert(msg1);
-                   return;
-                } 
+              //  if (formValue.paymentAmt <=0 || formValue.paymentAmt===undefined || formValue.paymentAmt===null )
+              //  {
+              //      this.checkValidation=false;  
+              //      msg1="RECEIPT AMT: Should be above Zero";
+              //      alert(msg1);
+              //      return;
+              //   } 
 
 
-               if (formValue.payType===undefined || formValue.payType===null)
-               {
-                  this.checkValidation=false;   
-                  msg1="PAY MODE: Please Select payment Type....";
-                  // this.executeAlertMsg(msg1);
-                  alert(msg1);
-                   return;
-                } 
-                // alert( "receiptMethodId : "+formValue.receiptMethodId);
-
-                if (formValue.receiptMethodId===undefined || formValue.receiptMethodId===null || formValue.receiptMethodId<=0)
-                {
-                  this.checkValidation=false;  
-                  msg1="PAY METHOD: Please Select Receipt Method....";
-                  // this.executeAlertMsg(msg1);
-                  alert(msg1);
+              //  if (formValue.payType===undefined || formValue.payType===null)
+              //  {
+              //     this.checkValidation=false;   
+              //     msg1="PAY MODE: Please Select payment Type....";
+              //      alert(msg1);
+              //      return;
+              //   } 
+           
+              //   if (formValue.receiptMethodId===undefined || formValue.receiptMethodId===null || formValue.receiptMethodId<=0)
+              //   {
+              //     this.checkValidation=false;  
+              //     msg1="PAY METHOD: Please Select Receipt Method....";
+              //     alert(msg1);
                   
-                  return;
-                 } 
+              //     return;
+              //    } 
 
-                 if (formValue.payType !==null) {
-                   if (formValue.payType != 'CASH') {
+              //    if (formValue.payType !==null) {
+              //      if (formValue.payType != 'CASH') {
 
-                    if (formValue.bankName===undefined || formValue.bankName===null || formValue.bankName.trim()==='')
-                    {
-                        this.checkValidation=false;  
-                        msg1="BANK : Please Enter Bank Name....";
-                        // this.executeAlertMsg(msg1);
-                        alert(msg1);
-                        return;
-                     } 
+              //       if (formValue.bankName===undefined || formValue.bankName===null || formValue.bankName.trim()==='')
+              //       {
+              //           this.checkValidation=false;  
+              //           msg1="BANK : Please Enter Bank Name....";
+              //             alert(msg1);
+              //           return;
+              //        } 
 
-                     if (formValue.bankBranch===undefined || formValue.bankBranch===null || formValue.bankBranch.trim()==='')
-                     {
-                         this.checkValidation=false;  
-                         msg1="BANK BRANCH : Please Enter Bank Branch....";
-                        //  this.executeAlertMsg(msg1);
-                        alert(msg1);
-                         return;
-                      } 
+              //        if (formValue.bankBranch===undefined || formValue.bankBranch===null || formValue.bankBranch.trim()==='')
+              //        {
+              //            this.checkValidation=false;  
+              //            msg1="BANK BRANCH : Please Enter Bank Branch....";
+              //           alert(msg1);
+              //            return;
+              //         } 
 
-                      if (formValue.checkNo===undefined || formValue.checkNo===null || formValue.checkNo.trim()==='')
-                      {
-                          this.checkValidation=false;  
-                          msg1="CHECK/DD/CRD/NEFT NO: Please Enter Cheq/dd no...";
-                          // this.executeAlertMsg(msg1);
-                          alert(msg1);
-                          return;
-                       } 
+              //         if (formValue.checkNo===undefined || formValue.checkNo===null || formValue.checkNo.trim()==='')
+              //         {
+              //             this.checkValidation=false;  
+              //             msg1="CHECK/DD/CRD/NEFT NO: Please Enter Cheq/dd no...";
+              //               alert(msg1);
+              //             return;
+              //          } 
 
-                       if (formValue.checkDate===undefined || formValue.checkDate===null)
-                       {
-                           this.checkValidation=false;  
-                           msg1="CHECK/DD/CRD/NEF DATE: Please Select Chq/dd.. Date....";
-                          //  this.executeAlertMsg(msg1);
-                          alert(msg1);
-                           return;
-                        } 
-                   }
+              //          if (formValue.checkDate===undefined || formValue.checkDate===null)
+              //          {
+              //              this.checkValidation=false;  
+              //              msg1="CHECK/DD/CRD/NEF DATE: Please Select Chq/dd.. Date....";
+              //              alert(msg1);
+              //              return;
+              //           } 
+              //      }
                   
-                  }
+                  // }
+
                   this.checkValidation=true;
                  
       }

@@ -563,6 +563,7 @@ closeMast() {
             this.amcEnrollmentForm.patchValue(this.lstcomments);
             this.GetCustomerDetails(this.lstcomments.customerId);
             this.GetCustomerSiteDetails(this.lstcomments.customerId);
+            this.amcEnrollmentForm.disable();
            
          }  else { alert ("No Data found....");this.lstcomments=null}
         } ); 
@@ -596,6 +597,7 @@ closeMast() {
             this.amcEnrollmentForm.patchValue(this.lstcomments);
             this.GetCustomerDetails(this.lstcomments.customerId);
             this.GetCustomerSiteDetails(this.lstcomments.customerId);
+            this.amcEnrollmentForm.disable();
            
          }  else { alert ("No Data found....");}
         } ); 

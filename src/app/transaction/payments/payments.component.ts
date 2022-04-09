@@ -38,6 +38,7 @@ interface Ipayment {
   searchByFrmDate: Date;
   searchBySuppName: string;
   emplId:number;
+  source:string;
   // partyId:number;
   
 }
@@ -65,6 +66,7 @@ export class PaymentsComponent implements OnInit {
   pipe = new DatePipe('en-US');
   todaydate = new Date();
   partyId:number;
+  source:string;
 
   payDate = this.pipe.transform(this.todaydate, 'dd-MMM-yyyy');
   invTypeLookupCode: string;
@@ -215,7 +217,7 @@ jeSource: [],
       // appAmt:[],
       docCategory: [],
       payStatus: [],
-
+      source:[],
     });
   }
 
@@ -300,6 +302,10 @@ jeSource: [],
               arrcontrol.controls[x].patchValue({ payAmount: this.lstsearchpayminvNew[x].invoiceAmt });
               arrcontrol.controls[x].patchValue({ supplierSiteId: this.lstsearchpayminvNew[x].suppSiteId });
               arrcontrol.controls[x].patchValue({partyId:this.lstsearchpayminvNew[x].partyId});
+              this.partyId=this.lstsearchpayminvNew[x].partyId;
+              this.suppId=this.lstsearchpayminvNew[x].suppId;
+              this.source=this.lstsearchpayminvNew[x].source;
+              
             }
           }
         });
@@ -339,7 +345,7 @@ jeSource: [],
   }
 
   paymentFind(suppNo: number) {
-    // alert('--paymentFind---')
+    alert('--paymentFind---')
     // alert('paymentFind-----')
     this.payHeaderLineDtlArray().clear();
     this.displaytype = true;
@@ -347,7 +353,8 @@ jeSource: [],
     this.displayouId = true;
     this.displaysiteAddress = true;
     this.displaystatus = true; 
-    this.transactionService.getsearchByInvDtls(suppNo, sessionStorage.getItem('ouId'),this.partyId).subscribe((res: any) => {
+    // this.transactionService.getsearchByInvDtls(suppNo, sessionStorage.getItem('ouId'),this.partyId).subscribe((res: any) => {
+      this.transactionService.getsearchByInvDtls(this.suppId, sessionStorage.getItem('ouId'),this.partyId).subscribe((res: any) => {
       this.lstsearchpayminv = res.obj;
       this.displayDetail=false;
       this.displaystatus=true;
@@ -400,6 +407,7 @@ jeSource: [],
     // console.log(docNo1);
     // if(docNo1===''){
      var suppNo1 = this.paymentForm.get('obj1').value;
+     console.log(suppNo1);
     this.payInvoiceLineDtlArray().clear();
     if(suppNo1[index].invTypeLookupCode==='Prepayment' &&suppNo1[index].docNo===null)
 {
@@ -413,7 +421,9 @@ jeSource: [],
                                           'invoiceId':this.lstsearchpayminvNew[index].invoiceId   });
 }
 else{
-    this.transactionService.getsearchByInvDtls(suppNo1[index].suppNo, this.ouId,this.partyId).subscribe((res: any) => {
+  alert(this.partyId+'PartyID');
+    // this.transactionService.getsearchByInvDtls(suppNo1[index].suppNo, this.ouId,this.partyId).subscribe((res: any) => {
+      this.transactionService.getsearchByInvDtls(suppNo1[index].suppId, this.ouId,suppNo1[index].partyId).subscribe((res: any) => {
       this.lstinvoiceDetls = res.obj;
       var sum = 0;
       for (let i = 0; i < this.lstinvoiceDetls.length; i++) {

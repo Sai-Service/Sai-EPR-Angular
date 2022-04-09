@@ -211,6 +211,7 @@ export class CustomerRelationMasterComponent implements OnInit {
         newMast()  {
       
           this.CheckHeaderValidations();
+
           if (this.headerValidation==false ) {alert("Header Validation Failed... Please Check");  return;}
     
           this.lineValidation=false;
@@ -250,7 +251,7 @@ export class CustomerRelationMasterComponent implements OnInit {
 
 
   searchMast(pageNo) {
-    this.CheckHeaderValidations();
+    // this.CheckHeaderValidations();
     if (this.headerValidation==false ) {return;}
 
     this.service.getCustomerEmpMapList(this.employeeId,pageNo,50)

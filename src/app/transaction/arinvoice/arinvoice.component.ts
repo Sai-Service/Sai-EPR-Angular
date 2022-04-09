@@ -2269,7 +2269,7 @@ export class ARInvoiceComponent implements OnInit {
   glPrdValidateLine(i: any) {
 
     // alert("GL Period : " + this.pipe.transform(this.GLPeriodCheck.startDate, 'dd-MM-y') + " - " + this.pipe.transform(this.GLPeriodCheck.endDate, 'dd-MM-y'));
-    alert("GL Period : " + this.GLPeriodCheck.startDate + " - " +this.GLPeriodCheck.endDate);
+    // alert("GL Period : " + this.GLPeriodCheck.startDate + " - " +this.GLPeriodCheck.endDate);
 
     var patch = this.arInvoiceForm.get('invApplyList') as FormArray;
     var applLineArr = this.arInvoiceForm.get('invApplyList').value;
