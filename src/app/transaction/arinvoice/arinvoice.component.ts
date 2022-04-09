@@ -106,7 +106,7 @@ export class ARInvoiceComponent implements OnInit {
   // glDate:string;
   taxAmount: number;
   billToCustName: string;
-
+  displaytaxName:boolean=true;
   public applyTo = 'INVOICE'
   // now = Date.now();
   // new=new Date();
@@ -869,6 +869,7 @@ export class ARInvoiceComponent implements OnInit {
               this.displayRemoveRow = false;
               this.displayRmDistRow = false;
               this.disabledComplete = false;
+              this.displaytaxName=false;
               this.arInvoiceForm.disable();
             }
             if(data.obj.invStatus == 'Complete'){
@@ -2269,7 +2270,7 @@ export class ARInvoiceComponent implements OnInit {
   glPrdValidateLine(i: any) {
 
     // alert("GL Period : " + this.pipe.transform(this.GLPeriodCheck.startDate, 'dd-MM-y') + " - " + this.pipe.transform(this.GLPeriodCheck.endDate, 'dd-MM-y'));
-    alert("GL Period : " + this.GLPeriodCheck.startDate + " - " +this.GLPeriodCheck.endDate);
+    // alert("GL Period : " + this.GLPeriodCheck.startDate + " - " +this.GLPeriodCheck.endDate);
 
     var patch = this.arInvoiceForm.get('invApplyList') as FormArray;
     var applLineArr = this.arInvoiceForm.get('invApplyList').value;

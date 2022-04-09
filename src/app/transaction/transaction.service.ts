@@ -111,7 +111,7 @@ getsearchByPayment(suppNo,ouId): Observable<any> {
 }
 
 getsearchByInvDtls(suppNo,ouId,partyId): Observable<any> {
-  return this.http.get(this.ServerUrl + `/apInvPayment/paymentSupp?suppNo=${suppNo}&ouId=${ouId}&partyId=${partyId}`);
+  return this.http.get(this.ServerUrl + `/apInvPayment/paymentSupp?suppId=${suppNo}&ouId=${ouId}&partyId=${partyId}`);
 }
 
 

@@ -1000,7 +1000,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                 this.displaysalesRepName = true;
               }
             }
-            if (data.obj.custName.includes(('CSCash Customer')) && Number(sessionStorage.getItem('divisionId')) === 2 ) {    
+            if (data.obj.custName.includes(('CSCASH')) && Number(sessionStorage.getItem('divisionId')) === 2 ) {    
               this.displaywalkingCustomer = false;
               if ( data.obj.cntrOrdCustName !=null){
               var temp = data.obj.cntrOrdCustName.split('#');
@@ -1451,7 +1451,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
               }
             }
             var custName = data.obj.custName;
-            if (custName.includes(('CSCash Customer')) && Number(sessionStorage.getItem('divisionId')) === 2) {
+            if (custName.includes(('CSCASH')) && Number(sessionStorage.getItem('divisionId')) === 2) {
               this.displaywalkingCustomer = false;
               this.CounterSaleOrderBookingForm.patchValue({ discType: 'Header Level Discount' });
               this.displaydisPer = false;
@@ -2364,11 +2364,15 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     // var formValue = this.CounterSaleOrderBookingForm
     // const formValue1: ISalesBookingForm = this.transData(this.CounterSaleOrderBookingForm.value);
     // console.log(formValue);
+    var orderedDate = this.CounterSaleOrderBookingForm.get('orderedDate').value;
+    var custPoDate= this.CounterSaleOrderBookingForm.get('custPoDate').value;
     var formValue = this.CounterSaleOrderBookingForm.getRawValue();
     var orderLines = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     formValue.ouId = Number(sessionStorage.getItem('ouId'));
     formValue.emplId = Number(sessionStorage.getItem('emplId'));
     formValue.divisionId = Number(sessionStorage.getItem('divisionId'));
+    formValue.orderedDate = this.pipe.transform(orderedDate, 'yyyy-MM-dd');
+    formValue.custPoDate = this.pipe.transform(custPoDate, 'yyyy-MM-dd');
     this.orderManagementService.pickTicketInvoiceFun(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         this.dataDisplay = ''
@@ -2421,7 +2425,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     var walkCustName=this.CounterSaleOrderBookingForm.get('walkCustName').value;
     var walkCustPan=this.CounterSaleOrderBookingForm.get('walkCustPan').value;
     var walkCustaddres=this.CounterSaleOrderBookingForm.get('walkCustaddres').value;
-    if (custName.includes('CSCash')){
+    if (custName.includes('CSCASH')){
       if (walkCustName===undefined || walkCustName===''|| walkCustName===null|| walkCustPan===undefined || walkCustPan===''|| walkCustPan===null||
       walkCustaddres===undefined || walkCustaddres===''|| walkCustaddres===null){
         alert('Enter Walking Customer Details.!');

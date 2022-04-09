@@ -182,6 +182,8 @@
                                         </ng-template>
                                         <input hidden type="text" class="form-control" formControlName="suppId"
                                             value={{suppId}} style="width: 60px;height: 25px;font-size: 10px;">
+                                            <input hidden type="text" class="form-control" formControlName="source"
+                                            value={{source}} style="width: 60px;height: 25px;font-size: 10px;">
                                     </td>
                                     <td>
                                         <div *ngIf="displaysiteName; then thensiteName; else elsesiteName"></div>
