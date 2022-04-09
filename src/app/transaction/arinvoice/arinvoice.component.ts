@@ -106,7 +106,7 @@ export class ARInvoiceComponent implements OnInit {
   // glDate:string;
   taxAmount: number;
   billToCustName: string;
-
+  displaytaxName:boolean=true;
   public applyTo = 'INVOICE'
   // now = Date.now();
   // new=new Date();
@@ -869,6 +869,7 @@ export class ARInvoiceComponent implements OnInit {
               this.displayRemoveRow = false;
               this.displayRmDistRow = false;
               this.disabledComplete = false;
+              this.displaytaxName=false;
               this.arInvoiceForm.disable();
             }
             if(data.obj.invStatus == 'Complete'){

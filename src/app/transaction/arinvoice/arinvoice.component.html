@@ -556,7 +556,10 @@
                                                                 class="form-control"> -->
                                                             <!-- (ngModelChange)='onOptioninvItemIdSelected(i)'
                                                                  [value]="sc.itemId" -->
-
+                                                                
+                                                    <div *ngIf="displaytaxName; then thenenableselect; else elseenabletext"></div>
+                                                    <ng-template #thenenableselect>
+                                                        <td>
                                                             <select formControlName="taxCategoryName" id="taxCategoryName"
                                                                 (ngModelChange)='onOptionTaxCatSelected(i,null, $event,basicAmt)'
                                                                 class="form-control" >
@@ -566,6 +569,13 @@
                                                                 </option>
                                                             </select>
                                                         </td>
+                                                            </ng-template>
+                                                            <ng-template #elseenabletext> 
+                                                            <td> 
+                                                                <input formControlName="taxCategoryName" id="taxCategoryName" class="form-control">
+                                                            </td>
+                                                            </ng-template>  
+                                                        
                                                 <td> <input disabled type="number" formControlName="taxRecoverable"
                                                         style="width: 4rem;" class="form-control"></td>
                                                         <!-- //taxRecoverable -->
