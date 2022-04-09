@@ -448,32 +448,26 @@ isVisibleGSTSaleRegister:boolean=false;
     }
   }
 
-  else if (reportName ==='Customer Ledger Report'){
+  else if (reportName === 'Customer Ledger Report') {
     var custAccNo = this.serviceReportForm.get('custAccNo').value;
-    if (custAccNo===undefined || custAccNo===''|| custAccNo===null){
+    if (custAccNo === undefined || custAccNo === '' || custAccNo === null) {
       alert('First Enter customer Account No.!');
       return;
     }
-    const fileName = 'Customer Ledger Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+    const fileName = 'Customer Ledger Report.pdf';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    if ((Number(sessionStorage.getItem('deptId'))===4)){
+    if (Number(sessionStorage.getItem('deptId')) === 4) {     
       this.reportService.customerLedger(custAccNo,sessionStorage.getItem('ouId'),deptId)
-      .subscribe(data => {
-        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-        this.isDisabled1 = false;
-        this.closeResetButton = true;
-        this.dataDisplay = ''
-      })
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        });
     }
-    else if ((Number(sessionStorage.getItem('deptId')))!=4){
+    else if ((Number(sessionStorage.getItem('deptId'))!=4)){
       this.reportService.customerLedger(custAccNo,sessionStorage.getItem('ouId'),sessionStorage.getItem('deptId'))
       .subscribe(data => {
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-        this.isDisabled1 = false;
-        this.closeResetButton = true;
-        this.dataDisplay = ''
-      })
-    } 
+      });
+    }
   }
 
   else if (reportName==='GST Sales Register'){
