@@ -2364,11 +2364,15 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     // var formValue = this.CounterSaleOrderBookingForm
     // const formValue1: ISalesBookingForm = this.transData(this.CounterSaleOrderBookingForm.value);
     // console.log(formValue);
+    var orderedDate = this.CounterSaleOrderBookingForm.get('orderedDate').value;
+    var custPoDate= this.CounterSaleOrderBookingForm.get('custPoDate').value;
     var formValue = this.CounterSaleOrderBookingForm.getRawValue();
     var orderLines = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     formValue.ouId = Number(sessionStorage.getItem('ouId'));
     formValue.emplId = Number(sessionStorage.getItem('emplId'));
     formValue.divisionId = Number(sessionStorage.getItem('divisionId'));
+    formValue.orderedDate = this.pipe.transform(orderedDate, 'yyyy-MM-dd');
+    formValue.custPoDate = this.pipe.transform(custPoDate, 'yyyy-MM-dd');
     this.orderManagementService.pickTicketInvoiceFun(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         this.dataDisplay = ''
