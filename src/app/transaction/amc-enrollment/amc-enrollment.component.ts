@@ -614,4 +614,23 @@ closeMast() {
     }
 
 
+    
+printAmcDoc(){
+ 
+  var amcNum=this.amcEnrollmentForm.get('enrollmentNo').value
+   if(amcNum==undefined || amcNum==null || amcNum.trim()=='') {alert("AMC Enrollment Number not Selected..."); return;}
+ 
+  const fileName = 'download.pdf';
+  const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+  this.service.printAmcDoc(amcNum)
+    .subscribe(data => {
+      var blob = new Blob([data], { type: 'application/pdf' });
+      var url = URL.createObjectURL(blob);
+      var printWindow = window.open(url, '', 'width=800,height=500');
+      printWindow.open
+      
+    });
+}
+
+ 
 }
