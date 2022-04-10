@@ -55,6 +55,7 @@ export class SaiEwSchemeMasterComponent implements OnInit {
         public ModelVariantList   : Array<string>=[];
         public PremiumPeriodList  : Array<string>=[];
         public ewInsNameList      : Array<string> = [];
+        public statusList : Array<string> = [];
         
       
         public VariantSearch:any;
@@ -63,7 +64,7 @@ export class SaiEwSchemeMasterComponent implements OnInit {
         variantDetailsList:any;
        
         // lstcomments: any[];
-      
+        status :string='Active';
         loginName:string;
         loginArray:string;
         name:string;
@@ -168,6 +169,7 @@ export class SaiEwSchemeMasterComponent implements OnInit {
             fromSlab:[],
             toSlab:[],
             mviewFlag:[],
+            status:[],
 
           });
         }
@@ -189,6 +191,14 @@ export class SaiEwSchemeMasterComponent implements OnInit {
           // this.ewInsurerSiteId=this.ouId;
           console.log(this.loginArray);
           console.log(this.locId);
+
+          this.service.statusList()
+          .subscribe(
+            data => {
+              this.statusList = data;
+              console.log(this.statusList);
+            }
+          );
 
           this.service.OUIdList()
           .subscribe(
@@ -273,6 +283,8 @@ export class SaiEwSchemeMasterComponent implements OnInit {
                 console.log(this.lstcomments);
               }
             );
+
+          
         }
 
    
@@ -340,6 +352,9 @@ export class SaiEwSchemeMasterComponent implements OnInit {
         Select(ewSchemeId: number) {
        
           this.saiEwSchemeMasterForm.reset();
+         
+         
+          // this.saiEwSchemeMasterForm.get('validToKms').enable();
           this.mviewFlag=1;
           // alert( "mviewFlag :" +this.mviewFlag);
           let select = this.lstcomments.find(d => d.ewSchemeId === ewSchemeId);
@@ -348,6 +363,10 @@ export class SaiEwSchemeMasterComponent implements OnInit {
             this.ewSchemeId = select.ewSchemeId;
             this.displayButton = false;
             this.updateButton=true;
+            if( this.saiEwSchemeMasterForm.get('status').value ==='Inactive') {
+              this.saiEwSchemeMasterForm.disable();
+              this.updateButton=false;
+            }
             this.premiumPeriod=select.premiumPeriod;
             // alert("premium period : ,schemeStartDate ,slab : "+this.premiumPeriod +","+this.schemeStartDate +","+this.slab);
 

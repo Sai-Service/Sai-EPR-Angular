@@ -135,109 +135,10 @@
                                 <td>
                                     <input   type="text"  formControlName="ewSchemeDesc"  id="ewSchemeDesc" [(ngModel)]="ewSchemeDesc" class="form-control" placeholder="Enter Scheme Desc" style="background-color: yellow;">
                                 </td>
-                                
+                               
                             </tr>
-                            </ng-template>
-                            <ng-template #db2>
-
-                                <tr>
-                                <td style="width: 15%" class="LabelFontStyle1">Model&nbsp;Name:&nbsp;</td>
-                                <td>  
-                                    <select disabled formControlName="mainModel" id="mainModel" [(ngModel)]="mainModel" class="form-control"  (ngModelChange)="onOptionsSelectedModel($event)" style="background-color: lightgreen;">
-                                        <option disabled>--Select--</option>
-                                        <option *ngFor="let mm of mainModelList"  [ngValue]="mm.code">
-                                            {{mm.code}}
-                                        </option>
-                                    </select>
-                                </td>
-
-                                <td style="width: 15%" class="LabelFontStyle1">Variant&nbsp;Name:&nbsp;</td>
-        
-                                <td>  
-                                    
-                                    <select disabled formControlName="variant" id="variant" class="form-control" [(ngModel)]="variant" (ngModelChange)="onOptionsSelectedVariant($event)" style="background-color: lightgreen;" >
-                                           <option disabled>--Select--</option>
-                                        <option *ngFor="let mv of VariantSearch" [ngValue]="mv.variant">
-                                            {{mv.variant}}
-                                         </option>
-                                    </select>
-
-                                </td>
-    
-                                <td style="width: 15%" class="LabelFontStyle">Variant&nbsp;Description:&nbsp;</td>
-        
-                                <td>
-                                    <input disabled  type="text"  formControlName="variantDesc"  id="variantDesc" [(ngModel)]="variantDesc" class="form-control"  >
-                                </td>
-    
-                                
-                            </tr>
-    
-                            <tr>
-    
-                                <td style="width: 15%" class="LabelFontStyle1">Scheme&nbsp;Type:&nbsp;</td>
-        
-                                <td>  
-                                    <select disabled  formControlName="ewType" id="ewType" [(ngModel)]="ewType" class="form-control" (ngModelChange)="onSelectedEWtype($event)" style="background-color: lightgreen;">
-                                        <option disabled>--Select--</option>
-                                        <option *ngFor="let sc of  EwTypeList" [ngValue]="sc.code">
-                                            {{sc.code}}
-                                        </option>
-                                    </select>
-                                </td>
-
-                                <td style="width: 15%" class="LabelFontStyle1">Scheme&nbsp;Name:&nbsp;</td>
-        
-                                <td>  
-                                    <select disabled  formControlName="ewSchemeName" id="ewSchemeName" [(ngModel)]="ewSchemeName" class="form-control" (ngModelChange)="onSelectedEWtype($event)" style="background-color: lightgreen;">
-                                        <option disabled>--Select--</option>
-                                        <option *ngFor="let sc of  EwSchemeList" [ngValue]="sc.code">
-                                            {{sc.code}}-{{sc.codeDesc}}
-                                        </option>
-                                    </select>
-                                </td>
-
-                                <td style="width: 15%" class="LabelFontStyle1">Scheme&nbsp;Period:&nbsp;</td>
-                                
-                                <td>  
-                                    <select disabled  formControlName="premiumPeriod" id="premiumPeriod" [(ngModel)]="premiumPeriod" class="form-control" (ngModelChange)="onSelectedEWtype($event)" style="background-color: lightgreen;">
-                                        <option disabled>--Select--</option>
-                                        <option *ngFor="let sc of  PremiumPeriodList" [ngValue]="sc.code">
-                                           {{sc.code}}
-                                        </option>
-                                    </select>
-                                </td>
-
-
-                            </tr>
-                            
-    
-                            <tr>
-                                <td style="width: 15%" class="LabelFontStyle1">EW&nbsp;Slab&nbsp;:&nbsp;</td>
-        
-                                <td>  
-                                    <select disabled  formControlName="slab" id="slab" [(ngModel)]="slab" class="form-control" (ngModelChange)="onSelectedEWSlab($event)" style="background-color: lightgreen;">
-                                        <option disabled>--Select--</option>
-                                        <option *ngFor="let sc of  EWSlabList" [ngValue]="sc.code">
-                                           {{sc.code}}-{{sc.codeDesc}}
-                                        </option>
-                                    </select>
-                                </td>
-    
-                                <td style="width: 15%" class="LabelFontStyle1">Scheme&nbsp;Code:&nbsp;</td>
-        
-                                <td>
-                                    <input  disabled type="text"  formControlName="ewSchemeNo"  id="ewSchemeNo" [(ngModel)]="ewSchemeNo" class="form-control" placeholder="Enter Scheme Code" >
-                                </td>
-    
-                                <td style="width: 15%" class="LabelFontStyle1">Descpription:&nbsp;</td>
-        
-                                <td>
-                                    <input  disabled type="text"  formControlName="ewSchemeDesc"  id="ewSchemeDesc" [(ngModel)]="ewSchemeDesc" class="form-control" placeholder="Enter Scheme Desc" >
-                                </td>
-                                
-                            </tr>
-                            </ng-template>
+                          
+                           
 
 
                             <tr>
@@ -295,11 +196,210 @@
                                             </option>
                                         </select>
                                    </td>
+
+
+                                   <td style="width: 15%" class="LabelFontStyle1">  Status&nbsp;&nbsp;: </td>
+    
+                                <td>
+                                    <select formControlName="status" id="status" class="form-control"  
+                                    [(ngModel)]="status"  style="background-color: yellow;">
+                                        <option *ngFor="let sc of  statusList" [ngValue] ="sc.code">
+                                        {{sc.code}}
+                                    </option>
+                                </select>
+                                </td>
+                                 
     
                                
                               </tr>
+                            </ng-template>
+                            <ng-template #db2>
+
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">Model&nbsp;Name:&nbsp;</td>
+                                    <td>  
+                                        <select disabled formControlName="mainModel" id="mainModel" [(ngModel)]="mainModel" class="form-control"  (ngModelChange)="onOptionsSelectedModel($event)"  style="background-color: lightgreen;">
+                                            <option disabled>--Select--</option>
+                                            <option *ngFor="let mm of mainModelList"  [ngValue]="mm.code">
+                                                {{mm.code}}
+                                            </option>
+                                        </select>
+                                    </td>
+    
+                                    <td style="width: 15%" class="LabelFontStyle">Variant&nbsp;Name:&nbsp;</td>
+            
+                                    <td>  
+                                        
+                                        <select disabled formControlName="variant" id="variant" class="form-control" [(ngModel)]="variant" (ngModelChange)="onOptionsSelectedVariant($event)" style="background-color: lightgreen;" >
+                                            <!-- (ngModelChange)="onOptionsSelectedVariant($event)" -->
+                                            <option disabled>--Select--</option>
+                                            <option *ngFor="let mv of VariantSearch" [ngValue]="mv.variant">
+                                                {{mv.variant}}
+                                                <!-- -{{mm.varDescription}} -->
+                                            </option>
+                                        </select>
+    
+                                    </td>
+        
+                                    <td style="width: 15%" class="LabelFontStyle">Variant&nbsp;Description:&nbsp;</td>
+            
+                                    <td>
+                                        <input disabled  type="text"  formControlName="variantDesc"  id="variantDesc" [(ngModel)]="variantDesc" class="form-control" >
+                                    </td>
+        
+                                    
+                                </tr>
+        
+                                <tr>
+        
+                                    <td style="width: 15%" class="LabelFontStyle">Scheme&nbsp;Type:&nbsp;</td>
+            
+                                    <td>  
+                                        <select disabled  formControlName="ewType" id="ewType" [(ngModel)]="ewType" class="form-control" (ngModelChange)="onSelectedEWtype($event)" style="background-color: lightgreen;">
+                                            <option disabled>--Select--</option>
+                                            <option *ngFor="let sc of  EwTypeList" [ngValue]="sc.code">
+                                                {{sc.code}}
+                                            </option>
+                                        </select>
+                                    </td>
+    
+                                    <td style="width: 15%" class="LabelFontStyle">Scheme&nbsp;Name:&nbsp;</td>
+            
+                                    <td>  
+                                        <select disabled  formControlName="ewSchemeName" id="ewSchemeName" [(ngModel)]="ewSchemeName" class="form-control" (ngModelChange)="onSelectedEWtype($event)" style="background-color: lightgreen;">
+                                            <option disabled>--Select--</option>
+                                            <option *ngFor="let sc of  EwSchemeList" [ngValue]="sc.code">
+                                                {{sc.code}}-{{sc.codeDesc}}
+                                            </option>
+                                        </select>
+                                    </td>
+    
+                                    <td style="width: 15%" class="LabelFontStyle">Scheme&nbsp;Period:&nbsp;</td>
+                                    
+                                    <td>  
+                                        <select disabled  formControlName="premiumPeriod" id="premiumPeriod" [(ngModel)]="premiumPeriod" class="form-control" (ngModelChange)="onSelectedEWtype($event)" style="background-color: lightgreen;">
+                                            <option disabled>--Select--</option>
+                                            <option *ngFor="let sc of  PremiumPeriodList" [ngValue]="sc.code">
+                                               {{sc.code}}
+                                            </option>
+                                        </select>
+                                    </td>
+    
+    
+                                </tr>
+                                
+        
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">EW&nbsp;Slab&nbsp;:&nbsp;</td>
+            
+                                    <td>  
+                                        <select disabled  formControlName="slab" id="slab" [(ngModel)]="slab" class="form-control" (ngModelChange)="onSelectedEWSlab($event)" style="background-color: lightgreen;">
+                                            <option disabled>--Select--</option>
+                                            <option *ngFor="let sc of  EWSlabList" [ngValue]="sc.code">
+                                               {{sc.code}}-{{sc.codeDesc}}
+                                            </option>
+                                        </select>
+                                    </td>
+        
+                                    <td style="width: 15%" class="LabelFontStyle">Scheme&nbsp;Code:&nbsp;</td>
+            
+                                    <td>
+                                        <input  disabled type="text"  formControlName="ewSchemeNo"  id="ewSchemeNo" [(ngModel)]="ewSchemeNo" class="form-control" placeholder="Enter Scheme Code" >
+                                    </td>
+        
+                                    <td style="width: 15%" class="LabelFontStyle">Descpription:&nbsp;</td>
+            
+                                    <td>
+                                        <input disabled  type="text"  formControlName="ewSchemeDesc"  id="ewSchemeDesc" [(ngModel)]="ewSchemeDesc" class="form-control" placeholder="Enter Scheme Desc" >
+                                    </td>
+                                   
+                                </tr>
+                              
+                               
+    
+    
+                                <tr>
+                               
+    
+                                    <td style="width: 15%" class="LabelFontStyle">Scheme&nbsp;Start&nbsp;Date:&nbsp;</td>
+            
+                                    <td>
+                                        <input disabled  type="date"  formControlName="schemeStartDate"  id="schemeStartDate" [(ngModel)]="schemeStartDate" class="form-control" >
+                                    </td>
+        
+                                    <td style="width: 15%" class="LabelFontStyle">Scheme&nbsp;End&nbsp;Date:&nbsp;</td>
+            
+                                    <td>
+                                        <input disabled  type="date"  formControlName="schemeEndDate"  id="schemeEndDate" [(ngModel)]="schemeEndDate" class="form-control"  >
+                                    </td>
+                                    <td style="width: 15%" class="LabelFontStyle">Scheme&nbsp;Kms&nbsp;Limit:&nbsp;</td>
+                                    <td>
+                                        <input  disabled type="number"  formControlName="schemeKms"  id="schemeKms" [(ngModel)]="schemeKms" class="form-control" placeholder="Enter Scheme KM Limit"  >
+                                    </td>
+    
+                                </tr>
+                                <tr>
+                                   
+        
+                                  
+                                    <td   style="width: 15%" class="LabelFontStyle">Scheme&nbsp;Amount:&nbsp;</td>
+                                    <td><input disabled  style="font-weight: bold;text-align: right;"   type="number" formControlName="schemeAmount"  id="schemeAmount"  [(ngModel)]="schemeAmount" class="form-control" placeholder="Premium Amount" > </td>
+                                   
+    
+                                    <td style="width: 15%" class="LabelFontStyle">Valid&nbsp;From&nbsp;Km:&nbsp;</td>
+                                    <td>
+                                        <input disabled  type="number"  formControlName="validFromKms"  id="validFromKms" [(ngModel)]="validFromKms" class="form-control" placeholder="Enter Valid upto KM Limit" >
+                                    </td>
+    
+                                    <td style="width: 15%" class="LabelFontStyle">Valid&nbsp;To&nbsp;Km:&nbsp;</td>
+                                    <td>
+                                        <input disabled  type="number"  formControlName="validToKms"  id="validToKms" [(ngModel)]="validToKms" class="form-control" placeholder="Enter Valid upto KM Limit" >
+                                    </td>
+    
+                                   
+    
+                                    </tr>
+                                    <tr>
+    
+                                        <td style="width: 15%" class="LabelFontStyle">EW&nbsp;Insurance:&nbsp;</td>
+            
+                                         <td colspan="3"> 
+                                            <select disabled formControlName="ewInsId" id="ewInsId"   class="form-control" style="background-color: lightgreen;width: 100%;">
+                                                <!-- (ngModelChange)='onEwInsurerNameSelected($event)' -->
+                                                <option></option>
+                                                <option *ngFor="let sc of ewInsNameList"
+                                                    [ngValue]="sc.customerId">
+                                                    {{sc.custName}}
+                                                </option>
+                                            </select>
+                                       </td>
+    
+    
+                                       <td style="width: 15%" class="LabelFontStyle">
+                                        Status&nbsp;&nbsp;:
+                                    </td>
+        
+                                    <td>
+                                        <select formControlName="status" id="status" class="form-control"  
+                                        [(ngModel)]="status"  style="background-color: yellow;">
+                                        <!-- (ngModelChange)='onOptionsSelected($event)' -->
+                                        <!-- <option disabled>--Select--</option> -->
+                                        <option *ngFor="let sc of  statusList" [ngValue] ="sc.code">
+                                            {{sc.code}}
+                                        </option>
+                                    </select>
+                                    </td>
+        
+                                   
+                                  </tr>
+                              
+                            </ng-template>
+
+                           
+
                         </table>
                         </fieldset>
+                   
 
 
  <!-- ===================================Buttons======================================== -->
@@ -382,7 +482,7 @@
 
                                         <div *ngIf="updateButton; then upd1; else upd2"></div>
                                         <ng-template #upd1>
-                                            <td><button type="button" class="btn btn-info" (click)="updateMast()"[disabled]="!saiEwSchemeMasterForm">Update</button> </td>
+                                            <td><button type="button" class="btn btn-info" (click)="updateMast()" >Update</button> </td>
                                         </ng-template> <ng-template #upd2></ng-template>
 
                                             <td><button type="button" class="btn btn-info" (click)="searchMast()">Search</button> </td>
@@ -483,12 +583,12 @@
                 <td style="text-align: center;">{{i+1}}</td>
                 <td>{{com.ewSchemeNo}}</td>
                 <td>{{com.ewSchemeDesc}}</td>   
-                <td>{{com.ewType}}</td>   
-                <td>{{com.variant}}</td> 
-                <td>{{com.premiumPeriod}}</td>
-                <td>{{com.slab}}</td>
-                <td>{{com.schemeStartDate | date:'dd-MM-y'}}</td>
-                <td>{{com.schemeEndDate | date:'dd-MM-y'}}</td>
+                <td style="text-align: center;">{{com.ewType}}</td>   
+                <td style="text-align: center;">{{com.variant}}</td> 
+                <td style="text-align: center;">{{com.premiumPeriod}}</td>
+                <td style="text-align: center;">{{com.slab}}</td>
+                <td style="text-align: center;">{{com.schemeStartDate | date:'dd-MM-y'}}</td>
+                <td style="text-align: center;">{{com.schemeEndDate | date:'dd-MM-y'}}</td>
                 <!-- <td>{{com.schemeEndDate | date:'dd-MM-y hh:mm:ss'}}</td> -->
               
                 <td><button class="btn btn-info" (click)="Select(com.ewSchemeId)">Select</button></td>   

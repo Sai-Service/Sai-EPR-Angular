@@ -167,21 +167,14 @@ export class CustomerRelationMasterComponent implements OnInit {
     this.employeeId=selectedValue.emplId
     this.lineDetailsArray().reset();
     this.displayButton=true;
-    this.searchMast(0);
+    // this.searchMast(0);
     }
   }
 
 
   SearchByEmpTktNo (){
-    // var mEmpId=this.custRelationMasterForm.get('employeeId').value;
-   
-    // this.service.getCustomerEmpMapList(mEmpId,0,1)
-    // .subscribe(
-    //   data => {
-    //     this.CustomerMapList = data;
-    //     console.log(this.CustomerMapList);
-    //   });
-    }
+       this.searchMast(0);
+   }
 
   SearchByCust (custNo){
     this.service.customerEmpMapSearch(custNo,this.locId)
@@ -253,7 +246,6 @@ export class CustomerRelationMasterComponent implements OnInit {
   searchMast(pageNo) {
     // this.CheckHeaderValidations();
     if (this.headerValidation==false ) {return;}
-
     this.service.getCustomerEmpMapList(this.employeeId,pageNo,50)
       .subscribe(
         data => {

@@ -3904,5 +3904,16 @@ viewInvnote(trxNumber){
 getJonCardNoSearch(jonCardNo): Observable<any> {
   return this.http.get(this.ServerUrl +`/jobCard/jobDtls/${jonCardNo}`);
 }
+
+
+printAmcDoc(amcNum){
+  // const REQUEST_URI = this.ServerUrl +`/SRGatepass/print/${jcNumber}`;  
+  const REQUEST_URI = this.ServerUrl +`/McpEnrollMst/amcInvoicePrint/${amcNum}`;  
+  return this.http.get(REQUEST_URI, {
+  responseType: 'arraybuffer',
+  headers: this.headers,
+});
+// http://localhost:8081/McpEnrollMst/amcInvoicePrint/AMC2202-8
+}
   
 }

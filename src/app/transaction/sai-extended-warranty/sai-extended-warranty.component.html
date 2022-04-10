@@ -554,13 +554,14 @@
                                 <input  disabled   type="text" formControlName="paytmentSource"  id="paytmentSource" [(ngModel)]="paytmentSource" class="form-control">
                             </td> -->
 
-                            <td style="width: 15%" class="LabelFontStyle1">Sold&nbsp;By:&nbsp;</td>
+                            <td style="width: 15%" class="LabelFontStyle1">Exective&nbsp;Name:&nbsp;</td>
 
                             <td>
                                 <select type="text" class="form-control" formControlName="soldByEmpId" style="background-color: yellow;">
                                 <option disabled>--Select--</option>
                                 <option *ngFor="let sc of issueByList" [ngValue]="sc.emplId" >
-                                {{sc.emplId}}-{{sc.ticketNo}}-{{sc.name}}
+                                <!-- {{sc.emplId}}- -->
+                                {{sc.ticketNo}}-{{sc.fullName}}
                                 </option>
                                 </select>
                             </td>
