@@ -424,3 +424,10 @@ input[disabled]{
   line-height: 10px; /* Tamaño de linea */
   /* width: 5rem; */
 }
+
+
+.grid_scroll{
+  overflow: auto;
+  width: 100%;
+  height: 400px;
+}

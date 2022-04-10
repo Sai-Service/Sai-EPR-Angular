@@ -302,16 +302,16 @@ export class InterStateComponent implements OnInit {
           // this.gstNo=this.getshiplist[0].gstNo
         });
 
-    this.orderManagementService.priceListNameList1(sessionStorage.getItem('ouId'), (sessionStorage.getItem('divisionId')))
+    this.orderManagementService.priceListNameListouwise(sessionStorage.getItem('ouId'), (sessionStorage.getItem('divisionId')),sessionStorage.getItem('deptId'))
       .subscribe(
         data => {
           this.priceListNameList = data;
           console.log(this.priceListNameList);
           for (let i = 0; i < data.length; i++) {
-            if (data[i].ouId === 999) {
+            // if (data[i].ouId === 999) {
               this.InterStateForm.patchValue({ priceListName: data[i].priceListName })
               this.InterStateForm.patchValue({ priceListId: data[i].priceListHeaderId })
-            }
+            // }
           }
         }
       );

@@ -352,25 +352,24 @@ export class CounterSalePerformaInvComponent implements OnInit {
         }
       );
 
-      this.orderManagementService.priceListNameList1(sessionStorage.getItem('ouId'), (sessionStorage.getItem('divisionId')))
+      this.orderManagementService.priceListNameListouwise(sessionStorage.getItem('ouId'), (sessionStorage.getItem('divisionId')),sessionStorage.getItem('deptId'))
       .subscribe(
         data => {
           this.priceListNameList = data;
           // console.log(this.priceListNameList);
           for (let i = 0; i < data.length; i++) {
-            if (Number(sessionStorage.getItem('deptId'))!=1){
-            if (data[i].ouId === 999) {
+            // if (Number(sessionStorage.getItem('deptId'))!=1){
+            // if (data[i].ouId === 999) {
               this.CounterSaleOrderBookingForm.patchValue({ priceListName: data[i].priceListName })
               this.CounterSaleOrderBookingForm.patchValue({ priceListId: data[i].priceListHeaderId })
-            }
+            // }
           }
-          else if (Number(sessionStorage.getItem('deptId'))===1){
-            if (data[i].priceListName.includes('Sales')) {
-              this.CounterSaleOrderBookingForm.patchValue({ priceListName: data[i].priceListName })
-              this.CounterSaleOrderBookingForm.patchValue({ priceListId: data[i].priceListHeaderId })
-            }
-          }
-          }
+          // else if (Number(sessionStorage.getItem('deptId'))===1){
+          //   if (data[i].priceListName.includes('Sales')) {
+          //     this.CounterSaleOrderBookingForm.patchValue({ priceListName: data[i].priceListName })
+          //     this.CounterSaleOrderBookingForm.patchValue({ priceListId: data[i].priceListHeaderId })
+          //   }
+          // }
         }
       );
     this.orderlineDetailsGroup();

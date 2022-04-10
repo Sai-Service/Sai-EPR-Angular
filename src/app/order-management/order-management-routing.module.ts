@@ -22,6 +22,7 @@ import { ShippingNetworkComponent } from './shipping-network/shipping-network.co
 import { SalesOrderProformaComponent } from './sales-order-proforma/sales-order-proforma.component';
 import { PriceUpdationComponent } from './price-updation/price-updation.component';
 import { SalesOrderModelWisePriceComponent } from './sales-order-model-wise-price/sales-order-model-wise-price.component';
+import { RtoLineItemReportComponent } from './rto-line-item-report/rto-line-item-report.component';
 
 const routes: Routes = [
   {path:'salesOrderBooking', component:SalesOrderBookingComponent},
@@ -49,6 +50,7 @@ const routes: Routes = [
   {path:'SalesProforma',component:SalesOrderProformaComponent},
   {path:'priceUpdation',component:PriceUpdationComponent},
   {path:'modelWisePrice',component:SalesOrderModelWisePriceComponent},
+  {path:'rtoLineItemReport',component:RtoLineItemReportComponent},
   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];
 

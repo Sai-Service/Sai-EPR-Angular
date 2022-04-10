@@ -749,15 +749,13 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
         }
       );
 
-    this.orderManagementService.priceListNameList1(sessionStorage.getItem('ouId'), (sessionStorage.getItem('divisionId')))
+    this.orderManagementService.priceListNameListouwise(sessionStorage.getItem('ouId'), (sessionStorage.getItem('divisionId')),sessionStorage.getItem('deptId'))
       .subscribe(
         data => {
           this.priceListNameList = data;
           for (let i = 0; i < data.length; i++) {
-            if (data[i].ouId === 999) {
               this.CounterSaleOrderBookingForm.patchValue({ priceListName: data[i].priceListName })
               this.CounterSaleOrderBookingForm.patchValue({ priceListId: data[i].priceListHeaderId })
-            }
           }
         }
       );
@@ -1313,13 +1311,6 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
 
 
-  onOptionsSelectedPriceListID(priceListName) {
-    // alert(priceListName);
-    let select = this.priceListNameList.find(d => d.priceListName === priceListName);
-    // alert(select);
-    this.priceListId = select.priceListHeaderId;
-    // this.displayCSOrderAndLineDt = false;
-  }
 
 
 

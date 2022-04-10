@@ -87,7 +87,7 @@ export class PriceUpdationComponent implements OnInit {
   prc:number;
   itemDetails(itemSeg){
     var itemSeg = itemSeg.toUpperCase();
-    this.orderManagementService.getOnHandQty(sessionStorage.getItem('locId'),itemSeg,6).subscribe((res: any) => {
+    this.orderManagementService.getOnHandQty(sessionStorage.getItem('locId'),itemSeg,sessionStorage.getItem('deptId')).subscribe((res: any) => {
         this.itemDetailsList=res;
       //   for (let i=0;i<res.length;i++){
       //   alert(res[i].prc);
