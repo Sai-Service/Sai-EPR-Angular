@@ -2,9 +2,7 @@ import {
   Component,
   OnInit,
   ViewChild,
-  ViewEncapsulation,
-  HostListener,
-  ElementRef,
+   ElementRef,
 } from '@angular/core';
 import {
   FormArray,
@@ -12,13 +10,9 @@ import {
   FormControl,
   FormGroup,
   Validators,
-  FormControlName,
-} from '@angular/forms';
+ } from '@angular/forms';
 import { Router } from '@angular/router';
-import { controllers } from 'chart.js';
-import { data } from 'jquery';
 import { MasterService } from 'src/app/master/master.service';
-import { stringify } from 'querystring';
 import { DatePipe } from '@angular/common';
 
 interface IsubinventoryTransfer {
@@ -50,6 +44,8 @@ interface IsubinventoryTransfer {
   primaryQty: number;
   onHandQty: number;
   LocatorSegment: string;
+  attribute3:string;
+
 }
 
 @Component({
@@ -66,6 +62,7 @@ export class SubinventoryTransferComponent implements OnInit {
   getItemDetail: any;
   getfrmSubLoc: any;
   public LocatorList: any;
+  phyLocation:any=[];
   locData = [
     {
       locatorId: 999,
@@ -118,6 +115,8 @@ export class SubinventoryTransferComponent implements OnInit {
   pipe = new DatePipe('en-US');
   now = new Date();
   transDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
+  dispPhyLoc:boolean=true;
+  attribute3:string;
 
   @ViewChild('myinput') myInputField: ElementRef;
   @ViewChild('suppCode1') suppCode1: ElementRef;
@@ -157,6 +156,7 @@ export class SubinventoryTransferComponent implements OnInit {
       locId: [],
       issueTo: [],
       SubNo: [],
+      attribute3:[],
       trfLinesList: this.fb.array([]),
     });
   }
@@ -267,6 +267,7 @@ export class SubinventoryTransferComponent implements OnInit {
           this.ItemIdList = data;
           // console.log(this.invItemId);
         });
+
     });
 
     this.service
@@ -292,6 +293,17 @@ export class SubinventoryTransferComponent implements OnInit {
     patch.controls[0].patchValue({
       lineNumber: 1,
     });
+    if(this.subInventoryCode='VH')
+    {
+      this.dispPhyLoc=false;
+      this.service.getPhysicalLoc(this.divisionId).subscribe(
+          data => {
+            this.phyLocation = data;
+        //     console.log(this.ItemIdList);
+        //     // console.log(this.invItemId);
+          });
+      
+    }
     // this.SubNo="12PU";
   }
 
@@ -691,6 +703,7 @@ export class SubinventoryTransferComponent implements OnInit {
       var issto = this.SubinventoryTransferForm.get('issueTo').value;
       var rmks = this.SubinventoryTransferForm.get('remarks').value;
       var locId1 = this.SubinventoryTransferForm.get('locId').value;
+      var phyLoc=this.SubinventoryTransferForm.get('attribute3').value;
 
       for (let i = 0; i < this.trfLinesList().length; i++) {
         let VariantFormGroup = <FormGroup>variants.controls[i];
@@ -725,6 +738,10 @@ export class SubinventoryTransferComponent implements OnInit {
         VariantFormGroup.addControl(
           'issueTo',
           new FormControl(issto, Validators.required)
+        );
+        VariantFormGroup.addControl(
+          'attribute3',
+          new FormControl(phyLoc, Validators.required)
         );
       }
 
