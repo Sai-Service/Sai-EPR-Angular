@@ -254,7 +254,7 @@ var segment1 = '';
      }
 
 
-    this.service.searchByItemf9(select1.itemId,this.locId, this.ouId,this.divisionId).subscribe(
+    this.service.searchByItemf9(select1.itemId,this.locId, this.ouId,this.divisionId,sessionStorage.getItem('deptId')).subscribe(
       data =>{
 
         this.Itemdata= data;

@@ -46,31 +46,31 @@ export class SalesReportsComponent implements OnInit {
   // New Code Started//////////////
   public BillShipToList: Array<string> = [];
   public DepartmentList: any = [];
-  isVisibleVehicleSaleRegister:boolean=false;
-  isVisiblelocationLOV:boolean=false;
-  isVisiblelocationInput:boolean=false;
-  isVisibleDepartmentList:boolean=false;
-  fromDate:Date;
-  toDate:Date;
-  locId:number;
-  isVisibleSaleIND:boolean=false;
-  isSaleClosingStock:boolean=false;
-  OUCode:string;
-  custAccNo:string;
-  deptId:number;
-  isVisiblefromtolocationdepartment:boolean=false;
-  isVisiblecustomerLedger:boolean=false;
+  isVisibleVehicleSaleRegister: boolean = false;
+  isVisiblelocationLOV: boolean = false;
+  isVisiblelocationInput: boolean = false;
+  isVisibleDepartmentList: boolean = false;
+  fromDate: Date;
+  toDate: Date;
+  locId: number;
+  isVisibleSaleIND: boolean = false;
+  isSaleClosingStock: boolean = false;
+  OUCode: string;
+  custAccNo: string;
+  deptId: number;
+  isVisiblefromtolocationdepartment: boolean = false;
+  isVisiblecustomerLedger: boolean = false;
   isVisiblespPurRegDownLoad: boolean = false;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) {
     this.salesReportForm = this.fb.group({
-      fromDate:[''],
-      toDate:[''],
-      locId:[''],
-      OUCode:[''],
-      custAccNo:[''],
-      deptId:[''],
-      department:[''],
+      fromDate: [''],
+      toDate: [''],
+      locId: [''],
+      OUCode: [''],
+      custAccNo: [''],
+      deptId: [''],
+      department: [''],
 
 
       vhslRegisterFromDt: [''],
@@ -95,9 +95,9 @@ export class SalesReportsComponent implements OnInit {
   ngOnInit(): void {
     this.salesReportForm.patchValue({ OUCode: sessionStorage.getItem('ouId') + '-' + sessionStorage.getItem('ouName') })
     this.salesReportForm.patchValue({ locCode: sessionStorage.getItem('locId') + '-' + sessionStorage.getItem('locName') })
-    this.salesReportForm.patchValue({department:'Spares'});
-    this.salesReportForm.patchValue({department:'5'});
-    
+    this.salesReportForm.patchValue({ department: 'Spares' });
+    this.salesReportForm.patchValue({ department: '5' });
+
     // Prevent closing from click inside dropdown
     $(document).on('click', '.dropdown-menu', function (e) {
       e.stopPropagation();
@@ -132,15 +132,15 @@ export class SalesReportsComponent implements OnInit {
 
 
 
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.isVisiblelocationLOV = true;
-        this.isVisiblelocationInput = false;
-        this.salesReportForm.patchValue({ subInventory: 'SP' })
-      }
-      else {
-        this.isVisiblelocationLOV = false;
-        this.isVisiblelocationInput = true;
-      }
+    if (Number(sessionStorage.getItem('deptId')) === 4) {
+      this.isVisiblelocationLOV = true;
+      this.isVisiblelocationInput = false;
+      this.salesReportForm.patchValue({ subInventory: 'SP' })
+    }
+    else {
+      this.isVisiblelocationLOV = false;
+      this.isVisiblelocationInput = true;
+    }
   }
 
   refresh() {
@@ -156,82 +156,82 @@ export class SalesReportsComponent implements OnInit {
   reportName: string;
   reportDetails(reportName) {
     if (reportName === 'gstVehicleSaleRegister') {
-      this.reportName='Vehicle Sales Register'
-      this.isVisibleVehicleSaleRegister=true;
-      this.isVisibleSaleIND=false;
-      this.isSaleClosingStock=false;
-      this.isVisiblefromtolocationdepartment=false;
-      this.isVisiblecustomerLedger=false;
+      this.reportName = 'Vehicle Sales Register'
+      this.isVisibleVehicleSaleRegister = true;
+      this.isVisibleSaleIND = false;
+      this.isSaleClosingStock = false;
+      this.isVisiblefromtolocationdepartment = false;
+      this.isVisiblecustomerLedger = false;
     }
-  else  if (reportName === 'gstSaleIND') {
-      this.reportName='Sales Invoiced Not Delivered'
-      this.isVisibleVehicleSaleRegister=false;
-      this.isVisibleSaleIND=true;
-      this.isSaleClosingStock=false;
-      this.isVisiblefromtolocationdepartment=false;
-      this.isVisiblecustomerLedger=false;
+    else if (reportName === 'gstSaleIND') {
+      this.reportName = 'Sales Invoiced Not Delivered'
+      this.isVisibleVehicleSaleRegister = false;
+      this.isVisibleSaleIND = true;
+      this.isSaleClosingStock = false;
+      this.isVisiblefromtolocationdepartment = false;
+      this.isVisiblecustomerLedger = false;
     }
-    else if (reportName==='gstVehicleBookingReg'){
-      this.reportName='Vehicle Booking Register'
-      this.isVisibleVehicleSaleRegister=true;
-      this.isVisibleSaleIND=false;
-      this.isSaleClosingStock=false;
-      this.isVisiblefromtolocationdepartment=false;
-      this.isVisiblecustomerLedger=false;
+    else if (reportName === 'gstVehicleBookingReg') {
+      this.reportName = 'Vehicle Booking Register'
+      this.isVisibleVehicleSaleRegister = true;
+      this.isVisibleSaleIND = false;
+      this.isSaleClosingStock = false;
+      this.isVisiblefromtolocationdepartment = false;
+      this.isVisiblecustomerLedger = false;
     }
-    else if (reportName==='gstSaleAllotNotInv'){
-      this.reportName='Sales Alloted Not Invoiced Report'
-      this.isVisibleVehicleSaleRegister=false;
-      this.isVisibleSaleIND=true;
-      this.isSaleClosingStock=false;
-      this.isVisiblefromtolocationdepartment=false;
-      this.isVisiblecustomerLedger=false;
+    else if (reportName === 'gstSaleAllotNotInv') {
+      this.reportName = 'Sales Alloted Not Invoiced Report'
+      this.isVisibleVehicleSaleRegister = false;
+      this.isVisibleSaleIND = true;
+      this.isSaleClosingStock = false;
+      this.isVisiblefromtolocationdepartment = false;
+      this.isVisiblecustomerLedger = false;
     }
-    else if (reportName==='gstSaleClosingStock'){
-      this.reportName='Vehicle Closing Stock'
-      this.isVisibleVehicleSaleRegister=false;
-      this.isVisibleSaleIND=false;
-      this.isSaleClosingStock=true;
-      this.isVisiblefromtolocationdepartment=false;
+    else if (reportName === 'gstSaleClosingStock') {
+      this.reportName = 'Vehicle Closing Stock'
+      this.isVisibleVehicleSaleRegister = false;
+      this.isVisibleSaleIND = false;
+      this.isSaleClosingStock = true;
+      this.isVisiblefromtolocationdepartment = false;
     }
-    else if (reportName==='gstSaleRegister'){
-      this.reportName='GST Sales Register'
-      this.isVisibleVehicleSaleRegister=true;
-      this.isVisibleSaleIND=false;
-      this.isSaleClosingStock=false;
-      this.isVisiblefromtolocationdepartment=false;
-      this.isVisiblecustomerLedger=false;
+    else if (reportName === 'gstSaleRegister') {
+      this.reportName = 'GST Sales Register'
+      this.isVisibleVehicleSaleRegister = true;
+      this.isVisibleSaleIND = false;
+      this.isSaleClosingStock = false;
+      this.isVisiblefromtolocationdepartment = false;
+      this.isVisiblecustomerLedger = false;
     }
-    else if (reportName==='gstSparesSaiDebtors'){
-      this.reportName='Sai Debtors'
-      this.isVisibleVehicleSaleRegister=false;
-      this.isVisibleSaleIND=true;
-      this.isSaleClosingStock=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisiblefromtolocationdepartment=false;
-      if (Number(sessionStorage.getItem('deptId'))===4){
-        this.isVisibleDepartmentList=true;
-        
+    else if (reportName === 'gstSparesSaiDebtors') {
+      this.reportName = 'Sai Debtors'
+      this.isVisibleVehicleSaleRegister = false;
+      this.isVisibleSaleIND = true;
+      this.isSaleClosingStock = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisiblefromtolocationdepartment = false;
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.isVisibleDepartmentList = true;
+
       }
     }
-    else if (reportName==='gstReceiptRegister'){
-      this.reportName='Receipt Register';
-      this.isVisiblefromtolocationdepartment=true;
-      this.isVisibleVehicleSaleRegister=false;
-      this.isVisibleSaleIND=false;
-      this.isSaleClosingStock=false;
-      this.isVisiblecustomerLedger=false;
+    else if (reportName === 'gstReceiptRegister') {
+      this.reportName = 'Receipt Register';
+      this.isVisiblefromtolocationdepartment = true;
+      this.isVisibleVehicleSaleRegister = false;
+      this.isVisibleSaleIND = false;
+      this.isSaleClosingStock = false;
+      this.isVisiblecustomerLedger = false;
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.isVisibleDepartmentList = true;
       }
     }
-    else if (reportName==='customerLedger'){
-      this.reportName='Customer Ledger Report';
-      this.isVisiblefromtolocationdepartment=false;
-      this.isVisibleVehicleSaleRegister=false;
-      this.isVisibleSaleIND=false;
-      this.isSaleClosingStock=false;
-      this.isVisiblecustomerLedger=true;
+    else if (reportName === 'customerLedger') {
+      this.reportName = 'Customer Ledger Report';
+      this.isVisiblefromtolocationdepartment = false;
+      this.isVisibleVehicleSaleRegister = false;
+      this.isVisibleSaleIND = false;
+      this.isSaleClosingStock = false;
+      this.isVisiblecustomerLedger = true;
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.isVisibleDepartmentList = true;
       }
@@ -254,139 +254,139 @@ export class SalesReportsComponent implements OnInit {
       alert('Please Select location Code.!');
       return;
     }
-    if (reportName === 'Vehicle Sales Register'){
+    if (reportName === 'Vehicle Sales Register') {
       const fileName = 'Vehicle Sales Register-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
-   const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.vhslRegisterReport(fromDate, toDate, locId)
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.dataDisplay = ''
-          this.closeResetButton = true;
-          this.isDisabled1 = false;
-        })
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.dataDisplay = ''
+            this.closeResetButton = true;
+            this.isDisabled1 = false;
+          })
       }
-      else  if (Number(sessionStorage.getItem('deptId')) != 4) {
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
         this.reportService.vhslRegisterReport(fromDate, toDate, sessionStorage.getItem('locId'))
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.dataDisplay = ''
-          this.closeResetButton = true;
-          this.isDisabled1 = false;
-        })
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.dataDisplay = ''
+            this.closeResetButton = true;
+            this.isDisabled1 = false;
+          })
       }
     }
-   else if (reportName==='Sales Invoiced Not Delivered'){
+    else if (reportName === 'Sales Invoiced Not Delivered') {
       const fileName = 'Sales Invoiced Not Delivered-' + sessionStorage.getItem('locName').trim() + '-' + '-TO-' + toDate + '.xls';
-    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.salesINDReport(toDate, locId)
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.dataDisplay = ''
-          this.closeResetButton = true;
-          this.isDisabled1 = false;
-        })
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.dataDisplay = ''
+            this.closeResetButton = true;
+            this.isDisabled1 = false;
+          })
       }
-      else  if (Number(sessionStorage.getItem('deptId')) != 4) {
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
         this.reportService.salesINDReport(toDate, sessionStorage.getItem('locId'))
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.dataDisplay = ''
-          this.closeResetButton = true;
-          this.isDisabled1 = false;
-        })
-      } 
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.dataDisplay = ''
+            this.closeResetButton = true;
+            this.isDisabled1 = false;
+          })
+      }
     }
-    else if (reportName==='Vehicle Booking Register'){
+    else if (reportName === 'Vehicle Booking Register') {
       const fileName = 'Sales Booking Register-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
-    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.salesbookingregReport(fromDate, toDate, locId)
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.dataDisplay = ''
-          this.closeResetButton = true;
-          this.isDisabled1 = false;
-        })
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.dataDisplay = ''
+            this.closeResetButton = true;
+            this.isDisabled1 = false;
+          })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
         this.reportService.salesbookingregReport(fromDate, toDate, sessionStorage.getItem('locId'))
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.dataDisplay = ''
-          this.closeResetButton = true;
-          this.isDisabled1 = false;
-        })
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.dataDisplay = ''
+            this.closeResetButton = true;
+            this.isDisabled1 = false;
+          })
       }
     }
-    else if (reportName==='Sales Alloted Not Invoiced Report'){
+    else if (reportName === 'Sales Alloted Not Invoiced Report') {
       const fileName = 'Sales Alloted Not Invoiced Report-' + sessionStorage.getItem('locName').trim() + '-' + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.salesAltnotInvReport(toDate, locId)
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.dataDisplay = ''
-          this.closeResetButton = true;
-          this.isDisabled1 = false;
-        })
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.dataDisplay = ''
+            this.closeResetButton = true;
+            this.isDisabled1 = false;
+          })
       }
-      else   if (Number(sessionStorage.getItem('deptId')) != 4) {
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
         this.reportService.salesAltnotInvReport(toDate, sessionStorage.getItem('locId'))
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.dataDisplay = ''
-          this.closeResetButton = true;
-          this.isDisabled1 = false;
-        })
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.dataDisplay = ''
+            this.closeResetButton = true;
+            this.isDisabled1 = false;
+          })
       }
     }
-    else if (reportName==='Vehicle Closing Stock'){
+    else if (reportName === 'Vehicle Closing Stock') {
       const fileName = 'Vehicle Closing Stock-' + sessionStorage.getItem('locName').trim() + '-' + '-TO-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.vehicleClosingStockReport(sessionStorage.getItem('ouId'))
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.dataDisplay = ''
-          this.closeResetButton = true;
-          this.isDisabled1 = false;
-        })
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.dataDisplay = ''
+            this.closeResetButton = true;
+            this.isDisabled1 = false;
+          })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
         this.reportService.vehicleClosingStockReport(sessionStorage.getItem('ouId'))
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.dataDisplay = ''
-          this.closeResetButton = true;
-          this.isDisabled1 = false;
-        })
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.dataDisplay = ''
+            this.closeResetButton = true;
+            this.isDisabled1 = false;
+          })
       }
     }
-    else if (reportName==='GST Sales Register'){
+    else if (reportName === 'GST Sales Register') {
       const fileName = 'GST Sales Register-' + sessionStorage.getItem('locName').trim() + '-' + '-TO-' + '.xls';
-    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.gstSaleRegisterReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId)
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.dataDisplay = ''
-          this.closeResetButton = true;
-          this.isDisabled1 = false;
-        })
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.dataDisplay = ''
+            this.closeResetButton = true;
+            this.isDisabled1 = false;
+          })
       }
-      else   if (Number(sessionStorage.getItem('deptId')) != 4) {
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
         this.reportService.gstSaleRegisterReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.dataDisplay = ''
-          this.closeResetButton = true;
-          this.isDisabled1 = false;
-        })
-      } 
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.dataDisplay = ''
+            this.closeResetButton = true;
+            this.isDisabled1 = false;
+          })
+      }
     }
-    else if (reportName==='Sai Debtors'){
+    else if (reportName === 'Sai Debtors') {
       var custAccNo = this.salesReportForm.get('custAccNo').value;
       var deptId = this.salesReportForm.get('deptId').value;
       if (custAccNo === undefined || custAccNo === null) {
@@ -395,22 +395,22 @@ export class SalesReportsComponent implements OnInit {
       const fileName = 'Sai Debtors-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.SPDebtorReport(toDate, sessionStorage.getItem('ouId'), locId,custAccNo,deptId)
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.isDisabled1 = false;
-          this.closeResetButton = true;
-          this.dataDisplay = ''
-        })
+        this.reportService.SPDebtorReport(toDate, sessionStorage.getItem('ouId'), locId, custAccNo, deptId)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
       }
-      else  if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.SPDebtorReport(toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'),custAccNo,sessionStorage.getItem('deptId'))
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.isDisabled2 = false;
-          this.closeResetButton = true;
-          this.dataDisplay = ''
-        })
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.SPDebtorReport(toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), custAccNo, sessionStorage.getItem('deptId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled2 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
       }
     }
     else if (reportName === 'Receipt Register') {
@@ -435,43 +435,37 @@ export class SalesReportsComponent implements OnInit {
           })
       }
     }
-    else if (reportName ==='Customer Ledger Report'){
+    else if (reportName === 'Customer Ledger Report') {
       var custAccNo = this.salesReportForm.get('custAccNo').value;
-      if (custAccNo===undefined || custAccNo===''|| custAccNo===null){
+      if (custAccNo === undefined || custAccNo === '' || custAccNo === null) {
         alert('First Enter customer Account No.!');
         return;
       }
-      const fileName = 'Customer Ledger Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+      const fileName = 'Customer Ledger Report.pdf';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if ((Number(sessionStorage.getItem('deptId'))===4)){
+      if (Number(sessionStorage.getItem('deptId')) === 4) {     
         this.reportService.customerLedger(custAccNo,sessionStorage.getItem('ouId'),deptId)
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.isDisabled1 = false;
-          this.closeResetButton = true;
-          this.dataDisplay = ''
-        })
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          });
       }
-      else if ((Number(sessionStorage.getItem('deptId')))!=4){
+      else if ((Number(sessionStorage.getItem('deptId'))!=4)){
         this.reportService.customerLedger(custAccNo,sessionStorage.getItem('ouId'),sessionStorage.getItem('deptId'))
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.isDisabled1 = false;
-          this.closeResetButton = true;
-          this.dataDisplay = ''
-        })
-      } 
+        });
+      }
     }
   }
 
 
-  department(department){
-    if (department==='Sales'){
-      let department = this.DepartmentList.filter((customer) => ((customer.codeDesc.includes('Sales')==true)));
+  department(department) {
+    if (department === 'Sales') {
+      let department = this.DepartmentList.filter((customer) => ((customer.codeDesc.includes('Sales') == true)));
       console.log(department);
-      this.DepartmentList=department;
+      this.DepartmentList = department;
     }
-    }
+  }
 
   onOptionsLocation(event) {
     // alert(event);
@@ -622,7 +616,7 @@ export class SalesReportsComponent implements OnInit {
     //const fileName = 'download.pdf';
     const fileName = 'SP-Debtors-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.SPDebtorReport(fromDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'),sessionStorage.getItem('deptId'),sessionStorage.getItem('deptId'))
+    this.reportService.SPDebtorReport(fromDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'), sessionStorage.getItem('deptId'))
       .subscribe(data => {
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
         this.isDisabled2 = false;

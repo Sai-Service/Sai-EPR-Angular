@@ -749,15 +749,13 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
         }
       );
 
-    this.orderManagementService.priceListNameList1(sessionStorage.getItem('ouId'), (sessionStorage.getItem('divisionId')))
+    this.orderManagementService.priceListNameListouwise(sessionStorage.getItem('ouId'), (sessionStorage.getItem('divisionId')),sessionStorage.getItem('deptId'))
       .subscribe(
         data => {
           this.priceListNameList = data;
           for (let i = 0; i < data.length; i++) {
-            if (data[i].ouId === 999) {
               this.CounterSaleOrderBookingForm.patchValue({ priceListName: data[i].priceListName })
               this.CounterSaleOrderBookingForm.patchValue({ priceListId: data[i].priceListHeaderId })
-            }
           }
         }
       );
@@ -1000,7 +998,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                 this.displaysalesRepName = true;
               }
             }
-            if (data.obj.custName.includes(('CSCash Customer')) && Number(sessionStorage.getItem('divisionId')) === 2 ) {    
+            if (data.obj.custName.includes(('CSCASH')) && Number(sessionStorage.getItem('divisionId')) === 2 ) {    
               this.displaywalkingCustomer = false;
               if ( data.obj.cntrOrdCustName !=null){
               var temp = data.obj.cntrOrdCustName.split('#');
@@ -1313,13 +1311,6 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
 
 
-  onOptionsSelectedPriceListID(priceListName) {
-    // alert(priceListName);
-    let select = this.priceListNameList.find(d => d.priceListName === priceListName);
-    // alert(select);
-    this.priceListId = select.priceListHeaderId;
-    // this.displayCSOrderAndLineDt = false;
-  }
 
 
 
@@ -1451,7 +1442,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
               }
             }
             var custName = data.obj.custName;
-            if (custName.includes(('CSCash Customer')) && Number(sessionStorage.getItem('divisionId')) === 2) {
+            if (custName.includes(('CSCASH')) && Number(sessionStorage.getItem('divisionId')) === 2) {
               this.displaywalkingCustomer = false;
               this.CounterSaleOrderBookingForm.patchValue({ discType: 'Header Level Discount' });
               this.displaydisPer = false;
@@ -2425,7 +2416,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     var walkCustName=this.CounterSaleOrderBookingForm.get('walkCustName').value;
     var walkCustPan=this.CounterSaleOrderBookingForm.get('walkCustPan').value;
     var walkCustaddres=this.CounterSaleOrderBookingForm.get('walkCustaddres').value;
-    if (custName.includes('CSCash')){
+    if (custName.includes('CSCASH')){
       if (walkCustName===undefined || walkCustName===''|| walkCustName===null|| walkCustPan===undefined || walkCustPan===''|| walkCustPan===null||
       walkCustaddres===undefined || walkCustaddres===''|| walkCustaddres===null){
         alert('Enter Walking Customer Details.!');

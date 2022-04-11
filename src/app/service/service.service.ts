@@ -199,6 +199,8 @@ printWsGatePass(jcNumber,gpNum,locId){
 
 
 
+
+
 GenerateInvoiceFN(jobCardNum){
   const options = {
     headers: this.headers

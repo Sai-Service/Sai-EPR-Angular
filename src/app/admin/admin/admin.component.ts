@@ -123,6 +123,7 @@ export class AdminComponent implements OnInit {
 
   searchByItem = true;
   searchByDesc = false;
+  deptId:string;
 
   @ViewChild('myinput') myInputField: ElementRef;
   emplId: number;
@@ -162,6 +163,7 @@ export class AdminComponent implements OnInit {
       purchPrice: [],
       mrp: [],
       principleItem: [],
+      deptId:[],
     });
   }
 
@@ -196,6 +198,7 @@ export class AdminComponent implements OnInit {
     this.deptName = sessionStorage.getItem('deptName');
     this.locName = sessionStorage.getItem('locName');
     this.ouName = sessionStorage.getItem('ouName');
+    this.deptId=sessionStorage.getItem('deptId');
     //
     this.loginArray = sessionStorage.getItem('CompName');
 
@@ -562,7 +565,7 @@ export class AdminComponent implements OnInit {
     this.service.getItemDetailsByCode(segment1).subscribe((data1) => {
       if (data1 != null) {
         this.service
-          .searchByItemf9(data1.itemId, this.locId, this.ouId, this.divisionId)
+          .searchByItemf9(data1.itemId, this.locId, this.ouId, this.divisionId,sessionStorage.getItem('deptId'))
           .subscribe((data) => {
             this.lstcomments = data;
             console.log(data);
@@ -651,7 +654,7 @@ export class AdminComponent implements OnInit {
     //    }
 
     this.service
-      .searchByItemf9(itemNumber, this.locId, this.ouId, this.divisionId)
+      .searchByItemf9(itemNumber, this.locId, this.ouId, this.divisionId,sessionStorage.getItem('deptId'))
       .subscribe((data) => {
         this.lstcomments = data;
         console.log(data);
@@ -745,7 +748,8 @@ export class AdminComponent implements OnInit {
       itemId,
       this.locId,
       this.ouId,
-      this.divisionId
+      this.divisionId,
+      this.deptId,
     )
     .subscribe((data) => {
       this.lstcomments = data;

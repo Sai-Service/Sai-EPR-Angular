@@ -1496,11 +1496,11 @@ searchByItemByLoc(locId,itemid,ouId,divId):Observable<any>
     }
   }
 
-searchByItemf9(itemid,locId,ouId,divId):Observable<any>
+searchByItemf9(itemid,locId,ouId,divId,deptId):Observable<any>
 {
   // alert("MS>>> "+ itemid+","+locId+","+ouId+","+divId);
-  return this.http.get(this.ServerUrl+`/itemMst/ItemDtlsF9?locId=${locId}&itemId=${itemid}&ouId=${ouId}&divisionId=${divId}`)
-  // http://localhost:8081/itemMst/ItemDtlsF9?locId=121&itemId=544&ouId=110&divisionId=2
+  // return this.http.get(this.ServerUrl+`/itemMst/ItemDtlsF9?locId=${locId}&itemId=${itemid}&ouId=${ouId}&divisionId=${divId}`)
+  return this.http.get(this.ServerUrl+`/itemMst/ItemDtlsF9?locId=${locId}&itemId=${itemid}&ouId=${ouId}&divisionId=${divId}&deptId=${deptId}`)
 }
 
 searchByItemSegmentDiv(divId,itemSeg):Observable<any>
@@ -2783,6 +2783,11 @@ formData.append('location', locCode);
     return this.http.get(this.ServerUrl + `/orderHeader/getByDateOM?startDt=${startDt}&endDt=${endDt}&locId=${locId}&dept=${deptId}`)
   }
 
+  getRtoDataList(startDt, endDt,ouId,locId){
+    return this.http.get(this.ServerUrl + `/orderHeader/getRTOList?fromDate=${startDt}&toDate=${endDt}&ouId=${ouId}&locId=${locId}`)
+  }
+
+
 getModelWisePrice(){
   return this.http.get(this.ServerUrl + `/orderHeader/priceModelwise`)
 }
@@ -3907,6 +3912,17 @@ viewInvnote(trxNumber){
 
 getJonCardNoSearch(jonCardNo): Observable<any> {
   return this.http.get(this.ServerUrl +`/jobCard/jobDtls/${jonCardNo}`);
+}
+
+
+printAmcDoc(amcNum){
+  // const REQUEST_URI = this.ServerUrl +`/SRGatepass/print/${jcNumber}`;  
+  const REQUEST_URI = this.ServerUrl +`/McpEnrollMst/amcInvoicePrint/${amcNum}`;  
+  return this.http.get(REQUEST_URI, {
+  responseType: 'arraybuffer',
+  headers: this.headers,
+});
+// http://localhost:8081/McpEnrollMst/amcInvoicePrint/AMC2202-8
 }
   
 }

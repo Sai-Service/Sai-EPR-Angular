@@ -1281,17 +1281,17 @@ export class JobCardComponent implements OnInit {
    
     this.labLineValidation=false
 
-    if(Number(arrayControl[index].billableTyId)<=0) { this.labLineValidation=false;return; }
-    if(invItemId===null || invItemId==undefined || invItemId<=0){ this.labLineValidation=false;return; }
+    if(Number(arrayControl[index].billableTyId)<=0) { this.labLineValidation=false; alert ("Please Check BILLABLE TYPE.")  ;return; }
+    if(invItemId===null || invItemId==undefined || invItemId<=0){ this.labLineValidation=false;alert("Please Check ITEM CODE."); return; }
    
-    if(itemSeg===null || itemSeg===undefined || itemSeg.trim()===''){this.labLineValidation=false;return;}
+    if(itemSeg===null || itemSeg===undefined || itemSeg.trim()===''){this.labLineValidation=false;alert("Please Check ITEM SEGMENT.") ;return;}
 
     if (genItem==='Y') {
-        if(itemDesc===null || itemDesc===undefined || itemDesc.trim()===''){this.labLineValidation=false;return;}
+        if(itemDesc===null || itemDesc===undefined || itemDesc.trim()===''){this.labLineValidation=false;alert("Please Check ITEM DESCRIPTION.") ;return;}
     }
 
     if(Number(arrayControl[index].qty)<=0 ||arrayControl[index].qty===null || arrayControl[index].qty===undefined )
-    { this.labLineValidation=false;return; }
+    { this.labLineValidation=false;alert("Please Check QTY.") ;return; }
 
     // if (genItem==='N') {
       // if(Number(arrayControl[index].qty)<=0 ||arrayControl[index].qty===null || arrayControl[index].qty===undefined )
@@ -1676,11 +1676,7 @@ export class JobCardComponent implements OnInit {
             lbInsTax= ((data.obj.jobCardLabLines[ln].insBasicAmt-lbInsDisAmt) * (data.obj.jobCardLabLines[ln].taxPer))/100;
             insLbr4=insLbr4+lbInsTax;
             insLbr5=insLbr3+insLbr4;
-
-
           }
-
-        
 
           this.labCustBasTotal=Math.round((custLbr1+Number.EPSILON)*100)/100;
           this.labCustDisTotal=Math.round((custLbr2+Number.EPSILON)*100)/100;
@@ -1716,8 +1712,6 @@ export class JobCardComponent implements OnInit {
 
             this.onOptionsplitRatioSelect1(ln,data.obj.jobCardMatLines[ln].splitCateId);
 
-          
-
             custMatr1=custMatr1+data.obj.jobCardMatLines[ln].custBasicAmt;
             custMatr2=custMatr2+data.obj.jobCardMatLines[ln].disAmt;
             custMatr3=custMatr3+(data.obj.jobCardMatLines[ln].custBasicAmt-data.obj.jobCardMatLines[ln].disAmt);
@@ -1731,12 +1725,7 @@ export class JobCardComponent implements OnInit {
             matInsTax= ((data.obj.jobCardMatLines[ln].insBasicAmt-data.obj.jobCardMatLines[ln].disAmt) * (data.obj.jobCardMatLines[ln].taxPer))/100;
             insMat4=insMat4+matInsTax;
             insMat5=insMat3+insMat4;
-
-
           }
-
-           
-
             this.matCustBasTotal=Math.round((custMatr1+Number.EPSILON)*100)/100 ;
             this.matCustDisTotal=Math.round((custMatr2+Number.EPSILON)*100)/100 ;
             this.matCustSubTotal=Math.round((custMatr3+Number.EPSILON)*100)/100 ;

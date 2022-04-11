@@ -491,11 +491,11 @@ getrepairOrder($event)
 
  onOptionSelectedSubInv(event:any,i)
  {
-   
-  //  alert('----' + event +'*****');
-  //  if(event==='')
-  //  {return;
-  //  }
+//  alert(event.length);
+//  if (event.length < 8){
+//    alert('Please check Item not valid.!');
+//    return;
+//  }
    console.log(this.ItemIdList);
    let select1=this.ItemIdList.find(d=>d.SEGMENT===event);
    console.log(select1);

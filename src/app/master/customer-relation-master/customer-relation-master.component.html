@@ -25,7 +25,8 @@
                                     </td> -->
 
                                     <td>  
-                                        <select style="width: 200px;"  formControlName="empTktNo" id="empTktNo" [(ngModel)]="empTktNo" class="form-control" (ngModelChange)='onSelectEmpTktNo($event)'>
+                                        <select style="width: 200px;"  formControlName="empTktNo" id="empTktNo" [(ngModel)]="empTktNo" class="form-control" 
+                                            (ngModelChange)='onSelectEmpTktNo($event)'>
                                             <option disabled>--Select--</option>
                                             <option *ngFor="let sc of  EmployeeList" [ngValue]="sc.ticketNo"  >
                                             {{sc.emplId}}-{{sc.ticketNo}}-{{sc.fullName}}
@@ -60,47 +61,30 @@
                     <fieldset class="RFS">
                         <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Employee Information</legend>
                         <table class="center">
-                            <tr>
-                               
+                             <tr>
                                 <input hidden type="text"  formControlName="employeeId" id="employeeId"  [(ngModel)]="employeeId" class="form-control">
                             
-                             <tr>
-                                <td style="width: 15%" class="LabelFontStyle">Emp&nbsp;Ticket&nbsp;No:</td>
-                                <td>
-                                    <input disabled type="text"  formControlName="empTktNo" id="empTktNo"  [(ngModel)]="empTktNo" class="form-control">
-                                </td>
-
-                                <td style="width: 15%" class="LabelFontStyle">Emp&nbsp;Name&nbsp;:</td>
-                                <td>
-                                    <input disabled  style="width: 300px;"  type="text"  formControlName="emplName" id="emplName"  [(ngModel)]="emplName" class="form-control">
-                                </td>
-
-                                <td style="width: 15%" class="LabelFontStyle">Start&nbsp;Date&nbsp;:</td>
-                                <td>
-                                    <input disabled type="date"  formControlName="startDate" id="startDate"  [(ngModel)]="startDate" class="form-control">
-                                </td>
-                               
-                               </tr>
-                               <tr>
-                                <td style="width: 15%" class="LabelFontStyle">Emp&nbsp;Status&nbsp;:</td>
-                                <td>
-                                    <input disabled type="text"  formControlName="empStatus" id="empStatus"  [(ngModel)]="empStatus" class="form-control">
-                                </td>
-
+                                <td style="width: 15%" class="LabelFontStyle">Ticket&nbsp;No:</td>
+                                <td><input disabled type="text"  formControlName="empTktNo" id="empTktNo"  [(ngModel)]="empTktNo" class="form-control"></td>
+                              
+                                <td style="width: 15%" class="LabelFontStyle">Name&nbsp;:</td>
+                                <td><input disabled style="width: 300px;"   type="text"  formControlName="emplName" id="emplName"  [(ngModel)]="emplName" class="form-control"></td>
+                             
                                 <td style="width: 15%" class="LabelFontStyle">Designation&nbsp;:</td>
-                                <td>
-                                    <input disabled style="width: 300px;" type="text"  formControlName="empDesig" id="empDesig"  [(ngModel)]="empDesig" class="form-control">
-                                </td>
+                                <td><input disabled style="width: 200px;"  type="text"  formControlName="empDesig" id="empDesig"  [(ngModel)]="empDesig" class="form-control"> </td>
+                               
 
-                                
-
+                                <td style="width: 15%" class="LabelFontStyle">Status&nbsp;:</td>
+                                <td><input disabled   type="text"  formControlName="empStatus" id="empStatus"  [(ngModel)]="empStatus" class="form-control"> </td>
+                               
+                                <!-- <td style="width: 15%" class="LabelFontStyle">Start&nbsp;Date&nbsp;:</td>
+                                <td><input disabled type="date"  formControlName="startDate" id="startDate"  [(ngModel)]="startDate" class="form-control"></td>
+                              
                                 <td style="width: 15%" class="LabelFontStyle">End&nbsp;Date&nbsp;:</td>
-                                <td>
-                                    <input disabled type="date"  formControlName="endDate" id="endDate"  [(ngModel)]="endDate" class="form-control">
-                                </td>
-
+                                <td><input disabled type="date"  formControlName="endDate" id="endDate"  [(ngModel)]="endDate" class="form-control"></td>
+                                -->
                                </tr>
-
+                            
                         </table>
                     </fieldset>
 
@@ -155,14 +139,14 @@
                             <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
                             <ng-template #thenBlock1>
                             <td> <button type="submit" class="btn btn-info" id="register" (click)="newMast()">Save</button></td>
-                            <td> <button type="submit" class="btn btn-info" id="register" (click)="searchMast(0)">Search</button></td>
+                            <!-- <td> <button type="submit" class="btn btn-info" id="register" (click)="searchMast(0)">Search</button></td> -->
                             <td> <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>
                             <td> <button type="submit" class="btn btn-info" id="register" (click)="closeMast()">Close</button></td>
                            
                             </ng-template>
                             <ng-template #elseBlock1>
                                 <td> <button disabled type="submit" class="btn btn-info" id="register" (click)="newMast()">Save</button></td>
-                                <td> <button type="submit" class="btn btn-info" id="register" (click)="searchMast(0)">Search</button></td>
+                                <!-- <td> <button type="submit" class="btn btn-info" id="register" (click)="searchMast(0)">Search</button></td> -->
                                 <td> <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>
                                 <td> <button type="submit" class="btn btn-info" id="register" (click)="closeMast()">Close</button></td>
                             </ng-template>

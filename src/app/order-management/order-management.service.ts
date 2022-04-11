@@ -305,6 +305,11 @@ export class OrderManagementService {
   priceListNameList1(ouId, divisionId): Observable<any> {
     return this.http.get(this.ServerUrl + `/pricelist/priceHdr?ouId=${ouId}&divisionId=${divisionId}`);
   }
+
+
+  priceListNameListouwise(ouId, divisionId,deptId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/pricelist/priceHdrOu?ouId=${ouId}&divisionId=${divisionId}&deptId=${deptId}&priceSubType=MRP`);
+  }
   public OrderBook(BookRecord) {
     const options = {
       headers: this.headers

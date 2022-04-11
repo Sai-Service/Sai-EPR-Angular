@@ -24,6 +24,7 @@ import { ShippingNetworkComponent } from './shipping-network/shipping-network.co
 import { SalesOrderProformaComponent } from './sales-order-proforma/sales-order-proforma.component';
 import { PriceUpdationComponent } from './price-updation/price-updation.component';
 import { SalesOrderModelWisePriceComponent } from './sales-order-model-wise-price/sales-order-model-wise-price.component';
+import { RtoLineItemReportComponent } from './rto-line-item-report/rto-line-item-report.component';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { SalesOrderModelWisePriceComponent } from './sales-order-model-wise-pric
      ShippingNetworkComponent,
      SalesOrderProformaComponent,
      PriceUpdationComponent,
-     SalesOrderModelWisePriceComponent ],
+     SalesOrderModelWisePriceComponent,
+     RtoLineItemReportComponent ],
   imports: [
     CommonModule,
     OrderManagementRoutingModule,

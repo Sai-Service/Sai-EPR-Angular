@@ -1,0 +1,113 @@
+<form [formGroup]="rtoListForm" (ngSubmit)="rtoList(rtoListForm.value)">
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <td class="PageHeader">
+                RTO&nbsp;Report&nbsp;
+            </td>
+        </tr>
+    </table>
+    <table class="center">
+        <tr>
+            <td>
+                <button type="submit" class="btn btn-primary" id="register" (click)="refresh()">
+                    Clear
+                </button>
+            </td>
+            <td>
+                <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
+            </td>
+        </tr>
+    </table>
+        <table class="center" style="width: 100%;background-color: #FFE4B5;">
+            <tr>
+                <td>
+                    <table class="center">
+                        <tr>
+
+                            <td>From&nbsp;Date&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control" formControlName="startDt" 
+                                value={{startDt}}  max="{{minDate | date:'yyyy-MM-dd'}}">
+                            </td>
+
+                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control" formControlName="endDt" 
+                                value={{endDt}} max="{{minDate | date:'yyyy-MM-dd'}}">
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-primary" id="search" (click)="getrtoReport()" style="width:fit-content">
+                                    Get&nbsp;Order&nbsp;List
+                                </button>
+                            </td>
+                           
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <div class="col-md-12 table-responsive" #epltable>
+            <div style="padding-bottom: 10px;padding-top: 10px;">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <button (click)="exportToExcel()" class="btn btn-success" style="width: fit-content;">Export To Excel</button>
+                    </div>
+                </div>
+            </div>   
+            <div class="grid_scroll">
+        <table  class="GridFont"  style="border-color:#494949;width: 100%;">       
+        <tr class="GridHeader" style="font-size: 11px;">
+                <th >Sr. No</th>
+                <th >Cust Name</th>
+                <th >Cust Address</th>
+                <th >Cust Contact No</th>
+                <th >Cust Email Id</th>
+                <th >Variant Description</th>
+                <th >VIN</th>
+                <th >Engine No</th>
+                <th >Ex-Showroom Price</th>
+                <th >Policy No</th>
+                <th >Invoice No</th>
+                <th >Invoice Date</th>
+                <th >RTO Fess</th>
+                <th >RTO Cess</th>
+                <th >RTO Passing Date</th>
+                <th >Postal Charge</th>
+                <th >Registration Charge</th>
+                <th >Insurance Comapany</th>
+                <th >Hypothication Charge</th>
+                <th >Smart Card Charge</th>
+                <th >Broker Name</th>
+                <th >Son Of</th>
+                <th >Insurance Date</th>
+            </tr>
+            <tr *ngFor="let com of rtoDataListDetails ; let i= index" class="ItemStyle" style="text-decoration:none;font-size: 11px;">
+                <td style="padding-left: 5px; text-align: center;">{{com.ROWNUM}}</td>
+                <td style="padding-left: 5px; text-align: center;">{{com.CUSTNAME}}</td>
+                <td style="padding-left: 5px; text-align: center;">{{com.CUSTADD}}</td>
+                <td style="padding-left: 5px; text-align: center;">{{com.CUSTCONTACT}}</td>
+                <td style="padding-left: 5px; text-align: center;">{{com.EMAILID}}</td>
+                <td style="padding-left: 5px; text-align: center;">{{com.VARIANTDESC}}</td>
+                <td style="padding-left: 5px; text-align: center;">{{com.VIN}}</td>
+                <td style="padding-left: 5px; text-align: center;">{{com.ENGINENO}}</td>
+                <td style="padding-left: 5px; text-align: center;">{{com.EXSHWPRICE}}</td>
+                <td style="padding-left: 5px; text-align: center;">{{com.POLICYNO}}</td>
+                <td style="padding-left: 5px; text-align: center;">{{com.TRXNUMBER}}</td>
+                <td style="padding-left: 5px; text-align: center;">{{com.TRXDATE}}</td>
+                <td style="padding-left: 5px; text-align: center;">{{com.RTOFEES}}</td>
+                <td style="padding-left: 5px; text-align: center;">{{com.RTOCESS}}</td>
+                <td style="padding-left: 5px; text-align: center;">{{com.RTOPASSINGDATE}}</td>
+                <td style="padding-left: 5px; text-align: center;">{{com.POSTALCHARGE}}</td>
+                <td style="padding-left: 5px; text-align: center;">{{com.REGICHARGE}}</td>
+                <td style="padding-left: 5px; text-align: center;">{{com.INSCOMPNAME}}</td>
+                <td style="padding-left: 5px; text-align: center;">{{com.HYPCHARGE}}</td>
+                <td style="padding-left: 5px; text-align: center;">{{com.SMARTCARDCHARGE}}</td>
+                <td style="padding-left: 5px; text-align: center;">{{com.BROKERNAME}}</td>
+                <td style="padding-left: 5px; text-align: center;">{{com.SONOF}}</td>
+                <td style="padding-left: 5px; text-align: center;">{{com.INSUDATE}}</td>
+            </tr>
+        </table>
+            </div>
+    </div>
+   
+</form>
