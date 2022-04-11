@@ -46,6 +46,7 @@ import { PayableInvoiceNewComponent } from './payable-invoice-new/payable-invoic
 import { DeadStockComponent } from './dead-stock/dead-stock.component';
 import { PoInvListComponent } from './po-inv-list/po-inv-list.component';
 
+
 // import { ShippingNetworkComponent } from './shipping-network/shipping-network.component';
 
 // import { OrderGenerationComponent } from './order-generation/order-generation.component';
@@ -98,6 +99,7 @@ import { PoInvListComponent } from './po-inv-list/po-inv-list.component';
     PayableInvoiceNewComponent,
     DeadStockComponent,
     PoInvListComponent,
+ 
   
     // ShippingNetworkComponent,
     // OrderGenerationComponent,
