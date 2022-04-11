@@ -417,8 +417,7 @@ printGP(){
   
   var regNum=this.serviceGatepassForm.get('regNo').value
   var gpNum=this.serviceGatepassForm.get('gpNumber').value
-  
- 
+
   if(gpNum==undefined || gpNum==null || gpNum<=0) {alert("Gate Pass Number not Selected..."); return;}
   if(regNum==undefined || regNum==null || regNum.trim()==''){return;}
 

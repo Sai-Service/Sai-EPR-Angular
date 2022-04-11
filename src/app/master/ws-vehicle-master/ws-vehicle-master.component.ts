@@ -620,14 +620,16 @@ export class WsVehicleMasterComponent implements OnInit {
     const formValue: IWsVehicleMaster =this.transeData( this.wsVehicleMasterForm.value);
     this.CreateItemCode();
     this.CheckDataValidations();
-     this.saveButton=false;
-     this.updateButton=false;
-     this.displayButton=false;
+ 
+    
  
     if (this.checkValidation) {
       alert("Data Validation done Sucessfully....")
 
-     
+      this.saveButton=false;
+      this.updateButton=false;
+      this.displayButton=false;
+
       console.log(formValue);
       formValue.divisionId =Number(sessionStorage.getItem('divisionId'));
       formValue.divisionName =sessionStorage.getItem('divisionName');
@@ -647,7 +649,7 @@ export class WsVehicleMasterComponent implements OnInit {
           }
         }
       });
-    } else { alert("Data Validation Not Sucessfull....\nPosting Not Done...") }
+    } else { alert("Data Validation Failed....\nRecord not saved..") }
   }
 
 
@@ -692,12 +694,18 @@ export class WsVehicleMasterComponent implements OnInit {
 
 
   CheckRegNo(mReg: string) { 
-    mReg=mReg.toUpperCase();
+      this.wsVehicleMasterForm.patchValue({regNo :mReg.trim()});
+      mReg =this.wsVehicleMasterForm.get('regNo').value;
+      mReg=mReg.toUpperCase();
+ 
+      if(mReg.length<9 || mReg.length>10) { alert (mReg+ " :Registration No should have minimum 9 & maximum 10 characters. " ) ; this.wsVehicleMasterForm.patchValue({regNo :''});return;}
+   
+
     this.service.getVehRegDetailsNew(mReg)
     .subscribe(
       data => {
 
-       if(data.code===400) { alert (data.message + "." +data.obj); return; }
+       if(data.code===400) { alert (data.message + "." +data.obj+ ". Please enter vehcicle details. "); return; }
 
        if( data.code ===200)  { alert ("Vehicle Registration No : "+ mReg + " Already Exists...") 
             this.displayButton = false;
@@ -1238,9 +1246,12 @@ export class WsVehicleMasterComponent implements OnInit {
 
     const formValue: IWsVehicleMaster = this.wsVehicleMasterForm.value;
 
-    if (formValue.regNo === undefined || formValue.regNo === null || formValue.regNo.trim() === '') {
+    this.wsVehicleMasterForm.patchValue({regNo :formValue.regNo.trim()});
+    this.wsVehicleMasterForm.patchValue({vin :formValue.vin.trim()});
+
+    if (formValue.regNo === undefined || formValue.regNo === null || formValue.regNo.trim() === '' || formValue.regNo.length <9 || formValue.regNo.length>10) {
       this.checkValidation = false;
-      alert("REGISTRATION NO : Should not be null....");
+      alert("REGISTRATION NO  is not valid ...\nShould have minimum 9 & maximum 10 characters.");
       return;
     }
 
@@ -1256,9 +1267,10 @@ export class WsVehicleMasterComponent implements OnInit {
       return;
     }
 
-    if (formValue.vin === undefined || formValue.vin === null || formValue.vin.trim() === '') {
+    
+    if (formValue.vin === undefined || formValue.vin === null || formValue.vin.trim() === '' || formValue.vin.length <10 ){
       this.checkValidation = false;
-      alert("VIN : Should not be null....");
+      alert("VIN  is not valid....\nShould have minimum 10 characters");
       return;
     }
 
@@ -1297,6 +1309,11 @@ export class WsVehicleMasterComponent implements OnInit {
       alert("ITEM CATEGORY: Should not be null");
     }
 
+    if (formValue.dealerCode === undefined || formValue.dealerCode === null || formValue.dealerCode.trim() === '') {
+      this.checkValidation = false;
+      alert("DEALER CODE : Should not be null....");
+      return;
+    }
     
 
     // if (formValue.itemTypeForCat === undefined || formValue.itemTypeForCat === null || formValue.itemTypeForCat.trim() === '') {
@@ -1366,6 +1383,14 @@ export class WsVehicleMasterComponent implements OnInit {
     this.checkValidation = true
 
   }
+
+  validateVin(x){
+    this.wsVehicleMasterForm.patchValue({vin :x.trim()});
+    if(x.length<10) { alert ("VIN : Should have minimum 10 characters. " +x.length) ; this.wsVehicleMasterForm.patchValue({vin :''});}
+    
+  }
+
+ 
 
   createCustomer(){
     this.router.navigate(['/admin/master/customerMaster']);
