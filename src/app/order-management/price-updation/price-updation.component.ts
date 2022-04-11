@@ -39,6 +39,8 @@ export class PriceUpdationComponent implements OnInit {
   // orderedItem:string;
   public itemMap = new Map<string, any[]>();
   public itemMap2 = new Map<number, any[]>();
+  subInventoryId: number;
+  public subInvCode: any;
 
   constructor(private fb: FormBuilder, private router1: ActivatedRoute, private location: Location, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService) {
     this.PriceUpdationForm = fb.group({
@@ -54,6 +56,12 @@ export class PriceUpdationComponent implements OnInit {
 
    PriceUpdation(PriceUpdationForm: any) { }
   ngOnInit(): void {
+    this.service.subInvCode2(sessionStorage.getItem('deptId'), sessionStorage.getItem('divisionId') ).subscribe(
+      data => {
+        this.subInvCode = data;
+        console.log(this.subInventoryId);
+        this.subInventoryId = this.subInvCode.subInventoryId;
+      });
   }
   searchByItemSegmentDiv(itemDesc: string) {
     var itemDesc = itemDesc.toUpperCase();
@@ -87,7 +95,7 @@ export class PriceUpdationComponent implements OnInit {
   prc:number;
   itemDetails(itemSeg){
     var itemSeg = itemSeg.toUpperCase();
-    this.orderManagementService.getOnHandQty(sessionStorage.getItem('locId'),itemSeg,sessionStorage.getItem('deptId')).subscribe((res: any) => {
+    this.orderManagementService.getOnHandQty(sessionStorage.getItem('locId'),itemSeg,this.subInventoryId).subscribe((res: any) => {
         this.itemDetailsList=res;
       //   for (let i=0;i<res.length;i++){
       //   alert(res[i].prc);

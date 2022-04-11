@@ -424,7 +424,7 @@ printGP(){
 
   const fileName = 'download.pdf';
   const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-  this.service.printWsGatePass(regNum,gpNum,sessionStorage.getItem('locId'))
+  this.serviceService.printWsGatePass(regNum,gpNum,sessionStorage.getItem('locId'))
     .subscribe(data => {
       var blob = new Blob([data], { type: 'application/pdf' });
       var url = URL.createObjectURL(blob);
