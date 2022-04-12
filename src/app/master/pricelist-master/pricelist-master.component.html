@@ -226,40 +226,33 @@
                                     </ng-template>
 
                                     <td style="width: 15%" class="LabelFontStyle">Price&nbsp;Sub&nbsp;Type:</td>
-                                    
                                     <div *ngIf="displayButton; then thenBlock113; else elseBlock113"></div>
-                                    <ng-template #thenBlock113>
-                                   
-                                        <td>  
-                                            <select formControlName="priceSubType" id="priceSubType" [(ngModel)]="priceSubType" class="form-control" style="background-color: yellow;">
+                                        <ng-template #thenBlock113>
+                                            <td>  
+                                                <select formControlName="priceSubType" id="priceSubType" [(ngModel)]="priceSubType" class="form-control" style="background-color: yellow;">
+                                                    <option disabled>--Select--</option>
+                                                    <option *ngFor="let sc of  PriceSubTypeList" [ngValue]="sc.code"  >
+                                                    {{sc.code}}
+                                                    </option>
+                                                </select>
+                                            </td>
+                                        </ng-template>
+                                       
+                                        <ng-template #elseBlock113>
+                                            <td>
+                                                <select disabled formControlName="priceSubType" id="priceSubType" [(ngModel)]="priceSubType" class="form-control">
                                                 <option disabled>--Select--</option>
                                                 <option *ngFor="let sc of  PriceSubTypeList" [ngValue]="sc.code"  >
                                                 {{sc.code}}
                                                 </option>
                                             </select>
-                                        </td>
-                                    </ng-template>
-                                       
-                                    <ng-template #elseBlock113>
-                                        <td>
-                                            <select disabled formControlName="priceSubType" id="priceSubType" [(ngModel)]="priceSubType" class="form-control">
-                                            <option disabled>--Select--</option>
-                                            <option *ngFor="let sc of  PriceSubTypeList" [ngValue]="sc.code"  >
-                                            {{sc.code}}
-                                            </option>
-                                        </select>
-                                        </td>
-
-                                    </ng-template>
-
-
+                                            </td>
+                                        </ng-template>
                                 </tr>
                                      
                     </table>
                     </fieldset>
 
-
-                                    
                     <table style="width: 100%; background-color: #FFE4B5;">
                         <tr>
                             <td class="SubHeading2"> Item Line Details&nbsp;</td>
@@ -393,12 +386,16 @@
                                                       <!-- <th style="width:5rem" scope="col">Item Id</th> -->
                                                       <th style="width:15rem" scope="col">Item Code</th>
                                                       <th style="width:15rem" scope="col">Item Description</th>
-                                                      <th style="width:8rem" scope="col">Item Category</th>
+                                                      <th style="width:5rem" scope="col">Item Category</th>
                                                       <th style="width:3rem" scope="col">UOM</th>
-                                                      <th style="width:6rem" scope="col">Batch Code</th>
+                                                      <th style="width:5rem" scope="col">Batch Code</th>
                                                       <th style="width:7rem" scope="col">Taxable Price</th>
                                                       <th style="width:4rem" scope="col">Tax%</th>
-                                                      <th style="width:7rem" scope="col">MRP</th>
+                                                      <div *ngIf="mrpPriceList; then mrpYes; else mrpNo"></div>
+                                                      <ng-template #mrpYes> 
+                                                        <th style="width:7rem" scope="col">MRP</th>
+                                                      </ng-template><ng-template #mrpNo></ng-template>
+                                                      <th style="width:7rem" scope="col">Date Updated</th>
                                                       <!-- <th style="width:8rem" scope="col">Start Date</th> -->
                                                       <!-- <th style="width:8rem" scope="col">Last Update Date</th> -->
                                                       <th style="width:2rem" scope="col">Add+</th>
@@ -464,13 +461,21 @@
                                                 </ng-template>
                                               
                                                 <td><input disabled style="width:20rem;"  type="text" formControlName="itemDescription" class="form-control"   placeholder="Item Description "  ></td>
-                                                <td><input style="width:10rem;" disabled  type="text" formControlName="itemCategory"  class="form-control" placeholder="Item Category "  > </td>
-                                                <td><input style="width: 5rem;" disabled  type="text" formControlName="uom"  class="form-control" placeholder="Uom "  > </td>
-                                                <td><input style="width:6rem;background-color: yellow;"  type="text" formControlName="batchCode"  class="form-control" placeholder="Batch Code"  (change)="validateitemWithBatchCode(i)"  > </td>
-                                                <td><input style="text-align: right;width:7rem;background-color: yellow;"  type="number" formControlName="priceValue"  class="form-control" (change)="validatePrice(i)" placeholder="Price "  > </td>
-                                                <td><input disabled style="text-align: right;width:4rem;"  type="number" formControlName="tax"  class="form-control"  placeholder="TAX"></td>
+                                                <td><input style="width:8rem;" disabled  type="text" formControlName="itemCategory"  class="form-control" placeholder="Item Category "  > </td>
+                                                <td><input style="width: 3rem;" disabled  type="text" formControlName="uom"  class="form-control" placeholder="Uom "  > </td>
+                                                <td><input style="width:5rem;background-color: yellow;"  type="text" formControlName="batchCode"  class="form-control" placeholder="Batch Code"  (change)="validateitemWithBatchCode(i)"  > </td>
+                                                <td><input style="text-align: right;width:6rem;background-color: yellow;"  type="number" formControlName="priceValue"  class="form-control" (change)="validatePrice(i)" placeholder="Price "  > </td>
+                                                <td><input disabled style="text-align: right;width:3rem;"  type="number" formControlName="tax"  class="form-control"  placeholder="Tax"></td>
                                                 <!-- <td><input disabled style="text-align: right;width:7rem;"  type="number" formControlName="mrp"  class="form-control"  placeholder="MRP"></td> -->
-                                                <td><input disabled style="text-align: right;width:7rem;"  type="number" formControlName="attribute10"  class="form-control"  placeholder="MRP"></td>
+                                               
+                                                <div *ngIf="mrpPriceList; then mrpYes1; else mrpNo1"></div>
+                                                <ng-template #mrpYes1> 
+                                                    <td><input disabled style="text-align: right;width:6rem;"  type="number" formControlName="attribute10"  class="form-control"  placeholder="Mrp"></td>
+                                               </ng-template><ng-template #mrpNo1></ng-template>
+                                                  
+                                                <td><input disabled style="text-align: right;width:9rem;"  type="text" formControlName="lastUpdatedDate"  class="form-control"  placeholder="Date Updated"></td>
+                                       
+                                                
                                             
                                                 <!-- <td><input disabled style="text-align: right;width:9rem;"  type="date"   formControlName="startDate"  class="form-control"></td>
                                                 <td><input disabled style="text-align: right;width:9rem;"  type="date"   formControlName="lastUpdatedDate"  class="form-control"></td>
@@ -500,7 +505,7 @@
                                 <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
                                 <ng-template #thenBlock1>
                                     <td>
-                                        <button type="button" class="btn btn-info" (click)="newMast()" [disabled]="!priceListMasterForm">Save</button>
+                                        <button type="button" class="btn btn-info" (click)="newMast()" >Save</button>
                                     </td>
 
                                     <td>
@@ -945,12 +950,14 @@
         <tbody>
                 <tr class="GridHeader">
                 <th style="width:5rem" scope="col">Srl&nbsp;No</th>
+                <th style="width:6rem" scope="col">Division&nbsp;</th>
+                <th style="width:10rem" scope="col">Operating&nbsp;Unit</th>
+              
                 <!-- <th style="width:5rem" scope="col">PL&nbsp;Header&nbsp;Id</th> -->
-                <th style="width:10rem" scope="col"> Price&nbsp;List&nbsp;Name</th>
+                <th style="width:15rem" scope="col"> Price&nbsp;List&nbsp;Name</th>
                 <!-- <th style="width:10rem" scope="col">Price&nbsp;List&nbsp;Description</th> -->
                 <th style="width:6rem" scope="col">PL&nbsp;Type</th>
-                <th style="width:10rem" scope="col">Operating&nbsp;Unit</th>
-                <th style="width:10rem" scope="col">Division&nbsp;</th>
+                <th style="width:6rem" scope="col">Sub&nbsp;Type</th>
                 <th style="width:12rem" scope="col">Start&nbsp;Date</th>
                 <th style="width:10rem" scope="col">Status</th>
                 <th style="width:6rem" scope="col">Select</th>
@@ -960,13 +967,12 @@
         <tr *ngFor="let com of lstcomments let i=index" class="ItemStyle" style="text-decoration:none;">
                
                 <td style="text-align: center;">{{i+1}}</td>
-                <!-- <td>{{com.priceListHeaderId}}</td> -->
-                <td>{{com.priceListName}}</td>
-                <!-- <td>{{com.description}}</td>    -->
-                <td>{{com.priceListType}}</td>   
-                <td>{{com.ouName}}</td> 
                 <td style="text-align: center;">{{com.divisionName}}</td> 
-                <td style="text-align: center;">{{com.startDate |date:'dd-MM-y'}}</td>
+                <td style="text-align: center;">{{com.ouName}}</td> 
+                <td>{{com.priceListName}}</td>
+                <td style="text-align: center;">{{com.priceListType}}</td>   
+                <td style="text-align: center;">{{com.priceSubType}}</td>
+                <td style="text-align: center;">{{com.startDate |date:'dd/MM/y'}}</td>
                 <td style="text-align: center;">{{com.status}}</td>
                 <td style="text-align: center;"><button class="btn btn-info" (click)="SelectPL(com.priceListHeaderId)">Select</button></td> 
                 <td style="text-align: center;"><button class="btn btn-info" (click)="exportToExcel(com.priceListHeaderId)">Download</button></td>    
