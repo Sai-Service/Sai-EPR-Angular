@@ -61,6 +61,7 @@ const routes: Routes = [
   {path:'PaymentReceipt/:orderNumber',component:PaymentReceiptComponent},
   // {path:'PaymentAr/:regNo',component:PaymentArComponent},
   {path:'PaymentAr/:jobCardNum',component:PaymentArComponent},
+  {path:'PaymentAr/:invNumber',component:PaymentArComponent},
   {path:'PaymentAr',component:PaymentArComponent},
   // {path:'ReceiptArApplication',component:ReceiptArApplicationComponent},
   {path:'SaiExtendedWarranty',component:SaiExtendedWarrantyComponent},

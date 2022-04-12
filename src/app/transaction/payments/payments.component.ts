@@ -409,6 +409,11 @@ jeSource: [],
      var suppNo1 = this.paymentForm.get('obj1').value;
      console.log(suppNo1);
     this.payInvoiceLineDtlArray().clear();
+    if(suppNo1[index].source==='REFUND' &&suppNo1[index].docNo===null)
+    {
+     var invArr = this.paymentForm.get('obj').value;
+      invArr.controls[0].get('invoiceAmt').disable();
+    }
     if(suppNo1[index].invTypeLookupCode==='Prepayment' &&suppNo1[index].docNo===null)
 {
   var payLnGrp: FormGroup = this.payInvoiceLineDtl();
@@ -867,6 +872,23 @@ console.log(jsonData);
             }
           }
         });
+      }
+      ArPaymentNavigation() {
+        alert('AR Receipt Form')
+        var arraybaseNew = this.paymentForm.get('obj1') as FormArray;
+        var arraybaseNew1 = arraybaseNew.getRawValue();
+        console.log(arraybaseNew1);
+        
+        for (let i=0; i<arraybaseNew1.length;i++){
+          var invNumber = arraybaseNew1[i].docNo;
+        alert(invNumber);
+        var sourceType=arraybaseNew1[i].source;
+        alert(sourceType)
+        // var invType = arraybaseNew1[i].invTypeLookupCode;
+        if (sourceType==='REFUND') {
+           this.router.navigate(['/admin/transaction/PaymentAr',invNumber]);
+        }
+      }
       }
 
     }
