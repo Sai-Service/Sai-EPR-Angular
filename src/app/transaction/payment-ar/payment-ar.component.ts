@@ -478,14 +478,26 @@ export class PaymentArComponent implements OnInit {
     // });
 
 
+    // this.sub = this.router1.params.subscribe(params => {
+    //    var jcNum = params['jobCardNum'];
+    //   if (jcNum != undefined){
+    //     this.fromJc=true;
+    //     this.refType='Service-Order'
+    //   this.GetJobCardDetails(jcNum);}
+    // });
+
+
+
     this.sub = this.router1.params.subscribe(params => {
-       var jcNum = params['jobCardNum'];
-      if (jcNum != undefined){
-        this.fromJc=true;
-        this.refType='Service-Order'
-      this.GetJobCardDetails(jcNum);}
-      // alert ("JC Number : "+jcNum);
-    });
+      var invoiceno = params['invNumber'];
+      alert('paymentAR Alert'+invoiceno);
+     if (invoiceno != undefined){
+      //  this.fromJc=true;
+       this.referenceNo=invoiceno;
+    //  this.GetJobCardDetails(invoiceno);
+    }
+     // alert ("JC Number : "+jcNum);
+   });
 
 
     
