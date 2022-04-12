@@ -250,6 +250,7 @@ export class OPMasterDtoComponent implements OnInit {
   displayButton = true;
   displayLine = true;
   displayHSN: Array<boolean> = [];
+  displayTaxCategotySelect:Array<boolean>=[];
   displayinvDesc = true;
   displayBillShipList = true;
   displayBillShipList1 = true;
@@ -873,6 +874,9 @@ export class OPMasterDtoComponent implements OnInit {
     // this.displayPoLine[aa] = true;
     this.displayPoLine.push(true);
     this.hideArray[index] = true;
+    // debugger;
+    var lineNum=(index-1);
+    this.displayTaxCategotySelect[lineNum]=false;
     //alert(document.activeElement);
 
   }
@@ -885,7 +889,7 @@ export class OPMasterDtoComponent implements OnInit {
     // else {
     //   this.lineDetailsArray.removeAt(index);
     // }
-debugger
+// debugger
     this.displayPoLine[index] = true;
     this.hideArray[index] = true;
     this.lineDetailsArray.removeAt(index);
@@ -1607,7 +1611,7 @@ debugger
               }
               else {
                 this.ItemDetailsList = res.obj;
-
+                this.displayTaxCategotySelect[index]=true;
                 // alert(this.ItemDetailsList.gstPercentage);
                 var patch = this.poMasterDtoForm.get('poLines') as FormArray;
 
@@ -2303,6 +2307,19 @@ debugger
   filterRecord(event, i) {
     var itemCode = event.target.value;
     if (event.keyCode == 13) {
+      if (itemCode.length === 8) {
+        this.service.invItemList2New('GOODS', (sessionStorage.getItem('deptName')), (sessionStorage.getItem('divisionId')), itemCode.toUpperCase())
+          .subscribe((data) => {
+            if (data.length === 0) {
+              alert('Item Not Present in Master');
+              return;
+            }
+            else {
+              this.invItemList = data;
+              this.onOptioninvItemIdSelected(itemCode,i)
+            }
+          }); 
+      }
       if (itemCode.length === 4) {
         // if (event.keyCode == 13) {
         this.service.invItemList2New('GOODS', (sessionStorage.getItem('deptName')), (sessionStorage.getItem('divisionId')), itemCode.toUpperCase())

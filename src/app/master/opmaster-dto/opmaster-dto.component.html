@@ -1002,6 +1002,8 @@
 
                                                             </td>
                                                             <td>
+                                                                <div *ngIf="displayTaxCategotySelect[i]; then thenTaxCategotySelect; else elseTaxCategotySelect"> </div>
+                                                                <ng-template #thenTaxCategotySelect>
                                                                 <select formControlName="taxCategoryName" id="taxCategoryName"
                                                                     (change)='onOptionTaxCatSelected(i,$event)' 
                                                                     class="form-control">
@@ -1010,6 +1012,10 @@
                                                                         {{sc.taxCategoryName}}
                                                                     </option>
                                                                 </select>
+                                                                </ng-template>
+                                                                <ng-template #elseTaxCategotySelect>
+                                                                    <input type="text" disabled formControlName="taxCategoryName" style="width: 180px;" class="form-control">
+                                                                </ng-template>
                                                             </td>
                                                             <td> <input type="number" min="0.00"
                                                                     formControlName="orderedQty"
