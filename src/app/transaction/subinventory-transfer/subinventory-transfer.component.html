@@ -87,6 +87,21 @@
              <td>
                <input  type="text" class="form-control"formControlName="remarks">
              </td>
+             <div *ngIf="dispPhyLoc; then thenEnPhyLoc; else elseDisPhyLoc">
+            </div>
+            <ng-template #thenEnPhyLoc>
+            </ng-template>
+            <ng-template #elseDisPhyLoc>
+             <td style="width: 15%" class="LabelFontStyle">
+              Physical Location:
+              </td>
+              <td>
+                <select type="text" class="form-control" formControlName="attribute3">
+                  <option>--Select--</option>
+                  <option *ngFor="let ib of phyLocation">{{ib.code}}</option>
+                  </select>
+              </td>
+            </ng-template>
           </tr>
       </table>
       <br>

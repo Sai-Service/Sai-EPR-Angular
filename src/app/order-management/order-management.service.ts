@@ -480,7 +480,11 @@ export class OrderManagementService {
       return this.http.get(this.ServerUrl + `/orderHeader/getVehiclePrice?code=${model}&variant=${variant}&colorCode=${color}`);
     }
   }
-
+  dealerShipBaseAmtNew(model, variant, color,ouId): Observable<any> {
+    if (variant != null && variant != null) {
+      return this.http.get(this.ServerUrl + `/orderHeader/getVehiclePrice?code=${model}&variant=${variant}&colorCode=${color}&ouId=${ouId}`);
+    }
+  }
 
   public variantDetailsUpdate(orderNumber, model, variant, color, basicValue) {
     const options = {

@@ -226,6 +226,7 @@ workshopReturn(WorkshopReturnForm:any){}
 
 
 addnewtrxLinesList(){
+  
   this.trxLinesList().push(this.newtrxLinesList());
     
 var len = this.trxLinesList().length;
@@ -238,6 +239,11 @@ var patch = this.WorkshopReturnForm.get('trxLinesList') as FormArray;
   // this.reservePos();
 }
 removenewtrxLinesList(trxLineIndex){
+  var len1 = this.trxLinesList().length;
+  if (len1 === 1) {
+    alert('You can not delete the line');
+    return;
+  }
   this.trxLinesList().removeAt(trxLineIndex);
 }
 
@@ -250,6 +256,36 @@ onSelectjob(event)
       this.Billabletype=data;
     }
    )
+}
+validate(i: number, qty1) {
+  // alert("Validate");
+  // if(qty1)
+  var trxLnArr = this.WorkshopReturnForm.get('trxLinesList').value;
+  var trxLnArr1 = this.WorkshopReturnForm.get('trxLinesList') as FormArray;
+  let avalqty = trxLnArr[i].avlqty;
+  let qty = trxLnArr[i].quantity;
+  let uomCode = trxLnArr[i].uom;
+  //  alert(avalqty+'avalqty');
+  //  alert(trxLnArr[i].primaryQty +' qty');
+  if (qty > avalqty) {
+    alert('You can not enter more than available quantity');
+    trxLnArr1.controls[i].patchValue({ quantity: '' });
+    qty1.focus();
+  }
+  if (qty <= 0) {
+    alert('Please enter quantity more than zero');
+    trxLnArr1.controls[i].patchValue({ quantity: '' });
+    qty1.focus();
+  }
+  if (uomCode === 'NO') {
+    // alert(Number.isInteger(qty)+'Status');
+    if (!Number.isInteger(qty)) {
+      alert('Please enter correct No');
+      trxLnArr1.controls[i].patchValue({ quantity: '' });
+    }
+  }
+  // var trxLnArr = this.SubinventoryTransferForm.get('trfLinesList').value;
+  
 }
 onSelectType(event)
 {
@@ -362,13 +398,8 @@ closeReurn()
   }
   onOptionSelectedSubInv(event:any,i)
  {
-  // alert('2');
-  // alert(subCode.subInventoryId);
-  // alert('LocID'+this.locId);
-  // var subCode=this.moveOrderForm.get('frmSubInvCode').value;
-  // let select1= this.subInvCode.find(d=>d.subInventoryCode===this.frmSubInvCode);
-  // alert(this.subInvCode.subInventoryId+'ID');
-  var subInv=this.subInvdetail.subInventoryId;
+  // alert('event'+event);
+    var subInv=this.subInvdetail.subInventoryId;
   // alert(subInv+'sub');
   
 
@@ -377,14 +408,18 @@ closeReurn()
   var trxLnArr1 = this.WorkshopReturnForm.get('trxLinesList').value;
   var trxLnArr2 = this.WorkshopReturnForm.get('trxLinesList') as FormArray;
   var itemid=trxLnArr1[i].invItemId;
-  // alert (itemid);
-  // var frmSubCode=trxLnArr1[i].frmSubInvCode;
-  // alert("FromSub"+frmSubCode);
-  // alert(select1);
-  // alert(trxLnArr1.get +"item");
-
-    // alert('Item'+itemid);
-  // var subInv=this.subInvCode.subInventoryId;
+  // let controlinvArray = this.WorkshopReturnForm.get('trxLinesList').value;
+  console.log(trxLnArr1);
+  for (let j = 1 ; j < trxLnArr1.length; j++) {
+    if (event === trxLnArr1[j-1].invItemId) {
+      alert('Item Already Present.!' + ' ' + 'Line Number' + ' ' + (j) + '.!')
+      // trxLnArr2.controls[i].patchValue({invItemId: '',description:'',frmLocatorId:''})
+    this.removenewtrxLinesList(i);
+      // trxLnArr2.controls[i].
+      return;
+    }
+  }
+  if(itemid!=undefined){
     this.service.getretfrmSubLoc(this.locId,itemid,subInv,jobno).subscribe(
       data =>{
         //  this.getfrmSubLoc = data;
@@ -427,7 +462,11 @@ closeReurn()
       // trxLnArr1.controls[i].patchValue({frmSubInvCode:this.subInvCode.subInventoryCode});
     }
     );
-    
+  }
+ }
+ checkValidation()
+ {
+ 
  }
 
  AvailQty(event:any,i:number) 

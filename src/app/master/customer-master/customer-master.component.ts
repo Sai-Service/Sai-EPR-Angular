@@ -594,7 +594,7 @@ export class CustomerMasterComponent implements OnInit {
   gstVerification(event: any) {
     // var gstno = this.customerMasterForm.get('gstNo').value
     var gstno=event.target.value;
-    alert(gstno+'gst');
+    // alert(gstno+'gst');
     if (gstno === '') {
       this.customerMasterForm.patchValue({ 'gstNo': 'GSTUNREGISTERED' });
       return;
@@ -608,7 +608,7 @@ export class CustomerMasterComponent implements OnInit {
       var patt = new RegExp(regex);
       
       let validgst = patt.test(gstno);
-      alert(validgst);
+      // alert(validgst);
       if (validgst === false) {
         alert('Please enter valid GST Number');
         this.customerMasterForm.patchValue({ 'gstNo': '' });
@@ -671,35 +671,41 @@ export class CustomerMasterComponent implements OnInit {
     //  alert('Gst verificaition2');
     this.customerMasterForm.patchValue({ 'panNo': GstNo1 });
   }
-
   gstVerification2(event: any) {
-// alert('In gstverification2')
-    var sGstnoVal = this.customerMasterForm.get('sGstNo').value
-    if (sGstnoVal === '') {
+    // var gstno = this.customerMasterForm.get('gstNo').value
+    var gstno=event.target.value;
+    // alert(gstno+'gst');
+    if (gstno === '') {
       this.customerMasterForm.patchValue({ 'sGstNo': 'GSTUNREGISTERED' });
       return;
     }
     else {
-      var regex: string = "\\d{2}[A-Z]{5}\\d{4}[A-Z]{1}[A-Z\\d]{1}[Z]{1}[A-Z\\d]{1}";
+      // debugger;
+      // "27AAACI7573H1ZP"
+      var regex: string = '\\d{2}[A-Z]{5}\\d{4}[A-Z]{1}[A-Z\\d]{1}[Z]{1}[A-Z\\d]{1}';
+      // var regex:string="^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{1}[A-Z0-9]{1}$";
       var p = new PatternValidator();
       var patt = new RegExp(regex);
-      let validgst = patt.test(sGstnoVal);
-
-
+      
+      let validgst = patt.test(gstno);
+      // alert(validgst);
       if (validgst === false) {
         alert('Please enter valid GST Number');
-        this.customerMasterForm.patchValue({'sGstNo':''});
+        this.customerMasterForm.patchValue({ 'sGstNo': '' });
         return false;
       }
-
-   
+      // else {
+      //   alert('Please enter valid PAN Number');
+      //   return false;
+      // }
+      // return validgst;
     }
    
-    var res = sGstnoVal.substr(0, 2);
+    var res = gstno.substr(0, 2);
     console.log(res);
     const state = this.customerMasterForm.get('sstate').value;
     console.log(state);
-    console.log(this.sstate === 'MAHARASHTRA' && res === 27);
+    console.log(this.state === 'MAHARASHTRA' && res === 27);
     switch (state.toUpperCase()) {
       case 'MAHARASHTRA':
         if (res != 27) {
@@ -739,12 +745,85 @@ export class CustomerMasterComponent implements OnInit {
         break;
     }
 
-    const sGstNo1 = sGstnoVal.substr(2, 10);
-    this.spanNo = sGstNo1;
-    //  alert('Gst verificaition2');
-    this.customerMasterForm.patchValue({ 'spanNo': sGstNo1 });
 
+    const GstNo1 = gstno.substr(2, 10);
+    this.spanNo = GstNo1;
+    //  alert('Gst verificaition2');
+    this.customerMasterForm.patchValue({ 'spanNo': GstNo1 });
   }
+//   gstVerification2(event: any) {
+// // alert('In gstverification2')
+//     var sGstnoVal = this.customerMasterForm.get('sGstNo').value
+//     if (sGstnoVal === '') {
+//       this.customerMasterForm.patchValue({ 'sGstNo': 'GSTUNREGISTERED' });
+//       return;
+//     }
+//     else {
+//       var regex: string = "\\d{2}[A-Z]{5}\\d{4}[A-Z]{1}[A-Z\\d]{1}[Z]{1}[A-Z\\d]{1}";
+//       var p = new PatternValidator();
+//       var patt = new RegExp(regex);
+//       let validgst = patt.test(sGstnoVal);
+
+
+//       if (validgst === false) {
+//         alert('Please enter valid GST Number');
+//         this.customerMasterForm.patchValue({'sGstNo':''});
+//         return false;
+//       }
+
+   
+//     }
+   
+//     var res = sGstnoVal.substr(0, 2);
+//     console.log(res);
+//     const state = this.customerMasterForm.get('sstate').value;
+//     console.log(state);
+//     console.log(this.sstate === 'MAHARASHTRA' && res === 27);
+//     switch (state.toUpperCase()) {
+//       case 'MAHARASHTRA':
+//         if (res != 27) {
+//           alert('Kindly entered correct GST No Start with 27');
+//           this.customerMasterForm.get('sGstNo').reset();
+//         }
+//         break;
+//       case 'GOA':
+//         if (res != 30) {
+//           alert('Kindly entered correct GST No Start with 30');
+//           this.customerMasterForm.get('sGstNo').reset();
+//         }
+//         break;
+//       case 'ANDHRA PRADESH':
+//         if (res != 28) {
+//           alert('Kindly entered correct GST No Start with 28');
+//           this.customerMasterForm.get('sGstNo').reset();
+//         }
+//         break;
+//       case 'KARNATAKA':
+//         if (res != 29) {
+//           alert('Kindly entered correct GST No Start with 29');
+//           this.customerMasterForm.get('sGstNo').reset();
+//         }
+//         break;
+//       case 'KERALA':
+//         if (res != 32) {
+//           alert('Kindly entered correct GST No Start with 32');
+//           this.customerMasterForm.get('sGstNo').reset();
+//         }
+//         break;
+//       case 'TELANGANA':
+//         if (res != 36) {
+//           alert('Kindly entered correct GST No Start with 36');
+//           this.customerMasterForm.get('sGstNo').reset();
+//         }
+//         break;
+//     }
+
+//     const sGstNo1 = sGstnoVal.substr(2, 10);
+//     this.spanNo = sGstNo1;
+//     //  alert('Gst verificaition2');
+//     this.customerMasterForm.patchValue({ 'spanNo': sGstNo1 });
+
+//   }
 
   onKey(event: any) {
     // const aaa = this.title + '. ' + this.fName + ' ' + this.mName + ' ' + this.lName;
@@ -1336,7 +1415,6 @@ export class CustomerMasterComponent implements OnInit {
 
     }
 
-
     if (msgType.includes("NewSite")) {
       var isvaliddata = this.validation();
       if (isvaliddata === false) {
@@ -1349,12 +1427,13 @@ export class CustomerMasterComponent implements OnInit {
       // (document.getElementById('NewSite') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
       if (this.customerMasterForm.invalid) {
         //this.submitted = false;
-        (document.getElementById('NewSite') as HTMLInputElement).setAttribute('data-target', '');
-        return;
+        // (document.getElementById('NewSite') as HTMLInputElement).setAttribute('data-target', '');
+        // return;
       }
       this.message = "Do you want to SAVE New Site(Yes/No)?"
 
     }
+  
 
     if (msgType.includes("Reset")) {
       this.message = "Do you want to Reset the changes(Yes/No)?"

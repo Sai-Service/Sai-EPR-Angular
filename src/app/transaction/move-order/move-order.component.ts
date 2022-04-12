@@ -352,6 +352,14 @@ newmoveOrder(){
 //  alert(trans.transactionTypeName+'tra');
  console.log(trans);
   const formValue:ImoveOrder=this.moveOrderForm.value;
+  var lineLevelData=this.moveOrderForm.get('trxLinesList').value;
+  console.log(lineLevelData);
+  for (let i=0;i<lineLevelData.length;i++){
+    if (lineLevelData[i].segment.length >8){
+      alert('Line No' + ' ' + lineLevelData[i].segment + ' ' + 'Select Item Is Wrong... Please confirm');
+      return;
+    }
+  }
   var subCode=this.moveOrderForm.get('frmSubInvCode').value;
   formValue.frmSubInvCode = subCode;
   var itemcode1=this.moveOrderForm.get('repairNo').value.split(' -- ');
@@ -369,7 +377,7 @@ newmoveOrder(){
       this.frmSubInvCode=obj.frmSubInvCode;
       this.transactionTypeId=trans.transactionTypeName;
       this.subInventoryCode=subCode.subInventoryCode;
-      alert("Record inserted Successfully");
+      alert(res.message);
       // this.display=false;
       this.moveOrderForm.patchValue({frmSubInvCode:subCode});
      
@@ -491,11 +499,11 @@ getrepairOrder($event)
 
  onOptionSelectedSubInv(event:any,i)
  {
-//  alert(event.length);
-//  if (event.length < 8){
-//    alert('Please check Item not valid.!');
-//    return;
-//  }
+
+ if (event.length > 8){
+   alert('Please check Item not valid.!');
+   return;
+ }
    console.log(this.ItemIdList);
    let select1=this.ItemIdList.find(d=>d.SEGMENT===event);
    console.log(select1);
@@ -555,7 +563,8 @@ getrepairOrder($event)
       this.resrveqty=data;
       trxLnArr2.controls[i].patchValue({resveQty:this.resrveqty});
     });
-    this.service.getPriceDetail(this.locId,select1.itemId,subInv,repNo,this.divisionId).subscribe
+    // this.service.getPriceDetail(this.locId,select1.itemId,subInv,repNo,this.divisionId).subscribe
+    this.service.getWIPrice(this.locId,select1.itemId,subInv,repNo,this.divisionId,this.deptId).subscribe
     ((res: any) => {
       if (res.code === 200)
       {
