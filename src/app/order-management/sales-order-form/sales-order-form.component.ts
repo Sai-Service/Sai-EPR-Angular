@@ -1025,7 +1025,7 @@ export class SalesOrderFormComponent implements OnInit {
     if (Number(sessionStorage.getItem('divisionId')) === 2) {
       var model = this.SalesOrderBookingForm.get('model').value;
       var variant = this.SalesOrderBookingForm.get('variant').value;
-      this.orderManagementService.dealerShipBaseAmt(model, variant, color)
+      this.orderManagementService.dealerShipBaseAmtNew(model, variant, color,sessionStorage.getItem('ouId'))
         .subscribe(
           data => {
             this.SalesOrderBookingForm.patchValue({ basicValue: data.obj[0].basicValue })
