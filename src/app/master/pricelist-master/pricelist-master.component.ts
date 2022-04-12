@@ -163,6 +163,7 @@ export class PricelistMasterComponent implements OnInit {
   displayItemDetails = true;
   addNew = true;
   itemFoundInPLmaster = false;
+  mrpPriceList=true;
   userList2: any[] = [];
   lastkeydown1: number = 0;
 
@@ -269,6 +270,7 @@ export class PricelistMasterComponent implements OnInit {
       // lastUpdatedDate:[],
       attribute10:[],
       tax:[],
+      lastUpdatedDate:[],
     });
   }
 
@@ -680,6 +682,7 @@ export class PricelistMasterComponent implements OnInit {
         if (res.code === 200) {
           alert('RECORD UPDATED SUCCESSFULLY');
           this.addNew = false;
+          this.priceListMasterForm.disable();
 
         } else {
           if (res.code === 400) {
@@ -1407,7 +1410,6 @@ export class PricelistMasterComponent implements OnInit {
     // this.addNew=false;
     // this.priceListMasterForm.reset();
     this.searchBy = 'ITEM NUMBER';
-
     this.updateHeaderButton = true;
     this.display1 = false;
     this.displayLineDetails = false;
@@ -1419,6 +1421,10 @@ export class PricelistMasterComponent implements OnInit {
     this.lineDetailsArray().push(this.lineDetailsGroup());
     this.priceListMasterForm.get('searchByItemDesc').reset();
     this.priceListMasterForm.get('searchByItemCode').reset();
+
+    var plSubType =this.priceListMasterForm.get('priceSubType').value;
+    if(plSubType==='MRP') {this.mrpPriceList=true;} else {this.mrpPriceList=false;}
+    // alert ("Price list subType :" +plSubType);
 
     // this.service.getLineDetails(priceListHeaderId)  .subscribe(
     //   data => {

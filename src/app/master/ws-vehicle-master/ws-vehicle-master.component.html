@@ -833,6 +833,10 @@
          </div>
         
                 <div class="modal-body">
+
+                <div *ngIf="updateButton; then custSearch1; else custSearch2"></div>
+                <ng-template #custSearch2>
+
                     <fieldset class="RFS">
                         <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
                            Search Customer </legend>
@@ -882,6 +886,7 @@
                            
                         </table>
                     </fieldset>
+                 </ng-template> <ng-template #custSearch1></ng-template>
                    
                         
                     <table class="center" style="width: 100%;">
