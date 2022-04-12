@@ -730,39 +730,34 @@
                             </ng-template>
                             <ng-template #elseBlock1>
                         
-                                    <!-- <div *ngIf="enableCancelButton; then CancelButtonYes; else CancelButtonNo"></div>
-                                    <ng-template #CancelButtonYes> -->
-                                    <td>
-                                        <button  type="button" class="btn btn-info" (click)="reverseReceipt()">Reverse</button>
-                                    </td>
-                                    <!-- </ng-template>
-                                    <ng-template #CancelButtonNo>
-                                        <td>
-                                            <button disabled type="button" class="btn btn-info" (click)="reverseReceipt()">Reverse</button>
-                                        </td>
-                                    </ng-template> -->
+                                <div *ngIf="enableCancelButton; then CancelButtonYes; else CancelButtonNo"></div>
+                                <ng-template #CancelButtonYes>
+                                        <td><button  type="button" class="btn btn-info" (click)="reverseReceipt()">Reverse</button></td>
+                                </ng-template>
+                                <ng-template #CancelButtonNo></ng-template>
+                                    
 
-                                      <div *ngIf="applHistory; then hList1; else hList2"></div>
-                                      <ng-template #hList1>  
-                                        <td>
-                                            <button type="button"  class="btn btn-primary" 
-                                            data-toggle="modal" data-target="#applHistory"  (click)="receiptApplyHist()" style="width: 7rem;color: black;">
-                                            &nbsp;Apply History</button>
-                                        </td>
-                                      </ng-template>
-                                      <ng-template #hList2>  
-                                        <td>
-                                            <button  disabled type="button"  class="btn btn-primary" 
-                                            data-toggle="modal" data-target="#applHistory"  (click)="receiptApplyHist()" style="width: 7rem;color: black;">
-                                            &nbsp;Apply History</button>
-                                        </td>
-                                      </ng-template>
+                                <div *ngIf="applHistory; then hList1; else hList2"></div>
+                                <ng-template #hList1>  
+                                <td>
+                                    <button type="button"  class="btn btn-primary" 
+                                    data-toggle="modal" data-target="#applHistory"  (click)="receiptApplyHist()" style="width: 7rem;color: black;">
+                                    &nbsp;Apply History</button>
+                                </td>
+                                </ng-template>
+                                <ng-template #hList2>  
+                                <td>
+                                    <button  disabled type="button"  class="btn btn-primary" 
+                                    data-toggle="modal" data-target="#applHistory"  (click)="receiptApplyHist()" style="width: 7rem;color: black;">
+                                    &nbsp;Apply History</button>
+                                </td>
+                                </ng-template>
 
-                                    <td>
-                                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#viewAccountingModel"  style="width: 8rem;" (click)="viewAccounting(receiptNumber)" >
-                                        View Accounting
-                                     </button>
-                                    </td>     
+                                <td>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#viewAccountingModel"  style="width: 8rem;" (click)="viewAccounting(receiptNumber)" >
+                                    View Accounting
+                                    </button>
+                                </td>     
 
                                    <!-- ==========================SEARCH & APPLY =============================== -->
 
