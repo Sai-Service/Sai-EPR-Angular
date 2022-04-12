@@ -818,6 +818,10 @@ export class ARInvoiceComponent implements OnInit {
             for (let i = 0; i < data.obj.invLines.length - len; i++) {
               var invLnGrp: FormGroup = this.lineDetailsGroup();
               this.lineDetailsArray.push(invLnGrp);
+              var seltrxtyp = this.taxCategoryList[i].find(d => d.taxCategoryId == data.obj[i].invLines.taxCategoryId)
+              console.log(seltrxtyp);
+              // var patch=this.arInvoiceForm.get('invLines')as FormArray;
+              // patch.controls[i].patchValue({taxCategoryName:seltrxtyp.taxCategoryName});
 
             }
             for (let i = 0; i < data.obj.invDisLines.length; i++) {
@@ -1150,6 +1154,7 @@ export class ARInvoiceComponent implements OnInit {
               var dislines = this.arInvoiceForm.get('invDisLines').value;
 
               this.distarr.set(this.invLineNo, dislines);
+              console.log(this.distarr);
             }
             // this.CheckForDuplicateLineItem(this.codeCombinationId,i);
 
@@ -1347,7 +1352,7 @@ export class ARInvoiceComponent implements OnInit {
 
   // }
   Save() {
-
+// debugger;
     let jsonData = this.arInvoiceForm.getRawValue();
     jsonData.ouId = this.ouId;
     var arrayControl = this.arInvoiceForm.get('invLines').value;
@@ -1569,8 +1574,10 @@ export class ARInvoiceComponent implements OnInit {
                       //(control.controls[i]).patchValue({ invoiceLineNum: this.invLineNo });
                     }
                     //this.distarr.set(this.invLineNo, this.arInvoiceForm.get('invDisLines').value);
+                    // debugger;
                     this.distarr.set(this.invLineNo, this.distributioArr);
-                    // alert(this.distarr.size+'afterArray')
+                    console.log(this.distarr)
+                    alert(this.distarr.size+'afterArray')
                     console.log(this.arInvoiceForm.get('invDisLines').value);
                   }
                 );
@@ -2617,8 +2624,12 @@ export class ARInvoiceComponent implements OnInit {
               control.controls[i].patchValue(this.distributioArr[i]);
               // control.controls[i].patchValue({ lineNum: i + 1 });
             }
-            this.distarr.set(this.invLineNo, this.arInvoiceForm.get('invDisLines').value);
+            // this.distarr.set(this.invLineNo, this.arInvoiceForm.get('invDisLines').value);
+            // debugger;
+            this.distarr.set(this.invLineNo,distrRes)
+            console.log(this.distarr);
             console.log(this.arInvoiceForm.get('invDisLines').value);
+            this.isVisibleArDist=true;
           }
         );
     }

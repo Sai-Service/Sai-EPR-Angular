@@ -160,7 +160,8 @@
                     <td><input type="text"  formControlName="regNo"  [(ngModel)]="regNo"   class="form-control" placeholder="Enter Veh Reg no" (keyup)="onInput($event)"  (change)="CheckRegNo(regNo)"  style="background-color: yellow ;text-transform: uppercase;"  >   </td> 
                   
                     <td style="width: 15%" class="LabelFontStyle1">VIN&nbsp;:&nbsp;</td>
-                    <td><input type="text" formControlName="vin"  [(ngModel)]="vin"   class="form-control" placeholder="Enter VIN" (keyup)="onInput($event)" style="text-transform: uppercase;" > </td> 
+                    <td><input type="text" formControlName="vin"  [(ngModel)]="vin"   class="form-control" placeholder="Enter VIN" (keyup)="onInput($event)"  style="text-transform: uppercase;" style="background-color: yellow ;text-transform: uppercase" > </td> 
+                    <!-- (change)="validateVin(vin)" -->
                  
                     <td style="width: 12%" class="LabelFontStyle1">Model&nbsp;:&nbsp;</td>
                     <td>  
@@ -213,17 +214,29 @@
                     <td> <input   type="text"  formControlName="chassisNo"  id="chassisNo" [(ngModel)]="chassisNo" class="form-control" (change)="CreateItemCode()" (keyup)="onInput($event)" style="background-color: yellow" >   </td>
                     <td style="width: 12%" class="LabelFontStyle1">Engine&nbsp;No:&nbsp;</td>
                     <td> <input   type="text"  formControlName="engineNo"  id="engineNo" [(ngModel)]="engineNo" (keyup)="onInput($event)" class="form-control" style="background-color: yellow"  > </td>
-                    <td style="width: 12%" class="LabelFontStyle">Fuel&nbsp;Type:&nbsp;</td>
-                    <td><input disabled type="text" formControlName="fuelType" class="form-control" ></td>
-                    <td style="width: 12%" class="LabelFontStyle">Service&nbsp;Model:&nbsp;</td>
-                    <td> <input   disabled  type="text"  formControlName="serviceModel"  id="serviceModel" [(ngModel)]="serviceModel" class="form-control"  > </td>
+                    <td style="width: 12%" class="LabelFontStyle1">Sale&nbsp;Date:&nbsp;</td>
+
+                    <td>
+                        <input   type="date"  formControlName="deliveryDate"  id="deliveryDate" [(ngModel)]="deliveryDate" 
+                        class="form-control"  (change)="onChangeDelDate(deliveryDate)" 
+                        placeholder="" max="{{minDate | date:'yyyy-MM-dd'}}" style="background-color: yellow;">
+                    </td>
+
+                    <td style="width: 12%" class="LabelFontStyle1">Reg.&nbsp;Date&nbsp;:&nbsp;</td>
+
+                    <td>
+                        <input   type="date"  formControlName="regDate"  id="regDate" [(ngModel)]="regDate" class="form-control" 
+                        (change)="onChangeRegDate(regDate)" placeholder="" max="{{minDate | date:'yyyy-MM-dd'}}" >
+                    </td>
+                    
+                    
                 </tr>
                 </ng-template>
 
                 <ng-template #A2>        
                     <tr>
                       <td style="width: 15%" class="LabelFontStyle1">Reg&nbsp;No:&nbsp;</td>
-                      <td><input type="text" disabled  formControlName="regNo"  [(ngModel)]="regNo"   class="form-control" placeholder="Enter Veh Reg no" (keyup)="onInput($event)"  (change)="CheckRegNo(regNo)"  style="background-color: yellow ;text-transform: uppercase;"  >   </td> 
+                      <td><input type="text" disabled  formControlName="regNo"  [(ngModel)]="regNo"   class="form-control" placeholder="Enter Veh Reg no" (keyup)="onInput($event)"  (change)="CheckRegNo(regNo)"   >   </td> 
                     
                       <td style="width: 15%" class="LabelFontStyle1">VIN&nbsp;:&nbsp;</td>
                       <td><input type="text"  disabled formControlName="vin"  [(ngModel)]="vin"   class="form-control" placeholder="Enter VIN" (keyup)="onInput($event)" style="text-transform: uppercase;" > </td> 
@@ -272,37 +285,30 @@
   
                   <tr>
                       <td style="width: 12%" class="LabelFontStyle1">Chassis&nbsp;No:&nbsp;</td>
-                      <td> <input disabled  type="text"  formControlName="chassisNo"  id="chassisNo" [(ngModel)]="chassisNo" class="form-control" (change)="CreateItemCode()" (keyup)="onInput($event)" style="background-color: yellow" >   </td>
+                      <td> <input disabled  type="text"  formControlName="chassisNo"  id="chassisNo" [(ngModel)]="chassisNo" class="form-control" (change)="CreateItemCode()" (keyup)="onInput($event)" >   </td>
                       <td style="width: 12%" class="LabelFontStyle1">Engine&nbsp;No:&nbsp;</td>
-                      <td> <input disabled  type="text"  formControlName="engineNo"  id="engineNo" [(ngModel)]="engineNo" (keyup)="onInput($event)" class="form-control" style="background-color: yellow"  > </td>
-                      <td style="width: 12%" class="LabelFontStyle">Fuel&nbsp;Type:&nbsp;</td>
+                      <td> <input disabled  type="text"  formControlName="engineNo"  id="engineNo" [(ngModel)]="engineNo" (keyup)="onInput($event)" class="form-control"  > </td>
+                      <td style="width: 12%" class="LabelFontStyle1">Sale&nbsp;Date:&nbsp;</td>
+                      <td><input disabled  type="date"  formControlName="deliveryDate"  id="deliveryDate" [(ngModel)]="deliveryDate"  class="form-control"  ></td>
+                      <td style="width: 12%" class="LabelFontStyle1">Reg.&nbsp;Date&nbsp;:&nbsp;</td>
+                      <td><input disabled  type="date"  formControlName="regDate"  id="regDate" [(ngModel)]="regDate" class="form-control" > </td>
+                   
+                      <!-- <td style="width: 12%" class="LabelFontStyle">Fuel&nbsp;Type:&nbsp;</td>
                       <td><input disabled type="text" formControlName="fuelType" class="form-control" ></td>
                       <td style="width: 12%" class="LabelFontStyle">Service&nbsp;Model:&nbsp;</td>
                       <td> <input   disabled  type="text"  formControlName="serviceModel"  id="serviceModel" [(ngModel)]="serviceModel" class="form-control"  > </td>
-                  </tr>
+                   -->
+                    </tr>
                   </ng-template>
 
 
                
                 <tr>
-                     
-
-                    <td style="width: 12%" class="LabelFontStyle1">Sale&nbsp;Date:&nbsp;</td>
-
-                    <td>
-                        <input   type="date"  formControlName="deliveryDate"  id="deliveryDate" [(ngModel)]="deliveryDate" 
-                        class="form-control"  (change)="onChangeDelDate(deliveryDate)" 
-                        placeholder="" max="{{minDate | date:'yyyy-MM-dd'}}">
-                    </td>
-
-                    <td style="width: 12%" class="LabelFontStyle1">Reg.&nbsp;Date&nbsp;:&nbsp;</td>
-
-                    <td>
-                        <input   type="date"  formControlName="regDate"  id="regDate" [(ngModel)]="regDate" class="form-control" 
-                        (change)="onChangeRegDate(regDate)" 
-                         placeholder="" max="{{minDate | date:'yyyy-MM-dd'}}">
-                    </td>
-
+                    <td style="width: 12%" class="LabelFontStyle">Fuel&nbsp;Type:&nbsp;</td>
+                    <td><input disabled type="text" formControlName="fuelType" class="form-control" ></td>
+                    <td style="width: 12%" class="LabelFontStyle">Service&nbsp;Model:&nbsp;</td>
+                    <td> <input   disabled  type="text"  formControlName="serviceModel"  id="serviceModel" [(ngModel)]="serviceModel" class="form-control"  > </td>
+         
                     <td style="width: 12%" class="LabelFontStyle">OEM&nbsp;WR&nbsp;Expiry:&nbsp;</td>
 
                     <td>
@@ -353,10 +359,10 @@
                     </td> -->
 
                     <td colspan="3" >
-                        <select  formControlName="dealerCode" id="dealerCode" [ngModel]="dealerCode" class="form-control" style="width: 100%;"
-                            (ngModelChange)='onSelectedDealer($event)'>
+                        <select  formControlName="dealerCode" id="dealerCode" [ngModel]="dealerCode" class="form-control" 
+                            (ngModelChange)='onSelectedDealer($event)' style="background-color: yellow;width: 100%;">
                             <!-- style="width:fit-content"  -->
-                            <option></option>
+                            <!-- <option></option> -->
                             <option *ngFor="let sc of dealerCodeList"  [ngValue]="sc.dealerCode">
                                 {{sc.dealerCode}} - {{sc.dealerDesc}}
                                

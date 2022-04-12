@@ -1281,17 +1281,17 @@ export class JobCardComponent implements OnInit {
    
     this.labLineValidation=false
 
-    if(Number(arrayControl[index].billableTyId)<=0) { this.labLineValidation=false;return; }
-    if(invItemId===null || invItemId==undefined || invItemId<=0){ this.labLineValidation=false;return; }
+    if(Number(arrayControl[index].billableTyId)<=0) { this.labLineValidation=false; alert ("Please Check BILLABLE TYPE.")  ;return; }
+    if(invItemId===null || invItemId==undefined || invItemId<=0){ this.labLineValidation=false;alert("Please Check ITEM CODE."); return; }
    
-    if(itemSeg===null || itemSeg===undefined || itemSeg.trim()===''){this.labLineValidation=false;return;}
+    if(itemSeg===null || itemSeg===undefined || itemSeg.trim()===''){this.labLineValidation=false;alert("Please Check ITEM SEGMENT.") ;return;}
 
     if (genItem==='Y') {
-        if(itemDesc===null || itemDesc===undefined || itemDesc.trim()===''){this.labLineValidation=false;return;}
+        if(itemDesc===null || itemDesc===undefined || itemDesc.trim()===''){this.labLineValidation=false;alert("Please Check ITEM DESCRIPTION.") ;return;}
     }
 
     if(Number(arrayControl[index].qty)<=0 ||arrayControl[index].qty===null || arrayControl[index].qty===undefined )
-    { this.labLineValidation=false;return; }
+    { this.labLineValidation=false;alert("Please Check QTY.") ;return; }
 
     // if (genItem==='N') {
       // if(Number(arrayControl[index].qty)<=0 ||arrayControl[index].qty===null || arrayControl[index].qty===undefined )

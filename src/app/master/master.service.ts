@@ -1375,6 +1375,11 @@ getsearchBySubInvTrfNo(subtrfNo,locId):Observable<any>
   return this.http.get(this.ServerUrl+`/mmtTrx/subInvTrf?shipmentNumber=${subtrfNo}&transferOrgId=${locId}`)
 }
 
+getPhysicalLoc(divId):Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/cmnLookup/Catgtype?cmnType=PhysicalLocation&divisionId=${divId}`)
+}
+
 public subInvTransferSubmit(subInvTransferRecord)
 {
   const option={
@@ -1637,6 +1642,10 @@ ItemIdDivisionList(divisionId):Observable<any>{
 getfrmSubLoc(locId,invItemId,subInventoryId):Observable<any>{
   // alert ("ms >> subInventoryId :" +subInventoryId);
   return this.http.get(this.ServerUrl+`/onhandqty/onhandlocsubinv?locId=${locId}&itemId=${invItemId}&subInventoryId=${subInventoryId}`)
+}
+getWIPrice(locId,invItemId,subInventoryId,repNo,divId,deptId):Observable<any>{
+  // alert ("ms >> subInventoryId :" +subInventoryId);
+  return this.http.get(this.ServerUrl+`/onhandqty/onhandlocsubinv3?locId=${locId}&itemId=${invItemId}&subInventoryId=${subInventoryId}&repairNo=${repNo}&divisionId=${divId}&deptId=${deptId}`)
 }
 getfrmSubLocPrice(locId,invItemId,subInventoryId):Observable<any>{
   return this.http.get(this.ServerUrl+ `/onhandqty/onhandlocPrc?locId=${locId}&itemId=${invItemId}&subInventoryId=${subInventoryId}`)
