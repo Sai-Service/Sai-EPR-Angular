@@ -47,6 +47,7 @@ interface IjobCard {
   dealerName: string;
   dealerSite: string;
   dmsCustId: number;
+
   ewStartDate: Date;
   ewEndDate:Date;
   ewStatus: string;
@@ -61,6 +62,13 @@ interface IjobCard {
   oemExpiryDate: Date;
   cngKitNumber: string;
   cngCylinderNo: string;
+  cngEndDate:string;
+  mcpNo :string;
+  mcpStartDate:string;
+  mcpEndDate:string;
+  govtVehicleYn:string;
+  vipYn:string;
+
   divisionName: string;
   divisionId: number;
   jobStatus: string;
@@ -479,6 +487,13 @@ export class JobCardComponent implements OnInit {
       oemExpiryDate: [],
       cngKitNumber: [],
       cngCylinderNo: [],
+      cngEndDate:[],
+      mcpNo:[],
+      mcpStartDate:[],
+      mcpEndDate:[],
+      govtVehicleYn:[],
+      vipYn:[],
+
       divisionName: [],
     
       jobStatus: [''],

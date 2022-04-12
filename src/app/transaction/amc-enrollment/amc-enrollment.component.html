@@ -35,8 +35,8 @@
                       <td style="width: 15%" class="LabelFontStyle">&nbsp;Enrollment&nbsp;No:&nbsp;</td>
                     <td> <input  disabled type ="text" class="form-control" formControlName="enrollmentNo"  value={{enrollmentNo}}  > </td>
                     <td style="width: 15%" class="LabelFontStyle">&nbsp;Enrollment&nbsp;Date:&nbsp;</td>
-                    <td> <input  disabled type ="date" class="form-control" formControlName="enrollmentDate" [(ngModel)]='enrollmentDate'  
-                        value={{enrollmentDate}} > </td>
+                    <td> <input  disabled type ="date" class="form-control" formControlName="enrollmentDt" [(ngModel)]='enrollmentDt'  
+                        value={{enrollmentDt}} > </td>
                       
                     <td style="width: 15%" class="LabelFontStyle">&nbsp;Invoice&nbsp;No:&nbsp;</td>
                     <td> <input  disabled type ="text" class="form-control" formControlName="invoiceNo"  value={{invoiceNo}}  > </td>
@@ -103,8 +103,8 @@
                     <td style="width: 15%" class="LabelFontStyle">&nbsp;End&nbsp;Kms:&nbsp;</td>
                     <td> <input disabled type ="number" class="form-control" formControlName="schemeValidKm"  value={{schemeValidKm}}   > </td>
                
-                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Start&nbsp;Date:&nbsp;</td>
-                    <td> <input disabled type ="date" class="form-control" formControlName="startDate"  value={{startDate}}   > </td>
+                    <td style="width: 15%" class="LabelFontStyle">AMC&nbsp;Start&nbsp;Date:&nbsp;</td>
+                    <td> <input disabled type ="date" class="form-control" formControlName="amcStartDate"  [(ngModel)]='amcStartDate' value={{amcStartDate}}   > </td>
 
              
                 </tr>
@@ -120,8 +120,8 @@
                     <td style="width: 15%" class="LabelFontStyle">&nbsp;Total&nbsp;Period:&nbsp;</td>
                     <td> <input disabled type ="number" class="form-control" formControlName="totalPeriod" [(ngModel)]='totalPeriod'
                         value={{totalPeriod}} > </td>
-                    <td style="width: 15%" class="LabelFontStyle">&nbsp;End&nbsp;Date:&nbsp;</td>
-                    <td> <input  disabled type ="date" class="form-control" formControlName="endDate"  value={{endDate}}   > </td>
+                    <td style="width: 15%" class="LabelFontStyle">AMC&nbsp;End&nbsp;Date:&nbsp;</td>
+                    <td> <input  disabled type ="date" class="form-control" formControlName="amcEndDate"  value={{amcEndDate}}   > </td>
         
                 </tr>
 
