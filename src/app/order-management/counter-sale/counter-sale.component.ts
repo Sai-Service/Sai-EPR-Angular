@@ -1447,6 +1447,10 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
               this.displaywalkingCustomer = false;
               this.CounterSaleOrderBookingForm.patchValue({ discType: 'Header Level Discount' });
               this.displaydisPer = false;
+              this.CounterSaleOrderBookingForm.patchValue({transactionTypeName:'Spares Sale - Cash'});
+              this.CounterSaleOrderBookingForm.patchValue({createOrderType:'Direct Invoice'});
+              this.CounterSaleOrderBookingForm.get('transactionTypeName').disable();
+              this.CounterSaleOrderBookingForm.get('createOrderType').disable();
             }
             else {
               this.CounterSaleOrderBookingForm.get('disPer').disable();
@@ -3409,5 +3413,8 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     //   totAmt: lineTotAmt,
     // });
     // alert(controlinv1[this.selTaxLn].taxAmt)
+  }
+  remark(){
+    this.CounterSaleOrderBookingForm.get('disPer').disable();
   }
 }
