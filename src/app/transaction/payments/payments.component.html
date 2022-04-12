@@ -3,23 +3,10 @@
         <td class="PageHeader">
             &nbsp;&nbsp;Payments&nbsp;
         </td>
-        <!-- <td colspan="4" style="width: 100%;text-align: center;">
-            <button data-toggle="modal" class="btn-primary" data-target="#myModel" style="text-align: center;">Find</button>
-        </td> -->
-        <!-- <td>
-        <table class="center" style="width: 10rem; background-color: #FFE4B5;">
-            <tr>
-                <td colspan="2" style="width: 100%;text-align: center;margin-left: 10px;">
-                    <button data-toggle="modal" class="btn-primary" data-target="#myModel" style="text-align: center; margin-right: 90%;">Find</button>
-                </td>
-            </tr>
-        </table>
-       </td> -->
     </tr>
 </table>
 <div class="center" style="width: 100%;">
     <div class="form-bg">
-        <!-- <form [formGroup]="paymentForm" (ngSubmit)="payment(paymentForm.value)"> -->
         <form [formGroup]="paymentForm" (ngSubmit)="payment(paymentForm.value)">
             <br>
             <table style="width: 100%; background-color: #FFE4B5;">
@@ -560,6 +547,11 @@
                     <td>
                         <button type="button" class="btn btn-primary" id="register" (click)="cancelPayment()">
                             Cancel
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary" id="arPayment" (click)="ArPaymentNavigation()" style="text-align: justify;">
+                            AR Receipt
                         </button>
                     </td>
                 </tr>

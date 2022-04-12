@@ -292,8 +292,10 @@ export class OPMasterDtoComponent implements OnInit {
   // public suppIdList: Array<string> = [];
   public approvedArray: any[];
   public suppIdList: any
-  public BillShipList: Array<string> = [];
-  public BillShipList1: Array<string> = [];
+  // public BillShipList: Array<string> = [];
+  BillShipList:any=[];
+  // public BillShipList1: Array<string> = [];
+  BillShipList1:any=[];
   public DivisionIDList: Array<string> = [];
   public locIdList: Array<string> = [];
   public companyCodeList: Array<string> = [];
@@ -546,6 +548,9 @@ export class OPMasterDtoComponent implements OnInit {
         data => {
           this.BillShipList = data;
           console.log(this.BillShipList);
+          let locCodeLosi = this.BillShipList.find(v => v.locId == sessionStorage.getItem('locId'));
+          console.log(locCodeLosi.locId);
+          this.poMasterDtoForm.patchValue({shipToLoc:locCodeLosi.locId});
         }
       );
     this.service.hsnSacCodeData('HSN').subscribe(
@@ -559,6 +564,9 @@ export class OPMasterDtoComponent implements OnInit {
         data => {
           this.BillShipList1 = data;
           console.log(this.BillShipList1);
+          let locCodeLosi = this.BillShipList1.find(v => v.locId == sessionStorage.getItem('locId'));
+          console.log(locCodeLosi.locId);
+          this.poMasterDtoForm.patchValue({billToLoc:locCodeLosi.locId});
         }
       );
     this.service.locationCodeList()
