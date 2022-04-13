@@ -375,7 +375,7 @@
                                         <td style="width: 15%" class="LabelFontStyle1">&nbsp;Status:&nbsp;</td>
         
                                         <td>  
-                                        <select disabled type="text"  formControlName="status" id="status" [(ngModel)]="status" class="form-control" style="background-color:lightgreen;" >
+                                        <select  type="text"  formControlName="receiptStatus" id="receiptStatus" [(ngModel)]="receiptStatus" class="form-control" style="background-color:lightgreen;" >
                                             <option disabled>--Select--</option>
                                             <option *ngFor="let sc of  ReceiptStatusList" [ngValue]="sc.code"  >
                                                 {{sc.code}}
@@ -557,8 +557,8 @@
                             </fieldset>
                        
 
-                        <!-- <div *ngIf="showReasonDetails; then rsnBlock1; else rsnBlock2"></div>
-                        <ng-template #rsnBlock1> -->
+                        <div *ngIf="showReasonDetails; then rsnBlock1; else rsnBlock2"></div>
+                        <ng-template #rsnBlock1>
 
                         <fieldset class="RFS">
                         <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Reversal Details</legend>
@@ -636,8 +636,8 @@
                              
                         </table>
                         </fieldset>
-                        <!-- </ng-template>
-                        <ng-template #rsnBlock2></ng-template> -->
+                        </ng-template>
+                        <ng-template #rsnBlock2></ng-template>
 
                         </ng-template>
                         <ng-template #showTotalYes> </ng-template>
@@ -1309,6 +1309,7 @@
              <th style="width:8rem" scope="col">Receipt Amt</th>
             <th style="width:8rem" scope="col">Reference Type</th>
             <th style="width:5rem" scope="col">Status</th>
+            <th style="width:5rem" scope="col">Rcpt Status</th>
             <th style="width:4rem"  scope="col">Select</th>
     </tr>
    </tbody>
@@ -1323,8 +1324,12 @@
                 <td style="text-align: right;">{{com.paymentAmt}}</td>
                 <td style="text-align: center;">{{com.refType}}</td>
                 <td style="text-align: center;">{{com.status}}</td>
+                <td style="text-align: center;">{{com.receiptStatus}}</td>
                 <td><button class="btn btn-secondary" (click)="Select(com.receiptNumber)">Select</button></td>   
-               
+                <!-- <td><button class="btn btn-secondary" (click)="SelectWip(com.receiptNumber)">Select</button></td>    -->
+          
+
+                
             </tr>
     </table>
 </div>
