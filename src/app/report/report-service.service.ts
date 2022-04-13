@@ -324,8 +324,8 @@ export class ReportServiceService {
   }
 
 
-  serPendingVehicleReport(fromDate,toDate,locId){
-    const REQUEST_URI = this.ServerUrl +`/ServiceReports/ServPendingVeh?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}`;
+  serPendingVehicleReport(toDate,locId){
+    const REQUEST_URI = this.ServerUrl +`/ServiceReports/ServPendingVeh?toDate=${toDate}&locId=${locId}`;
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',

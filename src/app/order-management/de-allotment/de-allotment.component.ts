@@ -106,9 +106,10 @@ export class DeAllotmentComponent implements OnInit {
 
   
 
-  Deallocate(deallotReason){
-    // alert(deallotReason);
-    this.orderManagementService.DeallocateSubmit(this.orderNumber1,this.segment1,deallotReason).subscribe((res: any) => {
+  Deallocate(orderNumber,segment){
+    var deallotReason = this.deAllotmentForm.get('deallotReason').value;
+    // alert(deallotReason+'----'+segment+'-----'+deallotReason);
+    this.orderManagementService.DeallocateSubmit(orderNumber,segment,deallotReason).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
         // this.deAllotmentForm.reset();
