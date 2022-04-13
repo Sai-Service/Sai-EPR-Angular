@@ -647,7 +647,8 @@ export class WsVehicleMasterComponent implements OnInit {
         } else {
           if (res.code === 400) {
             this.displaySuccess = false;
-            alert('Code already present in the data base');
+            // alert('Code already present in the data base');
+            alert (res.message +"-"+ res.obj);
             this.displayButton=true;
             this.saveButton=true;
           }
