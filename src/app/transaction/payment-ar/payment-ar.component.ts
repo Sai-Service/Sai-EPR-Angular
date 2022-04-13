@@ -491,7 +491,7 @@ if(this.deptId==2){
   if(this.deptId==4){
     this.sub = this.router1.params.subscribe(params => {
       this.referenceNo = params['jobCardNum'];
-      alert('paymentAR Alert----'+ params['jobCardNum']+'----'+ this.referenceNo);
+      alert('PaymentAR Alert----'+ params['jobCardNum']+'----'+ this.referenceNo);
      if ( this.referenceNo != undefined){
         }
     });
@@ -847,17 +847,15 @@ if(this.deptId==2){
 
   onPayTypeSelected(payType: any, rmStatus: any) {
     // alert('paytype =' +payType  + " LocId :"+ this.locId + " Ou Id :"+this.ouId + " Deptid : "+ this.deptId + " Status :"+rmStatus);
+   
     if (payType === '--Select--' || payType === 'undefined') {
-      // alert("null selected");
       return;
     } else if (payType === 'CASH') {
-      // alert("cash selected");
-      this.bankName=null;
+       this.bankName=null;
       this.bankBranch=null;
       this.checkNo=null;
       this.checkDate=null;
-      // mPaytype,mStatus,deptId,mOrgId
-      this.service.ReceiptMethodListNew(payType,rmStatus,this.deptId, this.ouId)
+       this.service.ReceiptMethodListNew(payType,rmStatus,this.deptId, this.ouId)
         .subscribe(
           data => {
             this.ReceiptMethodList = data.obj;

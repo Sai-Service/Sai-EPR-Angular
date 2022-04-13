@@ -41,6 +41,10 @@ interface IWsVehicleMaster {
   endDate:Date;
   oemWarrantyPeriod:number;
   inactiveDate:string;
+
+  deliveryDate : string;
+  oemWarrentyEndDate: string;
+  regDate: string;
  
 }
 
@@ -1304,6 +1308,23 @@ export class WsVehicleMasterComponent implements OnInit {
       return;
     }
 
+    // alert ("Sale Date:"+formValue.deliveryDate);
+
+    if (formValue.deliveryDate === undefined || formValue.deliveryDate === null || formValue.deliveryDate.trim() === '' ) {
+      this.checkValidation = false;
+      alert("SALE DATE : Should not be null....");
+      return;
+    }
+
+    
+    if (formValue.regDate === undefined || formValue.regDate === null || formValue.regDate.trim() === '' ) {
+      this.checkValidation = false;
+      alert("REGISTRATION DATE : Should not be null....");
+      return;
+    }
+
+
+
     if (formValue.categoryId < 0 || formValue.categoryId === undefined || formValue.categoryId === null) {
       this.checkValidation = false;
       alert("ITEM CATEGORY: Should not be null");
@@ -1314,6 +1335,8 @@ export class WsVehicleMasterComponent implements OnInit {
       alert("DEALER CODE : Should not be null....");
       return;
     }
+
+    
     
 
     // if (formValue.itemTypeForCat === undefined || formValue.itemTypeForCat === null || formValue.itemTypeForCat.trim() === '') {
