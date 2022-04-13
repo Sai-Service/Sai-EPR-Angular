@@ -626,6 +626,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     this.isVisibleGenerateInvoice = false;
     this.isVisibleGenerateGatePass = false;
     this.isVisiblePayment = false;
+    this.displayRemoveRow.push(false);
     this.isVisibleViewInvoice = false;
     this.isVisibleViewReceipt = false;
     this.isVisibleViewGatePass = false;
@@ -1446,6 +1447,10 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
               this.displaywalkingCustomer = false;
               this.CounterSaleOrderBookingForm.patchValue({ discType: 'Header Level Discount' });
               this.displaydisPer = false;
+              this.CounterSaleOrderBookingForm.patchValue({transactionTypeName:'Spares Sale - Cash'});
+              this.CounterSaleOrderBookingForm.patchValue({createOrderType:'Direct Invoice'});
+              this.CounterSaleOrderBookingForm.get('transactionTypeName').disable();
+              this.CounterSaleOrderBookingForm.get('createOrderType').disable();
             }
             else {
               this.CounterSaleOrderBookingForm.get('disPer').disable();
@@ -2427,7 +2432,9 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       }
     }
     for (let j = 0; j < orderLines.length; j++) {
-      if (orderLines[j].segment === '' && orderLines[j].taxCategoryName === '' && orderLines[j].pricingQty === '') {
+      if (orderLines[j].segment === '' || orderLines[j].segment=== undefined || orderLines[j].segment===null
+      && orderLines[j].taxCategoryName === '' || orderLines[j].taxCategoryName===undefined || orderLines[j].taxCategoryName===null
+       && orderLines[j].pricingQty === '' || orderLines[j].pricingQty===undefined || orderLines[j].pricingQty===null) {
         alert('First Select Line Details..!');
         this.closeResetButton = true;
         this.dataDisplay = ''
@@ -3406,5 +3413,8 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     //   totAmt: lineTotAmt,
     // });
     // alert(controlinv1[this.selTaxLn].taxAmt)
+  }
+  remark(){
+    this.CounterSaleOrderBookingForm.get('disPer').disable();
   }
 }

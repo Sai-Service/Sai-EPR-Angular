@@ -409,10 +409,10 @@ jeSource: [],
      var suppNo1 = this.paymentForm.get('obj1').value;
      console.log(suppNo1);
     this.payInvoiceLineDtlArray().clear();
-    if(suppNo1[index].source==='REFUND' &&suppNo1[index].docNo===null)
+    if(suppNo1[index].source==='REFUND')
     {
      var invArr = this.paymentForm.get('obj').value;
-      invArr.controls[0].get('invoiceAmt').disable();
+      // invArr.controls[0].get('invoiceAmt').disable();
     }
     if(suppNo1[index].invTypeLookupCode==='Prepayment' &&suppNo1[index].docNo===null)
 {
@@ -881,12 +881,13 @@ console.log(jsonData);
         
         for (let i=0; i<arraybaseNew1.length;i++){
           var invNumber = arraybaseNew1[i].docNo;
-        alert(invNumber);
+        // alert(invNumber);
         var sourceType=arraybaseNew1[i].source;
-        alert(sourceType)
+        // alert(sourceType)
         // var invType = arraybaseNew1[i].invTypeLookupCode;
         if (sourceType==='REFUND') {
-           this.router.navigate(['/admin/transaction/PaymentAr',invNumber]);
+          alert(invNumber+'In If');
+           this.router.navigate(['/admin/transaction/PaymentAr', invNumber]);
         }
       }
       }

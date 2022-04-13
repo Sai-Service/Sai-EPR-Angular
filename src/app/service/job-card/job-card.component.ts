@@ -944,7 +944,7 @@ export class JobCardComponent implements OnInit {
     if (e.target.checked === true) {
       // alert('in true');
       this.splitFlag = 'Y'
-      this.displaySplit = false;
+      this.displaySplit = false
     }
     if (e.target.checked === false) {
       // alert('in false');

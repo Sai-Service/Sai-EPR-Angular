@@ -65,8 +65,10 @@ fieldset {
 
 .grid_scroll{
     overflow: auto;
-     height: 200px; 
+     height: 260px; 
     width: 100%;
+    overflow: auto;
+    /* width: 800px; */    
     }
 
     input[type="text"]:disabled {

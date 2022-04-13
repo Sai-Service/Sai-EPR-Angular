@@ -485,13 +485,15 @@
                                         <tr>
                                             <!-- <td>
                                                 <button type="button" href="#contact-tab-md" class="btn btn-primary" (click)="onOptionTaxCatSelected(i,taxCategoryId,null,basicAmt)">Distribution</button>
-                                                <!-- <li class="nav-item waves-effect waves-light">
+                                                < <li class="nav-item waves-effect waves-light">
                                                     <a (click)="onOptionTaxCatSelected(i,taxCategoryId,null,basicAmt)" class="nav-link" id="contact-tab-md" data-toggle="tab" href="#contact-md" role="tab" aria-controls="contact-md" aria-selected="false">Distribution</a>
                                                   </li> -->
 
                                             <!-- </td> -->
         <input type="text" hidden formControlName="taxCategoryId">
         <!-- (click)="taxDetails('insert', i, taxCategoryId)" -->
+                                                  <div *ngIf="displayinvItem; then thenenabletext; else elsedisabletext"></div>
+                                                    <ng-template #thenenabletext>
                                                 <td><input  type="number" style="width: 2rem;" class="form-control" formControlName="lineNum" (click)="openTaxDetails(i)" ></td>
                                                 <!-- (click)="onOptionTaxCatSelected(i,taxCategoryId,null,basicAmt,'profile-md')"comment by vinita on25feb22 -->
                                                 <td>
@@ -544,7 +546,29 @@
                                                 <td> <input type="number" min="0"  formControlName="unitSellingPrice"
                                                         style="width: 4rem;" class="form-control"
                                                         (change)="onKey(i)"></td> 
+                                                    </ng-template>
+                                                    <ng-template #elsedisabletext>
+                                                <td><input disabled  type="number" style="width: 2rem;" class="form-control" formControlName="lineNum" (click)="openTaxDetails(i)" ></td>
+                                                <td>
+                                                      <input disabled type="text" formControlName="segment"  class="form-control"
+                                                        style="height: 20px;width:120px;" />
+                                                </td>
 
+                                                <td> <input disabled type="text" formControlName="invCategory"
+                                                        class="form-control" style="width: 4rem;"></td>
+                                                <td>
+                                                <input disabled type="text"  formControlName="description"
+                                                        class="form-control" id="description">
+                                                </td>
+                                                <td> <input disabled type="text" formControlName="uom"
+                                                        style="width: 3rem;" class="form-control"></td>
+
+                                                <td> <input disabled type="number" min="0"   formControlName="orderedQty"
+                                                        style="width: 4rem;" class="form-control" ></td>
+                                                <td> <input disabled type="number" min="0"  formControlName="unitSellingPrice"
+                                                        style="width: 4rem;" class="form-control"
+                                                        ></td> 
+                                                    </ng-template>
                                                 <td> <input disabled type="number" formControlName="basicAmt"
                                                         (keyup)="onKey(i)" style="width: 4rem;"
                                                         class="form-control"></td>
@@ -744,7 +768,7 @@
                                             <ng-container *ngFor="let taxDet of TaxDetailsArray().controls; let j= index"
                                             [formGroupName]="j"  class="auto-style5">
                                           <tr class="ItemStyle" style="text-decoration:none;">
-                                            <input  type="text" formControlName="invLineNo">
+                                            <input hidden type="text" formControlName="invLineNo" style="width: 2rem;height: 25px;font-size: 10px;">
                                             <input hidden type="text" formControlName="taxItemId">
                                             <td> <input disabled formControlName="lineNumber"
                                                 class="form-control" style="width: 2rem;height: 25px;font-size: 10px;">

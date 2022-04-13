@@ -73,6 +73,7 @@ export class ARInvoiceComponent implements OnInit {
   public currentOp: string;
   displaytaxDisscountButton = true;
   displayTaxDetailForm = true;
+  displayinvItem=true;
   ouId: number;
   trxNumber1: string;
   trxNumber: string;
@@ -818,8 +819,8 @@ export class ARInvoiceComponent implements OnInit {
             for (let i = 0; i < data.obj.invLines.length - len; i++) {
               var invLnGrp: FormGroup = this.lineDetailsGroup();
               this.lineDetailsArray.push(invLnGrp);
-              var seltrxtyp = this.taxCategoryList[i].find(d => d.taxCategoryId == data.obj[i].invLines.taxCategoryId)
-              console.log(seltrxtyp);
+              // var seltrxtyp = this.taxCategoryList[i].find(d => d.taxCategoryId == data.obj[i].invLines.taxCategoryId)
+              // console.log(seltrxtyp);
               // var patch=this.arInvoiceForm.get('invLines')as FormArray;
               // patch.controls[i].patchValue({taxCategoryName:seltrxtyp.taxCategoryName});
 
@@ -874,13 +875,20 @@ export class ARInvoiceComponent implements OnInit {
               this.displayRmDistRow = false;
               this.disabledComplete = false;
               this.displaytaxName=false;
+              this.displayinvItem=false;
               this.arInvoiceForm.disable();
             }
             if(data.obj.invStatus == 'Complete'){
               this.isVisibleInvoice=true;
+              this.displayinvItem=false;
             }
             if (data.obj.class == 'Credit Memo') {
               this.isVisibleApply = true;
+              // this.displayinvItem=false;
+            }
+            if(data.obj.referenceNo!='')
+            {
+              this.displayinvItem=false;
             }
           }
           else {
