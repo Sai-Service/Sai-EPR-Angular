@@ -552,8 +552,10 @@ lstOrderLinesNew:any=[];
             for (let i = 0; i < this.lstOrderLines.length - len; i++) {
               // alert(this.lstOrderLinesNew[i].invType)
                if (this.lstOrderLinesNew[i].invType.includes('VEHICLE')) {
+                //  if (this.lstOrderLines[i].flowStatusCode==='INVOICED'){
                 var oeOrderLinesAllList: FormGroup = this.lineDetailsGroup();
                 control.push(oeOrderLinesAllList);
+              // }
                }
             }
             // this.lineDetailsArray.clear();
@@ -563,7 +565,10 @@ lstOrderLinesNew:any=[];
             //  alert(this.lstOrderLines.length)
               for (let j=0;j<this.lstOrderLines.length;j++){
                 if (this.lstOrderLines[j].invType.includes('VEHICLE')){
+                  // alert(this.lstOrderLines[j].pricingQty)
+                  // if (this.lstOrderLines[j].pricingQty !=0 && this.lstOrderLines[j].flowStatusCode==='CLOSED'){
             this.counterSaleReturnOrderForm.get('oeOrderLinesAllList').patchValue(this.lstOrderLines);
+          // }
           }
           }
             var patch = this.counterSaleReturnOrderForm.get('oeOrderLinesAllList') as FormArray;
@@ -680,7 +685,7 @@ lstOrderLinesNew:any=[];
   }
 
   CalculateTotal() {
-
+    alert('Hi');
     var rtnLineArr = this.counterSaleReturnOrderForm.get('oeOrderLinesAllList').value;
     var len1 = rtnLineArr.length;
 
@@ -691,18 +696,17 @@ lstOrderLinesNew:any=[];
 
 
     for (let i = 0; i < len1; i++) {
-
       totBaseAmt = totBaseAmt + rtnLineArr[i].baseAmt;
       totTaxAmt = totTaxAmt + rtnLineArr[i].taxAmt;
       netTotalAmt = netTotalAmt + rtnLineArr[i].totAmt;
       totDiscAmt = totDiscAmt + rtnLineArr[i].disAmt;
-
     }
 
     var bAmt = totBaseAmt.toFixed(2);
     var tAmt = totTaxAmt.toFixed(2);
     var nAmt = netTotalAmt.toFixed(2);
     var dAmt = totDiscAmt.toFixed(2);
+    alert(bAmt);
     this.rtnBaseAmt = Number(bAmt);
     this.rtnTaxAmt = Number(tAmt);
     this.rtnTotAmt = Number(nAmt);
