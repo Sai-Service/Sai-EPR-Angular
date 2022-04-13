@@ -311,6 +311,8 @@ closeMast() {
          }
          mRegNo=mRegNo.toUpperCase();
 
+         
+
         //  alert ("Reg No :" +mRegNo)
 
         this.service.getVehRegDetailsNew(mRegNo)
@@ -333,6 +335,7 @@ closeMast() {
             });
           
       }
+
 
       GetCustomerDetails(mCustId: any) {
         // alert("Customer Id: "+mCustId);
