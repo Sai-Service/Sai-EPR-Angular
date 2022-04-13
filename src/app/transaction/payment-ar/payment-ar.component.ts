@@ -848,6 +848,14 @@ if(this.deptId==2){
   onPayTypeSelected(payType: any, rmStatus: any) {
     // alert('paytype =' +payType  + " LocId :"+ this.locId + " Ou Id :"+this.ouId + " Deptid : "+ this.deptId + " Status :"+rmStatus);
    
+
+    if(payType ==='CONTROL ACCOUNT'  ){
+       this.paymentArForm.get('payType').reset();
+       this.receiptMethodId=null;
+       alert ( payType+ " : User not authorised to select this Receipt Mode...")
+       return;
+    }
+
     if (payType === '--Select--' || payType === 'undefined') {
       return;
     } else if (payType === 'CASH') {
