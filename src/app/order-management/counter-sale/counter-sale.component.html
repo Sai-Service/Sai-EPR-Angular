@@ -640,7 +640,7 @@
                     <td colspan="5">
                         <div *ngIf="displayremarks; then thenremarks; else elseremarks"></div>
                         <ng-template #thenremarks>
-                        <input type="text" formControlName="remarks" value={{remarks}} class="form-control"
+                        <input type="text" formControlName="remarks" value={{remarks}} class="form-control" (change)="remark()"
                             placeholder="Enter Remark" style="width: 100%;">
                         </ng-template>
                         <ng-template #elseremarks>
@@ -823,7 +823,7 @@
                     </td>
                     <td colspan="5">
                         <input type="text" formControlName="remarks" value={{remarks}} class="form-control"
-                            placeholder="Enter Remark" style="width: 100%;">
+                            placeholder="Enter Remark" style="width: 100%;" >
                     </td>
                 </tr>
                 <tr>

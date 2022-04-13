@@ -14,7 +14,7 @@ import { trigger } from '@angular/animations';
 
 interface IAmcEnroll {  
   enrollmentNo :string;
-  enrollmentDate:Date;
+  enrollmentDt:Date;
   srvAdvisor:number;
   regNo:string;
   contactNo:string;
@@ -26,6 +26,8 @@ interface IAmcEnroll {
   schemeDesc:string;
   startDate:Date;
   endDate :Date;
+  amcStartDate:Date;
+  amcEndDate:Date;
   currentKms:number;
   schemeValidKm:number;
   discOnMatrl:number;
@@ -77,7 +79,8 @@ export class AmcEnrollmentComponent implements OnInit {
 
   enrollmentNo :string;
   // enrollmentDate:Date;
-  enrollmentDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+  enrollmentDt = this.pipe.transform(Date.now(), 'y-MM-dd');
+
   srvAdvisor:number;
   regNo:string;
   contactNo:string;
@@ -88,7 +91,9 @@ export class AmcEnrollmentComponent implements OnInit {
   schemeNumber :string;
   schemeDesc:string;
   startDate:Date;
-  endDate :Date;
+  endDate :string;
+  amcStartDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+  amcEndDate:string;
   currentKms:number;
   schemeValidKm:number;
   discOnMatrl:number;
@@ -154,7 +159,7 @@ export class AmcEnrollmentComponent implements OnInit {
     orgId:[''],
 
     enrollmentNo :[],
-    enrollmentDate:[],
+    enrollmentDt:[],
     srvAdvisor:[],
     regNo:[],
 
@@ -168,6 +173,8 @@ export class AmcEnrollmentComponent implements OnInit {
     schemeDesc:[],
     startDate:[],
     endDate :[],
+    amcStartDate :[],
+    amcEndDate:[],
     currentKms:[],
     schemeValidKm:[],
     discOnMatrl:[],
@@ -398,6 +405,7 @@ closeMast() {
             console.log(this.lstAmcSchLineDetails);
             console.log(this.lstAmcSchHeaderDetails);
             this.showAmcPaymentDetails()
+            this.getAmcEndDate(data.totalPeriod)
             var len = this.lineDetailsArray().length;
               for (let i = 0; i < this.lstAmcSchLineDetails.length - len; i++) {
               var invLnGrp: FormGroup = this.lineDetailsGroup();
@@ -413,6 +421,18 @@ closeMast() {
         } 
         }
       }
+
+          getAmcEndDate(prd) {
+           var amStDate=new Date(this.amcStartDate);
+            var am1=this.addDays(amStDate,prd*365);
+            this.amcEndDate=this.pipe.transform(am1, 'y-MM-dd');
+
+          }
+
+          addDays(date1: Date, days1: number): Date {
+            date1.setDate(date1.getDate() + days1);
+            return date1;
+        }
 
 
           showAmcPaymentDetails(){
