@@ -1097,12 +1097,12 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
               // alert(this.PaymentViewReceipt);
               this.PaymentViewReceipt = true;
             }
-            var orderedDate1 = data.obj.orderedDate;
-            var orderedDate2 = this.pipe.transform(data.obj.orderedDate, 'dd-MMM-yyyy');
-            var custPoDate1 = data.obj.custPoDate;
-            var custPoDate2 = this.pipe.transform(custPoDate1, 'dd-MM-yyyy');
+            // var orderedDate1 = data.obj.orderedDate;
+            // var orderedDate2 = this.pipe.transform(data.obj.orderedDate, 'dd-MMM-yyyy');
+            // var custPoDate1 = data.obj.custPoDate;
+            // var custPoDate2 = this.pipe.transform(custPoDate1, 'dd-MM-yyyy');
             this.CounterSaleOrderBookingForm.patchValue(({ orderedDate: data.obj.orderedDate }));
-            this.CounterSaleOrderBookingForm.patchValue(({ custPoDate: custPoDate2 }));
+            this.CounterSaleOrderBookingForm.patchValue(({ custPoDate: data.obj.custPoDate }));
           }
           else {
             if (data.code) {
@@ -2367,8 +2367,9 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     formValue.ouId = Number(sessionStorage.getItem('ouId'));
     formValue.emplId = Number(sessionStorage.getItem('emplId'));
     formValue.divisionId = Number(sessionStorage.getItem('divisionId'));
-    formValue.orderedDate = this.pipe.transform(orderedDate, 'yyyy-MM-dd');
-    formValue.custPoDate = this.pipe.transform(custPoDate, 'yyyy-MM-dd');
+    // formValue.orderedDate = this.pipe.transform(orderedDate, 'yyyy-MM-dd');
+    // alert(formValue.orderedDate)
+    // formValue.custPoDate = this.pipe.transform(custPoDate, 'yyyy-MM-dd');
     this.orderManagementService.pickTicketInvoiceFun(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         this.dataDisplay = ''
