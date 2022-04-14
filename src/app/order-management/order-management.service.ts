@@ -779,6 +779,16 @@ export class OrderManagementService {
     });
   }
 
+  printSalesRtndocument(mRtnNumber) {
+    const REQUEST_URI = this.ServerUrl + `/orderHeader/csReversalVHPrint/${mRtnNumber}`;
+    // http://localhost:8081/orderHeader/csReversalPrint/12121101811 
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
 
   printArReceipt(rcptNumber) {
     const REQUEST_URI = this.ServerUrl + `/arCashReceipts/arReceiptPrint/${rcptNumber}`;

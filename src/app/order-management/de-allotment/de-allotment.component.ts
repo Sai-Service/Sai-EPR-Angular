@@ -36,10 +36,12 @@ export class DeAllotmentComponent implements OnInit {
   segment1:string;
   ouName:string;
   deallotReason1:string;
-
+  // isVisibleDeallocate:Array<boolean> = [];
+  isVisibleDeallocate=false;
   public Deallotmentsearchlist=[];
   public deAllotedChassisArray=[];
   deallotmentReasonTypelist:any[];
+  // displaydeallotmentButton: Array<boolean> = []true;
 
   constructor(private fb: FormBuilder,private location: Location, private router: Router, private service: MasterService,private orderManagementService:OrderManagementService,private transactionService :TransactionService) { 
     this.deAllotmentForm = fb.group({
@@ -56,13 +58,14 @@ export class DeAllotmentComponent implements OnInit {
   ngOnInit(): void {
     this.ouId=sessionStorage.getItem('ouId');
     this.ouName=sessionStorage.getItem('ouName');
-
-    
     this.orderManagementService.Deallotmentsearchlist(this.ouId)
     .subscribe(
       data => {
         this.Deallotmentsearchlist = data;
         console.log(this.Deallotmentsearchlist);
+        // for (let i=0; i< this.Deallotmentsearchlist.length; i++){
+        //   this.isVisibleDeallocate[i]=true;
+        // }
       }
     );
     this.orderManagementService.deallotmentReasonType()
@@ -132,4 +135,8 @@ export class DeAllotmentComponent implements OnInit {
     window.location.reload();
   }
 
+  selectReason(event,i){
+    // alert(event.target.value)
+  this.isVisibleDeallocate=true;
+  }
 }
