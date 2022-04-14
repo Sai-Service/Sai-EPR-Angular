@@ -1828,18 +1828,14 @@ export class OPMasterDtoComponent implements OnInit {
 
 
   onKey(index,event) {
-    // alert(index)
-    // alert('Hi')
     console.log(index);
     if (event.keyCode != 13) {
     var trxLnArrNew = this.poMasterDtoForm.get('poLines') as FormArray;
     var trxLnArr = trxLnArrNew.getRawValue();
     var trxLnArr1 = this.poMasterDtoForm.get('poLines') as FormArray
     var orderedQty = trxLnArr[index].orderedQty;
-    // alert(orderedQty);
     var uomCode = trxLnArr[index].uom;
     if (uomCode === 'NO') {
-      // alert(Number.isInteger(qty1)+'Status');
       if (!(Number.isInteger(orderedQty))) {
         alert('Please enter correct No');
         trxLnArr1.controls[index].patchValue({ orderedQty: '' });
@@ -1848,21 +1844,13 @@ export class OPMasterDtoComponent implements OnInit {
     }
 
     var arrayControl = this.poMasterDtoForm.get('poLines').value;
-    // var  uomCode= arrayControl[index].uom
-    // var isvalidqty = this.validate(index);
-    // if (isvalidqty == false) {
-    //   return;
-    // }
     var patch = this.poMasterDtoForm.get('poLines') as FormArray;
     console.log(arrayControl);
 
     trxLnArr[index].baseAmtLineWise = Math.round(((trxLnArr[index].unitPrice * trxLnArr[index].orderedQty) + Number.EPSILON) * 100) / 100;
-    // arrayControl[index].baseAmtLineWise = Math.round(((arrayControl[index].unitPrice * arrayControl[index].orderedQty) + Number.EPSILON) * 100) / 100;
-    // var baseAmount = arrayControl[index].baseAmtLineWise;
     var baseAmount = Math.round(((trxLnArr[index].baseAmtLineWise) + Number.EPSILON) * 100) / 100;
     var taxCategoryId = trxLnArr[index].taxCategoryId;
     var taxCatName = trxLnArr[index].taxCategoryName;
-    // alert(taxCatName+'---taxCategoryId'+ taxCategoryId)
     if (taxCatName.includes('Disc')) {
       var discLineAmt = trxLnArr[index].discLineAmt;
       var diss = discLineAmt;
@@ -1875,16 +1863,9 @@ export class OPMasterDtoComponent implements OnInit {
     }
     if (baseAmount != null) {
       console.log(trxLnArr[index].baseAmtLineWise);
-
       console.log((this.poMasterDtoForm.controls['poLines'][index]));
       var itemId = trxLnArr[index].invItemId;
-    
-      // var itemId = this.ItemDetailsList.itemId;
-      // var taxCategoryId = taxCategoryId;
-      // this.taxCatId = taxCategoryId;
-
       var sum = 0;
-
       var vorAmt: number = 0;
       var drfAmt: number = 0;
       // var baseAmount = this.sum;
@@ -1893,18 +1874,12 @@ export class OPMasterDtoComponent implements OnInit {
           (data: any[]) => {
             this.taxCalforItem = data;
             console.log(this.taxCalforItem);
-
             for (let i = 0; i < this.taxCalforItem.length; i++) {
-
               if (this.taxCalforItem[i].totTaxPer != 0) {
-                // sum = sum + this.taxCalforItem[i].totTaxAmt;
-                sum = Math.round(((sum + this.taxCalforItem[i].totTaxAmt) + Number.EPSILON) * 100) / 100;
+                sum = Math.round(((sum + this.taxCalforItem[i].totTaxAmt) + Number.EPSILON) * 100) / 100;              
               }
             }
             (patch.controls[index]).patchValue({
-              // baseAmtLineWise: arrayControl[index].baseAmtLineWise,
-              // taxAmtLineWise: sum,
-              // totAmtLineWise: arrayControl[index].baseAmtLineWise + sum,
               baseAmtLineWise: Math.round(((trxLnArr[index].baseAmtLineWise) + Number.EPSILON) * 100) / 100,
               taxAmtLineWise: Math.round(((sum) + Number.EPSILON) * 100) / 100,
               totAmtLineWise: Math.round(((trxLnArr[index].baseAmtLineWise + sum-diss) + Number.EPSILON) * 100) / 100,

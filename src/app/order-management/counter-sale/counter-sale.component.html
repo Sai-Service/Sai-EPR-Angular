@@ -1297,9 +1297,7 @@
                                                     </ng-template>
                                                 </td>
                                                 <td>
-                                                    <div
-                                                        *ngIf="displayRemoveRow[i]; then thenRemoveRow; else elseRemoveRow">
-                                                    </div>
+                                                    <div *ngIf="displayRemoveRow[i]; then thenRemoveRow; else elseRemoveRow"> </div>
                                                     <ng-template #thenRemoveRow>
                                                         <button type="button" class="btn btn-primary"
                                                             (click)="RemoveRow(i)" style="width: min-content;"><i

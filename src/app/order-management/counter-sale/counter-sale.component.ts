@@ -626,7 +626,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     this.isVisibleGenerateInvoice = false;
     this.isVisibleGenerateGatePass = false;
     this.isVisiblePayment = false;
-    this.displayRemoveRow.push(false);
+    // this.displayRemoveRow.push(false);
     this.isVisibleViewInvoice = false;
     this.isVisibleViewReceipt = false;
     this.isVisibleViewGatePass = false;
@@ -1032,7 +1032,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
               this.displayAfterGatePass = true;
               this.isVisible = true;
               this.isVisible15 = true;
-              this.isVisible16 = true;
+              this.isVisible16 = false;
             }
             if (data.obj.orderStatus === 'INVOICED' && data.obj.gatePassYN === 'N') { 
              this.isVisibleUpdate = false;
@@ -2774,7 +2774,11 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     var itemid1 = trxLnArr1[OrderLineIndex].itemId;
     var uuidref = trxLnArr1[OrderLineIndex].uuidRef;
     var locatorId = trxLnArr1[OrderLineIndex].frmLocatorName;
-    var prc = trxLnArr1[OrderLineIndex].unitSellingPrice;
+    var prc = trxLnArr1[OrderLineIndex].unitSellingPrice; 
+    if (trxLnArr1.length ===1){
+      alert('Not able to Delete This Line');
+      return;
+    }
     this.orderlineDetailsArray().removeAt(OrderLineIndex);
     this.TaxDetailsArray().removeAt(OrderLineIndex);
     if (itemid != null || itemid != undefined) {
