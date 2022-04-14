@@ -74,6 +74,7 @@ export class PaymentArComponent implements OnInit {
   public PaymentModeList: Array<string> = [];
   public ReceiptMethodList: Array<string> = [];
   public ReceiptStatusList: Array<string> = [];
+  public ReceiptStateList: Array<string> = [];
   public ReverseReasonList: Array<string> = [];
   public ReceiptTypeArList: Array<string> = [];
   public VehRegNoList: Array<string> = [];
@@ -121,6 +122,7 @@ export class PaymentArComponent implements OnInit {
   tdsAmount:number;
   tdstrxNumber:string;
   receiptStatus = 'Open';
+  status = 'UNAPP';
 
   receiptMethodId: number;
   // paymentCollection: string;
@@ -184,7 +186,7 @@ export class PaymentArComponent implements OnInit {
   chqBounceCharge:number;
   chqBncTrxNo:number;
   // status : string;
-  status = 'Open';
+ 
   cancelDate = null;
 
 
@@ -569,6 +571,16 @@ if(this.deptId==2){
           console.log(this.ReceiptStatusList);
         }
       );
+
+      this.service.ReceiptStateLst()
+      .subscribe(
+        data => {
+          this.ReceiptStateList = data;
+          console.log(this.ReceiptStateList);
+        }
+      );
+
+
 
     this.service.ReceiptTypeArList()
       .subscribe(
@@ -1136,6 +1148,7 @@ if(this.deptId==2){
                this.totAppliedtAmount = data.obj.oePayList[0].totAppliedtAmount.toFixed(2);
                this.totUnAppliedtAmount = data.obj.oePayList[0].totUnAppliedtAmount.toFixed(2);
                this.balanceAmount = data.obj.oePayList[0].balanceAmount.toFixed(2);
+
                this.GetCustomerDetails(data.obj.oePayList[0].customerId)
                this.GetCustomerSiteDetails(data.obj.oePayList[0].customerId)
                
@@ -2339,11 +2352,12 @@ if(this.deptId==2){
     // }
 
     // alert("Status :" + formValue.status);
-    if (formValue.status === undefined || formValue.status === null) {
-      alert("STATUS: Should not be null....");
-      this.cancelValidation = false
-      return;
-    }
+    
+    // if (formValue.status === undefined || formValue.status === null) {
+    //   alert("STATUS: Should not be null....");
+    //   this.cancelValidation = false
+    //   return;
+    // }
 
     this.cancelValidation = true;
   }
@@ -2386,7 +2400,7 @@ if(this.deptId==2){
   onReasonSelected(mReasonCode1) {
       var mReasonCode=this.paymentArForm.get('reversalReasonCode').value
       var pymtType =this.paymentArForm.get('payType').value
-
+      
       // alert ("REaseonCode , pytype :"+mReasonCode +","+pymtType);
 
      if (mReasonCode != null) {
@@ -2405,30 +2419,25 @@ if(this.deptId==2){
       this.reversalCategory = 'Receipt Reversed'
       this.status = 'REVERSED'
       this.enableApplyButton = false;
-      
-     
-    
     }
 
       this.chqBounceStatus=false; 
-      this.reversalComment=null;
-    
+      // this.reversalComment=null;
       if(mReasonCode ==='ChqBounce' && pymtType ==='CHEQUE' ){
         // alert ("in Reason fn..chq bounc")
           this.chqBounceStatus=true;
           this.reversalComment =mReasonCode;
           // this.service.RcptChqBounceReasonList('ChqBncRsn')
           this.service.RcptChqBounceReasonListNew(this.ouId)
-          
           .subscribe(
             data => {
               this.ChqBounceReasonList = data;
               console.log(this.ChqBounceReasonList);
             }
           );
-      } 
-     
+      }  else { this.reversalComment=null;}
     }
+
   
     onBounceRsnSelected(bncRsn) {
       let selectedValue = this.ChqBounceReasonList.find(d => d.code === bncRsn);
@@ -2599,11 +2608,19 @@ if(this.deptId==2){
 
     }
 
-    if (formValue.status === undefined || formValue.status === null) {
-      this.checkValidation = false;
-      alert("RECEIPT STATUS: Should not be null....");
-      return;
-    }
+  
+
+    // if (formValue.receiptStatus === undefined || formValue.receiptStatus === null) {
+    //   this.checkValidation = false;
+    //   alert("RECEIPT STATUS: Should not be null....");
+    //   return;
+    // }
+
+    // if (formValue.status === undefined || formValue.status === null) {
+    //   this.checkValidation = false;
+    //   alert("STATUS: Should not be null....");
+    //   return;
+    // }
 
     
     this.checkValidation = true

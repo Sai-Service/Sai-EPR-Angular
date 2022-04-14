@@ -2486,6 +2486,12 @@ OrderCategoryList(): Observable<any> {
     // cmnLookup/type/ReceiptStatus
   }
 
+  ReceiptStateLst(): Observable<any> {
+    return this.http.get(this.ServerUrl +'/cmnLookup/CmnType/ReceiptState');
+    // http://localhost:8081/cmnLookup/CmnType/ReceiptState
+  }
+  
+
   ReverseReasonList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/CmnType/ReversalReason');
   }
