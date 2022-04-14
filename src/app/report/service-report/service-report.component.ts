@@ -161,7 +161,7 @@ isVisibleGSTSaleRegister:boolean=false;
     var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
     const fileName = 'Service Pending Vehicle Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.serPendingVehicleReport(fromDate, toDate, sessionStorage.getItem('locId'))
+    this.reportService.serPendingVehicleReport(toDate, sessionStorage.getItem('locId'))
       .subscribe(data => {
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
         this.dataDisplay = ''
@@ -336,7 +336,7 @@ isVisibleGSTSaleRegister:boolean=false;
       const fileName = 'Service Pending Vehicle Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId'))===4){
-        this.reportService.serPendingVehicleReport(fromDate, toDate, locId)
+        this.reportService.serPendingVehicleReport(toDate, locId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.dataDisplay = ''
@@ -345,7 +345,7 @@ isVisibleGSTSaleRegister:boolean=false;
           })
       }
       else if (Number(sessionStorage.getItem('deptId'))!=4){
-        this.reportService.serPendingVehicleReport(fromDate, toDate, sessionStorage.getItem('locId'))
+        this.reportService.serPendingVehicleReport(toDate, sessionStorage.getItem('locId'))
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
           this.dataDisplay = ''

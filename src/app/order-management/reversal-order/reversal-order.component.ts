@@ -552,14 +552,14 @@ lstOrderLinesNew:any=[];
             for (let i = 0; i < this.lstOrderLines.length - len; i++) {
               // alert(this.lstOrderLinesNew[i].invType)
                if (this.lstOrderLinesNew[i].invType.includes('VEHICLE')) {
-                //  if (this.lstOrderLines[i].flowStatusCode==='INVOICED'){
+                 if (this.lstOrderLines[i].flowStatusCode==='INVOICED'){
                 var oeOrderLinesAllList: FormGroup = this.lineDetailsGroup();
                 control.push(oeOrderLinesAllList);
-              // }
+              }
                }
             }
-            // this.lineDetailsArray.clear();
-            let lineLevelOrderStatusListVehicle = this.lstOrderLinesNew.filter((vehicleDtls) => ((vehicleDtls.invType.includes('VEHICLE') == true)) );
+
+            let lineLevelOrderStatusListVehicle = this.lstOrderLinesNew.filter((vehicleDtls) => ((vehicleDtls.invType.includes('VEHICLE') == true && vehicleDtls.flowStatusCode.includes('INVOICED')==true)) );
             console.log(lineLevelOrderStatusListVehicle); 
              this.lstOrderLines= lineLevelOrderStatusListVehicle;
             //  alert(this.lstOrderLines.length)

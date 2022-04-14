@@ -1356,7 +1356,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
     if (Number(sessionStorage.getItem('divisionId')) === 2) {
       var model = this.CounterSaleOrderBookingForm.get('model').value;
       var variant = this.CounterSaleOrderBookingForm.get('variant').value;
-      this.orderManagementService.dealerShipBaseAmt(model, variant,color)
+      this.orderManagementService.dealerShipBaseAmtNew(model, variant,color,sessionStorage.getItem('ouId'))
         .subscribe(
           data => {
             this.CounterSaleOrderBookingForm.patchValue({ basicValue: data.obj[0].basicValue })

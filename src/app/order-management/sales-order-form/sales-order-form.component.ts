@@ -400,7 +400,7 @@ export class SalesOrderFormComponent implements OnInit {
       name: [''],
       lesseeCustName: [''],
       customerSiteId: [''],
-      insType: [''],
+      insType: ['',[Validators.required]],
       custTaxCat: [''],
       taxCategoryName: [''],
       birthDate: [''],
@@ -1358,6 +1358,10 @@ export class SalesOrderFormComponent implements OnInit {
         alert('Please Enter CSD Customer Details.!');
         return;
       }
+    }
+    if (this.SalesOrderBookingForm.get('insType').value===undefined||this.SalesOrderBookingForm.get('insType').value===null|| this.SalesOrderBookingForm.get('insType').value===''){
+      alert('Please Select Insuarnce Type.!');
+      return;
     }
     // alert(accountNo+'---transactionTypeName'+transactionTypeName+'---salesRepName--'+salesRepName+'--model--'+model) ;
     if (accountNo === undefined || accountNo === null || accountNo === '' || transactionTypeName === undefined || transactionTypeName === null || transactionTypeName === '' || salesRepName === undefined || salesRepName === null || salesRepName === ''
