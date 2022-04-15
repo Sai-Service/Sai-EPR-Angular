@@ -378,6 +378,10 @@ export class SalesOrderFormComponent implements OnInit {
   colorCode: string;
   lesseeCustId: number;
   lesseeCustName: string;
+  exShowRoomPrice: number;
+  totalPaidAmt: number;
+  balancePay: number;
+  
 
   constructor(private fb: FormBuilder, private router1: ActivatedRoute, private location: Location, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService) {
     this.SalesOrderBookingForm = fb.group({
@@ -392,6 +396,9 @@ export class SalesOrderFormComponent implements OnInit {
       csdDate: [''],
       csdPoNo: [''],
       lesseeContactNo: [''],
+      exShowRoomPrice: [0],
+      totalPaidAmt: [0],
+      balancePay: [0],
       exchangeYN: ['', [Validators.required]],
       priceListHeaderId: [''],
       taxiYN: [''],
@@ -400,7 +407,7 @@ export class SalesOrderFormComponent implements OnInit {
       name: [''],
       lesseeCustName: [''],
       customerSiteId: [''],
-      insType: ['',[Validators.required]],
+      insType: ['', [Validators.required]],
       custTaxCat: [''],
       taxCategoryName: [''],
       birthDate: [''],
@@ -1025,7 +1032,7 @@ export class SalesOrderFormComponent implements OnInit {
     if (Number(sessionStorage.getItem('divisionId')) === 2) {
       var model = this.SalesOrderBookingForm.get('model').value;
       var variant = this.SalesOrderBookingForm.get('variant').value;
-      this.orderManagementService.dealerShipBaseAmtNew(model, variant, color,sessionStorage.getItem('ouId'))
+      this.orderManagementService.dealerShipBaseAmtNew(model, variant, color, sessionStorage.getItem('ouId'))
         .subscribe(
           data => {
             this.SalesOrderBookingForm.patchValue({ basicValue: data.obj[0].basicValue })
@@ -1359,7 +1366,7 @@ export class SalesOrderFormComponent implements OnInit {
         return;
       }
     }
-    if (this.SalesOrderBookingForm.get('insType').value===undefined||this.SalesOrderBookingForm.get('insType').value===null|| this.SalesOrderBookingForm.get('insType').value===''){
+    if (this.SalesOrderBookingForm.get('insType').value === undefined || this.SalesOrderBookingForm.get('insType').value === null || this.SalesOrderBookingForm.get('insType').value === '') {
       alert('Please Select Insuarnce Type.!');
       return;
     }
@@ -1435,6 +1442,8 @@ export class SalesOrderFormComponent implements OnInit {
             this.SalesOrderBookingForm.patchValue({ custTaxCat: data.obj.taxCategoryName });
             this.SalesOrderBookingForm.patchValue({ fuelType: data.obj.fuelType });
             this.SalesOrderBookingForm.patchValue({ name: data.obj.billLocName });
+            var balPay = Math.round(((data.obj.balancePay) + Number.EPSILON) * 100) / 100;
+            this.SalesOrderBookingForm.patchValue({balancePay: balPay})
             this.isVisible6 = true;
             if (data.obj.financeType != 'None') {
               this.DisplayfinanceSelectionYes = false;

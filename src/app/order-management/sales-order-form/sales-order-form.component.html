@@ -967,11 +967,35 @@
                                 <input disabled type="number" formControlName="basicValue" class="form-control"
                                     style="width: 150px; font-weight: bold;">
                             </td>
+                            
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Ex-Showroom&nbsp;Price:&nbsp;
+                            </td>
+                            <td>
+                                <input disabled type="number" formControlName="exShowRoomPrice" class="form-control"
+                                    style="width: 150px; font-weight: bold;">
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Total&nbsp;Paid&nbsp;Amt:&nbsp;
+                            </td>
+                            <td>
+                                <input disabled type="number" formControlName="totalPaidAmt" class="form-control"
+                                    style="width: 150px; font-weight: bold;">
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Balance&nbsp;Amt:&nbsp;
+                            </td>
+                            <td>
+                                <input disabled type="number" formControlName="balancePay" class="form-control" 
+                                    style="width: 150px; font-weight: bold;">
+                            </td>
+                        </tr>
+                        <tr>   
                             <td colspan="3">
                                 <button type="submit" class="btn btn-primary" (click)="modelDetailsUpdate()"
                                     [style.display]="isVisiblemodelDetailsUpdate ? 'block' : 'none'"
                                     style="width: fit-content;height: fit-content;">Model Details Update</button>
-                                <!-- [style.display]="isVisible5 ? 'block' : 'none'" [disabled]="isDisabled5" -->
+                               
                             </td>
                         </tr>
                     </table>
@@ -1018,12 +1042,35 @@
                                 <input disabled type="text" formControlName="fuelType" [(ngModel)]='fuelType'
                                     class="form-control" style="width: 150px;">
                             </td>
-                            <td style="width: 15%" class="LabelFontStyle1">
+                            <td style="width: 15%" class="LabelFontStyle">
                                 Basic&nbsp;Price:&nbsp;
                             </td>
                             <td>
                                 <input disabled type="number" formControlName="basicValue" class="form-control"
                                     style="width: 150px;font-weight: bold;">
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle">
+                                Ex-Showroom&nbsp;Price:&nbsp;
+                            </td>
+                            <td>
+                                <input disabled type="number" formControlName="exShowRoomPrice" class="form-control"
+                                    style="width: 150px; font-weight: bold;">
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle">
+                                Total&nbsp;Paid&nbsp;Amt:&nbsp;
+                            </td>
+                            <td>
+                                <input disabled type="number" formControlName="totalPaidAmt" class="form-control"
+                                    style="width: 150px; font-weight: bold;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle">
+                                Balance&nbsp;Amt:&nbsp;
+                            </td>
+                            <td>
+                                <input disabled type="number" formControlName="balancePay" class="form-control"
+                                    style="width: 150px; font-weight: bold;">
                             </td>
                         </tr>
                     </table>
