@@ -1287,14 +1287,14 @@ export class JobCardComponent implements OnInit {
   checkLabLineValidation(index){
   
     var arrayControl = this.jobcardForm.get('jobCardLabLines').value
+    var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
     var invItemId = arrayControl[index].itemId;
     var genItem =arrayControl[index].genericItem;
     var itemSeg=arrayControl[index].segment;
     var itemDesc=arrayControl[index].description;
     var billTypeId=arrayControl[index].billableTyId;
+  
 
-    // alert ( " arrayControl[index].billableTyId  >> "+billTypeId +", index = "+index);
-   
     this.labLineValidation=false
 
     if(billTypeId <=0 ||billTypeId==undefined || billTypeId===null) { this.labLineValidation=false; alert ("Line - " + (index+1) +": Please Check BILLABLE TYPE..." +arrayControl[index].billableTyId)  ;return; }
@@ -1404,7 +1404,7 @@ export class JobCardComponent implements OnInit {
   
 
   onInput(event) {
-    event.target.value = event.target.value.toLocaleUpperCase();
+    event.target.value = event.target.value.toUpperCase();
   }
 
   serchByRegNo(RegNo) {
@@ -1971,8 +1971,10 @@ export class JobCardComponent implements OnInit {
   for (let i = 0; i < len1 ; i++) 
     {
       this.checkLabLineValidation(i);
-      if(this.labLineValidation===false) {break;}
+       if(this.labLineValidation===false) { break;}
     }
+
+    
 
    if(this.labLineValidation) {
      this.saveLabButton=false;

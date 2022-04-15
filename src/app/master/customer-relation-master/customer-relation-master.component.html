@@ -123,8 +123,8 @@
                                             <td><input   disabled style="width:15rem;"  type="text" formControlName="custName" class="form-control"></td>
                                             <td> <input  disabled style="width:20rem;"  type="text" formControlName="address1" class="form-control"></td>
                                             <td> <input  disabled style="width:8rem;"  type="text" formControlName="contactNo" class="form-control"></td>
-                                            <td> <input  disabled style="width:10rem;"  type="date" formControlName="startDate" class="form-control"></td>
-                                            <td> <input   style="width:10rem;"  type="date" formControlName="endDate" class="form-control"></td>
+                                            <td> <input  disabled style="width:10rem;"  type="date" formControlName="startdate" class="form-control"></td>
+                                            <td> <input   style="width:10rem;"  type="date" formControlName="enddate" class="form-control"></td>
                                             <td><button  type="submit" class="btn btn-info" (click)="addRow(i)"  style="width: min-content;"><i class="fa fa-plus"></i></button>  </td>
                                             <td><button  type="submit" class="btn btn-info" (click)="RemoveRow(i)"  style="width: min-content;"><i class="fa fa-trash"></i></button>  </td>
                                             <!-- (keydown.shift.arrowdown)="addRow(i)" -->
@@ -145,7 +145,14 @@
                            
                             </ng-template>
                             <ng-template #elseBlock1>
-                                <td> <button disabled type="submit" class="btn btn-info" id="register" (click)="newMast()">Save</button></td>
+                                <div *ngIf="updateButton; then upd1; else upd2"></div>
+                                <ng-template #upd1>
+                                  <td> <button  type="submit" class="btn btn-info" id="register" (click)="updateMast()">Update</button></td>
+                                </ng-template>
+                                <ng-template #upd2>
+                                    <td> <button disabled type="submit" class="btn btn-info" id="register" (click)="updateMast()">Update</button></td>
+                                  </ng-template>
+
                                 <!-- <td> <button type="submit" class="btn btn-info" id="register" (click)="searchMast(0)">Search</button></td> -->
                                 <td> <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>
                                 <td> <button type="submit" class="btn btn-info" id="register" (click)="closeMast()">Close</button></td>
@@ -195,7 +202,7 @@
              <!-- <td style="width: 170px;">{{com.emplId}}</td> -->
             <td style="width: 170px;">{{com.startdate}}</td>
             <td style="width: 170px;">{{com.enddate}}</td>
-            <td style="width: 140px;"><button class="btn btn-secondary" (click)="Select(com.custAccountNo)" >Select</button></td>
+            <td style="width: 140px;"><button class="btn btn-secondary" (click)="SelectCust(com.custAccountNo)" >Select</button></td>
         </tr>
       </tbody>
      </table>

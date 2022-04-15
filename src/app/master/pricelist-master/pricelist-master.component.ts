@@ -1499,6 +1499,7 @@ export class PricelistMasterComponent implements OnInit {
                 } else { alert(mSegment + " - Item Not Found in Price List Master - " + plName) }
               });
   }
+  
 
 
   F9SearchItemCodeNew_Old(itemSeg) {   // not in use

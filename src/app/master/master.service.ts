@@ -3840,9 +3840,16 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
           // http://localhost:8081/empCust/exeDtls?accountNo=1931&locId=2102
         }
 
+        customerEmpMapSearchNew(custNo,locId): Observable<any> {
+          return this.http.get(this.ServerUrl + `/empCust/custDtls?custAccountNo=${custNo}&locId=${locId}`);
+          // http://localhost:8081/empCust/custDtls?custAccountNo=1833&locId=2102
+        }
 
 
-     public custRelationPostSubmit(custRelationRecord) {
+
+
+
+    public custRelationPostSubmit(custRelationRecord) {
       const options = {
         headers: this.headers
       };
@@ -3850,6 +3857,17 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
       return this.http.post(url, custRelationRecord, options);
     }
 
+
+    public custRelationPutSubmit(custRelationRecord) {
+      const options = {
+        headers: this.headers
+      };
+      const url = this.ServerUrl + '/empCust';
+      return this.http.put(url, custRelationRecord, options);
+      // http://localhost:8081/empCust
+    }
+
+  
     //////////////////////////// ORDER GENERATION /
 
     clearBakcOrder(locId) {

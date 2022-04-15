@@ -61,10 +61,11 @@ export class CustomerRelationMasterComponent implements OnInit {
     emplName:string;
     empDesig:string;
     empStatus:string ='Active';
-    startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
-    endDate:Date;
+    startdate = this.pipe.transform(Date.now(), 'y-MM-dd');
+    enddate:Date;
 
     displayButton=true;
+    updateButton=false;
     lineItemRepeated=false;
     headerValidation=true;
     lineValidation=true;
@@ -92,8 +93,8 @@ export class CustomerRelationMasterComponent implements OnInit {
       emplName:[],
       empDesig:[],
       empStatus:[],
-      startDate:[],
-      endDate:[],
+      startdate:[],
+      enddate:[],
 
       custList: this.fb.array([this.lineDetailsGroup()])   
 
@@ -109,8 +110,8 @@ export class CustomerRelationMasterComponent implements OnInit {
         address1: ['', [Validators.required]],
         contactNo: ['', [Validators.required]],
         mobile1: ['', [Validators.required]],
-        startDate: ['', [Validators.required]],
-        endDate: ['', [Validators.required]],
+        startdate: ['', [Validators.required]],
+        enddate: ['', [Validators.required]],
         emplId:[],
         locId:[],
        });
@@ -188,14 +189,14 @@ export class CustomerRelationMasterComponent implements OnInit {
           emplName: this.CustomerEmpMapList.fullName,
           empDesig: this.CustomerEmpMapList.designation,
           empStatus: this.CustomerEmpMapList.status,
-          startDate: this.CustomerEmpMapList.startDate,
-          endDate: this.CustomerEmpMapList.endDate,
+          startdate: this.CustomerEmpMapList.startdate,
+          enddate: this.CustomerEmpMapList.endDate,
 
         });  }  else {
 
         (this.custRelationMasterForm.patchValue(
           {
-            empTktNo:  '',  emplName:'', empDesig:  '', empStatus: '',  startDate: '',  endDate:'', }));
+            empTktNo:  '',  emplName:'', empDesig:  '', empStatus: '',  startdate: '',  enddate:'', }));
             alert ("Customer No : "+custNo + " Not Mapped to  any Ticket No.");
       }
       });
@@ -242,6 +243,46 @@ export class CustomerRelationMasterComponent implements OnInit {
 
         }
 
+        updateMast()  {
+      
+          this.CheckHeaderValidations();
+
+          if (this.headerValidation==false ) {alert("Header Validation Failed... Please Check");  return;}
+    
+          this.lineValidation=false;
+          var custLineArr = this.custRelationMasterForm.get('custList').value;
+          var len1=custLineArr.length;
+          
+          for (let i = 0; i < len1 ; i++) 
+            {
+              this.CheckLineValidations(i);
+              if(this.lineValidation==false){break;}
+            }
+
+        if(this.lineValidation===false) { 
+          alert("Line Validation Failed...\nPlease check all line data fields are updated properly..")
+          return;
+        }
+          // this.displayButton=false;
+          this.updateButton=false;
+          var custLines = this.custRelationMasterForm.get('custList').value;
+           var len1 = custLines.length;
+            console.log(custLines);
+            this.service.custRelationPutSubmit(custLines).subscribe((res: any) => {
+              if (res.code === 200) {
+                alert(res.message);
+                this.custRelationMasterForm.disable();
+                } else { if (res.code === 400) {
+                  this.displayButton=true;
+                  alert(res.message);
+                ;
+                }
+              }
+            });
+            
+
+        }
+
 
   searchMast(pageNo) {
     // this.CheckHeaderValidations();
@@ -270,7 +311,10 @@ export class CustomerRelationMasterComponent implements OnInit {
     var patch = this.custRelationMasterForm.get('custList') as FormArray;
     if(this.headerValidation==false) {
       patch.controls[index].patchValue({custAccountNo: '' });return;}
-  
+     
+      var z1 = this.pipe.transform(this.now, 'y-MM-dd');
+      patch.controls[index].patchValue({ startdate: z1 })
+
     var custLineArr = this.custRelationMasterForm.get('custList').value;
     var custAcNo = custLineArr[index].custAccountNo;
     this.service.searchCustomerByAccount(custAcNo)
@@ -287,8 +331,8 @@ export class CustomerRelationMasterComponent implements OnInit {
                 custName:  '',
                 address1: '',
                 contactNo: '',
-                startDate: '',
-                endDate:'',
+                startdate: '',
+                enddate:'',
                 emplId:'',
                 locId:','
               }
@@ -319,8 +363,8 @@ export class CustomerRelationMasterComponent implements OnInit {
                     custName:  this.lstCustDetails.custName,
                     address1: this.lstCustDetails.address1,
                     contactNo: this.lstCustDetails.mobile1,
-                    startDate: this.lstCustDetails.startDate,
-                    endDate:this.lstCustDetails.endDate,
+                    // startdate: this.lstCustDetails.startdate,
+                    // enddate:this.lstCustDetails.enddate,
                     emplId:this.employeeId,
                     locId:this.locId,
                   }
@@ -392,6 +436,7 @@ export class CustomerRelationMasterComponent implements OnInit {
           var lineValue1=custLineArr1[i].customerId;
           var lineValue2=custLineArr1[i].custAccountNo;
           var lineValue3=custLineArr1[i].emplId;
+
           var j=i+1;
         if(lineValue1<=0 || lineValue2<=0 || lineValue3<=0) {
             alert("Line-"+j+ " : Incomplete Line Details.Please Check");
@@ -401,8 +446,26 @@ export class CustomerRelationMasterComponent implements OnInit {
           this.lineValidation=true;
 
         }
-  
 
+
+        SelectCust (accountNo) {
+          this.displayButton=false;
+          this.updateButton=true;
+          this.service.customerEmpMapSearchNew(accountNo, this.locId).subscribe(
+           data => {
+           this.lstCustDetails = data;
+
+           var len = this.lineDetailsArray().length;
+           for (let i = 0; i < this.lstCustDetails.length - len; i++) {
+             var avlLnGrp: FormGroup = this.lineDetailsGroup();
+             this.lineDetailsArray().push(avlLnGrp);
+           }
+           this.custRelationMasterForm.get('custList').patchValue(this.lstCustDetails);
+          });
+         
+        }
+
+       
   
 
 }
