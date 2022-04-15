@@ -2435,7 +2435,8 @@ if(this.deptId==2){
               console.log(this.ChqBounceReasonList);
             }
           );
-      }  else { this.reversalComment=null;}
+      }  
+      
     }
 
   
