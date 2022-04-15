@@ -1829,6 +1829,7 @@ export class OPMasterDtoComponent implements OnInit {
 
   onKey(index,event) {
     console.log(index);
+    alert(event.target.value)
     if (event.keyCode != 13) {
     var trxLnArrNew = this.poMasterDtoForm.get('poLines') as FormArray;
     var trxLnArr = trxLnArrNew.getRawValue();
@@ -1849,6 +1850,7 @@ export class OPMasterDtoComponent implements OnInit {
 
     trxLnArr[index].baseAmtLineWise = Math.round(((trxLnArr[index].unitPrice * trxLnArr[index].orderedQty) + Number.EPSILON) * 100) / 100;
     var baseAmount = Math.round(((trxLnArr[index].baseAmtLineWise) + Number.EPSILON) * 100) / 100;
+    alert(baseAmount);
     var taxCategoryId = trxLnArr[index].taxCategoryId;
     var taxCatName = trxLnArr[index].taxCategoryName;
     if (taxCatName.includes('Disc')) {
@@ -2250,7 +2252,7 @@ export class OPMasterDtoComponent implements OnInit {
 
       if (itemType === 'EXPENCE') {
         this.lineDetailsArray.controls[lineNum].get('segmentName').enable();
-
+        this.displayTaxCategotySelect[lineNum]=true;
         this.displayHSN[lineNum] = false;
         var deptName = 'NA';
         this.service.hsnSacCodeData('HSN').subscribe(
@@ -2258,7 +2260,8 @@ export class OPMasterDtoComponent implements OnInit {
             this.hsnSacCodeList = data;
           }
         )
-        this.service.invItemList(itemType, deptName, (sessionStorage.getItem('divisionId')))
+        var segment:string;
+        this.service.invItemListExpence(itemType, deptName, (sessionStorage.getItem('divisionId')),segment)
           .subscribe(
             data => {
               this.invItemList = data;

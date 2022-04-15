@@ -1035,7 +1035,12 @@ export class SalesOrderFormComponent implements OnInit {
       this.orderManagementService.dealerShipBaseAmtNew(model, variant, color, sessionStorage.getItem('ouId'))
         .subscribe(
           data => {
-            this.SalesOrderBookingForm.patchValue({ basicValue: data.obj[0].basicValue })
+            if (this.SalesOrderBookingForm.get('transactionTypeName').value.includes('CSD')){
+              this.SalesOrderBookingForm.patchValue({ basicValue: data.obj[0].csdPrice });
+            }
+            else{
+              this.SalesOrderBookingForm.patchValue({ basicValue: data.obj[0].basicValue });
+            }
           }
         );
     }
