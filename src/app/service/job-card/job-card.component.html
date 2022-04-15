@@ -1166,8 +1166,7 @@
                                                     <fieldset class="RFS">
                                                     <!-- <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Find Job Card</legend> -->
                                                     <div class="grid_scroll">
-                                                        <table class="GridFont" cellspacing="0" cellpadding="4"
-                                                            border="0" style="width:100%; border-collapse:collapse;">
+                                                        <table class="GridFont" cellspacing="0" cellpadding="4" border="0" style="width:100%; border-collapse:collapse;">
                                                             <thead>
                                                                 <tr class="GridHeader">
                                                                     <th scope="col">Sr. no</th>
@@ -1177,7 +1176,7 @@
                                                                     <th scope="col">&nbsp;</th>
                                                                     <!-- <th scope="col">Uom</th> -->
                                                                     <th scope="col">Description</th>
-                                                                    <th scope="col">GItem</th>
+                                                                    <th scope="col">Gen</th>
                                                                     <th scope="col">Tax %</th>
                                                                     <th scope="col">Quantity</th>
                                                                     <th scope="col">Unit Price</th>
@@ -1212,20 +1211,22 @@
                                                                       
                                                                             <td>
                                                                                 <input type="number"  hidden  formControlName="billableTyId"  class="form-control"  style="height: 25px;">
-                                                                               
-                                                                                <!-- <select formControlName="billableTyId"  id="billableTyId"   style="width: fit-content;"  class="form-control"  >
+<!--                                                                                
+                                                                                <select formControlName="billableTyId"  id="billableTyId"   style="width: fit-content;"  class="form-control"  >
                                                                                     <option
                                                                                     *ngFor="let sc of  billableTyIdList"  [selected]="sc.billableTyName===Customer" [ngValue]=sc.billableTyId> 
                                                                                         {{sc.billableTyName}}
                                                                                      </option>
                                                                                 </select> -->
 
-                                                                                <select formControlName="billableTyId"  id="billableTyId"   style="width: fit-content;"  class="form-control"  >
+                                                                                <select formControlName="billableTyId"  id="billableTyId"   style="width: fit-content;"  class="form-control" >
+                                                                                    <option></option>
                                                                                     <option
-                                                                                    *ngFor="let sc of  billableTyIdList"  [ngValue]=sc.billableTyId> 
+                                                                                    *ngFor="let sc of  billableTyIdList" [selected]="sc.billableTyId===1"  [(ngValue)]=sc.billableTyId> 
                                                                                         {{sc.billableTyName}}
                                                                                      </option>
                                                                                 </select>
+                                                                                <!-- (ngModelChange)="onBillableTypeSelect($event, i)" -->
 
                                                                                 </td>
                                                                              
@@ -2510,21 +2511,14 @@
 
 
 
-                                                         <div *ngIf="saveBillButton; then RE1; else RE2"></div>
+                                                         <!-- <div *ngIf="saveBillButton; then RE1; else RE2"></div>
                                                          <ng-template #RE1>
                                                             <td>
                                                                 <button type="submit" class="btn btn-primary"
                                                                 style="width: fit-content;" (click)="ReopenMaterialIssue()"  id="register">Reopen-Material Issue</button>
                                                            </td>
                                                         </ng-template>
-                                                         <ng-template #RE2>
-                                                                <!-- <td>
-                                                                    <button disabled  type="submit" class="btn btn-primary"
-                                                                    style="width: fit-content;" (click)="ReopenMaterialIssue()"  id="register">Reopen-Material Issue</button>
-                                                            </td> -->
-
-
-                                                          </ng-template>
+                                                         <ng-template #RE2></ng-template> -->
 
                                                       
 
