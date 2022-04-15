@@ -989,16 +989,6 @@ export class PayableInvoiceNewComponent implements OnInit {
             }
            
             console.log(this.tdsSectionList);
-            // if (res.obj[i].invoiceStatus === 'Validated' || res.obj[i].invoiceStatus === 'Unpaid' || res.obj[i].invTypeLookupCode != 'CREDIT' || res.obj[i].invTypeLookupCode != 'STANDARD') {
-            //   this.poInvoiceForm.disable();
-            //   this.isVisibleUpdateBtn = false;
-            //   this.TaxDetailsArray().disable();
-            //   this.TdsDetailsArray().disable();
-            //   this.lineDetailsArray().disable();
-            //   this.invLineDetailsArray().disable();
-            //   // this.isVisibleSave=false;
-            // }
-            // alert(res.obj[i].invoiceStatus);
             if (res.obj[i].invoiceStatus === null) {
               this.lineDetailsArray().controls[i].get('locationId').enable();
               this.lineDetailsArray().controls[i].get('invTypeLookupCode').disable();
@@ -1016,7 +1006,9 @@ export class PayableInvoiceNewComponent implements OnInit {
               this.lineDetailsArray().controls[i].get('invoiceAmt').enable();
               this.lineDetailsArray().controls[i].get('taxAmt').enable();
             }
-
+            if (res.obj[i].segment1 != null || res.obj[i].segment1 !=undefined || res.obj[i].segment1 != ''){
+              this.poInvoiceForm.disable();
+            }
           }
           this.displayValidateButton = false;
         }
@@ -1120,7 +1112,6 @@ export class PayableInvoiceNewComponent implements OnInit {
             var invLnGrp: FormGroup = this.tdsLineDetails();
             this.TdsDetailsArray().push(invLnGrp);
           }
-          // alert(data.taxLines.length)
           for (let i = 0; i < data.taxLines.length; i++) {
             var invLnGrp: FormGroup = this.TaxDetailsGroup();
             this.TaxDetailsArray().push(invLnGrp);
@@ -1229,6 +1220,9 @@ export class PayableInvoiceNewComponent implements OnInit {
           else {
             this.isVisible = true;
             this.displayapInvCancelled = false;
+          }
+          if (arraybaseNew1[i].segment != null || arraybaseNew1[i].segment != undefined || arraybaseNew1[i].segment != ''){
+            this.poInvoiceForm.disable();
           }
         }
       )
@@ -2400,11 +2394,23 @@ export class PayableInvoiceNewComponent implements OnInit {
     var amount = this.lineDetailsArray().controls[this.selectedLine].get('invoiceAmt').value;
     var totalOfInvLineAmout = 0;
     for (let i = 0; i < this.invLineDetailsArray().length; i++) {
-      totalOfInvLineAmout = Math.round(((totalOfInvLineAmout + arrayControl1[i].amount) + Number.EPSILON) * 100) / 100;
+      // totalOfInvLineAmout = Math.round(((totalOfInvLineAmout + arrayControl1[i].amount) + Number.EPSILON) * 100) / 100;
+      var desc1 : string =  arrayControl1[i].description;
+      if(desc1.includes('Adhoc Disc')){
+        totalOfInvLineAmout = Math.round(((totalOfInvLineAmout - arrayControl1[i].amount) + Number.EPSILON) * 100) / 100;
+      }else{
+        totalOfInvLineAmout = Math.round(((totalOfInvLineAmout + arrayControl1[i].amount) + Number.EPSILON) * 100) / 100;
+      }
     }
     var totalOfDistributionAmout = 0;
     for (let j = 0; j < this.lineDistributionArray().length; j++) {
-      totalOfDistributionAmout = Math.round(((totalOfDistributionAmout + Number(arrayCaontrolOfDistribution[j].amount)) + Number.EPSILON) * 100) / 100;
+      // totalOfDistributionAmout = Math.round(((totalOfDistributionAmout + Number(arrayCaontrolOfDistribution[j].amount)) + Number.EPSILON) * 100) / 100;
+      var desc1 : string =  arrayCaontrolOfDistribution[j].description;
+      if(desc1.includes('Adhoc Disc')){
+        totalOfDistributionAmout = Math.round(((totalOfDistributionAmout - Number(arrayCaontrolOfDistribution[j].amount)) + Number.EPSILON) * 100) / 100;  
+      }else{
+        totalOfDistributionAmout = Math.round(((totalOfDistributionAmout + Number(arrayCaontrolOfDistribution[j].amount)) + Number.EPSILON) * 100) / 100;
+    }
     }
     if (amount == totalOfInvLineAmout && amount == totalOfDistributionAmout) {
       var arrayControl = this.poInvoiceForm.get('obj').value;

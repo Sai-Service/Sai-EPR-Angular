@@ -46,10 +46,13 @@ export class RtoLineItemReportComponent implements OnInit {
   }
   getrtoReport(){
     var stDt = this.rtoListForm.get('startDt').value;
-     var stDate = this.pipe.transform(stDt, 'dd-MMM-yyyy');
-     var endDtSt = this.rtoListForm.get('endDt').value;
-     var endDt1 = new Date(endDtSt);
-    var endDt = this.pipe.transform(endDt1, 'dd-MMM-yyyy');
+   // this.startDt = this.pipe.transform(stDt, 'dd-MMM-yyyy');
+    var stDate = this.pipe.transform(stDt, 'dd-MMM-yyyy');
+
+    var endDtSt = this.rtoListForm.get('endDt').value;
+    var endDt1 = new Date(endDtSt);
+    // endDt1.setDate(endDt1.getDate() + 1);
+   var endDt = this.pipe.transform(endDt1, 'dd-MMM-yyyy');
     this.service.getRtoDataList(stDate, endDt,Number(sessionStorage.getItem('ouId')),sessionStorage.getItem('locId')).subscribe((res: any) => {
       this.rtoDataListDetails = res;
       console.log(res);  

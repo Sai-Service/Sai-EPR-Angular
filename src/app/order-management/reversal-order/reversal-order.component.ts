@@ -950,7 +950,7 @@ lstOrderLinesNew:any=[];
 
     const fileName = 'download.pdf';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.orderManagementService.printCSRtndocument(mRtnOrderNumber)
+    this.orderManagementService.printSalesRtndocument(mRtnOrderNumber)
       .subscribe(data => {
         var blob = new Blob([data], { type: 'application/pdf' });
         var url = URL.createObjectURL(blob);
