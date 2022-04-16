@@ -939,6 +939,8 @@ export class JobCardComponent implements OnInit {
     this.billableTyName = 'Customer';
     var laborLineArr = this.jobcardForm.get('jobCardLabLines') as FormArray;
     laborLineArr.controls[0].patchValue({ billableTyName: 'Customer' });
+    // laborLineArr.controls[0].patchValue({ billableTyId: 1 });
+
   }
   splitFlagFlagFn(e) {
     if (e.target.checked === true) {
@@ -1500,8 +1502,6 @@ export class JobCardComponent implements OnInit {
     if(lenLab>1) {for (let i = lenLab - 1; i > 0; i--) { this.lineDetailsArray.removeAt(i); }}
     if(lenMat>1) {for (let i = lenMat - 1; i > 0; i--) { this.lineDistributionArray().removeAt(i); }}
 
-  
-    
     this.jobCardNum1=jcNum;
    
     this.serviceService.getJonCardNoSearch(jcNum)
@@ -1518,7 +1518,6 @@ export class JobCardComponent implements OnInit {
             this.estTotal=data.obj.estMaterial+data.obj.estLabor;
             this.fscCoupon=data.obj.fscCoupon;
           } else { alert (jcNum + " Job Card Not Found...");return;}
-
 
           // let mToday =this.pipe.transform(new Date(), 'yyyy-MM-dd');
           // let jobDate=this.pipe.transform(this.jobCardDate, 'yyyy-MM-dd');

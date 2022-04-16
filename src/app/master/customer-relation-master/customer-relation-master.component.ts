@@ -61,14 +61,15 @@ export class CustomerRelationMasterComponent implements OnInit {
     emplName:string;
     empDesig:string;
     empStatus:string ='Active';
-    startdate = this.pipe.transform(Date.now(), 'y-MM-dd');
-    enddate:Date;
+    startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+    endDate:Date;
 
     displayButton=true;
     updateButton=false;
     lineItemRepeated=false;
     headerValidation=true;
     lineValidation=true;
+    closedStatus=false;
 
   constructor(private service: MasterService, private fb: FormBuilder, private router: Router) 
     {
@@ -93,8 +94,8 @@ export class CustomerRelationMasterComponent implements OnInit {
       emplName:[],
       empDesig:[],
       empStatus:[],
-      startdate:[],
-      enddate:[],
+      startDate:[],
+      endDate:[],
 
       custList: this.fb.array([this.lineDetailsGroup()])   
 
@@ -110,8 +111,8 @@ export class CustomerRelationMasterComponent implements OnInit {
         address1: ['', [Validators.required]],
         contactNo: ['', [Validators.required]],
         mobile1: ['', [Validators.required]],
-        startdate: ['', [Validators.required]],
-        enddate: ['', [Validators.required]],
+        startDate: ['', [Validators.required]],
+        endDate: ['', [Validators.required]],
         emplId:[],
         locId:[],
        });
@@ -189,14 +190,14 @@ export class CustomerRelationMasterComponent implements OnInit {
           emplName: this.CustomerEmpMapList.fullName,
           empDesig: this.CustomerEmpMapList.designation,
           empStatus: this.CustomerEmpMapList.status,
-          startdate: this.CustomerEmpMapList.startdate,
-          enddate: this.CustomerEmpMapList.endDate,
+          startDate: this.CustomerEmpMapList.startDate,
+          endDate: this.CustomerEmpMapList.endDate,
 
         });  }  else {
 
         (this.custRelationMasterForm.patchValue(
           {
-            empTktNo:  '',  emplName:'', empDesig:  '', empStatus: '',  startdate: '',  enddate:'', }));
+            empTktNo:  '',  emplName:'', empDesig:  '', empStatus: '',  startDate: '',  endDate:'', }));
             alert ("Customer No : "+custNo + " Not Mapped to  any Ticket No.");
       }
       });
@@ -244,6 +245,8 @@ export class CustomerRelationMasterComponent implements OnInit {
         }
 
         updateMast()  {
+
+          if(this.closedStatus===false) {
       
           this.CheckHeaderValidations();
 
@@ -279,7 +282,7 @@ export class CustomerRelationMasterComponent implements OnInit {
                 }
               }
             });
-            
+          } 
 
         }
 
@@ -313,7 +316,7 @@ export class CustomerRelationMasterComponent implements OnInit {
       patch.controls[index].patchValue({custAccountNo: '' });return;}
      
       var z1 = this.pipe.transform(this.now, 'y-MM-dd');
-      patch.controls[index].patchValue({ startdate: z1 })
+      patch.controls[index].patchValue({ startDate: z1 })
 
     var custLineArr = this.custRelationMasterForm.get('custList').value;
     var custAcNo = custLineArr[index].custAccountNo;
@@ -331,8 +334,8 @@ export class CustomerRelationMasterComponent implements OnInit {
                 custName:  '',
                 address1: '',
                 contactNo: '',
-                startdate: '',
-                enddate:'',
+                startDate: '',
+                endDate:'',
                 emplId:'',
                 locId:','
               }
@@ -363,8 +366,8 @@ export class CustomerRelationMasterComponent implements OnInit {
                     custName:  this.lstCustDetails.custName,
                     address1: this.lstCustDetails.address1,
                     contactNo: this.lstCustDetails.mobile1,
-                    // startdate: this.lstCustDetails.startdate,
-                    // enddate:this.lstCustDetails.enddate,
+                    startDate: this.lstCustDetails.startDate,
+                    endDate:this.lstCustDetails.endDate,
                     emplId:this.employeeId,
                     locId:this.locId,
                   }
@@ -454,6 +457,8 @@ export class CustomerRelationMasterComponent implements OnInit {
           this.service.customerEmpMapSearchNew(accountNo, this.locId).subscribe(
            data => {
            this.lstCustDetails = data;
+           if (data[0].endDate !=null) { this.closedStatus=true ;} 
+           else {this.closedStatus=false;}
 
            var len = this.lineDetailsArray().length;
            for (let i = 0; i < this.lstCustDetails.length - len; i++) {

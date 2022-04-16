@@ -329,18 +329,14 @@
                     <td style="width: 12%" class="LabelFontStyle">Service&nbsp;Model:&nbsp;</td>
                     <td> <input   disabled  type="text"  formControlName="serviceModel"  id="serviceModel" [(ngModel)]="serviceModel" class="form-control"  > </td>
          
+                    <td style="width: 12%" class="LabelFontStyle">OEM&nbsp;WR&nbsp;Prd:&nbsp;</td>
+                    <td><input disabled  type="number"  formControlName="oemWarrantyPeriod"  id="oemWarrantyPeriod" [(ngModel)]="oemWarrantyPeriod" class="form-control" > </td>
+                    
                     <td style="width: 12%" class="LabelFontStyle">OEM&nbsp;WR&nbsp;Expiry:&nbsp;</td>
+                    <td><input disabled  type="date"  formControlName="oemWarrentyEndDate"  id="oemWarrentyEndDate" [(ngModel)]="oemWarrentyEndDate" class="form-control" ></td>
 
-                    <td>
-                        <input disabled  type="date"  formControlName="oemWarrentyEndDate"  id="oemWarrentyEndDate" [(ngModel)]="oemWarrentyEndDate" class="form-control" >
-                    </td>
-
-                    <td style="width: 12%" class="LabelFontStyle">Last&nbsp;Run&nbsp;Km:&nbsp;</td>
-
-                    <td>
-                        <input   type="number"  formControlName="lastRunKm"  id="lastRunKm" [(ngModel)]="lastRunKm" class="form-control" >
-                        <!-- (keyup)="onInput($event)" -->
-                    </td>
+                     <!-- (keyup)="onInput($event)" -->
+                   
 
                    
                    
@@ -462,6 +458,10 @@
                 
                         <tr>
 
+                            <td style="width: 12%" class="LabelFontStyle">Last&nbsp;Run&nbsp;Km:&nbsp;</td>
+                            <td><input   type="number"  formControlName="lastRunKm"  id="lastRunKm" [(ngModel)]="lastRunKm" class="form-control" > </td>
+                              
+
                             <td style="width: 12%" class="LabelFontStyle">Dlr&nbsp;Invoice&nbsp;No:&nbsp;</td>
     
                             <td>
@@ -473,37 +473,37 @@
                             <td>
                                 <input   type="text"  formControlName="dmsInvoiceNo"  id="dmsInvoiceNo" [(ngModel)]="dmsInvoiceNo" class="form-control" (keyup)="onInput($event)">
                             </td>
+                            <td style="width: 12%" class="LabelFontStyle1">&nbsp;Status:&nbsp;</td>
+
+                            <td>
+                                <select formControlName="status" id="status" class="form-control"   [ngModel]="status" (ngModelChange)='onStatusSelected($event)' style="background-color: yellow;" >
+                                <option *ngFor="let sc of  statusList" [ngValue] ="sc.code">
+                                    {{sc.code}}
+                                </option>
+                                </select>
+                            </td>
                        
-                      
-                        <td style="width: 12%" class="LabelFontStyle">Customer&nbsp;Name:&nbsp;</td>
-                        <td colspan="3">
-                            <input   hidden  type="text"  formControlName="customerId"/>
-                            <input disabled type="text"  formControlName="custName"  id="custName" [(ngModel)]="custName" class="form-control" style="width: 100%;" >
-                        </td>
-
-                      
-                      
-
+                           
                 </tr>
 
                 <tr>
+
                     <td style="width: 12%" class="LabelFontStyle1">Customer&nbsp;No:&nbsp;</td>
-                    <td>
-                        <input   disabled  type="text"  formControlName="custAccountNo"  id="custAccountNo" [(ngModel)]="custAccountNo" class="form-control" style="background-color: greenyellow;" >
+                    <td> <input   disabled  type="text"  formControlName="custAccountNo"  id="custAccountNo" [(ngModel)]="custAccountNo" class="form-control" style="background-color: greenyellow;" >  </td>
+                  
+                    <td style="width: 12%" class="LabelFontStyle">Customer&nbsp;Name:&nbsp;</td>
+                    <td colspan="2">
+                        <input   hidden  type="text"  formControlName="customerId"/>
+                        <input disabled type="text"  formControlName="custName"  id="custName" [(ngModel)]="custName" class="form-control" style="width: 100%;" >
                     </td>
 
-                    <td style="width: 12%" class="LabelFontStyle1">&nbsp;Status:&nbsp;</td>
-
-                    <!-- <input  style="width:50px ;"   type="text"  formControlName="status"
-                    class="form-control" [(ngModel)]="status"> -->
-                    <td>
-                    <select formControlName="status" id="status" class="form-control"   [ngModel]="status" (ngModelChange)='onStatusSelected($event)' style="background-color: yellow;" >
-                    <!-- <option disabled>--Select--</option> -->
-                    <option *ngFor="let sc of  statusList" [ngValue] ="sc.code">
-                        {{sc.code}}
-                    </option>
-                    </select>
-                </td>
+                    
+                 <td>
+                    <button  type="button"  class="btn btn-primary" 
+                    data-toggle="modal" data-target="#CustomerInfo"  style="width: fit-content;color: black;" (click)="LoadCustDetails()">
+                    &nbsp;Customer Details</button>
+                </td> 
+                
 
                 <div *ngIf="displayInactive; then Block1; else Block2"></div>
                 <ng-template #Block1> 
@@ -518,20 +518,10 @@
                 </ng-template>
                 <ng-template #Block2> </ng-template>
 
-
-                <td></td>
-                <td>
-                    <button  type="button"  class="btn btn-primary" 
-                    data-toggle="modal" data-target="#CustomerInfo"  style="width: fit-content;color: black;" (click)="LoadCustDetails()">
-                    &nbsp;Customer Details</button>
-                </td>
-
                 </tr>
 
                
-                   
-
-               
+                            
               
                
             </table>
