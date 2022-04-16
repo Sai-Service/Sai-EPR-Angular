@@ -52,7 +52,7 @@ export class PaymentReceiptComponent implements OnInit  {
     ouId :number;  
     deptId:number; 
     checkNo : string;
-    checkDate: Date;
+    // checkDate: Date;
     bankName : string;
     bankBranch : string;
     paymentAmt : number;
@@ -77,6 +77,7 @@ export class PaymentReceiptComponent implements OnInit  {
     pipe = new DatePipe('en-US');
     now = Date.now();
     receiptDate = this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
+    checkDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
     cancelDate =null;
 
     comment : string
@@ -180,7 +181,10 @@ export class PaymentReceiptComponent implements OnInit  {
     this.locId=Number(sessionStorage.getItem('locId'));
     this.deptId=Number(sessionStorage.getItem('dept'))
     // this.locName=(sessionStorage.getItem('locName'));
-
+    this.paymentReceiptForm.patchValue({checkDate:(this.pipe.transform(this.now, 'dd-MM-yyyy'))});
+    console.log(this.pipe.transform(this.now, 'dd-MM-yyyy'));
+    
+    // alert(this.paymentReceiptForm.get('checkDate').value);
     this.emplId= Number(sessionStorage.getItem('emplId'));
     this.buttonviewReceipt=true;
 
@@ -400,6 +404,7 @@ export class PaymentReceiptComponent implements OnInit  {
       this.paymentReceiptForm.get('bankBranch').value===undefined ||
       this.paymentReceiptForm.get('checkDate').value===undefined){
         alert('Select Bank details And then Save...!');
+        this.isDisabledSave=false;
         return;
       }
     }

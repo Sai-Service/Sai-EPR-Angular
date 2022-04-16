@@ -172,6 +172,19 @@ export class MasterService {
   }
   
 
+
+  invItemListExpence(itemType,deptName,divisionId,segment):Observable<any> {
+    const REQUEST_PARAMS = new HttpParams().set('itemType', itemType)
+    .set('dept', deptName)
+    .set('divisionId',divisionId)
+    .set('segment',segment)
+    const REQUEST_URI = this.ServerUrl +'/itemMst/ItemType';
+    return this.http.get(REQUEST_URI, {
+      params: REQUEST_PARAMS,
+    });
+  }
+  
+
   invItemList2(itemType,deptName,divisionId):Observable<any> {
     const REQUEST_PARAMS = new HttpParams().set('itemType', itemType)
     .set('dept', deptName)
