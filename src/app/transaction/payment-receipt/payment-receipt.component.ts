@@ -77,7 +77,8 @@ export class PaymentReceiptComponent implements OnInit  {
     pipe = new DatePipe('en-US');
     now = Date.now();
     receiptDate = this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
-    checkDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
+    // checkDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
+    checkDate:Date;
     cancelDate =null;
 
     comment : string
@@ -181,8 +182,8 @@ export class PaymentReceiptComponent implements OnInit  {
     this.locId=Number(sessionStorage.getItem('locId'));
     this.deptId=Number(sessionStorage.getItem('dept'))
     // this.locName=(sessionStorage.getItem('locName'));
-    this.paymentReceiptForm.patchValue({checkDate:(this.pipe.transform(this.now, 'dd-MM-yyyy'))});
-    console.log(this.pipe.transform(this.now, 'dd-MM-yyyy'));
+    // this.paymentReceiptForm.patchValue({checkDate:(this.pipe.transform(this.now, 'dd-MM-yyyy'))});
+    // console.log(this.pipe.transform(this.now, 'dd-MM-yyyy'));
     
     // alert(this.paymentReceiptForm.get('checkDate').value);
     this.emplId= Number(sessionStorage.getItem('emplId'));

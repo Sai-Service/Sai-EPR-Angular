@@ -8,10 +8,11 @@ import { NgxDateRangeModule } from 'ngx-daterange';
 // import { JobcardOpeningComponent } from './jobcard-opening/jobcard-opening.component';
 import { ServiceGatepassComponent } from './service-gatepass/service-gatepass.component';
 import { VehicleServiceHistoryComponent } from './vehicle-service-history/vehicle-service-history.component';
+import { LaborListComponent } from './labor-list/labor-list.component';
 
 
 @NgModule({
-  declarations: [JobCardComponent,  ServiceGatepassComponent, VehicleServiceHistoryComponent],
+  declarations: [JobCardComponent,  ServiceGatepassComponent, VehicleServiceHistoryComponent, LaborListComponent],
   imports: [
     CommonModule,
     ServiceRoutingModule,

@@ -436,7 +436,7 @@
                                 </ng-template>
                                 <ng-template #rtn2>
                                    <td>
-                                   <div *ngIf="validateStatus ,then vStatusYes; else vStatusNo")></div>
+                                   <div *ngIf="validateStatus ,then vStatusYes; else vStatusNo"></div>
                                    <ng-template #vStatusYes>
                                        <button style="width: 8em;" type="button" class="btn btn-info" (click)="validateSave(applyTo)">Validate</button>
                                    </ng-template>

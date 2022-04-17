@@ -2794,6 +2794,10 @@ formData.append('location', locCode);
     return this.http.get(this.ServerUrl + `/orderHeader/getByDate?locId=${locId}&startDt=${startDt}&endDt=${endDt}&dept=${deptId}`)
   }
 
+  getLaborByUser(ouId){
+    return this.http.get(this.ServerUrl + `/pricelist/laborPrice/${ouId}`)
+  }
+
   getClosingStock(ouId){
     return this.http.get(this.ServerUrl + `/orderHeader/onHandList/${ouId}`)
   }
