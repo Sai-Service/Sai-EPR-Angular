@@ -1008,6 +1008,16 @@ export class WsVehicleMasterComponent implements OnInit {
   onOptionsSelectedModel(mainModel:any) {
     if (mainModel != null) {
 
+      this.wsVehicleMasterForm.patchValue({
+        variantDesc: '',
+        serviceModel: '',
+        fuelType : '',
+        oemWarrantyPeriod :'',
+        deliveryDate: '',
+        regDate: '',
+        oemWarrentyEndDate : '',
+       });
+
       // let selectedValue = this.mainModelList.find(v => v.code === mainModel);
       // this.itemTypeForCat=selectedValue.attribute2;
       

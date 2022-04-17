@@ -592,6 +592,7 @@ closeMast() {
               var amcItemList:FormGroup=this.lineDetailsGroup();
               control.push(amcItemList);
             }
+            this.amcEnrollmentForm.patchValue({amcEndDate:data.endDate ,amcStartDate :data.startDate});
             this.amcEnrollmentForm.patchValue(this.lstcomments);
             this.GetCustomerDetails(this.lstcomments.customerId);
             this.GetCustomerSiteDetails(this.lstcomments.customerId);

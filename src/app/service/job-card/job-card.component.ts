@@ -939,6 +939,8 @@ export class JobCardComponent implements OnInit {
     this.billableTyName = 'Customer';
     var laborLineArr = this.jobcardForm.get('jobCardLabLines') as FormArray;
     laborLineArr.controls[0].patchValue({ billableTyName: 'Customer' });
+    // laborLineArr.controls[0].patchValue({ billableTyId: 1 });
+
   }
   splitFlagFlagFn(e) {
     if (e.target.checked === true) {
@@ -1287,14 +1289,14 @@ export class JobCardComponent implements OnInit {
   checkLabLineValidation(index){
   
     var arrayControl = this.jobcardForm.get('jobCardLabLines').value
+    var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
     var invItemId = arrayControl[index].itemId;
     var genItem =arrayControl[index].genericItem;
     var itemSeg=arrayControl[index].segment;
     var itemDesc=arrayControl[index].description;
     var billTypeId=arrayControl[index].billableTyId;
+  
 
-    // alert ( " arrayControl[index].billableTyId  >> "+billTypeId +", index = "+index);
-   
     this.labLineValidation=false
 
     if(billTypeId <=0 ||billTypeId==undefined || billTypeId===null) { this.labLineValidation=false; alert ("Line - " + (index+1) +": Please Check BILLABLE TYPE..." +arrayControl[index].billableTyId)  ;return; }
@@ -1404,7 +1406,7 @@ export class JobCardComponent implements OnInit {
   
 
   onInput(event) {
-    event.target.value = event.target.value.toLocaleUpperCase();
+    event.target.value = event.target.value.toUpperCase();
   }
 
   serchByRegNo(RegNo) {
@@ -1500,8 +1502,6 @@ export class JobCardComponent implements OnInit {
     if(lenLab>1) {for (let i = lenLab - 1; i > 0; i--) { this.lineDetailsArray.removeAt(i); }}
     if(lenMat>1) {for (let i = lenMat - 1; i > 0; i--) { this.lineDistributionArray().removeAt(i); }}
 
-  
-    
     this.jobCardNum1=jcNum;
    
     this.serviceService.getJonCardNoSearch(jcNum)
@@ -1518,7 +1518,6 @@ export class JobCardComponent implements OnInit {
             this.estTotal=data.obj.estMaterial+data.obj.estLabor;
             this.fscCoupon=data.obj.fscCoupon;
           } else { alert (jcNum + " Job Card Not Found...");return;}
-
 
           // let mToday =this.pipe.transform(new Date(), 'yyyy-MM-dd');
           // let jobDate=this.pipe.transform(this.jobCardDate, 'yyyy-MM-dd');
@@ -1971,8 +1970,10 @@ export class JobCardComponent implements OnInit {
   for (let i = 0; i < len1 ; i++) 
     {
       this.checkLabLineValidation(i);
-      if(this.labLineValidation===false) {break;}
+       if(this.labLineValidation===false) { break;}
     }
+
+    
 
    if(this.labLineValidation) {
      this.saveLabButton=false;

@@ -65,9 +65,11 @@ export class CustomerRelationMasterComponent implements OnInit {
     endDate:Date;
 
     displayButton=true;
+    updateButton=false;
     lineItemRepeated=false;
     headerValidation=true;
     lineValidation=true;
+    closedStatus=false;
 
   constructor(private service: MasterService, private fb: FormBuilder, private router: Router) 
     {
@@ -242,6 +244,48 @@ export class CustomerRelationMasterComponent implements OnInit {
 
         }
 
+        updateMast()  {
+
+          if(this.closedStatus===false) {
+      
+          this.CheckHeaderValidations();
+
+          if (this.headerValidation==false ) {alert("Header Validation Failed... Please Check");  return;}
+    
+          this.lineValidation=false;
+          var custLineArr = this.custRelationMasterForm.get('custList').value;
+          var len1=custLineArr.length;
+          
+          for (let i = 0; i < len1 ; i++) 
+            {
+              this.CheckLineValidations(i);
+              if(this.lineValidation==false){break;}
+            }
+
+        if(this.lineValidation===false) { 
+          alert("Line Validation Failed...\nPlease check all line data fields are updated properly..")
+          return;
+        }
+          // this.displayButton=false;
+          this.updateButton=false;
+          var custLines = this.custRelationMasterForm.get('custList').value;
+           var len1 = custLines.length;
+            console.log(custLines);
+            this.service.custRelationPutSubmit(custLines).subscribe((res: any) => {
+              if (res.code === 200) {
+                alert(res.message);
+                this.custRelationMasterForm.disable();
+                } else { if (res.code === 400) {
+                  this.displayButton=true;
+                  alert(res.message);
+                ;
+                }
+              }
+            });
+          } 
+
+        }
+
 
   searchMast(pageNo) {
     // this.CheckHeaderValidations();
@@ -270,7 +314,10 @@ export class CustomerRelationMasterComponent implements OnInit {
     var patch = this.custRelationMasterForm.get('custList') as FormArray;
     if(this.headerValidation==false) {
       patch.controls[index].patchValue({custAccountNo: '' });return;}
-  
+     
+      var z1 = this.pipe.transform(this.now, 'y-MM-dd');
+      patch.controls[index].patchValue({ startDate: z1 })
+
     var custLineArr = this.custRelationMasterForm.get('custList').value;
     var custAcNo = custLineArr[index].custAccountNo;
     this.service.searchCustomerByAccount(custAcNo)
@@ -392,6 +439,7 @@ export class CustomerRelationMasterComponent implements OnInit {
           var lineValue1=custLineArr1[i].customerId;
           var lineValue2=custLineArr1[i].custAccountNo;
           var lineValue3=custLineArr1[i].emplId;
+
           var j=i+1;
         if(lineValue1<=0 || lineValue2<=0 || lineValue3<=0) {
             alert("Line-"+j+ " : Incomplete Line Details.Please Check");
@@ -401,8 +449,28 @@ export class CustomerRelationMasterComponent implements OnInit {
           this.lineValidation=true;
 
         }
-  
 
+
+        SelectCust (accountNo) {
+          this.displayButton=false;
+          this.updateButton=true;
+          this.service.customerEmpMapSearchNew(accountNo, this.locId).subscribe(
+           data => {
+           this.lstCustDetails = data;
+           if (data[0].endDate !=null) { this.closedStatus=true ;} 
+           else {this.closedStatus=false;}
+
+           var len = this.lineDetailsArray().length;
+           for (let i = 0; i < this.lstCustDetails.length - len; i++) {
+             var avlLnGrp: FormGroup = this.lineDetailsGroup();
+             this.lineDetailsArray().push(avlLnGrp);
+           }
+           this.custRelationMasterForm.get('custList').patchValue(this.lstCustDetails);
+          });
+         
+        }
+
+       
   
 
 }
