@@ -125,50 +125,14 @@ isVisibleGSTSaleRegister:boolean=false;
     );
   }
 
-  jobSummary(){
-    this.isDisabled1 = true;
-    this.closeResetButton = false;
-    this.progress = 0;
-    this.dataDisplay = 'Report Is Running....Do not refresh the Page';
-    var purStDt = this.serviceReportForm.get('jobSumFromDt').value;
-    var fromDate = this.pipe.transform(purStDt, 'dd-MMM-yyyy');
-    var spreceipttoDate2 = this.serviceReportForm.get('jobSumToDt').value;
-    var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
-    const fileName = 'Job-Card-Summary-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
-    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.jobSummaryReport(fromDate, toDate, sessionStorage.getItem('locId'))
-      .subscribe(data => {
-        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-        this.dataDisplay = ''
-        this.closeResetButton = true;
-        this.isDisabled1 = false;
-      })
-  }
 
 
 
 
 
 
-  serPendingVehicle(){
-    this.isDisabled2 = true;
-    this.closeResetButton = false;
-    this.progress = 0;
-    this.dataDisplay = 'Report Is Running....Do not refresh the Page';
-    var purStDt = this.serviceReportForm.get('serPendingVehicleFromDt').value;
-    var fromDate = this.pipe.transform(purStDt, 'dd-MMM-yyyy');
-    var spreceipttoDate2 = this.serviceReportForm.get('serPendingVehicleToDt').value;
-    var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
-    const fileName = 'Service Pending Vehicle Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
-    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.serPendingVehicleReport(toDate, sessionStorage.getItem('locId'))
-      .subscribe(data => {
-        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-        this.dataDisplay = ''
-        this.closeResetButton = true;
-        this.isDisabled2 = false;
-      })
-  }
+
+
   
   refresh() {
     window.location.reload();
@@ -269,6 +233,24 @@ isVisibleGSTSaleRegister:boolean=false;
       this.isVisiblepaneltolocation=false;
       this.isVisiblecustomerLedger=false;
       this.isVisibleGSTSaleRegister=true;
+    }
+    else if (reportName==='laborChargeSummary'){
+      this.reportName='Labour Charge Summary Report';
+      this.isVisiblegstsaiDebtors=false;
+      this.isVisiblepanelfromtolocation=true;
+      this.isVisiblefromtolocationdepartment=false;
+      this.isVisiblepaneltolocation=false;
+      this.isVisiblecustomerLedger=false;
+      this.isVisibleGSTSaleRegister=false;
+    }
+    else if (reportName==='technicianSummary'){
+      this.reportName='Technician  Summary Report';
+      this.isVisiblegstsaiDebtors=false;
+      this.isVisiblepanelfromtolocation=true;
+      this.isVisiblefromtolocationdepartment=false;
+      this.isVisiblepaneltolocation=false;
+      this.isVisiblecustomerLedger=false;
+      this.isVisibleGSTSaleRegister=false;
     }
   }
 
@@ -484,6 +466,50 @@ isVisibleGSTSaleRegister:boolean=false;
     }
     if (Number(sessionStorage.getItem('deptId'))!=4){
       this.reportService.gstSaleRegisterReport(fromDate, toDate, sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'))
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.dataDisplay = ''
+          this.closeResetButton = true;
+          this.isDisabled1 = false;
+        })
+      }
+  }
+  else if (reportName==='Labour Charge Summary Report'){
+    const fileName = 'Labour Charge Summary Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    if (Number(sessionStorage.getItem('deptId'))===4){
+    this.reportService.laborChargeSummary(fromDate, toDate, sessionStorage.getItem('ouId'),locId)
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.dataDisplay = ''
+        this.closeResetButton = true;
+        this.isDisabled1 = false;
+      })
+    }
+    if (Number(sessionStorage.getItem('deptId'))!=4){
+      this.reportService.laborChargeSummary(fromDate, toDate, sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'))
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.dataDisplay = ''
+          this.closeResetButton = true;
+          this.isDisabled1 = false;
+        })
+      }
+  }
+  else if (reportName==='Technician  Summary Report'){
+    const fileName = 'Technician  Summary Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    if (Number(sessionStorage.getItem('deptId'))===4){
+    this.reportService.technicianSummary(fromDate, toDate, sessionStorage.getItem('ouId'),locId)
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.dataDisplay = ''
+        this.closeResetButton = true;
+        this.isDisabled1 = false;
+      })
+    }
+    if (Number(sessionStorage.getItem('deptId'))!=4){
+      this.reportService.technicianSummary(fromDate, toDate, sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'))
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
           this.dataDisplay = ''

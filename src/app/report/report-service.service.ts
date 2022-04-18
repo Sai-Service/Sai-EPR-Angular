@@ -409,6 +409,24 @@ gstSaleRegisterReport(fromDate,toDate,ouId,locId){
   });
 }
 
+laborChargeSummary(fromDate,toDate,ouId,locId){
+  const REQUEST_URI = this.ServerUrl +`/ServiceReports/LabSummaryRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
+  return this.http.get(REQUEST_URI, {
+    // params: REQUEST_PARAMS,
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  }); 
+}
+
+technicianSummary(fromDate,toDate,ouId,locId){
+  const REQUEST_URI = this.ServerUrl +`/ServiceReports/TechSummRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
+  return this.http.get(REQUEST_URI, {
+    // params: REQUEST_PARAMS,
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
+}
+
 
 salesINDReport(toDate,locId){
   const REQUEST_URI = this.ServerUrl +`/SalesReports/VehIndReg?toDate=${toDate}&locId=${locId}`;

@@ -489,14 +489,23 @@ if(this.deptId==2){
     });
 
   }
-
   if(this.deptId==4){
     this.sub = this.router1.params.subscribe(params => {
-      this.referenceNo = params['jobCardNum'];
-      alert('PaymentAR Alert----'+ params['jobCardNum']+'----'+ this.referenceNo);
+      this.referenceNo = this.router1.snapshot.queryParamMap.get('invNumber');
+     var methodId =   this.router1.snapshot.queryParamMap.get('methodId');
      if ( this.referenceNo != undefined){
-        }
-    });
+       this.payType='CONTROL ACCOUNT'
+          this.receiptMethodId=Number(methodId);
+          if(this.receiptMethodId==143)
+          {
+            this.refType='Sales-Order'
+          }
+          if(this.receiptMethodId==142)
+          {
+            this.refType='Service-Order'
+          }
+   }
+   });
   }
 
     
