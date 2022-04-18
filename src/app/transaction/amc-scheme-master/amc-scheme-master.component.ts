@@ -406,13 +406,15 @@ transeData(val) {
 
       validateDisM(){
         var mDis =this.amcSchemeMasterForm.get('discOnMatrl').value;
-        if(mDis<0) { alert ("MATERIAL DISCOUNT : Enter Valid Discount Percentage.."); this.amcSchemeMasterForm.patchValue({schMatDisPer:0})}
+        if(mDis<0) { alert ("MATERIAL DISCOUNT : Enter Valid Discount Percentage.."); 
+        this.amcSchemeMasterForm.patchValue({discOnMatrl:0})}
          this.CalculateAmcLineValues();
       }
 
       validateDisL(){
         var lDis =this.amcSchemeMasterForm.get('discOnLabour').value;
-        if(lDis<0) { alert ("LABOUR DISCOUNT : Enter Valid Discount Percentage.."); this.amcSchemeMasterForm.patchValue({schLabDisPer:0})}
+        if(lDis<0) { alert ("LABOUR DISCOUNT : Enter Valid Discount Percentage.."); 
+        this.amcSchemeMasterForm.patchValue({discOnLabour:0})}
         this.CalculateAmcLineValues(); 
       }
 
@@ -592,7 +594,31 @@ transeData(val) {
       }
 
       this.amcHeaderValidation=true;
+    }
+
+    validatePrdKm(prdk,fld) {
+      // alert ("Value:" +prdk + " , FLD :" +fld );
+
+      var sPrd =this.amcSchemeMasterForm.get('schemeValidYears').value;
+      var gPrd =this.amcSchemeMasterForm.get('gracePeriod').value;
+      this.amcSchemeMasterForm.patchValue({ totalPeriod: sPrd+gPrd });
     
+      if (prdk <=0 && fld ==='SCHPRD') {
+        alert("Please Enter a Valid Scehme Period .It should be grater than Zero");
+        this.amcSchemeMasterForm.patchValue({ schemeValidYears: null });
+        this.amcSchemeMasterForm.patchValue({ totalPeriod: 0 });
+      }
+
+      if (prdk <0  && fld ==='GRCPRD') {
+        alert("Please Enter a Valid Grace Period.");
+        this.amcSchemeMasterForm.patchValue({ gracePeriod: 0 });
+        this.amcSchemeMasterForm.patchValue({ totalPeriod: 0 });
+      }
+
+      if (prdk <=0 && fld ==='SCHKM') {
+        alert("Please Enter a Valid Scheme Kilometer");
+        this.amcSchemeMasterForm.patchValue({ schemeValidKm: null });
+      }
 
 
     }

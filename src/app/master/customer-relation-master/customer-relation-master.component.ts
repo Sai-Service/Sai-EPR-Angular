@@ -454,6 +454,7 @@ export class CustomerRelationMasterComponent implements OnInit {
         SelectCust (accountNo) {
           this.displayButton=false;
           this.updateButton=true;
+        
           this.service.customerEmpMapSearchNew(accountNo, this.locId).subscribe(
            data => {
            this.lstCustDetails = data;
