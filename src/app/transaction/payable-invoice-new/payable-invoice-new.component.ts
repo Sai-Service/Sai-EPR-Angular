@@ -503,6 +503,7 @@ export class PayableInvoiceNewComponent implements OnInit {
       poLineId: [],
       matchType: [],
       defaultDistCcid: [],
+      accDesc:[],
       defaultDisAcc: [],
       receiptNumber: [],
       qtyInvoiced: [],
@@ -947,7 +948,7 @@ export class PayableInvoiceNewComponent implements OnInit {
       if (res.code === 200) {
         this.isDisabled = true;
         this.isVisibleSave = false;
-        this.isVisibleUpdateBtn = true;
+        this.isVisibleUpdateBtn = false;
         this.isVisibleValidate = false;
 
         if (res.obj.length === 0) {
@@ -2137,7 +2138,7 @@ export class PayableInvoiceNewComponent implements OnInit {
       if (res.code === 200) {
         this.isDisabled = true;
         this.isVisibleSave = false;
-        this.isVisibleUpdateBtn = true;
+        this.isVisibleUpdateBtn = false;
         this.isVisibleValidate = false;
 
         if (res.obj.length === 0) {
@@ -2389,29 +2390,43 @@ export class PayableInvoiceNewComponent implements OnInit {
 
   Validate() {
     var arrayControl = this.poInvoiceForm.get('obj').value;
-    var arrayControl1 = this.poInvoiceForm.get('invLines').value;
+    // var arrayControl1 = this.poInvoiceForm.get('invLines').value;
+    var arrayControl2 = this.poInvoiceForm.get('invLines') as FormArray;
+    var arrayControl1 = arrayControl2.getRawValue();
     var arrayCaontrolOfDistribution = this.poInvoiceForm.get('distribution').value;
     var amount = this.lineDetailsArray().controls[this.selectedLine].get('invoiceAmt').value;
     var totalOfInvLineAmout = 0;
+    // debugger;
     for (let i = 0; i < this.invLineDetailsArray().length; i++) {
       // totalOfInvLineAmout = Math.round(((totalOfInvLineAmout + arrayControl1[i].amount) + Number.EPSILON) * 100) / 100;
       var desc1 : string =  arrayControl1[i].description;
+      if (desc1 === 'null' || desc1 ===null){
+        totalOfInvLineAmout=  Math.round(((arrayControl1[i].amount) + Number.EPSILON) * 100) / 100;
+      }
+      else{
       if(desc1.includes('Adhoc Disc')){
         totalOfInvLineAmout = Math.round(((totalOfInvLineAmout - arrayControl1[i].amount) + Number.EPSILON) * 100) / 100;
       }else{
         totalOfInvLineAmout = Math.round(((totalOfInvLineAmout + arrayControl1[i].amount) + Number.EPSILON) * 100) / 100;
       }
     }
+    }
     var totalOfDistributionAmout = 0;
     for (let j = 0; j < this.lineDistributionArray().length; j++) {
       // totalOfDistributionAmout = Math.round(((totalOfDistributionAmout + Number(arrayCaontrolOfDistribution[j].amount)) + Number.EPSILON) * 100) / 100;
       var desc1 : string =  arrayCaontrolOfDistribution[j].description;
+      if (desc1 === 'null' || desc1 ===null){
+        totalOfDistributionAmout = Math.round(((Number(arrayCaontrolOfDistribution[j].amount)) + Number.EPSILON) * 100) / 100;  
+      }
+      else {
       if(desc1.includes('Adhoc Disc')){
         totalOfDistributionAmout = Math.round(((totalOfDistributionAmout - Number(arrayCaontrolOfDistribution[j].amount)) + Number.EPSILON) * 100) / 100;  
       }else{
         totalOfDistributionAmout = Math.round(((totalOfDistributionAmout + Number(arrayCaontrolOfDistribution[j].amount)) + Number.EPSILON) * 100) / 100;
     }
     }
+  }
+  // alert(amount+'----'+totalOfInvLineAmout+'----' + totalOfDistributionAmout)
     if (amount == totalOfInvLineAmout && amount == totalOfDistributionAmout) {
       var arrayControl = this.poInvoiceForm.get('obj').value;
       var invoiceNum = this.lineDetailsArray().controls[this.selectedLine].get('invoiceNum').value;

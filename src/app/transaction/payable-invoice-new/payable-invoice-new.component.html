@@ -791,24 +791,32 @@
                                                                     </option>
                                                                 </select>
                                                             </td>
+                                                            <div  *ngIf="displayitemName; then thenitemName; else elseitemName">  </div>
+                                                            <ng-template #thenitemName>
                                                             <td>
-                                                                <input type="text"
+                                                                <input type="text" disabled
                                                                     style="height: 20px;width: 100px;text-transform: uppercase;"
                                                                     class="form-control" formControlName="itemSeg"  style="width: 140px;height: 25px;font-size: 10px;"
                                                                     [(ngModel)]='itemSeg' name="itemSeg{{k}}"
                                                                     (keydown.tab)="searchByItemSegmentDetails(itemSeg,k)" />
                                                             </td>
                                                             <td>
-                                                                <div
-                                                                    *ngIf="displayitemName; then thenitemName; else elseitemName">
-                                                                </div>
-                                                                <ng-template #thenitemName>
+                                                               
                                                                     <input hidden type="text" formControlName="itemId">
                                                                     <input type="text" disabled class="form-control"
                                                                         formControlName="itemName" value={{itemName}}
                                                                         style="width: 140px;height: 25px;font-size: 10px;">
-                                                                </ng-template>
+                                                            </td>
+                                                        </ng-template>
                                                                 <ng-template #elseitemName>
+                                                                    <td>
+                                                                        <input type="text"
+                                                                    style="height: 20px;width: 100px;text-transform: uppercase;"
+                                                                    class="form-control" formControlName="itemSeg"  style="width: 140px;height: 25px;font-size: 10px;"
+                                                                    [(ngModel)]='itemSeg' name="itemSeg{{k}}"
+                                                                    (keydown.tab)="searchByItemSegmentDetails(itemSeg,k)" />
+                                                                    </td>
+                                                                    <td>
                                                                     <select formControlName="segment" id="segment"
                                                                         (ngModelChange)='onOptioninvItemIdSelected($event, k)'
                                                                         class="form-control"
@@ -818,23 +826,12 @@
                                                                             {{sc.segment}}
                                                                         </option>
                                                                     </select>
-                                                                    <!-- commented by Jyoti K 04-Apr-2022 -->
-                                                                    <!-- <input type="text" list="dynmicUserIds1"
-                                                                        (keyup)="filterRecord(k,$event)"
-                                                                        formControlName="segment" id="invItemIdFirstWay"
-                                                                        class="form-control"
-                                                                        (ngModelChange)="onOptioninvItemIdSelected($event,k)"
-                                                                        style="height: 25px;width:120px;" />
-                                                                    <datalist id="dynmicUserIds1" autocomplete="off">
-                                                                        <option *ngFor="let item of invItemList"
-                                                                            [ngValue]="item.itemId">{{item.segment}}
-                                                                        </option>
-                                                                    </datalist>
-                                                                    <input hidden type="text" formControlName="itemId"> -->
-                                                                  
+                                                                </td>
+                                                                   
                                                                 <input hidden type="number" formControlName="itemId">
-                                                                </ng-template>
-                                                            </td>
+                                                               
+                                                            <!-- </td> -->
+                                                        </ng-template>
                                                             <input hidden type="text" formControlName="itemId">
                                                             <td>
                                                                 <!-- <div  *ngIf="displaydescription; then thendescription; else elsedescription">  </div>
@@ -969,8 +966,8 @@
                                                                     style="width: fit-content;height: 25px;font-size: 10px;">
                                                             </td>
                                                             <td>
-                                                                <input type="text" class="form-control"
-                                                                    formControlName="segment1" value={{segment1}}
+                                                                <input type="text" class="form-control" disabled
+                                                                    formControlName="accDesc" value={{accDesc}}
                                                                     style="width: 100px;height: 25px;font-size: 10px;">
                                                             </td>
                                                             <td>
