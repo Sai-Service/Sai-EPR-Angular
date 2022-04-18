@@ -222,7 +222,7 @@
                                     </td>
                                     <td>
                                         <select formControlName="paymentMethodId" id="paymentMethodId"
-                                            class="form-control" style="width: 120px;height: 25px;font-size: 10px;">
+                                            class="form-control" style="width: 120px;height: 25px;font-size: 10px;" (change)="onOptionMethod($event,i)">
                                             <option>--Select--</option>
                                             <option *ngFor="let paymentDoc of  paymentIdListList"
                                                 [value]="paymentDoc.lookupValueId">
@@ -246,16 +246,17 @@
                                         <!-- (ngModelChange)='onOptionsSelected($event)'  [ngModel]="bankAccountNo"  -->
                                         <!-- <input type="text" class="form-control" formControlName="bankAccountNum" value={{bankAccountNum}}  style="width: 100px;height: 25px;font-size: 10px;">   -->
                                         <select formControlName="bankAccountNo" id="bankAccountNo" class="form-control"
-                                            (change)='onOptionsSelected($event, i)'
+                                            (change)='onOptionsSelected($event, i)' 
                                             style="width: 140px;height: 25px;font-size: 10px;">
                                             <option>--Select--</option>
                                             <option *ngFor="let sc of  bankAccountNumList">
-                                                {{sc.bankAccountNo}}/{{sc.bankAccountName}}/{{sc.branchName}}/{{sc.branchNo}}
+                                                <!-- {{sc.bankAccountNo}}/{{sc.bankAccountName}}/{{sc.branchName}}/{{sc.branchNo}} -->
+                                                {{sc.bankAccountNo}}/{{sc.branchName}}
                                             </option>
                                         </select>
                                     </td>
 
-
+                                    <input formControlName="receiptMethodId" >
                                     <td>
                                         <!-- [ngModel]="docCategoryCode"  -->
                                         <select formControlName="docCategoryCode" id="docCategoryCode"

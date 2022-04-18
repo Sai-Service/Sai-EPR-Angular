@@ -1,10 +1,10 @@
-import { PathLocationStrategy, DatePipe } from '@angular/common';
-import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener, ValueProvider, ElementRef } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { DatePipe } from '@angular/common';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MasterService } from 'src/app/master/master.service';
-import { min } from 'moment';
-import { formatDate } from '@angular/common'
+// import { min } from 'moment';
+// import { formatDate } from '@angular/common'
 
 
 interface IJournalVoucher{
@@ -225,6 +225,7 @@ export class JournalVoucherComponent implements OnInit {
     this.emplId=Number((sessionStorage.getItem('emplId')));
     this.divId=Number(sessionStorage.getItem('divisionId'));
     (document.getElementById("btnRev") as HTMLInputElement).disabled = true;
+    
     // alert('employee'+this.emplId);
 
     // this.JournalVoucherForm.controls.postedDate.setValue(formatDate(this.postedDate,'yyyy-MM-dd','en'));
@@ -289,6 +290,12 @@ export class JournalVoucherComponent implements OnInit {
 );
 this.JournalVoucherForm.get('reversalPeriod').disable();
 this.JournalVoucherForm.get('reversalDate').disable();
+if(this.docSeqValue!=null && this.status=='INCOMPLETE'){
+  (document.getElementById("btnUpdate") as HTMLInputElement).disabled = false;
+}
+else{
+(document.getElementById("btnUpdate") as HTMLInputElement).disabled = true;
+}
   }
 JournalVoucher(JournalVoucherForm:any){}
 
@@ -685,7 +692,27 @@ else
   alert("JV Status is not POST So,you can not reverse the JV");
 }
     }
-
+    updateGl()
+{
+  const formValue:IJournalVoucher=this.JournalVoucherForm.value;
+  this.service.glUpdate(formValue).subscribe((res:any)=>{
+    if(res.code===200)
+    {
+      alert("Record updated Successfully");
+      console.log(res.obj);
+      this.docSeqValue=res.obj;
+      // this.JournalVoucherForm.disable();
+    }
+    else
+   {
+      if (res.code === 400)
+      {
+        alert("Code already present in data base");
+        this.JournalVoucherForm.reset();
+      }
+    }
+ })
+}
     onOptionGlPeriod(event){
 
        var selPer=this.PeriodName.find(d=>d.periodName===event);

@@ -819,6 +819,9 @@ export class ARInvoiceComponent implements OnInit {
             for (let i = 0; i < data.obj.invLines.length - len; i++) {
               var invLnGrp: FormGroup = this.lineDetailsGroup();
               this.lineDetailsArray.push(invLnGrp);
+
+              var patch=this.arInvoiceForm.get('invLines')as FormArray;
+              patch.controls[i].patchValue({taxPer:data.obj.invLines.taxPer})
               // var seltrxtyp = this.taxCategoryList[i].find(d => d.taxCategoryId == data.obj[i].invLines.taxCategoryId)
               // console.log(seltrxtyp);
               // var patch=this.arInvoiceForm.get('invLines')as FormArray;
@@ -834,6 +837,7 @@ export class ARInvoiceComponent implements OnInit {
               var invLnGrp: FormGroup = this.TaxDetailsGroup();
               this.TaxDetailsArray().push(invLnGrp);
               this.arInvoiceForm.get('taxLines').patchValue(data.obj.taxLines);
+
 
             }
             // alert('second emit call')
@@ -2510,7 +2514,7 @@ export class ARInvoiceComponent implements OnInit {
         }
       });
 
-  }
+  } 
 
 
   viewAccounting(trxNumber: any) {

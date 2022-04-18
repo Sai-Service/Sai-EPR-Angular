@@ -1,6 +1,6 @@
 // import { asLiteral } from '@angular/compiler/src/render3/view/util';
-import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 // import * as moment from 'moment';
 // import { DateRangePickerComponent } from 'ngx-daterange';
@@ -39,6 +39,7 @@ interface Ipayment {
   searchBySuppName: string;
   emplId:number;
   source:string;
+  receiptMethodId:number;
   // partyId:number;
   
 }
@@ -75,7 +76,7 @@ export class PaymentsComponent implements OnInit {
   paymentAmt: number;
   totAmt: number;
   bankAccountId: number;
-  docCategoryCode: number;
+  docCategoryCode: string;
   invoiceId: number;
   // partyId: number;
   totAmount: number;
@@ -88,7 +89,7 @@ export class PaymentsComponent implements OnInit {
   // public invPayment:any[];
   public supplierCodeList1: any[];
   public supplierCodeList: any[];
-  public docCategoryCodeList: any[];
+  public docCategoryCodeList: any=[];
   public suppIdList: any;
   public suppIdList1: any;
   siteIdList: any;
@@ -101,9 +102,9 @@ export class PaymentsComponent implements OnInit {
   displaystatus = false;
   TRUER = false; recFagDiss = true;
   public bankAccountNumList: any;
-  public paymentDocNameList: Array<string> = [];
+  public paymentDocNameList: any = [];
   public statusLookupCodeList: any = [];
-  public paymentIdListList: Array<string> = [];
+  public paymentIdListList: any = [];
   public PaymentReturnArr: any;
   appAmt: number;
   searchByToDate: Date;
@@ -133,6 +134,7 @@ export class PaymentsComponent implements OnInit {
   payAddress:string;
   emplId:number;
   private sub: any;
+  receiptMethodId:number;
   constructor(private fb: FormBuilder, private router1: ActivatedRoute, private transactionService: TransactionService, private location: Location, private service: MasterService, private router: Router) {
     this.paymentForm = fb.group({
       suppNo: [],
@@ -218,6 +220,7 @@ jeSource: [],
       docCategory: [],
       payStatus: [],
       source:[],
+      receiptMethodId:[],
     });
   }
 
@@ -240,13 +243,13 @@ jeSource: [],
       );
 
 
-    this.transactionService.bankAccountNumList(this.ouId)
-      .subscribe(
-        data => {
-          this.bankAccountNumList = data;
-          console.log(this.bankAccountNumList);
-        }
-      );
+    // this.transactionService.bankAccountNumList(this.ouId)
+    //   .subscribe(
+    //     data => {
+    //       this.bankAccountNumList = data;
+    //       console.log(this.bankAccountNumList);
+    //     }
+    //   );
 
     this.transactionService.statusLookupCodeList()
       .subscribe(
@@ -428,6 +431,8 @@ jeSource: [],
 else{
   alert(this.partyId+'PartyID');
     // this.transactionService.getsearchByInvDtls(suppNo1[index].suppNo, this.ouId,this.partyId).subscribe((res: any) => {
+      if(this.source=='REFUND')
+      {
       this.transactionService.getsearchByInvDtls(suppNo1[index].suppId, this.ouId,suppNo1[index].partyId).subscribe((res: any) => {
       this.lstinvoiceDetls = res.obj;
       var sum = 0;
@@ -446,6 +451,28 @@ else{
 
     }
     );
+  }
+  else{
+    var partyId='';
+    this.transactionService.getsearchByInvDtls(suppNo1[index].suppId, this.ouId,partyId).subscribe((res: any) => {
+      this.lstinvoiceDetls = res.obj;
+      var sum = 0;
+      for (let i = 0; i < this.lstinvoiceDetls.length; i++) {
+        sum = sum + this.lstinvoiceDetls[i].invoiceAmt;
+        // this.invAmtArr.push(this.lstinvoiceDetls[i].invoiceAmt);
+      }
+      //  alert(sum);
+      this.totAmt = sum;
+      this.lstinvoiceDetls.forEach(f => {
+        var payInvGrp: FormGroup = this.payInvoiceLineDtl();
+        this.payInvoiceLineDtlArray().push(payInvGrp);
+
+      });
+      this.paymentForm.get('obj').patchValue(this.lstinvoiceDetls);
+
+    }
+    );
+  }
     // (document.getElementById('btnSave') as HTMLInputElement).disabled = true;comment by vinita
     // }
     // else{
@@ -489,6 +516,24 @@ else{
     //  }
   }
 
+  onOptionMethod(event,index){
+    alert(event);
+    var methodName=event.target.value;
+    alert(methodName+'methodName')
+    console.log(this.paymentIdListList); 
+    var selMet=this.paymentIdListList.find(d=>d.lookupValueId == event.target.value);
+    console.log(selMet);
+    
+    alert(selMet.lookupValue)
+    this.transactionService.paymentMethodName(this.ouId,selMet.lookupValue)
+    .subscribe(
+      data => {
+        this.bankAccountNumList = data.obj;
+        // console.log(this.docCategoryCodeList);
+      }
+    );
+  }
+
 
   onOptionsSelected(bankAccountNo, index) {
     // alert('---bankAccountNo---')
@@ -517,7 +562,14 @@ else{
 
   onOptionsSelectedDocCat(docCategoryCode) {
     var docCategoryCode = docCategoryCode.target.value;
-    // alert('---onOptionsSelectedDocCat----');
+    alert('---onOptionsSelectedDocCat----'+docCategoryCode);
+    console.log(this.bankAccountNumList);
+    var sel=this.bankAccountNumList.find(d=>d.methodName==docCategoryCode)
+    // alert(sel.receiptMethodId);
+    if(sel.receiptMethodId!=undefined){
+    var arrCon=this.paymentForm.get('obj1') as FormArray;
+    arrCon.controls[0].patchValue({receiptMethodId:sel.receiptMethodId});
+    }
     this.transactionService.paymentDocNameList(docCategoryCode)
       .subscribe(
         data => {
@@ -883,11 +935,12 @@ console.log(jsonData);
           var invNumber = arraybaseNew1[i].docNo;
         // alert(invNumber);
         var sourceType=arraybaseNew1[i].source;
-        // alert(sourceType)
-        // var invType = arraybaseNew1[i].invTypeLookupCode;
+        // var method=arraybaseNew1[i].docCategoryCode;
+        var methodId = arraybaseNew1[i].receiptMethodId;
         if (sourceType==='REFUND') {
-          alert(invNumber+'In If');
-           this.router.navigate(['/admin/transaction/PaymentAr', invNumber]);
+          alert(invNumber+'In If'+methodId);
+          //  this.router.navigate(['/admin/transaction/PaymentAr', invNumber]);
+          this.router.navigate(['/admin/transaction/PaymentAr'], { queryParams: { invNumber: invNumber,methodId:methodId } } );
         }
       }
       }
