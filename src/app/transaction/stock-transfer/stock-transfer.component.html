@@ -73,12 +73,21 @@
                 <span  *ngIf="!stockTranferForm.get('subInventoryCode').valid && stockTranferForm.get('subInventoryCode').touched">Please
                     select Organization Name </span>
               </td>
+              <td style="width: 15%" class="LabelFontStyle1">To SubInventory</td>
+              <td><select class="form-control"  formControlName="transferSubInv"  [(ngModel)]="transferSubInv" (change)="onSubInveSelect($event)" >
+                  <option>--Select--</option>
+                  <option *ngFor="let subinv of tosubInvCode">{{subinv.subInventoryCode}}</option>
+                  </select>
+              </td>
           <td style="width: 15%" class="LabelFontStyle">
             Eway&nbsp;Bill&nbsp;Number&nbsp;:&nbsp;
           </td>
           <td>
             <input type="text" class="form-control" formControlName="ewayBill" maxlength="16">
           </td>
+         
+        </tr>
+        <tr>
           <td style="width: 15%" class="LabelFontStyle">
             Eway&nbsp;Bill&nbsp;Date&nbsp;:&nbsp;
           </td>
@@ -86,8 +95,6 @@
               <input type="date" class="form-control"  formControlName="ewayBillDate"  min="now" max="{{minewayBillDate | date:'yyyy-MM-dd'}}"  onkeydown="return false">
             </td>
 
-        </tr>
-        <tr>
           <td style="width: 15%" class="LabelFontStyle">
             Request&nbsp;By&nbsp;:&nbsp;
           </td>
@@ -111,16 +118,16 @@
                   *ngIf="getGroupControl('issueTo').touched && getGroupControl('issueTo').invalid" class="error">Valid Item
                  </span>
           </td>
-          <td style="width: 15%" class="LabelFontStyle">
-            Status&nbsp;:&nbsp;
-          </td>
-          <td>
-            <input disabled type="text" class="form-control" formControlName="status" [(ngModel)]="status">
-          </td>
+         
         </tr>
         <input hidden formControlName='deptName'[(ngModel)]='deptName'>
 <tr>
-
+  <td style="width: 15%" class="LabelFontStyle">
+    Status&nbsp;:&nbsp;
+  </td>
+  <td>
+    <input disabled type="text" class="form-control" formControlName="status" [(ngModel)]="status">
+  </td>
       <td style="width: 15%" class="LabelFontStyle">
         Remark&nbsp;:&nbsp;
       </td>

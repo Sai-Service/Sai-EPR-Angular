@@ -930,16 +930,17 @@ console.log(jsonData);
         var arraybaseNew = this.paymentForm.get('obj1') as FormArray;
         var arraybaseNew1 = arraybaseNew.getRawValue();
         console.log(arraybaseNew1);
-        
+        // if (this.PaymentReturnArr.length !=0){
+       var invNumber= this.PaymentReturnArr[0].documentNo;
+      // }
+      // else
         for (let i=0; i<arraybaseNew1.length;i++){
-          var invNumber = arraybaseNew1[i].docNo;
-        // alert(invNumber);
-        var sourceType=arraybaseNew1[i].source;
-        // var method=arraybaseNew1[i].docCategoryCode;
+          // var invNumber = arraybaseNew1[i].docNo;
+        var sourceType=arraybaseNew1[i].source;  
         var methodId = arraybaseNew1[i].receiptMethodId;
         if (sourceType==='REFUND') {
           alert(invNumber+'In If'+methodId);
-          //  this.router.navigate(['/admin/transaction/PaymentAr', invNumber]);
+       
           this.router.navigate(['/admin/transaction/PaymentAr'], { queryParams: { invNumber: invNumber,methodId:methodId } } );
         }
       }

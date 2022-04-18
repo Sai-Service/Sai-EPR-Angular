@@ -34,6 +34,8 @@ interface IStockTransfer {
   emplId:number;
   uuidRef: string;
   totVal:number;
+
+  transferSubInv:string;
 }
 interface IEway{
   ewayBill: string;
@@ -86,6 +88,7 @@ export class StockTransferComponent implements OnInit {
   public ItemIdList:any= [];
   transactionTypeId:number=27;
   public subInvCode: any;
+  public tosubInvCode:any;
   public issueByList: Array<string> = [];
   public locIdList: any[];
   onHandId:number;
@@ -128,7 +131,7 @@ export class StockTransferComponent implements OnInit {
   lastkeydown1: number = 0;
   public itemMap = new Map<string, StockTransferRow >();
   totVal:number;
-
+  transferSubInv:string;
   // public itemMap3 = new Map<string, StockTransferRow>();
 
   @ViewChild("myinput") myInputField: ElementRef;
@@ -153,6 +156,7 @@ export class StockTransferComponent implements OnInit {
       issueBy: [''],
       transDate: [''],
       subInventoryCode: ['',[Validators.required]],
+      transferSubInv:['',[Validators.required]],
       transferLoc:[],
       status: ['', [Validators.required]],
       transReference:[''],
@@ -314,6 +318,12 @@ export class StockTransferComponent implements OnInit {
         console.log(this.subInventoryId);
         this.subInventoryCode=this.subInvCode.subInventoryCode;
         // alert('subInventoryCode');
+      });
+     
+      this.service
+      .getsubTrfSubinventory(this.deptId, this.divisionId)
+      .subscribe((data) => {
+        this.tosubInvCode = data;
       });
 
     this.service.TolocationIdList(this.locId).subscribe
@@ -597,6 +607,7 @@ deleteReserveLinewise(i, itemid, transferId) {
     var tranda = this.stockTranferForm.get('transDate').value;
     var staus = this.stockTranferForm.get('status').value;
     var subInv=this.stockTranferForm.get('subInventoryCode').value;
+    var tosubInv=this.stockTranferForm.get('transferSubInv').value;
     for (let i = 0; i < this.trxLinesList().length; i++) {
       let variantFormGroup = <FormGroup>variants.controls[i];
       variantFormGroup.addControl('transferOrgId', new FormControl(tranorgid, []));
@@ -609,7 +620,7 @@ deleteReserveLinewise(i, itemid, transferId) {
       variantFormGroup.addControl('status', new FormControl(staus, []));
       variantFormGroup.addControl('orgId', new FormControl(this.locId, []));
       variantFormGroup.addControl('subInventoryCode',new FormControl(subInv,[]));
-      // variantFormGroup.addControl('locatorId', new FormControl(trxLnArr1[i].frmLocator,[]));
+      variantFormGroup.addControl('transferSubInv', new FormControl(tosubInv,[]));
     }
     console.log(variants.value);
     this.service.stockTransferSubmit(variants.value).subscribe((res: any) => {
@@ -722,6 +733,19 @@ deleteReserveLinewise(i, itemid, transferId) {
     window.location.reload();
     
   }
+  onSubInveSelect(event){
+    var toSub=event.target.value
+    var loc=this.stockTranferForm.get('transferOrgId').value;
+  // var issTo=this.stockTranferForm.get('issueTo').value;
+  alert(event)
+  var selData=this.tosubInvCode.find(d=>d.subInventoryCode===toSub)
+  
+  this.service.issueByList(loc, selData.deptId, this.divisionId).subscribe
+  (data => {
+    this.issueByList = data;
+    console.log(this.issueByList);
+  });
+  }
 searchAll()
 {
   //alert(this.locId+'Location');
@@ -757,11 +781,7 @@ onlocationissueselect(event){
   // alert(this.stockTranferForm.get('issueTo').value)
   var loc=this.stockTranferForm.get('transferOrgId').value;
   var issTo=this.stockTranferForm.get('issueTo').value;
-  this.service.issueByList(loc, this.deptId, this.divisionId).subscribe
-  (data => {
-    this.issueByList = data;
-    console.log(this.issueByList);
-  });
+  
   if((loc===undefined && issTo===undefined) || issTo===''){}
   else{
     // alert('event');
@@ -773,22 +793,7 @@ onlocationissueselect(event){
        lineNumber: 1,
        uuidRef: uuidv4()
      });
-    // this.service.Shipmentdue(Number(sessionStorage.getItem('locId')),loc,this.subInvCode.subInventoryCode).subscribe
-    // ((res:any)=>{
-    //   //  var obj=res.obj;
-    //    if(res.code===200)
-    //    {
-    //     alert(res.message);
-    //    }
-    //    else{
-    //     if(res.code === 400) {
-    //       // alert(res.message);
-    //       // this.stockTranferForm.reset();
-    //       // window.location.reload();
-    //     }
-    //    }
-    //   }
-    // )
+   
 
    
   this.service.ItemIdListDept(this.deptId,Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId).subscribe(
