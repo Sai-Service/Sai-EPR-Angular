@@ -1388,9 +1388,9 @@ getsearchBySubInvTrfNo(subtrfNo,locId):Observable<any>
   return this.http.get(this.ServerUrl+`/mmtTrx/subInvTrf?shipmentNumber=${subtrfNo}&transferOrgId=${locId}`)
 }
 
-getPhysicalLoc(divId):Observable<any>
+getPhysicalLoc(locId):Observable<any>
 {
-  return this.http.get(this.ServerUrl+`/cmnLookup/Catgtype?cmnType=PhysicalLocation&divisionId=${divId}`)
+  return this.http.get(this.ServerUrl+`/cmnLookup/Catgtype?cmnType=PhysicalLocation&divisionId=${locId}`)
 }
 
 public subInvTransferSubmit(subInvTransferRecord)
@@ -1745,6 +1745,15 @@ public glSave(glSaveValue)
   };
   const url=this.ServerUrl+'/glHeader/Save';
   return this.http.post(url,glSaveValue,options);
+}
+
+public glUpdate(glUpdateValue)
+{
+  const options={
+    headers:this.headers
+  };
+  const url=this.ServerUrl+'/glHeader/putGlHeader';
+  return this.http.put(url,glUpdateValue,options);
 }
 
 public glCopy(glCopyValue)
@@ -3825,7 +3834,7 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
         const url = this.ServerUrl + '/ceStateHdr';
         return this.http.post(url, BankReconRecord, options);
       }
-
+      
       
       ///////////////////Back order File upload/////////////////////
       UploadExcelBankStatement(formData: FormData,docType:string,mouId ,bnkAcccountId,stNumber) {

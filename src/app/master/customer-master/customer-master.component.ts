@@ -918,6 +918,7 @@ export class CustomerMasterComponent implements OnInit {
 
     const formValue: IcustomerMaster = this.transDataWithSite(this.customerMasterForm.value);
     formValue.customerId1 = this.custAccountNo;
+    formValue.termId=this.customerMasterForm.get('paymentType').value;
     // if (formValue.tdsPer === 'Organization') {
     //   formValue.title = 'M/S';
     // }
@@ -972,6 +973,7 @@ export class CustomerMasterComponent implements OnInit {
     const formValue: IcustomerMaster = this.transDataForSite(this.customerMasterForm.value);
     formValue.termId = this.customerMasterForm.get('paymentType').value;
     formValue.staxCategoryName = this.customerMasterForm.get('staxCatName').value;
+    // formValue.sGstNo = this.customerMasterForm.get('sGstNo').value;
     this.service.UpdateCustExeSiteMasterById(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD UPDATED SUCCESSFULLY');
@@ -1020,6 +1022,7 @@ export class CustomerMasterComponent implements OnInit {
       return;
     }
     const formValue: IcustomerMaster = this.transDataUppdateCustomer(this.customerMasterForm.getRawValue());
+    formValue.termId=this.customerMasterForm.get('paymentType').value;
     this.service.UpdateCustMasterById(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD UPDATED SUCCESSFULLY');
@@ -1189,7 +1192,6 @@ export class CustomerMasterComponent implements OnInit {
       this.contactNo = select.contactNo
       this.contactPerson = select.contactPerson
       this.semailId = select.emailId
-      this.sGstNo = select.gstNo
       this.smobile1 = select.mobile1
       this.smobile2 = select.mobile2
       this.ouId = select.ouId
@@ -1204,6 +1206,7 @@ export class CustomerMasterComponent implements OnInit {
       this.customerMasterForm.patchValue({ sdisPer: select.disPer });
       this.customerMasterForm.patchValue({ staxCatName: select.taxCategoryName });
       this.customerMasterForm.patchValue({ spinCd: select.pinCd });
+      this.customerMasterForm.patchValue({ sGstNo : select.gstNo})
       // this.sstatus=select.status
       // ticketNo not in  json
       let selstatus = this.statusList.find(d => d.codeDesc === select.status);

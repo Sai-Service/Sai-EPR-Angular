@@ -296,7 +296,7 @@ export class SubinventoryTransferComponent implements OnInit {
     if(this.subInventoryCode='VH')
     {
       this.dispPhyLoc=false;
-      this.service.getPhysicalLoc(this.divisionId).subscribe(
+      this.service.getPhysicalLoc(this.locId).subscribe(
           data => {
             this.phyLocation = data;
         //     console.log(this.ItemIdList);

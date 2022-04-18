@@ -128,6 +128,9 @@ docCategoryCodeList(bankAccountId): Observable<any> {
   return this.http.get(this.ServerUrl +`/cePaymentDoc/PayDoc/${bankAccountId}`);
 }
 
+paymentMethodName(ouId,methodTyp):Observable<any>{
+  return this.http.get(this.ServerUrl +`/ceBankAccounts/BankList?ouId=${ouId}&methodType=${methodTyp}`);
+}
 
 paymentDocNameList(docCategoryCode): Observable<any> {
   return this.http.get(this.ServerUrl +`/cePaymentDoc/DocName/${docCategoryCode}`);
