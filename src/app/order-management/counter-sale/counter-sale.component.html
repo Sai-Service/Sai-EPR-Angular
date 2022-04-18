@@ -996,9 +996,7 @@
                                             *ngFor="let group of orderlineDetailsArray().controls; let i= index"
                                             [formGroupName]="i">
                                             <tr>
-                                                <div
-                                                    *ngIf="displaysegmentInvType[i]; then thensegmentInvType; else elsesegmentInvType">
-                                                </div>
+                                                <div  *ngIf="displaysegmentInvType[i]; then thensegmentInvType; else elsesegmentInvType">  </div>
                                                 <ng-template #thensegmentInvType>
                                                     <td>
                                                         <!-- (click)="taxDetails('insert', i, taxCategoryId)" href="#panel1006"-->
@@ -1299,9 +1297,7 @@
                                                     </ng-template>
                                                 </td>
                                                 <td>
-                                                    <div
-                                                        *ngIf="displayRemoveRow[i]; then thenRemoveRow; else elseRemoveRow">
-                                                    </div>
+                                                    <div *ngIf="displayRemoveRow[i]; then thenRemoveRow; else elseRemoveRow"> </div>
                                                     <ng-template #thenRemoveRow>
                                                         <button type="button" class="btn btn-primary"
                                                             (click)="RemoveRow(i)" style="width: min-content;"><i

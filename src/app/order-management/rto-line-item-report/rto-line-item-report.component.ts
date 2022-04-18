@@ -21,14 +21,18 @@ export class RtoLineItemReportComponent implements OnInit {
   today = new Date();
   startDt = this.pipe.transform(this.today, 'dd-MMM-yyyy');
   minDate = new Date();
+  selectLine:string;
   endDt = this.pipe.transform(this.today, 'dd-MMM-yyyy');
   rtoDataListDetails:any=[];
+  rtoDataListDetailsSelectLine:any=[];
+  showSelectLines=true;
   @ViewChild('epltable', { static: false }) epltable: ElementRef;
   constructor(private fb: FormBuilder, private router: Router, private location1: Location,
     private router1: ActivatedRoute, private service: MasterService) { 
       this.rtoListForm = this.fb.group({
         endDt:[''],
         startDt:[''],
+        selectLine:[''],
       })
     }
 
@@ -46,12 +50,16 @@ export class RtoLineItemReportComponent implements OnInit {
   }
   getrtoReport(){
     var stDt = this.rtoListForm.get('startDt').value;
-     var stDate = this.pipe.transform(stDt, 'dd-MMM-yyyy');
-     var endDtSt = this.rtoListForm.get('endDt').value;
-     var endDt1 = new Date(endDtSt);
-    var endDt = this.pipe.transform(endDt1, 'dd-MMM-yyyy');
+   // this.startDt = this.pipe.transform(stDt, 'dd-MMM-yyyy');
+    var stDate = this.pipe.transform(stDt, 'dd-MMM-yyyy');
+
+    var endDtSt = this.rtoListForm.get('endDt').value;
+    var endDt1 = new Date(endDtSt);
+    // endDt1.setDate(endDt1.getDate() + 1);
+   var endDt = this.pipe.transform(endDt1, 'dd-MMM-yyyy');
     this.service.getRtoDataList(stDate, endDt,Number(sessionStorage.getItem('ouId')),sessionStorage.getItem('locId')).subscribe((res: any) => {
       this.rtoDataListDetails = res;
+      this.rtoDataListDetailsSelectLine=res;
       console.log(res);  
   })
   }
@@ -71,5 +79,26 @@ export class RtoLineItemReportComponent implements OnInit {
     xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
     xlsx.writeFile(wb, 'CounterSaleOrderList.xlsx');
   }
+
+  selectLineData(event,i){
+    alert(event.target.checked+'---'+i);
+    var selecLineFlag=event.target.checked
+    // for (let j=0;j<this.rtoDataListDetails.length;j++){
+      var lineDetailsArray:any[]=this.rtoDataListDetails;
+      lineDetailsArray.push({selecLineFlag:selecLineFlag});
+    console.log(lineDetailsArray);
+  // }
+    
+  }
+
+showSelectedLines(){
+  // alert(this.rtoDataListDetails.length);
+  for (let i=0; i < this.rtoDataListDetails.length; i++){
+    //  alert(this.rtoDataListDetails[i].selecLineFlag)
+  if (this.rtoDataListDetails[i].selecLineFlag===true){
+  this.showSelectLines=false;
+ }
+}
+}
 
 }

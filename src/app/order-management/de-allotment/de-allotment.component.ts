@@ -36,10 +36,12 @@ export class DeAllotmentComponent implements OnInit {
   segment1:string;
   ouName:string;
   deallotReason1:string;
-
+  // isVisibleDeallocate:Array<boolean> = [];
+  isVisibleDeallocate=false;
   public Deallotmentsearchlist=[];
   public deAllotedChassisArray=[];
   deallotmentReasonTypelist:any[];
+  // displaydeallotmentButton: Array<boolean> = []true;
 
   constructor(private fb: FormBuilder,private location: Location, private router: Router, private service: MasterService,private orderManagementService:OrderManagementService,private transactionService :TransactionService) { 
     this.deAllotmentForm = fb.group({
@@ -56,13 +58,14 @@ export class DeAllotmentComponent implements OnInit {
   ngOnInit(): void {
     this.ouId=sessionStorage.getItem('ouId');
     this.ouName=sessionStorage.getItem('ouName');
-
-    
     this.orderManagementService.Deallotmentsearchlist(this.ouId)
     .subscribe(
       data => {
         this.Deallotmentsearchlist = data;
         console.log(this.Deallotmentsearchlist);
+        // for (let i=0; i< this.Deallotmentsearchlist.length; i++){
+        //   this.isVisibleDeallocate[i]=true;
+        // }
       }
     );
     this.orderManagementService.deallotmentReasonType()
@@ -106,9 +109,10 @@ export class DeAllotmentComponent implements OnInit {
 
   
 
-  Deallocate(deallotReason){
-    // alert(deallotReason);
-    this.orderManagementService.DeallocateSubmit(this.orderNumber1,this.segment1,deallotReason).subscribe((res: any) => {
+  Deallocate(orderNumber,segment){
+    var deallotReason = this.deAllotmentForm.get('deallotReason').value;
+    // alert(deallotReason+'----'+segment+'-----'+deallotReason);
+    this.orderManagementService.DeallocateSubmit(orderNumber,segment,deallotReason).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
         // this.deAllotmentForm.reset();
@@ -131,4 +135,8 @@ export class DeAllotmentComponent implements OnInit {
     window.location.reload();
   }
 
+  selectReason(event,i){
+    // alert(event.target.value)
+  this.isVisibleDeallocate=true;
+  }
 }

@@ -34,8 +34,7 @@
                  <table  class="GridFont" cellspacing="0" cellpadding="4"   style="border-color:#959595;border-collapse:collapse;width: 100%;"> 
                     <thead>
                         <tr class="GridHeader"> 
-                            <th scope="col" style="border: 1px solid black;">Select</th>
-                            <th scope="col" style="border: 1px solid black;">De-Allotment Reason</th>
+                            <!-- <th scope="col" style="border: 1px solid black;">Select</th> -->
                             <th scope="col" style="border: 1px solid black;">Order Number</th>
                             <th scope="col" style="border: 1px solid black;">Item Allocated</th>
                             <th scope="col" style="border: 1px solid black;">Color Code</th>
@@ -51,28 +50,18 @@
                             <th scope="col" style="border: 1px solid black;">Date of Purchase</th>
                             <th scope="col" style="border: 1px solid black;">Aging</th>
                             <th scope="col" style="border: 1px solid black;">Order Aging</th>
+                            <th scope="col" style="border: 1px solid black;">De-Allotment Reason</th>
+                            <th scope="col" style="border: 1px solid black;">De-Allotment</th>
                         </tr>
                     </thead>
                         <tbody>
-                        <tr *ngFor="let com of Deallotmentsearchlist" class="ItemStyle" style="text-decoration:none;text-align: center;">
-                            <td style="border: 1px solid black;">
+                        <tr *ngFor="let com of Deallotmentsearchlist let i= index" class="ItemStyle" style="text-decoration:none;text-align: center;">
+                             <!-- <td style="border: 1px solid black;">
                                 <input  type="checkbox" formControlName="selectOrderNumber"
                                 (change)="selectOrderNumberEvent($event,com.orderNumber,com.orderedItem)">
-                            </td>
-                            <td style="border: 1px solid black;">
-                                <!-- <select formControlName="cancelReason" id="cancelReason" class="form-control" style="width: 120px;height: 22px;">
-                                    <option>--Select--</option>
-                                    <option value="PaymentRefund">Payment Refund</option>
-                                    <option value="Booking Cancelled">Booking Cancelled</option>
-                                    </select> -->
-                                    <select formControlName="deallotReason" id="deallotReason" [(ngModel)]="deallotReason" class="form-control"  style="width: 120px;height: 22px;">
-                                    <option>--Select--</option>
-                                    <option *ngFor="let deallotmentReason of deallotmentReasonTypelist">
-                                        {{deallotmentReason.codeDesc}}
-                                    </option>
-                                </select>
-                            </td>
-                            <td style="border: 1px solid black;">{{com.orderNumber}}</td>
+                            </td> -->
+                           
+                            <td style="border: 1px solid black;padding-left: 5px;">{{com.orderNumber}}</td>
                             <td style="border: 1px solid black;">{{com.orderedItem}}</td>
                             <td style="border: 1px solid black;">{{com.colorCode}}</td>
                             <td style="border: 1px solid black;">{{com.description}}</td>
@@ -87,6 +76,23 @@
                             <td style="border: 1px solid black;width: 8rem;">{{com.creationDate | date:'yyyy-MM-dd  hh:mm:ss'}}</td>
                             <td style="border: 1px solid black;">{{com.aging}}</td>
                             <td style="border: 1px solid black;">{{com.orderAging}}</td>
+                            <td style="border: 1px solid black;">
+                               
+                                <select formControlName="deallotReason" id="deallotReason"  class="form-control"  style="width: 120px;height: 22px;"  (change)="selectReason($event,i)">
+                                <option>--Select--</option>
+                                <option *ngFor="let deallotmentReason of deallotmentReasonTypelist" [(ngValue)]="deallotmentReason.codeDesc">
+                                    {{deallotmentReason.codeDesc}}
+                                </option>
+                            </select>
+                        </td>
+                            <td [style.display]="isVisibleDeallocate ? 'block' : 'none'">
+                                <!-- <div  *ngIf="displaydeallotmentButton[i]; then thendeallotmentButton; else elsedeallotmentButton">  </div>
+                                <ng-template #thendeallotmentButton>
+                                </ng-template>
+                                <ng-template #elsedeallotmentButton> -->
+                                <button type="submit" class="btn btn-primary" id="register" (click)="Deallocate(com.orderNumber,com.orderedItem)">Deallocate</button>
+                            <!-- </ng-template> -->
+                            </td>
                         </tr>
                     </tbody>
                 </table>  
@@ -109,9 +115,6 @@
             </div>
             <table class="center">
                 <tr>
-                    <td>
-                        <button type="submit" class="btn btn-primary" id="register" (click)="Deallocate(deallotReason)">Deallocate</button>
-                    </td>
                     <td>
                         <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button>
                     </td>

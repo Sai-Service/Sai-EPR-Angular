@@ -626,7 +626,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     this.isVisibleGenerateInvoice = false;
     this.isVisibleGenerateGatePass = false;
     this.isVisiblePayment = false;
-    this.displayRemoveRow.push(false);
+    // this.displayRemoveRow.push(false);
     this.isVisibleViewInvoice = false;
     this.isVisibleViewReceipt = false;
     this.isVisibleViewGatePass = false;
@@ -1032,7 +1032,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
               this.displayAfterGatePass = true;
               this.isVisible = true;
               this.isVisible15 = true;
-              this.isVisible16 = true;
+              this.isVisible16 = false;
             }
             if (data.obj.orderStatus === 'INVOICED' && data.obj.gatePassYN === 'N') { 
              this.isVisibleUpdate = false;
@@ -1097,12 +1097,12 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
               // alert(this.PaymentViewReceipt);
               this.PaymentViewReceipt = true;
             }
-            var orderedDate1 = data.obj.orderedDate;
-            var orderedDate2 = this.pipe.transform(data.obj.orderedDate, 'dd-MMM-yyyy');
-            var custPoDate1 = data.obj.custPoDate;
-            var custPoDate2 = this.pipe.transform(custPoDate1, 'dd-MM-yyyy');
+            // var orderedDate1 = data.obj.orderedDate;
+            // var orderedDate2 = this.pipe.transform(data.obj.orderedDate, 'dd-MMM-yyyy');
+            // var custPoDate1 = data.obj.custPoDate;
+            // var custPoDate2 = this.pipe.transform(custPoDate1, 'dd-MM-yyyy');
             this.CounterSaleOrderBookingForm.patchValue(({ orderedDate: data.obj.orderedDate }));
-            this.CounterSaleOrderBookingForm.patchValue(({ custPoDate: custPoDate2 }));
+            this.CounterSaleOrderBookingForm.patchValue(({ custPoDate: data.obj.custPoDate }));
           }
           else {
             if (data.code) {
@@ -2367,8 +2367,9 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     formValue.ouId = Number(sessionStorage.getItem('ouId'));
     formValue.emplId = Number(sessionStorage.getItem('emplId'));
     formValue.divisionId = Number(sessionStorage.getItem('divisionId'));
-    formValue.orderedDate = this.pipe.transform(orderedDate, 'yyyy-MM-dd');
-    formValue.custPoDate = this.pipe.transform(custPoDate, 'yyyy-MM-dd');
+    // formValue.orderedDate = this.pipe.transform(orderedDate, 'yyyy-MM-dd');
+    // alert(formValue.orderedDate)
+    // formValue.custPoDate = this.pipe.transform(custPoDate, 'yyyy-MM-dd');
     this.orderManagementService.pickTicketInvoiceFun(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         this.dataDisplay = ''
@@ -2773,7 +2774,11 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     var itemid1 = trxLnArr1[OrderLineIndex].itemId;
     var uuidref = trxLnArr1[OrderLineIndex].uuidRef;
     var locatorId = trxLnArr1[OrderLineIndex].frmLocatorName;
-    var prc = trxLnArr1[OrderLineIndex].unitSellingPrice;
+    var prc = trxLnArr1[OrderLineIndex].unitSellingPrice; 
+    if (trxLnArr1.length ===1){
+      alert('Not able to Delete This Line');
+      return;
+    }
     this.orderlineDetailsArray().removeAt(OrderLineIndex);
     this.TaxDetailsArray().removeAt(OrderLineIndex);
     if (itemid != null || itemid != undefined) {

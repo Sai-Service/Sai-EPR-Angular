@@ -324,8 +324,8 @@ export class ReportServiceService {
   }
 
 
-  serPendingVehicleReport(fromDate,toDate,locId){
-    const REQUEST_URI = this.ServerUrl +`/ServiceReports/ServPendingVeh?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}`;
+  serPendingVehicleReport(toDate,locId){
+    const REQUEST_URI = this.ServerUrl +`/ServiceReports/ServPendingVeh?toDate=${toDate}&locId=${locId}`;
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
@@ -402,6 +402,24 @@ vhslRegisterReport(fromDate,toDate,locId){
 
 gstSaleRegisterReport(fromDate,toDate,ouId,locId){
   const REQUEST_URI = this.ServerUrl +`/AccountsReports/GstSaleReg?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
+  return this.http.get(REQUEST_URI, {
+    // params: REQUEST_PARAMS,
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
+}
+
+laborChargeSummary(fromDate,toDate,ouId,locId){
+  const REQUEST_URI = this.ServerUrl +`/ServiceReports/LabSummaryRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
+  return this.http.get(REQUEST_URI, {
+    // params: REQUEST_PARAMS,
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  }); 
+}
+
+technicianSummary(fromDate,toDate,ouId,locId){
+  const REQUEST_URI = this.ServerUrl +`/ServiceReports/TechSummRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
   return this.http.get(REQUEST_URI, {
     // params: REQUEST_PARAMS,
     responseType: 'arraybuffer',

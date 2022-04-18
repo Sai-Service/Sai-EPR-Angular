@@ -172,6 +172,19 @@ export class MasterService {
   }
   
 
+
+  invItemListExpence(itemType,deptName,divisionId,segment):Observable<any> {
+    const REQUEST_PARAMS = new HttpParams().set('itemType', itemType)
+    .set('dept', deptName)
+    .set('divisionId',divisionId)
+    .set('segment',segment)
+    const REQUEST_URI = this.ServerUrl +'/itemMst/ItemType';
+    return this.http.get(REQUEST_URI, {
+      params: REQUEST_PARAMS,
+    });
+  }
+  
+
   invItemList2(itemType,deptName,divisionId):Observable<any> {
     const REQUEST_PARAMS = new HttpParams().set('itemType', itemType)
     .set('dept', deptName)
@@ -2495,6 +2508,12 @@ OrderCategoryList(): Observable<any> {
     // cmnLookup/type/ReceiptStatus
   }
 
+  ReceiptStateLst(): Observable<any> {
+    return this.http.get(this.ServerUrl +'/cmnLookup/CmnType/ReceiptState');
+    // http://localhost:8081/cmnLookup/CmnType/ReceiptState
+  }
+  
+
   ReverseReasonList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/CmnType/ReversalReason');
   }
@@ -2782,6 +2801,10 @@ formData.append('location', locCode);
 
   getOrderByUser(locId, startDt, endDt,deptId){
     return this.http.get(this.ServerUrl + `/orderHeader/getByDate?locId=${locId}&startDt=${startDt}&endDt=${endDt}&dept=${deptId}`)
+  }
+
+  getLaborByUser(ouId){
+    return this.http.get(this.ServerUrl + `/pricelist/laborPrice/${ouId}`)
   }
 
   getClosingStock(ouId){
@@ -3843,9 +3866,16 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
           // http://localhost:8081/empCust/exeDtls?accountNo=1931&locId=2102
         }
 
+        customerEmpMapSearchNew(custNo,locId): Observable<any> {
+          return this.http.get(this.ServerUrl + `/empCust/custDtls?custAccountNo=${custNo}&locId=${locId}`);
+          // http://localhost:8081/empCust/custDtls?custAccountNo=1833&locId=2102
+        }
 
 
-     public custRelationPostSubmit(custRelationRecord) {
+
+
+
+    public custRelationPostSubmit(custRelationRecord) {
       const options = {
         headers: this.headers
       };
@@ -3853,6 +3883,17 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
       return this.http.post(url, custRelationRecord, options);
     }
 
+
+    public custRelationPutSubmit(custRelationRecord) {
+      const options = {
+        headers: this.headers
+      };
+      const url = this.ServerUrl + '/empCust';
+      return this.http.put(url, custRelationRecord, options);
+      // http://localhost:8081/empCust
+    }
+
+  
     //////////////////////////// ORDER GENERATION /
 
     clearBakcOrder(locId) {

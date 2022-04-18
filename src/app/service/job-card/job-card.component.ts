@@ -939,6 +939,8 @@ export class JobCardComponent implements OnInit {
     this.billableTyName = 'Customer';
     var laborLineArr = this.jobcardForm.get('jobCardLabLines') as FormArray;
     laborLineArr.controls[0].patchValue({ billableTyName: 'Customer' });
+    // laborLineArr.controls[0].patchValue({ billableTyId: 1 });
+
   }
   splitFlagFlagFn(e) {
     if (e.target.checked === true) {
@@ -1287,26 +1289,28 @@ export class JobCardComponent implements OnInit {
   checkLabLineValidation(index){
   
     var arrayControl = this.jobcardForm.get('jobCardLabLines').value
+    var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
     var invItemId = arrayControl[index].itemId;
     var genItem =arrayControl[index].genericItem;
     var itemSeg=arrayControl[index].segment;
     var itemDesc=arrayControl[index].description;
+    var billTypeId=arrayControl[index].billableTyId;
+  
 
-    // alert ( " checkLabLineValidation...genItem"+itemSeg +","+itemDesc);
-   
     this.labLineValidation=false
 
-    if(Number(arrayControl[index].billableTyId)<=0) { this.labLineValidation=false; alert ("Please Check BILLABLE TYPE.")  ;return; }
-    if(invItemId===null || invItemId==undefined || invItemId<=0){ this.labLineValidation=false;alert("Please Check ITEM CODE."); return; }
+    if(billTypeId <=0 ||billTypeId==undefined || billTypeId===null) { this.labLineValidation=false; alert ("Line - " + (index+1) +": Please Check BILLABLE TYPE..." +arrayControl[index].billableTyId)  ;return; }
    
-    if(itemSeg===null || itemSeg===undefined || itemSeg.trim()===''){this.labLineValidation=false;alert("Please Check ITEM SEGMENT.") ;return;}
+    if(invItemId===null || invItemId==undefined || invItemId<=0){ this.labLineValidation=false;alert("Line - " + (index+1) +": Please Check LABOR ITEM."); return; }
+   
+    if(itemSeg===null || itemSeg===undefined || itemSeg.trim()===''){this.labLineValidation=false;alert("Line - " + (index+1) +": Please Check LABOR ITEM NAME.") ;return;}
 
     if (genItem==='Y') {
-        if(itemDesc===null || itemDesc===undefined || itemDesc.trim()===''){this.labLineValidation=false;alert("Please Check ITEM DESCRIPTION.") ;return;}
+        if(itemDesc===null || itemDesc===undefined || itemDesc.trim()===''){this.labLineValidation=false;alert("Line - " + (index+1) +": Please Check LABOR DESCRIPTION.") ;return;}
     }
 
     if(Number(arrayControl[index].qty)<=0 ||arrayControl[index].qty===null || arrayControl[index].qty===undefined )
-    { this.labLineValidation=false;alert("Please Check QTY.") ;return; }
+    { this.labLineValidation=false;alert("Line - " + (index+1) +": Please Check QUANTITY.") ;return; }
 
     // if (genItem==='N') {
       // if(Number(arrayControl[index].qty)<=0 ||arrayControl[index].qty===null || arrayControl[index].qty===undefined )
@@ -1326,7 +1330,7 @@ export class JobCardComponent implements OnInit {
 
     if(this.dispSplitRatio) {
       if(Number(arrayControl[index].splitRatio)<=0 ||arrayControl[index].splitRatio===null || arrayControl[index].splitRatio===undefined )
-      { this.matLineValidation=false;alert ("Check SPLIT RATIO");return; }
+      { this.matLineValidation=false;alert ("Line - " + (index+1) +": Check SPLIT RATIO");return; }
       }
 
     this.labLineValidation=true;
@@ -1402,7 +1406,7 @@ export class JobCardComponent implements OnInit {
   
 
   onInput(event) {
-    event.target.value = event.target.value.toLocaleUpperCase();
+    event.target.value = event.target.value.toUpperCase();
   }
 
   serchByRegNo(RegNo) {
@@ -1498,8 +1502,6 @@ export class JobCardComponent implements OnInit {
     if(lenLab>1) {for (let i = lenLab - 1; i > 0; i--) { this.lineDetailsArray.removeAt(i); }}
     if(lenMat>1) {for (let i = lenMat - 1; i > 0; i--) { this.lineDistributionArray().removeAt(i); }}
 
-  
-    
     this.jobCardNum1=jcNum;
    
     this.serviceService.getJonCardNoSearch(jcNum)
@@ -1516,7 +1518,6 @@ export class JobCardComponent implements OnInit {
             this.estTotal=data.obj.estMaterial+data.obj.estLabor;
             this.fscCoupon=data.obj.fscCoupon;
           } else { alert (jcNum + " Job Card Not Found...");return;}
-
 
           // let mToday =this.pipe.transform(new Date(), 'yyyy-MM-dd');
           // let jobDate=this.pipe.transform(this.jobCardDate, 'yyyy-MM-dd');
@@ -1969,8 +1970,10 @@ export class JobCardComponent implements OnInit {
   for (let i = 0; i < len1 ; i++) 
     {
       this.checkLabLineValidation(i);
-      if(this.labLineValidation===false) {break;}
+       if(this.labLineValidation===false) { break;}
     }
+
+    
 
    if(this.labLineValidation) {
      this.saveLabButton=false;
@@ -2409,7 +2412,6 @@ export class JobCardComponent implements OnInit {
       alert("Material status not completed")
     }
   }
-
 
   GenerateInvoice(jobCardNum) {
     this.genBillButton=false;
@@ -3155,6 +3157,11 @@ SearchPartNum(){
 
   createNew() {
     this.router.navigate(['/admin/master/WsVehicleMaster']);
+  }
+
+
+  onBillableTypeSelect(evnt,index) {
+    alert ("Billable Type :"+evnt +"  ,"+index);
   }
 
 }

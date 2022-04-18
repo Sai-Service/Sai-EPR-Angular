@@ -41,6 +41,10 @@ interface IWsVehicleMaster {
   endDate:Date;
   oemWarrantyPeriod:number;
   inactiveDate:string;
+
+  deliveryDate : string;
+  oemWarrentyEndDate: string;
+  regDate: string;
  
 }
 
@@ -643,7 +647,8 @@ export class WsVehicleMasterComponent implements OnInit {
         } else {
           if (res.code === 400) {
             this.displaySuccess = false;
-            alert('Code already present in the data base');
+            // alert('Code already present in the data base');
+            alert (res.message +"-"+ res.obj);
             this.displayButton=true;
             this.saveButton=true;
           }
@@ -1003,6 +1008,16 @@ export class WsVehicleMasterComponent implements OnInit {
   onOptionsSelectedModel(mainModel:any) {
     if (mainModel != null) {
 
+      this.wsVehicleMasterForm.patchValue({
+        variantDesc: '',
+        serviceModel: '',
+        fuelType : '',
+        oemWarrantyPeriod :'',
+        deliveryDate: '',
+        regDate: '',
+        oemWarrentyEndDate : '',
+       });
+
       // let selectedValue = this.mainModelList.find(v => v.code === mainModel);
       // this.itemTypeForCat=selectedValue.attribute2;
       
@@ -1304,6 +1319,23 @@ export class WsVehicleMasterComponent implements OnInit {
       return;
     }
 
+    // alert ("Sale Date:"+formValue.deliveryDate);
+
+    if (formValue.deliveryDate === undefined || formValue.deliveryDate === null || formValue.deliveryDate.trim() === '' ) {
+      this.checkValidation = false;
+      alert("SALE DATE : Should not be null....");
+      return;
+    }
+
+    
+    if (formValue.regDate === undefined || formValue.regDate === null || formValue.regDate.trim() === '' ) {
+      this.checkValidation = false;
+      alert("REGISTRATION DATE : Should not be null....");
+      return;
+    }
+
+
+
     if (formValue.categoryId < 0 || formValue.categoryId === undefined || formValue.categoryId === null) {
       this.checkValidation = false;
       alert("ITEM CATEGORY: Should not be null");
@@ -1314,6 +1346,8 @@ export class WsVehicleMasterComponent implements OnInit {
       alert("DEALER CODE : Should not be null....");
       return;
     }
+
+    
     
 
     // if (formValue.itemTypeForCat === undefined || formValue.itemTypeForCat === null || formValue.itemTypeForCat.trim() === '') {

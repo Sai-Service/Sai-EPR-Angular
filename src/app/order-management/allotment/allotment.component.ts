@@ -162,7 +162,7 @@ export class AllotmentComponent implements OnInit {
   }
 
   allotedVehicleSelectold() {
-    alert(this.segment1+' '+ this.orderNumber1);
+    // alert(this.segment1+' '+ this.orderNumber1);
     this.allotedChassisArray.push({ orderNumber: this.orderNumber1, segment: this.segment1 });
     console.log(this.allotedChassisArray);
     this.orderManagementService.allotmentSubmit(this.allotedChassisArray).subscribe((res: any) => {

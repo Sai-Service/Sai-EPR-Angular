@@ -128,7 +128,7 @@
           <li><a class="dropdown-item" [routerLink]="['/admin/service/JobCard']">JobCard</a></li>
           <li><a class="dropdown-item" [routerLink]="['/admin/service/ServiceGatepass']">Gate Pass</a></li>
           <li><a class="dropdown-item" [routerLink]="['/admin/master/WsVehicleMaster']">Vehicle Master WS</a></li>
-          <!-- <li><a class="dropdown-item" [routerLink]="['/admin/service/VehicleServiceHistory']">Vehicle History</a></li> -->
+          <li><a class="dropdown-item" [routerLink]="['/admin/service/laborList']">Labor List</a></li>
        
         </ul>
       </li>
@@ -266,6 +266,14 @@
         Pending Shipment List
       </a>
     </li>
+  </div>
+  <div [style.display]="isVisibleSubInventoryTransfer ? 'block' : 'none'">
+  <li class="nav-item dropdown">
+   <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+        aria-haspopup="true"  [routerLink]="['/admin/transaction/SubInventoryTransfer']" aria-expanded="false">
+        SubinventoryTransfer
+      </a>
+  </li>
   </div>
   <div [style.display]="isVisible29 ? 'block' : 'none'">
     <li class="nav-item dropdown">

@@ -94,6 +94,7 @@ export class AdminComponent implements OnInit {
   public show: boolean = false;
   isShown: boolean = false;
   displayUserIdwiseAccess: boolean = true;
+  isVisibleSubInventoryTransfer:boolean=false;
   fullName: string;
   deptName: string;
   locCode: string;
@@ -259,16 +260,17 @@ export class AdminComponent implements OnInit {
       this.isVisible20=false;
       this.isVisible21=false;
       this.isVisible22=false;
-      this.isVisible23=false;
+      this.isVisible23=true;
       this.isVisible24=true;
       this.isVisible25=true;
       this.isVisible26=true;
+      this.isVisibleSubInventoryTransfer=true;
       this.isVisible27=true;
       this.isVisible28=true;
       this.isVisible29=true;
       this.isVisible30=false;
       this.isVisible31=true;
-      this.isVisible32=false;
+      this.isVisible32=true;
       this.isVisible35=false;
       this.isVisible36=true;
       this.isVisible37=true;
@@ -285,6 +287,7 @@ export class AdminComponent implements OnInit {
       this.isVisible16=true;
       this.isVisible17=false;
       this.isVisible18=false;
+      this.isVisibleSubInventoryTransfer=false;
       this.isVisible19=false;
       this.isVisible20=false;
       this.isVisible21=true;
@@ -311,6 +314,7 @@ export class AdminComponent implements OnInit {
       this.isVisible11=true;
       this.isVisible12=false;
       this.isVisible37=true;
+      this.isVisibleSubInventoryTransfer=false;
       this.isVisible13=false;
       this.isVisible14=true;
       this.isVisible15=true;
@@ -342,6 +346,7 @@ export class AdminComponent implements OnInit {
       this.isVisible11=true;
       this.isVisible12=false;
       this.isVisible13=false;
+      this.isVisibleSubInventoryTransfer=false;
       this.isVisible14=true;
       this.isVisible15=true;
       this.isVisible16=true;
@@ -372,6 +377,7 @@ export class AdminComponent implements OnInit {
       // alert((sessionStorage.getItem('roleId')))
       this.isVisible11=true;
       this.isVisible12=false;
+      this.isVisibleSubInventoryTransfer=false;
       this.isVisible13=false;
       this.isVisible14=true;
       this.isVisible15=true;
@@ -406,6 +412,7 @@ export class AdminComponent implements OnInit {
       this.isVisible11=true;
       this.isVisible12=false;
       this.isVisible37=true;
+      this.isVisibleSubInventoryTransfer=false;
       this.isVisible13=false;
       this.isVisible14=true;
       this.isVisible15=true;
