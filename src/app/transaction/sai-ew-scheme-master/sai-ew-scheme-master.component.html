@@ -53,7 +53,7 @@
         
                                 <td>  
                                     
-                                    <select formControlName="variant" id="variant" class="form-control" [(ngModel)]="variant" (ngModelChange)="onOptionsSelectedVariant($event)" style="background-color: yellow;">
+                                    <select formControlName="variant" id="variant" class="form-control" [(ngModel)]="variant" (ngModelChange)="onOptionsSelectedVariant($event)"  (change)="onOptionsSelectedVariant($event)"  style="background-color: yellow;">
                                         <!-- (ngModelChange)="onOptionsSelectedVariant($event)" -->
                                         <option disabled>--Select--</option>
                                         <option *ngFor="let mv of VariantSearch" [ngValue]="mv.variant">
@@ -127,7 +127,7 @@
                                 <td style="width: 15%" class="LabelFontStyle1">Scheme&nbsp;Code:&nbsp;</td>
         
                                 <td>
-                                    <input   type="text"  formControlName="ewSchemeNo"  id="ewSchemeNo" [(ngModel)]="ewSchemeNo" class="form-control" placeholder="Enter Scheme Code" style="background-color: yellow;">
+                                    <input disabled  type="text"  formControlName="ewSchemeNo"  id="ewSchemeNo" [(ngModel)]="ewSchemeNo" class="form-control" placeholder="Enter Scheme Code" style="background-color: yellow;">
                                 </td>
     
                                 <td style="width: 15%" class="LabelFontStyle1">Descpription:&nbsp;</td>
@@ -157,7 +157,7 @@
                                 </td>
                                 <td style="width: 15%" class="LabelFontStyle1">Scheme&nbsp;Kms&nbsp;Limit:&nbsp;</td>
                                 <td>
-                                    <input   type="number"  formControlName="schemeKms"  id="schemeKms" [(ngModel)]="schemeKms" class="form-control" placeholder="Enter Scheme KM Limit"style="background-color: yellow;" >
+                                    <input   type="number"  formControlName="schemeKms"  id="schemeKms" [(ngModel)]="schemeKms" class="form-control" placeholder="Scheme KM Limit"style="background-color: yellow;" (change)="validateKm(schemeKms,'KMLIMIT')" >
                                 </td>
 
                             </tr>
@@ -166,17 +166,17 @@
     
                               
                                 <td   style="width: 15%" class="LabelFontStyle1">Scheme&nbsp;Amount:&nbsp;</td>
-                                <td><input style="font-weight: bold;text-align: right;"   type="number" formControlName="schemeAmount"  id="schemeAmount"  [(ngModel)]="schemeAmount" class="form-control" placeholder="Premium Amount" style="background-color: yellow;"> </td>
+                                <td><input style="font-weight: bold;text-align: right;"   type="number" formControlName="schemeAmount"  id="schemeAmount"  [(ngModel)]="schemeAmount" class="form-control" placeholder="Premium Amount" style="background-color: yellow;"  (change)="validateKm(schemeAmount,'SCHAMT')"> </td>
                                
 
                                 <td style="width: 15%" class="LabelFontStyle1">Valid&nbsp;From&nbsp;Km:&nbsp;</td>
                                 <td>
-                                    <input   type="number"  formControlName="validFromKms"  id="validFromKms" [(ngModel)]="validFromKms" class="form-control" placeholder="Enter Valid upto KM Limit" style="background-color: yellow;">
+                                    <input   type="number"  formControlName="validFromKms"  id="validFromKms" [(ngModel)]="validFromKms" class="form-control" placeholder="Valid From KM Limit" style="background-color: yellow;"  (change)="validateKm(validFromKms,'FROMKM')">
                                 </td>
 
                                 <td style="width: 15%" class="LabelFontStyle1">Valid&nbsp;To&nbsp;Km:&nbsp;</td>
                                 <td>
-                                    <input   type="number"  formControlName="validToKms"  id="validToKms" [(ngModel)]="validToKms" class="form-control" placeholder="Enter Valid upto KM Limit" style="background-color: yellow;">
+                                    <input   type="number"  formControlName="validToKms"  id="validToKms" [(ngModel)]="validToKms" class="form-control" placeholder="Valid upto KM Limit" style="background-color: yellow;"  (change)="validateKm(validToKms,'TOKM')">
                                 </td>
 
                                

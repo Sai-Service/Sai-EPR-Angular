@@ -329,6 +329,8 @@ export class SaiEwSchemeMasterComponent implements OnInit {
 
         onOptionsSelectedVariant(modelVariant){
 
+          // alert ("VAr name :" +modelVariant);
+
           this.service.variantDetailsList(modelVariant)
           .subscribe(
             data => {
@@ -461,8 +463,16 @@ export class SaiEwSchemeMasterComponent implements OnInit {
 
         
         onOptionsSelectedModel(mainModel){
+
       
           if(mainModel != null){
+
+            this.saiEwSchemeMasterForm.patchValue({
+              variantDesc: '',
+              variant:''
+            });
+
+
             this.orderManagementService.VariantSearchFn(mainModel)
             .subscribe(
               data => {
@@ -631,6 +641,32 @@ export class SaiEwSchemeMasterComponent implements OnInit {
         //   return false;
         // }
       
+
+        validateKm(kml,fld) {
+          // alert ("Km Entered :" +kml + " , FLD :" +fld );
+        
+          if (kml <=0 && fld ==='KMLIMIT') {
+            alert("Please Enter a Valid KMR .It should be grated than Zero");
+            this.saiEwSchemeMasterForm.patchValue({ schemeKms: null });
+          }
+
+          if (kml <=0 && fld ==='FROMKM') {
+            alert("Please Enter a Valid from KMR .It should be grated than Zero");
+            this.saiEwSchemeMasterForm.patchValue({ validFromKms: null });
+          }
+
+          if (kml <=0 && fld ==='TOKM') {
+            alert("Please Enter a Valid To KMR .It should be grated than Zero");
+            this.saiEwSchemeMasterForm.patchValue({ validToKms: null });
+          }
+
+          if (kml <=0 && fld ==='SCHAMT') {
+            alert("Please Enter a Valid Scheme Anmount");
+            this.saiEwSchemeMasterForm.patchValue({ schemeAmount: null });
+          }
+
+
+        }
 
   }
 

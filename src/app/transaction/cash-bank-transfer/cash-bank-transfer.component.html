@@ -15,9 +15,10 @@
                      <table class="center">
                         <tr>
                         <!-- <td  class="LabelFontStyle">Div/ouid/locid/deptid/empId&nbsp;:&nbsp;</td> -->
-                       <td> <input  hidden type="text" disabled formControlName="loginArray" class="form-control" [(ngModel)]="loginArray" placeholder=""> </td>
+                       <!-- <td> <input  hidden type="text" disabled formControlName="loginArray" class="form-control" [(ngModel)]="loginArray" placeholder=""> </td>
                        <td> <input hidden  style="width:30px ;"  disabled type="text" formControlName="ouId"  class="form-control" [(ngModel)]="ouId" ></td>
                        <td> <input hidden style="width:30px ;" disabled type="text" formControlName="locId"  [(ngModel)]="locId" class="form-control"  > </td>
+                       -->
                        <td > <input hidden style="width:30px ;"  type="text" disabled formControlName="deptId"  class="form-control" [(ngModel)]="deptId" placeholder=""></td>
                        <td > <input hidden style="width: 20px;"  type="text" disabled formControlName="emplId"   class="form-control" [(ngModel)]="emplId" placeholder=""> </td>
                        </tr>
@@ -26,16 +27,37 @@
                     <fieldset class="RFS">
                         <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Cash Bank Transfer</legend>
                         <table class="center">
-                            <tr>
+                         
+                                <tr>
 
-                                <!-- <td style="width: 15%" class="LabelFontStyle">Branch:&nbsp;</td>
-                                <td>  
-                                    <select   formControlName="orgId" id="orgId" [(ngModel)]="orgId"  class="form-control" style="background-color: yellow;" >                                    <option disabled>--Select--</option>
-                                    <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">
-                                    {{sc.ouId}}-{{sc.ouName}}
-                                    </option>
-                                    </select>
-                                </td> -->
+                                    <td style="width: 15%" class="LabelFontStyle">Division&nbsp;:&nbsp;</td> 
+                                    <td> <input type="text" disabled formControlName="loginArray" class="form-control" [(ngModel)]="loginArray" style="background-color: lightgreen;" > </td>
+                    
+                                    <td style="width: 15%" class="LabelFontStyle">Operating&nbsp;Unit:&nbsp;</td> 
+                                    <td>
+                                        <select disabled  formControlName="ouId" id="ouId" [(ngModel)]="ouId"  class="form-control" style="background-color: lightgreen;"  
+                                                    (ngModelChange)='onOuIdSelected1($event)' >
+                                            <option disabled>--Select--</option>
+                                            <option *ngFor="let sc of OUIdList"  [ngValue]="sc.ouId">
+                                            {{sc.ouName}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                
+                                   
+                                        <td style="width: 15%" class="LabelFontStyle">Location&nbsp;:&nbsp;</td>
+        
+                                        <td>
+                                        <select   formControlName="locId" id="locId" [(ngModel)]="locId"  class="form-control" style="background-color:yellow;"   >
+                                            <option disabled>--Select--</option>
+                                            <option *ngFor="let sc of locIdList"  [ngValue]="sc.locId">
+                                            {{sc.locCode}}-{{sc.locName}}
+                                            </option>
+                                        </select>
+                                        </td>
+                                </tr>
+
+                                <tr>
 
                                 <td style="width: 15%" class="LabelFontStyle">Doc&nbsp;Number:&nbsp;</td>
                                 <td>

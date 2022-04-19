@@ -46,17 +46,18 @@
                 <tr>
                    <td>&nbsp;Scheme&nbsp;Period:&nbsp;</td>
                     <td> <input  type ="number" class="form-control" formControlName="schemeValidYears" [(ngModel)]='schemeValidYears'  
-                        value={{schemeValidYears}} style="background-color: yellow;" > </td>
+                        value={{schemeValidYears}} style="background-color: yellow;" (change)="validatePrdKm(schemeValidYears,'SCHPRD')" > </td>
                     <td>&nbsp;Grace&nbsp;Period:&nbsp;</td>
                     <td> <input  type ="number" class="form-control" formControlName="gracePeriod" [(ngModel)]='gracePeriod'
-                            value={{gracePeriod}} style="background-color: yellow;"> </td>
-                    <td>&nbsp;Total&nbsp;Period:&nbsp;</td>
-                    <td> <input  type ="number" class="form-control" formControlName="totalPeriod" [(ngModel)]='totalPeriod'
-                        value={{totalPeriod}} style="background-color: yellow;"> </td>
+                            value={{gracePeriod}} style="background-color: yellow;" (change)="validatePrdKm(gracePeriod,'GRCPRD')"> </td>
+                   
+                     <td>&nbsp;Total&nbsp;Period:&nbsp;</td>
+                    <td> <input disabled type ="number" class="form-control" formControlName="totalPeriod" [(ngModel)]='totalPeriod'
+                        value={{totalPeriod}} style="background-color: yellow;" > </td>
 
                         <td>&nbsp;Scheme&nbsp;Kms:&nbsp;</td>
                         <td> <input  type ="number" class="form-control" formControlName="schemeValidKm" [(ngModel)]='schemeValidKm'
-                            value={{schemeValidKm}} style="background-color: yellow;"> </td>
+                            value={{schemeValidKm}} style="background-color: yellow;" (change)="validatePrdKm(schemeValidKm,'SCHKM')"> </td>
                 </tr>
 
                 <tr>
