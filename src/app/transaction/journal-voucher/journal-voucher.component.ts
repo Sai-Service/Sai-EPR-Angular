@@ -291,10 +291,10 @@ export class JournalVoucherComponent implements OnInit {
 this.JournalVoucherForm.get('reversalPeriod').disable();
 this.JournalVoucherForm.get('reversalDate').disable();
 if(this.docSeqValue!=null && this.status=='INCOMPLETE'){
-  (document.getElementById("btnUpdate") as HTMLInputElement).disabled = false;
+  (document.getElementById("btnUpdate") as HTMLInputElement).disabled = true;
 }
 else{
-(document.getElementById("btnUpdate") as HTMLInputElement).disabled = true;
+(document.getElementById("btnUpdate") as HTMLInputElement).disabled = false;
 }
   }
 JournalVoucher(JournalVoucherForm:any){}
