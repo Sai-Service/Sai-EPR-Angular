@@ -26,6 +26,8 @@ export class RtoLineItemReportComponent implements OnInit {
   rtoDataListDetails:any=[];
   rtoDataListDetailsSelectLine:any=[];
   showSelectLines=true;
+  selecLineFlag: boolean=false;
+
   @ViewChild('epltable', { static: false }) epltable: ElementRef;
   constructor(private fb: FormBuilder, private router: Router, private location1: Location,
     private router1: ActivatedRoute, private service: MasterService) { 
@@ -48,6 +50,7 @@ export class RtoLineItemReportComponent implements OnInit {
           console.log(res);  
       })
   }
+  
   getrtoReport(){
     var stDt = this.rtoListForm.get('startDt').value;
    // this.startDt = this.pipe.transform(stDt, 'dd-MMM-yyyy');
@@ -59,8 +62,11 @@ export class RtoLineItemReportComponent implements OnInit {
    var endDt = this.pipe.transform(endDt1, 'dd-MMM-yyyy');
     this.service.getRtoDataList(stDate, endDt,Number(sessionStorage.getItem('ouId')),sessionStorage.getItem('locId')).subscribe((res: any) => {
       this.rtoDataListDetails = res;
+      for (let i =0 ; i <res.length; i++ ){
+      this.rtoDataListDetails[i].selectLineFlag=this.selecLineFlag;
+    }
       this.rtoDataListDetailsSelectLine=res;
-      console.log(res);  
+      console.log(this.rtoDataListDetails);  
   })
   }
   refresh() {
@@ -77,26 +83,21 @@ export class RtoLineItemReportComponent implements OnInit {
       // xlsx.utils.json_to_sheet(this.storeAllOrderData);
     const wb: xlsx.WorkBook = xlsx.utils.book_new();
     xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
-    xlsx.writeFile(wb, 'CounterSaleOrderList.xlsx');
+    xlsx.writeFile(wb, 'RTO-Report-List.xlsx');
   }
 
   selectLineData(event,i){
-    alert(event.target.checked+'---'+i);
     var selecLineFlag=event.target.checked
-    // for (let j=0;j<this.rtoDataListDetails.length;j++){
-      var lineDetailsArray:any[]=this.rtoDataListDetails;
-      lineDetailsArray.push({selecLineFlag:selecLineFlag});
-    console.log(lineDetailsArray);
-  // }
-    
+      this.rtoDataListDetails[i].selectLineFlag=selecLineFlag;
   }
 
 showSelectedLines(){
-  // alert(this.rtoDataListDetails.length);
+  console.log(this.rtoDataListDetails); 
   for (let i=0; i < this.rtoDataListDetails.length; i++){
-    //  alert(this.rtoDataListDetails[i].selecLineFlag)
-  if (this.rtoDataListDetails[i].selecLineFlag===true){
-  this.showSelectLines=false;
+  if (this.rtoDataListDetails[i].selectLineFlag===true){
+    let rtoTrueselectionData = this.rtoDataListDetails.filter((rtoData) => ((rtoData.selectLineFlag == true)));
+    console.log(rtoTrueselectionData);
+    this.rtoDataListDetails=rtoTrueselectionData;
  }
 }
 }

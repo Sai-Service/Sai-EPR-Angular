@@ -97,13 +97,6 @@ export class PriceUpdationComponent implements OnInit {
     var itemSeg = itemSeg.toUpperCase();
     this.orderManagementService.getOnHandQty(sessionStorage.getItem('locId'),itemSeg,this.subInventoryId).subscribe((res: any) => {
         this.itemDetailsList=res;
-      //   for (let i=0;i<res.length;i++){
-      //   alert(res[i].prc);
-      //   if (res[i].prc===null){
-      //     this.prc=0;
-      //   }
-      // }
-        // this.PriceUpdationForm.patchValue({id:res.id})
     })
   }
 
