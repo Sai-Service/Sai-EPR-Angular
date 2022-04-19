@@ -1390,7 +1390,7 @@ getsearchBySubInvTrfNo(subtrfNo,locId):Observable<any>
 
 getPhysicalLoc(locId):Observable<any>
 {
-  return this.http.get(this.ServerUrl+`/cmnLookup/Catgtype?cmnType=PhysicalLocation&divisionId=${locId}`)
+  return this.http.get(this.ServerUrl+`/cmnLookup/physicalLoc/${locId}`)
 }
 
 public subInvTransferSubmit(subInvTransferRecord)
