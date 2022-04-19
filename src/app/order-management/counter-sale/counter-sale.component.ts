@@ -854,6 +854,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
               this.displaysegmentInvType[i] = false;
               this.displayLineflowStatusCode.push(true);
               this.displayCounterSaleLine.push(false);
+              this.displayRemoveRow[i]=false;
             }
             for (let j = 0; j <= this.lstgetOrderTaxDetails.length; j++) {
               var orderTaxLinesList: FormGroup = this.TaxDetailsGroup();

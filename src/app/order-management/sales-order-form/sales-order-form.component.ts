@@ -1514,7 +1514,7 @@ export class SalesOrderFormComponent implements OnInit {
               }
               this.displayVehicleDetails = true;
               var variantNew = data.obj.variant;
-              this.SalesOrderBookingForm.get('model').disable();
+              this.SalesOrderBookingForm.get('model').enable();
               this.SalesOrderBookingForm.patchValue({ color: data.obj.color });
               this.orderManagementService.ColourSearchFn(variantNew)
                 .subscribe(
@@ -1525,6 +1525,7 @@ export class SalesOrderFormComponent implements OnInit {
                     this.SalesOrderBookingForm.patchValue({ color: selectColo.ColorCode })
                   }
                 );
+                this.isVisiblemodelDetailsUpdate=true;
             }
             else {
               for (let i = 0; i < this.lstgetOrderLineDetails.length; i++) {
@@ -1538,6 +1539,7 @@ export class SalesOrderFormComponent implements OnInit {
                   this.isVisible2 = true;
                   // this.isVisible3 = true;
                   this.isVisible3 = true;
+                  
                 }
                 if (this.lstgetOrderLineDetails[i].flowStatusCode === 'BOOKED' || this.lstgetOrderLineDetails[i].flowStatusCode === 'ALLOTED') {
                   this.displaytaxCategoryName[i] = true;
@@ -1642,9 +1644,11 @@ export class SalesOrderFormComponent implements OnInit {
                 this.isVisible5 = true;
               }
               if (this.lstgetOrderLineDetails[k].invType != 'SS_VEHICLE') {
+                alert(this.lstgetOrderLineDetails[k].flowStatusCode);
+                if (this.lstgetOrderLineDetails[k].flowStatusCode != 'READY FOR INVOICE'){
                 if (this.lstgetOrderLineDetails[k].invType.includes('SS_ADDON') === true && this.lstgetOrderLineDetails[k].flowStatusCode === 'CANCELLED') {
                   this.displayVehicleDetails = true;
-                  this.SalesOrderBookingForm.get('model').disable();
+                  this.SalesOrderBookingForm.get('model').enable();
                   var variantNew = data.obj.variant;
                   this.SalesOrderBookingForm.patchValue({ color: data.obj.color })
                   this.orderManagementService.ColourSearchFn(variantNew)
@@ -1658,6 +1662,16 @@ export class SalesOrderFormComponent implements OnInit {
                     );
                 }
               }
+              }
+              for (let l = 0; l < this.lstgetOrderLineDetails.length; l++) {
+              if (this.lstgetOrderLineDetails[l].invType != 'SS_VEHICLE') {
+                if (this.lstgetOrderLineDetails[l].invType.includes('SS_ADDON') === true && (this.lstgetOrderLineDetails[l].flowStatusCode === 'BOOKED'|| this.lstgetOrderLineDetails[l].flowStatusCode === 'READY FOR INVOICE')) {
+                  this.displayVehicleDetails = false;
+                  this.isVisiblemodelDetailsUpdate=false;
+                  this.SalesOrderBookingForm.get('model').disable();
+                }
+              }
+            }
               for (let m = 0; m < this.lstgetOrderLineDetails.length; m++) {
                 if (this.lstgetOrderLineDetails[m].invType === 'SS_VEHICLE') {
                   if (this.lstgetOrderLineDetails[m].flowStatusCode === 'READY FOR INVOICE' || this.lstgetOrderLineDetails[m].flowStatusCode === 'INVOICED' || this.lstgetOrderLineDetails[m].flowStatusCode === 'ALLOTED' || this.lstgetOrderLineDetails[m].flowStatusCode != 'BOOKED' || this.lstgetOrderLineDetails[m].flowStatusCode != 'CANCELLED') {
@@ -2676,11 +2690,13 @@ export class SalesOrderFormComponent implements OnInit {
     var basicValue = this.SalesOrderBookingForm.get('basicValue').value;
     // alert(model+'---'+variant+'----'+color+'---'+fuelType+'---'+basicValue);
     this.orderManagementService.variantDetailsUpdate(this.orderNumber, model, variant, color, basicValue)
-      .subscribe(
-        res => {
-          // if (res.code === 200) {
-
-          // }
+    .subscribe((res: any) => {
+          if (res.code===200){
+            alert(res.message)
+          }
+          else if (res.code===400){
+            alert(res.message)
+          }
         }
       );
   }
@@ -2698,3 +2714,4 @@ export class SalesOrderFormComponent implements OnInit {
       );
   }
 }
+ 

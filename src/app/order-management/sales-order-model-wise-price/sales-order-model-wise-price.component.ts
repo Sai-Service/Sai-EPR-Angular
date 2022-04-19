@@ -28,7 +28,7 @@ export class SalesOrderModelWisePriceComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.service.getModelWisePrice().subscribe((res: any) => {
+    this.service.getModelWisePrice(sessionStorage.getItem('ouId')).subscribe((res: any) => {
         this.modelWisePriceList = res;
         console.log(this.modelWisePriceList);
     })

@@ -293,17 +293,8 @@ export class SubinventoryTransferComponent implements OnInit {
     patch.controls[0].patchValue({
       lineNumber: 1,
     });
-    if(this.subInventoryCode='VH')
-    {
-      this.dispPhyLoc=false;
-      this.service.getPhysicalLoc(this.locId).subscribe(
-          data => {
-            this.phyLocation = data;
-        //     console.log(this.ItemIdList);
-        //     // console.log(this.invItemId);
-          });
-      
-    }
+    alert(this.subInventoryCode);
+    
     // this.SubNo="12PU";
   }
 
@@ -316,7 +307,17 @@ export class SubinventoryTransferComponent implements OnInit {
       this.issueByList = data;
       console.log(this.issueByList);
     });
-  
+    if(this.subInventoryCode=='VH')
+    {
+      this.dispPhyLoc=false;
+      this.service.getPhysicalLoc(this.locId).subscribe(
+          data => {
+            this.phyLocation = data;
+        //     console.log(this.ItemIdList);
+        //     // console.log(this.invItemId);
+          });
+      
+    }
   }
   subinventoryTransfer(SubinventoryTransferForm: any) {}
 

@@ -34,6 +34,7 @@
                     <th scope="col" style="border: 1px solid black;">SR No.</th>
                     <th scope="col" style="border: 1px solid black;">Locator</th>
                     <th scope="col" style="border: 1px solid black;">On Hand Qty</th>
+                    <th scope="col" style="border: 1px solid black;">Last Updated Date</th>
                     <th scope="col" style="border: 1px solid black;">Current Price</th>
                     <th scope="col" style="border: 1px solid black;">New Price</th>
                     <th scope="col" style="border: 1px solid black;"> Update</th>
@@ -42,6 +43,8 @@
                     <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.ROWNUM}}</td>
                     <td style="padding-left: 5px; text-align: center;border: 1px solid black;width: 180px;">{{com.segmentName}}</td>
                     <td style="padding-left: 5px; text-align: center;border: 1px solid black;width: 180px;">{{com.onHandQty}}</td>
+                    <!-- | date:'dd-MM-yyyy' -->
+                    <td style="padding-left: 5px; text-align: center;border: 1px solid black;width: 180px;">{{com.lastUpdatedDate | date:'dd-MM-yyyy'}}</td>
                     <td style="padding-left: 5px; text-align: center;border: 1px solid black;width: 180px;">{{com.prc}}</td>
                     <td hidden style="padding-left: 5px; text-align: center;border: 1px solid black;width: 180px;">{{com.id}}</td>
                      <td style="padding-left: 5px; text-align: center;border: 1px solid black;width: 180px;">
