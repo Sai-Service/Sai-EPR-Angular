@@ -2820,8 +2820,8 @@ formData.append('location', locCode);
   }
 
 
-getModelWisePrice(){
-  return this.http.get(this.ServerUrl + `/orderHeader/priceModelwise`)
+getModelWisePrice(orgId){
+  return this.http.get(this.ServerUrl + `/orderHeader/priceModelwise/${orgId}`)
 }
 
   bulkpouploadSpares(formData: FormData) {

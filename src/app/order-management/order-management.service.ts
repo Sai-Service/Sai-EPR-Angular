@@ -494,6 +494,8 @@ export class OrderManagementService {
     return this.http.put(url, options);
   }
 
+ 
+
 
   // ////////////////************Order Payment Receipt **************//////////////////
   PaymentModeList(): Observable<any> {
