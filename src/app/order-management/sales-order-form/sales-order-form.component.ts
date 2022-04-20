@@ -1644,7 +1644,7 @@ export class SalesOrderFormComponent implements OnInit {
                 this.isVisible5 = true;
               }
               if (this.lstgetOrderLineDetails[k].invType != 'SS_VEHICLE') {
-                alert(this.lstgetOrderLineDetails[k].flowStatusCode);
+                // alert(this.lstgetOrderLineDetails[k].flowStatusCode);
                 if (this.lstgetOrderLineDetails[k].flowStatusCode != 'READY FOR INVOICE'){
                 if (this.lstgetOrderLineDetails[k].invType.includes('SS_ADDON') === true && this.lstgetOrderLineDetails[k].flowStatusCode === 'CANCELLED') {
                   this.displayVehicleDetails = true;

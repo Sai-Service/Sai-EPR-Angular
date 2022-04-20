@@ -1829,7 +1829,7 @@ export class OPMasterDtoComponent implements OnInit {
 
   onKey(index,event) {
     console.log(index);
-    alert(event.target.value)
+    // alert(event.target.value)
     if (event.keyCode != 13) {
     var trxLnArrNew = this.poMasterDtoForm.get('poLines') as FormArray;
     var trxLnArr = trxLnArrNew.getRawValue();
@@ -1850,7 +1850,7 @@ export class OPMasterDtoComponent implements OnInit {
 
     trxLnArr[index].baseAmtLineWise = Math.round(((trxLnArr[index].unitPrice * trxLnArr[index].orderedQty) + Number.EPSILON) * 100) / 100;
     var baseAmount = Math.round(((trxLnArr[index].baseAmtLineWise) + Number.EPSILON) * 100) / 100;
-    alert(baseAmount);
+    // alert(baseAmount);
     var taxCategoryId = trxLnArr[index].taxCategoryId;
     var taxCatName = trxLnArr[index].taxCategoryName;
     if (taxCatName.includes('Disc')) {
