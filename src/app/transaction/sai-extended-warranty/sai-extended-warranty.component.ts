@@ -180,6 +180,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
   // ewEndDate = this.pipe.transform(this.now, 'y-MM-dd');
   ewStartDate :string;
   ewEndDate:string;
+  oemWarrantyPeriod:number;
 
   receiptNumber:number;
   payType:string;
@@ -293,6 +294,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
       ewSaleDate:[],
       ewStartDate:[],
       ewEndDate:[],
+      oemWarrantyPeriod:[],
 
       receiptNumber:[],
       payType:[],
@@ -640,6 +642,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
               
               this.saiEwForm.patchValue({
                 serviceModel: this.variantDetailsList.serviceModel,
+                oemWarrantyPeriod: this.variantDetailsList.oemWarrantyPeriod,
 
               });
             }
@@ -935,6 +938,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
            var mDays2=mDays1 / (1000 * 3600 * 24);
            var mDays3=Math.round(mDays2 - 0.5)
            this.vehicleAgeDays=mDays3;
+           var oemPrd =this.saiEwForm.get('oemWarrantyPeriod').value;
 
           //  if (mDays3<=7)  {this.paytmentSource ='SALES'} 
           //  else if (mDays3<=730) {this.paytmentSource ='SERVICE'} 
@@ -943,14 +947,17 @@ export class SaiExtendedWarrantyComponent implements OnInit {
           //    this.resetMast();
           //   }
 
+          if(this.displayButton) {
           if(this.paytmentSource ==='SALES' && mDays3 >7 ) {
             alert("VEHICLE SALE DATE :"+this.pipe.transform(date1,'dd/MM/y') + " Aging : "+ mDays3 +" Days...Not Eligible To issue EW from SALES")
             this.resetMast();
           }
-          if(this.paytmentSource ==='SERVICE' && mDays3 >730 ) {
+
+          if(this.paytmentSource ==='SERVICE' && mDays3 > (oemPrd*365) ) {
             alert("VEHICLE SALE DATE :"+this.pipe.transform(date1,'dd/MM/y') + " AGING : "+ mDays3 +" DAYS...NOT ELIGIBLE FOR AVAILING EXTENDED WARRANTY")   
             this.resetMast();
           }
+        }
 
         }
 
