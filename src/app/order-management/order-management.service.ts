@@ -555,7 +555,7 @@ export class OrderManagementService {
 
   getOmReceiptSearchBy(rcptNumber, orderNumber, custAcNumber): Observable<any> {
     // getOmReceiptSearchBy(rcptNumber): Observable<any> {
-    alert("MS>>RCPT NO : " + rcptNumber);
+    // alert("MS>>RCPT NO : " + rcptNumber);
     var baseUrl = this.ServerUrl + '/arCashReceipts/Search?';
     var receipt, order, cust;
     if (rcptNumber === undefined) {
@@ -584,16 +584,16 @@ export class OrderManagementService {
 
 
   getOmReceiptSearchByRcptNo(rcptNumber): Observable<any> {
-    alert("MS>>Receipt number :" + rcptNumber);
+    // alert("MS>>Receipt number :" + rcptNumber);
     return this.http.get(this.ServerUrl + `/arCashReceipts/receipt/${rcptNumber}`);
   }
 
   getOmReceiptSearchByRcptNoByloc(rcptNumber): Observable<any> {
-    alert("MS>>Receipt number :" + rcptNumber);
+    // alert("MS>>Receipt number :" + rcptNumber);
     return this.http.get(this.ServerUrl + `/arCashReceipts/receipt/${rcptNumber}?locId=` + sessionStorage.getItem('locId'));
   }
   getOmReceiptSearchByCustAcNo(custAcNumber): Observable<any> {
-    alert("MS>>Customer Accunt number :" + custAcNumber);
+    // alert("MS>>Customer Accunt number :" + custAcNumber);
     return this.http.get(this.ServerUrl + `/arCashReceipts/custmst/${custAcNumber}`);
   }
 
