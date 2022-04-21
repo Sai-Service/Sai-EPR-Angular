@@ -18,7 +18,8 @@
         <div class="grid_scroll">
             <table class="GridFont" style="border-color:#494949;border-collapse:collapse;width: 100%;">
                 <tr class="GridHeader" style="font-size: 11px;">
-                    <th> Chassis Item</th>
+                    <th> Order &nbsp; Number</th>
+                    <th style="width: 225px;"> Chassis Item</th>
                     <th> Chassis No</th>
                     <th> Engine No</th>
                     <th>Variant</th>
@@ -36,9 +37,14 @@
                     <th>Two Tone</th>
                     <th> Taxi</th>
                     <th> Physical Location</th>
+                    <th> Taxable Amt</th>
+                    <th> Tax Amt</th>
+                    <th> Total Amt</th>
+                    <th> Vehicle Status</th>
                 </tr>
                 <tr *ngFor="let com of closingStockDetails ; let i= index" class="ItemStyle" style="text-decoration:none;font-size: 11px;">
-                    <td style="padding-left: 5px;padding-top: 10px;"> {{com.itemName}} </td>
+                    <td style="padding-left: 5px;padding-top: 10px;"> {{com.orderNumber}} </td>
+                    <td style="padding-left: 5px;padding-top: 10px;width: 225px;"> {{com.itemName}} </td>
                     <td style="padding-left: 5px;padding-top: 10px;"> {{com.chassisNo}} </td>
                     <td style="padding-left: 5px;padding-top: 10px;"> {{com.engineNo}} </td>
                     <td style="padding-left: 5px;padding-top: 10px;"> {{com.variant}} </td>
@@ -56,7 +62,10 @@
                     <td style="padding-left: 5px;padding-top: 10px;"> {{com.twoTone}}</td>
                     <td style="padding-left: 5px;padding-top: 10px;"> {{com.taxi}}</td>
                     <td style="padding-left: 5px;padding-top: 10px;"> {{com.physicalLoc}}</td>
-                    
+                    <td style="padding-left: 5px;padding-top: 10px;"> {{com.taxableAmt}}</td>
+                    <td style="padding-left: 5px;padding-top: 10px;"> {{com.taxAmt}}</td>
+                    <td style="padding-left: 5px;padding-top: 10px;"> {{com.totalAmt}}</td>
+                    <td style="padding-left: 5px;padding-top: 10px;"> {{com.vehicleStatus}}</td>
             </table>
         </div>
     </div>

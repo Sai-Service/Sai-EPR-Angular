@@ -742,15 +742,7 @@
 
                                                         <tr class="ItemStyle" style="text-decoration:none;">
                                                             <td>
-                                                                <!-- <div  *ngIf="displayViewTaxDetails; then thenViewTaxDetails; else elseViewTaxDetails">  </div>
-                                                                <ng-template #thenViewTaxDetails>
-                                                                </ng-template>
-                                                                <ng-template #elseViewTaxDetails>
-                                                                    <a data-toggle="tab" href="#taxDetails"
-                                                                        (click)="onOptionViewTaxDetails(taxCategoryId,k)">
-                                                                        <img id="bajajlogo" src="assets\images\tax.png">
-                                                                    </a>
-                                                                </ng-template>   -->
+                                                              
 
                                                                 <div *ngIf="displayViewTaxDetails; then thenViewTaxDetails; else elseViewTaxDetails"> </div>
                                                                 <ng-template #thenViewTaxDetails>
@@ -850,7 +842,7 @@
                                                             <td>
 
                                                                 <input type="number" min="0" class="form-control"
-                                                                    formControlName="amount" value={{amount}}
+                                                                    formControlName="amount" value={{amount}}  (keydown.tab)="selectDisLineDtl(k)"
                                                                     style="width: 80px;height: 25px;font-size: 10px;text-align: right;">
 
                                                             </td>
