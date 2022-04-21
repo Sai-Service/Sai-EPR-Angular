@@ -759,7 +759,7 @@ export class WsVehicleMasterComponent implements OnInit {
             this.GetCustomerDetails(this.lstcomments.custAccountNo);
             // this.GetCustomerSiteDetails(this.lstcomments.customerId);
             // this.CreateItemCode();
-
+            
             if(this.lstcomments.status ==='Inactive') { this.wsVehicleMasterForm.disable();}
 
           }

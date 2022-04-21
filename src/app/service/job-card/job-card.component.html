@@ -2749,11 +2749,10 @@
                                                                         </select>
                                                                     </td>
                                                                     <td> 
-                                                                        <select formControlName="techId" id="techId"
-                                                                            class="form-control">
+                                                                        <select formControlName="techId" id="techId"  class="form-control">
                                                                             <option>--Select--</option>
                                                                             <option *ngFor="let sc of  TechnicianList" [ngValue]="sc.teamId">
-                                                                                {{sc.description}}
+                                                                                {{sc.teamId}}-{{sc.description}}
                                                                             </option>
                                                                         </select>
                                                                     </td>
@@ -2761,9 +2760,7 @@
                                                                             class="form-control">
                                                                     </td> -->
 
-                                                                    <td> <input type="number" min="0"  formControlName="techAmt" (change) = "validateTechAmt(j,content)"
-                                                                        class="form-control">
-                                                                    </td>
+                                                                    <td> <input type="number" min="0"  formControlName="techAmt" (change) = "validateTechAmt(j,content)" class="form-control">  </td>
 
                                                                     <!-- <td> <input  type="text"
                                                                             formControlName="contr1" class="form-control">
@@ -2774,14 +2771,10 @@
                                                                 <td> <input  type="text"
                                                                         formControlName="contr1Amt" class="form-control">
                                                                 </td> -->
-                                                                    <td>
-                                                                        <button type="submit" class="btn btn-primary"    (click)="addTechRow(j)"
-                                                                            (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i class="fa fa-plus"></i></button>
-                                                                    </td>
-                                                                    <td>
-                                                                        <button type="submit" class="btn btn-primary"
-                                                                            (click)="RemoveTechRow(j)"   style="width: min-content;"><i class="fa fa-trash"></i></button>
-                                                                    </td>
+                                                                    <td> <button type="submit" class="btn btn-primary"    (click)="addTechRow(j)"
+                                                                            (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i class="fa fa-plus"></i></button></td>
+                                                                    <td> <button type="submit" class="btn btn-primary"
+                                                                            (click)="RemoveTechRow(j)"   style="width: min-content;"><i class="fa fa-trash"></i></button></td>
                                                                 </tr>
                                                                 <!-- <tr>
                                                                             <td> <input  type="text"

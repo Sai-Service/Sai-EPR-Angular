@@ -1258,7 +1258,6 @@ export class SaiExtendedWarrantyComponent implements OnInit {
             console.log(formValue);
             this.service.SaiEwCustomerSubmit(formValue).subscribe((res: any) => {
             if (res.code === 200) {
-            
               this.ewInvoiceNo=res.obj.obj.ewInvoiceNo;
               this.ewId=res.obj.obj.ewId;
               this.receiptNumber=res.obj.obj.receiptNumber;
