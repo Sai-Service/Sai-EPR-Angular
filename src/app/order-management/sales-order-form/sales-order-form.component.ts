@@ -1353,6 +1353,7 @@ export class SalesOrderFormComponent implements OnInit {
     const formValue: ISalesBookingForm = this.transData(this.SalesOrderBookingForm.getRawValue());
     formValue.flowStatusCode = 'BOOKED';
     formValue.accountNo = this.SalesOrderBookingForm.get('accountNo').value;
+    formValue.custAddress=this.SalesOrderBookingForm.get('billToAddress').value;
     formValue.ouId = Number(sessionStorage.getItem('ouId'));
     formValue.divisionId = Number(sessionStorage.getItem('divisionId'));
     formValue.deptId = Number(sessionStorage.getItem('deptId'));
