@@ -1065,12 +1065,12 @@
                                                                         <ng-template #CancelYes>
                                                                         <!-- <td>   <button type="submit"  class="btn btn-primary" id="register" (click)="cancelJobNo()">Cancel</button> </td> -->
                                                                                
-                                                                            <button type="submit" class="btn btn-primary" id="cancBtn" data-toggle="modal"  style="width: 5rem;"
+                                                                            <button type="button" class="btn btn-primary" id="cancBtn" data-toggle="modal"  style="width: 5rem;"
                                                                             data-target="#confirmAlert" (click)="getMessage('Cancel')" >Cancel</button>
 
                                                                         </ng-template>
                                                                         <ng-template #CancelNo>
-                                                                                <button disabled type="submit" class="btn btn-primary" id="cancBtn" data-toggle="modal" style="width: 5rem;"
+                                                                                <button disabled type="button" class="btn btn-primary" id="cancBtn" data-toggle="modal" style="width: 5rem;"
                                                                                 data-target="#confirmAlert" (click)="getMessage('Cancel')" >Cancel</button>
                         
                                                                         </ng-template>
@@ -1082,7 +1082,7 @@
                                                                     </div>
                                                                     <ng-template #thenBlockRFI>
                                                                         <td>
-                                                                            <button type="submit"
+                                                                            <button type="button"
                                                                                 class="btn btn-primary"
                                                                                 style="width: fit-content;"
                                                                                 (click)="jobCardStatusClose()"
@@ -1105,7 +1105,7 @@
 
                                                                     <div *ngIf="preInvButton; then Pre1; else Pre2"></div>
                                                                     <ng-template #Pre1>
-                                                                        <td><button  type="submit" class="btn btn-primary"   style="width: fit-content;" id="register" (click)="printPreInvoice()" >Pre-Invoice</button> </td>
+                                                                        <td><button  type="button" class="btn btn-primary"   style="width: fit-content;" id="register" (click)="printPreInvoice()" >Pre-Invoice</button> </td>
                                                                     </ng-template>
                                                                     <ng-template #Pre2>
                                                                         <!-- <td><button  disabled type="submit" class="btn btn-primary"   style="width: fit-content;" id="register" (click)="printPreInvoice()" >Pre-Invoice</button> </td> -->
@@ -1114,8 +1114,8 @@
                                                                     <ng-template #dpcustYes>
                                                                         <div *ngIf="preInvButton; then Pre11; else Pre21"></div>
                                                                         <ng-template #Pre11>
-                                                                            <td> <button  type="submit" class="btn btn-primary" style="width: fit-content;" id="register" (click)="printPreInvoiceDp('cust')" >DP-PreInvoice(Cust)</button> </td>
-                                                                            <td> <button  type="submit" class="btn btn-primary" style="width: fit-content;" id="register" (click)="printPreInvoiceDp('ins')" >DP-PreInvoice(Ins)</button> </td>
+                                                                            <td> <button  type="button" class="btn btn-primary" style="width: fit-content;" id="register" (click)="printPreInvoiceDp('cust')" >DP-PreInvoice(Cust)</button> </td>
+                                                                            <td> <button  type="button" class="btn btn-primary" style="width: fit-content;" id="register" (click)="printPreInvoiceDp('ins')" >DP-PreInvoice(Ins)</button> </td>
                                                                         </ng-template>
                                                                         <ng-template #Pre21></ng-template>
                                                                     </ng-template>
@@ -1427,14 +1427,14 @@
                                                                                 <div *ngIf="displaySplit; then thenBlockSplit; else elseBlockSplit"></div>
                                                                                 
                                                                                 <ng-template #thenBlockSplit>
-                                                                                    <button type="submit" 
+                                                                                    <button type="button" 
                                                                                         class="btn btn-primary"
                                                                                         class="form-control"
                                                                                         style="width: min-content; text-align: center;"><i
                                                                                             class="fa fa-plus"></i></button>
                                                                                 </ng-template>
                                                                                 <ng-template #elseBlockSplit>
-                                                                                    <button type="submit"
+                                                                                    <button type="button"
                                                                                         class="btn btn-primary"  data-toggle="modal" data-target="#myModel"
                                                                                         class="form-control"   (click)="openCodeComb(i)"
                                                                                         style="width: min-content; text-align: center;"><i class="fa fa-plus"></i></button>
@@ -1444,18 +1444,18 @@
 
                                                                             <div *ngIf="saveLabButton; then AD1; else AD2"></div>
                                                                             <ng-template #AD1>
-                                                                            <td><button type="submit" class="btn btn-primary"  (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)"
+                                                                            <td><button type="button" class="btn btn-primary"  (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)"
                                                                                     style="width: min-content;"><i class="fa fa-plus"></i></button>
                                                                             </td>
-                                                                            <td><button type="submit"  class="btn btn-primary" (click)="RemoveRow(i)"
+                                                                            <td><button type="button"  class="btn btn-primary" (click)="RemoveRow(i)"
                                                                                     style="width: min-content;"><i class="fa fa-trash"></i></button>
                                                                             </td>
                                                                             </ng-template>
                                                                             <ng-template #AD2>
-                                                                                <td><button disabled type="submit" class="btn btn-primary"  (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)"
+                                                                                <td><button disabled type="button" class="btn btn-primary"  (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)"
                                                                                         style="width: min-content;"><i class="fa fa-plus"></i></button>
                                                                                 </td>
-                                                                                <td><button disabled type="submit"  class="btn btn-primary" (click)="RemoveRow(i)"
+                                                                                <td><button disabled type="button"  class="btn btn-primary" (click)="RemoveRow(i)"
                                                                                         style="width: min-content;"><i class="fa fa-trash"></i></button>
                                                                                 </td>
                                                                             </ng-template>
@@ -2515,7 +2515,7 @@
                                                         <div *ngIf="genBillButton; then G1; else G2"></div>
                                                         <ng-template #G1>
                                                         <td>
-                                                            <button type="submit" class="btn btn-primary"
+                                                            <button type="button" class="btn btn-primary"
                                                                 (click)="GenerateInvoice(jobCardNum)" id="register" style="width: fit-content;">Generate Invoice</button>
                                                         </td>
                                                         </ng-template>
@@ -2533,7 +2533,7 @@
                                                         <div *ngIf="preInvButton; then Pre11; else Pre21"></div>
                                                         <ng-template #Pre11>
                                                         <td>
-                                                            <button  type="submit" class="btn btn-primary"
+                                                            <button  type="button" class="btn btn-primary"
                                                                 style="width: fit-content;"
                                                                 id="register" (click)="printPreInvoice()" >Pre-Invoice</button>
                                                         </td>
@@ -2550,8 +2550,8 @@
 
                                                             <div *ngIf="preInvButton; then Pre11; else Pre21"></div>
                                                             <ng-template #Pre11>
-                                                            <td> <button  type="submit" class="btn btn-primary" style="width: fit-content;" id="register" (click)="printPreInvoiceDp('cust')" >DP-PreInvoice(Cust)</button> </td>
-                                                            <td> <button  type="submit" class="btn btn-primary" style="width: fit-content;" id="register" (click)="printPreInvoiceDp('ins')" >DP-PreInvoice(Ins)</button> </td>
+                                                            <td> <button  type="button" class="btn btn-primary" style="width: fit-content;" id="register" (click)="printPreInvoiceDp('cust')" >DP-PreInvoice(Cust)</button> </td>
+                                                            <td> <button  type="button" class="btn btn-primary" style="width: fit-content;" id="register" (click)="printPreInvoiceDp('ins')" >DP-PreInvoice(Ins)</button> </td>
                                                            
                                                             </ng-template>
                                                             <ng-template #Pre21>
@@ -2573,8 +2573,8 @@
                                              
                                                     <div *ngIf="printInvoiceButton; then P1; else P2"></div>
                                                     <ng-template #P1>
-                                                        <td><button type="submit" class="btn btn-primary" id="register" style="width: fit-content;" (click)="printWSInvoice()">Print invoice</button> </td>
-                                                        <td> <button type="submit" class="btn btn-primary" id="register"  style="width: fit-content;" [routerLink]="['/admin/transaction/PaymentAr',this.jobCardNum]">Receipt</button> </td> 
+                                                        <td><button type="button" class="btn btn-primary" id="register" style="width: fit-content;" (click)="printWSInvoice()">Print invoice</button> </td>
+                                                        <td> <button type="button" class="btn btn-primary" id="register"  style="width: fit-content;" [routerLink]="['/admin/transaction/PaymentAr',this.jobCardNum]">Receipt</button> </td> 
                                                     </ng-template>
                                                     <ng-template #P2></ng-template>
 
@@ -2582,10 +2582,10 @@
                                                     <ng-template #dpcustInvYes>
                                                         <div *ngIf="printInvoiceButton; then P3; else P4"></div>
                                                         <ng-template #P3>
-                                                            <td><button type="submit" class="btn btn-primary" id="register" style="width: fit-content;" (click)="printWSInvoiceDp('cust')">DP invoice(Cust)</button> </td>
-                                                            <td><button type="submit" class="btn btn-primary" id="register" style="width: fit-content;" (click)="printWSInvoiceDp('ins')">DP invoice(Ins)</button> </td>
+                                                            <td><button type="button" class="btn btn-primary" id="register" style="width: fit-content;" (click)="printWSInvoiceDp('cust')">DP invoice(Cust)</button> </td>
+                                                            <td><button type="button" class="btn btn-primary" id="register" style="width: fit-content;" (click)="printWSInvoiceDp('ins')">DP invoice(Ins)</button> </td>
                                                           
-                                                            <td> <button type="submit" class="btn btn-primary" id="register"  style="width: fit-content;" [routerLink]="['/admin/transaction/PaymentAr',this.jobCardNum]">Receipt</button> </td> 
+                                                            <td> <button type="button" class="btn btn-primary" id="register"  style="width: fit-content;" [routerLink]="['/admin/transaction/PaymentAr',this.jobCardNum]">Receipt</button> </td> 
                                                         </ng-template>
                                                         <ng-template #P4></ng-template>
                                                     </ng-template>
@@ -2771,9 +2771,9 @@
                                                                 <td> <input  type="text"
                                                                         formControlName="contr1Amt" class="form-control">
                                                                 </td> -->
-                                                                    <td> <button type="submit" class="btn btn-primary"    (click)="addTechRow(j)"
+                                                                    <td> <button type="button" class="btn btn-primary"    (click)="addTechRow(j)"
                                                                             (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i class="fa fa-plus"></i></button></td>
-                                                                    <td> <button type="submit" class="btn btn-primary"
+                                                                    <td> <button type="button" class="btn btn-primary"
                                                                             (click)="RemoveTechRow(j)"   style="width: min-content;"><i class="fa fa-trash"></i></button></td>
                                                                 </tr>
                                                                 <!-- <tr>
@@ -2951,7 +2951,7 @@
             <table class="center">
         <tr>
             <td>
-            <button  type="submit" class="btn btn-primary" data-dismiss="modal" id="register"   (click)="executeAction()">Yes</button>
+            <button  type="button" class="btn btn-primary" data-dismiss="modal" id="register"   (click)="executeAction()">Yes</button>
             </td>
             <td>
             <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
@@ -3073,7 +3073,7 @@
                                         <td style="text-align: center;width: 2rem;">{{com.trxNumber}}</td> 
                                         <td style="text-align: right;width: 2rem;">{{com.invoiceAmount}}</td> 
                                         <td style="text-align: right;width: 2rem;">{{com.balance}}</td> 
-                                        <button  type="submit" class="btn btn-secondary" data-dismiss="modal" id="register"   (click)="Search(com.jobCardNum)">Select</button>
+                                        <button  type="button" class="btn btn-secondary" data-dismiss="modal" id="register"   (click)="Search(com.jobCardNum)">Select</button>
                                 </tr> 
                             </table>
                         </div>
@@ -3174,7 +3174,7 @@
                                 <!-- <td style="width:8rem;text-align: center;">{{com.itemCategory}}</td>      
                                 <td style="width:8rem;text-align: center;">{{com.uom}}</td>  -->
                                 <!-- <td><button class="btn btn-secondary" (click)="F9SearchItemCodeNew(com.segment)">Select</button></td>  -->
-                                <button  type="submit" class="btn btn-secondary" data-dismiss="modal" id="register" style="width: fit-content;"  (click)="getItem(com.segment,lineIndex)">Select</button>
+                                <button  type="button" class="btn btn-secondary" data-dismiss="modal" id="register" style="width: fit-content;"  (click)="getItem(com.segment,lineIndex)">Select</button>
                             </tr>
                 </table>
             </div>
