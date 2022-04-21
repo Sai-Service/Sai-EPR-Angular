@@ -746,11 +746,12 @@ export class WsVehicleMasterComponent implements OnInit {
           }
           else {
 
-            // alert ( "Status :"+this.lstcomments.status);
+            // alert ( "Reg date :"+data.obj.regDate);
             this.updateButton=true;
             this.displayButton = false;
             console.log(this.lstcomments);
             this.wsVehicleMasterForm.patchValue(data.obj);
+            this.wsVehicleMasterForm.patchValue({regDate :data.obj.regDate});
             // this.dlrInvoiceNo=data.obj.dlrInvNo;
             // this.dmsInvoiceNo=data.obj.dmsInvNo;
 
@@ -758,7 +759,7 @@ export class WsVehicleMasterComponent implements OnInit {
             this.GetCustomerDetails(this.lstcomments.custAccountNo);
             // this.GetCustomerSiteDetails(this.lstcomments.customerId);
             // this.CreateItemCode();
-
+            
             if(this.lstcomments.status ==='Inactive') { this.wsVehicleMasterForm.disable();}
 
           }

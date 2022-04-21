@@ -12,7 +12,7 @@
                     <table>
                         <tr>
                                <td colspan="2" style="width: 100%;text-align: center;margin-left: 10px;">
-                                <button class="btn btn-info" data-toggle="modal" data-target="#jobCardSearch" (click)='LoadSearchForm()'  
+                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#jobCardSearch" (click)='LoadSearchForm()'  
                                     style="text-align: center; font-size: small;font-weight: bolder; margin-right: 90%;">Find</button>
                             </td>
 
@@ -140,7 +140,7 @@
                                                                         </tr>
                                                                         <tr>
                                                                             <td style="width: 15%" class="LabelFontStyle">DMS&nbsp;JC&nbsp;No&nbsp;:</td>
-                                                                            <td> <input type="text" autofocus  class="form-control" formControlName="dmsJcNo"  (keydown.enter) ="enterKeyLock(0,'dmsJcNo')"> </td>
+                                                                            <td> <input type="text" autofocus  class="form-control" formControlName="dmsJcNo"  > </td>
                                                                             
                                                                             <td style="width: 15%" class="LabelFontStyle">  DMS&nbsp;JC&nbsp;Date&nbsp;:</td>
                                                                             <td><input type="date"  class="form-control" formControlName="dmsJCDate" placeholder=""> </td>
@@ -288,7 +288,7 @@
                                                                             <td></td>
 
                                                                             <td>
-                                                                                <button data-toggle="modal"  class="btn btn-primary"
+                                                                                <button type="button" data-toggle="modal"  class="btn btn-primary"
                                                                                      data-target="#vehAddtionalDetails"  style="width: 140px">Additional Details</button>
                                                                             </td>
 
@@ -1056,7 +1056,7 @@
                                                                                 
                                                                         </td>
                                                                         <td>
-                                                                            <button type="submit" style="width: 5rem;"
+                                                                            <button type="button" style="width: 5rem;"
                                                                                 class="btn btn-primary" id="register"
                                                                                 (click)="closeMast()">Close</button>
                                                                         </td>
@@ -1248,7 +1248,7 @@
                                                                             <div *ngIf="openStatus; then opnYes; else opnNo"> </div>
                                                                             <ng-template #opnYes>
                                                                                 <td><input  type="text" formControlName="segment" value={{segment}}
-                                                                                    (keyup)="getInvItemId($event)" id="invItemIdFirstWay"  (keydown.enter)="enterKeyLock(i,'segment')"
+                                                                                    (keyup)="getInvItemId($event)" id="invItemIdFirstWay"  
                                                                                     list="dynmicUserIds1" class="form-control"  style="width: 8rem;"
                                                                                     (change)="serchByitemId(segment,i)" />
                                                                                     <datalist id="dynmicUserIds1">
@@ -1289,7 +1289,7 @@
                                                                             <ng-template #splt11>
                                                                                 <!-- <div *ngIf="genericItemLab; then genYes1; else genNo1"> </div>
                                                                                 <ng-template #genYes1> -->
-                                                                                     <td><input  type="text" formControlName="description"  class="form-control"  style="height: 25px;"  (keydown.enter)="enterKeyLock(i,'description')"  > </td>
+                                                                                     <td><input  type="text" formControlName="description"  class="form-control"  style="height: 25px;"  > </td>
                                                                                 <!-- </ng-template>
                                                                                 <ng-template #genNo1>
                                                                                      <td><input disabled type="text" formControlName="description"  class="form-control"  style="height: 25px;"> </td>
@@ -1299,7 +1299,7 @@
                                                                             <ng-template #splt21>
                                                                                 <!-- <div *ngIf="genericItemLab; then genYes2; else genNo2"> </div>
                                                                                 <ng-template #genYes2> -->
-                                                                                     <td><input  type="text" formControlName="description"  class="form-control"  style="height: 25px; width:350px" (keyup)="onInput($event)" (keydown.enter)="enterKeyLock(i,'description')" ></td>
+                                                                                     <td><input  type="text" formControlName="description"  class="form-control"  style="height: 25px; width:350px" (keyup)="onInput($event)" ></td>
                                                                                <!-- </ng-template>
                                                                                <ng-template #genNo2>
                                                                                     <td><input disabled type="text" formControlName="description"  class="form-control"  style="height: 25px; width:350px" ></td>
@@ -1330,7 +1330,7 @@
 
                                                                             <td>
                                                                                 <input type="number" min="0"
-                                                                                    formControlName="qty"  (keydown.enter)="enterKeyLock(i,'qty')"
+                                                                                    formControlName="qty"  
                                                                                     (change)="onKey(i)"    class="form-control" style="width: 3rem; height: 25px; text-align: right;">
                                                                             </td>
 
@@ -2749,11 +2749,10 @@
                                                                         </select>
                                                                     </td>
                                                                     <td> 
-                                                                        <select formControlName="techId" id="techId"
-                                                                            class="form-control">
+                                                                        <select formControlName="techId" id="techId"  class="form-control">
                                                                             <option>--Select--</option>
                                                                             <option *ngFor="let sc of  TechnicianList" [ngValue]="sc.teamId">
-                                                                                {{sc.description}}
+                                                                                {{sc.teamId}}-{{sc.description}}
                                                                             </option>
                                                                         </select>
                                                                     </td>
@@ -2761,9 +2760,7 @@
                                                                             class="form-control">
                                                                     </td> -->
 
-                                                                    <td> <input type="number" min="0"  formControlName="techAmt" (change) = "validateTechAmt(j,content)"
-                                                                        class="form-control">
-                                                                    </td>
+                                                                    <td> <input type="number" min="0"  formControlName="techAmt" (change) = "validateTechAmt(j,content)" class="form-control">  </td>
 
                                                                     <!-- <td> <input  type="text"
                                                                             formControlName="contr1" class="form-control">
@@ -2774,14 +2771,10 @@
                                                                 <td> <input  type="text"
                                                                         formControlName="contr1Amt" class="form-control">
                                                                 </td> -->
-                                                                    <td>
-                                                                        <button type="submit" class="btn btn-primary"    (click)="addTechRow(j)"
-                                                                            (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i class="fa fa-plus"></i></button>
-                                                                    </td>
-                                                                    <td>
-                                                                        <button type="submit" class="btn btn-primary"
-                                                                            (click)="RemoveTechRow(j)"   style="width: min-content;"><i class="fa fa-trash"></i></button>
-                                                                    </td>
+                                                                    <td> <button type="submit" class="btn btn-primary"    (click)="addTechRow(j)"
+                                                                            (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i class="fa fa-plus"></i></button></td>
+                                                                    <td> <button type="submit" class="btn btn-primary"
+                                                                            (click)="RemoveTechRow(j)"   style="width: min-content;"><i class="fa fa-trash"></i></button></td>
                                                                 </tr>
                                                                 <!-- <tr>
                                                                             <td> <input  type="text"
