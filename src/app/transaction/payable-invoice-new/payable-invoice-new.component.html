@@ -923,18 +923,12 @@
                                                                     style="width: 100px;height: 25px;font-size: 10px;">
                                                             </td>
                                                             <td>
-
                                                                 <input type="number" class="form-control"
                                                                     formControlName="baseAmount" value={{baseAmount}}
                                                                     style="width: 100px;height: 25px;font-size: 10px;text-align: right;">
                                                             </td>
-
                                                             <td>
-
-
-                                                                <div
-                                                                    *ngIf="displayglDate; then thenglDate; else elseglDate">
-                                                                </div>
+                                                                <div *ngIf="displayglDate; then thenglDate; else elseglDate"> </div>
                                                                 <ng-template #thenglDate>
                                                                     <input type="text" class="form-control"
                                                                         formControlName="glDate" value="{{glDate}}"
@@ -947,9 +941,7 @@
                                                                         style="width: 130px;height: 25px;font-size: 10px;">
                                                                 </ng-template>
                                                             </td>
-
                                                             <td>
-
                                                                 <input hidden type="number" class="form-control"
                                                                     formControlName="defaultDistCcid">
                                                                 <input disabled type="text" class="form-control"
@@ -963,31 +955,26 @@
                                                                     style="width: 100px;height: 25px;font-size: 10px;">
                                                             </td>
                                                             <td>
-
                                                                 <input type="text" class="form-control"
                                                                     formControlName="segment1" value={{segment1}}
                                                                     style="width: 100px;height: 25px;font-size: 10px;">
                                                             </td>
                                                             <td>
-
                                                                 <input type="text" class="form-control"
                                                                     formControlName="segment1" value={{segment1}}
                                                                     style="width: 100px;height: 25px;font-size: 10px;">
                                                             </td>
                                                             <td>
-
                                                                 <input type="text" class="form-control"
                                                                     formControlName="segment1" value={{segment1}}
                                                                     style="width: 100px;height: 25px;font-size: 10px;">
                                                             </td>
                                                             <td>
-
                                                                 <input type="text" class="form-control"
                                                                     formControlName="segment1" value={{segment1}}
                                                                     style="width: 100px;height: 25px;font-size: 10px;">
                                                             </td>
                                                             <td>
-
                                                                 <input type="text" class="form-control"
                                                                     formControlName="segment1" value={{segment1}}
                                                                     style="width: 100px;height: 25px;font-size: 10px;">
@@ -997,9 +984,6 @@
                                                                     class="btn btn-primary fa fa-trash"
                                                                     (click)="Delete(trxLineIndex)"></button>
                                                             </td>
-                                                        </tr>
-                                                        <tr>
-
                                                         </tr>
                                                     </ng-container>
                                                 </ng-container>
@@ -1013,7 +997,6 @@
                                 <div class="tab-pane fade" id="distributionDetails" role="tabpanel">
                                     <div class="grid_scroll_1">
                                         <table class="GridFont">
-
                                             <thead>
                                                 <tr class="GridHeader">
                                                     <th scope="col">Inv Line No</th>
@@ -1027,16 +1010,13 @@
                                                     <th hidden scope="col">Status</th>
                                                     <th hidden scope="col">Accounting</th>
                                                     <th scope="col" style="width: fit-content;">Account Description</th>
-                                                    <div
-                                                        *ngIf="disDeleteButton; then thendisDeleteButton; else elsedisDeleteButton">
-                                                    </div>
+                                                    <div *ngIf="disDeleteButton; then thendisDeleteButton; else elsedisDeleteButton"></div>
                                                     <ng-template #thendisDeleteButton>
                                                         <th scope="col">Delete</th>
                                                     </ng-template>
                                                     <ng-template #elsedisDeleteButton> </ng-template>
                                                 </tr>
                                             </thead>
-
                                             <tbody>
                                                 <ng-container class="center" formArrayName="distribution">
                                                     <ng-container
@@ -1057,19 +1037,15 @@
                                                                     (keydown.shift.arrowdown)="addRowDistribution(k,lineTypeLookupCode)"
                                                                     class="form-control"
                                                                     style="width: 100px;height: 25px;">
-
                                                             </td>
                                                             <td>
                                                                 <input type="number" min="0" formControlName="amount"
                                                                     class="form-control"
                                                                     style="width: 100px;height: 25px;text-align: right;"
                                                                     (change)="amountmatch(k,$event)">
-
                                                             </td>
                                                             <td>
-                                                                <div
-                                                                    *ngIf="dispaccountingDate; then thenaccountingDate; else elseaccountingDate">
-                                                                </div>
+                                                                <div *ngIf="dispaccountingDate; then thenaccountingDate; else elseaccountingDate">  </div>
                                                                 <ng-template #thenaccountingDate>
                                                                     <input type="text" 
                                                                     formControlName="accountingDate"
@@ -1085,11 +1061,8 @@
                                                                 <!-- [(ngModel)]='accountingDate' -->
                                                             </td>
                                                             <td>
-                                                                <div
-                                                                    *ngIf="dispAccountCode; then thendispAccountCode; else elsedispAccountCode">
-                                                                </div>
+                                                                <div *ngIf="dispAccountCode; then thendispAccountCode; else elsedispAccountCode"> </div>
                                                                 <ng-template #thendispAccountCode>
-
                                                                     <input formControlName="distCodeCombId" hidden
                                                                         class="form-control"
                                                                         style="width: 160px;height: 25px;">
@@ -1097,7 +1070,6 @@
                                                                         (click)="openCodeComb1(k)" data-toggle="modal"
                                                                         data-target="#myModel1" class="form-control"
                                                                         style="width: 160px;height: 25px;">
-
                                                                 </ng-template>
                                                                 <ng-template #elsedispAccountCode>
                                                                     <input formControlName="distCodeCombId" hidden

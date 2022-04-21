@@ -305,8 +305,10 @@ export class PayableInvoiceNewComponent implements OnInit {
   public lstsearchapinv: any;
   // nverValidedCnd:false;
   // ValidedCnd:true;
-  public locIdList1: Array<string> = [];
-  public BranchList: Array<string> = [];
+  // public locIdList1: Array<string> = [];
+  locIdList1:any=[];
+  // public BranchList: Array<string> = [];
+  BranchList:any=[];
   public CostCenterList: Array<string> = [];
   public NaturalAccountList: any = [];
   public InterBrancList: any = [];
@@ -1879,10 +1881,16 @@ export class PayableInvoiceNewComponent implements OnInit {
   }
 
   openCodeComb1(i) {
+    // alert(i)
     var arrayControl = this.poInvoiceForm.get('distribution').value;
     var invLinesControl = this.poInvoiceForm.get('invLines').value;
-    let segmentName1 = arrayControl[i].distCodeCombSeg
-    if (segmentName1 === null) {
+    let segmentName1 = arrayControl[i].distCodeCombSeg;
+    // alert(segmentName1)
+    if (segmentName1 === null ||segmentName1=='' ) {
+      this.poInvoiceForm.get('segment11').reset();
+      var branchNM = sessionStorage.getItem('locCode').split('.');
+      // alert(branchNM)
+      this.BranchList = this.BranchList.filter((br => br.lookupValue === branchNM[0]));
       this.poInvoiceForm.get('segment11').reset();
       this.poInvoiceForm.get('segment2').reset();
       this.poInvoiceForm.get('segment3').reset();
@@ -2478,6 +2486,13 @@ export class PayableInvoiceNewComponent implements OnInit {
       var tdsLines = this.poInvoiceForm.get('tdsLines').value;
       console.log(tdsLines);
       var arrayControl = this.poInvoiceForm.get('obj') as FormArray;
+      var distribution = this.poInvoiceForm.get('distribution') as FormArray;
+      var distributionArray = distribution.getRawValue();
+      // for (let d=0; d<distributionArray.length; d++){
+      //   // if (distributionArray[d].distCodeCombId !=){
+
+      //   // }
+      // }
       var arrayControl1 = arrayControl.getRawValue();
       this.transactionService.PoInvoiceTdsDataSubmit(tdsLines).subscribe((res: any) => {
         if (res.code === 200) {
@@ -2546,6 +2561,7 @@ export class PayableInvoiceNewComponent implements OnInit {
 
 
   onOptionsSelectedBranch(segment: any, lType: string) {
+    // alert(segment+'----'+lType);
     this.service.getInterBranch(segment, lType).subscribe(
       data => {
         this.branch = data;
@@ -2561,7 +2577,11 @@ export class PayableInvoiceNewComponent implements OnInit {
             this.lookupValueDesc2 = this.branch.lookupValueDesc;
           }
           if (lType === 'SS_Branch') {
+            // this.lookupValueDesc1 = this.branch.lookupValueDesc;
             this.lookupValueDesc1 = this.branch.lookupValueDesc;
+            var sellBr= this.BranchList.find(d => d.lookupValue === segment);  
+            // console.log(sellBr);       
+              this.locIdList1 = this.locIdList1.filter((br => br.lookupValue.includes(sellBr.parentValue) ||br.lookupValue === "000"));
           }
         }
       }
