@@ -181,10 +181,10 @@
                                                                                 <input type="text" hidden   class="form-control" placeholder=""  [(ngModel)]="divisionId"  formControlName="divisionId">
                                                                              </td>
 
-                                                                            <td style="width: 15%" class="LabelFontStyle1"> Registration&nbsp;No&nbsp;:</td>
-                                                                            <td>
+                                                                             <td style="width: 15%" class="LabelFontStyle1"> Registration&nbsp;No&nbsp;:</td>
+                                                                            <!-- <td>
                                                                             <table>
-                                                                            <tr>
+                                                                            <tr> -->
 
                                                                                <td>
                                                                                 <input type="text" style="background-color: yellow;"
@@ -209,17 +209,18 @@
                                                                                 <input type="number" hidden  formControlName="storedKmr" [(ngModel)]="storedKmr">
                                                                                    
                                                                                 </td>
-                                                                                <td><button type="button" class="btn-primary" (click)="createNew()" style="width: fit-content;">Create</button> </td>
+                                                                                <!-- <td><button type="button" class="btn-primary" (click)="createNew()" style="width: fit-content;">Create</button> </td>
                                                                             </tr>
                                                                             </table>
-                                                                            </td>
+                                                                            </td> -->
 
 
-                                                                            <td style="width: 15%"  class="LabelFontStyle1"> VIN&nbsp;:</td>
+                                                                            <td style="width: 15%"  class="LabelFontStyle"> VIN&nbsp;:</td>
                                                                             <td><input disabled type="text" class="form-control" placeholder=""  formControlName="vin"> </td>
                                                                            
-                                                                            <td style="width: 15%" class="LabelFontStyle1">OMR&nbsp;/Current&nbsp;KMS&nbsp;:</td>
-                                                                            <td><input type="number" style="background-color: yellow;" class="form-control" placeholder="" formControlName="lastRunKms" (change)="validateKm($event)" > </td>
+                                                                            <td></td>
+                                                                            <td><button type="button" data-toggle="modal"  class="btn btn-primary" data-target="#vehAddtionalDetails"  style="width:140px">Additional Details</button></td>
+                                                                          
                                                                         </tr>
 
                                                                        
@@ -236,7 +237,19 @@
                                                                                 </select>
                                                                             </td>
 
-                                                                            <td style="width: 15%"  class="LabelFontStyle1">Sub&nbsp;Service&nbsp;Type&nbsp;:</td>
+                                                                           <td></td>
+                                                                            <td><button type="button" class="btn btn-primary" (click)="createNew()" style="width:140px;">Create Customer</button> </td> 
+
+                                                                         
+                                                                            <td style="width: 15%" class="LabelFontStyle"> &nbsp;Sale&nbsp;Date&nbsp;: </td>
+                                                                            <td> <input type="date" disabled class="form-control" placeholder="" formControlName="regDate"> </td>
+                                                                         
+                                                                            <td style="width: 15%" class="LabelFontStyle"> &nbsp;Model&nbsp;:</td>
+                                                                            <td><input type="text" disabled class="form-control" placeholder="" formControlName="mainModel"> </td>
+                                                                        </tr>
+                                                                       
+                                                                        <tr>
+                                                                            <td style="width: 15%"  class="LabelFontStyle1">Service&nbsp;Sub&nbsp;Type&nbsp;:</td>
                                                                             <td>
                                                                                 <select formControlName="subTypeId" style="background-color: yellow;"
                                                                                     id="subTypeId" class="form-control">
@@ -248,6 +261,27 @@
                                                                                 </select>
                                                                             </td>
 
+                                                                            <td style="width: 15%"  class="LabelFontStyle"> Bay&nbsp;Code&nbsp;:</td>
+                                                                          
+                                                                           <td>
+                                                                            <select formControlName="bayTyId" style="background-color: yellow;" id="bayTyId" class="form-control">
+                                                                            <option>--Select--</option>
+                                                                            <option
+                                                                                *ngFor="let sc of  bayTypeList"  [ngValue]="sc.bayTyId">
+                                                                               {{sc.bayTyDesc}}
+                                                                            </option>
+                                                                           </select> 
+                                                                          </td>
+
+                                                                        
+                                                                          <td style="width: 15%" class="LabelFontStyle"> &nbsp;Variant&nbsp;:</td>
+                                                                          <td><input type="text" disabled class="form-control" placeholder="" formControlName="variantCode"> </td>
+                                                                         
+                                                                          <td style="width: 15%" class="LabelFontStyle">Color&nbsp;:</td>
+                                                                          <td><input type="text" disabled  class="form-control" placeholder="" formControlName="colorCode"> </td>
+                                                                        </tr>
+
+                                                                        <tr>
                                                                             <td style="width: 15%" class="LabelFontStyle1"> Service&nbsp;Advisor&nbsp;:</td>
                                                                             <td>
                                                                                 <select formControlName="srvAdvisor" style="background-color: yellow;" id="srvAdvisor"  class="form-control">
@@ -270,28 +304,14 @@
                                                                                     </option>
                                                                                 </select>
                                                                             </td>
+                                                                           
+                                                                            <td style="width: 15%" class="LabelFontStyle">Chassis&nbsp;No&nbsp;:</td>
+                                                                            <td><input type="text" disabled class="form-control" placeholder=""  formControlName="chassisNo">  </td>
+                                                                            
+                                                                            <td style="width: 15%" class="LabelFontStyle"> Engine&nbsp;No&nbsp;:</td>
+                                                                            <td><input type="text" disabled  class="form-control" placeholder="" formControlName="engineNo"> </td>
                                                                         </tr>
-                                                                       
                                                                         <tr>
-                                                                            <td style="width: 15%"  class="LabelFontStyle"> Bay&nbsp;Code&nbsp;:</td>
-                                                                          
-                                                                           <td>
-                                                                            <select formControlName="bayTyId" style="background-color: yellow;" id="bayTyId" class="form-control">
-                                                                            <option>--Select--</option>
-                                                                            <option
-                                                                                *ngFor="let sc of  bayTypeList"  [ngValue]="sc.bayTyId">
-                                                                               {{sc.bayTyDesc}}
-                                                                            </option>
-                                                                           </select> 
-                                                                          </td>
-
-                                                                            <td></td>
-
-                                                                            <td>
-                                                                                <button type="button" data-toggle="modal"  class="btn btn-primary"
-                                                                                     data-target="#vehAddtionalDetails"  style="width: 140px">Additional Details</button>
-                                                                            </td>
-
                                                                             <td style="width: 15%"  class="LabelFontStyle1">Technician&nbsp;: </td>
                                                                             <td>
                                                                                  <select formControlName="techId" style="background-color: yellow;"
@@ -304,49 +324,35 @@
                                                                                 </select>
                                                                             </td>
 
-                                                                            <td style="width: 15%"  class="LabelFontStyle">Tech&nbsp;Advisor&nbsp;:</td>
-                                                                            <td><input type="text" class="form-control" placeholder="" formControlName="techAdvisor" > </td>
-                                                                        </tr>
+                                                                            <td style="width: 15%" class="LabelFontStyle1">OMR&nbsp;/Current&nbsp;KMS&nbsp;:</td>
+                                                                            <td><input type="number" style="background-color: yellow;" class="form-control" placeholder="" formControlName="lastRunKms" (change)="validateKm($event)" > </td>
+  
 
-
-                                                                        <tr>
-                                                                            <td style="width: 15%" class="LabelFontStyle"> Vehicle&nbsp;Model&nbsp;:</td>
-                                                                            <td><input type="text" disabled class="form-control" placeholder="" formControlName="mainModel"> </td>
+                                                                            <!-- <td style="width: 15%"  class="LabelFontStyle">Tech&nbsp;Advisor&nbsp;:</td> -->
+                                                                            <input hidden  type="text" class="form-control" placeholder="" formControlName="techAdvisor" > 
                                                                            
-                                                                            <td style="width: 15%" class="LabelFontStyle"> Vehicle&nbsp;Sale&nbsp;Date&nbsp;: </td>
-                                                                            <td> <input type="date" disabled class="form-control" placeholder="" formControlName="regDate"> </td>
                                                                             
-                                                                            <td style="width: 15%" class="LabelFontStyle">Chassis&nbsp;No&nbsp;:</td>
-                                                                            <td><input type="text" disabled class="form-control" placeholder=""  formControlName="chassisNo">  </td>
-                                                                            
-                                                                            <td style="width: 15%" class="LabelFontStyle"> Engine&nbsp;No&nbsp;:</td>
-                                                                            <td><input type="text" disabled  class="form-control" placeholder="" formControlName="engineNo"> </td>
-                                                                           
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td style="width: 15%" class="LabelFontStyle"> Vehicle&nbsp;Variant&nbsp;:</td>
-                                                                            <td><input type="text" disabled class="form-control" placeholder="" formControlName="variantCode"> </td>
-                                                                           
-                                                                            <td style="width: 15%" class="LabelFontStyle">Color&nbsp;:</td>
-                                                                            <td><input type="text" disabled  class="form-control" placeholder="" formControlName="colorCode"> </td>
-                                                                           
                                                                             <td style="width: 15%" class="LabelFontStyle">Dealer&nbsp;Name&nbsp;:</td>
                                                                             <td> <input type="text" disabled class="form-control" placeholder=""  formControlName="dealerName"> </td>
-                                                                           
+                                                                        
                                                                             <td style="width: 15%" class="LabelFontStyle">Dealer&nbsp;Site&nbsp;:</td>
                                                                             <td><input type="text" disabled class="form-control" placeholder="" formControlName="dealerSite"></td>
-                                                                        </tr>
+                                                                       </tr>
                                                                         <tr>
                                                                             <td style="width: 15%" class="LabelFontStyle">&nbsp;Demanded&nbsp;Job&nbsp;:</td>
                                                                             <td colspan="3">
                                                                             <textarea id="demandJob" formControlName="demandJob" rows="2" style="width: 100%;resize: none; font-size: small;" (keyup)="onInput($event)"></textarea> </td>
-                                                                           
                                                                             <td style="width: 15%"  class="LabelFontStyle">Recommendation&nbsp;:</td>
                                                                             <td colspan="3"><textarea id="recomJob" formControlName="recomJob" rows="2" style="width: 100%; resize: none;font-size: small;" (keyup)="onInput($event)"></textarea> </td>
                                                                         </tr>
+                                                                       
+                                                                      
+
+
 
                                                                     </fieldset>
                                                                         </ng-template>
+
                                                                         <ng-template #elseBlockFreeze>
                                                                                 <fieldset class="RFS">
                                                                                     <legend id="FormsPH_LGAadhaar" class="RFSL"
@@ -613,29 +619,13 @@
                                                                                         </td>
                                                                                     </tr>
                                                                                     <tr>
-                                                                                        <td style="width: 15%"
-                                                                                            class="LabelFontStyle">
-                                                                                            &nbsp;Demanded&nbsp;Job&nbsp;:
-                                                                                        </td>
-                                                                                        <td colspan="3">
-                                                                                            <input type="text" class="form-control"
-                                                                                            formControlName="demandJob" placeholder="">
-                                                                                        </td>
-                                                                                        <td style="width: 15%"
-                                                                                            class="LabelFontStyle">
-                                                                                            Recommendation&nbsp;:</td>
-                                                                                        <td colspan="3">
-                                                                                            <input type="text" class="form-control"
-                                                                                            formControlName="recomJob" placeholder="">
-                                                                                        </td>
-
-                                                                                        <!-- <td>
-                                                                                            <button data-toggle="modal"
-                                                                                                class="btn btn-primary"
-                                                                                                data-target="#exampleModalScrollable"
-                                                                                                style="width: fit-content;">
-                                                                                                Details</button>
-                                                                                        </td> -->
+                                                                                        <td style="width: 15%" class="LabelFontStyle"> &nbsp;Demanded&nbsp;Job&nbsp;:</td>
+                                                                                        <td colspan="3"><input type="text" class="form-control" formControlName="demandJob" placeholder=""></td>
+                                                                                       
+                                                                                        <td style="width: 15%" class="LabelFontStyle"> Recommendation&nbsp;:</td>
+                                                                                        <td colspan="3"><input type="text" class="form-control" formControlName="recomJob" placeholder=""> </td>
+                                                                                          <!-- <td> <button data-toggle="modal" class="btn btn-primary" data-target="#exampleModalScrollable" style="width: fit-content;"> Details</button> </td> -->
+                                                                                      
                                                                                     </tr>
 
                                                                                 </fieldset>
@@ -665,7 +655,7 @@
                                                                                                     </td>
             
                                                                                                     <td style="width: 15%" class="LabelFontStyle">
-                                                                                                        Act&nbsp;No:&nbsp;</td>
+                                                                                                        Cust&nbsp;No:&nbsp;</td>
             
                                                                                                 <td>
                                                                                                     <input disabled type="text" class="form-control" placeholder=""
@@ -777,7 +767,7 @@
                                                                                                     </td>
             
                                                                                                     <td style="width: 15%" class="LabelFontStyle">
-                                                                                                        Account &nbsp;No:&nbsp;</td>
+                                                                                                        Cust&nbsp;No:&nbsp;</td>
             
                                                                                                 <td>
                                                                                                     <input disabled type="text" class="form-control" placeholder=""

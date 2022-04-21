@@ -2123,11 +2123,14 @@ export class JobCardComponent implements OnInit {
     if(formValue.freePickup=='Yes' && (formValue.pickupType==null || formValue.pickupType==undefined)){this.jobHeaderValidation = false;
       msg1="PICKUP TYPE : Should not be null....";alert(msg1);return;}
     
-      if(formValue.estLabor <0 ){this.jobHeaderValidation = false;
-      msg1="ESTIMATED  LABOUR : Enter Valid Est.Labour Amt....";alert(msg1);return;}
+    if(formValue.estLabor <0 ){this.jobHeaderValidation = false;
+    msg1="ESTIMATED  LABOUR : Enter Valid Est.Labour Amt....";alert(msg1);return;}
     
-      if(formValue.estMaterial <0 ){this.jobHeaderValidation = false;
-        msg1="ESTIMATED  MATERIAL : Enter Valid Est.Material Amt....";alert(msg1);return;}
+    if(formValue.estMaterial <0 ){this.jobHeaderValidation = false;
+      msg1="ESTIMATED  MATERIAL : Enter Valid Est.Material Amt....";alert(msg1);return;}
+
+    if(formValue.promiseDate===null || formValue.promiseDate===undefined) {this.jobHeaderValidation = false;
+      msg1="PROMISED DATE : Enter Promised Date....";alert(msg1);return;}
       
        
     

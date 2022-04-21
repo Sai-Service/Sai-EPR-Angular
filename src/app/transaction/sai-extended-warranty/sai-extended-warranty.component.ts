@@ -948,7 +948,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
           //   }
 
           if(this.displayButton) {
-          if(this.paytmentSource ==='SALES' && mDays3 >7 ) {
+          if(this.paytmentSource ==='SALES' && mDays3 >15 ) {
             alert("VEHICLE SALE DATE :"+this.pipe.transform(date1,'dd/MM/y') + " Aging : "+ mDays3 +" Days...Not Eligible To issue EW from SALES")
             this.resetMast();
           }
@@ -1267,9 +1267,11 @@ export class SaiExtendedWarrantyComponent implements OnInit {
               this.saiEwForm.disable();
             } else {
               if (res.code === 400) {
-                this.displayButton=true;
+                
+                alert(res.message);
+                // this.displayButton=true;
                
-                alert('Code already present in the data base');
+                // alert('Code already present in the data base');
                 // window.location.reload();
               }
             }
