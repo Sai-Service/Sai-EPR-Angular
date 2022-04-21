@@ -2079,6 +2079,17 @@ export class PayableInvoiceNewComponent implements OnInit {
     jsonData.accPayCodeCombId = 2079
     jsonData.currency = 'INR';
     var taxStr = [];
+    var distributionArray = this.poInvoiceForm.get('distribution').value;
+    // var distributionArray = distribution.getRawValue();
+    for (let d=0; d<distributionArray.length; d++){
+      if (distributionArray[d].lineTypeLookupCode==='OTHER'){
+      if (distributionArray[d].distCodeCombSeg === null || distributionArray[d].distCodeCombSeg === undefined || distributionArray[d].distCodeCombSeg ===''){
+        alert('Please Select Code Combination In Distribution Tab. Line No '+distributionArray[d].distLineNumber);
+        return;
+      }
+    }
+    }
+   
     for (let taxlinval of this.taxarr.values()) {
       for (let i = 0; i < taxlinval.length; i++) {
         taxStr.push(taxlinval[i]);
@@ -2486,13 +2497,6 @@ export class PayableInvoiceNewComponent implements OnInit {
       var tdsLines = this.poInvoiceForm.get('tdsLines').value;
       console.log(tdsLines);
       var arrayControl = this.poInvoiceForm.get('obj') as FormArray;
-      var distribution = this.poInvoiceForm.get('distribution') as FormArray;
-      var distributionArray = distribution.getRawValue();
-      // for (let d=0; d<distributionArray.length; d++){
-      //   // if (distributionArray[d].distCodeCombId !=){
-
-      //   // }
-      // }
       var arrayControl1 = arrayControl.getRawValue();
       this.transactionService.PoInvoiceTdsDataSubmit(tdsLines).subscribe((res: any) => {
         if (res.code === 200) {
