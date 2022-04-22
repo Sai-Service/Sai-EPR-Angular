@@ -2420,6 +2420,8 @@ export class SalesOrderFormComponent implements OnInit {
             this.SalesOrderBookingForm.patchValue({ tcsYN: data.obj.tcsYN });
             this.SalesOrderBookingForm.patchValue({ tcsPer: data.obj.tcsPer });
             this.SalesOrderBookingForm.patchValue({ accountNo: custAccountNo });
+            this.custName =(data.obj.custName).toUpperCase();
+          //  this.SalesOrderBookingForm.patchValue({custName:custName})
             let select = this.payTermDescList.find(d => d.lookupValueId === this.selCustomer.termId);
             // this.payTermDesc = select.lookupValue;
             this.SalesOrderBookingForm.patchValue({ payTermDesc: select.lookupValue })
@@ -2475,13 +2477,13 @@ export class SalesOrderFormComponent implements OnInit {
       this.SalesOrderBookingForm.patchValue(selSite);
       this.custName = this.selCustomer.custName;
       this.customerId = this.selCustomer.customerId;
-      this.billToAddress = (this.selCustomer.address1 + ', '
+      this.billToAddress =(this.selCustomer.address1 + ', '
         + this.selCustomer.address2 + ', '
         + this.selCustomer.address3 + ', '
         + this.selCustomer.address4 + ', '
         + this.selCustomer.city + ', '
         + this.selCustomer.pinCd + ', '
-        + this.selCustomer.state);
+        + this.selCustomer.state).toUpperCase();
       this.shipToAddress = this.billToAddress;
       this.birthDate = this.selCustomer.birthDate;
       this.weddingDate = this.selCustomer.weddingDate;
