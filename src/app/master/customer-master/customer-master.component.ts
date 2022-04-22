@@ -941,9 +941,42 @@ export class CustomerMasterComponent implements OnInit {
       formValue.spanNo = formValue.panNo;
 
     }
+    formValue.custName=this.custName.toUpperCase();
+    if (this.customerMasterForm.get('fName').value !=undefined || this.customerMasterForm.get('fName').value !=null || this.customerMasterForm.get('fName').value !=''){
+    formValue.fName=this.customerMasterForm.get('fName').value.toUpperCase();
+    }
+    if (this.customerMasterForm.get('mName').value !=undefined || this.customerMasterForm.get('mName').value !=null || this.customerMasterForm.get('mName').value !=''){
+    formValue.mName=this.customerMasterForm.get('mName').value.toUpperCase();
+  }
+  if (this.customerMasterForm.get('lName').value !=undefined || this.customerMasterForm.get('lName').value !=null || this.customerMasterForm.get('lName').value !=''){
+    formValue.lName=this.customerMasterForm.get('lName').value.toUpperCase();
+  }
+    formValue.address1=this.customerMasterForm.get('address1').value.toUpperCase();
+    formValue.address2=this.customerMasterForm.get('address2').value.toUpperCase();
+    if (this.address3 !=undefined){
+    formValue.address3=this.address3.toUpperCase();
+    }
+    else if (this.address3 ===undefined){
+      formValue.address3=''
+    }
+   if (this.address4 !=undefined){
+    formValue.address4=this.address4.toUpperCase();
+  }
+  else if (this.address4 ===undefined){
+    formValue.address4=''
+  }
+    formValue.location=this.customerMasterForm.get('location').value.toUpperCase();
+    formValue.city=this.customerMasterForm.get('city').value.toUpperCase();
+    formValue.perAdd=this.customerMasterForm.get('perAdd').value.toUpperCase();
+    if (this.contactPerson !=undefined ){
+    formValue.contactPerson=this.customerMasterForm.get('contactPerson').value.toUpperCase();
+    }
+    else   if (this.contactPerson !=undefined ){
+      this.contactPerson===''
+    }
     this.service.CustMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFULLY ' + res.obj);
+        alert(res.message + '--' + res.obj);
         // var mobile=this.customerMasterForm.get('mobile1').value;
         this.searchByAccount1(res.obj);
         this.customerMasterForm.disable();

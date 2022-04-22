@@ -300,6 +300,11 @@ export class MasterService {
   siteIdList(siteId): Observable<any> {
     return this.http.get(this.ServerUrl +`/supp/site/${siteId}`);
   }
+
+  chassisList(ouId): Observable<any> {
+    return this.http.get(this.ServerUrl +`/arInv/chssisListOrder/${ouId}`);
+  }
+
   segmentNameList(segmentName) : Observable<any> {
     return this.http.get(this.ServerUrl +`/glCodeCmbn/codeComb/${segmentName}`);
   }

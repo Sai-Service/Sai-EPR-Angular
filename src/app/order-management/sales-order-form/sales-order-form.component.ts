@@ -2480,7 +2480,6 @@ export class SalesOrderFormComponent implements OnInit {
       this.billToAddress =(this.selCustomer.address1 + ', '
         + this.selCustomer.address2 + ', '
         + this.selCustomer.address3 + ', '
-        + this.selCustomer.address4 + ', '
         + this.selCustomer.city + ', '
         + this.selCustomer.pinCd + ', '
         + this.selCustomer.state).toUpperCase();
