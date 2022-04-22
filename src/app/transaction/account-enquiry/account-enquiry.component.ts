@@ -416,7 +416,10 @@ public InterBrancList:Array<string>=[];
             var formValue:IAccountEnquiry=this.AccountEnquiryForm.value;
             var postedDatefrm = this.pipe.transform(formValue.postedDatefrm, 'dd-MMM-yyyy');
             var postedDateto = this.pipe.transform(formValue.postedDateto, 'dd-MMM-yyyy');
-            var temp = this.AccountEnquiryForm.get('segmentNameFrm').value.split('.');
+            // var temp = this.AccountEnquiryForm.get('segmentNameFrm').value.split('.');
+            // var tempfrm = this.AccountEnquiryForm.get('segmentNameFrm').value
+            // alert(tempfrm+'tempfrm'+this.segmentNameFrm);
+            var temp=this.segmentNameFrm.split('.');
             alert(temp[0]+''+temp[1]+''+temp[2]+''+temp[3]+''+temp[4]);
             formValue.segmentFrm1 = temp[0];
             formValue.segmentFrm2 = Number(temp[1]);
@@ -448,8 +451,19 @@ public InterBrancList:Array<string>=[];
 showBalDetail()
 {
   var formValue:IAccountEnquiry=this.AccountEnquiryForm.value;
-  var postedDate = this.pipe.transform(formValue.postedDate, 'dd-MMM-yyyy');
-  formValue.postedDate=postedDate;
+  var postedDatefrm = this.pipe.transform(formValue.postedDatefrm, 'dd-MMM-yyyy');
+  var postedDateto = this.pipe.transform(formValue.postedDateto, 'dd-MMM-yyyy');
+  // formValue.postedDate=postedDate;
+  var temp=this.segmentNameFrm.split('.');
+  alert(temp[0]+''+temp[1]+''+temp[2]+''+temp[3]+''+temp[4]);
+  formValue.segmentFrm1 = temp[0];
+  formValue.segmentFrm2 = Number(temp[1]);
+  formValue.segmentFrm3 = Number(temp[2]);
+  formValue.segmentFrm4 = Number(temp[3]);
+  formValue.segmentFrm5 = temp[4];
+  formValue.postedDatefrm=postedDatefrm;
+  formValue.postedDateto=postedDateto;
+
   this.service.AccountBalSearch(formValue).subscribe
   ((res:any) => {
     if(res.code===200)

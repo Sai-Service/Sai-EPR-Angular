@@ -602,10 +602,10 @@
            
                 <table class="center">
              <tr>
-                <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Status&nbsp;:&nbsp;</td>
+                <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Status:</td>
                 <td>
                 <select formControlName="ewStatus" id="ewStatus" class="form-control"  
-                                        [ngModel]="ewStatus"  (ngModelChange)='onSelectEwStatus($event)' >
+                                        [ngModel]="ewStatus"  (ngModelChange)='onSelectEwStatus($event)' style="width: 140px;" >
                     <option disabled>--Select--</option>
                     <option *ngFor="let sc of  statusList" [ngValue] ="sc.code">
                         {{sc.code}}
@@ -616,23 +616,43 @@
             
                 <div *ngIf="enableEwDetails; then ewBlock1; else ewBlock2"></div>
                 <ng-template #ewBlock1> 
-                    <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Booklet&nbsp;No:&nbsp;</td>
-                    <td><input   type="text"  formControlName="ewBookletNo"  id="ewBookletNo" [(ngModel)]="ewBookletNo" class="form-control" (keyup)="onInput($event)" > </td>
-                    <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Start&nbsp;Date:&nbsp;</td>
-                    <td><input   type="date"  formControlName="ewStartDate"  id="ewStartDate" [(ngModel)]="ewStartDate" class="form-control"  (change)="onChangeEwStartDate(ewStartDate)" > </td>
-                    <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Expiry&nbsp;:&nbsp;</td>
-                    <td> <input   type="date"  formControlName="ewEndDate"  id="ewEndDate" [(ngModel)]="ewEndDate" class="form-control" (change)="onChangeEwEndDate(ewEndDate)" > </td>
+                    <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Type:</td>
+                    <!-- <td><input   type="text"  formControlName="ewType"  id="ewType" [(ngModel)]="ewType" class="form-control" (keyup)="onInput($event)" style="width: 140px;" > </td> -->
+                 
+                    <td>  
+                        <select   formControlName="ewType" id="ewType" [(ngModel)]="ewType" class="form-control" style="width: 140px;">
+                            <option disabled>--Select--</option>
+                            <option *ngFor="let sc of  EwTypeList" [ngValue]="sc.code">
+                                {{sc.code}}
+                            </option>
+                        </select>
+                    </td>
+                    <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Booklet&nbsp;No:</td>
+                    <td><input   type="text"  formControlName="ewBookletNo"  id="ewBookletNo" [(ngModel)]="ewBookletNo" class="form-control" (keyup)="onInput($event)" style="width: 140px;"> </td>
+                    <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Start&nbsp;Date:</td>
+                    <td><input   type="date"  formControlName="ewStartDate"  id="ewStartDate" [(ngModel)]="ewStartDate" class="form-control"  (change)="onChangeEwStartDate(ewStartDate)" style="width: 140px;"> </td>
+                    <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Expiry:</td>
+                    <td> <input   type="date"  formControlName="ewEndDate"  id="ewEndDate" [(ngModel)]="ewEndDate" class="form-control" (change)="onChangeEwEndDate(ewEndDate)" style="width: 140px;"> </td>
                 </ng-template>
 
                 <ng-template #ewBlock2> 
-                    <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Booklet&nbsp;No:&nbsp;</td>
-                    <td><input disabled  type="text"  formControlName="ewBookletNo"  id="ewBookletNo" [(ngModel)]="ewBookletNo" class="form-control" (keyup)="onInput($event)" > </td>
-                    <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Start&nbsp;Date:&nbsp;</td>
-                    <td><input disabled  type="date"  formControlName="ewStartDate"  id="ewStartDate" [(ngModel)]="ewStartDate" class="form-control" > </td>
-                    <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Expiry&nbsp;:&nbsp;</td>
-                    <td> <input disabled  type="date"  formControlName="ewEndDate"  id="ewEndDate" [(ngModel)]="ewEndDate" class="form-control" > </td>
+                    <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Type:</td>
+                    <!-- <td><input disabled  type="text"  formControlName="ewType"  id="ewType" [(ngModel)]="ewType" class="form-control" (keyup)="onInput($event)" style="width: 140px;" > </td> -->
+                    <td>  
+                        <select disabled  formControlName="ewType" id="ewType" [(ngModel)]="ewType" class="form-control" style="width: 140px;">
+                            <option disabled>--Select--</option>
+                            <option *ngFor="let sc of  EwTypeList" [ngValue]="sc.code">
+                                {{sc.code}}
+                            </option>
+                        </select>
+                    </td>
+                    <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Booklet&nbsp;No:</td>
+                    <td><input disabled  type="text"  formControlName="ewBookletNo"  id="ewBookletNo" [(ngModel)]="ewBookletNo" class="form-control" (keyup)="onInput($event)" style="width: 140px;" > </td>
+                    <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Start&nbsp;Date:</td>
+                    <td><input disabled  type="date"  formControlName="ewStartDate"  id="ewStartDate" [(ngModel)]="ewStartDate" class="form-control" style="width: 140px;"> </td>
+                    <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Expiry:</td>
+                    <td> <input disabled  type="date"  formControlName="ewEndDate"  id="ewEndDate" [(ngModel)]="ewEndDate" class="form-control" style="width: 140px;"> </td>
                 </ng-template>
-
 
             </tr>
 
@@ -640,7 +660,7 @@
             
                 <div *ngIf="enableEwDetails; then ewBlock11; else ewBlock21"></div>
                 <ng-template #ewBlock11> 
-                <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Insurer&nbsp;:&nbsp;</td>
+                <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Insurer:</td>
     
                 <td colspan="3">
                     <select  formControlName="ewInsurerId" id="ewInsurerId"  (ngModelChange)='onEwInsurerNameSelected($event)' class="form-control" style="width: 100%;">
@@ -653,8 +673,8 @@
                 </td>
 
                   
-           <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Ins&nbsp;Site:&nbsp;</td>
-           <td colspan="3">
+           <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Ins&nbsp;Site:</td>
+           <td colspan="5">
             <select  formControlName="ewInsurerSite" id="ewInsurerSite" class="form-control" style="width: 100%;">
             <option>--Select--</option>
             <option *ngFor="let sc of ewInsSiteList"
@@ -666,7 +686,7 @@
                 
              </ng-template>
              <ng-template #ewBlock21> 
-                <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Insurer&nbsp;:&nbsp;</td>
+                <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Insurer:</td>
                 <td colspan="3">
                     <select disabled formControlName="ewInsurerId" id="ewInsurerId"  (ngModelChange)='onEwInsurerNameSelected($event)' class="form-control" style="width: 100%;">
                     <option></option>
@@ -676,8 +696,8 @@
                     </option>
                     </select>
                 </td>
-                <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Ins&nbsp;Site:&nbsp;</td>
-                <td colspan="3">
+                <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Ins&nbsp;Site:</td>
+                <td colspan="5">
                     <select disabled formControlName="ewInsurerSite" id="ewInsurerSite" class="form-control" style="width: 100%;">
                     <option>--Select--</option>
                     <option *ngFor="let sc of ewInsSiteList"
@@ -696,10 +716,10 @@
              <tr>
 
                     
-                <td style="width: 12%" class="LabelFontStyle">MCP|AMC&nbsp;Status:&nbsp;</td>
+                <td style="width: 12%" class="LabelFontStyle">MCP|AMC&nbsp;Status:</td>
 
                  <td>
-                    <select type="text"  formControlName="mcpYN"  id ="mcpYN"  [(ngModel)]='mcpYN' value={{mcpYN}}   class="form-control"  (ngModelChange)='onSelectMcpStatus($event)'>
+                    <select type="text"  formControlName="mcpYN"  id ="mcpYN"  [(ngModel)]='mcpYN' value={{mcpYN}}   class="form-control"  (ngModelChange)='onSelectMcpStatus($event)' style="width: 140px;">
                         <!-- <option>--Select--</option> -->
                         <option value=Y>Active</option>
                         <option value=N>Inactive</option>
@@ -708,26 +728,49 @@
 
                 <div *ngIf="enableMcpDetails; then mcpBlock1; else mcpBlock2"></div>
                 <ng-template #mcpBlock1> 
-                    <td style="width: 12%" class="LabelFontStyle">MCP|AMC&nbsp;No:&nbsp;</td>
-                    <td>  <input type="text"  formControlName="mcpNo"  id="mcpNo" [(ngModel)]="mcpNo" class="form-control" (keyup)="onInput($event)" > </td>
+
+                    <td style="width: 12%" class="LabelFontStyle">Type:</td>
+                    <!-- <td><input   type="text"  formControlName="mcpAmcType"  id="mcpAmcType" [(ngModel)]="mcpAmcType" class="form-control" (keyup)="onInput($event)" style="width: 140px;" > </td> -->
+                 
+                    <td>
+                        <select type="text"  formControlName="pkgSource"  id ="pkgSource"  [(ngModel)]='pkgSource' value={{pkgSource}}   class="form-control"  style="width: 140px;">
+                            <!-- <option>--Select--</option> -->
+                            <option value=AMC>AMC</option>
+                            <option value=MCP>MCP</option>
+                        </select>
+                    </td>
+
+                    <td style="width: 12%" class="LabelFontStyle">MCP|AMC&nbsp;No:</td>
+                    <td>  <input type="text"  formControlName="mcpNo"  id="mcpNo" [(ngModel)]="mcpNo" class="form-control" (keyup)="onInput($event)" style="width: 140px;" > </td>
                    
-                    <td class="LabelFontStyle">MCP|AMC&nbsp;Start&nbsp;Date:&nbsp;</td>
-                    <td> <input   type="date"  formControlName="mcpStartDate"  id="mcpStartDate" [(ngModel)]="mcpStartDate" class="form-control" (change)="onChangMcpStartDate(mcpStartDate)" > </td>
+                    <td class="LabelFontStyle">MCP|AMC&nbsp;Start&nbsp;Date:</td>
+                    <td> <input   type="date"  formControlName="mcpStartDate"  id="mcpStartDate" [(ngModel)]="mcpStartDate" class="form-control" (change)="onChangMcpStartDate(mcpStartDate)" style="width: 140px;" > </td>
            
 
-                    <td class="LabelFontStyle">MCP|AMC&nbsp;Expiry:&nbsp;</td>
-                    <td> <input   type="date"  formControlName="mcpEndDate"  id="mcpEndDate" [(ngModel)]="mcpEndDate" class="form-control" (change)="onChangMcpEndDate(mcpEndDate)"> </td>
+                    <td class="LabelFontStyle">MCP|AMC&nbsp;Expiry:</td>
+                    <td> <input   type="date"  formControlName="mcpEndDate"  id="mcpEndDate" [(ngModel)]="mcpEndDate" class="form-control" (change)="onChangMcpEndDate(mcpEndDate)" style="width: 140px;"> </td>
                 </ng-template>
 
                 <ng-template #mcpBlock2> 
-                    <td style="width: 12%" class="LabelFontStyle">MCP|AMC&nbsp;No:&nbsp;</td>
-                    <td>  <input disabled type="text"  formControlName="mcpNo"  id="mcpNo" [(ngModel)]="mcpNo" class="form-control" (keyup)="onInput($event)" > </td>
+
+                    <td style="width: 12%" class="LabelFontStyle">Type:</td>
+                    <!-- <td><input disabled  type="text"  formControlName="mcpAmcType"  id="mcpAmcType" [(ngModel)]="mcpAmcType" class="form-control" (keyup)="onInput($event)" style="width: 140px;" > </td> -->
+                 
+                    <td>
+                        <select disabled type="text"  formControlName="pkgSource"  id ="pkgSource"  [(ngModel)]='pkgSource' value={{pkgSource}}   class="form-control"  style="width: 140px;">
+                            <!-- <option>--Select--</option> -->
+                            <option value=AMC>AMC</option>
+                            <option value=MCP>MCP</option>
+                        </select>
+                    </td>
+                    <td style="width: 12%" class="LabelFontStyle">MCP|AMC&nbsp;No:</td>
+                    <td>  <input disabled type="text"  formControlName="mcpNo"  id="mcpNo" [(ngModel)]="mcpNo" class="form-control" (keyup)="onInput($event)"style="width: 140px;" > </td>
                    
-                    <td class="LabelFontStyle">MCP|AMC&nbsp;Start&nbsp;Date:&nbsp;</td>
-                    <td> <input disabled  type="date"  formControlName="mcpStartDate"  id="mcpStartDate" [(ngModel)]="mcpStartDate" class="form-control" > </td>
+                    <td class="LabelFontStyle">MCP|AMC&nbsp;Start&nbsp;Date:</td>
+                    <td> <input disabled  type="date"  formControlName="mcpStartDate"  id="mcpStartDate" [(ngModel)]="mcpStartDate" class="form-control" style="width: 140px;"> </td>
            
                     <td class="LabelFontStyle">MCP|AMC&nbsp;Expiry:&nbsp;</td>
-                    <td> <input  disabled type="date"  formControlName="mcpEndDate"  id="mcpEndDate" [(ngModel)]="mcpEndDate" class="form-control" > </td>
+                    <td> <input  disabled type="date"  formControlName="mcpEndDate"  id="mcpEndDate" [(ngModel)]="mcpEndDate" class="form-control" style="width: 140px;"> </td>
                 </ng-template>
 
                 </tr>

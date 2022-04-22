@@ -135,6 +135,8 @@ export class PaymentsComponent implements OnInit {
   emplId:number;
   private sub: any;
   receiptMethodId:number;
+  isarPayment:boolean=false;
+  ispayAdvise:boolean=false;
   constructor(private fb: FormBuilder, private router1: ActivatedRoute, private transactionService: TransactionService, private location: Location, private service: MasterService, private router: Router) {
     this.paymentForm = fb.group({
       suppNo: [],
@@ -388,6 +390,8 @@ jeSource: [],
         alert(res.message);
         this.PaymentReturnArr = res.obj;
 
+        this.isarPayment=true;
+        this.ispayAdvise=true;
       } else {
         if (res.code === 400) {
           alert(res.msg);
@@ -402,14 +406,7 @@ jeSource: [],
   selectPayment:number=0;
   paymentInvoiceFind(suppNo: number, ouId: number,index) {
     this.selectPayment=index;
-    //  alert('--paymentInvoiceFind---')
-    //  var arr=this.paymentForm.get('obj1').value;
-    //  console.log(arr);
-    //  var docNo1=arr[i].docNo;
-    //  alert(docNo1)
-    // console.log(docNo1);
-    // if(docNo1===''){
-     var suppNo1 = this.paymentForm.get('obj1').value;
+    var suppNo1 = this.paymentForm.get('obj1').value;
      console.log(suppNo1);
     this.payInvoiceLineDtlArray().clear();
     if(suppNo1[index].source==='REFUND')
@@ -473,24 +470,7 @@ else{
     }
     );
   }
-    // (document.getElementById('btnSave') as HTMLInputElement).disabled = true;comment by vinita
-    // }
-    // else{
-    //   // this.transactionService.paymentDocSearch(docNo1).subscribe((res: any) =>
-    // {
-    //   if (res.code === 200) {
-    //    alert(res.message);
-    //    this.PaymentReturnArr=res.obj;
-
-    //   } else {
-    //     if (res.code === 400) {
-    //       alert(res.msg);
-    //       // this.poReceiptForm.reset();
-    //     }
-    //   }
-    // });
-
-    // }
+  
   }
   }
 
@@ -946,7 +926,27 @@ console.log(jsonData);
       }
       }
 
-    }
+      paymentAdvice() {
+        var arr = this.paymentForm.get('obj1').value;
+        // var arraybaseNew1 = arr.getRawValue();
+        // console.log(arraybaseNew1);
+        // if (this.PaymentReturnArr.length !=0){
+      //  var invNumber= this.PaymentReturnArr[0].documentNo;
+        var docSeq =  this.PaymentReturnArr[0].documentNo;
+        var ouId=arr[0].ouName;
+        var docCat=arr[0].docCategoryCode;
+        const fileName = 'download.pdf';
+        const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+        this.transactionService.viewPaymentAdvice(docSeq,docCat,this.ouId)
+          .subscribe(data => {
+            var blob = new Blob([data], { type: 'application/pdf' });
+            var url = URL.createObjectURL(blob);
+            var printWindow = window.open(url, '', 'width=800,height=500');
+            printWindow.open
+          })
+      }
 
+    }
+  
 
 
