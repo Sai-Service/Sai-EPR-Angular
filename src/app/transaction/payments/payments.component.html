@@ -256,7 +256,7 @@
                                         </select>
                                     </td>
 
-                                    <input formControlName="receiptMethodId" >
+                                    <input hidden formControlName="receiptMethodId" >
                                     <td>
                                         <!-- [ngModel]="docCategoryCode"  -->
                                         <select formControlName="docCategoryCode" id="docCategoryCode"
@@ -532,7 +532,7 @@
                                 View Accounting
                             </button>
                         </td>
-                    </tr>
+                    </tr> 
                 </tbody>
             </table>
             <table class="center">
@@ -551,12 +551,17 @@
                         </button>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-primary" id="arPayment" (click)="ArPaymentNavigation()" style="text-align: justify;">
+                        <button type="button" class="btn btn-primary" id="arPayment" [style.display]="isarPayment ? 'block' : 'none'" (click)="ArPaymentNavigation()" style="text-align: justify;">
                             AR Receipt
                         </button>
                     </td>
+                    <td>
+                        <button type="button" class="btn btn-primary"   (click)="paymentAdvice()"  [style.display]="ispayAdvise ? 'block' : 'none'">
+                            Payment Advice
+                        </button>
+                    </td>
                 </tr>
-            </table>
+            </table>l   
 
             <!-- Modal footer -->
             <!-- <div class="modal-footer">
