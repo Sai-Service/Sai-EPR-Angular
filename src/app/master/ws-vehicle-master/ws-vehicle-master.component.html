@@ -550,7 +550,7 @@
 
              <tr>
 
-                <td style="width: 12%" class="LabelFontStyle">Ins&nbsp;Policy&nbsp;No:&nbsp;</td>
+                <td style="width: 12%" class="LabelFontStyle">Policy&nbsp;No:&nbsp;</td>
 
                 <td>
                     <input   type="text"  formControlName="policyNo"  id="policyNo" [(ngModel)]="policyNo" (keyup)="onInput($event)"  class="form-control" >
@@ -569,7 +569,7 @@
              </tr>
              <tr>
 
-                <td style="width: 12%" class="LabelFontStyle">Ins&nbsp;Company:&nbsp;</td>
+                <td style="width: 12%" class="LabelFontStyle">Company:&nbsp;</td>
                 <td colspan="3">
                     <select  formControlName="insurerCompId" id="insurerCompId"  (ngModelChange)='onInsurerNameSelected($event)' class="form-control" style="width: 100%;">
                     <option></option>
@@ -582,7 +582,7 @@
                 </tr>
                 <tr>
              
-                <td style="width: 12%" class="LabelFontStyle">Insurance&nbsp;Site:&nbsp;</td>
+                <td style="width: 12%" class="LabelFontStyle">Site:&nbsp;</td>
                 <td colspan="3">
                 <select  formControlName="insurerSiteId" id="insurerSiteId" class="form-control" style="width: 100%;">
                 <option></option>
@@ -717,61 +717,41 @@
 
                     
                 <td style="width: 12%" class="LabelFontStyle">MCP|AMC&nbsp;Status:</td>
-
-                 <td>
-                    <select type="text"  formControlName="mcpYN"  id ="mcpYN"  [(ngModel)]='mcpYN' value={{mcpYN}}   class="form-control"  (ngModelChange)='onSelectMcpStatus($event)' style="width: 140px;">
-                        <!-- <option>--Select--</option> -->
+                <td><input readonly  type="text"  formControlName="mcpYN"  id="mcpYN" [(ngModel)]="mcpYN" class="form-control"  style="width: 140px;" > </td>
+                 
+                 <!-- <td>
+                    <select disabled type="text"  formControlName="mcpYN"  id ="mcpYN"  [(ngModel)]='mcpYN' value={{mcpYN}}   class="form-control"  (ngModelChange)='onSelectMcpStatus($event)' style="width: 140px;">
                         <option value=Y>Active</option>
                         <option value=N>Inactive</option>
                     </select>
-                </td>
+                </td> -->
 
-                <div *ngIf="enableMcpDetails; then mcpBlock1; else mcpBlock2"></div>
-                <ng-template #mcpBlock1> 
+                <!-- <div *ngIf="enableMcpDetails; then mcpBlock1; else mcpBlock2"></div> -->
+                <!-- <ng-template #mcpBlock1>  -->
 
                     <td style="width: 12%" class="LabelFontStyle">Type:</td>
-                    <!-- <td><input   type="text"  formControlName="mcpAmcType"  id="mcpAmcType" [(ngModel)]="mcpAmcType" class="form-control" (keyup)="onInput($event)" style="width: 140px;" > </td> -->
+                    <td><input readonly  type="text"  formControlName="pkgSource"  id="pkgSource" [(ngModel)]="pkgSource" class="form-control" (keyup)="onInput($event)" style="width: 140px;" > </td>
                  
-                    <td>
-                        <select type="text"  formControlName="pkgSource"  id ="pkgSource"  [(ngModel)]='pkgSource' value={{pkgSource}}   class="form-control"  style="width: 140px;">
-                            <!-- <option>--Select--</option> -->
+                    <!-- <td>
+                        <select disabled type="text"  formControlName="pkgSource"  id ="pkgSource"  [(ngModel)]='pkgSource' value={{pkgSource}}   class="form-control"  style="width: 140px;">
+                            <option></option>
                             <option value=AMC>AMC</option>
                             <option value=MCP>MCP</option>
                         </select>
-                    </td>
+                    </td> -->
 
                     <td style="width: 12%" class="LabelFontStyle">MCP|AMC&nbsp;No:</td>
-                    <td>  <input type="text"  formControlName="mcpNo"  id="mcpNo" [(ngModel)]="mcpNo" class="form-control" (keyup)="onInput($event)" style="width: 140px;" > </td>
+                    <td>  <input readonly type="text"  formControlName="mcpNo"  id="mcpNo" [(ngModel)]="mcpNo" class="form-control" (keyup)="onInput($event)" style="width: 140px;" > </td>
                    
                     <td class="LabelFontStyle">MCP|AMC&nbsp;Start&nbsp;Date:</td>
-                    <td> <input   type="date"  formControlName="mcpStartDate"  id="mcpStartDate" [(ngModel)]="mcpStartDate" class="form-control" (change)="onChangMcpStartDate(mcpStartDate)" style="width: 140px;" > </td>
+                    <td> <input  readonly type="date"  formControlName="mcpStartDate"  id="mcpStartDate" [(ngModel)]="mcpStartDate" class="form-control" (change)="onChangMcpStartDate(mcpStartDate)" style="width: 140px;" > </td>
            
 
                     <td class="LabelFontStyle">MCP|AMC&nbsp;Expiry:</td>
-                    <td> <input   type="date"  formControlName="mcpEndDate"  id="mcpEndDate" [(ngModel)]="mcpEndDate" class="form-control" (change)="onChangMcpEndDate(mcpEndDate)" style="width: 140px;"> </td>
-                </ng-template>
+                    <td> <input readonly  type="date"  formControlName="mcpEndDate"  id="mcpEndDate" [(ngModel)]="mcpEndDate" class="form-control" (change)="onChangMcpEndDate(mcpEndDate)" style="width: 140px;"> </td>
+                <!-- </ng-template> -->
 
-                <ng-template #mcpBlock2> 
-
-                    <td style="width: 12%" class="LabelFontStyle">Type:</td>
-                    <!-- <td><input disabled  type="text"  formControlName="mcpAmcType"  id="mcpAmcType" [(ngModel)]="mcpAmcType" class="form-control" (keyup)="onInput($event)" style="width: 140px;" > </td> -->
-                 
-                    <td>
-                        <select disabled type="text"  formControlName="pkgSource"  id ="pkgSource"  [(ngModel)]='pkgSource' value={{pkgSource}}   class="form-control"  style="width: 140px;">
-                            <!-- <option>--Select--</option> -->
-                            <option value=AMC>AMC</option>
-                            <option value=MCP>MCP</option>
-                        </select>
-                    </td>
-                    <td style="width: 12%" class="LabelFontStyle">MCP|AMC&nbsp;No:</td>
-                    <td>  <input disabled type="text"  formControlName="mcpNo"  id="mcpNo" [(ngModel)]="mcpNo" class="form-control" (keyup)="onInput($event)"style="width: 140px;" > </td>
-                   
-                    <td class="LabelFontStyle">MCP|AMC&nbsp;Start&nbsp;Date:</td>
-                    <td> <input disabled  type="date"  formControlName="mcpStartDate"  id="mcpStartDate" [(ngModel)]="mcpStartDate" class="form-control" style="width: 140px;"> </td>
-           
-                    <td class="LabelFontStyle">MCP|AMC&nbsp;Expiry:&nbsp;</td>
-                    <td> <input  disabled type="date"  formControlName="mcpEndDate"  id="mcpEndDate" [(ngModel)]="mcpEndDate" class="form-control" style="width: 140px;"> </td>
-                </ng-template>
+               
 
                 </tr>
 
