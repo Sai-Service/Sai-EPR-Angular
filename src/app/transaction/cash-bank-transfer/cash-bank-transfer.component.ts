@@ -80,6 +80,7 @@ export class CashBankTransferComponent implements OnInit {
       now = Date.now();
       public minDate = new Date();
       public OUIdList            : Array<string> = [];
+      public locIdList: Array<string> = [];
       // public TransferTypeList    : Array<string> = [];
       public PeriodList          : Array<string> = [];
       // public fromAcctList        : Array<string> = [];
@@ -298,13 +299,31 @@ export class CashBankTransferComponent implements OnInit {
           console.log(this.locId);
 
 
-          this.service.OUIdList()
+          this.service.OUIdListDiv(this.divisionId)
           .subscribe(
             data => {
               this.OUIdList = data;
               console.log(this.OUIdList);
             }
           );
+    
+        this.service.getLocationSearch1(this.ouId)
+        .subscribe(
+          data => {
+            this.locIdList = data;
+            console.log(this.locIdList);
+    
+          }
+            );
+
+
+          // this.service.OUIdList()
+          // .subscribe(
+          //   data => {
+          //     this.OUIdList = data;
+          //     console.log(this.OUIdList);
+          //   }
+          // );
 
           this.service.TransferTypeLst()
           .subscribe(
@@ -357,6 +376,19 @@ export class CashBankTransferComponent implements OnInit {
        
 
         }
+
+
+        onOuIdSelected1(ouId) {
+          
+          if (ouId > 0) {
+             this.service.getLocationSearch1(ouId)
+              .subscribe(
+                data => {
+                  this.locIdList = data;
+                  console.log(this.locIdList);
+                } );
+          } }
+        
 
         onOptionsSelected(event: any) {
         var status1 = this.cashBankTransferForm.get('status').value;

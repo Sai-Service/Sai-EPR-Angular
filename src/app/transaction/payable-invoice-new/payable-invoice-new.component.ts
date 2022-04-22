@@ -305,8 +305,10 @@ export class PayableInvoiceNewComponent implements OnInit {
   public lstsearchapinv: any;
   // nverValidedCnd:false;
   // ValidedCnd:true;
-  public locIdList1: Array<string> = [];
-  public BranchList: Array<string> = [];
+  // public locIdList1: Array<string> = [];
+  locIdList1:any=[];
+  // public BranchList: Array<string> = [];
+  BranchList:any=[];
   public CostCenterList: Array<string> = [];
   public NaturalAccountList: any = [];
   public InterBrancList: any = [];
@@ -1312,16 +1314,18 @@ export class PayableInvoiceNewComponent implements OnInit {
 
 
   selectDisLineDtl(k) {
+    // alert(k)
     var lineNumber = this.invLineDetailsArray().controls[k].get('lineNumber').value;
     var invoiceId = this.invLineDetailsArray().controls[k].get('invoiceId').value;
     var taxcat = this.invLineDetailsArray().controls[k].get('taxCategoryName').value;
     var itemtyp = this.invLineDetailsArray().controls[k].get('lineTypeLookupCode').value;
     var amount = this.invLineDetailsArray().controls[k].get('amount').value;
+    var description=this.invLineDetailsArray().controls[k].get('description').value;
     this.invoiceId = this.lstInvLineDeatails.invoiceId;
     if (this.invoiceId == null) {
       alert('Invoice No is not generated');
       if (itemtyp != 'MISCELLANEOUS') {
-        this.distribution1(k, itemtyp, amount);
+        this.distribution1(k, itemtyp, amount,description);
       }
       return;
     }
@@ -1349,8 +1353,8 @@ export class PayableInvoiceNewComponent implements OnInit {
     }
   }
 
-  distribution1(k, itemtyp, amount) {
-    // alert(itemtyp+'---'+amount+k);
+  distribution1(k, itemtyp, amount,description) {
+    // alert(itemtyp+'---'+amount+'-----'+k);
     // this.poInvoiceForm.get('invLines').patchValue({ locId: arrayControl[k].locationId });
     var arrayControl = this.poInvoiceForm.get('obj').value;
     var distributionSet = arrayControl[0].distributionSet;
@@ -1397,13 +1401,13 @@ export class PayableInvoiceNewComponent implements OnInit {
         );
     }
     if ((distributionSet == null && amount != null)) {
+      this.lineDistributionArray().clear();
       var len = this.lineDistributionArray().length;
       var patch = this.poInvoiceForm.get('distribution') as FormArray;
       var controlDist = this.poInvoiceForm.get('distribution').value;
-      if (controlDist[0].lineTypeLookupCode != null && controlDist[0].distLineNumber != null) {
+      // if (controlDist[0].lineTypeLookupCode != null && controlDist[0].distLineNumber != null) {
         this.lineDistributionArray().push(this.distLineDetails());
         var aa = this.lineDistributionArray().length;
-        // alert(this.lineDistributionArray().length);
         (patch.controls[aa - 1]).patchValue(
           {
             distLineNumber: aa,
@@ -1411,11 +1415,13 @@ export class PayableInvoiceNewComponent implements OnInit {
             lineTypeLookupCode: itemtyp,
             amount: amount,
             baseAmount: amount,
+            accountingDate:this.pipe.transform(this.now, 'dd-MMM-yyyy'),
+            description:description
           }
         );
         this.distarr.set(invln, this.poInvoiceForm.get('distribution').value);
-      }
-      if (controlDist[0].lineTypeLookupCode == null || controlDist[0].distLineNumber == null) {
+      // }
+      // if (controlDist[0].lineTypeLookupCode == null || controlDist[0].distLineNumber == null) {
         (patch.controls[len - 1]).patchValue(
           {
             distLineNumber: len,
@@ -1423,7 +1429,7 @@ export class PayableInvoiceNewComponent implements OnInit {
           }
         );
         this.distarr.set(invln, this.poInvoiceForm.get('distribution').value);
-      }
+      // }
 
     }
     
@@ -1675,6 +1681,7 @@ export class PayableInvoiceNewComponent implements OnInit {
   onOptionTaxCatSelected(taxCategoryName, k) {
     if (this.isSearchPatch === false) {
       this.displayViewTaxDetails = false;
+      // this.TaxDetailsArray().clear();
       var arrayControl = this.poInvoiceForm.get('invLines').value;
       var arrayControlNew = this.poInvoiceForm.get('invLines') as FormArray;
       var arrayControlNew1=arrayControlNew.getRawValue()
@@ -1750,12 +1757,14 @@ export class PayableInvoiceNewComponent implements OnInit {
               var patch = this.poInvoiceForm.get('obj') as FormArray;
               var taxLinesData = this.poInvoiceForm.get('taxLines').value;
               console.log(taxLinesData);
-              alert('Tax Details Has Been Patched... Please Confirm!');
               this.displaylineNumber=false;
               var lnv = this.indexVal;
               var lno: String = String(lnv);
               this.taxMap.set(String(lno), taxLinesData);
               console.log(this.taxMap.get(String(lno)));
+            }
+            if (data.taxLines.length != 0){
+              alert('Tax Details Has Been Patched... Please Confirm!');
             }
             this.invLineNo = k + 1;
             this.taxarr.set(this.invLineNo, this.poInvoiceForm.get('taxLines').value);
@@ -1872,10 +1881,16 @@ export class PayableInvoiceNewComponent implements OnInit {
   }
 
   openCodeComb1(i) {
+    // alert(i)
     var arrayControl = this.poInvoiceForm.get('distribution').value;
     var invLinesControl = this.poInvoiceForm.get('invLines').value;
-    let segmentName1 = arrayControl[i].distCodeCombSeg
-    if (segmentName1 === null) {
+    let segmentName1 = arrayControl[i].distCodeCombSeg;
+    // alert(segmentName1)
+    if (segmentName1 === null ||segmentName1=='' ) {
+      this.poInvoiceForm.get('segment11').reset();
+      var branchNM = sessionStorage.getItem('locCode').split('.');
+      // alert(branchNM)
+      this.BranchList = this.BranchList.filter((br => br.lookupValue === branchNM[0]));
       this.poInvoiceForm.get('segment11').reset();
       this.poInvoiceForm.get('segment2').reset();
       this.poInvoiceForm.get('segment3').reset();
@@ -2064,6 +2079,17 @@ export class PayableInvoiceNewComponent implements OnInit {
     jsonData.accPayCodeCombId = 2079
     jsonData.currency = 'INR';
     var taxStr = [];
+    var distributionArray = this.poInvoiceForm.get('distribution').value;
+    // var distributionArray = distribution.getRawValue();
+    for (let d=0; d<distributionArray.length; d++){
+      if (distributionArray[d].lineTypeLookupCode==='OTHER'){
+      if (distributionArray[d].distCodeCombSeg === null || distributionArray[d].distCodeCombSeg === undefined || distributionArray[d].distCodeCombSeg ===''){
+        alert('Please Select Code Combination In Distribution Tab. Line No '+distributionArray[d].distLineNumber);
+        return;
+      }
+    }
+    }
+   
     for (let taxlinval of this.taxarr.values()) {
       for (let i = 0; i < taxlinval.length; i++) {
         taxStr.push(taxlinval[i]);
@@ -2415,6 +2441,7 @@ export class PayableInvoiceNewComponent implements OnInit {
     for (let j = 0; j < this.lineDistributionArray().length; j++) {
       // totalOfDistributionAmout = Math.round(((totalOfDistributionAmout + Number(arrayCaontrolOfDistribution[j].amount)) + Number.EPSILON) * 100) / 100;
       var desc1 : string =  arrayCaontrolOfDistribution[j].description;
+      // var baseAmount = arrayCaontrolOfDistribution[j].baseAmount;
       if (desc1 === 'null' || desc1 ===null){
         totalOfDistributionAmout = Math.round(((Number(arrayCaontrolOfDistribution[j].amount)) + Number.EPSILON) * 100) / 100;  
       }
@@ -2538,6 +2565,7 @@ export class PayableInvoiceNewComponent implements OnInit {
 
 
   onOptionsSelectedBranch(segment: any, lType: string) {
+    // alert(segment+'----'+lType);
     this.service.getInterBranch(segment, lType).subscribe(
       data => {
         this.branch = data;
@@ -2553,7 +2581,11 @@ export class PayableInvoiceNewComponent implements OnInit {
             this.lookupValueDesc2 = this.branch.lookupValueDesc;
           }
           if (lType === 'SS_Branch') {
+            // this.lookupValueDesc1 = this.branch.lookupValueDesc;
             this.lookupValueDesc1 = this.branch.lookupValueDesc;
+            var sellBr= this.BranchList.find(d => d.lookupValue === segment);  
+            // console.log(sellBr);       
+              this.locIdList1 = this.locIdList1.filter((br => br.lookupValue.includes(sellBr.parentValue) ||br.lookupValue === "000"));
           }
         }
       }

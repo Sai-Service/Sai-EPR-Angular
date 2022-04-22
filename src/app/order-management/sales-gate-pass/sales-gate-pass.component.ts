@@ -220,9 +220,11 @@ export class SalesGatePassComponent implements OnInit {
       alert('Please Enter All required Details...!')
       return;
     }
+    var customerId=this.lstcomments.customerId;
     var orderedDate2 = this.pipe.transform(regDate, 'MM/dd/yyyy');
-    // alert(orderedDate2)
-    this.orderManagementService.vehicleNoupdateFn(itemId, regNo, orderedDate2).subscribe((res: any) => {
+  //  alert(customerId);
+  //  return;
+    this.orderManagementService.vehicleNoupdateFn(itemId, regNo, orderedDate2,customerId).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
         this.gatePassOrderNo(this.orderNumber);

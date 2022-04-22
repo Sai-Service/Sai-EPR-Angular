@@ -84,6 +84,7 @@ export class PoReceiptFormComponent implements OnInit {
   isVisible:boolean=true;
   public minDate = new Date();
   recdate1:Date;
+  polineNum:number;
   poInvNum: string;
   poInvDate: Date;
   content: Number;
@@ -135,7 +136,7 @@ export class PoReceiptFormComponent implements OnInit {
   invItemId: number;
   billToLoc: number;
   categoryId: number;
-  polineNum: number;
+  // polineNum: number;
   // segment1:string;
   segment2: string;
   segment3: number;

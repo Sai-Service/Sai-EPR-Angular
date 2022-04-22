@@ -12,7 +12,7 @@
                     <table>
                         <tr>
                                <td colspan="2" style="width: 100%;text-align: center;margin-left: 10px;">
-                                <button class="btn btn-info" data-toggle="modal" data-target="#jobCardSearch" (click)='LoadSearchForm()'
+                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#jobCardSearch" (click)='LoadSearchForm()'  
                                     style="text-align: center; font-size: small;font-weight: bolder; margin-right: 90%;">Find</button>
                             </td>
 
@@ -140,7 +140,7 @@
                                                                         </tr>
                                                                         <tr>
                                                                             <td style="width: 15%" class="LabelFontStyle">DMS&nbsp;JC&nbsp;No&nbsp;:</td>
-                                                                            <td> <input type="text"   class="form-control" formControlName="dmsJcNo"  placeholder=""> </td>
+                                                                            <td> <input type="text" autofocus  class="form-control" formControlName="dmsJcNo"  > </td>
                                                                             
                                                                             <td style="width: 15%" class="LabelFontStyle">  DMS&nbsp;JC&nbsp;Date&nbsp;:</td>
                                                                             <td><input type="date"  class="form-control" formControlName="dmsJCDate" placeholder=""> </td>
@@ -181,10 +181,10 @@
                                                                                 <input type="text" hidden   class="form-control" placeholder=""  [(ngModel)]="divisionId"  formControlName="divisionId">
                                                                              </td>
 
-                                                                            <td style="width: 15%" class="LabelFontStyle1"> Registration&nbsp;No&nbsp;:</td>
-                                                                            <td>
+                                                                             <td style="width: 15%" class="LabelFontStyle1"> Registration&nbsp;No&nbsp;:</td>
+                                                                            <!-- <td>
                                                                             <table>
-                                                                            <tr>
+                                                                            <tr> -->
 
                                                                                <td>
                                                                                 <input type="text" style="background-color: yellow;"
@@ -209,17 +209,18 @@
                                                                                 <input type="number" hidden  formControlName="storedKmr" [(ngModel)]="storedKmr">
                                                                                    
                                                                                 </td>
-                                                                                <td><button type="button" class="btn-primary" (click)="createNew()" style="width: fit-content;">Create</button> </td>
+                                                                                <!-- <td><button type="button" class="btn-primary" (click)="createNew()" style="width: fit-content;">Create</button> </td>
                                                                             </tr>
                                                                             </table>
-                                                                            </td>
+                                                                            </td> -->
 
 
-                                                                            <td style="width: 15%"  class="LabelFontStyle1"> VIN&nbsp;:</td>
+                                                                            <td style="width: 15%"  class="LabelFontStyle"> VIN&nbsp;:</td>
                                                                             <td><input disabled type="text" class="form-control" placeholder=""  formControlName="vin"> </td>
                                                                            
-                                                                            <td style="width: 15%" class="LabelFontStyle1">OMR&nbsp;/Current&nbsp;KMS&nbsp;:</td>
-                                                                            <td><input type="number" style="background-color: yellow;" class="form-control" placeholder="" formControlName="lastRunKms" (change)="validateKm($event)" > </td>
+                                                                            <td></td>
+                                                                            <td><button type="button" data-toggle="modal"  class="btn btn-primary" data-target="#vehAddtionalDetails"  style="width:140px">Additional Details</button></td>
+                                                                          
                                                                         </tr>
 
                                                                        
@@ -236,7 +237,19 @@
                                                                                 </select>
                                                                             </td>
 
-                                                                            <td style="width: 15%"  class="LabelFontStyle1">Sub&nbsp;Service&nbsp;Type&nbsp;:</td>
+                                                                           <td></td>
+                                                                            <td><button type="button" class="btn btn-primary" (click)="createNew()" style="width:140px;">Create Customer</button> </td> 
+
+                                                                         
+                                                                            <td style="width: 15%" class="LabelFontStyle"> &nbsp;Sale&nbsp;Date&nbsp;: </td>
+                                                                            <td> <input type="date" disabled class="form-control" placeholder="" formControlName="regDate"> </td>
+                                                                         
+                                                                            <td style="width: 15%" class="LabelFontStyle"> &nbsp;Model&nbsp;:</td>
+                                                                            <td><input type="text" disabled class="form-control" placeholder="" formControlName="mainModel"> </td>
+                                                                        </tr>
+                                                                       
+                                                                        <tr>
+                                                                            <td style="width: 15%"  class="LabelFontStyle1">Service&nbsp;Sub&nbsp;Type&nbsp;:</td>
                                                                             <td>
                                                                                 <select formControlName="subTypeId" style="background-color: yellow;"
                                                                                     id="subTypeId" class="form-control">
@@ -248,6 +261,27 @@
                                                                                 </select>
                                                                             </td>
 
+                                                                            <td style="width: 15%"  class="LabelFontStyle"> Bay&nbsp;Code&nbsp;:</td>
+                                                                          
+                                                                           <td>
+                                                                            <select formControlName="bayTyId" style="background-color: yellow;" id="bayTyId" class="form-control">
+                                                                            <option>--Select--</option>
+                                                                            <option
+                                                                                *ngFor="let sc of  bayTypeList"  [ngValue]="sc.bayTyId">
+                                                                               {{sc.bayTyDesc}}
+                                                                            </option>
+                                                                           </select> 
+                                                                          </td>
+
+                                                                        
+                                                                          <td style="width: 15%" class="LabelFontStyle"> &nbsp;Variant&nbsp;:</td>
+                                                                          <td><input type="text" disabled class="form-control" placeholder="" formControlName="variantCode"> </td>
+                                                                         
+                                                                          <td style="width: 15%" class="LabelFontStyle">Color&nbsp;:</td>
+                                                                          <td><input type="text" disabled  class="form-control" placeholder="" formControlName="colorCode"> </td>
+                                                                        </tr>
+
+                                                                        <tr>
                                                                             <td style="width: 15%" class="LabelFontStyle1"> Service&nbsp;Advisor&nbsp;:</td>
                                                                             <td>
                                                                                 <select formControlName="srvAdvisor" style="background-color: yellow;" id="srvAdvisor"  class="form-control">
@@ -270,28 +304,14 @@
                                                                                     </option>
                                                                                 </select>
                                                                             </td>
+                                                                           
+                                                                            <td style="width: 15%" class="LabelFontStyle">Chassis&nbsp;No&nbsp;:</td>
+                                                                            <td><input type="text" disabled class="form-control" placeholder=""  formControlName="chassisNo">  </td>
+                                                                            
+                                                                            <td style="width: 15%" class="LabelFontStyle"> Engine&nbsp;No&nbsp;:</td>
+                                                                            <td><input type="text" disabled  class="form-control" placeholder="" formControlName="engineNo"> </td>
                                                                         </tr>
-                                                                       
                                                                         <tr>
-                                                                            <td style="width: 15%"  class="LabelFontStyle"> Bay&nbsp;Code&nbsp;:</td>
-                                                                          
-                                                                           <td>
-                                                                            <select formControlName="bayTyId" style="background-color: yellow;" id="bayTyId" class="form-control">
-                                                                            <option>--Select--</option>
-                                                                            <option
-                                                                                *ngFor="let sc of  bayTypeList"  [ngValue]="sc.bayTyId">
-                                                                               {{sc.bayTyDesc}}
-                                                                            </option>
-                                                                           </select> 
-                                                                          </td>
-
-                                                                            <td></td>
-
-                                                                            <td>
-                                                                                <button data-toggle="modal"  class="btn btn-primary"
-                                                                                     data-target="#vehAddtionalDetails"  style="width: 140px">Additional Details</button>
-                                                                            </td>
-
                                                                             <td style="width: 15%"  class="LabelFontStyle1">Technician&nbsp;: </td>
                                                                             <td>
                                                                                  <select formControlName="techId" style="background-color: yellow;"
@@ -304,49 +324,35 @@
                                                                                 </select>
                                                                             </td>
 
-                                                                            <td style="width: 15%"  class="LabelFontStyle">Tech&nbsp;Advisor&nbsp;:</td>
-                                                                            <td><input type="text" class="form-control" placeholder="" formControlName="techAdvisor" > </td>
-                                                                        </tr>
+                                                                            <td style="width: 15%" class="LabelFontStyle1">OMR&nbsp;/Current&nbsp;KMS&nbsp;:</td>
+                                                                            <td><input type="number" style="background-color: yellow;" class="form-control" placeholder="" formControlName="lastRunKms" (change)="validateKm($event)" > </td>
+  
 
-
-                                                                        <tr>
-                                                                            <td style="width: 15%" class="LabelFontStyle"> Vehicle&nbsp;Model&nbsp;:</td>
-                                                                            <td><input type="text" disabled class="form-control" placeholder="" formControlName="mainModel"> </td>
+                                                                            <!-- <td style="width: 15%"  class="LabelFontStyle">Tech&nbsp;Advisor&nbsp;:</td> -->
+                                                                            <input hidden  type="text" class="form-control" placeholder="" formControlName="techAdvisor" > 
                                                                            
-                                                                            <td style="width: 15%" class="LabelFontStyle"> Vehicle&nbsp;Sale&nbsp;Date&nbsp;: </td>
-                                                                            <td> <input type="date" disabled class="form-control" placeholder="" formControlName="regDate"> </td>
                                                                             
-                                                                            <td style="width: 15%" class="LabelFontStyle">Chassis&nbsp;No&nbsp;:</td>
-                                                                            <td><input type="text" disabled class="form-control" placeholder=""  formControlName="chassisNo">  </td>
-                                                                            
-                                                                            <td style="width: 15%" class="LabelFontStyle"> Engine&nbsp;No&nbsp;:</td>
-                                                                            <td><input type="text" disabled  class="form-control" placeholder="" formControlName="engineNo"> </td>
-                                                                           
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td style="width: 15%" class="LabelFontStyle"> Vehicle&nbsp;Variant&nbsp;:</td>
-                                                                            <td><input type="text" disabled class="form-control" placeholder="" formControlName="variantCode"> </td>
-                                                                           
-                                                                            <td style="width: 15%" class="LabelFontStyle">Color&nbsp;:</td>
-                                                                            <td><input type="text" disabled  class="form-control" placeholder="" formControlName="colorCode"> </td>
-                                                                           
                                                                             <td style="width: 15%" class="LabelFontStyle">Dealer&nbsp;Name&nbsp;:</td>
                                                                             <td> <input type="text" disabled class="form-control" placeholder=""  formControlName="dealerName"> </td>
-                                                                           
+                                                                        
                                                                             <td style="width: 15%" class="LabelFontStyle">Dealer&nbsp;Site&nbsp;:</td>
                                                                             <td><input type="text" disabled class="form-control" placeholder="" formControlName="dealerSite"></td>
-                                                                        </tr>
+                                                                       </tr>
                                                                         <tr>
                                                                             <td style="width: 15%" class="LabelFontStyle">&nbsp;Demanded&nbsp;Job&nbsp;:</td>
                                                                             <td colspan="3">
                                                                             <textarea id="demandJob" formControlName="demandJob" rows="2" style="width: 100%;resize: none; font-size: small;" (keyup)="onInput($event)"></textarea> </td>
-                                                                           
                                                                             <td style="width: 15%"  class="LabelFontStyle">Recommendation&nbsp;:</td>
                                                                             <td colspan="3"><textarea id="recomJob" formControlName="recomJob" rows="2" style="width: 100%; resize: none;font-size: small;" (keyup)="onInput($event)"></textarea> </td>
                                                                         </tr>
+                                                                       
+                                                                      
+
+
 
                                                                     </fieldset>
                                                                         </ng-template>
+
                                                                         <ng-template #elseBlockFreeze>
                                                                                 <fieldset class="RFS">
                                                                                     <legend id="FormsPH_LGAadhaar" class="RFSL"
@@ -613,29 +619,13 @@
                                                                                         </td>
                                                                                     </tr>
                                                                                     <tr>
-                                                                                        <td style="width: 15%"
-                                                                                            class="LabelFontStyle">
-                                                                                            &nbsp;Demanded&nbsp;Job&nbsp;:
-                                                                                        </td>
-                                                                                        <td colspan="3">
-                                                                                            <input type="text" class="form-control"
-                                                                                            formControlName="demandJob" placeholder="">
-                                                                                        </td>
-                                                                                        <td style="width: 15%"
-                                                                                            class="LabelFontStyle">
-                                                                                            Recommendation&nbsp;:</td>
-                                                                                        <td colspan="3">
-                                                                                            <input type="text" class="form-control"
-                                                                                            formControlName="recomJob" placeholder="">
-                                                                                        </td>
-
-                                                                                        <!-- <td>
-                                                                                            <button data-toggle="modal"
-                                                                                                class="btn btn-primary"
-                                                                                                data-target="#exampleModalScrollable"
-                                                                                                style="width: fit-content;">
-                                                                                                Details</button>
-                                                                                        </td> -->
+                                                                                        <td style="width: 15%" class="LabelFontStyle"> &nbsp;Demanded&nbsp;Job&nbsp;:</td>
+                                                                                        <td colspan="3"><input type="text" class="form-control" formControlName="demandJob" placeholder=""></td>
+                                                                                       
+                                                                                        <td style="width: 15%" class="LabelFontStyle"> Recommendation&nbsp;:</td>
+                                                                                        <td colspan="3"><input type="text" class="form-control" formControlName="recomJob" placeholder=""> </td>
+                                                                                          <!-- <td> <button data-toggle="modal" class="btn btn-primary" data-target="#exampleModalScrollable" style="width: fit-content;"> Details</button> </td> -->
+                                                                                      
                                                                                     </tr>
 
                                                                                 </fieldset>
@@ -665,7 +655,7 @@
                                                                                                     </td>
             
                                                                                                     <td style="width: 15%" class="LabelFontStyle">
-                                                                                                        Act&nbsp;No:&nbsp;</td>
+                                                                                                        Cust&nbsp;No:&nbsp;</td>
             
                                                                                                 <td>
                                                                                                     <input disabled type="text" class="form-control" placeholder=""
@@ -777,7 +767,7 @@
                                                                                                     </td>
             
                                                                                                     <td style="width: 15%" class="LabelFontStyle">
-                                                                                                        Account &nbsp;No:&nbsp;</td>
+                                                                                                        Cust&nbsp;No:&nbsp;</td>
             
                                                                                                 <td>
                                                                                                     <input disabled type="text" class="form-control" placeholder=""
@@ -1056,7 +1046,7 @@
                                                                                 
                                                                         </td>
                                                                         <td>
-                                                                            <button type="submit" style="width: 5rem;"
+                                                                            <button type="button" style="width: 5rem;"
                                                                                 class="btn btn-primary" id="register"
                                                                                 (click)="closeMast()">Close</button>
                                                                         </td>
@@ -1065,12 +1055,12 @@
                                                                         <ng-template #CancelYes>
                                                                         <!-- <td>   <button type="submit"  class="btn btn-primary" id="register" (click)="cancelJobNo()">Cancel</button> </td> -->
                                                                                
-                                                                            <button type="submit" class="btn btn-primary" id="cancBtn" data-toggle="modal"  style="width: 5rem;"
+                                                                            <button type="button" class="btn btn-primary" id="cancBtn" data-toggle="modal"  style="width: 5rem;"
                                                                             data-target="#confirmAlert" (click)="getMessage('Cancel')" >Cancel</button>
 
                                                                         </ng-template>
                                                                         <ng-template #CancelNo>
-                                                                                <button disabled type="submit" class="btn btn-primary" id="cancBtn" data-toggle="modal" style="width: 5rem;"
+                                                                                <button disabled type="button" class="btn btn-primary" id="cancBtn" data-toggle="modal" style="width: 5rem;"
                                                                                 data-target="#confirmAlert" (click)="getMessage('Cancel')" >Cancel</button>
                         
                                                                         </ng-template>
@@ -1082,7 +1072,7 @@
                                                                     </div>
                                                                     <ng-template #thenBlockRFI>
                                                                         <td>
-                                                                            <button type="submit"
+                                                                            <button type="button"
                                                                                 class="btn btn-primary"
                                                                                 style="width: fit-content;"
                                                                                 (click)="jobCardStatusClose()"
@@ -1105,7 +1095,7 @@
 
                                                                     <div *ngIf="preInvButton; then Pre1; else Pre2"></div>
                                                                     <ng-template #Pre1>
-                                                                        <td><button  type="submit" class="btn btn-primary"   style="width: fit-content;" id="register" (click)="printPreInvoice()" >Pre-Invoice</button> </td>
+                                                                        <td><button  type="button" class="btn btn-primary"   style="width: fit-content;" id="register" (click)="printPreInvoice()" >Pre-Invoice</button> </td>
                                                                     </ng-template>
                                                                     <ng-template #Pre2>
                                                                         <!-- <td><button  disabled type="submit" class="btn btn-primary"   style="width: fit-content;" id="register" (click)="printPreInvoice()" >Pre-Invoice</button> </td> -->
@@ -1114,8 +1104,8 @@
                                                                     <ng-template #dpcustYes>
                                                                         <div *ngIf="preInvButton; then Pre11; else Pre21"></div>
                                                                         <ng-template #Pre11>
-                                                                            <td> <button  type="submit" class="btn btn-primary" style="width: fit-content;" id="register" (click)="printPreInvoiceDp('cust')" >DP-PreInvoice(Cust)</button> </td>
-                                                                            <td> <button  type="submit" class="btn btn-primary" style="width: fit-content;" id="register" (click)="printPreInvoiceDp('ins')" >DP-PreInvoice(Ins)</button> </td>
+                                                                            <td> <button  type="button" class="btn btn-primary" style="width: fit-content;" id="register" (click)="printPreInvoiceDp('cust')" >DP-PreInvoice(Cust)</button> </td>
+                                                                            <td> <button  type="button" class="btn btn-primary" style="width: fit-content;" id="register" (click)="printPreInvoiceDp('ins')" >DP-PreInvoice(Ins)</button> </td>
                                                                         </ng-template>
                                                                         <ng-template #Pre21></ng-template>
                                                                     </ng-template>
@@ -1248,7 +1238,7 @@
                                                                             <div *ngIf="openStatus; then opnYes; else opnNo"> </div>
                                                                             <ng-template #opnYes>
                                                                                 <td><input  type="text" formControlName="segment" value={{segment}}
-                                                                                    (keyup)="getInvItemId($event)" id="invItemIdFirstWay"
+                                                                                    (keyup)="getInvItemId($event)" id="invItemIdFirstWay"  
                                                                                     list="dynmicUserIds1" class="form-control"  style="width: 8rem;"
                                                                                     (change)="serchByitemId(segment,i)" />
                                                                                     <datalist id="dynmicUserIds1">
@@ -1289,7 +1279,7 @@
                                                                             <ng-template #splt11>
                                                                                 <!-- <div *ngIf="genericItemLab; then genYes1; else genNo1"> </div>
                                                                                 <ng-template #genYes1> -->
-                                                                                     <td><input  type="text" formControlName="description"  class="form-control"  style="height: 25px;"> </td>
+                                                                                     <td><input  type="text" formControlName="description"  class="form-control"  style="height: 25px;"  > </td>
                                                                                 <!-- </ng-template>
                                                                                 <ng-template #genNo1>
                                                                                      <td><input disabled type="text" formControlName="description"  class="form-control"  style="height: 25px;"> </td>
@@ -1299,7 +1289,7 @@
                                                                             <ng-template #splt21>
                                                                                 <!-- <div *ngIf="genericItemLab; then genYes2; else genNo2"> </div>
                                                                                 <ng-template #genYes2> -->
-                                                                                     <td><input  type="text" formControlName="description"  class="form-control"  style="height: 25px; width:350px" (keyup)="onInput($event)"  ></td>
+                                                                                     <td><input  type="text" formControlName="description"  class="form-control"  style="height: 25px; width:350px" (keyup)="onInput($event)" ></td>
                                                                                <!-- </ng-template>
                                                                                <ng-template #genNo2>
                                                                                     <td><input disabled type="text" formControlName="description"  class="form-control"  style="height: 25px; width:350px" ></td>
@@ -1330,25 +1320,19 @@
 
                                                                             <td>
                                                                                 <input type="number" min="0"
-                                                                                    formControlName="qty" 
-                                                                                    (change)="onKey(i)"
-                                                                                    class="form-control"
-                                                                                    style="width: 3rem; height: 25px; text-align: right;">
+                                                                                    formControlName="qty"  
+                                                                                    (change)="onKey(i)"    class="form-control" style="width: 3rem; height: 25px; text-align: right;">
                                                                             </td>
 
                                                                           
                                                                             <td>
                                                                                 <input type="number" min="0"
-                                                                                    class="form-control" disabled
-                                                                                    formControlName="unitPrice"
-                                                                                    (change)="onKey(i)"
+                                                                                    class="form-control" disabled formControlName="unitPrice" (change)="onKey(i)"
                                                                                     style="height: 25px; width: 4rem;  text-align: right;">
                                                                             </td>
                                                                             <td>
-                                                                                <input type="number" min="0"  disabled
-                                                                                    formControlName="basicAmt"
-                                                                                    class="form-control"
-                                                                                    style="width: 4rem; height: 25px; text-align: right;">
+                                                                                <input type="number" min="0"  disabled  formControlName="basicAmt"
+                                                                                    class="form-control"      style="width: 4rem; height: 25px; text-align: right;">
                                                                             </td>
 
                                                                            
@@ -1433,39 +1417,35 @@
                                                                                 <div *ngIf="displaySplit; then thenBlockSplit; else elseBlockSplit"></div>
                                                                                 
                                                                                 <ng-template #thenBlockSplit>
-                                                                                    <button type="submit" 
+                                                                                    <button type="button" 
                                                                                         class="btn btn-primary"
                                                                                         class="form-control"
                                                                                         style="width: min-content; text-align: center;"><i
                                                                                             class="fa fa-plus"></i></button>
                                                                                 </ng-template>
                                                                                 <ng-template #elseBlockSplit>
-                                                                                    <button type="submit"
-                                                                                        class="btn btn-primary"
-                                                                                        data-toggle="modal"
-                                                                                        data-target="#myModel"
-                                                                                        placeholder="Select Item Category"
-                                                                                        class="form-control"
-                                                                                        (click)="openCodeComb(i)"
-                                                                                        style="width: min-content; text-align: center;"><i
-                                                                                            class="fa fa-plus"></i></button>
+                                                                                    <button type="button"
+                                                                                        class="btn btn-primary"  data-toggle="modal" data-target="#myModel"
+                                                                                        class="form-control"   (click)="openCodeComb(i)"
+                                                                                        style="width: min-content; text-align: center;"><i class="fa fa-plus"></i></button>
+                                                                                            
                                                                                 </ng-template>
                                                                             </td>
 
                                                                             <div *ngIf="saveLabButton; then AD1; else AD2"></div>
                                                                             <ng-template #AD1>
-                                                                            <td><button type="submit" class="btn btn-primary"  (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)"
+                                                                            <td><button type="button" class="btn btn-primary"  (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)"
                                                                                     style="width: min-content;"><i class="fa fa-plus"></i></button>
                                                                             </td>
-                                                                            <td><button type="submit"  class="btn btn-primary" (click)="RemoveRow(i)"
+                                                                            <td><button type="button"  class="btn btn-primary" (click)="RemoveRow(i)"
                                                                                     style="width: min-content;"><i class="fa fa-trash"></i></button>
                                                                             </td>
                                                                             </ng-template>
                                                                             <ng-template #AD2>
-                                                                                <td><button disabled type="submit" class="btn btn-primary"  (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)"
+                                                                                <td><button disabled type="button" class="btn btn-primary"  (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)"
                                                                                         style="width: min-content;"><i class="fa fa-plus"></i></button>
                                                                                 </td>
-                                                                                <td><button disabled type="submit"  class="btn btn-primary" (click)="RemoveRow(i)"
+                                                                                <td><button disabled type="button"  class="btn btn-primary" (click)="RemoveRow(i)"
                                                                                         style="width: min-content;"><i class="fa fa-trash"></i></button>
                                                                                 </td>
                                                                             </ng-template>
@@ -2525,7 +2505,7 @@
                                                         <div *ngIf="genBillButton; then G1; else G2"></div>
                                                         <ng-template #G1>
                                                         <td>
-                                                            <button type="submit" class="btn btn-primary"
+                                                            <button type="button" class="btn btn-primary"
                                                                 (click)="GenerateInvoice(jobCardNum)" id="register" style="width: fit-content;">Generate Invoice</button>
                                                         </td>
                                                         </ng-template>
@@ -2543,7 +2523,7 @@
                                                         <div *ngIf="preInvButton; then Pre11; else Pre21"></div>
                                                         <ng-template #Pre11>
                                                         <td>
-                                                            <button  type="submit" class="btn btn-primary"
+                                                            <button  type="button" class="btn btn-primary"
                                                                 style="width: fit-content;"
                                                                 id="register" (click)="printPreInvoice()" >Pre-Invoice</button>
                                                         </td>
@@ -2560,8 +2540,8 @@
 
                                                             <div *ngIf="preInvButton; then Pre11; else Pre21"></div>
                                                             <ng-template #Pre11>
-                                                            <td> <button  type="submit" class="btn btn-primary" style="width: fit-content;" id="register" (click)="printPreInvoiceDp('cust')" >DP-PreInvoice(Cust)</button> </td>
-                                                            <td> <button  type="submit" class="btn btn-primary" style="width: fit-content;" id="register" (click)="printPreInvoiceDp('ins')" >DP-PreInvoice(Ins)</button> </td>
+                                                            <td> <button  type="button" class="btn btn-primary" style="width: fit-content;" id="register" (click)="printPreInvoiceDp('cust')" >DP-PreInvoice(Cust)</button> </td>
+                                                            <td> <button  type="button" class="btn btn-primary" style="width: fit-content;" id="register" (click)="printPreInvoiceDp('ins')" >DP-PreInvoice(Ins)</button> </td>
                                                            
                                                             </ng-template>
                                                             <ng-template #Pre21>
@@ -2583,8 +2563,8 @@
                                              
                                                     <div *ngIf="printInvoiceButton; then P1; else P2"></div>
                                                     <ng-template #P1>
-                                                        <td><button type="submit" class="btn btn-primary" id="register" style="width: fit-content;" (click)="printWSInvoice()">Print invoice</button> </td>
-                                                        <td> <button type="submit" class="btn btn-primary" id="register"  style="width: fit-content;" [routerLink]="['/admin/transaction/PaymentAr',this.jobCardNum]">Receipt</button> </td> 
+                                                        <td><button type="button" class="btn btn-primary" id="register" style="width: fit-content;" (click)="printWSInvoice()">Print invoice</button> </td>
+                                                        <td> <button type="button" class="btn btn-primary" id="register"  style="width: fit-content;" [routerLink]="['/admin/transaction/PaymentAr',this.jobCardNum]">Receipt</button> </td> 
                                                     </ng-template>
                                                     <ng-template #P2></ng-template>
 
@@ -2592,10 +2572,10 @@
                                                     <ng-template #dpcustInvYes>
                                                         <div *ngIf="printInvoiceButton; then P3; else P4"></div>
                                                         <ng-template #P3>
-                                                            <td><button type="submit" class="btn btn-primary" id="register" style="width: fit-content;" (click)="printWSInvoiceDp('cust')">DP invoice(Cust)</button> </td>
-                                                            <td><button type="submit" class="btn btn-primary" id="register" style="width: fit-content;" (click)="printWSInvoiceDp('ins')">DP invoice(Ins)</button> </td>
+                                                            <td><button type="button" class="btn btn-primary" id="register" style="width: fit-content;" (click)="printWSInvoiceDp('cust')">DP invoice(Cust)</button> </td>
+                                                            <td><button type="button" class="btn btn-primary" id="register" style="width: fit-content;" (click)="printWSInvoiceDp('ins')">DP invoice(Ins)</button> </td>
                                                           
-                                                            <td> <button type="submit" class="btn btn-primary" id="register"  style="width: fit-content;" [routerLink]="['/admin/transaction/PaymentAr',this.jobCardNum]">Receipt</button> </td> 
+                                                            <td> <button type="button" class="btn btn-primary" id="register"  style="width: fit-content;" [routerLink]="['/admin/transaction/PaymentAr',this.jobCardNum]">Receipt</button> </td> 
                                                         </ng-template>
                                                         <ng-template #P4></ng-template>
                                                     </ng-template>
@@ -2742,29 +2722,25 @@
                                                     </thead>
                                                     <tbody>
                                                         <ng-container class="center" formArrayName="splitAmounts">
+                                                            <!-- <ng-container class="center" formArrayName="splitArr">    -->
                                                             <ng-container
                                                                 *ngFor="let matDetails of splitDetailsArray().controls; let j= index"
                                                                 [formGroupName]="j">
 
                                                                 <tr>
-                                                                    <input  hidden disabled type="number" min="0"  formControlName="lineBasicAmt" 
-                                                                            class="form-control">
-
+                                                                    <input  hidden disabled type="number" min="0"  formControlName="lineBasicAmt"  class="form-control">
                                                                     <td>
                                                                         <select class="form-control"
                                                                             formControlName="type">
-                                                                            <option value="Technician">Technician
-                                                                            </option>
-                                                                            <option value="Contractor">Contractor
-                                                                            </option>
+                                                                            <option value="Technician">Technician</option>
+                                                                            <option value="Contractor">Contractor</option>
                                                                         </select>
                                                                     </td>
-                                                                    <td> <select formControlName="techId" id="techId"
-                                                                            class="form-control">
+                                                                    <td> 
+                                                                        <select formControlName="techId" id="techId"  class="form-control">
                                                                             <option>--Select--</option>
-                                                                            <option *ngFor="let sc of  TechnicianList"
-                                                                                [ngValue]="sc.teamId">
-                                                                                {{sc.description}}
+                                                                            <option *ngFor="let sc of  TechnicianList" [ngValue]="sc.teamId">
+                                                                                {{sc.teamId}}-{{sc.description}}
                                                                             </option>
                                                                         </select>
                                                                     </td>
@@ -2772,12 +2748,7 @@
                                                                             class="form-control">
                                                                     </td> -->
 
-                                                                   
-                                                                    
-
-                                                                    <td> <input type="number" min="0"  formControlName="techAmt" (change) =validateTechAmt(j,content)
-                                                                        class="form-control">
-                                                                    </td>
+                                                                    <td> <input type="number" min="0"  formControlName="techAmt" (change) = "validateTechAmt(j,content)" class="form-control">  </td>
 
                                                                     <!-- <td> <input  type="text"
                                                                             formControlName="contr1" class="form-control">
@@ -2788,19 +2759,10 @@
                                                                 <td> <input  type="text"
                                                                         formControlName="contr1Amt" class="form-control">
                                                                 </td> -->
-                                                                    <td>
-                                                                        <button type="submit" class="btn btn-primary"
-                                                                            (click)="addTechRow(j)"
-                                                                            (keydown.shift.arrowdown)="addRow(i)"
-                                                                            style="width: min-content;"><i
-                                                                                class="fa fa-plus"></i></button>
-                                                                    </td>
-                                                                    <td>
-                                                                        <button type="submit" class="btn btn-primary"
-                                                                            (click)="RemoveTechRow(j)"
-                                                                            style="width: min-content;"><i
-                                                                                class="fa fa-trash"></i></button>
-                                                                    </td>
+                                                                    <td> <button type="button" class="btn btn-primary"    (click)="addTechRow(j)"
+                                                                            (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i class="fa fa-plus"></i></button></td>
+                                                                    <td> <button type="button" class="btn btn-primary"
+                                                                            (click)="RemoveTechRow(j)"   style="width: min-content;"><i class="fa fa-trash"></i></button></td>
                                                                 </tr>
                                                                 <!-- <tr>
                                                                             <td> <input  type="text"
@@ -2977,7 +2939,7 @@
             <table class="center">
         <tr>
             <td>
-            <button  type="submit" class="btn btn-primary" data-dismiss="modal" id="register"   (click)="executeAction()">Yes</button>
+            <button  type="button" class="btn btn-primary" data-dismiss="modal" id="register"   (click)="executeAction()">Yes</button>
             </td>
             <td>
             <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
@@ -3099,7 +3061,7 @@
                                         <td style="text-align: center;width: 2rem;">{{com.trxNumber}}</td> 
                                         <td style="text-align: right;width: 2rem;">{{com.invoiceAmount}}</td> 
                                         <td style="text-align: right;width: 2rem;">{{com.balance}}</td> 
-                                        <button  type="submit" class="btn btn-secondary" data-dismiss="modal" id="register"   (click)="Search(com.jobCardNum)">Select</button>
+                                        <button  type="button" class="btn btn-secondary" data-dismiss="modal" id="register"   (click)="Search(com.jobCardNum)">Select</button>
                                 </tr> 
                             </table>
                         </div>
@@ -3200,7 +3162,7 @@
                                 <!-- <td style="width:8rem;text-align: center;">{{com.itemCategory}}</td>      
                                 <td style="width:8rem;text-align: center;">{{com.uom}}</td>  -->
                                 <!-- <td><button class="btn btn-secondary" (click)="F9SearchItemCodeNew(com.segment)">Select</button></td>  -->
-                                <button  type="submit" class="btn btn-secondary" data-dismiss="modal" id="register" style="width: fit-content;"  (click)="getItem(com.segment,lineIndex)">Select</button>
+                                <button  type="button" class="btn btn-secondary" data-dismiss="modal" id="register" style="width: fit-content;"  (click)="getItem(com.segment,lineIndex)">Select</button>
                             </tr>
                 </table>
             </div>

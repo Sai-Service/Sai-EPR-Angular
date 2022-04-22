@@ -2601,25 +2601,27 @@ OrderCategoryList(): Observable<any> {
 
   }
 
-  getArReceiptSearchByRcptNoByloc(rcptNumber,ouId, locId): Observable<any>
+  getArReceiptSearchByRcptNoByloc(rcptNumber,ouId, locId,deptId): Observable<any>
   {
+    // alert ("MS >> dept Id : " +deptId)
     if( rcptNumber !=undefined || rcptNumber !=null ) {
-    return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptNumber=${rcptNumber}&orgId=${ouId}&locId=${locId}`);
+      return this.http.get(this.ServerUrl + `/arCashReceipts/Search/${deptId}?receiptNumber=${rcptNumber}&orgId=${ouId}&locId=${locId}`);
+    //  return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptNumber=${rcptNumber}&orgId=${ouId}&locId=${locId}`);
     }
-
   }
 
-  SearchRcptByDate(rcptDate,ouId,locId): Observable<any>
+  SearchRcptByDate(rcptDate,ouId,locId,deptId): Observable<any>
   {
-    return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptDate='${rcptDate}'&orgId=${ouId}&locId=${locId}`)
-   
-  }
+    // old >> return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptDate='${rcptDate}'&orgId=${ouId}&locId=${locId}`)
+    return this.http.get(this.ServerUrl + `/arCashReceipts/Search/${deptId}?receiptDate='${rcptDate}'&orgId=${ouId}&locId=${locId}`)
+   }
 
 
-  SearchRcptByCustNo(custActNo,ouId,locId): Observable<any>
+  SearchRcptByCustNo(custActNo,ouId,locId,deptId): Observable<any>
     {
-      return this.http.get(this.ServerUrl + `/arCashReceipts/Search?accountNo=${custActNo}&orgId=${ouId}&locId=${locId}`);
-        
+      //old>> return this.http.get(this.ServerUrl + `/arCashReceipts/Search?accountNo=${custActNo}&orgId=${ouId}&locId=${locId}`);
+      return this.http.get(this.ServerUrl + `/arCashReceipts/Search/${deptId}?accountNo=${custActNo}&orgId=${ouId}&locId=${locId}`);
+      
     }
 
 
@@ -2820,8 +2822,8 @@ formData.append('location', locCode);
   }
 
 
-getModelWisePrice(){
-  return this.http.get(this.ServerUrl + `/orderHeader/priceModelwise`)
+getModelWisePrice(orgId){
+  return this.http.get(this.ServerUrl + `/orderHeader/priceModelwise/${orgId}`)
 }
 
   bulkpouploadSpares(formData: FormData) {

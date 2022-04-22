@@ -121,7 +121,7 @@
                                             <td style="text-align: center;width: 4rem;">{{i+1}}</td>
                                             <div *ngIf="updateButton; then upd11; else upd21"></div>
                                             <ng-template #upd11>
-                                                 <td><input readonly  style="width:6rem; text-align: center;"  type="number" formControlName="custAccountNo" class="form-control" style="background-color: lightgreen;"></td>
+                                                 <td><input readonly  style="width:6rem; text-align: center;background-color: lightgreen;"  type="text" formControlName="custAccountNo" class="form-control"></td>
                                             </ng-template>
                                             <ng-template #upd21>
                                                 <td><input   style="width:6rem;text-align: center;"  type="number" formControlName="custAccountNo" (change)="searchCustomer(i)" class="form-control"></td>
@@ -161,12 +161,12 @@
                             </ng-template>
                             <ng-template #elseBlock1>
 
-                                <div *ngIf="updateButton; then upd1; else upd2"></div>
+                                <div *ngIf="closedStatus; then upd1; else upd2"></div>
                                 <ng-template #upd1>
-                                  <td> <button  type="submit" class="btn btn-info" id="register" (click)="updateMast()">Update</button></td>
+                                  <td> <button disabled type="submit" class="btn btn-info" id="register" (click)="updateMast()">Update</button></td>
                                 </ng-template>
                                 <ng-template #upd2>
-                                    <td> <button disabled type="submit" class="btn btn-info" id="register" (click)="updateMast()">Update</button></td>
+                                    <td> <button  type="submit" class="btn btn-info" id="register" (click)="updateMast()">Update</button></td>
                                 </ng-template>
 
                                 <!-- <td> <button type="submit" class="btn btn-info" id="register" (click)="searchMast(0)">Search</button></td> -->

@@ -946,7 +946,7 @@ if(this.deptId==2){
     if(rcptNo ===undefined || rcptNo===null || rcptNo<=0 ) {return;}
 
     this.status = null;
-    this.service.getArReceiptSearchByRcptNoByloc(rcptNo,sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
+    this.service.getArReceiptSearchByRcptNoByloc(rcptNo,sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
       .subscribe(
         data => {
           this.lstcomments = data.obj;
@@ -962,7 +962,7 @@ if(this.deptId==2){
    
     this.status = null;
     // var mDate = this.pipe.transform(rcptdate, 'dd-MMM-y');
-    this.service.SearchRcptByCustNo(custActNo, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
+    this.service.SearchRcptByCustNo(custActNo, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
       .subscribe(
         data => {
           this.lstcomments = data.obj;
@@ -980,7 +980,7 @@ if(this.deptId==2){
    
     this.status = null;
     var mDate = this.pipe.transform(rcptdate, 'dd-MMM-y');
-    this.service.SearchRcptByDate(mDate,sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
+    this.service.SearchRcptByDate(mDate,sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
       .subscribe(
         data => {
           this.lstcomments = data.obj;

@@ -1435,7 +1435,6 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                 if (Number(this.custSiteList[i].ouId) === Number(sessionStorage.getItem('ouId'))) {
                   this.CounterSaleOrderBookingForm.patchValue({ name: this.custSiteList[i].siteName });
                   this.CounterSaleOrderBookingForm.get('name').enable()
-                  alert('Selected Customer Multiple Sites.. Please confirm.!')
                   //  this.onOptionsSelectedcustSiteName(this.custSiteList[i].siteName);
                 }
               }
@@ -1443,6 +1442,9 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                 alert('Please Create/Select Operating Unit wise Site to continue process!')
               }
             }
+            if (this.custSiteList.length !=1){
+              alert('Selected Customer Multiple Sites.. Please confirm.!')
+             }
             var custName = data.obj.custName;
             if (custName.includes(('CSCASH')) && Number(sessionStorage.getItem('divisionId')) === 2) {
               this.displaywalkingCustomer = false;

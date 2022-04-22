@@ -379,7 +379,10 @@
                                     <input disabled type="text" class="form-control" formControlName="billToAddress"
                                         [(ngModel)]='billToAddress' value={{billToAddress}} style="width: 100%">
                                 </td>
-
+                                <td colspan="8">
+                                    <input disabled type="text" class="form-control" formControlName="billToAddress"
+                                        [(ngModel)]='billToAddress' value={{billToAddress}} style="width: 100%">
+                                </td>
                             </tr>
                             <tr>
                                 <td style="width: 15%" class="LabelFontStyle">
@@ -921,7 +924,7 @@
                                 <select formControlName="model" id="model" class="form-control" style="width: 170px;"
                                     (ngModelChange)="onOptionsSelectedVariant($event)">
                                     <option>--Select--</option>
-                                    <option *ngFor="let mm of mainModelList">
+                                    <option *ngFor="let mm of mainModelList" [ngValue]="mm.code">
                                         {{mm.code}}
                                     </option>
                                 </select>
@@ -1007,7 +1010,7 @@
                                 Model&nbsp;:&nbsp;
                             </td>
                             <td>
-                                <input disabled type="text" formControlName="model" class="form-control"
+                                <input disabled type="text" formControlName="model" class="form-control" 
                                     style="width: 150px;">
                             </td>
                             <td style="width: 15%" class="LabelFontStyle">

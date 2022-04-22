@@ -116,6 +116,7 @@ interface IjobCard {
 
 export class JobCardComponent implements OnInit {
   jobcardForm: FormGroup;
+  @ViewChild('aForm') aForm: ElementRef;
 
   pipe = new DatePipe('en-US');
   now = Date.now();
@@ -634,6 +635,7 @@ export class JobCardComponent implements OnInit {
       jobCardLabLines: this.fb.array([this.lineDetailsGroup()]),
       jobCardMatLines: this.fb.array([this.distLineDetails()]),
       splitAmounts: this.fb.array([this.splitDetailsGroup()])
+      // splitArr: this.fb.array([this.splitDetailsGroup()])
     })
 
   }
@@ -670,48 +672,18 @@ export class JobCardComponent implements OnInit {
       genericItem:[],
     });
   }
+
+
   splitDetailsGroup() {
     return this.fb.group({
       type: [],
       techId: [],
-      // tech2: [],
-      // tech3: [],
-      // tech4: [],
-      // tech5: [],
-      // tech6: [],
-      // tech7: [],
-      // tech8: [],
       techAmt: [],
       techPer: [],
-      // tech2Per:[],
-      // tech2Amt:[],
-      // tech3Per:[],
-      // tech3Amt:[],
-      // tech4Per:[],
-      // tech4Amt:[],
-      // tech5Per:[],
-      // tech5Amt:[],
-      // tech6Per:[],
-      // tech6Amt:[],
-      // tech7Per:[],
-      // tech7Amt:[],
-      // tech8Per:[],
-      // tech8Amt:[],
-      // contr1:[],
-      // contr2:[],
-      // contr3:[],
-      // contr4:[],
-      // contr1Per:[],
-      // contr2Per:[],
-      // contr3Per:[],
-      // contr4Per:[],
-      // contr1Amt:[],
-      // contr2Amt:[],
-      // contr3Amt:[],
-      // contr4Amt:[],
       lineBasicAmt:[],
     });
   }
+
   // splitDetailsArray(i: number): FormArray {
   //     return this.lineDetailsArray.controls[i].get('splitAmounts') as FormArray
   //   }
@@ -719,6 +691,10 @@ export class JobCardComponent implements OnInit {
   splitDetailsArray(): FormArray {
     return <FormArray>this.jobcardForm.get('splitAmounts')
   }
+
+ 
+
+
   get lineDetailsArray() {
     var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
     // (patch.controls[0]).patchValue(
@@ -728,6 +704,7 @@ export class JobCardComponent implements OnInit {
     // );
     return <FormArray>this.jobcardForm.get('jobCardLabLines')
   }
+
   addTechRow(index) {
 
     var len1=this.splitDetailsArray().length-1
@@ -1557,7 +1534,15 @@ export class JobCardComponent implements OnInit {
           for (let i = 0; i < this.lstcomments.jobCardLabLines.length - len1; i++) {
             var payInvGrp: FormGroup = this.lineDetailsGroup();
             this.lineDetailsArray.push(payInvGrp);
-          }
+         
+            }
+
+              // alert ("this.lstcomments.jobCardLabLines[i].splitArr.length :"+this.lstcomments.jobCardLabLines[0].splitArr.length);
+            //   for (let j = 0; j < this.lstcomments.jobCardLabLines[i].splitArr.length ; j++) {
+            //     var payInvGrp1: FormGroup = this.splitDetailsGroup();
+            //     this.splitDetailsArray().push(payInvGrp1);
+            // }
+          
     
           if (this.lstcomments.lineCnt > 0) {
             this.dispReadyInvoice = true;
@@ -2138,11 +2123,14 @@ export class JobCardComponent implements OnInit {
     if(formValue.freePickup=='Yes' && (formValue.pickupType==null || formValue.pickupType==undefined)){this.jobHeaderValidation = false;
       msg1="PICKUP TYPE : Should not be null....";alert(msg1);return;}
     
-      if(formValue.estLabor <0 ){this.jobHeaderValidation = false;
-      msg1="ESTIMATED  LABOUR : Enter Valid Est.Labour Amt....";alert(msg1);return;}
+    if(formValue.estLabor <0 ){this.jobHeaderValidation = false;
+    msg1="ESTIMATED  LABOUR : Enter Valid Est.Labour Amt....";alert(msg1);return;}
     
-      if(formValue.estMaterial <0 ){this.jobHeaderValidation = false;
-        msg1="ESTIMATED  MATERIAL : Enter Valid Est.Material Amt....";alert(msg1);return;}
+    if(formValue.estMaterial <0 ){this.jobHeaderValidation = false;
+      msg1="ESTIMATED  MATERIAL : Enter Valid Est.Material Amt....";alert(msg1);return;}
+
+    if(formValue.promiseDate===null || formValue.promiseDate===undefined) {this.jobHeaderValidation = false;
+      msg1="PROMISED DATE : Enter Promised Date....";alert(msg1);return;}
       
        
     
@@ -2201,6 +2189,15 @@ export class JobCardComponent implements OnInit {
     var jobCardLabLinesControl = this.jobcardForm.get('jobCardLabLines').value;
     var lineTotAmt = jobCardLabLinesControl[i].basicAmt;
     this.lineBasicAmt=lineTotAmt;
+
+      // alert ("this.lstcomments.jobCardLabLines[i].splitArr.length :"+this.lstcomments.jobCardLabLines[0].splitArr.length);
+        for (let j = 0; j < this.lstcomments.jobCardLabLines[i].splitArr.length-1 ; j++) {
+          var payInvGrp1: FormGroup = this.splitDetailsGroup();
+          this.splitDetailsArray().push(payInvGrp1);
+      }
+
+      // this.jobcardForm.patchValue(this.lstcomments.jobCardLabLines[i].splitArr);
+
 
   }
 
@@ -2303,6 +2300,7 @@ export class JobCardComponent implements OnInit {
       alert("Distribution amount mismatch")
     }
   }
+
   clearlabLineFormArray() {
     this.splitDetailsArray().clear();
     this.lineDetailsArray.reset();
@@ -3162,6 +3160,19 @@ SearchPartNum(){
 
   onBillableTypeSelect(evnt,index) {
     alert ("Billable Type :"+evnt +"  ,"+index);
+  }
+
+  enterKeyLock(i,fld) {
+    // alert('Enter Not Allowed.!' +fld);
+    this.setFocus(fld);
+    return;
+  }
+
+  setFocus(name) {
+    const ele = this.aForm.nativeElement[name];
+    if (ele) {
+      ele.focus();
+    }
   }
 
 }
