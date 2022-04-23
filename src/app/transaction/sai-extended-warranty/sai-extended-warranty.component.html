@@ -248,11 +248,11 @@
                         
                         <td style="width: 15%" class="LabelFontStyle1">Current&nbsp;Mileage:&nbsp;</td>
                             
-                        <div *ngIf="displayButton; then thenBlock901; else elseBlock901"></div>
-                        <ng-template #thenBlock901>
+                        <div *ngIf="displayButton; then thenBlock801; else elseBlock802"></div>
+                        <ng-template #thenBlock801>
                             <td><input   type="number"  formControlName="kmsEwSale"  id="kmsEwSale" [(ngModel)]="kmsEwSale" class="form-control" (change)='onEnterKms(kmsEwSale)' style="background-color: yellow;"> </td>
                         </ng-template>
-                        <ng-template #elseBlock901>
+                        <ng-template #elseBlock802>
                             <td><input disabled  type="number"  formControlName="kmsEwSale"  id="kmsEwSale" [(ngModel)]="kmsEwSale" class="form-control" (change)='onEnterKms(kmsEwSale)' > </td>
                         </ng-template>
 
@@ -343,6 +343,7 @@
 
                         <td style="width: 15%" class="LabelFontStyle">Sale&nbsp;Date:&nbsp;</td>
                         <td><input disabled  type="date"  formControlName="deliveryDate"  id="deliveryDate" [(ngModel)]="deliveryDate" class="form-control" ></td>
+                        <input hidden  type="date"  formControlName="regDate"  id="regDate" [(ngModel)]="regDate" class="form-control" >
 
 
                             <td style="width: 15%" class="LabelFontStyle1">OEM&nbsp;WR&nbsp;Period:&nbsp;</td>
@@ -578,8 +579,8 @@
 
                             <td style="width: 15%" class="LabelFontStyle1">EW&nbsp;Scheme:&nbsp;</td>
     
-                            <div *ngIf="displayButton; then thenBlock902; else elseBlock902"></div>
-                            <ng-template #thenBlock902>
+                            <div *ngIf="showSchemeLov; then thenBlock901; else elseBlock902"></div>
+                            <ng-template #thenBlock901>
                             <td colspan="3">  
                                 <select  formControlName="ewSchemeId" id="ewSchemeId" [(ngModel)]="ewSchemeId" class="form-control" (ngModelChange)="GetSchemeDetails($event)"  style="background-color: yellow;width: 100%;">
                                     <option disabled>--Select--</option>
@@ -590,16 +591,11 @@
                             </td>
                             </ng-template>
 
-                            <ng-template #elseBlock902>
-                                <td colspan="3">  
-                                    <select disabled formControlName="ewSchemeId" id="ewSchemeId" [(ngModel)]="ewSchemeId" class="form-control" (ngModelChange)="GetSchemeDetails($event)" style="width: 100%;background-color: lightgreen;"  >
-                                        <option disabled>--Select--</option>
-                                        <option *ngFor="let sc of EwSchemeItemList" [ngValue] ="sc.ewSchemeId" >
-                                            {{sc.ewSchemeId}}-{{sc.ewSchemeNo}}
-                                        </option>
-                                    </select>
-                                </td>
-                                </ng-template>
+                            <ng-template #elseBlock902> 
+                                <td colspan="3"><input disabled   type="text"  formControlName="ewSchemeName"  id="ewSchemeName" [(ngModel)]="ewSchemeName" class="form-control" style="width: 100%;" ></td>
+                                <input hidden   formControlName="ewSchemeId"  id="ewSchemeId" [(ngModel)]="ewSchemeId" >
+                              
+                            </ng-template>
 
 
                                 <td   style="width: 15%" class="LabelFontStyle1">EW&nbsp;Item&nbsp;Code:&nbsp;</td>
