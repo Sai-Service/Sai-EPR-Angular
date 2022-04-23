@@ -1409,8 +1409,10 @@ export class JobCardComponent implements OnInit {
       .subscribe(
         data => {
           this.RegNoList = data.obj;
-          if(data.code===400 && data.obj !=null)  {alert(data.obj);this.jobcardForm.reset(); return;}
-          if(data.code===400 && data.obj ===null) {alert("Please Enter valid Registration Number..."); this.jobcardForm.reset(); return;}
+          // if(data.code===400 && data.obj !=null)  {alert(data.obj);this.jobcardForm.reset(); return;}
+          // if(data.code===400 && data.obj ===null) {alert("Please Enter valid Registration Number..."); this.jobcardForm.reset(); return;}
+          if(data.code===400 ) {alert (data.message); this.jobcardForm.reset(); return;}
+          
           console.log(this.RegNoList);
        
           this.jobcardForm.patchValue(this.RegNoList);
