@@ -1093,7 +1093,7 @@ export class JobCardComponent implements OnInit {
 
 
   getUserIdsFirstWay($event) {
-    this.onInput($event);
+    // this.onInput($event);
     let userId = (<HTMLInputElement>document.getElementById('userIdFirstWay')).value;
     this.userList1 = [];
 
@@ -1387,20 +1387,32 @@ export class JobCardComponent implements OnInit {
   }
 
   serchByRegNo(RegNo) {
-   
-    // RegNo=RegNo.toUpperCase();
-    // alert ("Regno :" + RegNo);
-    // RegNo=RegNo.trim();
+
+    // var mreg1=this.jobcardForm.get('regNo').value
+    if(RegNo==null || RegNo==undefined || RegNo.trim()=='') {
+      alert ("Enter Valid Vehicle Registration No."); return;
+    }
+
+    RegNo=RegNo.toUpperCase();
+    RegNo=RegNo.trim();
+    this.regNo=RegNo;
+    // alert ("this.regno :"+this.regNo);
 
     var jcType=this.jobcardForm.get('jcType').value;
-    if(jcType ==='--Select--' || jcType ===null ) {alert ("Please Select Job Card Type...");return;}
+    if(jcType ==='--Select--' || jcType ===null || jcType ===undefined ) {
+      alert ("Please Select Job Card Type...");
+      this.jobcardForm.patchValue({regNo:''});
+      return;
+    }
  
     this.serviceService.getByRegNo(RegNo, sessionStorage.getItem('ouId'),jcType)
       .subscribe(
         data => {
           this.RegNoList = data.obj;
-          if(data.code===400 && data.obj !=null)  {alert(data.obj);this.jobcardForm.reset(); return;}
-          if(data.code===400 && data.obj ===null) {alert("Please Enter valid Registration Number..."); this.jobcardForm.reset(); return;}
+          // if(data.code===400 && data.obj !=null)  {alert(data.obj);this.jobcardForm.reset(); return;}
+          // if(data.code===400 && data.obj ===null) {alert("Please Enter valid Registration Number..."); this.jobcardForm.reset(); return;}
+          if(data.code===400 ) {alert (data.message); this.jobcardForm.reset(); return;}
+          
           console.log(this.RegNoList);
        
           this.jobcardForm.patchValue(this.RegNoList);
@@ -2195,9 +2207,9 @@ export class JobCardComponent implements OnInit {
           var payInvGrp1: FormGroup = this.splitDetailsGroup();
           this.splitDetailsArray().push(payInvGrp1);
       }
-
-      // this.jobcardForm.patchValue(this.lstcomments.jobCardLabLines[i].splitArr);
-
+    
+      this.jobcardForm.patchValue(this.lstcomments.jobCardLabLines[i].splitArr);
+      //let selectbilTy = this.billableTyIdList.find(d => d.billableTyName === 'Customer');
 
   }
 

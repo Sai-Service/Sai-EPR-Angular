@@ -3792,10 +3792,12 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
 
       //////////////////////bank recon/////////////////////
 
-      bankList(mouId): Observable<any> {
+      bankList(methodType,mouId): Observable<any> {
         // alert ("OU Id :"+mouId);
-        return this.http.get(this.ServerUrl+`/ceBankAccounts/BankList/${mouId}`);
+        // return this.http.get(this.ServerUrl+`/ceBankAccounts/BankList/${mouId}`);
+        return this.http.get(this.ServerUrl+`/ceBankAccounts/BankList?methodType=${methodType}&ouId=${mouId}`);
         // http://localhost:8081/ceBankAccounts/BankList/101
+        // http://localhost:8081/ceBankAccounts/BankList?methodType=RTGS/NEFT&ouId=21
       }
 
 

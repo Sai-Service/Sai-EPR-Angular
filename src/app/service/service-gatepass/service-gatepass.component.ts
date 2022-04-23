@@ -204,14 +204,16 @@ export class ServiceGatepassComponent implements OnInit {
 
 
         serchByRegNo(mRegNo) {
-          // alert ("hello..")
-          var mreg1=this.serviceGatepassForm.get('regNo').value
-          if(mreg1==null || mreg1==undefined || mreg1.trim()=='') {
+          var mreg=this.serviceGatepassForm.get('regNo').value
+          if(mreg==null || mreg==undefined || mreg.trim()=='') {
             alert ("Enter Valid Vehicle Registration No."); return;
           }
-
-          var mreg=mreg1.toUpperCase();
-          // alert(mreg);
+          // alert ("mreg1:"+this.regNo+"....");
+          mreg=mreg.toUpperCase();
+          mreg=mreg.trim();
+          this.regNo=mreg;
+          // alert ("this.regno :"+this.regNo+"...");
+         
           this.service.getVehRegDetailsNew(mreg)
             .subscribe(
               data => {
@@ -475,7 +477,8 @@ radioEvent(event:any){
     }
 
     onInput(event) {
-      event.target.value = event.target.value.toLocaleUpperCase();
+       event.target.value = event.target.value.toLocaleUpperCase();
+     
     }
 
  }

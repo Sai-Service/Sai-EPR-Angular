@@ -187,8 +187,8 @@
                                                                             <tr> -->
 
                                                                                <td>
-                                                                                <input type="text" style="background-color: yellow;"
-                                                                                formControlName="regNo"   [(ngModel)]="regNo" (change)="serchByRegNo(regNo)" 
+                                                                                <input type="text" style="background-color: yellow;text-transform: uppercase;"
+                                                                                formControlName="regNo"   [(ngModel)]="regNo" (change)="serchByRegNo(regNo)"  
                                                                                 (keyup)="getUserIdsFirstWay($event)" id="userIdFirstWay" list="dynmicUserIds" class="form-control" />
                                                                                 <datalist id="dynmicUserIds">
                                                                                     <option
@@ -341,9 +341,9 @@
                                                                         <tr>
                                                                             <td style="width: 15%" class="LabelFontStyle">&nbsp;Demanded&nbsp;Job&nbsp;:</td>
                                                                             <td colspan="3">
-                                                                            <textarea id="demandJob" formControlName="demandJob" rows="2" style="width: 100%;resize: none; font-size: small;" (keyup)="onInput($event)"></textarea> </td>
+                                                                            <textarea id="demandJob" formControlName="demandJob" rows="2" style="width: 100%;resize: none; font-size: small;" ></textarea> </td>
                                                                             <td style="width: 15%"  class="LabelFontStyle">Recommendation&nbsp;:</td>
-                                                                            <td colspan="3"><textarea id="recomJob" formControlName="recomJob" rows="2" style="width: 100%; resize: none;font-size: small;" (keyup)="onInput($event)"></textarea> </td>
+                                                                            <td colspan="3"><textarea id="recomJob" formControlName="recomJob" rows="2" style="width: 100%; resize: none;font-size: small;" ></textarea> </td>
                                                                         </tr>
                                                                        
                                                                       
@@ -929,7 +929,7 @@
                                                                             <td>
                                                                                 <input type="text" class="form-control"
                                                                                     placeholder=""
-                                                                                    formControlName="driverName"  (keyup)="onInput($event)">
+                                                                                    formControlName="driverName"  >
                                                                             </td>
                                                                             <td style="width: 15%"
                                                                                 class="LabelFontStyle">
@@ -937,7 +937,7 @@
                                                                             <td>
                                                                                 <input type="text" class="form-control"
                                                                                     placeholder=""
-                                                                                    formControlName="pickupRemark" (keyup)="onInput($event)">
+                                                                                    formControlName="pickupRemark" >
                                                                             </td>
 
                                                                             <td style="width: 15%"
@@ -946,7 +946,7 @@
                                                                         <td>
                                                                             <input type="text" class="form-control"
                                                                                 placeholder=""
-                                                                                formControlName="pickupLoc" (keyup)="onInput($event)">
+                                                                                formControlName="pickupLoc" >
                                                                         </td>
 
                                                                              
@@ -970,7 +970,7 @@
                                                                             <div *ngIf="fscCouponStatus; then fscYes; else fscNo"></div>
                                                                             <ng-template #fscYes>
                                                                                 <td style="width: 15%" class="LabelFontStyle"> FSC&nbsp;Coupon&nbsp;No&nbsp;: </td>
-                                                                                <td> <input type="text" class="form-control"  placeholder="Fsc Coupon No." formControlName="fscCoupon" [(ngModel)]="fscCoupon" (keyup)="onInput($event)" ></td>
+                                                                                <td> <input type="text" class="form-control"  placeholder="Fsc Coupon No." formControlName="fscCoupon" [(ngModel)]="fscCoupon"  ></td>
                                                                             </ng-template>
                                                                             <ng-template #fscNo></ng-template>
 
@@ -1289,7 +1289,7 @@
                                                                             <ng-template #splt21>
                                                                                 <!-- <div *ngIf="genericItemLab; then genYes2; else genNo2"> </div>
                                                                                 <ng-template #genYes2> -->
-                                                                                     <td><input  type="text" formControlName="description"  class="form-control"  style="height: 25px; width:350px" (keyup)="onInput($event)" ></td>
+                                                                                     <td><input  type="text" formControlName="description"  class="form-control"  style="height: 25px; width:350px" ></td>
                                                                                <!-- </ng-template>
                                                                                <ng-template #genNo2>
                                                                                     <td><input disabled type="text" formControlName="description"  class="form-control"  style="height: 25px; width:350px" ></td>
@@ -1298,7 +1298,7 @@
 
 
 
-                                                                            <td><input disabled type="text" formControlName="genericItem"  class="form-control"  style="height: 25px; width:30px" (keyup)="onInput($event)"  ></td>
+                                                                            <td><input disabled type="text" formControlName="genericItem"  class="form-control"  style="height: 25px; width:30px"   ></td>
 
 
                                                                           
@@ -2731,7 +2731,7 @@
                                                                     <input  hidden disabled type="number" min="0"  formControlName="lineBasicAmt"  class="form-control">
                                                                     <td>
                                                                         <select class="form-control"
-                                                                            formControlName="type">
+                                                                            formControlName="Tecttttttype">
                                                                             <option value="Technician">Technician</option>
                                                                             <option value="Contractor">Contractor</option>
                                                                         </select>

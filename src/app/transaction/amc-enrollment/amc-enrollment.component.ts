@@ -310,8 +310,8 @@ closeMast() {
           alert ("Please Enter Vehicle Registration No...");return;
          }
          mRegNo=mRegNo.toUpperCase();
-
-         
+         mRegNo=mRegNo.trim();
+         this.regNo=mRegNo;
 
         //  alert ("Reg No :" +mRegNo)
 
