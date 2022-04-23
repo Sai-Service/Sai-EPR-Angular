@@ -45,6 +45,7 @@ interface ImoveOrder{
 }
 
 export class reserveLine {
+
   transactionType: string;
   transactionNumber: string;
   locId: number;
@@ -67,6 +68,7 @@ export  class StockTransferRow {
 })
 export class MoveOrderComponent implements OnInit {
   moveOrderForm:FormGroup;
+  submitted = false;
   public transType:any;
   public subInvCode:any;
   public issueByList:Array<string>=[];
@@ -818,4 +820,53 @@ validate(i:number,qty1)
     this.moveOrderForm.patchValue({ 'totalval': totAmt });
   
   }
+
+
+message: string = "Please Fix the Errors !";
+   msgType:string ="Close";
+   getMessage(msgType: string) {
+     this.msgType = msgType;
+     if (this.msgType.includes("Save")) {
+       this.submitted= true;
+      //  alert('1');
+       (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
+       if (this.moveOrderForm.invalid) {
+ //         //this.submitted = false;
+         alert('Please enter all mandatory details');
+         (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '');
+         return;
+       }
+       this.message = "Do you want to SAVE the changes(Yes/No)?"
+       
+     }
+     
+    
+     if (this.msgType.includes("Reset")) {
+       this.message = "Do you want to Reset the changes(Yes/No)?"
+     }
+     
+     if (this.msgType.includes("Close")) {
+       this.message = "Do you want to Close the Form(Yes/No)?"
+     }
+     return;
+   }
+ 
+  executeAction() {
+     if(this.msgType.includes("Save")) {
+      
+       this.newmoveOrder();
+     }
+     if (this.msgType.includes("Reset")) {
+          // this.resetItemCatMast();
+       this.resetMoveOrder();
+     }
+     
+     if (this.msgType.includes("Close")) {
+       this.closeMoveOrder();
+      //  this.router.navigate(['admin']);
+     }
+     return;
+   }
+ 
 }
+ 
