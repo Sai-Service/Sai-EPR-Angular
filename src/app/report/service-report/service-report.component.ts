@@ -558,8 +558,8 @@ isVisibleGSTSaleRegister:boolean=false;
       })
     }
   }
-  else if (reportName==='AMC Sales Register'){
-    const fileName = 'AMC Sales Register-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+  else if (reportName==='EW Sales Register'){
+    const fileName = 'EW Sales Register-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     if (Number(sessionStorage.getItem('deptId'))===4){
     this.reportService.EWSaleRegister(fromDate, toDate, sessionStorage.getItem('ouId'),locId)
