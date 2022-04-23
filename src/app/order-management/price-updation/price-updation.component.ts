@@ -103,8 +103,9 @@ export class PriceUpdationComponent implements OnInit {
 update(id){
   var price:string= this.PriceUpdationForm.get('attribute1').value
   var attribute1:string = String(price);
+  var emplId = sessionStorage.getItem('emplId');
   var onhandPrc:any=[];
-  onhandPrc.push({ id: id, attribute1: attribute1});
+  onhandPrc.push({ id: id, attribute1: attribute1,lastUpdatedBy:emplId});
   // const formValue: ISalesBookingForm = this.transData(this.PriceUpdationForm.getRawValue());
   this.orderManagementService.UpdatePrice(onhandPrc).subscribe((res: any) => {
     if (res.code === 200) {

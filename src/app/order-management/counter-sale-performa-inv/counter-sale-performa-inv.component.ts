@@ -249,7 +249,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
       pricingQty: [''],
       unitSellingPrice: [''],
       baseAmt: [''],
-      disPer: [''],
+      disPer: [0],
       disAmt: [''],
       taxPer: [''],
       sgst: [''],
@@ -610,7 +610,6 @@ export class CounterSalePerformaInvComponent implements OnInit {
       this.custAddress = (selSite.address1 + ', '
         + selSite.address2 + ', '
         + selSite.address3 + ', '
-        + selSite.address4 + ', '
         + selSite.city + ', '
         + selSite.pinCd + ', '
         + this.selCustomer.state);

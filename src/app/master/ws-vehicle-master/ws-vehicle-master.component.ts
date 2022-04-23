@@ -45,7 +45,8 @@ interface IWsVehicleMaster {
   deliveryDate : string;
   oemWarrentyEndDate: string;
   regDate: string;
- 
+  ewType:string;
+  pkgSource:string;
 }
 
 @Component({
@@ -69,6 +70,7 @@ export class WsVehicleMasterComponent implements OnInit {
   public VehVinList: Array<string> = [];
   public EwSchemeItemList: Array<string> = [];
   public ewInsNameList: Array<string> = [];
+  // public EwTypeList         : Array<string>=[];
 
   public ItemEWList: Array<string> = [];
   // public mainModelList: Array<string> = [];
@@ -129,7 +131,8 @@ export class WsVehicleMasterComponent implements OnInit {
   ewId: number;
   ewSchemeId: number;
   ewBookletNo: string;
-
+  ewType:string;
+  
   ///////////////////////////////////////////////////
   regNo: string;
   vin: string;
@@ -170,6 +173,7 @@ export class WsVehicleMasterComponent implements OnInit {
   mcpStartDate:string;
   mcpYN: string;
   mcpPackage: string;
+  pkgSource:string;
 
   cngCylinderNo: string;
   cngKitNumber: string;
@@ -341,6 +345,7 @@ export class WsVehicleMasterComponent implements OnInit {
       mcpEndDate: [],
       mcpStartDate:[],
       mcpYN: [],
+      pkgSource:[],
 
       cngCylinderNo: [],
       cngKitNumber: [],
@@ -565,6 +570,14 @@ export class WsVehicleMasterComponent implements OnInit {
           console.log(this.statusList);
         }
       );
+
+      this.service.EwTypeList(sessionStorage.getItem('divisionId'))
+      .subscribe(
+        data => {
+          this.EwTypeList = data;
+          console.log(this.EwTypeList);
+        }
+      );
   }
 
   onStatusSelected(event: any) {
@@ -611,7 +624,7 @@ export class WsVehicleMasterComponent implements OnInit {
     delete val.paytmentSource;
     delete val.kmReading;
     delete val.soldByEmpId;
-    delete val.ewType;
+    // delete val.ewType;
     delete val.govtVehicleYn;
     delete val.vipYn;
     // delete val.invLine;
@@ -746,11 +759,12 @@ export class WsVehicleMasterComponent implements OnInit {
           }
           else {
 
-            // alert ( "Status :"+this.lstcomments.status);
+            // alert ( "Reg date :"+data.obj.regDate);
             this.updateButton=true;
             this.displayButton = false;
             console.log(this.lstcomments);
             this.wsVehicleMasterForm.patchValue(data.obj);
+            this.wsVehicleMasterForm.patchValue({regDate :data.obj.regDate});
             // this.dlrInvoiceNo=data.obj.dlrInvNo;
             // this.dmsInvoiceNo=data.obj.dmsInvNo;
 
@@ -758,7 +772,7 @@ export class WsVehicleMasterComponent implements OnInit {
             this.GetCustomerDetails(this.lstcomments.custAccountNo);
             // this.GetCustomerSiteDetails(this.lstcomments.customerId);
             // this.CreateItemCode();
-
+            
             if(this.lstcomments.status ==='Inactive') { this.wsVehicleMasterForm.disable();}
 
           }

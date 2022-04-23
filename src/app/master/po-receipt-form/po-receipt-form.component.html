@@ -773,6 +773,7 @@
                     style="border-color:#959595;width:100%;border-collapse:collapse;">
                     <thead>
                         <tr class="GridHeader">
+                            <th scope="col">SR no</th>
                             <th scope="col">Item</th>
                             <th scope="col" style="width: 5rem;">Quantity Received</th>
                             <th scope="col">Locator</th>
@@ -837,7 +838,11 @@
                             <!-- <input  type="button"
                             formControlName="poLineId"  (click)="taxDeatils(i,poHeaderId,poLineId)" class="form-control" style="height: 20px;width: 50px;" > -->
                         <!-- </td> -->
-                        <td> <input disabled type="text"
+                        <td> <input disabled type="number"
+                            formControlName="polineNum"
+                            class="form-control" style="height: 20px;width: 30px;">
+                    </td>
+                        <td style="padding-left: 10px;"> <input disabled type="text"
                             formControlName="itemName"
                             class="form-control" style="height: 20px;">
                     </td>
@@ -993,7 +998,11 @@
                                         <!-- <td>
                                             <input type="checkbox">
                                         </td> -->
-                                        <td> <input disabled type="text" disabled
+                                        <td> <input disabled type="number"
+                                            formControlName="polineNum"
+                                            class="form-control" style="height: 20px;width: 30px;">
+                                    </td>
+                                        <td style="padding-left: 10px;"> <input disabled type="text" disabled
                                             formControlName="itemName"
                                             class="form-control" style="height: 20px;">
                                     </td>

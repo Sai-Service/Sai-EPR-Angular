@@ -136,6 +136,17 @@ paymentDocNameList(docCategoryCode): Observable<any> {
   return this.http.get(this.ServerUrl +`/cePaymentDoc/DocName/${docCategoryCode}`);
 }
 
+viewPaymentAdvice(docSeq,docCat,ouId):Observable<any>{
+  // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/rcvShipment/StkTransferNote/${shipmentNumber}`;
+  // local
+  const REQUEST_URI = this.ServerUrl +`/AccountsReports/PaymentAdvice?docSeqId=${docSeq}&docCatCode=${docCat}&ouId=${ouId}`;
+  return this.http.get(REQUEST_URI, {
+    // params: REQUEST_PARAMS,
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
+}
+
 public paymentSaveSubmit(poRecord) {
   const options = {
     headers: this.headers

@@ -47,15 +47,15 @@
                                         <th scope="col">Distribution Set</th>
                                         <th scope="col">Terms Date</th>
                                         <th scope="col">Terms</th>
-                                        <th scope="col">Payment Method</th>
+                                        <th scope="col" hidden>Payment Method</th>
                                         <th scope="col">Pay Group</th>
                                         <th scope="col">Prepayment Type</th>
                                         <th scope="col">Settlement Date</th>
-                                        <th scope="col">Taxation Country</th>
+                                        <th scope="col" hidden>Taxation Country</th>
                                         <th scope="col">Related& Invoice</th>
                                         <th scope="col">Supplier Tax Inv No</th>
-                                        <th scope="col">Remit-To Bank Acct Name</th>
-                                        <th scope="col">Remit-To Bank Acct No</th>
+                                        <th scope="col" hidden>Remit-To Bank Acct Name</th>
+                                        <th scope="col" hidden>Remit-To Bank Acct No</th>
                                         <th scope="col">Debit Memo Reason</th>
                                         <th>
                                             <table style="width: 100%;">
@@ -229,8 +229,7 @@
                                                             formControlName="terms" value={{terms}}
                                                             style="width: 120px;height: 25px;font-size: 10px;">
                                                     </td>
-                                                    <td>
-
+                                                    <td hidden>
                                                         <select formControlName="paymentMethod" class="form-control"
                                                             style="width: 120px;height: 25px;font-size: 10px;"
                                                             (change)='onOptionSelectedSectionPaymentMethod($event)'>
@@ -269,7 +268,7 @@
                                                             formControlName="settlementDate" value={{settlementDate}}
                                                             style="width: 120px;height: 25px;font-size: 10px;">
                                                     </td>
-                                                    <td>
+                                                    <td hidden>
                                                         <input type="text" class="form-control"
                                                             formControlName="taxationCountry" value={{taxationCountry}}
                                                             style="width: 120px;height: 25px;font-size: 10px;">
@@ -282,13 +281,13 @@
                                                         <input type="text" class="form-control" placeholder=""
                                                             style="width: 120px;height: 25px;font-size: 10px;">
                                                     </td>
-                                                    <td>
+                                                    <td hidden>
                                                         <input type="text" class="form-control"
                                                             formControlName="remitToBankAccount"
                                                             value={{remitToBankAccount}}
                                                             style="width: 120px;height: 25px;font-size: 10px;">
                                                     </td>
-                                                    <td>
+                                                    <td hidden>
                                                         <input type="text" class="form-control"
                                                             formControlName="remitToBankAccountNo"
                                                             value={{remitToBankAccountNo}}
@@ -303,11 +302,18 @@
                                                         <table>
                                                             <tr>
                                                                 <td>
-                                                                    <input class="form-control"
-                                                                        style="width: 100px;height: 25px;">
+                                                                    <!-- <input  type="text" class="form-control" formControlName="chassisNo"
+                                                                        style="width: 100px;height: 25px;"> -->
+                                                                        <select formControlName="chassisNo" class="form-control"
+                                                                        style="width: 120px;height: 25px;font-size: 10px;"  (change)="onSelectChassis($event,i)">
+                                                                        <option>--Select--</option>
+                                                                        <option *ngFor="let chassisList of  chassisNoList" [value]="chassisList.chassisNo">
+                                                                            {{chassisList.chassisNo}}
+                                                                        </option>
+                                                                    </select>
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-control"
+                                                                    <input disabled type="number" class="form-control" formControlName="referenceNo"
                                                                         style="width: 100px;height: 25px;">
                                                                 </td>
                                                                 <td>
@@ -441,7 +447,7 @@
                                                             formControlName="terms" value={{terms}}
                                                             style="width: 120px;height: 25px;font-size: 10px;">
                                                     </td>
-                                                    <td>
+                                                    <td hidden>
 
                                                         <select disabled formControlName="paymentMethod"
                                                             class="form-control"
@@ -486,7 +492,7 @@
                                                             formControlName="settlementDate" value={{settlementDate}}
                                                             style="width: 120px;height: 25px;font-size: 10px;">
                                                     </td>
-                                                    <td>
+                                                    <td hidden>
                                                         <input disabled type="text" class="form-control"
                                                             formControlName="taxationCountry" value={{taxationCountry}}
                                                             style="width: 120px;height: 25px;font-size: 10px;">
@@ -499,13 +505,13 @@
                                                         <input disabled type="text" class="form-control" placeholder=""
                                                             style="width: 120px;height: 25px;font-size: 10px;">
                                                     </td>
-                                                    <td>
+                                                    <td hidden>
                                                         <input type="text" disabled class="form-control"
                                                             formControlName="remitToBankAccount"
                                                             value={{remitToBankAccount}}
                                                             style="width: 120px;height: 25px;font-size: 10px;">
                                                     </td>
-                                                    <td>
+                                                    <td hidden>
                                                         <input type="text" disabled class="form-control"
                                                             formControlName="remitToBankAccountNo"
                                                             value={{remitToBankAccountNo}}
@@ -520,11 +526,11 @@
                                                         <table>
                                                             <tr>
                                                                 <td>
-                                                                    <input disabled class="form-control"
+                                                                    <input disabled type="text" class="form-control" formControlName="chassisNo"
                                                                         style="width: 100px;height: 25px;">
                                                                 </td>
                                                                 <td>
-                                                                    <input disabled class="form-control"
+                                                                    <input disabled type="number" class="form-control" formControlName="referenceNo"
                                                                         style="width: 100px;height: 25px;">
                                                                 </td>
                                                                 <td>
@@ -742,15 +748,7 @@
 
                                                         <tr class="ItemStyle" style="text-decoration:none;">
                                                             <td>
-                                                                <!-- <div  *ngIf="displayViewTaxDetails; then thenViewTaxDetails; else elseViewTaxDetails">  </div>
-                                                                <ng-template #thenViewTaxDetails>
-                                                                </ng-template>
-                                                                <ng-template #elseViewTaxDetails>
-                                                                    <a data-toggle="tab" href="#taxDetails"
-                                                                        (click)="onOptionViewTaxDetails(taxCategoryId,k)">
-                                                                        <img id="bajajlogo" src="assets\images\tax.png">
-                                                                    </a>
-                                                                </ng-template>   -->
+                                                              
 
                                                                 <div *ngIf="displayViewTaxDetails; then thenViewTaxDetails; else elseViewTaxDetails"> </div>
                                                                 <ng-template #thenViewTaxDetails>
@@ -850,7 +848,7 @@
                                                             <td>
 
                                                                 <input type="number" min="0" class="form-control"
-                                                                    formControlName="amount" value={{amount}}
+                                                                    formControlName="amount" value={{amount}}  (keydown.tab)="selectDisLineDtl(k)"
                                                                     style="width: 80px;height: 25px;font-size: 10px;text-align: right;">
 
                                                             </td>
@@ -931,18 +929,12 @@
                                                                     style="width: 100px;height: 25px;font-size: 10px;">
                                                             </td>
                                                             <td>
-
                                                                 <input type="number" class="form-control"
                                                                     formControlName="baseAmount" value={{baseAmount}}
                                                                     style="width: 100px;height: 25px;font-size: 10px;text-align: right;">
                                                             </td>
-
                                                             <td>
-
-
-                                                                <div
-                                                                    *ngIf="displayglDate; then thenglDate; else elseglDate">
-                                                                </div>
+                                                                <div *ngIf="displayglDate; then thenglDate; else elseglDate"> </div>
                                                                 <ng-template #thenglDate>
                                                                     <input type="text" class="form-control"
                                                                         formControlName="glDate" value="{{glDate}}"
@@ -955,9 +947,7 @@
                                                                         style="width: 130px;height: 25px;font-size: 10px;">
                                                                 </ng-template>
                                                             </td>
-
                                                             <td>
-
                                                                 <input hidden type="number" class="form-control"
                                                                     formControlName="defaultDistCcid">
                                                                 <input disabled type="text" class="form-control"
@@ -971,31 +961,26 @@
                                                                     style="width: 100px;height: 25px;font-size: 10px;">
                                                             </td>
                                                             <td>
-
                                                                 <input type="text" class="form-control"
                                                                     formControlName="segment1" value={{segment1}}
                                                                     style="width: 100px;height: 25px;font-size: 10px;">
                                                             </td>
                                                             <td>
-
                                                                 <input type="text" class="form-control"
                                                                     formControlName="segment1" value={{segment1}}
                                                                     style="width: 100px;height: 25px;font-size: 10px;">
                                                             </td>
                                                             <td>
-
                                                                 <input type="text" class="form-control"
                                                                     formControlName="segment1" value={{segment1}}
                                                                     style="width: 100px;height: 25px;font-size: 10px;">
                                                             </td>
                                                             <td>
-
                                                                 <input type="text" class="form-control"
                                                                     formControlName="segment1" value={{segment1}}
                                                                     style="width: 100px;height: 25px;font-size: 10px;">
                                                             </td>
                                                             <td>
-
                                                                 <input type="text" class="form-control"
                                                                     formControlName="segment1" value={{segment1}}
                                                                     style="width: 100px;height: 25px;font-size: 10px;">
@@ -1005,9 +990,6 @@
                                                                     class="btn btn-primary fa fa-trash"
                                                                     (click)="Delete(trxLineIndex)"></button>
                                                             </td>
-                                                        </tr>
-                                                        <tr>
-
                                                         </tr>
                                                     </ng-container>
                                                 </ng-container>
@@ -1021,7 +1003,6 @@
                                 <div class="tab-pane fade" id="distributionDetails" role="tabpanel">
                                     <div class="grid_scroll_1">
                                         <table class="GridFont">
-
                                             <thead>
                                                 <tr class="GridHeader">
                                                     <th scope="col">Inv Line No</th>
@@ -1035,16 +1016,13 @@
                                                     <th hidden scope="col">Status</th>
                                                     <th hidden scope="col">Accounting</th>
                                                     <th scope="col" style="width: fit-content;">Account Description</th>
-                                                    <div
-                                                        *ngIf="disDeleteButton; then thendisDeleteButton; else elsedisDeleteButton">
-                                                    </div>
+                                                    <div *ngIf="disDeleteButton; then thendisDeleteButton; else elsedisDeleteButton"></div>
                                                     <ng-template #thendisDeleteButton>
                                                         <th scope="col">Delete</th>
                                                     </ng-template>
                                                     <ng-template #elsedisDeleteButton> </ng-template>
                                                 </tr>
                                             </thead>
-
                                             <tbody>
                                                 <ng-container class="center" formArrayName="distribution">
                                                     <ng-container
@@ -1065,19 +1043,15 @@
                                                                     (keydown.shift.arrowdown)="addRowDistribution(k,lineTypeLookupCode)"
                                                                     class="form-control"
                                                                     style="width: 100px;height: 25px;">
-
                                                             </td>
                                                             <td>
                                                                 <input type="number" min="0" formControlName="amount"
                                                                     class="form-control"
                                                                     style="width: 100px;height: 25px;text-align: right;"
                                                                     (change)="amountmatch(k,$event)">
-
                                                             </td>
                                                             <td>
-                                                                <div
-                                                                    *ngIf="dispaccountingDate; then thenaccountingDate; else elseaccountingDate">
-                                                                </div>
+                                                                <div *ngIf="dispaccountingDate; then thenaccountingDate; else elseaccountingDate">  </div>
                                                                 <ng-template #thenaccountingDate>
                                                                     <input type="text" 
                                                                     formControlName="accountingDate"
@@ -1093,11 +1067,8 @@
                                                                 <!-- [(ngModel)]='accountingDate' -->
                                                             </td>
                                                             <td>
-                                                                <div
-                                                                    *ngIf="dispAccountCode; then thendispAccountCode; else elsedispAccountCode">
-                                                                </div>
+                                                                <div *ngIf="dispAccountCode; then thendispAccountCode; else elsedispAccountCode"> </div>
                                                                 <ng-template #thendispAccountCode>
-
                                                                     <input formControlName="distCodeCombId" hidden
                                                                         class="form-control"
                                                                         style="width: 160px;height: 25px;">
@@ -1105,7 +1076,6 @@
                                                                         (click)="openCodeComb1(k)" data-toggle="modal"
                                                                         data-target="#myModel1" class="form-control"
                                                                         style="width: 160px;height: 25px;">
-
                                                                 </ng-template>
                                                                 <ng-template #elsedispAccountCode>
                                                                     <input formControlName="distCodeCombId" hidden

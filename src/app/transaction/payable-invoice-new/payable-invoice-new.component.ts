@@ -1,5 +1,5 @@
 import { asLiteral } from '@angular/compiler/src/render3/view/util';
-import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener, ChangeDetectionStrategy,ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener, ChangeDetectionStrategy, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
@@ -64,6 +64,8 @@ interface IpoInvoice {
 
   thresHoldHdrId: number;
   thresHoldTypeId: number;
+  chassisNo: string;
+  referenceNo: number;
 }
 
 interface ISearch {
@@ -93,10 +95,11 @@ export class PayableInvoiceNewComponent implements OnInit {
   indexVal: number;
   locId: number;
   locCode: string;
-  source:string;
+  source: string;
   userList3: any[] = [];
+  chassisNoList:any=[];
   lastkeydown3: number = 0;
-  itemSeg:string;
+  itemSeg: string;
   firstFieldEmittedValue: IDateRange;
   isSearchPatch: boolean = false;
   firstFieldOptions: IDateRangePickerOptions = {
@@ -188,9 +191,9 @@ export class PayableInvoiceNewComponent implements OnInit {
   isVisibleSaveTDS: boolean = false;
   isVisibleviewAccounting: boolean = false;
   isVisibleTDSTab: boolean = false;
-  isVisiblepayGroupSelectList:boolean=false;
-  isVisiblepayGroupGroupinput:boolean= false;
-  isVisiblelineDetialsDeleteButton:boolean=false;
+  isVisiblepayGroupSelectList: boolean = false;
+  isVisiblepayGroupGroupinput: boolean = false;
+  isVisiblelineDetialsDeleteButton: boolean = false;
   // invoiceDate = this.pipe.transform(this.now, 'yyyy-MM-ddTHH:mm');
   invoiceDate = this.pipe.transform(this.now, 'dd-MMM-yyyy');
   // accountingDate = new Date();
@@ -236,7 +239,7 @@ export class PayableInvoiceNewComponent implements OnInit {
   remitToBankAccountNo: string;
   debitMemoReason: string;
   remitToSuppSite: string;
-  public tdsSectionList: any=[];
+  public tdsSectionList: any = [];
   public tdsTaxCategoryList: Array<string> = [];
   lstTdsLineDetails: any[];
   lstTdsLine: any[];
@@ -305,8 +308,10 @@ export class PayableInvoiceNewComponent implements OnInit {
   public lstsearchapinv: any;
   // nverValidedCnd:false;
   // ValidedCnd:true;
-  public locIdList1: Array<string> = [];
-  public BranchList: Array<string> = [];
+  // public locIdList1: Array<string> = [];
+  locIdList1: any = [];
+  // public BranchList: Array<string> = [];
+  BranchList: any = [];
   public CostCenterList: Array<string> = [];
   public NaturalAccountList: any = [];
   public InterBrancList: any = [];
@@ -374,9 +379,11 @@ export class PayableInvoiceNewComponent implements OnInit {
   public allTaxCategoryList: any = [];
 
 
-  displaylineNumber=true;
+  displaylineNumber = true;
+  chassisNo: string;
+  referenceNo: number;
 
-  constructor(private fb: FormBuilder, private router1: ActivatedRoute,private orderManagementService: OrderManagementService, private transactionService: TransactionService, private service: MasterService, private router: Router) {
+  constructor(private fb: FormBuilder, private router1: ActivatedRoute, private orderManagementService: OrderManagementService, private transactionService: TransactionService, private service: MasterService, private router: Router) {
     this.poInvoiceForm = fb.group({
       emplId: [],
       invoiceId: [],
@@ -416,7 +423,7 @@ export class PayableInvoiceNewComponent implements OnInit {
       docSeqValue: [],
       runningTotalCr: [],
       name1: [],
-      source:[],
+      source: [],
       obj: this.fb.array([this.lineDetailsGroup()]),
       invLines: this.fb.array([this.invLineDetails()]),
       distribution: this.fb.array([this.distLineDetails()]),
@@ -497,13 +504,13 @@ export class PayableInvoiceNewComponent implements OnInit {
       locCode: [],
       lineTypeLookupCode: ['', [Validators.required]],
       segment1: [],
-      itemSeg:[],
+      itemSeg: [],
       amount: ['', [Validators.required]],
       poNumber: [],
       poLineId: [],
       matchType: [],
       defaultDistCcid: [],
-      accDesc:[],
+      accDesc: [],
       defaultDisAcc: [],
       receiptNumber: [],
       qtyInvoiced: [],
@@ -533,7 +540,7 @@ export class PayableInvoiceNewComponent implements OnInit {
       locationId: ['', [Validators.required]],
       emplId: [],
       ouName: [],
-      source:[],
+      source: [],
       invoiceId: [],
       invoiceStatus: [],
       payGroup: [],
@@ -541,6 +548,8 @@ export class PayableInvoiceNewComponent implements OnInit {
       segment1: [],
       name: ['', [Validators.required]],
       suppInvNo: [],
+      chassisNo: [''],
+      referenceNo: [],
       suppId: [],
       suppInvDate: [],
       suppNo: [],
@@ -662,7 +671,7 @@ export class PayableInvoiceNewComponent implements OnInit {
     );
 
     this.poInvoiceForm.patchValue({ invoiceStatus: 'Not Validated' })
-      this.isVisiblelineDetialsDeleteButton=true;
+    this.isVisiblelineDetialsDeleteButton = true;
     this.paymentMethod1 = 69;
     this.ouId = Number(sessionStorage.getItem('ouId'));
     this.emplId = Number(sessionStorage.getItem('emplId'));
@@ -832,10 +841,10 @@ export class PayableInvoiceNewComponent implements OnInit {
     );
 
     this.service
-    .searchByItemSegmentDiv(sessionStorage.getItem('divisionId'), '36DH1601')
-    .subscribe((data) => {
-      this.invItemList = data;
-    });
+      .searchByItemSegmentDiv(sessionStorage.getItem('divisionId'), '36DH1601')
+      .subscribe((data) => {
+        this.invItemList = data;
+      });
 
 
     this.sub = this.router1.params.subscribe(params => {
@@ -971,7 +980,7 @@ export class PayableInvoiceNewComponent implements OnInit {
             // console.log(select.lookupValueDesc);  
             this.lineDetailsArray().controls[i].patchValue({ paymentRateDate: payDtString, invoiceId1: this.lstsearchapinv[i].invoiceId, internalSeqNum: this.lstsearchapinv[i].internalSeqNum });
             this.lineDetailsArray().controls[i].patchValue({ glDate: res.obj[i].glDate });
-            patch.controls[i].patchValue({payGroup:res.obj[i].payGroup})
+            patch.controls[i].patchValue({ payGroup: res.obj[i].payGroup })
             if (res.obj[i].paymentMethod === undefined || res.obj[i].paymentMethod === null) {
               (patch.controls[i]).patchValue(
                 {
@@ -979,16 +988,16 @@ export class PayableInvoiceNewComponent implements OnInit {
                 }
               );
             }
-            if ( res.obj[i].payGroup !=undefined|| res.obj[i].payGroup !=null){
+            if (res.obj[i].payGroup != undefined || res.obj[i].payGroup != null) {
               (patch.controls[i]).patchValue(
                 {
                   payGroup: res.obj[i].payGroup,
                 }
               );
-              this.isVisibleTDSTab=true;
-              this.isVisibleSaveTDS=true;
+              this.isVisibleTDSTab = true;
+              this.isVisibleSaveTDS = true;
             }
-           
+
             console.log(this.tdsSectionList);
             if (res.obj[i].invoiceStatus === null) {
               this.lineDetailsArray().controls[i].get('locationId').enable();
@@ -1007,7 +1016,7 @@ export class PayableInvoiceNewComponent implements OnInit {
               this.lineDetailsArray().controls[i].get('invoiceAmt').enable();
               this.lineDetailsArray().controls[i].get('taxAmt').enable();
             }
-            if (res.obj[i].segment1 != null || res.obj[i].segment1 !=undefined || res.obj[i].segment1 != ''){
+            if (res.obj[i].segment1 != null || res.obj[i].segment1 != undefined || res.obj[i].segment1 != '') {
               this.poInvoiceForm.disable();
             }
           }
@@ -1109,7 +1118,7 @@ export class PayableInvoiceNewComponent implements OnInit {
           }
 
           for (let i = 0; i < data.invDisLines.length; i++) {
-           
+
             var invLnGrp: FormGroup = this.tdsLineDetails();
             this.TdsDetailsArray().push(invLnGrp);
           }
@@ -1145,9 +1154,9 @@ export class PayableInvoiceNewComponent implements OnInit {
             (tdscontrolInv.controls[i]).patchValue({ description: data.invDisLines[i].description });
             // }
           }
-          for (let j=0;j<data.invDisLines.length;j++){
-            var accDate=data.invDisLines[j].accountingDate;
-            var accDate1=  this.pipe.transform(accDate, 'dd-MMM-yyyy');
+          for (let j = 0; j < data.invDisLines.length; j++) {
+            var accDate = data.invDisLines[j].accountingDate;
+            var accDate1 = this.pipe.transform(accDate, 'dd-MMM-yyyy');
             (distLineArray.controls[j]).patchValue({ accountingDate: accDate1 });
           }
           this.invoiceStatus = data.invoiceStatus;
@@ -1159,7 +1168,7 @@ export class PayableInvoiceNewComponent implements OnInit {
             this.isVisibleUpdateBtn = true;
             this.isVisibleValidate = true;
           }
-          if (data.invoiceStatus == 'Validated' || data.invoiceStatus === 'Unpaid') {
+          if (data.invoiceStatus.includes('Validate') || data.invoiceStatus === 'Unpaid') {
             this.poInvoiceForm.disable();
             this.displayAddNewLine = false;
             this.invoiceStatus = data.invoiceStatus;
@@ -1177,31 +1186,31 @@ export class PayableInvoiceNewComponent implements OnInit {
             this.tdsTaxDetailsGroup().disable();
             this.tdsLineDetails().disable();
             this.displayapInvCancelled = false;
-            this.disDeleteButton=false;
-            this.isVisiblelineDetialsDeleteButton=false;
-            this.isVisibleSaveTDS=false;
+            this.disDeleteButton = false;
+            this.isVisiblelineDetialsDeleteButton = false;
+            this.isVisibleSaveTDS = false;
           }
-          if (data.invoiceStatus ===undefined) {
+          if (data.invoiceStatus === undefined) {
             if (arraybaseNew1[i].invTypeLookupCode === 'CREDIT' || arraybaseNew1[i].invTypeLookupCode === 'STANDARD') {
               this.displayAddNewLine = false;
               this.displayapInvCancelled = false;
-            this.isVisibleUpdateBtn = false;
-            this.isVisibleValidate = false;
-            this.isVisibleSaveTDS = false;
-            this.isVisibleviewAccounting = true;
-            this.displayapInvCancelled = false;
-            this.isVisiblePayment = false;
-            this.TaxDetailsArray().disable();
-            this.TdsDetailsArray().disable();
-            this.lineDetailsArray().disable();
-            this.invLineDetailsArray().disable();
-            this.lineDistributionArray().disable();
-            this.tdsTaxDetailsArray().disable();
-            this.tdsTaxDetailsGroup().disable();
-            this.tdsLineDetails().disable();
-            this.disDeleteButton=false;
-            this.isVisiblelineDetialsDeleteButton=false;
-            this.isVisibleSaveTDS=false;
+              this.isVisibleUpdateBtn = false;
+              this.isVisibleValidate = false;
+              this.isVisibleSaveTDS = false;
+              this.isVisibleviewAccounting = true;
+              this.displayapInvCancelled = false;
+              this.isVisiblePayment = false;
+              this.TaxDetailsArray().disable();
+              this.TdsDetailsArray().disable();
+              this.lineDetailsArray().disable();
+              this.invLineDetailsArray().disable();
+              this.lineDistributionArray().disable();
+              this.tdsTaxDetailsArray().disable();
+              this.tdsTaxDetailsGroup().disable();
+              this.tdsLineDetails().disable();
+              this.disDeleteButton = false;
+              this.isVisiblelineDetialsDeleteButton = false;
+              this.isVisibleSaveTDS = false;
             }
           }
 
@@ -1210,19 +1219,19 @@ export class PayableInvoiceNewComponent implements OnInit {
             this.isVisible = false;
             this.poInvoiceForm.disable();
           }
-          if (arraybaseNew1[i].invTypeLookupCode === 'Prepayment'  && data.invoiceStatus == 'Validated' || data.invoiceStatus === 'Unpaid' ) {
+          if (arraybaseNew1[i].invTypeLookupCode === 'Prepayment' && data.invoiceStatus.includes('Validate') || data.invoiceStatus === 'Unpaid') {
             if (arraybaseNew1[i].invTypeLookupCode != 'CREDIT' || arraybaseNew1[i].invTypeLookupCode != 'STANDARD') {
               this.isVisiblePayment = true;
             }
           }
-          else if (arraybaseNew1[i].invTypeLookupCode === 'Standard Invoice' && data.invoiceStatus == 'Validated' || data.invoiceStatus === 'Unpaid') {
+          else if (arraybaseNew1[i].invTypeLookupCode === 'Standard Invoice' && data.invoiceStatus.includes('Validate') || data.invoiceStatus === 'Unpaid') {
             this.isVisiblePayment = true;
           }
           else {
             this.isVisible = true;
             this.displayapInvCancelled = false;
           }
-          if (arraybaseNew1[i].segment != null || arraybaseNew1[i].segment != undefined || arraybaseNew1[i].segment != ''){
+          if (arraybaseNew1[i].segment != null || arraybaseNew1[i].segment != undefined || arraybaseNew1[i].segment != '') {
             this.poInvoiceForm.disable();
           }
         }
@@ -1245,17 +1254,17 @@ export class PayableInvoiceNewComponent implements OnInit {
     // var invNumber = arraybaseNew1[0].invoiceNum;
     // var sourceType=arraybaseNew1[0].source;
     // var invType = arraybaseNew1[0].invTypeLookupCode;
-    for (let i=0; i<arraybaseNew1.length;i++){
+    for (let i = 0; i < arraybaseNew1.length; i++) {
       var invNumber = arraybaseNew1[i].invoiceNum;
-    var sourceType=arraybaseNew1[i].source;
-    var invType = arraybaseNew1[i].invTypeLookupCode;
-    if (invType === 'Prepayment' || sourceType==='REFUND') {
-      this.router.navigate(['/admin/transaction/Payment', invNumber]);
+      var sourceType = arraybaseNew1[i].source;
+      var invType = arraybaseNew1[i].invTypeLookupCode;
+      if (invType === 'Prepayment' || sourceType === 'REFUND') {
+        this.router.navigate(['/admin/transaction/Payment', invNumber]);
+      }
+      else {
+        this.router.navigate(['/admin/transaction/Payment']);
+      }
     }
-    else {
-      this.router.navigate(['/admin/transaction/Payment']);
-    }
-  }
   }
 
 
@@ -1312,16 +1321,18 @@ export class PayableInvoiceNewComponent implements OnInit {
 
 
   selectDisLineDtl(k) {
+    // alert(k)
     var lineNumber = this.invLineDetailsArray().controls[k].get('lineNumber').value;
     var invoiceId = this.invLineDetailsArray().controls[k].get('invoiceId').value;
     var taxcat = this.invLineDetailsArray().controls[k].get('taxCategoryName').value;
     var itemtyp = this.invLineDetailsArray().controls[k].get('lineTypeLookupCode').value;
     var amount = this.invLineDetailsArray().controls[k].get('amount').value;
+    var description = this.invLineDetailsArray().controls[k].get('description').value;
     this.invoiceId = this.lstInvLineDeatails.invoiceId;
     if (this.invoiceId == null) {
       alert('Invoice No is not generated');
       if (itemtyp != 'MISCELLANEOUS') {
-        this.distribution1(k, itemtyp, amount);
+        this.distribution1(k, itemtyp, amount, description);
       }
       return;
     }
@@ -1349,8 +1360,8 @@ export class PayableInvoiceNewComponent implements OnInit {
     }
   }
 
-  distribution1(k, itemtyp, amount) {
-    // alert(itemtyp+'---'+amount+k);
+  distribution1(k, itemtyp, amount, description) {
+    // alert(itemtyp+'---amt'+amount+'-----'+k);
     // this.poInvoiceForm.get('invLines').patchValue({ locId: arrayControl[k].locationId });
     var arrayControl = this.poInvoiceForm.get('obj').value;
     var distributionSet = arrayControl[0].distributionSet;
@@ -1397,36 +1408,38 @@ export class PayableInvoiceNewComponent implements OnInit {
         );
     }
     if ((distributionSet == null && amount != null)) {
+      this.lineDistributionArray().clear();
       var len = this.lineDistributionArray().length;
       var patch = this.poInvoiceForm.get('distribution') as FormArray;
       var controlDist = this.poInvoiceForm.get('distribution').value;
-      if (controlDist[0].lineTypeLookupCode != null && controlDist[0].distLineNumber != null) {
-        this.lineDistributionArray().push(this.distLineDetails());
-        var aa = this.lineDistributionArray().length;
-        // alert(this.lineDistributionArray().length);
-        (patch.controls[aa - 1]).patchValue(
-          {
-            distLineNumber: aa,
-            invoiceLineNum: invln,
-            lineTypeLookupCode: itemtyp,
-            amount: amount,
-            baseAmount: amount,
-          }
-        );
-        this.distarr.set(invln, this.poInvoiceForm.get('distribution').value);
-      }
-      if (controlDist[0].lineTypeLookupCode == null || controlDist[0].distLineNumber == null) {
-        (patch.controls[len - 1]).patchValue(
-          {
-            distLineNumber: len,
-            invoiceLineNum: invln
-          }
-        );
-        this.distarr.set(invln, this.poInvoiceForm.get('distribution').value);
-      }
+      // if (controlDist[0].lineTypeLookupCode != null && controlDist[0].distLineNumber != null) {
+      this.lineDistributionArray().push(this.distLineDetails());
+      var aa = this.lineDistributionArray().length;
+      (patch.controls[aa - 1]).patchValue(
+        {
+          distLineNumber: aa,
+          invoiceLineNum: invln,
+          lineTypeLookupCode: itemtyp,
+          amount: amount,
+          baseAmount: amount,
+          accountingDate: this.pipe.transform(this.now, 'dd-MMM-yyyy'),
+          description: description
+        }
+      );
+      this.distarr.set(invln, this.poInvoiceForm.get('distribution').value);
+      // }
+      // if (controlDist[0].lineTypeLookupCode == null || controlDist[0].distLineNumber == null) {
+      (patch.controls[len - 1]).patchValue(
+        {
+          distLineNumber: len,
+          invoiceLineNum: invln
+        }
+      );
+      this.distarr.set(invln, this.poInvoiceForm.get('distribution').value);
+      // }
 
     }
-    
+
   }
 
   move(val1, val2) {
@@ -1466,33 +1479,33 @@ export class PayableInvoiceNewComponent implements OnInit {
 
   filterRecord(event, i) {
     // alert(event+'Filter');
-   var itemCode = event.target.value;
+    var itemCode = event.target.value;
     // alert(itemCode+'-----'+itemCode.length)
     if (event.keyCode == 13) {
       // enter keycode
       if (itemCode.length == 8) {
         if (this.invItemList.length <= 1) {
           // if (invTyp === 'Manual') {
-            // alert('inside if--');
-            this.service.searchByItemSegmentAR(itemCode.toUpperCase())
-              .subscribe((data) => {
-                this.invItemList = data.obj;
-                this.onOptioninvItemIdSelected(itemCode, i);
-              });
+          // alert('inside if--');
+          this.service.searchByItemSegmentAR(itemCode.toUpperCase())
+            .subscribe((data) => {
+              this.invItemList = data.obj;
+              this.onOptioninvItemIdSelected(itemCode, i);
+            });
           // } 
-        } 
+        }
         return;
       } else if (itemCode.length >= 4) {
         // alert(trxType);
         // if (invTyp === 'Manual') {
-          // alert('inside if');
-          this.service.searchByItemSegmentAR(itemCode.toUpperCase())
-            .subscribe((data) => {
-              this.invItemList = data.obj;
+        // alert('inside if');
+        this.service.searchByItemSegmentAR(itemCode.toUpperCase())
+          .subscribe((data) => {
+            this.invItemList = data.obj;
 
-            });
+          });
         // } 
-     
+
       } else {
         alert('Please Enter 4 characters of item number!!');
         return;
@@ -1503,18 +1516,18 @@ export class PayableInvoiceNewComponent implements OnInit {
   orderedItem: string;
   public itemMap = new Map<string, any[]>();
   public itemMap2 = new Map<number, any[]>();
-  searchByItemSegmentDetails(itemDesc,k){
+  searchByItemSegmentDetails(itemDesc, k) {
     // alert(itemDesc)
     var itemDesc = itemDesc.toUpperCase();
     this.service.searchByItemSegmentAR(itemDesc.toUpperCase())
-    .subscribe(
-      data => {
-        this.invItemList1 = data.obj;
-        console.log(data.invItemList1);
-        // this.itemMap.set(itemDesc, data.obj);
-        // this.itemMap2.set(k, this.itemMap.get(itemDesc));
-      }
-    );
+      .subscribe(
+        data => {
+          this.invItemList1 = data.obj;
+          console.log(data.invItemList1);
+          // this.itemMap.set(itemDesc, data.obj);
+          // this.itemMap2.set(k, this.itemMap.get(itemDesc));
+        }
+      );
   }
 
   onOptioninvItemIdSelected(itemId, index) {
@@ -1629,7 +1642,7 @@ export class PayableInvoiceNewComponent implements OnInit {
   }
 
 
-  
+
   onHsnCodeSelected(event, index) {
     console.log(event);
     let selectgstPercentage = this.hsnSacCodeList.find(v => v.hsnsaccode == event);
@@ -1668,30 +1681,49 @@ export class PayableInvoiceNewComponent implements OnInit {
             this.isVisibleTDSTab = false;
             this.lineDetailsArray().controls[0].patchValue({ payGroup: data.suppId.supTdsTyp });
           }
+          // alert(data.suppId.name)
+          if (data.suppId.name.includes('RTO')) {
+            alert('Your selected RTO supplier. Please Select Chassis & Order Number.!')
+            this.service.chassisList(sessionStorage.getItem('ouId'))
+              .subscribe(
+                data => {
+                  console.log(data);
+                  this.chassisNoList=data;
+                })
+          }
         }
       );
   }
 
+  onSelectChassis(event,i){
+    // alert(i+'-----'+ event.target.value);
+    let select = this.chassisNoList.find(d => d.chassisNo === event.target.value);
+    console.log(select);
+    this.lineDetailsArray().controls[i].patchValue({ referenceNo: select.referenceNo});
+  }
+
+
   onOptionTaxCatSelected(taxCategoryName, k) {
     if (this.isSearchPatch === false) {
       this.displayViewTaxDetails = false;
+      // this.TaxDetailsArray().clear();
       var arrayControl = this.poInvoiceForm.get('invLines').value;
       var arrayControlNew = this.poInvoiceForm.get('invLines') as FormArray;
-      var arrayControlNew1=arrayControlNew.getRawValue()
-      var  invdescription= arrayControlNew1[k].description;
-      var lineTypeLookupCode= arrayControlNew1[k].lineTypeLookupCode;
-      var amount= arrayControlNew1[k].amount;
+      var arrayControlNew1 = arrayControlNew.getRawValue()
+      var invdescription = arrayControlNew1[k].description;
+      var lineTypeLookupCode = arrayControlNew1[k].lineTypeLookupCode;
+      var amount = arrayControlNew1[k].amount;
       // alert(invdescription+'---'+lineTypeLookupCode);
-      if (lineTypeLookupCode==='OTHER'){
-      if (invdescription===''|| invdescription===undefined|| invdescription===null){
-        alert('First Select Desciption');
-        // this.poInvoiceForm.get('invLines').reset();
-        // (arrayControlNew.controls[k]).get('taxCategoryName').reset()
-        // (arrayControlNew.controls[0]).patchValue({ taxCategoryName: '--Select--'});
-        // (arrayControlNew.controls[k]).patchValue({ taxCategoryId: ''});
-        return;
+      if (lineTypeLookupCode === 'OTHER') {
+        if (invdescription === '' || invdescription === undefined || invdescription === null) {
+          alert('First Select Desciption');
+          // this.poInvoiceForm.get('invLines').reset();
+          // (arrayControlNew.controls[k]).get('taxCategoryName').reset()
+          // (arrayControlNew.controls[0]).patchValue({ taxCategoryName: '--Select--'});
+          // (arrayControlNew.controls[k]).patchValue({ taxCategoryId: ''});
+          return;
+        }
       }
-    }
       var objarray = this.poInvoiceForm.get('obj').value;
       this.indexVal = arrayControl[k].lineNumber;
       var amount = arrayControl[k].amount;
@@ -1721,11 +1753,11 @@ export class PayableInvoiceNewComponent implements OnInit {
               this.invLineDetailsArray().push(invLnGrp);
             }
             (controlinv.controls[0]).patchValue({ lineNumber: 1 });
-            var accDate=data.miscLines[k].accountingDate;
-          var accDate1=  this.pipe.transform(accDate, 'dd-MMM-yyyy');
-          // var accDatedist=data.invDisLines[k].accountingDate;
-          // var accDatedist1=  this.pipe.transform(accDatedist, 'dd-MMM-yyyy');
-            (controlinv.controls[k]).patchValue({ accountingDate: accDate1});
+            var accDate = data.miscLines[k].accountingDate;
+            var accDate1 = this.pipe.transform(accDate, 'dd-MMM-yyyy');
+            // var accDatedist=data.invDisLines[k].accountingDate;
+            // var accDatedist1=  this.pipe.transform(accDatedist, 'dd-MMM-yyyy');
+            (controlinv.controls[k]).patchValue({ accountingDate: accDate1 });
             var x = controlinv.length + 1;
             for (let z = existlinecnt, j = 1; z < this.invLineDetailsArray().length; j++, z++) {
               controlinv.controls[z].patchValue(data.miscLines[j - 1]);
@@ -1750,12 +1782,14 @@ export class PayableInvoiceNewComponent implements OnInit {
               var patch = this.poInvoiceForm.get('obj') as FormArray;
               var taxLinesData = this.poInvoiceForm.get('taxLines').value;
               console.log(taxLinesData);
-              alert('Tax Details Has Been Patched... Please Confirm!');
-              this.displaylineNumber=false;
+              this.displaylineNumber = false;
               var lnv = this.indexVal;
               var lno: String = String(lnv);
               this.taxMap.set(String(lno), taxLinesData);
               console.log(this.taxMap.get(String(lno)));
+            }
+            if (data.taxLines.length != 0) {
+              alert('Tax Details Has Been Patched... Please Confirm!');
             }
             this.invLineNo = k + 1;
             this.taxarr.set(this.invLineNo, this.poInvoiceForm.get('taxLines').value);
@@ -1798,7 +1832,7 @@ export class PayableInvoiceNewComponent implements OnInit {
                 for (let i = 0, z = len - 1; i < data.invDisLines.length; i++, z++) {
                   controlDist.controls[z].patchValue(data.invDisLines[i]);
                   (controlDist.controls[z]).patchValue({ invoiceLineNum: Number(this.invoiceLineNo), distLineNumber: z + 1 });
-                  (controlDist.controls[z]).patchValue({ accountingDate :accDate1});
+                  (controlDist.controls[z]).patchValue({ accountingDate: accDate1 });
                 }
               }
             } else {
@@ -1806,7 +1840,7 @@ export class PayableInvoiceNewComponent implements OnInit {
               for (let i = 0, z = len; i < data.invDisLines.length; i++, z++) {
                 controlDist.controls[z].patchValue(data.invDisLines[i]);
                 (controlDist.controls[z]).patchValue({ invoiceLineNum: Number(this.invoiceLineNo), distLineNumber: z + 1 });
-                (controlDist.controls[z]).patchValue({ accountingDate :accDate1});
+                (controlDist.controls[z]).patchValue({ accountingDate: accDate1 });
               }
 
             }
@@ -1872,10 +1906,16 @@ export class PayableInvoiceNewComponent implements OnInit {
   }
 
   openCodeComb1(i) {
+    // alert(i)
     var arrayControl = this.poInvoiceForm.get('distribution').value;
     var invLinesControl = this.poInvoiceForm.get('invLines').value;
-    let segmentName1 = arrayControl[i].distCodeCombSeg
-    if (segmentName1 === null) {
+    let segmentName1 = arrayControl[i].distCodeCombSeg;
+    // alert(segmentName1)
+    if (segmentName1 === null || segmentName1 == '') {
+      this.poInvoiceForm.get('segment11').reset();
+      var branchNM = sessionStorage.getItem('locCode').split('.');
+      // alert(branchNM)
+      this.BranchList = this.BranchList.filter((br => br.lookupValue === branchNM[0]));
       this.poInvoiceForm.get('segment11').reset();
       this.poInvoiceForm.get('segment2').reset();
       this.poInvoiceForm.get('segment3').reset();
@@ -2064,6 +2104,17 @@ export class PayableInvoiceNewComponent implements OnInit {
     jsonData.accPayCodeCombId = 2079
     jsonData.currency = 'INR';
     var taxStr = [];
+    var distributionArray = this.poInvoiceForm.get('distribution').value;
+    // var distributionArray = distribution.getRawValue();
+    for (let d = 0; d < distributionArray.length; d++) {
+      if (distributionArray[d].lineTypeLookupCode === 'OTHER') {
+        if (distributionArray[d].distCodeCombSeg === null || distributionArray[d].distCodeCombSeg === undefined || distributionArray[d].distCodeCombSeg === '') {
+          alert('Please Select Code Combination In Distribution Tab. Line No ' + distributionArray[d].distLineNumber);
+          return;
+        }
+      }
+    }
+
     for (let taxlinval of this.taxarr.values()) {
       for (let i = 0; i < taxlinval.length; i++) {
         taxStr.push(taxlinval[i]);
@@ -2158,10 +2209,10 @@ export class PayableInvoiceNewComponent implements OnInit {
             let payDtString = payDate.format('dd-MMM-yyyy');
             let select = this.tdsSectionList.find(d => d.lookupValueDesc === res.obj[i].payGroup);
             console.log(select);
-            console.log(select.lookupValueDesc);  
+            console.log(select.lookupValueDesc);
             this.lineDetailsArray().controls[i].patchValue({ paymentRateDate: payDtString, invoiceId1: this.lstsearchapinv[i].invoiceId, internalSeqNum: this.lstsearchapinv[i].internalSeqNum });
             this.lineDetailsArray().controls[i].patchValue({ glDate: res.obj[i].glDate });
-            patch.controls[i].patchValue({payGroup:res.obj[i].payGroup})
+            patch.controls[i].patchValue({ payGroup: res.obj[i].payGroup })
             if (res.obj[i].paymentMethod === undefined || res.obj[i].paymentMethod === null) {
               (patch.controls[i]).patchValue(
                 {
@@ -2169,16 +2220,16 @@ export class PayableInvoiceNewComponent implements OnInit {
                 }
               );
             }
-            if ( res.obj[i].payGroup !=undefined|| res.obj[i].payGroup !=null){
+            if (res.obj[i].payGroup != undefined || res.obj[i].payGroup != null) {
               (patch.controls[i]).patchValue(
                 {
                   payGroup: res.obj[i].payGroup,
                 }
               );
-              this.isVisibleTDSTab=true;
-              this.isVisibleSaveTDS=true;
+              this.isVisibleTDSTab = true;
+              this.isVisibleSaveTDS = true;
             }
-           
+
             console.log(this.tdsSectionList);
             // if (res.obj[i].invoiceStatus === 'Validated' || res.obj[i].invoiceStatus === 'Unpaid' || res.obj[i].invTypeLookupCode != 'CREDIT' || res.obj[i].invTypeLookupCode != 'STANDARD') {
             //   this.poInvoiceForm.disable();
@@ -2399,34 +2450,37 @@ export class PayableInvoiceNewComponent implements OnInit {
     // debugger;
     for (let i = 0; i < this.invLineDetailsArray().length; i++) {
       // totalOfInvLineAmout = Math.round(((totalOfInvLineAmout + arrayControl1[i].amount) + Number.EPSILON) * 100) / 100;
-      var desc1 : string =  arrayControl1[i].description;
-      if (desc1 === 'null' || desc1 ===null){
-        totalOfInvLineAmout=  Math.round(((arrayControl1[i].amount) + Number.EPSILON) * 100) / 100;
+      var desc1: string = arrayControl1[i].description;
+      if (desc1 === 'null' || desc1 === null) {
+        // totalOfInvLineAmout = Math.round(((arrayControl1[i].amount) + Number.EPSILON) * 100) / 100;
+        totalOfInvLineAmout=arrayControl1[i].amount;
       }
-      else{
-      if(desc1.includes('Adhoc Disc')){
-        totalOfInvLineAmout = Math.round(((totalOfInvLineAmout - arrayControl1[i].amount) + Number.EPSILON) * 100) / 100;
-      }else{
-        totalOfInvLineAmout = Math.round(((totalOfInvLineAmout + arrayControl1[i].amount) + Number.EPSILON) * 100) / 100;
+      else {
+        if (desc1.includes('Adhoc Disc')) {
+          totalOfInvLineAmout = Math.round(((totalOfInvLineAmout - arrayControl1[i].amount) + Number.EPSILON) * 100) / 100;
+        } else {
+          totalOfInvLineAmout = Math.round(((totalOfInvLineAmout + arrayControl1[i].amount) + Number.EPSILON) * 100) / 100;
+        }
       }
-    }
     }
     var totalOfDistributionAmout = 0;
     for (let j = 0; j < this.lineDistributionArray().length; j++) {
       // totalOfDistributionAmout = Math.round(((totalOfDistributionAmout + Number(arrayCaontrolOfDistribution[j].amount)) + Number.EPSILON) * 100) / 100;
-      var desc1 : string =  arrayCaontrolOfDistribution[j].description;
-      if (desc1 === 'null' || desc1 ===null){
-        totalOfDistributionAmout = Math.round(((Number(arrayCaontrolOfDistribution[j].amount)) + Number.EPSILON) * 100) / 100;  
+      var desc1: string = arrayCaontrolOfDistribution[j].description;
+      // var baseAmount = arrayCaontrolOfDistribution[j].baseAmount;
+      if (desc1 === 'null' || desc1 === null) {
+        // totalOfDistributionAmout = Math.round(((Number(arrayCaontrolOfDistribution[j].amount)) + Number.EPSILON) * 100) / 100;
+        totalOfDistributionAmout=arrayCaontrolOfDistribution[j].amount;
       }
       else {
-      if(desc1.includes('Adhoc Disc')){
-        totalOfDistributionAmout = Math.round(((totalOfDistributionAmout - Number(arrayCaontrolOfDistribution[j].amount)) + Number.EPSILON) * 100) / 100;  
-      }else{
-        totalOfDistributionAmout = Math.round(((totalOfDistributionAmout + Number(arrayCaontrolOfDistribution[j].amount)) + Number.EPSILON) * 100) / 100;
+        if (desc1.includes('Adhoc Disc')) {
+          totalOfDistributionAmout = Math.round(((totalOfDistributionAmout - Number(arrayCaontrolOfDistribution[j].amount)) + Number.EPSILON) * 100) / 100;
+        } else {
+          totalOfDistributionAmout = Math.round(((totalOfDistributionAmout + Number(arrayCaontrolOfDistribution[j].amount)) + Number.EPSILON) * 100) / 100;
+        }
+      }
     }
-    }
-  }
-  // alert(amount+'----'+totalOfInvLineAmout+'----' + totalOfDistributionAmout)
+    // alert(amount+'----null'+totalOfInvLineAmout+'----null' + totalOfDistributionAmout)
     if (amount == totalOfInvLineAmout && amount == totalOfDistributionAmout) {
       var arrayControl = this.poInvoiceForm.get('obj').value;
       var invoiceNum = this.lineDetailsArray().controls[this.selectedLine].get('invoiceNum').value;
@@ -2538,6 +2592,7 @@ export class PayableInvoiceNewComponent implements OnInit {
 
 
   onOptionsSelectedBranch(segment: any, lType: string) {
+    // alert(segment+'----'+lType);
     this.service.getInterBranch(segment, lType).subscribe(
       data => {
         this.branch = data;
@@ -2553,7 +2608,11 @@ export class PayableInvoiceNewComponent implements OnInit {
             this.lookupValueDesc2 = this.branch.lookupValueDesc;
           }
           if (lType === 'SS_Branch') {
+            // this.lookupValueDesc1 = this.branch.lookupValueDesc;
             this.lookupValueDesc1 = this.branch.lookupValueDesc;
+            var sellBr = this.BranchList.find(d => d.lookupValue === segment);
+            // console.log(sellBr);       
+            this.locIdList1 = this.locIdList1.filter((br => br.lookupValue.includes(sellBr.parentValue) || br.lookupValue === "000"));
           }
         }
       }
