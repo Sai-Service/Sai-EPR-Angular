@@ -64,6 +64,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
   public ewInsNameList      : Array<string> = [];
 
   public ItemEWList         : Array<string> = [];
+  dealerCodeList:any;
   
   pipe = new DatePipe('en-US');
   resMsg : string;
@@ -181,6 +182,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
   ewStartDate :string;
   ewEndDate:string;
   oemWarrantyPeriod:number;
+  oemWarrEndDate :string;
 
   receiptNumber:number;
   payType:string;
@@ -295,6 +297,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
       ewStartDate:[],
       ewEndDate:[],
       oemWarrantyPeriod:[],
+      oemWarrEndDate:[],
 
       receiptNumber:[],
       payType:[],
@@ -345,7 +348,14 @@ export class SaiExtendedWarrantyComponent implements OnInit {
           // console.log(this.orgId);
           // this.ewInsuranceId=this.ouId;
 
-          
+          this.service.delearCodeList()
+          .subscribe(
+            data => {
+              this.dealerCodeList = data;
+              console.log(this.dealerCodeList);
+            }
+          );
+
           this.service.PaymentModeList()
           .subscribe(
             data => {
@@ -600,12 +610,20 @@ export class SaiExtendedWarrantyComponent implements OnInit {
            var yPeriod =this.ewPeriod;
 
            var oemPeriod =this.saiEwForm.get('oemWarrantyPeriod').value
-           alert ("Load Scheme details : oem prd: "+oemPeriod)
+           alert ("sales date  , oem prd :"+saleDate1 +"  ,"+oemPeriod); 
 
            var currDate = new Date();
            var oemEndDate =this.addDays(saleDate1,oemPeriod*365);
+           //  this.oemWarrEndDate=this.pipe.transform(oemEndDate, 'y-MM-dd'); 
+         
+
+          //  alert ("OEM end date :"+oemEndDate);
            ew2=this.addDays(saleDate1,oemPeriod*365);
+
+         
           
+           alert ("EW start date :"+ew2);
+
            if(currDate <=oemEndDate) {
             this.ewStartDate=this.pipe.transform(ew2, 'y-MM-dd');
            } else { this.ewStartDate=this.pipe.transform(currDate, 'y-MM-dd');   }
@@ -851,6 +869,10 @@ export class SaiExtendedWarrantyComponent implements OnInit {
                       serviceModel: data.serviceModel,
                       oemWarrantyPeriod: data.oemWarrantyPeriod,
                     });
+
+                    var saleDate1=new Date(this.deliveryDate);
+                    var oemEndDate =this.addDays(saleDate1,data.oemWarrantyPeriod*365);
+                    this.oemWarrEndDate=this.pipe.transform(oemEndDate, 'y-MM-dd'); 
 
                     if(this.isEwActive ==false) {
                       var saleDate=new Date(this.deliveryDate);

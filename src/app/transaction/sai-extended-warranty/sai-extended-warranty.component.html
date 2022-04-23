@@ -246,9 +246,20 @@
 
 
                         
-                        <td style="width: 15%" class="LabelFontStyle1">VIN&nbsp;:&nbsp;</td>
-    
-                        <td>
+                        <td style="width: 15%" class="LabelFontStyle1">Current&nbsp;Mileage:&nbsp;</td>
+                            
+                        <div *ngIf="displayButton; then thenBlock901; else elseBlock901"></div>
+                        <ng-template #thenBlock901>
+                            <td><input   type="number"  formControlName="kmsEwSale"  id="kmsEwSale" [(ngModel)]="kmsEwSale" class="form-control" (change)='onEnterKms(kmsEwSale)' style="background-color: yellow;"> </td>
+                        </ng-template>
+                        <ng-template #elseBlock901>
+                            <td><input disabled  type="number"  formControlName="kmsEwSale"  id="kmsEwSale" [(ngModel)]="kmsEwSale" class="form-control" (change)='onEnterKms(kmsEwSale)' > </td>
+                        </ng-template>
+
+
+
+                     
+                        <!-- <td>
                         <input disabled style="font-weight: bold;" type="text"
                         formControlName="vehicleId"
                         [(ngModel)]="vehicleId"
@@ -265,13 +276,16 @@
                                 {{item.vin}}
                             </option>
                         </datalist>
-                      </td>
+                      </td> -->
 
                        </tr>
 
 
                        
                     <tr>
+                        <td style="width: 15%" class="LabelFontStyle1">VIN&nbsp;:&nbsp;</td>
+                        <td><input disabled  type="text"  formControlName="vehicleId"  id="vehicleId" [(ngModel)]="vehicleId" class="form-control"  > </td>
+                    
                         <td style="width: 15%" class="LabelFontStyle">Item&nbsp;Code:&nbsp;</td>
                         <td><input disabled  type="text"  formControlName="itemDesc"  id="itemDesc" [(ngModel)]="itemDesc" class="form-control" >  </td>
 
@@ -281,10 +295,7 @@
                         <td style="width: 15%" class="LabelFontStyle">Variant&nbsp;:&nbsp;</td>
                         <td><input disabled  type="text"  formControlName="variantDesc"  id="variantDesc" [(ngModel)]="variantDesc" class="form-control" ></td>
 
-                        <td style="width: 15%" class="LabelFontStyle">Fuel&nbsp;Type:&nbsp;</td>
-        
-                        <td><input disabled  type="text"  formControlName="fuelType"  id="fuelType" [(ngModel)]="fuelType" class="form-control" > </td>
-                    
+                       
                     </tr>
                     <tr>
                         <td style="width: 15%" class="LabelFontStyle">Chassis&nbsp;No:&nbsp;</td>
@@ -293,54 +304,84 @@
                         <td style="width: 15%" class="LabelFontStyle">Engine&nbsp;No:&nbsp;</td>
                         <td><input disabled  type="text"  formControlName="engineNo"  id="engineNo" [(ngModel)]="engineNo" class="form-control" ></td>
                     
-                        <td style="width: 15%" class="LabelFontStyle">Sale&nbsp;Date:&nbsp;</td>
-                        <td><input disabled  type="date"  formControlName="deliveryDate"  id="deliveryDate" [(ngModel)]="deliveryDate" class="form-control" ></td>
-
+                       
                         <td style="width: 15%" class="LabelFontStyle">Selling&nbsp;Dealer:&nbsp;</td>
-                        <td><input disabled  type="text"  formControlName="dealerCode"  id="dealerCode" [(ngModel)]="dealerCode" class="form-control" > </td>
+                        <!-- <td colspan="3"><input disabled  type="text"  formControlName="dealerCode"  id="dealerCode" [(ngModel)]="dealerCode" class="form-control" style="width: 100%;" > </td> -->
+                   
+                        <td colspan="3" >
+                            <!-- (ngModelChange)='onSelectedDealer($event)' -->
+                            <select disabled formControlName="dealerCode" id="dealerCode" [ngModel]="dealerCode" class="form-control"  style="width: 100%;background-color: lightgreen;">
+                                    <option *ngFor="let sc of dealerCodeList"  [ngValue]="sc.dealerCode">
+                                    {{sc.dealerCode}} - {{sc.dealerDesc}}
+                                </option>
+                            </select>
+                        </td>
+                   
                     </tr>
 
                     <tr>
+                        <td style="width: 15%" class="LabelFontStyle">Fuel&nbsp;Type:&nbsp;</td>
+        
+                        <td><input disabled  type="text"  formControlName="fuelType"  id="fuelType" [(ngModel)]="fuelType" class="form-control" > </td>
+                    
                         <td style="width: 15%" class="LabelFontStyle">Service&nbsp;Model:&nbsp;</td>
                         <td><input disabled  type="text"  formControlName="serviceModel"  id="serviceModel" [(ngModel)]="serviceModel" class="form-control" > </td>
                    
                         <!-- <td style="width: 15%" class="LabelFontStyle">Last&nbsp;Run&nbsp;Kms:&nbsp;</td>
                         <td><input disabled  type="text"  formControlName="lastRunKms"  id="lastRunKms" [(ngModel)]="lastRunKms" class="form-control" ></td> -->
 
-                        <td style="width: 15%" class="LabelFontStyle1">Current&nbsp;Mileage:&nbsp;</td>
-                        
-                        <div *ngIf="displayButton; then thenBlock901; else elseBlock901"></div>
-                        <ng-template #thenBlock901>
-                            <td><input   type="number"  formControlName="kmsEwSale"  id="kmsEwSale" [(ngModel)]="kmsEwSale" class="form-control" (change)='onEnterKms(kmsEwSale)' style="background-color: yellow;"> </td>
-                        </ng-template>
-                        <ng-template #elseBlock901>
-                            <td><input disabled  type="number"  formControlName="kmsEwSale"  id="kmsEwSale" [(ngModel)]="kmsEwSale" class="form-control" (change)='onEnterKms(kmsEwSale)' > </td>
-                        </ng-template>
+                      
 
                         <td style="width: 15%" class="LabelFontStyle">Cust&nbsp;Name:&nbsp;</td>
 
-                        <td><input disabled   type="text"  formControlName="custName"  id="custName" [(ngModel)]="custName" class="form-control" > </td>
+                        <td colspan="3"><input disabled   type="text"  formControlName="custName"  id="custName" [(ngModel)]="custName" class="form-control" style="width: 100%;"> </td>
                         <td></td>
+                   
+                    </tr>
+
+                    <tr>
+
+                        <td style="width: 15%" class="LabelFontStyle">Sale&nbsp;Date:&nbsp;</td>
+                        <td><input disabled  type="date"  formControlName="deliveryDate"  id="deliveryDate" [(ngModel)]="deliveryDate" class="form-control" ></td>
+
+
+                            <td style="width: 15%" class="LabelFontStyle1">OEM&nbsp;WR&nbsp;Period:&nbsp;</td>
+    
+                            <td>
+                                <input disabled  type="number"  formControlName="oemWarrantyPeriod"  id="oemWarrantyPeriod" [(ngModel)]="oemWarrantyPeriod" class="form-control" >
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle1">OEM&nbsp;WR&nbsp;Expiry:&nbsp;</td>
+    
+                            <td>
+                                <input disabled  type="date"  formControlName="oemWarrEndDate"  id="oemWarrEndDate" [(ngModel)]="oemWarrEndDate" class="form-control" >
+                            </td>
+
+                            <td></td>
+
+                            <div *ngIf="showCustModal; then thenBlockC; else elseBlockC"></div>
+                            <ng-template #thenBlockC>
+        
+                            <td>
+                                <button type="button"  class="btn btn-primary" 
+                                data-toggle="modal" data-target="#customerDetails"   style="width: 9rem;color: black;">
+                                &nbsp;View&nbsp;Customer&nbsp;Details</button>
+                            </td>
+                            </ng-template>
+                            <ng-template #elseBlockC>
+        
+                                <td>
+                                    <button disabled type="button"  class="btn btn-primary" 
+                                    data-toggle="modal" data-target="#customerDetails"   style="width: 9rem;color: black;">
+                                    &nbsp;View&nbsp;Customer&nbsp;Details</button>
+                                </td>
+                            </ng-template>
+                         
+
+                    </tr>
                     
                     <!-- -----------------------------CUSTOMER MODAL FORM STARTS HERE--------------------- -->
 
-                    <div *ngIf="showCustModal; then thenBlockC; else elseBlockC"></div>
-                    <ng-template #thenBlockC>
-
-                    <td>
-                        <button type="button"  class="btn btn-primary" 
-                        data-toggle="modal" data-target="#customerDetails"   style="width: 9rem;color: black;">
-                        &nbsp;View&nbsp;Customer&nbsp;Details</button>
-                    </td>
-                    </ng-template>
-                    <ng-template #elseBlockC>
-
-                        <td>
-                            <button disabled type="button"  class="btn btn-primary" 
-                            data-toggle="modal" data-target="#customerDetails"   style="width: 9rem;color: black;">
-                            &nbsp;View&nbsp;Customer&nbsp;Details</button>
-                        </td>
-                    </ng-template>
+                  
 
 
                    <!-- ----------------------------- MODALFORM--------------------- -->
@@ -464,7 +505,10 @@
                    </div>
                     <!-- -----------------------------CUSTOMER MODAL FORM ENDS HERE--------------------- -->
 
-                    </tr>
+
+
+
+                    <!-- </tr> -->
                     </table>
                     </fieldset>
 
@@ -625,11 +669,9 @@
                           
                         </tr>
                         <tr>
-                            <td style="width: 15%" class="LabelFontStyle1">OEM&nbsp;WR&nbsp;Period:&nbsp;</td>
-    
-                            <td>
-                                <input disabled  type="number"  formControlName="oemWarrantyPeriod"  id="oemWarrantyPeriod" [(ngModel)]="oemWarrantyPeriod" class="form-control" >
-                            </td>
+                            
+
+                           
 
                             <td style="width: 15%" class="LabelFontStyle1">EW&nbsp;Sale&nbsp;Date:&nbsp;</td>
     
@@ -652,6 +694,8 @@
 
           
                           </tr>
+
+                        
                         
                     </table>
                     </fieldset>
