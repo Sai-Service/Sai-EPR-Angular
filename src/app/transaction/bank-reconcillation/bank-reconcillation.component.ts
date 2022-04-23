@@ -254,10 +254,10 @@ export class BankReconcillationComponent implements OnInit {
           console.log(this.locId);
 
 
-          this.service.bankList(this.ouId)
+          this.service.bankList('RTGS/NEFT',Number(sessionStorage.getItem('ouId')))
           .subscribe(
             data => {
-              this.BankList = data;
+              this.BankList = data.obj;
               console.log(this.BankList);
             }
           );

@@ -1,5 +1,5 @@
 import { Component, OnInit} from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, NumberValueAccessor, MaxLengthValidator } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, NumberValueAccessor, MaxLengthValidator, CheckboxControlValueAccessor } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Validators , FormArray } from '@angular/forms';
 import { MasterService } from '../../master/master.service';
@@ -598,13 +598,20 @@ export class SaiExtendedWarrantyComponent implements OnInit {
            var ew2;
            var ew3;
            var yPeriod =this.ewPeriod;
-         
-           ew2=this.addDays(saleDate1,730);
-           this.ewStartDate=this.pipe.transform(ew2, 'y-MM-dd');
 
+           var oemPeriod =this.saiEwForm.get('oemWarrantyPeriod').value
+           alert ("Load Scheme details : oem prd: "+oemPeriod)
+
+           var currDate = new Date();
+           var oemEndDate =this.addDays(saleDate1,oemPeriod*365);
+           ew2=this.addDays(saleDate1,oemPeriod*365);
+          
+           if(currDate <=oemEndDate) {
+            this.ewStartDate=this.pipe.transform(ew2, 'y-MM-dd');
+           } else { this.ewStartDate=this.pipe.transform(currDate, 'y-MM-dd');   }
+          
            var ewStDate=new Date(this.ewStartDate);
            ew3=this.addDays(ewStDate,yPeriod*365);
-          //  alert("EW2 : "+ew2 + "   EW3: "+ew3);
            this.ewEndDate=this.pipe.transform(ew3, 'y-MM-dd');
           });
         } else {}
@@ -639,14 +646,18 @@ export class SaiExtendedWarrantyComponent implements OnInit {
             data => {
               this.variantDetailsList = data;
               console.log(this.variantDetailsList);
-              
+              // this.oemWarrantyPeriod=data.oemWarrantyPeriod;
               this.saiEwForm.patchValue({
                 serviceModel: this.variantDetailsList.serviceModel,
                 oemWarrantyPeriod: this.variantDetailsList.oemWarrantyPeriod,
-
               });
+
+              alert ("GetVariantDeatils >> this.variantDetailsList.oemWarrantyPeriod :"+this.variantDetailsList.oemWarrantyPeriod);
+        
             }
              );
+
+             
         }
 
         GetEwReceiptDetails(mEwId){
@@ -785,11 +796,18 @@ export class SaiExtendedWarrantyComponent implements OnInit {
 
 
         serchByRegNo(mRegNo) {
-          
-          mRegNo=mRegNo.toUpperCase();
-          this.vehRegNo=mRegNo;
-          // alert(".vehRegNo..."+ this.vehRegNo);
-          this.service.getVehRegDetailsNew(mRegNo)
+
+          //  ----------------------------------------------------
+            var mreg=this.saiEwForm.get('vehRegNo').value
+            if(mreg==null || mreg==undefined || mreg.trim()=='') {
+              alert ("Enter Valid Vehicle Registration No."); return;
+            }
+            mreg=mreg.toUpperCase();
+            mreg=mreg.trim();
+            this.vehRegNo=mreg;
+            //  ---------------------------------------------------
+
+          this.service.getVehRegDetailsNew(mreg)
           .subscribe(
             data => {
               this.getVehRegDetails = data.obj;
@@ -810,29 +828,43 @@ export class SaiExtendedWarrantyComponent implements OnInit {
                 variantItemId: this.getVehRegDetails.itemId.itemId,
                 itemDesc: this.getVehRegDetails.itemId.segment,
                 custId: this.getVehRegDetails.customerId,
+                
                 // ewStatus:this.getVehRegDetails.ewStatus,
                 // ewStatusBookletno:this.getVehRegDetails.ewBookletNo,
                 // ewStatusStartDate:this.getVehRegDetails.ewStartDate,
                 // ewStatusPeriod:this.getVehRegDetails.ewPeriod,
          });
-           this.deliveryDate = this.pipe.transform(this.deliveryDate, 'y-MM-dd');
-           this.GetLastRunKmsSearch(mRegNo);
-           this.getEwStatus(mRegNo);
-           this.GetVariantDeatils(this.variant);
-           this.GetCustomerDetails(this.custId);
+          
+                
+                this.GetCustomerDetails(this.custId);
+                this.GetCustomerSiteDetails(this.custId);
+                this.deliveryDate = this.pipe.transform(this.deliveryDate, 'y-MM-dd');
+                this.getEwStatus(mreg);
+                this.GetLastRunKmsSearch(mreg);
+                //  this.GetVariantDeatils(this.variant);
 
-            
-            // var myCustAccountno=this.custAccountNo;
-            // alert("my Customer acc no:"+ myCustAccountno);
+                 //  ..................Oem Wr Period Check .........................
+                this.service.variantDetailsList(this.variant) .subscribe(
+                  data => { this.variantDetailsList = data;
+                    console.log(this.variantDetailsList);
+                    this.saiEwForm.patchValue({
+                      serviceModel: data.serviceModel,
+                      oemWarrantyPeriod: data.oemWarrantyPeriod,
+                    });
 
-           if(this.isEwActive ==false) {
-              this.GetCustomerSiteDetails(this.custId);
-              // this.CustAccountNoSearchSite(this.custAccountNo);
-              var saleDate=new Date(this.deliveryDate);
-              var mToday   = new Date(Date.now());
-              this.getDiffDays(saleDate,mToday);
+                    if(this.isEwActive ==false) {
+                      var saleDate=new Date(this.deliveryDate);
+                      var mToday   = new Date(Date.now());
+                      this.getDiffDays(saleDate,mToday,this.oemWarrantyPeriod);
+                    } 
 
-            } 
+
+                  });
+
+      // ........................................................................
+
+         
+
          } else { alert("Vehicle Regno. Not Found...."); this.dispCustButton=false; this.saiEwForm.reset();}
         }
           );}
@@ -930,7 +962,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
        
    
 
-        getDiffDays(date1 ,date2){
+        getDiffDays(date1 ,date2,oPrd){
             date1 = new Date(date1);
             date2 = new Date(date2);
         //  date2 = this.pipe.transform(date2, 'y-MM-dd');
@@ -938,25 +970,21 @@ export class SaiExtendedWarrantyComponent implements OnInit {
            var mDays2=mDays1 / (1000 * 3600 * 24);
            var mDays3=Math.round(mDays2 - 0.5)
            this.vehicleAgeDays=mDays3;
+ 
            var oemPrd =this.saiEwForm.get('oemWarrantyPeriod').value;
 
-          //  if (mDays3<=7)  {this.paytmentSource ='SALES'} 
-          //  else if (mDays3<=730) {this.paytmentSource ='SERVICE'} 
-          //  else {
-          //    alert("VEHICLE SALE DATE :"+this.pipe.transform(date1,'dd/MM/y') + " AGING : "+ mDays3 +" DAYS...NOT ELIGIBLE FOR AVAILING EXTENDED WARRANTY")
-          //    this.resetMast();
-          //   }
-
+          //  alert ("mdays3 :"+mDays3 +"....oemPrd :"+oemPrd);
+        
           if(this.displayButton) {
           if(this.paytmentSource ==='SALES' && mDays3 >15 ) {
             alert("VEHICLE SALE DATE :"+this.pipe.transform(date1,'dd/MM/y') + " Aging : "+ mDays3 +" Days...Not Eligible To issue EW from SALES")
             this.resetMast();
           }
 
-          if(this.paytmentSource ==='SERVICE' && mDays3 > (oemPrd*365) ) {
-            alert("VEHICLE SALE DATE :"+this.pipe.transform(date1,'dd/MM/y') + " AGING : "+ mDays3 +" DAYS...NOT ELIGIBLE FOR AVAILING EXTENDED WARRANTY")   
-            this.resetMast();
-          }
+          // if(this.paytmentSource ==='SERVICE' && mDays3 > (oemPrd*365) ) {
+          //   alert("VEHICLE SALE DATE :"+this.pipe.transform(date1,'dd/MM/y') + " AGING : "+ mDays3 +" DAYS...NOT ELIGIBLE FOR AVAILING EXTENDED WARRANTY")   
+          //   this.resetMast();
+          // }
         }
 
         }
@@ -1003,7 +1031,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
               this.resetMast();
             }
 
-              this.getDiffDays(saleDate,mToday);
+              this.getDiffDays(saleDate,mToday,0);
          } );
         }
 
@@ -1108,7 +1136,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
               this.GetCustomerSiteDetails(this.custId);
               var saleDate=new Date(this.deliveryDate);
               var mToday   = new Date(Date.now());
-              this.getDiffDays(saleDate,mToday);
+              this.getDiffDays(saleDate,mToday,0);
 
             } 
          }
@@ -1204,7 +1232,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
              this.GetEwReceiptDetails(ewId);
              
             // this.GetItemDeatils2(select.itemId);
-            this.getDiffDays(this.deliveryDate,this.ewSaleDate);
+            this.getDiffDays(this.deliveryDate,this.ewSaleDate,0);
             this.LoadEWSchemeVariant(this.variant,this.vehicleAgeDays,this.kmsEwSale);
             this.getEwClaimStatus(this.vehRegNo);
         }
@@ -1554,6 +1582,21 @@ getInvItemId($event) {
 
 
             PrintDoc(){ alert ("Not Available...")}
+
+            validateEwSaleDate(x) {
+
+            //  alert ("Sale Date :"+x);
+              var currDate = new Date();
+              var ewSalDate =new Date(x);
+              var delDate=new Date(this.deliveryDate);
+              
+              if(ewSalDate < delDate || ewSalDate>currDate  || this.ewSaleDate===undefined || this.ewSaleDate===null) {
+                alert ("EW SALE DATE :" + "Should not be Null / Below Sale Date / Above Current Date");
+                this.ewSaleDate = this.deliveryDate;
+                return;
+              }
+          
+            }
 
           
  

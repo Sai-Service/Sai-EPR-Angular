@@ -187,8 +187,8 @@
                                                                             <tr> -->
 
                                                                                <td>
-                                                                                <input type="text" style="background-color: yellow;"
-                                                                                formControlName="regNo"   [(ngModel)]="regNo" (change)="serchByRegNo(regNo)" 
+                                                                                <input type="text" style="background-color: yellow;text-transform: uppercase;"
+                                                                                formControlName="regNo"   [(ngModel)]="regNo" (change)="serchByRegNo(regNo)"  
                                                                                 (keyup)="getUserIdsFirstWay($event)" id="userIdFirstWay" list="dynmicUserIds" class="form-control" />
                                                                                 <datalist id="dynmicUserIds">
                                                                                     <option
@@ -2731,7 +2731,7 @@
                                                                     <input  hidden disabled type="number" min="0"  formControlName="lineBasicAmt"  class="form-control">
                                                                     <td>
                                                                         <select class="form-control"
-                                                                            formControlName="type">
+                                                                            formControlName="Tecttttttype">
                                                                             <option value="Technician">Technician</option>
                                                                             <option value="Contractor">Contractor</option>
                                                                         </select>
