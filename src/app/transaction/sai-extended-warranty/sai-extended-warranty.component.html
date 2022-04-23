@@ -633,7 +633,7 @@
 
                             <td style="width: 15%" class="LabelFontStyle1">EW&nbsp;Sale&nbsp;Date:&nbsp;</td>
     
-                            <td><input disabled  type="date" value="fsd"  formControlName="ewSaleDate"  id="ewSaleDate" [(ngModel)]="ewSaleDate" class="form-control" ></td>
+                            <td><input   type="date" value="fsd"  formControlName="ewSaleDate"  id="ewSaleDate" [(ngModel)]="ewSaleDate"  (change) ="validateEwSaleDate(ewSaleDate)"  class="form-control"  style="background-color: yellow;"></td>
   
 
                             <td style="width: 15%" class="LabelFontStyle1">EW&nbsp;Start&nbsp;Date:&nbsp;</td>

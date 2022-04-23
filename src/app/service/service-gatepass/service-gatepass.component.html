@@ -30,12 +30,11 @@
                         <tr>
 
                                     <td class="LabelFontStyle1">&nbsp;Reg&nbsp;&nbsp;Number:&nbsp;</td>
-                                        
-                                    <td> <input  type ="text" class="form-control" formControlName="regNo" [(ngModel)]='regNo' value={{regNo}} (change)="serchByRegNo(regNo)" (keyup)="onInput($event)"
-                                        style="background-color: yellow;" placeholder="Regno"> </td>
+                                    <td> <input  type ="text" class="form-control" formControlName="regNo" [(ngModel)]='regNo' value={{regNo}} (change)="serchByRegNo(regNo)" 
+                                        style="background-color: yellow;text-transform: uppercase;" placeholder="Regno"> </td>
+                                        <!-- (keyup)="onInput($event)" -->
 
                                     <td  class="LabelFontStyle">&nbsp;GP&nbsp;Number&nbsp;:&nbsp;</td>
-                                    
                                     <div *ngIf="showGenForm; then genFYes; else genFNo"></div>
                                     <ng-template #genFYes> 
                                         <td><input disabled type="text" class="form-control" formControlName="gpNumber" [(ngModel)]='gpNumber' value={{gpNumber}}  > </td>
