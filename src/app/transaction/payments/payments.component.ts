@@ -350,7 +350,7 @@ jeSource: [],
   }
 
   paymentFind(suppNo: number) {
-    alert('--paymentFind---')
+    // alert('--paymentFind---')
     // alert('paymentFind-----')
     this.payHeaderLineDtlArray().clear();
     this.displaytype = true;
@@ -418,7 +418,7 @@ jeSource: [],
 {
   var payLnGrp: FormGroup = this.payInvoiceLineDtl();
   this.payInvoiceLineDtlArray().push(payLnGrp);
-  alert(this.lstsearchpayminvNew[index].invoiceId+'--'+this.lstsearchpayminvNew[index].invoiceAmt)
+  // alert(this.lstsearchpayminvNew[index].invoiceId+'--'+this.lstsearchpayminvNew[index].invoiceAmt)
   // this.paymentForm.patchValue({'invoiceId':this.lstsearchpayminvNew[0].invoiceId,'invoiceAmt':this.lstsearchpayminvNew[0].invoiceAmt});
   var dataobj1 = this.paymentForm.get('obj') as FormArray;
   dataobj1.controls[index].patchValue({'invoiceNum': this.lstsearchpayminvNew[index].invoiceNum,
@@ -426,7 +426,7 @@ jeSource: [],
                                           'invoiceId':this.lstsearchpayminvNew[index].invoiceId   });
 }
 else{
-  alert(this.partyId+'PartyID');
+  // alert(this.partyId+'PartyID');
     // this.transactionService.getsearchByInvDtls(suppNo1[index].suppNo, this.ouId,this.partyId).subscribe((res: any) => {
       if(this.source=='REFUND')
       {
@@ -497,14 +497,14 @@ else{
   }
 
   onOptionMethod(event,index){
-    alert(event);
+    // alert(event);
     var methodName=event.target.value;
-    alert(methodName+'methodName')
+    // alert(methodName+'methodName')
     console.log(this.paymentIdListList); 
     var selMet=this.paymentIdListList.find(d=>d.lookupValueId == event.target.value);
     console.log(selMet);
     
-    alert(selMet.lookupValue)
+    // alert(selMet.lookupValue)
     this.transactionService.paymentMethodName(this.ouId,selMet.lookupValue)
     .subscribe(
       data => {
@@ -542,7 +542,7 @@ else{
 
   onOptionsSelectedDocCat(docCategoryCode) {
     var docCategoryCode = docCategoryCode.target.value;
-    alert('---onOptionsSelectedDocCat----'+docCategoryCode);
+    // alert('---onOptionsSelectedDocCat----'+docCategoryCode);
     console.log(this.bankAccountNumList);
     var sel=this.bankAccountNumList.find(d=>d.methodName==docCategoryCode)
     // alert(sel.receiptMethodId);
@@ -565,7 +565,7 @@ else{
     // alert(name);
     let selectedValue = this.supplierCodeList.find(v => v.name == name);
     var dataobj1 = this.paymentForm.get('obj1') as FormArray;
-    alert(selectedValue.suppNo)
+    // alert(selectedValue.suppNo)
     dataobj1.controls[0].patchValue(
       {
         suppNo: selectedValue.suppNo,
@@ -619,9 +619,9 @@ else{
   }
 
   onSiteSelected(event: any) {
-    alert(event);
+    // alert(event);
     var siteId = event.target.value;
-    alert(siteId);
+    // alert(siteId);
     this.service.siteIdList(siteId)
       .subscribe(
         data => {
@@ -633,7 +633,7 @@ else{
 
 
   selectFlag1(e,k) {
-    alert(k);
+    // alert(k);
     // alert(e + '----checkbox')
     if (e.target.checked === true) {
       this.selectFlag = 'Y'
@@ -642,7 +642,7 @@ else{
       this.selectFlag = 'N'
     }
     if(this.selectFlag='Y'){
-      alert((this.selectFlag));
+      // alert((this.selectFlag));
       // debugger;
       var arrcon = this.paymentForm.get('obj').value;
       var arrobj = this.paymentForm.get('obj1').value;
@@ -831,7 +831,7 @@ console.log(jsonData);
 
 
   searchPayment(searchBySuppName, searchByFrmDate, searchByToDate) {
-    alert('searchPayment----');
+    // alert('searchPayment----');
     console.log(this.supplierCodeList)
     // frmDate = this.pipe.transform(searchByFrmDate, 'dd-MMM-yyyy');
     // toDate = this.pipe.transform(searchByToDate, 'dd-MMM-yyyy');
@@ -857,7 +857,7 @@ console.log(jsonData);
             this.payHeaderLineDtlArray().push(payLnGrp);
             
           }
-          alert(this.payHeaderLineDtlArray().length+'len');
+          // alert(this.payHeaderLineDtlArray().length+'len');
           for (let j = 0; j < this.payHeaderLineDtlArray().length; j++) {
             var patch=this.paymentForm.get('obj1') as FormArray;
           //   // var selPay=this.suppIdList.find(d=>d.suppSiteId===res.obj[j])
@@ -906,7 +906,7 @@ console.log(jsonData);
         });
       }
       ArPaymentNavigation() {
-        alert('AR Receipt Form')
+        // alert('AR Receipt Form')
         var arraybaseNew = this.paymentForm.get('obj1') as FormArray;
         var arraybaseNew1 = arraybaseNew.getRawValue();
         console.log(arraybaseNew1);
