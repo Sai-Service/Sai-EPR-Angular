@@ -668,11 +668,16 @@
                             
 
                            
-
                             <td style="width: 15%" class="LabelFontStyle1">EW&nbsp;Sale&nbsp;Date:&nbsp;</td>
-    
-                            <td><input   type="date" value="fsd"  formControlName="ewSaleDate"  id="ewSaleDate" [(ngModel)]="ewSaleDate"  (change) ="validateEwSaleDate(ewSaleDate)"  class="form-control"  style="background-color: yellow;"></td>
-  
+                            
+                            <div *ngIf="ewGracePeriod; then grpYes; else grpNo"></div>
+                            <ng-template #grpYes>
+                                <td><input   type="date" value="fsd"  formControlName="ewSaleDate"  id="ewSaleDate" [(ngModel)]="ewSaleDate"  (change) ="validateEwSaleDate(ewSaleDate)"  class="form-control"  style="background-color: yellow;"></td>
+                            </ng-template>
+                            <ng-template #grpNo>
+                                <td><input disabled  type="date" value="fsd"  formControlName="ewSaleDate"  id="ewSaleDate" [(ngModel)]="ewSaleDate"    class="form-control"></td>
+                            </ng-template>
+
 
                             <td style="width: 15%" class="LabelFontStyle1">EW&nbsp;Start&nbsp;Date:&nbsp;</td>
     

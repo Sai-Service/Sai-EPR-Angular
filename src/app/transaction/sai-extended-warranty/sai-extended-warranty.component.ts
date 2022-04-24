@@ -214,6 +214,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
   showCustModal=false;
   receiptDetails=false;
   showSchemeLov=true;
+  ewGracePeriod =false;
 
   variantItemId : number;
 
@@ -615,19 +616,20 @@ export class SaiExtendedWarrantyComponent implements OnInit {
            var oemExpDate =new Date (this.oemWarrEndDate);
            var ew2;
            var ew3;
+           var ew4;
            var yPeriod =this.ewPeriod;
 
             var currDate = new Date();
             ew2=this.addDays(oemExpDate,1);
-            // alert ("EW start date :"+ew2);
-        
-           if(currDate <=oemExpDate) {
-            this.ewStartDate=this.pipe.transform(ew2, 'y-MM-dd');
-           } else { this.ewStartDate=this.pipe.transform(currDate, 'y-MM-dd');   }
+           
+         
+           if(currDate <=oemExpDate) {ew4=ew2;} else { ew4=new Date (currDate);   }
           
+           this.ewStartDate=this.pipe.transform(ew4, 'y-MM-dd');
            var ewStDate=new Date(this.ewStartDate);
            ew3=this.addDays(ewStDate,yPeriod*365);
            this.ewEndDate=this.pipe.transform(ew3, 'y-MM-dd');
+
           });
         } else {}
 
@@ -869,9 +871,13 @@ export class SaiExtendedWarrantyComponent implements OnInit {
                       oemWarrantyPeriod: data.oemWarrantyPeriod,
                     });
 
+                    var currentDate   = new Date(Date.now());
                     var saleDate1=new Date(this.deliveryDate);
                     var oemEndDate =this.addDays(saleDate1,data.oemWarrantyPeriod*365);
                     this.oemWarrEndDate=this.pipe.transform(oemEndDate, 'y-MM-dd'); 
+                    // alert ("OEM End Date :"+oemEndDate +"  CurrDate :"+currentDate);
+
+                    if(currentDate<=oemEndDate) {this.ewGracePeriod=false;} else {this.ewGracePeriod=true;}
 
                     if(this.isEwActive ==false) {
                       var saleDate=new Date(this.deliveryDate);
@@ -1639,16 +1645,21 @@ getInvItemId($event) {
               var currDate = new Date();
               var ewSalDate =new Date(x);
               var delDate=new Date(this.deliveryDate);
+              var oewExpDate =new Date(this.oemWarrEndDate);
 
-
-              var mDays =this.diffDays(ewSalDate,delDate);
-              alert ("mdays : "+mDays);
+              this.ewStartDate=this.pipe.transform(ewSalDate, 'y-MM-dd');
               
-              if(ewSalDate < delDate || ewSalDate>currDate  || this.ewSaleDate===undefined || this.ewSaleDate===null) {
-                alert ("EW SALE DATE :" + "Should not be Null / Below Sale Date / Above Current Date");
-                this.ewSaleDate = this.deliveryDate;
-                return;
+              if(ewSalDate < oewExpDate || ewSalDate>currDate  || this.ewSaleDate===undefined || this.ewSaleDate===null) {
+                alert ("EW SALE DATE :" + "Should not be Null / Below OEM Expiry Date / Above Current Date");
+                this.ewSaleDate = this.pipe.transform(currDate, 'y-MM-dd');
+                this.ewStartDate=this.pipe.transform( this.ewSaleDate, 'y-MM-dd');
+                // return;
               }
+
+              var yPeriod =this.saiEwForm.get('ewPeriod').value;
+              var ewStDate=new Date(this.ewStartDate);
+              var ew3=this.addDays(ewStDate,yPeriod*365);
+              this.ewEndDate=this.pipe.transform(ew3, 'y-MM-dd');
           
             }
 

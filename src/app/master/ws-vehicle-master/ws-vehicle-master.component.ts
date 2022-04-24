@@ -721,13 +721,10 @@ export class WsVehicleMasterComponent implements OnInit {
         if(mReg==null || mReg==undefined || mReg.trim()=='') {
           alert ("Enter Valid Vehicle Registration No."); return;
         }
-        alert ("reg no as entered :"+mReg+"....");
         mReg=mReg.toUpperCase();
         mReg=mReg.trim();
-        alert ("reg no aftr upper/trim :"+mReg+"....");
         this.regNo=mReg;
-        alert (" this.regNo:"+ this.regNo+"....");
-        //  ---------------------------------------------------
+         //  ---------------------------------------------------
       if(mReg.length<9 || mReg.length>10) { alert (mReg+ " :Registration No should have minimum 9 & maximum 10 characters. " ) ; this.wsVehicleMasterForm.patchValue({regNo :''});return;}
    
     this.service.getVehRegDetailsNew(mReg)
