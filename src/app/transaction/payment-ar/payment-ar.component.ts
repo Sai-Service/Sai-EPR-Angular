@@ -72,7 +72,8 @@ export class PaymentArComponent implements OnInit {
   public statusList: Array<string> = [];
   public locIdList: Array<string> = [];
   public PaymentModeList: Array<string> = [];
-  public ReceiptMethodList: Array<string> = [];
+  // public ReceiptMethodList: Array<string> = [];
+  ReceiptMethodList:any=[];
   public ReceiptStatusList: Array<string> = [];
   public ReceiptStateList: Array<string> = [];
   public ReverseReasonList: Array<string> = [];
@@ -496,14 +497,15 @@ if(this.deptId==2){
      if ( this.referenceNo != undefined){
        this.payType='CONTROL ACCOUNT'
           this.receiptMethodId=Number(methodId);
-          if(this.receiptMethodId==143)
-          {
-            this.refType='Sales-Order'
-          }
-          if(this.receiptMethodId==142)
-          {
-            this.refType='Service-Order'
-          }
+          // alert(this.receiptMethodId);  
+          // if(this.receiptMethodId===143)
+          // {
+          //   this.refType='Sales-Order'
+          // }
+          // if(this.receiptMethodId==142)
+          // {
+          //   this.refType='Service-Order'
+          // }
    }
    });
   }
@@ -903,6 +905,21 @@ if(this.deptId==2){
             this.showBankDetails = true;
             if(this.displayButton==true) {
             this.checkDate = this.pipe.transform(Date.now(), 'y-MM-dd'); }
+            if (Number(sessionStorage.getItem('deptId'))===4){
+              // var selectReceiptmethodList= this.receiptMethodId.
+              let selectReceiptmethodList = this.ReceiptMethodList.find(d => d.receiptMethodId === this.receiptMethodId);
+              console.log(selectReceiptmethodList);
+              console.log(selectReceiptmethodList.methodName);
+              if(selectReceiptmethodList.methodName.includes('FSC Control'))
+              {
+                  this.refType='Service-Order'
+              }
+              if(selectReceiptmethodList.methodName.includes('Sales Control'))
+              {
+                  this.refType='Sales-Order'
+              }
+                  
+                }
           });
     }
   }

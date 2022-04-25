@@ -1779,6 +1779,11 @@ SerchBydocseqval(docseqval):Observable<any>
 {
   return this.http.get(this.ServerUrl+`/glHeader/docSeqValueWise/${docseqval}`);
 }
+lineStatus():Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/cmnLookup/glLinesStatus`);
+}
+
 
 //////////////////FlexField////////////////
 
