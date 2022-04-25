@@ -47,15 +47,15 @@
                                         <th scope="col">Distribution Set</th>
                                         <th scope="col">Terms Date</th>
                                         <th scope="col">Terms</th>
-                                        <th scope="col">Payment Method</th>
+                                        <th scope="col" hidden>Payment Method</th>
                                         <th scope="col">Pay Group</th>
                                         <th scope="col">Prepayment Type</th>
                                         <th scope="col">Settlement Date</th>
-                                        <th scope="col">Taxation Country</th>
+                                        <th scope="col" hidden>Taxation Country</th>
                                         <th scope="col">Related& Invoice</th>
                                         <th scope="col">Supplier Tax Inv No</th>
-                                        <th scope="col">Remit-To Bank Acct Name</th>
-                                        <th scope="col">Remit-To Bank Acct No</th>
+                                        <th scope="col" hidden>Remit-To Bank Acct Name</th>
+                                        <th scope="col" hidden>Remit-To Bank Acct No</th>
                                         <th scope="col">Debit Memo Reason</th>
                                         <th>
                                             <table style="width: 100%;">
@@ -229,8 +229,7 @@
                                                             formControlName="terms" value={{terms}}
                                                             style="width: 120px;height: 25px;font-size: 10px;">
                                                     </td>
-                                                    <td>
-
+                                                    <td hidden>
                                                         <select formControlName="paymentMethod" class="form-control"
                                                             style="width: 120px;height: 25px;font-size: 10px;"
                                                             (change)='onOptionSelectedSectionPaymentMethod($event)'>
@@ -269,7 +268,7 @@
                                                             formControlName="settlementDate" value={{settlementDate}}
                                                             style="width: 120px;height: 25px;font-size: 10px;">
                                                     </td>
-                                                    <td>
+                                                    <td hidden>
                                                         <input type="text" class="form-control"
                                                             formControlName="taxationCountry" value={{taxationCountry}}
                                                             style="width: 120px;height: 25px;font-size: 10px;">
@@ -282,13 +281,13 @@
                                                         <input type="text" class="form-control" placeholder=""
                                                             style="width: 120px;height: 25px;font-size: 10px;">
                                                     </td>
-                                                    <td>
+                                                    <td hidden>
                                                         <input type="text" class="form-control"
                                                             formControlName="remitToBankAccount"
                                                             value={{remitToBankAccount}}
                                                             style="width: 120px;height: 25px;font-size: 10px;">
                                                     </td>
-                                                    <td>
+                                                    <td hidden>
                                                         <input type="text" class="form-control"
                                                             formControlName="remitToBankAccountNo"
                                                             value={{remitToBankAccountNo}}
@@ -303,11 +302,18 @@
                                                         <table>
                                                             <tr>
                                                                 <td>
-                                                                    <input class="form-control"
-                                                                        style="width: 100px;height: 25px;">
+                                                                    <!-- <input  type="text" class="form-control" formControlName="chassisNo"
+                                                                        style="width: 100px;height: 25px;"> -->
+                                                                        <select formControlName="chassisNo" class="form-control"
+                                                                        style="width: 120px;height: 25px;font-size: 10px;"  (change)="onSelectChassis($event,i)">
+                                                                        <option>--Select--</option>
+                                                                        <option *ngFor="let chassisList of  chassisNoList" [value]="chassisList.chassisNo">
+                                                                            {{chassisList.chassisNo}}
+                                                                        </option>
+                                                                    </select>
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-control"
+                                                                    <input disabled type="number" class="form-control" formControlName="referenceNo"
                                                                         style="width: 100px;height: 25px;">
                                                                 </td>
                                                                 <td>
@@ -441,7 +447,7 @@
                                                             formControlName="terms" value={{terms}}
                                                             style="width: 120px;height: 25px;font-size: 10px;">
                                                     </td>
-                                                    <td>
+                                                    <td hidden>
 
                                                         <select disabled formControlName="paymentMethod"
                                                             class="form-control"
@@ -486,7 +492,7 @@
                                                             formControlName="settlementDate" value={{settlementDate}}
                                                             style="width: 120px;height: 25px;font-size: 10px;">
                                                     </td>
-                                                    <td>
+                                                    <td hidden>
                                                         <input disabled type="text" class="form-control"
                                                             formControlName="taxationCountry" value={{taxationCountry}}
                                                             style="width: 120px;height: 25px;font-size: 10px;">
@@ -499,13 +505,13 @@
                                                         <input disabled type="text" class="form-control" placeholder=""
                                                             style="width: 120px;height: 25px;font-size: 10px;">
                                                     </td>
-                                                    <td>
+                                                    <td hidden>
                                                         <input type="text" disabled class="form-control"
                                                             formControlName="remitToBankAccount"
                                                             value={{remitToBankAccount}}
                                                             style="width: 120px;height: 25px;font-size: 10px;">
                                                     </td>
-                                                    <td>
+                                                    <td hidden>
                                                         <input type="text" disabled class="form-control"
                                                             formControlName="remitToBankAccountNo"
                                                             value={{remitToBankAccountNo}}
@@ -520,11 +526,11 @@
                                                         <table>
                                                             <tr>
                                                                 <td>
-                                                                    <input disabled class="form-control"
+                                                                    <input disabled type="text" class="form-control" formControlName="chassisNo"
                                                                         style="width: 100px;height: 25px;">
                                                                 </td>
                                                                 <td>
-                                                                    <input disabled class="form-control"
+                                                                    <input disabled type="number" class="form-control" formControlName="referenceNo"
                                                                         style="width: 100px;height: 25px;">
                                                                 </td>
                                                                 <td>

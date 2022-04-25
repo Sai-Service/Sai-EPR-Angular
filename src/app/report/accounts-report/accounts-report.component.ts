@@ -41,11 +41,13 @@ export class AccountsReportComponent implements OnInit {
   spInvAging3:number;
   periodName:string;
   isDisabled1 = false;
+  accountName:string;
   isVisibleGSTSaleRegister: boolean = false;
   isVisibleGSTPurchaseRegister: boolean=false;
   isVisibleSparesdebtors:boolean=false;
   isVisiblespInvAgging:boolean=false;
   isVisiblepanelgltrialBalance:boolean=false;
+  panelCashBank:boolean=false;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) {
     this.reportForm = this.fb.group({
@@ -59,12 +61,14 @@ export class AccountsReportComponent implements OnInit {
       spInvAging2:[''],
       spInvAging3:[''],
       periodName:[''],
+      accountName:[''],
     })
    }
    
   ngOnInit(): void {
     this.reportForm.patchValue({OUCode:sessionStorage.getItem('ouId')+'-'+sessionStorage.getItem('ouName')})
-    this.reportForm.patchValue({locCode:sessionStorage.getItem('locId')+'-'+sessionStorage.getItem('locName')})
+    this.reportForm.patchValue({locCode:sessionStorage.getItem('locId')+'-'+sessionStorage.getItem('locName')});
+    this.reportForm.patchValue({accountName:sessionStorage.getItem('ticketNo')});
    // Prevent closing from click inside dropdown
 $(document).on('click', '.dropdown-menu', function (e) {
   e.stopPropagation();
@@ -145,6 +149,7 @@ reportName:string;
     this.isVisibleSparesdebtors=false;
     this.isVisiblespInvAgging=false;
     this.isVisiblepanelgltrialBalance=false;
+    this.panelCashBank=false;
   }
   else if (reportName==='chequebounceReport'){
     this.reportName='Cheque Bounce Report';
@@ -156,6 +161,7 @@ reportName:string;
     this.isVisibleSparesdebtors=false;
     this.isVisiblespInvAgging=false;
     this.isVisiblepanelgltrialBalance=false;
+    this.panelCashBank=false;
   }
   else if (reportName==='gstPurSummary'){
     this.reportName='Purchase Register Summary';
@@ -167,6 +173,7 @@ reportName:string;
     this.isVisibleSparesdebtors=false;
     this.isVisiblespInvAgging=false;
     this.isVisiblepanelgltrialBalance=false;
+    this.panelCashBank=false;
   }
   else if (reportName==='receiptRegisterReport'){
     this.reportName='Receipt Register Report';
@@ -178,6 +185,7 @@ reportName:string;
     this.isVisibleSparesdebtors=false;
     this.isVisiblespInvAgging=false;
     this.isVisiblepanelgltrialBalance=false;
+    this.panelCashBank=false;
   }
   else if (reportName==='gSTSaleRegister'){
     this.reportName='GST Sales Register';
@@ -189,6 +197,7 @@ reportName:string;
     this.isVisibleSparesdebtors=false;
     this.isVisiblespInvAgging=false;
     this.isVisiblepanelgltrialBalance=false;
+    this.panelCashBank=false;
   }
   else if (reportName==='sparesdebtors'){
     this.reportName='Spares Debtors';
@@ -201,6 +210,7 @@ reportName:string;
     this.isVisibleSparesdebtors=true;
     this.isVisiblespInvAgging=false;
     this.isVisiblepanelgltrialBalance=false;
+    this.panelCashBank=false;
   }
   else if (reportName==='spInvAgging'){
     this.reportName='Spares Inventory Aging';
@@ -210,6 +220,7 @@ reportName:string;
     this.isVisibleSparesdebtors=false;
     this.isVisiblespInvAgging=true;
     this.isVisiblepanelgltrialBalance=false;
+    this.panelCashBank=false;
   }
   else if (reportName==='gltrialBalance'){
     this.reportName='GL Trial Balance';
@@ -219,6 +230,17 @@ reportName:string;
     this.isVisibleSparesdebtors=false;
     this.isVisiblespInvAgging=false;
     this.isVisiblepanelgltrialBalance=true;
+    this.panelCashBank=false;
+  }
+  else if (reportName==='cashBank'){
+    this.reportName='Cash Bank Reports';
+    this.isVisibleGSTSaleRegister=false;
+    this.isVisibleGSTPurchaseRegister=false;
+    this.isVisibleGSTSaleRegister=false;
+    this.isVisibleSparesdebtors=false;
+    this.isVisiblespInvAgging=false;
+    this.isVisiblepanelgltrialBalance=false;
+    this.panelCashBank=true;
   }
   }
 
@@ -351,6 +373,18 @@ reportName:string;
         this.isDisabled1=false;
       })      
     }
+    else if (reportName ==='Cash Bank Reports'){
+      var accountName=this.reportForm.get('accountName').value;
+       const fileName = 'Cash Bank Reports-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+     this.reportService.cashBankReport(fromDate,toDate,sessionStorage.getItem('ouId'),accountName)
+       .subscribe(data => {
+         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+         this.closeResetButton = true;
+         this.dataDisplay = ''
+         this.isDisabled1=false;
+       })      
+     }
   }
 
 }

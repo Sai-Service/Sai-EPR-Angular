@@ -252,6 +252,24 @@ isVisibleGSTSaleRegister:boolean=false;
       this.isVisiblecustomerLedger=false;
       this.isVisibleGSTSaleRegister=false;
     }
+    else if (reportName==='amcSaleRegister'){
+      this.reportName='AMC Sales Register';
+      this.isVisiblegstsaiDebtors=false;
+      this.isVisiblepanelfromtolocation=true;
+      this.isVisiblefromtolocationdepartment=false;
+      this.isVisiblepaneltolocation=false;
+      this.isVisiblecustomerLedger=false;
+      this.isVisibleGSTSaleRegister=false;
+    }
+    else if (reportName==='EWSaleRegister'){
+      this.reportName='EW Sales Register';
+      this.isVisiblegstsaiDebtors=false;
+      this.isVisiblepanelfromtolocation=true;
+      this.isVisiblefromtolocationdepartment=false;
+      this.isVisiblepaneltolocation=false;
+      this.isVisiblecustomerLedger=false;
+      this.isVisibleGSTSaleRegister=false;
+    }
   }
 
 
@@ -517,6 +535,50 @@ isVisibleGSTSaleRegister:boolean=false;
           this.isDisabled1 = false;
         })
       }
+  }
+  else if (reportName==='AMC Sales Register'){
+    const fileName = 'AMC Sales Register-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    if (Number(sessionStorage.getItem('deptId'))===4){
+    this.reportService.amcSaleRegister(fromDate, toDate, sessionStorage.getItem('ouId'),locId)
+    .subscribe(data => {
+      saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+      this.dataDisplay = ''
+      this.closeResetButton = true;
+      this.isDisabled1 = false;
+    })
+    }
+    if (Number(sessionStorage.getItem('deptId'))!=4){
+      this.reportService.amcSaleRegister(fromDate, toDate, sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'))
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.dataDisplay = ''
+        this.closeResetButton = true;
+        this.isDisabled1 = false;
+      })
+    }
+  }
+  else if (reportName==='EW Sales Register'){
+    const fileName = 'EW Sales Register-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    if (Number(sessionStorage.getItem('deptId'))===4){
+    this.reportService.EWSaleRegister(fromDate, toDate, sessionStorage.getItem('ouId'),locId)
+    .subscribe(data => {
+      saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+      this.dataDisplay = ''
+      this.closeResetButton = true;
+      this.isDisabled1 = false;
+    })
+    }
+    if (Number(sessionStorage.getItem('deptId'))!=4){
+      this.reportService.EWSaleRegister(fromDate, toDate, sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'))
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.dataDisplay = ''
+        this.closeResetButton = true;
+        this.isDisabled1 = false;
+      })
+    }
   }
   }
 

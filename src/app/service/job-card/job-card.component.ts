@@ -399,6 +399,8 @@ export class JobCardComponent implements OnInit {
  
   @ViewChild("myinput") myInputField: ElementRef;
   arInvNum: string;
+  addonInvoiceNumber:string;
+  arInvDate:Date;
   ngAfterViewInit() {
     this.myInputField.nativeElement.focus();
   }
@@ -629,6 +631,18 @@ export class JobCardComponent implements OnInit {
       matInsSubTotal:[],
       matInsTaxTotal:[],
       matInsNetTotal:[],
+
+      addonLabBasicAmt:[],
+      addonMatBasicAmt:[],
+      addonLabDiscount:[],
+      addonMatDiscout:[],
+      addonLabTaxableAmt:[],
+      addonMatTaxableAmt:[],
+      addonLabTotTaxAmt:[],
+      addonMatTotTaxAmt:[],
+      addonLabTotAmt:[],
+      addonMatTotAmt:[],
+      addonInvTotAmt:[],
 
 
 
@@ -1093,7 +1107,7 @@ export class JobCardComponent implements OnInit {
 
 
   getUserIdsFirstWay($event) {
-    this.onInput($event);
+    // this.onInput($event);
     let userId = (<HTMLInputElement>document.getElementById('userIdFirstWay')).value;
     this.userList1 = [];
 
@@ -1387,20 +1401,32 @@ export class JobCardComponent implements OnInit {
   }
 
   serchByRegNo(RegNo) {
-   
-    // RegNo=RegNo.toUpperCase();
-    // alert ("Regno :" + RegNo);
-    // RegNo=RegNo.trim();
+
+    // var mreg1=this.jobcardForm.get('regNo').value
+    if(RegNo==null || RegNo==undefined || RegNo.trim()=='') {
+      alert ("Enter Valid Vehicle Registration No."); return;
+    }
+
+    RegNo=RegNo.toUpperCase();
+    RegNo=RegNo.trim();
+    this.regNo=RegNo;
+    // alert ("this.regno :"+this.regNo);
 
     var jcType=this.jobcardForm.get('jcType').value;
-    if(jcType ==='--Select--' || jcType ===null ) {alert ("Please Select Job Card Type...");return;}
+    if(jcType ==='--Select--' || jcType ===null || jcType ===undefined ) {
+      alert ("Please Select Job Card Type...");
+      this.jobcardForm.patchValue({regNo:''});
+      return;
+    }
  
     this.serviceService.getByRegNo(RegNo, sessionStorage.getItem('ouId'),jcType)
       .subscribe(
         data => {
           this.RegNoList = data.obj;
-          if(data.code===400 && data.obj !=null)  {alert(data.obj);this.jobcardForm.reset(); return;}
-          if(data.code===400 && data.obj ===null) {alert("Please Enter valid Registration Number..."); this.jobcardForm.reset(); return;}
+          // if(data.code===400 && data.obj !=null)  {alert(data.obj);this.jobcardForm.reset(); return;}
+          // if(data.code===400 && data.obj ===null) {alert("Please Enter valid Registration Number..."); this.jobcardForm.reset(); return;}
+          if(data.code===400 ) {alert (data.message); this.jobcardForm.reset(); return;}
+          
           console.log(this.RegNoList);
        
           this.jobcardForm.patchValue(this.RegNoList);
@@ -1492,6 +1518,8 @@ export class JobCardComponent implements OnInit {
             this.jobCardDate= data.obj.jobCardDate;
             this.jobCardNum1=data.obj.jobCardNum;
             this.arInvNum=data.obj.invoiceNumber;
+            this.addonInvoiceNumber=data.obj.addonInvoiceNumber;
+
             this.estTotal=data.obj.estMaterial+data.obj.estLabor;
             this.fscCoupon=data.obj.fscCoupon;
           } else { alert (jcNum + " Job Card Not Found...");return;}
@@ -2196,8 +2224,20 @@ export class JobCardComponent implements OnInit {
           this.splitDetailsArray().push(payInvGrp1);
       }
 
-      // this.jobcardForm.patchValue(this.lstcomments.jobCardLabLines[i].splitArr);
+      var tblDetails=this.lstcomments.jobCardLabLines[i].splitArr
+      var splitLinesArr =this.jobcardForm.get("splitAmounts") as FormArray;
 
+      for (let j = 0; j < this.lstcomments.jobCardLabLines[i].splitArr.length ; j++) {
+
+        let tschType :string =tblDetails[j].type;
+        tschType=tschType.trim();
+        splitLinesArr.controls[j].patchValue({type :tschType ,techId :tblDetails[j].techId,techAmt:tblDetails[j].techAmt,})
+        alert (tschType +","+tblDetails[j].techId+","+tblDetails[j].techAmt);
+
+       }
+
+      //  this.jobcardForm.get('splitAmounts').patchValue(tblDetails);
+       //let selectbilTy = this.billableTyIdList.find(d => d.billableTyName === 'Customer');
 
   }
 
@@ -2425,7 +2465,7 @@ export class JobCardComponent implements OnInit {
         this.preInvButton=false;
         this.reopenButton=false;
         alert(res.message);
-        this.arInvNum = res.obj;
+        this.arInvNum = res.obj.InvoiceNo;
       } else {
         if (res.code === 400) {
           this.genBillButton=true;

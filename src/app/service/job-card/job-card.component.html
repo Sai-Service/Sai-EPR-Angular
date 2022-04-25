@@ -187,8 +187,8 @@
                                                                             <tr> -->
 
                                                                                <td>
-                                                                                <input type="text" style="background-color: yellow;"
-                                                                                formControlName="regNo"   [(ngModel)]="regNo" (change)="serchByRegNo(regNo)" 
+                                                                                <input type="text" style="background-color: yellow;text-transform: uppercase;"
+                                                                                formControlName="regNo"   [(ngModel)]="regNo" (change)="serchByRegNo(regNo)"  
                                                                                 (keyup)="getUserIdsFirstWay($event)" id="userIdFirstWay" list="dynmicUserIds" class="form-control" />
                                                                                 <datalist id="dynmicUserIds">
                                                                                     <option
@@ -341,9 +341,9 @@
                                                                         <tr>
                                                                             <td style="width: 15%" class="LabelFontStyle">&nbsp;Demanded&nbsp;Job&nbsp;:</td>
                                                                             <td colspan="3">
-                                                                            <textarea id="demandJob" formControlName="demandJob" rows="2" style="width: 100%;resize: none; font-size: small;" (keyup)="onInput($event)"></textarea> </td>
+                                                                            <textarea id="demandJob" formControlName="demandJob" rows="2" style="width: 100%;resize: none; font-size: small;" ></textarea> </td>
                                                                             <td style="width: 15%"  class="LabelFontStyle">Recommendation&nbsp;:</td>
-                                                                            <td colspan="3"><textarea id="recomJob" formControlName="recomJob" rows="2" style="width: 100%; resize: none;font-size: small;" (keyup)="onInput($event)"></textarea> </td>
+                                                                            <td colspan="3"><textarea id="recomJob" formControlName="recomJob" rows="2" style="width: 100%; resize: none;font-size: small;" ></textarea> </td>
                                                                         </tr>
                                                                        
                                                                       
@@ -929,7 +929,7 @@
                                                                             <td>
                                                                                 <input type="text" class="form-control"
                                                                                     placeholder=""
-                                                                                    formControlName="driverName"  (keyup)="onInput($event)">
+                                                                                    formControlName="driverName"  >
                                                                             </td>
                                                                             <td style="width: 15%"
                                                                                 class="LabelFontStyle">
@@ -937,7 +937,7 @@
                                                                             <td>
                                                                                 <input type="text" class="form-control"
                                                                                     placeholder=""
-                                                                                    formControlName="pickupRemark" (keyup)="onInput($event)">
+                                                                                    formControlName="pickupRemark" >
                                                                             </td>
 
                                                                             <td style="width: 15%"
@@ -946,7 +946,7 @@
                                                                         <td>
                                                                             <input type="text" class="form-control"
                                                                                 placeholder=""
-                                                                                formControlName="pickupLoc" (keyup)="onInput($event)">
+                                                                                formControlName="pickupLoc" >
                                                                         </td>
 
                                                                              
@@ -970,7 +970,7 @@
                                                                             <div *ngIf="fscCouponStatus; then fscYes; else fscNo"></div>
                                                                             <ng-template #fscYes>
                                                                                 <td style="width: 15%" class="LabelFontStyle"> FSC&nbsp;Coupon&nbsp;No&nbsp;: </td>
-                                                                                <td> <input type="text" class="form-control"  placeholder="Fsc Coupon No." formControlName="fscCoupon" [(ngModel)]="fscCoupon" (keyup)="onInput($event)" ></td>
+                                                                                <td> <input type="text" class="form-control"  placeholder="Fsc Coupon No." formControlName="fscCoupon" [(ngModel)]="fscCoupon"  ></td>
                                                                             </ng-template>
                                                                             <ng-template #fscNo></ng-template>
 
@@ -1289,7 +1289,7 @@
                                                                             <ng-template #splt21>
                                                                                 <!-- <div *ngIf="genericItemLab; then genYes2; else genNo2"> </div>
                                                                                 <ng-template #genYes2> -->
-                                                                                     <td><input  type="text" formControlName="description"  class="form-control"  style="height: 25px; width:350px" (keyup)="onInput($event)" ></td>
+                                                                                     <td><input  type="text" formControlName="description"  class="form-control"  style="height: 25px; width:350px" ></td>
                                                                                <!-- </ng-template>
                                                                                <ng-template #genNo2>
                                                                                     <td><input disabled type="text" formControlName="description"  class="form-control"  style="height: 25px; width:350px" ></td>
@@ -1298,7 +1298,7 @@
 
 
 
-                                                                            <td><input disabled type="text" formControlName="genericItem"  class="form-control"  style="height: 25px; width:30px" (keyup)="onInput($event)"  ></td>
+                                                                            <td><input disabled type="text" formControlName="genericItem"  class="form-control"  style="height: 25px; width:30px"   ></td>
 
 
                                                                           
@@ -1885,15 +1885,28 @@
                                                                 formControlName="validTillDt">
                                                         </td>
 
-                                                        <td style="width: 15%" class="LabelFontStyle">
+                                                        <!-- <td style="width: 15%" class="LabelFontStyle">
                                                             Invoice&nbsp;Number&nbsp;:</td>
                                                         <td>
                                                             <input type="text" disabled class="form-control"
-                                                            formControlName="arInvNum" value="{{arInvNum}}">
+                                                            formControlName="arInvNum" value="{{arInvNum}}"> -->
 
-                                                        </td>
+                                                        <!-- </td> -->
 
                                                     </tr>
+
+                                                       <tr>
+   
+                                                           <td style="width: 15%" class="LabelFontStyle"> Bill&nbsp;Date&nbsp;:</td>
+                                                           <td> <input type="date" disabled class="form-control" formControlName="arInvDate"  value="{{arInvDate}}" > </td> 
+                                                     
+                                                           <td style="width: 15%" class="LabelFontStyle">Bill&nbsp;No&nbsp;:</td>
+                                                           <td> <input type="text" disabled class="form-control" formControlName="arInvNum"  value="{{arInvNum}}" > </td> 
+                                                     
+                                                           <td style="width: 15%" class="LabelFontStyle"> Addon&nbsp;Bill&nbsp;No&nbsp;:</td>
+                                                            <td> <input type="text" disabled class="form-control" formControlName="addonInvoiceNumber"  value="{{addonInvoiceNumber}}"> </td> 
+                                                        </tr>
+                                                      
 
                                                 </fieldset>
                                             </ng-template>
@@ -2020,12 +2033,20 @@
                                                                                                 placeholder=""
                                                                                                 formControlName="emailId" style="width: 250px;">
                                                                                         </td>
+
+                                                                                        <td style="width: 15%" class="LabelFontStyle"> Bill&nbsp;Date&nbsp;:</td>
+                                                                                        <td> <input type="date" disabled class="form-control" formControlName="arInvDate"  value="{{arInvDate}}" style="width: 120px;"> </td> 
+                                                                                  
+                                                                                    </tr>
+                                                                                        <tr>
+   
+                                                                                            <td style="width: 15%" class="LabelFontStyle">Bill&nbsp;No&nbsp;:</td>
+                                                                                            <td> <input type="text" disabled class="form-control" formControlName="arInvNum"  value="{{arInvNum}}" > </td> 
+                                                                                      
+                                                                                          
                                                                                         </tr>
 
-                                                                                        <tr>
-                                                                                            <td style="width: 15%" class="LabelFontStyle"> Invoice&nbsp;No&nbsp;:</td>
-                                                                                            <td> <input type="text" disabled class="form-control" formControlName="arInvNum"  value="{{arInvNum}}" style="width: 250px;"> </td>
-                                                                                          </tr>
+                                                                                      
                                                                              </table>
 
 
@@ -2039,11 +2060,7 @@
                                                             <td>
                                                                 <fieldset class="RFS">
                                                                     <legend id="FormsPH_LGAadhaar"
-                                                                        class="RFSL"
-                                                                        style="font-size: 10px;color: black;">
-                                                                        <b>
-                                                                            Insurance&nbsp;Details&nbsp;</b>
-                                                                    </legend>
+                                                                        class="RFSL" style="font-size: 10px;color: black;"><b>Insurance&nbsp;Details&nbsp;</b></legend>
                                                                     <table>
                                                                         <tr>
                                                                             
@@ -2113,9 +2130,10 @@
 
                                                                         </tr>
                                                                         <tr>
-                                                                          <td style="width: 15%" class="LabelFontStyle"> Invoice&nbsp;No&nbsp;:</td>
-                                                                          <td> <input type="text" disabled class="form-control" formControlName="arInvNum"  value="{{arInvNum}}" style="width: 250px;"> </td> 
+                                                                            <td style="width: 15%" class="LabelFontStyle">Bill&nbsp;No&nbsp;:</td>
+                                                                            <td> <input type="text" disabled class="form-control" formControlName="arInvNum"  value="{{arInvNum}}" > </td> 
                                                                         </tr>
+                                                                      
                                                                      
                                                                     </table>
 
@@ -2127,46 +2145,29 @@
 
                                                 </ng-template>
 
-                                                
+                                                <fieldset class="RFS">
+                                                    <tr>
+                                                        <td style="width: 15%" class="LabelFontStyle">Estimated&nbsp;Labour&nbsp;:</td>
+                                                        <td><input type="number" disabled class="form-control"  placeholder="" formControlName="estLabor"> </td>
+                                                       
+                                                        <td style="width: 15%" class="LabelFontStyle">Estimated&nbsp;Material&nbsp;:</td>
+                                                        <td><input type="number" disabled class="form-control" placeholder="" formControlName="estMaterial"> </td>
+                                                       
+                                                        <td style="width: 15%" class="LabelFontStyle">Estimated&nbsp;Total&nbsp;:</td>
+                                                        <td><input type="number" disabled class="form-control"  placeholder="" formControlName="estTotal"></td>
+                                                      
+                                                        <td style="width: 15%" class="LabelFontStyle"> Variation&nbsp;Reason(if&nbsp;any):</td>
+                                                           
+                                                        <td colspan="2">
+                                                            <select class="form-control" formControlName="variReason"  >
+                                                                <option value="Regular">Reason1</option>
+                                                                <option value="Re-Insurance coupon">Reason2</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                </fieldset>
 
 
-                                                    <fieldset class="RFS">
-                                                        <!-- <legend id="FormsPH_LGAadhaar" class="RFSL"
-                                                            style="font-size: 10px;color: black;">
-                                                            <b> Estimate details</b>
-                                                        </legend> -->
-                                                        <tr>
-                                                            <td style="width: 15%" class="LabelFontStyle">
-                                                                Estimated&nbsp;Labour&nbsp;:</td>
-                                                            <td>
-                                                                <input type="number" disabled class="form-control"
-                                                                    placeholder="" formControlName="estLabor">
-                                                            </td>
-                                                            
-                                                            <td style="width: 15%" class="LabelFontStyle">
-                                                                Estimated&nbsp;Material&nbsp;:</td>
-                                                            <td>
-                                                                <input type="number" disabled class="form-control"
-                                                                    placeholder="" formControlName="estMaterial">
-                                                            </td>
-                                                            <td style="width: 15%" class="LabelFontStyle">
-                                                                Estimated&nbsp;Total&nbsp;:</td>
-                                                            <td>
-                                                                <input type="number" disabled class="form-control"
-                                                                    placeholder="" formControlName="estTotal">
-                                                            </td>
-
-                                                            <td style="width: 15%" class="LabelFontStyle">
-                                                                Variation&nbsp;Reason(if&nbsp;any):</td>
-                                                            <td colspan="2">
-                                                                <select class="form-control" formControlName="variReason"  >
-                                                                    <option value="Regular">Reason1</option>
-                                                                    <option value="Re-Insurance coupon">Reason2</option>
-                                                                </select>
-                                                            </td>
-                                                        </tr>
-                                                    </fieldset>
-                                                
                                                     <fieldset class="RFS">
                                                         <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;"><b> Bill Details</b> </legend>
                                                         <table class="auto-style4" class="GridFont" cellspacing="0"
@@ -2238,8 +2239,8 @@
 
                                                                     
 
-                                                                    <td><input disabled type="number" min="0" formControlName="labTaxableAmt" [(ngModel)]="labTaxableAmt" style="width: 7em;font-weight: bold;font-size: small;"    ></td>
-                                                                    <td><input disabled type="number" min="0" formControlName="labTotTaxAmt" [(ngModel)]="labTotTaxAmt" style="width: 7em;font-weight: bold;font-size: small;" ></td>
+                                                                    <td><input disabled type="number" min="0" formControlName="labTaxableAmt"  style="width: 7em;font-weight: bold;font-size: small;"    ></td>
+                                                                    <td><input disabled type="number" min="0" formControlName="labTotTaxAmt"  style="width: 7em;font-weight: bold;font-size: small;" ></td>
                                                                     <td><input disabled type="number" min="0"  formControlName="labTotAmt" style="width: 7em;font-weight: bold;font-size: small;"></td>
                                                                     <td><input disabled type="number" formControlName="matBasicAmt" style="width: 7em;font-weight: bold;font-size: small;text-align: right;"></td>
                                                                     
@@ -2280,6 +2281,101 @@
                                                                     <td><input disabled type="number" min="0"  formControlName="matTotAmt" style="width: 7em;font-weight: bold;font-size: small;">  </td>
                                                                     <td><input disabled type="number" min="0"  formControlName="invTotAmt" class="form-control"  style="width: 10em;font-weight: bold;font-size: small;"></td>
                                                                 </tr>
+
+                                                               
+                                                                <div *ngIf="showServiceCustomer; then srvBlockAddon2; else insBlockAddon2"></div>
+                                                                <ng-template #srvBlockAddon2>
+
+                                                                <tr class="ItemStyle" style="text-decoration:none;">
+
+                                                                    <td style="width: 10em;text-align: center;" class="LabelFontStyle" >Addon&nbsp;</td>
+                                                                    <td><input disabled type="number" formControlName="addonLabBasicAmt" style="width: 7em;font-weight: bold;font-size: small;text-align: right;" ></td>
+                                                                    
+                                                                    <div *ngIf="showServiceCustomer ;then sr1; else sr2"></div>
+                                                                    <ng-template #sr1>
+
+                                                                    <div *ngIf="showLabdisP ;then sdp1; else sdp2"></div>
+                                                                    <ng-template #sdp1>
+                                                                    <td><select formControlName="labDiscountPer" 
+                                                                            id="labDiscountPer" class="form-control" style="width: 4em;font-weight: bold;font-size: small;"
+                                                                            (ngModelChange)="labDiscountPerCal($event)">
+                                                                            <option>--Select--</option>
+                                                                            <option
+                                                                                *ngFor="let sc of  labDiscountPerList" [value]="sc.code" >
+                                                                                {{sc.code}}
+                                                                            </option>
+                                                                        </select></td>
+                                                                    </ng-template>
+                                                                    <ng-template #sdp2>
+                                                                        <td><input  disabled type="number"   min="0"     formControlName="labDiscountPer" class="form-control"  style="width: 7em;font-weight: bold;font-size: small;"></td>
+                                                                    </ng-template>
+
+
+
+                                                                    <div *ngIf="showLabDisCol ;then sd1; else sd2"></div>
+                                                                    <ng-template #sd1>
+                                                                         <td><input  type="number"   min="0"     formControlName="labDiscount" class="form-control" (change)="labDiscountAmtCal($event)" style="width: 7em;font-weight: bold;font-size: small;"></td>
+                                                                    </ng-template>
+                                                                    <ng-template #sd2>
+                                                                         <td><input disabled type="number"   min="0"  formControlName="labDiscount" class="form-control"  style="width: 7em;font-weight: bold;font-size: small;"></td>
+                                                                    </ng-template>
+
+                                                                </ng-template>
+                                                                <ng-template #sr2>
+                                                                    <td><input disabled type="number"   min="0"  formControlName="labDiscountPer" class="form-control"  style="width: 4em;font-weight: bold;font-size: small;"></td>
+                                                                    <td><input disabled type="number"   min="0"  formControlName="labDiscount" class="form-control"  style="width: 7em;font-weight: bold;font-size: small;"></td>
+                                                                
+                                                                </ng-template>
+
+                                                                    
+
+                                                                    <td><input disabled type="number" min="0" formControlName="addonLabTaxableAmt" [(ngModel)]="labTaxableAmt" style="width: 7em;font-weight: bold;font-size: small;"    ></td>
+                                                                    <td><input disabled type="number" min="0" formControlName="addonLabTotTaxAmt" [(ngModel)]="labTotTaxAmt" style="width: 7em;font-weight: bold;font-size: small;" ></td>
+                                                                    <td><input disabled type="number" min="0"  formControlName="addonLabTotAmt" style="width: 7em;font-weight: bold;font-size: small;"></td>
+                                                                    
+                                                                    <td><input disabled type="number" formControlName="addonMatBasicAmt " style="width: 7em;font-weight: bold;font-size: small;text-align: right;"></td>
+                                                                    
+                                                                    <div *ngIf="showServiceCustomer ;then sr11; else sr21"></div>
+                                                                    <ng-template #sr11>
+
+                                                                    <div *ngIf="showMatDisP ;then mdp1; else mdp2"></div>
+                                                                    <ng-template #mdp1>
+                                                                    <td><select   formControlName="matDiscountPer"  class="form-control" style="width: 4em;font-weight: bold;font-size: small;"
+                                                                        id="matDiscountPer" class="form-control"
+                                                                        (ngModelChange)="matDiscountPerCal($event)">
+                                                                        <option>--Select--</option>
+                                                                        <option
+                                                                            *ngFor="let sc of  matDiscountPerList" [value]="sc.code" >
+                                                                            {{sc.code}}
+                                                                        </option> 
+                                                                      </select></td>
+                                                                    </ng-template>
+                                                                    <ng-template #mdp2>
+                                                                        <td><input disabled type="number" min="0" formControlName="matDiscountPer"  style="width: 7em;font-weight: bold;font-size: small;" class="form-control"  ></td>
+                                                                    </ng-template>
+
+                                                                      <div *ngIf="showMatDisCol ;then md1; else md2"></div>
+                                                                      <ng-template #md1>
+                                                                        <td><input type="number" min="0" formControlName="matDiscout"  style="width: 7em;font-weight: bold;font-size: small;" class="form-control"  (change)="matDiscountAmtCal($event)"></td>
+                                                                      </ng-template>
+                                                                      <ng-template #md2>
+                                                                        <td><input disabled type="number" min="0" formControlName="matDiscout"  style="width: 7em;font-weight: bold;font-size: small;" class="form-control"  ></td>
+                                                                     </ng-template>
+                                                                    </ng-template>
+                                                                    <ng-template #sr21> 
+                                                                        <td><input disabled type="number"   min="0"  formControlName="matDiscountPer" class="form-control"  style="width: 4em;font-weight: bold;font-size: small;"></td>
+                                                                        <td><input disabled type="number" min="0" formControlName="matDiscout"  style="width: 7em;font-weight: bold;font-size: small;" class="form-control"  ></td>
+                                                                    </ng-template>
+
+                                                                    <td><input disabled type="number" min="0" formControlName="addonMatTaxableAmt"  style="width: 7em;font-weight: bold;font-size: small;" ></td>
+                                                                    <td><input disabled type="number" min="0" formControlName="addonMatTotTaxAmt"  style="width: 7em;font-weight: bold;font-size: small;" ></td>
+                                                                    <td><input disabled type="number" min="0"  formControlName="addonMatTotAmt" style="width: 7em;font-weight: bold;font-size: small;">  </td>
+                                                                    <td><input disabled type="number" min="0"  formControlName="addonInvTotAmt" class="form-control"  style="width: 10em;font-weight: bold;font-size: small;"></td>
+                                                                </tr>
+
+                                                            </ng-template>
+                                                            <ng-template #insBlockAddon2></ng-template>
+
                                                               
 
                                                               
@@ -2731,7 +2827,7 @@
                                                                     <input  hidden disabled type="number" min="0"  formControlName="lineBasicAmt"  class="form-control">
                                                                     <td>
                                                                         <select class="form-control"
-                                                                            formControlName="type">
+                                                                            formControlName="Tecttttttype">
                                                                             <option value="Technician">Technician</option>
                                                                             <option value="Contractor">Contractor</option>
                                                                         </select>

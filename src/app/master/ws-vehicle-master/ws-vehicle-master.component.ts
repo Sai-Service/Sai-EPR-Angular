@@ -711,14 +711,22 @@ export class WsVehicleMasterComponent implements OnInit {
   }
 
 
-  CheckRegNo(mReg: string) { 
-      this.wsVehicleMasterForm.patchValue({regNo :mReg.trim()});
-      mReg =this.wsVehicleMasterForm.get('regNo').value;
-      mReg=mReg.toUpperCase();
- 
+  CheckRegNo(mreg: string) { 
+      // this.wsVehicleMasterForm.patchValue({regNo :mReg.trim()});
+      // mReg =this.wsVehicleMasterForm.get('regNo').value;
+      // mReg=mReg.toUpperCase();
+
+        //  ----------------------------------------------------
+        var mReg=this.wsVehicleMasterForm.get('regNo').value
+        if(mReg==null || mReg==undefined || mReg.trim()=='') {
+          alert ("Enter Valid Vehicle Registration No."); return;
+        }
+        mReg=mReg.toUpperCase();
+        mReg=mReg.trim();
+        this.regNo=mReg;
+         //  ---------------------------------------------------
       if(mReg.length<9 || mReg.length>10) { alert (mReg+ " :Registration No should have minimum 9 & maximum 10 characters. " ) ; this.wsVehicleMasterForm.patchValue({regNo :''});return;}
    
-
     this.service.getVehRegDetailsNew(mReg)
     .subscribe(
       data => {
@@ -1000,6 +1008,10 @@ export class WsVehicleMasterComponent implements OnInit {
   }
 
   CreateItemCode() {
+
+    this.chassisNo=this.chassisNo.toUpperCase();
+    this.vin =this.vin.toUpperCase();
+    
   
     var colorCode1 = this.wsVehicleMasterForm.get('colorCode').value;
     this.segment = this.variantCode + "-" + colorCode1 + "-" + this.chassisNo

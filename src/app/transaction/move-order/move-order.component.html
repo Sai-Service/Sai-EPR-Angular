@@ -283,22 +283,39 @@
             <div *ngIf="display; then thenBlock; else elseBlock">
             </div>
             <ng-template #thenBlock>
-              <td>
+              <!-- <td>
                 <button  type="submit" class="btn btn-primary" (click)="newmoveOrder()">Save</button>
+              </td> -->
+              <td class="center">
+                <button type="submit" class="btn btn-primary" id="saveBtn" data-toggle="modal" 
+                data-target="#confirmAlert" (click)="getMessage('Save')" >Save</button>
               </td>
-
-              </ng-template>
+         </ng-template>
               <ng-template #elseBlock>
-                <td>
+                <!-- <td>
                   <button disabled type="button" class="btn btn-primary" (click)="newmoveOrder()">Save</button>
+                </td> -->
+                <td class="center">
+                  <button disabled type="submit" class="btn btn-primary" id="saveBtn" data-toggle="modal" 
+                  data-target="#confirmAlert" (click)="getMessage('Save')" >Save</button>
                 </td>
               </ng-template>
-              <td>
+              <!-- <td>
                 <button  type="button" class="btn btn-primary" (click)="resetMoveOrder()">Reset</button>
               </td>
               <td>
                 <button  type="button" class="btn btn-primary" (click)="closeMoveOrder()">Close</button>
-              </td>
+              </td> -->
+              <td>
+                <button type="submit" class="btn btn-primary" id="resetBtn" data-toggle="modal" 
+                data-target="#confirmAlert" (click)="getMessage('Reset')">Reset</button>
+                    <!-- (click)="resetItemCatMast()" -->
+            </td>
+            <td>
+                <button type="submit" class="btn btn-primary" id="closeBtn"
+                data-toggle="modal" data-target="#confirmAlert" (click)="getMessage('Close')">Close</button>
+            </td>
+
           </tr>
         </table>
     <!-- </form> -->
@@ -348,3 +365,31 @@
 </form>
   </div>
 
+  <div class="modal" id="confirmAlert" tabindex="-1" role="dialog" aria-hidden="true"
+  style="width: 500px; text-align: center;margin-left: 35%;">
+      <div class="modal-dialog modal-dialog-centered modal-sm"  role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" >Confirmation!</h5>
+          </div>
+          <div class="modal-body">
+              <label style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
+                  {{message}}
+              </label>
+          </div>
+          <div class="modal-footer">
+              <table class="center">
+          <tr>
+              <td>
+              <button  type="submit" class="btn btn-info" data-dismiss="modal" id="register"   (click)="executeAction()">Yes</button>
+              </td>
+              <td>
+              <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+              </td>
+          </tr>
+          </table>
+          </div>
+          </div>
+          </div>
+      </div>
+  

@@ -138,6 +138,14 @@ export class ReportServiceService {
     });
   }
 
+  cashBankReport(fromDate,toDate,ouId,accountName){
+    const REQUEST_URI = this.ServerUrl +`/AccountsReports/CashbankReg?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&accountName=${accountName}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
   spbackOrderQtyReport(invcDt1,invcDt4,locId,custNo,ordNo){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/SprBackOrder?fromDate=${invcDt1}&toDate=${invcDt4}&locId=${locId}&custNo=${custNo}&ordNo=${ordNo}`;
     return this.http.get(REQUEST_URI, {
@@ -427,6 +435,22 @@ technicianSummary(fromDate,toDate,ouId,locId){
   });
 }
 
+
+amcSaleRegister(fromDate,toDate,ouId,locId){
+  const REQUEST_URI = this.ServerUrl +`/ServiceReports/AmcSalesRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
+  return this.http.get(REQUEST_URI, {
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
+}
+
+EWSaleRegister(fromDate,toDate,ouId,locId){
+  const REQUEST_URI = this.ServerUrl +`/ServiceReports/EWSalesRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
+  return this.http.get(REQUEST_URI, {
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
+}
 
 salesINDReport(toDate,locId){
   const REQUEST_URI = this.ServerUrl +`/SalesReports/VehIndReg?toDate=${toDate}&locId=${locId}`;

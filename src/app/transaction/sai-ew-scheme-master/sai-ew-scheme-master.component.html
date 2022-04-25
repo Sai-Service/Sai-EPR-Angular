@@ -567,8 +567,9 @@
         <tbody>
                 <tr class="GridHeader">
                 <th style="width:5rem" scope="col">Srl&nbsp;No&nbsp;</th>
-                <th style="width:15rem" scope="col"> Scheme&nbsp;Name</th>
-                <th style="width:15rem" scope="col">Scheme&nbsp;Descruption&nbsp;</th>
+                <th style="width:25rem" scope="col"> Scheme&nbsp;Name</th>
+                <th style="width:10rem" scope="col"> Scheme&nbsp;Amt</th>
+                <!-- <th style="width:15rem" scope="col">Scheme&nbsp;Descruption&nbsp;</th> -->
                 <th style="width:6rem" scope="col"> EW&nbsp;Type</th>
                 <th style="width:10rem" scope="col">Model&nbsp;</th>
                 <th style="width:10rem" scope="col">Scheme&nbsp;Period</th>
@@ -581,8 +582,9 @@
         </tbody>
         <tr *ngFor="let com of lstcomments let i=index" class="ItemStyle" style="text-decoration:none;">
                 <td style="text-align: center;">{{i+1}}</td>
-                <td>{{com.ewSchemeNo}}</td>
-                <td>{{com.ewSchemeDesc}}</td>   
+                <td>{{com.ewSchemeId}}-{{com.ewSchemeNo}}</td>
+                <!-- <td>{{com.ewSchemeDesc}}</td>    -->
+                <td style="text-align: center;">{{com.schemeAmount}}</td>  
                 <td style="text-align: center;">{{com.ewType}}</td>   
                 <td style="text-align: center;">{{com.variant}}</td> 
                 <td style="text-align: center;">{{com.premiumPeriod}}</td>

@@ -1555,7 +1555,6 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       this.custAddress = (selSite.address1 + ', '
         + selSite.address2 + ', '
         + selSite.address3 + ', '
-        + selSite.address4 + ', '
         + selSite.city + ', '
         + selSite.pinCd + ', '
         + this.selCustomer.state);

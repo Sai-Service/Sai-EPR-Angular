@@ -300,6 +300,11 @@ export class MasterService {
   siteIdList(siteId): Observable<any> {
     return this.http.get(this.ServerUrl +`/supp/site/${siteId}`);
   }
+
+  chassisList(ouId): Observable<any> {
+    return this.http.get(this.ServerUrl +`/arInv/chssisListOrder/${ouId}`);
+  }
+
   segmentNameList(segmentName) : Observable<any> {
     return this.http.get(this.ServerUrl +`/glCodeCmbn/codeComb/${segmentName}`);
   }
@@ -3792,10 +3797,12 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
 
       //////////////////////bank recon/////////////////////
 
-      bankList(mouId): Observable<any> {
+      bankList(methodType,mouId): Observable<any> {
         // alert ("OU Id :"+mouId);
-        return this.http.get(this.ServerUrl+`/ceBankAccounts/BankList/${mouId}`);
+        // return this.http.get(this.ServerUrl+`/ceBankAccounts/BankList/${mouId}`);
+        return this.http.get(this.ServerUrl+`/ceBankAccounts/BankList?methodType=${methodType}&ouId=${mouId}`);
         // http://localhost:8081/ceBankAccounts/BankList/101
+        // http://localhost:8081/ceBankAccounts/BankList?methodType=RTGS/NEFT&ouId=21
       }
 
 
