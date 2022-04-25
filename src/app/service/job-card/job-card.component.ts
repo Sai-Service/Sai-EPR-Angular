@@ -399,6 +399,8 @@ export class JobCardComponent implements OnInit {
  
   @ViewChild("myinput") myInputField: ElementRef;
   arInvNum: string;
+  addonInvoiceNumber:string;
+  arInvDate:Date;
   ngAfterViewInit() {
     this.myInputField.nativeElement.focus();
   }
@@ -629,6 +631,18 @@ export class JobCardComponent implements OnInit {
       matInsSubTotal:[],
       matInsTaxTotal:[],
       matInsNetTotal:[],
+
+      addonLabBasicAmt:[],
+      addonMatBasicAmt:[],
+      addonLabDiscount:[],
+      addonMatDiscout:[],
+      addonLabTaxableAmt:[],
+      addonMatTaxableAmt:[],
+      addonLabTotTaxAmt:[],
+      addonMatTotTaxAmt:[],
+      addonLabTotAmt:[],
+      addonMatTotAmt:[],
+      addonInvTotAmt:[],
 
 
 
@@ -1504,6 +1518,8 @@ export class JobCardComponent implements OnInit {
             this.jobCardDate= data.obj.jobCardDate;
             this.jobCardNum1=data.obj.jobCardNum;
             this.arInvNum=data.obj.invoiceNumber;
+            this.addonInvoiceNumber=data.obj.addonInvoiceNumber;
+
             this.estTotal=data.obj.estMaterial+data.obj.estLabor;
             this.fscCoupon=data.obj.fscCoupon;
           } else { alert (jcNum + " Job Card Not Found...");return;}
@@ -2207,9 +2223,21 @@ export class JobCardComponent implements OnInit {
           var payInvGrp1: FormGroup = this.splitDetailsGroup();
           this.splitDetailsArray().push(payInvGrp1);
       }
-    
-      this.jobcardForm.patchValue(this.lstcomments.jobCardLabLines[i].splitArr);
-      //let selectbilTy = this.billableTyIdList.find(d => d.billableTyName === 'Customer');
+
+      var tblDetails=this.lstcomments.jobCardLabLines[i].splitArr
+      var splitLinesArr =this.jobcardForm.get("splitAmounts") as FormArray;
+
+      for (let j = 0; j < this.lstcomments.jobCardLabLines[i].splitArr.length ; j++) {
+
+        let tschType :string =tblDetails[j].type;
+        tschType=tschType.trim();
+        splitLinesArr.controls[j].patchValue({type :tschType ,techId :tblDetails[j].techId,techAmt:tblDetails[j].techAmt,})
+        alert (tschType +","+tblDetails[j].techId+","+tblDetails[j].techAmt);
+
+       }
+
+      //  this.jobcardForm.get('splitAmounts').patchValue(tblDetails);
+       //let selectbilTy = this.billableTyIdList.find(d => d.billableTyName === 'Customer');
 
   }
 
@@ -2437,7 +2465,7 @@ export class JobCardComponent implements OnInit {
         this.preInvButton=false;
         this.reopenButton=false;
         alert(res.message);
-        this.arInvNum = res.obj;
+        this.arInvNum = res.obj.InvoiceNo;
       } else {
         if (res.code === 400) {
           this.genBillButton=true;

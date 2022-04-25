@@ -519,23 +519,38 @@
 
                         <tr>
 
+                            <td style="width: 15%" class="LabelFontStyle1">EW&nbsp;Sale&nbsp;Date:&nbsp;</td>
+                            
+                            <div *ngIf="ewGracePeriod; then grpYes; else grpNo"></div>
+                            <ng-template #grpYes>
+                                <td><input   type="date" value="fsd"  formControlName="ewSaleDate"  id="ewSaleDate" [(ngModel)]="ewSaleDate"  (change) ="validateEwSaleDate(ewSaleDate)"  class="form-control"  style="background-color: yellow;"></td>
+                            </ng-template>
+                            <ng-template #grpNo>
+                                <td><input disabled  type="date" value="fsd"  formControlName="ewSaleDate"  id="ewSaleDate" [(ngModel)]="ewSaleDate"    class="form-control"></td>
+                            </ng-template>
+
+                            <td style="width: 15%" class="LabelFontStyle1">EW&nbsp;Start&nbsp;Date:&nbsp;</td>
+    
+                            <td>
+                                <input disabled  type="date"  formControlName="ewStartDate"  id="ewStartDate" [(ngModel)]="ewStartDate" class="form-control" >
+                            </td>
+
+                            <td style="width: 15%" class="LabelFontStyle1">EW&nbsp;End&nbsp;Date:&nbsp;</td>
+    
+                            <td>
+                                <input disabled  type="date"  formControlName="ewEndDate"  id="ewEndDate" [(ngModel)]="ewEndDate" class="form-control" >
+                            </td>
+
+
                           <td style="width: 15%" class="LabelFontStyle">EW&nbsp;Contract&nbsp;No:&nbsp;</td>
 
                             <td>
                                 <input  disabled  style="font-weight: bold;"  type="number" formControlName="ewId"  id="ewId" [(ngModel)]="ewId" class="form-control">
                             </td>
                             
-                            <td style="width: 15%" class="LabelFontStyle">EW&nbsp;Invoice&nbsp;No:&nbsp;</td>
+                          
 
-                            <td>
-                                <input style="font-weight: bold;" disabled   type="text" formControlName="ewInvoiceNo"  id="ewInvoiceNo" [(ngModel)]="ewInvoiceNo" class="form-control">
-                            </td>
-
-                            <td   style="width: 15%" class="LabelFontStyle1">Reference&nbsp;No(EW/CWI):&nbsp;</td>
-
-                            <td>
-                                <input  style="font-weight: bold;"   type="text" formControlName="bajajCwiNo"  id="bajajCwiNo"  [(ngModel)]="bajajCwiNo" class="form-control" placeholder="Reference No" style="background-color: yellow;" >
-                            </td>
+                           
 
                             <!-- <td style="width: 15%" class="LabelFontStyle">EW&nbsp;Status:&nbsp;</td> -->
             
@@ -563,16 +578,7 @@
                                 <input  disabled   type="text" formControlName="paytmentSource"  id="paytmentSource" [(ngModel)]="paytmentSource" class="form-control">
                             </td> -->
 
-                            <td style="width: 15%" class="LabelFontStyle1">Exective&nbsp;Name:&nbsp;</td>
-
-                            <td>
-                                <select type="text" class="form-control" formControlName="soldByEmpId" style="background-color: yellow;">
-                                <option disabled>--Select--</option>
-                                <option *ngFor="let sc of issueByList" [ngValue]="sc.emplId" >
-                                {{sc.emplId}}-{{sc.ticketNo}}-{{sc.fullName}}
-                                </option>
-                                </select>
-                            </td>
+                         
                         </tr>
 
                         <tr>
@@ -583,7 +589,7 @@
                             <ng-template #thenBlock901>
                             <td colspan="3">  
                                 <select  formControlName="ewSchemeId" id="ewSchemeId" [(ngModel)]="ewSchemeId" class="form-control" (ngModelChange)="GetSchemeDetails($event)"  style="background-color: yellow;width: 100%;">
-                                    <option disabled>--Select--</option>
+                                    <option></option>
                                     <option *ngFor="let sc of EwSchemeItemList" [ngValue] ="sc.ewSchemeId" >
                                         {{sc.ewSchemeId}}-{{sc.ewSchemeNo}}
                                     </option>
@@ -605,7 +611,7 @@
     
                                 <td >  
                                     <select   formControlName="itemId" id="itemId" [(ngModel)]="itemId"  class="form-control" style="background-color: yellow;">
-                                    <option disabled>--Select--</option>
+                                    <option></option>
                                     <option *ngFor="let sc of  invItemListEw" [ngValue]="sc.ITEMID">
                                       <!-- {{sc.ITEMID}}- -->
                                      {{sc.SEGMENT}}
@@ -627,9 +633,13 @@
                                 </td>
                                 </ng-template>
 
-                                <td style="width: 15%" class="LabelFontStyle1">EW&nbsp;Booklet&nbsp;No:&nbsp;</td>
-                                <td><input   type="text"  formControlName="ewBookletNo"  id="ewBookletNo" [(ngModel)]="ewBookletNo" class="form-control" style="background-color: yellow;"></td>
-                          
+                                <td style="width: 15%" class="LabelFontStyle">EW&nbsp;Invoice&nbsp;No:&nbsp;</td>
+
+                                <td>
+                                    <input style="font-weight: bold;" disabled   type="text" formControlName="ewInvoiceNo"  id="ewInvoiceNo" [(ngModel)]="ewInvoiceNo" class="form-control">
+                                </td>
+
+                                 
                         </tr>
 
 
@@ -665,31 +675,29 @@
                           
                         </tr>
                         <tr>
+                            <td style="width: 15%" class="LabelFontStyle1">EW&nbsp;Booklet&nbsp;No:&nbsp;</td>
+                            <td><input   type="text"  formControlName="ewBookletNo"  id="ewBookletNo" [(ngModel)]="ewBookletNo" class="form-control" style="background-color: yellow;"></td>
+                 
                             
+                            <td   style="width: 15%" class="LabelFontStyle1">Reference&nbsp;No(EW/CWI):&nbsp;</td>
 
+                            <td>
+                                <input  style="font-weight: bold;"   type="text" formControlName="bajajCwiNo"  id="bajajCwiNo"  [(ngModel)]="bajajCwiNo" class="form-control" placeholder="Reference No" style="background-color: yellow;" >
+                            </td>
                            
-                            <td style="width: 15%" class="LabelFontStyle1">EW&nbsp;Sale&nbsp;Date:&nbsp;</td>
-                            
-                            <div *ngIf="ewGracePeriod; then grpYes; else grpNo"></div>
-                            <ng-template #grpYes>
-                                <td><input   type="date" value="fsd"  formControlName="ewSaleDate"  id="ewSaleDate" [(ngModel)]="ewSaleDate"  (change) ="validateEwSaleDate(ewSaleDate)"  class="form-control"  style="background-color: yellow;"></td>
-                            </ng-template>
-                            <ng-template #grpNo>
-                                <td><input disabled  type="date" value="fsd"  formControlName="ewSaleDate"  id="ewSaleDate" [(ngModel)]="ewSaleDate"    class="form-control"></td>
-                            </ng-template>
+                            <td style="width: 15%" class="LabelFontStyle1">Exective&nbsp;Name:&nbsp;</td>
 
-
-                            <td style="width: 15%" class="LabelFontStyle1">EW&nbsp;Start&nbsp;Date:&nbsp;</td>
-    
                             <td>
-                                <input disabled  type="date"  formControlName="ewStartDate"  id="ewStartDate" [(ngModel)]="ewStartDate" class="form-control" >
+                                <select type="text" class="form-control" formControlName="soldByEmpId" style="background-color: yellow;">
+                                <option disabled>--Select--</option>
+                                <option *ngFor="let sc of issueByList" [ngValue]="sc.emplId" >
+                                {{sc.emplId}}-{{sc.ticketNo}}-{{sc.fullName}}
+                                </option>
+                                </select>
                             </td>
 
-                            <td style="width: 15%" class="LabelFontStyle1">EW&nbsp;End&nbsp;Date:&nbsp;</td>
-    
-                            <td>
-                                <input disabled  type="date"  formControlName="ewEndDate"  id="ewEndDate" [(ngModel)]="ewEndDate" class="form-control" >
-                            </td>
+
+                          
                
                            
 
