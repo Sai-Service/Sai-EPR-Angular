@@ -228,12 +228,11 @@
                 </td>
             </ng-template> -->
                 <td><input disabled type="text" class="form-control" style="height: 20px;" formControlName="description"></td>
-                <!-- <td><input type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="frmSubInvCode"></td> -->
+          <!-- <td><input type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="frmSubInvCode"></td>  -->
                  <div *ngIf="displayLocator; then thenBlock2; else elseBlock2">
                   </div> 
-              <ng-template #thenBlock2> -->
+              <ng-template #thenBlock2> 
                 <td><select class="form-control" style="height: 20px; width: 110px;" formControlName="fromLocator" (ngModelChange)='AvailQty($event,trxLineIndex)'>
-                  <!-- <option>--Select--</option> -->
                   <option *ngFor="let locId of  locData[trxLineIndex]" [ngValue]="locId.locatorId">{{locId.segmentName}}--{{locId.onHandQty}}</option>
                   <input hidden formControlName="frmLocatorId">
                 </select>
