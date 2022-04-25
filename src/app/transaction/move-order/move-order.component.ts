@@ -120,7 +120,7 @@ export class MoveOrderComponent implements OnInit {
   display = true;
  displayButton= true;
  displaySegment=true;
- displayLocator=true;
+ displayLocator:boolean=true;
  getItemDetail:any;
  description:string;
  uom:string;
@@ -144,6 +144,7 @@ export class MoveOrderComponent implements OnInit {
   attribute10:number;
   fromLocator:string;
   totalval:number;
+  displaybuttons:boolean=true;
 
   public itemMap = new Map<string, StockTransferRow >();
 
@@ -391,6 +392,7 @@ newmoveOrder(){
       // this.moveOrderForm.get('trxLinesList').patchValue({fromLocator:'obj.fromLocator'})
       // this.displayButton=false;
       this.moveOrderForm.disable();
+      this.displayButton=false;
       // this.displaytransactionTypeName=false;
       
       // this.moveOrderForm.reset();
@@ -682,6 +684,7 @@ validate(i:number,qty1)
         this.moveOrderForm.patchValue(data.obj);
         this.moveOrderForm.patchValue(data.obj.trxLinesList);
         this.moveOrderForm.disable();
+        this.displaybuttons=false;
         // for(var i=0;i<data.obj.trxLinesList.length;i++)
         // {
         // var select1=this.ItemIdList.find(d=>d.itemId===data.obj.trxLinesList[i].invItemId)

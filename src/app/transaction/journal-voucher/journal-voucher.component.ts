@@ -32,6 +32,8 @@ interface IJournalVoucher{
   description:string;
   jeLineNum:number;
   docSeqVal1:number;
+  lineStatus:string;
+  // ssLineStatus:string;
 
 }
 @Component({
@@ -68,6 +70,7 @@ export class JournalVoucherComponent implements OnInit {
   jeSource:string;
   name:string;
   emplId:number;
+  ssLineStatus:any;
 
   reversalPeriod:string;
   reversalDate:Date;
@@ -85,6 +88,10 @@ export class JournalVoucherComponent implements OnInit {
   segmentNameList:any;
   jeCategory:string;
 
+  isVisible16: boolean = false;
+  isVisicod:boolean=false;
+  displayRemoveRow: Array<boolean> = [];
+  displaycodeCombination:Array<boolean>=[];
   showModal:boolean;
   title: string;
   content: number;
@@ -111,6 +118,7 @@ export class JournalVoucherComponent implements OnInit {
 
   duplicateLineItem=false;
   min=new Date();
+  lineStatus:string;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.JournalVoucherForm=fb.group({
@@ -158,7 +166,8 @@ export class JournalVoucherComponent implements OnInit {
       enteredDr:[],
       enteredCr:[],
       description:[],
-
+      lineStatus:[],
+      
      })
    }
 
@@ -190,6 +199,7 @@ export class JournalVoucherComponent implements OnInit {
      (patch.controls[len - 1]).patchValue(
       {
         jeLineNum: len,
+        lineStatus:'BOOKED',
       }
     );
     var btnrm =document.getElementById("btnrm"+(i-1)) as HTMLInputElement;
@@ -197,6 +207,8 @@ export class JournalVoucherComponent implements OnInit {
    (document.getElementById("btnrm"+(i-1)) as HTMLInputElement).disabled = false;
    // (document.getElementById('btnrm'+i+1) as HTMLInputElement).disabled = true;
    }}
+   this.displayRemoveRow.push(true);
+   this.displaycodeCombination.push(true);
      }
      removeglLines(glLineIndex){
       var len1=this.glLines().length;
@@ -225,6 +237,8 @@ export class JournalVoucherComponent implements OnInit {
     this.emplId=Number((sessionStorage.getItem('emplId')));
     this.divId=Number(sessionStorage.getItem('divisionId'));
     (document.getElementById("btnRev") as HTMLInputElement).disabled = true;
+    (document.getElementById("btnUpdate") as HTMLInputElement).disabled = true;
+    this.isVisicod=true;
     
     // alert('employee'+this.emplId);
 
@@ -250,13 +264,13 @@ export class JournalVoucherComponent implements OnInit {
         console.log(this.BranchList);
       }
     );
-    // this.service.BranchListDiv(1,this.divId)
-    // .subscribe(
-    //   data => {
-    //     this.BranchList = data;
-    //     console.log(this.BranchList);
-    //   }
-    // );
+    this.service.lineStatus()
+    .subscribe(
+      data => {
+        this.ssLineStatus = data;
+        console.log(this.BranchList);
+      }
+    );
     this.service.JournalType().subscribe(
       data=>{this.JournalType=data;
       }
@@ -296,6 +310,9 @@ if(this.docSeqValue!=null && this.status=='INCOMPLETE'){
 else{
 (document.getElementById("btnUpdate") as HTMLInputElement).disabled = false;
 }
+this.glLines().controls[0].patchValue({ lineStatus: 'BOOKED' });
+// for(i=0;i<i<this.glLines().length;i++)
+this.displaycodeCombination[0]=true;
   }
 JournalVoucher(JournalVoucherForm:any){}
 
@@ -555,6 +572,8 @@ var segment = temp1[0];}
             console.log(res.obj);
             this.docSeqValue=res.obj;
             // this.JournalVoucherForm.disable();
+            (document.getElementById("btnSave") as HTMLInputElement).disabled = false;
+            (document.getElementById("btnUpdate") as HTMLInputElement).disabled = true;
           }
           else
          {
@@ -605,11 +624,15 @@ copyGl()
          {
            this.docseqdata=data.obj;
            let control=this.JournalVoucherForm.get('glLines') as FormArray;
-           data.obj.glLines.forEach(f => {
+          //  data.obj.glLines.forEach(f =>
+            for (let i = 0; i < data.obj.glLines.length; i++) 
+           
+            {
              var trxList:FormGroup=this.newglLines();
              this.glLines().push(trxList);
+             this.displayRemoveRow[i]=false;
 
-           });
+           }
            this.JournalVoucherForm.patchValue(data.obj);
            this.JournalVoucherForm.patchValue({periodName:data.obj.periodName});
            this.JournalVoucherForm.patchValue({runningTotalCr:data.obj.runningTotalCr});
@@ -624,8 +647,35 @@ copyGl()
           if(data.obj.status==='INCOMPLETE')
           {
             (document.getElementById("btnRev") as HTMLInputElement).disabled = true;
+            
 
           }
+          if(data.obj.status==='INCOMPLETE' && data.obj.docSeqValue!=null)
+          {
+            (document.getElementById("btnSave") as HTMLInputElement).disabled = true;
+            
+
+          }
+          for (let i = 0; i<data.obj.glLines.length; i++) {
+            // alert(data.obj.glLines[i].lineStatus)
+          if(data.obj.glLines[i].lineStatus =='CANCELLED'){
+            // alert(data.obj.glLines[i].lineStatus)
+              control.controls[i].get('lineStatus').disable();
+              control.controls[i].get('enteredDr').disable();
+              control.controls[i].get('enteredCr').disable();
+              control.controls[i].get('description').disable();
+              // this.isVisicod=false;
+              this.displaycodeCombination[i]=false;
+          }
+          else {
+            control.controls[i].get('lineStatus').enable();
+            control.controls[i].get('enteredDr').enable();
+            control.controls[i].get('enteredCr').enable();
+            control.controls[i].get('description').enable();
+            // this.isVisicod=false;
+            this.displaycodeCombination[i]=true;
+          }
+        }
           if(data.obj.status==='POST')
           {
             this.JournalVoucherForm.disable();
@@ -646,7 +696,7 @@ copyGl()
               // alert('For Loop'+i);
             //   // var btnrm =document.getElementById("btnrm"+i) as HTMLInputElement;
             (document.getElementById("btnAdd"+i) as HTMLInputElement).disabled = true;
-            (document.getElementById("btnRm"+i) as HTMLInputElement).disabled = true;
+            // (document.getElementById("btnRm"+i) as HTMLInputElement).disabled = true;
             }
             }
 
@@ -701,6 +751,7 @@ else
       alert("Record updated Successfully");
       console.log(res.obj);
       this.docSeqValue=res.obj;
+      (document.getElementById("btnUpdate") as HTMLInputElement).disabled = true;
       // this.JournalVoucherForm.disable();
     }
     else

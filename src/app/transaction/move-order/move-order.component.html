@@ -228,12 +228,11 @@
                 </td>
             </ng-template> -->
                 <td><input disabled type="text" class="form-control" style="height: 20px;" formControlName="description"></td>
-                <!-- <td><input type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="frmSubInvCode"></td> -->
-                <!-- <div *ngIf="displayLocator; then thenBlock2; else elseBlock2">
-                  </div>
-              <ng-template #thenBlock2> -->
+          <!-- <td><input type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="frmSubInvCode"></td>  -->
+                 <div *ngIf="displayLocator; then thenBlock2; else elseBlock2">
+                  </div> 
+              <ng-template #thenBlock2> 
                 <td><select class="form-control" style="height: 20px; width: 110px;" formControlName="fromLocator" (ngModelChange)='AvailQty($event,trxLineIndex)'>
-                  <!-- <option>--Select--</option> -->
                   <option *ngFor="let locId of  locData[trxLineIndex]" [ngValue]="locId.locatorId">{{locId.segmentName}}--{{locId.onHandQty}}</option>
                   <input hidden formControlName="frmLocatorId">
                 </select>
@@ -241,11 +240,11 @@
                 *ngIf="getGroupControllinewise(trxLineIndex,'fromLocator').touched && getGroupControllinewise(trxLineIndex,'fromLocator').invalid" class="error">Valid Item
                </span>
                 </td>
-              <!-- </ng-template>
+              </ng-template>
               <ng-template #elseBlock2>
                   <td><input disabled class="form-control" style="height: 20px; width: 110px;" formControlName="fromLocator">
                     </td>
-                </ng-template> -->
+                </ng-template> 
                 <input hidden formControlName="onHandQty">
                 <input hidden formControlName="id">
                 <td>
@@ -264,8 +263,15 @@
                   *ngIf="getGroupControllinewise(trxLineIndex,'quantity').touched && getGroupControllinewise(trxLineIndex,'quantity').invalid" class="error">Valid Item
                  </span></td>
                 <td><input type="text" class="form-control" style="height: 20px;" formControlName="reason"></td>
-                <td><button type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;" (click)="addnewtrxLinesList(trxLineIndex)" ></button></td>
-                <td><button type="button" class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removenewtrxLinesList(trxLineIndex)"></button></td>
+                <div *ngIf="displaybuttons; then thenenablebutton; else elsedisbutton"> </div>
+                <ng-template #thenenablebutton>
+                  <td><button type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;" (click)="addnewtrxLinesList(trxLineIndex)" ></button></td>
+                  <td><button type="button" class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removenewtrxLinesList(trxLineIndex)"></button></td>
+                </ng-template> 
+                <ng-template #elsedisbutton>
+                  <td><button disabled type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;" (click)="addnewtrxLinesList(trxLineIndex)" ></button></td>
+                  <td><button disabled type="button" class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removenewtrxLinesList(trxLineIndex)"></button></td>
+                </ng-template>           
               </tr>
               </ng-container>
               </tbody>

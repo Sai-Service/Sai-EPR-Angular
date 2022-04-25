@@ -185,6 +185,7 @@
                             <th scope="col">Dr</th>
                             <th scope="col">Cr</th>
                             <th scope="col">Line Narration</th>
+                            <th scope="col">Status</th>
                             <th scope="col">Add</th>
                             <th scope="col">Delete</th>
                     </tr>
@@ -204,8 +205,14 @@
                                                 class="form-control" style="height: 20px;width: 250px;">
                                         </td>
                                         <td>
-                                               <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal1" style="width:1rem ; text-align: right;"(click)="openCodeCombination(glLineIndex)">..</button>
-                                        </td>
+                                            <div *ngIf="displaycodeCombination[glLineIndex]; then thencodeCombination; else elsecodeCombination"> </div>
+                                            <ng-template #thencodeCombination>
+                                               <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal1" style="width:1rem ; text-align: right;"  (click)="openCodeCombination(glLineIndex)">..</button>
+                                            </ng-template>
+                                            <ng-template #elsecodeCombination>
+                                                <button type="button" class="btn btn-primary" disabled data-toggle="modal" data-target="#myModal1" style="width:1rem ; text-align: right;"  (click)="openCodeCombination(glLineIndex)">..</button>
+                                            </ng-template>
+                                            </td>
                                     </tr>
                                 </table>
 
@@ -220,6 +227,12 @@
                             <td>
                                     <input type="text" class="form-control"  style="height: 20px;width: 250px;"formControlName="description" >
                             </td>
+                            <td>
+                                <select  class="form-control"  style="height: 20px;width: 80px;"formControlName="lineStatus" >
+                                <option></option>
+                                <option *ngFor="let st of ssLineStatus" [value]="st.code" >{{st.code}}</option>
+                                </select>
+                        </td>
                             <!-- <div *ngIf="displayaddButton; then thenBlockopen; else elseBlockfreeze"> -->
                             <!-- </div> -->
                             <!-- <ng-template #thenBlockopen>
@@ -228,7 +241,19 @@
                             </ng-template>
                             <ng-template #elseBlockfreeze> -->
                                     <td><button  type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;" id="btnAdd{{glLineIndex}}" (click)="addnewglLines(glLineIndex)"></button></td>
-                                    <td><button  type="button" class="btn btn-primary fa fa-trash"style="width: 2rem;" id="btnRm{{glLineIndex}}" (click)="removeglLines(glLineIndex)"></button></td>
+                                    <td>
+                                    <div *ngIf="displayRemoveRow[glLineIndex]; then thenRemoveRow; else elseRemoveRow"> </div>
+                                    <ng-template #thenRemoveRow>
+                                       <button  type="button" class="btn btn-primary"
+                                        style="width: min-content;"(click)="removeglLines(glLineIndex)"><i
+                                        class="fa fa-trash"></i></button>
+                                    </ng-template>
+                                    <ng-template #elseRemoveRow>
+                                        <button disabled  type="button" class="btn btn-primary" [style.display]="isVisible16 ? 'block' : 'none'"
+                                                style="width: min-content;"(click)="removeglLines(glLineIndex)"><i
+                                                class="fa fa-trash"></i></button>
+                                    </ng-template>
+                                </td>
                             <!-- </ng-template> -->
                       </tr>
                         </ng-container>
@@ -239,7 +264,7 @@
                     <tr class="ItemStyle">
 
                         <td  colspan="4"><b>Total:&nbsp;</b></td>
-                        <td style="width: 14.7rem;"></td>
+                        <td style="width: 12.9rem;"></td>
                         <!-- <td style="width: 6rem;"></td> -->
                         <td style="width: 4rem;">
                             <input disabled  formControlName="runningTotalDr" id="runningTotalDr" class="form-control" style="height: 20px;width: 100px;text-align: right;">
