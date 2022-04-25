@@ -454,6 +454,19 @@ export class PoReceiptFormComponent implements OnInit {
                 control.push(poLines);
                 this.displaySaveButton = false;
                 this.poReceiptForm.patchValue(this.lstcompolines);
+                let controlinv = this.poReceiptForm.get('poLines') as FormArray;
+                for (let j = 0; j < data.obj.poLines.length; j++) {
+                  // alert(data.obj.poLines[j].poLineId);
+                  (controlinv.controls[j]).patchValue({
+                    totAmount:data.obj.poLines[j].totAmount.toFixed(2),
+                    unitPrice:data.obj.poLines[j].unitPrice.toFixed(2),
+                    baseAmount:data.obj.poLines[j].totAmount.toFixed(2),
+                    sgstAmt:data.obj.poLines[j].sgstAmt.toFixed(2),
+                    cgstAmt:data.obj.poLines[j].cgstAmt.toFixed(2),
+                    igstAmt:data.obj.poLines[j].igstAmt.toFixed(2),
+                    taxAmount:data.obj.poLines[j].taxAmount.toFixed(2),
+                  });
+                }
               }
               else {
                 const invCategory = data.obj.poLines[0].ctgDescription.substr(0, 3);
@@ -492,13 +505,22 @@ export class PoReceiptFormComponent implements OnInit {
                   }
                   this.displaySaveButton = true;
                   this.poReceiptForm.patchValue(this.lstcompolines);
+                  this.baseAmount=data.obj.baseAmount.toFixed(2);
+                  this.totalAmt=data.obj.totalAmt.toFixed(2);
+                  this.taxAmt=data.obj.taxAmt.toFixed(2);
                   let controlinv = this.poReceiptForm.get('poLines') as FormArray;
-
                   for (let j = 0; j < data.obj.poLines.length; j++) {
                     // alert(data.obj.poLines[j].poLineId);
                     (controlinv.controls[j]).patchValue({
                       subInventoryId: data.obj.poLines[j].subInventoryId,
                       poLineId: data.obj.poLines[j].poLineId,
+                      totAmount:data.obj.poLines[j].totAmount.toFixed(2),
+                      unitPrice:data.obj.poLines[j].unitPrice.toFixed(2),
+                      baseAmount:data.obj.poLines[j].totAmount.toFixed(2),
+                      sgstAmt:data.obj.poLines[j].sgstAmt.toFixed(2),
+                      cgstAmt:data.obj.poLines[j].cgstAmt.toFixed(2),
+                      igstAmt:data.obj.poLines[j].igstAmt.toFixed(2),
+                      taxAmount:data.obj.poLines[j].taxAmount.toFixed(2),
                     });
                     // this.lineDetailsGroup().patchValue({subInvetoryId:data.obj.poLines[j].subInventoryId})
                   }
@@ -540,6 +562,7 @@ export class PoReceiptFormComponent implements OnInit {
   }
 
   ReceiptFind(segment1) {
+    // alert(segment1)
     this.lineDetailsArray.clear();
     // this.poReceiptForm.get('loginArray').reset();
     // this.poReceiptForm.get('ouName').reset();
@@ -595,11 +618,27 @@ export class PoReceiptFormComponent implements OnInit {
             this.poReceiptForm.patchValue(this.lstcompolines);
             this.locatorDesc = this.lstcompolines.rcvLines[0].locatorDesc;
             this.recDate = this.lstcompolines.receiptDate;
+            
             this.poReceiptForm.patchValue({ taxAmt: this.lstcompolines.totalTax });
-            for (let j = 0; j < data.obj.poLines.length; j++) {
-              this.lineDetailsArray[i].patchValue({ subInventoryId: data.obj.poLines[i].subInventoryId })
+            let controlinv1 = this.poReceiptForm.get('poLines') as FormArray;
+            for (let j = 0; j<data.obj.rcvLines.length; j++) {
+              (controlinv1.controls[j]).patchValue({
+                subInventoryId:data.obj.rcvLines[j].subInventoryId})
+              // this.lineDetailsArray[j].patchValue({ subInventoryId: data.obj.rcvLines[j].subInventoryId })
             }
-          
+            let controlinv = this.poReceiptForm.get('poLines') as FormArray;
+            for (let j = 0; j < data.obj.rcvLines.length; j++) {
+              (controlinv.controls[j]).patchValue({
+                totAmount:data.obj.rcvLines[j].totAmount.toFixed(2),
+                unitPrice:data.obj.rcvLines[j].unitPrice.toFixed(2),
+                baseAmount:data.obj.rcvLines[j].totAmount.toFixed(2),
+                sgstAmt:data.obj.rcvLines[j].sgstAmt.toFixed(2),
+                cgstAmt:data.obj.rcvLines[j].cgstAmt.toFixed(2),
+                igstAmt:data.obj.rcvLines[j].igstAmt.toFixed(2),
+                taxAmount:data.obj.rcvLines[j].taxAmount.toFixed(2),
+              });
+            }
+
           }
           else if (data.code === 400) {
             alert(data.message)
@@ -759,7 +798,6 @@ export class PoReceiptFormComponent implements OnInit {
                 var poLines: FormGroup = this.lineDetailsGroup();
                 control.push(poLines);
                 var totLineAmt=(data.obj.poLines[i].totAmount).toFixed(2);
-                alert(totLineAmt+'------'+data.obj.poLines[i].totAmount);
                 this.lineDetailsGroup().patchValue({totAmount:(data.obj.poLines[i].totAmount).toFixed(2)})
               }
               this.displaySaveButton = false;
@@ -774,13 +812,21 @@ export class PoReceiptFormComponent implements OnInit {
               for (let i = 0; i < this.lstcompolines.poLines.length; i++) {
                 var poLines: FormGroup = this.lineDetailsGroup();
                 control.push(poLines);
-                var totLineAmt=(data.obj.poLines[i].totAmount).toFixed(2);
-                alert(totLineAmt+'------'+data.obj.poLines[i].totAmount);
-                this.lineDetailsGroup().patchValue({totAmount:(data.obj.poLines[i].totAmount).toFixed(2)})
-                // debugger;
               }
               this.displaySaveButton = true;
               this.poReceiptForm.patchValue(this.lstcompolines);
+              for (let j = 0; j < data.obj.poLines.length; j++) {
+                // alert(data.obj.poLines[j].poLineId);
+                (control.controls[j]).patchValue({
+                  totAmount:data.obj.poLines[j].totAmount.toFixed(2),
+                  unitPrice:data.obj.poLines[j].unitPrice.toFixed(2),
+                  baseAmount:data.obj.poLines[j].totAmount.toFixed(2),
+                  sgstAmt:data.obj.poLines[j].sgstAmt.toFixed(2),
+                  cgstAmt:data.obj.poLines[j].cgstAmt.toFixed(2),
+                  igstAmt:data.obj.poLines[j].igstAmt.toFixed(2),
+                  taxAmount:data.obj.poLines[j].taxAmount.toFixed(2),
+                });
+              }
               this.locatorDesc = this.lstcompolines.rcvLines[0].locatorDesc;
               this.recDate = this.lstcompolines.receiptDate;
 
@@ -1108,7 +1154,7 @@ export class PoReceiptFormComponent implements OnInit {
     formValue.totalAmt = this.poReceiptForm.get('totalAmt').value;
     formValue.billToLocId= Number(sessionStorage.getItem('locId'));
     this.locId = Number(sessionStorage.getItem('locId'));
-    console.log(this.lstcompolines);
+    console.log(formValue);
     this.service.poSaveSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         this.receiptNo = res.obj;
