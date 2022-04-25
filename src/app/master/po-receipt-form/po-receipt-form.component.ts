@@ -758,6 +758,9 @@ export class PoReceiptFormComponent implements OnInit {
               for (let i = 0; i < this.lstcompolines.poLines.length; i++) {
                 var poLines: FormGroup = this.lineDetailsGroup();
                 control.push(poLines);
+                var totLineAmt=(data.obj.poLines[i].totAmount).toFixed(2);
+                alert(totLineAmt+'------'+data.obj.poLines[i].totAmount);
+                this.lineDetailsGroup().patchValue({totAmount:(data.obj.poLines[i].totAmount).toFixed(2)})
               }
               this.displaySaveButton = false;
               this.poReceiptForm.patchValue(this.lstcompolines);
@@ -771,6 +774,9 @@ export class PoReceiptFormComponent implements OnInit {
               for (let i = 0; i < this.lstcompolines.poLines.length; i++) {
                 var poLines: FormGroup = this.lineDetailsGroup();
                 control.push(poLines);
+                var totLineAmt=(data.obj.poLines[i].totAmount).toFixed(2);
+                alert(totLineAmt+'------'+data.obj.poLines[i].totAmount);
+                this.lineDetailsGroup().patchValue({totAmount:(data.obj.poLines[i].totAmount).toFixed(2)})
                 // debugger;
               }
               this.displaySaveButton = true;
@@ -1012,7 +1018,7 @@ export class PoReceiptFormComponent implements OnInit {
       // baseAmount: baseAmt,  
       // taxAmount : taxAmt,
       // totAmount: baseAmt +taxAmt,
-      baseAmount: Math.round(((baseAmt) + Number.EPSILON) * 100) / 100,
+      baseAmount: (Math.round(((baseAmt) + Number.EPSILON) * 100) / 100).toFixed(2),
       taxAmount: Math.round(((taxAmt) + Number.EPSILON) * 100) / 100,
       totAmount: Math.round(((baseAmt + taxAmt) + Number.EPSILON) * 100) / 100,
     });
