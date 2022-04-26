@@ -202,6 +202,7 @@ export class BankReconcillationComponent implements OnInit {
             date1:[],
             docNo:[],
             voucherNo:[],
+            reconcileDate:[],
             name:[],
             statementReconId:[],
             // statementHeaderId:[],
@@ -270,6 +271,14 @@ export class BankReconcillationComponent implements OnInit {
         SearchByBankAcNo(){
           var bnkAcNo=this.bankReconcillationForm.get("bankAccountNo").value
           alert ("Search By Bank Account No -WIP  :" +bnkAcNo);
+        }
+
+        resetMast() {
+          window.location.reload();
+        }
+      
+        closeMast() {
+          this.router.navigate(['admin']);
         }
 
         clearSearch(){
@@ -344,13 +353,7 @@ export class BankReconcillationComponent implements OnInit {
        }
 
 
-       resetMast() {
-        window.location.reload();
-      }
-    
-      closeMast() {
-        this.router.navigate(['admin']);
-      }
+     
 
        LoadValues(){}
 
@@ -659,5 +662,8 @@ export class BankReconcillationComponent implements OnInit {
               // }
             } });
          } }
+
+
+
 
 }

@@ -135,8 +135,8 @@
                                                                             <td style="width: 15%" class="LabelFontStyle">Job&nbsp;Card&nbsp;Status&nbsp;:</td>
                                                                             <td>  <input type="text" disabled   class="form-control" placeholder=""  formControlName="jobStatus" [(ngModel)]="jobStatus">  </td>
                                                                             
-                                                                            <td style="width: 15%" class="LabelFontStyle"> Invoice&nbsp;Number&nbsp;:</td>
-                                                                            <td> <input type="text" disabled class="form-control" formControlName="arInvNum"  value="{{arInvNum}}"> </td>
+                                                                            <td style="width: 15%" class="LabelFontStyle"> Invoice&nbsp;Date&nbsp;:</td>
+                                                                            <td> <input type="date" disabled class="form-control" formControlName="arInvDate"  value="{{arInvDate}}" style="font-weight: bolder;"> </td>
                                                                         </tr>
                                                                         <tr>
                                                                             <td style="width: 15%" class="LabelFontStyle">DMS&nbsp;JC&nbsp;No&nbsp;:</td>
@@ -1898,13 +1898,13 @@
                                                        <tr>
    
                                                            <td style="width: 15%" class="LabelFontStyle"> Bill&nbsp;Date&nbsp;:</td>
-                                                           <td> <input type="date" disabled class="form-control" formControlName="arInvDate"  value="{{arInvDate}}" > </td> 
+                                                           <td> <input type="date" disabled class="form-control" formControlName="arInvDate"  value="{{arInvDate}}" style="font-weight: bolder;"> </td> 
                                                      
                                                            <td style="width: 15%" class="LabelFontStyle">Bill&nbsp;No&nbsp;:</td>
-                                                           <td> <input type="text" disabled class="form-control" formControlName="arInvNum"  value="{{arInvNum}}" > </td> 
+                                                           <td> <input type="text" disabled class="form-control" formControlName="arInvNum"  value="{{arInvNum}}" style="font-weight: bolder;"> </td> 
                                                      
                                                            <td style="width: 15%" class="LabelFontStyle"> Addon&nbsp;Bill&nbsp;No&nbsp;:</td>
-                                                            <td> <input type="text" disabled class="form-control" formControlName="addonInvoiceNo"  value="{{addonInvoiceNo}}"> </td> 
+                                                            <td> <input type="text" disabled class="form-control" formControlName="addonInvoiceNo"  value="{{addonInvoiceNo}}" style="font-weight: bolder;"> </td> 
                                                         </tr>
                                                       
 
@@ -2023,27 +2023,19 @@
                                                                                         <tr>
                                                                                            
 
-                                                                                            <td style="width: 15%"
-                                                                                            class="LabelFontStyle">
-                                                                                            Email:&nbsp;</td>
+                                                                                        <td style="width: 15%" class="LabelFontStyle"> Email:&nbsp;</td>
                                                                                         <td>
-                                                                                            <input type="text"
-                                                                                                disabled
-                                                                                                class="form-control"
-                                                                                                placeholder=""
+                                                                                            <input type="text"   disabled   class="form-control"  placeholder=""
                                                                                                 formControlName="emailId" style="width: 250px;">
                                                                                         </td>
 
-                                                                                        <td style="width: 15%" class="LabelFontStyle"> Bill&nbsp;Date&nbsp;:</td>
-                                                                                        <td> <input type="date" disabled class="form-control" formControlName="arInvDate"  value="{{arInvDate}}" style="width: 120px;"> </td> 
-                                                                                  
+                                                                                       
                                                                                     </tr>
                                                                                         <tr>
-   
                                                                                             <td style="width: 15%" class="LabelFontStyle">Bill&nbsp;No&nbsp;:</td>
-                                                                                            <td> <input type="text" disabled class="form-control" formControlName="custInvoiceNo"  value="{{custInvoiceNo}}" > </td> 
-                                                                                      
-                                                                                          
+                                                                                            <td> <input type="text" disabled class="form-control" formControlName="custInvoiceNo"  value="{{custInvoiceNo}}" style="font-weight: bolder;" > </td> 
+                                                                                            <td style="width: 15%" class="LabelFontStyle"> Bill&nbsp;Date&nbsp;:</td>
+                                                                                            <td> <input type="date" disabled class="form-control" formControlName="arInvDate"  value="{{arInvDate}}" style="width: 120px;" style="font-weight: bolder;"> </td> 
                                                                                         </tr>
 
                                                                                       
@@ -2130,8 +2122,12 @@
 
                                                                         </tr>
                                                                         <tr>
+                                                                          
                                                                             <td style="width: 15%" class="LabelFontStyle">Bill&nbsp;No&nbsp;:</td>
-                                                                            <td> <input type="text" disabled class="form-control" formControlName="insInvoiceNo"  value="{{insInvoiceNo}}" > </td> 
+                                                                            <td> <input type="text" disabled class="form-control" formControlName="insInvoiceNo"  value="{{insInvoiceNo}}" style="font-weight: bolder;" > </td> 
+                                                                            <td style="width: 15%" class="LabelFontStyle"> Bill&nbsp;Date&nbsp;:</td>
+                                                                            <td> <input type="date" disabled class="form-control" formControlName="arInvDate"  value="{{arInvDate}}" style="width: 120px;" style="font-weight: bolder;"> </td> 
+                                                                         
                                                                         </tr>
                                                                       
                                                                      

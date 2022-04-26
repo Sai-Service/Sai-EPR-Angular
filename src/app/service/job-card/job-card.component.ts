@@ -1520,8 +1520,9 @@ export class JobCardComponent implements OnInit {
             this.jobCardDate= data.obj.jobCardDate;
             this.jobCardNum1=data.obj.jobCardNum;
             this.arInvNum=data.obj.invoiceNumber;
+            this.custInvoiceNo=data.obj.invoiceNumber;
             this.addonInvoiceNo=data.obj.addonInvoiceNumber;
-
+            this.insInvoiceNo=data.obj.insInvoiceNumber;
             this.estTotal=data.obj.estMaterial+data.obj.estLabor;
             this.fscCoupon=data.obj.fscCoupon;
           } else { alert (jcNum + " Job Card Not Found...");return;}
