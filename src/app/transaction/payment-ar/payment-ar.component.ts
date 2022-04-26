@@ -1653,7 +1653,7 @@ if(this.deptId==2){
       //  this.totUnAppliedtAmount=this.paymentAmt;
       // this.totAppliedtAmount =0;
 
-      this.service.getArReceiptSearchByInvoiceNo(custActNo, this.ouId, rcptNo)
+      this.service.getArReceiptSearchByInvoiceNo(custActNo, this.ouId, rcptNo,sessionStorage.getItem('dept'))
         .subscribe(
           data => {
             this.lstinvoices = data.obj.invLine;

@@ -1116,7 +1116,7 @@ export class PayableInvoiceNewComponent implements OnInit {
             var invLnGrp: FormGroup = this.distLineDetails();
             this.lineDistributionArray().push(invLnGrp);
           }
-          debugger;
+          // debugger;
           for (let i = 0; i < data.invDisLines.length; i++) {
             var invLnGrp: FormGroup = this.tdsLineDetails();
             this.TdsDetailsArray().push(invLnGrp);
@@ -2456,8 +2456,10 @@ export class PayableInvoiceNewComponent implements OnInit {
       }
       else {
         if (desc1.includes('Adhoc Disc')) {
+          // alert('----disc'+arrayControl1[i].amount)
           totalOfInvLineAmout = Math.round(((totalOfInvLineAmout - arrayControl1[i].amount) + Number.EPSILON) * 100) / 100;
         } else {
+          // alert('----'+arrayControl1[i].amount)
           totalOfInvLineAmout = Math.round(((totalOfInvLineAmout + arrayControl1[i].amount) + Number.EPSILON) * 100) / 100;
         }
       }
@@ -2472,10 +2474,13 @@ export class PayableInvoiceNewComponent implements OnInit {
         // totalOfDistributionAmout=arrayCaontrolOfDistribution[j].amount;
       }
       else {
+        
         if (desc1.includes('Adhoc Disc')) {
+          // alert(arrayCaontrolOfDistribution[j].amount)
           totalOfDistributionAmout = Math.round(((totalOfDistributionAmout - Number(arrayCaontrolOfDistribution[j].amount)) + Number.EPSILON) * 100) / 100;
         } else {
           totalOfDistributionAmout = Math.round(((totalOfDistributionAmout + Number(arrayCaontrolOfDistribution[j].amount)) + Number.EPSILON) * 100) / 100;
+          // alert(arrayCaontrolOfDistribution[j].amount)
         }
       }
     }
@@ -2485,6 +2490,7 @@ export class PayableInvoiceNewComponent implements OnInit {
     if (Math.round(amount)== Math.round(totalOfInvLineAmout) && Math.round(amount) == Math.round(totalOfDistributionAmout)) {
       var arrayControl = this.poInvoiceForm.get('obj').value;
       var invoiceNum = this.lineDetailsArray().controls[this.selectedLine].get('invoiceNum').value;
+      return;
       this.transactionService.UpdateValidate(invoiceNum).subscribe((res: any) => {
         if (res.code === 200) {
           alert(res.message);
