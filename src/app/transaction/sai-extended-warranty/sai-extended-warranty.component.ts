@@ -512,7 +512,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
           var mAging =this.saiEwForm.get("vehicleAgeDays").value;
           var mKms =this.saiEwForm.get("kmsEwSale").value;
 
-          alert (mVAriant +","+mAging+","+mKms);
+          // alert (mVAriant +","+mAging+","+mKms);
 
           // alert("Last Run Km :" + this.lastRunKms);
           if(this.lastRunKms===null) {this.lastRunKms=0; 
@@ -630,7 +630,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
             ew2=this.addDays(oemExpDate,1);
            
          
-           if(currDate <=oemExpDate) {ew4=ew2;} else { ew4=new Date (currDate);   }
+           if(currDate <=oemExpDate) {ew4=ew2;} else { ew4=new Date (this.ewSaleDate);   }
           
            this.ewStartDate=this.pipe.transform(ew4, 'y-MM-dd');
            var ewStDate=new Date(this.ewStartDate);
@@ -995,7 +995,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
       ////////////////// ////////// //////////////////////   
      
         getDiffDays(date1 ,date2,oPrd){
-          alert ("Delv Date :"+date1 +" ew Sale date :"+date2);
+          // alert ("Delv Date :"+date1 +" ew Sale date :"+date2);
             date1 = new Date(date1);
             date2 = new Date(date2);
         //  date2 = this.pipe.transform(date2, 'y-MM-dd');
@@ -1009,7 +1009,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
           //  alert ("mdays3 :"+mDays3 +"....oemPrd :"+oemPrd);
         
           if(this.displayButton) {
-          if(this.paytmentSource ==='SALES' && mDays3 >16 ) {
+          if(this.paytmentSource ==='SALES' && mDays3 >20 ) {
             alert("VEHICLE SALE DATE :"+this.pipe.transform(date1,'dd/MM/y') + " Aging : "+ mDays3 +" Days...Not Eligible To issue EW from SALES")
             this.resetMast();
           }

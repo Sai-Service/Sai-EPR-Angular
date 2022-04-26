@@ -83,8 +83,10 @@
                                 </select>
                             </td>
 
-                             <td> <button type="button" class="btn btn-info" (click)="clearSearch()" >Clear</button> </td> 
+                             <!-- <td> <button type="button" class="btn btn-info" (click)="clearSearch()" >Reset</button> </td>  -->
+                             <td> <button type="button" class="btn btn-info" (click)="resetMast()" >Reset</button> </td> 
                    
+                             
                         </tr>
                         <tr>
                             <td></td><td></td><td></td><td></td><td></td>
@@ -93,6 +95,9 @@
                                 data-toggle="modal" data-target="#ImportbankStatement1"  (click)="ImportBankStmnt(bankAccountId)" style="width:fit-content;color: black;text-align: center;">
                                 &nbsp;Import Bank Statement</button>
                             </td> 
+
+                            <td> <button type="button" class="btn btn-info" (click)="closeMast()" >Close</button> </td> 
+                   
                         </tr>
                 </table>
 
@@ -108,7 +113,7 @@
                             <tbody>
                                     <tr class="GridHeader">
                                     <th style="width:2rem" scope="col">Srl&nbsp;No&nbsp;</th> 
-                                    <th style="width:7rem" scope="col">Account&nbsp;No&nbsp;</th>
+                                    <th style="width:10rem" scope="col">Account&nbsp;No&nbsp;</th>
                                     <th style="width:15rem" scope="col">Account&nbsp;Name</th>
                                     <th style="width:7rem" scope="col">Bank&nbsp;Name</th>
                                     <th style="width:15rem" scope="col">Statement&nbsp;No&nbsp;</th>
@@ -127,7 +132,7 @@
                                     <td style="text-align: center;">{{i+1}}</td>
                                     <td style="text-align: center;">{{com.bankAccountNo}}</td>
                                     <td style="text-align: center;">{{com.bankAccountName}}</td>
-                                    <td style="text-align: center;">{{com.currencyCode}}</td>
+                                    <td style="text-align: center;">{{com.bankAccountName}}</td>
                                     <!-- <td>{{com.transferDate| date:'dd-MM-y'}}</td>    -->
                                     <!-- <td style="text-align: center;">{{com.transferDescp}}</td>    -->
                                     <td style="text-align: center;">{{com.statementNumber}}</td> 
@@ -193,7 +198,7 @@
                     <td><input readonly  type="text" class="form-control" formControlName="statementNumber"  [(ngModel)]="statementNumber"  style="background-color: lightgray;"></td>
                     <td > Bank&nbsp;Name&nbsp;:&nbsp;</td> 
                     <!-- <td style="font-weight: bold;">{{this.statementDate}}</td> -->
-                    <td><input disabled  type="text" class="form-control" formControlName="currencyCode"  [(ngModel)]="currencyCode"  style="background-color: lightgray;width: 200px;"></td>
+                    <td><input disabled  type="text" class="form-control" formControlName="bankAccountName"  [(ngModel)]="bankAccountName"  style="background-color: lightgray;width: 200px;"></td>
                       
                 </tr>
 
@@ -472,8 +477,8 @@
                         <th style="width:6rem" scope="col">CheckId</th>
                         <th style="width:6rem" scope="col">Doc No</th>
                         <th style="width:6rem" scope="col">VoucherNo</th>
-                      
-                        <th style="width:10rem" scope="col">Bank AcNo</th>
+                        <th style="width:6rem" scope="col">Reconciled Date</th>
+                        <!-- <th style="width:10rem" scope="col">Bank AcNo</th> -->
                         <!-- <th style="width:10rem" scope="col">Currency</th> -->
                         <th style="width:10rem" scope="col">Amount</th>
                         <!-- <th style="width:10rem" scope="col">Amount</th>
@@ -494,20 +499,22 @@
                                     <td><input disabled style="width: 100px;height: 25px;text-align: center;" type="text"    formControlName="checkId" class="form-control"></td>
                                     <td><input disabled style="width: 210px;height: 25px;text-align: center;" type="text"    formControlName="docNo" class="form-control"></td>
                                     <td><input disabled style="width: 160px;height: 25px;text-align: center;" type="text"    formControlName="voucherNo" class="form-control"></td>
-                                    <td><input disabled style="width: 210px;height: 25px;text-align: center;" type="text"    formControlName="bankAccountNo" class="form-control"></td>
-                                    <td><input disabled style="width: 150px;height: 25px;text-align: right;"  type="number"    formControlName="appAmt" class="form-control"></td>
+                                    <td><input disabled style="width: 160px;height: 25px;text-align: center;" type="date"    formControlName="reconcileDate" class="form-control"></td>
+                                    <!-- <td><input disabled style="width: 210px;height: 25px;text-align: center;" type="text"    formControlName="bankAccountNo" class="form-control"></td> -->
+                                    <td><input disabled style="width: 150px;height: 25px;text-align: right;"  type="number"  formControlName="appAmt" class="form-control"></td>
                                     <td><input disabled style="width: 150px;height: 25px;text-align: center;" type="date"    formControlName="glDate" class="form-control"></td>
-                                    <td><input readonly style="width: 250px;height: 25px;text-align: left;background-color: lightgreen;" type="text"    formControlName="name" class="form-control"></td>
+                                    <td><input readonly style="width: 300px;height: 25px;text-align: left;background-color: lightgreen;" type="text" formControlName="name" class="form-control"></td>
                                 </ng-template>
                                 <ng-template #recon2>
                                 <td><input type="checkbox"  style="text-align:  center;width: 3rem;" formControlName="selectFlag" (change)="LineSelectFlag($event,k)"></td>
                                 <td><input disabled style="width: 100px;height: 25px;text-align: center;" type="text"    formControlName="checkId" class="form-control"></td>
                                 <td><input disabled style="width: 210px;height: 25px;text-align: center;" type="text"    formControlName="docNo" class="form-control"></td>
                                 <td><input disabled style="width: 160px;height: 25px;text-align: center;" type="text"    formControlName="voucherNo" class="form-control"></td>
-                                <td><input disabled style="width: 210px;height: 25px;text-align: center;" type="text"    formControlName="bankAccountNo" class="form-control"></td>
+                                <td><input disabled style="width: 160px;height: 25px;text-align: center;" type="date"    formControlName="reconcileDate" class="form-control"></td>
+                                <!-- <td><input disabled style="width: 210px;height: 25px;text-align: center;" type="text"    formControlName="bankAccountNo" class="form-control"></td> -->
                                 <td><input disabled style="width: 150px;height: 25px;text-align: right;"  type="number"    formControlName="appAmt" class="form-control"></td>
                                 <td><input disabled style="width: 150px;height: 25px;text-align: center;" type="date"    formControlName="glDate" class="form-control"></td>
-                                <td><input readonly style="width: 200px;height: 25px;text-align: center;background-color: lightgreen;" type="text"    formControlName="name" class="form-control"></td>
+                                <td><input readonly style="width: 250px;height: 25px;text-align: center;background-color: lightgreen;" type="text"    formControlName="name" class="form-control"></td>
                              </ng-template>
                             </tr>
                     </ng-container>

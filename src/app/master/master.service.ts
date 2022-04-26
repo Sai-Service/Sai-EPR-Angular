@@ -2658,11 +2658,12 @@ OrderCategoryList(): Observable<any> {
 
 
 
-  getArReceiptSearchByInvoiceNo(custAccountNo,billToSiteId,rcptNo): Observable<any> {
+  getArReceiptSearchByInvoiceNo(custAccountNo,billToSiteId,rcptNo,loginDeptId): Observable<any> {
     // alert("MS>>RCPT NO -getArReceiptSearchByRcptNo: CustActNo " +custAccountNo +'billToSiteId:'+billToSiteId );
-    return this.http.get(this.ServerUrl + `/arCashReceipts/apply/inv?recepitNo=${rcptNo}&custAccountNo=${custAccountNo}&billToSiteId=${billToSiteId}`);
+    return this.http.get(this.ServerUrl + `/arCashReceipts/apply/inv?recepitNo=${rcptNo}&custAccountNo=${custAccountNo}&billToSiteId=${billToSiteId}&loginDeptId=${loginDeptId} `);
 
   }
+  
 
   getCreditMemoSearchByInvoiceNo(custAccountNo,billToSiteId,crMemoNo): Observable<any> {
      return this.http.get(this.ServerUrl + `/arCashReceipts/apply/cm?creditNo=${crMemoNo}&custAccountNo=${custAccountNo}&billToSiteId=${billToSiteId}`);

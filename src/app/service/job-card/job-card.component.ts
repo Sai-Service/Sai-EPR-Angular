@@ -378,8 +378,11 @@ export class JobCardComponent implements OnInit {
   matInsTaxTotal:number;
   matInsNetTotal:number;
 
-
-
+  custInvoiceNo:string;
+  addonInvoiceNo:string;
+  insInvoiceNo:string;
+  arInvNum: string;
+  arInvDate:Date;
 
   // public minDatetime = new Date();
   // promiseDate = new Date();
@@ -398,9 +401,8 @@ export class JobCardComponent implements OnInit {
   promiseDate = this.minDatetime;
  
   @ViewChild("myinput") myInputField: ElementRef;
-  arInvNum: string;
-  addonInvoiceNumber:string;
-  arInvDate:Date;
+ 
+
   ngAfterViewInit() {
     this.myInputField.nativeElement.focus();
   }
@@ -1518,8 +1520,9 @@ export class JobCardComponent implements OnInit {
             this.jobCardDate= data.obj.jobCardDate;
             this.jobCardNum1=data.obj.jobCardNum;
             this.arInvNum=data.obj.invoiceNumber;
-            this.addonInvoiceNumber=data.obj.addonInvoiceNumber;
-
+            this.custInvoiceNo=data.obj.invoiceNumber;
+            this.addonInvoiceNo=data.obj.addonInvoiceNumber;
+            this.insInvoiceNo=data.obj.insInvoiceNumber;
             this.estTotal=data.obj.estMaterial+data.obj.estLabor;
             this.fscCoupon=data.obj.fscCoupon;
           } else { alert (jcNum + " Job Card Not Found...");return;}
@@ -2458,6 +2461,8 @@ export class JobCardComponent implements OnInit {
     this.preInvButton=false;
     this.reopenButton=false;
 
+    var jcTp =this.jobcardForm.get('jcType').value;
+
     this.serviceService.GenerateInvoiceFN(jobCardNum).subscribe((res: any) => {
       if (res.code === 200) {
         this.printInvoiceButton=true;
@@ -2465,7 +2470,17 @@ export class JobCardComponent implements OnInit {
         this.preInvButton=false;
         this.reopenButton=false;
         alert(res.message);
-        this.arInvNum = res.obj.InvoiceNo;
+
+         if(jcTp==='Service') {
+          this.arInvNum = res.obj.InvoiceNo;
+          this.addonInvoiceNo=res.obj.AddonInvoiceNo;
+          
+        }
+        if(jcTp==='BS') {
+          this.custInvoiceNo  = res.obj.CustomerInvoiceNo;
+          this.insInvoiceNo   = res.obj.InsuranceInvoiceNo;
+        }
+    
       } else {
         if (res.code === 400) {
           this.genBillButton=true;
