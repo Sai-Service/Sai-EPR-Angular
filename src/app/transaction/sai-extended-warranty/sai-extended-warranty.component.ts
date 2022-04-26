@@ -512,7 +512,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
           var mAging =this.saiEwForm.get("vehicleAgeDays").value;
           var mKms =this.saiEwForm.get("kmsEwSale").value;
 
-          alert (mVAriant +","+mAging+","+mKms);
+          // alert (mVAriant +","+mAging+","+mKms);
 
           // alert("Last Run Km :" + this.lastRunKms);
           if(this.lastRunKms===null) {this.lastRunKms=0; 
