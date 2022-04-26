@@ -494,9 +494,11 @@ if(this.deptId==2){
     this.sub = this.router1.params.subscribe(params => {
       this.referenceNo = this.router1.snapshot.queryParamMap.get('invNumber');
      var methodId =   this.router1.snapshot.queryParamMap.get('methodId');
+     var Amt =this.router1.snapshot.queryParamMap.get('recAmt');
      if ( this.referenceNo != undefined){
        this.payType='CONTROL ACCOUNT'
           this.receiptMethodId=Number(methodId);
+          this.paymentAmt=Number(Amt);
           // alert(this.receiptMethodId);  
           // if(this.receiptMethodId===143)
           // {

@@ -375,7 +375,7 @@ jeSource: [],
 
 
   selectedPayment: any;
-
+  selreeceiptmethod:any;
   paymentdispSearch(docNo, i) {
 
     // alert(docNo);
@@ -383,6 +383,7 @@ jeSource: [],
     var arr = this.paymentForm.get('obj1').value;
     console.log(arr);
     var docNo1 = arr[i].docNo;
+    this.selreeceiptmethod=arr[i].receiptMethodId
 
 
     this.transactionService.paymentDocSearch(docNo1).subscribe((res: any) => {
@@ -912,16 +913,18 @@ console.log(jsonData);
         console.log(arraybaseNew1);
         // if (this.PaymentReturnArr.length !=0){
        var invNumber= this.PaymentReturnArr[0].documentNo;
+       var recAmt=this.PaymentReturnArr[0].payAmount;
+       var methodId=this.selreeceiptmethod
       // }
       // else
         for (let i=0; i<arraybaseNew1.length;i++){
           // var invNumber = arraybaseNew1[i].docNo;
         var sourceType=arraybaseNew1[i].source;  
-        var methodId = arraybaseNew1[i].receiptMethodId;
+        // var methodId = arraybaseNew1[i].receiptMethodId;
         if (sourceType==='REFUND') {
           // alert(invNumber+'In If'+methodId);
        
-          this.router.navigate(['/admin/transaction/PaymentAr'], { queryParams: { invNumber: invNumber,methodId:methodId } } );
+          this.router.navigate(['/admin/transaction/PaymentAr'], { queryParams: { invNumber: invNumber,methodId:methodId,recAmt:recAmt } } );
         }
       }
       }
