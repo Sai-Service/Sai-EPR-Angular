@@ -65,8 +65,8 @@
                                                     </th>
                                                 </tr>
                                                 <tr>
-                                                    <th scope="col" style="width: 100px;height: 25px;">Type Name</th>
-                                                    <th scope="col" style="width: 100px;height: 25px;">Invoice No</th>
+                                                    <th scope="col" style="width: 100px;height: 25px;">Chassis No</th>
+                                                    <th scope="col" style="width: 100px;height: 25px;">Order No</th>
                                                     <th scope="col" style="width: 100px;height: 25px;">Description</th>
                                                 </tr>
                                             </table>
@@ -75,7 +75,7 @@
                                 </thead>
                                 <tbody>
                                     <ng-container class="center" formArrayName="obj">
-                                        <ng-container *ngFor="let group of lineDetailsArray().controls; let i= index"
+                                        <ng-container *ngFor="let group of lineDetailsArray().controls; let i= index "
                                             [formGroupName]="i" class="auto-style5">
                                             <div *ngIf="displayHeaderData; then thenHeaderData; else elseHeaderData">
                                             </div>
@@ -305,7 +305,7 @@
                                                                     <!-- <input  type="text" class="form-control" formControlName="chassisNo"
                                                                         style="width: 100px;height: 25px;"> -->
                                                                         <select formControlName="chassisNo" class="form-control"
-                                                                        style="width: 120px;height: 25px;font-size: 10px;"  (change)="onSelectChassis($event,i)">
+                                                                        style="width: 100px;height: 25px;font-size: 10px;"  (change)="onSelectChassis($event,i)">
                                                                         <option>--Select--</option>
                                                                         <option *ngFor="let chassisList of  chassisNoList" [value]="chassisList.chassisNo">
                                                                             {{chassisList.chassisNo}}

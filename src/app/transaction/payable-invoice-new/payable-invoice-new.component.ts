@@ -13,6 +13,7 @@ import { InvoiceSearchNew } from './invoice-search-new';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 import { data } from 'jquery';
+import { async } from 'rxjs/internal/scheduler/async';
 
 
 interface IpoInvoice {
@@ -1134,9 +1135,12 @@ export class PayableInvoiceNewComponent implements OnInit {
           for (let i = 0; i < data.invLines.length; i++) {
             if (data.invLines[i].lineTypeLookupCode === 'ITEM' || data.invLines[i].lineTypeLookupCode === 'OTHER') {
               (controlinv.controls[i]).patchValue({ taxCategoryName: data.invLines[i].taxCategoryName });
-              (controlinv.controls[i].patchValue({ invDescription: data.invLines[i].description }))
+              (controlinv.controls[i].patchValue({ invDescription: data.invLines[i].description }));
             }
           }
+          // for (let k=0; k < data.invLines.length; k++){
+          //   (controlinv.controls[k].patchValue({ lineNumber: (data.invLines[k].lineNumber).sort(async) }));
+          // }
           var arraybase1 = this.poInvoiceForm.get('obj').value;
           var arraybaseNew = this.poInvoiceForm.get('obj') as FormArray;
           var arraybaseNew1 = arraybaseNew.getRawValue()
@@ -1167,6 +1171,7 @@ export class PayableInvoiceNewComponent implements OnInit {
             this.isVisibleUpdateBtn = true;
             this.isVisibleValidate = true;
           }
+          if (data.invoiceStatus != undefined ){
           if (data.invoiceStatus.includes('Validate') || data.invoiceStatus === 'Unpaid') {
             this.poInvoiceForm.disable();
             this.displayAddNewLine = false;
@@ -1189,6 +1194,7 @@ export class PayableInvoiceNewComponent implements OnInit {
             this.isVisiblelineDetialsDeleteButton = false;
             this.isVisibleSaveTDS = false;
           }
+        }
           if (data.invoiceStatus === undefined) {
             if (arraybaseNew1[i].invTypeLookupCode === 'CREDIT' || arraybaseNew1[i].invTypeLookupCode === 'STANDARD') {
               this.displayAddNewLine = false;
@@ -1218,6 +1224,12 @@ export class PayableInvoiceNewComponent implements OnInit {
             this.isVisible = false;
             this.poInvoiceForm.disable();
           }
+          // alert(data.source +'---'+arraybaseNew1[i].segment1);
+        
+          if (arraybaseNew1[i].segment1 != undefined || arraybaseNew1[i].segment1 != null || arraybaseNew1[i].segment1 != '')
+         {
+          this.poInvoiceForm.disable();
+         }
           if (arraybaseNew1[i].invTypeLookupCode === 'Prepayment' && data.invoiceStatus.includes('Validate') || data.invoiceStatus === 'Unpaid') {
             if (arraybaseNew1[i].invTypeLookupCode != 'CREDIT' || arraybaseNew1[i].invTypeLookupCode != 'STANDARD') {
               this.isVisiblePayment = true;
@@ -1681,7 +1693,7 @@ export class PayableInvoiceNewComponent implements OnInit {
             this.lineDetailsArray().controls[0].patchValue({ payGroup: data.suppId.supTdsTyp });
           }
           // alert(data.suppId.name)
-          if (data.suppId.name.includes('RTO')) {
+          if (data.suppId.name.includes('RTO') || data.suppId.name.includes('INSURANCE')) {
             alert('Your selected RTO supplier. Please Select Chassis & Order Number.!')
             this.service.chassisList(sessionStorage.getItem('ouId'))
               .subscribe(
@@ -2446,51 +2458,41 @@ export class PayableInvoiceNewComponent implements OnInit {
     var arrayCaontrolOfDistribution = this.poInvoiceForm.get('distribution').value;
     var amount : number = this.lineDetailsArray().controls[this.selectedLine].get('invoiceAmt').value;
     var totalOfInvLineAmout:number = 0;
-    // debugger;
     for (let i = 0; i < this.invLineDetailsArray().length; i++) {
-      // totalOfInvLineAmout = Math.round(((totalOfInvLineAmout + arrayControl1[i].amount) + Number.EPSILON) * 100) / 100;
       var desc1: string = arrayControl1[i].description;
       if (desc1 === 'null' || desc1 === null) {
         totalOfInvLineAmout = Math.round(((arrayControl1[i].amount) + Number.EPSILON) * 100) / 100;
-        // totalOfInvLineAmout=arrayControl1[i].amount;
       }
       else {
         if (desc1.includes('Adhoc Disc')) {
-          // alert('----disc'+arrayControl1[i].amount)
           totalOfInvLineAmout = Math.round(((totalOfInvLineAmout - arrayControl1[i].amount) + Number.EPSILON) * 100) / 100;
+          // alert('invLines desc----'+arrayControl1[i].amount)
         } else {
-          // alert('----'+arrayControl1[i].amount)
           totalOfInvLineAmout = Math.round(((totalOfInvLineAmout + arrayControl1[i].amount) + Number.EPSILON) * 100) / 100;
+          // alert('invLines------'+arrayControl1[i].amount)
         }
       }
     }
     var totalOfDistributionAmout:number = 0;
     for (let j = 0; j < this.lineDistributionArray().length; j++) {
-      // totalOfDistributionAmout = Math.round(((totalOfDistributionAmout + Number(arrayCaontrolOfDistribution[j].amount)) + Number.EPSILON) * 100) / 100;
       var desc1: string = arrayCaontrolOfDistribution[j].description;
-      // var baseAmount = arrayCaontrolOfDistribution[j].baseAmount;
       if (desc1 === 'null' || desc1 === null) {
         totalOfDistributionAmout = Math.round(((Number(arrayCaontrolOfDistribution[j].amount)) + Number.EPSILON) * 100) / 100;
-        // totalOfDistributionAmout=arrayCaontrolOfDistribution[j].amount;
       }
       else {
-        
         if (desc1.includes('Adhoc Disc')) {
-          // alert(arrayCaontrolOfDistribution[j].amount)
           totalOfDistributionAmout = Math.round(((totalOfDistributionAmout - Number(arrayCaontrolOfDistribution[j].amount)) + Number.EPSILON) * 100) / 100;
+          // alert('distribution disc -----'+ arrayCaontrolOfDistribution[j].amount)
         } else {
           totalOfDistributionAmout = Math.round(((totalOfDistributionAmout + Number(arrayCaontrolOfDistribution[j].amount)) + Number.EPSILON) * 100) / 100;
-          // alert(arrayCaontrolOfDistribution[j].amount)
+          // alert('distribution1-----'+arrayCaontrolOfDistribution[j].amount)
         }
       }
     }
-    // var amount1 =  amount.includes('.')
-    // alert(Math.round(amount)+'----null'+Math.round(totalOfInvLineAmout)+'----null' +Math.round( totalOfDistributionAmout))
-  
-    if (Math.round(amount)== Math.round(totalOfInvLineAmout) && Math.round(amount) == Math.round(totalOfDistributionAmout)) {
+    // alert(amount+'----null'+totalOfInvLineAmout+'----null' +totalOfDistributionAmout);
+    if (amount== totalOfInvLineAmout && amount == totalOfDistributionAmout) {
       var arrayControl = this.poInvoiceForm.get('obj').value;
       var invoiceNum = this.lineDetailsArray().controls[this.selectedLine].get('invoiceNum').value;
-      return;
       this.transactionService.UpdateValidate(invoiceNum).subscribe((res: any) => {
         if (res.code === 200) {
           alert(res.message);
