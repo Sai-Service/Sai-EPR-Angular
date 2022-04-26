@@ -24,6 +24,7 @@ interface IWsVehicleMaster {
   categoryId: number;
   itemId: number;
   custAccountNo: number;
+  customerId:number
   mobile1: number;
   custName: string;
   address1: string;
@@ -188,7 +189,7 @@ export class WsVehicleMasterComponent implements OnInit {
   serviceModel: string;
   kmReading: string;
   soldByEmpId: string;
-  customeId: number;
+  customerId: number;
   custAccountNo: number;
   dmsCustNo: number;
   custName: string;
@@ -992,12 +993,21 @@ export class WsVehicleMasterComponent implements OnInit {
        this.service.searchCustomerByAccount(accountNo)
       .subscribe(
         data => {
+
+          if(data.code===200) {
           this.CustomerDetailsList = data.obj;
           console.log(this.CustomerDetailsList);
-          this.wsVehicleMasterForm.patchValue(this.CustomerDetailsList);
-        
+          this.wsVehicleMasterForm.patchValue(this.CustomerDetailsList);}
+          else {
+            alert ("Customer Details Not Found.\nPlease Enter Valid Customer details and proceed.");
+            this.wsVehicleMasterForm.patchValue({customerId:0,custName :''})
+
+          }
+
+
         });
   }
+
 
   SearchByCustName(mName) { alert("Search by Cust Name..... wip :" + mName); }
 
@@ -1388,15 +1398,23 @@ export class WsVehicleMasterComponent implements OnInit {
     // }
 
 
+  
+    // alert ("formValue.customerId : " +formValue.customerId);
+
+    if (formValue.customerId <=0 || formValue.customerId === undefined || formValue.customerId === null) {
+      this.checkValidation = false;
+      alert("CUSTOMER NO: Should not be null / Enter Valid Customer No");return;
+    }
+
     if (formValue.custAccountNo < 0 || formValue.custAccountNo === undefined || formValue.custAccountNo === null) {
       this.checkValidation = false;
-      alert("CUSTOMER NO: Should not be null");
+      alert("CUSTOMER NO: Should not be null / Enter Valid Customer No");return;
     }
 
     
     if (formValue.mobile1 < 0 || formValue.mobile1 === undefined || formValue.mobile1 === null) {
       this.checkValidation = false;
-      alert("CUSTOMER PHONE1: Should not be null");
+      alert("CUSTOMER PHONE1: Should not be null");return;
     }
 
     if (formValue.custName === undefined || formValue.custName === null || formValue.custName.trim() === '') {
