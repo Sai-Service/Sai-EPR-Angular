@@ -2466,10 +2466,8 @@ export class PayableInvoiceNewComponent implements OnInit {
       else {
         if (desc1.includes('Adhoc Disc')) {
           totalOfInvLineAmout = Math.round(((totalOfInvLineAmout - arrayControl1[i].amount) + Number.EPSILON) * 100) / 100;
-          // alert('invLines desc----'+arrayControl1[i].amount)
         } else {
           totalOfInvLineAmout = Math.round(((totalOfInvLineAmout + arrayControl1[i].amount) + Number.EPSILON) * 100) / 100;
-          // alert('invLines------'+arrayControl1[i].amount)
         }
       }
     }
@@ -2482,10 +2480,8 @@ export class PayableInvoiceNewComponent implements OnInit {
       else {
         if (desc1.includes('Adhoc Disc')) {
           totalOfDistributionAmout = Math.round(((totalOfDistributionAmout - Number(arrayCaontrolOfDistribution[j].amount)) + Number.EPSILON) * 100) / 100;
-          // alert('distribution disc -----'+ arrayCaontrolOfDistribution[j].amount)
         } else {
           totalOfDistributionAmout = Math.round(((totalOfDistributionAmout + Number(arrayCaontrolOfDistribution[j].amount)) + Number.EPSILON) * 100) / 100;
-          // alert('distribution1-----'+arrayCaontrolOfDistribution[j].amount)
         }
       }
     }

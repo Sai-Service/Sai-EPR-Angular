@@ -495,6 +495,13 @@ export class OrderManagementService {
   }
 
  
+  autoApplyInvoiceFn(currentDate){
+    const options = {
+      headers: this.headers
+    };
+    const url = this.ServerUrl + `/orderHeader/autoApply/inv/${currentDate}`;
+    return this.http.post(url, options);
+  }
 
 
   // ////////////////************Order Payment Receipt **************//////////////////

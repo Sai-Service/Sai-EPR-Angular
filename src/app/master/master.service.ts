@@ -145,6 +145,10 @@ export class MasterService {
   DepartmentListNew(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/CmnType/Dept');
   }
+  DepartmentListNew1(divisionId): Observable<any> {
+    return this.http.get(this.ServerUrl +`/subInvMst/subInv/${divisionId}`);
+  }
+
   empIdListFn(): Observable<any> {
     return this.http.get(this.ServerUrl +'/empMst/All');
   }
@@ -2816,6 +2820,9 @@ formData.append('location', locCode);
     return this.http.get(this.ServerUrl + `/poHdr/byDate?userId=${emplId}&startDt=${startDt}&endDt=${endDt}&locId=${locId}`)
   }
 
+  getPOByUserAccc(deptId, startDt, endDt,locId){
+    return this.http.get(this.ServerUrl + `/poHdr/Acc/byDate?deptId=${deptId}&startDt=${startDt}&endDt=${endDt}&locId=${locId}`)
+  }
 
   getOrderByUser(locId, startDt, endDt,deptId){
     return this.http.get(this.ServerUrl + `/orderHeader/getByDate?locId=${locId}&startDt=${startDt}&endDt=${endDt}&dept=${deptId}`)

@@ -2425,6 +2425,10 @@
                                     style="width: fit-content;height: fit-content;"
                                     (click)="navigateGatePass(orderNumber)">Generate Gate Pass</button>
                             </td>
+                            <td>
+                                <button class="btn btn-primary" [style.display]="isVisibleAutoApplyInvoice ? 'block' : 'none'"
+                                (click)="autoApplyInvoice()"  style="width: fit-content;height: fit-content;">Auto Apply Invoice</button>
+                            </td>
                         </tr>
                     </table>
                 </fieldset>
