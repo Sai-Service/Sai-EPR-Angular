@@ -2210,39 +2210,37 @@ export class JobCardComponent implements OnInit {
   }
 
 
+
   openCodeComb(i) {
     this.displayModal = false;
     this.showModal = true; // Show-Hide Modal Check
     this.content = i; // Dynamic Data
     let a = i + 1
     this.title = a;
+
+    // alert ("index :"+i);
+    this.splitDetailsArray().clear();
+    this.splitDetailsArray().push(this.splitDetailsGroup());
     
     var jobCardLabLinesControl = this.jobcardForm.get('jobCardLabLines').value;
     var lineTotAmt = jobCardLabLinesControl[i].basicAmt;
     this.lineBasicAmt=lineTotAmt;
 
-      // alert ("this.lstcomments.jobCardLabLines[i].splitArr.length :"+this.lstcomments.jobCardLabLines[0].splitArr.length);
-        for (let j = 0; j < this.lstcomments.jobCardLabLines[i].splitArr.length-1 ; j++) {
+    for (let j = 0; j < this.lstcomments.jobCardLabLines[i].splitArr.length-1 ; j++) {
           var payInvGrp1: FormGroup = this.splitDetailsGroup();
           this.splitDetailsArray().push(payInvGrp1);
       }
-
-      var tblDetails=this.lstcomments.jobCardLabLines[i].splitArr
-      var splitLinesArr =this.jobcardForm.get("splitAmounts") as FormArray;
-
-      for (let j = 0; j < this.lstcomments.jobCardLabLines[i].splitArr.length ; j++) {
-
-        let tschType :string =tblDetails[j].type;
-        tschType=tschType.trim();
-        splitLinesArr.controls[j].patchValue({type :tschType ,techId :tblDetails[j].techId,techAmt:tblDetails[j].techAmt,})
-        alert (tschType +","+tblDetails[j].techId+","+tblDetails[j].techAmt);
-
-       }
-
-      //  this.jobcardForm.get('splitAmounts').patchValue(tblDetails);
-       //let selectbilTy = this.billableTyIdList.find(d => d.billableTyName === 'Customer');
-
-  }
+    
+     var tblDetails = this.lstcomments.jobCardLabLines[i].splitArr;   
+     var splitLinesArr = this.jobcardForm.get('splitAmounts') as FormArray;
+     
+     for (let j = 0; j < this.lstcomments.jobCardLabLines[i].splitArr.length ; j++) {
+    //   let selectTech = this.TechnicianList.find(d => d.teamId === tblDetails[j].techId);
+       let tschType :string =  tblDetails[j].type;
+       tschType = tschType.trim();
+       (splitLinesArr.controls[j]).patchValue({ type: tschType, techId: tblDetails[j].techId,techAmt: tblDetails[j].techAmt,});
+      }
+    }
 
   validateTechAmt(t , i) {
     var jobCardLabLinesControl = this.jobcardForm.get('jobCardLabLines').value;

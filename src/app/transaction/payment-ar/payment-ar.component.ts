@@ -251,6 +251,7 @@ export class PaymentArComponent implements OnInit {
   chqBounceStatus=false;
   printButton=true;
   fromJc=false;
+  accountsLogin=false;
 
   showInvoiceGrid = false;
   showRefundGrid = false;
@@ -267,6 +268,7 @@ export class PaymentArComponent implements OnInit {
   locationId: Number;
   locName: string;
   emplId: number;
+  roleId: number;
   orgId: number;
   divisionId: number;
 
@@ -313,6 +315,7 @@ export class PaymentArComponent implements OnInit {
       locationId: [],
       locName: [''],
       emplId: [],
+      roleId: [],
 
       receiptNumber: [],
       receiptDate: [],
@@ -463,7 +466,7 @@ export class PaymentArComponent implements OnInit {
     // this.locName=(sessionStorage.getItem('locName'));
     this.deptId = Number(sessionStorage.getItem('dept'));
     this.emplId = Number(sessionStorage.getItem('emplId'));
-
+    this.roleId = Number(sessionStorage.getItem('roleId'));
     this.orgId = this.ouId;
     console.log(this.loginArray);
     console.log(this.locId);
@@ -480,6 +483,9 @@ export class PaymentArComponent implements OnInit {
     //      }
     // });
 
+if (Number(sessionStorage.getItem('dept')) ===4)  {this.accountsLogin=true;}else {this.accountsLogin=false;}
+
+// alert ("DeptId : " +this.deptId + " accountsLogin="+this.accountsLogin);
 if(this.deptId==2){
     this.sub = this.router1.params.subscribe(params => {
        var jcNum = params['jobCardNum'];
@@ -487,7 +493,7 @@ if(this.deptId==2){
         this.fromJc=true;
         this.refType='Service-Order'
       this.GetJobCardDetails(jcNum);}
-    });
+  });
 
   }
   if(this.deptId==4){
