@@ -48,6 +48,7 @@ export class AccountsReportComponent implements OnInit {
   isVisiblespInvAgging:boolean=false;
   isVisiblepanelgltrialBalance:boolean=false;
   panelCashBank:boolean=false;
+  accountNameList:any=[];
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) {
     this.reportForm = this.fb.group({
@@ -68,7 +69,7 @@ export class AccountsReportComponent implements OnInit {
   ngOnInit(): void {
     this.reportForm.patchValue({OUCode:sessionStorage.getItem('ouId')+'-'+sessionStorage.getItem('ouName')})
     this.reportForm.patchValue({locCode:sessionStorage.getItem('locId')+'-'+sessionStorage.getItem('locName')});
-    this.reportForm.patchValue({accountName:sessionStorage.getItem('ticketNo')});
+    // this.reportForm.patchValue({accountName:sessionStorage.getItem('ticketNo')});
    // Prevent closing from click inside dropdown
 $(document).on('click', '.dropdown-menu', function (e) {
   e.stopPropagation();
@@ -93,6 +94,14 @@ this.service.getLocationSearch1(sessionStorage.getItem('ouId'))
     this.BillShipToList = data;
   }
 );
+
+this.service.accountNameList()
+.subscribe(
+  data => {
+    this.accountNameList = data;
+  }
+);
+
 
 this.service.DepartmentListNew()
 .subscribe(

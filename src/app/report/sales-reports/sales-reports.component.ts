@@ -64,6 +64,7 @@ export class SalesReportsComponent implements OnInit {
   isVisiblecustomerLedger: boolean = false;
   isVisiblespPurRegDownLoad: boolean = false;
   isVisiblestockTransfer:boolean=false;
+  isVisiblefromtoloccustaccno:boolean=false;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) {
     this.salesReportForm = this.fb.group({
@@ -167,6 +168,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblefromtolocationdepartment = false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblestockTransfer=false;
+      this.isVisiblefromtoloccustaccno=false;
     }
     else if (reportName === 'gstSaleIND') {
       this.reportName = 'Sales Invoiced Not Delivered'
@@ -176,6 +178,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblefromtolocationdepartment = false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblestockTransfer=false;
+      this.isVisiblefromtoloccustaccno=false;
     }
     else if (reportName === 'gstVehicleBookingReg') {
       this.reportName = 'Vehicle Booking Register'
@@ -185,6 +188,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblefromtolocationdepartment = false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblestockTransfer=false;
+      this.isVisiblefromtoloccustaccno=false;
     }
     else if (reportName === 'gstSaleAllotNotInv') {
       this.reportName = 'Sales Alloted Not Invoiced Report'
@@ -194,6 +198,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblefromtolocationdepartment = false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblestockTransfer=false;
+      this.isVisiblefromtoloccustaccno=false;
     }
     else if (reportName === 'gstSaleClosingStock') {
       this.reportName = 'Vehicle Closing Stock'
@@ -202,6 +207,7 @@ export class SalesReportsComponent implements OnInit {
       this.isSaleClosingStock = true;
       this.isVisiblefromtolocationdepartment = false;
       this.isVisiblestockTransfer=false;
+      this.isVisiblefromtoloccustaccno=false;
     }
     else if (reportName === 'gstSaleRegister') {
       this.reportName = 'GST Sales Register'
@@ -211,6 +217,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblefromtolocationdepartment = false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblestockTransfer=false;
+      this.isVisiblefromtoloccustaccno=false;
     }
     else if (reportName === 'gstSparesSaiDebtors') {
       this.reportName = 'Sai Debtors'
@@ -224,6 +231,7 @@ export class SalesReportsComponent implements OnInit {
         this.isVisibleDepartmentList = true;
 
       }
+      this.isVisiblefromtoloccustaccno=false;
     }
     else if (reportName === 'gstReceiptRegister') {
       this.reportName = 'Receipt Register';
@@ -236,6 +244,7 @@ export class SalesReportsComponent implements OnInit {
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.isVisibleDepartmentList = true;
       }
+      this.isVisiblefromtoloccustaccno=false;
     }
     else if (reportName === 'customerLedger') {
       this.reportName = 'Customer Ledger Report';
@@ -248,6 +257,7 @@ export class SalesReportsComponent implements OnInit {
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.isVisibleDepartmentList = true;
       }
+      this.isVisiblefromtoloccustaccno=false;
     }
     else if (reportName === 'gststockTransferSummary') {
       this.reportName = 'Stock Transfer Made Summary Report';
@@ -257,6 +267,7 @@ export class SalesReportsComponent implements OnInit {
       this.isSaleClosingStock = false;
       this.isVisiblestockTransfer=true;
       this.isVisiblecustomerLedger = false;
+      this.isVisiblefromtoloccustaccno=false;
     }
     else if (reportName ==='gststockTransferReceivedDetails'){
       this.reportName = 'Stock Transfer Received Detail Report';
@@ -266,6 +277,7 @@ export class SalesReportsComponent implements OnInit {
       this.isSaleClosingStock = false;
       this.isVisiblestockTransfer=true;
       this.isVisiblecustomerLedger = false;
+      this.isVisiblefromtoloccustaccno=false;
     }
     else if (reportName==='gststockTransferReceivedSummary'){
       this.reportName = 'Spares Stock Transfer Received Summary Report';
@@ -275,6 +287,37 @@ export class SalesReportsComponent implements OnInit {
       this.isSaleClosingStock = false;
       this.isVisiblestockTransfer=true;
       this.isVisiblecustomerLedger = false;
+      this.isVisiblefromtoloccustaccno=false;
+    }
+    else if (reportName==='saleProformaSummary'){
+      this.reportName = 'Sales Proforma Summary Report';
+      this.isVisiblefromtolocationdepartment = false;
+      this.isVisibleVehicleSaleRegister = true;
+      this.isVisibleSaleIND = false;
+      this.isSaleClosingStock = false;
+      this.isVisiblestockTransfer=false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisiblefromtoloccustaccno=false;
+    }
+    else if (reportName==='creditNoteReg'){
+      this.reportName = 'Credit Note Register';
+      this.isVisiblefromtolocationdepartment = false;
+      this.isVisibleVehicleSaleRegister = true;
+      this.isVisibleSaleIND = false;
+      this.isSaleClosingStock = false;
+      this.isVisiblestockTransfer=false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisiblefromtoloccustaccno=false;
+    }
+    else if (reportName==='subDealerRep'){
+      this.reportName = 'SubDealer-Sales Register Report';
+      this.isVisiblefromtolocationdepartment = false;
+      this.isVisibleVehicleSaleRegister = false;
+      this.isVisibleSaleIND = false;
+      this.isSaleClosingStock = false;
+      this.isVisiblestockTransfer=false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisiblefromtoloccustaccno=true;
     }
   }
 
@@ -568,9 +611,79 @@ export class SalesReportsComponent implements OnInit {
           })
       }
     }
+    else if (reportName === 'Sales Proforma Summary Report') {
+      const fileName = 'Sales Proforma Summary Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.saleProformaSummary(fromDate, toDate, locId)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.saleProformaSummary(fromDate, toDate, sessionStorage.getItem('locId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+    }
+    else if (reportName === 'Credit Note Register') {
+      const fileName = 'Credit Note Register-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.creditNoteReg(fromDate, toDate,sessionStorage.getItem('ouId'), locId)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.creditNoteReg(fromDate, toDate, sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+    }
+    else if (reportName==='SubDealer-Sales Register Report'){
+      var custAcctNo=this.salesReportForm.get('custAccNo').value;
+      if (custAcctNo === undefined || custAcctNo === null) {
+        custAcctNo = '';
+      }
+      const fileName = 'SubDealer-Sales Register Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.subDealerRep(fromDate, toDate,locId,custAcctNo)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.subDealerRep(fromDate, toDate, sessionStorage.getItem('locId'),custAcctNo)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+    }
   }
 
-
+ 
   department(department) {
     if (department === 'Sales') {
       let department = this.DepartmentList.filter((customer) => ((customer.codeDesc.includes('Sales') == true)));

@@ -551,10 +551,17 @@
                 <input disabled type="text" class="form-control" formControlName="OUCode">
               </td>
               <td style="width: 15%" class="LabelFontStyle">
-                &nbsp;User&nbsp;name&nbsp;:&nbsp;
+                &nbsp;Receipt&nbsp;name&nbsp;:&nbsp;
               </td>
               <td>
-                <input  type="text" class="form-control" formControlName="accountName">
+                <!-- <input  type="text" class="form-control" formControlName="accountName"> -->
+                <select formControlName="accountName" id="accountName" class="form-control"
+                (ngModelChange)='onOptionsLocation($event)'>
+                <option>--Select--</option>
+                <option *ngFor="let sc of  accountNameList" [value]="sc">
+                  {{sc}}
+                </option>
+              </select>
               </td>
             </tr>
          

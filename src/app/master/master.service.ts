@@ -473,6 +473,11 @@ public LocationMasterSubmit(LocationMasterRecord) {
 getLocationSearch1(ouId): Observable<any> {
   return this.http.get(this.ServerUrl + `/locationMst/locListOuwise/${ouId}`);
 }
+
+accountNameList(): Observable<any> {
+  return this.http.get(this.ServerUrl + `/receiptMethod/rcptMethod`);
+}
+
 getLocationSearch(): Observable<any> {
   return this.http.get(this.ServerUrl + '/locationMst');
 }
