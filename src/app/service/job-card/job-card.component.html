@@ -2686,9 +2686,6 @@
                         </ng-template>
                         <ng-template #elseBlockModal> -->
 
-                            <!-- <div class="modal fade" id="myModel" tabindex="-1" role="dialog" aria-hidden="true"
-                            aria-hidden="true" style="width: 700px; margin-left:350px" aria-labelledby="myModelLabel" >
-                                                         -->
                             <div id="myModel" [style.display]="showModal ? 'block' : 'none'" class="modal fade"
                                 tabindex="-1" role="dialog" aria-hidden="true" style="width: 700px; margin-left:350px">
 
@@ -2697,7 +2694,7 @@
                                         <div class="modal-header">
                                                 <h4 class="modal-title" id="myModalLabel"
                                                 style="text-align: center; font-size: medium; margin-left: 20%; font-family: Verdana,Sans-serif, Arial, Helvetica;font-weight: bold;">
-                                                Add Technician for Line-{{ title }}. Labour Amt : {{this.lineBasicAmt}}</h4>
+                                                Add Technician for Line-{{title}}.Labour Amt:{{this.lineBasicAmt}}</h4>
                                                
                                             <button type="button" class="close" data-dismiss="modal"
                                                 aria-hidden="true">&times;</button>
@@ -2739,12 +2736,21 @@
                                                                   
                                                                     <td> <input type="number" min="0"  formControlName="techAmt" (change) = "validateTechAmt(j,content)" class="form-control">  </td>
 
-                                                                 
-                                                                    <td> <button type="button" class="btn btn-primary"    (click)="addTechRow(j)"
-                                                                            (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i class="fa fa-plus"></i></button></td>
-                                                                    <td> <button type="button" class="btn btn-primary"
-                                                                            (click)="RemoveTechRow(j)"   style="width: min-content;"><i class="fa fa-trash"></i></button></td>
-                                                                </tr>
+                                                                    <div *ngIf="saveLabButton; then ADT1; else ADT2"></div>
+                                                                    <ng-template #ADT1>
+                                                                        <td> <button type="button" class="btn btn-primary"    (click)="addTechRow(j)"
+                                                                                (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i class="fa fa-plus"></i></button></td>
+                                                                        <td> <button type="button" class="btn btn-primary"
+                                                                                (click)="RemoveTechRow(j)"   style="width: min-content;"><i class="fa fa-trash"></i></button></td>
+                                                                    </ng-template>
+                                                                    <ng-template #ADT2>
+                                                                        <td> <button disabled type="button" class="btn btn-primary"    (click)="addTechRow(j)"
+                                                                                (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i class="fa fa-plus"></i></button></td>
+                                                                        <td> <button disabled type="button" class="btn btn-primary"
+                                                                                (click)="RemoveTechRow(j)"   style="width: min-content;"><i class="fa fa-trash"></i></button></td>
+                                                                    </ng-template>
+
+                                                                    </tr>
                                                              
                                                             </ng-container>
                                                         </ng-container>
@@ -2752,10 +2758,19 @@
                                                 </table>
                                             </div>
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary" data-dismiss="modal"
+
+                                        <div *ngIf="saveLabButton; then ADT11; else ADT21"></div>
+                                        <ng-template #ADT11>
+                                        <div class="modal-footer"><button type="button" class="btn btn-primary" data-dismiss="modal"
                                                 aria-hidden="true" (click)="fnCancatination(content)">OK</button>
                                         </div>
+                                        </ng-template>
+                                        <ng-template #ADT21>
+                                            <div class="modal-footer"><button type="button" class="btn btn-primary" data-dismiss="modal"
+                                                    aria-hidden="true" >Close</button>
+                                            </div>
+                                        </ng-template>
+
                                     </div>
                                 </div>
                             </div>

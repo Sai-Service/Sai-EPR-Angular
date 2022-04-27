@@ -2218,7 +2218,7 @@ export class JobCardComponent implements OnInit {
     let a = i + 1
     this.title = a;
 
-    alert ("index :"+i);
+    // alert ("index :"+i);
     this.splitDetailsArray().clear();
     this.splitDetailsArray().push(this.splitDetailsGroup());
     

@@ -1363,8 +1363,8 @@ export class SaiExtendedWarrantyComponent implements OnInit {
             } else {
               if (res.code === 400) {
                 // this.displayButton=true;
-           
                 alert(res.message);
+                this.displayButton=true;
                 // this.displayButton=true;
                
                 // alert('Code already present in the data base');
