@@ -756,7 +756,7 @@ export class WsVehicleMasterComponent implements OnInit {
           this.lstcomments = data.obj;
 
           if (data.code === 400) {
-            alert("Registration No : [ " + mReg + " ] not Found...");
+            alert("Registration No : [ " + mReg + " ] not Found...\n"+data.message);
             this.displayButton = true;
             this.showCreateCustButton = true;
             this.showCreateItemButton = true;

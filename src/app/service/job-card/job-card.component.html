@@ -1418,8 +1418,8 @@
                                                                                 
                                                                                 <ng-template #thenBlockSplit>
                                                                                     <button type="button" 
-                                                                                        class="btn btn-primary"
-                                                                                        class="form-control"
+                                                                                        class="btn btn-primary" data-toggle="modal" data-target="#myModel"
+                                                                                        class="form-control" (click)="openCodeComb(i)"
                                                                                         style="width: min-content; text-align: center;"><i
                                                                                             class="fa fa-plus"></i></button>
                                                                                 </ng-template>
@@ -2644,11 +2644,7 @@
 
 
                                                         </ng-template>
-
-
-
-                                                       
-                                                       
+                                                      
                                                     
                                                     <div *ngIf="showBodyshopCustomer; then dpcustInvYes; else dpcustInvNo"></div>
                                                     <ng-template #dpcustInvNo>
@@ -2681,108 +2677,18 @@
                                     </div>
                                 </div>
                             </section>
-                            <!-- formControlName="divisionName" -->
-
-                        </table>
-                        <!-- <table class="center">
-                            <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog"
-                                aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title" id="myModalLabel"
-                                                style="text-align: center; font-size: medium; font-family: Verdana,Sans-serif, Arial, Helvetica;font-weight: bold;">
-                                                Additional Details</h4>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="grid_scroll1">
-                                                     <table>
-
-                                                        <tr>
-                                                            <input hidden formControlName="insurerCompId">
-                                                            <input hidden formControlName="insurerCompNo">
-                                                            <input hidden type="text" class="form-control"  formControlName="insurerSiteId">
-    
-                                                            <td  class="LabelFontStyle">Vehicle&nbsp;Insurance&nbsp;:</td>
-                                                            <td><input type="text" class="form-control" disabled  formControlName="insStatus"> </td>
-    
-                                                            <td  class="LabelFontStyle">Comp&nbsp;Name&nbsp;:</td>
-                                                            <td colspan="6" ><input disabled  type="text" class="form-control" formControlName="insurerCompName" style="width: 100%;">  </td>
-                                                           
-                                                        </tr>
-                                                        <tr>
-                                                            <td style="width: 15%" class="LabelFontStyle">Address:</td>
-                                                            <td colspan="8"> <input type="text" class="form-control" disabled  formControlName="insurerSite" style="width:100%"> </td>
-                                                            <td style="width: 15%" class="LabelFontStyle">Expiry&nbsp;Date:</td>
-                                                            <td> <input type="date" class="form-control" disabled  formControlName="insuDate"> </td>
-                                                     
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td  class="LabelFontStyle">OEM&nbsp;Warranty&nbsp;:</td>
-                                                            <td><input type="text" class="form-control" disabled  formControlName="oemWarrStatus"> </td>
-                                                            <td  class="LabelFontStyle">Expiry&nbsp;Date:</td>
-                                                            <td><input type="date" class="form-control" disabled formControlName="oemExpiryDate"> </td>
-                                                        </tr>
-                                                 
-
-                                                  
-
-                                                    <tr>
-                                                        <td style="width: 15%" class="LabelFontStyle"> Extended&nbsp;Warranty&nbsp;:</td>
-                                                        <td><input type="text" class="form-control" disabled  formControlName="ewStatus">  </td>
-                                                        <td> <input type="text" class="form-control" formControlName="ewStatus" disabled> </td>
-                                                        <td><input type="date" class="form-control" disabled  formControlName="ewStartDate"> </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td style="width: 15%" class="LabelFontStyle"> MCP &nbsp;&nbsp;:</td>
-                                                        <td><input type="text" class="form-control" disabled placeholder="">  </td>
-                                                        <td><input type="text" class="form-control" disabled placeholder="MCP Number"></td>
-                                                        <td><input type="date" class="form-control" disabled placeholder="Expiry Date"> </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="width: 15%" class="LabelFontStyle">CNG &nbsp;&nbsp;:</td>
-                                                        <td><input type="text" class="form-control" disabled formControlName="cngCylinderNo"> </td>
-                                                        <td><input type="text" class="form-control" disabled  formControlName="cngKitNumber"> </td>
-                                                        <td> <input type="date" class="form-control" disabled  placeholder="Expiry Date">
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="width: 15%" class="LabelFontStyle">Govt&nbsp;Vehicle&nbsp;(Y/N)&nbsp;:</td>
-                                                        <td> <input type="text" class="form-control" disabled placeholder=""> </td>
-                                                        <td style="width: 15%" class="LabelFontStyle">  VIP&nbsp;:</td>
-                                                        <td><input type="text" class="form-control" disabled    placeholder=""> </td>   
-                                                    </tr>
-                                                   
-                                                </table>
-                                                <div class="modal-footer">
-                                                     <table>
-                                                        <tr>
-
-                                                            <td style="margin-right: 20%;"><button type="button"
-                                                                    class="btn btn-primary" data-dismiss="modal"
-                                                                    class="close">Ok</button></td>
-                                                              </tr>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </table> -->
+                       </table>
+                   
 
 
-                        <div *ngIf="displayModal; then thenBlockModal; else elseBlockModal">
-                        </div>
+                        <!-- <div *ngIf="displayModal; then thenBlockModal; else elseBlockModal"></div>
                         <ng-template #thenBlockModal>
                         </ng-template>
-                        <ng-template #elseBlockModal>
+                        <ng-template #elseBlockModal> -->
+
+                            <!-- <div class="modal fade" id="myModel" tabindex="-1" role="dialog" aria-hidden="true"
+                            aria-hidden="true" style="width: 700px; margin-left:350px" aria-labelledby="myModelLabel" >
+                                                         -->
                             <div id="myModel" [style.display]="showModal ? 'block' : 'none'" class="modal fade"
                                 tabindex="-1" role="dialog" aria-hidden="true" style="width: 700px; margin-left:350px">
 
@@ -2802,20 +2708,14 @@
                                                     class="center" style="border: solid 1px Gray">
                                                     <thead>
                                                         <tr>
-                                                            <!-- <th scope="col">SL. NO.</th> -->
-                                                            <th scope="col">Type</th>
-                                                            <th scope="col">Technician Name</th>
-                                                            <!-- <th scope="col">Percentage</th> -->
-                                                            <th scope="col">Amount</th>
-                                                            <!-- <th scope="col">Contractor code</th> -->
-                                                            <!-- <th scope="col">Percentage</th>
-                                                             <th scope="col">Amount</th> -->
-                                                        </tr>
+                                                             <th scope="col">Type</th>
+                                                             <th scope="col">Technician Name</th>
+                                                             <th scope="col">Amount</th>
+                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <ng-container class="center" formArrayName="splitAmounts">
-                                                            <!-- <ng-container class="center" formArrayName="splitArr">    -->
-                                                            <ng-container
+                                                              <ng-container
                                                                 *ngFor="let matDetails of splitDetailsArray().controls; let j= index"
                                                                 [formGroupName]="j">
 
@@ -2823,7 +2723,7 @@
                                                                     <input  hidden disabled type="number" min="0"  formControlName="lineBasicAmt"  class="form-control">
                                                                     <td>
                                                                         <select class="form-control"
-                                                                            formControlName="Tecttttttype">
+                                                                            formControlName="type">
                                                                             <option value="Technician">Technician</option>
                                                                             <option value="Contractor">Contractor</option>
                                                                         </select>
@@ -2836,155 +2736,16 @@
                                                                             </option>
                                                                         </select>
                                                                     </td>
-                                                                    <!-- <td> <input disabled type="number" min="0"  formControlName="techPer"
-                                                                            class="form-control">
-                                                                    </td> -->
-
+                                                                  
                                                                     <td> <input type="number" min="0"  formControlName="techAmt" (change) = "validateTechAmt(j,content)" class="form-control">  </td>
 
-                                                                    <!-- <td> <input  type="text"
-                                                                            formControlName="contr1" class="form-control">
-                                                                    </td>
-                                                                    <td> <input  formControlName="contr1Per"
-                                                                        class="form-control" >
-                                                                </td>
-                                                                <td> <input  type="text"
-                                                                        formControlName="contr1Amt" class="form-control">
-                                                                </td> -->
+                                                                 
                                                                     <td> <button type="button" class="btn btn-primary"    (click)="addTechRow(j)"
                                                                             (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i class="fa fa-plus"></i></button></td>
                                                                     <td> <button type="button" class="btn btn-primary"
                                                                             (click)="RemoveTechRow(j)"   style="width: min-content;"><i class="fa fa-trash"></i></button></td>
                                                                 </tr>
-                                                                <!-- <tr>
-                                                                            <td> <input  type="text"
-                                                                                    formControlName="tech2" class="form-control">
-                                                                            </td>
-                                                                            <td> <input  formControlName="tech2Per"
-                                                                                class="form-control" >
-                                                                        </td>
-                                                                        <td> <input  type="text"
-                                                                                formControlName="tech2Amt" class="form-control">
-                                                                        </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td> <input  type="text"
-                                                                                formControlName="tech3" class="form-control">
-                                                                        </td>
-                                                                        <td> <input  formControlName="tech3Per"
-                                                                            class="form-control" >
-                                                                    </td>
-                                                                    <td> <input  type="text"
-                                                                            formControlName="tech3Amt" class="form-control">
-                                                                    </td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td> <input  type="text"
-                                                                                        formControlName="tech4" class="form-control">
-                                                                                </td>
-                                                                                <td> <input  formControlName="tech4Per"
-                                                                                    class="form-control" >
-                                                                            </td>
-                                                                            <td> <input  type="text"
-                                                                                    formControlName="tech4Amt" class="form-control">
-                                                                            </td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td> <input  type="text"
-                                                                                        formControlName="tech5" class="form-control">
-                                                                                </td>
-                                                                                <td> <input  formControlName="tech5Per"
-                                                                                    class="form-control" >
-                                                                            </td>
-                                                                            <td> <input  type="text"
-                                                                                    formControlName="tech5Amt" class="form-control">
-                                                                            </td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td> <input  type="text"
-                                                                                        formControlName="tech6" class="form-control">
-                                                                                </td>
-                                                                                <td> <input  formControlName="tech6Per"
-                                                                                    class="form-control" >
-                                                                            </td>
-                                                                            <td> <input  type="text"
-                                                                                    formControlName="tech6Amt" class="form-control">
-                                                                            </td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td> <input  type="text"
-                                                                                        formControlName="tech7" class="form-control">
-                                                                                </td>
-                                                                                <td> <input  formControlName="tech7Per"
-                                                                                    class="form-control" >
-                                                                            </td>
-                                                                            <td> <input  type="text"
-                                                                                    formControlName="tech7Amt" class="form-control">
-                                                                            </td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td> <input  type="text"
-                                                                                        formControlName="tech8" class="form-control">
-                                                                                </td>
-                                                                                <td> <input  formControlName="tech8Per"
-                                                                                    class="form-control" >
-                                                                            </td>
-                                                                            <td> <input  type="text"
-                                                                                    formControlName="tech8Amt" class="form-control">
-                                                                            </td>
-                                                                                </tr>
-
-                                                                                  <tr> -->
-                                                                <!-- <th scope="col">SL. NO.</th> -->
-                                                                <!-- <th scope="col">Contractor code</th>
-                                                                                        <th scope="col">Percentage</th>
-                                                                                        <th scope="col">Amount</th>
-                                                                                    </tr> -->
-
-                                                                <!-- <tr> -->
-                                                                <!-- <td> <input  type="text"
-                                                                                            formControlName="contr1" class="form-control">
-                                                                                    </td>
-                                                                                    <td> <input  formControlName="contr1Per"
-                                                                                        class="form-control" >
-                                                                                </td>
-                                                                                <td> <input  type="text"
-                                                                                        formControlName="contr1Amt" class="form-control">
-                                                                                </td> -->
-                                                                <!-- </tr>
-                                                                                    <tr>
-                                                                                        <td> <input  type="text"
-                                                                                            formControlName="contr2" class="form-control">
-                                                                                    </td>
-                                                                                    <td> <input  formControlName="contr2Per"
-                                                                                        class="form-control" >
-                                                                                </td>
-                                                                                <td> <input  type="text"
-                                                                                        formControlName="contr2Amt" class="form-control">
-                                                                                </td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td> <input  type="text"
-                                                                                            formControlName="contr3" class="form-control">
-                                                                                    </td>
-                                                                                    <td> <input  formControlName="contr3Per"
-                                                                                        class="form-control" >
-                                                                                </td>
-                                                                                <td> <input  type="text"
-                                                                                        formControlName="contr3Amt" class="form-control">
-                                                                                </td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td> <input  type="text"
-                                                                                            formControlName="contr4" class="form-control">
-                                                                                    </td>
-                                                                                    <td> <input  formControlName="contr4Per"
-                                                                                        class="form-control" >
-                                                                                </td>
-                                                                                <td> <input  type="text"
-                                                                                        formControlName="contr4Amt" class="form-control">
-                                                                                </td>
-                                                                                    </tr>  -->
+                                                             
                                                             </ng-container>
                                                         </ng-container>
                                                     </tbody>
@@ -2998,7 +2759,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </ng-template>
+                        <!-- </ng-template> -->
 
                     </div>
                     <!-- </form> -->
