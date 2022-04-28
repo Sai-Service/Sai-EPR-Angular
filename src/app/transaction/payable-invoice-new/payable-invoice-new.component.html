@@ -304,7 +304,7 @@
                                                                 <td>
                                                                     <!-- <input  type="text" class="form-control" formControlName="chassisNo"
                                                                         style="width: 100px;height: 25px;"> -->
-                                                                        <select formControlName="chassisNo" class="form-control"
+                                                                        <select formControlName="description" class="form-control"
                                                                         style="width: 100px;height: 25px;font-size: 10px;"  (change)="onSelectChassis($event,i)">
                                                                         <option>--Select--</option>
                                                                         <option *ngFor="let chassisList of  chassisNoList" [value]="chassisList.chassisNo">
@@ -313,7 +313,7 @@
                                                                     </select>
                                                                 </td>
                                                                 <td>
-                                                                    <input disabled type="number" class="form-control" formControlName="referenceNo"
+                                                                    <input disabled type="number" class="form-control" formControlName="voucherNum"
                                                                         style="width: 100px;height: 25px;">
                                                                 </td>
                                                                 <td>
@@ -526,11 +526,11 @@
                                                         <table>
                                                             <tr>
                                                                 <td>
-                                                                    <input disabled type="text" class="form-control" formControlName="chassisNo"
+                                                                    <input disabled type="text" class="form-control" formControlName="description"
                                                                         style="width: 100px;height: 25px;">
                                                                 </td>
                                                                 <td>
-                                                                    <input disabled type="number" class="form-control" formControlName="referenceNo"
+                                                                    <input disabled type="number" class="form-control" formControlName="voucherNum"
                                                                         style="width: 100px;height: 25px;">
                                                                 </td>
                                                                 <td>

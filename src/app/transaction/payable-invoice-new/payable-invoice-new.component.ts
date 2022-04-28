@@ -65,8 +65,9 @@ interface IpoInvoice {
 
   thresHoldHdrId: number;
   thresHoldTypeId: number;
-  chassisNo: string;
-  referenceNo: number;
+  // chassisNo: string;
+  // description:string;
+  voucherNum: number;
 }
 
 interface ISearch {
@@ -381,8 +382,8 @@ export class PayableInvoiceNewComponent implements OnInit {
 
 
   displaylineNumber = true;
-  chassisNo: string;
-  referenceNo: number;
+  // chassisNo: string;
+  voucherNum: number;
 
   constructor(private fb: FormBuilder, private router1: ActivatedRoute, private orderManagementService: OrderManagementService, private transactionService: TransactionService, private service: MasterService, private router: Router) {
     this.poInvoiceForm = fb.group({
@@ -549,8 +550,9 @@ export class PayableInvoiceNewComponent implements OnInit {
       segment1: [],
       name: ['', [Validators.required]],
       suppInvNo: [],
-      chassisNo: [''],
-      referenceNo: [],
+      // chassisNo: [''],
+      description:[],
+      voucherNum: [],
       suppId: [],
       suppInvDate: [],
       suppNo: [],
@@ -761,7 +763,7 @@ export class PayableInvoiceNewComponent implements OnInit {
       );
 
 
-    this.service.supplierCodeList()
+    this.service.supplierCodeListNew()
       .subscribe(
         data1 => {
           this.supplierCodeList = data1;
@@ -1710,7 +1712,7 @@ export class PayableInvoiceNewComponent implements OnInit {
     // alert(i+'-----'+ event.target.value);
     let select = this.chassisNoList.find(d => d.chassisNo === event.target.value);
     console.log(select);
-    this.lineDetailsArray().controls[i].patchValue({ referenceNo: select.referenceNo});
+    this.lineDetailsArray().controls[i].patchValue({ voucherNum: select.referenceNo});
   }
 
 
