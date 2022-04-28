@@ -171,6 +171,14 @@ export class ReportServiceService {
     });
   }
 
+  salesAgingReport(ouId,spInvAging1, spInvAging2, spInvAging3){
+    const REQUEST_URI = this.ServerUrl +`/SalesReports/VehSalesAging?ouId=${ouId}&age1=${spInvAging1}&age2=${spInvAging2}&age3=${spInvAging3}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
   spbackOrderQtyReport(invcDt1,invcDt4,locId,custNo,ordNo){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/SprBackOrder?fromDate=${invcDt1}&toDate=${invcDt4}&locId=${locId}&custNo=${custNo}&ordNo=${ordNo}`;
     return this.http.get(REQUEST_URI, {

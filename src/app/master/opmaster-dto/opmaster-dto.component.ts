@@ -976,8 +976,8 @@ export class OPMasterDtoComponent implements OnInit {
         data => {
           console.log(data);
           if (data.code === 400) {
-            alert(data.message)
-            window.location.reload();
+            alert(data.message+'--'+ data.obj)
+            // window.location.reload();
           } if (data.code === 200) {
             let control3 = this.poMasterDtoForm.get('poLines') as FormArray;
             var lenC = control3.length

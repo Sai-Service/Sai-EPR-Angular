@@ -80,6 +80,10 @@
                             <a class="dropdown-item" data-toggle="collapse" href="#panelfromtoloccustaccno" role="tab"
                                 (click)="reportDetails('subDealerRep')">SubDealer-Sales Register Report</a>
                         </li>
+                        <li>
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelSalesaggingReports" role="tab"
+                                (click)="reportDetails('salesaggingReports')">Sales Aging Report</a>
+                        </li>
                     </ul>
                 </li>
 
@@ -781,6 +785,102 @@
                     </table>
                 </td>
             </tr>
+        </table>
+
+
+        <table class="center" [style.display]="isVisibleSalesInventoryAging ? 'block' : 'none'" class="collapse"
+        style="margin-left: 10%;" id="panelSalesaggingReports">
+        <tr>
+            <td>
+                <table class="center">
+                    <tr>
+                        <td colspan="4" class="LabelFontStyle" style="width: 100%;">
+                            {{reportName}}
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table class="center">
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            &nbsp;Aging&nbsp;1&nbsp;:&nbsp;
+                        </td>
+                        <td>
+                            <input type="number" class="form-control"  formControlName="spInvAging1">
+                        </td>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            &nbsp;Aging&nbsp;2&nbsp;:&nbsp;
+                        </td>
+                        <td>
+                            <input type="number" class="form-control"  formControlName="spInvAging2">
+                        </td>
+                        <td>Aging&nbsp;3&nbsp;:&nbsp;</td>
+                        <td>
+                            <input type="number" class="form-control"  formControlName="spInvAging3">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            &nbsp;Location&nbsp;Code&nbsp;:&nbsp;
+                        </td>
+                        <td [style.display]="isVisiblelocationInput ? 'block' : 'none'">
+                            <input type="text" disabled class="form-control" formControlName="locCode">
+                        </td>
+                        <td [style.display]="isVisiblelocationLOV ? 'block' : 'none'">
+                            <select formControlName="locCode" id="locCode" class="form-control"
+                                (ngModelChange)='onOptionsLocation($event)'>
+                                <option>--Select--</option>
+                                <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
+                                    {{sc.locCode}}
+                                </option>
+                            </select>
+                            <input  disabled hidden type="number" class="form-control" formControlName="locId">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                          <table class="center">
+                            <tr>
+                              <td colspan="4">
+                                <table class="center" style="width: 100%;">
+                                  <tr>
+                                    <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                                    <ng-template #hList2>
+                                      <div class="d-flex justify-content-center">
+                                        <div class="spinner-border text-primary" role="status">
+                                          <span class="sr-only" id="loading"></span>
+                                        </div>
+                                      </div>
+                                    </ng-template>
+                                    <ng-template #hList1> </ng-template>
+                                    <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">
+                                      &nbsp;{{dataDisplay}}&nbsp; </td>
+                                  </tr>
+                                </table>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td colspan="4">
+                                  <table class="center" style="width: 100%;margin-left: 50%;">
+                                      <tr>
+                                        <td>
+                                            <button class="btn-primary" [disabled]="isDisabled1" (click)="reportParameter(reportName)">View
+                                              Report</button>
+                                          </td>
+                                         
+                                      </tr>
+                                  </table>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                </table>
+            </td>
+        </tr>
         </table>
 
     </fieldset>

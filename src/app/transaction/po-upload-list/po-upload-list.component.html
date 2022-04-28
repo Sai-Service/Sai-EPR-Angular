@@ -6,57 +6,91 @@
             </td>
         </tr>
     </table>
-    <!-- <br> -->
-   <!-- <div class="grid_scroll"> -->
-    <div class="col-md-12 table-responsive" #epltable>
-        <div style="padding-bottom: 10px;padding-top: 10px;">
-            <div class="row">
-                <div class="col-sm-12">
-                    <button (click)="exportToExcel()" class="btn btn-success" style="width: fit-content;">Export To Excel</button>
-                </div>
-            </div>
-        </div>
         <table class="center" style="width: 100%;background-color: #FFE4B5;">
             <tr>
                 <td>
                     <table class="center">
-                        <tr>
-
-                            <td>From&nbsp;Date&nbsp;</td>&nbsp;
-                            <td>
-                                <input type="date" class="form-control" formControlName="startDt" 
-                                value={{startDt}}  max="{{minDate | date:'yyyy-MM-dd'}}">
-                            </td>
-
-                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
-                            <td>
-                                <input type="date" class="form-control" formControlName="endDt" 
-                                value={{endDt}} max="{{minDate | date:'yyyy-MM-dd'}}">
+                        <tr [style.display]="isVisibledeptAndLocation ? 'block' : 'none'">
+                            <td style="width: 15%" class="LabelFontStyle">
+                                &nbsp;Location&nbsp;Code&nbsp;:&nbsp;
                             </td>
                             <td>
-                                <button type="submit" class="btn btn-primary" id="search" (click)="getPO()">
-                                    Get&nbsp;PO&nbsp;List
-                                </button>
+                                <select formControlName="locCode" id="locCode" class="form-control"
+                                (ngModelChange)='onOptionsLocation($event)'>
+                                <option>--Select--</option>
+                                <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
+                                    {{sc.locCode}}
+                                </option>
+                            </select>
+                            <input  disabled hidden type="number" class="form-control" formControlName="locId">
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle" >
+                                &nbsp;Department&nbsp;List&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                  <select formControlName="deptId" id="deptId" class="form-control">
+                                <option>--Select--</option>
+                                <option *ngFor="let sc of  DepartmentList" [value]="sc.cmnTypeId">
+                                    {{sc.code}}
+                                </option>
+                            </select>
                             </td>
                         </tr>
                         <tr>
-                            <div *ngIf="closeResetButton; then hList1; else hList2"></div>
-                            <ng-template #hList2> 
-                                <div class="d-flex justify-content-center">
-                                    <div class="spinner-border text-primary" role="status" >
-                                          <span class="sr-only" id="loading"></span>
-                                   
+                            <table>
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        &nbsp;From&nbsp;Date&nbsp;:&nbsp;
+                                    </td>
+                                    <td>
+                                        <input type="date" class="form-control" formControlName="startDt" 
+                                        value={{startDt}}  max="{{minDate | date:'yyyy-MM-dd'}}">
+                                    </td>
+        
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        &nbsp;To&nbsp;Date&nbsp;:&nbsp;
+                                    </td>
+                                    <td>
+                                        <input type="date" class="form-control" formControlName="endDt" 
+                                        value={{endDt}} max="{{minDate | date:'yyyy-MM-dd'}}">
+                                    </td>
+                                    <td>
+                                        <button type="submit" class="btn btn-primary" id="search" (click)="getPO()">
+                                            Get&nbsp;PO&nbsp;List
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </tr>
+                        <tr>
+                          <table>
+                              <tr>
+                                <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                                <ng-template #hList2> 
+                                    <div class="d-flex justify-content-center">
+                                        <div class="spinner-border text-primary" role="status" >
+                                              <span class="sr-only" id="loading"></span>
+                                       
+                                        </div>
                                     </div>
-                                </div>
-                          </ng-template>
-                          <ng-template #hList1> </ng-template>
-                           <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">&nbsp;{{dataDisplay }}&nbsp; </td>
+                              </ng-template>
+                              <ng-template #hList1> </ng-template>
+                               <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">&nbsp;{{dataDisplay }}&nbsp; </td>
+                              </tr>
+                          </table>
                         </tr>
                     </table>
                 </td>
             </tr>
         </table>
-        <br>
+        <div class="col-md-12 table-responsive" #epltable>
+            <div style="padding-bottom: 10px;padding-top: 10px;">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <button (click)="exportToExcel()" class="btn btn-success" style="width: fit-content;">Export To Excel</button>
+                    </div>
+                </div>
+            </div>
         <div class="grid_scroll">
         <table  class="GridFont"  style="border-color:#959595;border-collapse:collapse;width: 100%;">
             <tr class="GridHeader" style="font-size: 14px;">

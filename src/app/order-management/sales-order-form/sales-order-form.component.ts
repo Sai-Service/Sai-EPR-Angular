@@ -6,9 +6,10 @@ import { Validators, FormArray } from '@angular/forms';
 import { MasterService } from 'src/app/master/master.service';
 import { TransactionService } from 'src/app/transaction/transaction.service';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
-import { Location } from "@angular/common";
+import { Location,DatePipe } from "@angular/common";
 import { saveAs } from 'file-saver';
-import { SalesOrderobj } from './sales-orderobj'
+import { SalesOrderobj } from './sales-orderobj';
+
 
 const MIME_TYPES = {
   pdf: 'application/pdf',
@@ -368,6 +369,7 @@ export class SalesOrderFormComponent implements OnInit {
   isVisible5: boolean = false;
   isVisible6: boolean = false;
   isVisible7: boolean = false;
+  isVisibleAutoApplyInvoice:boolean=false;
   isVisibleform21: boolean = false;
   isVisiblemodelDetailsUpdate: boolean = false;
   isVisibleCSDDetails: boolean = false;
@@ -1685,6 +1687,7 @@ export class SalesOrderFormComponent implements OnInit {
                 if (this.lstgetOrderLineDetails[x].flowStatusCode === 'INVOICED' && data.obj.gatepassYN === 'N') {
                   this.isVisible7 = true;
                   this.isVisibleform21 = true;
+                  this.isVisibleAutoApplyInvoice=true;
                 }
                 if (this.lstgetOrderLineDetails[x].flowStatusCode === 'ALLOTED' && this.lstgetOrderLineDetails[x].invType === 'SS_VEHICLE') {
                   //  this.onOptionsSelectedDescription(this.lstgetOrderLineDetails[i].segment,i)
@@ -2714,6 +2717,25 @@ export class SalesOrderFormComponent implements OnInit {
           console.log(this.brokerList);
         }
       );
+  }
+
+  pipe = new DatePipe('en-US');
+  now = new Date();
+
+  autoApplyInvoice(){
+    // var currentDate= new Date();
+    var currentDate = this.pipe.transform(this.now, 'dd-MMM-yyyy');
+    alert(currentDate)
+    this.orderManagementService.autoApplyInvoiceFn(currentDate)
+    .subscribe((res: any) => {
+      if (res.code===200){
+        alert(res.message)
+      }
+      else if (res.code===400){
+        alert(res.message)
+      }
+    }
+  );
   }
 }
  
