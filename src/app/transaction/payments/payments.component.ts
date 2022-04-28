@@ -40,6 +40,7 @@ interface Ipayment {
   emplId:number;
   source:string;
   receiptMethodId:number;
+  refundStatus:string;
   // partyId:number;
   
 }
@@ -135,6 +136,7 @@ export class PaymentsComponent implements OnInit {
   emplId:number;
   private sub: any;
   receiptMethodId:number;
+  refundStatus:string;
   isarPayment:boolean=false;
   ispayAdvise:boolean=false;
   constructor(private fb: FormBuilder, private router1: ActivatedRoute, private transactionService: TransactionService, private location: Location, private service: MasterService, private router: Router) {
@@ -223,6 +225,7 @@ jeSource: [],
       payStatus: [],
       source:[],
       receiptMethodId:[],
+      refundStatus:[],
     });
   }
 
@@ -376,6 +379,7 @@ jeSource: [],
 
   selectedPayment: any;
   selreeceiptmethod:any;
+  selstatus:any;
   paymentdispSearch(docNo, i) {
 
     // alert(docNo);
@@ -383,15 +387,20 @@ jeSource: [],
     var arr = this.paymentForm.get('obj1').value;
     console.log(arr);
     var docNo1 = arr[i].docNo;
-    this.selreeceiptmethod=arr[i].receiptMethodId
+    this.selreeceiptmethod=arr[i].receiptMethodId;
+    this.selstatus=arr[i].refundStatus;
 
 
     this.transactionService.paymentDocSearch(docNo1).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
         this.PaymentReturnArr = res.obj;
-
+        if(this.selstatus=='Y'){
+          this.isarPayment=false;
+        }
+        else{
         this.isarPayment=true;
+        }
         this.ispayAdvise=true;
       } else {
         if (res.code === 400) {
@@ -882,7 +891,7 @@ console.log(jsonData);
       viewAcc(documentNo){
         // alert(documentNo)
         var docVal=this.paymentForm.get('obj').value;
-        var docNo=docVal[0].docNo
+        // var docNo=docVal[0].docNo
         this.service.viewAccountingApReceipt(documentNo).subscribe((res: any) => {
           if (res.code === 200) {
             this.viewAccountingApRcpt = res.obj;
