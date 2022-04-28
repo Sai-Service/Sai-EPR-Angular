@@ -5,6 +5,7 @@ import { MasterService } from 'src/app/master/master.service';
 import { ServiceService } from '../service.service';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 import { DatePipe } from '@angular/common';
+import { IFinanaceExchangeForm } from 'src/app/order-management/sales-order-form/sales-order-form.component';
 
 interface IjobCard {
 
@@ -721,16 +722,34 @@ export class JobCardComponent implements OnInit {
     return <FormArray>this.jobcardForm.get('jobCardLabLines')
   }
 
-  addTechRow(index) {
+  addTechRow(index,lbrIndex) {
+
+    var jobCardLabLinesControl = this.jobcardForm.get('jobCardLabLines').value;
+    var lineTotAmt = jobCardLabLinesControl[lbrIndex].basicAmt;
+    var splitControl = this.jobcardForm.get('splitAmounts').value;
+    var techTotAmt = 0;
+
+    for (let i = 0; i < this.splitDetailsArray().length; i++) {
+           techTotAmt = techTotAmt + splitControl[i].techAmt;
+     } 
+
+    //  alert ("Labor line ,amt :"+lbrIndex + ","+lineTotAmt + " tech line  ,techtotamt :" +index + ","+techTotAmt);
+
+     if(techTotAmt >=lineTotAmt) {
+       alert ("Labour Amount Fully alloted to Technicains....")
+       this.techLineValidation = false;return;
+      }
+
 
     var len1=this.splitDetailsArray().length-1
-    // alert ("index,len1 :" +index +","+len1);
     if(len1===index){
     this.TechSplitValidation(index);
     if(this.techLineValidation && this.techTotalValidation===false) {
     this.splitDetailsArray().push(this.splitDetailsGroup()); 
     }
    }}
+
+
   // RemoveTechRow(index) {
 
   //   this.splitDetailsArray().removeAt(index);
@@ -939,12 +958,12 @@ export class JobCardComponent implements OnInit {
     if (e.target.checked === true) {
       // alert('in true');
       this.splitFlag = 'Y'
-      this.displaySplit = false
+      this.displaySplit = true
     }
     if (e.target.checked === false) {
       // alert('in false');
       this.splitFlag = 'N'
-      this.displaySplit = true;;
+      this.displaySplit = false;;
     }
   }
 
@@ -2219,8 +2238,14 @@ export class JobCardComponent implements OnInit {
     this.title = a;
 
     // alert ("index :"+i);
-    this.splitDetailsArray().clear();
-    this.splitDetailsArray().push(this.splitDetailsGroup());
+
+    
+    var jStatus=this.jobcardForm.get('jobStatus').value;
+
+    // if(jStatus !='Opened') {
+      this.splitDetailsArray().clear();
+      this.splitDetailsArray().push(this.splitDetailsGroup());
+    // }
     
     var jobCardLabLinesControl = this.jobcardForm.get('jobCardLabLines').value;
     var lineTotAmt = jobCardLabLinesControl[i].basicAmt;
@@ -2250,7 +2275,42 @@ export class JobCardComponent implements OnInit {
     var splitControl = this.jobcardForm.get('splitAmounts').value;
     var techAmt =splitControl[t].techAmt;
     var len1=this.splitDetailsArray().length;
+    var techTotAmt = 0;var techBalAmt=0
+
+    for (let i = 0; i < this.splitDetailsArray().length; i++) {
+        // if(i != t) {
+          techTotAmt = techTotAmt + splitControl[i].techAmt;
+        // }
+    } 
+
+      // alert ("array length :"+len1);
+      // alert (" 1Line : " + i+" >> tech tot amt :"+techTotAmt  + "  , Linetotamt :"+lineTotAmt);
+
+      if (techTotAmt > lineTotAmt) { 
+        var excessAmt = techTotAmt-lineTotAmt
+        // alert ("excessAmt  :"+excessAmt);
+        var techLineAmt=techAmt-excessAmt;
+        // alert ("techLinAmt  :"+techLineAmt);
+        if(techLineAmt < 0) {techLineAmt=0}
+        patch.controls[t].patchValue({techAmt:techLineAmt  });
+      }
+
+    
+  }
+
+
+  validateTechAmtOld(t , i) {
+    var jobCardLabLinesControl = this.jobcardForm.get('jobCardLabLines').value;
+    var lineTotAmt = jobCardLabLinesControl[i].basicAmt;
+    var patch = this.jobcardForm.get('splitAmounts') as FormArray;
    
+    var splitControl = this.jobcardForm.get('splitAmounts').value;
+    var techAmt =splitControl[t].techAmt;
+    var len1=this.splitDetailsArray().length;
+
+   
+    // alert (" 1Line : " + i+" >> tech tot amt :"+techTotAmt  + "  , Linetotamt :"+lineTotAmt);
+
     if(techAmt > lineTotAmt || techAmt <=0 && len1===1) { 
       this.techTotalValidation=true;
        patch.controls[0].patchValue({ techAmt: lineTotAmt });
@@ -2262,6 +2322,9 @@ export class JobCardComponent implements OnInit {
     for (let i = 0; i < this.splitDetailsArray().length-1; i++) {
       techTotAmt = techTotAmt + splitControl[i].techAmt;
     } 
+
+      alert (" 2Line : " + i+" >> tech tot amt :"+techTotAmt  + "  , Linetotamt :"+lineTotAmt);
+
 
      techBalAmt=lineTotAmt-techTotAmt;
     if(techAmt>techBalAmt || techAmt <=0 || techAmt==null ||techAmt==undefined) {
@@ -2285,7 +2348,7 @@ export class JobCardComponent implements OnInit {
      var j = i + 1;
      
 
-     if (lineValue1 === undefined || lineValue1 === null)  {
+     if (lineValue1 === undefined || lineValue1 === null || lineValue1.trim()=='')  {
       this.techLineValidation = false;
       alert("Line-" + j +" TYPE: Should not be null....");
       return;
@@ -2317,12 +2380,12 @@ export class JobCardComponent implements OnInit {
     var lineTotAmt = jobCardLabLinesControl[content].basicAmt;
     var splitControl = this.jobcardForm.get('splitAmounts').value;
     var techTotAmt = 0;
-
-   
+    
     for (let i = 0; i < this.splitDetailsArray().length; i++) {
       techTotAmt = techTotAmt + splitControl[i].techAmt;
     }
 
+    // alert (" Line : " + content+" >> tech tot amt :"+techTotAmt  + "  , Linetotamt :"+lineTotAmt);
 
     if (techTotAmt == lineTotAmt) {
       this.splitArr = this.lineDetailsArray.value[0];
@@ -2341,6 +2404,7 @@ export class JobCardComponent implements OnInit {
       alert("Distribution amount mismatch")
     }
   }
+  
 
   clearlabLineFormArray() {
     this.splitDetailsArray().clear();

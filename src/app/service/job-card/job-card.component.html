@@ -1425,8 +1425,8 @@
                                                                                 </ng-template>
                                                                                 <ng-template #elseBlockSplit>
                                                                                     <button type="button"
-                                                                                        class="btn btn-primary"  data-toggle="modal" data-target="#myModel"
-                                                                                        class="form-control"   (click)="openCodeComb(i)"
+                                                                                        class="btn btn-primary"  
+                                                                                        class="form-control"   
                                                                                         style="width: min-content; text-align: center;"><i class="fa fa-plus"></i></button>
                                                                                             
                                                                                 </ng-template>
@@ -2738,13 +2738,13 @@
 
                                                                     <div *ngIf="saveLabButton; then ADT1; else ADT2"></div>
                                                                     <ng-template #ADT1>
-                                                                        <td> <button type="button" class="btn btn-primary"    (click)="addTechRow(j)"
+                                                                        <td> <button type="button" class="btn btn-primary"    (click)="addTechRow(j,content)"
                                                                                 (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i class="fa fa-plus"></i></button></td>
                                                                         <td> <button type="button" class="btn btn-primary"
                                                                                 (click)="RemoveTechRow(j)"   style="width: min-content;"><i class="fa fa-trash"></i></button></td>
                                                                     </ng-template>
                                                                     <ng-template #ADT2>
-                                                                        <td> <button disabled type="button" class="btn btn-primary"    (click)="addTechRow(j)"
+                                                                        <td> <button disabled type="button" class="btn btn-primary"    (click)="addTechRow(j,content)"
                                                                                 (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i class="fa fa-plus"></i></button></td>
                                                                         <td> <button disabled type="button" class="btn btn-primary"
                                                                                 (click)="RemoveTechRow(j)"   style="width: min-content;"><i class="fa fa-trash"></i></button></td>
