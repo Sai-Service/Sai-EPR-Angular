@@ -529,7 +529,7 @@ export class OPMasterDtoComponent implements OnInit {
     //   );
 
 
-    this.service.supplierCodeList()
+    this.service.supplierCodeListNew()
       .subscribe(
         data1 => {
           this.supplierCodeList = data1;
@@ -537,6 +537,7 @@ export class OPMasterDtoComponent implements OnInit {
           data1 = this.supplierCodeList;
         }
       );
+
     this.service.poTypeList()
       .subscribe(
         data => {
@@ -1502,7 +1503,6 @@ export class OPMasterDtoComponent implements OnInit {
         this.service.suppIdList(selectedValue.suppId, this.ouId)
           .subscribe(
             data => {
-
               this.suppIdList = data;
               if (this.suppIdList.length == 0) {
                 alert('Supplier site not attached to supplier');

@@ -325,7 +325,7 @@ assetAddition(AssetAdditionForm:any){}
         this.emplList=data;
       }
     )
-    this.service.supplierCodeList().subscribe(
+    this.service.supplierCodeListNew().subscribe(
       data=>{
         this.suppList=data;
       }
