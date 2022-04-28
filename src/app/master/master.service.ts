@@ -219,6 +219,10 @@ export class MasterService {
     return this.http.get(this.ServerUrl +'/supp/typewiseDet/Supplier');
   }
 
+  supplierCodeWithEmplListNew(): Observable<any> {
+    return this.http.get(this.ServerUrl +'/supp/getAllSupp');
+  }
+
   pricelIstListFn(ouId): Observable<any> {
     return this.http.get(this.ServerUrl +`/pricelist/NDPPrc?ouId=${ouId}`);
   }
