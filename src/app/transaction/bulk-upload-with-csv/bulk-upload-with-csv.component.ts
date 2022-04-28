@@ -132,7 +132,7 @@ export class BulkUploadWithCsvComponent implements OnInit {
       this.displayParamter = false; 
     }
 
-    this.service.supplierCodeList()
+    this.service.supplierCodeListNew()
       .subscribe(
         data1 => {
           this.supplierCodeList = data1;

@@ -756,7 +756,7 @@ export class WsVehicleMasterComponent implements OnInit {
           this.lstcomments = data.obj;
 
           if (data.code === 400) {
-            alert("Registration No : [ " + mReg + " ] not Found...");
+            alert("Registration No : [ " + mReg + " ] not Found...\n"+data.message);
             this.displayButton = true;
             this.showCreateCustButton = true;
             this.showCreateItemButton = true;
@@ -800,7 +800,7 @@ export class WsVehicleMasterComponent implements OnInit {
           this.lstcomments = data.obj;
 
           if (data.code === 400) {
-            alert("Model+Chassis : " + mdl + " +" +chas + "not Found...");
+            alert("Model+Chassis : " + mdl + " +" +chas + " not Found...");
             this.displayButton = true;
             this.showCreateCustButton = true;
             this.showCreateItemButton = true;
@@ -1295,10 +1295,13 @@ export class WsVehicleMasterComponent implements OnInit {
 
   CheckDataValidations() {
 
+    // alert ("in validation...");
+
     const formValue: IWsVehicleMaster = this.wsVehicleMasterForm.value;
 
     this.wsVehicleMasterForm.patchValue({regNo :formValue.regNo.trim()});
     this.wsVehicleMasterForm.patchValue({vin :formValue.vin.trim()});
+    // alert ("regno:"+formValue.regNo);
 
     if (formValue.regNo === undefined || formValue.regNo === null || formValue.regNo.trim() === '' || formValue.regNo.length <9 || formValue.regNo.length>10) {
       this.checkValidation = false;

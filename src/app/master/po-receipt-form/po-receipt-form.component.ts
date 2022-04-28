@@ -460,7 +460,7 @@ export class PoReceiptFormComponent implements OnInit {
                   (controlinv.controls[j]).patchValue({
                     totAmount:data.obj.poLines[j].totAmount.toFixed(2),
                     unitPrice:data.obj.poLines[j].unitPrice.toFixed(2),
-                    baseAmount:data.obj.poLines[j].totAmount.toFixed(2),
+                    baseAmount:data.obj.poLines[j].baseAmount.toFixed(2),
                     sgstAmt:data.obj.poLines[j].sgstAmt.toFixed(2),
                     cgstAmt:data.obj.poLines[j].cgstAmt.toFixed(2),
                     igstAmt:data.obj.poLines[j].igstAmt.toFixed(2),
@@ -516,7 +516,7 @@ export class PoReceiptFormComponent implements OnInit {
                       poLineId: data.obj.poLines[j].poLineId,
                       totAmount:data.obj.poLines[j].totAmount.toFixed(2),
                       unitPrice:data.obj.poLines[j].unitPrice.toFixed(2),
-                      baseAmount:data.obj.poLines[j].totAmount.toFixed(2),
+                      baseAmount:data.obj.poLines[j].baseAmount.toFixed(2),
                       sgstAmt:data.obj.poLines[j].sgstAmt.toFixed(2),
                       cgstAmt:data.obj.poLines[j].cgstAmt.toFixed(2),
                       igstAmt:data.obj.poLines[j].igstAmt.toFixed(2),
@@ -631,7 +631,7 @@ export class PoReceiptFormComponent implements OnInit {
               (controlinv.controls[j]).patchValue({
                 totAmount:data.obj.rcvLines[j].totAmount.toFixed(2),
                 unitPrice:data.obj.rcvLines[j].unitPrice.toFixed(2),
-                baseAmount:data.obj.rcvLines[j].totAmount.toFixed(2),
+                baseAmount:data.obj.rcvLines[j].baseAmount.toFixed(2),
                 sgstAmt:data.obj.rcvLines[j].sgstAmt.toFixed(2),
                 cgstAmt:data.obj.rcvLines[j].cgstAmt.toFixed(2),
                 igstAmt:data.obj.rcvLines[j].igstAmt.toFixed(2),
@@ -820,7 +820,7 @@ export class PoReceiptFormComponent implements OnInit {
                 (control.controls[j]).patchValue({
                   totAmount:data.obj.poLines[j].totAmount.toFixed(2),
                   unitPrice:data.obj.poLines[j].unitPrice.toFixed(2),
-                  baseAmount:data.obj.poLines[j].totAmount.toFixed(2),
+                  baseAmount:data.obj.poLines[j].baseAmount.toFixed(2),
                   sgstAmt:data.obj.poLines[j].sgstAmt.toFixed(2),
                   cgstAmt:data.obj.poLines[j].cgstAmt.toFixed(2),
                   igstAmt:data.obj.poLines[j].igstAmt.toFixed(2),

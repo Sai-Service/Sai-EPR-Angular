@@ -43,7 +43,7 @@
                                         <th scope="col">Tax Amount</th>
                                         <th scope="col">GL Date</th>
                                         <th scope="col">Payment Currency</th>
-                                        <th scope="col">Payment Rate Date</th>
+                                        <th scope="col" hidden>Payment Rate Date</th>
                                         <th scope="col">Distribution Set</th>
                                         <th scope="col">Terms Date</th>
                                         <th scope="col">Terms</th>
@@ -65,8 +65,8 @@
                                                     </th>
                                                 </tr>
                                                 <tr>
-                                                    <th scope="col" style="width: 100px;height: 25px;">Type Name</th>
-                                                    <th scope="col" style="width: 100px;height: 25px;">Invoice No</th>
+                                                    <th scope="col" style="width: 100px;height: 25px;">Chassis No</th>
+                                                    <th scope="col" style="width: 100px;height: 25px;">Order No</th>
                                                     <th scope="col" style="width: 100px;height: 25px;">Description</th>
                                                 </tr>
                                             </table>
@@ -75,7 +75,7 @@
                                 </thead>
                                 <tbody>
                                     <ng-container class="center" formArrayName="obj">
-                                        <ng-container *ngFor="let group of lineDetailsArray().controls; let i= index"
+                                        <ng-container *ngFor="let group of lineDetailsArray().controls; let i= index "
                                             [formGroupName]="i" class="auto-style5">
                                             <div *ngIf="displayHeaderData; then thenHeaderData; else elseHeaderData">
                                             </div>
@@ -195,16 +195,16 @@
                                                         <!-- <input disabled type="text" class="form-control" formControlName="glDate"
                                                             value={{glDate}}
                                                             style="width: 90px;height: 25px;font-size: 10px;"> -->
-                                                        <input type="text" disabled formControlName="glDate"
+                                                        <input type="date"  formControlName="glDate"
                                                             value={{glDate}} class="form-control" [(ngModel)]='glDate'
-                                                            style="width: 130px;height: 25px;font-size: 10px;">
+                                                            style="width: 130px;height: 25px;font-size: 10px;background-color: yellow;">
                                                     </td>
                                                     <td>
                                                         <input class="form-control" formControlName="currency"
                                                             value={{currency}}
                                                             style="width: 60px;height: 25px;font-size: 10px;">
                                                     </td>
-                                                    <td>
+                                                    <td hidden>
                                                         <input type="date" class="form-control"
                                                             formControlName="paymentRateDate" value={{paymentRateDate}}
                                                             style="width: 120px;height: 25px;font-size: 10px;">
@@ -254,13 +254,18 @@
                                                    
                                                     <td>
 
-                                                        <select formControlName="prepayType" class="form-control"
+                                                        <!-- <select formControlName="prepayType" class="form-control"
                                                             style="width: 120px;height: 25px;font-size: 10px;">
                                                             <option>--Select--</option>
                                                             <option *ngFor="let sc of  prepayTypeList"
                                                                 [ngValue]="sc.prepayType">
                                                                 {{sc.locCode}}
                                                             </option>
+                                                        </select> -->
+                                                        <select formControlName="prepayType" class="form-control"
+                                                            style="width: 120px;height: 25px;font-size: 10px;">
+                                                            <option value="Permanent">Permanent</option>
+                                                            <option value="Temporary">Temporary</option>
                                                         </select>
                                                     </td>
                                                     <td>
@@ -304,8 +309,8 @@
                                                                 <td>
                                                                     <!-- <input  type="text" class="form-control" formControlName="chassisNo"
                                                                         style="width: 100px;height: 25px;"> -->
-                                                                        <select formControlName="chassisNo" class="form-control"
-                                                                        style="width: 120px;height: 25px;font-size: 10px;"  (change)="onSelectChassis($event,i)">
+                                                                        <select formControlName="description" class="form-control"
+                                                                        style="width: 100px;height: 25px;font-size: 10px;"  (change)="onSelectChassis($event,i)">
                                                                         <option>--Select--</option>
                                                                         <option *ngFor="let chassisList of  chassisNoList" [value]="chassisList.chassisNo">
                                                                             {{chassisList.chassisNo}}
@@ -313,7 +318,7 @@
                                                                     </select>
                                                                 </td>
                                                                 <td>
-                                                                    <input disabled type="number" class="form-control" formControlName="referenceNo"
+                                                                    <input disabled type="number" class="form-control" formControlName="voucherNum"
                                                                         style="width: 100px;height: 25px;">
                                                                 </td>
                                                                 <td>
@@ -419,7 +424,7 @@
                                                             value={{currency}}
                                                             style="width: 60px;height: 25px;font-size: 10px;">
                                                     </td>
-                                                    <td>
+                                                    <td hidden>
 
                                                         <input type="date" disabled class="form-control"
                                                             formControlName="paymentRateDate" value={{paymentRateDate}}
@@ -526,11 +531,11 @@
                                                         <table>
                                                             <tr>
                                                                 <td>
-                                                                    <input disabled type="text" class="form-control" formControlName="chassisNo"
+                                                                    <input disabled type="text" class="form-control" formControlName="description"
                                                                         style="width: 100px;height: 25px;">
                                                                 </td>
                                                                 <td>
-                                                                    <input disabled type="number" class="form-control" formControlName="referenceNo"
+                                                                    <input disabled type="number" class="form-control" formControlName="voucherNum"
                                                                         style="width: 100px;height: 25px;">
                                                                 </td>
                                                                 <td>

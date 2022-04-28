@@ -789,7 +789,7 @@ docSeqValue:number;
       );
 
 
-    this.service.supplierCodeList()
+    this.service.supplierCodeListNew()
       .subscribe(
         data1 => {
           this.supplierCodeList = data1;

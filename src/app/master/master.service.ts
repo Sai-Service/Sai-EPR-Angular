@@ -145,6 +145,10 @@ export class MasterService {
   DepartmentListNew(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/CmnType/Dept');
   }
+  DepartmentListNew1(divisionId): Observable<any> {
+    return this.http.get(this.ServerUrl +`/subInvMst/subInv/${divisionId}`);
+  }
+
   empIdListFn(): Observable<any> {
     return this.http.get(this.ServerUrl +'/empMst/All');
   }
@@ -208,6 +212,15 @@ export class MasterService {
   }
   supplierCodeList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/supp');
+  }
+
+
+  supplierCodeListNew(): Observable<any> {
+    return this.http.get(this.ServerUrl +'/supp/typewiseDet/Supplier');
+  }
+
+  supplierCodeWithEmplListNew(): Observable<any> {
+    return this.http.get(this.ServerUrl +'/supp/getAllSupp');
   }
 
   pricelIstListFn(ouId): Observable<any> {
@@ -473,6 +486,11 @@ public LocationMasterSubmit(LocationMasterRecord) {
 getLocationSearch1(ouId): Observable<any> {
   return this.http.get(this.ServerUrl + `/locationMst/locListOuwise/${ouId}`);
 }
+
+accountNameList(): Observable<any> {
+  return this.http.get(this.ServerUrl + `/receiptMethod/rcptMethod`);
+}
+
 getLocationSearch(): Observable<any> {
   return this.http.get(this.ServerUrl + '/locationMst');
 }
@@ -2811,6 +2829,9 @@ formData.append('location', locCode);
     return this.http.get(this.ServerUrl + `/poHdr/byDate?userId=${emplId}&startDt=${startDt}&endDt=${endDt}&locId=${locId}`)
   }
 
+  getPOByUserAccc(deptId, startDt, endDt,locId){
+    return this.http.get(this.ServerUrl + `/poHdr/Acc/byDate?deptId=${deptId}&startDt=${startDt}&endDt=${endDt}&locId=${locId}`)
+  }
 
   getOrderByUser(locId, startDt, endDt,deptId){
     return this.http.get(this.ServerUrl + `/orderHeader/getByDate?locId=${locId}&startDt=${startDt}&endDt=${endDt}&dept=${deptId}`)

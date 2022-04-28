@@ -529,7 +529,7 @@ export class OPMasterDtoComponent implements OnInit {
     //   );
 
 
-    this.service.supplierCodeList()
+    this.service.supplierCodeListNew()
       .subscribe(
         data1 => {
           this.supplierCodeList = data1;
@@ -537,6 +537,7 @@ export class OPMasterDtoComponent implements OnInit {
           data1 = this.supplierCodeList;
         }
       );
+
     this.service.poTypeList()
       .subscribe(
         data => {
@@ -976,8 +977,8 @@ export class OPMasterDtoComponent implements OnInit {
         data => {
           console.log(data);
           if (data.code === 400) {
-            alert(data.message)
-            window.location.reload();
+            alert(data.message+'--'+ data.obj)
+            // window.location.reload();
           } if (data.code === 200) {
             let control3 = this.poMasterDtoForm.get('poLines') as FormArray;
             var lenC = control3.length
@@ -1502,7 +1503,6 @@ export class OPMasterDtoComponent implements OnInit {
         this.service.suppIdList(selectedValue.suppId, this.ouId)
           .subscribe(
             data => {
-
               this.suppIdList = data;
               if (this.suppIdList.length == 0) {
                 alert('Supplier site not attached to supplier');

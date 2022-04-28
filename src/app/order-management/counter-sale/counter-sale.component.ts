@@ -1450,15 +1450,15 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
               this.displaywalkingCustomer = false;
               this.CounterSaleOrderBookingForm.patchValue({ discType: 'Header Level Discount' });
               this.displaydisPer = false;
-              this.CounterSaleOrderBookingForm.patchValue({transactionTypeName:'Spares Sale - Cash'});
+              let select = this.orderTypeList.find(d => d.transactionTypeName.includes('Cash'));
+               this.CounterSaleOrderBookingForm.patchValue({transactionTypeName:select.transactionTypeName});
               this.CounterSaleOrderBookingForm.patchValue({createOrderType:'Direct Invoice'});
               this.CounterSaleOrderBookingForm.get('transactionTypeName').disable();
               this.CounterSaleOrderBookingForm.get('createOrderType').disable();
             }
             else {
               this.CounterSaleOrderBookingForm.get('disPer').disable();
-            }
-            
+            }  
             if (data.obj.tcsYM === 'Y') {
               this.displaytcsYN = false;
               this.displaytcsBuuton = true;
@@ -3118,7 +3118,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
 
   onOptionsSelectedTransactionType(transactionTypeName: string) {
-    // alert(transactionTypeName)
+    //  alert(transactionTypeName)
     if (transactionTypeName != undefined) {
       // alert(transactionTypeName)'
       // alert(this.op)
@@ -3129,7 +3129,9 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
         }
       }
       this.displayCSOrderAndLineDt = false;
-      // alert(this.transactionTypeName);
+      console.log(this.orderTypeList);
+      
+      alert(this.transactionTypeName);
       let select = this.orderTypeList.find(d => d.transactionTypeName === this.transactionTypeName);
       console.log(select);
       // alert(select.transactionTypeId)
