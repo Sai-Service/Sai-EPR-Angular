@@ -2716,17 +2716,18 @@
                                                                 *ngFor="let matDetails of splitDetailsArray().controls; let j= index"
                                                                 [formGroupName]="j">
 
+                                                                <div *ngIf="saveLabButton; then ADT1; else ADT2"></div>
+                                                                <ng-template #ADT1>
+
                                                                 <tr>
                                                                     <input  hidden disabled type="number" min="0"  formControlName="lineBasicAmt"  class="form-control">
-                                                                    <td>
-                                                                        <select class="form-control"
+                                                                    <td><select class="form-control"
                                                                             formControlName="type">
                                                                             <option value="Technician">Technician</option>
                                                                             <option value="Contractor">Contractor</option>
                                                                         </select>
                                                                     </td>
-                                                                    <td> 
-                                                                        <select formControlName="techId" id="techId"  class="form-control">
+                                                                    <td><select formControlName="techId" id="techId"  class="form-control">
                                                                             <option>--Select--</option>
                                                                             <option *ngFor="let sc of  TechnicianList" [ngValue]="sc.teamId">
                                                                                 {{sc.teamId}}-{{sc.description}}
@@ -2736,22 +2737,37 @@
                                                                   
                                                                     <td> <input type="number" min="0"  formControlName="techAmt" (change) = "validateTechAmt(j,content)" class="form-control">  </td>
 
-                                                                    <div *ngIf="saveLabButton; then ADT1; else ADT2"></div>
-                                                                    <ng-template #ADT1>
-                                                                        <td> <button type="button" class="btn btn-primary"    (click)="addTechRow(j,content)"
-                                                                                (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i class="fa fa-plus"></i></button></td>
-                                                                        <td> <button type="button" class="btn btn-primary"
-                                                                                (click)="RemoveTechRow(j)"   style="width: min-content;"><i class="fa fa-trash"></i></button></td>
-                                                                    </ng-template>
-                                                                    <ng-template #ADT2>
-                                                                        <td> <button disabled type="button" class="btn btn-primary"    (click)="addTechRow(j,content)"
-                                                                                (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i class="fa fa-plus"></i></button></td>
-                                                                        <td> <button disabled type="button" class="btn btn-primary"
-                                                                                (click)="RemoveTechRow(j)"   style="width: min-content;"><i class="fa fa-trash"></i></button></td>
-                                                                    </ng-template>
+                                                                    <td> <button type="button" class="btn btn-primary"    (click)="addTechRow(j,content)"
+                                                                            (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i class="fa fa-plus"></i></button></td>
+                                                                    <td> <button type="button" class="btn btn-primary"
+                                                                            (click)="RemoveTechRow(j)"   style="width: min-content;"><i class="fa fa-trash"></i></button></td>
+                                                                   </tr>
 
-                                                                    </tr>
-                                                             
+                                                                </ng-template>
+                                                                <ng-template #ADT2>
+                                                                <tr>
+                                                                    <input  hidden disabled type="number" min="0"  formControlName="lineBasicAmt"  class="form-control">
+                                                                    <td><select disabled class="form-control"   formControlName="type">
+                                                                            <option value="Technician">Technician</option>
+                                                                            <option value="Contractor">Contractor</option>
+                                                                        </select>
+                                                                    </td>
+                                                                    <td><select disabled formControlName="techId" id="techId"  class="form-control">
+                                                                            <option>--Select--</option>
+                                                                            <option *ngFor="let sc of  TechnicianList" [ngValue]="sc.teamId">
+                                                                                {{sc.teamId}}-{{sc.description}}
+                                                                            </option>
+                                                                        </select>
+                                                                    </td>
+                                                                  
+                                                                    <td> <input disabled type="number" min="0"  formControlName="techAmt" (change) = "validateTechAmt(j,content)" class="form-control">  </td>
+
+                                                                    <td> <button disabled  type="button" class="btn btn-primary"    (click)="addTechRow(j,content)"
+                                                                            (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i class="fa fa-plus"></i></button></td>
+                                                                    <td> <button disabled type="button" class="btn btn-primary"
+                                                                            (click)="RemoveTechRow(j)"   style="width: min-content;"><i class="fa fa-trash"></i></button></td>
+                                                                </tr>
+                                                                </ng-template>
                                                             </ng-container>
                                                         </ng-container>
                                                     </tbody>
