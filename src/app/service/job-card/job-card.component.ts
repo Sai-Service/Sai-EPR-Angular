@@ -1565,6 +1565,7 @@ export class JobCardComponent implements OnInit {
           // this.jobcardForm.patchValue({jcType :  this.lstcomments.jcType});
           this.jobcardForm.get('regNo').disable();
           this.jobcardForm.get('jcType').disable();
+          
         
           this.jobcardForm.patchValue({regNo : data.obj.regNo});
           // var promdate= this.pipe.transform(data.obj.promiseDate,  'yyyy-MM-ddThh:mm');
@@ -1626,6 +1627,8 @@ export class JobCardComponent implements OnInit {
             this.jobcardForm.disable();
             this.jobcardForm.get('jobCardLabLines').disable();
             this.jobcardForm.get('jobCardMatLines').disable();
+            this.jobcardForm.get('splitAmounts').disable();
+            
           }
          
          
@@ -1635,6 +1638,7 @@ export class JobCardComponent implements OnInit {
             this.jobcardForm.disable();
             this.jobcardForm.get('jobCardLabLines').disable();
             this.jobcardForm.get('jobCardMatLines').disable();
+            this.jobcardForm.get('splitAmounts').disable();
             this.displaybilling = false;
             this.dispButtonStatus = false;
             this.dispReadyInvoice = false;
@@ -1656,6 +1660,7 @@ export class JobCardComponent implements OnInit {
         
             this.jobcardForm.get('jobCardLabLines').disable();
             this.jobcardForm.get('jobCardMatLines').disable();
+            this.jobcardForm.get('splitAmounts').disable();
             this.displaybilling = false;
             this.dispButtonStatus = false;
             this.dispReadyInvoice = false;
@@ -2237,19 +2242,26 @@ export class JobCardComponent implements OnInit {
     let a = i + 1
     this.title = a;
 
-    // alert ("index :"+i);
+      
+      // var len2=this.lstcomments.jobCardLabLines[i].splitArr.length
+// +     alert ("index :"+i );
 
-    
-    var jStatus=this.jobcardForm.get('jobStatus').value;
-
-    // if(jStatus !='Opened') {
       this.splitDetailsArray().clear();
       this.splitDetailsArray().push(this.splitDetailsGroup());
-    // }
+  
+      var jobCardLabLinesControl = this.jobcardForm.get('jobCardLabLines').value;
+      var lineTotAmt = jobCardLabLinesControl[i].basicAmt;
+      this.lineBasicAmt=lineTotAmt;
+
+      // var len1=this.splitDetailsArray().length;
+      // var len2=this.lstcomments.jobCardLabLines[i].splitArr.length
+      // alert ("splitDetailsArray().length :"+len1 + " ,this.lstcomments.jobCardLabLines[i].splitArr.length :" + len2);
     
-    var jobCardLabLinesControl = this.jobcardForm.get('jobCardLabLines').value;
-    var lineTotAmt = jobCardLabLinesControl[i].basicAmt;
-    this.lineBasicAmt=lineTotAmt;
+      // if (len2==0){
+      // var techId1=this.jobcardForm.get('techId').value;
+      // var patch = this.jobcardForm.get('splitAmounts') as FormArray;
+      // patch.controls[0].patchValue({ type: 'Technician' , techId: techId1, techAmt :lineTotAmt })
+      // }
 
     for (let j = 0; j < this.lstcomments.jobCardLabLines[i].splitArr.length-1 ; j++) {
           var payInvGrp1: FormGroup = this.splitDetailsGroup();
@@ -2266,6 +2278,7 @@ export class JobCardComponent implements OnInit {
        (splitLinesArr.controls[j]).patchValue({ type: tschType, techId: tblDetails[j].techId,techAmt: tblDetails[j].techAmt,});
       }
     }
+
 
   validateTechAmt(t , i) {
     var jobCardLabLinesControl = this.jobcardForm.get('jobCardLabLines').value;
