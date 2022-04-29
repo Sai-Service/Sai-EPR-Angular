@@ -662,7 +662,11 @@ export class SupplierMasterComponent implements OnInit {
     });
   }
   UpdateSitesupplierMastExeSite() {
-    const formValue: IsupplierMaster = this.transDataforS(this.supplierMasterForm.value);
+    const formValue: IsupplierMaster = this.transDataforS(this.supplierMasterForm.getRawValue());
+    // alert(this.sacctsPayCodeCombId);
+    // debugger;
+    formValue.sacctsPayCodeCombId=this.supplierMasterForm.get('sacctsPayCodeCombId').value;
+    formValue.sprepayCodeCombId=this.supplierMasterForm.get('sprepayCodeCombId').value;
     this.service.UpdateSiteSupliMasterById(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD UPDATED SUCCESSFULLY');
@@ -937,6 +941,7 @@ export class SupplierMasterComponent implements OnInit {
       this.smobile2 = select.mobile2
       // this.spanNo=select.panNo
       this.taxCategoryName = select.taxCategoryDesc
+      
       this.supplierMasterForm.patchValue({sGstNo:select.gstNo,
                                           spanNo:select.panNo,
                                           sstate:select.state1,
@@ -946,9 +951,11 @@ export class SupplierMasterComponent implements OnInit {
                                           siteName:select.siteName,
                                           sliabilityAcct:select.attribute2,
                                           sprePayAcct:select.attribute1,
+                                          sacctsPayCodeCombId:select.acctsPayCodeCombId,
+                                          sprepayCodeCombId:select.prepayCodeCombId,
                                           screateDebitMemoFlag:select.createDebitMemoFlag});
       // ticketNo not in  json
-
+      alert("---"+select.prepayCodeCombId);
       // this.displayButton = false;
       // this.displaysite=true;
       // this

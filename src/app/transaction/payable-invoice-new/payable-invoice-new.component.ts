@@ -215,7 +215,8 @@ export class PayableInvoiceNewComponent implements OnInit {
   // now = Date.now();
   // glDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
 
-  glDate = this.pipe.transform(this.now, 'dd-MMM-yyyy');
+  // glDate = this.pipe.transform(this.now, 'dd-MMM-yyyy');
+  glDate:Date;
   accountingDate = this.pipe.transform(this.now, 'dd-MMM-yyyy');
   // paymentMethod = 'CHEQUE';
 
@@ -2143,6 +2144,8 @@ export class PayableInvoiceNewComponent implements OnInit {
     jsonData.currency = 'INR';
     var taxStr = [];
     var distributionArray = this.poInvoiceForm.get('distribution').value;
+    var invLinesArray1 = this.poInvoiceForm.get('obj') as FormArray;
+    var invLinesArray=invLinesArray1.getRawValue();
     // var distributionArray = distribution.getRawValue();
     for (let d = 0; d < distributionArray.length; d++) {
       if (distributionArray[d].lineTypeLookupCode === 'OTHER') {
@@ -2152,7 +2155,28 @@ export class PayableInvoiceNewComponent implements OnInit {
         }
       }
     }
-
+    for (let i=0; i<invLinesArray.length;i++){
+      // alert(invLinesArray[i].glDate +'----'+invLinesArray[i].name);
+      if (invLinesArray[i].glDate===undefined){
+        alert('Please Select GL Date.!');
+        return;
+      }
+      let selectedValue = this.supplierCodeList.find(v => v.suppNo == invLinesArray[i].name);
+      var SuppName=selectedValue.name;
+      // alert(SuppName);
+      if (SuppName.includes('RTO')){
+        if(invLinesArray[i].description === undefined || invLinesArray[i].description===''|| invLinesArray[i].description===null){
+          alert('Your Selected Supplier is RTO. Please Select Chassis No & Order Number.!');
+          return;
+        }
+      }
+      if (SuppName.includes('INSUARNCE')){
+        if(invLinesArray[i].description === undefined || invLinesArray[i].description===''|| invLinesArray[i].description===null){
+          alert('Your Selected Supplier is Insuarnce. Please Select Chassis No & Order Number.!');
+          return;
+        }
+      }
+    }
     for (let taxlinval of this.taxarr.values()) {
       for (let i = 0; i < taxlinval.length; i++) {
         taxStr.push(taxlinval[i]);

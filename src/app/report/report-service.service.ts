@@ -28,8 +28,8 @@ export class ReportServiceService {
     });
   }
 
-  stockMadeDetailsReport(fromDate, toDate,locId,tolocId,subInvCode){
-    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprStkTrfMade?fromDate=${fromDate}&toDate=${toDate}&fromLoc=${locId}&toLoc=${tolocId}&subInvCode=${subInvCode}`;
+  stockMadeDetailsReport(fromDate, toDate,locId,tolocId,subInvCode,deptId){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprStkTrfMade?fromDate=${fromDate}&toDate=${toDate}&fromLoc=${locId}&toLoc=${tolocId}&subInvCode=${subInvCode}&deptId=${deptId}`;
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
