@@ -710,9 +710,9 @@ copyGl()
     reverseGl()
 {
     // alert("Hello");
-    const formValue:IJournalVoucher=this.JournalVoucherForm.value;
+    const formValue:IJournalVoucher=this.JournalVoucherForm.getRawValue();
     var stat=this.JournalVoucherForm.get('status').value;
-    if(stat="POST")
+    if(stat=="POST")
     {
     this.service.glReverse(formValue).subscribe((res:any)=>{
       if(res.code===200)
