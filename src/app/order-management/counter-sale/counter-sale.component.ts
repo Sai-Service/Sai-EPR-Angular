@@ -1,21 +1,16 @@
 import { Component, OnInit, HostListener, ViewChild, ElementRef, NgModule, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, FormControlName, NgForm, Validators, FormArray, FormsModule } from '@angular/forms';
-
 import { Url } from 'url';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { MasterService } from 'src/app/master/master.service';
 import { TransactionService } from 'src/app/transaction/transaction.service';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
-import { data, event } from 'jquery';
 import { SalesOrderobj } from 'src/app/order-management/sales-order-form/sales-orderobj'
 import { DatePipe, Location } from '@angular/common';
 import { escapeRegExp } from '@angular/compiler/src/util';
 import { saveAs } from 'file-saver';
-import { SelectorMatcher } from '@angular/compiler';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { v4 as uuidv4 } from 'uuid';
-import { enableDebugTools } from '@angular/platform-browser';
-import { ReturnToVendorComponent } from 'src/app/transaction/return-to-vendor/return-to-vendor.component';
+
 
 
 
@@ -1452,6 +1447,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
               this.displaydisPer = false;
               let select = this.orderTypeList.find(d => d.transactionTypeName.includes('Cash'));
                this.CounterSaleOrderBookingForm.patchValue({transactionTypeName:select.transactionTypeName});
+               this.CounterSaleOrderBookingForm.patchValue({walkCustPan:'Applied For'});
               this.CounterSaleOrderBookingForm.patchValue({createOrderType:'Direct Invoice'});
               this.CounterSaleOrderBookingForm.get('transactionTypeName').disable();
               this.CounterSaleOrderBookingForm.get('createOrderType').disable();
@@ -1594,19 +1590,37 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
             }
           })
     }
+    var custName = this.CounterSaleOrderBookingForm.get('custName').value;
+    // debugger;
+    if (custName.includes(('CSCASH')) && Number(sessionStorage.getItem('divisionId')) === 2) {
+      this.displaywalkingCustomer = false;
+      this.CounterSaleOrderBookingForm.patchValue({ discType: 'Header Level Discount' });
+      this.displaydisPer = false;
+      let select = this.orderTypeList.find(d => d.transactionTypeName.includes('Cash'));
+      console.log(this.createOrderTypeList);
+       this.CounterSaleOrderBookingForm.patchValue({transactionTypeName:select.transactionTypeName});
+       var createOrderList = this.createOrderTypeAllList.filter((orderType) => (orderType.codeDesc.includes('Direct Invoice')==true));
+       console.log(createOrderList);
+      //  this.createOrderTypeList=createOrderList;
+      this.CounterSaleOrderBookingForm.patchValue({createOrderType:createOrderList[0].code});
+      this.CounterSaleOrderBookingForm.get('transactionTypeName').disable();
+      // this.CounterSaleOrderBookingForm.get('createOrderType').disable();
+    }
+    if (custName.includes('CSCASH')==false){
     if (Number(sessionStorage.getItem('deptId')) === 6) {
       this.transactionTypeName = 'Accessories Sale - Credit';
     }
     else if (Number(sessionStorage.getItem('deptId')) === 5) {
       this.transactionTypeName = 'Spares Sale - Credit';
     }
+  }
     if (this.transactionTypeName.includes('Sale - Credit')){
       console.log(this.createOrderTypeList);
           let createOrderList = this.createOrderTypeAllList.filter((customer) => (customer.codeDesc.includes('Direct Invoice')==false));
           console.log(createOrderList);
           this.createOrderTypeList=createOrderList;
     }
-    this.CounterSaleOrderBookingForm.patchValue({ createOrderType: 'Pick Ticket' });
+    // this.CounterSaleOrderBookingForm.patchValue({ createOrderType: 'Pick Ticket' });
   }
 
   salesOrderDetails(event) {
@@ -3131,7 +3145,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       this.displayCSOrderAndLineDt = false;
       console.log(this.orderTypeList);
       
-      alert(this.transactionTypeName);
+      // alert(this.transactionTypeName);
       let select = this.orderTypeList.find(d => d.transactionTypeName === this.transactionTypeName);
       console.log(select);
       // alert(select.transactionTypeId)
