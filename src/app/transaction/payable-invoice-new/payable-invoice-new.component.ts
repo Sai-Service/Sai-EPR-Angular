@@ -1151,6 +1151,8 @@ export class PayableInvoiceNewComponent implements OnInit {
           var invId = arraybase1[0].invoiceId;
           let tdscontrolInv = this.poInvoiceForm.get('tdsLines') as FormArray;
           let distLineArray = this.poInvoiceForm.get('distribution') as FormArray;
+          // alert(data.invTdsLines.length);
+          if (data.invTdsLines.length != 0){
           for (let i = 0; i < data.invDisLines.length; i++) {
             if (data.invDisLines[i].lineTypeLookupCode != 'MISCELLANEOUS'){
             (tdscontrolInv.controls[i]).patchValue({ invoiceId: invId });
@@ -1161,6 +1163,7 @@ export class PayableInvoiceNewComponent implements OnInit {
             (tdscontrolInv.controls[i]).patchValue({ description: data.invDisLines[i].description });
             }
           }
+        }
           let tdscontroltax = this.poInvoiceForm.get('tdsTaxLines') as FormArray;
           for (let i = 0; i < data.invTdsLines.length; i++) {  
             (tdscontroltax.controls[i]).patchValue({ lineNumber: data.invTdsLines[i].distLineNumber });
