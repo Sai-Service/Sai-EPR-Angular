@@ -71,7 +71,7 @@ export class PaymentArComponent implements OnInit {
   public DepartmentList: Array<string> = [];
   public statusList: Array<string> = [];
   public locIdList: Array<string> = [];
-  public PaymentModeList: Array<string> = [];
+  // public PaymentModeList: Array<string> = [];
   // public ReceiptMethodList: Array<string> = [];
   ReceiptMethodList:any=[];
   public ReceiptStatusList: Array<string> = [];
@@ -80,7 +80,8 @@ export class PaymentArComponent implements OnInit {
   public ReceiptTypeArList: Array<string> = [];
   public VehRegNoList: Array<string> = [];
   public RefReasonList: Array<string> = [];
-  
+
+  PaymentModeList:any;
   ChqBounceReasonList:any;
   viewAccountingArRcpt: Array<string> = [];
   viewAccountingLines: Array<string> = [];
@@ -1149,6 +1150,18 @@ if(this.deptId==2){
       }
 
 
+      getRevDays(rcptType){
+        // alert ("getRevDays :"+rcptType);
+
+        let selectedValue = this.PaymentModeList.find(d => d.lookupValue === rcptType);
+        var revDays;
+       if( selectedValue != undefined){revDays =selectedValue.parentValue;} else { revDays=0;}
+ 
+         return revDays;
+    
+      }
+
+
 
       SelectWip(receiptNumber: any) {
         this.displayButton = false;
@@ -1183,11 +1196,9 @@ if(this.deptId==2){
                this.totUnAppliedtAmount = data.obj.oePayList[0].totUnAppliedtAmount.toFixed(2);
                this.balanceAmount = data.obj.oePayList[0].balanceAmount.toFixed(2);
 
-               this.GetCustomerDetails(data.obj.oePayList[0].customerId)
+                this.GetCustomerDetails(data.obj.oePayList[0].customerId)
                this.GetCustomerSiteDetails(data.obj.oePayList[0].customerId)
                
-              
-     
      
                if( data.obj.oePayList[0].reversalReasonCode !=null) {
                if(data.obj.oePayList[0].reversalReasonCode ==='ChqBounce') {this.chqBounceStatus=true; }
@@ -1213,10 +1224,14 @@ if(this.deptId==2){
               var rcptdt =data.obj.oePayList[0].receiptDate
               var tDate = this.pipe.transform(Date.now() ,'y-MM-dd');
               var mDays =this.diffDays(rcptdt);
+              // var reversalDays= this.getRevDays(data.obj.oePayList[0].payType)
+              var reversalDays=30;
               // alert ("Receipt Date :"+rcptdt + "  , sys date :"+ tDate + " , mdays :"+mDays);
         
+              // alert ("Receipt Type :"+ data.obj.oePayList[0].payType+  ". Receipt aging days :"+mDays + ". Reversal Days Limit :" + reversalDays);
+             
                     
-               if( data.obj.oePayList[0].payType ==='CHEQUE' && mDays<5) {
+               if( data.obj.oePayList[0].payType ==='CHEQUE' && mDays<=reversalDays) {
                  this.showReasonDetails=true;this.enableCancelButton = true;
                  this.paymentArForm.get('reversalReasonCode').enable();
                  this.paymentArForm.get('reversalCategory').enable();
@@ -1224,18 +1239,19 @@ if(this.deptId==2){
                 }
 
 
-                if( data.obj.oePayList[0].payType ==='CHEQUE' && mDays>5) {
+                if( data.obj.oePayList[0].payType ==='CHEQUE' && mDays>reversalDays) {
                 this.showReasonDetails=false;this.enableCancelButton = false;
                 }
                
-               if( data.obj.oePayList[0].payType !='CHEQUE' && mDays==0) {
+               if( data.obj.oePayList[0].payType !='CHEQUE' && mDays<reversalDays) {
                  this.showReasonDetails=true;this.enableCancelButton = true;
                  this.paymentArForm.get('reversalReasonCode').enable();
                  this.paymentArForm.get('reversalCategory').enable();
                  this.paymentArForm.get('reversalComment').enable();
                 }
 
-                if( data.obj.oePayList[0].payType !='CHEQUE' && mDays !=0) {
+                // if( data.obj.oePayList[0].payType !='CHEQUE' && mDays !=0) {
+                  if( data.obj.oePayList[0].payType !='CHEQUE' && mDays >reversalDays) {
                   this.showReasonDetails=false;this.enableCancelButton = false; }
 
 
@@ -2887,6 +2903,8 @@ if(this.deptId==2){
         
       });
   }
+
+ 
 
 }
 
