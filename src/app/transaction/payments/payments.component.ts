@@ -238,7 +238,7 @@ jeSource: [],
     this.emplId=Number(sessionStorage.getItem('emplId'));
 
     // alert(currentOP)  
-    this.service.supplierCodeListNew()
+    this.service.supplierCodeWithEmplListNew()
       .subscribe(
         data1 => {
           this.supplierCodeList = data1;
