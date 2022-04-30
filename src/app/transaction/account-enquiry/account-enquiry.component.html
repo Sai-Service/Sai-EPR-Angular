@@ -465,7 +465,7 @@
                 style="border-color:#959595;width:100%;border-collapse:collapse;font-size: 14px;">
                 <thead>
                     <tr class="GridHeader">
-
+                        <th scope="col">Account Code</th>
                         <th scope="col">Period</th>
                         <th scope="col">PTD</th>
                         <th scope="col">YTD</th>
@@ -474,6 +474,7 @@
 
                 <tr *ngFor="let com of JVBaldata" class="ItemStyle"
                     style="text-decoration:none;color: black;text-align: center;font-size: 12px;">
+                    <td>{{com.segmentName}}</td>
                     <td>{{com.periodName}}</td>
                     <td>{{com.ptd}}</td>
                     <td>{{com.ytd}}</td>
