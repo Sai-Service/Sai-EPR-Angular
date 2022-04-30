@@ -227,6 +227,14 @@ export class JobCardComponent implements OnInit {
   labDiscountIns:number=0;
   matDiscoutIns:number=0;
 
+  matDiscountPerAddon: number=0;
+  labDiscountPerAddon: number=0;
+  labDiscountAddon:number=0;
+  matDiscoutAddon:number=0;
+
+
+
+
   matDiscountPer: number=0;;
   labDiscountPer: number=0;;
   labDiscount:number=0;;
@@ -596,8 +604,14 @@ export class JobCardComponent implements OnInit {
       labDiscountPerIns: [],
       labDiscountIns:[],
       matDiscoutIns:[],
-      lineBasicAmt:[],
 
+
+      matDiscountPerAddon: [],
+      labDiscountPerAddon: [],
+      labDiscountAddon:[],
+      matDiscoutAddon:[],
+     
+      lineBasicAmt:[],
       labBasTotal:[],
       labSubTotal:[],
       labDisTotal:[],
@@ -1446,7 +1460,7 @@ export class JobCardComponent implements OnInit {
           this.RegNoList = data.obj;
           // if(data.code===400 && data.obj !=null)  {alert(data.obj);this.jobcardForm.reset(); return;}
           // if(data.code===400 && data.obj ===null) {alert("Please Enter valid Registration Number..."); this.jobcardForm.reset(); return;}
-          if(data.code===400 ) {alert (data.message + "\n" +data.obj); this.jobcardForm.reset(); return;}
+          if(data.code===400 ) {alert (data.message); this.jobcardForm.reset(); return;}
           
           console.log(this.RegNoList);
        
@@ -1845,7 +1859,8 @@ export class JobCardComponent implements OnInit {
             insMatTaxableAmt:Math.round((this.lstcomments.insMatTaxableAmt+Number.EPSILON)*100)/100,
             insMatTotTaxAmt:Math.round((this.lstcomments.insMatTotTaxAmt+Number.EPSILON)*100)/100,
             insMatTotAmt:Math.round((this.lstcomments.insMatTotAmt+Number.EPSILON)*100)/100,
-
+            // addonInvTotAmt:Math.round((this.lstcomments.addonLabTotAmt+Number.EPSILON)*100)/100,
+            addonInvTotAmt: Math.round(((this.lstcomments.addonLabTotAmt + this.lstcomments.addonMatTotAmt)+Number.EPSILON)*100)/100, 
           })
 
          

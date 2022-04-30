@@ -920,7 +920,7 @@
                                                                            
 
                                                                             <td style="width: 15%" class="LabelFontStyle1"> Promise&nbsp;Date&nbsp;/&nbsp;Time&nbsp;: </td>
-                                                                            <td> <input type="date" class="form-control"  placeholder="" formControlName="promiseDate" [(ngModel)]="promiseDate" (change)="validatePromisedDate()"  min="{{minDate | date:'yyyy-MM-dd'}}"></td>
+                                                                            <td> <input type="date" class="form-control"  placeholder="" formControlName="promiseDate" [(ngModel)]="promiseDate" (change)="validatePromisedDate()"  min="{{minDate | date:'yyyy-MM-dd'}}" style="background-color: yellow;"></td>
                                                                         
                                                                         </tr>
                                                                         <tr>
@@ -2279,6 +2279,8 @@
                                                                 </tr>
 
                                                                
+
+                                                                <!-- ===========================ADDON================================================= -->
                                                                 <div *ngIf="showServiceCustomer; then srvBlockAddon2; else insBlockAddon2"></div>
                                                                 <ng-template #srvBlockAddon2>
 
@@ -2287,12 +2289,12 @@
                                                                     <td style="width: 10em;text-align: center;" class="LabelFontStyle" >Addon&nbsp;</td>
                                                                     <td><input disabled type="number" formControlName="addonLabBasicAmt" style="width: 7em;font-weight: bold;font-size: small;text-align: right;" ></td>
                                                                     
-                                                                    <div *ngIf="showServiceCustomer ;then sr1; else sr2"></div>
-                                                                    <ng-template #sr1>
+                                                                    <div *ngIf="showServiceCustomer ;then sraddon1; else sraddon2"></div>
+                                                                    <ng-template #sraddon1>
 
-                                                                    <div *ngIf="showLabdisP ;then sdp1; else sdp2"></div>
-                                                                    <ng-template #sdp1>
-                                                                    <td><select formControlName="labDiscountPer" 
+                                                                    <div *ngIf="showLabdisP ;then sdpaddon1; else sdpaddon2"></div>
+                                                                    <ng-template #sdpaddon1>
+                                                                    <td><select disabled formControlName="labDiscountPerAddon" 
                                                                             id="labDiscountPer" class="form-control" style="width: 4em;font-weight: bold;font-size: small;"
                                                                             (ngModelChange)="labDiscountPerCal($event)">
                                                                             <option>--Select--</option>
@@ -2302,24 +2304,24 @@
                                                                             </option>
                                                                         </select></td>
                                                                     </ng-template>
-                                                                    <ng-template #sdp2>
-                                                                        <td><input  disabled type="number"   min="0"     formControlName="labDiscountPer" class="form-control"  style="width: 7em;font-weight: bold;font-size: small;"></td>
+                                                                    <ng-template #sdpaddon2>
+                                                                        <td><input  disabled type="number"   min="0"     formControlName="labDiscountPerAddon" class="form-control"  style="width: 7em;font-weight: bold;font-size: small;"></td>
                                                                     </ng-template>
 
 
 
-                                                                    <div *ngIf="showLabDisCol ;then sd1; else sd2"></div>
-                                                                    <ng-template #sd1>
-                                                                         <td><input  type="number"   min="0"     formControlName="labDiscount" class="form-control" (change)="labDiscountAmtCal($event)" style="width: 7em;font-weight: bold;font-size: small;"></td>
+                                                                    <div *ngIf="showLabDisCol ;then sdaddon1; else sdaddon2"></div>
+                                                                    <ng-template #sdaddon1>
+                                                                         <td><input disabled  type="number"   min="0"     formControlName="labDiscountAddon" class="form-control" (change)="labDiscountAmtCal($event)" style="width: 7em;font-weight: bold;font-size: small;"></td>
                                                                     </ng-template>
-                                                                    <ng-template #sd2>
-                                                                         <td><input disabled type="number"   min="0"  formControlName="labDiscount" class="form-control"  style="width: 7em;font-weight: bold;font-size: small;"></td>
+                                                                    <ng-template #sdaddon2>
+                                                                         <td><input disabled type="number"   min="0"  formControlName="labDiscountAddon" class="form-control"  style="width: 7em;font-weight: bold;font-size: small;"></td>
                                                                     </ng-template>
 
                                                                 </ng-template>
-                                                                <ng-template #sr2>
-                                                                    <td><input disabled type="number"   min="0"  formControlName="labDiscountPer" class="form-control"  style="width: 4em;font-weight: bold;font-size: small;"></td>
-                                                                    <td><input disabled type="number"   min="0"  formControlName="labDiscount" class="form-control"  style="width: 7em;font-weight: bold;font-size: small;"></td>
+                                                                <ng-template #sraddon2>
+                                                                    <td><input disabled type="number"   min="0"  formControlName="labDiscountPerAddon" class="form-control"  style="width: 4em;font-weight: bold;font-size: small;"></td>
+                                                                    <td><input disabled type="number"   min="0"  formControlName="labDiscountAddon" class="form-control"  style="width: 7em;font-weight: bold;font-size: small;"></td>
                                                                 
                                                                 </ng-template>
 
@@ -2331,12 +2333,12 @@
                                                                     
                                                                     <td><input disabled type="number" formControlName="addonMatBasicAmt " style="width: 7em;font-weight: bold;font-size: small;text-align: right;"></td>
                                                                     
-                                                                    <div *ngIf="showServiceCustomer ;then sr11; else sr21"></div>
-                                                                    <ng-template #sr11>
+                                                                    <div *ngIf="showServiceCustomer ;then sraddon11; else sraddon21"></div>
+                                                                    <ng-template #sraddon11>
 
-                                                                    <div *ngIf="showMatDisP ;then mdp1; else mdp2"></div>
-                                                                    <ng-template #mdp1>
-                                                                    <td><select   formControlName="matDiscountPer"  class="form-control" style="width: 4em;font-weight: bold;font-size: small;"
+                                                                    <div *ngIf="showMatDisP ;then mdpaddon1; else mdpadddon2"></div>
+                                                                    <ng-template #mdpaddon1>
+                                                                    <td><select disabled  formControlName="matDiscountPerAddon"  class="form-control" style="width: 4em;font-weight: bold;font-size: small;"
                                                                         id="matDiscountPer" class="form-control"
                                                                         (ngModelChange)="matDiscountPerCal($event)">
                                                                         <option>--Select--</option>
@@ -2346,21 +2348,21 @@
                                                                         </option> 
                                                                       </select></td>
                                                                     </ng-template>
-                                                                    <ng-template #mdp2>
-                                                                        <td><input disabled type="number" min="0" formControlName="matDiscountPer"  style="width: 7em;font-weight: bold;font-size: small;" class="form-control"  ></td>
+                                                                    <ng-template #mdpadddon2>
+                                                                        <td><input disabled type="number" min="0" formControlName="matDiscountPerAddon"  style="width: 7em;font-weight: bold;font-size: small;" class="form-control"  ></td>
                                                                     </ng-template>
 
-                                                                      <div *ngIf="showMatDisCol ;then md1; else md2"></div>
-                                                                      <ng-template #md1>
-                                                                        <td><input type="number" min="0" formControlName="matDiscout"  style="width: 7em;font-weight: bold;font-size: small;" class="form-control"  (change)="matDiscountAmtCal($event)"></td>
+                                                                      <div *ngIf="showMatDisCol ;then mdaddon1; else mdaddon2"></div>
+                                                                      <ng-template #mdaddon1>
+                                                                        <td><input disabled type="number" min="0" formControlName="matDiscoutAddon"  style="width: 7em;font-weight: bold;font-size: small;" class="form-control"  (change)="matDiscountAmtCal($event)"></td>
                                                                       </ng-template>
-                                                                      <ng-template #md2>
-                                                                        <td><input disabled type="number" min="0" formControlName="matDiscout"  style="width: 7em;font-weight: bold;font-size: small;" class="form-control"  ></td>
+                                                                      <ng-template #mdaddon2>
+                                                                        <td><input disabled type="number" min="0" formControlName="matDiscoutAddon"  style="width: 7em;font-weight: bold;font-size: small;" class="form-control"  ></td>
                                                                      </ng-template>
                                                                     </ng-template>
-                                                                    <ng-template #sr21> 
-                                                                        <td><input disabled type="number"   min="0"  formControlName="matDiscountPer" class="form-control"  style="width: 4em;font-weight: bold;font-size: small;"></td>
-                                                                        <td><input disabled type="number" min="0" formControlName="matDiscout"  style="width: 7em;font-weight: bold;font-size: small;" class="form-control"  ></td>
+                                                                    <ng-template #sraddon21> 
+                                                                        <td><input disabled type="number"   min="0"  formControlName="matDiscountPerAddon" class="form-control"  style="width: 4em;font-weight: bold;font-size: small;"></td>
+                                                                        <td><input disabled type="number" min="0" formControlName="matDiscoutAddon"  style="width: 7em;font-weight: bold;font-size: small;" class="form-control"  ></td>
                                                                     </ng-template>
 
                                                                     <td><input disabled type="number" min="0" formControlName="addonMatTaxableAmt"  style="width: 7em;font-weight: bold;font-size: small;" ></td>
@@ -2371,6 +2373,7 @@
 
                                                             </ng-template>
                                                             <ng-template #insBlockAddon2></ng-template>
+                                                            <!-- ======================================================================================== -->
 
                                                               
 
@@ -2812,9 +2815,9 @@
                 {{message}}
             </label>
 
-            <td> <input  type="text"
+            <!-- <td> <input  type="text"
                 formControlName="regNo1" value={{regNo1}} class="form-control">
-           </td>
+           </td> -->
 
          
 

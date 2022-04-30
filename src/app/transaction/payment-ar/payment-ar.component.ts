@@ -1018,7 +1018,7 @@ if(this.deptId==2){
   }
 
 
-  Select(receiptNumber: any) {
+  SelectOld(receiptNumber: any) {
    this.displayButton = false;
     this.display = false;
 
@@ -1152,18 +1152,15 @@ if(this.deptId==2){
 
       getRevDays(rcptType){
         // alert ("getRevDays :"+rcptType);
-
+        var revDays=0;
         let selectedValue = this.PaymentModeList.find(d => d.lookupValue === rcptType);
-        var revDays;
-       if( selectedValue != undefined){revDays =selectedValue.parentValue;} else { revDays=0;}
- 
+        if( selectedValue != undefined){revDays =selectedValue.parentValue;} else {revDays=0;}
          return revDays;
-    
       }
 
 
 
-      SelectWip(receiptNumber: any) {
+      SelectReceipt(receiptNumber: any) {
         this.displayButton = false;
          this.display = false;
      
@@ -1224,8 +1221,8 @@ if(this.deptId==2){
               var rcptdt =data.obj.oePayList[0].receiptDate
               var tDate = this.pipe.transform(Date.now() ,'y-MM-dd');
               var mDays =this.diffDays(rcptdt);
-              // var reversalDays= this.getRevDays(data.obj.oePayList[0].payType)
-              var reversalDays=30;
+              var reversalDays= this.getRevDays(data.obj.oePayList[0].payType)
+              // var reversalDays=30;
               // alert ("Receipt Date :"+rcptdt + "  , sys date :"+ tDate + " , mdays :"+mDays);
         
               // alert ("Receipt Type :"+ data.obj.oePayList[0].payType+  ". Receipt aging days :"+mDays + ". Reversal Days Limit :" + reversalDays);
