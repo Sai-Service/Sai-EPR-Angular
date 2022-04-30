@@ -225,6 +225,11 @@ export class PoUploadListComponent implements OnInit {
     this.poPendingListForm.patchValue({ locId: event })
   }
 
+  navigation(segment){
+    var locId= this.poPendingListForm.get('locId').value;
+    alert(segment+'-----'+locId);
+    this.router.navigate(['/admin/master/OPMasterDto',segment]);
+  }
   // goReceiptForm(segment1) {
 
   //   this.router.navigate(['/admin/master/PoReceiptForm', segment1]);

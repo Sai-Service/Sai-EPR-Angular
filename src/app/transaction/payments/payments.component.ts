@@ -313,7 +313,7 @@ jeSource: [],
               this.partyId=this.lstsearchpayminvNew[x].partyId;
               this.suppId=this.lstsearchpayminvNew[x].suppId;
               this.source=this.lstsearchpayminvNew[x].source;
-              
+              arrcontrol.controls[x].get('payAmount').disable();
             }
           }
         });
@@ -455,6 +455,15 @@ else{
 
       });
       this.paymentForm.get('obj').patchValue(this.lstinvoiceDetls);
+      var paymentLineAmtArray =  this.paymentForm.get('obj') as FormArray;
+      alert(paymentLineAmtArray.length);
+      for (let k=0; k<paymentLineAmtArray.length;k++){
+        paymentLineAmtArray[k].invoiceAmt.disable(); 
+      }
+      this.payInvoiceLineDtlArray().get('invoiceAmt').disable();
+      // this.payInvoiceLineDtlArray().disable();
+      // this.payHeaderLineDtlArray().get('selectFlag').enable();
+      
 
     }
     );
