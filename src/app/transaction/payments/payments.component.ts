@@ -710,15 +710,18 @@ else{
 
 paymentSave(){
   var applAmt=this.paymentForm.get('appAmt').value;
-  var arrcon=this.paymentForm.get('obj1').value;
-  var invTyp=arrcon[this.selectPayment].invTypeLookupCode;
+  // var arrcon=this.paymentForm.get('obj1').value;
+  
   var patch=this.paymentForm.get('obj1') as FormArray;
+  var arrcon=patch.getRawValue();
+  var invTyp=arrcon[this.selectPayment].invTypeLookupCode;
    this.totAmt=0;
-  const totlCalControls=this.paymentForm.get('obj').value;
+   const obj1=this.paymentForm.get('obj') as FormArray;
+  const totlCalControls=obj1.getRawValue();
   for (var k=0;k<this.payInvoiceLineDtlArray.length;k++)   {
     this.totAmt=this.totAmt+totlCalControls[k].totAmt;
   }
-  const formValue: Ipayment = this.paymentForm.value;
+  const formValue: Ipayment = this.paymentForm.getRawValue();
   console.log(this.paymentForm.get('emplId').value);
   var jsonData=this.paymentForm.value.obj1[this.selectPayment];
 console.log(jsonData);
@@ -735,7 +738,8 @@ console.log(jsonData);
   // jsonData.bankAccountId.delete;
   var invPayment:any=[];
   this.totAmount = 0;
-  var arrayControle=this.paymentForm.get('obj').value;
+  const objarr=this.paymentForm.get('obj') as FormArray;
+  var arrayControle=objarr.getRawValue();
   var patch=this.paymentForm.get('obj1') as FormArray;
   for (let i=0;i<this.payInvoiceLineDtlArray().length;i++){
     // alert(arrayControle[i].selectFlag);
