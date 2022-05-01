@@ -218,6 +218,7 @@ export class PayableInvoiceNewComponent implements OnInit {
   // glDate = this.pipe.transform(this.now, 'dd-MMM-yyyy');
   // glDate:Date;
   glDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+  
   accountingDate = this.pipe.transform(this.now, 'dd-MMM-yyyy');
   // paymentMethod = 'CHEQUE';
 

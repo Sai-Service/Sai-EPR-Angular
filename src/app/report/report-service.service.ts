@@ -154,6 +154,22 @@ export class ReportServiceService {
     });
   }
 
+  aPGLUnpainAging(ouId,suppNo){
+    const REQUEST_URI = this.ServerUrl +`/AccountsReports/APToGLUnpaid?ouId=${ouId}&suppNo=${suppNo}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+  prePayment(ouId){
+    const REQUEST_URI = this.ServerUrl +`/AccountsReports/PrepaymentRep?ouId=${ouId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
 
   creditNoteReg(fromDate, toDate,ouId, locId){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/SprCreditNoteRegister?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
