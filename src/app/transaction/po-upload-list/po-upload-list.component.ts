@@ -22,7 +22,7 @@ export class PoUploadListComponent implements OnInit {
   endDt = this.pipe.transform(this.today, 'dd-MMM-yyyy');
   isPending : Array<boolean> = [];
   isVisibledeptAndLocation:boolean=false;
-
+  displaySegment:boolean;
   @ViewChild('epltable', { static: false }) epltable: ElementRef;
 
   closeResetButton =true;
@@ -73,7 +73,12 @@ export class PoUploadListComponent implements OnInit {
       }
     );
 
-    
+    if (Number(sessionStorage.getItem('deptId'))===4){
+      this.displaySegment=false;
+    }
+    else if (Number(sessionStorage.getItem('deptId'))!=4){
+      this.displaySegment=true;
+    }
 
     this.service.getLocationSearch1(sessionStorage.getItem('ouId'))
     .subscribe(
@@ -227,8 +232,8 @@ export class PoUploadListComponent implements OnInit {
 
   navigation(segment){
     var locId= this.poPendingListForm.get('locId').value;
-    alert(segment+'-----'+locId);
-    this.router.navigate(['/admin/master/OPMasterDto',segment]);
+    // alert(segment+'-----'+locId);
+    this.router.navigate(['/admin/master/OPMasterDto',segment,locId]);
   }
   // goReceiptForm(segment1) {
 

@@ -887,7 +887,7 @@ export class ReturnToVendorComponent implements OnInit {
             this.returntoVendorForm.disable();
           } else {
             if (res.code === 400) {
-              alert('Data already present in the data base');
+              alert(res.message+'--'+ res.obj);
               // this.returntoVendorForm.reset();
             }
           }
