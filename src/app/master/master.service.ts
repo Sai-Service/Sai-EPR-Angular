@@ -2837,6 +2837,18 @@ formData.append('location', locCode);
     return this.http.get(this.ServerUrl + `/orderHeader/getByDate?locId=${locId}&startDt=${startDt}&endDt=${endDt}&dept=${deptId}`)
   }
 
+  getemwayBill(startDt, endDt,locId,deptId){
+    return this.http.get(this.ServerUrl + `/arRecvTrx/EwayInv?fromDate=${startDt}&toDate=${endDt}&locId=${locId}&deptId=${deptId}`)
+  }
+
+  EwayBill(trxNumber){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/EwayBillRep?trxNumber=${trxNumber}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
   getLaborByUser(ouId){
     return this.http.get(this.ServerUrl + `/pricelist/laborPrice/${ouId}`)
   }
