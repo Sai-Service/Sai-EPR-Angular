@@ -189,7 +189,8 @@ export class BankReconcillationComponent implements OnInit {
             amtRecon:[],
             charges:[],
             status:[],
-            reconDate:[],
+            // reconDate:[],
+            accountingDate:[],
           });
         }
 
@@ -334,6 +335,7 @@ export class BankReconcillationComponent implements OnInit {
        
       
         this.invLineArray().reset();
+        this.invLineArray().clear();
            this.service.getBankStatementDetails(hdrId)
             .subscribe(
               data => {
@@ -346,7 +348,6 @@ export class BankReconcillationComponent implements OnInit {
                 for (let i = 0; i < this.lstStatementLines.length - len; i++) {
                   var invLnGrp: FormGroup = this.invLineDetails();
                   this.invLineArray().push(invLnGrp);
-    
                 }
                 this.bankReconcillationForm.get('ceLineList').patchValue(this.lstStatementLines);
           });

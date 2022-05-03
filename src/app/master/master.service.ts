@@ -3851,9 +3851,15 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
         if(transType==='PAYMENT'){
          return this.http.get(this.ServerUrl + `/apInvPayment/apPaymentDetails?bankAccNo=${bnkNo}&vouNo=${vchNo}&frmDt=${dt1}&toDate1=${dt2}&frmAmt=${amt1}&toAmt=${amt2}`);
         }
+
         if(transType==='RECEIPT'){
         return this.http.get(this.ServerUrl + `/arCashReceipts/arReceiptDetails?bankAccNo=${bnkNo}&vouNo=${vchNo}&frmDt=${dt1}&toDate1=${dt2}&frmAmt=${amt1}&toAmt=${amt2}`);
         }
+
+        if(transType==='CASHFLOW'){
+          return this.http.get(this.ServerUrl + `/AccountTrf/cashBankTrf?bankAccNo=${bnkNo}&vouNo=${vchNo}&frmDt=${dt1}&toDate1=${dt2}&frmAmt=${amt1}&toAmt=${amt2}`);
+        }
+
       }
 
 
