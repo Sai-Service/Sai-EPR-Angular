@@ -3874,7 +3874,7 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
       
       ///////////////////Back order File upload/////////////////////
       UploadExcelBankStatement(formData: FormData,docType:string,mouId ,bnkAcccountId,stNumber) {
-          alert ("Org Id :"+mouId + "  BankAccountId :"+bnkAcccountId);
+          // alert ("Org Id :"+mouId + "  BankAccountId :"+bnkAcccountId);
           let headers1 = new HttpHeaders();
           var userId1=sessionStorage.getItem('userId');
           console.log(docType);
