@@ -179,6 +179,15 @@ export class ReportServiceService {
     });
   }
 
+
+  EwayBill(trxNumber){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/EwayBillRep?trxNumber=${trxNumber}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
   subDealerRep(fromDate, toDate,locId,custAcctNo){
     const REQUEST_URI = this.ServerUrl +`/SalesReports/SubDealerRep?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}&custAcctNo=${custAcctNo}`;
     return this.http.get(REQUEST_URI, {

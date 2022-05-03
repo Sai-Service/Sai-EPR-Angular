@@ -129,6 +129,10 @@
                             <a class="dropdown-item" data-toggle="collapse" href="#isVisiblesparesMiscIssueReceipt" role="tab"
                               (click)="reportDetails('creditNoteReg')">Credit Note Register</a>
                           </li>
+                          <li>
+                            <a class="dropdown-item" data-toggle="collapse" href="#isVisibleEwayBill" role="tab"
+                              (click)="reportDetails('EwayBill')">Eway Bill Report</a>
+                          </li>
                     </ul>
                 </li>
             </ul>
@@ -1363,6 +1367,69 @@ id="panelcustomerLedger">
     </td>
 </tr>
 </table>
+
+
+<table style="margin-left: auto;margin-right: auto;" [style.display]="isVisibleEwayBill ? 'block' : 'none'" class="collapse" id="isVisibleEwayBill">
+    <tr>
+      <td>
+        <table class="center" style="margin-left: 90%;">
+          <tr>
+            <td colspan="4" class="LabelFontStyle" style="width: 100%;">
+              {{reportName}}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <table class="center" style="margin-left: 30%;">
+                <tr>
+                 
+                  <td style="width: 15%" class="LabelFontStyle">
+                    &nbsp;Invoice&nbsp;Number&nbsp;:&nbsp;
+                  </td>
+                  <td>
+                    <input  type="number" class="form-control" formControlName="trxNumber">
+                  </td>
+                  
+                </tr>
+              </table>
+            </td>
+          </tr>
+          
+          <tr>
+            <td colspan="4">
+              <table class="center">
+                <tr>
+                  <td colspan="4">
+                    <table class="center">
+                      <tr>
+                        <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                        <ng-template #hList2>
+                          <div class="d-flex justify-content-center">
+                            <div class="spinner-border text-primary" role="status">
+                              <span class="sr-only" id="loading"></span>
+                            </div>
+                          </div>
+                        </ng-template>
+                        <ng-template #hList1> </ng-template>
+                        <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">
+                          &nbsp;{{dataDisplay}}&nbsp; </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <button class="btn-primary" [disabled]="isDisabled1" (click)="reportParameter(reportName)">View
+                      Report</button>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
 
 
     </fieldset>
