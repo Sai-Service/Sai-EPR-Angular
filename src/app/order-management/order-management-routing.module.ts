@@ -23,6 +23,7 @@ import { SalesOrderProformaComponent } from './sales-order-proforma/sales-order-
 import { PriceUpdationComponent } from './price-updation/price-updation.component';
 import { SalesOrderModelWisePriceComponent } from './sales-order-model-wise-price/sales-order-model-wise-price.component';
 import { RtoLineItemReportComponent } from './rto-line-item-report/rto-line-item-report.component';
+import { EwayBillInvoiceDataComponent } from './eway-bill-invoice-data/eway-bill-invoice-data.component';
 
 const routes: Routes = [
   {path:'salesOrderBooking', component:SalesOrderBookingComponent},
@@ -51,6 +52,7 @@ const routes: Routes = [
   {path:'priceUpdation',component:PriceUpdationComponent},
   {path:'modelWisePrice',component:SalesOrderModelWisePriceComponent},
   {path:'rtoLineItemReport',component:RtoLineItemReportComponent},
+  {path:'EwayBillInvoiceData',component:EwayBillInvoiceDataComponent},
   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];
 

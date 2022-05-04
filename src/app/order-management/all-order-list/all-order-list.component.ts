@@ -65,7 +65,6 @@ export class AllOrderListComponent implements OnInit {
 
   getPO() {
     var stDt = this.orderListForm.get('startDt').value;
-   // this.startDt = this.pipe.transform(stDt, 'dd-MMM-yyyy');
     var stDate = this.pipe.transform(stDt, 'dd-MMM-yyyy');
 
     var endDtSt = this.orderListForm.get('endDt').value;

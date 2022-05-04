@@ -279,6 +279,16 @@ isVisibleGSTSaleRegister:boolean=false;
       this.isVisiblecustomerLedger=false;
       this.isVisibleGSTSaleRegister=false;
     }
+    else if (reportName==='jobIssueDetails'){
+      this.reportName='Job Issue Details Report';
+      this.isVisiblegstsaiDebtors=false;
+      this.isVisiblepanelfromtolocation=true;
+      this.isVisiblefromtolocationdepartment=false;
+      this.isVisiblepaneltolocation=false;
+      this.isVisiblecustomerLedger=false;
+      this.isVisibleGSTSaleRegister=false;
+    }
+    
   }
 
 
@@ -609,6 +619,28 @@ isVisibleGSTSaleRegister:boolean=false;
           this.closeResetButton = true;
           this.dataDisplay = ''
         })
+    }
+  }
+  else if (reportName==='Job Issue Details Report'){
+    const fileName = 'Job Issue Details Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    if (Number(sessionStorage.getItem('deptId'))===4){
+    this.reportService.jobIssueDetails(fromDate, toDate,locId)
+    .subscribe(data => {
+      saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+      this.dataDisplay = ''
+      this.closeResetButton = true;
+      this.isDisabled1 = false;
+    })
+    }
+    if (Number(sessionStorage.getItem('deptId'))!=4){
+      this.reportService.jobIssueDetails(fromDate, toDate,sessionStorage.getItem('locId'))
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.dataDisplay = ''
+        this.closeResetButton = true;
+        this.isDisabled1 = false;
+      })
     }
   }
   }

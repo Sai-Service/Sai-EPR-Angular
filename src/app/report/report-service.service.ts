@@ -179,6 +179,13 @@ export class ReportServiceService {
     });
   }
 
+  jobIssueDetails(fromDate, toDate, locId){
+    const REQUEST_URI = this.ServerUrl +`/ServiceReports/JobIssueDetails?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
 
   EwayBill(trxNumber){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/EwayBillRep?trxNumber=${trxNumber}`;
