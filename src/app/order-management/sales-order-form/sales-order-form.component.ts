@@ -2725,8 +2725,8 @@ export class SalesOrderFormComponent implements OnInit {
   autoApplyInvoice(){
     // var currentDate= new Date();
     var currentDate = this.pipe.transform(this.now, 'dd-MMM-yyyy');
-    alert(currentDate)
-    this.orderManagementService.autoApplyInvoiceFn(currentDate)
+    alert(this.orderNumber)
+    this.orderManagementService.autoApplyInvoiceFn(this.orderNumber)
     .subscribe((res: any) => {
       if (res.code===200){
         alert(res.message)
