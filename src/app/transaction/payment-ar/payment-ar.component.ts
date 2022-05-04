@@ -1167,6 +1167,7 @@ if(this.deptId==2){
          this.service.getArReceiptDetailsByRcptNoAndloc(receiptNumber)
            .subscribe(
              data => {
+              if (data.code === 400) {alert (data.message+data.obj);return; }
                this.receiptDetails = data.obj.oePayList[0];
                console.log(this.receiptDetails);
                // ---------------------------Applied history

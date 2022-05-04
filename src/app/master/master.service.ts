@@ -3850,8 +3850,8 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
          return this.http.get(this.ServerUrl + `/ceStateHdr/accoutWiseHdrList?bankAccountId=${bnkId}&orgId=${ouId}`);
       }
 
-      getAvlBankReconLines(bnkNo,vchNo,dt1,dt2,amt1,amt2,transType): Observable<any> {
-        // alert("ms >>Trans Type :" + transType );
+      getAvlBankReconLines(bnkNo,vchNo,dt1,dt2,amt1,amt2,transType,bnkId): Observable<any> {
+        alert("ms >>BANK AC ID,NO  :" + bnkId + ","+ bnkNo);
         if(transType==='PAYMENT'){
          return this.http.get(this.ServerUrl + `/apInvPayment/apPaymentDetails?bankAccNo=${bnkNo}&vouNo=${vchNo}&frmDt=${dt1}&toDate1=${dt2}&frmAmt=${amt1}&toAmt=${amt2}`);
         }
@@ -3861,7 +3861,9 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
         }
 
         if(transType==='CASHFLOW'){
-          return this.http.get(this.ServerUrl + `/AccountTrf/cashBankTrf?bankAccNo=${bnkNo}&vouNo=${vchNo}&frmDt=${dt1}&toDate1=${dt2}&frmAmt=${amt1}&toAmt=${amt2}`);
+          // return this.http.get(this.ServerUrl + `/AccountTrf/cashBankTrf?bankAccNo=${bnkNo}&vouNo=${vchNo}&frmDt=${dt1}&toDate1=${dt2}&frmAmt=${amt1}&toAmt=${amt2}`);
+          return this.http.get(this.ServerUrl + `/AccountTrf/cashBankTrf?bankAccountId=${bnkId}&frmDt=${dt1}&toDate1=${dt2}&frmAmt=${amt1}&toAmt=${amt2}`);
+          // http://localhost:8081/AccountTrf/cashBankTrf?bankAccountId=2&frmDt=01-MAR-2022&toDate1=05-MAY-2022&frmAmt=0.00&toAmt=500000.00
         }
 
       }

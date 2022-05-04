@@ -379,17 +379,20 @@ export class BankReconcillationComponent implements OnInit {
         var ptype =this.bankReconcillationForm.get('transType').value;
 
         // alert ("refType ,ptype: " +refType  + "," + ptype);
-
+        if(ptype==='CASHFLOW') { ptype='RECEIPT';}
+ 
         if(ptype===refType) {
+
           // alert ("if refType ,ptype: " +refType  + "," + ptype);
 
         var trnType=this.bankReconcillationForm.get("transType").value
         var bnkAcNo=this.bankReconcillationForm.get("bankAccountNo").value
         var dt1=this.pipe.transform(this.date1, 'dd-MMM-y');
         var dt2=this.pipe.transform(this.date2, 'dd-MMM-y');
+        var bnkAcId=this.bankReconcillationForm.get("bankAccountId").value
 
        
-        this.service.getAvlBankReconLines(bnkAcNo, this.transNo1,dt1,dt2,this.amount1,this.amount2,trnType)
+        this.service.getAvlBankReconLines(bnkAcNo, this.transNo1,dt1,dt2,this.amount1,this.amount2,trnType,bnkAcId)
           .subscribe(
             data => {
               this.lstAvlBnkLines = data.obj;
@@ -413,7 +416,7 @@ export class BankReconcillationComponent implements OnInit {
               this.fndButton3=false;
         });
 
-      } else { alert ("Transaction Type Mismatch.\nPlease Select Correct Search Parameters.");}
+       } else { alert ("Transaction Type Mismatch.\nPlease Select Correct Search Parameters.");}
        }
 
 
