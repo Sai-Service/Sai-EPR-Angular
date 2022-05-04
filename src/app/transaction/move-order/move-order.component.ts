@@ -381,7 +381,7 @@ newmoveOrder(){
       this.transactionTypeId=trans.transactionTypeName;
       this.subInventoryCode=subCode.subInventoryCode;
       alert(res.message);
-      // this.display=false;
+      this.display=false;
       this.moveOrderForm.patchValue({frmSubInvCode:subCode});
      
       for (let i = 1; i < res.obj.trxLinesList.length-1 ; i++) {
