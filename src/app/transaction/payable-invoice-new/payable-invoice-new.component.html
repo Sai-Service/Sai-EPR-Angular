@@ -164,8 +164,8 @@
                                                             style="width: 150px;height: 25px;font-size: 11px;">
                                                         <input type="date" formControlName="invoiceDate"
                                                             [style.display]="isVisibleinvoiceDateDate ? 'block' : 'none'"
-                                                            class="form-control"
-                                                            style="width: 150px;height: 25px;font-size: 11px;">
+                                                            class="form-control" [(ngModel)]='invoiceDate'
+                                                            style="width: 150px;height: 25px;font-size: 11px;background-color: yellow;">
                                                     </td>
                                                     <td>
                                                         <input type="text" class="form-control"
@@ -187,7 +187,7 @@
                                                             (change)="prepaymentData($event)" #amt>
                                                     </td>
                                                     <td>
-                                                        <input type="text" class="form-control" formControlName="taxAmt"
+                                                        <input type="number" class="form-control" formControlName="taxAmt"
                                                             value={{taxAmt}}
                                                             style="width: 90px;height: 25px;font-size: 10px;text-align: right;">
                                                     </td>
@@ -383,11 +383,10 @@
                                                             style="width: 65px;height: 25px;font-size: 10px;">
                                                     </td>
                                                     <td>
-                                                        <input disabled formControlName="invoiceDate"
-                                                            class="form-control"
-                                                            style="width: 150px;height: 25px;font-size: 11px;">
+                                                        <input  type="date" formControlName="invoiceDate" 
+                                                            class="form-control" [(ngModel)]="invoiceDate"
+                                                            style="width: 150px;height: 25px;font-size: 11px; background-color: yellow;">
                                                     </td>
-
                                                     <td>
                                                         <input type="text" disabled class="form-control"
                                                             formControlName="invoiceNum" value={{invoiceNum}}
@@ -410,7 +409,7 @@
 
                                                     </td>
                                                     <td>
-                                                        <input type="text" class="form-control" formControlName="taxAmt"
+                                                        <input type="number" class="form-control" formControlName="taxAmt"
                                                             value={{taxAmt}}
                                                             style="width: 90px;height: 25px;font-size: 10px;text-align: right;">
                                                     </td>
@@ -991,7 +990,7 @@
                                                             <td [style.display]="isVisiblelineDetialsDeleteButton ? 'block' : 'none'">
                                                                 <button type="submit"
                                                                     class="btn btn-primary fa fa-trash"
-                                                                    (click)="Delete(trxLineIndex)"></button>
+                                                                    (click)="Delete(k)"></button>
                                                             </td>
                                                         </tr>
                                                     </ng-container>
@@ -1741,11 +1740,12 @@
                                     style="width: fit-content;">AP Inv Cancelled</button>
                             </td>
                             <td>
-                                <button type="submit" class="btn btn-primary" (click)="apInvoiceSave()"
+                                <button type="submit" class="btn btn-primary" (click)="HeaderValidate()"
                                     [style.display]="isVisibleSave ? 'block' : 'none'">Save</button>
                             </td>
                             <td>
-                                <button type="submit" class="btn btn-primary" (click)="apInvoiceSave()"
+                                <!-- (click)="apInvoiceSave()" -->
+                                <button type="submit" class="btn btn-primary" (click)=" HeaderValidate()"
                                     [style.display]="isVisibleUpdateBtn ? 'block' : 'none'">Update</button>
                             </td>
                             <td>

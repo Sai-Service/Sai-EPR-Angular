@@ -343,9 +343,8 @@
                             <td><input disabled style="width: 140px;height: 25px;" type="date"    formControlName="valueDate" class="form-control"></td>
                             <td><input disabled style="width: 130px;height: 25px;" type="number"  formControlName="amount" class="form-control"></td>
                             <!-- <td><input disabled style="width: 130px;height: 25px;" type="number"  formControlName="amtRecon" class="form-control"></td> -->
-                             <td><input disabled style="width: 240px;height: 25px;" type="text"    formControlName="status" class="form-control"></td>
-                             <td><input disabled style="width: 100px;height: 25px;" type="date"  formControlName="reconDate" class="form-control"></td>
-                         
+                             <td><input disabled style="width: 240px;height: 25px;" type="text"    formControlName="status" class="form-control" ></td>
+                             <td><input disabled style="width: 100px;height: 25px;" type="date"  formControlName="accountingDate" class="form-control" ></td>
                             </tr>
                         </ng-container>
                         </ng-container>
@@ -599,8 +598,8 @@
                 </tr>
         
                 <tr>
-                    <div *ngIf="importButton; then hList1; else hList2"></div>
-                                <ng-template #hList2> 
+                    <div *ngIf="spinIcon; then hList1; else hList2"></div>
+                                <ng-template #hList1> 
                                     <div class="d-flex justify-content-center">
                                         <div class="spinner-border text-primary" role="status" >
                                               <span class="sr-only" id="loading"></span>
@@ -608,7 +607,7 @@
                                         </div>
                                     </div>
                               </ng-template>
-                              <ng-template #hList1> </ng-template>
+                              <ng-template #hList2> </ng-template>
         
                               <!-- <h5 style="text-align: center;color:blue" > {{dataDisplay }}</h5> -->
                               <td class="LabelFontStyle" style="color: blue;">&nbsp;{{dataDisplay }}&nbsp; </td>

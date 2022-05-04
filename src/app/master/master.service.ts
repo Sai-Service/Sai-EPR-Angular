@@ -2837,6 +2837,18 @@ formData.append('location', locCode);
     return this.http.get(this.ServerUrl + `/orderHeader/getByDate?locId=${locId}&startDt=${startDt}&endDt=${endDt}&dept=${deptId}`)
   }
 
+  getemwayBill(startDt, endDt,locId,deptId){
+    return this.http.get(this.ServerUrl + `/arRecvTrx/EwayInv?fromDate=${startDt}&toDate=${endDt}&locId=${locId}&deptId=${deptId}`)
+  }
+
+  EwayBill(trxNumber){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/EwayBillRep?trxNumber=${trxNumber}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
   getLaborByUser(ouId){
     return this.http.get(this.ServerUrl + `/pricelist/laborPrice/${ouId}`)
   }
@@ -3839,9 +3851,15 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
         if(transType==='PAYMENT'){
          return this.http.get(this.ServerUrl + `/apInvPayment/apPaymentDetails?bankAccNo=${bnkNo}&vouNo=${vchNo}&frmDt=${dt1}&toDate1=${dt2}&frmAmt=${amt1}&toAmt=${amt2}`);
         }
+
         if(transType==='RECEIPT'){
         return this.http.get(this.ServerUrl + `/arCashReceipts/arReceiptDetails?bankAccNo=${bnkNo}&vouNo=${vchNo}&frmDt=${dt1}&toDate1=${dt2}&frmAmt=${amt1}&toAmt=${amt2}`);
         }
+
+        if(transType==='CASHFLOW'){
+          return this.http.get(this.ServerUrl + `/AccountTrf/cashBankTrf?bankAccNo=${bnkNo}&vouNo=${vchNo}&frmDt=${dt1}&toDate1=${dt2}&frmAmt=${amt1}&toAmt=${amt2}`);
+        }
+
       }
 
 
@@ -3874,7 +3892,7 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
       
       ///////////////////Back order File upload/////////////////////
       UploadExcelBankStatement(formData: FormData,docType:string,mouId ,bnkAcccountId,stNumber) {
-          alert ("Org Id :"+mouId + "  BankAccountId :"+bnkAcccountId);
+          // alert ("Org Id :"+mouId + "  BankAccountId :"+bnkAcccountId);
           let headers1 = new HttpHeaders();
           var userId1=sessionStorage.getItem('userId');
           console.log(docType);

@@ -49,6 +49,10 @@ export class AccountsReportComponent implements OnInit {
   isVisiblepanelgltrialBalance:boolean=false;
   panelCashBank:boolean=false;
   accountNameList:any=[];
+  isVisiblepanelAPGLUnpainAging:boolean=false;
+  supplierNo:string;
+  supNo:number;
+  isVisiblepanelprePayment:boolean=false;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) {
     this.reportForm = this.fb.group({
@@ -63,6 +67,8 @@ export class AccountsReportComponent implements OnInit {
       spInvAging3:[''],
       periodName:[''],
       accountName:[''],
+      supplierNo:[''],
+      supNo:[''],
     })
    }
    
@@ -107,6 +113,15 @@ this.service.DepartmentListNew()
 .subscribe(
   data => {
     this.DepartmentList = data;
+  }
+);
+
+this.service.supplierCodeListNew()
+.subscribe(
+  data1 => {
+    this.supplierCodeList = data1;
+    console.log(this.supplierCodeList);
+    data1 = this.supplierCodeList;
   }
 );
 
@@ -159,6 +174,8 @@ reportName:string;
     this.isVisiblespInvAgging=false;
     this.isVisiblepanelgltrialBalance=false;
     this.panelCashBank=false;
+    this.isVisiblepanelAPGLUnpainAging=false;
+    this.isVisiblepanelprePayment=false;
   }
   else if (reportName==='chequebounceReport'){
     this.reportName='Cheque Bounce Report';
@@ -171,6 +188,8 @@ reportName:string;
     this.isVisiblespInvAgging=false;
     this.isVisiblepanelgltrialBalance=false;
     this.panelCashBank=false;
+    this.isVisiblepanelAPGLUnpainAging=false;
+    this.isVisiblepanelprePayment=false;
   }
   else if (reportName==='gstPurSummary'){
     this.reportName='Purchase Register Summary';
@@ -183,6 +202,8 @@ reportName:string;
     this.isVisiblespInvAgging=false;
     this.isVisiblepanelgltrialBalance=false;
     this.panelCashBank=false;
+    this.isVisiblepanelAPGLUnpainAging=false;
+    this.isVisiblepanelprePayment=false;
   }
   else if (reportName==='receiptRegisterReport'){
     this.reportName='Receipt Register Report';
@@ -195,6 +216,8 @@ reportName:string;
     this.isVisiblespInvAgging=false;
     this.isVisiblepanelgltrialBalance=false;
     this.panelCashBank=false;
+    this.isVisiblepanelAPGLUnpainAging=false;
+    this.isVisiblepanelprePayment=false;
   }
   else if (reportName==='gSTSaleRegister'){
     this.reportName='GST Sales Register';
@@ -207,6 +230,8 @@ reportName:string;
     this.isVisiblespInvAgging=false;
     this.isVisiblepanelgltrialBalance=false;
     this.panelCashBank=false;
+    this.isVisiblepanelAPGLUnpainAging=false;
+    this.isVisiblepanelprePayment=false;
   }
   else if (reportName==='sparesdebtors'){
     this.reportName='Spares Debtors';
@@ -220,6 +245,8 @@ reportName:string;
     this.isVisiblespInvAgging=false;
     this.isVisiblepanelgltrialBalance=false;
     this.panelCashBank=false;
+    this.isVisiblepanelAPGLUnpainAging=false;
+    this.isVisiblepanelprePayment=false;
   }
   else if (reportName==='spInvAgging'){
     this.reportName='Spares Inventory Aging';
@@ -230,6 +257,8 @@ reportName:string;
     this.isVisiblespInvAgging=true;
     this.isVisiblepanelgltrialBalance=false;
     this.panelCashBank=false;
+    this.isVisiblepanelAPGLUnpainAging=false;
+    this.isVisiblepanelprePayment=false;
   }
   else if (reportName==='gltrialBalance'){
     this.reportName='GL Trial Balance';
@@ -240,6 +269,8 @@ reportName:string;
     this.isVisiblespInvAgging=false;
     this.isVisiblepanelgltrialBalance=true;
     this.panelCashBank=false;
+    this.isVisiblepanelAPGLUnpainAging=false;
+    this.isVisiblepanelprePayment=false;
   }
   else if (reportName==='cashBank'){
     this.reportName='Cash Bank Reports';
@@ -250,6 +281,32 @@ reportName:string;
     this.isVisiblespInvAgging=false;
     this.isVisiblepanelgltrialBalance=false;
     this.panelCashBank=true;
+    this.isVisiblepanelAPGLUnpainAging=false;
+    this.isVisiblepanelprePayment=false;
+  }
+  else if (reportName==='APGLUnpainAging'){
+    this.reportName='AP To GL Unpaid Aging Report';
+    this.isVisibleGSTSaleRegister=false;
+    this.isVisibleGSTPurchaseRegister=false;
+    this.isVisibleGSTSaleRegister=false;
+    this.isVisibleSparesdebtors=false;
+    this.isVisiblespInvAgging=false;
+    this.isVisiblepanelgltrialBalance=false;
+    this.panelCashBank=false;
+    this.isVisiblepanelAPGLUnpainAging=true;
+    this.isVisiblepanelprePayment=false;
+  }
+  else if (reportName==='prePayment'){
+    this.reportName='Prepayment Status Report';
+    this.isVisibleGSTSaleRegister=false;
+    this.isVisibleGSTPurchaseRegister=false;
+    this.isVisibleGSTSaleRegister=false;
+    this.isVisibleSparesdebtors=false;
+    this.isVisiblespInvAgging=false;
+    this.isVisiblepanelgltrialBalance=false;
+    this.panelCashBank=false;
+    this.isVisiblepanelAPGLUnpainAging=false;
+    this.isVisiblepanelprePayment=true;
   }
   }
 
@@ -394,6 +451,62 @@ reportName:string;
          this.isDisabled1=false;
        })      
      }
+     else if (reportName==='AP To GL Unpaid Aging Report'){
+      var suppNo=this.reportForm.get('supNo').value;
+      if (suppNo ===undefined || suppNo===null|| suppNo===''){
+        alert('Please Select Supplier.!')
+      }
+      const fileName = 'AP To GL Unpaid Aging Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.aPGLUnpainAging(sessionStorage.getItem('ouId'),suppNo)
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.closeResetButton = true;
+        this.dataDisplay = ''
+        this.isDisabled1=false;
+      })             
+     }
+     else if (reportName==='Prepayment Status Report'){
+      const fileName = 'Prepayment Status Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      this.reportService.prePayment(sessionStorage.getItem('ouId'))
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.closeResetButton = true;
+          this.dataDisplay = ''
+          this.isDisabled1=false;
+        })      
+     }
   }
 
+  public supplierCodeList: any[];
+  lastkeydown1: number = 0;
+  userList1: any[] = [];
+  getUserIdsFirstWay($event) {
+    let userId = (<HTMLInputElement>document.getElementById('userIdFirstWay')).value;
+    this.userList1 = [];
+
+    if (userId.length > 2) {
+      if ($event.timeStamp - this.lastkeydown1 > 200) {
+        this.userList1 = this.searchFromArray(this.supplierCodeList, userId);
+      }
+    }
+  }
+  searchFromArray(arr, regex) {
+    let matches = [], i;
+    for (i = 0; i < arr.length; i++) {
+      if (arr[i].match(regex)) {
+        matches.push(arr[i]);
+      }
+    }
+    return matches;
+  };
+
+  onSupplierCodeSelected(event){
+    alert(event.target.value);
+    var suppName=event.target.value;
+    let selectedValue = this.supplierCodeList.find(v => v.name == suppName);
+    console.log(selectedValue);
+    this.reportForm.patchValue({supNo:selectedValue.suppNo})
+  }
 }

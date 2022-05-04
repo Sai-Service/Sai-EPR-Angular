@@ -495,14 +495,22 @@ export class OrderManagementService {
   }
 
  
-  autoApplyInvoiceFn(currentDate){
+  // autoApplyInvoiceFn(currentDate){
+  //   const options = {
+  //     headers: this.headers
+  //   };
+  //   const url = this.ServerUrl + `/orderHeader/autoApply/inv/${currentDate}`;
+  //   return this.http.post(url, options);
+  // }
+
+
+  autoApplyInvoiceFn(orderNumber){
     const options = {
       headers: this.headers
     };
-    const url = this.ServerUrl + `/orderHeader/autoApply/inv/${currentDate}`;
+    const url = this.ServerUrl + `/orderHeader/autoApply/inv/${orderNumber}`;
     return this.http.post(url, options);
   }
-
 
   // ////////////////************Order Payment Receipt **************//////////////////
   PaymentModeList(): Observable<any> {

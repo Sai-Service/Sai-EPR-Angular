@@ -25,6 +25,7 @@ interface IBankRecon {
 export class BankReconcillationComponent implements OnInit {
     bankReconcillationForm : FormGroup;
   
+        spinIcon=false;
         importButton=true;
         dataDisplay: any;
         msg:any;
@@ -188,7 +189,8 @@ export class BankReconcillationComponent implements OnInit {
             amtRecon:[],
             charges:[],
             status:[],
-            reconDate:[],
+            // reconDate:[],
+            accountingDate:[],
           });
         }
 
@@ -333,6 +335,7 @@ export class BankReconcillationComponent implements OnInit {
        
       
         this.invLineArray().reset();
+        this.invLineArray().clear();
            this.service.getBankStatementDetails(hdrId)
             .subscribe(
               data => {
@@ -345,7 +348,6 @@ export class BankReconcillationComponent implements OnInit {
                 for (let i = 0; i < this.lstStatementLines.length - len; i++) {
                   var invLnGrp: FormGroup = this.invLineDetails();
                   this.invLineArray().push(invLnGrp);
-    
                 }
                 this.bankReconcillationForm.get('ceLineList').patchValue(this.lstStatementLines);
           });
@@ -634,6 +636,7 @@ export class BankReconcillationComponent implements OnInit {
         if (this.fileValidation===true) {
           this.updStatus=true; 
           this.importButton=false;
+          this.spinIcon=true;
           // this.progress = 0;
 
         this.dataDisplay ='File Upload in progress....Do not refresh the Page'
@@ -646,22 +649,25 @@ export class BankReconcillationComponent implements OnInit {
         formData.append('file', event)
            this.service.UploadExcelBankStatement(formData,this.docType,this.ouId,bnkAcId,stNum).subscribe((res: any) => {
             if (res.code === 200) {
-                this.resMsg = res.message+",  Code : "+res.code;;
-              //  this.lstMessage=res.obj.priceListDetailList;
-                this.dataDisplay ='File Uploaded Sucessfully....'
-               this.importButton=false;
+               this.resMsg = res.message+",  Code : "+res.code;;
+              //this.lstMessage=res.obj.priceListDetailList;
+               this.dataDisplay ='File Uploaded Sucessfully....'
+              //  this.importButton=false;
                this.viewLogFile=true;
+               this.spinIcon=false;
             } else {
               // if (res.code === 400) {
                  this.resMsg = res.message +",  Code : "+res.code;
                 // this.lstMessage=res.obj.priceListDetailList;
                 this.updStatus=false;
                 this.dataDisplay ='File Uploading Failed....'
-                this.importButton=false;
+                this.importButton=true;
+                this.spinIcon=false;
                 // this.viewLogFile=false;
               // }
             } });
-         } }
+         } else { alert ( "Please Select Upload File ...");}
+        }
 
 
 
