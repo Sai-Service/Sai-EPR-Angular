@@ -2841,6 +2841,10 @@ formData.append('location', locCode);
     return this.http.get(this.ServerUrl + `/arRecvTrx/EwayInv?fromDate=${startDt}&toDate=${endDt}&locId=${locId}&deptId=${deptId}`)
   }
 
+  getemwayBillcustNo(startDt, endDt,locId,deptId,custAccNo){
+    return this.http.get(this.ServerUrl + `/arRecvTrx/EwayList?fromDate=${startDt}&toDate=${endDt}&locId=${locId}&custAccountNo=${custAccNo}`)
+  }
+
   EwayBill(trxNumber){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/EwayBillRep?trxNumber=${trxNumber}`;
     return this.http.get(REQUEST_URI, {

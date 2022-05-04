@@ -70,7 +70,8 @@ export class PaymentsComponent implements OnInit {
   partyId:number;
   source:string;
 
-  payDate = this.pipe.transform(this.todaydate, 'dd-MMM-yyyy');
+  // payDate = this.pipe.transform(this.todaydate, 'dd-MMM-yyyy');
+  payDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   invTypeLookupCode: string;
   invoiceAmt: number;
   // invoiceNum:string;
@@ -781,7 +782,7 @@ console.log(jsonData);
 
   this.transactionService.paymentSaveSubmit(JSON.stringify(jsonData)).subscribe((res: any) => {
     if (res.code === 200) {
-      // alert(res.message);
+      alert(res.message);
       // alert(res.obj);
       console.log(res.obj);
 
@@ -792,7 +793,7 @@ console.log(jsonData);
       (document.getElementById('btnSelect') as HTMLInputElement).disabled = true;
     } else {
       if (res.code === 400) {
-        alert(res.msg);
+        alert(res.message+'--'+res.obj);
         // this.poReceiptForm.reset();
       }
     }

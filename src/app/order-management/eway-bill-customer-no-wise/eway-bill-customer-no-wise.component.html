@@ -1,0 +1,240 @@
+<form [formGroup]="ewayBillDataForm" (ngSubmit)="ewayBillData(ewayBillDataForm.value)">
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <td class="PageHeader">
+                Eway-Bill&nbsp;List&nbsp;
+            </td>
+        </tr>
+    </table>
+    <table class="center" style="background-color: #FFE4B5;">
+        <tr>
+            <td style="width: 15%" class="LabelFontStyle">From&nbsp;Date&nbsp;</td>&nbsp;
+            <td>
+                <input type="date" class="form-control" formControlName="startDt" 
+                value={{startDt}}  max="{{minDate | date:'yyyy-MM-dd'}}">
+            </td>
+            <td style="width: 15%" class="LabelFontStyle">To&nbsp;Date&nbsp;</td>&nbsp;
+            <td>
+                <input type="date" class="form-control" formControlName="endDt" 
+                value={{endDt}} max="{{minDate | date:'yyyy-MM-dd'}}">
+            </td>
+            <td style="width: 15%" class="LabelFontStyle1">
+                Customer&nbsp;No&nbsp;:&nbsp;
+            </td>
+            <td>
+                <input type="number" style="width: 120px;" class="form-control" formControlName="custAccountNo"
+                    value={{custAccountNo}} [(ngModel)]='custAccountNo' (keydown.tab)="accountNoSearch(custAccountNo)" #myinput>
+            </td>
+            <td style="width: 15%" class="LabelFontStyle">
+                Customer&nbsp;Name:&nbsp;
+            </td>
+            <td>
+                <table>
+                    <tr>
+                        <td>
+                            <input type="text" formControlName="custName" [(ngModel)]='custName' value={{custName}}
+                                class="form-control" style="width: 170px;" data-bs-toggle="modal"
+                                data-bs-target="#customerNameSearchModel">
+                        </td>
+                        <td>
+                            <button type="button"  class="btn btn-primary"
+                                (click)="custNameSearch(custName)" data-toggle="modal"
+                                data-target="#customerNameSearchModel" style="width: 2rem;color: white;">
+                                <i class="fa fa-search"></i> </button>
+                            <div class="modal fade" id="customerNameSearchModel" tabindex="-1" role="dialog"
+                                aria-labelledby="customerNameSearchModel" aria-hidden="true">
+                                <div class="modal-dialog modal-xl" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="customerNameSearchModel">
+                                                Additional&nbsp;Details</h5>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <table>
+                                                <tr>
+                                                    <table class="GridFont" id="excel-table" cellspacing="0"
+                                                        cellpadding="4">
+                                                        <tbody>
+                                                            <tr class="GridHeader">
+                                                                <th scope="col">Customer No</th>
+                                                                <th scope="col">Customer Name</th>
+                                                                <th scope="col">Address</th>
+                                                                <th scope="col">GST No</th>
+                                                                <th scope="col">Pan No</th>
+                                                                <th scope="col">Mobile</th>
+                                                                <th scope="col">Select</th>
+                                                            </tr>
+                                                            <tr *ngFor="let com of customerNameSearch"
+                                                                class="ItemStyle" style="text-decoration:none;">
+                                                                <td style="width: 195px;">{{com.accountNo}}</td>
+                                                                <td style="width: 195px;">{{com.custName}}</td>
+                                                                <td style="width: 195px;">{{com.billToAddress}}</td>
+                                                                <td style="width: 195px;">{{com.gstNo}}</td>
+                                                                <td style="width: 195px;">{{com.panNo}}</td>
+                                                                <td style="width: 195px;">{{com.mobile1}}</td>
+                                                                <td><button class="btn-primary"
+                                                                        style="width: fit-content;"
+                                                                        (click)="accountNoSearch(com.accountNo)"
+                                                                        data-dismiss="modal">Select</button></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary"
+                                                data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td>
+                <button type="submit" class="btn btn-primary" id="search" (click)="getInvoiceDate()" style="width:fit-content">
+                    Get&nbsp;Order&nbsp;List
+                </button>
+            </td>
+        </tr>
+        <tr>
+           <td colspan="4">
+            <table style="width: 100%;" class="center">
+                <tr>
+                  <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                  <ng-template #hList2> 
+                      <div class="d-flex justify-content-center">
+                          <div class="spinner-border text-primary" role="status" >
+                                <span class="sr-only" id="loading"></span>
+                          </div>
+                      </div>
+                </ng-template>
+                <ng-template #hList1> </ng-template>
+                 <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">&nbsp;{{dataDisplay }}&nbsp; </td>
+                </tr>
+            </table>
+           </td>
+          </tr>
+    </table>
+    <table class="center">
+        <tr>
+            <td>
+                <button type="submit" class="btn btn-primary" id="register" (click)="refresh()">
+                    Clear
+                </button>
+            </td>
+            <td>
+                <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
+            </td>
+        </tr>
+    </table>
+    <div class="col-md-12 table-responsive" #epltable>
+        <div style="padding-bottom: 10px;padding-top: 10px;">
+            <div class="row">
+                <div class="col-sm-12">
+                    <button (click)="exportToExcel()" class="btn btn-success" style="width: fit-content;">Export To Excel</button>
+                </div>
+            </div>
+        </div>
+        <table  class="center"  style="border-color:#494949;border-collapse:collapse;width: 100%;">
+            <tr class="GridHeader" style="font-size: 11px;">
+                <th style="border: 1px solid black;" >MSUP_TYP</th>
+                <th style="border: 1px solid black;" >SSUP_TYP</th>
+                <th style="border: 1px solid black;" >DOCU_TYP</th>
+                <th style="border: 1px solid black;" >DOCU_NO</th>
+                <th style="border: 1px solid black;" >DOCU_DT</th>
+                <th style="border: 1px solid black;" >FR_PARTY</th>
+                <th style="border: 1px solid black;" >FR_GSTNO</th>
+                <th style="border: 1px solid black;" >FR_ADD1</th>
+                <th style="border: 1px solid black;" >FR_ADD2</th>
+                <th style="border: 1px solid black;" >FR_PLAC</th>
+                <th style="border: 1px solid black;" >FR_PIN</th>
+                <th style="border: 1px solid black;" >FR_STAT</th>
+                <th style="border: 1px solid black;" >DSP_STAT</th>
+                <th style="border: 1px solid black;" >TO_PARTY</th>
+                <th style="border: 1px solid black;" >TO_GSTNO</th>
+                <th style="border: 1px solid black;" >TO_ADD1</th>
+                <th style="border: 1px solid black;" >TO_ADD2</th>
+                <th style="border: 1px solid black;" >TO_PLAC</th>
+                <th style="border: 1px solid black;" >TO_PIN</th>
+                <th style="border: 1px solid black;" >TO_STAT</th>
+                <th style="border: 1px solid black;" >SHP_STAT</th>
+                <th style="border: 1px solid black;" >ITEM</th>
+                <th style="border: 1px solid black;" >DESCRIPTIO</th>
+                <th style="border: 1px solid black;" >HSNSACCO</th>
+                <th style="border: 1px solid black;" >UOM</th>
+                <th style="border: 1px solid black;" >ITM_QTY</th>
+                <th style="border: 1px solid black;" >TXBL_AMT</th>
+                <th style="border: 1px solid black;" >GST_RT</th>
+                <th style="border: 1px solid black;" >CGSTAMT</th>
+                <th style="border: 1px solid black;" >SGSTAMT</th>
+                <th style="border: 1px solid black;" >IGSTAMT</th>
+                <th style="border: 1px solid black;" >CESSAMT</th>
+                <th style="border: 1px solid black;" >CESNADVL</th>
+                <th style="border: 1px solid black;" >OTHR_AMT</th>
+                <th style="border: 1px solid black;" >INV_VAL</th>
+                <th style="border: 1px solid black;" >TRN_MODE</th>
+                <th style="border: 1px solid black;" >TRN_DIST</th>
+                <th style="border: 1px solid black;" >TRNSPNAM</th>
+                <th style="border: 1px solid black;" >TRNSP_ID</th>
+                <th style="border: 1px solid black;" >TRNDOCNO</th>
+                <th style="border: 1px solid black;" >TRNDOCDT</th>
+                <th style="border: 1px solid black;" >TRNSPVEH</th>
+                <th style="border: 1px solid black;" >TRVEHTYP</th>
+            </tr>
+            <tr *ngFor="let com of ewayListDetails ; let i= index" class="ItemStyle" style="text-decoration:none;font-size: 11px;">
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.MSUP_TYP}}</td>
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.SSUP_TYP}}</td>
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.DOCU_TYP}}</td>
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.DOCU_NO}}</td>
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.DOCU_DT}}</td>
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.FR_PARTY}}</td>
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.FR_GSTNO}}</td>
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.FR_ADD1}}</td>
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.FR_ADD2}}</td>
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.FR_PLAC}}</td>
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.FR_PIN}}</td>
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.FR_STAT}}</td>
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.DSP_STAT}}</td>
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.TO_PARTY}}</td>
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.TO_GSTNO}}</td>
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.TO_ADD1}}</td>
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.TO_ADD2}}</td>
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.TO_PLAC}}</td>
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.TO_PIN}}</td>
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.TO_STAT}}</td>
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.SHP_STAT}}</td>
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.item}}</td>
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.DESCRIPTION}}</td>
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.HSNSACCODE}}</td>
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.uom}}</td>
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.ITM_QTY}}</td>
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.TXBL_AMT}}</td>
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.GST_RT}}</td>
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.cgstamt}}</td>
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.sgstamt}}</td>
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.igstamt}}</td>
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.cessamt}}</td>
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.CESNADVL}}</td>
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.OTHR_AMT}}</td>
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.INV_VAL}}</td>
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.TRN_MODE}}</td>
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.TRN_DIST}}</td>
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.TRNSPNAM}}</td>
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.TRNSP_ID}}</td>
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.TRNDOCNO}}</td>
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.TRNDOCDT}}</td>
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.TRNSPVEH}}</td>
+                <td style="padding-left: 5px; text-align: center;border: 1px solid black;">{{com.TRVEHTYP}}</td>
+            </tr>
+        </table>
+    </div>
+   
+</form>
