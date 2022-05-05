@@ -26,6 +26,7 @@ import { PriceUpdationComponent } from './price-updation/price-updation.componen
 import { SalesOrderModelWisePriceComponent } from './sales-order-model-wise-price/sales-order-model-wise-price.component';
 import { RtoLineItemReportComponent } from './rto-line-item-report/rto-line-item-report.component';
 import { EwayBillInvoiceDataComponent } from './eway-bill-invoice-data/eway-bill-invoice-data.component';
+import { EwayBillCustomerNoWiseComponent } from './eway-bill-customer-no-wise/eway-bill-customer-no-wise.component';
 
 
 @NgModule({
@@ -51,7 +52,8 @@ import { EwayBillInvoiceDataComponent } from './eway-bill-invoice-data/eway-bill
      PriceUpdationComponent,
      SalesOrderModelWisePriceComponent,
      RtoLineItemReportComponent,
-     EwayBillInvoiceDataComponent ],
+     EwayBillInvoiceDataComponent,
+     EwayBillCustomerNoWiseComponent ],
   imports: [
     CommonModule,
     OrderManagementRoutingModule,

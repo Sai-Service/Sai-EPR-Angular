@@ -802,7 +802,17 @@ export class SalesOrderFormComponent implements OnInit {
     // alert(segment +'---'+ k)
     // alert('HI')
     let controlinv = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+    let controlinvext = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+    let controlinvext1=controlinvext.getRawValue();
     var itemType = (controlinv.controls[k]).get('invType').value;
+    // alert(controlinvext1.length)
+    for (let i=0;i<controlinvext1.length;i++){
+      // alert(controlinvext1[i].segment+'----'+ controlinvext1[i].pricingQty)
+      if (controlinvext1[i].segment==segment && controlinvext1[i].pricingQty !=0 ){
+        alert('Already Selected this Item. Please Confirm.!');
+        return;
+      }
+    }
     console.log(this.invItemList1);
     let select = this.invItemList1.find(d => d.segment === segment);
     console.log(select);
@@ -2674,7 +2684,7 @@ export class SalesOrderFormComponent implements OnInit {
     var taxArrValpatch = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
     // alert(i+'----'+ trxArrVal[i].flowStatusCode);
     if (trxArrVal[i].flowStatusCode === 'CANCELLED') {
-      trxArr.controls[i].patchValue({ 'baseAmt': 0, 'disAmt': 0, 'taxAmt': 0, 'totAmt': 0 });
+      trxArr.controls[i].patchValue({ 'baseAmt': 0, 'disAmt': 0, 'taxAmt': 0, 'totAmt': 0,'pricingQty':0 });
       for (let j = 0; j < taxArrVal.length; j++) {
         // alert(taxArrVal[j].invLineNo +'-----' + (i+1))
         if (taxArrVal[j].invLineNo === Number(i + 1)) {
@@ -2725,7 +2735,7 @@ export class SalesOrderFormComponent implements OnInit {
   autoApplyInvoice(){
     // var currentDate= new Date();
     var currentDate = this.pipe.transform(this.now, 'dd-MMM-yyyy');
-    alert(this.orderNumber)
+    // alert(this.orderNumber)
     this.orderManagementService.autoApplyInvoiceFn(this.orderNumber)
     .subscribe((res: any) => {
       if (res.code===200){

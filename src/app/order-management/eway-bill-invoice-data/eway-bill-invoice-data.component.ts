@@ -102,7 +102,7 @@ export class EwayBillInvoiceDataComponent implements OnInit {
 
 
   download(trnNumber){
-    alert(trnNumber)
+    // alert(trnNumber)
     const fileName = 'Eway Bill Report-' + sessionStorage.getItem('locName').trim() + '-'  + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       this.service.EwayBill(trnNumber)

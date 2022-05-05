@@ -870,7 +870,7 @@ export class PayableInvoiceNewComponent implements OnInit {
     var len = this.invLineDetailsArray().length;
     this.invoiceLineNo = this.invoiceLineNo + 1;
     var patch = this.poInvoiceForm.get('invLines') as FormArray;
-    var lineArray = this.poInvoiceForm.get('invLines').value();
+    // var lineArray = this.poInvoiceForm.get('invLines').value();
     // if (lineArray[this.invoiceLineNo] )
     (patch.controls[len - 1]).patchValue(
       {
@@ -1394,9 +1394,15 @@ export class PayableInvoiceNewComponent implements OnInit {
     var amount = this.invLineDetailsArray().controls[k].get('amount').value;
     var description = this.invLineDetailsArray().controls[k].get('description').value;
     this.invoiceId = this.lstInvLineDeatails.invoiceId;
+    // alert(amount)
     // alert(taxcat+'----');
+    if (amount ==='' || amount == undefined || amount== null){
+      alert('Please enter amount.!');
+      return;
+    }
+    else{
     if (this.invoiceId == null) {
-      alert('Invoice No is not generated');
+      alert('Distribution Line Added. Please Enter Code Combination Value in Ditribution Tab.!');
       if (itemtyp != 'MISCELLANEOUS') {
         this.distribution1(k, itemtyp, amount, description);
         if (taxcat != null){
@@ -1405,6 +1411,7 @@ export class PayableInvoiceNewComponent implements OnInit {
       }
       return;
     }
+  
     else {
       // debugger;
       this.lineDistributionArray().clear();
@@ -1421,7 +1428,7 @@ export class PayableInvoiceNewComponent implements OnInit {
           }
         );
     }
-   
+  }
   }
 
   setFocus(name) {
@@ -1439,8 +1446,8 @@ export class PayableInvoiceNewComponent implements OnInit {
     var arrayControl2 = this.poInvoiceForm.get('invLines').value;
     var amount = arrayControl2[k].amount;
     var invln = arrayControl2[k].lineNumber;
-    // this.setFocus('distCodeCombSeg');
-    // (<any>arrayControl2[k].get('lineTypeLookupCode')).nativeElement.focus();
+    var existLineNo = k+1;
+    // alert(existLineNo+'------'+ invln+'----'+k)
     if (amount == null) {
       alert('Kindly entered Amount');
     }
@@ -1487,6 +1494,7 @@ export class PayableInvoiceNewComponent implements OnInit {
       this.lineDistributionArray().push(this.distLineDetails());
       }
       var aa = this.lineDistributionArray().length;
+      
       (patch.controls[aa - 1]).patchValue(
         {
           distLineNumber: aa,
@@ -2243,7 +2251,7 @@ export class PayableInvoiceNewComponent implements OnInit {
     var arrayControl1 = arrayControl2.getRawValue();
     var arrayCaontrolOfDistribution = this.poInvoiceForm.get('distribution').value;
     var amount : number = this.lineDetailsArray().controls[this.selectedLine].get('invoiceAmt').value;
-    alert(amount)
+    // alert(amount)
     var totalOfInvLineAmout:number = 0;
     for (let i = 0; i < this.invLineDetailsArray().length; i++) {
       var desc1: string = arrayControl1[i].description;
@@ -2272,7 +2280,7 @@ export class PayableInvoiceNewComponent implements OnInit {
         }
       }
     }
-    alert('Header Amt---'+amount+'---Total Line Amt---'+totalOfInvLineAmout+'---total Distribution Amt---' +totalOfDistributionAmout);
+    // alert('Header Amt---'+amount+'---Total Line Amt---'+totalOfInvLineAmout+'---total Distribution Amt---' +totalOfDistributionAmout);
     if (amount == totalOfInvLineAmout && amount == totalOfDistributionAmout) {
       
       this.apInvoiceSave()
@@ -2686,7 +2694,7 @@ export class PayableInvoiceNewComponent implements OnInit {
         }
       }
     }
-    alert('Header Amt---'+amount+'---Total Line Amt---'+totalOfInvLineAmout+'----total Distribution Amt---' +totalOfDistributionAmout);
+    // alert('Header Amt---'+amount+'---Total Line Amt---'+totalOfInvLineAmout+'----total Distribution Amt---' +totalOfDistributionAmout);
     if (amount== totalOfInvLineAmout && amount == totalOfDistributionAmout) {
       var arrayControl = this.poInvoiceForm.get('obj').value;
       var invoiceNum = this.lineDetailsArray().controls[this.selectedLine].get('invoiceNum').value;

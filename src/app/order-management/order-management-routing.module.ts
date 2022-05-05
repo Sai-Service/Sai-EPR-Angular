@@ -24,6 +24,7 @@ import { PriceUpdationComponent } from './price-updation/price-updation.componen
 import { SalesOrderModelWisePriceComponent } from './sales-order-model-wise-price/sales-order-model-wise-price.component';
 import { RtoLineItemReportComponent } from './rto-line-item-report/rto-line-item-report.component';
 import { EwayBillInvoiceDataComponent } from './eway-bill-invoice-data/eway-bill-invoice-data.component';
+import { EwayBillCustomerNoWiseComponent } from './eway-bill-customer-no-wise/eway-bill-customer-no-wise.component';
 
 const routes: Routes = [
   {path:'salesOrderBooking', component:SalesOrderBookingComponent},
@@ -53,6 +54,7 @@ const routes: Routes = [
   {path:'modelWisePrice',component:SalesOrderModelWisePriceComponent},
   {path:'rtoLineItemReport',component:RtoLineItemReportComponent},
   {path:'EwayBillInvoiceData',component:EwayBillInvoiceDataComponent},
+  {path:'EwayBillCustomerNoWise',component:EwayBillCustomerNoWiseComponent},
   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];
 
