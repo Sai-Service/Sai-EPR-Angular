@@ -12,6 +12,7 @@ export class ManualInvoiceObjNew {
   accPayCodeCombId: number;
   paymentStatusFlag: string;
   poHeaderId: number;
+  addonType:string;
   exclusivePayFlag: string;
   invLines: any[];
   invDisLines: any[];

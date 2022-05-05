@@ -339,6 +339,7 @@ export class SalesOrderFormComponent implements OnInit {
   isDisabled9 = false;
   isDisabled10 = false;
   isDisabled11 = false;
+  isDisabledOrderFind=false;
   isDisabledlesseeCustName = false;
   isDisabledtaxbtn: Array<boolean> = [];
   // isDisabledtaxbtn=false;
@@ -711,6 +712,7 @@ export class SalesOrderFormComponent implements OnInit {
       // alert(this.orderNumber)
       if (this.orderNumber != undefined) {
         this.OrderFind(this.orderNumber);
+        this.SalesOrderBookingForm.get('orderNumber').disable();
       }
     });
 
@@ -1439,6 +1441,7 @@ export class SalesOrderFormComponent implements OnInit {
     this.isDisabled3 = true;
     this.isDisabled4 = true;
     this.isDisabled8 = false;
+    this.isDisabledOrderFind=false;
     this.isDisabledlesseeCustName = true;
     this.currentOpration = 'orderSearch';
     this.SalesOrderBookingForm.get('custName').disable();

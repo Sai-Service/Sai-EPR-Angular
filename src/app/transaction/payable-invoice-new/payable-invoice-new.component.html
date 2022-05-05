@@ -50,7 +50,7 @@
                                         <th scope="col" hidden>Payment Method</th>
                                         <th scope="col">Pay Group</th>
                                         <th scope="col">Prepayment Type</th>
-                                        <th scope="col">Settlement Date</th>
+                                        <th scope="col">Addon Type</th>
                                         <th scope="col" hidden>Taxation Country</th>
                                         <th scope="col">Related& Invoice</th>
                                         <th scope="col">Supplier Tax Inv No</th>
@@ -269,9 +269,14 @@
                                                         </select>
                                                     </td>
                                                     <td>
-                                                        <input type="date" class="form-control"
+                                                        <!-- <input type="date" class="form-control"
                                                             formControlName="settlementDate" value={{settlementDate}}
+                                                            style="width: 120px;height: 25px;font-size: 10px;"> -->
+                                                            <select formControlName="addonType" class="form-control"  (change)="onSelectAddonType($event)"
                                                             style="width: 120px;height: 25px;font-size: 10px;">
+                                                            <option value="SS_ADDON_RTO">SS_ADDON_RTO</option>
+                                                            <option value="SS_ADDON_INS">SS_ADDON_INS</option>
+                                                        </select>
                                                     </td>
                                                     <td hidden>
                                                         <input type="text" class="form-control"
@@ -490,8 +495,11 @@
                                                         </select>
                                                     </td>
                                                     <td>
-                                                        <input type="date" disabled class="form-control"
+                                                        <!-- <input type="date" disabled class="form-control"
                                                             formControlName="settlementDate" value={{settlementDate}}
+                                                            style="width: 120px;height: 25px;font-size: 10px;"> -->
+                                                            <input type="text" disabled class="form-control"
+                                                            formControlName="addonType" value={{addonType}}
                                                             style="width: 120px;height: 25px;font-size: 10px;">
                                                     </td>
                                                     <td hidden>
