@@ -1439,18 +1439,22 @@ export class PayableInvoiceNewComponent implements OnInit {
   }
 
   distribution1(k, itemtyp, amount, description) {
-    // alert(itemtyp+'---amt'+amount+'-----'+k);
+    alert(itemtyp+'---amt'+amount+'-----'+k);
     // this.poInvoiceForm.get('invLines').patchValue({ locId: arrayControl[k].locationId });
     var arrayControl = this.poInvoiceForm.get('obj').value;
     var distributionSet = arrayControl[0].distributionSet;
     var arrayControl2 = this.poInvoiceForm.get('invLines').value;
+    var arrayControlDist = this.poInvoiceForm.get('distribution').value;
+    console.log( arrayControlDist);
     var amount = arrayControl2[k].amount;
     var invln = arrayControl2[k].lineNumber;
-    var existLineNo = k+1;
-    // alert(existLineNo+'------'+ invln+'----'+k)
+      var invoiceLineNum = arrayControlDist[k].invoiceLineNum;
+    // alert(invln+'----'+invoiceLineNum);
     if (amount == null) {
       alert('Kindly entered Amount');
+      return;
     }
+    // debugger;
     if (distributionSet != null && amount != null) {
       this.transactionService.DistributionDataList(distributionSet, amount)
         .subscribe(
@@ -1486,36 +1490,29 @@ export class PayableInvoiceNewComponent implements OnInit {
         );
     }
     if ((distributionSet == null && amount != null)) {
-      // this.lineDistributionArray().clear();
-      var len = this.lineDistributionArray().length;
       var patch = this.poInvoiceForm.get('distribution') as FormArray;
       var controlDist = this.poInvoiceForm.get('distribution').value;
       if (controlDist[0].lineTypeLookupCode != null && controlDist[0].distLineNumber != null) {
       this.lineDistributionArray().push(this.distLineDetails());
       }
       var aa = this.lineDistributionArray().length;
-      
-      (patch.controls[aa - 1]).patchValue(
-        {
-          distLineNumber: aa,
-          invoiceLineNum: invln,
-          lineTypeLookupCode: itemtyp,
-          amount: amount,
-          baseAmount: amount,
-          accountingDate: this.pipe.transform(this.now, 'dd-MMM-yyyy'),
-          description: description
-        }
-      );
-      this.distarr.set(invln, this.poInvoiceForm.get('distribution').value);
-      // (patch.controls[len - 1]).patchValue(
-      //   {
-      //     distLineNumber: len,
-      //     invoiceLineNum: invln
-      //   }
-      // );
-      this.distarr.set(invln, this.poInvoiceForm.get('distribution').value);
+      // if (invln === invoiceLineNum){
+      //   patch.controls[k].patchValue({ 'amount': amount, 'baseAmount': amount,'description': description});
       // }
-
+      // else if (invoiceLineNum===null) {
+        (patch.controls[aa - 1]).patchValue(
+          {
+             distLineNumber: aa,
+             invoiceLineNum: invln,
+            lineTypeLookupCode: itemtyp,
+            amount: amount,
+            baseAmount: amount,
+            accountingDate: this.pipe.transform(this.now, 'dd-MMM-yyyy'),
+            description: description
+          }
+        );
+      // }
+      this.distarr.set(invln, this.poInvoiceForm.get('distribution').value);
     }
 
   }

@@ -405,6 +405,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   isDisabled11 = false;
   isDisabled15 = false;
   isDisabled16 = false;
+  isVisibleOrderFind:boolean=false;
 
 
   constructor(private fb: FormBuilder, private location1: Location, private router1: ActivatedRoute, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService,) {
@@ -778,6 +779,8 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       this.orderNumber = params['orderNumber'];
       if (this.orderNumber != undefined) {
         this.OrderFind(this.orderNumber);
+        this.CounterSaleOrderBookingForm.get('orderNumber').disable();
+        this.isVisibleOrderFind=false;
       }
     });
 
@@ -815,6 +818,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           if (data.code === 200) {
+           
             this.displaycustPoDate=false;
             this.isVisibleCreateOrder = false;
             this.isVisiblePickTiPreview = true;
@@ -823,7 +827,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
             this.lstgetOrderLineDetails = data.obj.oeOrderLinesAllList;
             this.lstgetOrderTaxDetails = data.obj.taxAmounts;
             this.allDatastore = data.obj;
-            
+            this.CounterSaleOrderBookingForm.get('orderNumber').disable();
             // alert(data.obj.orderStatus +'----'+data.obj.gatePassYN)
             this.custClassCode = data.obj.classCodeType;
             if (data.obj.discType === 'Header Level Discount') {

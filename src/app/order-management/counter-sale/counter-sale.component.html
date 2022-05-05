@@ -21,9 +21,10 @@
                 <input class="form-control" formControlName="orderNumber" [(ngModel)]='orderNumber'
                     value={{orderNumber}}>
             </td>
+            <!-- [style.display]="isVisibleOrderFind ? 'block' : 'none'"  -->
             <td style="background-color: #FFE4B5;">
                 <button type="button" class="btn-primary"  [disabled]="isDisabled11" (click)="OrderFind(orderNumber)"><i class="fa fa-search"
-                        aria-hidden="true"></i></button>
+                       aria-hidden="true"></i></button>
             </td>
         </tr>
     </table>
