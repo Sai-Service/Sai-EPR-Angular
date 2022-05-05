@@ -37,6 +37,8 @@ export class EwayBillCustomerNoWiseComponent implements OnInit {
   closeResetButton =true;
   dataDisplay: any;
   progress = 0;
+  DOCU_DT:Date;
+  docDate:Date;
 
 
   constructor(private fb: FormBuilder, private router: Router, private orderManagementService: OrderManagementService, private location1: Location, private router1: ActivatedRoute, private service: MasterService) {
@@ -45,6 +47,7 @@ export class EwayBillCustomerNoWiseComponent implements OnInit {
       endDt: [],
       custAccountNo: [],
       custName: [],
+      DOCU_DT:[],
     })
   }
 
@@ -57,7 +60,7 @@ export class EwayBillCustomerNoWiseComponent implements OnInit {
   }
 
   accountNoSearch(custAccountNo) {
-    alert(custAccountNo);
+    // alert(custAccountNo);
     this.service.searchCustomerByAccount(custAccountNo)
       .subscribe(
         data => {
@@ -98,7 +101,7 @@ export class EwayBillCustomerNoWiseComponent implements OnInit {
   exportToExcel() {
     const ws: xlsx.WorkSheet =
       xlsx.utils.table_to_sheet(this.epltable.nativeElement);
-      // xlsx.utils.json_to_sheet(this.storeAllOrderData);
+      // xlsx.utils.json_to_sheet(this.ewayListDetails);
     const wb: xlsx.WorkBook = xlsx.utils.book_new();
     xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
     xlsx.writeFile(wb, 'EwayBillList.xlsx');
@@ -112,7 +115,7 @@ export class EwayBillCustomerNoWiseComponent implements OnInit {
     this.location1.back();
   }
 
-
+  // DOCU_DT:Date;
   getInvoiceDate() { 
     var stDt = this.ewayBillDataForm.get('startDt').value;
     var stDate = this.pipe.transform(stDt, 'dd-MMM-yyyy');
@@ -125,9 +128,17 @@ export class EwayBillCustomerNoWiseComponent implements OnInit {
    this.closeResetButton=false;
    this.progress = 0;
    this.dataDisplay ='Data Loading in progress....Do not refresh the Page'
+  //  alert(custAccountNo);
+   if (custAccountNo === undefined){
+    custAccountNo=''
+   }
    this.service.getemwayBillcustNo(stDate, endDt,sessionStorage.getItem('locId'),sessionStorage.getItem('deptId'),custAccountNo).subscribe((res: any) => {
     if (res.code === 200) {
       this.ewayListDetails = res.obj;
+      // this.ewayBillDataForm.patchValue({DOCU_DT:res.obj.DOCU_DT})
+      // alert(res.obj.DOCU_DT)
+      // this.DOCU_DT= res.obj.DOCU_DT;
+      // this.docDate = this.DOCU_DT;
       this.dataDisplay ='Data Display Sucessfully....'
       this.closeResetButton=true;
     }
