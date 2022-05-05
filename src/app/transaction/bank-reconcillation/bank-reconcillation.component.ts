@@ -97,12 +97,13 @@ export class BankReconcillationComponent implements OnInit {
         fndButton3=true;
         showReconciledGrid =false;
         optType:string;
-        transType:string='apPymt';
+        transType:string;
         showImportModalForm=false;
 
         statementHeaderId1:number;
         statementLineId:number;
-        referenceType:string;
+        referenceType:string='PAYMENT';
+        transactionType:string;
         referenceId:number;
         amount :number;
        
@@ -168,6 +169,7 @@ export class BankReconcillationComponent implements OnInit {
             statementHeaderId1:[],
             statementLineId:[],
             referenceType:[],
+            transactionType:[],
             referenceId:[],
 
             ceLineList: this.fb.array([this.invLineDetails()]),
@@ -366,9 +368,9 @@ export class BankReconcillationComponent implements OnInit {
        radioEvent(event:any){
         // alert(event.target.value);
         
-        if( event.target.value==='payment')   { this.bankReconcillationForm.patchValue({transType  : 'PAYMENT' }); }
-        if( event.target.value==='receipt')   { this.bankReconcillationForm.patchValue({transType  : 'RECEIPT' }); }
-        if( event.target.value==='cashflow')  { this.bankReconcillationForm.patchValue({transType  : 'CASHFLOW'}); }
+        if( event.target.value==='payment')   { this.bankReconcillationForm.patchValue({referenceType  : 'PAYMENT' }); }
+        if( event.target.value==='receipt')   { this.bankReconcillationForm.patchValue({referenceType  : 'RECEIPT' }); }
+        if( event.target.value==='cashflow')  { this.bankReconcillationForm.patchValue({referenceType  : 'CASHFLOW'}); }
         // alert ("this.transType : " +this.transType);
       }
 
@@ -379,7 +381,7 @@ export class BankReconcillationComponent implements OnInit {
         var ptype =this.bankReconcillationForm.get('transType').value;
 
         // alert ("refType ,ptype: " +refType  + "," + ptype);
-        if(ptype==='CASHFLOW') { ptype='RECEIPT';}
+        if(refType==='CASHFLOW') {refType='RECEIPT';}
  
         if(ptype===refType) {
 
@@ -472,7 +474,7 @@ export class BankReconcillationComponent implements OnInit {
 
          this.statementHeaderId1=LineArr[index].statementHeaderId;
          this.statementLineId=LineArr[index].statementLineId;
-         this.referenceType=LineArr[index].trxType;
+         this.transType=LineArr[index].trxType;
          this.referenceId=LineArr[index].checkId;
          this.amount=LineArr[index].amount;
 

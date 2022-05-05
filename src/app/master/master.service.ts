@@ -3847,7 +3847,7 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
       }
 
       getAvlBankReconLines(bnkNo,vchNo,dt1,dt2,amt1,amt2,transType,bnkId): Observable<any> {
-        alert("ms >>BANK AC ID,NO  :" + bnkId + ","+ bnkNo);
+        // alert("ms >>BANK AC ID,NO  :" + bnkId + ","+ bnkNo);
         if(transType==='PAYMENT'){
          return this.http.get(this.ServerUrl + `/apInvPayment/apPaymentDetails?bankAccNo=${bnkNo}&vouNo=${vchNo}&frmDt=${dt1}&toDate1=${dt2}&frmAmt=${amt1}&toAmt=${amt2}`);
         }
