@@ -235,7 +235,8 @@
                             <tr>
                                 <input  hidden  type="text"  formControlName="fromAcctDescp"  id="fromAcctDescp" [(ngModel)]="fromAcctDescp" class="form-control"  >
                                 <input  hidden  type="text"  formControlName="bankId"  id="bankId" [(ngModel)]="bankId" class="form-control"  >
-                                 
+                                <input  hidden  type="text"  formControlName="bankAccountId"  id="bankAccountId" [(ngModel)]="bankAccountId" class="form-control"  >
+                               
                                 <div *ngIf="selectdisp; then disp1; else disp2"></div>
                                  <ng-template #disp2> 
                                        
@@ -251,7 +252,7 @@
                                     <select   formControlName="receiptMethodId" id="receiptMethodId" [(ngModel)]="receiptMethodId"  class="form-control"   
                                     (ngModelChange)="onSelectionFromAc($event)" style="background-color: yellow;" >     
                                     <option >--Select--</option>
-                                    <option *ngFor="let sc of  fromAcctList" [ngValue]="sc.bankAccountId">
+                                    <option *ngFor="let sc of  fromAcctList" [ngValue]="sc.receiptMethodId">
                                     {{sc.methodName}}
                                     </option>
                                     </select>
@@ -276,7 +277,7 @@
                                 <td>  
                                     <select   formControlName="toAcctDescpId" id="toAcctDescpId" [(ngModel)]="toAcctDescpId"  class="form-control"   (ngModelChange)="onSelectionToAc($event)" style="background-color: yellow;">   
                                     <option disabled>--Select--</option>
-                                    <option *ngFor="let sc of  toAcctList" [ngValue]="sc.bankAccountId">
+                                    <option *ngFor="let sc of  toAcctList" [ngValue]="sc.receiptMethodId">
                                     {{sc.methodName}}
                                     <!-- -{{sc.bankAccountNo}} -->
                                     </option>

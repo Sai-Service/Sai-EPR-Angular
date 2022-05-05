@@ -128,6 +128,7 @@ export class CashBankTransferComponent implements OnInit {
 
       receiptMethodId:number;
       bankId:number;
+      bankAccountId:number;
       toAcctDescpId:number;
 
       trfAmount:number;
@@ -221,6 +222,7 @@ export class CashBankTransferComponent implements OnInit {
           receiptMethodId:[],
           toAcctDescpId:[],
           bankId:[],
+          bankAccountId:[],
     
           status:[],
 
@@ -797,7 +799,7 @@ export class CashBankTransferComponent implements OnInit {
               return;
             }
             
-            let selectedValue = this.fromAcctList.find(v => v.bankAccountId == methodId);
+            let selectedValue = this.fromAcctList.find(v => v.receiptMethodId == methodId);
             if( selectedValue != undefined){
               console.log(selectedValue);
              this.fromAcctDescp=selectedValue.methodName;
@@ -865,10 +867,11 @@ export class CashBankTransferComponent implements OnInit {
              return;
             }
 
-              let selectedValue = this.toAcctList.find(v => v.bankAccountId == methodId);
+              let selectedValue = this.toAcctList.find(v => v.receiptMethodId == methodId);
               if( selectedValue != undefined){
                 console.log(selectedValue);
                this.toAcctDescp=selectedValue.methodName+'-'+selectedValue.bankAccountNo;
+               this.bankAccountId=selectedValue.bankAccountId;
               }
   
                this.service.getPayRecAccountCode(methodId,this.ouId,this.divisionId,this.locId)

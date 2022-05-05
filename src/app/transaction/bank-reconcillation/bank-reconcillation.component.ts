@@ -334,6 +334,7 @@ export class BankReconcillationComponent implements OnInit {
         this.controlDrLineCount=select.controlDrLineCount;
         this.controlCrLineCount=select.controlCrLineCount;
         this.currencyCode=select.currencyCode;
+        this.statementHeaderId=select.statementHeaderId;
        
       
         this.invLineArray().reset();
@@ -387,7 +388,7 @@ export class BankReconcillationComponent implements OnInit {
 
           // alert ("if refType ,ptype: " +refType  + "," + ptype);
 
-        var trnType=this.bankReconcillationForm.get("transType").value
+        var trnType=this.bankReconcillationForm.get("referenceType").value
         var bnkAcNo=this.bankReconcillationForm.get("bankAccountNo").value
         var dt1=this.pipe.transform(this.date1, 'dd-MMM-y');
         var dt2=this.pipe.transform(this.date2, 'dd-MMM-y');
