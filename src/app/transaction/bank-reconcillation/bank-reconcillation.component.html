@@ -18,8 +18,10 @@
                 <table class="center" style="width: 100%;background-color: #FFE4B5;">
                   
                             <tr>
-                            <td  style="background-color: #FFE4B5;">&nbsp;Account&nbsp;Number&nbsp;:&nbsp;</td>
+                            <td class="LabelFontStyle" style="background-color: #FFE4B5;">&nbsp;Account&nbsp;Number&nbsp;:&nbsp;</td>
                             
+                            <!-- <td style="width: 15%" class="LabelFontStyle"></td> -->
+
                             <!-- <td style="background-color: #FFE4B5;">
                                 <input type="number" class="form-control" formControlName="bankAccountNo" [(ngModel)]='bankAccountNo'
                                     value={{bankAccountNo}}>
@@ -35,14 +37,14 @@
                                 </select>
                             </td>
 
-                            <td  style="background-color: #FFE4B5;">&nbsp;Statement&nbsp;&nbsp;Number:&nbsp;</td>
+                            <td class="LabelFontStyle" style="background-color: #FFE4B5;">&nbsp;Statement&nbsp;&nbsp;Number:&nbsp;</td>
                             
                             <td style="background-color: #FFE4B5;">
                                 <input type="text" class="form-control" formControlName="stNumber" [(ngModel)]='stNumber'
                                     value={{stNumber}} >
                             </td>
 
-                            <td  style="background-color: #FFE4B5;">&nbsp;Document&nbsp;&nbsp;Number:&nbsp;</td>
+                            <td class="LabelFontStyle" style="background-color: #FFE4B5;">&nbsp;Document&nbsp;&nbsp;Number:&nbsp;</td>
                             
                             <td style="background-color: #FFE4B5;">
                                 <input type="number" class="form-control" formControlName="docNumber" [(ngModel)]='docNumber'
@@ -55,21 +57,21 @@
                             </tr>
                             <tr>
 
-                                <td  style="background-color: #FFE4B5;">&nbsp;Date&nbsp;&nbsp;:&nbsp;</td>
+                                <td class="LabelFontStyle" style="background-color: #FFE4B5;">&nbsp;Date&nbsp;&nbsp;:&nbsp;</td>
                             
                                 <td style="background-color: #FFE4B5;">
                                     <input type="date" class="form-control" formControlName="stDate" [(ngModel)]='stDate'
                                         value={{stDate}} max="{{minDate | date:'yyyy-MM-dd'}}" >
                                 </td>
 
-                            <td  style="background-color: #FFE4B5;">&nbsp;GL&nbsp;&nbsp;Date:&nbsp;</td>
+                            <td class="LabelFontStyle" style="background-color: #FFE4B5;">&nbsp;GL&nbsp;&nbsp;Date:&nbsp;</td>
                             
                             <td style="background-color: #FFE4B5;">
                                 <input type="date" class="form-control" formControlName="glDate" [(ngModel)]='glDate'
                                     value={{glDate}} max="{{minDate | date:'yyyy-MM-dd'}}" >
                             </td>
 
-                            <td  style="background-color: #FFE4B5;">&nbsp;Complete&nbsp;&nbsp;:&nbsp;</td>
+                            <td class="LabelFontStyle" style="background-color: #FFE4B5;">&nbsp;Complete&nbsp;&nbsp;:&nbsp;</td>
                             
                             <!-- <td style="background-color: #FFE4B5;">
                                 <input type="text" class="form-control" formControlName="complete" [(ngModel)]='complete'
@@ -191,25 +193,25 @@
              
             <table class="center" style="width: 100%;">
                  <tr>
-                    <td > Account &nbsp;No&nbsp;:&nbsp;</td> 
+                    <td class="LabelFontStyle"> Account &nbsp;No&nbsp;:&nbsp;</td> 
                     <td ><input readonly  type="text" class="form-control" formControlName="bankAccountNo"  [(ngModel)]="bankAccountNo"  style="background-color: lightgray;width: 200px;"></td>
-                    <td > Statement &nbsp;No&nbsp;:&nbsp;</td> 
+                    <td class="LabelFontStyle"> Statement &nbsp;No&nbsp;:&nbsp;</td> 
                     <!-- <td style="font-weight: bold;">{{this.statementNumber}}</td> -->
                     <td><input readonly  type="text" class="form-control" formControlName="statementNumber"  [(ngModel)]="statementNumber"  style="background-color: lightgray;"></td>
-                    <td > Bank&nbsp;Name&nbsp;:&nbsp;</td> 
+                    <td class="LabelFontStyle"> Bank&nbsp;Name&nbsp;:&nbsp;</td> 
                     <!-- <td style="font-weight: bold;">{{this.statementDate}}</td> -->
                     <td><input disabled  type="text" class="form-control" formControlName="bankAccountName"  [(ngModel)]="bankAccountName"  style="background-color: lightgray;width: 200px;"></td>
                       
                 </tr>
 
                 <tr>
-                    <td > Account &nbsp;Name&nbsp;:&nbsp;</td>
+                    <td class="LabelFontStyle"> Account &nbsp;Name&nbsp;:&nbsp;</td>
                     <td ><input readonly  type="text" class="form-control" formControlName="bankAccountName"  [(ngModel)]="bankAccountName"  style="background-color: lightgray;width: 200px;"></td>
                                       
-                    <td > Statement &nbsp;Date&nbsp;:&nbsp;</td> 
+                    <td class="LabelFontStyle"> Statement &nbsp;Date&nbsp;:&nbsp;</td> 
                     <!-- <td style="font-weight: bold;">{{this.statementDate}}</td> -->
                     <td><input disabled  type="text" class="form-control" formControlName="statementDate"  [(ngModel)]="statementDate"  style="background-color: lightgray;"></td>
-                    <td > Branch &nbsp;:&nbsp;</td> 
+                    <td class="LabelFontStyle"> Branch &nbsp;:&nbsp;</td> 
                     <td><input readonly  type="text" class="form-control" formControlName="branchName"  [(ngModel)]="branchName"  style="background-color: lightgray;width: 200px;"></td>
                   
                    
@@ -234,9 +236,9 @@
                         <td style="text-align: right;">Lines&nbsp;</td> 
                     </tr> -->
                      <tr>
-                        <td >Opening&nbsp;Balance&nbsp;:</td> 
+                        <td class="LabelFontStyle">Opening&nbsp;Balance&nbsp;:</td> 
                         <td><input   type="number" class="form-control" formControlName="controlBeginBalance"  [(ngModel)]="controlBeginBalance" style="width: 130px;background-color: yellow;"></td>
-                        <td>Receipts&nbsp;:&nbsp;</td> 
+                        <td class="LabelFontStyle">Receipts&nbsp;:&nbsp;</td> 
                         <td><input   type="number" class="form-control" formControlName="controlTotalCr"  [(ngModel)]="controlTotalCr" style="width: 130px;background-color: yellow;" ></td>
                         <td><input   type="number" class="form-control" formControlName="controlCrLineCount"  [(ngModel)]="controlCrLineCount" style=" width:55px ;background-color: yellow;"></td>
                     </tr>   
@@ -244,19 +246,19 @@
                      
                     
                     <tr>
-                    <td >Closing&nbsp;Balance&nbsp;:</td> 
+                    <td class="LabelFontStyle">Closing&nbsp;Balance&nbsp;:</td> 
                     <td><input   type="number" class="form-control" formControlName="controlEndBalance"  [(ngModel)]="controlEndBalance" style="width: 130px;background-color: yellow;" ></td>
                        
-                       <td >Payments&nbsp;:&nbsp;</td>
+                       <td class="LabelFontStyle">Payments&nbsp;:&nbsp;</td>
                         <td><input   type="number" class="form-control" formControlName="controlTotalDr"  [(ngModel)]="controlTotalDr" style="width: 130px;background-color: yellow;" ></td>
                         <td><input   type="number" class="form-control" formControlName="controlDrLineCount"  [(ngModel)]="controlDrLineCount"  style=" width:55px ;background-color: yellow;"></td>
                    
                     </tr>
                     <tr>
-                        <td >Available&nbsp;Balance&nbsp;:</td> 
-                        <td><input disabled  type="number" class="form-control" formControlName="avlBalance"  [(ngModel)]="avlBalance" style="width: 130px;" ></td>
-                        <td >Value&nbsp;Dated&nbsp;Balance&nbsp;:</td> 
-                        <td><input disabled  type="number" class="form-control" formControlName="valueDtdBalance"  [(ngModel)]="valueDtdBalance" style="width: 130px;" ></td>
+                        <td class="LabelFontStyle">Available&nbsp;Balance&nbsp;:</td> 
+                        <td ><input disabled  type="number" class="form-control" formControlName="avlBalance"  [(ngModel)]="avlBalance" style="width: 130px;" ></td>
+                        <td class="LabelFontStyle">Value&nbsp;Dated&nbsp;Balance&nbsp;:</td> 
+                        <td ><input disabled  type="number" class="form-control" formControlName="valueDtdBalance"  [(ngModel)]="valueDtdBalance" style="width: 130px;" ></td>
                     </tr>
                    
     
@@ -273,25 +275,25 @@
                     <table class="center" style="width: 100%;">
                   
                         <tr>
-                            <td >Opening&nbsp;Balance&nbsp;:</td> 
+                            <td class="LabelFontStyle">Opening&nbsp;Balance&nbsp;:</td> 
                             <td><input disabled  type="number" class="form-control" formControlName="controlBeginBalance"  [(ngModel)]="controlBeginBalance" style="width: 130px;"></td>
-                            <td>Receipts&nbsp;:&nbsp;</td> 
+                            <td class="LabelFontStyle">Receipts&nbsp;:&nbsp;</td> 
                             <td><input  disabled type="number" class="form-control" formControlName="controlTotalCr"  [(ngModel)]="controlTotalCr" style="width: 130px;" ></td>
                             <td><input disabled  type="number" class="form-control" formControlName="controlCrLineCount"  [(ngModel)]="controlCrLineCount" style=" width:52px ;"></td>
                         </tr>   
     
                         <tr>
-                        <td >Closing&nbsp;Balance&nbsp;:</td> 
+                        <td class="LabelFontStyle">Closing&nbsp;Balance&nbsp;:</td> 
                         <td><input disabled  type="number" class="form-control" formControlName="controlEndBalance"  [(ngModel)]="controlEndBalance" style="width: 130px;" ></td>
                            
-                           <td >Payments&nbsp;:&nbsp;</td>
+                           <td class="LabelFontStyle">Payments&nbsp;:&nbsp;</td>
                             <td><input disabled  type="number" class="form-control" formControlName="controlTotalDr"  [(ngModel)]="controlTotalDr" style="width: 130px;" ></td>
                             <td><input disabled  type="number" class="form-control" formControlName="controlDrLineCount"  [(ngModel)]="controlDrLineCount"  style=" width:52px ;"></td>
                        
                         </tr>
                         <tr>
                             <td><td></td>
-                            <td >Unreconcilled&nbsp;&nbsp;:</td> 
+                            <td class="LabelFontStyle">Unreconcilled&nbsp;&nbsp;:</td> 
                             <td><input disabled  type="number" class="form-control" formControlName="unreconamt"  [(ngModel)]="unreconamt" style="width: 130px;" ></td>
                             <td><input disabled  type="number" class="form-control" formControlName="unreconcnt"  [(ngModel)]="unreconcnt" style=" width:52px ;"></td>
                        
@@ -401,26 +403,28 @@
                     <td style="font-weight:bold;"><input type="radio" id="appymt"   name="optType" value="payment"   checked  (change)="radioEvent($event)" >&nbsp;AP&nbsp;Payment&nbsp;&nbsp;&nbsp;&nbsp;</td>
                     <td style="font-weight:bold;"><input type="radio" id="arrcpt"   name="optType" value="receipt"   (change)="radioEvent($event)" >&nbsp;AR&nbsp;Receipt&nbsp;&nbsp;&nbsp;&nbsp;</td>
                     <td style="font-weight:bold;"><input type="radio" id="cashflow" name="optType" value="cashflow" (change)="radioEvent($event)">&nbsp;Cash&nbsp;Flow</td>
-                    <input hidden  formControlName="transType"  [(ngModel)]="transType" >
+                    <!-- <input hidden  formControlName="transType"  [(ngModel)]="transType" > -->
                 </tr>
                     <br>
                 <tr>
-                    <td > Transaction &nbsp;Type&nbsp;:&nbsp;</td> 
+                    <td class="LabelFontStyle"> Tran|Ref &nbsp;Type&nbsp;:&nbsp;</td> 
+                    <td ><input disabled  type="text" class="form-control" formControlName="transType"  [(ngModel)]="transType"  style="width: 170px;" ></td>
                     <td ><input disabled  type="text" class="form-control" formControlName="referenceType"  [(ngModel)]="referenceType"  style="width: 170px;" ></td>
+             
                 </tr> 
                  <tr>
-                    <td > Transaction &nbsp;No&nbsp;:&nbsp;</td> 
+                    <td class="LabelFontStyle"> Transaction &nbsp;No&nbsp;:&nbsp;</td> 
                     <td ><input   type="text" class="form-control" formControlName="transNo1"  [(ngModel)]="transNo1"  style="width: 170px;background-color: yellow;text-align: center;" ></td>
                     <td ><input   type="text" class="form-control" formControlName="transNo2"  [(ngModel)]="transNo2"  style="width: 170px;background-color: yellow;text-align: center;" ></td>
                  </tr>
                  <tr> 
                   
-                    <td > Date &nbsp;&nbsp;:&nbsp;</td> 
+                    <td class="LabelFontStyle"> Date &nbsp;&nbsp;:&nbsp;</td> 
                     <td ><input   type="date" class="form-control" formControlName="date1"  [(ngModel)]="date1" (change)="validateDate()"  max="{{minDate | date:'yyyy-MM-dd'}}" style="width: 170px;background-color: yellow;text-align: center;" ></td>
                     <td ><input   type="date" class="form-control" formControlName="date2"  [(ngModel)]="date2" (change)="validateDate()"  max="{{minDate | date:'yyyy-MM-dd'}}" style="width: 170px;background-color: yellow;text-align: center;" ></td>
                 </tr>  
                 <tr>
-                     <td > Amount &nbsp;:&nbsp;</td> 
+                     <td class="LabelFontStyle"> Amount &nbsp;:&nbsp;</td> 
                      <td><input   type="number" class="form-control" formControlName="amount1"  [(ngModel)]="amount1"  style="width: 170px;background-color: yellow;text-align: center;" ></td>
                      <td><input   type="number" class="form-control" formControlName="amount2"  [(ngModel)]="amount2"  style="width: 170px;background-color: yellow;text-align: center;" ></td>
 
