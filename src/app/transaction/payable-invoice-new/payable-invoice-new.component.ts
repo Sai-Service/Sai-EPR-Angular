@@ -43,7 +43,7 @@ interface IpoInvoice {
   // paymentMethod:'CHEQUE';
   payGroup: string;
   prepayType: string;
-  addonType:string;
+  addonType: string;
   settlementDate: Date;
   taxationCountry: string;
   remitToSuppName: string;
@@ -69,6 +69,7 @@ interface IpoInvoice {
   // chassisNo: string;
   // description:string;
   voucherNum: number;
+  trxNumber: number;
 }
 
 interface ISearch {
@@ -197,6 +198,7 @@ export class PayableInvoiceNewComponent implements OnInit {
   isVisiblepayGroupSelectList: boolean = false;
   isVisiblepayGroupGroupinput: boolean = false;
   isVisiblelineDetialsDeleteButton: boolean = false;
+  isVisibleAddonType: boolean = false;
   // invoiceDate = this.pipe.transform(this.now, 'yyyy-MM-ddTHH:mm');
   // invoiceDate = this.pipe.transform(this.now, 'dd-MMM-yyyy');
   // accountingDate = new Date();
@@ -238,7 +240,7 @@ export class PayableInvoiceNewComponent implements OnInit {
   // public paymentMethod = 'CHEQUE';
   payGroup: string;
   prepayType: string;
-  addonType:string;
+  addonType: string;
   settlementDate: Date;
   taxationCountry: string;
   remitToSuppName: string;
@@ -389,6 +391,7 @@ export class PayableInvoiceNewComponent implements OnInit {
   displaylineNumber = true;
   // chassisNo: string;
   voucherNum: number;
+  trxNumber: number;
 
   constructor(private fb: FormBuilder, private router1: ActivatedRoute, private orderManagementService: OrderManagementService, private transactionService: TransactionService, private service: MasterService, private router: Router) {
     this.poInvoiceForm = fb.group({
@@ -558,6 +561,7 @@ export class PayableInvoiceNewComponent implements OnInit {
       // chassisNo: [''],
       description: [],
       voucherNum: [],
+      trxNumber: [],
       suppId: [],
       suppInvDate: [],
       suppNo: [],
@@ -577,7 +581,7 @@ export class PayableInvoiceNewComponent implements OnInit {
       terms: [],
       paymentMethod: ['', [Validators.required]],
       prepayType: [],
-      addonType:[],
+      addonType: [],
       settlementDate: [],
       taxationCountry: [],
       remitToSuppName: [],
@@ -678,7 +682,7 @@ export class PayableInvoiceNewComponent implements OnInit {
 
       }
     );
-
+    this.isVisibleAddonType = true;
     this.poInvoiceForm.patchValue({ invoiceStatus: 'Not Validated' })
     this.isVisiblelineDetialsDeleteButton = true;
     this.paymentMethod1 = 69;
@@ -977,6 +981,7 @@ export class PayableInvoiceNewComponent implements OnInit {
     this.transactionService.getsearchByApINV(JSON.stringify(searchObj)).subscribe((res: any) => {
       if (res.code === 200) {
         this.isDisabled = true;
+        this.isVisibleAddonType = false;
         this.isVisibleSave = false;
         this.isVisibleUpdateBtn = false;
         this.isVisibleValidate = false;
@@ -1495,7 +1500,7 @@ export class PayableInvoiceNewComponent implements OnInit {
       var controlDist = this.poInvoiceForm.get('distribution').value;
 
       if (controlDist[0].lineTypeLookupCode != null && controlDist[0].distLineNumber != null) {
-          this.lineDistributionArray().push(this.distLineDetails());
+        this.lineDistributionArray().push(this.distLineDetails());
       }
       var aa = this.lineDistributionArray().length;
       // var invoiceLineNum = controlDist.length;
@@ -1504,17 +1509,17 @@ export class PayableInvoiceNewComponent implements OnInit {
       //    patch.controls[k].patchValue({ 'amount': amount, 'baseAmount': amount, 'description': description });
       //  }
       // // else if (invoiceLineNum === null) {
-        (patch.controls[aa - 1]).patchValue(
-          {
-            distLineNumber: aa,
-            invoiceLineNum: invln,
-            lineTypeLookupCode: itemtyp,
-            amount: amount,
-            baseAmount: amount,
-            accountingDate: this.pipe.transform(this.now, 'dd-MMM-yyyy'),
-            description: description
-          }
-        );
+      (patch.controls[aa - 1]).patchValue(
+        {
+          distLineNumber: aa,
+          invoiceLineNum: invln,
+          lineTypeLookupCode: itemtyp,
+          amount: amount,
+          baseAmount: amount,
+          accountingDate: this.pipe.transform(this.now, 'dd-MMM-yyyy'),
+          description: description
+        }
+      );
       // }
 
       this.distarr.set(invln, this.poInvoiceForm.get('distribution').value);
@@ -1762,40 +1767,41 @@ export class PayableInvoiceNewComponent implements OnInit {
             this.lineDetailsArray().controls[0].patchValue({ payGroup: data.suppId.supTdsTyp });
           }
           // alert(data.suppId.name)
-         
+
         }
       );
   }
 
   onSelectChassis(event, i) {
     // alert(i+'-----'+ event.target.value);
-    let select = this.chassisNoList.find(d => d.chassisNo === event.target.value);
+    let select = this.chassisNoList.find(d => d.orderedItem === event.target.value);
     console.log(select);
     this.lineDetailsArray().controls[i].patchValue({ voucherNum: select.referenceNo });
+    this.lineDetailsArray().controls[i].patchValue({ trxNumber: select.trxNumber });
   }
 
 
-  onSelectAddonType(event){
-    var addType=event.target.value;
-    if (addType.includes('RTO')){
-    alert('Your selected RTO addon Type. Please Select Chassis & Order Number.!')
-    this.service.chassisList(sessionStorage.getItem('ouId'),addType)
-      .subscribe(
-        data => {
-          console.log(data);
-          this.chassisNoList = data;
-        })
-      }
-      else if (addType.includes('INS')){
-        alert('Your selected Insurance addon Type. Please Select Chassis & Order Number.!')
-        this.service.chassisList(sessionStorage.getItem('ouId'),addType)
-          .subscribe(
-            data => {
-              console.log(data);
-              this.chassisNoList = data;
-            })
-      }
-}
+  onSelectAddonType(event) {
+    var addType = event.target.value;
+    if (addType.includes('RTO')) {
+      alert('Your selected RTO addon Type. Please Select Chassis & Order Number.!')
+      this.service.chassisList(sessionStorage.getItem('ouId'), addType)
+        .subscribe(
+          data => {
+            console.log(data);
+            this.chassisNoList = data.obj;
+          })
+    }
+    else if (addType.includes('INS')) {
+      alert('Your selected Insurance addon Type. Please Select Chassis & Order Number.!')
+      this.service.chassisList(sessionStorage.getItem('ouId'), addType)
+        .subscribe(
+          data => {
+            console.log(data);
+            this.chassisNoList = data.obj;
+          })
+    }
+  }
 
   onOptionTaxCatSelected(taxCategoryName, k) {
     if (this.isSearchPatch === false) {
@@ -2427,7 +2433,7 @@ export class PayableInvoiceNewComponent implements OnInit {
         this.isVisibleSave = false;
         this.isVisibleUpdateBtn = false;
         this.isVisibleValidate = false;
-
+        this.isVisibleAddonType = false;
         if (res.obj.length === 0) {
           alert('AP Invoice Details not Find !...');
           this.poInvoiceForm.reset();
@@ -2710,7 +2716,7 @@ export class PayableInvoiceNewComponent implements OnInit {
         }
       }
     }
-    // alert('Header Amt---'+amount+'---Total Line Amt---'+totalOfInvLineAmout+'----total Distribution Amt---' +totalOfDistributionAmout);
+    // alert('Header Amt---' + amount + '---Total Line Amt---' + totalOfInvLineAmout + '----total Distribution Amt---' + totalOfDistributionAmout);
     if (amount == totalOfInvLineAmout && amount == totalOfDistributionAmout) {
       var arrayControl = this.poInvoiceForm.get('obj').value;
       var invoiceNum = this.lineDetailsArray().controls[this.selectedLine].get('invoiceNum').value;
@@ -3122,5 +3128,26 @@ export class PayableInvoiceNewComponent implements OnInit {
       this.lineDetailsArray().controls[0].get('invoiceDate').enable();
     }
   }
+
+  roundOffAP() {
+    var invoiceNum = this.lineDetailsArray().controls[this.selectedLine].get('invoiceNum').value;
+    this.transactionService.roundOffAP(invoiceNum).subscribe((res: any) => {
+      if (res.code === 200) {
+        alert(res.message);
+        this.apInvFind(res.obj.invoiceNum);
+        this.TaxDetailsArray().clear();
+        this.TdsDetailsArray().clear();
+        this.lineDetailsArray().clear();
+        this.tdsTaxDetailsArray().clear();
+        this.invLineDetailsArray().clear();
+      } else {
+        if (res.code === 400) {
+          alert(res.message);
+          
+        }
+      }
+    });
+  }
+
 }
 

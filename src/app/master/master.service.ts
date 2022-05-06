@@ -315,7 +315,7 @@ export class MasterService {
   }
 
   chassisList(ouId,addonType): Observable<any> {
-    return this.http.get(this.ServerUrl +`/chssisListOrder?orgId${ouId}&addonType=${addonType}`);
+    return this.http.get(this.ServerUrl +`/arInv/chssisListOrder?orgId=${ouId}&addonType=${addonType}`);
   }
 
   // http://localhost:8081/arInv/chssisListOrder?orgId=21&addonType=SS_ADDON_RTO

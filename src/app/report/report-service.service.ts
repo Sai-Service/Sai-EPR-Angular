@@ -47,7 +47,7 @@ export class ReportServiceService {
 
 
   SprStkTrfRecdDtlsReport(invcDt1,invcDt4,tolocId,fromlocId,subInvCode,deptId){
-    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprStkTrfRecdDtls?fromDate=${invcDt1}&toDate=${invcDt4}&shipToLoc=${tolocId}&shipFromLoc=${fromlocId}&subInvCode=${subInvCode}&dep=${deptId}`;
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprStkTrfRecdDtls?fromDate=${invcDt1}&toDate=${invcDt4}&shipToLoc=${tolocId}&shipFromLoc=${fromlocId}&subInvCode=${subInvCode}&deptId=${deptId}`;
     return this.http.get(REQUEST_URI, {
       responseType: 'arraybuffer',
       headers: this.headers,
@@ -519,6 +519,15 @@ amcSaleRegister(fromDate,toDate,ouId,locId){
 
 EWSaleRegister(fromDate,toDate,ouId,locId){
   const REQUEST_URI = this.ServerUrl +`/ServiceReports/EWSalesRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
+  return this.http.get(REQUEST_URI, {
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
+}
+
+
+reinsuarnceReceiptPrint(receiptNo){
+  const REQUEST_URI = this.ServerUrl +`/SalesReports/ReInsuranceReceipt?receiptNumber=${receiptNo}`;
   return this.http.get(REQUEST_URI, {
     responseType: 'arraybuffer',
     headers: this.headers,
