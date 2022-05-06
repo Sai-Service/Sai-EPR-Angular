@@ -807,10 +807,12 @@ export class OrderManagementService {
   }
 
 
-  printArReceipt(rcptNumber) {
+  printArReceipt(rcptNumber,refTp) {
     const REQUEST_URI = this.ServerUrl + `/arCashReceipts/arReceiptPrint/${rcptNumber}`;
-    // http://localhost:8081/arCashReceipts/arReceiptPrint/21221026900924
-    return this.http.get(REQUEST_URI, {
+    if(refTp==='ReIns-Renewal') {
+      const REQUEST_URI = this.ServerUrl + `/SalesReports/ReInsuranceReceipt?receiptNumber=${rcptNumber}`;
+    } 
+      return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
       headers: this.headers,

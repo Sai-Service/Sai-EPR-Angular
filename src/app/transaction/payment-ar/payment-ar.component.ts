@@ -8,6 +8,7 @@ import { OrderManagementService } from 'src/app/order-management/order-managemen
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { relativeTimeRounding } from 'moment';
 import { ServiceService } from 'src/app/service/service.service';
+import { ReturnStatement } from '@angular/compiler';
 
 interface IPaymentRcptAr {
 
@@ -256,6 +257,7 @@ export class PaymentArComponent implements OnInit {
 
   showInvoiceGrid = false;
   showRefundGrid = false;
+  showRefundHist=false;
   showOnAcGrid = false;
   insuranceFlag: string;
   refType: string;
@@ -444,6 +446,7 @@ export class PaymentArComponent implements OnInit {
       billToSiteId: [],
       invCurrancyCode: [],
       refReasonCode: [],
+      insurance:[],
       // emplId:[],
 
     })
@@ -1196,6 +1199,14 @@ if(this.deptId==2){
 
                 this.GetCustomerDetails(data.obj.oePayList[0].customerId)
                this.GetCustomerSiteDetails(data.obj.oePayList[0].customerId)
+
+                this.showRefundHist=false;
+                if(data.obj.oePayList[0].status ==='REFUND') {
+                  this.showReasonDetails=false;this.enableCancelButton = false; this.enableApplyButton = false;
+                  this.showRefundHist=true;
+                  return;
+                }
+
                
      
                if( data.obj.oePayList[0].reversalReasonCode !=null) {
@@ -2737,7 +2748,8 @@ if(this.deptId==2){
 
     var applLineArr = this.paymentArForm.get('invLine').value;
     var lineValue1 = applLineArr[i].applAmtNew;
-    var lineValue2 = applLineArr[i].refReasonCode;
+    // var lineValue2 = applLineArr[i].refReasonCode;
+    var lineValue2 = applLineArr[i].insurance;
     var tglDate = new Date(applLineArr[i].glDateLine);
     var chkFlag = applLineArr[i].applyrcptFlag;
     var j = i + 1;
@@ -2890,9 +2902,11 @@ if(this.deptId==2){
 
   printReceipt(){
     var mRtnOrderNumber=this.paymentArForm.get('receiptNumber').value
+    var refTp=this.paymentArForm.get('refType').value
+    alert ("Ref Type : "+refTp);
     const fileName = 'download.pdf';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.orderManagementService.printArReceipt(mRtnOrderNumber)
+    this.orderManagementService.printArReceipt(mRtnOrderNumber ,refTp)
       .subscribe(data => {
         var blob = new Blob([data], { type: 'application/pdf' });
         var url = URL.createObjectURL(blob);
