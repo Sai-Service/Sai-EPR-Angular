@@ -783,6 +783,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
         this.isVisibleOrderFind=false;
       }
     });
+    this.isVisibleOrderFind=true;
 
     this.displaysegmentInvType[0] = true;
 

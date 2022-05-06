@@ -91,6 +91,10 @@
                             <a class="dropdown-item" data-toggle="collapse" href="#panelfromtolocation" role="tab"
                               (click)="reportDetails('EWSaleRegister')">EW Sales Register</a>
                           </li>
+                          <li>
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelreceiptNo" role="tab"
+                              (click)="reportDetails('reinsuarnceReceiptPrint')">Reinsurance Receipt Print</a>
+                          </li>
                     </ul>
                 </li>
 
@@ -940,6 +944,75 @@
                             <input  disabled hidden type="number" class="form-control" formControlName="locId">
 
                         </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                          <table class="center">
+                            <tr>
+                              <td colspan="4">
+                                <table class="center" style="width: 100%;">
+                                  <tr>
+                                    <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                                    <ng-template #hList2>
+                                      <div class="d-flex justify-content-center">
+                                        <div class="spinner-border text-primary" role="status">
+                                          <span class="sr-only" id="loading"></span>
+                                        </div>
+                                      </div>
+                                    </ng-template>
+                                    <ng-template #hList1> </ng-template>
+                                    <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">
+                                      &nbsp;{{dataDisplay}}&nbsp; </td>
+                                  </tr>
+                                </table>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td colspan="4">
+                                  <table class="center" style="width: 100%;margin-left: 50%;">
+                                      <tr>
+                                        <td>
+                                            <button class="btn-primary" [disabled]="isDisabled1" (click)="reportParameter(reportName)">View
+                                              Report</button>
+                                          </td>
+                                      </tr>
+                                  </table>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+
+
+    <table class="center"   style="margin-left: 30%;"
+        [style.display]="isVisiblepanelreceiptNo ? 'block' : 'none'" class="collapse"
+        id="panelreceiptNo">
+        <tr>
+            <td>
+                <table class="center">  
+                    <tr>
+                        <td colspan="4" class="LabelFontStyle" style="width: 100%;">
+                            {{reportName}}
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table class="center">
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            &nbsp;Receipt&nbsp;Number&nbsp;:&nbsp;
+                        </td>
+                        <td>
+                            <input type="number" class="form-control" formControlName="receiptNo">
+                        </td>     
                     </tr>
                     <tr>
                         <td colspan="4">

@@ -65,6 +65,14 @@ apInvoiceCancellation(invoiceNum,emplId): Observable<any> {
     return this.http.get(this.ServerUrl+`/apInv/apSuppDtls/?suppId=${supId}&suppSiteId=${supsiteId}`)
   }
 
+  roundOffAP(invoiceNum) {
+    const options = {
+      headers: this.headers
+    };
+    const url = (this.ServerUrl + `/apInv/roundoff/${invoiceNum}`);
+    return this.http.put(url, invoiceNum, options);
+  }
+
   paymentMethodList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/locationMst');
   }
