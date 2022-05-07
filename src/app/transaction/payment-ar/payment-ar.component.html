@@ -1054,11 +1054,14 @@
                                                                 <td><input style="width: 150px;height: 25px;text-align: right;background-color: yellow;"    type="number" min="0" formControlName="applAmtNew" (change)="validateLineRefAmt(k)" class="form-control" > </td>
                                                                 <!-- <td><input style="width: 480px;height: 25px;text-align: left;background-color: yellow;"    type="text" formControlName="refReasonCode" class="form-control" > </td> -->
                                                                 <td>
-                                                                    <select formControlName="refReasonCode" id="refReasonCode" [(ngModel)]="refReasonCode" class="form-control"  style="width: 480px;height: 25px;text-align: left;background-color: yellow;">
+                                                                    <!-- <select formControlName="refReasonCode" id="refReasonCode" [(ngModel)]="refReasonCode" class="form-control"  style="width: 480px;height: 25px;text-align: left;background-color: yellow;"> -->
                                                                                              <!-- (ngModelChange)='onReasonSelected($event)'> -->
-                                                                        <option disabled>--Select--</option>
-                                                                        <option *ngFor="let sc of  RefReasonList" [ngValue]="sc.cmnTypeId"  >
-                                                                            {{sc.cmnTypeId}}-{{sc.code}}-{{sc.cmnDesc}}
+                                                                    <select formControlName="insurance" id="insurance" [(ngModel)]="insurance" class="form-control"  style="width: 480px;height: 25px;text-align: left;background-color: yellow;">
+                                                                       <option disabled>--Select--</option>
+                                                                        <!-- <option *ngFor="let sc of  RefReasonList" [ngValue]="sc.cmnTypeId"  > -->
+                                                                            <option *ngFor="let sc of  RefReasonList" [ngValue]="sc.cmnDesc"  >
+                                                                            <!-- {{sc.cmnTypeId}}-{{sc.code}}- -->
+                                                                            {{sc.cmnDesc}}
                                                                         </option>
                                                                     </select>
                                                                 </td>
@@ -1279,33 +1282,35 @@
                             <div class="container1">
                                <div class="grid_scroll_3">
                                  <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="font-size:small; border-color:brown;border-collapse:collapse;width: 100%;">
-                              
-                                  <tbody>
-                                            <tr class="GridHeader">
-                                                <th style="width:6rem" scope="col">Srl#</th>
-                                               <th style="width:10rem" scope="col">Application Type</th>
-                                                <th style="width:10rem" scope="col">Invoice No</th>
-                                                <th style="width:10rem" scope="col">Invoice Date</th>
-                                                <th style="width:10rem" scope="col">Invoice Amt</th>
-                                                <th style="width:10rem" scope="col">Applied Amt</th>
-                                                <th style="width:10rem" scope="col">Applied Date</th>
-                                                <th style="width:10rem" scope="col">GL Date</th>
-                                                <!-- <th style="width:10rem" scope="col">Balance  Due</th> -->
-                                                                                         
-                                        </tr>
-                                    </tbody>
-                                  
-                                        <tr *ngFor="let com of lstApplyHistory let i= index" class="ItemStyle" style="text-decoration:none;">
-                                            <td style="text-align: center;">{{i+1}}</td>
-                                            <td style="width:10rem;text-align: center;">{{com.applyTo}}</td>
-                                            <td style="width:10rem;text-align: center;">{{com.trxNumber}}</td>
-                                            <td style="width:10rem;text-align: center;">{{com.trxDate |date:'dd-MM-y'}}</td>
-                                            <td style="width:10rem;text-align: right;">{{com.invoiceAmount | number:'0.00'}}</td>
-                                            <td style="width:10rem;text-align: right;">{{com.applAmt | number:'0.00'}}</td>
-                                            <td style="width:10rem;text-align: center;">{{com.applDate |date:'dd-MM-y'}}</td>
-                                            <td style="width:10rem;text-align: center;">{{com.glDate |date:'dd-MM-y'}}</td>
-                                            <!-- <td style="width:6rem;text-align: center;">{{com.balanceDue | number:'0.00'}}</td> -->
-                                        </tr>
+                                    <!-- <div *ngIf="showRefundHist ,then refHistYes; else refHistNo")></div>
+                                    <ng-template #refHistYes> -->
+                                                <tbody>
+                                                    <tr class="GridHeader">
+                                                        <th style="width:3rem" scope="col">Srl#</th>
+                                                        <th style="width:8rem" scope="col">Apply Type</th>
+                                                        <th style="width:8rem" scope="col">Document No</th>
+                                                        <th style="width:8rem" scope="col">Document Date</th>
+                                                        <th style="width:7rem" scope="col">Document Amt</th>
+                                                        <th style="width:7rem" scope="col">Applied Amt</th>
+                                                        <th style="width:8rem" scope="col">Applied Date</th>
+                                                        <th style="width:8rem" scope="col">GL Date</th>
+                                                        <th style="width:20rem" scope="col">Remarks</th>
+                                                     </tr>
+                                                </tbody>
+                                             
+                                                <tr *ngFor="let com of lstApplyHistory let i= index" class="ItemStyle" style="text-decoration:none;">
+                                                    <td style="text-align: center;width: 3rem;">{{i+1}}</td>
+                                                    <!-- <td style="width:10rem;text-align: center;">{{com.applyTo}}</td> -->
+                                                    <td style="width:8rem;text-align: center;">{{com.invType}}</td>
+                                                    <td style="width:8rem;text-align: center;">{{com.trxNumber}}</td>
+                                                    <td style="width:8rem;text-align: center;">{{com.trxDate |date:'dd-MM-y'}}</td>
+                                                    <td style="width:7rem;text-align: right;">{{com.invoiceAmount | number:'0.00'}}</td>
+                                                    <td style="width:7rem;text-align: right;">{{com.applAmt | number:'0.00'}}</td>
+                                                    <td style="width:8rem;text-align: center;">{{com.applDate |date:'dd-MM-y'}}</td>
+                                                    <td style="width:8rem;text-align: center;">{{com.glDate |date:'dd-MM-y'}}</td>
+                                                    <td style="width:15rem;text-align: center;">{{com.refReasonCode}}</td>
+                                                    <!-- <td style="width:6rem;text-align: center;">{{com.balanceDue | number:'0.00'}}</td> -->
+                                                </tr>
                                 </table>
                               </div>
                             </div>

@@ -533,6 +533,9 @@ export class ReturnToVendorComponent implements OnInit {
           this.service.getsearchByReceiptNo(mRcptNumber,this.locId)
           .subscribe(
             data => {
+
+              if(data.code===400) {alert (data.message) ;return; }
+              
               this.lstReceiptHeader = data.obj;
               this.lstReceiptItemLines=data.obj.rcvLines;
               this.lstDebtiNotes=data.obj.rtvLines;

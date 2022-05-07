@@ -807,17 +807,25 @@ export class OrderManagementService {
   }
 
 
-  printArReceipt(rcptNumber) {
-    const REQUEST_URI = this.ServerUrl + `/arCashReceipts/arReceiptPrint/${rcptNumber}`;
-    // http://localhost:8081/arCashReceipts/arReceiptPrint/21221026900924
-    return this.http.get(REQUEST_URI, {
-      // params: REQUEST_PARAMS,
-      responseType: 'arraybuffer',
-      headers: this.headers,
-    });
+  printArReceipt(rcptNumber,refTp) {
+    alert ( "oms >> "+ refTp);
+    // const REQUEST_URI = this.ServerUrl + `/arCashReceipts/arReceiptPrint/${rcptNumber}`;
+    // const REQUEST_URI = this.ServerUrl + `/SalesReports/ReInsuranceReceipt?receiptNumber=${rcptNumber}`;
+    // return this.http.get(REQUEST_URI, { responseType: 'arraybuffer',  headers: this.headers, });
+
+    if(refTp==='ReIns-Renewal') {
+       return this.http.get(this.ServerUrl + `/SalesReports/ReInsuranceReceipt?receiptNumber=${rcptNumber}`, { responseType: 'arraybuffer',  headers: this.headers, });
+      }  
+     else { 
+     return this.http.get(this.ServerUrl + `/arCashReceipts/arReceiptPrint/${rcptNumber}`, { responseType: 'arraybuffer',  headers: this.headers, });
+    }
+
+   }
+
+     
   }
 
 
 
 
-}
+
