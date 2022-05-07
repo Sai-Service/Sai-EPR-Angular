@@ -2903,7 +2903,7 @@ if(this.deptId==2){
   printReceipt(){
     var mRtnOrderNumber=this.paymentArForm.get('receiptNumber').value
     var refTp=this.paymentArForm.get('refType').value
-    alert ("Ref Type : "+refTp);
+    // alert ("Ref Type : "+refTp);
     const fileName = 'download.pdf';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.orderManagementService.printArReceipt(mRtnOrderNumber ,refTp)
