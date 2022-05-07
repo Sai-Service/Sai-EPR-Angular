@@ -712,7 +712,8 @@ export class SalesOrderFormComponent implements OnInit {
       // alert(this.orderNumber)
       if (this.orderNumber != undefined) {
         this.OrderFind(this.orderNumber);
-        this.SalesOrderBookingForm.get('orderNumber').disable();
+        // this.isDisabledOrderFind=false;
+        // this.SalesOrderBookingForm.get('orderNumber').disable();
       }
     });
 
@@ -1441,7 +1442,7 @@ export class SalesOrderFormComponent implements OnInit {
     this.isDisabled3 = true;
     this.isDisabled4 = true;
     this.isDisabled8 = false;
-    this.isDisabledOrderFind=false;
+    // this.isDisabledOrderFind=false;
     this.isDisabledlesseeCustName = true;
     this.currentOpration = 'orderSearch';
     this.SalesOrderBookingForm.get('custName').disable();
@@ -2033,6 +2034,8 @@ export class SalesOrderFormComponent implements OnInit {
     this.progress = 0;
     this.dataDisplay = 'Order Line Save is progress....Do not refresh the Page'
     var orderLines = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value;
+    // var orderLines1 = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+    // var orderLines = orderLines1.getRawValue();
     var orderLinesNew = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     var orderLinesNew1 = orderLinesNew.getRawValue();
     let jsonData = this.SalesOrderBookingForm.value;

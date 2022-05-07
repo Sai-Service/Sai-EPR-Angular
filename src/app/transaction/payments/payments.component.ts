@@ -71,6 +71,7 @@ export class PaymentsComponent implements OnInit {
   source:string;
 
   // payDate = this.pipe.transform(this.todaydate, 'dd-MMM-yyyy');
+  // payDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   payDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   invTypeLookupCode: string;
   invoiceAmt: number;

@@ -194,10 +194,10 @@
                                                     </td>
                                                     <td>
                                                         <!-- <input disabled type="text" class="form-control" formControlName="glDate"
-                                                            value={{glDate}}
+                                                            value={{glDate}}(change)="distrbutionGlDate($event)" 
                                                             style="width: 90px;height: 25px;font-size: 10px;"> -->
                                                         <input type="date" formControlName="glDate" class="form-control"
-                                                            [(ngModel)]='glDate'
+                                                            [(ngModel)]='glDate' 
                                                             style="width: 130px;height: 25px;font-size: 10px;background-color: yellow;">
                                                     </td>
                                                     <td>
@@ -704,10 +704,6 @@
                                     <a class="nav-link waves-light active" data-toggle="tab" href="#lineDetails"
                                         role="tab">Lines</a>
                                 </li>
-                                <!-- <li class="nav-item">
-                                    <a class="nav-link waves-light" data-toggle="tab" href="#taxDetails" role="tab">Tax
-                                        Details</a>
-                                </li> -->
                                 <li class="nav-item">
                                     <a class="nav-link waves-light" data-toggle="tab" href="#distributionDetails"
                                         role="tab">Distribution</a>
@@ -715,7 +711,6 @@
                                 <li class="nav-item" [style.display]="isVisibleTDSTab ? 'block' : 'none'">
                                     <a class="nav-link waves-light" data-toggle="tab" href="#tdsDetails"
                                         (click)="openTDSTab" role="tab">TDS</a>
-                                    <!-- <a class="nav-link" id="contact-tab-md" data-toggle="tab" href="#tdsDetails" role="tab" aria-controls="contact-md" aria-selected="false" (click)="openTDSTab">TDS</a> -->
                                 </li>
                             </ul>
                             <div class="tab-content rounded-bottom">
@@ -797,24 +792,14 @@
 
                                                         <tr class="ItemStyle" style="text-decoration:none;">
                                                             <td>
-
-
-                                                                <div
-                                                                    *ngIf="displayViewTaxDetails; then thenViewTaxDetails; else elseViewTaxDetails">
-                                                                </div>
+                                                                <div *ngIf="displayViewTaxDetails; then thenViewTaxDetails; else elseViewTaxDetails"></div>
                                                                 <ng-template #thenViewTaxDetails>
-                                                                    <button type="button" data-toggle="modal"
-                                                                        (click)="openTaxDetails(k)"
-                                                                        class="btn btn-primary"
-                                                                        data-target="#taxDetailsModel"
-                                                                        style="width: 40px;text-align: left;">Tax..</button>
+                                                                    <button type="button" data-toggle="modal" (click)="openTaxDetails(k)"  class="btn btn-primary"
+                                                                        data-target="#taxDetailsModel" style="width: 40px;text-align: left;">Tax..</button>
                                                                 </ng-template>
                                                                 <ng-template #elseViewTaxDetails>
-                                                                    <button type="button" data-toggle="modal"
-                                                                        (click)="openTaxDetails(k)"
-                                                                        class="btn btn-primary"
-                                                                        data-target="#taxDetailsModel"
-                                                                        style="width: 40px;text-align: left;">Tax..</button>
+                                                                    <button type="button" data-toggle="modal" (click)="openTaxDetails(k)" class="btn btn-primary"
+                                                                        data-target="#taxDetailsModel"  style="width: 40px;text-align: left;">Tax..</button>
                                                                 </ng-template>
                                                             </td>
                                                             <td>
@@ -823,10 +808,10 @@
                                                                     data-toggle="collapse"
                                                                     data-target="#collapseExample" aria-expanded="false"
                                                                     aria-controls="collapseExample"
-                                                                    style="width: 50px;height: 25px;font-size: 10px;"
-                                                                    (click)="selectDisLineDtl(k)" #val1
+                                                                    style="width: 50px;height: 25px;font-size: 10px;" #val1
                                                                     (change)="move(val1,val2)" [disabled]="isDisabled">
                                                             </td>
+                                                            <!-- (click)="selectDisLineDtl(k)" -->
                                                             <td>
 
                                                                 <select class="form-control"
@@ -840,9 +825,7 @@
                                                                     </option>
                                                                 </select>
                                                             </td>
-                                                            <div
-                                                                *ngIf="displayitemName; then thenitemName; else elseitemName">
-                                                            </div>
+                                                            <div  *ngIf="displayitemName; then thenitemName; else elseitemName"> </div>
                                                             <ng-template #thenitemName>
                                                                 <td>
                                                                     <input type="text" disabled
@@ -1122,9 +1105,13 @@
                                                                         style="width: 130px;height: 25px;font-size: 10px;">
                                                                 </ng-template>
                                                                 <ng-template #elseaccountingDate>
-                                                                    <input type="text" disabled
-                                                                        formControlName="accountingDate"
+                                                                    <!-- <input type="text" disabled
+                                                                        formControlName="accountingDate" [(ngModel)]="accountingDate"
                                                                         value={{accountingDate}} class="form-control"
+                                                                        style="width: 130px;height: 25px;font-size: 10px;"> -->
+                                                                        <input type="date" disabled formControlName="accountingDate"
+                                                                        value="{{accountingDate | date:'dd-MM-yyyy'}}"
+                                                                        class="form-control" [(ngModel)]='accountingDate'
                                                                         style="width: 130px;height: 25px;font-size: 10px;">
                                                                 </ng-template>
                                                                 <!-- [(ngModel)]='accountingDate' -->

@@ -222,7 +222,7 @@ export class PayableInvoiceNewComponent implements OnInit {
   // glDate:Date;
   glDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   invoiceDate = this.pipe.transform(Date.now(), 'y-MM-dd');
-  accountingDate = this.pipe.transform(this.now, 'dd-MMM-yyyy');
+   accountingDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   // paymentMethod = 'CHEQUE';
 
 
@@ -1498,7 +1498,6 @@ export class PayableInvoiceNewComponent implements OnInit {
     if ((distributionSet == null && amount != null)) {
       var patch = this.poInvoiceForm.get('distribution') as FormArray;
       var controlDist = this.poInvoiceForm.get('distribution').value;
-
       if (controlDist[0].lineTypeLookupCode != null && controlDist[0].distLineNumber != null) {
         this.lineDistributionArray().push(this.distLineDetails());
       }
@@ -3147,6 +3146,10 @@ export class PayableInvoiceNewComponent implements OnInit {
         }
       }
     });
+  }
+
+  distrbutionGlDate(event){
+    // alert(event.target.value);
   }
 
 }
