@@ -2294,6 +2294,15 @@ export class SalesOrderFormComponent implements OnInit {
           printWindow.open
         });
     }
+    else if (invType=='SS_ADDON_EW'){
+      this.orderManagementService.downloadEWINV(this.orderNumber)
+      .subscribe(data => {
+        var blob = new Blob([data], { type: 'application/pdf' });
+        var url = URL.createObjectURL(blob);
+        var printWindow = window.open(url, '', 'width=800,height=500');
+        printWindow.open
+      });
+    }
     else {
       // alert(invType);
       this.orderManagementService.downloadAddonINV(trxNumber)
