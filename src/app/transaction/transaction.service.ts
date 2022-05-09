@@ -54,7 +54,7 @@ apInvoiceCancellation(invoiceNum,emplId): Observable<any> {
 }
 
   getApInvLineDetails(invoiceNum): Observable<any> {
-    return this.http.get(this.ServerUrl + `/apInv/invDtls/${invoiceNum}`);
+    return this.http.get(this.ServerUrl + `/apInv/invDtls?invNum=${invoiceNum}`);
   }
 
   distLinesDeatailsfa(invoiceId,lineNumber): Observable<any> {

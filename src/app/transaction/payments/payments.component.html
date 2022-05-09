@@ -59,6 +59,7 @@
                             <th scope="col">Type</th>
                             <th scope="col">Invoice Type</th>
                             <th scope="col">Operating Unit</th>
+                            <th scope="col">Location</th>                            
                             <th scope="col">Supplier Name</th>
                             <th scope="col">Supplier Number</th>
                             <th scope="col">Supplier Site</th>
@@ -139,6 +140,16 @@
                                                 style="width: 100px;height: 25px;font-size: 10px;">
                                         </ng-template>
                                     </td>
+                                    <!-- <td>
+                                        <select  type="text" class="form-control" formControlName="locId"
+                                        value={{locId}} [(ngModel)]='locId'
+                                        style="width: 100px;height: 25px;font-size: 10px;">
+                                        <option>--Select--</option>
+                                        <option *ngFor="let sc of  locIdList" [ngValue]="sc.locId" >
+                                            {{sc.locId}}-{{sc.locCode}}
+                                            </option>
+                                            </select>
+                                    </td> -->
                                     <td>
                                         <div *ngIf="displayname; then thenname; else elsename"></div>
                                         <ng-template #thenname>
@@ -219,7 +230,7 @@
                                         <!-- <input type="date" formControlName="payDate" value="{{payDate | date:'dd-MM-yyyy'}}" [(ngModel)]='payDate' class="form-control"
                                             style="width: 100px;height: 25px;font-size: 10px;background-color: yellow;">  value="{{payDate | date:'dd-MM-yyyy'}}"-->
                                             <input type="date" class="form-control"
-                                            formControlName="payDate" [(ngModel)]='payDate'
+                                            formControlName="payDate" [(ngModel)]='payDate'  
                                             style="width: 120px;height: 25px;font-size: 10px;background-color: yellow;">
                                         </td>
                                     <td>
