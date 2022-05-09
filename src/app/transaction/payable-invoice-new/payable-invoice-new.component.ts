@@ -222,7 +222,7 @@ export class PayableInvoiceNewComponent implements OnInit {
   // glDate:Date;
   glDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   invoiceDate = this.pipe.transform(Date.now(), 'y-MM-dd');
-   accountingDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+  accountingDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   // paymentMethod = 'CHEQUE';
 
 
@@ -606,7 +606,6 @@ export class PayableInvoiceNewComponent implements OnInit {
 
 
   lineDistributionArray(): FormArray {
-
     return <FormArray>this.poInvoiceForm.get('distribution')
   }
 
@@ -1400,6 +1399,10 @@ export class PayableInvoiceNewComponent implements OnInit {
     var itemtyp = this.invLineDetailsArray().controls[k].get('lineTypeLookupCode').value;
     var amount = this.invLineDetailsArray().controls[k].get('amount').value;
     var description = this.invLineDetailsArray().controls[k].get('description').value;
+    var distributionArray = this.poInvoiceForm.get('distribution') as FormArray;
+    var distributionArrVal = this.poInvoiceForm.get('distribution').value;
+    console.log(distributionArray);
+
     this.invoiceId = this.lstInvLineDeatails.invoiceId;
     // alert(amount)
     // alert(taxcat+'----');
@@ -1410,11 +1413,38 @@ export class PayableInvoiceNewComponent implements OnInit {
     else {
       if (this.invoiceId == null) {
         alert('Distribution Line Added. Please Enter Code Combination Value in Ditribution Tab.!');
-        if (itemtyp != 'MISCELLANEOUS') {
-          this.distribution1(k, itemtyp, amount, description);
-          if (taxcat != null) {
-            this.onOptionTaxCatSelected(taxcat, k)
+        if (distributionArray != null || distributionArray != undefined) {
+          var len = k + 1;
+          //  alert(len)
+          for (let j = 0; j < distributionArray.length; j++) {
+            console.log(distributionArrVal[j].invoiceLineNum);
+            // debugger;
+            if (distributionArrVal[j].invoiceLineNum != null && distributionArrVal[j].invoiceLineNum == len) {
+              if (itemtyp != 'MISCELLANEOUS') {
+                (distributionArray.controls[k]).patchValue(
+                  {
+                    amount: amount,
+                    baseAmount: amount,
+                  }
+                );
+                if (taxcat != null) {
+                  this.onOptionTaxCatSelected(taxcat, k)
+                }
+              }
+              return;
+            }
+            else {
+              if (itemtyp != 'MISCELLANEOUS') {
+                this.distribution1(k, itemtyp, amount, description);
+                if (taxcat != null) {
+                  this.onOptionTaxCatSelected(taxcat, k)
+                }
+                return;
+              }
+
+            }
           }
+
         }
         return;
       }
@@ -1502,12 +1532,11 @@ export class PayableInvoiceNewComponent implements OnInit {
         this.lineDistributionArray().push(this.distLineDetails());
       }
       var aa = this.lineDistributionArray().length;
-      // var invoiceLineNum = controlDist.length;
-      // alert(controlDist.length)
-      // if (invln === invoiceLineNum && arrayControlDist[k].amount != amount) {
-      //    patch.controls[k].patchValue({ 'amount': amount, 'baseAmount': amount, 'description': description });
-      //  }
-      // // else if (invoiceLineNum === null) {
+      var invoiceLineNum = controlDist.length;
+      //  if (invln === invoiceLineNum && arrayControlDist[k].amount != amount) {
+      //     patch.controls[k].patchValue({ 'amount': amount, 'baseAmount': amount, 'description': description });
+      //   }
+      // else if (invoiceLineNum === null) {
       (patch.controls[aa - 1]).patchValue(
         {
           distLineNumber: aa,
@@ -1515,8 +1544,9 @@ export class PayableInvoiceNewComponent implements OnInit {
           lineTypeLookupCode: itemtyp,
           amount: amount,
           baseAmount: amount,
-          accountingDate: this.pipe.transform(this.now, 'dd-MMM-yyyy'),
-          description: description
+          accountingDate: this.glDate,
+          description: description,
+
         }
       );
       // }
@@ -1816,10 +1846,6 @@ export class PayableInvoiceNewComponent implements OnInit {
       if (lineTypeLookupCode === 'OTHER') {
         if (invdescription === '' || invdescription === undefined || invdescription === null) {
           alert('First Select Desciption');
-          // this.poInvoiceForm.get('invLines').reset();
-          // (arrayControlNew.controls[k]).get('taxCategoryName').reset()
-          // (arrayControlNew.controls[0]).patchValue({ taxCategoryName: '--Select--'});
-          // (arrayControlNew.controls[k]).patchValue({ taxCategoryId: ''});
           return;
         }
       }
@@ -1833,7 +1859,8 @@ export class PayableInvoiceNewComponent implements OnInit {
       (controlinv.controls[k]).patchValue({ locId: objarray[0].locationId });
       var disAm = 0;
       var sum = 0;
-      this.transactionService.getTaxDetails(select.taxCategoryId, sessionStorage.getItem('ouId'), disAm, amount)
+      var klen = k + 1;
+      this.transactionService.getTaxDetailsNew(select.taxCategoryId, sessionStorage.getItem('ouId'), disAm, amount,klen)
         .subscribe(
           data => {
             this.lstInvLineDeatails1 = data;
@@ -1846,20 +1873,15 @@ export class PayableInvoiceNewComponent implements OnInit {
 
             }
             var patch = this.poInvoiceForm.get('obj') as FormArray;
-            // alert(amount + '---'+ sum);
-            // (patch.controls[0]).patchValue({ invoiceAmt: (amount + sum) });
-            // (patch.controls[0]).patchValue({ taxAmt: sum });
-
             for (let i = 0; i < data.miscLines.length; i++) {
+
               var invLnGrp: FormGroup = this.invLineDetails();
               this.invLineDetailsArray().push(invLnGrp);
               var accDate = data.miscLines[i].accountingDate;
-              // alert(accDate +'---'+ i);
               var accDate1 = this.pipe.transform(accDate, 'dd-MMM-yyyy');
               (controlinv.controls[i]).patchValue({ accountingDate: accDate1 });
             }
             (controlinv.controls[0]).patchValue({ lineNumber: 1 });
-
             var x = controlinv.length + 1;
             for (let z = existlinecnt, j = 1; z < this.invLineDetailsArray().length; j++, z++) {
               controlinv.controls[z].patchValue(data.miscLines[j - 1]);
@@ -3142,13 +3164,13 @@ export class PayableInvoiceNewComponent implements OnInit {
       } else {
         if (res.code === 400) {
           alert(res.message);
-          
+
         }
       }
     });
   }
 
-  distrbutionGlDate(event){
+  distrbutionGlDate(event) {
     // alert(event.target.value);
   }
 
