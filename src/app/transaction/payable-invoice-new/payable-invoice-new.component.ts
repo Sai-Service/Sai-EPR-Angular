@@ -69,6 +69,7 @@ interface IpoInvoice {
   // chassisNo: string;
   // description:string;
   voucherNum: number;
+  remark: string;
   trxNumber: number;
 }
 
@@ -391,6 +392,7 @@ export class PayableInvoiceNewComponent implements OnInit {
   displaylineNumber = true;
   // chassisNo: string;
   voucherNum: number;
+  remark: string;
   trxNumber: number;
 
   constructor(private fb: FormBuilder, private router1: ActivatedRoute, private orderManagementService: OrderManagementService, private transactionService: TransactionService, private service: MasterService, private router: Router) {
@@ -561,6 +563,7 @@ export class PayableInvoiceNewComponent implements OnInit {
       // chassisNo: [''],
       description: [],
       voucherNum: [],
+      remark: [],
       trxNumber: [],
       suppId: [],
       suppInvDate: [],
@@ -1144,8 +1147,9 @@ export class PayableInvoiceNewComponent implements OnInit {
             this.lineDistributionArray().push(invLnGrp);
           }
           for (let i = 0; i < data.invDisLines.length; i++) {
-            if (data.invDisLines[i].lineTypeLookupCode != 'MISCELLANEOUS') {
-              //  alert(data.invDisLines[i].lineTypeLookupCode);
+            // debugger;
+            // alert(data.invDisLines[i].description.includes('Rounding')+'-------'+ data.invDisLines[i].description)
+            if (data.invDisLines[i].lineTypeLookupCode != 'MISCELLANEOUS' && data.invDisLines[i].description !='Rounding off value') {
               var invLnGrp: FormGroup = this.tdsLineDetails();
               this.TdsDetailsArray().push(invLnGrp);
             }
@@ -1182,7 +1186,7 @@ export class PayableInvoiceNewComponent implements OnInit {
           let j = 0;
           if (data.invTdsLines.length != 0) {
             for (let i = 0; i < data.invDisLines.length; i++) {
-              if (data.invDisLines[i].lineTypeLookupCode != 'MISCELLANEOUS') {
+              if (data.invDisLines[i].lineTypeLookupCode != 'MISCELLANEOUS' && data.invDisLines[i].description !='Rounding off value') {
                 // alert(invId+'----'+ data.invDisLines[i].lineTypeLookupCode);
                 (tdscontrolInv.controls[j]).patchValue({ invoiceId: invId });
                 (tdscontrolInv.controls[j]).patchValue({ invoiceLineNum: data.invDisLines[i].invoiceLineNum });
@@ -1860,7 +1864,7 @@ export class PayableInvoiceNewComponent implements OnInit {
       var disAm = 0;
       var sum = 0;
       var klen = k + 1;
-      this.transactionService.getTaxDetailsNew(select.taxCategoryId, sessionStorage.getItem('ouId'), disAm, amount,klen)
+      this.transactionService.getTaxDetailsNew(select.taxCategoryId, sessionStorage.getItem('ouId'), disAm, amount, klen)
         .subscribe(
           data => {
             this.lstInvLineDeatails1 = data;
