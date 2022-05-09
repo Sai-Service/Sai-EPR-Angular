@@ -141,6 +141,7 @@ export class PaymentsComponent implements OnInit {
   refundStatus:string;
   isarPayment:boolean=false;
   ispayAdvise:boolean=false;
+  // public locIdList: Array<string> = [];
   constructor(private fb: FormBuilder, private router1: ActivatedRoute, private transactionService: TransactionService, private location: Location, private service: MasterService, private router: Router) {
     this.paymentForm = fb.group({
       suppNo: [],
@@ -281,7 +282,13 @@ jeSource: [],
           console.log(this.paymentIdListList);
         }
       );
-
+      // this.service.locationIdList1(this.ouId)
+      // .subscribe(
+      //   data => {
+      //     this.locIdList = data;
+      //     console.log(this.locIdList);
+      //   }
+      // );
   
     this.sub = this.router1.params.subscribe(params => {
       this.INVNO = params['invNumber'];
@@ -886,7 +893,9 @@ console.log(jsonData);
           for (let j = 0; j < this.payHeaderLineDtlArray().length; j++) {
             var patch=this.paymentForm.get('obj1') as FormArray;
           //   // var selPay=this.suppIdList.find(d=>d.suppSiteId===res.obj[j])
-            patch.controls[j].patchValue(this.paymentData)
+            patch.controls[j].patchValue(this.paymentData);
+            var payDateNew1New = this.pipe.transform(res.obj[j].payDate, 'y-MM-dd');
+            this.payDate = payDateNew1New;
           }
 
           this.paymentForm.get('obj1').patchValue(this.paymentData);
