@@ -54,7 +54,7 @@ apInvoiceCancellation(invoiceNum,emplId): Observable<any> {
 }
 
   getApInvLineDetails(invoiceNum): Observable<any> {
-    return this.http.get(this.ServerUrl + `/apInv/invDtls/${invoiceNum}`);
+    return this.http.get(this.ServerUrl + `/apInv/invDtls?invNum=${invoiceNum}`);
   }
 
   distLinesDeatailsfa(invoiceId,lineNumber): Observable<any> {
@@ -103,6 +103,10 @@ apInvoiceCancellation(invoiceNum,emplId): Observable<any> {
 
   getTaxDetails(taxCategoryId,invItemId, disAm,amount): Observable<any> {
     return this.http.get(this.ServerUrl +`/apInv/Aptaxcal?invId=${invItemId}&baseAmt=${amount}&taxCateId=${taxCategoryId}&disAmt=${disAm}`);
+  }
+
+  getTaxDetailsNew(taxCategoryId,invItemId, disAm,amount,invoiceLineNum): Observable<any> {
+    return this.http.get(this.ServerUrl +`/apInv/Aptaxcal?invId=${invItemId}&baseAmt=${amount}&taxCateId=${taxCategoryId}&disAmt=${disAm}&invLineNum=${invoiceLineNum}`);
   }
 
   // ============================ PO INVOICE  TDS SAVE=======================

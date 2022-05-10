@@ -183,6 +183,14 @@ export class OrderManagementService {
     });
   }
 
+  downloadEWINV(InvoiceNumber) {
+    const REQUEST_URI = this.ServerUrl + `/orderHeader/addonTaxInvEW/${InvoiceNumber}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
   downloadSoa(orderNumber) {
     const REQUEST_URI = this.ServerUrl + `/orderHeader/SS_Sales_SOA/${orderNumber}`;
     return this.http.get(REQUEST_URI, {

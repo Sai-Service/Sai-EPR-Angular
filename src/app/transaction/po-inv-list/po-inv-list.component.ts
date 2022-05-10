@@ -23,15 +23,22 @@ export class PoInvListComponent implements OnInit {
   progress = 0;
   content: number;
   @ViewChild('epltable', { static: false }) epltable: ElementRef;
+  pipe = new DatePipe('en-US');
+  poDetails: any = [];
+  today = new Date();
+  startDt = this.pipe.transform(this.today, 'dd-MMM-yyyy');
+  minDate = new Date();
+  endDt = this.pipe.transform(this.today, 'dd-MMM-yyyy');
 
   constructor(private fb: FormBuilder, private router: Router, private location1: Location, private router1: ActivatedRoute, private service: MasterService,private transactionService: TransactionService) { 
     this.apInvListForm = this.fb.group({
-    
+      startDt:[],
+      endDt:[],
     })
   }
 
   ngOnInit(): void {
-
+    $("#wrapper").toggleClass("toggled");
     this.closeResetButton=false;
     this.progress = 0;
     this.dataDisplay ='Data Loading in progress....Do not refresh the Page'
@@ -39,7 +46,7 @@ export class PoInvListComponent implements OnInit {
     // if (this.poInvoiceForm.get('segment1').value != null) { searchObj.segment1 = this.poInvoiceForm.get('segment1').value }
     // if (this.poInvoiceForm.get('suppNo').value != null) { searchObj.suppNo = this.poInvoiceForm.get('suppNo').value }
     // if (this.poInvoiceForm.get('invoiceNum').value != null) { searchObj.invoiceNum = this.poInvoiceForm.get('invoiceNum').value }
-    this.transactionService.getsearchByApINV(JSON.stringify(searchObj)).subscribe((res: any) => {
+    this.service.getsearchApInvList(sessionStorage.getItem('ouId'),this.startDt,this.endDt).subscribe((res: any) => {
       if (res.code === 200) {
         this.apInvDetails = res.obj;
         this.dataDisplay ='Data Display Sucessfully....'
@@ -64,14 +71,21 @@ export class PoInvListComponent implements OnInit {
     xlsx.writeFile(wb, 'epltable.xlsx');
   }
 
-  apInvFind(content) {
-    var searchObj: ApInvListClass = new ApInvListClass();
-    // if (this.apInvListForm.get('segment1').value != null) { searchObj.segment1 = this.apInvListForm.get('segment1').value }
-    // if (this.apInvListForm.get('suppNo').value != null) { searchObj.suppNo = this.apInvListForm.get('suppNo').value }
-    // if (this.apInvListForm.get('invoiceNum').value != null) { searchObj.invoiceNum = this.apInvListForm.get('invoiceNum').value }
-    this.transactionService.getsearchByApINV(JSON.stringify(searchObj)).subscribe((res: any) => {
+  apInvFind() {
+    var stDt = this.apInvListForm.get('startDt').value;
+    this.startDt = this.pipe.transform(stDt, 'dd-MMM-yyyy');
+    var endDtSt = this.apInvListForm.get('endDt').value;
+    var endDt1 = new Date(endDtSt);
+    endDt1.setDate(endDt1.getDate() + 1);
+    this.endDt = this.pipe.transform(endDt1, 'dd-MMM-yyyy');
+    this.closeResetButton=false;
+    this.progress = 0;
+    this.dataDisplay ='Data Loading in progress....Do not refresh the Page'
+    this.service.getsearchApInvList(sessionStorage.getItem('ouId'),this.startDt,this.endDt).subscribe((res: any) => {
       if (res.code === 200) {
         this.apInvDetails = res.obj;
+        console.log(this.apInvDetails);
+        
         this.dataDisplay ='Data Display Sucessfully....'
         this.closeResetButton=true;
       }

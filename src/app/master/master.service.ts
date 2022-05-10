@@ -2832,6 +2832,10 @@ formData.append('location', locCode);
     return this.http.get(this.ServerUrl + `/poHdr/byDate?userId=${emplId}&startDt=${startDt}&endDt=${endDt}&locId=${locId}`)
   }
 
+  getsearchApInvList(ouId,startDt,endDt){
+    return this.http.get(this.ServerUrl + `/apInv/SearchDateWise?orgId=${ouId}&frmInvoiceDate=${startDt}&toInvoiceDate=${endDt}`)
+  }
+
   getPOByUserAccc(deptId, startDt, endDt,locId){
     return this.http.get(this.ServerUrl + `/poHdr/Acc/byDate?deptId=${deptId}&startDt=${startDt}&endDt=${endDt}&locId=${locId}`)
   }
