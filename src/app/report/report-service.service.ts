@@ -534,6 +534,14 @@ reinsuarnceReceiptPrint(receiptNo){
   });
 }
 
+salesAddonReconciliation(fromDate,toDate,segment1,segment2,segment3,segment4,segment5){
+  const REQUEST_URI = this.ServerUrl +`/SalesReports/SalesAddonReco?fromDate=${fromDate}&toDate=${toDate}&segment1=${segment1}&segment2=${segment2}&segment3=${segment3}&segment4=${segment4}&segment5=${segment5}`;
+  return this.http.get(REQUEST_URI, {
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
+}
+
 salesINDReport(toDate,locId){
   const REQUEST_URI = this.ServerUrl +`/SalesReports/VehIndReg?toDate=${toDate}&locId=${locId}`;
   return this.http.get(REQUEST_URI, {

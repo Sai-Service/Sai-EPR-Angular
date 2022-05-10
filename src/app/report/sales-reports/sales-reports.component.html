@@ -95,6 +95,10 @@
                             <a class="dropdown-item" data-toggle="collapse" href="#panelreceiptNo" role="tab"
                               (click)="reportDetails('reinsuarnceReceiptPrint')">Reinsurance Receipt Print</a>
                           </li>
+                          <li>
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelSalesAddonReconciliation" role="tab"
+                              (click)="reportDetails('salesAddonReconciliation')">Sales Addon Reconciliation</a>
+                          </li>
                     </ul>
                 </li>
 
@@ -1055,6 +1059,189 @@
             </td>
         </tr>
     </table>
+
+
+
+    <table class="center"   style="margin-left: 30%;" [style.display]="isVisiblepanelSalesAddonReconciliation ? 'block' : 'none'" class="collapse"
+    id="panelSalesAddonReconciliation">
+    <tr>
+        <td>
+            <table class="center">  
+                <tr>
+                    <td colspan="4" class="LabelFontStyle" style="width: 100%;">
+                        {{reportName}}
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="center">
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        &nbsp;From&nbsp;Date&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <input type="date" class="form-control" formControlName="fromDate"
+                            max="{{minDate | date:'yyyy-MM-dd'}}">
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        &nbsp;To&nbsp;Date&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <input type="date" class="form-control" formControlName="toDate"
+                            max="{{minDate | date:'yyyy-MM-dd'}}">
+                    </td> 
+                </tr>
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        Branch&nbsp;:
+                    </td>
+                    <td>
+                        <select formControlName="segment1" id="segment1"
+                            class="form-control"
+                            (ngModelChange)="onOptionsSelectedBranch($event,'SS_Branch')">
+                            <option>--Select--</option>
+                            <option *ngFor="let sc of  BranchList">
+                                {{sc.lookupValue}}
+                            </option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" disabled
+                            style="width: 150px; background-color: white; border: none;"
+                            formControlName="lookupValueDesc1"
+                            [(ngModel)]="lookupValueDesc1" class="form-control">
+                            </td>
+                </tr>
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        &nbsp;Location&nbsp;:
+                    </td>
+                    <td>
+                        <select formControlName="segment2" id="segment2"
+                            class="form-control"
+                            (ngModelChange)="onOptionsSelectedBranch($event,'SS_Location')">
+                            <option>--Select--</option>
+                            <option *ngFor="let sc of  locIdList1">
+                                {{sc.lookupValue}}
+                            </option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" disabled [(ngModel)]="lookupValueDesc2"
+                            style="width: 150px; background-color: white; border: none;"
+                            formControlName="lookupValueDesc2" class="form-control">
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        Cost&nbsp;Center&nbsp;:
+                    </td>
+                    <td>
+                        <select formControlName="segment3" id="segment3"
+                            class="form-control"
+                            (ngModelChange)="onOptionsSelectedBranch($event,'CostCentre')">
+                            <option>--Select--</option>
+                            <option *ngFor="let sc of  CostCenterList">
+                                {{sc.lookupValue}}
+                            </option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" disabled [(ngModel)]="lookupValueDesc3"
+                            style="width: 150px; background-color: white; border: none;"
+                            formControlName="lookupValueDesc3" class="form-control">
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        Natural&nbsp;Account&nbsp;:
+                    </td>
+                    <td>
+                       
+                        <input type="text" (keyup)="getNaturalAccount($event)"
+                            formControlName="segment4" id="NaturalAccountFirstWay"
+                            list="dynmicUserIds3" class="form-control"
+                            (ngModelChange)="onOptionsSelectedNatural($event)" />
+                        <datalist id="dynmicUserIds3">
+                            <!-- <option>--Select--</option> -->
+                            <option *ngFor="let sc of  NaturalAccountList"
+                                [value]="sc.naturalaccount">
+                                {{sc.naturalaccount}}--{{sc.description}}
+                            </option>
+                        </datalist>
+                    </td>
+                    <td>
+                        <input type="text" disabled [(ngModel)]="lookupValueDesc4"
+                            style="width: 150px; background-color: white; border: none;color: black;"
+                            formControlName="lookupValueDesc4" class="form-control">
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        Inter&nbsp;Branch&nbsp;:
+
+                    </td>
+                    <td>
+                        <select formControlName="segment5" id="segment5"
+                            class="form-control"
+                            (ngModelChange)="onOptionsSelectedBranchNew($event)">
+                            <option>--Select--</option>
+                            <option *ngFor="let sc of  InterBrancList">
+                                {{sc.lookupValue}}
+                            </option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text"
+                            style="width: 150px; background-color: white; border: none;"
+                            formControlName="lookupValueDesc5"
+                            [(ngModel)]="lookupValueDesc5" class="form-control">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                      <table class="center">
+                        <tr>
+                          <td colspan="4">
+                            <table class="center" style="width: 100%;">
+                              <tr>
+                                <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                                <ng-template #hList2>
+                                  <div class="d-flex justify-content-center">
+                                    <div class="spinner-border text-primary" role="status">
+                                      <span class="sr-only" id="loading"></span>
+                                    </div>
+                                  </div>
+                                </ng-template>
+                                <ng-template #hList1> </ng-template>
+                                <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">
+                                  &nbsp;{{dataDisplay}}&nbsp; </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="4">
+                              <table class="center" style="width: 100%;margin-left: 50%;">
+                                  <tr>
+                                    <td>
+                                        <button class="btn-primary" [disabled]="isDisabled1" (click)="reportParameter(reportName)">View
+                                          Report</button>
+                                      </td>
+                                  </tr>
+                              </table>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+            </table>
+        </td>
+    </tr>
+</table>
 
     </fieldset>
     <table class="center">

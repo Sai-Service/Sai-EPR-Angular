@@ -726,7 +726,7 @@
                                                             Row</button>
                                                     </td>
                                                     <td>
-                                                        <button type="submit" class="btn btn-primary"
+                                                        <button type="submit" class="btn btn-primary" [style.display]="isVisibleRoundOffButton ? 'block' : 'none'"
                                                             (click)="roundOffAP()">RoundOff</button>
                                                     </td>
                                                 </tr>
@@ -739,11 +739,11 @@
                                                         Add New Line&nbsp;&nbsp;:&nbsp;
                                                     </td>
                                                     <td>
-                                                        <button type="submit" class="btn btn-primary fa fa-plus"
+                                                        <button type="submit" class="btn btn-primary fa fa-plus" 
                                                             (click)="addRow()">Add Row</button>
                                                     </td>
                                                     <td>
-                                                        <button type="submit" class="btn btn-primary"
+                                                        <button type="submit" class="btn btn-primary" [style.display]="isVisibleRoundOffButton ? 'block' : 'none'"
                                                             (click)="roundOffAP()">RoundOff</button>
                                                     </td>
                                                 </tr>
@@ -1862,6 +1862,7 @@
                                                         style="width: 150px; background-color: white; border: none;"
                                                         formControlName="lookupValueDesc1"
                                                         [(ngModel)]="lookupValueDesc1" class="form-control">
+                                                        </td>
                                             </tr>
                                             <tr>
                                                 <td style="width: 15%" class="LabelFontStyle">

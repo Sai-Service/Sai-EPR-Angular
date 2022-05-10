@@ -200,6 +200,7 @@ export class PayableInvoiceNewComponent implements OnInit {
   isVisiblepayGroupGroupinput: boolean = false;
   isVisiblelineDetialsDeleteButton: boolean = false;
   isVisibleAddonType: boolean = false;
+  isVisibleRoundOffButton:boolean=false;
   // invoiceDate = this.pipe.transform(this.now, 'yyyy-MM-ddTHH:mm');
   // invoiceDate = this.pipe.transform(this.now, 'dd-MMM-yyyy');
   // accountingDate = new Date();
@@ -690,6 +691,7 @@ export class PayableInvoiceNewComponent implements OnInit {
     this.paymentMethod1 = 69;
     this.ouId = Number(sessionStorage.getItem('ouId'));
     this.emplId = Number(sessionStorage.getItem('emplId'));
+    this.isVisibleRoundOffButton=false;
 
     this.service.getLocationSearch1(this.ouId)
       .subscribe(
@@ -985,6 +987,7 @@ export class PayableInvoiceNewComponent implements OnInit {
         this.isDisabled = true;
         this.isVisibleAddonType = false;
         this.isVisibleSave = false;
+        this.isVisibleRoundOffButton=false;
         this.isVisibleUpdateBtn = false;
         this.isVisibleValidate = false;
         if (res.obj.length === 0) {
@@ -1174,6 +1177,15 @@ export class PayableInvoiceNewComponent implements OnInit {
               (controlinv.controls[i]).patchValue({ taxCategoryName: data.invLines[i].taxCategoryName });
               (controlinv.controls[i].patchValue({ invDescription: data.invLines[i].description }));
             }
+            // alert(data.invLines[i].description)
+          }
+          for (let x=0; x< data.invLines.length ; x++){
+            if (data.invLines[x].description.includes('Rounding')==true){
+              this.isVisibleRoundOffButton=false;
+            }
+            else {
+              this.isVisibleRoundOffButton=true; 
+            }
           }
           var arraybase1 = this.poInvoiceForm.get('obj').value;
           var arraybaseNew = this.poInvoiceForm.get('obj') as FormArray;
@@ -1221,6 +1233,7 @@ export class PayableInvoiceNewComponent implements OnInit {
             this.isVisibleSave = false;
             this.isVisibleUpdateBtn = true;
             this.isVisibleValidate = true;
+            // this.isVisibleRoundOffButton=true;
           }
           if (data.invoiceStatus != undefined) {
             if (data.invoiceStatus.includes('Validate') || data.invoiceStatus === 'Unpaid') {
@@ -1231,6 +1244,7 @@ export class PayableInvoiceNewComponent implements OnInit {
               this.isVisibleUpdateBtn = false;
               this.isVisibleValidate = false;
               this.isVisibleSaveTDS = false;
+              this.isVisibleRoundOffButton=false;
               this.isVisibleviewAccounting = true;
               this.TaxDetailsArray().disable();
               this.TdsDetailsArray().disable();
@@ -1257,6 +1271,7 @@ export class PayableInvoiceNewComponent implements OnInit {
                 this.displayAddNewLine = false;
                 this.displayapInvCancelled = false;
                 this.isVisibleUpdateBtn = false;
+                this.isVisibleRoundOffButton=false;
                 this.isVisibleValidate = false;
                 this.isVisibleSaveTDS = false;
                 this.isVisibleviewAccounting = true;
@@ -1291,7 +1306,7 @@ export class PayableInvoiceNewComponent implements OnInit {
               this.isVisiblePayment = true;
             }
           }
-          else if (arraybaseNew1[index].invTypeLookupCode === 'Standard Invoice' && data.invoiceStatus.includes('Validate') || data.invoiceStatus === 'Unpaid') {
+          else if (arraybaseNew1[index].invTypeLookupCode === 'Standard Invoice' && data.invoiceStatus===('Validate') || data.invoiceStatus === 'Unpaid') {
             this.isVisiblePayment = true;
           }
           else {
@@ -2023,12 +2038,11 @@ export class PayableInvoiceNewComponent implements OnInit {
     var headerArray = this.poInvoiceForm.get('obj').value;
     var invAmt = headerArray[0].invoiceAmt;
     var totInvAmt = (invAmt + taxAmt1);
-    //  alert((invAmt+taxAmt1)+'----'+ totInvAmt);
     var patchheaderArray = this.poInvoiceForm.get('obj').value;
     var invAmt = patchheaderArray[0].invoiceAmt;
     var patch = this.poInvoiceForm.get('obj') as FormArray;
-    (patch.controls[0]).patchValue({ invoiceAmt: basicAmt + taxAmt1 });
-    (patch.controls[0]).patchValue({ taxAmt: (taxAmt1) });
+    (patch.controls[0]).patchValue({ invoiceAmt: (basicAmt + taxAmt1).toFixed(2) });
+    (patch.controls[0]).patchValue({ taxAmt: (taxAmt1).toFixed(2) });
   }
 
 
@@ -2458,6 +2472,7 @@ export class PayableInvoiceNewComponent implements OnInit {
         this.isVisibleSave = false;
         this.isVisibleUpdateBtn = false;
         this.isVisibleValidate = false;
+        this.isVisibleRoundOffButton=false;
         this.isVisibleAddonType = false;
         if (res.obj.length === 0) {
           alert('AP Invoice Details not Find !...');
@@ -2541,170 +2556,6 @@ export class PayableInvoiceNewComponent implements OnInit {
 
 
 
-  // selectINVLineDtlAfterSave(invNumver) {
-  //   this.tdsTaxDetailsArray().clear();
-  //   this.lineDistributionArray().clear();
-  //   this.invLineDetailsArray().clear();
-  //   this.TaxDetailsArray().clear();
-  //   this.dispaccountingDate = true;
-  //   this.displayapInvCancelled = true;
-  //   this.displayViewTaxDetails = false;
-  //   var i=0
-  //   this.selectedLine = i;
-  //   this.displaydescription = false;
-  //   var arrayControl = this.poInvoiceForm.get('obj').value;
-  //   var invoiceStatus = arrayControl[this.selectedLine].invoiceStatus;
-  //   var invoiceStatus = arrayControl[this.selectedLine].invoiceStatus;
-  //   var invoiceStatus1 = this.poInvoiceForm.get('invoiceStatus').value;
-  //   var invoiceNum = this.lineDetailsArray().controls[i].get('invoiceNum').value;
-  //   this.invLineDetailsArray().clear();
-  //   this.transactionService.getApInvLineDetails(invoiceNum)
-  //     .subscribe(
-  //       data => {
-  //         console.log(data);
-  //         this.isSearchPatch = true;
-  //         this.displayitemName = true;
-  //         this.displayTaxCategory = false;
-  //         this.isVisibleSave = false;
-  //       this.isVisibleUpdateBtn = true;
-  //       this.isVisibleValidate = true;
-  //       this.displayTdsButton = false;
-  //         this.poInvoiceForm.patchValue({
-  //           invoiceNum: data.invoiceNum,
-  //           segment1: data.invLines[0].poNumber,
-  //           invoiceStatus: data.invoiceStatus
-  //         })
-  //         this.isDisabled = true;
-  //         this.lstInvLineDeatails = data;
-  //         this.lstTdsLine = data.invDisLines;
-  //         console.log(data.invoiceStatus);
-  //         data.invLines.forEach(f => {
-  //           var invLnGrp: FormGroup = this.invLineDetails();
-  //           this.invLineDetailsArray().push(invLnGrp);
-  //         });
-
-  //         for (let i = 0; i < data.invDisLines.length; i++) {
-  //           var invLnGrp: FormGroup = this.distLineDetails();
-  //           this.lineDistributionArray().push(invLnGrp);
-  //         }
-
-  //         for (let i = 0; i < data.invDisLines.length; i++) {
-  //           var invLnGrp: FormGroup = this.tdsLineDetails();
-  //           this.TdsDetailsArray().push(invLnGrp);
-  //         }
-  //         // alert(data.taxLines.length)
-  //         for (let i = 0; i < data.taxLines.length; i++) {
-  //           var invLnGrp: FormGroup = this.TaxDetailsGroup();
-  //           this.TaxDetailsArray().push(invLnGrp);
-  //         }
-  //         console.log(data.taxLines);
-
-  //         this.poInvoiceForm.get('invLines').patchValue(data.invLines);
-  //         this.poInvoiceForm.get('taxLines').patchValue(data.taxLines);
-  //         this.poInvoiceForm.get('distribution').patchValue(data.invDisLines);
-  //         this.poInvoiceForm.get('tdsLines').patchValue(data.invTdsLines);
-  //         let controlinv = this.poInvoiceForm.get('invLines') as FormArray;
-  //         for (let i = 0; i < data.invLines.length; i++) {
-  //           if (data.invLines[i].lineTypeLookupCode === 'ITEM' || data.invLines[i].lineTypeLookupCode === 'OTHER') {
-  //             (controlinv.controls[i]).patchValue({ taxCategoryName: data.invLines[i].taxCategoryName });
-
-  //           }
-  //         }
-  //         var arraybase1 = this.poInvoiceForm.get('obj').value;
-  //         var invId = arraybase1[0].invoiceId;
-  //         let tdscontrolInv = this.poInvoiceForm.get('tdsLines') as FormArray;
-  //         for (let i = 0; i < data.invDisLines.length; i++) {
-  //           (tdscontrolInv.controls[i]).patchValue({ invoiceId: invId });
-  //           (tdscontrolInv.controls[i]).patchValue({ invoiceLineNum: data.invDisLines[i].invoiceLineNum });
-  //           (tdscontrolInv.controls[i]).patchValue({ invoiceDistId: data.invDisLines[i].invDistributionId });
-  //           (tdscontrolInv.controls[i]).patchValue({ distCodeCombSeg: data.invDisLines[i].distCodeCombSeg });
-  //           (tdscontrolInv.controls[i]).patchValue({ baseAmount: data.invDisLines[i].baseAmount });
-  //           (tdscontrolInv.controls[i]).patchValue({ description: data.invDisLines[i].description });
-  //         }
-
-  //         this.invoiceStatus = data.invoiceStatus;
-
-  //         if (data.invTdsLines.length === 0) {
-
-  //           this.displayTdsButton = true;
-  //           this.showTdsLineDetails = false;
-  //           this.showTdsLines(0);
-  //         } else {
-  //           this.displayTdsButton = false;
-  //           this.showTdsLineDetails = true;
-  //         }
-  //         if (data.invoicestatus == '' || data.invoiceStatus==null) {
-  //           this.isVisibleSave = false;
-  //           this.isVisibleUpdateBtn = true;
-  //           this.isVisibleValidate = true;
-  //         }
-  //         if (data.invoiceStatus == 'Validated' || data.invoiceStatus==='Unpaid') {
-  //           this.poInvoiceForm.disable();
-  //           this.displayAddNewLine = false;
-  //           this.invoiceStatus = data.invoiceStatus;
-  //           this.displayapInvCancelled = false;
-  //           this.isVisibleUpdateBtn = false;
-  //           this.isVisibleValidate = false;
-  //           this.isVisibleSaveTDS=false;
-  //           this.isVisibleviewAccounting=true;  
-  //           this.TaxDetailsArray().disable();
-  //           this.TdsDetailsArray().disable();
-  //           this.displayapInvCancelled = false;
-  //           this.isVisible = false;
-  //           this.isVisible1 = true;
-  //         }
-  //         if (data.source == 'MANUAL') {
-  //           this.apInvoiceTyp = 'MANUAL';
-  //           this.dispStatus = true;
-  //           this.disDeleteButton = true;
-  //           this.displayAddNewLine = true;
-  //           this.dispAccountCode = true;
-  //           this.poInvoiceForm.get('distribution').enable();
-  //           this.poInvoiceForm.get('invLines').enable();
-  //           this.poInvoiceForm.get('taxLines').enable();
-  //         }
-
-  //         else {
-  //           this.dispStatus = false;
-  //           this.disDeleteButton = false;
-  //           this.dispAccountCode = false;
-  //           this.poInvoiceForm.get('distribution').disable();
-  //           this.poInvoiceForm.get('invLines').disable();
-  //           this.poInvoiceForm.get('taxLines').disable();
-  //         }
-  //        if (data.invoiceStatus === 'CANCELLED') {
-  //           this.displayapInvCancelled = true;
-  //           this.isVisible = false;
-  //           this.poInvoiceForm.disable();
-  //         }
-  //         else {
-  //           this.isVisible = true;
-  //           this.displayapInvCancelled = false;
-  //         }
-  //       }
-  //     )
-
-  //   if (invoiceStatus1 === 'Validated' || invoiceStatus1 === 'CANCELLED') {
-  //     this.isVisible = false;
-  //     // this.isVisible1=true;
-  //     this.displayapInvCancelled = false;
-  //   }
-  //   else {
-  //     this.isVisible = true;
-  //     //  this.isVisible1=false;
-  //     this.displayapInvCancelled = false;
-  //     this.isVisibleSaveTDS=true;
-  //   }
-  //   if (this.currentOP === 'Search') {
-  //     // alert('in if search')
-  //     this.tdsTaxDetailsArray().disable();
-  //     this.lineDistributionArray().disable();
-  //     this.invLineDetailsArray().disable();
-  //     this.TaxDetailsArray().disable();
-  //   }
-  // }
-
-
 
   Validate() {
     var arrayControl = this.poInvoiceForm.get('obj').value;
@@ -2753,6 +2604,7 @@ export class PayableInvoiceNewComponent implements OnInit {
           this.poInvoiceForm.patchValue({ invoiceStatus: 'Validate' })
           this.isVisible = false;
           this.isVisibleUpdateBtn = false;
+          this.isVisibleRoundOffButton=false;
           this.isVisibleValidate = false;
           this.TaxDetailsArray().clear();
           this.TdsDetailsArray().clear();
