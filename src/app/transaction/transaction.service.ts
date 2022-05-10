@@ -41,7 +41,7 @@ UpdateValidate(invoiceNum) {
   const options = {
     headers: this.headers
   };
-  const url = (this.ServerUrl + `/apInv/invValidate/${invoiceNum}`);
+  const url = (this.ServerUrl + `/apInv/invValidate?invNum=${invoiceNum}`);
   return this.http.put(url, invoiceNum, options);
 }
 
@@ -69,7 +69,7 @@ apInvoiceCancellation(invoiceNum,emplId): Observable<any> {
     const options = {
       headers: this.headers
     };
-    const url = (this.ServerUrl + `/apInv/roundoff/${invoiceNum}`);
+    const url = (this.ServerUrl + `/apInv/roundoff?invNum=${invoiceNum}`);
     return this.http.put(url, invoiceNum, options);
   }
 

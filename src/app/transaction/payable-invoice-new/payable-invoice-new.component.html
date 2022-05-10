@@ -125,7 +125,7 @@
                                                     </td>
                                                     <td>
                                                         <input hidden type="text" formControlName="suppId">
-                                                        <select formControlName="name" id="name" class="form-control"
+                                                        <!-- <select formControlName="name" id="name" class="form-control"
                                                             (ngModelChange)='onOptionsSelectedsuppName($event,i)'
                                                             style="width: 160px;height: 25px;font-size: 10px;">
                                                             <option>--Select--</option>
@@ -133,7 +133,16 @@
                                                                 [ngValue]="item.suppNo">
                                                                 {{item.name}}
                                                             </option>
-                                                        </select>
+                                                        </select>   -->
+                                                       
+                                                        <input type="text" formControlName="name"
+                                                                    list="dynmicUserIds1" class="form-control"  style="width: 160px;height: 25px;font-size: 10px;"
+                                                                    (ngModelChange)='onOptionsSelectedsuppName($event,i)'>
+                                                                <datalist id="dynmicUserIds1">
+                                                                    <option *ngFor="let item of  supplierCodeList"
+                                                                    [ngValue]="item.suppNo">{{item.name}}
+                                                                    </option>
+                                                                </datalist>
                                                     </td>
                                                     <td>
                                                         <input disabled type="text" class="form-control"
@@ -1096,12 +1105,11 @@
                                                                     (change)="amountmatch(k,$event)">
                                                             </td>
                                                             <td>
-                                                                <div
-                                                                    *ngIf="dispaccountingDate; then thenaccountingDate; else elseaccountingDate">
+                                                                <div  *ngIf="dispaccountingDate; then thenaccountingDate; else elseaccountingDate">
                                                                 </div>
                                                                 <ng-template #thenaccountingDate>
-                                                                    <input type="text" formControlName="accountingDate"
-                                                                        value={{accountingDate}} class="form-control"
+                                                                    <input type="date" formControlName="accountingDate" [(ngModel)]='accountingDate'
+                                                                    value="{{accountingDate | date:'dd-MM-yyyy'}}" class="form-control"
                                                                         style="width: 130px;height: 25px;font-size: 10px;">
                                                                 </ng-template>
                                                                 <ng-template #elseaccountingDate>

@@ -104,6 +104,8 @@ export class PayableInvoiceNewComponent implements OnInit {
   userList3: any[] = [];
   chassisNoList: any = [];
   lastkeydown3: number = 0;
+  userList4: any[] = [];
+  lastkeydown4: number = 0;
   itemSeg: string;
   firstFieldEmittedValue: IDateRange;
   isSearchPatch: boolean = false;
@@ -405,7 +407,7 @@ export class PayableInvoiceNewComponent implements OnInit {
       suppNo: [''],
       suppId: [''],
       invoiceNum: [''],
-      invoiceAmt: [''],
+      invoiceAmt: [0.00],
       invoiceDate: [''],
       secondDateRange: [''],
       totalDistAmt: [],
@@ -573,7 +575,7 @@ export class PayableInvoiceNewComponent implements OnInit {
       taxAmt: [],
       // invoiceId: [],
       invoiceNum: ['', [Validators.required]],
-      invoiceAmt: ['', [Validators.required]],
+      invoiceAmt: [0.00, [Validators.required]],
       invoiceDate: ['', [Validators.required]],
       termsDate: [''],
       termsId: [''],
@@ -894,6 +896,28 @@ export class PayableInvoiceNewComponent implements OnInit {
   }
 
 
+  getUserIdsFirstWay($event) {
+    let userId = (<HTMLInputElement>document.getElementById('userIdFirstWay')).value;
+    this.userList4 = [];
+
+    if (userId.length > 2) {
+      if ($event.timeStamp - this.lastkeydown4 > 200) {
+        this.userList4 = this.searchFromArray(this.supplierCodeList, userId);
+      }
+    }
+  }
+
+
+  searchFromArray(arr, regex) {
+    let matches = [], i;
+    for (i = 0; i < arr.length; i++) {
+      if (arr[i].match(regex)) {
+        matches.push(arr[i]);
+      }
+    }
+    return matches;
+  };
+
   getNaturalAccount($event) {
     let userId = (<HTMLInputElement>document.getElementById('NaturalAccountFirstWay')).value;
     this.userList3 = [];
@@ -903,6 +927,9 @@ export class PayableInvoiceNewComponent implements OnInit {
       }
     }
   }
+
+
+
 
   searchFromArray2(arr, regex) {
     let matches = [], i;
@@ -914,6 +941,8 @@ export class PayableInvoiceNewComponent implements OnInit {
     }
     return matches;
   };
+
+
 
   Delete(trxLineIndex) {
     if (trxLineIndex == 0) {
@@ -1052,6 +1081,12 @@ export class PayableInvoiceNewComponent implements OnInit {
             if (res.obj[i].segment1 != null) {
               this.poInvoiceForm.disable();
             }
+            if (res.obj[i].invoiceAmt % 1 != 0){
+              this.isVisibleRoundOffButton=false;
+            }
+            else{
+              this.isVisibleRoundOffButton=true;
+            }
           }
           this.displayValidateButton = false;
         }
@@ -1078,17 +1113,22 @@ export class PayableInvoiceNewComponent implements OnInit {
   }
 
   onOptionsSelectedsuppName(name: any, i) {
+    // alert(name);
+    // alert(name.target.value+'----'+name)
     this.service.supplierCodeList1()
       .subscribe(
         data => {
           this.supplierCodeList1 = data;
           console.log(this.supplierCodeList1);
-          this.suppNo = name;
+          // this.suppNo = name;
           console.log(this.supplierCodeList1);
         }
       );
 
-    let selectedValue = this.supplierCodeList.find(v => v.suppNo == name);
+    // let selectedValue = this.supplierCodeList.find(v => v.suppNo == name);
+    let selectedValue = this.supplierCodeList.find(v => v.name == name);
+    console.log(selectedValue);
+    this.suppNo = selectedValue.suppNo;
     this.currency = 'INR';
 
     this.suppId = selectedValue.suppId;
@@ -1152,10 +1192,12 @@ export class PayableInvoiceNewComponent implements OnInit {
           for (let i = 0; i < data.invDisLines.length; i++) {
             // debugger;
             // alert(data.invDisLines[i].description.includes('Rounding')+'-------'+ data.invDisLines[i].description)
-            if (data.invDisLines[i].lineTypeLookupCode != 'MISCELLANEOUS' && data.invDisLines[i].description !='Rounding off value') {
+            if (data.invDisLines[i].description != undefined){
+            if (data.invDisLines[i].lineTypeLookupCode != 'MISCELLANEOUS' && data.invDisLines[i].description.includes('Rounding')==false) {
               var invLnGrp: FormGroup = this.tdsLineDetails();
               this.TdsDetailsArray().push(invLnGrp);
             }
+          }
           }
           for (let i = 0; i < data.taxLines.length; i++) {
             var invLnGrp: FormGroup = this.TaxDetailsGroup();
@@ -1180,9 +1222,11 @@ export class PayableInvoiceNewComponent implements OnInit {
             // alert(data.invLines[i].description)
           }
           for (let x=0; x< data.invLines.length ; x++){
+            // if (data.invLines[x].description != undefined){
             if (data.invLines[x].description.includes('Rounding')==true){
               this.isVisibleRoundOffButton=false;
             }
+            // }
             else {
               this.isVisibleRoundOffButton=true; 
             }
@@ -1194,11 +1238,12 @@ export class PayableInvoiceNewComponent implements OnInit {
           let tdscontrolInv = this.poInvoiceForm.get('tdsLines') as FormArray;
           let distLineArray = this.poInvoiceForm.get('distribution') as FormArray;
           // alert(data.invTdsLines.length);
-          // debugger;
+          
           let j = 0;
+          // alert(data.invTdsLines.length)
           if (data.invTdsLines.length != 0) {
             for (let i = 0; i < data.invDisLines.length; i++) {
-              if (data.invDisLines[i].lineTypeLookupCode != 'MISCELLANEOUS' && data.invDisLines[i].description !='Rounding off value') {
+              if (data.invDisLines[i].lineTypeLookupCode != 'MISCELLANEOUS' && data.invDisLines[i].description.includes('Rounding')==false) {
                 // alert(invId+'----'+ data.invDisLines[i].lineTypeLookupCode);
                 (tdscontrolInv.controls[j]).patchValue({ invoiceId: invId });
                 (tdscontrolInv.controls[j]).patchValue({ invoiceLineNum: data.invDisLines[i].invoiceLineNum });
@@ -1301,12 +1346,14 @@ export class PayableInvoiceNewComponent implements OnInit {
           if (arraybaseNew1[index].segment1 != undefined || arraybaseNew1[index].segment1 != null || arraybaseNew1[index].segment1 != '') {
             this.poInvoiceForm.disable();
           }
+          // if (data.invoiceStatus != undefined){
           if (arraybaseNew1[index].invTypeLookupCode === 'Prepayment' && data.invoiceStatus.includes('Validate') || data.invoiceStatus === 'Unpaid') {
             if (arraybaseNew1[index].invTypeLookupCode != 'CREDIT' || arraybaseNew1[index].invTypeLookupCode != 'STANDARD') {
               this.isVisiblePayment = true;
             }
-          }
-          else if (arraybaseNew1[index].invTypeLookupCode === 'Standard Invoice' && data.invoiceStatus===('Validate') || data.invoiceStatus === 'Unpaid') {
+          // }
+        }
+          else if (arraybaseNew1[index].invTypeLookupCode === 'Standard Invoice' && data.invoiceStatus.includes('Validate') || data.invoiceStatus === 'Unpaid') {
             this.isVisiblePayment = true;
           }
           else {
@@ -1385,11 +1432,13 @@ export class PayableInvoiceNewComponent implements OnInit {
             this.TdsDetailsArray().removeAt(i);
           }
           this.TdsDetailsArray().clear();
-          for (let i = 0; i < this.lstTdsLineDetails.length; i++) {
-
+          for (let i = 0; i < this.lstTdsLineDetails.length; i++) { 
+            if (this.lstTdsLineDetails[i].description != undefined){
+            if (this.lstTdsLineDetails[i].description.includes('Rounding')==false){
             var tdsLnGrp: FormGroup = this.tdsLineDetails();
             this.TdsDetailsArray().push(tdsLnGrp);
-
+          }
+        }
           }
           this.poInvoiceForm.get('tdsLines').patchValue(this.lstTdsLineDetails);
           let tdscontrolInv = this.poInvoiceForm.get('tdsLines') as FormArray;
@@ -1444,6 +1493,7 @@ export class PayableInvoiceNewComponent implements OnInit {
                   {
                     amount: amount,
                     baseAmount: amount,
+                    accountingDate:this.glDate,
                   }
                 );
                 if (taxcat != null) {
@@ -1552,10 +1602,7 @@ export class PayableInvoiceNewComponent implements OnInit {
       }
       var aa = this.lineDistributionArray().length;
       var invoiceLineNum = controlDist.length;
-      //  if (invln === invoiceLineNum && arrayControlDist[k].amount != amount) {
-      //     patch.controls[k].patchValue({ 'amount': amount, 'baseAmount': amount, 'description': description });
-      //   }
-      // else if (invoiceLineNum === null) {
+      // alert(this.glDate);
       (patch.controls[aa - 1]).patchValue(
         {
           distLineNumber: aa,
@@ -1563,11 +1610,11 @@ export class PayableInvoiceNewComponent implements OnInit {
           lineTypeLookupCode: itemtyp,
           amount: amount,
           baseAmount: amount,
-          accountingDate: this.glDate,
+          // accountingDate: this.glDate,
           description: description,
-
         }
       );
+      this.accountingDate= this.glDate;
       // }
 
       this.distarr.set(invln, this.poInvoiceForm.get('distribution').value);
@@ -2380,21 +2427,23 @@ export class PayableInvoiceNewComponent implements OnInit {
         alert('Please Select GL Date.!');
         return;
       }
-      let selectedValue = this.supplierCodeList.find(v => v.suppNo == invLinesArray[i].name);
-      var SuppName = selectedValue.name;
-      // alert(SuppName);
-      if (SuppName.includes('RTO')) {
-        if (invLinesArray[i].description === undefined || invLinesArray[i].description === '' || invLinesArray[i].description === null) {
-          alert('Your Selected Supplier is RTO. Please Select Chassis No & Order Number.!');
-          return;
-        }
-      }
-      if (SuppName.includes('INSUARNCE')) {
-        if (invLinesArray[i].description === undefined || invLinesArray[i].description === '' || invLinesArray[i].description === null) {
-          alert('Your Selected Supplier is Insuarnce. Please Select Chassis No & Order Number.!');
-          return;
-        }
-      }
+      // alert(invLinesArray[i].suppNo);
+      // console.log(this.supplierCodeList);
+      // let selectedValue = this.supplierCodeList.find(v => v.suppNo == invLinesArray[i].suppNo);
+      // console.log(selectedValue);
+      // var SuppName = selectedValue.name;
+      // if (SuppName.includes('RTO')) {
+      //   if (invLinesArray[i].description === undefined || invLinesArray[i].description === '' || invLinesArray[i].description === null) {
+      //     alert('Your Selected Supplier is RTO. Please Select Chassis No & Order Number.!');
+      //     return;
+      //   }
+      // }
+      // if (SuppName.includes('INSUARNCE')) {
+      //   if (invLinesArray[i].description === undefined || invLinesArray[i].description === '' || invLinesArray[i].description === null) {
+      //     alert('Your Selected Supplier is Insuarnce. Please Select Chassis No & Order Number.!');
+      //     return;
+      //   }
+      // }
     }
     for (let taxlinval of this.taxarr.values()) {
       for (let i = 0; i < taxlinval.length; i++) {
@@ -2952,9 +3001,9 @@ export class PayableInvoiceNewComponent implements OnInit {
             var arrinvln = this.poInvoiceForm.get('invLines') as FormArray;
 
             for (let k = 0; k < this.invLineDetailsArray().length; k++) {
-              arrinvln.controls[k].patchValue({ lineTypeLookupCode: 'OTHER', amount: Number(invamt) });
+              arrinvln.controls[k].patchValue({ lineTypeLookupCode: 'OTHER', amount: Number(invamt),description:'Pre-Payment Line Item' });
 
-
+              patchdist.controls[k].patchValue({description:'Pre-Payment Line Item'})
             }
             console.log(this.poInvoiceForm.get('invLines').value);
             // alert (this.poInvoiceForm.value);
@@ -2987,8 +3036,11 @@ export class PayableInvoiceNewComponent implements OnInit {
   prepaymentDate(event: any) {
     // alert(event.target.value);
     if (event.target.value === 'Prepayment') {
-      this.isVisibleinvoiceDateText = true;
-      this.isVisibleinvoiceDateDate = false;
+      // this.isVisibleinvoiceDateText = true; /////   till time commited this condition
+      // this.isVisibleinvoiceDateDate = false; /////   till time commited this condition
+       this.isVisibleinvoiceDateText = false; 
+       this.isVisibleinvoiceDateDate = true; 
+       this.lineDetailsArray().controls[0].get('invoiceDate').enable();
       var patch = this.poInvoiceForm.get('obj') as FormArray;
       // this.invoiceDate=new Date();
       (patch.controls[0]).patchValue(
@@ -2997,7 +3049,7 @@ export class PayableInvoiceNewComponent implements OnInit {
         }
       );
       console.log(this.invoiceDate);
-      this.lineDetailsArray().controls[0].get('invoiceDate').disable();
+      // this.lineDetailsArray().controls[0].get('invoiceDate').disable(); /// till time disable for Kiran Sir requirement
     }
     else {
       this.isVisibleinvoiceDateText = false;
