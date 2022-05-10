@@ -1666,6 +1666,7 @@ export class JobCardComponent implements OnInit {
             this.cancelButton=false;
             this.openStatus=false;
             this.updateButton=false;
+            this.importMatButton=false;
                          
           }
 
@@ -1688,6 +1689,7 @@ export class JobCardComponent implements OnInit {
             this.cancelButton=false;
             this.openStatus=false;
             this.updateButton=false;
+            this.importMatButton=false;
           }
 
 

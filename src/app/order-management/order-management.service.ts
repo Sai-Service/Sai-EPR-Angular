@@ -808,7 +808,7 @@ export class OrderManagementService {
 
 
   printArReceipt(rcptNumber,refTp) {
-    alert ( "oms >> "+ refTp);
+    // alert ( "oms >> "+ refTp);
     // const REQUEST_URI = this.ServerUrl + `/arCashReceipts/arReceiptPrint/${rcptNumber}`;
     // const REQUEST_URI = this.ServerUrl + `/SalesReports/ReInsuranceReceipt?receiptNumber=${rcptNumber}`;
     // return this.http.get(REQUEST_URI, { responseType: 'arraybuffer',  headers: this.headers, });
