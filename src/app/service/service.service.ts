@@ -262,18 +262,22 @@ printWsPreInvdocumentDp(jcNumber,jtype,custtp){
 }
 
 printWsInvoicedocument(jcNumber,jtype){
-   // http://localhost:8081/jobCard/wsInvoicePrint/12PU.101-3
-  //  http://localhost:8081/jobCard/dpInvoice/12PU.101-24
-
-  //  if (jtype==='Service') {
     const REQUEST_URI = this.ServerUrl +`/jobCard/wsInvoicePrint/${jcNumber}`;  
     return this.http.get(REQUEST_URI, {
     responseType: 'arraybuffer',
     headers: this.headers,
   });
-  // }  
-
 }
+
+printWsAddonInvoicedocument(jcNumber,jtype){
+  const REQUEST_URI = this.ServerUrl +`/jobCard/wsAddonPrint/${jcNumber}`;  
+   return this.http.get(REQUEST_URI, {
+   responseType: 'arraybuffer',
+   headers: this.headers,
+ });
+}
+
+
 
 printWsInvoicedocumentDp(jcNumber,jtype,custtp){
   // http://localhost:8081/jobCard/dpCustInvoice/12PU.2202-237
