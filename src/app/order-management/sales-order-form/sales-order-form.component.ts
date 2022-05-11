@@ -2284,7 +2284,7 @@ export class SalesOrderFormComponent implements OnInit {
   }
 
   downloadAllInvoice(invType, trxNumber) {
-    // alert(invType)
+    alert(trxNumber)
     if (invType === 'SS_VEHICLE') {
       this.orderManagementService.downloadVehicleINV(this.orderNumber)
         .subscribe(data => {
@@ -2294,8 +2294,8 @@ export class SalesOrderFormComponent implements OnInit {
           printWindow.open
         });
     }
-    else if (invType=='SS_ADDON_EW'){
-      this.orderManagementService.downloadEWINV(this.orderNumber)
+    else if (invType=='SS_EW'){
+      this.orderManagementService.downloadEWINV(trxNumber)
       .subscribe(data => {
         var blob = new Blob([data], { type: 'application/pdf' });
         var url = URL.createObjectURL(blob);
