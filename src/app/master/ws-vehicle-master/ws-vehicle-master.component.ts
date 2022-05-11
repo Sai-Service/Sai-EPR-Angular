@@ -863,6 +863,7 @@ export class WsVehicleMasterComponent implements OnInit {
             this.CustomerDetailsList = data1.obj;
             console.log(this.CustomerDetailsList);
             this.wsVehicleMasterForm.patchValue({
+              customerId: this.CustomerDetailsList.customerId,
               custAccountNo: this.CustomerDetailsList.custAccountNo,
               custName: this.CustomerDetailsList.custName,
               address1: this.CustomerDetailsList.address1,
@@ -968,7 +969,7 @@ export class WsVehicleMasterComponent implements OnInit {
           console.log(this.CustomerDetailsList);
          // this.wsVehicleMasterForm.patchValue(this.lstcomments[0]);
           this.wsVehicleMasterForm.patchValue({
-            customerId : this.CustomerDetailsList.  customerId,
+            customerId : this.CustomerDetailsList.customerId,
             custAccountNo: this.CustomerDetailsList.custAccountNo,
             custName: this.CustomerDetailsList.custName,
             address1: this.CustomerDetailsList.address1,
@@ -1406,7 +1407,7 @@ export class WsVehicleMasterComponent implements OnInit {
 
     if (formValue.customerId <=0 || formValue.customerId === undefined || formValue.customerId === null) {
       this.checkValidation = false;
-      alert("CUSTOMER NO: Should not be null / Enter Valid Customer No");return;
+      alert("CUSTOMER ID: Should not be null.");return;
     }
 
     if (formValue.custAccountNo < 0 || formValue.custAccountNo === undefined || formValue.custAccountNo === null) {
