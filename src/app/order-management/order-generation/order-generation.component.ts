@@ -60,8 +60,8 @@ export class OrderGenerationComponent implements OnInit {
   deptId: number;
   emplId: number;
 
-  orderNumber='BJ-2103100001'
-  // orderNumber: string;
+  // orderNumber='BJ-2103100001'
+  orderNumber: string;
 
   fromDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   toDate = this.pipe.transform(Date.now(), 'y-MM-dd');
@@ -659,9 +659,6 @@ export class OrderGenerationComponent implements OnInit {
       this.lineDetailsArray().controls[index].get('orderQty').reset();
       return;
     }
-
-
-
 
     var segId;
     var prc;
