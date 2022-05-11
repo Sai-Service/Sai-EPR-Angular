@@ -1036,7 +1036,7 @@ export class PayableInvoiceNewComponent implements OnInit {
             let payDate = moment(this.lstsearchapinv[i].paymentRateDate, 'dd-MM-yyyy hh:mm:ss');
             let payDtString = payDate.format('dd-MMM-yyyy');
             let select = this.tdsSectionList.find(d => d.lookupValueDesc === res.obj[i].payGroup);
-            this.lineDetailsArray().controls[i].patchValue({ paymentRateDate: payDtString, invoiceId1: this.lstsearchapinv[i].invoiceId, internalSeqNum: this.lstsearchapinv[i].internalSeqNum });
+            this.lineDetailsArray().controls[i].patchValue({ paymentRateDate: payDtString, invoiceId1: this.lstsearchapinv[i].invoiceId, internalSeqNum: this.lstsearchapinv[i].internalSeqNum,invoiceAmt:this.lstsearchapinv[i].invoiceAmt.toFixed(0),taxAmt:this.lstsearchapinv[i].taxAmt.toFixed(0) });
             var glDateNew1 = (res.obj[i].glDate)
             var glDateNew = this.pipe.transform(glDateNew1, 'y-MM-dd');
             var invoiceDateNew = this.pipe.transform(res.obj[i].invoiceDate, 'y-MM-dd');
@@ -1084,9 +1084,9 @@ export class PayableInvoiceNewComponent implements OnInit {
             if (res.obj[i].invoiceAmt % 1 != 0){
               this.isVisibleRoundOffButton=false;
             }
-            else{
-              this.isVisibleRoundOffButton=true;
-            }
+            // else{
+            //   this.isVisibleRoundOffButton=true;
+            // }
           }
           this.displayValidateButton = false;
         }
@@ -1163,6 +1163,13 @@ export class PayableInvoiceNewComponent implements OnInit {
     var arraybaseNew = this.poInvoiceForm.get('obj') as FormArray;
     var arraybaseNew1 = arraybaseNew.getRawValue();
     var invoiceNum = this.lineDetailsArray().controls[index].get('invoiceNum').value;
+    var invoiceAmt = this.lineDetailsArray().controls[index].get('invoiceAmt').value;
+    if (invoiceAmt % 1 != 0){
+      this.isVisibleRoundOffButton=true;
+    }
+    else{
+      this.isVisibleRoundOffButton=false;
+    }
     this.invLineDetailsArray().clear();
     this.transactionService.getApInvLineDetails(invoiceNum)
       .subscribe(
@@ -1227,9 +1234,9 @@ export class PayableInvoiceNewComponent implements OnInit {
               this.isVisibleRoundOffButton=false;
             }
             // }
-            else {
-              this.isVisibleRoundOffButton=true; 
-            }
+            // else {
+            //   this.isVisibleRoundOffButton=true; 
+            // }
           }
           var arraybase1 = this.poInvoiceForm.get('obj').value;
           var arraybaseNew = this.poInvoiceForm.get('obj') as FormArray;
@@ -1266,9 +1273,10 @@ export class PayableInvoiceNewComponent implements OnInit {
 
           }
           for (let j = 0; j < data.invDisLines.length; j++) {
-            var accDate = data.invDisLines[j].accountingDate;
-            var accDate1 = this.pipe.transform(accDate, 'dd-MMM-yyyy');
-            (distLineArray.controls[j]).patchValue({ accountingDate: accDate1 });
+            // var accDate = data.invDisLines[j].accountingDate;
+            // var accDate1 = this.pipe.transform(accDate, 'dd-MM-yyyy');
+            // (distLineArray.controls[j]).patchValue({ accountingDate: accDate1 });
+            this.accountingDate=data.invDisLines[j].accountingDate;
           }
           this.invoiceStatus = data.invoiceStatus;
           if (data.invTdsLines.length === 0) {
@@ -1460,7 +1468,7 @@ export class PayableInvoiceNewComponent implements OnInit {
 
 
   selectDisLineDtl(k) {
-    // alert(k)
+    alert(k)
     var lineNumber = this.invLineDetailsArray().controls[k].get('lineNumber').value;
     var invoiceId = this.invLineDetailsArray().controls[k].get('invoiceId').value;
     var taxcat = this.invLineDetailsArray().controls[k].get('taxCategoryName').value;
@@ -2541,7 +2549,7 @@ export class PayableInvoiceNewComponent implements OnInit {
             let select = this.tdsSectionList.find(d => d.lookupValueDesc === res.obj[i].payGroup);
             console.log(select);
             console.log(select.lookupValueDesc);
-            this.lineDetailsArray().controls[i].patchValue({ paymentRateDate: payDtString, invoiceId1: this.lstsearchapinv[i].invoiceId, internalSeqNum: this.lstsearchapinv[i].internalSeqNum });
+            this.lineDetailsArray().controls[i].patchValue({ paymentRateDate: payDtString, invoiceId1: this.lstsearchapinv[i].invoiceId, internalSeqNum: this.lstsearchapinv[i].internalSeqNum,invoiceAmt:this.lstsearchapinv[i].invoiceAmt.toFixed(2),taxAmt:this.lstsearchapinv[i].taxAmt.toFixed(2) });
             this.lineDetailsArray().controls[i].patchValue({ glDate: res.obj[i].glDate });
             patch.controls[i].patchValue({ payGroup: res.obj[i].payGroup })
             if (res.obj[i].paymentMethod === undefined || res.obj[i].paymentMethod === null) {
@@ -2560,7 +2568,9 @@ export class PayableInvoiceNewComponent implements OnInit {
               this.isVisibleTDSTab = true;
               this.isVisibleSaveTDS = true;
             }
-
+            // if (res.obj[i].invoiceAmt % 1 != 0){
+            //   this.isVisibleRoundOffButton=false;
+            // }
             console.log(this.tdsSectionList);
             // if (res.obj[i].invoiceStatus === 'Validated' || res.obj[i].invoiceStatus === 'Unpaid' || res.obj[i].invTypeLookupCode != 'CREDIT' || res.obj[i].invTypeLookupCode != 'STANDARD') {
             //   this.poInvoiceForm.disable();
