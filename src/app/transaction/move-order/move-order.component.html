@@ -345,7 +345,9 @@
   <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
       <tbody>
           <tr class="GridHeader">
+            <th scope="col">Srl#</th>
             <th scope="col">workshopIssue No.</th>
+            <!-- <th scope="col">Line No</th> -->
             <th scope="col">Registration No.</th>
             <th scope="col">Item Code</th>
             <th scope="col">Item Description</th>
@@ -356,8 +358,10 @@
             <th>Date</th>
           </tr>
           </tbody>
-          <tr *ngFor="let com of lstcomment1" style="background-color:#E3EAEB;">
+          <tr *ngFor="let com of lstcomment1 let i=index" style="background-color:#E3EAEB;">
+            <td style="text-align: center;width: 3rem;">{{i+1}}</td>
             <td>{{com.requestNumber}}</td>
+            <!-- <td>{{com.lineNumber}}</td> -->
             <td>{{com.regNo}}</td>
             <td>{{com.segment }}</td>
             <td>{{com.description}}</td>
@@ -365,7 +369,7 @@
             <td>{{com.uom}}</td>
             <td style="text-align: right;">{{com.quantity}}</td>
             <td style="text-align: right;">{{com.rate}}</td>
-            <td>{{com.creationDate}}</td>
+            <td style="text-align:  center;">{{com.creationDate}}</td>
           </tr>
   </table>
   </div>
