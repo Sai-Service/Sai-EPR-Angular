@@ -1635,6 +1635,7 @@ export class JobCardComponent implements OnInit {
                 this.dispReadyInvoice = false; this.preInvButton=false;}
                 this.dispButtonStatus=false;
                 this.updateButton=true;
+                this.importMatButton=true;
             
                 this.openStatus=true;
               if(x===y) { this.cancelButton=true;}else {this.cancelButton=false;}
