@@ -1396,19 +1396,23 @@ export class PayableInvoiceNewComponent implements OnInit {
   paymentNavigation() {
     var arraybaseNew = this.poInvoiceForm.get('obj') as FormArray;
     var arraybaseNew1 = arraybaseNew.getRawValue();
-    // var invNumber = arraybaseNew1[0].invoiceNum;
-    // var sourceType=arraybaseNew1[0].source;
-    // var invType = arraybaseNew1[0].invTypeLookupCode;
     for (let i = 0; i < arraybaseNew1.length; i++) {
       var invNumber = arraybaseNew1[i].invoiceNum;
       var sourceType = arraybaseNew1[i].source;
       var invType = arraybaseNew1[i].invTypeLookupCode;
-      if (invType === 'Prepayment' || sourceType === 'REFUND') {
+      var internalSeqNum= arraybaseNew1[i].internalSeqNum;
+      if (invType === 'Prepayment' && internalSeqNum != null ) {
+        // if (invType != 'CREDIT' || invType != 'STANDARD'){
+        this.router.navigate(['/admin/transaction/Payment', invNumber]);
+      // }
+      }
+      else if (sourceType === 'REFUND'){
         this.router.navigate(['/admin/transaction/Payment', invNumber]);
       }
-      else {
+       else if (internalSeqNum != null){
         this.router.navigate(['/admin/transaction/Payment']);
       }
+      
     }
   }
 
