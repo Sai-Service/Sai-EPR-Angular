@@ -1036,7 +1036,7 @@ export class PayableInvoiceNewComponent implements OnInit {
             let payDate = moment(this.lstsearchapinv[i].paymentRateDate, 'dd-MM-yyyy hh:mm:ss');
             let payDtString = payDate.format('dd-MMM-yyyy');
             let select = this.tdsSectionList.find(d => d.lookupValueDesc === res.obj[i].payGroup);
-            this.lineDetailsArray().controls[i].patchValue({ paymentRateDate: payDtString, invoiceId1: this.lstsearchapinv[i].invoiceId, internalSeqNum: this.lstsearchapinv[i].internalSeqNum, invoiceAmt: this.lstsearchapinv[i].invoiceAmt.toFixed(0), taxAmt: this.lstsearchapinv[i].taxAmt.toFixed(0) });
+            this.lineDetailsArray().controls[i].patchValue({ paymentRateDate: payDtString, invoiceId1: this.lstsearchapinv[i].invoiceId, internalSeqNum: this.lstsearchapinv[i].internalSeqNum });
             var glDateNew1 = (res.obj[i].glDate)
             var glDateNew = this.pipe.transform(glDateNew1, 'y-MM-dd');
             var invoiceDateNew = this.pipe.transform(res.obj[i].invoiceDate, 'y-MM-dd');
