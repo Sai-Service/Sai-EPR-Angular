@@ -288,7 +288,18 @@ isVisibleGSTSaleRegister:boolean=false;
       this.isVisiblecustomerLedger=false;
       this.isVisibleGSTSaleRegister=false;
     }
-    
+    else if (reportName==='IrnGenerationReport'){
+      this.reportName='IRN Generation Report';
+      this.isVisiblegstsaiDebtors=false;
+      this.isVisiblepanelfromtolocation=false;
+      this.isVisiblefromtolocationdepartment=true;
+      this.isVisiblepaneltolocation=false;
+      this.isVisiblecustomerLedger=false;
+      this.isVisibleGSTSaleRegister=false;
+      if (Number(sessionStorage.getItem('deptId'))===4){
+        this.isVisibleDepartmentList=true;
+      }
+    }
   }
 
 
@@ -640,6 +651,29 @@ isVisibleGSTSaleRegister:boolean=false;
         this.dataDisplay = ''
         this.closeResetButton = true;
         this.isDisabled1 = false;
+      })
+    }
+  }
+  else if (reportName ==='IRN Generation Report'){
+    const fileName = 'IRN Generation Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    if (Number(sessionStorage.getItem('deptId')) === 4) {
+      var deptId=this.serviceReportForm.get('deptId').value;
+      this.reportService.irnGenerationReport( fromDate,toDate,sessionStorage.getItem('ouId'),locId,deptId)
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.isDisabled1 = false;
+          this.closeResetButton = true;
+          this.dataDisplay = ''
+        })
+    }
+    else if (Number(sessionStorage.getItem('deptId')) != 4){
+      this.reportService.irnGenerationReport(fromDate,toDate,sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'),sessionStorage.getItem('deptId'))
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.isDisabled1 = false;
+        this.closeResetButton = true;
+        this.dataDisplay = ''
       })
     }
   }
