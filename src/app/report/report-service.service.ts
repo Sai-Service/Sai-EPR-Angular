@@ -146,8 +146,8 @@ export class ReportServiceService {
     });
   }
 
-  cashBankReport(fromDate,toDate,ouId,locId,accountName){
-    const REQUEST_URI = this.ServerUrl +`/AccountsReports/CashbankReg?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&accountName=${accountName}`;
+  cashBankReport(fromDate,toDate,ouId,locId,accountName,naturalAccct){
+    const REQUEST_URI = this.ServerUrl +`/AccountsReports/CashbankReg?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&accountName=${accountName}&naturalCode=${naturalAccct}`;
     return this.http.get(REQUEST_URI, {
       responseType: 'arraybuffer',
       headers: this.headers,

@@ -1930,7 +1930,6 @@
                                                         list="dynmicUserIds3" class="form-control"
                                                         (ngModelChange)="onOptionsSelectedNatural($event,'NaturalAccount')" />
                                                     <datalist id="dynmicUserIds3">
-                                                        <!-- <option>--Select--</option> -->
                                                         <option *ngFor="let sc of  NaturalAccountList"
                                                             [value]="sc.naturalaccount">
                                                             {{sc.naturalaccount}}--{{sc.description}}

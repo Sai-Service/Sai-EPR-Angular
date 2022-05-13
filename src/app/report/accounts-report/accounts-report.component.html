@@ -563,11 +563,12 @@
                 </select>
                 <input hidden disabled type="number" class="form-control" formControlName="locId">
               </td>
+            </tr>
+            <tr>
               <td style="width: 15%" class="LabelFontStyle">
                 &nbsp;Receipt&nbsp;name&nbsp;:&nbsp;
               </td>
               <td>
-                <!-- (ngModelChange)='onOptionsLocation($event)' -->
                 <select formControlName="accountName" id="accountName" class="form-control">
                 <option>--Select--</option>
                 <option *ngFor="let sc of  accountNameList" [value]="sc">
@@ -575,6 +576,21 @@
                 </option>
               </select>
               </td>
+              <td style="width: 15%" class="LabelFontStyle">
+                Natural&nbsp;Account&nbsp;:
+            </td>
+            <td>
+              <input type="text" (keyup)="getNaturalAccount($event)"
+              formControlName="segment4" id="NaturalAccountFirstWay"
+              list="dynmicUserIds3" class="form-control"
+              (ngModelChange)="onOptionsSelectedNatural($event)" />
+          <datalist id="dynmicUserIds3">
+              <option *ngFor="let sc of  NaturalAccountList"
+                  [value]="sc.naturalaccount">
+                  {{sc.naturalaccount}}--{{sc.description}}
+              </option>
+          </datalist>
+            </td>
             </tr>
          
             <tr>
