@@ -321,8 +321,8 @@ reportName:string;
     var fromDate = this.pipe.transform(purStDt, 'dd-MMM-yyyy');
     var spreceipttoDate2 = this.reportForm.get('toDate').value;
     var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
-    var locId = this.reportForm.get('locId').value;
     var deptId=this.reportForm.get('deptId').value;
+    var locId = this.reportForm.get('locId').value;
     if (locId===null){
       locId=''
     }
@@ -440,10 +440,16 @@ reportName:string;
       })      
     }
     else if (reportName ==='Cash Bank Reports'){
+      // alert(reportName);
       var accountName=this.reportForm.get('accountName').value;
+      // var locId = this.reportForm.get('locId').value;
+      // if (locId===null){
+      //   locId=''
+      // }
        const fileName = 'Cash Bank Reports-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-     this.reportService.cashBankReport(fromDate,toDate,sessionStorage.getItem('ouId'),accountName)
+    //  alert(fromDate+'---'+toDate+'---'+sessionStorage.getItem('ouId')+'----'+locId+'---'+accountName)
+     this.reportService.cashBankReport(fromDate,toDate,sessionStorage.getItem('ouId'),locId,accountName)
        .subscribe(data => {
          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
          this.closeResetButton = true;

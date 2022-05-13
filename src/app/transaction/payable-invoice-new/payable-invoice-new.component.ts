@@ -1036,7 +1036,7 @@ export class PayableInvoiceNewComponent implements OnInit {
             let payDate = moment(this.lstsearchapinv[i].paymentRateDate, 'dd-MM-yyyy hh:mm:ss');
             let payDtString = payDate.format('dd-MMM-yyyy');
             let select = this.tdsSectionList.find(d => d.lookupValueDesc === res.obj[i].payGroup);
-            this.lineDetailsArray().controls[i].patchValue({ paymentRateDate: payDtString, invoiceId1: this.lstsearchapinv[i].invoiceId, internalSeqNum: this.lstsearchapinv[i].internalSeqNum, invoiceAmt: this.lstsearchapinv[i].invoiceAmt.toFixed(0), taxAmt: this.lstsearchapinv[i].taxAmt.toFixed(0) });
+            this.lineDetailsArray().controls[i].patchValue({ paymentRateDate: payDtString, invoiceId1: this.lstsearchapinv[i].invoiceId, internalSeqNum: this.lstsearchapinv[i].internalSeqNum });
             var glDateNew1 = (res.obj[i].glDate)
             var glDateNew = this.pipe.transform(glDateNew1, 'y-MM-dd');
             var invoiceDateNew = this.pipe.transform(res.obj[i].invoiceDate, 'y-MM-dd');
@@ -1396,19 +1396,23 @@ export class PayableInvoiceNewComponent implements OnInit {
   paymentNavigation() {
     var arraybaseNew = this.poInvoiceForm.get('obj') as FormArray;
     var arraybaseNew1 = arraybaseNew.getRawValue();
-    // var invNumber = arraybaseNew1[0].invoiceNum;
-    // var sourceType=arraybaseNew1[0].source;
-    // var invType = arraybaseNew1[0].invTypeLookupCode;
     for (let i = 0; i < arraybaseNew1.length; i++) {
       var invNumber = arraybaseNew1[i].invoiceNum;
       var sourceType = arraybaseNew1[i].source;
       var invType = arraybaseNew1[i].invTypeLookupCode;
-      if (invType === 'Prepayment' || sourceType === 'REFUND') {
+      var internalSeqNum= arraybaseNew1[i].internalSeqNum;
+      if (invType === 'Prepayment' && internalSeqNum != null ) {
+        // if (invType != 'CREDIT' || invType != 'STANDARD'){
+        this.router.navigate(['/admin/transaction/Payment', invNumber]);
+      // }
+      }
+      else if (sourceType === 'REFUND'){
         this.router.navigate(['/admin/transaction/Payment', invNumber]);
       }
-      else {
+       else if (internalSeqNum != null){
         this.router.navigate(['/admin/transaction/Payment']);
       }
+      
     }
   }
 
