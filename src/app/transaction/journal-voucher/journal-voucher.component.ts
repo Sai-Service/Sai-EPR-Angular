@@ -1,8 +1,8 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
-import { MasterService } from 'src/app/master/master.service';
+import { Router,ActivatedRoute } from '@angular/router';
+ import { MasterService } from 'src/app/master/master.service';
 // import { min } from 'moment';
 // import { formatDate } from '@angular/common'
 
@@ -112,6 +112,7 @@ export class JournalVoucherComponent implements OnInit {
   @ViewChild("perName") perName: ElementRef;
   displayaddButton: boolean;
   divId: number;
+  private sub: any;
   ngAfterViewInit() {
     this.perName.nativeElement.focus();
   }
@@ -120,7 +121,7 @@ export class JournalVoucherComponent implements OnInit {
   min=new Date();
   lineStatus:string;
 
-  constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
+  constructor(private fb: FormBuilder, private router: Router, private service: MasterService,private router1: ActivatedRoute) {
     this.JournalVoucherForm=fb.group({
 
       segment11:[''],
@@ -313,6 +314,16 @@ else{
 this.glLines().controls[0].patchValue({ lineStatus: 'BOOKED' });
 // for(i=0;i<i<this.glLines().length;i++)
 this.displaycodeCombination[0]=true;
+
+
+  this.sub = this.router1.params.subscribe(params => {
+     var jvNum = params['docSequenceValue'];
+    if (jvNum != undefined){
+    // this.docSeqVal1=jvNum
+    this.search(jvNum);}
+});
+
+
   }
 JournalVoucher(JournalVoucherForm:any){}
 

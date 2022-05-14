@@ -300,7 +300,7 @@ export class PaymentArComponent implements OnInit {
   paymentAr(paymentArForm: any) { }
 
 
-  constructor(private service: MasterService,  private orderManagementService: OrderManagementService,  private fb: FormBuilder, private router: Router, private router1: ActivatedRoute) {
+  constructor(private service: MasterService,  private orderManagementService: OrderManagementService,  private fb: FormBuilder, private router: Router, private router1: ActivatedRoute, private router2: ActivatedRoute) {
 
 
     this.paymentArForm = fb.group({
@@ -503,6 +503,8 @@ if(this.deptId==2){
   if(this.deptId==4){
     this.sub = this.router1.params.subscribe(params => {
       this.referenceNo = this.router1.snapshot.queryParamMap.get('invNumber');
+      // this.searchByRcptNo= Number(this.router1.snapshot.queryParamMap.get('docSequenceValue'));
+      // alert(this.searchByRcptNo)
      var methodId =   this.router1.snapshot.queryParamMap.get('methodId');
      var Amt =this.router1.snapshot.queryParamMap.get('recAmt');
      if ( this.referenceNo != undefined){
@@ -519,9 +521,25 @@ if(this.deptId==2){
           //   this.refType='Service-Order'
           // }
    }
+  //  else if (this.searchByRcptNo!=undefined) {
+  //    alert('else if ----' + this.searchByRcptNo)
+  //    this.SearchByRcptNo(this.searchByRcptNo)
+  //  } 
    });
   }
 
+  if(this.deptId==4){
+    this.sub = this.router2.params.subscribe(params => {
+      this.searchByRcptNo = Number(this.router1.snapshot.queryParamMap.get('docSequenceValue'));
+      this.locId= Number(this.router1.snapshot.queryParamMap.get('locId'));
+      // alert( this.searchByRcptNo+'------'+ this.locId);
+      if (this.searchByRcptNo != undefined){
+      this.SearchByRcptNo(this.searchByRcptNo);
+      this.SelectReceipt(this.searchByRcptNo);
+    }
+  });
+
+  }
     
   /////////////////////////////////////////////////////
 
@@ -972,9 +990,10 @@ if(this.deptId==2){
 
   SearchByRcptNo(rcptNo: any) {
     // alert ("Receipt Num : " +rcptNo);
-    if(rcptNo ===undefined || rcptNo===null || rcptNo<=0 ) {return;}
+    // if(rcptNo ===undefined || rcptNo===null || rcptNo<=0 ) {return;}
 
     this.status = null;
+    if (Number(sessionStorage.getItem('deptId'))!=4){
     this.service.getArReceiptSearchByRcptNoByloc(rcptNo,sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
       .subscribe(
         data => {
@@ -983,8 +1002,21 @@ if(this.deptId==2){
           if (data.code === 400) {
             alert(data.obj)
             this.lstcomments = null;
-      } });}
-
+      } });
+    }
+    else if (Number(sessionStorage.getItem('deptId'))==4){
+      // alert ('else if ----'+ this.locId)
+      this.service.getArReceiptSearchByRcptNoByloc(rcptNo,sessionStorage.getItem('ouId'), this.locId, sessionStorage.getItem('deptId'))
+      .subscribe(
+        data => {
+          this.lstcomments = data.obj;
+          console.log(this.lstcomments);
+          if (data.code === 400) {
+            alert(data.obj)
+            this.lstcomments = null;
+      } });
+    }
+    }
     SearchRcptByCustNo(custActNo: any) {
     // alert ("custActNo Num : " +custActNo);
     if(custActNo ===undefined || custActNo===null || custActNo<=0 ) {return;}
@@ -1164,9 +1196,10 @@ if(this.deptId==2){
 
 
       SelectReceipt(receiptNumber: any) {
+        // alert('selectReceiptMethod'+'---'+receiptNumber)
         this.displayButton = false;
          this.display = false;
-     
+        if (Number(sessionStorage.getItem('deptId'))!=4){
          this.service.getArReceiptDetailsByRcptNoAndloc(receiptNumber)
            .subscribe(
              data => {
@@ -1275,7 +1308,121 @@ if(this.deptId==2){
 
               
               });
-     
+            }
+            else if (Number(sessionStorage.getItem('deptId'))===4){
+              // alert(receiptNumber+'---'+this.locId)
+              this.service.getArReceiptDetailsByRcptNoAndlocDeptIDAccou(receiptNumber,this.locId)
+              .subscribe(
+                data => {
+                 if (data.code === 400) {alert (data.message+data.obj);return; }
+                  this.receiptDetails = data.obj.oePayList[0];
+                  console.log(this.receiptDetails);
+                  this.enableCancelButton=false;
+                  this.enableApplyButton=false;
+                  this.printButton=false;
+                  // ---------------------------Applied history
+                  this.lstApplyHistory= data.obj.invApplyLst;
+                  console.log(this.lstApplyHistory);
+        
+                  var len1=data.obj.invApplyLst.length;
+        
+                  if(len1>0) {
+                    this.applHistory=true
+                  } else {
+                    this.applHistory=false;
+                  }
+        
+                  // --------------------------------------------
+        
+                  this.paymentArForm.patchValue(this.receiptDetails);
+        
+                  this.vehNo=data.obj.oePayList[0].vehNo;
+                  this.bounceReasonCode=data.obj.oePayList[0].bounceReasonCode;
+                  this.chqBounceCharge=data.obj.oePayList[0].chqBounceCharge;
+                  this.chqBncTrxNo=data.obj.oePayList[0].chqBncTrxNo;
+                  this.totAppliedtAmount = data.obj.oePayList[0].totAppliedtAmount.toFixed(2);
+                  this.totUnAppliedtAmount = data.obj.oePayList[0].totUnAppliedtAmount.toFixed(2);
+                  this.balanceAmount = data.obj.oePayList[0].balanceAmount.toFixed(2);
+   
+                   this.GetCustomerDetails(data.obj.oePayList[0].customerId)
+                  this.GetCustomerSiteDetails(data.obj.oePayList[0].customerId)
+   
+                   this.showRefundHist=false;
+                   if(data.obj.oePayList[0].status ==='REFUND') {
+                     this.showReasonDetails=false;this.enableCancelButton = false; this.enableApplyButton = false;
+                     this.showRefundHist=true;
+                     return;
+                   }
+   
+                  
+        
+                  if( data.obj.oePayList[0].reversalReasonCode !=null) {
+                  if(data.obj.oePayList[0].reversalReasonCode ==='ChqBounce') {this.chqBounceStatus=true; }
+                   this.printButton=false;
+                   this.showModalForm = false;
+                   this.enableApplyButton = false;
+                   this.enableCancelButton = false;
+                   this.showReasonDetails=true;
+                   this.reversalReasonCode=data.obj.oePayList[0].reversalReasonCode;
+                   this.reversalComment=data.obj.oePayList[0].reversalComment;
+                   this.reversalDate=data.obj.oePayList[0].reversalDate;
+                   this.reversalCategory=data.obj.oePayList[0].reversalCategory;
+                   this.paymentArForm.disable();
+                   this.paymentArForm.get('searchByRcptNo').enable();
+                   this.paymentArForm.get('searchByCustNo').enable();
+                   this.paymentArForm.get('searchByDate').enable();
+                   this.paymentArForm.get('applyTo').enable();
+                   return;
+                  
+                 }    
+        
+   
+                 var rcptdt =data.obj.oePayList[0].receiptDate
+                 var tDate = this.pipe.transform(Date.now() ,'y-MM-dd');
+                 var mDays =this.diffDays(rcptdt);
+                 var reversalDays= this.getRevDays(data.obj.oePayList[0].payType)
+                 // var reversalDays=30;
+                 // alert ("Receipt Date :"+rcptdt + "  , sys date :"+ tDate + " , mdays :"+mDays);
+           
+                 // alert ("Receipt Type :"+ data.obj.oePayList[0].payType+  ". Receipt aging days :"+mDays + ". Reversal Days Limit :" + reversalDays);
+                
+                       
+                  if( data.obj.oePayList[0].payType ==='CHEQUE' && mDays<=reversalDays) {
+                    this.showReasonDetails=true;this.enableCancelButton = true;
+                    this.paymentArForm.get('reversalReasonCode').enable();
+                    this.paymentArForm.get('reversalCategory').enable();
+                    this.paymentArForm.get('reversalComment').enable();
+                   }
+   
+   
+                   if( data.obj.oePayList[0].payType ==='CHEQUE' && mDays>reversalDays) {
+                   this.showReasonDetails=false;this.enableCancelButton = false;
+                   }
+                  
+                  if( data.obj.oePayList[0].payType !='CHEQUE' && mDays<reversalDays) {
+                    this.showReasonDetails=true;this.enableCancelButton = true;
+                    this.paymentArForm.get('reversalReasonCode').enable();
+                    this.paymentArForm.get('reversalCategory').enable();
+                    this.paymentArForm.get('reversalComment').enable();
+                   }
+   
+                   // if( data.obj.oePayList[0].payType !='CHEQUE' && mDays !=0) {
+                     if( data.obj.oePayList[0].payType !='CHEQUE' && mDays >reversalDays) {
+                     this.showReasonDetails=false;this.enableCancelButton = false; }
+   
+   
+                 // if ( data.obj.oePayList[0].totAppliedtAmount>0 && data.obj.oePayList[0].totAppliedtAmount < data.obj.oePayList[0].paymentAmt) {
+                 //   this.enableApplyButton = true;
+                 //  } 
+   
+                 if ( data.obj.oePayList[0].totUnAppliedtAmount>0 ) {
+                        this.enableApplyButton = true;
+                 } else { this.enableApplyButton = false;}
+   
+   
+                 
+                 });
+            }
                 //  this.paymentArForm.get('searchByRcptNo').enable();
                 //  this.paymentArForm.get('searchByCustNo').enable();
                 //  this.paymentArForm.get('searchByDate').enable();
