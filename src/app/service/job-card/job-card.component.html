@@ -81,8 +81,8 @@
                                         <a class="nav-link active" id="home-tab-md" data-toggle="tab" href="#home-md"
                                             role="tab" aria-controls="home-md" aria-selected="true">Job Card Opening</a>
                                     </li>
-                                    <div *ngIf="displaylabMatTab; then thenBlocklabMatTab; else elseBlocklabMatTab">
-                                    </div>
+                                    
+                                    <div *ngIf="displaylabMatTab; then thenBlocklabMatTab; else elseBlocklabMatTab"></div>
                                     <ng-template #thenBlocklabMatTab>
 
                                     </ng-template>
@@ -2655,6 +2655,14 @@
                                                     <div *ngIf="printInvoiceButton; then P1; else P2"></div>
                                                     <ng-template #P1>
                                                         <td><button type="button" class="btn btn-primary" id="register" style="width: fit-content;" (click)="printWSInvoice()">Print invoice</button> </td>
+                                                       
+                                                        <div *ngIf="printAddonInvButton; then A1; else A2"></div>
+                                                        <ng-template #A1>
+                                                            <td><button type="button" class="btn btn-primary" id="register" style="width: fit-content;" (click)="printWSAdnInvoice()">Print Addon Bill</button> </td>
+                                                        </ng-template>
+                                                        <ng-template #A2></ng-template>
+
+                                                        
                                                         <td> <button type="button" class="btn btn-primary" id="register"  style="width: fit-content;" [routerLink]="['/admin/transaction/PaymentAr',this.jobCardNum]">Receipt</button> </td> 
                                                     </ng-template>
                                                     <ng-template #P2></ng-template>

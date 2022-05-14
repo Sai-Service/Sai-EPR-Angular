@@ -73,6 +73,10 @@
                             <a class="dropdown-item" data-toggle="collapse" href="#panelfromtolocation" role="tab"
                               (click)="reportDetails('jobIssueDetails')">Job Issue Details Report</a>
                           </li>
+                          <li>
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelfromtolocationdepartment" role="tab"
+                                (click)="reportDetails('IrnGenerationReport')">IRN Generation Report</a>
+                        </li>
                     </ul>
                 </li>
             </ul>
@@ -315,7 +319,7 @@
                         <table [style.display]="isVisibleDepartmentList ? 'block' : 'none'" >
                             <tr>
                                 <td style="width: 15%" class="LabelFontStyle" >
-                                    &nbsp;Department&nbsp;List&nbsp;:&nbsp;
+                                    &nbsp;Dept&nbsp;&nbsp;List&nbsp;&nbsp;:&nbsp;
                                 </td>
                                 <td>
                                     <!-- <select formControlName="deptId" id="deptId" class="form-control">

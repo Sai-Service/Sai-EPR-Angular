@@ -125,7 +125,7 @@
                                                     </td>
                                                     <td>
                                                         <input hidden type="text" formControlName="suppId">
-                                                        <select formControlName="name" id="name" class="form-control"
+                                                        <!-- <select formControlName="name" id="name" class="form-control"
                                                             (ngModelChange)='onOptionsSelectedsuppName($event,i)'
                                                             style="width: 160px;height: 25px;font-size: 10px;">
                                                             <option>--Select--</option>
@@ -133,7 +133,16 @@
                                                                 [ngValue]="item.suppNo">
                                                                 {{item.name}}
                                                             </option>
-                                                        </select>
+                                                        </select>   -->
+                                                       
+                                                        <input type="text" formControlName="name"
+                                                                    list="dynmicUserIds1" class="form-control"  style="width: 160px;height: 25px;font-size: 10px;"
+                                                                    (ngModelChange)='onOptionsSelectedsuppName($event,i)'>
+                                                                <datalist id="dynmicUserIds1">
+                                                                    <option *ngFor="let item of  supplierCodeList"
+                                                                    [ngValue]="item.suppNo">{{item.name}}
+                                                                    </option>
+                                                                </datalist>
                                                     </td>
                                                     <td>
                                                         <input disabled type="text" class="form-control"
@@ -346,7 +355,7 @@
                                                                         style="width: 100px;height: 25px;">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-control"
+                                                                    <input class="form-control" formControlName="remark"
                                                                         style="width: 100px;height: 25px;">
                                                                 </td>
                                                             </tr>
@@ -568,7 +577,7 @@
                                                                         style="width: 100px;height: 25px;">
                                                                 </td>
                                                                 <td>
-                                                                    <input disabled class="form-control"
+                                                                    <input disabled class="form-control"formControlName="remark"
                                                                         style="width: 100px;height: 25px;">
                                                                 </td>
                                                             </tr>
@@ -726,7 +735,7 @@
                                                             Row</button>
                                                     </td>
                                                     <td>
-                                                        <button type="submit" class="btn btn-primary"
+                                                        <button type="submit" class="btn btn-primary" [style.display]="isVisibleRoundOffButton ? 'block' : 'none'"
                                                             (click)="roundOffAP()">RoundOff</button>
                                                     </td>
                                                 </tr>
@@ -739,11 +748,11 @@
                                                         Add New Line&nbsp;&nbsp;:&nbsp;
                                                     </td>
                                                     <td>
-                                                        <button type="submit" class="btn btn-primary fa fa-plus"
+                                                        <button type="submit" class="btn btn-primary fa fa-plus" 
                                                             (click)="addRow()">Add Row</button>
                                                     </td>
                                                     <td>
-                                                        <button type="submit" class="btn btn-primary"
+                                                        <button type="submit" class="btn btn-primary" [style.display]="isVisibleRoundOffButton ? 'block' : 'none'"
                                                             (click)="roundOffAP()">RoundOff</button>
                                                     </td>
                                                 </tr>
@@ -803,7 +812,7 @@
                                                                 </ng-template>
                                                             </td>
                                                             <td>
-                                                                <input type="text" class="form-control"
+                                                                <input type="number" class="form-control"
                                                                     formControlName="lineNumber" value={{lineNumber}}
                                                                     data-toggle="collapse"
                                                                     data-target="#collapseExample" aria-expanded="false"
@@ -1096,12 +1105,11 @@
                                                                     (change)="amountmatch(k,$event)">
                                                             </td>
                                                             <td>
-                                                                <div
-                                                                    *ngIf="dispaccountingDate; then thenaccountingDate; else elseaccountingDate">
+                                                                <div  *ngIf="dispaccountingDate; then thenaccountingDate; else elseaccountingDate">
                                                                 </div>
                                                                 <ng-template #thenaccountingDate>
-                                                                    <input type="text" formControlName="accountingDate"
-                                                                        value={{accountingDate}} class="form-control"
+                                                                    <input type="date" formControlName="accountingDate" [(ngModel)]='accountingDate'
+                                                                    value="{{accountingDate | date:'dd-MM-yyyy'}}" class="form-control"
                                                                         style="width: 130px;height: 25px;font-size: 10px;">
                                                                 </ng-template>
                                                                 <ng-template #elseaccountingDate>
@@ -1862,6 +1870,7 @@
                                                         style="width: 150px; background-color: white; border: none;"
                                                         formControlName="lookupValueDesc1"
                                                         [(ngModel)]="lookupValueDesc1" class="form-control">
+                                                        </td>
                                             </tr>
                                             <tr>
                                                 <td style="width: 15%" class="LabelFontStyle">
@@ -1921,7 +1930,6 @@
                                                         list="dynmicUserIds3" class="form-control"
                                                         (ngModelChange)="onOptionsSelectedNatural($event,'NaturalAccount')" />
                                                     <datalist id="dynmicUserIds3">
-                                                        <!-- <option>--Select--</option> -->
                                                         <option *ngFor="let sc of  NaturalAccountList"
                                                             [value]="sc.naturalaccount">
                                                             {{sc.naturalaccount}}--{{sc.description}}

@@ -146,8 +146,8 @@ export class ReportServiceService {
     });
   }
 
-  cashBankReport(fromDate,toDate,ouId,accountName){
-    const REQUEST_URI = this.ServerUrl +`/AccountsReports/CashbankReg?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&accountName=${accountName}`;
+  cashBankReport(fromDate,toDate,ouId,locId,accountName,naturalAccct){
+    const REQUEST_URI = this.ServerUrl +`/AccountsReports/CashbankReg?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&accountName=${accountName}&naturalCode=${naturalAccct}`;
     return this.http.get(REQUEST_URI, {
       responseType: 'arraybuffer',
       headers: this.headers,
@@ -450,6 +450,16 @@ export class ReportServiceService {
     });
   }
 
+  irnGenerationReport(fromDate,toDate,ouId,locId,deptId){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprIrnRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&deptId=${deptId}`;
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+
   internalConsuptionReport(fromDate,toDate,locId,subInvCode){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/ICReport?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}&subInvCode=${subInvCode}`;
     return this.http.get(REQUEST_URI, {
@@ -528,6 +538,14 @@ EWSaleRegister(fromDate,toDate,ouId,locId){
 
 reinsuarnceReceiptPrint(receiptNo){
   const REQUEST_URI = this.ServerUrl +`/SalesReports/ReInsuranceReceipt?receiptNumber=${receiptNo}`;
+  return this.http.get(REQUEST_URI, {
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
+}
+
+salesAddonReconciliation(fromDate,toDate,segment1,segment2,segment3,segment4,segment5){
+  const REQUEST_URI = this.ServerUrl +`/SalesReports/SalesAddonReco?fromDate=${fromDate}&toDate=${toDate}&segment1=${segment1}&segment2=${segment2}&segment3=${segment3}&segment4=${segment4}&segment5=${segment5}`;
   return this.http.get(REQUEST_URI, {
     responseType: 'arraybuffer',
     headers: this.headers,

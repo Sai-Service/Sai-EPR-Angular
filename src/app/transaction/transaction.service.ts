@@ -41,7 +41,7 @@ UpdateValidate(invoiceNum) {
   const options = {
     headers: this.headers
   };
-  const url = (this.ServerUrl + `/apInv/invValidate/${invoiceNum}`);
+  const url = (this.ServerUrl + `/apInv/invValidate?invNum=${invoiceNum}`);
   return this.http.put(url, invoiceNum, options);
 }
 
@@ -69,7 +69,7 @@ apInvoiceCancellation(invoiceNum,emplId): Observable<any> {
     const options = {
       headers: this.headers
     };
-    const url = (this.ServerUrl + `/apInv/roundoff/${invoiceNum}`);
+    const url = (this.ServerUrl + `/apInv/roundoff?invNum=${invoiceNum}`);
     return this.http.put(url, invoiceNum, options);
   }
 
@@ -105,8 +105,8 @@ apInvoiceCancellation(invoiceNum,emplId): Observable<any> {
     return this.http.get(this.ServerUrl +`/apInv/Aptaxcal?invId=${invItemId}&baseAmt=${amount}&taxCateId=${taxCategoryId}&disAmt=${disAm}`);
   }
 
-  getTaxDetailsNew(taxCategoryId,invItemId, disAm,amount,invLineNum): Observable<any> {
-    return this.http.get(this.ServerUrl +`/apInv/Aptaxcal?invId=${invItemId}&baseAmt=${amount}&taxCateId=${taxCategoryId}&disAmt=${disAm}&invLineNum=${invLineNum}`);
+  getTaxDetailsNew(taxCategoryId,invItemId, disAm,amount,invoiceLineNum): Observable<any> {
+    return this.http.get(this.ServerUrl +`/apInv/Aptaxcal?invId=${invItemId}&baseAmt=${amount}&taxCateId=${taxCategoryId}&disAmt=${disAm}&invLineNum=${invoiceLineNum}`);
   }
 
   // ============================ PO INVOICE  TDS SAVE=======================

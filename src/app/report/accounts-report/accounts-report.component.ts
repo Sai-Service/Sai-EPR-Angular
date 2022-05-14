@@ -53,6 +53,9 @@ export class AccountsReportComponent implements OnInit {
   supplierNo:string;
   supNo:number;
   isVisiblepanelprePayment:boolean=false;
+  public NaturalAccountList: any = [];
+  public InterBrancList: any = [];
+  segment4:string;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) {
     this.reportForm = this.fb.group({
@@ -69,6 +72,7 @@ export class AccountsReportComponent implements OnInit {
       accountName:[''],
       supplierNo:[''],
       supNo:[''],
+      segment4:[''],
     })
    }
    
@@ -132,6 +136,15 @@ this.service.FinancialPeriod()
   }
 );
 
+
+this.service.getInterBranchNatural()
+.subscribe(
+  data => {
+    this.NaturalAccountList = data.obj;
+    console.log(data.obj);
+    console.log(this.NaturalAccountList);
+  }
+);
 
 }
 
@@ -321,8 +334,8 @@ reportName:string;
     var fromDate = this.pipe.transform(purStDt, 'dd-MMM-yyyy');
     var spreceipttoDate2 = this.reportForm.get('toDate').value;
     var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
-    var locId = this.reportForm.get('locId').value;
     var deptId=this.reportForm.get('deptId').value;
+    var locId = this.reportForm.get('locId').value;
     if (locId===null){
       locId=''
     }
@@ -440,10 +453,20 @@ reportName:string;
       })      
     }
     else if (reportName ==='Cash Bank Reports'){
+      // alert(reportName);
       var accountName=this.reportForm.get('accountName').value;
+      var naturalAccct = this.reportForm.get('segment4').value;
+      alert(naturalAccct);
+      // var locId = this.reportForm.get('locId').value;
+      if (naturalAccct===null || naturalAccct==''){
+       alert('Please Select Natural Account');
+       this.dataDisplay = 'Please Select Natural Account....Do not refresh the Page';
+       return;
+      }
        const fileName = 'Cash Bank Reports-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-     this.reportService.cashBankReport(fromDate,toDate,sessionStorage.getItem('ouId'),accountName)
+    //  alert(fromDate+'---'+toDate+'---'+sessionStorage.getItem('ouId')+'----'+locId+'---'+accountName)
+     this.reportService.cashBankReport(fromDate,toDate,sessionStorage.getItem('ouId'),locId,accountName,naturalAccct)
        .subscribe(data => {
          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
          this.closeResetButton = true;
@@ -509,4 +532,43 @@ reportName:string;
     console.log(selectedValue);
     this.reportForm.patchValue({supNo:selectedValue.suppNo})
   }
+
+  userList3: any[] = [];
+  lastkeydown3: number = 0;
+  lookupValueDesc4: string;
+  getNaturalAccount($event) {
+    let userId = (<HTMLInputElement>document.getElementById('NaturalAccountFirstWay')).value;
+    this.userList3 = [];
+    if (userId.length > 2) {
+      if ($event.timeStamp - this.lastkeydown3 > 200) {
+        this.userList3 = this.searchFromArray2(this.NaturalAccountList, userId);
+      }
+    }
+  }
+
+
+  searchFromArray2(arr, regex) {
+    let matches = [], i;
+    for (i = 0; i < arr.length; i++) {
+      // alert(arr[i] + 'Array i');
+      if (arr[i].match(regex)) {
+        matches.push(arr[i]);
+      }
+    }
+    return matches;
+  };
+
+
+  onOptionsSelectedNatural(event) {
+    if (event != undefined) {
+      let selectnaturalaccount = this.NaturalAccountList.find(v => v.naturalaccount == event);
+      console.log(selectnaturalaccount);
+      this.lookupValueDesc4 = selectnaturalaccount.description;
+      this.service.getInterBranchNewApi(event).subscribe(
+        data => {
+          this.InterBrancList = data.obj
+        })
+    }
+  }
+
 }

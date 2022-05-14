@@ -328,6 +328,7 @@ export class JobCardComponent implements OnInit {
   preInvButton=false;
   dispReadyInvoice = false;
   printInvoiceButton=false;
+  printAddonInvButton=false;
   saveLabButton=true;
   saveMatButton=false; 
   importMatButton=true;
@@ -1528,6 +1529,7 @@ export class JobCardComponent implements OnInit {
     var  jcNum=jobCardNo.toUpperCase();
     this.saveLabButton=true;
     this.displaybilling=true;
+    
     this.jobcardForm.reset();
     // this.lineDetailsArray.clear();
     this.jobcardForm.get('jobCardLabLines').reset();
@@ -1562,6 +1564,8 @@ export class JobCardComponent implements OnInit {
 
           // let mToday =this.pipe.transform(new Date(), 'yyyy-MM-dd');
           // let jobDate=this.pipe.transform(this.jobCardDate, 'yyyy-MM-dd');
+          this.printAddonInvButton=false;
+          if(data.obj.addonInvoiceNumber>0) { this.printAddonInvButton=true;}
 
           if(this.lstcomments.jcType=='Service') {
             this.dispSplitRatio=false; 
@@ -1631,6 +1635,7 @@ export class JobCardComponent implements OnInit {
                 this.dispReadyInvoice = false; this.preInvButton=false;}
                 this.dispButtonStatus=false;
                 this.updateButton=true;
+                this.importMatButton=true;
             
                 this.openStatus=true;
               if(x===y) { this.cancelButton=true;}else {this.cancelButton=false;}
@@ -1666,6 +1671,7 @@ export class JobCardComponent implements OnInit {
             this.cancelButton=false;
             this.openStatus=false;
             this.updateButton=false;
+            this.importMatButton=false;
                          
           }
 
@@ -1688,6 +1694,7 @@ export class JobCardComponent implements OnInit {
             this.cancelButton=false;
             this.openStatus=false;
             this.updateButton=false;
+            this.importMatButton=false;
           }
 
 
@@ -2546,7 +2553,7 @@ export class JobCardComponent implements OnInit {
 
   GenerateInvoice(jobCardNum) {
     this.genBillButton=false;
-
+    this.printAddonInvButton=false;
     this.saveBillButton=false;
     this.preInvButton=false;
     this.reopenButton=false;
@@ -2564,6 +2571,7 @@ export class JobCardComponent implements OnInit {
          if(jcTp==='Service') {
           this.arInvNum = res.obj.InvoiceNo;
           this.addonInvoiceNo=res.obj.AddonInvoiceNo;
+          if(res.obj.AddonInvoiceNo>0) {this.printAddonInvButton=true;}
           
         }
         if(jcTp==='BS') {
@@ -3079,6 +3087,26 @@ printWSInvoice(){
       
     });
 }
+
+
+printWSAdnInvoice(){
+  var jcNum=this.jobcardForm.get('jobCardNum').value
+  var jctype=this.jobcardForm.get('jcType').value
+  const fileName = 'download.pdf';
+  const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+  this.serviceService.printWsAddonInvoicedocument(jcNum,jctype)
+    .subscribe(data => {
+      var blob = new Blob([data], { type: 'application/pdf' });
+      var url = URL.createObjectURL(blob);
+      var printWindow = window.open(url, '', 'width=800,height=500');
+      printWindow.open
+      
+    });
+}
+
+
+
+
 
 printWSInvoiceDp(custtp){
   var jcNum=this.jobcardForm.get('jobCardNum').value
