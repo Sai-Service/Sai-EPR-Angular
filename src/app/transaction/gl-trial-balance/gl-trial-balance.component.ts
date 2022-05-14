@@ -109,4 +109,6 @@ export class GlTrialBalanceComponent implements OnInit {
     });
  }
 
+ testing1(){alert("testting link...")}
+
 }
