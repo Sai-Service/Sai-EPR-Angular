@@ -1,9 +1,7 @@
 import { Component, OnInit, HostListener, ViewChild, ElementRef ,NgModule} from '@angular/core';
 import { FormGroup, FormControl, FormBuilder} from '@angular/forms';
-
 import { MasterService } from 'src/app/master/master.service'
 import { DatePipe ,Location} from '@angular/common';
-
 import { ActivatedRoute,Router } from '@angular/router';
 import * as xlsx from 'xlsx';
 

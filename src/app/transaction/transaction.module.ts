@@ -22,7 +22,6 @@ import { McpPackageMasterComponent } from './mcp-package-master/mcp-package-mast
 import { McpEnquiryComponent } from './mcp-enquiry/mcp-enquiry.component';
 import { McpEnrollmentComponent } from './mcp-enrollment/mcp-enrollment.component';
 import { McpCancellationComponent } from './mcp-cancellation/mcp-cancellation.component';
-  
 import { StockTakingComponent } from './stock-taking/stock-taking.component';
 import { JournalVoucherComponent } from './journal-voucher/journal-voucher.component';
 import { OnHandDetailsComponent } from './on-hand-details/on-hand-details.component';
@@ -45,6 +44,7 @@ import { WarrantyClaimComponent } from './warranty-claim/warranty-claim.componen
 import { PayableInvoiceNewComponent } from './payable-invoice-new/payable-invoice-new.component';
 import { DeadStockComponent } from './dead-stock/dead-stock.component';
 import { PoInvListComponent } from './po-inv-list/po-inv-list.component';
+import { GlTrialBalanceComponent } from './gl-trial-balance/gl-trial-balance.component';
 
 
 // import { ShippingNetworkComponent } from './shipping-network/shipping-network.component';
@@ -99,6 +99,7 @@ import { PoInvListComponent } from './po-inv-list/po-inv-list.component';
     PayableInvoiceNewComponent,
     DeadStockComponent,
     PoInvListComponent,
+    GlTrialBalanceComponent,
  
   
     // ShippingNetworkComponent,

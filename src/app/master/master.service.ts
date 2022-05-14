@@ -3915,6 +3915,11 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
           // http://localhost:8081/fileImport/uploadBankStmt/
         }
 
+        /////////////////////////////////GL TRIAL BALANCE //////////////
+      getGLTrialBalanceList(ou,prdName): Observable<any> {
+              return this.http.get(this.ServerUrl + `/glHeader/drillDownHeader?segment1=${ou}&periodName=${prdName}`);
+       }
+
         ////////////////////customer relation manager master //////////////////////
         employeeLst(locId,divId,deptId): Observable<any> {
              return this.http.get(this.ServerUrl + `/empMst/EmpLocDept?locId=${locId}&divisionId=${divId}&deptId=${deptId}`);
