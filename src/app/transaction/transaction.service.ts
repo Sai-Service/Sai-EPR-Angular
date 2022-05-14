@@ -105,6 +105,10 @@ apInvoiceCancellation(invoiceNum,emplId): Observable<any> {
     return this.http.get(this.ServerUrl +`/apInv/Aptaxcal?invId=${invItemId}&baseAmt=${amount}&taxCateId=${taxCategoryId}&disAmt=${disAm}`);
   }
 
+  getTaxDetailsNew(taxCategoryId,invItemId, disAm,amount,invLineNum): Observable<any> {
+    return this.http.get(this.ServerUrl +`/apInv/Aptaxcal?invId=${invItemId}&baseAmt=${amount}&taxCateId=${taxCategoryId}&disAmt=${disAm}&invLineNum=${invLineNum}`);
+  }
+
   // ============================ PO INVOICE  TDS SAVE=======================
   public PoInvoiceTdsDataSubmit(poTdsRecord) {
     const options = {

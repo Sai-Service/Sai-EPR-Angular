@@ -207,14 +207,14 @@ public InterBrancList:Array<string>=[];
       fnCancatination()
       {
         var natacc1 = this.AccountEnquiryForm.get('segmentFrm4').value.split('--');
-        alert(this.accType);
+        alert(this.accType +natacc1[0]);
         var segmentDtls :string =''
         if(this.accType === 'frmAcc'){
         this.segmentNameFrm=this.AccountEnquiryForm.get('segmentFrm1').value+'.'+
                          this.AccountEnquiryForm.get('segmentFrm2').value+'.'+
                          this.AccountEnquiryForm.get('segmentFrm3').value+'.'+
                         //  this.AccountEnquiryForm.get('segmentFrm4').value+'.'+
-                        natacc1+'.'+
+                        natacc1[0]+'.'+
                          this.AccountEnquiryForm.get('segmentFrm5').value;
 
                          segmentDtls = this.segmentNameFrm;
@@ -257,7 +257,7 @@ public InterBrancList:Array<string>=[];
                            this.AccountEnquiryForm.get('segmentFrm2').value+'.'+
                            this.AccountEnquiryForm.get('segmentFrm3').value+'.'+
                           //  this.AccountEnquiryForm.get('segmentFrm4').value+'.'+
-                          natacc1+'.'+
+                          natacc1[0]+'.'+
                            this.AccountEnquiryForm.get('segmentFrm5').value;
   
                            segmentDtls = this.segmentNameTo;
@@ -560,5 +560,21 @@ viewAccounting(event:any){
     return matches;
   };
 
-}
 
+  transView(docSequenceValue,jeCat,locId){
+    alert(docSequenceValue+"--"+jeCat+"--"+locId);
+    // var sel
+    var loc=this.JVdata.location
+    if(jeCat=='Receipts'|| jeCat=='Receipts Application' )
+    {
+      alert('in if----'+docSequenceValue)
+      // this.router.navigate(['/admin/transaction/PaymentAr',docSequenceValue]);   
+      this.router.navigate(['/admin/transaction/PaymentAr'], { queryParams: { docSequenceValue: docSequenceValue,locId:locId }});
+  }
+  if(jeCat=='JV Manual Creation')
+  {
+    alert('in if----'+docSequenceValue)
+      this.router.navigate(['/admin/transaction/JournalVoucher',docSequenceValue]);   
+  }
+}
+}

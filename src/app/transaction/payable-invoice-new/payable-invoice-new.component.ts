@@ -1833,7 +1833,8 @@ export class PayableInvoiceNewComponent implements OnInit {
       (controlinv.controls[k]).patchValue({ locId: objarray[0].locationId });
       var disAm = 0;
       var sum = 0;
-      this.transactionService.getTaxDetails(select.taxCategoryId, sessionStorage.getItem('ouId'), disAm, amount)
+      var kln = k+1;
+      this.transactionService.getTaxDetailsNew(select.taxCategoryId, sessionStorage.getItem('ouId'), disAm, amount,kln)
         .subscribe(
           data => {
             this.lstInvLineDeatails1 = data;

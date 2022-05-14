@@ -2668,6 +2668,11 @@ OrderCategoryList(): Observable<any> {
       return this.http.get(this.ServerUrl + `/arCashReceipts/receipt/${rcptNumber}?locId=`+sessionStorage.getItem('locId'));
     }
 
+    getArReceiptDetailsByRcptNoAndlocDeptIDAccou(rcptNumber,locId): Observable<any> {
+      return this.http.get(this.ServerUrl + `/arCashReceipts/receipt/${rcptNumber}?locId=`+locId);
+    }
+
+
     getArReceiptAppliedHistory (rcptNumber): Observable<any> {
       return this.http.get(this.ServerUrl + `/arCashReceipts/receipt/${rcptNumber}`);
     }

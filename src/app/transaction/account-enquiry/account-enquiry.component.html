@@ -265,7 +265,7 @@
                                                                                                 <datalist id="dynmicUserIds3">
                                                                                                      <!-- <option>--Select--</option> -->
                                                                                                    <option *ngFor="let sc of  NaturalAccountList" >
-                                                                                                       {{sc.naturalaccount}}--{{sc.description}}
+                                                                                                       {{sc.lookupValue}}--{{sc.lookupValueDesc}}
                                                                                                    </option>
                                                                                                 </datalist>
                                                                                             </td>
@@ -435,7 +435,7 @@
 
                         <th scope="col">Entered Debit</th>
                         <th scope="col">Entered Credit</th>
-
+                        <th scope="col">View Transaction</th>
 
                     </tr>
                 </thead>
@@ -452,10 +452,11 @@
                     <!-- <td><a href="http://localhost:8081/glHeader/receiptNoWise/{{com.docSequenceValue}}"> {{com.docSequenceValue}}</a></td> -->
                     <td>{{com.jeCategory}}</td>
                     <td>{{com.name}}</td>
-
+                    
                     <td style="text-align: right;padding-right: 15px;">{{com.enteredDr}}</td>
                     <td style="text-align: right;padding-right: 15px;">{{com.enteredCr}}</td>
-
+                    <td><button type="button" class="btn btn-primary" style="width: fit-content;"
+                        (click)="transView(com.docSequenceValue,com.jeCategory,com.locId)" >Transaction</button></td>
                 </tr>
 
             </table>
