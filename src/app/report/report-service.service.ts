@@ -146,8 +146,8 @@ export class ReportServiceService {
     });
   }
 
-  cashBankReport(fromDate,toDate,ouId,locId,accountName){
-    const REQUEST_URI = this.ServerUrl +`/AccountsReports/CashbankReg?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&accountName=${accountName}`;
+  cashBankReport(fromDate,toDate,ouId,locId,accountName,naturalAccct){
+    const REQUEST_URI = this.ServerUrl +`/AccountsReports/CashbankReg?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&accountName=${accountName}&naturalCode=${naturalAccct}`;
     return this.http.get(REQUEST_URI, {
       responseType: 'arraybuffer',
       headers: this.headers,
@@ -449,6 +449,16 @@ export class ReportServiceService {
       headers: this.headers,
     });
   }
+
+  irnGenerationReport(fromDate,toDate,ouId,locId,deptId){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprIrnRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&deptId=${deptId}`;
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
 
   internalConsuptionReport(fromDate,toDate,locId,subInvCode){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/ICReport?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}&subInvCode=${subInvCode}`;

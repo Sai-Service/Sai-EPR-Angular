@@ -1307,7 +1307,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
   }
 
   saveMisc() {
-    this.displayButton = true;
+    this.displayButton = false;
     this.displayaddButton = true;
     if (this.miscellaneousForm.valid) {
       // this.displayButton=true;
@@ -1320,23 +1320,15 @@ export class MiscellaneousTransactionComponent implements OnInit {
           this.totalItemValue = res.obj.totalItemValue;
           this.compileStatus = res.obj.compileStatus;
           // this.lstcomment=data.obj;
-          alert('Record Inserted Successfully');
-          // this.miscellaneousForm.patchValue(obj);
-          // let control =this.miscellaneousForm.get('cycleLinesList') as FormArray;
-          // var len = this.cycleLinesList().length;
-          // for(let i=0; i<res.obj.cycleLinesList.length-len; i++){
-          //   var trxlist:FormGroup=this.newcycleLinesList();
-          //   this.cycleLinesList().push(trxlist);
-
+          alert(res.message);
           this.miscellaneousForm.disable();
           this.displayButton = false;
           this.displayaddButton = false;
           this.displayOp=false;
-
-          // (document.getElementById("btnrm") as HTMLInputElement).disabled = false;
         } else {
           if (res.code === 400) {
-            alert('ERROR OCCOURED IN PROCEESS');
+            alert(res.message);
+            this.displayButton=true;
             // this.miscellaneousForm.reset();
           }
         }

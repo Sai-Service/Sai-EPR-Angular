@@ -399,19 +399,18 @@
           </td>
         </ng-template>
         <ng-template #elseBlock2>
+          <td>
           <button disabled type="submit" class="btn btn-primary" (click)="saveMisc()">Save</button>
+        </td>
         </ng-template>
         <td>
         <div *ngIf="displayOp; then thenBlockOp; else elseBlockOp">
         </div>
         <ng-template #thenBlockOp>
-
   <button disabled  type="submit" class="btn btn-primary" (click)="viewMiscnote()">View&nbsp;Note</button>
 </ng-template>
 <ng-template #elseBlockOp>
-
     <button   type="submit" class="btn btn-primary" (click)="viewMiscnote()">View&nbsp;Note</button>
-
   </ng-template>
 </td>
       </tr>

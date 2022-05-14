@@ -91,6 +91,9 @@ export class SalesReportsComponent implements OnInit {
   public NaturalAccountList: any = [];
   public InterBrancList: any = [];
   public CostCenterList: Array<string> = [];
+  isVisiblefromtosubinventory:boolean=false;
+  subInventory:string;
+  subInvCode: any;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) {
     this.salesReportForm = this.fb.group({
@@ -131,6 +134,7 @@ export class SalesReportsComponent implements OnInit {
       lookupValueDesc3:[],
       lookupValueDesc4:[],
       lookupValueDesc5:[],
+      subInventory:[],
     })
   }
 
@@ -211,6 +215,17 @@ export class SalesReportsComponent implements OnInit {
           console.log(this.NaturalAccountList);
         }
       );
+
+      this.service.subInvCode2(sessionStorage.getItem('deptId'), sessionStorage.getItem('divisionId')).subscribe(
+        data => {
+          this.subInvCode = data;
+          console.log(this.subInvCode);
+          if (this.subInvCode.subInventoryCode != null) {
+            this.subInventory = this.subInvCode.subInventoryCode;
+            this.salesReportForm.patchValue({ subInventory: this.subInvCode.subInventoryCode })
+          }
+        });
+  
         
     if (Number(sessionStorage.getItem('deptId')) === 4) {
       this.isVisiblelocationLOV = true;
@@ -222,6 +237,8 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblelocationInput = true;
     }
   }
+
+
 
   refresh() {
     window.location.reload();
@@ -248,6 +265,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepanelfromtolocation=false;
       this.isVisiblepanelreceiptNo=false;
       this.isVisiblepanelSalesAddonReconciliation=false;
+      this.isVisiblefromtosubinventory=false;
     }
     else if (reportName === 'gstSaleIND') {
       this.reportName = 'Sales Invoiced Not Delivered'
@@ -262,6 +280,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepanelfromtolocation=false;
       this.isVisiblepanelreceiptNo=false;
       this.isVisiblepanelSalesAddonReconciliation=false;
+      this.isVisiblefromtosubinventory=false;
     }
     else if (reportName === 'gstVehicleBookingReg') {
       this.reportName = 'Vehicle Booking Register'
@@ -276,6 +295,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepanelfromtolocation=false;
       this.isVisiblepanelreceiptNo=false;
       this.isVisiblepanelSalesAddonReconciliation=false;
+      this.isVisiblefromtosubinventory=false;
     }
     else if (reportName === 'gstSaleAllotNotInv') {
       this.reportName = 'Sales Alloted Not Invoiced Report'
@@ -290,6 +310,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepanelfromtolocation=false;
       this.isVisiblepanelreceiptNo=false;
       this.isVisiblepanelSalesAddonReconciliation=false;
+      this.isVisiblefromtosubinventory=false;
     }
     else if (reportName === 'gstSaleClosingStock') {
       this.reportName = 'Vehicle Closing Stock'
@@ -303,6 +324,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepanelfromtolocation=false;
       this.isVisiblepanelreceiptNo=false;
       this.isVisiblepanelSalesAddonReconciliation=false;
+      this.isVisiblefromtosubinventory=false;
     }
     else if (reportName === 'gstSaleRegister') {
       this.reportName = 'GST Sales Register'
@@ -317,6 +339,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepanelfromtolocation=false;
       this.isVisiblepanelreceiptNo=false;
       this.isVisiblepanelSalesAddonReconciliation=false;
+      this.isVisiblefromtosubinventory=false;
     }
     else if (reportName === 'gstSparesSaiDebtors') {
       this.reportName = 'Sai Debtors'
@@ -335,6 +358,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepanelfromtolocation=false;
       this.isVisiblepanelreceiptNo=false;
       this.isVisiblepanelSalesAddonReconciliation=false;
+      this.isVisiblefromtosubinventory=false;
     }
     else if (reportName === 'gstReceiptRegister') {
       this.reportName = 'Receipt Register';
@@ -352,6 +376,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepanelfromtolocation=false;
       this.isVisiblepanelreceiptNo=false;
       this.isVisiblepanelSalesAddonReconciliation=false;
+      this.isVisiblefromtosubinventory=false;
     }
 
     else if (reportName === 'customerLedger') {
@@ -370,6 +395,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepanelfromtolocation=false;
       this.isVisiblepanelreceiptNo=false;
       this.isVisiblepanelSalesAddonReconciliation=false;
+      this.isVisiblefromtosubinventory=false;
     }
     else if (reportName === 'gststockTransferSummary') {
       this.reportName = 'Stock Transfer Made Detail Report';
@@ -384,6 +410,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepanelfromtolocation=false;
       this.isVisiblepanelreceiptNo=false;
       this.isVisiblepanelSalesAddonReconciliation=false;
+      this.isVisiblefromtosubinventory=false;
     }
     else if (reportName ==='gststockTransferReceivedDetails'){
       this.reportName = 'Stock Transfer Received Detail Report';
@@ -398,6 +425,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepanelfromtolocation=false;
       this.isVisiblepanelreceiptNo=false;
       this.isVisiblepanelSalesAddonReconciliation=false;
+      this.isVisiblefromtosubinventory=false;
     }
     else if (reportName==='gststockTransferReceivedSummary'){
       this.reportName = 'Spares Stock Transfer Received Summary Report';
@@ -412,6 +440,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepanelfromtolocation=false;
       this.isVisiblepanelreceiptNo=false;
       this.isVisiblepanelSalesAddonReconciliation=false;
+      this.isVisiblefromtosubinventory=false;
     }
     else if (reportName==='saleProformaSummary'){
       this.reportName = 'Sales Proforma Summary Report';
@@ -426,6 +455,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepanelfromtolocation=false;
       this.isVisiblepanelreceiptNo=false;
       this.isVisiblepanelSalesAddonReconciliation=false;
+      this.isVisiblefromtosubinventory=false;
     }
     else if (reportName==='creditNoteReg'){
       this.reportName = 'Credit Note Register';
@@ -440,6 +470,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepanelfromtolocation=false;
       this.isVisiblepanelreceiptNo=false;
       this.isVisiblepanelSalesAddonReconciliation=false;
+      this.isVisiblefromtosubinventory=false;
     }
     else if (reportName==='subDealerRep'){
       this.reportName = 'SubDealer-Sales Register Report';
@@ -454,6 +485,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepanelfromtolocation=false;
       this.isVisiblepanelreceiptNo=false;
       this.isVisiblepanelSalesAddonReconciliation=false;
+      this.isVisiblefromtosubinventory=false;
     }
     else if (reportName==='salesaggingReports'){
       this.reportName = 'Sales Aging Report';
@@ -468,6 +500,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepanelfromtolocation=false;
       this.isVisiblepanelreceiptNo=false;
       this.isVisiblepanelSalesAddonReconciliation=false;
+      this.isVisiblefromtosubinventory=false;
     }
     else if (reportName==='saleAddonRegister'){
       this.reportName = 'Sales Addon Register';
@@ -482,6 +515,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepanelfromtolocation=false;
       this.isVisiblepanelreceiptNo=false;
       this.isVisiblepanelSalesAddonReconciliation=false;
+      this.isVisiblefromtosubinventory=false;
     }
     else if (reportName==='EWSaleRegister'){
       this.reportName = 'EW Sales Register';
@@ -496,6 +530,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepanelfromtolocation=false;
       this.isVisiblepanelreceiptNo=false;
       this.isVisiblepanelSalesAddonReconciliation=false;
+      this.isVisiblefromtosubinventory=false;
     }
     else if (reportName==='reinsuarnceReceiptPrint'){
       this.reportName = 'Reinsurance Receipt Print';
@@ -510,6 +545,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepanelfromtolocation=false;
       this.isVisiblepanelreceiptNo=true;
       this.isVisiblepanelSalesAddonReconciliation=false;
+      this.isVisiblefromtosubinventory=false;
     }
     else if (reportName ==='salesAddonReconciliation'){
       this.reportName = 'Sales Addon Reconciliation';
@@ -524,6 +560,56 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepanelfromtolocation=false;
       this.isVisiblepanelreceiptNo=false;
       this.isVisiblepanelSalesAddonReconciliation=true;
+      this.isVisiblefromtosubinventory=false;
+    }
+    else if (reportName ==='sparesSubinvTransReceived'){
+      this.reportName ='Sub Inventory Transfer Received Report';
+      this.isVisiblefromtolocationdepartment = false;
+      this.isVisibleVehicleSaleRegister = false;
+      this.isVisibleSaleIND = false;
+      this.isSaleClosingStock = false;
+      this.isVisiblestockTransfer=false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisiblefromtoloccustaccno=false;
+      this.isVisibleSalesInventoryAging=false;
+      this.isVisiblepanelfromtolocation=false;
+      this.isVisiblepanelreceiptNo=false;
+      this.isVisiblepanelSalesAddonReconciliation=false;
+      this.isVisiblefromtosubinventory=true;
+    }
+    else if (reportName ==='sparesSubinvTransMade'){
+      this.reportName ='Sub Inventory Transfer Made Report';
+      this.isVisiblefromtolocationdepartment = false;
+      this.isVisibleVehicleSaleRegister = false;
+      this.isVisibleSaleIND = false;
+      this.isSaleClosingStock = false;
+      this.isVisiblestockTransfer=false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisiblefromtoloccustaccno=false;
+      this.isVisibleSalesInventoryAging=false;
+      this.isVisiblepanelfromtolocation=false;
+      this.isVisiblepanelreceiptNo=false;
+      this.isVisiblepanelSalesAddonReconciliation=false;
+      this.isVisiblefromtosubinventory=true;
+    }
+    else if (reportName === 'IrnGenerationReport'){
+      this.reportName ='IRN Generation Report';
+      this.isVisiblefromtolocationdepartment = false;
+      this.isVisibleVehicleSaleRegister = false;
+      this.isVisibleSaleIND = false;
+      this.isSaleClosingStock = false;
+      this.isVisiblestockTransfer=false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisiblefromtoloccustaccno=false;
+      this.isVisibleSalesInventoryAging=false;
+      this.isVisiblepanelfromtolocation=true;
+      this.isVisiblepanelreceiptNo=false;
+      this.isVisiblepanelSalesAddonReconciliation=false;
+      this.isVisiblefromtosubinventory=false;
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.isVisibleDepartmentList = true;
+
+      }
     }
   }
 
@@ -1004,6 +1090,77 @@ export class SalesReportsComponent implements OnInit {
         this.closeResetButton = true;
         this.isDisabled1 = false;
       })
+    }
+    else if (reportName==='Sub Inventory Transfer Received Report'){
+      var subInvCode = this.salesReportForm.get('subInventory').value;
+      // alert(subInvCode)
+      const fileName = 'Sub Inventory Transfer Received Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if ((Number(sessionStorage.getItem('deptId'))===4)){
+        this.reportService.spInvTransRecFuc(fromDate,toDate, locId, subInvCode)
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.isDisabled1 = false;
+          this.closeResetButton = true;
+          this.dataDisplay = ''
+        })
+      }
+      else if ((Number(sessionStorage.getItem('deptId')))!=4){
+        this.reportService.spInvTransRecFuc(fromDate,toDate, sessionStorage.getItem('locId'), subInvCode)
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.isDisabled1 = false;
+          this.closeResetButton = true;
+          this.dataDisplay = ''
+        })
+      }
+    }
+    else if (reportName==='Sub Inventory Transfer Made Report'){
+      var subInvCode = this.salesReportForm.get('subInventory').value;
+      // alert(subInvCode)
+      const fileName = 'Sub Inventory Transfer Made Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if ((Number(sessionStorage.getItem('deptId'))===4)){
+        this.reportService.spInvTransMadeFuc(fromDate,toDate, locId, subInvCode)
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.isDisabled1 = false;
+          this.closeResetButton = true;
+          this.dataDisplay = ''
+        })
+      }
+      else if ((Number(sessionStorage.getItem('deptId')))!=4){
+        this.reportService.spInvTransMadeFuc(fromDate,toDate, sessionStorage.getItem('locId'), subInvCode)
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.isDisabled1 = false;
+          this.closeResetButton = true;
+          this.dataDisplay = ''
+        })
+      } 
+    }
+    else if (reportName ==='IRN Generation Report'){
+      const fileName = 'IRN Generation Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        var deptId=this.salesReportForm.get('deptId').value;
+        this.reportService.irnGenerationReport( fromDate,toDate,sessionStorage.getItem('ouId'),locId,deptId)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4){
+        this.reportService.irnGenerationReport(fromDate,toDate,sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'),sessionStorage.getItem('deptId'))
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.isDisabled1 = false;
+          this.closeResetButton = true;
+          this.dataDisplay = ''
+        })
+      }
     }
   }
 
