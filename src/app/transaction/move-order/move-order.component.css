@@ -4,3 +4,17 @@
     height: 170px;
 
 }
+
+
+.form-control {
+  font-family: Verdana,Sans-serif, Arial, Helvetica;
+  font-size: 12px;
+  outline: medium none;
+  padding: 3px;
+  vertical-align: top;
+  width: 190px;
+  height: 100%;
+  border-color: gray;
+ /* box-shadow: 5px 5px 8px rgb(13, 13, 19); */
+}
+

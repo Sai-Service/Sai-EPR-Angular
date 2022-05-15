@@ -47,6 +47,7 @@ export class BankReconcillationComponent implements OnInit {
         lstStatementLines:any
         lstAvlBnkLines:any;
         lstcomments:any;
+        
         loginName:string;
         divisionId:number;
         loginArray:string;

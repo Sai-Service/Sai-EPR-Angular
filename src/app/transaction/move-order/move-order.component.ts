@@ -280,6 +280,7 @@ export class MoveOrderComponent implements OnInit {
 
 
   ngOnInit(): void {
+    $("#wrapper").toggleClass("toggled");
     this.locId=Number(sessionStorage.getItem('locId'));
     // alert(this.locId);
     this.deptId=Number(sessionStorage.getItem('dept'));
@@ -658,9 +659,21 @@ validate(i:number,qty1)
 }
  search(reqNo)
  {
+    
+  // this.trxLinesList().reset();
+
   this.trxLinesList().clear();
+  // this.trxLinesList().push(this.newtrxLinesList());
+
   this.display=true;
-    var reqNo=(this.moveOrderForm.get('reqNo').value);
+  var reqNo=(this.moveOrderForm.get('reqNo').value);
+
+      if(reqNo==null || reqNo==undefined || reqNo.trim()=='') {
+      alert ("Enter a Valid Requisition No."); return;}
+      reqNo=reqNo.toUpperCase();
+      reqNo=reqNo.trim();
+      this.reqNo=reqNo;
+    
     // alert(reqNo);
   //  this.moveOrderForm.reset();
   var control = this.moveOrderForm.get('trxLinesList') as FormArray;
@@ -674,6 +687,7 @@ validate(i:number,qty1)
       }
       if(data.code===200)
       {
+        // this.trxLinesList().clear();
         this.lstcomment=data.obj;
         let control=this.moveOrderForm.get('trxLinesList') as FormArray;
         data.obj.trxLinesList.forEach(f => {
@@ -703,6 +717,12 @@ validate(i:number,qty1)
  searchByJobNo(JobNo){
    
    var jobno=(this.moveOrderForm.get('JobNo').value);
+   if(jobno==null || jobno==undefined || jobno.trim()=='') {
+    alert ("Enter a Valid Job Card No."); return;}
+      jobno=jobno.toUpperCase();
+      jobno=jobno.trim();
+      this.JobNo=jobno;
+  
    this.service.getsearchByJob(jobno).subscribe(
      data=>{
           this.lstcomment1=data;    

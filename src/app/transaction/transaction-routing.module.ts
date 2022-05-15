@@ -41,6 +41,7 @@ import { WarrantyClaimComponent } from './warranty-claim/warranty-claim.componen
 import { PayableInvoiceNewComponent } from './payable-invoice-new/payable-invoice-new.component';
 import { DeadStockComponent } from './dead-stock/dead-stock.component';
 import { PoInvListComponent } from './po-inv-list/po-inv-list.component';
+import { GlTrialBalanceComponent } from './gl-trial-balance/gl-trial-balance.component';
 // import { ShippingNetworkComponent } from './shipping-network/shipping-network.component';cd..
 
 
@@ -96,6 +97,7 @@ const routes: Routes = [
 {path:'payableInvoice',component:PayableInvoiceNewComponent},
 {path:'DeadStock',component:DeadStockComponent},
 {path:'poInvList',component:PoInvListComponent},
+{path:'glTrialBalance',component:GlTrialBalanceComponent},
 // {path :'ShippingNetwork',component:ShippingNetworkComponent},
 // {path:'CounterSaleReturn',component:CounterSaleReturnComponent},
  {path : '' ,redirectTo: 'Dashboard', pathMatch: 'full'}
