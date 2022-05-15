@@ -78,9 +78,7 @@
                         </tr>
                     </table>
 
-                    <fieldset class="RFS">
-                        <!-- <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Reconcillation Statement</legend> -->
-                      
+                    <!-- <fieldset class="RFS">
                         <div class="container1">
                                 <div class="grid_scroll">
                                 <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;font-size: small;">
@@ -100,10 +98,16 @@
                                         <td style="text-align: center;">{{i+1}}</td>
                                         <td style="text-align: center;">{{com.naturalAccount}}</td>
 
-                                        <!-- <td style="padding-left: 5px;padding-top: 10px;">
-                                            <a  href="{{naturalAccount}}">{{com.naturalAccount}}</a>
-                                        </td> -->
-                                       
+                                        <td style="padding-left: 5px;padding-top: 10px;">
+                                            <a href="#naturalAccount"   data-toggle="collapse">{{com.naturalAccount}}</a>
+                                        </td> 
+
+                                        <div id="naturalAccount" class="collapse">
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                          </div>
+                                          
                                         <td style="text-align: left;">{{com.accountDesc}}</td>
                                         <td style="text-align: right;">{{com.openingBal |number:'0.00'}}</td>
                                         <td style="text-align: right;">{{com.periodNetDr|number:'0.00'}}</td> 
@@ -114,11 +118,104 @@
                             </div>
                             </div>
                         
-                        </fieldset>
-                
+                        </fieldset> -->
+
+                        <div class="table-responsive">
+                            <table class="table">
+                              <thead>
+                                <tr>
+                                    <th style="width:2rem" scope="col">Srl&nbsp;No&nbsp;</th> 
+                                    <th style="width:10rem" scope="col">Natural&nbsp;Account&nbsp;</th>
+                                    <th style="width:25rem" scope="col">Description&nbsp;</th>
+                                    <th style="width:12rem" scope="col">Opening&nbsp;Balance</th>
+                                    <th style="width:12rem" scope="col">Debit&nbsp;Amount&nbsp;</th>
+                                    <th style="width:12rem" scope="col">Credit&nbsp;Amount</th>
+                                    <th style="width:12rem" scope="col">Closing&nbsp;Balance</th>
+                                </tr>
+                              </thead>
+                        <tbody>
+                        <tr *ngFor="let com of lstTBList let i=index" class="ItemStyle" style="text-decoration:none;font-size: large;">
+                            
+                         <!-- <tr *ngFor="let com of lstTBList let i=index" class="accordion-toggle collapsed" id="accordion1" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne"> -->
+                          <!-- <td class="expand-button"></td> -->
+                          <td style="text-align: center;">{{i+1}}</td>
+                          <!-- <td style="text-align: center;">{{com.naturalAccount}}</td> -->
+
+                          <td style="padding-left: 5px;padding-top: 10px;">
+                              <a class="accordion-toggle collapsed" id="accordion1" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne">{{com.naturalAccount}}</a>
+                          </td> 
+
+                          <td style="text-align: left;">{{com.accountDesc}}</td>
+                          <td style="text-align: right;">{{com.openingBal |number:'0.00'}}</td>
+                          <td style="text-align: right;">{{com.periodNetDr|number:'0.00'}}</td> 
+                          <td style="text-align: right;">{{com.periodNetCR|number:'0.00' }}</td>
+                          <td style="text-align: right; padding-right: 10px;">{{com.closingBal |number:'0.00'}}</td>
+                          
+                         </tr>
+                        
+                        <!-- </tr> -->
+
+                          <tr class="hide-table-padding">
+                          <td></td>
+                          <td colspan="3">
+                          <div id="collapseOne" class="collapse in p-3">
+                            <div class="row">
+                              <div class="col-2">label</div>
+                              <div class="col-6">value 1</div>
+                            </div>
+                            <div class="row">
+                              <div class="col-2">label</div>
+                              <div class="col-6">value 2</div>
+                            </div>
+                            <div class="row">
+                              <div class="col-2">label</div>
+                              <div class="col-6">value 3</div>
+                            </div>
+                            <div class="row">
+                              <div class="col-2">label</div>
+                              <div class="col-6">value 4</div>
+                            </div>
+                          </div></td>
+                          </tr>
+
+                          <tr class="accordion-toggle collapsed" id="accordion2" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+                          <td class="expand-button"></td>
+                          <td>Cell</td>
+                          <td>Cell</td>
+                          <td>Cell</td>
+                          
+                          </tr>
+                          <tr class="hide-table-padding">
+                          <td></td>
+                          <td colspan="4">
+                          <div id="collapseTwo" class="collapse in p-3">
+                            <div class="row">
+                              <div class="col-2">label</div>
+                              <div class="col-6">value</div>
+                            </div>
+                            <div class="row">
+                              <div class="col-2">label</div>
+                              <div class="col-6">value</div>
+                            </div>
+                            <div class="row">
+                              <div class="col-2">label</div>
+                              <div class="col-6">value</div>
+                            </div>
+                            <div class="row">
+                              <div class="col-2">label</div>
+                              <div class="col-6">value</div>
+                            </div>
+                          </div></td>
+                          </tr>
+                        </tbody>
+                        </table>
+                        </div>
+                                  
             </div>
         </div>
     </div>
 </form>
+
+                          
 
 
