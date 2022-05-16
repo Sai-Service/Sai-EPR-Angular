@@ -1051,6 +1051,7 @@ export class SalesOrderProformaComponent implements OnInit {
     this.displayRemoveRow[len - 1] = true;
     this.displayCounterSaleLine.push(true);
     this.displayLineflowStatusCode.push(true);
+    this.displayaddRow=true;
     this.itemSeg = '';
     var ln = len - 1;
     // alert(ln)

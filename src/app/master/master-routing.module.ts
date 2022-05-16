@@ -37,6 +37,7 @@ import { PendingShipmentListComponent } from './pending-shipment-list/pending-sh
 import { ItemMasterLocatorComponent } from './item-master-locator/item-master-locator.component';
 import { ReceivableTranstypeMasterComponent } from './receivable-transtype-master/receivable-transtype-master.component';
 import { CustomerRelationMasterComponent } from './customer-relation-master/customer-relation-master.component';
+import { ItemMasterNewComponent } from './item-master-new/item-master-new.component';
 // import { SubinventoryTransferComponent } from '../transaction/subinventory-transfer/subinventory-transfer.component';
 
 
@@ -82,6 +83,7 @@ const routes: Routes = [
   {path:'TaxThresholdSetup', component:TaxThresholdSetupComponent  },
   {path:'PoReceiptForm/:segment1',component:PoReceiptFormComponent},
   {path:'PoReceiptForm/:segment1/:accountLocId',component:PoReceiptFormComponent},
+  {path:'itemMasterNew',component:ItemMasterNewComponent},
   {path:'SubinventoryMaster',component:SubinventoryMasterComponent},
   {path:'PendingShipmentList',component:PendingShipmentListComponent},
   {path:'PoReceiptForm/:shipmentNumber',component:PoReceiptFormComponent},

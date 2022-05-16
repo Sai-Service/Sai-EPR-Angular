@@ -1,5 +1,4 @@
 <div class="center">
-    <!-- class="container" style="width: fit-content;" -->
     <form [formGroup]="itemMasterForm" (ngSubmit)="itemMaster(itemMasterForm.value)">
         <table style="width: 100%;background-color: white;">
             <tr>
@@ -17,8 +16,6 @@
                             <td style="text-align: left; ">
                                 <button type="submit" [disabled]="!segment1" (click)="SearchItemCode(segment1)"
                                     class="btn-primary"><i class="fa fa-search" aria-hidden="true"></i></button>
-
-
                             </td>
                         </tr>
                     </table>
@@ -33,7 +30,6 @@
                             <tr>
                                 <td style="width:12%" class="LabelFontStyle1">Item&nbsp;Type&nbsp;:&nbsp;</td>
                                 <td>
-
                                     <select style="width:fit-content" formControlName="itemTypeForCat"
                                         id="itemTypeForCat" class="form-control" [ngModel]="itemTypeForCat"
                                         [ngClass]="{ 'is-invalid': submitted && f.itemTypeForCat.errors }"
@@ -607,7 +603,7 @@
                                                 <ng-template #thenBlockisTaxable>
                                                 </ng-template>
                                                 <ng-template #elseBlockisTaxable>
-                                                    <tr>
+                                                    <!-- <tr>
                                                         <td style="width: 12%" class="LabelFontStyle">
                                                             Purchase&nbsp;S&CGST&nbsp;Category&nbsp;Name:&nbsp;</td>
                                                         <td>
@@ -632,7 +628,7 @@
                                                                 </option>
                                                             </select>
                                                         </td>
-                                                    </tr>
+                                                    </tr> -->
                                                     <tr>
                                                         <td style="width: 12%" class="LabelFontStyle">
                                                             Sales&nbsp;S&CGST&nbsp;Category&nbsp;Name:&nbsp;</td>

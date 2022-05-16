@@ -237,8 +237,8 @@ export class ItemMasterComponent implements OnInit {
   public locIdList: any = [];
   // public taxCategoryListS: Array<string> = [];
   // public taxCategoryListP: Array<string> = [];
-  taxCategoryListS:any=[];
-  taxCategoryListP:any=[];
+  taxCategoryListS:any[];
+  taxCategoryListP:any[];
 
   public segmentNameList: any;
   public SSitemTypeList: any;
@@ -873,7 +873,7 @@ export class ItemMasterComponent implements OnInit {
           }
         );
       if (this.stockable === 'Y') {
-        alert(this.stockable)
+        // alert(this.stockable)
         this.service.hsnSacCodeData('HSN').subscribe(
           data => {
             this.hsnSacCodeList = data;
