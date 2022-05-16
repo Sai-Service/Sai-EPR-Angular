@@ -1845,11 +1845,14 @@ export class JobCardComponent implements OnInit {
             gTotEstAmt:Math.round((gTotEstAmt1+Number.EPSILON)*100)/100, 
 
             labDiscount: Math.round((this.lstcomments.labDiscount+Number.EPSILON)*100)/100, 
+
+            
             labTaxableAmt: Math.round((this.lstcomments.labTaxableAmt+Number.EPSILON)*100)/100, 
             labTotTaxAmt: Math.round((this.lstcomments.labTotTaxAmt+Number.EPSILON)*100)/100,
             labTotAmt: Math.round((this.lstcomments.labTotAmt+Number.EPSILON)*100)/100, 
 
             matDiscout: Math.round((this.lstcomments.matDiscout+Number.EPSILON)*100)/100,
+            
             matTaxableAmt: Math.round((this.lstcomments.matTaxableAmt+Number.EPSILON)*100)/100, 
             matTotTaxAmt: Math.round((this.lstcomments.matTotTaxAmt+Number.EPSILON)*100)/100, 
             matTotAmt: Math.round((this.lstcomments.matTotAmt+Number.EPSILON)*100)/100, 
@@ -2764,9 +2767,11 @@ export class JobCardComponent implements OnInit {
     var labTaxAmt = labBasicAmt - labDisAmt;
     var totlabtaxamt = 0;
       for (var i = 0; i < control.length; i++) {
+        if(control[i].billableTyId===1) {
         var perDisLab = (control[i].basicAmt * perValueLab) / 100;
         var pervalLab = control[i].basicAmt - perDisLab;
         totlabtaxamt = totlabtaxamt + (pervalLab * control[i].taxPer) / 100;
+        }
       }
 
       // alert("labDisAmt : "+labDisAmt);
@@ -2844,10 +2849,12 @@ export class JobCardComponent implements OnInit {
     var totmattaxamt = 0;
     var totalMatTaxableAmt = 0;
     for (var i = 0; i < control.length; i++) {
+      if(control[i].billableTyId===1) {
       var perDisMat = (control[i].basicAmt * perValueMat) / 100;
       var pervalMat = control[i].basicAmt - perDisMat;
       totmattaxamt = totmattaxamt + (pervalMat * control[i].taxPer) / 100;
       totalMatTaxableAmt = totalMatTaxableAmt + pervalMat;
+      }
     }
    
     var temp = (totmattaxamt * event) / 100;
