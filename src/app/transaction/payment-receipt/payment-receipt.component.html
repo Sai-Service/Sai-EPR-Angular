@@ -112,9 +112,9 @@
                             <td style="width: 15%" class="LabelFontStyle">Payment&nbsp;Mode:&nbsp;</td>
 
                             <td>  
-                                <select formControlName="payType" id="payType" [(ngModel)]="payType" class="form-control" (ngModelChange)='onPayTypeSelected($event,"Active")' >
+                                <select formControlName="payType" id="payType" [(ngModel)]="payType" class="form-control" (change)='onPayTypeSelected($event,"Active")' >
                                     <option>--Select--</option>
-                                    <option *ngFor="let sc of  PaymentModeList" [ngValue]="sc.lookupValue"  >
+                                    <option *ngFor="let sc of  PaymentModeList" [value]="sc.lookupValue"  >
                                         {{sc.lookupValue}} 
                                     </option>
                                 </select>

@@ -266,8 +266,22 @@ export class PaymentReceiptComponent implements OnInit  {
 
 
   onPayTypeSelected(payType : any  , rmStatus : any){
-      if (payType === 'CASH') {   
-        // alert("checque seleected")   ;    
+  var  payType=payType.target.value;
+      if (payType === 'CASH') { 
+        var cashsum=0;
+        var paymentAmt=this.paymentReceiptForm.get('paymentAmt').value;
+        console.log(this.lstcomments);
+          if (this.lstcomments.length !=0){
+            for (let k=0; k<this.lstcomments.length;k++){
+              if (this.lstcomments[k].payType=='CASH'){
+                cashsum=paymentAmt+this.lstcomments[k].paymentAmt;
+                if (cashsum > 150000){
+                  alert('Total cash Amount 150000 please confirm.!');
+                  return;
+                }
+              }
+            }
+          }    
           this.service.ReceiptMethodListNew(payType ,rmStatus,sessionStorage.getItem('deptId'),sessionStorage.getItem('ouId'))
           .subscribe(
             data => {
