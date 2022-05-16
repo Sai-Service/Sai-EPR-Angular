@@ -273,8 +273,14 @@
                                         &nbsp;Department&nbsp;:&nbsp;
                                     </td>
                                     <td>
-                                        <input type="text" disabled class="form-control" formControlName="department">
-                                        <input hidden type="number" class="form-control" formControlName="deptId">
+                                        <!-- <input type="text" disabled class="form-control" formControlName="department">
+                                        <input hidden type="number" class="form-control" formControlName="deptId"> -->
+                                        <select formControlName="deptId" id="deptId" class="form-control">
+                                            <option>--Select--</option>
+                                            <option *ngFor="let sc of  DepartmentList" [ngValue]="sc.cmnTypeId">
+                                                {{sc.code}}
+                                            </option>
+                                        </select> 
                                     </td>
                                 </table>
                             </td>
@@ -453,15 +459,15 @@
                                             &nbsp;Department&nbsp;List&nbsp;:&nbsp;
                                         </td>
                                         <td>
-                                            <!-- <select formControlName="deptId" id="deptId" class="form-control">
-                                    <option>--Select--</option>
-                                    <option *ngFor="let sc of  DepartmentList" [value]="sc.cmnTypeId">
-                                        {{sc.code}}
-                                    </option>
-                                </select> -->
-                                            <input type="text" disabled class="form-control"
+                                            <select formControlName="deptId" id="deptId" class="form-control">
+                                                <option>--Select--</option>
+                                                <option *ngFor="let sc of  DepartmentList" [ngValue]="sc.cmnTypeId">
+                                                    {{sc.code}}
+                                                </option>
+                                            </select> 
+                                            <!-- <input type="text" disabled class="form-control"
                                                 formControlName="department">
-                                            <input hidden type="number" class="form-control" formControlName="deptId">
+                                            <input hidden type="number" class="form-control" formControlName="deptId"> -->
                                         </td>
                                     </tr>
                                 </table>
@@ -550,8 +556,14 @@
                                         &nbsp;Department&nbsp;:&nbsp;
                                     </td>
                                     <td>
-                                        <input type="text" disabled class="form-control" formControlName="department">
-                                        <input hidden type="number" class="form-control" formControlName="deptId">
+                                        <select formControlName="deptId" id="deptId" class="form-control">
+                                            <option>--Select--</option>
+                                            <option *ngFor="let sc of  DepartmentList" [ngValue]="sc.cmnTypeId">
+                                                {{sc.code}}
+                                            </option>
+                                        </select> 
+                                        <!-- <input type="text" disabled class="form-control" formControlName="department">
+                                        <input hidden type="number" class="form-control" formControlName="deptId"> -->
                                     </td>
                                 </table>
                             </td>

@@ -235,8 +235,10 @@ export class ItemMasterComponent implements OnInit {
   public NaturalAccountList: Array<string> = [];
   public InterBrancList: Array<string> = [];
   public locIdList: any = [];
-  public taxCategoryListS: Array<string> = [];
-  public taxCategoryListP: Array<string> = [];
+  // public taxCategoryListS: Array<string> = [];
+  // public taxCategoryListP: Array<string> = [];
+  taxCategoryListS:any=[];
+  taxCategoryListP:any=[];
 
   public segmentNameList: any;
   public SSitemTypeList: any;
@@ -281,7 +283,6 @@ export class ItemMasterComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService) {
     this.itemMasterForm = fb.group({
-
       loginArray: [''],
       loginName: [''],
       ouName: [''],
@@ -292,7 +293,6 @@ export class ItemMasterComponent implements OnInit {
       emplId: [''],
       orgId: [],
       divisionId: [],
-
       // itemType:['', [Validators.required]],
       itemType: [''],
       segment: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(20), Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
@@ -303,6 +303,7 @@ export class ItemMasterComponent implements OnInit {
       costing: [''],
       // stockable:['', [Validators.required]],
       stockable: [''],
+      internalOrder:[],
       segment1: [],
       tyreMake: [],
       materialType: [],
@@ -314,9 +315,8 @@ export class ItemMasterComponent implements OnInit {
       hsnSacCode: ['', [Validators.required]],
       hsnGstPer: [''],
       // internalOrder:['', [Validators.required]],
-      internalOrder: [''],
+      assetItem: [''],
       marginCategory: [],
-      assetItem: [],
       lotSize: [],
       status: ['', [Validators.required]],
       type: [],
@@ -734,9 +734,9 @@ export class ItemMasterComponent implements OnInit {
 
 
   onHsnCodeSelected(mHsnCode: any) {
-
+    var mHsnCode=mHsnCode.target.value;
     // alert("Hsn Code :"+mHsnCode);
-
+    // debugger;
     if (mHsnCode != null) {
       this.service.hsnSacCodeDet(mHsnCode)
         .subscribe(
@@ -746,7 +746,7 @@ export class ItemMasterComponent implements OnInit {
             console.log(this.hsnSacCodeDet);
             this.itemMasterForm.patchValue(this.hsnSacCodeDet.gstPercentage);
             this.hsnGstPer = this.hsnSacCodeDet.gstPercentage;
-
+            alert(this.hsnGstPer)
             this.service.taxCategoryListHSN(this.hsnGstPer, 'SALES')
               .subscribe(
                 data1 => {
@@ -810,6 +810,7 @@ export class ItemMasterComponent implements OnInit {
   }
 
   onOptionsSelectedItemType(category: any) {
+    var category= category.target.value;
     // alert("onOptionsSelectedItemType");
     if (category == 'SS_VEHICLE') {
       this.disItemCode = false;
@@ -872,6 +873,7 @@ export class ItemMasterComponent implements OnInit {
           }
         );
       if (this.stockable === 'Y') {
+        alert(this.stockable)
         this.service.hsnSacCodeData('HSN').subscribe(
           data => {
             this.hsnSacCodeList = data;

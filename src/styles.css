@@ -361,13 +361,13 @@ input:disabled {
 }
 
 input.ng-invalid{
-  background-color: rgb(240, 243, 63);
+  background-color: yellow ;
   font-weight: 200;
   border: 1px solid rgb(81, 81, 251);
 }
 
 select.ng-invalid{
-  background-color: rgb(245, 235, 102);
+  background-color: yellow;
   border: 1px solid rgb(81, 81, 251);
 }
  input:ng-valid[required], .ng-valid.required  {
@@ -406,7 +406,12 @@ input[disabled]{
 }
 
 
-
+select[disabled]{
+  background-color:lightgreen;
+  color: #000000;
+  font-weight: 200;
+  border: 1px solid rgb(81, 81, 251);
+}
 
 .bg-primary{
   /* width: 5em; */

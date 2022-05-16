@@ -20,11 +20,13 @@ interface IVariantMaster {
   fuelType:string;
   variantClass:string;
   vehicleType:string;
+  typeOfBody:string;
   cubicCapacity:string;
   seating:string;
   unladenWeight:string;
   grossWeight:string;
-  fittedWith:string;
+  // fittedWith:string;
+  horsePower:string;
   serviceModel:string;
   mfgYearPrint:string;
   bharatStageNorms:string;
@@ -88,11 +90,13 @@ engPrefix:string;
 fuelType:string;
 variantClass:string;
 vehicleType:string;
+typeOfBody:string;
 cubicCapacity:string;
 seating:string;
 unladenWeight:string;
 grossWeight:string;
 fittedWith:string;
+horsePower:string;
 serviceModel:string;
 mfgYearPrint:string;
 bharatStageNorms:string;
@@ -135,28 +139,30 @@ oemWarrantyPeriod:number;
       divisionId:[],
 
      
-      mainModel:[],
+      mainModel:['',[Validators.required]],
       variantId:[],
-      variant:[],
-      varDescription:[],
-      status:[],
-      chasPrefix:[],
-      engPrefix:[],
-      fuelType:[],
-      variantClass:[],
-      vehicleType:[],
-      cubicCapacity:[],
-      seating:[],
-      unladenWeight:[],
-      grossWeight:[],
+      variant:['',[Validators.required]],
+      varDescription:['',[Validators.required]],
+      status:['',[Validators.required]],
+      chasPrefix:['',[Validators.required]],
+      engPrefix:['',[Validators.required]],
+      fuelType:['',[Validators.required]],
+      variantClass:['',[Validators.required]],
+      vehicleType:['',[Validators.required]],
+      typeOfBody:['',[Validators.required]],
+      cubicCapacity:['',[Validators.required]],
+      seating:['',[Validators.required]],
+      unladenWeight:['',[Validators.required]],
+      grossWeight:['',[Validators.required]],
       fittedWith:[],
-      serviceModel:[],
-      mfgYearPrint:[],
-      bharatStageNorms:[],
-      cylinder:[],
-      startDate:[],
+      horsePower:['',[Validators.required]],
+      serviceModel:['',[Validators.required]],
+      mfgYearPrint:['',[Validators.required]],
+      bharatStageNorms:['',[Validators.required]],
+      cylinder:['',[Validators.required]],
+      startDate:['',[Validators.required]],
       endDate:[],
-      oemWarrantyPeriod:[],
+      oemWarrantyPeriod:['',[Validators.required]],
       });
 
       }
@@ -249,7 +255,10 @@ oemWarrantyPeriod:number;
               this.variantMasterForm.patchValue(select);
               this.variantId = select.itemId;
               this.displayButton = false;
-           
+              this.variantMasterForm.get('mainModel').disable();
+              this.variantMasterForm.get('variant').disable();
+              this.variantMasterForm.get('varDescription').disable();
+              // this.vehicleType=this.lstcomments.typeOfBody;
            }
            
           }
@@ -311,12 +320,12 @@ oemWarrantyPeriod:number;
           const formValue: IVariantMaster =this.transeData(this.variantMasterForm.value);
             this.service.UpdateVariantMaster(formValue).subscribe((res: any) => {
             if (res.code === 200) {
-              alert('RECORD UPDATED SUCCESSFUILY');
+              alert(res.message);
               // window.location.reload();
               this.variantMasterForm.disable();
             } else {
               if (res.code === 400) {
-                alert('ERROR OCCOURED IN PROCEESS');
+                alert(res.message);
                 // this.variantMasterForm.reset();
               }
             }
@@ -391,7 +400,7 @@ oemWarrantyPeriod:number;
                   return;
                 } 
   
-                if (formValue.vehicleType===undefined || formValue.vehicleType===null)
+                if (formValue.typeOfBody===undefined || formValue.typeOfBody===null)
                 {
                    this.checkValidation=false; 
                    alert ("VEHICLE TYPE: Should not be null....");
