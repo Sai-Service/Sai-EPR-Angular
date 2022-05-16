@@ -1832,6 +1832,8 @@ export class JobCardComponent implements OnInit {
           this.jobcardForm.patchValue({matBasicAmt: this.lstcomments.matBasicAmt});
           this.jobcardForm.patchValue({actualBasicAmt: Math.round((Number(this.lstcomments.totBasicAmt)+Number.EPSILON)*100)/100});
    
+          this.jobcardForm.patchValue({addonLabBasicAmt: this.lstcomments.addonLabBasicAmt});
+          this.jobcardForm.patchValue({addonMatBasicAmt: this.lstcomments.addonMatBasicAmt});
           
           var gTotLabEstAmt1=this.lstcomments.labBasicAmt+this.lstcomments.insLabBasicAmt;
           var gTotMatEstAmt1=this.lstcomments.matBasicAmt+this.lstcomments.insMatBasicAmt;
@@ -1853,6 +1855,20 @@ export class JobCardComponent implements OnInit {
             matTaxableAmt: Math.round((this.lstcomments.matTaxableAmt+Number.EPSILON)*100)/100, 
             matTotTaxAmt: Math.round((this.lstcomments.matTotTaxAmt+Number.EPSILON)*100)/100, 
             matTotAmt: Math.round((this.lstcomments.matTotAmt+Number.EPSILON)*100)/100, 
+
+
+            labDiscountAddon: Math.round((this.lstcomments.addonLabDiscount+Number.EPSILON)*100)/100, 
+            addonLabTaxableAmt: Math.round((this.lstcomments.addonLabTaxableAmt+Number.EPSILON)*100)/100, 
+            addonLabTotTaxAmt: Math.round((this.lstcomments.addonLabTotTaxAmt+Number.EPSILON)*100)/100,
+            addonLabTotAmt: Math.round((this.lstcomments.addonLabTotAmt+Number.EPSILON)*100)/100, 
+
+            matDiscoutAddon: Math.round((this.lstcomments.addonMatDiscout+Number.EPSILON)*100)/100,
+            addonMatTaxableAmt: Math.round((this.lstcomments.addonMatTaxableAmt+Number.EPSILON)*100)/100, 
+            addonMatTotTaxAmt: Math.round((this.lstcomments.addonMatTotTaxAmt+Number.EPSILON)*100)/100, 
+            addonMatTotAmt: Math.round((this.lstcomments.addonMatTotAmt+Number.EPSILON)*100)/100, 
+            
+            addonInvTotAmt: Math.round(((this.lstcomments.addonLabTotAmt + this.lstcomments.addonMatTotAmt)+Number.EPSILON)*100)/100, 
+       
            
             actualInsAmt: Math.round((this.lstcomments.insTotBasicAmt+Number.EPSILON)*100)/100, 
             insTaxableAmt:Math.round(((this.lstcomments.insMatTaxableAmt + this.lstcomments.insLabTaxableAmt)+Number.EPSILON)*100)/100, 
@@ -1867,8 +1883,7 @@ export class JobCardComponent implements OnInit {
             insMatTotTaxAmt:Math.round((this.lstcomments.insMatTotTaxAmt+Number.EPSILON)*100)/100,
             insMatTotAmt:Math.round((this.lstcomments.insMatTotAmt+Number.EPSILON)*100)/100,
             // addonInvTotAmt:Math.round((this.lstcomments.addonLabTotAmt+Number.EPSILON)*100)/100,
-            addonInvTotAmt: Math.round(((this.lstcomments.addonLabTotAmt + this.lstcomments.addonMatTotAmt)+Number.EPSILON)*100)/100, 
-          })
+            })
 
          
                
@@ -2718,6 +2733,7 @@ export class JobCardComponent implements OnInit {
       
     }}
 
+
     if(jct==='BS'){
       for (var i = 0; i < controlArr.length; i++) {
         var basictax = Number(controlArr[i].custBasicAmt * event) / 100;
@@ -2764,9 +2780,11 @@ export class JobCardComponent implements OnInit {
     var labTaxAmt = labBasicAmt - labDisAmt;
     var totlabtaxamt = 0;
       for (var i = 0; i < control.length; i++) {
+        if(control[i].billableTyId===1) {
         var perDisLab = (control[i].basicAmt * perValueLab) / 100;
         var pervalLab = control[i].basicAmt - perDisLab;
         totlabtaxamt = totlabtaxamt + (pervalLab * control[i].taxPer) / 100;
+        }
       }
 
       // alert("labDisAmt : "+labDisAmt);
@@ -2844,10 +2862,12 @@ export class JobCardComponent implements OnInit {
     var totmattaxamt = 0;
     var totalMatTaxableAmt = 0;
     for (var i = 0; i < control.length; i++) {
+      if(control[i].billableTyId===1) {
       var perDisMat = (control[i].basicAmt * perValueMat) / 100;
       var pervalMat = control[i].basicAmt - perDisMat;
       totmattaxamt = totmattaxamt + (pervalMat * control[i].taxPer) / 100;
       totalMatTaxableAmt = totalMatTaxableAmt + pervalMat;
+      }
     }
    
     var temp = (totmattaxamt * event) / 100;

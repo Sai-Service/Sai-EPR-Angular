@@ -2331,7 +2331,7 @@
                                                                     <td><input disabled type="number" min="0" formControlName="addonLabTotTaxAmt" [(ngModel)]="labTotTaxAmt" style="width: 7em;font-weight: bold;font-size: small;" ></td>
                                                                     <td><input disabled type="number" min="0"  formControlName="addonLabTotAmt" style="width: 7em;font-weight: bold;font-size: small;"></td>
                                                                     
-                                                                    <td><input disabled type="number" formControlName="addonMatBasicAmt " style="width: 7em;font-weight: bold;font-size: small;text-align: right;"></td>
+                                                                    <td><input disabled type="number" formControlName="addonMatBasicAmt" style="width: 7em;font-weight: bold;font-size: small;text-align: right;"></td>
                                                                     
                                                                     <div *ngIf="showServiceCustomer ;then sraddon11; else sraddon21"></div>
                                                                     <ng-template #sraddon11>
@@ -2459,7 +2459,7 @@
                                                             <td style="width: 15%" class="LabelFontStyle">Discount&nbsp;Type:&nbsp;</td>
 
                                                             <td>
-                                                                <select formControlName="disCategory" style="width: 12em;font-weight: bold;font-size: small;"
+                                                                <select disabled formControlName="disCategory" style="width: 12em;font-weight: bold;font-size: small;"
                                                                     id="disCategory" class="form-control">
                                                                     <option>--Select--</option>
                                                                     <option *ngFor="let sc of  disCategoryList">
@@ -2470,7 +2470,7 @@
 
                                                             <td style="width: 15%" class="LabelFontStyle">Authorized&nbsp;By:&nbsp;</td>
                                                             <td>
-                                                                <select class="form-control" style="width: 12em;font-weight: bold;font-size: small;"
+                                                                <select disabled class="form-control" style="width: 12em;font-weight: bold;font-size: small;"
                                                                     formControlName="disAuthBy">
                                                                     <option value="Location service">
                                                                         Location service</option>
@@ -2484,7 +2484,7 @@
                                                                 Disc&nbsp;Mode(Lbr)&nbsp;:</td>
                                                            
                                                                <td>
-                                                                    <select formControlName="disTypeLab" value={{disTypeLab}} style="width: 10em;font-weight: bold;font-size: small;"
+                                                                    <select disabled formControlName="disTypeLab" value={{disTypeLab}} style="width: 10em;font-weight: bold;font-size: small;"
                                                                         id="disTypeLab" class="form-control"
                                                                         (ngModelChange)='onOptionsDisTypeLabSelected($event)'>
                                                                         <option >--Select--</option>
@@ -2499,7 +2499,7 @@
                                                                     Disc&nbsp;Mode(Matrl)&nbsp;:</td>
                                                                     <td>
                                                                        
-                                                                        <select formControlName="disTypeMat" value={{disTypeMat}} style="width: 10em;font-weight: bold;font-size: small;"
+                                                                        <select disabled formControlName="disTypeMat" value={{disTypeMat}} style="width: 10em;font-weight: bold;font-size: small;"
                                                                             id="disTypeMat" class="form-control"
                                                                             (ngModelChange)='onOptionsDisTypeMatSelected($event)'>
                                                                             <option>--Select--</option>
