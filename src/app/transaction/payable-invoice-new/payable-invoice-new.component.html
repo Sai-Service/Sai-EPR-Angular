@@ -168,11 +168,11 @@
                                                             style="width: 150px;height: 25px;font-size: 11px;">
                                                     </td>
                                                     <td>
-                                                        <input type="text" formControlName="invoiceDate"
+                                                        <input type="text" formControlName="invoiceDate" 
                                                             [style.display]="isVisibleinvoiceDateText ? 'block' : 'none'"
                                                             class="form-control"
                                                             style="width: 150px;height: 25px;font-size: 11px;">
-                                                        <input type="date" formControlName="invoiceDate"
+                                                        <input type="date" formControlName="invoiceDate" value="{{glDate | date:'dd-MM-yyyy'}}"
                                                             [style.display]="isVisibleinvoiceDateDate ? 'block' : 'none'"
                                                             class="form-control" [(ngModel)]='invoiceDate'
                                                             style="width: 150px;height: 25px;font-size: 11px;background-color: yellow;">
@@ -416,7 +416,7 @@
                                                             style="width: 65px;height: 25px;font-size: 10px;">
                                                     </td>
                                                     <td>
-                                                        <input type="date" formControlName="invoiceDate"
+                                                        <input type="date" formControlName="invoiceDate" value="{{glDate | date:'dd-MM-yyyy'}}"
                                                             class="form-control" [(ngModel)]="invoiceDate"
                                                             style="width: 150px;height: 25px;font-size: 11px; background-color: yellow;">
                                                     </td>
