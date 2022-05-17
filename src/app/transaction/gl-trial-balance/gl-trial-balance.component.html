@@ -84,10 +84,10 @@
                     <fieldset class="RFS">
                         <div class="container1">
                                 <div class="grid_scroll">
-                                <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;font-size: small;">
+                                <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:black;border-collapse:collapse;width: 100%;font-size: small;;">
                                     <tbody>
                                             <tr class="GridHeader">
-                                            <th style="width:2rem" scope="col">Srl&nbsp;No&nbsp;</th> 
+                                            <th style="width:3rem" scope="col">Srl&nbsp;No&nbsp;</th> 
                                             <th style="width:10rem" scope="col">Natural&nbsp;Account&nbsp;</th>
                                             <th style="width:25rem" scope="col">Description&nbsp;</th>
                                             <th style="width:12rem" scope="col">Opening&nbsp;Balance</th>
@@ -97,11 +97,11 @@
                                         
                                         </tr>
                                     </tbody>
-                                    <tr *ngFor="let com of lstTBList let i=index" class="ItemStyle" style="text-decoration:none;font-size: large;">
-                                        <td style="text-align: center;">{{i+1}}</td>
+                                    <tr *ngFor="let com of lstTBList let i=index" class="ItemStyle" style="text-decoration:none;font-size: large;border-color: black;">
+                                      <td style="padding-left: 5px;padding-top: 10px;border-color:black;">{{i+1}}</td>
                                         <!-- <td style="text-align: center;">{{com.naturalAccount}}</td> -->
 
-                                         <td style="padding-left: 5px;padding-top: 10px;">
+                                         <td style="padding-left: 5px;padding-top: 10px;border-color:black;">
                                             <a href="#naturalAccount" (click) ='SelectTbAct(com.naturalAccount,com.accountDesc,com.periodNetDr,com.periodNetCR)'   data-toggle="modal" data-target="#viewGLDetails">{{com.naturalAccount}}</a>
                                         </td> 
 
@@ -113,11 +113,11 @@
                                             quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                                           </div> -->
                                           
-                                        <td style="text-align: left;">{{com.accountDesc}}</td>
-                                        <td style="text-align: right;">{{com.openingBal |number:'0.00'}}</td>
-                                        <td style="text-align: right;">{{com.periodNetDr|number:'0.00'}}</td> 
-                                        <td style="text-align: right;">{{com.periodNetCR|number:'0.00' }}</td>
-                                        <td style="text-align: right; padding-right: 10px;">{{com.closingBal |number:'0.00'}}</td>
+                                          <td style="padding-left: 5px;padding-top: 10px;border-color:black;">{{com.accountDesc}}</td>
+                                          <td style="padding-right: 5px;padding-top: 10px;border-color:black;text-align: right;">{{com.openingBal |number:'0.00'}}</td>
+                                          <td style="padding-right: 5px;padding-top: 10px;border-color:black;text-align: right;">{{com.periodNetDr|number:'0.00'}}</td> 
+                                          <td style="padding-right: 5px;padding-top: 10px;border-color:black;text-align: right;">{{com.periodNetCR|number:'0.00' }}</td>
+                                          <td style="padding-right: 5px;padding-top: 10px;border-color:black;text-align: right;">{{com.closingBal |number:'0.00'}}</td>
                                     </tr> 
                                 </table>
                             </div>
@@ -194,8 +194,10 @@
                 </tr>
             </table>
 
-             <div class="grid_scroll_2">
-              <table class="auto-style4" class="GridFont"   style="border-color:#959595;width:100%;">
+            <div class="container1">
+               <div class="grid_scroll_2">
+              <!-- <table class="auto-style4" class="GridFont"   style="border-color:#959595;width:100%;"> -->
+                <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
                   <thead>
                     <tr class="GridHeader">
                     <th>Srl#</th> 
@@ -207,28 +209,34 @@
                     <th>Document No</th>
                     <th>Debit(INR)</th>
                     <th>Credit(INR)</th>
-                    <th>Posted Date</th>
+                    <th>Posted&nbsp;Date</th>
                     </tr>
                   </thead>
-                  <tbody>
-                      <tr *ngFor="let com of lstTBActLineDet let i=index" class="ItemStyle" style="text-decoration:none;position: initial;font-size:medium">
-                          <td style="padding-right:5px ;">{{i+1}}</td>
-                          <td style="padding-right:5px ;">{{com.glcodeDescription}}</td>
-                          <td style="padding-right:5px ;">{{com.jeCategory}}</td>
-                          <td style="padding-right:5px ;">{{com.jeSource}}</td>
-                          <td style="padding-right:5px ;">{{com.jeDescription}}</td>
-                          <td style="padding-right:5px ;">{{com.referenceNo}}</td>
-                          <td style="padding-right:5px ;">{{com.glDocNo}}</td>
-                          <td style="text-align: right;padding-right: 5px;">{{com.debitAmt}}</td>
-                          <td style="text-align: right;padding-right: 5px;">{{com.creditAmt}}</td>
-                          <td>{{com.postedDate |date:'dd-MM-y'}}</td>
-                          </tr>
+                  <!-- <tbody> -->
+                                      
+                      <!-- <tr *ngFor="let com of lstTBActLineDet let i=index" class="ItemStyle" style="text-decoration:none;position: initial;font-size:medium"> -->
+                        <ng-container  *ngFor="let com of lstTBActLineDet let i=index" class="ItemStyle" style="text-decoration:none;position: initial;font-size:large">
 
-                    </tbody>
+                        <tr style="text-decoration:none;position: initial;font-size:small">
+                          <td style="padding-right: 5px;padding-top: 5px;border-color:black;text-align: right;">{{i+1}}</td>
+                          <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: left;">{{com.glcodeDescription}}</td>
+                          <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: left;">{{com.jeCategory}}</td>
+                          <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: left;">{{com.jeSource}}</td>
+                          <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: left;">{{com.jeDescription}}</td>
+                          <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: center;">{{com.referenceNo}}</td>
+                          <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: center;">{{com.glDocNo}}</td>
+                          <td style="padding-right: 5px;padding-top: 5px;border-color:black;text-align: right;">{{com.debitAmt |number:'0.00'}}</td>
+                          <td style="padding-right: 5px;padding-top: 5px;border-color:black;text-align: right;">{{com.creditAmt|number:'0.00'}}</td>
+                          <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: center;">{{com.postedDate |date:'dd-MM-y'}}</td>
+                        </tr>
+                        </ng-container>
+
+                    <!-- </tbody> -->
                 
                     </table>
                  
           </div>
+            </div>
 
       </div>
 
