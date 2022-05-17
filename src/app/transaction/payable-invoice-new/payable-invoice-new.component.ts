@@ -1058,7 +1058,7 @@ export class PayableInvoiceNewComponent implements OnInit {
               );
               this.isVisibleTDSTab = true;
             }
-
+            debugger;
             console.log(this.tdsSectionList);
             if (res.obj[i].invoiceStatus === null) {
               this.lineDetailsArray().controls[i].get('locationId').enable();
@@ -1079,7 +1079,12 @@ export class PayableInvoiceNewComponent implements OnInit {
             }
             // alert(res.obj[i].segment1)
             if (res.obj[i].segment1 != null) {
-              this.poInvoiceForm.disable();
+              this.lineDetailsArray().controls[i].get('invoiceDate').enable();
+              this.isVisibleinvoiceDateDate=true;
+              this.lineDetailsArray().controls[i].get('taxAmt').disable();
+              this.lineDetailsArray().controls[i].get('invoiceAmt').disable();
+              
+              // this.poInvoiceForm.disable();
             }
             if (res.obj[i].invoiceAmt % 1 != 0) {
               this.isVisibleRoundOffButton = false;
