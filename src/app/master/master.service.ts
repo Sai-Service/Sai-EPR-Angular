@@ -3925,6 +3925,12 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
               return this.http.get(this.ServerUrl + `/glHeader/drillDownHeader?segment1=${ou}&periodName=${prdName}`);
        }
 
+      getGLTrialBalanceActSelect(ou,prdName,natAc): Observable<any> {
+      return this.http.get(this.ServerUrl + `/glHeader/drillDownGLWise?segment1=${ou}&naturalAccount=${natAc}&periodName=${prdName}`);
+     }
+
+
+
         ////////////////////customer relation manager master //////////////////////
         employeeLst(locId,divId,deptId): Observable<any> {
              return this.http.get(this.ServerUrl + `/empMst/EmpLocDept?locId=${locId}&divisionId=${divId}&deptId=${deptId}`);
