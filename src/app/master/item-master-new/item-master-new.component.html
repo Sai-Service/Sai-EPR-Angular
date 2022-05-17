@@ -1,0 +1,55 @@
+<form [formGroup]="itemMasterForm" (ngSubmit)="itemMaster(itemMasterForm.value)">
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <td class="PageHeader">
+                &nbsp;&nbsp;Item&nbsp;Master
+            </td>
+            <td>
+                <table style="width: 100%; background-color: #FFE4B5;" class="center">
+                    <tr>
+                        <td style="width: 12%" class="LabelFontStyle">Item&nbsp;Code&nbsp;:</td>
+                        <td style="width: 25">
+                            <input type="text" formControlName="segment1" [(ngModel)]="segment1"
+                                class="form-control" #myinput>
+                        </td>
+                        <td style="text-align: left; ">
+                            <button type="submit" [disabled]="!segment1" (click)="SearchItemCode(segment1)"
+                                class="btn-primary"><i class="fa fa-search" aria-hidden="true"></i></button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <table class="center">
+        <tr>
+            <td style="width:12%" class="LabelFontStyle1">Item&nbsp;Type&nbsp;:&nbsp;</td>
+            <td>
+                <select style="width:fit-content" formControlName="itemTypeForCat"
+                    id="itemTypeForCat" class="form-control" [ngModel]="itemTypeForCat"
+                    [ngClass]="{ 'is-invalid': submitted && f.itemTypeForCat.errors }"
+                    (change)='onOptionsSelectedItemType($event)'>
+                    <option *ngFor="let sc of  SSitemTypeList">
+                        {{sc.itemType}}
+                    </option>
+                </select>
+                <div *ngIf="submitted && f.itemTypeForCat.errors" class="invalid-feedback">
+                    <div *ngIf="f.itemTypeForCat.errors.required">Please enter Item type </div>
+                </div>
+            </td>
+            <td style="width: 12%" class="LabelFontStyle">Item&nbsp;Category&nbsp;:&nbsp;</td>
+            <td>
+                <select style="width:fit-content" formControlName="categoryId" id="categoryId"
+                    class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.categoryId.errors }">
+                    <option *ngFor="let sc of  categoryIdList" [ngValue]="sc.categoryId">
+                        {{sc.attribute1}}
+                    </option>
+                </select>
+                <div *ngIf="submitted && f.categoryId.errors" class="invalid-feedback">
+                    <div *ngIf="f.categoryId.errors.required">Enter Item Category </div>
+                </div>             
+            </td>
+        </tr>
+    </table>
+</form>

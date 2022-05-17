@@ -410,6 +410,7 @@ export class PaymentReceiptComponent implements OnInit  {
     var payType = this.paymentReceiptForm.get('payType').value;
     if (this.paymentReceiptForm.get('paymentAmt').value===undefined || payType===undefined){
       alert('Please Fill-UP  blank Details...!');
+      this.isDisabledSave=false;
       return;
     }
     if (payType.includes("CASH") === false){
@@ -448,6 +449,7 @@ export class PaymentReceiptComponent implements OnInit  {
       } else {
         if (res.code === 400) {
           alert(res.message);
+          this.isDisabledSave=false;
           // this.paymentReceiptForm.reset();
         }
       }

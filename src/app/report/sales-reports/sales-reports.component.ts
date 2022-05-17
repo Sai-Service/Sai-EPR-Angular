@@ -180,7 +180,7 @@ export class SalesReportsComponent implements OnInit {
         }
       );
 
-    this.service.DepartmentListNew()
+      this.service.DepartmentListNew()
       .subscribe(
         data => {
           this.DepartmentList = data;
@@ -625,6 +625,7 @@ export class SalesReportsComponent implements OnInit {
     var toDate1 = this.salesReportForm.get('toDate').value;
     var toDate = this.pipe.transform(toDate1, 'dd-MMM-yyyy');
     var locId = this.salesReportForm.get('locId').value;
+    var deptId = this.salesReportForm.get('deptId').value;
     if (locId === null) {
       alert('Please Select location Code.!');
       return;
@@ -797,6 +798,7 @@ export class SalesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Receipt Register') {
+    //  alert(deptId);
       const fileName = 'Receipt Register-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
@@ -1084,7 +1086,7 @@ export class SalesReportsComponent implements OnInit {
     }
     else if (reportName === 'Sales Addon Reconciliation'){
       var segment1= this.salesReportForm.get('segment1').value;
-      alert(segment1)
+      // alert(segment1)
       var segment2 = this.salesReportForm.get('segment2').value;
       var segment3 = this.salesReportForm.get('segment3').value;
       var segment4= this.salesReportForm.get('segment4').value;
@@ -1430,6 +1432,15 @@ export class SalesReportsComponent implements OnInit {
     }
 
     
+  }
+
+
+  onOptionsDepartmentList(event:string){
+    // alert(event);
+    var deptList = this.DepartmentList.find(d => d.code === event);
+    console.log(deptList);
+    
+    this.salesReportForm.patchValue({deptId:deptList.cmnTypeId})
   }
 
 }
