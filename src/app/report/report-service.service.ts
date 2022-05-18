@@ -470,8 +470,8 @@ export class ReportServiceService {
   }
 
 
-  customerLedger(custAccNo,ouId,deptId){
-    const REQUEST_URI = this.ServerUrl +`/AccountsReports/CustomerLedger?custAcctNo=${custAccNo}&ouId=${ouId}&deptId=${deptId}`;
+  customerLedger(fromDate,toDate,custAccNo,ouId,deptId){
+    const REQUEST_URI = this.ServerUrl +`/AccountsReports/CustomerLedger?fromDate=${fromDate}&toDate=${toDate}&custAcctNo=${custAccNo}&ouId=${ouId}&deptId=${deptId}`;
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',

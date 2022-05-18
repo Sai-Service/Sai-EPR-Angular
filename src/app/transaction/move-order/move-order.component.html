@@ -27,7 +27,7 @@
       <table class="center">
         <tr>
           <td style="width: 15%" class="LabelFontStyle">Issue No:</td>
-          <td><input disabled type="text" class="form-control" formControlName="requestNumber" [(ngModel)]="requestNumber"></td>
+          <td colspan="3"><input disabled type="text" class="form-control" formControlName="requestNumber" [(ngModel)]="requestNumber" style="width:100%;"></td>
           
           <td style="width: 15%" class="LabelFontStyle">Issue Date:</td>
           <td><input  disabled type="text" class="form-control" formControlName="creationDate"  [(ngModel)]="creationDate" ></td>
@@ -43,10 +43,6 @@
                 *ngIf="getGroupControl('transactionTypeId').touched && getGroupControl('transactionTypeId').invalid">Valid Transaction Type
                </span>
             </td>
-
-            <td style="width: 15%" class="LabelFontStyle"> Status:</td>
-            <td><input disabled type="text" class="form-control" formControlName="headerStatus" [(ngModel)]="headerStatus"></td>
-  
         </tr>
         <tr>
           <td style="width: 15%" class="LabelFontStyle">IPO No: </td>
@@ -132,6 +128,8 @@
         </tr>
              
         <tr>
+          <td style="width: 15%" class="LabelFontStyle"> Status:</td>
+          <td><input disabled type="text" class="form-control" formControlName="headerStatus" [(ngModel)]="headerStatus" style="font-weight: bold;"></td>
           <td style="width: 15%" class="LabelFontStyle">Remark:</td> 
           <td colspan="3"><input type="text" class="form-control" formControlName="remarks" style="width:100% ;"></td>
         

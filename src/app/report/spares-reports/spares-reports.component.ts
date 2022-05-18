@@ -1358,13 +1358,13 @@ export class SparesReportsComponent implements OnInit {
       const fileName = 'Customer Ledger Report.pdf';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {     
-        this.reportService.customerLedger(custAccNo,sessionStorage.getItem('ouId'),deptId)
+        this.reportService.customerLedger(fromDate,toDate,custAccNo,sessionStorage.getItem('ouId'),deptId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
           });
       }
       else if ((Number(sessionStorage.getItem('deptId'))!=4)){
-        this.reportService.customerLedger(custAccNo,sessionStorage.getItem('ouId'),sessionStorage.getItem('deptId'))
+        this.reportService.customerLedger(fromDate,toDate,custAccNo,sessionStorage.getItem('ouId'),sessionStorage.getItem('deptId'))
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
         });
