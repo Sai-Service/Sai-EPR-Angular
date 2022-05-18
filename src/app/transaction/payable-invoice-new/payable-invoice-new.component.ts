@@ -1040,6 +1040,8 @@ export class PayableInvoiceNewComponent implements OnInit {
             var glDateNew1 = (res.obj[i].glDate)
             var glDateNew = this.pipe.transform(glDateNew1, 'y-MM-dd');
             var invoiceDateNew = this.pipe.transform(res.obj[i].invoiceDate, 'y-MM-dd');
+            this.isVisibleinvoiceDateText = false;
+            this.isVisibleinvoiceDateDate = true;
             this.invoiceDate = invoiceDateNew;
             this.glDate = glDateNew;
             patch.controls[i].patchValue({ payGroup: res.obj[i].payGroup })
@@ -1058,7 +1060,7 @@ export class PayableInvoiceNewComponent implements OnInit {
               );
               this.isVisibleTDSTab = true;
             }
-            debugger;
+            // debugger;
             console.log(this.tdsSectionList);
             if (res.obj[i].invoiceStatus === null) {
               this.lineDetailsArray().controls[i].get('locationId').enable();
@@ -1080,10 +1082,10 @@ export class PayableInvoiceNewComponent implements OnInit {
             // alert(res.obj[i].segment1)
             if (res.obj[i].segment1 != null) {
               this.lineDetailsArray().controls[i].get('invoiceDate').enable();
-              this.isVisibleinvoiceDateDate=true;
+              this.isVisibleinvoiceDateDate = true;
               this.lineDetailsArray().controls[i].get('taxAmt').disable();
               this.lineDetailsArray().controls[i].get('invoiceAmt').disable();
-              
+
               // this.poInvoiceForm.disable();
             }
             if (res.obj[i].invoiceAmt % 1 != 0) {
@@ -1405,19 +1407,19 @@ export class PayableInvoiceNewComponent implements OnInit {
       var invNumber = arraybaseNew1[i].invoiceNum;
       var sourceType = arraybaseNew1[i].source;
       var invType = arraybaseNew1[i].invTypeLookupCode;
-      var internalSeqNum= arraybaseNew1[i].internalSeqNum;
-      if (invType === 'Prepayment' && internalSeqNum != null ) {
+      var internalSeqNum = arraybaseNew1[i].internalSeqNum;
+      if (invType === 'Prepayment' && internalSeqNum != null) {
         // if (invType != 'CREDIT' || invType != 'STANDARD'){
         this.router.navigate(['/admin/transaction/Payment', invNumber]);
-      // }
+        // }
       }
-      else if (sourceType === 'REFUND'){
+      else if (sourceType === 'REFUND') {
         this.router.navigate(['/admin/transaction/Payment', invNumber]);
       }
-       else if (internalSeqNum != null){
+      else if (internalSeqNum != null) {
         this.router.navigate(['/admin/transaction/Payment']);
       }
-      
+
     }
   }
 
@@ -1962,7 +1964,7 @@ export class PayableInvoiceNewComponent implements OnInit {
             for (let i = 0; i < data.miscLines.length; i++) {
               isLnExist == false;
               for (let m = 0; m < arrayControl.length; m++) {
-               
+
                 if (data.miscLines[i].lineNumber == arrayControl[m].lineNumber) {
                   isLnExist = true;
                   controlinv.controls[m].patchValue(data.miscLines[i]);
@@ -1984,13 +1986,13 @@ export class PayableInvoiceNewComponent implements OnInit {
             var x = controlinv.length + 1;
             var miscLns = new Array();
             miscLns = data.miscLines;
-           
-              for (let m = 0; m < arrayControl.length; m++) {
-                for (let i = 0; i < miscLns.length; i++) {
+
+            for (let m = 0; m < arrayControl.length; m++) {
+              for (let i = 0; i < miscLns.length; i++) {
                 if (arrayControl[m].lineNumber == null) {
                   controlinv.controls[m].patchValue(miscLns[i]);
                   arrayControl[m].lineNumber = miscLns[i].lineNumber;
-                   miscLns.splice(i,1);
+                  miscLns.splice(i, 1);
                   break;
                 } else if (miscLns[i].lineNumber == arrayControl[m].lineNumber) {
                   controlinv.controls[m].patchValue(miscLns[i]);
