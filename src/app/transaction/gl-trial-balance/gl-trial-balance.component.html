@@ -43,15 +43,14 @@
                           <td >
                               <table class="center">
                                   <tr>
-                                    <td style="width: 15%" class="LabelFontStyle">Division&nbsp;:</td>
-                                    <td><input disabled type="text"  class="form-control" formControlName="loginArray" id="loginArray" [(ngModel)]='loginArray' ></td>
-                                    
-                                    <td style="width: 15%" class="LabelFontStyle">Operating&nbsp;Unit&nbsp;:</td>
-                                    <td><input disabled type="text"  class="form-control" formControlName="ouName" id="ouName" [(ngModel)]='ouName' ></td>
+                                    <td style="width: 15%" class="LabelFontStyle">Division&nbsp;:&nbsp; {{this.loginArray}}&nbsp; </td>
+                                     <!-- <td><input disabled type="text"  class="form-control" formControlName="loginArray" id="loginArray" [(ngModel)]='loginArray' style="border-style: none;background-color: #FFE4B5;font-weight: bold;"></td> -->
                                  
-                                    <!-- <td style="width: 15%" class="LabelFontStyle">GL&nbsp;Period&nbsp;:</td>
-                                    <td><input type="text"  class="form-control" formControlName="glPeriod" id="glPeriod" name="glPeriod" ></td>
-                      -->
+                                    <td style="width: 15%" class="LabelFontStyle">Operating&nbsp;Unit&nbsp;:</td>
+                                    <!-- <td><input disabled type="text"  class="form-control" formControlName="ouName" id="ouName" [(ngModel)]='ouName' style="border-style: none;background-color: #FFE4B5;font-weight: bold;"></td> -->
+                                    <!-- <td><input disabled type="text"  class="form-control" formControlName="ouCode" id="ouCode" [(ngModel)]='ouCode' style="border-style: none;background-color: #FFE4B5;font-weight: bold;"></td> -->
+                                    <td style="width: 15%" class="LabelFontStyle">&nbsp;{{this.ouCode}}&nbsp; </td>
+                                   
                                     <td style="width: 15%" class="LabelFontStyle">GL&nbsp;Period&nbsp;:&nbsp;</td>
                                     <td>
                                       <select formControlName="periodName" id="periodName" class="form-control">
@@ -69,9 +68,9 @@
                                     <td> <button type="button" class="btn btn-info" (click)="resetMast()" >Reset</button> </td>
                                     <div *ngIf="exportExcel; then TBEYes; else TBENo"></div>
                                     <ng-template #TBEYes> 
-                                    <td> <button  (click)="glTbReportExport()" class="btn btn-info" style="width: fit-content;">ExportToExcel</button></td>  
-                                    <!-- <button (click)="rcptListExport()" class="btn btn-success" style="width: fit-content;">Export To Excel</button> -->
-
+                                    <td> <button  (click)="glTbReportExport()" class="btn btn-info" style="width: fit-content;">Excel</button></td>  
+                                    <td> <button  (click)="glTbReport2()" class="btn btn-info" style="width: fit-content;">Report</button></td>  
+                                    
                                     </ng-template>
                                     <ng-template #TBENo> </ng-template>  
                                   </tr>

@@ -4,6 +4,15 @@ import { MasterService } from 'src/app/master/master.service'
 import { DatePipe ,Location} from '@angular/common';
 import { ActivatedRoute,Router } from '@angular/router';
 import * as xlsx from 'xlsx';
+import { ReportServiceService } from 'src/app/report/report-service.service'
+import { saveAs } from 'file-saver';
+
+
+const MIME_TYPES = {
+  pdf: 'application/pdf',
+  xls: 'application/vnd.ms-excel',
+  xlsx: 'application/vnc.openxmlformats-officedocument.spreadsheetxml.sheet'
+};
 
 export class glTbReport 
 {
@@ -46,13 +55,16 @@ export class GlTrialBalanceComponent implements OnInit {
   name: string;
   ouId:number;
   ouName: string;
+  ouCode:string;
   locId: number;
+  locCode:string;
   locName: string;
   deptId:number;
   emplId: number;
   roleId: number;
   orgId: number;
   divisionId: number;
+
   periodName:string;
   natAccount:string;
   natActDesc:string;
@@ -65,7 +77,7 @@ export class GlTrialBalanceComponent implements OnInit {
   glTrialBalance(glTrialBalanceForm:any) {  }
 
 
-  constructor(private fb: FormBuilder, private router: Router, private location1: Location, private router1: ActivatedRoute, private service: MasterService) { 
+  constructor(private fb: FormBuilder, private router: Router, private location1: Location, private router1: ActivatedRoute, private service: MasterService,private reportService: ReportServiceService) { 
     this.glTrialBalanceForm = this.fb.group({
       divisionId: [],
       division: [],
@@ -75,16 +87,19 @@ export class GlTrialBalanceComponent implements OnInit {
       ouId: [],
       ouName: [''],
       locId: [''],
+      locCode:[],
       locName: [''],
       emplId: [],
       roleId: [],
       deptId: [],
+      ouCode:[],
 
       periodName:[],
       natAccount:[],
       natActDesc:[],
       glDebitAmt :[],
       glCreditAmt :[],
+     
     })
   }
   ngOnInit(): void {
@@ -96,13 +111,16 @@ export class GlTrialBalanceComponent implements OnInit {
     this.ouName = (sessionStorage.getItem('ouName'));
     this.ouId=Number(sessionStorage.getItem('ouId'));
     this.locId=Number(sessionStorage.getItem('locId'));
+    this.locCode=sessionStorage.getItem('locCode');
     // this.locName=(sessionStorage.getItem('locName'));
     this.deptId=Number(sessionStorage.getItem('dept'));
     this.emplId= Number(sessionStorage.getItem('emplId'));
     this.orgId=this.ouId;
+    this.ouCode=this.ouName +"(" +this.locCode.substring(0,4)+")";
     console.log(this.loginArray);
     console.log(this.locId);
-
+   
+   
 
     this.service.FinancialPeriod()
       .subscribe(
@@ -128,14 +146,14 @@ export class GlTrialBalanceComponent implements OnInit {
       alert ("Please Select Period..."); return;
     }
       //  alert ("Period Selected  : " +prdName);
-
-    var ou='12MU'
-    this.service.getGLTrialBalanceList(ou, prdName)
+    var opuCode= this.locCode.substring(0,4)
+  
+    this.service.getGLTrialBalanceList(opuCode, prdName)
       .subscribe(
         data => {
           this.lstTBList = data;
           if(this.lstTBList.length==0) {
-            alert (ou +" - " + "No Record Found.");
+            alert (opuCode +" - " + "No Record Found.");
             this.exportExcel=false;
             return;
           }
@@ -147,7 +165,7 @@ export class GlTrialBalanceComponent implements OnInit {
  SelectTbAct(natAct,natDesc,drAmt,crAmt){
 
   var prdName =this.glTrialBalanceForm.get("periodName").value;
-  var ou='12MU'
+  var opuCode= this.locCode.substring(0,4)
 
   this.natAccount=natAct;
   this.natActDesc=natDesc;
@@ -159,7 +177,7 @@ export class GlTrialBalanceComponent implements OnInit {
   }
   this.lstTBActLineDet=null;
    
-  this.service.getGLTrialBalanceActSelect(ou, prdName,natAct)
+  this.service.getGLTrialBalanceActSelect(opuCode, prdName,natAct)
     .subscribe(
       data => {
         this.lstTBActLineDet = data;
@@ -187,13 +205,9 @@ export class GlTrialBalanceComponent implements OnInit {
 
 
  glTbReportExport() {
-  // var docNum =this.glTrialBalanceForm.get('docTrfNo').value;
-  // var status1 =this.cashBankTransferForm.get('status').value;
-
   const wb: xlsx.WorkBook = xlsx.utils.book_new();
   const ws: xlsx.WorkSheet = xlsx.utils.json_to_sheet([]);
   xlsx.utils.sheet_add_aoa(ws, this.glTbHeaderList);
-  // var orList = this.cashBankTransferForm.get('rcptLine').value;
   var orList = this.lstTBList
   var xlOrdList: any = [];
 
@@ -203,8 +217,6 @@ export class GlTrialBalanceComponent implements OnInit {
     ordLn.srlNo=i+1;
     ordLn.divName = sessionStorage.getItem('divisionName');
     ordLn.ouName = sessionStorage.getItem('ouName');
-    // ordLn.receiptDate = this.pipe.transform(orList[i].receiptDate, 'dd-MM-y');
-    // ordLn.receiptMethodId = orList[i].receiptMethodId;
     ordLn.natAccount = orList[i].naturalAccount;
     ordLn.natAccountDesc = orList[i].accountDesc;
     ordLn.openBalance = orList[i].openingBal;
@@ -213,12 +225,30 @@ export class GlTrialBalanceComponent implements OnInit {
     ordLn.closeBalance = orList[i].closingBal;
     ordLn.printDateTime = this.pipe.transform(Date.now(), 'dd-MM-y hh:mm:ss');  
     xlOrdList.push(ordLn);
-    // }
-  }
+   }
 
   xlsx.utils.sheet_add_json(ws, xlOrdList, { origin: 'A2', skipHeader: true });
   xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
   xlsx.writeFile(wb, 'gltbreport.xlsx');
 }
+
+glTbReport2(){
+//'GL Trial Balance'
+ 
+  var opuCode= this.locCode.substring(0,4)
+  var periodName =this.glTrialBalanceForm.get("periodName").value;
+  // alert(opuCode +","+periodName);
+
+const fileName = 'GL Trial Balance-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+ const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+ this.reportService.gltrialBalanceReport(opuCode,periodName)
+   .subscribe(data => {
+     saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+    //  this.closeResetButton = true;
+    //  this.dataDisplay = ''
+    //  this.isDisabled1=false;
+   })      
+ }
+
 
 }
