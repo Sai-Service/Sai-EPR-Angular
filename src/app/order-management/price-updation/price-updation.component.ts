@@ -10,8 +10,8 @@ import { Location } from "@angular/common";
 import { saveAs } from 'file-saver';
 
 interface ISalesBookingForm {
-  itemSeg:string;
-  attribute1:number;
+  itemSeg: string;
+  attribute1: number;
 }
 
 const MIME_TYPES = {
@@ -30,12 +30,12 @@ const MIME_TYPES = {
 export class PriceUpdationComponent implements OnInit {
   PriceUpdationForm: FormGroup;
   orderedItem: string;
-  itemSeg:string;
-  segment:string;
-  description:string;
-  price:number;
-  attribute1:number;
-  id:number;
+  itemSeg: string;
+  segment: string;
+  description: string;
+  price: number;
+  attribute1: number;
+  id: number;
   // orderedItem:string;
   public itemMap = new Map<string, any[]>();
   public itemMap2 = new Map<number, any[]>();
@@ -44,19 +44,20 @@ export class PriceUpdationComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private router1: ActivatedRoute, private location: Location, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService) {
     this.PriceUpdationForm = fb.group({
-      itemSeg:[''],
-      segment:[''],
-      orderedItem:[''],
-      description:[''],
-      price:[''],
-      attribute1:[''],
-      id:[''],
+      itemSeg: [''],
+      segment: [''],
+      orderedItem: [''],
+      description: [''],
+      price: [''],
+      // attribute1: [''],
+      attribute1: ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+      id: [''],
     })
-   }
+  }
 
-   PriceUpdation(PriceUpdationForm: any) { }
+  PriceUpdation(PriceUpdationForm: any) { }
   ngOnInit(): void {
-    this.service.subInvCode2(sessionStorage.getItem('deptId'), sessionStorage.getItem('divisionId') ).subscribe(
+    this.service.subInvCode2(sessionStorage.getItem('deptId'), sessionStorage.getItem('divisionId')).subscribe(
       data => {
         this.subInvCode = data;
         console.log(this.subInventoryId);
@@ -71,7 +72,7 @@ export class PriceUpdationComponent implements OnInit {
           this.orderedItem = data.description;
           console.log(data.description);
           this.itemMap.set(itemDesc, data);
-          this.PriceUpdationForm.patchValue({description:data[0].description})
+          this.PriceUpdationForm.patchValue({ description: data[0].description })
           // this.itemMap2.set(this.itemMap.get(itemDesc));
         }
 
@@ -80,7 +81,7 @@ export class PriceUpdationComponent implements OnInit {
   // onOptionsSelectedDescription(segment: string) {
   //   let select = (this.itemMap2.get(1)).find(d => d.segment === segment);
   // }
-  transData(val){
+  transData(val) {
     return val;
   }
 
@@ -91,29 +92,33 @@ export class PriceUpdationComponent implements OnInit {
     this.router.navigate(['admin']);
   }
 
-  itemDetailsList:any=[];
-  prc:number;
-  itemDetails(itemSeg){
+  itemDetailsList: any = [];
+  prc: number;
+  itemDetails(itemSeg) {
     var itemSeg = itemSeg.toUpperCase();
-    this.orderManagementService.getOnHandQty(sessionStorage.getItem('locId'),itemSeg,this.subInventoryId).subscribe((res: any) => {
-        this.itemDetailsList=res;
+    this.orderManagementService.getOnHandQty(sessionStorage.getItem('locId'), itemSeg, this.subInventoryId).subscribe((res: any) => {
+      this.itemDetailsList = res;
     })
   }
 
-update(id){
-  var price:string= this.PriceUpdationForm.get('attribute1').value
-  var attribute1:string = String(price);
-  var emplId = sessionStorage.getItem('emplId');
-  var onhandPrc:any=[];
-  onhandPrc.push({ id: id, attribute1: attribute1,lastUpdatedBy:emplId});
-  // const formValue: ISalesBookingForm = this.transData(this.PriceUpdationForm.getRawValue());
-  this.orderManagementService.UpdatePrice(onhandPrc).subscribe((res: any) => {
-    if (res.code === 200) {
-      alert(res.message)
-    }
-    else if (res.code===400){
-      alert(res.message)
-    }
-  })}
+  update(id) {
+    var price: string = this.PriceUpdationForm.get('attribute1').value
+    alert(price);
+    return;
+    var attribute1: string = String(price);
+    var emplId = sessionStorage.getItem('emplId');
+    var onhandPrc: any = [];
+    onhandPrc.push({ id: id, attribute1: attribute1, lastUpdatedBy: emplId });
+    // const formValue: ISalesBookingForm = this.transData(this.PriceUpdationForm.getRawValue());
+    this.orderManagementService.UpdatePrice(onhandPrc).subscribe((res: any) => {
+      if (res.code === 200) {
+        alert(res.message)
+      }
+      else if (res.code === 400) {
+        alert(res.message)
+      }
+    })
+  }
 
+ 
 }
