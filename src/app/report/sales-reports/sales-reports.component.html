@@ -539,6 +539,22 @@
                     <table class="center">
                         <tr>
                             <td style="width: 15%" class="LabelFontStyle">
+                                &nbsp;From&nbsp;Date&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                <input type="date" class="form-control" formControlName="fromDate"
+                                    max="{{minDate | date:'yyyy-MM-dd'}}">
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle">
+                                &nbsp;To&nbsp;Date&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                <input type="date" class="form-control" formControlName="toDate"
+                                    max="{{minDate | date:'yyyy-MM-dd'}}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle">
                                 &nbsp;Cust&nbsp;Account&nbsp;No&nbsp;:&nbsp;
                             </td>
                             <td>

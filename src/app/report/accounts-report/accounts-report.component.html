@@ -56,7 +56,11 @@
             </li>
             <li>
               <a class="dropdown-item" data-toggle="collapse" href="#panelCashBank" role="tab"
-                (click)="reportDetails('cashBank')">Cash Bank Reports</a>
+                (click)="reportDetails('cashBank')">Cash Book Report</a>
+            </li>
+            <li>
+              <a class="dropdown-item" data-toggle="collapse" href="#panelCashBank" role="tab"
+                (click)="reportDetails('bankBook')">Bank Book Report</a>
             </li>
             <li>
               <a class="dropdown-item" data-toggle="collapse" href="#panelAPGLUnpainAging" role="tab"
@@ -68,14 +72,15 @@
             </li>
           </ul>
         </li>
-    
+
       </ul>
     </div>
     <br>
   </nav>
   <br>
   <fieldset class="RFS">
-    <table style="margin-left: auto;margin-right: auto;" [style.display]="isVisibleGSTPurchaseRegister ? 'block' : 'none'" class="collapse" id="panelGSTPurchaseRegister">
+    <table style="margin-left: auto;margin-right: auto;"
+      [style.display]="isVisibleGSTPurchaseRegister ? 'block' : 'none'" class="collapse" id="panelGSTPurchaseRegister">
       <tr>
         <td>
           <table class="center">
@@ -179,7 +184,8 @@
         </td>
       </tr>
     </table>
-    <table style="margin-left: auto;margin-right: auto;"  [style.display]="isVisibleGSTSaleRegister ? 'block' : 'none'" class="collapse" id="panelGSTSaleRegister">
+    <table style="margin-left: auto;margin-right: auto;" [style.display]="isVisibleGSTSaleRegister ? 'block' : 'none'"
+      class="collapse" id="panelGSTSaleRegister">
       <tr>
         <td>
           <table class="center">
@@ -270,7 +276,8 @@
       </tr>
     </table>
 
-    <table style="margin-left: auto;margin-right: auto;" [style.display]="isVisibleSparesdebtors ? 'block' : 'none'" class="collapse" id="panelSparesdebtors">
+    <table style="margin-left: auto;margin-right: auto;" [style.display]="isVisibleSparesdebtors ? 'block' : 'none'"
+      class="collapse" id="panelSparesdebtors">
       <tr>
         <td>
           <table class="center">
@@ -354,7 +361,8 @@
         </td>
       </tr>
     </table>
-    <table style="margin-left: auto;margin-right: auto;" [style.display]="isVisiblespInvAgging ? 'block' : 'none'" class="collapse" id="panelspInvAgging">
+    <table style="margin-left: auto;margin-right: auto;" [style.display]="isVisiblespInvAgging ? 'block' : 'none'"
+      class="collapse" id="panelspInvAgging">
       <tr>
         <td>
           <table class="center">
@@ -445,7 +453,8 @@
         </td>
       </tr>
     </table>
-    <table style="margin-left: auto;margin-right: auto;" [style.display]="isVisiblepanelgltrialBalance ? 'block' : 'none'" class="collapse" id="panelgltrialBalance">
+    <table style="margin-left: auto;margin-right: auto;"
+      [style.display]="isVisiblepanelgltrialBalance ? 'block' : 'none'" class="collapse" id="panelgltrialBalance">
       <tr>
         <td>
           <table class="center">
@@ -470,14 +479,14 @@
               <td style="width: 15%" class="LabelFontStyle">GL&nbsp;Period&nbsp;:&nbsp;</td>
               <td>
                 <select formControlName="periodName" id="periodName" class="form-control">
-                <option>--Select--</option>
-                <option *ngFor="let sc of  periodNameList" [value]="sc.periodName">
-                  {{sc.periodName}}
-                </option>
-              </select>
+                  <option>--Select--</option>
+                  <option *ngFor="let sc of  periodNameList" [value]="sc.periodName">
+                    {{sc.periodName}}
+                  </option>
+                </select>
               </td>
             </tr>
-         
+
             <tr>
               <td colspan="4">
                 <table class="center">
@@ -513,7 +522,9 @@
         </td>
       </tr>
     </table>
-    <table style="margin-left: auto;margin-right: auto;" [style.display]="panelCashBank ? 'block' : 'none'" class="collapse" id="panelGSTPurchaseRegister">
+    <!-- style="margin-left: auto;margin-right: auto;" -->
+    <table  style="margin-left: 20%;" [style.display]="panelCashBank ? 'block' : 'none'"
+      class="collapse" id="panelCashBank">
       <tr>
         <td>
           <table class="center">
@@ -566,33 +577,32 @@
             </tr>
             <tr>
               <td style="width: 15%" class="LabelFontStyle">
-                &nbsp;Receipt&nbsp;name&nbsp;:&nbsp;
+                &nbsp;Cash/Bank&nbsp;name&nbsp;:&nbsp;
               </td>
-              <td>
-                <select formControlName="accountName" id="accountName" class="form-control">
-                <option>--Select--</option>
-                <option *ngFor="let sc of  accountNameList" [value]="sc">
-                  {{sc}}
-                </option>
-              </select>
+              <td  [style.display]="isVisiblepanelcashName ? 'block' : 'none'" >
+                <select formControlName="accountName" id="accountName" class="form-control" (change)="cashNameSelection($event)">
+                  <option>--Select--</option>
+                  <option *ngFor="let sc of  accountNameList" [value]="sc.name">
+                    {{sc.name}}
+                  </option>
+                </select>
+              </td>
+              <td  [style.display]="isVisiblepanelaccountName ? 'block' : 'none'" >
+                <select formControlName="accountName1" id="accountName1" class="form-control" (change)="accountNameSelection($event)">
+                  <option>--Select--</option>
+                  <option *ngFor="let sc of  accountNameList1" [value]="sc.name">
+                    {{sc.name}}
+                  </option>
+                </select>
               </td>
               <td style="width: 15%" class="LabelFontStyle">
                 Natural&nbsp;Account&nbsp;:
-            </td>
-            <td>
-              <input type="text" (keyup)="getNaturalAccount($event)"
-              formControlName="segment4" id="NaturalAccountFirstWay"
-              list="dynmicUserIds3" class="form-control"
-              (ngModelChange)="onOptionsSelectedNatural($event)" />
-          <datalist id="dynmicUserIds3">
-              <option *ngFor="let sc of  NaturalAccountList"
-                  [value]="sc.naturalaccount">
-                  {{sc.naturalaccount}}--{{sc.description}}
-              </option>
-          </datalist>
-            </td>
+              </td>
+              <td>
+                <input  disabled type="number" class="form-control" formControlName="segment4">
+              </td>
             </tr>
-         
+
             <tr>
               <td colspan="4">
                 <table class="center">
@@ -629,7 +639,8 @@
       </tr>
     </table>
 
-    <table style="margin-left: auto;margin-right: auto;" [style.display]="isVisiblepanelAPGLUnpainAging ? 'block' : 'none'" class="collapse" id="panelAPGLUnpainAging">
+    <table style="margin-left: auto;margin-right: auto;"
+      [style.display]="isVisiblepanelAPGLUnpainAging ? 'block' : 'none'" class="collapse" id="panelAPGLUnpainAging">
       <tr>
         <td>
           <table class="center">
@@ -645,18 +656,17 @@
                     <td style="width: 15%" class="LabelFontStyle">
                       &nbsp;Supplier&nbsp;name&nbsp;:&nbsp;
                     </td>
-                    
-                      <td>
-                        <input type="text" formControlName="supplierNo"
-                            (keyup)="getUserIdsFirstWay($event)" id="userIdFirstWay"
-                            list="dynmicUserIds" class="form-control" placeholder="Supplier details"
-                            (change)="onSupplierCodeSelected($event)">
-                        <datalist id="dynmicUserIds">
-                            <option *ngFor="let item of supplierCodeList">
-                                {{item.name}}</option>
-                        </datalist>
 
-                        <input hidden disabled type="number" class="form-control" formControlName="supNo">
+                    <td>
+                      <input type="text" formControlName="supplierNo" (keyup)="getUserIdsFirstWay($event)"
+                        id="userIdFirstWay" list="dynmicUserIds" class="form-control" placeholder="Supplier details"
+                        (change)="onSupplierCodeSelected($event)">
+                      <datalist id="dynmicUserIds">
+                        <option *ngFor="let item of supplierCodeList">
+                          {{item.name}}</option>
+                      </datalist>
+
+                      <input hidden disabled type="number" class="form-control" formControlName="supNo">
                     </td>
                     <td style="width: 15%" class="LabelFontStyle">
                       &nbsp;Orgnization&nbsp;name&nbsp;:&nbsp;
@@ -664,12 +674,12 @@
                     <td>
                       <input disabled type="text" class="form-control" formControlName="OUCode">
                     </td>
-                    
+
                   </tr>
                 </table>
               </td>
             </tr>
-            
+
             <tr>
               <td colspan="4">
                 <table class="center">
@@ -707,7 +717,8 @@
     </table>
 
 
-    <table style="margin-left: auto;margin-right: auto;" [style.display]="isVisiblepanelprePayment ? 'block' : 'none'" class="collapse" id="panelprePayment">
+    <table style="margin-left: auto;margin-right: auto;" [style.display]="isVisiblepanelprePayment ? 'block' : 'none'"
+      class="collapse" id="panelprePayment">
       <tr>
         <td>
           <table class="center">
@@ -720,19 +731,19 @@
               <td>
                 <table>
                   <tr>
-                   
+
                     <td style="width: 15%" class="LabelFontStyle">
                       &nbsp;Orgnization&nbsp;name&nbsp;:&nbsp;
                     </td>
                     <td>
                       <input disabled type="text" class="form-control" formControlName="OUCode">
                     </td>
-                    
+
                   </tr>
                 </table>
               </td>
             </tr>
-            
+
             <tr>
               <td colspan="4">
                 <table class="center">

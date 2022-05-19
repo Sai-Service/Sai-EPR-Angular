@@ -21,27 +21,27 @@
       </table>
   </tr>
     </table>
-    <div class="center" style="width: 100%;">
+    <!-- <div class="center" style="width: 100%;"> -->
       <!-- <form [formGroup]="moveOrderForm" (ngSubmit)="MoveOrder(moveOrderForm.value)"> -->
         <!-- <div *ngIf="displayButton; then thenBlock1; else elseBlock1">
         </div> -->
         <!-- <ng-template #thenBlock1> -->
-        <table class="center">
+        <table class="center" style="width: 100%;">
           <tr>
             <td style="width: 15%" class="LabelFontStyle">
-             Work Shop Return No:
+             Work&nbsp;Shop&nbsp;Return&nbsp;No:
             </td>
-            <td>
-              <input disabled type="text" class="form-control" formControlName="requestNumber" [(ngModel)]="requestNumber">
+            <td colspan="3">
+              <input disabled type="text" class="form-control" formControlName="requestNumber" [(ngModel)]="requestNumber" style="width:100% ;">
             </td>
             <td style="width: 15%" class="LabelFontStyle">
-              Return Date:
+              Return&nbsp;Date:
             </td>
             <td>
                 <input  disabled type="text" class="form-control" formControlName="creationDate"  [(ngModel)]="creationDate" >
               </td>
             <td style="width: 15%" class="LabelFontStyle">
-                Return Type:
+                Return&nbsp;Type:
               </td>
               <td>
                 <!-- <select class="form-control" formControlName="transactionTypeName" [(ngModel)]="transactionTypeName">
@@ -125,9 +125,6 @@
                 <input type="text" class="form-control" formControlName="remarks">
               </td>
           </tr>
-
-
-
           <tr>
             <div *ngIf="displayIssue; then thenIssList; else elseIssList"> </div>
             <ng-template #thenIssList>
@@ -281,7 +278,7 @@
             </tr>
           </table>
       <!-- </form> -->
-    </div>
+    <!-- </div> -->
     <br>
 
     <!-- <table style="width: 100%; background-color: #a4d3e9;">

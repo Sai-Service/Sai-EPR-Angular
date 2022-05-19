@@ -494,6 +494,10 @@ accountNameList(): Observable<any> {
   return this.http.get(this.ServerUrl + `/receiptMethod/rcptMethod`);
 }
 
+accountNameListbank(): Observable<any> {
+  return this.http.get(this.ServerUrl + `/receiptMethod/bankRcptMethod`);
+}
+
 getLocationSearch(): Observable<any> {
   return this.http.get(this.ServerUrl + '/locationMst');
 }

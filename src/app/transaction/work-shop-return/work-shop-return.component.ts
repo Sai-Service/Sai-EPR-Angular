@@ -165,6 +165,7 @@ reqNo:string;
   }
 
   ngOnInit(): void {
+    $("#wrapper").toggleClass("toggled");
     this.locId=Number(sessionStorage.getItem('locId'));
     // alert(this.locId);
     this.deptId=Number(sessionStorage.getItem('dept'));

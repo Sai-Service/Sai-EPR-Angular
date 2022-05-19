@@ -5,6 +5,7 @@ import { ReportServiceService } from 'src/app/report/report-service.service'
 import { DatePipe,Location } from '@angular/common';
 import { MasterService } from 'src/app/master/master.service';
 import { saveAs } from 'file-saver';
+import { data } from 'jquery';
 
 
 const MIME_TYPES = {
@@ -28,7 +29,7 @@ export class AccountsReportComponent implements OnInit {
   locId:number;
   public BillShipToList: Array<string> = [];
   periodNameList: any=[];
-  
+  accountName1:string;
   public DepartmentList: any=[];
   pipe = new DatePipe('en-US');
   now = new Date();
@@ -49,13 +50,18 @@ export class AccountsReportComponent implements OnInit {
   isVisiblepanelgltrialBalance:boolean=false;
   panelCashBank:boolean=false;
   accountNameList:any=[];
+  accountNameList1:any=[];
   isVisiblepanelAPGLUnpainAging:boolean=false;
+  isVisiblepanelaccountName:boolean=false;
   supplierNo:string;
   supNo:number;
   isVisiblepanelprePayment:boolean=false;
+  isVisiblepanelcashName:boolean=false;
   public NaturalAccountList: any = [];
   public InterBrancList: any = [];
   segment4:string;
+  isVisibleLocation:boolean=false;
+  isVisibleLocation1:boolean=false;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) {
     this.reportForm = this.fb.group({
@@ -72,6 +78,7 @@ export class AccountsReportComponent implements OnInit {
       accountName:[''],
       supplierNo:[''],
       supNo:[''],
+      accountName1:[''],
       segment4:[''],
     })
    }
@@ -112,6 +119,11 @@ this.service.accountNameList()
   }
 );
 
+this.service.accountNameListbank().subscribe(
+  data=> {
+    this.accountNameList1 = data;
+  }
+)
 
 this.service.DepartmentListNew()
 .subscribe(
@@ -286,11 +298,41 @@ reportName:string;
     this.isVisiblepanelprePayment=false;
   }
   else if (reportName==='cashBank'){
-    this.reportName='Cash Bank Reports';
+    this.reportForm.get('locCode').reset();
+    this.reportForm.get('locId').reset();
+    this.reportForm.get('segment4').reset();
+    this.reportForm.get('accountName').reset();
+    this.reportName='Cash Book Report';
     this.isVisibleGSTSaleRegister=false;
     this.isVisibleGSTPurchaseRegister=false;
     this.isVisibleGSTSaleRegister=false;
     this.isVisibleSparesdebtors=false;
+    this.isVisiblepanelaccountName=false;
+    this.isVisiblepanelcashName=true;
+    this.isVisibleLocation=true;
+    this.isVisibleLocation1=true;
+    this.isVisiblespInvAgging=false;
+    this.reportForm.get('locCode').enable();
+    this.isVisiblepanelgltrialBalance=false;
+    this.panelCashBank=true;
+    this.isVisiblepanelAPGLUnpainAging=false;
+    this.isVisiblepanelprePayment=false;
+  }
+  else if (reportName=='bankBook'){
+    this.reportName='Bank Book Report';
+    this.reportForm.get('locCode').reset();
+    this.reportForm.get('locId').reset();
+    this.reportForm.get('segment4').reset();
+    this.reportForm.get('accountName1').reset();
+    this.isVisibleGSTSaleRegister=false;
+    this.isVisibleGSTPurchaseRegister=false;
+    this.isVisibleGSTSaleRegister=false;
+    this.reportForm.get('locCode').disable();
+    this.isVisibleSparesdebtors=false;
+    this.isVisibleLocation=false;
+    this.isVisibleLocation1=false;
+    this.isVisiblepanelaccountName=true;
+    this.isVisiblepanelcashName=false;
     this.isVisiblespInvAgging=false;
     this.isVisiblepanelgltrialBalance=false;
     this.panelCashBank=true;
@@ -452,11 +494,11 @@ reportName:string;
         this.isDisabled1=false;
       })      
     }
-    else if (reportName ==='Cash Bank Reports'){
+    else if (reportName ==='Cash Book Report'){
       // alert(reportName);
       var accountName=this.reportForm.get('accountName').value;
       var naturalAccct = this.reportForm.get('segment4').value;
-      alert(naturalAccct);
+      // alert(naturalAccct);
       // var locId = this.reportForm.get('locId').value;
       if (naturalAccct===null || naturalAccct==''){
        alert('Please Select Natural Account');
@@ -474,6 +516,29 @@ reportName:string;
          this.isDisabled1=false;
        })      
      }
+     else if (reportName ==='Bank Book Report'){
+      // alert(reportName);
+      var accountName=this.reportForm.get('accountName1').value;
+      var naturalAccct = this.reportForm.get('segment4').value;
+      // alert(naturalAccct);
+      // var locId = this.reportForm.get('locId').value;
+      if (naturalAccct===null || naturalAccct==''){
+       alert('Please Select Natural Account');
+       this.dataDisplay = 'Please Select Natural Account....Do not refresh the Page';
+       return;
+      }
+       const fileName = 'Bank Book Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    //  alert(fromDate+'---'+toDate+'---'+sessionStorage.getItem('ouId')+'----'+locId+'---'+accountName)
+     this.reportService.cashBankReport(fromDate,toDate,sessionStorage.getItem('ouId'),locId,accountName,naturalAccct)
+       .subscribe(data => {
+         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+         this.closeResetButton = true;
+         this.dataDisplay = ''
+         this.isDisabled1=false;
+       })      
+     }
+
      else if (reportName==='AP To GL Unpaid Aging Report'){
       var suppNo=this.reportForm.get('supNo').value;
       if (suppNo ===undefined || suppNo===null|| suppNo===''){
@@ -570,5 +635,18 @@ reportName:string;
         })
     }
   }
+  cashNameSelection(event){
+    // alert(event.target.value);
+    var naturalCode = event.target.value;
+    let naturalAccountName = this.accountNameList.find(v => v.name == naturalCode);
+    console.log(naturalAccountName);
+    this.reportForm.patchValue({segment4:naturalAccountName.id})
+  }
 
+  accountNameSelection(event){
+    var naturalCode = event.target.value;
+    let naturalAccountName = this.accountNameList1.find(v => v.name == naturalCode);
+    console.log(naturalAccountName);
+    this.reportForm.patchValue({segment4:naturalAccountName.id})
+  }
 }
