@@ -1073,12 +1073,11 @@
                                                     </td>
 
                                                     <td>
-                                                        <!--   (keydown.enter)="enterKeyLock($event)"  (change)="onKey(i,'prc')" -->
+                                                        <!--   (keydown.enter)="enterKeyLock($event)" oninput="this.value = Math.abs(this.value)"  (change)="onKey(i,'prc')" -->
                                                         <input type="number" formControlName="pricingQty"
                                                             name="pricingQty{{i}}" class="form-control"
                                                             (keydown.tab)="onKey(i,'prc',$event)" 
-                                                            style="height: 20px;width:50px;" min="0"
-                                                            oninput="this.value = Math.abs(this.value)">
+                                                            style="height: 20px;width:50px;" min="0">
                                                             
                                                         <input hidden type="text" formControlName="uom"
                                                             class="form-control" style="height: 20px;width: 70px;"

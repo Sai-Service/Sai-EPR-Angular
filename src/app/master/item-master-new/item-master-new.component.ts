@@ -97,6 +97,7 @@ export class ItemMasterNewComponent implements OnInit {
   segment1: string;
   lstcomments: any[];
   disItemCode = true;
+  Status1: any;
   public SSitemTypeList: any;
   stockableShow = true;
   costingShow = true;
@@ -106,6 +107,7 @@ export class ItemMasterNewComponent implements OnInit {
   isTaxableShow = true;
   displayCosting = true;
   displayPoCharge = true;
+  hsnGstPer: string;
   displayisTaxable = true;
   ssVehical = false;
   ssSpares = false;
@@ -114,7 +116,7 @@ export class ItemMasterNewComponent implements OnInit {
   public mainModelList: Array<string>[];
   public colorCodeList: Array<string>[];
   public variantCodeList: Array<string>[];
-  public hsnSacCodeList: Array<string>[];
+  hsnSacCodeList: any;
   stockable: string;
   costing: string;
   internalOrder: string;
@@ -123,7 +125,40 @@ export class ItemMasterNewComponent implements OnInit {
   isTaxable: string;
   costCenter: number;
   itemTypeForCat: string;
-  categoryId:number;
+  categoryId: number;
+  hsnSacCode: string;
+  hsnSacCodeDet: any = [];
+  taxCategoryListS: any = [];
+  taxCategoryListP: any = [];
+  userList3: any[] = [];
+  lastkeydown3: number = 0;
+  uom: string;
+  public uomList: Array<string> = [];
+  displayInactive = true;
+  endDate: Date;
+  status: string;
+  public statusList: Array<string> = [];
+  segment: string;
+  description: string;
+  segment11: string;
+  lookupValueDesc1: string;
+  segment2: string;
+  lookupValueDesc2: string;
+  branch: any;
+  lookupValueDesc4: string;
+  lookupValueDesc3: string;
+  lookupValueDesc5: string;
+  poChargeAccount: number;
+  displayModal = true;
+  segment3:string;
+  segment4:string;
+  segment5:string;
+  showModal: boolean;
+  public CostCenterList: Array<string> = [];
+  public NaturalAccountList: Array<string> = [];
+  taxCategorySale:string;
+  taxCategoryPur:string;
+
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService) {
     this.itemMasterForm = fb.group({
       segmentName: [],
@@ -136,17 +171,69 @@ export class ItemMasterNewComponent implements OnInit {
       isTaxable: [],
       costCenter: [],
       itemTypeForCat: [],
-      categoryId:[],
+      categoryId: [],
+      hsnSacCode: [],
+      hsnGstPer: [],
+      uom: [],
+      status: [],
+      endDate: [],
+      segment: [],
+      description: [],
+      segment11: [],
+      lookupValueDesc1: [],
+      segment2: [],
+      lookupValueDesc2: [],
+      segment3: [],
+      segment4: [],
+      segment5: [],
+      lookupValueDesc4: [],
+      lookupValueDesc3: [],
+      lookupValueDesc5: [],
+      poChargeAccount:[],
+      taxCategorySale:[],
+      taxCategoryPur:[],
     })
   }
 
   ngOnInit(): void {
-    
+    $("#wrapper").toggleClass("toggled");
     this.service.SSitemTypeListFn()
       .subscribe(
         data => {
           this.SSitemTypeList = data;
           console.log(this.SSitemTypeList);
+        }
+      );
+
+    this.service.uomList()
+      .subscribe(
+        data => {
+          this.uomList = data;
+          console.log(this.uomList);
+        }
+      );
+
+    this.service.statusList()
+      .subscribe(
+        data => {
+          this.statusList = data;
+          console.log(this.statusList);
+        }
+      );
+
+      this.service.CostCenterList()
+      .subscribe(
+        data => {
+          this.CostCenterList = data;
+          console.log(this.CostCenterList);
+        }
+      );
+
+      this.service.NaturalAccountList()
+      .subscribe(
+        data => {
+          this.NaturalAccountList = data;
+          console.log(this.NaturalAccountList);
         }
       );
   }
@@ -268,13 +355,117 @@ export class ItemMasterNewComponent implements OnInit {
         )
       }
     }
+  }
 
 
-    // this.itemMasterForm.get('hsnGstPer').reset();
-    // this.itemMasterForm.get('hsnSacCode').reset();
-    // this.taxCategoryListS = null;
-    // this.taxCategoryListP = null;
+
+
+  onHsnCodeSelected(mHsnCode: any) {
+    var mHsnCode = mHsnCode.target.value;
+    if (mHsnCode != null) {
+      this.service.hsnSacCodeDet(mHsnCode)
+        .subscribe(
+          data => {
+            // this.hsnSacCodeList = data;
+            this.hsnSacCodeDet = data;
+            console.log(this.hsnSacCodeDet);
+            this.itemMasterForm.patchValue(this.hsnSacCodeDet.gstPercentage);
+            this.hsnGstPer = this.hsnSacCodeDet.gstPercentage;
+            alert(this.hsnGstPer)
+            this.service.taxCategoryListHSN(this.hsnGstPer, 'SALES')
+              .subscribe(data1 => {
+                this.taxCategoryListS = data1;
+                console.log(this.taxCategoryListS);
+                data1 = this.taxCategoryListS;
+              });
+
+            this.service.taxCategoryListHSN(this.hsnGstPer, 'PURCHASE')
+              .subscribe(
+                data1 => {
+                  this.taxCategoryListP = data1;
+                  console.log(this.taxCategoryListP);
+                  data1 = this.taxCategoryListP;
+                });
+          });
+    }
+  }
+  onOptionsSelected(event: any) {
+    this.Status1 = this.itemMasterForm.get('status').value;
+    if (this.Status1 === 'Inactive') {
+      this.displayInactive = false;
+      this.endDate = new Date();
+    }
+    else if (this.Status1 === 'Active') {
+    }
+  }
+
+  onOptionsSelectedBranch(segment: any, lType: string) {
+    this.service.getInterBranch(segment, lType).subscribe(
+      data => {
+        this.branch = data;
+        console.log(this.branch);
+        if (this.branch != null) {
+          if (lType === 'SS_Interbranch') {
+            this.lookupValueDesc5 = this.branch.lookupValueDesc;
+          }
+          if (lType === 'NaturalAccount') {
+            this.lookupValueDesc4 = this.branch.lookupValueDesc;
+          }
+          if (lType === 'CostCentre') {
+            this.lookupValueDesc3 = this.branch.lookupValueDesc;
+          }
+          if (lType === 'SS_Location') {
+            this.lookupValueDesc2 = this.branch.lookupValueDesc;
+          }
+          if (lType === 'SS_Branch') {
+            this.lookupValueDesc1 = this.branch.lookupValueDesc;
+          }
+        }
+        let selloc = sessionStorage.getItem('locCode');
+
+        this.segmentName = selloc + '.'
+          + this.costCenter + '.'
+          + this.poChargeAccount + '.'
+          + '0000'; 
+      }
+    );
 
   }
+
+
+  openCodeComb() {
+    let segmentName1 = this.itemMasterForm.get('segmentName').value;
+    if (segmentName1 === null) {
+      this.itemMasterForm.get('segment11').reset();
+      this.itemMasterForm.get('segment2').reset();
+      this.itemMasterForm.get('segment3').reset();
+      this.itemMasterForm.get('segment4').reset();
+      this.itemMasterForm.get('lookupValueDesc1').reset();
+      this.itemMasterForm.get('lookupValueDesc2').reset();
+      this.itemMasterForm.get('lookupValueDesc3').reset();
+      this.itemMasterForm.get('lookupValueDesc4').reset();
+      this.itemMasterForm.get('lookupValueDesc5').reset();
+    }
+    if (segmentName1 != null) {
+      var temp = segmentName1.split('.');
+      this.segment11 = temp[0];
+      this.segment2 = temp[1];
+      this.segment3 = temp[2];
+      this.segment4 = temp[3];
+      this.segment5 = temp[4];
+    }
+    this.displayModal = false;
+    this.showModal = true; // Show-Hide Modal Check
+  }
+  stockableEvent(e) {
+    if (e.target.checked) {
+      this.stockable = 'Y'
+    }
+    else {
+      this.stockable = 'N';
+    }
+  }
+
+
 
 }

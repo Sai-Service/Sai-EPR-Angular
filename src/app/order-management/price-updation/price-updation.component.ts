@@ -50,11 +50,14 @@ export class PriceUpdationComponent implements OnInit {
       description: [''],
       price: [''],
       // attribute1: [''],
-      attribute1: ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+      attribute1: ['', Validators.pattern('[0-9.]*')],
       id: [''],
     })
   }
 
+
+
+  get f() { return this.PriceUpdationForm.controls; }
   PriceUpdation(PriceUpdationForm: any) { }
   ngOnInit(): void {
     this.service.subInvCode2(sessionStorage.getItem('deptId'), sessionStorage.getItem('divisionId')).subscribe(
@@ -103,8 +106,8 @@ export class PriceUpdationComponent implements OnInit {
 
   update(id) {
     var price: string = this.PriceUpdationForm.get('attribute1').value
-    alert(price);
-    return;
+    // alert(price);
+    // return;
     var attribute1: string = String(price);
     var emplId = sessionStorage.getItem('emplId');
     var onhandPrc: any = [];
@@ -112,7 +115,8 @@ export class PriceUpdationComponent implements OnInit {
     // const formValue: ISalesBookingForm = this.transData(this.PriceUpdationForm.getRawValue());
     this.orderManagementService.UpdatePrice(onhandPrc).subscribe((res: any) => {
       if (res.code === 200) {
-        alert(res.message)
+        alert(res.message);
+        this.PriceUpdationForm.disable();
       }
       else if (res.code === 400) {
         alert(res.message)

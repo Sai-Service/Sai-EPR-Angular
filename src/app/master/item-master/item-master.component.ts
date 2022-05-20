@@ -444,7 +444,8 @@ export class ItemMasterComponent implements OnInit {
           this.NaturalAccountList = data;
           console.log(this.NaturalAccountList);
         }
-      ); this.service.InterBrancList()
+      );
+       this.service.InterBrancList()
         .subscribe(
           data => {
             this.InterBrancList = data;
@@ -741,7 +742,7 @@ export class ItemMasterComponent implements OnInit {
       this.service.hsnSacCodeDet(mHsnCode)
         .subscribe(
           data => {
-            this.hsnSacCodeList = data;
+            // this.hsnSacCodeList = data;
             this.hsnSacCodeDet = data;
             console.log(this.hsnSacCodeDet);
             this.itemMasterForm.patchValue(this.hsnSacCodeDet.gstPercentage);
@@ -1120,13 +1121,11 @@ export class ItemMasterComponent implements OnInit {
   }
   onOptionsSelected(event: any) {
     this.Status1 = this.itemMasterForm.get('status').value;
-    // alert(this.Status1);
     if (this.Status1 === 'Inactive') {
       this.displayInactive = false;
       this.endDate = new Date();
     }
     else if (this.Status1 === 'Active') {
-      // this.itemMasterForm.get('endDate').reset();
     }
   }
   fnCancatination(index) {

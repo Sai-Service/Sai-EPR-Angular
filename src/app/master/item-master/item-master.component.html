@@ -176,8 +176,7 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="displayModal; then thenBlockModal; else elseBlockModal">
-        </div>
+        <div *ngIf="displayModal; then thenBlockModal; else elseBlockModal">  </div>
         <ng-template #thenBlockModal>
         </ng-template>
         <ng-template #elseBlockModal>
@@ -371,9 +370,7 @@
                                                                 </td>
 
                                                                 <td>
-                                                                    <div
-                                                                        *ngIf="stockableShow; then thenBlockStatus; else elseBlockStatus">
-                                                                    </div>
+                                                                    <div *ngIf="stockableShow; then thenBlockStatus; else elseBlockStatus"> </div>
                                                                     <ng-template #thenBlockStatus>
                                                                         <input disabled type="checkbox"
                                                                             [formControl]="stockable"
@@ -393,9 +390,7 @@
                                                                 <td>
                                                                     <!-- <input disabled type="checkbox" formControlName="costing"
                                                         [(ngModel)]='costing' (change)="costingEvent($event)"> -->
-                                                                    <div
-                                                                        *ngIf="costingShow; then thenBlockStatus; else elseBlockStatus">
-                                                                    </div>
+                                                                    <div *ngIf="costingShow; then thenBlockStatus; else elseBlockStatus"> </div>
                                                                     <ng-template #thenBlockStatus>
                                                                         <input disabled type="checkbox"
                                                                             [formControl]="costing"
@@ -414,9 +409,7 @@
                                                                     Internal&nbsp;Order&nbsp;:&nbsp;</td>
                                                                 <td>
                                                                     <!-- <input disabled type="checkbox" formControlName="internalOrder" [(ngModel)]='internalOrder'  (change)="internalOrderEvent($event)"> -->
-                                                                    <div
-                                                                        *ngIf="internalOrderShow; then thenBlockStatus; else elseBlockStatus">
-                                                                    </div>
+                                                                    <div *ngIf="internalOrderShow; then thenBlockStatus; else elseBlockStatus">  </div>
                                                                     <ng-template #thenBlockStatus>
                                                                         <input disabled type="checkbox"
                                                                             [formControl]="internalOrder"

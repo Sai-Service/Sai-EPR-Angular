@@ -533,9 +533,11 @@ if(this.deptId==2){
       this.searchByRcptNo = Number(this.router1.snapshot.queryParamMap.get('docSequenceValue'));
       this.locId= Number(this.router1.snapshot.queryParamMap.get('locId'));
       // alert( this.searchByRcptNo+'------'+ this.locId);
+      if (this.searchByRcptNo != 0 && this.locId !=0){
       if (this.searchByRcptNo != undefined){
       this.SearchByRcptNo(this.searchByRcptNo);
       this.SelectReceipt(this.searchByRcptNo);
+    }
     }
   });
 
