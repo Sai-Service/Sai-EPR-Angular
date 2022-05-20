@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { NgForm } from '@angular/forms';
-
+import { OrderManagementService } from 'src/app/order-management/order-management.service';
 import { Url } from 'url';
 import { Router } from '@angular/router';
 import { Validators } from '@angular/forms';
@@ -54,7 +54,7 @@ export class ItemMasterLocatorComponent implements OnInit {
   LocatorSegment: string;
   itemId:number;
   // copyAddv:string;
-
+  orderedItem: string;
   endDate: Date;
   public status = "Active";
   displayInactive = true;
@@ -96,7 +96,7 @@ export class ItemMasterLocatorComponent implements OnInit {
   @ViewChild('input5') input5: ElementRef;
   @ViewChild('input6') input6: ElementRef;
 
-  constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
+  constructor(private fb: FormBuilder, private router: Router, private service: MasterService,private orderManagementService: OrderManagementService) {
     this.ItemlocatorMasterForm = fb.group({
       locatorId :[],
       locId: ['', [Validators.required]],
@@ -119,6 +119,7 @@ export class ItemMasterLocatorComponent implements OnInit {
   description:[],
   locationId:[],
   subId:[],
+  orderedItem:[],
   subInventoryCode:[],
   locCode:[],
   itemLocatorId:[],
@@ -154,11 +155,11 @@ export class ItemMasterLocatorComponent implements OnInit {
           console.log(this.subinventoryIdList);
         }
       );
-      this.service.ItemIdDivisionList(this.divisionId).subscribe(
-        data =>{ this.ItemIdList = data;
-          console.log(this.ItemIdList);
+    //   this.service.ItemIdDivisionList(this.divisionId).subscribe(
+    //     data =>{ this.ItemIdList = data;
+    //       console.log(this.ItemIdList);
 
-     });
+    //  });
   }
 
   ItemlocatorMaster(ItemlocatorMasterForm: any) {
@@ -194,20 +195,27 @@ export class ItemMasterLocatorComponent implements OnInit {
     }
     return matches;
   };
-  onOptiongetItem(event:any)
-  {
-    let select1=this.ItemIdList.find(d=>d.SEGMENT===event);
-    this.ItemlocatorMasterForm.patchValue({itemId:select1.itemId})
-    // var subcode=this.ItemlocatorMasterForm.get('subInventory').value;
-      this.service.getItemDetail(select1.itemId).subscribe
-      (data => {this.getItemDetail = data;
-        // alert("this.getItemDetail.description" + this.getItemDetail.description);
-        if(this.getItemDetail.description !=undefined){
-          this.ItemlocatorMasterForm.patchValue({description: this.getItemDetail.description});
-        }
-      } );
-
-  }
+  onOptiongetItem(event:any){
+    alert(event.target.value)
+    // var itemDesc=event;
+    var itemDesc = event.target.value.toUpperCase();
+    // let select1=this.ItemIdList.find(d=>d.SEGMENT===event);
+    // this.ItemlocatorMasterForm.patchValue({itemId:select1.itemId})
+    //   this.service.getItemDetail(select1.itemId).subscribe
+    //   (data => {this.getItemDetail = data;
+    //     if(this.getItemDetail.description !=undefined){
+    //       this.ItemlocatorMasterForm.patchValue({description: this.getItemDetail.description});
+    //     }
+    //   } );
+    this.orderManagementService.searchByItemSegmentDiv(this.divisionId, itemDesc)
+      .subscribe(
+        data => {
+          this.orderedItem = data[0].description;
+          console.log(data[0].description);
+          this.ItemlocatorMasterForm.patchValue({description: data[0].description});
+        })
+      }
+  
 
 
   okLocator()
@@ -401,7 +409,7 @@ export class ItemMasterLocatorComponent implements OnInit {
 
   searchMast(subId) {
 
-    alert(subId);
+    // alert(subId);
     var locId1=this.ItemlocatorMasterForm.get('locId').value;
     var subId=this.ItemlocatorMasterForm.get('subId').value;
     this.service.getItemLocatorMasterSearch(this.locationId,subId)
