@@ -358,7 +358,7 @@
                             </td>
                             <td>
                                 <div *ngIf="isTaxableShow; then thenBlockisTaxable; else elseBlockStatus"> </div>
-                            <ng-template #thenBlockisTaxable>
+                            <ng-template #thenBlockStatus>
                                 <input disabled type="checkbox" formControlName="isTaxable" checked  [(ngModel)]='isTaxable' (change)="internalOrderEvent($event)">
                             </ng-template>
                             <ng-template #elseBlockStatus>

@@ -470,9 +470,7 @@
                                                                 <td>
                                                                     <div
                                                                         *ngIf="isTaxableShow; then thenBlockisTaxable; else elseBlockStatus">
-
                                                                     </div>
-                                                                    <!-- [formControl]="isTaxable" -->
                                                                     <ng-template #thenBlockStatus>
                                                                         <input disabled type="checkbox" formControlName="isTaxable"
                                                                             checked
