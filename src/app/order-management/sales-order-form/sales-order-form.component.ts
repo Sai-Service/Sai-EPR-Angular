@@ -146,8 +146,8 @@ export class IFinanaceExchangeForm {
   financeAmt: number;
   emi: number;
   tenure: number;
+   csdDate:Date;
   csdIndexNo: number;
-  csdDate: Date;
   csdPoNo: string;
   lesseeContactNo: number;
   downPayment: number;
@@ -384,7 +384,9 @@ export class SalesOrderFormComponent implements OnInit {
   exShowRoomPrice: number;
   totalPaidAmt: number;
   balancePay: number;
-  
+  pipe = new DatePipe('en-US');
+  now = Date.now();
+  csdDate = this.pipe.transform(Date.now(), 'y-MM-dd');
 
   constructor(private fb: FormBuilder, private router1: ActivatedRoute, private location: Location, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService) {
     this.SalesOrderBookingForm = fb.group({
@@ -1719,6 +1721,13 @@ export class SalesOrderFormComponent implements OnInit {
               this.SalesOrderBookingForm.get('custPoNumber').disable();
               this.SalesOrderBookingForm.get('custPoDate').disable();
               this.SalesOrderBookingForm.get('refCustNo').disable();
+              this.SalesOrderBookingForm.get('csdPoNo').disable();
+              this.SalesOrderBookingForm.get('csdDate').disable();
+              this.SalesOrderBookingForm.get('csdIndexNo').disable();
+              var csdDate1 = (data.obj.csdDate)
+              var csdDateNew = this.pipe.transform(csdDate1, 'y-MM-dd');
+              this.csdDate=csdDateNew;
+              // alert(this.csdDate)
             }
           }
         })
@@ -2744,8 +2753,7 @@ export class SalesOrderFormComponent implements OnInit {
       );
   }
 
-  pipe = new DatePipe('en-US');
-  now = new Date();
+
 
   autoApplyInvoice(){
     // var currentDate= new Date();

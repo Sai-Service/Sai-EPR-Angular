@@ -48,10 +48,14 @@
                     <td style="padding-left: 5px; text-align: center;border: 1px solid black;width: 180px;">{{com.prc}}</td>
                     <td hidden style="padding-left: 5px; text-align: center;border: 1px solid black;width: 180px;">{{com.id}}</td>
                      <td style="padding-left: 5px; text-align: center;border: 1px solid black;width: 180px;">
-                        <input type="number" Value={{attribute1}}  formControlName="attribute1"  class="form-control" style="height: 20px;width: 180px;">
-                     </td>  
-                     <td style="padding-left: 5px; text-align: center;border: 1px solid black;width: 180px;">
-                        <button type="submit" (click)="update(com.id)" class="btn btn-primary">Update</button>
+                        <input type="text" Value={{attribute1}}  formControlName="attribute1"  class="form-control" style="height: 20px;width: 180px;">
+                        <div *ngIf="f.attribute1.touched && f.attribute1.invalid" class="alert alert-danger" style="font-size: 8px;">  
+                            <!-- <div *ngIf="f.attribute1.errors.required">Price is required.</div>   -->
+                            <div *ngIf="f.attribute1.errors.pattern">Invalid Input. Character or Special Character not Allowed.!</div>  
+                        </div>  
+                    </td>  
+                     <td style="padding-left: 5px; text-align: center;border: 1px solid black;width: 280px;">
+                        <button type="submit" (click)="update(com.id)" [disabled]="!PriceUpdationForm.valid" class="btn btn-primary">Update</button>
                     </td> 
                 </tr>
               </table>

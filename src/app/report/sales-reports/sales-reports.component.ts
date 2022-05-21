@@ -769,16 +769,16 @@ export class SalesReportsComponent implements OnInit {
         custAccNo = '';
       }
       // alert(deptId);
-      if (deptId===null || deptId == undefined || deptId ==''){
-        alert('Please Select Department ID.!');
-        this.dataDisplay = 'Please Select Department ID.....Do not refresh the Page';
-        this.isDisabled1 = false;
-        this.closeResetButton = true;
-        return;
-      }
       const fileName = 'Sai Debtors-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
+        if (deptId===null || deptId == undefined || deptId ==''){
+          alert('Please Select Department ID.!');
+          this.dataDisplay = 'Please Select Department ID.....Do not refresh the Page';
+          this.isDisabled1 = false;
+          this.closeResetButton = true;
+          return;
+        }
         this.reportService.SPDebtorReport(toDate, sessionStorage.getItem('ouId'), locId, custAccNo, deptId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);

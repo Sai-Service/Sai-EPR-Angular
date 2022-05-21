@@ -61,22 +61,29 @@
                                       Enter Subinventory </span> -->
                               </div>
                           </td>
-                          <td style="width: 18%" class="LabelFontStyle1">
-                            Item Name&nbsp;:
-                          </td>
-                          <td><input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control" (ngModelChange)="onOptiongetItem($event)"  />
-                            <datalist id="dynmicUserIds1">
-                              <option *ngFor="let item of ItemIdList" [ngValue]="item.invItemId">{{item.SEGMENT}}
-                                </option>
-                               </datalist>
-                            </td>
-                            <input hidden formControlName="itemId">
-                          <td style="width: 18%" class="LabelFontStyle1">
-                            Description&nbsp;:
-                          </td>
-                          <td>
-                            <input disabled type="text" formControlName="description" class="form-control">
-                          </td>
+                          </tr>
+                          <tr>
+                            <td style="width: 18%" class="LabelFontStyle1">
+                                Item Name&nbsp;:
+                              </td>
+                              <td>
+                                  <!-- <input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control" (ngModelChange)="onOptiongetItem($event)"  />
+                                <datalist id="dynmicUserIds1">
+                                  <option *ngFor="let item of ItemIdList" [ngValue]="item.invItemId">{{item.SEGMENT}}
+                                    </option>
+                                   </datalist> -->
+                                   <input type="text" style="text-transform: uppercase;"
+                                   class="form-control" formControlName="segment"
+                                   [(ngModel)]='segment' name="segment"
+                                   (keydown.tab)="onOptiongetItem($event)" />
+                                </td>
+                                <input hidden formControlName="itemId">
+                              <td style="width: 18%" class="LabelFontStyle1">
+                                Description&nbsp;:
+                              </td>
+                              <td>
+                                <input disabled type="text" formControlName="description" class="form-control">
+                              </td>
                           </tr>
                           <tr>
                           <!-- <td> -->
