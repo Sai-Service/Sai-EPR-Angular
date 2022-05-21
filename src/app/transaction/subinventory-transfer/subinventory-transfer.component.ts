@@ -117,6 +117,8 @@ export class SubinventoryTransferComponent implements OnInit {
   transDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
   dispPhyLoc:boolean=true;
   attribute3:string;
+  isVisiblenewSubtrf:boolean=false;
+  isVisibledownloadSubGatePass:boolean=false;
 
   @ViewChild('myinput') myInputField: ElementRef;
   @ViewChild('suppCode1') suppCode1: ElementRef;
@@ -252,11 +254,12 @@ export class SubinventoryTransferComponent implements OnInit {
     }
   }
   ngOnInit(): void {
+    $("#wrapper").toggleClass("toggled");
     this.locId = Number(sessionStorage.getItem('locId'));
     this.issueBy = sessionStorage.getItem('name');
     this.deptId = Number(sessionStorage.getItem('dept'));
     this.divisionId = Number(sessionStorage.getItem('divisionId'));
-
+    this.isVisiblenewSubtrf=true;
     this.service.subInvCode2(this.deptId, this.divisionId).subscribe((data) => {
       this.subInvCode = data;
       this.subInventoryCode = this.subInvCode.subInventoryCode;
@@ -293,7 +296,7 @@ export class SubinventoryTransferComponent implements OnInit {
     patch.controls[0].patchValue({
       lineNumber: 1,
     });
-    alert(this.subInventoryCode);
+    // alert(this.subInventoryCode);
     
     // this.SubNo="12PU";
   }
@@ -377,6 +380,7 @@ export class SubinventoryTransferComponent implements OnInit {
   }
 
   search(SubNo) {
+    this.isVisiblenewSubtrf=false;
     // alert(SubNo+'1st');
     if (SubNo != undefined) {
       this.currentOp = 'SEARCH';
@@ -415,6 +419,7 @@ export class SubinventoryTransferComponent implements OnInit {
             });
           }
           this.SubinventoryTransferForm.disable();
+          this.isVisibledownloadSubGatePass=true;
           this.currentOp = 'INSERT';
         });
     }
@@ -693,6 +698,7 @@ export class SubinventoryTransferComponent implements OnInit {
   }
 
   newSubtrf() {
+
     if (this.SubinventoryTransferForm.valid) {
       const formValue: IsubinventoryTransfer =
         this.SubinventoryTransferForm.value;
@@ -753,6 +759,8 @@ export class SubinventoryTransferComponent implements OnInit {
           // sessionStorage.setItem('shipmentNumber',obj[0].shipmentNumber);
           if (res.code === 200) {
             alert('Record inserted Successfully');
+            this.isVisiblenewSubtrf=false;
+            this.isVisibledownloadSubGatePass=true;
             // this.shipmentNumber =res.obj.shipmentNumber;
             this.SubinventoryTransferForm.patchValue(
               // //  'issueBy':res.obj[0].issueTo,
@@ -902,4 +910,18 @@ export class SubinventoryTransferComponent implements OnInit {
       }
     }
   }
+
+
+  downloadSubGatePass() {
+    const fileName = 'download.pdf';
+    alert(this.SubNo)
+      this.service.downloadSubGatePassFn(this.SubNo)
+        .subscribe(data => {
+          var blob = new Blob([data], { type: 'application/pdf' });
+          var url = URL.createObjectURL(blob);
+          var printWindow = window.open(url, '', 'width=800,height=500');
+          printWindow.open
+        });
+      }
+
 }

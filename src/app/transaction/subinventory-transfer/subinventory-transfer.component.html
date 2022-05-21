@@ -235,12 +235,16 @@
       </div>
       <table class="center">
               <tr>
-
                 <td>
                   <button type="submit" class="btn btn-primary" (click)="closesubTrf()">Close</button>
                 </td>
                 <td>
-                  <button  type="submit" class="btn btn-primary" (click)="newSubtrf()">Save</button>
+                  <button  type="submit" class="btn btn-primary" (click)="newSubtrf()" [style.display]="isVisiblenewSubtrf ? 'block' : 'none'">Save</button>
+              </td>
+              <td>
+                <button type="button" class="btn btn-primary" (click)="downloadSubGatePass()" [style.display]="isVisibledownloadSubGatePass ? 'block' : 'none'"
+                    style="width: fit-content"> Sub&nbsp;Transafer&nbsp;Note
+                </button>
               </td>
               <td>
                 <button type="submit" class="btn btn-primary" (click)="resetsubTrf()" >Reset</button>
