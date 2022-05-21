@@ -19,6 +19,7 @@ interface IAmcEnroll {
   regNo:string;
   contactNo:string;
   custAddress:string;
+  custAccountNo:number
 
   schemeGrp:string;
   schemeId:number;
@@ -112,7 +113,7 @@ export class AmcEnrollmentComponent implements OnInit {
   custCity: string;
   custState: String;
   custPincode: string;
-  CustomerGstNo: string
+  customerGstNo: string
   customerPanNo: string
   customerTanNo: string
   custAccountNo: number;
@@ -193,7 +194,7 @@ export class AmcEnrollmentComponent implements OnInit {
     custCity:[],
     custState:[],
     custPincode:[],
-    CustomerGstNo:[],
+    customerGstNo:[],
     customerPanNo:[],
     customerTanNo:[],
     custAccountNo:[],
@@ -324,13 +325,12 @@ closeMast() {
               console.log(this.getVehRegDetails);
 
               this.amcEnrollmentForm.patchValue({
-                customerId: this.getVehRegDetails.customerId,
+                custAccountNo: this.getVehRegDetails.custAccountNo,
                 regNo :mRegNo,
               });
               // this.enableCustAccount = false;
-              this.GetCustomerDetails(this.getVehRegDetails.customerId);
-              this.GetCustomerSiteDetails(this.getVehRegDetails.customerId);
-            }  else { alert("Vehicle Regno. Not Found...."); this.resetMast(); }
+              this.GetCustomerDetailsNew(this.getVehRegDetails.custAccountNo);
+              }  else { alert("Vehicle Regno. Not Found...."); this.resetMast(); }
 
             });
           
@@ -352,6 +352,24 @@ closeMast() {
       }
 
 
+      GetCustomerDetailsNew(mCustAcNo: any) {
+        if (mCustAcNo > 0) {
+            this.service.searchCustomerByAccount(mCustAcNo)
+            .subscribe(
+              data1 => {
+                this.CustomerDetailsList = data1.obj;
+                console.log(this.CustomerDetailsList);
+                this.amcEnrollmentForm.patchValue({
+                  customerId: this.CustomerDetailsList.customerId,
+                  custName: this.CustomerDetailsList.custName,
+                 });
+                this.GetCustomerSiteDetails(this.CustomerDetailsList.customerId);
+              }
+            );
+        } else {  alert ("Customer Details Not Found....");}
+      }
+
+
         GetCustomerSiteDetails(mCustId: any) {
           // alert("Customer Id: "+mCustId);
           this.service.GetCustomerSiteDetails(mCustId, this.ouId)
@@ -368,9 +386,9 @@ closeMast() {
                   this.amcEnrollmentForm.patchValue({
                     customerSiteId: this.CustomerSiteDetails.customerSiteId,
                     customerSiteAddress: this.CustomerSiteDetails.address1 + "," +
-                      this.CustomerSiteDetails.address2 + "," +
-                      this.CustomerSiteDetails.address3 + "," +
-                      this.CustomerSiteDetails.location,
+                    this.CustomerSiteDetails.address2 + "," +
+                    this.CustomerSiteDetails.address3 + "," +
+                    this.CustomerSiteDetails.location,
                     custCity: this.CustomerSiteDetails.city,
                     custState: this.CustomerSiteDetails.state,
                     custPincode: this.CustomerSiteDetails.pinCd,
@@ -530,12 +548,21 @@ closeMast() {
   checkAmcHeaderValidations()
   {
        const formValue: IAmcEnroll = this.amcEnrollmentForm.value;
+
     
       if(formValue.regNo===undefined || formValue.regNo===null  || formValue.regNo.trim()==='' ) {
           this.amcHeaderValidation=false;
           alert ("VEHICLE REG NO: Should not be null value");
           return; 
       }
+
+      if(formValue.custAccountNo===undefined || formValue.custAccountNo===null  || formValue.custAccountNo<=0 ) {
+        this.amcHeaderValidation=false;
+        alert ("CUSTOMER ACCOUNT NO: Should not be null value");
+        return; 
+    }
+
+
 
       if(formValue.schemeNumber===undefined || formValue.schemeNumber===null  || formValue.schemeNumber.trim()==='' ) {
         this.amcHeaderValidation=false;
