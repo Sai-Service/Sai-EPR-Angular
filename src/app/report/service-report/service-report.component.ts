@@ -300,6 +300,15 @@ isVisibleGSTSaleRegister:boolean=false;
         this.isVisibleDepartmentList=true;
       }
     }
+    else if (reportName=='invoiceSummary'){
+      this.reportName='Invoice Summary Report';
+      this.isVisiblegstsaiDebtors=false;
+      this.isVisiblepanelfromtolocation=true;
+      this.isVisiblefromtolocationdepartment=false;
+      this.isVisiblepaneltolocation=false;
+      this.isVisiblecustomerLedger=false;
+      this.isVisibleGSTSaleRegister=false;
+    }
   }
 
 
@@ -482,9 +491,10 @@ isVisibleGSTSaleRegister:boolean=false;
     var custAccNo = this.serviceReportForm.get('custAccNo').value;
     if (custAccNo === undefined || custAccNo === '' || custAccNo === null) {
       alert('First Enter customer Account No.!');
+      this.isDisabled1 = false;
       return;
     }
-    const fileName = 'Customer Ledger Report.pdf';
+    const fileName = 'Customer Ledger Report-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     if (Number(sessionStorage.getItem('deptId')) === 4) {     
       this.reportService.customerLedger(fromDate,toDate,custAccNo,sessionStorage.getItem('ouId'),deptId)
@@ -675,6 +685,28 @@ isVisibleGSTSaleRegister:boolean=false;
     }
     else if (Number(sessionStorage.getItem('deptId')) != 4){
       this.reportService.irnGenerationReport(fromDate,toDate,sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'),sessionStorage.getItem('deptId'))
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.isDisabled1 = false;
+        this.closeResetButton = true;
+        this.dataDisplay = ''
+      })
+    }
+  }
+  else if (reportName=='Invoice Summary Report'){
+    const fileName = 'Invoice Summary Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    if (Number(sessionStorage.getItem('deptId')) === 4) {
+      this.reportService.invoiceSummaryReport( fromDate,toDate,locId)
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.isDisabled1 = false;
+          this.closeResetButton = true;
+          this.dataDisplay = ''
+        })
+    }
+    else if (Number(sessionStorage.getItem('deptId')) != 4){
+      this.reportService.invoiceSummaryReport( fromDate,toDate,sessionStorage.getItem('locId'))
       .subscribe(data => {
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
         this.isDisabled1 = false;

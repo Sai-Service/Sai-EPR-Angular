@@ -1436,6 +1436,16 @@ getsubTrfSubinventory(deptId,divId):Observable<any>
   return this.http.get(this.ServerUrl+`/subInvMst/subIssue?deptId=${deptId}&divisionId=${divId}`)
 }
 
+
+
+downloadSubGatePassFn(shipmentNumber) {
+  const REQUEST_URI = this.ServerUrl + `/rcvShipment/ssSubInvTrf/${shipmentNumber}`;
+  return this.http.get(REQUEST_URI, {
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
+}
+
 ////////////Stock Transfer////////
 public stockTransferSubmit(stockTransferRecord)
 {

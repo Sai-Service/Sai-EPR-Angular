@@ -824,10 +824,12 @@ export class SalesReportsComponent implements OnInit {
       var custAccNo = this.salesReportForm.get('custAccNo').value;
       if (custAccNo === undefined || custAccNo === '' || custAccNo === null) {
         alert('First Enter customer Account No.!');
+        this.isDisabled1 = false;
         return;
       }
-      const fileName = 'Customer Ledger Report.pdf';
+      const fileName = 'Customer Ledger Report-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      // const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {     
         this.reportService.customerLedger(fromDate,toDate,custAccNo,sessionStorage.getItem('ouId'),deptId)
           .subscribe(data => {
