@@ -1018,6 +1018,7 @@ if(this.deptId==2){
       } });
     }
     }
+
     SearchRcptByCustNo(custActNo: any) {
     // alert ("custActNo Num : " +custActNo);
     if(custActNo ===undefined || custActNo===null || custActNo<=0 ) {return;}

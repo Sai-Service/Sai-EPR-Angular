@@ -200,7 +200,7 @@ export class GlTrialBalanceComponent implements OnInit {
   'DEBITS',
   'CREDITS',
   'CLOSING BALANCE',
-  'PRINT DATE TIME',
+  // 'PRINT DATE TIME',
 ]]
 
 
@@ -210,10 +210,10 @@ export class GlTrialBalanceComponent implements OnInit {
   xlsx.utils.sheet_add_aoa(ws, this.glTbHeaderList);
   var orList = this.lstTBList
   var xlOrdList: any = [];
-
+  // var ordLn = new glTbReport();
+ 
   for (let i = 0; i < orList.length; i++) {
     var ordLn = new glTbReport();
-
     ordLn.srlNo=i+1;
     ordLn.divName = sessionStorage.getItem('divisionName');
     ordLn.ouName = sessionStorage.getItem('ouName');
@@ -223,13 +223,17 @@ export class GlTrialBalanceComponent implements OnInit {
     ordLn.debitAmt = orList[i].periodNetDr;
     ordLn.creditAmt = orList[i].periodNetCR;
     ordLn.closeBalance = orList[i].closingBal;
-    ordLn.printDateTime = this.pipe.transform(Date.now(), 'dd-MM-y hh:mm:ss');  
+    // ordLn.printDateTime = this.pipe.transform(Date.now(), 'dd-MM-y hh:mm:ss a');  
     xlOrdList.push(ordLn);
    }
-
+   
+  var printdateTime =this.pipe.transform(Date.now(), 'ddMMyThhmmssa');  
+  var flName ='gltbreport-'+printdateTime+'.xlsx'
   xlsx.utils.sheet_add_json(ws, xlOrdList, { origin: 'A2', skipHeader: true });
   xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
-  xlsx.writeFile(wb, 'gltbreport.xlsx');
+  // xlsx.writeFile(wb, 'gltbreport.xlsx');
+  xlsx.writeFile(wb, flName);
+  
 }
 
 glTbReport2(){
@@ -239,7 +243,7 @@ glTbReport2(){
   var periodName =this.glTrialBalanceForm.get("periodName").value;
   // alert(opuCode +","+periodName);
 
-const fileName = 'GL Trial Balance-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+ const fileName = 'GL Trial Balance-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
  const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
  this.reportService.gltrialBalanceReport(opuCode,periodName)
    .subscribe(data => {
