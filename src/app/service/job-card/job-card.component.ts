@@ -1919,11 +1919,12 @@ export class JobCardComponent implements OnInit {
           var itotTaxAmt=Number(this.lstcomments.labTotTaxAmt)+Number(this.lstcomments.matTotTaxAmt)
           var totInvAmt=Number(this.lstcomments.labTotAmt)+Number(this.lstcomments.matTotAmt);
 
+
           this.jobcardForm.patchValue({totDis: Math.round((disTotal+Number.EPSILON)*100)/100}); 
           this.jobcardForm.patchValue({totTaxableAmt: Math.round((itotTxble+Number.EPSILON)*100)/100}); 
           this.jobcardForm.patchValue({totTaxAmt: Math.round((itotTaxAmt+Number.EPSILON)*100)/100});
           this.jobcardForm.patchValue({invTotAmt: Math.round((totInvAmt+Number.EPSILON)*100)/100}); 
-
+         
                
         }
       );

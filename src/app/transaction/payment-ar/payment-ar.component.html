@@ -1342,7 +1342,7 @@
             <th style="width:3rem" scope="col">Srl No</th>
             <th style="width:7rem" scope="col">Operating Unit</th>
             <th style="width:6rem" scope="col">Location</th>
-            <th style="width:20rem" scope="col">Cust No/Site/Name</th>
+            <th style="width:20rem" scope="col">Cust No|Name</th>
             <th style="width:8rem" scope="col">Receipt No</th>
             <th style="width:6rem" scope="col">Receipt Date</th>
             <th style="width:10rem" scope="col">Payment Type</th>
@@ -1357,11 +1357,11 @@
                 <td style="text-align: center;">{{i+1}}</td>
                 <td style="text-align: center;">{{com.ouName}}</td>
                 <td style="text-align: center;">{{com.locCode}}</td>
-                <td>{{com.custAccountNo}}/{{com.custSiteId}}/{{com.custName}}-</td>
+                <td>{{com.custAccountNo}}|{{com.custName}}-</td>
                 <td style="text-align: center;">{{com.receiptNumber}}</td>
                 <td style="text-align: center;">{{com.receiptDate  |date:'dd-MM-y'}}</td>
                 <td style="text-align: center;">{{com.payType}}</td>  
-                <td style="text-align: right;">{{com.paymentAmt}}</td>
+                <td style="text-align: right;">{{com.paymentAmt | number:'1.2-2'}}</td>
                 <td style="text-align: center;">{{com.refType}}</td>
                  <td style="text-align: center;">{{com.receiptStatus}}</td>
                  <td style="text-align: center;">{{com.status}}</td>
