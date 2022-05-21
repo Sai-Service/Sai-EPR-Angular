@@ -1205,9 +1205,9 @@ export class PayableInvoiceNewComponent implements OnInit {
           }
           for (let i = 0; i < data.invDisLines.length; i++) {
             // debugger;
-            // alert(data.invDisLines[i].description.includes('Rounding')+'-------'+ data.invDisLines[i].description)
+            // alert(data.invDisLines[i].description.includes('ROUNDING')+'-------'+ data.invDisLines[i].description)
             if (data.invDisLines[i].description != undefined) {
-              if (data.invDisLines[i].lineTypeLookupCode != 'MISCELLANEOUS' && data.invDisLines[i].description.includes('Rounding') == false) {
+              if (data.invDisLines[i].lineTypeLookupCode != 'MISCELLANEOUS' && data.invDisLines[i].description.includes('ROUNDING') == false) {
                 var invLnGrp: FormGroup = this.tdsLineDetails();
                 this.TdsDetailsArray().push(invLnGrp);
               }
@@ -1237,7 +1237,7 @@ export class PayableInvoiceNewComponent implements OnInit {
           }
           for (let x = 0; x < data.invLines.length; x++) {
             // if (data.invLines[x].description != undefined){
-            if (data.invLines[x].description.includes('Rounding') == true) {
+            if (data.invLines[x].description.includes('ROUNDING') == true) {
               this.isVisibleRoundOffButton = false;
             }
             // }
@@ -1257,7 +1257,7 @@ export class PayableInvoiceNewComponent implements OnInit {
           // alert(data.invTdsLines.length)
           if (data.invTdsLines.length != 0) {
             for (let i = 0; i < data.invDisLines.length; i++) {
-              if (data.invDisLines[i].lineTypeLookupCode != 'MISCELLANEOUS' && data.invDisLines[i].description.includes('Rounding') == false) {
+              if (data.invDisLines[i].lineTypeLookupCode != 'MISCELLANEOUS' && data.invDisLines[i].description.includes('ROUNDING') == false) {
                 // alert(invId+'----'+ data.invDisLines[i].lineTypeLookupCode);
                 (tdscontrolInv.controls[j]).patchValue({ invoiceId: invId });
                 (tdscontrolInv.controls[j]).patchValue({ invoiceLineNum: data.invDisLines[i].invoiceLineNum });
@@ -1453,7 +1453,7 @@ export class PayableInvoiceNewComponent implements OnInit {
           this.TdsDetailsArray().clear();
           for (let i = 0; i < this.lstTdsLineDetails.length; i++) {
             if (this.lstTdsLineDetails[i].description != undefined) {
-              if (this.lstTdsLineDetails[i].description.includes('Rounding') == false) {
+              if (this.lstTdsLineDetails[i].description.includes('ROUNDING') == false) {
                 var tdsLnGrp: FormGroup = this.tdsLineDetails();
                 this.TdsDetailsArray().push(tdsLnGrp);
               }

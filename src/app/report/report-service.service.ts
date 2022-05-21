@@ -468,6 +468,15 @@ export class ReportServiceService {
     });
   }
 
+  amcHistory(regNo,ouId){
+    const REQUEST_URI = this.ServerUrl +`/ServiceReports/AmcHistory?regNo=${regNo}&ouId=${ouId}`;
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
   internalConsuptionReport(fromDate,toDate,locId,subInvCode){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/ICReport?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}&subInvCode=${subInvCode}`;
     return this.http.get(REQUEST_URI, {
