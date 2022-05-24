@@ -870,7 +870,8 @@ export class CashBankTransferComponent implements OnInit {
               let selectedValue = this.toAcctList.find(v => v.receiptMethodId == methodId);
               if( selectedValue != undefined){
                 console.log(selectedValue);
-               this.toAcctDescp=selectedValue.methodName+'-'+selectedValue.bankAccountNo;
+               this.toAcctDescp=selectedValue.methodName 
+              //  +'-'+selectedValue.bankAccountNo;
                this.bankAccountId=selectedValue.bankAccountId;
               }
   
