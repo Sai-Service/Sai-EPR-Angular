@@ -55,6 +55,8 @@ isVisibleGSTPurchaseRegister:boolean=false;
 isVisiblespPurRegDownLoad: boolean = false;
 isVisiblecustomerLedger:boolean=false;
 isVisibleGSTSaleRegister:boolean=false;
+panelamcHistrory:boolean=false;
+regNo:string;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) { 
     this.serviceReportForm = this.fb.group({
@@ -66,7 +68,7 @@ isVisibleGSTSaleRegister:boolean=false;
       serPendingVehicleFromDt:[],
       serPendingVehicleToDt:[],
       OUCode:[''],
-
+      regNo:[''],
       fromDate:[''],
       toDate:[''],
       locCode:[''],
@@ -159,7 +161,7 @@ isVisibleGSTSaleRegister:boolean=false;
       this.isVisiblepaneltolocation=false;
       this.isVisiblecustomerLedger=false;
       this.isVisibleGSTSaleRegister=false;
-     
+      this.panelamcHistrory=false;
     }
     else if (reportName ==='serviceInvNotDelivery'){
       this.reportName='Service Invoice Not Delivered';
@@ -169,7 +171,7 @@ isVisibleGSTSaleRegister:boolean=false;
       this.isVisiblepaneltolocation=true;
       this.isVisiblecustomerLedger=false;
       this.isVisibleGSTSaleRegister=false;
-      
+      this.panelamcHistrory=false;
     }
     else if (reportName==='servicePendingVehicle'){
       this.reportName='Service Pending Vehicle Report';
@@ -179,6 +181,7 @@ isVisibleGSTSaleRegister:boolean=false;
       this.isVisiblepaneltolocation=false;
       this.isVisiblecustomerLedger=false;
       this.isVisibleGSTSaleRegister=false;
+      this.panelamcHistrory=false;
     }
     else if (reportName==='serviceDeliverySummary'){
       this.reportName='Service Delivery Summary';
@@ -188,6 +191,7 @@ isVisibleGSTSaleRegister:boolean=false;
       this.isVisiblepaneltolocation=false;
       this.isVisiblecustomerLedger=false;
       this.isVisibleGSTSaleRegister=false;
+      this.panelamcHistrory=false;
     }
     else if (reportName==='gstReceiptRegister'){
       this.reportName='Receipt Register';
@@ -200,6 +204,7 @@ isVisibleGSTSaleRegister:boolean=false;
         this.isVisiblegstsaiDebtors=false;
       }
       this.isVisibleGSTSaleRegister=false;
+      this.panelamcHistrory=false;
     }
     else if (reportName === 'gstsaiDebtors') {
       this.reportName = 'Sai Debtors';
@@ -212,6 +217,7 @@ isVisibleGSTSaleRegister:boolean=false;
       this.isVisiblepaneltolocation=false;
       this.isVisiblecustomerLedger=false;
       this.isVisibleGSTSaleRegister=false;
+      this.panelamcHistrory=false;
     }
     else if (reportName === 'customerLedger') {
       this.reportName = 'Customer Ledger Report';
@@ -224,6 +230,7 @@ isVisibleGSTSaleRegister:boolean=false;
       this.isVisiblepaneltolocation=false;
       this.isVisiblecustomerLedger=true;
       this.isVisibleGSTSaleRegister=false;
+      this.panelamcHistrory=false;
     }
     else if (reportName==='gSTSaleRegister'){
       this.reportName='GST Sales Register';
@@ -233,6 +240,7 @@ isVisibleGSTSaleRegister:boolean=false;
       this.isVisiblepaneltolocation=false;
       this.isVisiblecustomerLedger=false;
       this.isVisibleGSTSaleRegister=true;
+      this.panelamcHistrory=false;
     }
     else if (reportName==='laborChargeSummary'){
       this.reportName='Labour Charge Summary Report';
@@ -242,6 +250,7 @@ isVisibleGSTSaleRegister:boolean=false;
       this.isVisiblepaneltolocation=false;
       this.isVisiblecustomerLedger=false;
       this.isVisibleGSTSaleRegister=false;
+      this.panelamcHistrory=false;
     }
     else if (reportName==='technicianSummary'){
       this.reportName='Technician  Summary Report';
@@ -251,6 +260,7 @@ isVisibleGSTSaleRegister:boolean=false;
       this.isVisiblepaneltolocation=false;
       this.isVisiblecustomerLedger=false;
       this.isVisibleGSTSaleRegister=false;
+      this.panelamcHistrory=false;
     }
     else if (reportName==='amcSaleRegister'){
       this.reportName='AMC Sales Register';
@@ -260,6 +270,7 @@ isVisibleGSTSaleRegister:boolean=false;
       this.isVisiblepaneltolocation=false;
       this.isVisiblecustomerLedger=false;
       this.isVisibleGSTSaleRegister=false;
+      this.panelamcHistrory=false;
     }
     else if (reportName==='EWSaleRegister'){
       this.reportName='EW Sales Register';
@@ -269,6 +280,7 @@ isVisibleGSTSaleRegister:boolean=false;
       this.isVisiblepaneltolocation=false;
       this.isVisiblecustomerLedger=false;
       this.isVisibleGSTSaleRegister=false;
+      this.panelamcHistrory=false;
     }
     else if (reportName==='creditNoteReg'){
       this.reportName='Credit Note Register';
@@ -278,6 +290,7 @@ isVisibleGSTSaleRegister:boolean=false;
       this.isVisiblepaneltolocation=false;
       this.isVisiblecustomerLedger=false;
       this.isVisibleGSTSaleRegister=false;
+      this.panelamcHistrory=false;
     }
     else if (reportName==='jobIssueDetails'){
       this.reportName='Job Issue Details Report';
@@ -287,6 +300,7 @@ isVisibleGSTSaleRegister:boolean=false;
       this.isVisiblepaneltolocation=false;
       this.isVisiblecustomerLedger=false;
       this.isVisibleGSTSaleRegister=false;
+      this.panelamcHistrory=false;
     }
     else if (reportName==='IrnGenerationReport'){
       this.reportName='IRN Generation Report';
@@ -299,6 +313,7 @@ isVisibleGSTSaleRegister:boolean=false;
       if (Number(sessionStorage.getItem('deptId'))===4){
         this.isVisibleDepartmentList=true;
       }
+      this.panelamcHistrory=false;
     }
     else if (reportName=='invoiceSummary'){
       this.reportName='Invoice Summary Report';
@@ -308,6 +323,17 @@ isVisibleGSTSaleRegister:boolean=false;
       this.isVisiblepaneltolocation=false;
       this.isVisiblecustomerLedger=false;
       this.isVisibleGSTSaleRegister=false;
+      this.panelamcHistrory=false;
+    }
+    else if (reportName=='amcHistrory'){
+      this.reportName='AMC History Report';
+      this.isVisiblegstsaiDebtors=false;
+      this.isVisiblepanelfromtolocation=false;
+      this.isVisiblefromtolocationdepartment=false;
+      this.isVisiblepaneltolocation=false;
+      this.isVisiblecustomerLedger=false;
+      this.isVisibleGSTSaleRegister=false;
+      this.panelamcHistrory=true;
     }
   }
 
@@ -714,6 +740,22 @@ isVisibleGSTSaleRegister:boolean=false;
         this.dataDisplay = ''
       })
     }
+  }
+  else if (reportName == 'AMC History Report'){
+   var regNo = this.serviceReportForm.get('regNo').value;
+   if (regNo == undefined || regNo == null){
+     alert('Please Select Vehicle number.!');
+     return;
+   }
+   const fileName = 'download.pdf';
+   const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+   this.reportService.amcHistory(regNo,sessionStorage.getItem('ouId'))
+   .subscribe(data => {
+     saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+     this.isDisabled1 = false;
+     this.closeResetButton = true;
+     this.dataDisplay = ''
+   })
   }
   }
 
