@@ -113,7 +113,7 @@
   }
 
   .btn-primary{
-    width: 3em;
+    width: 5em;
     /* background-color: #2c3e50; */
     background-image: linear-gradient(#54b4eb, #2fa4e7 60%, #1d9ce5);
     color: black;
