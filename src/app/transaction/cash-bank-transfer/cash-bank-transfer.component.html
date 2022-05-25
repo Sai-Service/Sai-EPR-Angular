@@ -73,7 +73,7 @@
                                      (ngModelChange)="onSelectionTrfcode($event)" class="form-control" style="background-color: yellow;">                                   
                                      <option disabled>--Select--</option>
                                      <option *ngFor="let sc of  TransferTypeList" [ngValue]="sc.lookupValueId">
-                                    {{sc.lookupValue}}-{{sc.lookupDesc}}
+                                      {{sc.lookupValue}}-{{sc.lookupDesc}}
                                      </option>
                                      </select>
                                  </td>
