@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BookingOrderChetakComponent } from './booking-order-chetak.component';
+import { OrderBookingChetakComponent } from './order-booking-chetak.component';
 
-describe('BookingOrderChetakComponent', () => {
-  let component: BookingOrderChetakComponent;
-  let fixture: ComponentFixture<BookingOrderChetakComponent>;
+describe('OrderBookingChetakComponent', () => {
+  let component: OrderBookingChetakComponent;
+  let fixture: ComponentFixture<OrderBookingChetakComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BookingOrderChetakComponent ]
+      declarations: [ OrderBookingChetakComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BookingOrderChetakComponent);
+    fixture = TestBed.createComponent(OrderBookingChetakComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

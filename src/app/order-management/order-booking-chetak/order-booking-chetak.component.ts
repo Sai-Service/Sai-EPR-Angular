@@ -15,14 +15,15 @@ const MIME_TYPES = {
 
 
 @Component({
-  selector: 'app-counter-sale-performa-inv',
-  templateUrl: './counter-sale-performa-inv.component.html',
-  styleUrls: ['./counter-sale-performa-inv.component.css']
+  selector: 'app-order-booking-chetak',
+  templateUrl: './order-booking-chetak.component.html',
+  styleUrls: ['./order-booking-chetak.component.css']
 })
 
 
-export class CounterSalePerformaInvComponent implements OnInit {
-  CounterSaleOrderBookingForm: FormGroup;
+export class OrderBookingChetakComponent implements OnInit {
+  orderBookingChetakForm: FormGroup;
+
   itemSeg: string = "";
   orderNumber: number;
   emailId: string;
@@ -141,7 +142,9 @@ export class CounterSalePerformaInvComponent implements OnInit {
   public op: string;
   displayCounterSaleLine: Array<boolean> = [];
   displayLineflowStatusCode: Array<boolean> = [];
-  isDisabled = false;
+  
+  isDisabled = true;
+
   isDisabled1=true;
   isDisabled4=true;
   public taxCalforItem: any;
@@ -164,8 +167,13 @@ export class CounterSalePerformaInvComponent implements OnInit {
   basicValue:number;
   isVisibleModelDeatils: boolean = false;
 
+  orderBookingChetak(orderBookingChetakForm: any) { }
+
+  get f() { return this.orderBookingChetakForm.controls }
+
+
   constructor(private fb: FormBuilder, private location1: Location, private service: MasterService, private orderManagementService: OrderManagementService) {
-    this.CounterSaleOrderBookingForm = fb.group({
+    this.orderBookingChetakForm = fb.group({
       orderNumber: [],
       emailId: [],
       classCodeType:[],
@@ -233,7 +241,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
 
 
   orderlineDetailsArray(): FormArray {
-    return <FormArray>this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList')
+    return <FormArray>this.orderBookingChetakForm.get('oeOrderLinesAllList')
   }
 
   orderlineDetailsGroup() {
@@ -272,7 +280,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
 
 
   TaxDetailsArray(): FormArray {
-    return <FormArray>this.CounterSaleOrderBookingForm.get('taxAmounts')
+    return <FormArray>this.orderBookingChetakForm.get('taxAmounts')
   }
 
 
@@ -286,16 +294,16 @@ export class CounterSalePerformaInvComponent implements OnInit {
     else if (Number(sessionStorage.getItem('divisionId')) === 2) {
       this.displayDMSCDMS = false;
       this.showApplyDiscount = true;
-      this.CounterSaleOrderBookingForm.patchValue({ issueCodeType1: 'Regular Sales' });
-      this.CounterSaleOrderBookingForm.patchValue({ issueCode: 'CM03' });
-      var concatissuetypecode = this.CounterSaleOrderBookingForm.get('issueCode').value + '-' + this.CounterSaleOrderBookingForm.get('issueCodeType1').value
-      this.CounterSaleOrderBookingForm.patchValue({ issueCodeType: concatissuetypecode });
+      this.orderBookingChetakForm.patchValue({ issueCodeType1: 'Regular Sales' });
+      this.orderBookingChetakForm.patchValue({ issueCode: 'CM03' });
+      var concatissuetypecode = this.orderBookingChetakForm.get('issueCode').value + '-' + this.orderBookingChetakForm.get('issueCodeType1').value
+      this.orderBookingChetakForm.patchValue({ issueCodeType: concatissuetypecode });
       this.transactionTypeName = 'Proforma Invoice';
     }
     if (Number(sessionStorage.getItem('deptId'))===1){
       this.isVisibleModelDeatils=true;
     }
-    this.CounterSaleOrderBookingForm.patchValue({ discType: 'No Discount' })
+    this.orderBookingChetakForm.patchValue({ discType: 'No Discount' })
 
     this.dept = Number(sessionStorage.getItem('deptId'));
     this.loginArray = sessionStorage.getItem('divisionName');
@@ -362,20 +370,20 @@ export class CounterSalePerformaInvComponent implements OnInit {
           for (let i = 0; i < data.length; i++) {
             // if (Number(sessionStorage.getItem('deptId'))!=1){
             // if (data[i].ouId === 999) {
-              this.CounterSaleOrderBookingForm.patchValue({ priceListName: data[i].priceListName })
-              this.CounterSaleOrderBookingForm.patchValue({ priceListId: data[i].priceListHeaderId })
+              this.orderBookingChetakForm.patchValue({ priceListName: data[i].priceListName })
+              this.orderBookingChetakForm.patchValue({ priceListId: data[i].priceListHeaderId })
             // }
           }
           // else if (Number(sessionStorage.getItem('deptId'))===1){
           //   if (data[i].priceListName.includes('Sales')) {
-          //     this.CounterSaleOrderBookingForm.patchValue({ priceListName: data[i].priceListName })
-          //     this.CounterSaleOrderBookingForm.patchValue({ priceListId: data[i].priceListHeaderId })
+          //     this.orderBookingChetakForm.patchValue({ priceListName: data[i].priceListName })
+          //     this.orderBookingChetakForm.patchValue({ priceListId: data[i].priceListHeaderId })
           //   }
           // }
         }
       );
     this.orderlineDetailsGroup();
-    var patch = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray
+    var patch = this.orderBookingChetakForm.get('oeOrderLinesAllList') as FormArray
     (patch.controls[0]).patchValue(
       {
         lineNumber: 1,
@@ -410,11 +418,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
         });
   }
 
-  CounterSaleOrderBooking(CounterSaleOrderBookingForm: any) {
-  }
-
-  get f() { return this.CounterSaleOrderBookingForm.controls }
-
+ 
 
 
 
@@ -427,7 +431,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
     this.isDisabled1=false;
     this.isDisabled = true;
     this.isDisabled4=true;
-    this.CounterSaleOrderBookingForm.disable();
+    this.orderBookingChetakForm.disable();
     this.orderManagementService.proformaOrderSearchNew(sessionStorage.getItem('divisionId'), orderNumber)
       .subscribe(
         data => {
@@ -435,7 +439,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
             this.lstgetOrderLineDetails = data.obj.oeOrderLinesAllList;
             this.displayCustomerSite = false; 
             this.displayCSOrderAndLineDt = false;
-            let orLineCtrl = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+            let orLineCtrl = this.orderBookingChetakForm.get('oeOrderLinesAllList') as FormArray;
             // debugger;
             for (let i = 0; i < this.lstgetOrderLineDetails.length; i++) {
               var oeOrderLinesAllList1: FormGroup = this.orderlineDetailsGroup();
@@ -444,15 +448,15 @@ export class CounterSalePerformaInvComponent implements OnInit {
               this.displayRemoveRow[i] = false;
 
             }
-            this.CounterSaleOrderBookingForm.patchValue(data.obj);
-            this.CounterSaleOrderBookingForm.patchValue({name:data.obj.billLocName});
+            this.orderBookingChetakForm.patchValue(data.obj);
+            this.orderBookingChetakForm.patchValue({name:data.obj.billLocName});
             var orderedDate1 = data.obj.orderedDate;
             var orderedDate2 = this.pipe.transform(orderedDate1, 'dd-MM-yyyy');
-            this.CounterSaleOrderBookingForm.patchValue(({ orderedDate: orderedDate2 }));
+            this.orderBookingChetakForm.patchValue(({ orderedDate: orderedDate2 }));
             var custPoDate1 = data.obj.custPoDate;
             var custPoDate2 = this.pipe.transform(custPoDate1, 'dd-MM-yyyy');
-            this.CounterSaleOrderBookingForm.patchValue(({ custPoDate: custPoDate2 }));
-            orLineCtrl = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+            this.orderBookingChetakForm.patchValue(({ custPoDate: custPoDate2 }));
+            orLineCtrl = this.orderBookingChetakForm.get('oeOrderLinesAllList') as FormArray;
             for (let i = 0; i < this.lstgetOrderLineDetails.length; i++) {
               orLineCtrl.controls[i].patchValue({
                 sgst:this.lstgetOrderLineDetails[i].taxAmt/2,
@@ -470,7 +474,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
   onOptionsSelectedTransactionType(transactionTypeName: string) {
     if (transactionTypeName != undefined) {
       // alert(transactionTypeName)'
-      if (this.CounterSaleOrderBookingForm.get('custName').value == undefined) {
+      if (this.orderBookingChetakForm.get('custName').value == undefined) {
         alert("Please Enter Customer Proper Site Name ")
         return;
       }
@@ -479,19 +483,19 @@ export class CounterSalePerformaInvComponent implements OnInit {
       let select = this.orderTypeList.find(d => d.transactionTypeName === this.transactionTypeName);
       console.log(select);
       // alert(select.transactionTypeId)
-      this.CounterSaleOrderBookingForm.patchValue({ transactionTypeId: select.transactionTypeId })
+      this.orderBookingChetakForm.patchValue({ transactionTypeId: select.transactionTypeId })
       if (transactionTypeName.includes('Cash')) {
         let selectTrx = this.createOrderTypeList.find(d => d.code === 'Direct Invoice');
-        this.CounterSaleOrderBookingForm.patchValue({ createOrderType: selectTrx.codeDesc });
+        this.orderBookingChetakForm.patchValue({ createOrderType: selectTrx.codeDesc });
         this.setFocus('createOrderType');
-        this.CounterSaleOrderBookingForm.get('name').disable();
+        this.orderBookingChetakForm.get('name').disable();
         // alert('hi')
       }
       if (transactionTypeName.includes('Credit')) {
         let selectTrx = this.createOrderTypeList.find(d => d.code === 'Pick Ticket');
-        this.CounterSaleOrderBookingForm.patchValue({ createOrderType: selectTrx.codeDesc });
+        this.orderBookingChetakForm.patchValue({ createOrderType: selectTrx.codeDesc });
         this.setFocus('createOrderType');
-        this.CounterSaleOrderBookingForm.get('name').disable();
+        this.orderBookingChetakForm.get('name').disable();
       }
 
     }
@@ -517,51 +521,51 @@ export class CounterSalePerformaInvComponent implements OnInit {
             this.displayCSOrderAndLineDt = false;
             this.custSiteList = data.obj.customerSiteMasterList;
             if (data.obj.tcsYN === 'Y') {
-              this.CounterSaleOrderBookingForm.patchValue(data.obj);
+              this.orderBookingChetakForm.patchValue(data.obj);
               this.displaytcsYN = false;
               this.displaytcsBuuton = false;
               // this.isDisabled = true;
             }
 
             this.custClassCode = this.selCustomer.classCodeType;
-            this.CounterSaleOrderBookingForm.patchValue({ tcsYN: data.obj.tcsYN });
-            this.CounterSaleOrderBookingForm.patchValue({ custName: data.obj.custName });
-            this.CounterSaleOrderBookingForm.patchValue({ customerId: data.obj.customerId });
-            this.CounterSaleOrderBookingForm.patchValue({ classCodeType: data.obj.classCodeType});
-            this.CounterSaleOrderBookingForm.patchValue({ tcsPer: data.obj.tcsPer });
-            this.CounterSaleOrderBookingForm.patchValue({ custAccountNo: custAccountNo });
+            this.orderBookingChetakForm.patchValue({ tcsYN: data.obj.tcsYN });
+            this.orderBookingChetakForm.patchValue({ custName: data.obj.custName });
+            this.orderBookingChetakForm.patchValue({ customerId: data.obj.customerId });
+            this.orderBookingChetakForm.patchValue({ classCodeType: data.obj.classCodeType});
+            this.orderBookingChetakForm.patchValue({ tcsPer: data.obj.tcsPer });
+            this.orderBookingChetakForm.patchValue({ custAccountNo: custAccountNo });
             let select = this.payTermDescList.find(d => d.lookupValueId === this.selCustomer.termId);
             // this.paymentType = select.lookupValue;
-            this.CounterSaleOrderBookingForm.patchValue({ paymentType: select.lookupValue })
-            this.CounterSaleOrderBookingForm.get('custName').disable();
-            this.CounterSaleOrderBookingForm.get('mobile1').disable();
+            this.orderBookingChetakForm.patchValue({ paymentType: select.lookupValue })
+            this.orderBookingChetakForm.get('custName').disable();
+            this.orderBookingChetakForm.get('mobile1').disable();
             // alert(this.custSiteList.length)
             for (let i = 0; i < this.custSiteList.length; i++) {
               if (this.custSiteList.length === 1) {
                 // alert(this.custSiteList.length)
-                this.CounterSaleOrderBookingForm.patchValue({ name: this.custSiteList[0].siteName });
+                this.orderBookingChetakForm.patchValue({ name: this.custSiteList[0].siteName });
                 this.onOptionsSelectedcustSiteName(this.custSiteList[0].siteName);
               }
               else if (this.custSiteList.length > 1) {
                 // alert('hi')
-                this.CounterSaleOrderBookingForm.patchValue({ name: this.custSiteList[0].siteName });
+                this.orderBookingChetakForm.patchValue({ name: this.custSiteList[0].siteName });
                 this.onOptionsSelectedcustSiteName(this.custSiteList[0].siteName);
               }
             }
             var custName = data.obj.custName;
             if (custName.includes(('CSCash Customer')) && Number(sessionStorage.getItem('divisionId')) === 2) {
               this.displaywalkingCustomer = false;
-              this.CounterSaleOrderBookingForm.patchValue({ discType: 'Header Level Discount' });
+              this.orderBookingChetakForm.patchValue({ discType: 'Header Level Discount' });
               this.displaydisPer = false;
             }
             else {
-              this.CounterSaleOrderBookingForm.get('disPer').disable();
+              this.orderBookingChetakForm.get('disPer').disable();
             }
             if (data.obj.tcsYM === 'Y') {
               this.displaytcsYN = false;
               this.displaytcsBuuton = true;
             }
-            this.CounterSaleOrderBookingForm.get('custAccountNo').disable();
+            this.orderBookingChetakForm.get('custAccountNo').disable();
             this.isDisabled3 = true;
             this.customerNameSearch.splice(0, this.customerNameSearch.length);
             console.log(this.customerNameSearch);
@@ -581,8 +585,8 @@ export class CounterSalePerformaInvComponent implements OnInit {
           if (data.code === 200) {
             this.exicutiveNameByCustNameList = data.obj;
             var salesExicustive = data.obj.ticketNo + '--' + data.obj.fullName;
-            this.CounterSaleOrderBookingForm.patchValue({ salesRepId: data.obj.emplId });
-            this.CounterSaleOrderBookingForm.patchValue({ salesRepName: salesExicustive })
+            this.orderBookingChetakForm.patchValue({ salesRepId: data.obj.emplId });
+            this.orderBookingChetakForm.patchValue({ salesRepName: salesExicustive })
           }
         })
   }
@@ -606,7 +610,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
       console.log(this.selCustomer);
 
       // alert(this.selCustomer.customerId)
-      this.CounterSaleOrderBookingForm.patchValue(selSite);
+      this.orderBookingChetakForm.patchValue(selSite);
       // this.custName = this.custSiteList.custName;
       // this.customerId = selSite.customerId;
       this.custAddress = (selSite.address1 + ', '
@@ -619,14 +623,14 @@ export class CounterSalePerformaInvComponent implements OnInit {
       this.weddingDate = this.selCustomer.weddingDate;
       this.taxCategoryName = this.selCustomer.taxCategoryName;
       this.custClassCode = this.selCustomer.classCodeType;
-      this.CounterSaleOrderBookingForm.patchValue({ creditAmt: selSite.creditAmt });
+      this.orderBookingChetakForm.patchValue({ creditAmt: selSite.creditAmt });
       if (selSite.disPer != null) {
         // alert(selSite.disPer)
-        this.CounterSaleOrderBookingForm.patchValue({ discType: 'Header Level Discount' })
-        this.CounterSaleOrderBookingForm.patchValue({ disPer: selSite.disPer })
+        this.orderBookingChetakForm.patchValue({ discType: 'Header Level Discount' })
+        this.orderBookingChetakForm.patchValue({ disPer: selSite.disPer })
         this.orderlineDetailsGroup().patchValue({ disPer: selSite.disPer })
         this.displaydisPer = false;
-        var patch = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+        var patch = this.orderBookingChetakForm.get('oeOrderLinesAllList') as FormArray;
         // alert(patch.length)
         for (let i = 0; i < patch.length; i++) {
           (patch.controls[i]).patchValue({
@@ -643,9 +647,9 @@ export class CounterSalePerformaInvComponent implements OnInit {
           data => {
             if (data.code === 200) {
               var newCrmAmt1 = Math.round(((data.obj.outStandingAmt) + Number.EPSILON) * 100) / 100;
-              this.CounterSaleOrderBookingForm.patchValue({ creditAmt: newCrmAmt1 });
-              this.CounterSaleOrderBookingForm.patchValue({ creditDays: data.obj.creditDays });
-              this.CounterSaleOrderBookingForm.patchValue({ daysMsg: data.obj.daysMsg });
+              this.orderBookingChetakForm.patchValue({ creditAmt: newCrmAmt1 });
+              this.orderBookingChetakForm.patchValue({ creditDays: data.obj.creditDays });
+              this.orderBookingChetakForm.patchValue({ daysMsg: data.obj.daysMsg });
             }
           })
     }
@@ -679,20 +683,20 @@ export class CounterSalePerformaInvComponent implements OnInit {
       .subscribe(
         data => {
           this.accountNoSearchdata = data.obj;
-          this.CounterSaleOrderBookingForm.patchValue({ custAccountNo: data.obj.custAccountNo })
+          this.orderBookingChetakForm.patchValue({ custAccountNo: data.obj.custAccountNo })
 
         });
   }
 
 
   panCardWalding(event: any) {
-    this.orderManagementService.searchByPanNumber(this.CounterSaleOrderBookingForm.get('walkCustPan').value)
+    this.orderManagementService.searchByPanNumber(this.orderBookingChetakForm.get('walkCustPan').value)
       .subscribe(
         data => {
           if (data.code === 200) {
             if (data.obj.length >= 0) {
               alert(data.message + ' ' + 'Customer Account Number' + ' ' + data.obj.accountNo)
-              this.CounterSaleOrderBookingForm.get('walkCustPan').reset();
+              this.orderBookingChetakForm.get('walkCustPan').reset();
             }
             else if (data.obj.length < 0) {
 
@@ -702,16 +706,16 @@ export class CounterSalePerformaInvComponent implements OnInit {
   }
 
   walkcustomermerge(event: any) {
-    var contactName = this.CounterSaleOrderBookingForm.get('walkCustName').value + '#' + this.CounterSaleOrderBookingForm.get('walkCustPan').value + '#' + this.CounterSaleOrderBookingForm.get('walkCustaddres').value
-    this.CounterSaleOrderBookingForm.patchValue({ cntrOrdCustName: contactName })
+    var contactName = this.orderBookingChetakForm.get('walkCustName').value + '#' + this.orderBookingChetakForm.get('walkCustPan').value + '#' + this.orderBookingChetakForm.get('walkCustaddres').value
+    this.orderBookingChetakForm.patchValue({ cntrOrdCustName: contactName })
   }
 
 
   onOptionsSelectedissueTypeCode(event: any) {
     let selectIssueCode = this.issueCodeTypeList.find(d => d.codeDesc === event);
-    this.CounterSaleOrderBookingForm.patchValue({ issueCode: selectIssueCode.code })
-    var concatissuetypecode = this.CounterSaleOrderBookingForm.get('issueCode').value + '-' + this.CounterSaleOrderBookingForm.get('issueCodeType1').value
-    this.CounterSaleOrderBookingForm.patchValue({ issueCodeType: concatissuetypecode });
+    this.orderBookingChetakForm.patchValue({ issueCode: selectIssueCode.code })
+    var concatissuetypecode = this.orderBookingChetakForm.get('issueCode').value + '-' + this.orderBookingChetakForm.get('issueCodeType1').value
+    this.orderBookingChetakForm.patchValue({ issueCodeType: concatissuetypecode });
   }
 
 
@@ -724,11 +728,11 @@ export class CounterSalePerformaInvComponent implements OnInit {
       return;
     }
 
-    let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+    let controlinv = this.orderBookingChetakForm.get('oeOrderLinesAllList') as FormArray;
 
     (controlinv.controls[lnNo]).patchValue({ 'segment': '' });
 
-    let controlinvArray = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
+    let controlinvArray = this.orderBookingChetakForm.get('oeOrderLinesAllList').value;
     console.log(controlinvArray);
     for (let j = 0; j < controlinvArray.length; j++) {
       if (itemDesc === controlinvArray[j].segment) {
@@ -782,23 +786,23 @@ export class CounterSalePerformaInvComponent implements OnInit {
       this.displayorderHedaerDetails = false;
    
       var orderedDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
-      this.CounterSaleOrderBookingForm.patchValue({ orderedDate: orderedDate });
-      this.CounterSaleOrderBookingForm.get('custAccountNo').disable();
-      this.CounterSaleOrderBookingForm.get('name').disable();
-      this.CounterSaleOrderBookingForm.get('custName').disable();
-      this.CounterSaleOrderBookingForm.get('mobile1').disable();
-      this.CounterSaleOrderBookingForm.get('refCustNo').disable();
-      this.CounterSaleOrderBookingForm.get('custPoDate').disable();
-      this.CounterSaleOrderBookingForm.get('custPoNumber').disable();
-      this.CounterSaleOrderBookingForm.get('msRefNo').disable();
-      this.CounterSaleOrderBookingForm.get('msRefCustNo').disable();
-      let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+      this.orderBookingChetakForm.patchValue({ orderedDate: orderedDate });
+      this.orderBookingChetakForm.get('custAccountNo').disable();
+      this.orderBookingChetakForm.get('name').disable();
+      this.orderBookingChetakForm.get('custName').disable();
+      this.orderBookingChetakForm.get('mobile1').disable();
+      this.orderBookingChetakForm.get('refCustNo').disable();
+      this.orderBookingChetakForm.get('custPoDate').disable();
+      this.orderBookingChetakForm.get('custPoNumber').disable();
+      this.orderBookingChetakForm.get('msRefNo').disable();
+      this.orderBookingChetakForm.get('msRefCustNo').disable();
+      let controlinv = this.orderBookingChetakForm.get('oeOrderLinesAllList') as FormArray;
       let select = (this.itemMap2.get(k)).find(d => d.segment === segment);
 
       if (segment != undefined) {
         this.itemId = select.itemId;
-        var custtaxCategoryName = this.CounterSaleOrderBookingForm.get('taxCategoryName').value;
-        var priceListId = this.CounterSaleOrderBookingForm.get('priceListId').value;
+        var custtaxCategoryName = this.orderBookingChetakForm.get('taxCategoryName').value;
+        var priceListId = this.orderBookingChetakForm.get('priceListId').value;
         console.log(priceListId);
         let isExportCust ="N";
         // alert(this.custClassCode)
@@ -867,7 +871,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
                         taxCategoryId: data.obj[0].taxCategoryId,
                         mrp: mrp,
                       });
-                      if (this.CounterSaleOrderBookingForm.get('issueCodeType').value.includes('Only Oil Part') && data.obj[i].uom === 'LTR' && Number(sessionStorage.getItem('divisionId')) === 2) {
+                      if (this.orderBookingChetakForm.get('issueCodeType').value.includes('Only Oil Part') && data.obj[i].uom === 'LTR' && Number(sessionStorage.getItem('divisionId')) === 2) {
                         (controlinv.controls[k]).patchValue({
                           disPer: 0,
                           disAmt: 0
@@ -877,7 +881,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
                     }
                     if (select.itemId != null) {
                       // this.getLocatorDetails(k, select.itemId);
-                      let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+                      let controlinv = this.orderBookingChetakForm.get('oeOrderLinesAllList') as FormArray;
                       var invTp = controlinv.controls[k].get('invType').value;
                       var utc = controlinv.controls[k].get('unitSellingPrice').value;
                       if (this.custClassCode.includes("EXPORTER") && Number(sessionStorage.getItem('ouId')) === 22) {
@@ -898,7 +902,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
                             // controlinv.controls[k].patchValue({ frmLocatorId: lotList });
                             controlinv.controls[k].patchValue({ onHandQty: 0 });
                             controlinv.controls[k].get('frmLocatorId').disable();
-                            var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+                            var trxLnArr1 = this.orderBookingChetakForm.get('oeOrderLinesAllList') as FormArray;
                             // controlinv.controls[k].patchValue({ Avalqty: '' });
                             // controlinv.controls[k].patchValue({ pricingQty: '' });
                             // controlinv.controls[k].patchValue({ orderedItem: '' });
@@ -972,8 +976,8 @@ export class CounterSalePerformaInvComponent implements OnInit {
   }
 
   AvailQty(i, itemId, calledFrom){
-    var trxLnArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
-    var trxLnFormArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+    var trxLnArr = this.orderBookingChetakForm.get('oeOrderLinesAllList').value;
+    var trxLnFormArr = this.orderBookingChetakForm.get('oeOrderLinesAllList') as FormArray;
     if (itemId === undefined) {
       itemId = trxLnArr[i].itemId;
     }
@@ -991,13 +995,13 @@ export class CounterSalePerformaInvComponent implements OnInit {
         (data => {
           this.onhand1 = data.obj;
           console.log(this.onhand1);
-          var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+          var trxLnArr1 = this.orderBookingChetakForm.get('oeOrderLinesAllList') as FormArray;
           trxLnArr1.controls[i].patchValue({ onHandQty: data.obj });
           let onHand = data.obj;
           let reserve = trxLnArr[i].resveQty;
           let avlqty1 = 0;
           avlqty1 = onHand - reserve;
-          var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+          var trxLnArr1 = this.orderBookingChetakForm.get('oeOrderLinesAllList') as FormArray;
           trxLnArr1.controls[i].patchValue({ Avalqty: avlqty1 });
           if (avlqty1 < 0) {
             trxLnArr1.controls[i].patchValue({ Avalqty: 0 });
@@ -1017,8 +1021,8 @@ export class CounterSalePerformaInvComponent implements OnInit {
     var linLocData = this.locData[i];
     let selloc = linLocData.find(d => Number(d.ROWNUM) === Number(event));
     console.log(selloc);
-    var trxLnArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
-    var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+    var trxLnArr = this.orderBookingChetakForm.get('oeOrderLinesAllList').value;
+    var trxLnArr1 = this.orderBookingChetakForm.get('oeOrderLinesAllList') as FormArray;
     if (trxLnArr[i].frmLocatorId != '') {
       if (trxLnArr[i].pricingQty != undefined) {
         if (trxLnArr[i].pricingQty > selloc.onHandQty) {
@@ -1033,13 +1037,13 @@ export class CounterSalePerformaInvComponent implements OnInit {
   }
 
   onKey(index, fldName){
-    var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
-    var custtaxCategoryName = this.CounterSaleOrderBookingForm.get('taxCategoryName').value;
+    var trxLnArr1 = this.orderBookingChetakForm.get('oeOrderLinesAllList').value;
+    var custtaxCategoryName = this.orderBookingChetakForm.get('taxCategoryName').value;
 
     var baseAmt = Math.round(((trxLnArr1[index].pricingQty * trxLnArr1[index].unitSellingPrice) + Number.EPSILON) * 100) / 100;
     var disAmt = (baseAmt * trxLnArr1[index].disPer) / 100;
     var baseAmtAfterDisc = baseAmt - disAmt;
-    var patch = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+    var patch = this.orderBookingChetakForm.get('oeOrderLinesAllList') as FormArray;
     // alert(custtaxCategoryName)
     // if (custtaxCategoryName.includes('IGST')) {
     //   (patch.controls[index]).patchValue(
@@ -1067,7 +1071,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
     //     })
     //   this.updateTotAmtPerline(index);
     // }
-    var arrayControlNew = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+    var arrayControlNew = this.orderBookingChetakForm.get('oeOrderLinesAllList') as FormArray;
     var arrayControl = arrayControlNew.getRawValue();
     // alert(arrayControl[index].taxCategoryId) 
     var itemId = arrayControl[index].itemId;
@@ -1097,7 +1101,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
           totAmt: Math.round(((baseAmt + sum - disAmt1) + Number.EPSILON) * 100) / 100,
           disAmt: disAmt1,
         });
-        let distAmtArray = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+        let distAmtArray = this.orderBookingChetakForm.get('oeOrderLinesAllList') as FormArray;
         var disValue = data[0].totTaxAmt;
         if (disValue > 0 && data[0].taxTypeName.includes('Discount')) {
           patch.controls[index].patchValue({ disAmt: data[0].totTaxAmt });
@@ -1117,15 +1121,15 @@ export class CounterSalePerformaInvComponent implements OnInit {
   }
 
   addRow(i) {
-    var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
+    var trxLnArr1 = this.orderBookingChetakForm.get('oeOrderLinesAllList').value;
     if (this.op == 'Search') {
       i = trxLnArr1.length;
     }
 
-    var disPer = this.CounterSaleOrderBookingForm.get('disPer').value;
+    var disPer = this.orderBookingChetakForm.get('disPer').value;
     this.orderlineDetailsArray().push(this.orderlineDetailsGroup());
     var len = this.orderlineDetailsArray().length;
-    var patch = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+    var patch = this.orderBookingChetakForm.get('oeOrderLinesAllList') as FormArray;
     (patch.controls[len - 1]).patchValue(
       {
         lineNumber: len,
@@ -1155,8 +1159,8 @@ export class CounterSalePerformaInvComponent implements OnInit {
   RemoveRowOld(OrderLineIndex) {
     this.orderlineDetailsArray().removeAt(OrderLineIndex);
     this.TaxDetailsArray().removeAt(OrderLineIndex);
-    var formVal = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
-    var formArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+    var formVal = this.orderBookingChetakForm.get('oeOrderLinesAllList').value;
+    var formArr = this.orderBookingChetakForm.get('oeOrderLinesAllList') as FormArray;
     var basicAmt = 0;
     var taxAmt1 = 0;
     var totAmt = 0;
@@ -1172,8 +1176,8 @@ export class CounterSalePerformaInvComponent implements OnInit {
 
   RemoveRow(OrderLineIndex) {
     this.orderlineDetailsArray().removeAt(OrderLineIndex);
-    var formVal = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
-    var formArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+    var formVal = this.orderBookingChetakForm.get('oeOrderLinesAllList').value;
+    var formArr = this.orderBookingChetakForm.get('oeOrderLinesAllList') as FormArray;
     var basicAmt = 0;
     var taxAmt1 = 0;
     var totAmt = 0;
@@ -1192,8 +1196,8 @@ export class CounterSalePerformaInvComponent implements OnInit {
 
 
   updateLineOnCancel(i) {
-    var trxArrVal = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
-    var trxArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+    var trxArrVal = this.orderBookingChetakForm.get('oeOrderLinesAllList').value;
+    var trxArr = this.orderBookingChetakForm.get('oeOrderLinesAllList') as FormArray;
     // alert(i+'----'+ trxArrVal[i].flowStatusCode);
     if (trxArrVal[i].flowStatusCode === 'CANCELLED') {
       trxArr.controls[i].patchValue({ 'baseAmt': 0, 'disAmt': 0, 'taxAmt': 0, 'totAmt': 0 });
@@ -1202,9 +1206,9 @@ export class CounterSalePerformaInvComponent implements OnInit {
   }
 
   updateTotAmtPerline(lineIndex) {
-    var formArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+    var formArr = this.orderBookingChetakForm.get('oeOrderLinesAllList') as FormArray;
     var formVal = formArr.getRawValue();
-    // var tcsPer = this.CounterSaleOrderBookingForm.get('tcsPer').value;
+    // var tcsPer = this.orderBookingChetakForm.get('tcsPer').value;
     var basicAmt = 0;
     var taxAmt1 = 0;
     var totAmt = 0;
@@ -1247,17 +1251,17 @@ export class CounterSalePerformaInvComponent implements OnInit {
     }
 
     basicAmt = Math.round(((basicAmt) + Number.EPSILON) * 100) / 100;
-    this.CounterSaleOrderBookingForm.patchValue({ 'subtotal': basicAmt });
+    this.orderBookingChetakForm.patchValue({ 'subtotal': basicAmt });
     disAmt = Math.round(((disAmt) + Number.EPSILON) * 100) / 100;
-    this.CounterSaleOrderBookingForm.patchValue({ 'discAmt': disAmt });
+    this.orderBookingChetakForm.patchValue({ 'discAmt': disAmt });
     taxAmt1 = Math.round(((taxAmt1) + Number.EPSILON) * 100) / 100;
-    this.CounterSaleOrderBookingForm.patchValue({ 'totTax': taxAmt1 });
+    this.orderBookingChetakForm.patchValue({ 'totTax': taxAmt1 });
     totAmt = Math.round(((totAmt) + Number.EPSILON) * 100) / 100;
-    this.CounterSaleOrderBookingForm.patchValue({ 'totAmt': totAmt });
-    this.CounterSaleOrderBookingForm.patchValue({ 'tcsAmt': tcsAmt1 });
+    this.orderBookingChetakForm.patchValue({ 'totAmt': totAmt });
+    this.orderBookingChetakForm.patchValue({ 'tcsAmt': tcsAmt1 });
     var newln = lineIndex + 1;
     this.setFocus('itemSeg' + newln);
-    var crdAmt = this.CounterSaleOrderBookingForm.get('creditAmt').value;
+    var crdAmt = this.orderBookingChetakForm.get('creditAmt').value;
     if (crdAmt != undefined && crdAmt != null && crdAmt != '') {
       if (totAmt >= crdAmt) {
         alert('Credit Amount is exceeded.! ... Credit Amount is' + ' ' + crdAmt + ' ' + 'Total Amount is' + ' ' + totAmt + '.!');
@@ -1280,14 +1284,14 @@ export class CounterSalePerformaInvComponent implements OnInit {
   transeData(val) { }
 
   createProformaOrder() {
-    var formValue = this.transeData(this.CounterSaleOrderBookingForm.value);
-    console.log(this.CounterSaleOrderBookingForm.value);
+    var formValue = this.transeData(this.orderBookingChetakForm.value);
+    console.log(this.orderBookingChetakForm.value);
     console.log(formValue);
-    let jsonData = this.CounterSaleOrderBookingForm.getRawValue();
-    var custPoDate = this.CounterSaleOrderBookingForm.get('custPoDate').value;
+    let jsonData = this.orderBookingChetakForm.getRawValue();
+    var custPoDate = this.orderBookingChetakForm.get('custPoDate').value;
     jsonData.orderedDate = this.pipe.transform(this.now, 'yyyy-MM-dd');
-    jsonData.refCustNo = this.CounterSaleOrderBookingForm.get('refCustNo').value;
-    jsonData.custPoNumber = this.CounterSaleOrderBookingForm.get('custPoNumber').value;
+    jsonData.refCustNo = this.orderBookingChetakForm.get('refCustNo').value;
+    jsonData.custPoNumber = this.orderBookingChetakForm.get('custPoNumber').value;
     jsonData.custPoDate = this.pipe.transform(custPoDate, 'yyyy-MM-dd');
     jsonData.emplId = sessionStorage.getItem('emplId');
     jsonData.ouId = Number(sessionStorage.getItem('ouId'));
@@ -1355,12 +1359,12 @@ export class CounterSalePerformaInvComponent implements OnInit {
   onOptionsSelectedBasicPrice(color:any){
     // alert(color)
     if (Number(sessionStorage.getItem('divisionId')) === 2) {
-      var model = this.CounterSaleOrderBookingForm.get('model').value;
-      var variant = this.CounterSaleOrderBookingForm.get('variant').value;
+      var model = this.orderBookingChetakForm.get('model').value;
+      var variant = this.orderBookingChetakForm.get('variant').value;
       this.orderManagementService.dealerShipBaseAmtNew(model, variant,color,sessionStorage.getItem('ouId'))
         .subscribe(
           data => {
-            this.CounterSaleOrderBookingForm.patchValue({ basicValue: data.obj[0].basicValue })
+            this.orderBookingChetakForm.patchValue({ basicValue: data.obj[0].basicValue })
           }
         );
     }
