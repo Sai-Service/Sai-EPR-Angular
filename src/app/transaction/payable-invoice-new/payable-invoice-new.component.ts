@@ -1185,6 +1185,14 @@ export class PayableInvoiceNewComponent implements OnInit {
           this.isSearchPatch = true;
           this.displayitemName = true;
           this.displayTaxCategory = false;
+          if (data.invTdsLines.length === 0) {
+            this.isVisibleSaveTDS = true;
+          }
+          else if (data.invTdsLines.length != 0) {
+            this.isVisibleSaveTDS = false;
+            this.TdsDetailsArray().disable();
+            this.tdsTaxDetailsArray().disable()
+          }
           this.poInvoiceForm.patchValue({
             invoiceNum: data.invoiceNum,
             segment1: data.invLines[0].poNumber,
@@ -1207,7 +1215,9 @@ export class PayableInvoiceNewComponent implements OnInit {
             // debugger;
             // alert(data.invDisLines[i].description.includes('ROUNDING')+'-------'+ data.invDisLines[i].description)
             if (data.invDisLines[i].description != undefined) {
-              if (data.invDisLines[i].lineTypeLookupCode != 'MISCELLANEOUS' && data.invDisLines[i].description.includes('ROUNDING') == false) {
+              var description = data.invDisLines[i].description.toUpperCase();
+              // alert(description);
+              if (data.invDisLines[i].lineTypeLookupCode != 'MISCELLANEOUS' && description.includes('ROUNDING') == false) {
                 var invLnGrp: FormGroup = this.tdsLineDetails();
                 this.TdsDetailsArray().push(invLnGrp);
               }
@@ -1237,7 +1247,8 @@ export class PayableInvoiceNewComponent implements OnInit {
           }
           for (let x = 0; x < data.invLines.length; x++) {
             // if (data.invLines[x].description != undefined){
-            if (data.invLines[x].description.includes('ROUNDING') == true) {
+              var description = data.invLines[x].description.toUpperCase()
+            if (description.includes('ROUNDING') == true) {
               this.isVisibleRoundOffButton = false;
             }
             // }
@@ -1257,7 +1268,8 @@ export class PayableInvoiceNewComponent implements OnInit {
           // alert(data.invTdsLines.length)
           if (data.invTdsLines.length != 0) {
             for (let i = 0; i < data.invDisLines.length; i++) {
-              if (data.invDisLines[i].lineTypeLookupCode != 'MISCELLANEOUS' && data.invDisLines[i].description.includes('ROUNDING') == false) {
+              var description = data.invDisLines[i].description.toUpperCase();
+              if (data.invDisLines[i].lineTypeLookupCode != 'MISCELLANEOUS' && description.includes('ROUNDING') == false ) {
                 // alert(invId+'----'+ data.invDisLines[i].lineTypeLookupCode);
                 (tdscontrolInv.controls[j]).patchValue({ invoiceId: invId });
                 (tdscontrolInv.controls[j]).patchValue({ invoiceLineNum: data.invDisLines[i].invoiceLineNum });
@@ -1378,14 +1390,7 @@ export class PayableInvoiceNewComponent implements OnInit {
           if (arraybaseNew1[index].segment != null || arraybaseNew1[index].segment != undefined || arraybaseNew1[index].segment != '') {
             this.poInvoiceForm.disable();
           }
-          if (data.invTdsLines.length === 0) {
-            this.isVisibleSaveTDS = true;
-          }
-          else if (data.invTdsLines.length != 0) {
-            this.isVisibleSaveTDS = false;
-            this.TdsDetailsArray().disable();
-            this.tdsTaxDetailsArray().disable()
-          }
+         
         }
       )
 
@@ -1453,7 +1458,8 @@ export class PayableInvoiceNewComponent implements OnInit {
           this.TdsDetailsArray().clear();
           for (let i = 0; i < this.lstTdsLineDetails.length; i++) {
             if (this.lstTdsLineDetails[i].description != undefined) {
-              if (this.lstTdsLineDetails[i].description.includes('ROUNDING') == false) {
+              var description =this.lstTdsLineDetails[i].description.toUpperCase();
+              if (description.includes('ROUNDING') == false) {
                 var tdsLnGrp: FormGroup = this.tdsLineDetails();
                 this.TdsDetailsArray().push(tdsLnGrp);
               }

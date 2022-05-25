@@ -176,7 +176,7 @@ public InterBrancList:Array<string>=[];
       {
         this.accType = accType;
         let SegmentName1=this.AccountEnquiryForm.get('segmentNameFrm').value;
-        alert(SegmentName1);
+        // alert(SegmentName1);
 
         if(SegmentName1===null)
         {this.AccountEnquiryForm.get('segmentFrm1').reset();
@@ -207,7 +207,7 @@ public InterBrancList:Array<string>=[];
       fnCancatination()
       {
         var natacc1 = this.AccountEnquiryForm.get('segmentFrm4').value.split('--');
-        alert(this.accType +natacc1[0]);
+        // alert(this.accType +natacc1[0]);
         var segmentDtls :string =''
         if(this.accType === 'frmAcc'){
         this.segmentNameFrm=this.AccountEnquiryForm.get('segmentFrm1').value+'.'+
@@ -218,7 +218,7 @@ public InterBrancList:Array<string>=[];
                          this.AccountEnquiryForm.get('segmentFrm5').value;
 
                          segmentDtls = this.segmentNameFrm;
-                         alert(this.segmentNameFrm);
+                        //  alert(this.segmentNameFrm);
                          
         this.service.segmentNameList(segmentDtls)
         .subscribe(
@@ -311,7 +311,7 @@ public InterBrancList:Array<string>=[];
       {
 
         let SegmentName1=this.AccountEnquiryForm.get('segmentNameTo').value;
-        alert(SegmentName1);
+        // alert(SegmentName1);
 
         if(SegmentName1===null)
         {this.AccountEnquiryForm.get('segmentTo1').reset();
@@ -347,7 +347,7 @@ public InterBrancList:Array<string>=[];
                          this.AccountEnquiryForm.get('segmentTo4').value+'.'+
                          this.AccountEnquiryForm.get('segmentTo5').value;
 
-        alert(this.segmentNameTo);
+        // alert(this.segmentNameTo);
 
         this.service.segmentNameList(this.segmentNameTo)
         .subscribe(
@@ -420,7 +420,7 @@ public InterBrancList:Array<string>=[];
             // var tempfrm = this.AccountEnquiryForm.get('segmentNameFrm').value
             // alert(tempfrm+'tempfrm'+this.segmentNameFrm);
             var temp=this.segmentNameFrm.split('.');
-            alert(temp[0]+''+temp[1]+''+temp[2]+''+temp[3]+''+temp[4]);
+            // alert(temp[0]+''+temp[1]+''+temp[2]+''+temp[3]+''+temp[4]);
             formValue.segmentFrm1 = temp[0];
             formValue.segmentFrm2 = Number(temp[1]);
             formValue.segmentFrm3 = Number(temp[2]);
@@ -455,7 +455,7 @@ showBalDetail()
   var postedDateto = this.pipe.transform(formValue.postedDateto, 'dd-MMM-yyyy');
   // formValue.postedDate=postedDate;
   var temp=this.segmentNameFrm.split('.');
-  alert(temp[0]+''+temp[1]+''+temp[2]+''+temp[3]+''+temp[4]);
+  // alert(temp[0]+''+temp[1]+''+temp[2]+''+temp[3]+''+temp[4]);
   formValue.segmentFrm1 = temp[0];
   formValue.segmentFrm2 = Number(temp[1]);
   formValue.segmentFrm3 = Number(temp[2]);
@@ -485,7 +485,7 @@ this.isVisible=false;
 }
 
 viewAccounting(event:any){
-  alert(event);
+  // alert(event);
   this.service.viewAccountingjv(event).subscribe((res: any) => {
     if (res.code === 200) {
       this.viewAccountingjvdata=res.obj;
@@ -530,7 +530,7 @@ viewAccounting(event:any){
     var selPer=this.PeriodName.find(d=>d.periodName===event);
     console.log(selPer.startDate)
     if(selPer!=undefined){
-      alert(selPer.startDate+'---'+selPer.endDate);
+      // alert(selPer.startDate+'---'+selPer.endDate);
    (document.getElementById('postedDateto') as HTMLInputElement).setAttribute('min',selPer.startDate);
    (document.getElementById('postedDateto') as HTMLInputElement).setAttribute('max',selPer.endDate);
    
@@ -561,20 +561,22 @@ viewAccounting(event:any){
   };
 
 
-  transView(docSequenceValue,jeCat,locId){
-    alert(docSequenceValue+"--"+jeCat+"--"+locId);
+  transView(docSequenceValue,jeCat,locId,invoiceNo){
+    // alert(docSequenceValue+"--"+jeCat+"--"+locId+'invno'+invoiceNo);
     // var sel
     var loc=this.JVdata.location
     if(jeCat=='Receipts'|| jeCat=='Receipts Application' )
     {
-      alert('in if----'+docSequenceValue)
-      // this.router.navigate(['/admin/transaction/PaymentAr',docSequenceValue]);   
+      // alert('in if----'+docSequenceValue)   
       this.router.navigate(['/admin/transaction/PaymentAr'], { queryParams: { docSequenceValue: docSequenceValue,locId:locId }});
   }
   if(jeCat=='JV Manual Creation')
   {
-    alert('in if----'+docSequenceValue)
+    // alert('in if----'+docSequenceValue)
       this.router.navigate(['/admin/transaction/JournalVoucher',docSequenceValue]);   
+  }
+  if (jeCat=='Sales Invoice'){
+    this.router.navigate(['/admin/transaction/ARInvoice',invoiceNo]);   
   }
 }
 }

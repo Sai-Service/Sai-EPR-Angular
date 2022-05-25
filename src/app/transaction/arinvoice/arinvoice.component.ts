@@ -7,6 +7,7 @@ import { OrderManagementService } from 'src/app/order-management/order-managemen
 import { TransactionService } from '../transaction.service';
 import { ManualARInvoiceObj } from './manual-arinvoice-obj';
 import { DatePipe } from '@angular/common';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 // import { stringify } from '@angular/compiler/src/util';
 // import { event } from 'jquery';
 // import { log } from 'util';
@@ -39,7 +40,7 @@ interface IArInvoice {
   taxPer: number;
   taxRecoverable: number;
   extendedAmount: number;
-  glDate: string;
+  // glDate: Date;
   accountDesc: string;
   billcontactNo: number;
   shipcontactNo: number;
@@ -73,7 +74,7 @@ export class ARInvoiceComponent implements OnInit {
   public currentOp: string;
   displaytaxDisscountButton = true;
   displayTaxDetailForm = true;
-  displayinvItem=true;
+  displayinvItem = true;
   ouId: number;
   trxNumber1: string;
   trxNumber: string;
@@ -107,14 +108,17 @@ export class ARInvoiceComponent implements OnInit {
   // glDate:string;
   taxAmount: number;
   billToCustName: string;
-  displaytaxName:boolean=true;
+  displaytaxName: boolean = true;
   public applyTo = 'INVOICE'
   // now = Date.now();
   // new=new Date();
   // public minDate = new Date();
   now = new Date();
-  glDate = this.pipe.transform(this.now, 'dd-MM-yyyy')
-  invoiceDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
+  private sub: any;
+  // glDate = this.pipe.transform(this.now, 'dd-MM-yyyy')
+  glDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+  // invoiceDate = this.pipe.transform(this.now, 'dd-MM-yyyy'); jyotik
+  invoiceDate= this.pipe.transform(Date.now(), 'y-MM-dd');
   glDateLine: Date;
   // glDateLine = this.pipe.transform(this.now, 'y-MM-dd');comment by vinita
   // glDateLine = this.pipe.transform(this.now, 'dd-MM-yyyy');
@@ -226,7 +230,8 @@ export class ARInvoiceComponent implements OnInit {
   isDisabledPer = false;
   isVisibleApply: boolean = false;
   concatenatedSegment: string;
-
+  displayglDate=true;
+  displayglDate1=true;
   search(activeTab) {
     this.activeTab = activeTab;
   }
@@ -234,7 +239,7 @@ export class ARInvoiceComponent implements OnInit {
   result(activeTab) {
     this.activeTab = activeTab;
   }
-  constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService) {
+  constructor(private fb: FormBuilder, private router: Router, private router1: ActivatedRoute, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService) {
     this.arInvoiceForm = fb.group({
       // poHeaderId: [],
       source: [],
@@ -601,9 +606,20 @@ export class ARInvoiceComponent implements OnInit {
         }
       );
 
-    this.glPrdStartDate = this.GLPeriodCheck.startDate;
-    this.glPrdEndDate = this.GLPeriodCheck.endDate
 
+    // alert(Number(sessionStorage.getItem('deptId')))
+    if (Number(sessionStorage.getItem('deptId')) == 4) {
+      this.sub = this.router1.params.subscribe(params => {
+        this.trxNumber1 = params['invoiceNumber'];
+        // alert(this.trxNumber1)
+        if (this.trxNumber1 != undefined) {
+          this.searchByInvoiceNo(this.trxNumber1)
+        }
+      })
+    }
+
+    this.glPrdStartDate = this.GLPeriodCheck.startDate;
+    this.glPrdEndDate = this.GLPeriodCheck.endDate;
   }
   getNaturalAccount($event) {
     let userId = (<HTMLInputElement>document.getElementById('NaturalAccountFirstWay')).value;
@@ -798,7 +814,7 @@ export class ARInvoiceComponent implements OnInit {
   arInvoice(arInvoiceForm) { }
 
   searchByInvoiceNo(trxNumber1) {
-
+    // alert('call from account login.!')
     this.displaySaveButton = false;
     this.displayCustomerSite = false;
     this.TaxDetailsArray().clear();
@@ -820,8 +836,8 @@ export class ARInvoiceComponent implements OnInit {
               var invLnGrp: FormGroup = this.lineDetailsGroup();
               this.lineDetailsArray.push(invLnGrp);
 
-              var patch=this.arInvoiceForm.get('invLines')as FormArray;
-              patch.controls[i].patchValue({taxPer:data.obj.invLines.taxPer})
+              var patch = this.arInvoiceForm.get('invLines') as FormArray;
+              patch.controls[i].patchValue({ taxPer: data.obj.invLines.taxPer })
               // var seltrxtyp = this.taxCategoryList[i].find(d => d.taxCategoryId == data.obj[i].invLines.taxCategoryId)
               // console.log(seltrxtyp);
               // var patch=this.arInvoiceForm.get('invLines')as FormArray;
@@ -850,6 +866,13 @@ export class ARInvoiceComponent implements OnInit {
             //   })
             // }
             this.arInvoiceForm.patchValue(data.obj);
+            // alert(data.obj.glDate);
+            this.glDate=data.obj.glDate;
+            this.invoiceDate=data.obj.invoiceDate;
+            if (Number(sessionStorage.getItem('deptId'))==4){
+              this.displayglDate=false;
+              this.displayglDate1=false;
+            }
             // alert(this.invTypeList.length);
             // debugger;
             if (this.invTypeList.length < 1) {
@@ -878,27 +901,26 @@ export class ARInvoiceComponent implements OnInit {
               this.displayRemoveRow = false;
               this.displayRmDistRow = false;
               this.disabledComplete = false;
-              this.displaytaxName=false;
-              this.displayinvItem=false;
+              this.displaytaxName = false;
+              this.displayinvItem = false;
               this.arInvoiceForm.disable();
             }
-            if(data.obj.invStatus == 'Complete'){
-              this.isVisibleInvoice=true;
-              this.displayinvItem=false;
+            if (data.obj.invStatus == 'Complete') {
+              this.isVisibleInvoice = true;
+              this.displayinvItem = false;
             }
             if (data.obj.class == 'Credit Memo') {
               this.isVisibleApply = true;
               // this.displayinvItem=false;
             }
-            if(data.obj.referenceNo!='')
-            {
-              this.displayinvItem=false;
+            if (data.obj.referenceNo != '') {
+              this.displayinvItem = false;
             }
           }
           else {
             if (data.code === 400) {
               alert(data.message);
-              this.arInvoiceForm.reset();
+              // this.arInvoiceForm.reset();
             }
           }
         }
@@ -1291,9 +1313,6 @@ export class ARInvoiceComponent implements OnInit {
   //   var arrayControl = this.arInvoiceForm.get('invLines').value;
   //   var patch = this.arInvoiceForm.get('invLines') as FormArray;
   //   Array.from(this.taxarr.values());
-
-
-
   //   this.basicAmt = 0;
   //   this.taxRecoverable = 0;
   //   this.extendedAmount = 0;
@@ -1364,7 +1383,7 @@ export class ARInvoiceComponent implements OnInit {
 
   // }
   Save() {
-// debugger;
+    // debugger;
     let jsonData = this.arInvoiceForm.getRawValue();
     jsonData.ouId = this.ouId;
     var arrayControl = this.arInvoiceForm.get('invLines').value;
@@ -1382,7 +1401,14 @@ export class ARInvoiceComponent implements OnInit {
     jsonData.invoiceAmount = this.extendedAmount;
     jsonData.taxAmount = this.taxRecoverable;
     jsonData.taxableAmount = this.basicAmt;
-
+    var glDate = this.arInvoiceForm.get('glDate').value;
+    // alert(glDate);
+    var invoiceDate=this.arInvoiceForm.get('invoiceDate').value;
+    // alert(invoiceDate)
+    // return;
+    jsonData.glDate = this.pipe.transform(glDate, 'dd-MM-yyyy');
+    jsonData.invoiceDate = this.pipe.transform(invoiceDate, 'dd-MM-yyyy');
+    // alert(this.pipe.transform(glDate, 'dd-MM-yyyy'));
     var taxStr = [];
     for (let taxlinval of this.taxarr.values()) {
       // console.log("Map Values= " +JSON.stringify(value));
@@ -1589,7 +1615,7 @@ export class ARInvoiceComponent implements OnInit {
                     // debugger;
                     this.distarr.set(this.invLineNo, this.distributioArr);
                     console.log(this.distarr)
-                    alert(this.distarr.size+'afterArray')
+                    alert(this.distarr.size + 'afterArray')
                     console.log(this.arInvoiceForm.get('invDisLines').value);
                   }
                 );
@@ -2296,7 +2322,7 @@ export class ARInvoiceComponent implements OnInit {
     var gld = applLineArr[i].glDateLine;
     // alert("index :"+i + "  gl date - " +gld);
     var tglDate = new Date(gld);
-     var sDate = new Date(this.GLPeriodCheck.startDate);
+    var sDate = new Date(this.GLPeriodCheck.startDate);
     var tDate = new Date(this.GLPeriodCheck.endDate);
     // alert(tglDate+'--'+ sDate+'--'+tDate);
     if (gld < sDate || gld > tDate) {
@@ -2309,7 +2335,7 @@ export class ARInvoiceComponent implements OnInit {
   }
 
   validateSave() {
-// debugger;
+    // debugger;
     if (this.GLPeriodCheck === null) {
       this.checkValidation = false;
       alert("GL PERIOD is null. Please update GL period.");
@@ -2345,7 +2371,7 @@ export class ARInvoiceComponent implements OnInit {
     for (let i = 0; i < applLineArr1.length; i++) {
 
       patch.controls[i].patchValue({ applAmt: applLineArr1[i].applAmtNew });
-       patch.controls[i].patchValue({ glDate: applLineArr1[i].glDateLine });
+      patch.controls[i].patchValue({ glDate: applLineArr1[i].glDateLine });
 
       this.invLineArray().controls[i].get('applyrcptFlag').disable();
       this.invLineArray().controls[i].get('applAmtNew').disable();
@@ -2514,7 +2540,7 @@ export class ARInvoiceComponent implements OnInit {
         }
       });
 
-  } 
+  }
 
 
   viewAccounting(trxNumber: any) {
@@ -2638,20 +2664,20 @@ export class ARInvoiceComponent implements OnInit {
             }
             // this.distarr.set(this.invLineNo, this.arInvoiceForm.get('invDisLines').value);
             // debugger;
-            this.distarr.set(this.invLineNo,distrRes)
+            this.distarr.set(this.invLineNo, distrRes)
             console.log(this.distarr);
             console.log(this.arInvoiceForm.get('invDisLines').value);
-            this.isVisibleArDist=true;
+            this.isVisibleArDist = true;
           }
         );
     }
 
   }
   AllDistribution() {
+    // alert('hiiii')
     this.lineDistributionArray().clear();
     var distValues1 = Array.from(this.distarr.values());
     var allDistLn: any = [];
-
     for (let x = 0; x < distValues1.length; x++) {
       var exLines = distValues1[x];
       for (let y = 0; y < exLines.length; y++) {
@@ -2671,7 +2697,7 @@ export class ARInvoiceComponent implements OnInit {
     this.isVisibleArDist = true;
   }
 
-  ViewInvoice(){
+  ViewInvoice() {
     var trxNumber = this.arInvoiceForm.get('trxNumber').value;
     const fileName = 'download.pdf';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
