@@ -520,8 +520,8 @@ export class CounterSalePerformaInvComponent implements OnInit {
               this.displaytcsBuuton = false;
               // this.isDisabled = true;
             }
+
             this.custClassCode = this.selCustomer.classCodeType;
-            
             this.CounterSaleOrderBookingForm.patchValue({ tcsYN: data.obj.tcsYN });
             this.CounterSaleOrderBookingForm.patchValue({ custName: data.obj.custName });
             this.CounterSaleOrderBookingForm.patchValue({ customerId: data.obj.customerId });
