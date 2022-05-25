@@ -1001,8 +1001,9 @@ export class SalesOrderFormComponent implements OnInit {
     } else {
     }
     this.invItemList1 = this.itemMap.get(orderType);
+    if (Number(sessionStorage.getItem('deptId'))!=4){
     this.isVisible2 = true;
-    // alert(this.isVisible2)
+  }
     let controlinv = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     var variant = this.SalesOrderBookingForm.get('variant').value;
     this.orderManagementService.getItemByCatTypeNew(orderType, sessionStorage.getItem('divisionId'), variant)
@@ -1306,7 +1307,9 @@ export class SalesOrderFormComponent implements OnInit {
         flowStatusCode: 'BOOKED',
       }
     );
+    if (Number(sessionStorage.getItem('deptId'))!=4){
     this.isVisible2 = true;
+  }
     // this.displaysegmentInvType.push(true);
     // this.displaytaxCategoryName.push(true);
     this.displayRemoveRow[len - 1] = true;
@@ -1467,8 +1470,10 @@ export class SalesOrderFormComponent implements OnInit {
             this.SalesOrderBookingForm.patchValue({ fuelType: data.obj.fuelType });
             this.SalesOrderBookingForm.patchValue({ name: data.obj.billLocName });
             var balPay = Math.round(((data.obj.balancePay) + Number.EPSILON) * 100) / 100;
-            this.SalesOrderBookingForm.patchValue({balancePay: balPay})
+            this.SalesOrderBookingForm.patchValue({balancePay: balPay});
+            if (Number(sessionStorage.getItem('deptId'))!=4){
             this.isVisible6 = true;
+          }
             if (data.obj.financeType != 'None') {
               this.DisplayfinanceSelectionYes = false;
               this.DisplayfinanceSelectionYes1 = false;
@@ -1489,7 +1494,9 @@ export class SalesOrderFormComponent implements OnInit {
                 );
             }
             if (data.obj.orderStatus === 'INVOICED') {
+              if (Number(sessionStorage.getItem('deptId'))!=4){
               this.isVisible2 = true;
+              }
             }
             if (data.obj.flowStatusCode === 'CLOSED') {
               this.isVisible2 = false;
@@ -1523,7 +1530,9 @@ export class SalesOrderFormComponent implements OnInit {
                     lineNumber: 1,
                   }
                 );
+                if (Number(sessionStorage.getItem('deptId'))!=4){
                 this.isVisible2 = true;
+              }
                 this.isVisible3 = false;
                 this.isVisiblemodelDetailsUpdate = true;
                 this.isVisible5 = true;
@@ -1555,18 +1564,25 @@ export class SalesOrderFormComponent implements OnInit {
                 this.displaysegmentInvType[i] = false;
                 this.displayCounterSaleLine.push(false);
                 if (data.obj.flowStatusCode === 'ENTERED') {
+                  if (Number(sessionStorage.getItem('deptId'))!=4){
                   this.isVisible2 = true;
-                  // this.isVisible3 = true;
                   this.isVisible3 = true;
+                  }
+                  // this.isVisible3 = true;
+                  
                   
                 }
                 if (this.lstgetOrderLineDetails[i].flowStatusCode === 'BOOKED' || this.lstgetOrderLineDetails[i].flowStatusCode === 'ALLOTED') {
                   this.displaytaxCategoryName[i] = true;
                   this.displayLineflowStatusCode[i] = false;
+                  if (Number(sessionStorage.getItem('deptId'))!=4){
                   this.isVisible2 = true;
+                  }
                 }
                 if (this.lstgetOrderLineDetails[i].flowStatusCode === 'BOOKED') {
+                  if (Number(sessionStorage.getItem('deptId'))!=4){
                   this.isVisible2 = true;
+                  }
                 }
                 if (this.lstgetOrderLineDetails[i].flowStatusCode === 'CANCELLED' || this.lstgetOrderLineDetails[i].flowStatusCode === 'DE-ALLOTED') {
                   this.isDisabledtaxbtn[i] = true;
@@ -1659,7 +1675,9 @@ export class SalesOrderFormComponent implements OnInit {
               if (this.lstgetOrderLineDetails[k].flowStatusCode === 'READY FOR INVOICE') {
                 this.displaytaxCategoryName[k] = false;
                 this.displayLineflowStatusCode[k] = true;
+                if (Number(sessionStorage.getItem('deptId'))!=4){
                 this.isVisible3 = true;
+                }
                 this.isVisible5 = true;
               }
               if (this.lstgetOrderLineDetails[k].invType != 'SS_VEHICLE') {
@@ -1701,9 +1719,12 @@ export class SalesOrderFormComponent implements OnInit {
               }
               for (let x = 0; x < this.lstgetOrderLineDetails.length; x++) {
                 if (this.lstgetOrderLineDetails[x].flowStatusCode === 'INVOICED' && data.obj.gatepassYN === 'N') {
+                  if (Number(sessionStorage.getItem('deptId'))!=4){
                   this.isVisible7 = true;
-                  this.isVisibleform21 = true;
                   this.isVisibleAutoApplyInvoice=true;
+                  }
+                  this.isVisibleform21 = true;
+                  
                 }
                 if (this.lstgetOrderLineDetails[x].flowStatusCode === 'ALLOTED' && this.lstgetOrderLineDetails[x].invType === 'SS_VEHICLE') {
                   //  this.onOptionsSelectedDescription(this.lstgetOrderLineDetails[i].segment,i)

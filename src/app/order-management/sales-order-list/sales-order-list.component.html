@@ -18,37 +18,66 @@
             <tr>
                 <td>
                     <table class="center">
-                        <tr>
-
-                            <td>From&nbsp;Date&nbsp;</td>&nbsp;
-                            <td>
-                                <input type="date" class="form-control" formControlName="startDt" 
-                                value={{startDt}}  max="{{minDate | date:'yyyy-MM-dd'}}">
-                            </td>
-
-                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
-                            <td>
-                                <input type="date" class="form-control" formControlName="endDt" 
-                                value={{endDt}} max="{{minDate | date:'yyyy-MM-dd'}}">
+                        <tr [style.display]="isVisibledeptAndLocation ? 'block' : 'none'">
+                            <td style="width: 15%" class="LabelFontStyle">
+                                &nbsp;Location&nbsp;Code&nbsp;:&nbsp;
                             </td>
                             <td>
-                                <button type="submit" class="btn btn-primary" id="search" (click)="getPO()" style="width:fit-content">
-                                    Get&nbsp;Order&nbsp;List
-                                </button>
+                                <select formControlName="locCode" id="locCode" class="form-control"
+                                (ngModelChange)='onOptionsLocation($event)'>
+                                <option>--Select--</option>
+                                <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
+                                    {{sc.locCode}}
+                                </option>
+                            </select>
+                            <input  disabled hidden type="number" class="form-control" formControlName="locId">
                             </td>
-                            <td>Status&nbsp;</td>&nbsp;
+                            <td style="width: 15%" class="LabelFontStyle" >
+                                &nbsp;Department&nbsp;List&nbsp;:&nbsp;
+                            </td>
                             <td>
-                                <select formControlName="status" 
-                                id="status" class="form-control"
-                                style="width: fit-content;height: 25px;font-size: 10px;"
-                                (ngModelChange)="onSelectStatus($event)">
-                                <option value="--Select--">--Select--</option>
-                                <option value="BOOKED" >BOOKED</option>
-                                <option value="CANCELLED">CANCELLED</option>
-                                <option value="INVOICED" >INVOICED</option>
-                                <option value="CLOSED" >CLOSED</option>
+                                  <select formControlName="deptId" id="deptId" class="form-control">
+                                <option>--Select--</option>
+                                <option *ngFor="let sc of  DepartmentList" [value]="sc.cmnTypeId">
+                                    {{sc.code}}
+                                </option>
                             </select>
                             </td>
+                        </tr>
+                        <tr>
+                           <table>
+                               <tr>
+                                <td>From&nbsp;Date&nbsp;</td>&nbsp;
+                                <td>
+                                    <input type="date" class="form-control" formControlName="startDt" 
+                                    value={{startDt}}  max="{{minDate | date:'yyyy-MM-dd'}}">
+                                </td>
+    
+                                <td>To&nbsp;Date&nbsp;</td>&nbsp;
+                                <td>
+                                    <input type="date" class="form-control" formControlName="endDt" 
+                                    value={{endDt}} max="{{minDate | date:'yyyy-MM-dd'}}">
+                                </td>
+                                <td>
+                                    <button type="submit" class="btn btn-primary" id="search" (click)="getPO()" style="width:fit-content">
+                                        Get&nbsp;Order&nbsp;List
+                                    </button>
+                                </td>
+                                <td>Status&nbsp;</td>&nbsp;
+                                <td>
+                                    <select formControlName="status" 
+                                    id="status" class="form-control"
+                                    style="width: fit-content;height: 25px;font-size: 10px;"
+                                    (ngModelChange)="onSelectStatus($event)">
+                                    <option value="--Select--">--Select--</option>
+                                    <option value="BOOKED" >BOOKED</option>
+                                    <option value="CANCELLED">CANCELLED</option>
+                                    <option value="INVOICED" >INVOICED</option>
+                                    <option value="CLOSED" >CLOSED</option>
+                                </select>
+                                </td>
+                               </tr>
+                           </table>
                         </tr>
                     </table>
                 </td>

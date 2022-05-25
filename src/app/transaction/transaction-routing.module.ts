@@ -57,6 +57,7 @@ const routes: Routes = [
   {path:'Payment/:invNumber',component:PaymentsComponent},
   {path:'payableInvoice/:invNumber',component:PayableInvoiceNewComponent},
   {path:'ARInvoice', component:ARInvoiceComponent},
+  {path:'ARInvoice/:invoiceNumber', component:ARInvoiceComponent},
   {path:'AvgCostUpdate',component:AvgCostUpdateComponent},
   {path:'PaymentReceipt',component:PaymentReceiptComponent},
   {path:'PaymentReceipt/:orderNumber',component:PaymentReceiptComponent},

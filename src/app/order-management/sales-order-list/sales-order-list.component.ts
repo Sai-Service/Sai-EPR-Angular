@@ -32,6 +32,13 @@ export class SalesOrderListComponent implements OnInit {
   custNumber:number;
   custContact:number;
   isVisibleSearchDetails:boolean=false;
+  isVisibledeptAndLocation:boolean=false;
+  public DepartmentList: any = [];
+  DepartmentListNew:any=[];
+  public BillShipToList: Array<string> = [];
+  deptId:number;
+  locCode:string;
+  locId:number;
 
   @ViewChild('epltable', { static: false }) epltable: ElementRef;
 
@@ -43,6 +50,9 @@ export class SalesOrderListComponent implements OnInit {
       status:[],
       custName:[],
       custNumber:[],
+      locId:[],
+      deptId:[],
+      locCode:[],
       custContact:['', [Validators.pattern('[0-9]*'), Validators.minLength(10),Validators.maxLength(10)]],
     })
   }
@@ -56,6 +66,7 @@ export class SalesOrderListComponent implements OnInit {
     var endDt1 = new Date(this.today);
     endDt1.setDate(endDt1.getDate() + 1);
     this.endDt = this.pipe.transform(endDt1, 'dd-MMM-yyyy');
+    if (Number(sessionStorage.getItem('deptId'))!=4){
       this.service.getSalesOrderByUser(Number(sessionStorage.getItem('locId')), this.startDt, this.endDt,sessionStorage.getItem('deptId')).subscribe((res: any) => {
         if (res.code === 200) {
           this.orderListDetails = res.obj;
@@ -74,6 +85,31 @@ export class SalesOrderListComponent implements OnInit {
           }
         }
       })
+    }
+
+      if (Number(sessionStorage.getItem('deptId'))===4){
+        this.isVisibledeptAndLocation=true;
+      }
+      else{
+        this.isVisibledeptAndLocation=false;
+      }
+
+      this.service.getLocationSearch1(sessionStorage.getItem('ouId'))
+      .subscribe(
+        data => {
+          this.BillShipToList = data;
+        }
+      );
+
+      this.service.DepartmentListNew()
+      .subscribe(
+        data => {
+          this.DepartmentListNew = data;
+          let createOrderList = this.DepartmentListNew.filter((dept) => (dept.divisionId==2));
+          console.log(createOrderList);
+         this.DepartmentList= createOrderList;       
+        }
+      );
   }
 
 
@@ -87,6 +123,7 @@ export class SalesOrderListComponent implements OnInit {
     var endDt1 = new Date(endDtSt);
     // endDt1.setDate(endDt1.getDate() + 1);
    var endDt = this.pipe.transform(endDt1, 'dd-MMM-yyyy');
+   if (Number(sessionStorage.getItem('deptId')) !=4){
     this.service.getSalesOrderByUser(Number(sessionStorage.getItem('locId')), stDate, endDt,sessionStorage.getItem('deptId')).subscribe((res: any) => {
       if (res.code === 200) {
         this.orderListDetails = res.obj;
@@ -106,9 +143,38 @@ export class SalesOrderListComponent implements OnInit {
         }
       }
     })
-
+  }
+  else if (Number(sessionStorage.getItem('deptId')) ==4){
+    var deptId =this.orderListForm.get('deptId').value;
+    // alert(deptId)
+    var locId=this.orderListForm.get('locId').value;
+    this.service.getSalesOrderByUser(locId, stDate, endDt,deptId).subscribe((res: any) => {
+      if (res.code === 200) {
+        this.orderListDetails = res.obj;
+        this.storeAllOrderData =res.obj;
+        console.log(this.storeAllOrderData);
+        if (res.obj.length !=0){
+          this.isVisibleSearchDetails=true;
+        }
+        for (let x=0; x<this.orderListDetails.length; x++){
+          this.totInvAmt = Math.round(((this.totInvAmt += (this.orderListDetails[x].orAmt)) + Number.EPSILON) * 100) / 100;
+          console.log(this.totInvAmt);
+      }
+      }
+      else {
+        if (res.code === 400) {
+          alert(res.message);
+        }
+      }
+    })
+  }
   }
   
+  onOptionsLocation(event) {
+    // alert(event);
+    this.orderListForm.patchValue({ locId: event })
+  }
+
 onSelectStatus(event:any){
   // alert(event);
   console.log(this.orderListDetails);

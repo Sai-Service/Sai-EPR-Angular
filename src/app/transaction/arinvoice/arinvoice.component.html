@@ -131,7 +131,14 @@
         </td>
         <td style="width: 15%" class="LabelFontStyle">&nbsp;Invoice&nbsp;Date&nbsp;:&nbsp;</td>
         <td>
-            <input disabled type="text" formControlName="invoiceDate" class="form-control" [(ngModel)]="glDate">
+            <!-- <input disabled type="text" formControlName="invoiceDate" class="form-control" [(ngModel)]="invoiceDate"> -->
+            <div *ngIf="displayglDate; then thenglDate; else elseglDate"></div>
+            <ng-template #thenglDate>
+            <input type="date"  formControlName="invoiceDate" class="form-control"  style="background-color: yellow;"  >
+            </ng-template> 
+            <ng-template #elseglDate>
+                <input  formControlName="invoiceDate" class="form-control" [(ngModel)]="invoiceDate" value="{{invoiceDate | date:'dd-MM-yyyy'}}" style="background-color: yellow;"  >
+            </ng-template>   
         </td>
         <td style="width: 15%" class="LabelFontStyle">&nbsp;Tax&nbsp;:&nbsp;</td>
         <td>
@@ -149,9 +156,14 @@
             </td>
             <td style="width: 15%" class="LabelFontStyle">&nbsp;GL&nbsp;Date&nbsp;:&nbsp;</td>
             <td>
-                <input type="text" disabled formControlName="glDate" class="form-control"  
-                [(ngModel)]="glDate">
-                            
+                <!-- glDate open for kiran Sir requirement---Jyotik  value="{{glDate | date:'dd-MM-yyyy'}}"-->
+                <div *ngIf="displayglDate1; then thenglDate1; else elseglDate1"></div>
+                <ng-template #thenglDate1>
+                <input type="date"  formControlName="glDate" class="form-control"  style="background-color: yellow;"  >
+                </ng-template> 
+                <ng-template #elseglDate1>
+                    <input  formControlName="glDate" class="form-control" [(ngModel)]="glDate" value="{{glDate | date:'dd-MM-yyyy'}}" style="background-color: yellow;"  >
+                </ng-template>           
             </td>
             <td style="width: 15%" class="LabelFontStyle">&nbsp;Charges&nbsp;:&nbsp;</td>
             <td>
@@ -1116,7 +1128,7 @@
                         <ng-template #elseBlockViewAccounting>
 
                           </ng-template>
-                        <td><button type="button" class="btn btn-primary"  style="width: 8rem;" (click)="AllDistribution()">All Distribution</button></td>
+                        <!-- <td><button type="button" class="btn btn-primary"  style="width: 8rem;" (click)="AllDistribution()">All Distribution</button></td> -->
                         <td>
                             <button type="button" class="btn btn-primary" (click)="clearFormArray()"
                             style="width: 8rem;">Reset</button>
