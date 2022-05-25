@@ -57,6 +57,7 @@ isVisiblecustomerLedger:boolean=false;
 isVisibleGSTSaleRegister:boolean=false;
 panelamcHistrory:boolean=false;
 regNo:string;
+isVisiblepanelfromtoOuId:boolean=false;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) { 
     this.serviceReportForm = this.fb.group({
@@ -162,6 +163,7 @@ regNo:string;
       this.isVisiblecustomerLedger=false;
       this.isVisibleGSTSaleRegister=false;
       this.panelamcHistrory=false;
+      this.isVisiblepanelfromtoOuId=false;
     }
     else if (reportName ==='serviceInvNotDelivery'){
       this.reportName='Service Invoice Not Delivered';
@@ -172,6 +174,7 @@ regNo:string;
       this.isVisiblecustomerLedger=false;
       this.isVisibleGSTSaleRegister=false;
       this.panelamcHistrory=false;
+      this.isVisiblepanelfromtoOuId=false;
     }
     else if (reportName==='servicePendingVehicle'){
       this.reportName='Service Pending Vehicle Report';
@@ -182,6 +185,7 @@ regNo:string;
       this.isVisiblecustomerLedger=false;
       this.isVisibleGSTSaleRegister=false;
       this.panelamcHistrory=false;
+      this.isVisiblepanelfromtoOuId=false;
     }
     else if (reportName==='serviceDeliverySummary'){
       this.reportName='Service Delivery Summary';
@@ -192,6 +196,7 @@ regNo:string;
       this.isVisiblecustomerLedger=false;
       this.isVisibleGSTSaleRegister=false;
       this.panelamcHistrory=false;
+      this.isVisiblepanelfromtoOuId=false;
     }
     else if (reportName==='gstReceiptRegister'){
       this.reportName='Receipt Register';
@@ -205,6 +210,7 @@ regNo:string;
       }
       this.isVisibleGSTSaleRegister=false;
       this.panelamcHistrory=false;
+      this.isVisiblepanelfromtoOuId=false;
     }
     else if (reportName === 'gstsaiDebtors') {
       this.reportName = 'Sai Debtors';
@@ -218,6 +224,7 @@ regNo:string;
       this.isVisiblecustomerLedger=false;
       this.isVisibleGSTSaleRegister=false;
       this.panelamcHistrory=false;
+      this.isVisiblepanelfromtoOuId=false;
     }
     else if (reportName === 'customerLedger') {
       this.reportName = 'Customer Ledger Report';
@@ -231,6 +238,7 @@ regNo:string;
       this.isVisiblecustomerLedger=true;
       this.isVisibleGSTSaleRegister=false;
       this.panelamcHistrory=false;
+      this.isVisiblepanelfromtoOuId=false;
     }
     else if (reportName==='gSTSaleRegister'){
       this.reportName='GST Sales Register';
@@ -241,6 +249,7 @@ regNo:string;
       this.isVisiblecustomerLedger=false;
       this.isVisibleGSTSaleRegister=true;
       this.panelamcHistrory=false;
+      this.isVisiblepanelfromtoOuId=false;
     }
     else if (reportName==='laborChargeSummary'){
       this.reportName='Labour Charge Summary Report';
@@ -251,6 +260,7 @@ regNo:string;
       this.isVisiblecustomerLedger=false;
       this.isVisibleGSTSaleRegister=false;
       this.panelamcHistrory=false;
+      this.isVisiblepanelfromtoOuId=false;
     }
     else if (reportName==='technicianSummary'){
       this.reportName='Technician  Summary Report';
@@ -261,6 +271,7 @@ regNo:string;
       this.isVisiblecustomerLedger=false;
       this.isVisibleGSTSaleRegister=false;
       this.panelamcHistrory=false;
+      this.isVisiblepanelfromtoOuId=false;
     }
     else if (reportName==='amcSaleRegister'){
       this.reportName='AMC Sales Register';
@@ -271,6 +282,7 @@ regNo:string;
       this.isVisiblecustomerLedger=false;
       this.isVisibleGSTSaleRegister=false;
       this.panelamcHistrory=false;
+      this.isVisiblepanelfromtoOuId=false;
     }
     else if (reportName==='EWSaleRegister'){
       this.reportName='EW Sales Register';
@@ -281,6 +293,7 @@ regNo:string;
       this.isVisiblecustomerLedger=false;
       this.isVisibleGSTSaleRegister=false;
       this.panelamcHistrory=false;
+      this.isVisiblepanelfromtoOuId=false;
     }
     else if (reportName==='creditNoteReg'){
       this.reportName='Credit Note Register';
@@ -291,6 +304,7 @@ regNo:string;
       this.isVisiblecustomerLedger=false;
       this.isVisibleGSTSaleRegister=false;
       this.panelamcHistrory=false;
+      this.isVisiblepanelfromtoOuId=false;
     }
     else if (reportName==='jobIssueDetails'){
       this.reportName='Job Issue Details Report';
@@ -301,6 +315,7 @@ regNo:string;
       this.isVisiblecustomerLedger=false;
       this.isVisibleGSTSaleRegister=false;
       this.panelamcHistrory=false;
+      this.isVisiblepanelfromtoOuId=false;
     }
     else if (reportName==='IrnGenerationReport'){
       this.reportName='IRN Generation Report';
@@ -314,6 +329,7 @@ regNo:string;
         this.isVisibleDepartmentList=true;
       }
       this.panelamcHistrory=false;
+      this.isVisiblepanelfromtoOuId=false;
     }
     else if (reportName=='invoiceSummary'){
       this.reportName='Invoice Summary Report';
@@ -324,6 +340,7 @@ regNo:string;
       this.isVisiblecustomerLedger=false;
       this.isVisibleGSTSaleRegister=false;
       this.panelamcHistrory=false;
+      this.isVisiblepanelfromtoOuId=false;
     }
     else if (reportName=='amcHistrory'){
       this.reportName='AMC History Report';
@@ -334,6 +351,18 @@ regNo:string;
       this.isVisiblecustomerLedger=false;
       this.isVisibleGSTSaleRegister=false;
       this.panelamcHistrory=true;
+      this.isVisiblepanelfromtoOuId=false;
+    }
+    else if (reportName=='amcUtilisation'){
+      this.reportName='AMC Utilisation Report';
+      this.isVisiblegstsaiDebtors=false;
+      this.isVisiblepanelfromtolocation=false;
+      this.isVisiblefromtolocationdepartment=false;
+      this.isVisiblepaneltolocation=false;
+      this.isVisiblecustomerLedger=false;
+      this.isVisibleGSTSaleRegister=false;
+      this.panelamcHistrory=false;
+      this.isVisiblepanelfromtoOuId=true;
     }
   }
 
@@ -756,6 +785,19 @@ regNo:string;
      this.closeResetButton = true;
      this.dataDisplay = ''
    })
+  }
+  else if (reportName=='AMC Utilisation Report'){
+    const fileName = 'AMC Utilisation Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    // if (Number(sessionStorage.getItem('deptId')) === 4) {
+      this.reportService.amcUtilisation(fromDate,toDate,sessionStorage.getItem('ouId'))
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.isDisabled1 = false;
+          this.closeResetButton = true;
+          this.dataDisplay = ''
+        })
+    // }
   }
   }
 

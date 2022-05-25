@@ -172,9 +172,9 @@
                                                             [style.display]="isVisibleinvoiceDateText ? 'block' : 'none'"
                                                             class="form-control"
                                                             style="width: 150px;height: 25px;font-size: 11px;">
-                                                        <input type="date" formControlName="invoiceDate" value="{{glDate | date:'dd-MM-yyyy'}}"
+                                                        <input type="date" formControlName="invoiceDate" 
                                                             [style.display]="isVisibleinvoiceDateDate ? 'block' : 'none'"
-                                                            class="form-control" [(ngModel)]='invoiceDate'
+                                                            class="form-control"
                                                             style="width: 150px;height: 25px;font-size: 11px;background-color: yellow;">
                                                     </td>
                                                     <td>
@@ -205,8 +205,7 @@
                                                         <!-- <input disabled type="text" class="form-control" formControlName="glDate"
                                                             value={{glDate}}(change)="distrbutionGlDate($event)" 
                                                             style="width: 90px;height: 25px;font-size: 10px;"> -->
-                                                        <input type="date" formControlName="glDate" class="form-control"
-                                                            [(ngModel)]='glDate' 
+                                                        <input type="date" formControlName="glDate" class="form-control" (change)="distrbutionGlDate($event)" 
                                                             style="width: 130px;height: 25px;font-size: 10px;background-color: yellow;">
                                                     </td>
                                                     <td>
@@ -416,8 +415,8 @@
                                                             style="width: 65px;height: 25px;font-size: 10px;">
                                                     </td>
                                                     <td>
-                                                        <input type="date" formControlName="invoiceDate" value="{{glDate | date:'dd-MM-yyyy'}}"
-                                                            class="form-control" [(ngModel)]="invoiceDate"
+                                                        <input type="date" formControlName="invoiceDate" 
+                                                            class="form-control" 
                                                             style="width: 150px;height: 25px;font-size: 11px; background-color: yellow;">
                                                     </td>
                                                     <td>
@@ -451,7 +450,6 @@
                                                             value={{glDate}} class="form-control" [(ngModel)]='glDate'
                                                             style="width: 130px;height: 25px;font-size: 10px;"> -->
                                                         <input type="date" formControlName="glDate" class="form-control"
-                                                            [(ngModel)]='glDate'
                                                             style="width: 130px;height: 25px;font-size: 10px;background-color: yellow;">
                                                     </td>
                                                     <td>
@@ -988,13 +986,11 @@
                                                                 <ng-template #thenglDate>
                                                                     <input type="date" class="form-control"
                                                                         formControlName="glDate"
-                                                                        value="{{glDate | date:'dd-MM-yyyy'}}"
                                                                         style="width: 90px;height: 25px;font-size: 10px;">
                                                                 </ng-template>
                                                                 <ng-template #elseglDate>
                                                                     <input type="date" disabled formControlName="glDate"
-                                                                        value="{{glDate | date:'dd-MM-yyyy'}}"
-                                                                        class="form-control" [(ngModel)]='glDate'
+                                                                        class="form-control" 
                                                                         style="width: 130px;height: 25px;font-size: 10px;">
                                                                 </ng-template>
                                                             </td>
@@ -1108,8 +1104,8 @@
                                                                 <div  *ngIf="dispaccountingDate; then thenaccountingDate; else elseaccountingDate">
                                                                 </div>
                                                                 <ng-template #thenaccountingDate>
-                                                                    <input type="date" formControlName="accountingDate" [(ngModel)]='accountingDate'
-                                                                    value="{{accountingDate | date:'dd-MM-yyyy'}}" class="form-control"
+                                                                    <input type="date" formControlName="accountingDate" 
+                                                                    class="form-control"
                                                                         style="width: 130px;height: 25px;font-size: 10px;">
                                                                 </ng-template>
                                                                 <ng-template #elseaccountingDate>
@@ -1118,8 +1114,7 @@
                                                                         value={{accountingDate}} class="form-control"
                                                                         style="width: 130px;height: 25px;font-size: 10px;"> -->
                                                                         <input type="date" disabled formControlName="accountingDate"
-                                                                        value="{{accountingDate | date:'dd-MM-yyyy'}}"
-                                                                        class="form-control" [(ngModel)]='accountingDate'
+                                                                        class="form-control" 
                                                                         style="width: 130px;height: 25px;font-size: 10px;">
                                                                 </ng-template>
                                                                 <!-- [(ngModel)]='accountingDate' -->
