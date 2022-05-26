@@ -2493,12 +2493,14 @@ PriceListIdList(mOuId,mDivId): Observable<any> {
     }
 
 
-    public OrderGenNewItemSubmit(locId,itemCode,mths,ordNum) {
+    public OrderGenNewItemSubmit(locId,itemCode,mths,ordNum,dlrCd,plHd) {
       // alert ("in  OrderGenNewItemSubmit -"+itemCode);
       const options = {
         headers: this.headers
       };
-       const url = this.ServerUrl + `/spareOrder/addCons?locId=${locId}&itemCode=${itemCode}&months=${mths}&orderNumber=${ordNum}`;
+       const url = this.ServerUrl + `/spareOrder/addCons?locId=${locId}&itemCode=${itemCode}&months=${mths}&p_order=${ordNum}&dlrCode=${dlrCd}&priceListHeaderId=${plHd}`;
+
+      //  http://localhost:8081/spareOrder/addCons?locId=2102&itemCode=DK73012V&months=3&p_order=BJ-2102100022&dlrCode=15902&priceListHeaderId=221
       return this.http.post(url, options);
     }
 
@@ -2787,12 +2789,12 @@ OrderCategoryList(): Observable<any> {
   }
 ////////////////////////////// Back order File upload /////////
 
-  public orderGenBajaj(ordeGenRecord,mLocId,mths,dlrCd,pord) {
+  public orderGenBajaj(ordeGenRecord,mLocId,mths,dlrCd,plHd,ordNum) {
     // alert (  "MS>> Loc Id :" +mLocId + " ," +mths);
       const options = {
         headers: this.headers
       };
-      const url = this.ServerUrl + `/spareOrder?locId=${mLocId}&months=${mths}&dlrCode=${dlrCd}&p_order=${pord}`;
+      const url = this.ServerUrl + `/spareOrder?locId=${mLocId}&months=${mths}&dlrCode=${dlrCd}&priceListHeaderId=${plHd}&p_order=${ordNum}`;
       return this.http.post(url, ordeGenRecord, options);
       }
 
@@ -3990,6 +3992,12 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
 
   
     //////////////////////////// ORDER GENERATION /
+
+    priceListData(ouId,divId,deptId,plType): Observable<any> {
+      return this.http.get(this.ServerUrl + `/pricelist/priceHdrOu?ouId=${ouId}&divisionId=${divId}&deptId=${deptId}&priceSubType=${plType}`);
+      // http://localhost:8081/pricelist/priceHdrOu?ouId=22&divisionId=2&deptId=5&priceSubType=MRP
+    }
+    
 
     clearBakcOrder(locId) {
       const options = {

@@ -1238,9 +1238,9 @@ export class JobCardComponent implements OnInit {
         .subscribe(
           data2 => {
             this.billableTyIdList = data2;
-            // console.log(data1);
-            console.log(this.billableTyIdList);
-
+             alert ("Billable Type Found :"+ data2.length);
+             console.log(this.billableTyIdList);
+          
           
             if (jcStatus === 'New') {
               let selectbilTy = this.billableTyIdList.find(d => d.billableTyName === 'Customer');

@@ -15,6 +15,11 @@ import * as xlsx from 'xlsx';
 interface IOrderGen {
   segment: string;
   orderQty: number;
+  consCriteria:number;
+  currMonthYN:string;
+  dlrCode:string;
+  plHeaderId:number;
+  orderNumber:string;
 }
 
 
@@ -45,6 +50,7 @@ export class OrderGenerationComponent implements OnInit {
   lstOrderList: any;
   lstLatestOrder: any;
   public lstItemDetails: any;
+  public priceList: Array<string> = [];
 
   dataDisplay: any;
   loginName: string;
@@ -74,6 +80,7 @@ export class OrderGenerationComponent implements OnInit {
   orderValue: number;
   dlrCode: string = '15209';
   cdmsRefNo: string; //='TEST-CDMS-123';
+  plHeaderId :number;
 
   mth1ConWsQty: number;
   mth2ConWsQty: number;
@@ -100,6 +107,7 @@ export class OrderGenerationComponent implements OnInit {
   lineValidation = false;
   viewLogFile = false;
   orderUpdateStatus =true;
+  orderHeaderValidation=false;
 
   // epltable1: any;
 
@@ -145,6 +153,8 @@ export class OrderGenerationComponent implements OnInit {
       consSaleQty: [],
       currWsQty: [],
       conWsQty: [],
+
+      plHeaderId:[],
 
 
 
@@ -221,6 +231,15 @@ export class OrderGenerationComponent implements OnInit {
     this.orgId = this.ouId;
     console.log(this.loginArray);
     console.log(this.locId);
+
+
+    this.service.priceListData(sessionStorage.getItem('ouId'),sessionStorage.getItem('divisionId'),sessionStorage.getItem('dept'),'MRP')
+    .subscribe(
+      data => {
+        this.priceList = data;
+        console.log(this.priceList);
+      }
+    );
 
 
   }
@@ -387,38 +406,85 @@ export class OrderGenerationComponent implements OnInit {
     return val;
   }
 
+  checkOrderHeaderValidation()
+  {
+       const formValue: IOrderGen = this.orderGenerationForm.value;
+
+    
+      if(formValue.consCriteria===undefined || formValue.consCriteria===null  || formValue.consCriteria<0 ) {
+          this.orderHeaderValidation=false;
+          alert ("MONTHS : Should not be null");
+          return; 
+      }
+      if(formValue.orderNumber===undefined || formValue.orderNumber===null  || formValue.orderNumber.trim()==='' ) {
+        this.orderHeaderValidation=false;
+        alert ("ORDER NUMBER: Should not be null value");
+        return; 
+      }
+
+      if(formValue.currMonthYN===undefined || formValue.currMonthYN===null  || formValue.currMonthYN.trim()==='' ) {
+        this.orderHeaderValidation=false;
+        alert ("CURRENT MONTH: Should not be null value");
+        return; 
+      }
+
+      if(formValue.dlrCode===undefined || formValue.dlrCode===null  || formValue.dlrCode.trim()==='' ) {
+        this.orderHeaderValidation=false;
+        alert ("DEALER CODE: Should not be null value");
+        return; 
+      }
+
+
+      if(formValue.plHeaderId===undefined || formValue.plHeaderId===null  || formValue.plHeaderId<=0 ) {
+        this.orderHeaderValidation=false;
+        alert ("PRICE LIST: Should not be null");
+        return; 
+       }
+
+      this.orderHeaderValidation=true;
+
+    }
+
 
   CreateOrder() {
 
     const formValue: IOrderGen = this.transeData(this.orderGenerationForm.value);
+
+    this.checkOrderHeaderValidation();
+    if(this.orderHeaderValidation) {
     var ordMonths = this.orderGenerationForm.get('consCriteria').value
     var dlrCd = this.orderGenerationForm.get('dlrCode').value
+    var plHd = this.orderGenerationForm.get('plHeaderId').value
+    var ordNum = this.orderGenerationForm.get('orderNumber').value
+
 
     // alert (  "ts>> Loc Id :" +this.locId + " ," +ordMonths);
     this.dispGenOrdButton = false;
     this.spinIcon = true;
     this.dataDisplay = 'Creating Order....Do not refresh the Page';
 
-    this.service.orderGenBajaj(formValue, this.locId, ordMonths, dlrCd, '').subscribe((res: any) => {
+    this.service.orderGenBajaj(formValue, this.locId, ordMonths, dlrCd,plHd, ordNum).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD INSERTED SUCCESSFUILY');
         this.orderNumber = res.obj;
         this.orderGenerationForm.disable();
         this.displayButton = false;
         this.spinIcon = false;
-        this.getLatestOrderNumber(this.locId);
+        // this.getLatestOrderNumber(this.locId);
+        this.ShowOrder(this.orderNumber)
         
       } else {
         if (res.code === 400) {
           // alert('Error While Saving Record:-' + res.obj);
-          this.getLatestOrderNumber(this.locId);
+          // this.getLatestOrderNumber(this.locId);
+          this.ShowOrder(this.orderNumber)
           this.spinIcon = false;
           this.dataDisplay = '';
         }
       }
     });
 
-
+  } else {alert ("Data Validation Not Scuccessful....Save Failed")}
   }
 
 
@@ -449,7 +515,8 @@ export class OrderGenerationComponent implements OnInit {
       .subscribe(
         data => {
           this.lstOrderList = data;
-          // alert ("Total order lines :" +data.length);
+
+          alert ("Total order lines :" +data.length);
           if (data.length > 0) {
            
            this.orderGenerationForm.get('orderNumber').disable();
@@ -460,6 +527,10 @@ export class OrderGenerationComponent implements OnInit {
             this.status = data[0].status;
             this.orderDate = data[0].orderDate;
             this.consCriteria = data[0].consCriteria;
+            // this.plHeaderId= data[0].priceListHeaderId;
+
+            this.orderGenerationForm.patchValue({ plHeaderId: data[0].priceListHeaderId});
+
 
            if( data[0].locId != Number(sessionStorage.getItem('locId'))) {alert ("Order Number - Location Mismatch..."); this.spinIcon=false; this.dataDisplay='';return;}
 
@@ -628,6 +699,8 @@ export class OrderGenerationComponent implements OnInit {
 
     var mths = this.orderGenerationForm.get('consCriteria').value;
     var ordNum = this.orderGenerationForm.get('orderNumber').value;
+    var dlrCd = this.orderGenerationForm.get('dlrCode').value
+    var plHd = this.orderGenerationForm.get('plHeaderId').value
 
     var mSegment = ordLineArr[index].segment;
     var sprOrdId = ordLineArr[index].sprOrderId;
@@ -676,7 +749,7 @@ export class OrderGenerationComponent implements OnInit {
               // });
 
               // posting newly added line item consuption to order table
-              this.service.OrderGenNewItemSubmit(sessionStorage.getItem('locId'), mSegment, mths, ordNum).subscribe((res: any) => {
+              this.service.OrderGenNewItemSubmit(sessionStorage.getItem('locId'), mSegment, mths, ordNum,dlrCd,plHd).subscribe((res: any) => {
                 if (res.code === 200) { // alert(res.message); 
                   this.service.getNewLineConsDetails(segId, ordNum)
                     .subscribe(

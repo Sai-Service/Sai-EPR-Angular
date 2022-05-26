@@ -512,7 +512,7 @@ closeMast() {
           newMast() {
             const formValue: IAmcEnroll =this.transeData(this.amcEnrollmentForm.value);
               this.checkAmcHeaderValidations();
-            if(this.amcHeaderValidation) {
+              if(this.amcHeaderValidation) {
               this.displayButton=false;
             this.service.AmcEnrollMasterSubmit(formValue).subscribe((res: any) => {
               if (res.code === 200) {

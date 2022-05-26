@@ -47,7 +47,7 @@
                         <td style="width: 15%" class="LabelFontStyle">&nbsp;Order&nbsp;No:&nbsp;</td>
 
                             <td>
-                                <input disabled type ="text" class="form-control" formControlName="orderNumber"  [(ngModel)]='orderNumber'
+                                <input  type ="text" class="form-control" formControlName="orderNumber"  [(ngModel)]='orderNumber'
                                     value={{orderNumber}}  >
                                  
                             </td>
@@ -103,7 +103,20 @@
                                 <!-- <td></td> -->
 
                                
-                            </tr>       
+                            </tr>     
+                            <tr>
+                                <td style="width: 15%" class="LabelFontStyle">&nbsp;Price&nbsp;List:&nbsp;</td>
+
+                                <td colspan="2"> 
+                                    <select formControlName="plHeaderId" style="background-color: yellow;width: 100%;"
+                                        id="plHeaderId" [(ngModel)]='plHeaderId' class="form-control" >
+                                        <!-- <option>--Select--</option> -->
+                                        <option *ngFor="let sc of  priceList" [ngValue]="sc.priceListHeaderId"  >
+                                            {{sc.priceListName}}
+                                        </option>
+                                    </select>
+
+                            </tr>  
                       
 
                     <!-- <tr>
