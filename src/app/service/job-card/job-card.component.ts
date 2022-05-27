@@ -1238,9 +1238,9 @@ export class JobCardComponent implements OnInit {
         .subscribe(
           data2 => {
             this.billableTyIdList = data2;
-            // console.log(data1);
-            console.log(this.billableTyIdList);
-
+            //  alert ("Billable Type Found :"+ data2.length);
+             console.log(this.billableTyIdList);
+          
           
             if (jcStatus === 'New') {
               let selectbilTy = this.billableTyIdList.find(d => d.billableTyName === 'Customer');
@@ -2487,8 +2487,8 @@ export class JobCardComponent implements OnInit {
       this.displayMatDiscount = false;
       this.showMatDisCol=false;
       this.showMatDisP=false;
-      this.showLabdisP=false;
-      this.showLabDisCol=false;
+      // this.showLabdisP=false;
+      // this.showLabDisCol=false;
       // this.jobcardForm.get('matDiscout').disable();
       // this.jobcardForm.get('matDiscountPer').disable();
       this.jobcardForm.patchValue({matDiscout:0})
@@ -2524,10 +2524,12 @@ export class JobCardComponent implements OnInit {
     }
 
     if (event === '--Select--') {
-      this.displayLabDiscount = true;
+      this.displayLabDiscount = false;
       // this.jobcardForm.get('labDiscount').disable();
       // this.jobcardForm.get('labDiscountPer').disable();
       this.showLabDisCol=false;
+       this.showLabdisP=false;
+
       this.jobcardForm.patchValue({labDiscount:0})
       this.jobcardForm.patchValue({labDiscountPer:0})
     }

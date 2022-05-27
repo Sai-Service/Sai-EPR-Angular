@@ -47,7 +47,7 @@
                         <td style="width: 15%" class="LabelFontStyle">&nbsp;Order&nbsp;No:&nbsp;</td>
 
                             <td>
-                                <input disabled type ="text" class="form-control" formControlName="orderNumber"  [(ngModel)]='orderNumber'
+                                <input  type ="text" class="form-control" formControlName="orderNumber"  [(ngModel)]='orderNumber'
                                     value={{orderNumber}}  >
                                  
                             </td>
@@ -103,7 +103,20 @@
                                 <!-- <td></td> -->
 
                                
-                            </tr>       
+                            </tr>     
+                            <tr>
+                                <td style="width: 15%" class="LabelFontStyle">&nbsp;Price&nbsp;List:&nbsp;</td>
+
+                                <td colspan="2"> 
+                                    <select formControlName="plHeaderId" style="background-color: yellow;width: 100%;"
+                                        id="plHeaderId" [(ngModel)]='plHeaderId' class="form-control" >
+                                        <!-- <option>--Select--</option> -->
+                                        <option *ngFor="let sc of  priceList" [ngValue]="sc.priceListHeaderId"  >
+                                            {{sc.priceListName}}
+                                        </option>
+                                    </select>
+
+                            </tr>  
                       
 
                     <!-- <tr>
@@ -261,7 +274,8 @@
            <ng-container  class="center" formArrayName="orderList">
             <ng-container   *ngFor="let group of lineDetailsArray().controls; let i= index" [formGroupName]="i" class="auto-style5">  
                         <tr>
-
+                            <input  hidden  formControlName="sprOrderId" class="form-control">
+                            
                             <td style="text-align: center;width: 4rem;">{{i+1}}</td>
                             <td> <input   style="width:3rem;background-color: yellow;width:6rem;text-transform: uppercase;"    type="text" formControlName="segment"  class="form-control"  
                                             (keydown.enter)="enterKeyLock(i)"  (change)="validateItem(i)" ></td>
