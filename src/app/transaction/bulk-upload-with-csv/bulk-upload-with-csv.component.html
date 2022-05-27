@@ -103,6 +103,9 @@
                 <div *ngIf="submitted && f.supplierNo.errors" class="invalid-feedback">
                     <div *ngIf="f.supplierNo.errors.required">Code cannot be blank</div>
                 </div>
+                
+                    <input type="number" disabled hidden class="form-control"  formControlName="suppNo" >
+                
             </td>
        
             <td style="width: 15%" class="LabelFontStyle">

@@ -1038,17 +1038,17 @@ export class SalesReportsComponent implements OnInit {
       var spInvAging3 = this.salesReportForm.get('spInvAging3').value;
       if (spInvAging1 > spInvAging2) {
         alert('Please check Aging.!');
-        this.dataDisplay = 'Please check Aging.';
+        this.dataDisplay = 'Please Check Aging 2 Parameter.!';
         return;
       }
       else if (spInvAging1 > spInvAging3) {
         alert('Please check Aging.!');
-        this.dataDisplay = 'Please check Aging.';
+        this.dataDisplay = 'Please Check Aging 3 Parameter.!';
         return;
       }
       else if (spInvAging2 > spInvAging3) {
         alert('Please check Aging.!');
-        this.dataDisplay = 'Please check Aging.';
+        this.dataDisplay = 'Please Check Aging 3 Parameter.!';
         return;
       }
       const fileName = 'Spares Inventory Aging Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
@@ -1123,14 +1123,14 @@ export class SalesReportsComponent implements OnInit {
       if (receiptNo == '' || receiptNo == null || receiptNo==undefined){
         alert('Please Enter receipt Number.!')
       }
-      const fileName = 'EW Sales Register-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+      const fileName = 'download.pdf';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       this.reportService.reinsuarnceReceiptPrint(receiptNo)
       .subscribe(data => {
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-        this.dataDisplay = ''
-        this.closeResetButton = true;
         this.isDisabled1 = false;
+        this.closeResetButton = true;
+        this.dataDisplay = ''
       })
     }
     else if (reportName === 'Sales Addon Reconciliation'){
@@ -1156,7 +1156,7 @@ export class SalesReportsComponent implements OnInit {
       const fileName = 'Sub Inventory Transfer Received Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if ((Number(sessionStorage.getItem('deptId'))===4)){
-        this.reportService.spInvTransRecFuc(fromDate,toDate, locId, subInvCode)
+        this.reportService.SalesInvTransRecFuc(fromDate,toDate, locId, subInvCode)
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
           this.isDisabled1 = false;
@@ -1165,7 +1165,7 @@ export class SalesReportsComponent implements OnInit {
         })
       }
       else if ((Number(sessionStorage.getItem('deptId')))!=4){
-        this.reportService.spInvTransRecFuc(fromDate,toDate, sessionStorage.getItem('locId'), subInvCode)
+        this.reportService.SalesInvTransRecFuc(fromDate,toDate, sessionStorage.getItem('locId'), subInvCode)
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
           this.isDisabled1 = false;

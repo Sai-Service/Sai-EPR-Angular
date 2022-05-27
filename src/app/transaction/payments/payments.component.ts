@@ -589,7 +589,7 @@ else{
 
 
   onOptionsSelectedsuppName(name: any) {
-    var name = name.target.value;
+    // var name = name.target.value;
     // alert(name);
     let selectedValue = this.supplierCodeList.find(v => v.name == name);
     var dataobj1 = this.paymentForm.get('obj1') as FormArray;

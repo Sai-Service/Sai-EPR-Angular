@@ -157,14 +157,22 @@
                                                 style="width: 160px;height: 25px;font-size: 10px;">
                                         </ng-template>
                                         <ng-template #elsename>
-                                            <select formControlName="name" id="name" class="form-control"
+                                            <!-- <select formControlName="name" id="name" class="form-control"
                                                 (change)='onOptionsSelectedsuppName($event)'
                                                 style="width: 160px;height: 25px;font-size: 10px;">
                                                 <option>--Select--</option>
                                                 <option *ngFor="let item of  supplierCodeList" [value]="item.name">
                                                     {{item.name}}
                                                 </option>
-                                            </select>
+                                            </select> -->
+                                            <input type="text" formControlName="name"
+                                            list="dynmicUserIds1" class="form-control"  style="width: 160px;height: 25px;font-size: 10px;"
+                                            (ngModelChange)='onOptionsSelectedsuppName($event)'>
+                                        <datalist id="dynmicUserIds1">
+                                            <option *ngFor="let item of  supplierCodeList"
+                                            [value]="item.name">{{item.name}}
+                                            </option>
+                                        </datalist>
                                         </ng-template>
                                         <input hidden formControlName="partyId" value={{partyId}}>
                                     </td>

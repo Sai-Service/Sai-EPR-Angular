@@ -26,6 +26,7 @@ import { RtoLineItemReportComponent } from './rto-line-item-report/rto-line-item
 import { EwayBillInvoiceDataComponent } from './eway-bill-invoice-data/eway-bill-invoice-data.component';
 import { EwayBillCustomerNoWiseComponent } from './eway-bill-customer-no-wise/eway-bill-customer-no-wise.component';
 import { OrderBookingChetakComponent } from './order-booking-chetak/order-booking-chetak.component';
+import { ReserveQtyClearComponent } from './reserve-qty-clear/reserve-qty-clear.component';
 
 const routes: Routes = [
   {path:'salesOrderBooking', component:SalesOrderBookingComponent},
@@ -57,7 +58,7 @@ const routes: Routes = [
   {path:'EwayBillInvoiceData',component:EwayBillInvoiceDataComponent},
   {path:'EwayBillCustomerNoWise',component:EwayBillCustomerNoWiseComponent},
   {path:'OrderBookingChetak',component:OrderBookingChetakComponent},
-
+  {path:'ReserveQtyClear',component:ReserveQtyClearComponent},
   
   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];

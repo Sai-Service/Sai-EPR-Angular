@@ -784,8 +784,8 @@ export class SubinventoryTransferComponent implements OnInit {
             // this.displayButton = false;
           } else {
             if (res.code === 400) {
-              alert('Code already present in data base');
-              this.SubinventoryTransferForm.reset();
+              alert(res.message);
+              // this.SubinventoryTransferForm.reset();
             }
           }
         });
