@@ -1082,7 +1082,7 @@ export class PayableInvoiceNewComponent implements OnInit {
             // this.invoiceDate = invoiceDateNew;
             // this.glDate = glDateNew;
             patch.controls[i].patchValue({ payGroup: res.obj[i].payGroup })
-            // patch.controls[i].patchValue({ invoiceDate: invoiceDateNew })
+            patch.controls[i].patchValue({ invoiceDate: invoiceDateNew })
             patch.controls[i].patchValue({ glDate: glDateNew })
             if (res.obj[i].paymentMethod === undefined || res.obj[i].paymentMethod === null) {
               (patch.controls[i]).patchValue(
