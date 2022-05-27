@@ -2499,8 +2499,6 @@ PriceListIdList(mOuId,mDivId): Observable<any> {
         headers: this.headers
       };
        const url = this.ServerUrl + `/spareOrder/addCons?locId=${locId}&itemCode=${itemCode}&months=${mths}&p_order=${ordNum}&dlrCode=${dlrCd}&priceListHeaderId=${plHd}`;
-
-      //  http://localhost:8081/spareOrder/addCons?locId=2102&itemCode=DK73012V&months=3&p_order=BJ-2102100022&dlrCode=15902&priceListHeaderId=221
       return this.http.post(url, options);
     }
 

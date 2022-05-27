@@ -758,7 +758,7 @@ export class OrderGenerationComponent implements OnInit {
 
                           (patch.controls[index]).patchValue(
                             {
-
+                              sprOrderId :data[0].sprOrderId,
                               unitPrice: data[0].unitPrice,
                               itemId: data[0].itemId,
                               segment: data[0].segment,
@@ -777,7 +777,7 @@ export class OrderGenerationComponent implements OnInit {
                               backOrderQty: data[0].backOrderQty,
                               intransitQty: data[0].intransitQty,
                               custBackOrder: data[0].custBackOrder,
-                              totalValue: data[0].totalValue,
+                              // totalValue: data[0].totalValue,
                               lastOrderQty: data[0].lastOrderQty,
                               mth1TotalCons: data[0].mth1TotalCons,
                               mth2TotalCons: data[0].mth2TotalCons,
@@ -786,6 +786,7 @@ export class OrderGenerationComponent implements OnInit {
                               totalCons: data[0].totalCons,
                               setQty: data[0].setQty,
                               orderQty: data[0].orderQty,
+                              totalValue :data[0].orderQty*data[0].unitPrice,
 
                             });
                         } else {

@@ -274,7 +274,8 @@
            <ng-container  class="center" formArrayName="orderList">
             <ng-container   *ngFor="let group of lineDetailsArray().controls; let i= index" [formGroupName]="i" class="auto-style5">  
                         <tr>
-
+                            <input  hidden  formControlName="sprOrderId" class="form-control">
+                            
                             <td style="text-align: center;width: 4rem;">{{i+1}}</td>
                             <td> <input   style="width:3rem;background-color: yellow;width:6rem;text-transform: uppercase;"    type="text" formControlName="segment"  class="form-control"  
                                             (keydown.enter)="enterKeyLock(i)"  (change)="validateItem(i)" ></td>
