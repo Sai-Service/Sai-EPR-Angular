@@ -74,7 +74,7 @@ export class BulkUploadWithCsvComponent implements OnInit {
   // invcDt1:Date;
   itemButton1 = true;
   priceListName:string;
-
+  suppNo:number;
   pipe = new DatePipe('en-US');
   now = new Date();
   invcDt1 = this.pipe.transform(this.now, 'dd-MM-yyyy');
@@ -106,7 +106,8 @@ export class BulkUploadWithCsvComponent implements OnInit {
       userName: ['', [Validators.required]],
       supplierSite: ['', [Validators.required]],
       invcDt1: ['', [Validators.required]],
-      priceListName:['',Validators.required]
+      priceListName:['',Validators.required],
+      suppNo:[''],
     })
   }
   bulkUploadCSV(bulkUploadCSVForm) { 
@@ -233,7 +234,7 @@ export class BulkUploadWithCsvComponent implements OnInit {
         var value1 = value[0];
         // var value2 = value[1];
         // alert(value1+'---' + value2)
-        var supplierNo = this.bulkUploadCSVForm.get('supplierNo').value;
+        var supplierNo = this.bulkUploadCSVForm.get('suppNo').value;
         var supplierSite = this.bulkUploadCSVForm.get('supplierSite').value;
         var userName = (sessionStorage.getItem('ticketNo'));
         var invcDt2 = this.bulkUploadCSVForm.get('invcDt1').value;
@@ -318,11 +319,12 @@ export class BulkUploadWithCsvComponent implements OnInit {
 
 
   onSupplierCodeSelected(supp: string) {
+    // alert(supp)
     if (supp != null) {
       var value = supp.substr(supp.indexOf('@') + 1, supp.length);
       let selectedValue = this.supplierCodeList.find(v => v.suppNo == value);
-
       console.log(selectedValue, value);
+      this.bulkUploadCSVForm.patchValue({suppNo:selectedValue.suppNo})
       this.supplierNo = selectedValue.suppId;
       this.service.suppIdList(selectedValue.suppId, sessionStorage.getItem('ouId'))
         .subscribe(

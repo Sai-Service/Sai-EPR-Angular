@@ -441,6 +441,16 @@ export class ReportServiceService {
       headers: this.headers,
     });
   }
+
+  SalesInvTransRecFuc(fromDate,toDate,locId,subInvCode){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SubInvTrfRecdRep?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}&subInvCode=${subInvCode}`;
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
   spInvTransMadeFuc(fromDate,toDate,locId,subInvCode){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/SubInvTrfMadeRep?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}&subInvCode=${subInvCode}`;
     return this.http.get(REQUEST_URI, {
@@ -568,6 +578,7 @@ reinsuarnceReceiptPrint(receiptNo){
     responseType: 'arraybuffer',
     headers: this.headers,
   });
+  
 }
 
 salesAddonReconciliation(fromDate,toDate,segment1,segment2,segment3,segment4,segment5){

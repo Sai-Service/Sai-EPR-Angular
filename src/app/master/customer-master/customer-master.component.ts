@@ -1154,7 +1154,6 @@ export class CustomerMasterComponent implements OnInit {
   }
 
   searchByAccount1(accountNo) {
-
     this.displayNewButton = false;
     this.service.searchCustomerByAccount(accountNo)
       .subscribe(
@@ -1193,6 +1192,8 @@ export class CustomerMasterComponent implements OnInit {
           this.customerMasterForm.get('highAmt').disable();
           this.customerMasterForm.get('disPer').disable();
           this.customerMasterForm.get('perAdd').disable();
+          // this.customerMasterForm.get('siteName').disable();
+          // this.customerMasterForm.get('souId').disable();
           this.dispstatus = false;
 
         });
@@ -1203,7 +1204,7 @@ export class CustomerMasterComponent implements OnInit {
 
 
   Select(customerSiteId: number) {
-
+    alert(customerSiteId);
     this.displayNewButton1 = false;
     this.displaystatus = false;
 
@@ -1253,7 +1254,8 @@ export class CustomerMasterComponent implements OnInit {
       // this.displayButton = false;
     }
     console.log(select.status);
-
+    this.customerMasterForm.get('siteName').disable();
+    this.customerMasterForm.get('souId').disable();
   }
 
   onOptionsSelectedCity(city: any) {

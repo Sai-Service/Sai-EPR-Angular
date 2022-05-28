@@ -1627,6 +1627,13 @@ public reserveDelete(transno,locId)
 {
     return this.http.delete(this.ServerUrl+`/reserveQty/remove/?transactionNumber=${transno}&locId=${locId}`);
 }
+
+
+public reserveQtyDelete(itemCode,locId)
+{
+    return this.http.delete(this.ServerUrl+`/reserveQty/removeSingle/?itemCode=${itemCode}&locId=${locId}`);
+}
+
 public reserveDeleteLine(transno,locId,itemId)
 {
     return this.http.delete(this.ServerUrl+`/reserveQty/removeItem/?transactionNumber=${transno}&locId=${locId}&invItemId=${itemId}`);

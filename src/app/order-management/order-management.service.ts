@@ -830,7 +830,17 @@ export class OrderManagementService {
 
    }
 
-     
+
+   reinsuarnceReceiptPrintFn(receiptNo){
+    const REQUEST_URI = this.ServerUrl +`/SalesReports/ReInsuranceReceipt?receiptNumber=${receiptNo}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+    
+  }
+
+
   }
 
 

@@ -3073,6 +3073,9 @@ if(this.deptId==2){
     // alert ("Ref Type : "+refTp);
     const fileName = 'download.pdf';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    var refType = this.paymentArForm.get('refType').value;
+    // alert(refType)
+    // if (refType != 'ReIns-Renewal'){
     this.orderManagementService.printArReceipt(mRtnOrderNumber ,refTp)
       .subscribe(data => {
         var blob = new Blob([data], { type: 'application/pdf' });
@@ -3081,11 +3084,28 @@ if(this.deptId==2){
         printWindow.open
         
       });
+    // }
+     if (refType == 'ReIns-Renewal'){
+      this.orderManagementService.reinsuarnceReceiptPrintFn(this.receiptNumber)
+      .subscribe(data => {
+      var blob = new Blob([data], { type: 'application/pdf' });
+      var url = URL.createObjectURL(blob);
+      var printWindow = window.open(url, '', 'width=800,height=500');
+      printWindow.open
+    });
+    }
   }
 
- 
-
+  reinsuarnceReceiptPrint() {
+    const fileName = 'download.pdf';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.orderManagementService.reinsuarnceReceiptPrintFn(this.receiptNumber)
+    .subscribe(data => {
+    var blob = new Blob([data], { type: 'application/pdf' });
+    var url = URL.createObjectURL(blob);
+    var printWindow = window.open(url, '', 'width=800,height=500');
+    printWindow.open
+  });
 }
-
-
+}
 

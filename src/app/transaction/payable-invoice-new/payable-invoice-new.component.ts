@@ -105,6 +105,7 @@ export class PayableInvoiceNewComponent implements OnInit {
   chassisNoList: any = [];
   lastkeydown3: number = 0;
   userList4: any[] = [];
+  userList5:any[]=[];
   lastkeydown4: number = 0;
   itemSeg: string;
   firstFieldEmittedValue: IDateRange;
@@ -919,6 +920,41 @@ export class PayableInvoiceNewComponent implements OnInit {
     return matches;
   };
 
+  
+  getHSNFormArray($event) {
+    let userId = (<HTMLInputElement>document.getElementById('userIdHSNFirstWay')).value;
+    this.userList5 = [];
+
+    if (userId.length > 2) {
+      if ($event.timeStamp - this.lastkeydown4 > 200) {
+        this.userList5 = this.searchFromHSNArray(this.hsnSacCodeList, userId);
+      }
+    }
+  }
+
+
+  searchFromHSNArray(arr, regex) {
+    let matches = [], i;
+    for (i = 0; i < arr.length; i++) {
+      if (arr[i].match(regex)) {
+        matches.push(arr[i]);
+      }
+    }
+    return matches;
+  };
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   getNaturalAccount($event) {
     let userId = (<HTMLInputElement>document.getElementById('NaturalAccountFirstWay')).value;
     this.userList3 = [];
@@ -1855,8 +1891,10 @@ export class PayableInvoiceNewComponent implements OnInit {
   onHsnCodeSelected(event, index) {
     console.log(event);
     let selectgstPercentage = this.hsnSacCodeList.find(v => v.hsnsaccode == event);
+    console.log(selectgstPercentage);
     if (event != null && event != 'NA') {
       var gstPercentage = selectgstPercentage.gstPercentage;
+      console.log(gstPercentage);
       let control = this.poInvoiceForm.get('invLines') as FormArray;
       (control.controls[index]).patchValue(
         {

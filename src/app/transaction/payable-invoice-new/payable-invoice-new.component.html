@@ -899,7 +899,7 @@
 
                                                             </td>
                                                             <td>
-                                                                <select style="width:fit-content"
+                                                                <!-- <select style="width:fit-content"
                                                                     formControlName="hsnSacCode" id="hsnSacCode"
                                                                     class="form-control"
                                                                     (ngModelChange)='onHsnCodeSelected($event,k)'
@@ -910,7 +910,15 @@
                                                                         [ngValue]="sc.hsnsaccode">
                                                                         {{sc.hsnsaccode}}
                                                                     </option>
-                                                                </select>
+                                                                </select> -->
+                                                                <input type="text" formControlName="hsnSacCode"
+                                                                list="hsnSacCode" class="form-control"  style="width: fit-content;height: 25px;font-size: 10px;text-align: center;"
+                                                                (ngModelChange)='onHsnCodeSelected($event,k)' #hsnSacCode1>
+                                                            <datalist id="hsnSacCode">
+                                                                <option *ngFor="let sc of  hsnSacCodeList"
+                                                                [ngValue]="sc.hsnsaccode">{{sc.hsnsaccode}}
+                                                                </option>
+                                                            </datalist>
                                                                 <input hidden type="number"
                                                                     formControlName="gstPercentage" style="width: 5rem;"
                                                                     class="form-control">
