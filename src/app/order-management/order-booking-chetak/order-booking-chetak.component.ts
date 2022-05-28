@@ -143,7 +143,8 @@ export class OrderBookingChetakComponent implements OnInit {
   displayCounterSaleLine: Array<boolean> = [];
   displayLineflowStatusCode: Array<boolean> = [];
   
-  isDisabled = true;
+  orderFound=false;
+  isDisabled = false;
 
   isDisabled1=true;
   isDisabled4=true;
@@ -436,6 +437,7 @@ export class OrderBookingChetakComponent implements OnInit {
       .subscribe(
         data => {
           if (data.code === 200) {
+            this.orderFound=true;
             this.lstgetOrderLineDetails = data.obj.oeOrderLinesAllList;
             this.displayCustomerSite = false; 
             this.displayCSOrderAndLineDt = false;

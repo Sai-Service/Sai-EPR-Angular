@@ -344,10 +344,12 @@ export class OrderGenerationComponent implements OnInit {
     var orList = this.orderGenerationForm.get('orderList').value;
     var xlOrdList: any = [];
     for (let i = 0; i < orList.length; i++) {
-      var ordLn = new orderGenList();
-      ordLn.segment = orList[i].segment;
-      ordLn.orderQty = orList[i].orderQty;
-      xlOrdList.push(ordLn);
+      if(orList[i].orderQty>0){
+        var ordLn = new orderGenList();
+        ordLn.segment = orList[i].segment;
+        ordLn.orderQty = orList[i].orderQty;
+        xlOrdList.push(ordLn);
+      }
     }
     xlsx.utils.sheet_add_json(ws, xlOrdList, { origin: 'A2', skipHeader: true });
     xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
@@ -516,7 +518,7 @@ export class OrderGenerationComponent implements OnInit {
         data => {
           this.lstOrderList = data;
 
-          alert ("Total order lines :" +data.length);
+          alert ("Total Order Lines Found : " +data.length);
           if (data.length > 0) {
            
            this.orderGenerationForm.get('orderNumber').disable();
@@ -540,7 +542,6 @@ export class OrderGenerationComponent implements OnInit {
                this.displayButton = false;
                this.orderUpdateStatus=false;
                this.orderGenerationForm.disable();
-              
               }
 
             console.log(this.lstOrderList);

@@ -253,6 +253,7 @@ export class PaymentArComponent implements OnInit {
   chqBounceStatus=false;
   printButton=true;
   fromJc=false;
+  fromOrderChetak=false;
   accountsLogin=false;
 
   showInvoiceGrid = false;
@@ -490,6 +491,17 @@ export class PaymentArComponent implements OnInit {
 if (Number(sessionStorage.getItem('dept')) ===4)  {this.accountsLogin=true;}else {this.accountsLogin=false;}
 
 // alert ("DeptId : " +this.deptId + " accountsLogin="+this.accountsLogin);
+
+if(this.deptId==1){
+  this.sub = this.router1.params.subscribe(params => {
+     var  ordNumChetak = params['orderNumber'];
+    if (ordNumChetak != undefined){
+      this.fromOrderChetak=true;
+      this.refType='Sales-Order'
+    this.GetOrderDetails(ordNumChetak);}
+});
+}
+
 if(this.deptId==2){
     this.sub = this.router1.params.subscribe(params => {
        var jcNum = params['jobCardNum'];
@@ -498,8 +510,9 @@ if(this.deptId==2){
         this.refType='Service-Order'
       this.GetJobCardDetails(jcNum);}
   });
-
   }
+
+
   if(this.deptId==4){
     this.sub = this.router1.params.subscribe(params => {
       this.referenceNo = this.router1.snapshot.queryParamMap.get('invNumber');
@@ -666,6 +679,11 @@ if(this.deptId==2){
 
     this.glPrdStartDate = this.GLPeriodCheck.startDate;
     this.glPrdEndDate = this.GLPeriodCheck.endDate
+
+  }
+
+  GetOrderDetails(mOderNum){
+    alert ("Order Number :"+mOderNum);
 
   }
 

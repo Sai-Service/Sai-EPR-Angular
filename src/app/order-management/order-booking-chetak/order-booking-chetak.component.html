@@ -5,6 +5,17 @@
             <td colspan="4" class="PageHeader" style="width: 100%;">
                 &nbsp;PROFORMA&nbsp;INVOICE(CHETAK)&nbsp;
             </td>
+            <td colspan="2" align="right" style="background-color: #FFE4B5;text-align: right;width: 100%;">
+                &nbsp;Order&nbsp;No&nbsp;&nbsp;
+            </td>
+            <td style="background-color: #FFE4B5;">
+                <input class="form-control" formControlName="orderNumber" [(ngModel)]='orderNumber'
+                    value={{orderNumber}}>
+            </td>
+            <td style="background-color: #FFE4B5;">
+                <button type="button" class="btn-primary" [disabled]="isDisabled4" (click)="OrderFind(orderNumber)"><i class="fa fa-search"
+                        aria-hidden="true"></i></button>
+            </td>
             
         </tr>
     </table>
@@ -771,6 +782,12 @@
                 <td>
                     <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
                 </td>
+
+                <div *ngIf="orderFound; then ordYes; else ordNo"></div>
+                <ng-template #ordYes>
+                    <td> <button type="button" class="btn btn-primary" id="register"  style="width: fit-content;" [routerLink]="['/admin/transaction/PaymentAr',this.orderNumber]">Receipt</button> </td> 
+                </ng-template><ng-template #ordNo></ng-template>
+
             </tr>
         </table>
     </fieldset>

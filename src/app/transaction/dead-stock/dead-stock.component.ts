@@ -36,6 +36,7 @@ export class dedList {
   grrNum :string;
   transDate:string;
   transType:string;
+  dflag:string;
 
   }
 
@@ -244,7 +245,7 @@ export class DeadStockComponent implements OnInit {
     var mOrgId = this.deadStockForm.get('ouId').value
     var nMths = this.deadStockForm.get('nMonths').value
     this.spinIcon=true;
-    this.dataDisplay ='Loading Data....Pls wait..';
+    this.dataDisplay ='Loading Data....Please wait...';
    
     this.service.getDeadStockList(mOrgId,'Y')
       .subscribe(
@@ -462,6 +463,7 @@ export class DeadStockComponent implements OnInit {
     'GRR No',
     'GRR Date',
     'Transaction Type',
+    'DFlag',
     'Remark',
     "PrintDateTime",
   ]]
@@ -489,6 +491,7 @@ export class DeadStockComponent implements OnInit {
       ordLn.grrNum = orList[i].attribute4;
       ordLn.transDate = this.pipe.transform(orList[i].transDate, 'dd-MM-y');
       ordLn.transType = orList[i].attribute5;
+      ordLn.dflag= orList[i].dflag;
       ordLn.attribute1 = orList[i].attribute1;
       ordLn.printDateTime = this.pipe.transform(Date.now(), 'dd-MM-y hh:mm:ss');  
       xlOrdList.push(ordLn);
