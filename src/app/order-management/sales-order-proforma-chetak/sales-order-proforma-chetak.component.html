@@ -1,5 +1,6 @@
 <form [formGroup]="salesOrderBookingChetakForm" (ngSubmit)="salesOrderBookingChetak(salesOrderBookingChetakForm.value)"
     #aForm>
+    <div class="center">
     <table style="width: 100%;background-color: white;">
         <tr>
             <td colspan="4" class="PageHeader" style="width: 100%;">
@@ -18,21 +19,20 @@
             </td>
         </tr>
     </table>
+
+   
+
     <fieldset class="RFS">
         <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Customer
             Details&nbsp;/&nbsp;
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
                 style="width: 10rem;color: white;">
                 Additional&nbsp;Information
-            </button>
+            </button></legend>
 
-          
-        </legend>
         <table class="center" style="width: 100%;">
             <tr>
-                <td style="width: 15%" class="LabelFontStyle1">
-                    Cust&nbsp;No&nbsp;:&nbsp;
-                </td>
+                <td style="width: 15%" class="LabelFontStyle1">Cust&nbsp;No&nbsp;:&nbsp; </td>
                 <td>
                     <input type="number"  class="form-control" formControlName="custAccountNo" style="width:8rem;"
                         value={{custAccountNo}} [(ngModel)]='custAccountNo'   (keydown.tab)="accountNoSearch(custAccountNo)" #myinput>
@@ -70,9 +70,8 @@
                         </tr>
                     </table>
                 </td>
-                <td style="width: 15%" class="LabelFontStyle">
-                    Contact&nbsp;No&nbsp;:&nbsp;
-                </td>
+
+                <td style="width: 15%" class="LabelFontStyle">Contact&nbsp;No&nbsp;:&nbsp;</td>
                 <td>
                     <input type="number" formControlName="mobile1" [(ngModel)]='mobile1' value={{mobile1}} style="width:8rem;"
                         [ngClass]="{ 'is-invalid': submitted && f.mobile1.errors }" class="form-control"
@@ -316,7 +315,7 @@
                         Variant&nbsp;:&nbsp;
                     </td>
                     <td>
-                        <select formControlName="variant" id="variant" class="form-control" style="width:fit-content;"
+                        <select formControlName="variant" id="variant" class="form-control" style="width: 170px;"
                             (ngModelChange)="onOptionsSelectedColor($event)">
                             <option>--Select--</option>
                             <option *ngFor="let mm of VariantSearch" [value]="mm.variant">
@@ -921,4 +920,8 @@ aria-hidden="true">
 </div>
 </div>
 <!-- ------------------------------------------------------------------------------------------------------- -->
+    </div>
 </form>
+
+
+
