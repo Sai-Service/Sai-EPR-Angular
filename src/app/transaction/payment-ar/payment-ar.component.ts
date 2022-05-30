@@ -683,10 +683,21 @@ if(this.deptId==2){
 
   }
 
-  GetOrderDetails(mOderNum){
-    alert ("Order Number :"+mOderNum);
-
-  }
+      GetOrderDetails(mOderNum){
+        alert ("Order Number :"+mOderNum);
+        this.orderManagementService.proformaOrderSearchNew(sessionStorage.getItem('divisionId'), mOderNum)
+        .subscribe(
+          data => {
+            if (data.code === 200) {
+              this.custAccountNo=data.obj.custAccountNo;
+              this.custName=data.obj.custName;
+              this.customerId=data.obj.customerId;   // customerId null - need to  check api response
+              this.customerSiteId=data.obj.customerSiteId;
+              this.referenceNo=data.obj.orderNumber;
+              this.referenceDate=data.obj.orderedDate
+            }
+          }); 
+      }
 
       GetJobCardDetails(jcNum) {
       this.service.getJonCardNoSearch(jcNum)

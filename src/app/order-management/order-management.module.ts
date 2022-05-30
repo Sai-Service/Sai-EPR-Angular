@@ -27,8 +27,8 @@ import { SalesOrderModelWisePriceComponent } from './sales-order-model-wise-pric
 import { RtoLineItemReportComponent } from './rto-line-item-report/rto-line-item-report.component';
 import { EwayBillInvoiceDataComponent } from './eway-bill-invoice-data/eway-bill-invoice-data.component';
 import { EwayBillCustomerNoWiseComponent } from './eway-bill-customer-no-wise/eway-bill-customer-no-wise.component';
-import { OrderBookingChetakComponent } from './order-booking-chetak/order-booking-chetak.component';
 import { ReserveQtyClearComponent } from './reserve-qty-clear/reserve-qty-clear.component';
+import { SalesOrderProformaChetakComponent } from './sales-order-proforma-chetak/sales-order-proforma-chetak.component';
 
 
 @NgModule({
@@ -56,8 +56,8 @@ import { ReserveQtyClearComponent } from './reserve-qty-clear/reserve-qty-clear.
      RtoLineItemReportComponent,
      EwayBillInvoiceDataComponent,
      EwayBillCustomerNoWiseComponent,
-     OrderBookingChetakComponent,
      ReserveQtyClearComponent,
+     SalesOrderProformaChetakComponent,
       ],
   imports: [
     CommonModule,
