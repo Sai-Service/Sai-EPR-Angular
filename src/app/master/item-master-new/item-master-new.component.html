@@ -277,178 +277,176 @@
             <div style="border: 0px;" class="tab-content card " id="myTabContentMD">
                 <div class="tab-pane fade show active" id="inventoryTab" role="tabpanel" aria-labelledby="home-tab-md">
                     <!-- <div class="center"> -->
-                        <table class="center" style="border: 1px;">
-                            <tr>
-                                <td colspan="6">
-                                    <table style="border: 1px;">
-                                        <tr>
-                                            <td style="width: 12%" class="LabelFontStyle">
-                                                Stockable&nbsp;:&nbsp;
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td>
-                                    <div *ngIf="stockableShow; then thenBlockStatus; else elseBlockStatus"> </div>
-                                    <ng-template #thenBlockStatus>
-                                        <input disabled type="checkbox" formControlName="stockable"
-                                            [(ngModel)]='stockable' (change)="stockableEvent($event)">
-                                    </ng-template>
-                                    <ng-template #elseBlockStatus>
-                                        <input disabled type="checkbox" formControlName="stockable" checked
-                                            [(ngModel)]='stockable' (change)="stockableEvent($event)">
-                                    </ng-template>
-                                </td>
-                                <td style="width: 12%" class="LabelFontStyle">
-                                    Costing&nbsp;:&nbsp;
-                                </td>
-                                <td>
-                                    <div *ngIf="costingShow; then thenBlockStatus; else elseBlockStatus"> </div>
-                                    <ng-template #thenBlockStatus>
-                                        <input disabled type="checkbox" formControlName="costing" [(ngModel)]='costing'
-                                            (change)="costingEvent($event)">
-                                    </ng-template>
-                                    <ng-template #elseBlockStatus>
-                                        <input disabled type="checkbox" formControlName="costing" checked
-                                            [(ngModel)]='costing' (change)="costingEvent($event)">
-                                    </ng-template>
-                                </td>
-                                <td style="width: 12%" class="LabelFontStyle">
-                                    Internal&nbsp;Order&nbsp;:&nbsp;
-                                </td>
-                                <td>
-                                    <div *ngIf="internalOrderShow; then thenBlockStatus; else elseBlockStatus"> </div>
-                                    <ng-template #thenBlockStatus>
-                                        <input disabled type="checkbox" formControlName="internalOrder"
-                                            [(ngModel)]='internalOrder' (change)="internalOrderEvent($event)">
-                                    </ng-template>
-                                    <ng-template #elseBlockStatus>
-                                        <input disabled type="checkbox" formControlName="internalOrder" checked
-                                            [(ngModel)]='internalOrder' (change)="internalOrderEvent($event)">
-                                    </ng-template>
-                                </td>
-                                <td style="width: 12%" class="LabelFontStyle">
-                                    Asset&nbsp;Item&nbsp;:&nbsp;
-                                </td>
-                                <td>
-                                    <div *ngIf="assetItemShow; then thenBlockStatus; else elseBlockStatus"> </div>
-                                    <ng-template #thenBlockStatus>
-                                        <input disabled type="checkbox" formControlName="assetItem"
-                                            [(ngModel)]='assetItem' (change)="internalOrderEvent($event)">
-                                    </ng-template>
-                                    <ng-template #elseBlockStatus>
-                                        <input disabled type="checkbox" formControlName="assetItem" checked
-                                            [(ngModel)]='assetItem' (change)="internalOrderEvent($event)">
-                                    </ng-template>
-                                </td>
-                                <td style="width: 12%" class="LabelFontStyle">
-                                    Purchasable&nbsp;:&nbsp;
-                                </td>
-                               <td>
-                                <div  *ngIf="purchasableShow; then thenBlockStatus; else elseBlockStatus">  </div>
-                            <ng-template #thenBlockStatus>
-                                <input disabled type="checkbox"  formControlName="purchasable" [(ngModel)]='purchasable'  (change)="internalOrderEvent($event)">
-                            </ng-template>
-                            <ng-template #elseBlockStatus>
-                                <input disabled type="checkbox" formControlName="purchasable" checked   [(ngModel)]='purchasable'     (change)="internalOrderEvent($event)">
-                            </ng-template>
-                               </td>
-                               <td style="width: 12%" class="LabelFontStyle">
+                    <table class="center" style="border: 1px;">
+                        <tr>
+                            <td colspan="6">
+                                <table style="border: 1px;">
+                                    <tr>
+                                        <td style="width: 12%" class="LabelFontStyle">
+                                            Stockable&nbsp;:&nbsp;
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td>
+                                <div *ngIf="stockableShow; then thenBlockStatus; else elseBlockStatus"> </div>
+                                <ng-template #thenBlockStatus>
+                                    <input disabled type="checkbox" formControlName="stockable" [(ngModel)]='stockable'
+                                        (change)="stockableEvent($event)">
+                                </ng-template>
+                                <ng-template #elseBlockStatus>
+                                    <input disabled type="checkbox" formControlName="stockable" checked
+                                        [(ngModel)]='stockable' (change)="stockableEvent($event)">
+                                </ng-template>
+                            </td>
+                            <td style="width: 12%" class="LabelFontStyle">
+                                Costing&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                <div *ngIf="costingShow; then thenBlockStatus; else elseBlockStatus"> </div>
+                                <ng-template #thenBlockStatus>
+                                    <input disabled type="checkbox" formControlName="costing" [(ngModel)]='costing'
+                                        (change)="costingEvent($event)">
+                                </ng-template>
+                                <ng-template #elseBlockStatus>
+                                    <input disabled type="checkbox" formControlName="costing" checked
+                                        [(ngModel)]='costing' (change)="costingEvent($event)">
+                                </ng-template>
+                            </td>
+                            <td style="width: 12%" class="LabelFontStyle">
+                                Internal&nbsp;Order&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                <div *ngIf="internalOrderShow; then thenBlockStatus; else elseBlockStatus"> </div>
+                                <ng-template #thenBlockStatus>
+                                    <input disabled type="checkbox" formControlName="internalOrder"
+                                        [(ngModel)]='internalOrder' (change)="internalOrderEvent($event)">
+                                </ng-template>
+                                <ng-template #elseBlockStatus>
+                                    <input disabled type="checkbox" formControlName="internalOrder" checked
+                                        [(ngModel)]='internalOrder' (change)="internalOrderEvent($event)">
+                                </ng-template>
+                            </td>
+                            <td style="width: 12%" class="LabelFontStyle">
+                                Asset&nbsp;Item&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                <div *ngIf="assetItemShow; then thenBlockStatus; else elseBlockStatus"> </div>
+                                <ng-template #thenBlockStatus>
+                                    <input disabled type="checkbox" formControlName="assetItem" [(ngModel)]='assetItem'
+                                        (change)="internalOrderEvent($event)">
+                                </ng-template>
+                                <ng-template #elseBlockStatus>
+                                    <input disabled type="checkbox" formControlName="assetItem" checked
+                                        [(ngModel)]='assetItem' (change)="internalOrderEvent($event)">
+                                </ng-template>
+                            </td>
+                            <td style="width: 12%" class="LabelFontStyle">
+                                Purchasable&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                <div *ngIf="purchasableShow; then thenBlockStatus; else elseBlockStatus"> </div>
+                                <ng-template #thenBlockStatus>
+                                    <input disabled type="checkbox" formControlName="purchasable"
+                                        [(ngModel)]='purchasable' (change)="internalOrderEvent($event)">
+                                </ng-template>
+                                <ng-template #elseBlockStatus>
+                                    <input disabled type="checkbox" formControlName="purchasable" checked
+                                        [(ngModel)]='purchasable' (change)="internalOrderEvent($event)">
+                                </ng-template>
+                            </td>
+                            <td style="width: 12%" class="LabelFontStyle">
                                 Item&nbsp;Taxable&nbsp;:&nbsp;
                             </td>
                             <td>
                                 <div *ngIf="isTaxableShow; then thenBlockisTaxable; else elseBlockStatus"> </div>
-                            <ng-template #thenBlockStatus>
-                                <input disabled type="checkbox" formControlName="isTaxable" checked  [(ngModel)]='isTaxable' (change)="internalOrderEvent($event)">
-                            </ng-template>
-                            <ng-template #elseBlockStatus>
-                                <input disabled type="checkbox" formControlName="isTaxable"  [(ngModel)]='isTaxable' (change)="internalOrderEvent($event)">
-                            </ng-template>
+                                <ng-template #thenBlockStatus>
+                                    <input disabled type="checkbox" formControlName="isTaxable" checked
+                                        [(ngModel)]='isTaxable' (change)="internalOrderEvent($event)">
+                                </ng-template>
+                                <ng-template #elseBlockStatus>
+                                    <input disabled type="checkbox" formControlName="isTaxable" [(ngModel)]='isTaxable'
+                                        (change)="internalOrderEvent($event)">
+                                </ng-template>
                             </td>
-                            </tr>
-                           
-                        </table>
-                        <table class="center">
-                            <tr>
+                        </tr>
+
+                    </table>
+                    <table class="center">
+                        <tr>
+                            <td style="width: 12%" class="LabelFontStyle">
+                                Cost&nbsp;Center&nbsp;:
+                            </td>
+                            <td>
+                                <select style="width:fit-content" formControlName="costCenter" id="costCenter"
+                                    class="form-control" [(ngModel)]="costCenter"
+                                    (ngModelChange)="onOptionsSelectedBranch($event,'CostCentre')"
+                                    [ngClass]="{ 'is-invalid': submitted && f.costCenter.errors }">
+                                    <option *ngFor="let sc of  CostCenterList" [ngValue]="sc.lookupValue">
+                                        {{sc.lookupValue}}-{{sc.lookupValueDesc}}
+                                    </option>
+                                </select>
+                                <div *ngIf="submitted && f.costCenter.errors" class="invalid-feedback">
+                                    <div *ngIf="f.costCenter.errors.required">Cost Center cannot be blank</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div *ngIf="displayPoCharge; then thenBlockPoCharge; else elseBlockPoCharge"> </div>
+                                <ng-template #thenBlockPoCharge>
+                            <td style="width: 12%" class="LabelFontStyle">
+                                Natural&nbsp;Account&nbsp;:
+                            </td>
+                            <td>
+                                <select formControlName="poChargeAccount" id="poChargeAccount" class="form-control"
+                                    [(ngModel)]="poChargeAccount"
+                                    [ngClass]="{ 'is-invalid': submitted && f.NaturalAccount.errors }"
+                                    (ngModelChange)="onOptionsSelectedBranch($event,'NaturalAccount')">
+                                    <option></option>
+                                    <option *ngFor="let sc of  NaturalAccountList" [ngValue]="sc.lookupValue">
+                                        {{sc.lookupValue}}-{{sc.lookupValueDesc}}
+                                    </option>
+                                </select>
+                                <div *ngIf="submitted && f.NaturalAccount.errors" class="invalid-feedback">
+                                    <div *ngIf="f.NaturalAccount.errors.required">Natural
+                                        Account cannot be blank</div>
+                                </div>
+                            </td>
+                            </ng-template>
+                            <ng-template #elseBlockPoCharge>
                                 <td style="width: 12%" class="LabelFontStyle">
-                                    Cost&nbsp;Center&nbsp;:
+                                    Natural&nbsp;Account&nbsp;:
                                 </td>
                                 <td>
-                                    <select style="width:fit-content" formControlName="costCenter"  id="costCenter" class="form-control"
-                                        [(ngModel)]="costCenter"  (ngModelChange)="onOptionsSelectedBranch($event,'CostCentre')"
-                                        [ngClass]="{ 'is-invalid': submitted && f.costCenter.errors }">
-                                        <option *ngFor="let sc of  CostCenterList"
-                                            [ngValue]="sc.lookupValue">
+                                    <select formControlName="poChargeAccount" id="poChargeAccount" class="form-control"
+                                        [(ngModel)]="poChargeAccount"
+                                        (ngModelChange)="onOptionsSelectedBranch($event,'NaturalAccount')">
+                                        <option>--Select--</option>
+                                        <option *ngFor="let sc of  NaturalAccountList" [ngValue]="sc.lookupValue">
                                             {{sc.lookupValue}}-{{sc.lookupValueDesc}}
+
                                         </option>
                                     </select>
-                                    <div *ngIf="submitted && f.costCenter.errors"
-                                        class="invalid-feedback">
-                                        <div *ngIf="f.costCenter.errors.required">Cost Center cannot be blank</div>
-                                    </div>
                                 </td>
-                                <td>
-                                    <div  *ngIf="displayPoCharge; then thenBlockPoCharge; else elseBlockPoCharge"> </div>
-                                    <ng-template #thenBlockPoCharge>
-                                        <td style="width: 12%" class="LabelFontStyle">
-                                            Natural&nbsp;Account&nbsp;:
-                                        </td>
-                                        <td>
-                                            <select formControlName="poChargeAccount" id="poChargeAccount"
-                                                class="form-control" [(ngModel)]="poChargeAccount"
-                                                [ngClass]="{ 'is-invalid': submitted && f.NaturalAccount.errors }"
-                                                (ngModelChange)="onOptionsSelectedBranch($event,'NaturalAccount')">
-                                                <option></option>
-                                                <option *ngFor="let sc of  NaturalAccountList"
-                                                    [ngValue]="sc.lookupValue">
-                                                    {{sc.lookupValue}}-{{sc.lookupValueDesc}}
-                                                </option>
-                                            </select>
-                                            <div *ngIf="submitted && f.NaturalAccount.errors"
-                                                class="invalid-feedback">
-                                                <div *ngIf="f.NaturalAccount.errors.required">Natural
-                                                    Account cannot be blank</div>
-                                            </div>
-                                        </td>
-                                    </ng-template>
-                                    <ng-template #elseBlockPoCharge>
-                                        <td style="width: 12%" class="LabelFontStyle">
-                                            Natural&nbsp;Account&nbsp;:
-                                        </td>
-                                        <td>
-                                            <select formControlName="poChargeAccount"
-                                                id="poChargeAccount" class="form-control"
-                                                [(ngModel)]="poChargeAccount"
-                                                (ngModelChange)="onOptionsSelectedBranch($event,'NaturalAccount')">
-                                                <option>--Select--</option>
-                                                <option *ngFor="let sc of  NaturalAccountList"
-                                                    [ngValue]="sc.lookupValue">
-                                                    {{sc.lookupValue}}-{{sc.lookupValueDesc}}
-
-                                                </option>
-                                            </select>
-                                        </td>
-                                    </ng-template>
-                                    <td style="width: 12%" class="LabelFontStyle">
-                                        PO&nbsp;Charge&nbsp;Account&nbsp;:&nbsp;
-                                    </td>
-                                    <td colspan="3">
-                                        <input disabled formControlName="segmentName"  class="form-control" value={{segmentName}} style="width: 200px;">
-                                    </td>
-                            </tr>
-                            <div   *ngIf="displayisTaxable; then thenBlockisTaxable; else elseBlockisTaxable"></div>
-                            <ng-template #thenBlockisTaxable>
                             </ng-template>
-                            <ng-template #elseBlockisTaxable>
+                            <td style="width: 12%" class="LabelFontStyle">
+                                PO&nbsp;Charge&nbsp;Account&nbsp;:&nbsp;
+                            </td>
+                            <td colspan="3">
+                                <input disabled formControlName="segmentName" class="form-control" value={{segmentName}}
+                                    style="width: 200px;">
+                            </td>
+                        </tr>
+                        <div *ngIf="displayisTaxable; then thenBlockisTaxable; else elseBlockisTaxable"></div>
+                        <ng-template #thenBlockisTaxable>
+                        </ng-template>
+                        <ng-template #elseBlockisTaxable>
                             <tr>
                                 <td style="width: 12%" class="LabelFontStyle">
                                     Purchase&nbsp;S&CGST&nbsp;Category&nbsp;Name:&nbsp;</td>
                                 <td>
-                                    <select formControlName="taxCategorySale"
-                                        id="taxCategorySale" class="form-control">
+                                    <select formControlName="taxCategorySale" id="taxCategorySale" class="form-control">
                                         <option>--Select--</option>
-                                        <option *ngFor="let sc of  taxCategoryListP"
-                                            [ngValue]="sc.taxCategoryId">
+                                        <option *ngFor="let sc of  taxCategoryListP" [ngValue]="sc.taxCategoryId">
                                             {{sc.taxCategoryName}}
                                         </option>
                                     </select>
@@ -456,11 +454,9 @@
                                 <td style="width: 12%" class="LabelFontStyle">
                                     Purchase&nbsp;IGST&nbsp;Category&nbsp;Name:&nbsp;</td>
                                 <td>
-                                    <select formControlName="taxCategoryPur" id="taxCategoryPur"
-                                        class="form-control">
+                                    <select formControlName="taxCategoryPur" id="taxCategoryPur" class="form-control">
                                         <option>--Select--</option>
-                                        <option *ngFor="let sc of  taxCategoryListP"
-                                            [ngValue]="sc.taxCategoryId">
+                                        <option *ngFor="let sc of  taxCategoryListP" [ngValue]="sc.taxCategoryId">
                                             {{sc.taxCategoryName}}
                                         </option>
                                     </select>
@@ -469,38 +465,175 @@
                             <tr>
                                 <td style="width: 12%" class="LabelFontStyle">
                                     Sales&nbsp;S&CGST&nbsp;Category&nbsp;Name:&nbsp;</td>
-                            
+
                                 <td>
-                                    <select formControlName="taxCategoryPur" id="taxCategoryPur"
-                                        class="form-control">
+                                    <select formControlName="taxCategoryPur" id="taxCategoryPur" class="form-control">
                                         <option>--Select--</option>
-                                        <option *ngFor="let sc of  taxCategoryListS"
-                                            [ngValue]="sc.taxCategoryId">
+                                        <option *ngFor="let sc of  taxCategoryListS" [ngValue]="sc.taxCategoryId">
                                             {{sc.taxCategoryName}}
                                         </option>
                                     </select>
                                 </td>
                                 <td style="width: 12%" class="LabelFontStyle">
                                     Sales&nbsp;IGST&nbsp;Category&nbsp;Name:&nbsp;</td>
-                                
-                                    <td>
-                                        <select formControlName="taxCategoryPur" id="taxCategoryPur"
-                                            class="form-control">
-                                            <option>--Select--</option>
-                                            <option *ngFor="let sc of  taxCategoryListS"
-                                                [ngValue]="sc.taxCategoryId">
-                                                {{sc.taxCategoryName}}
-                                            </option>
-                                        </select>
-                                    </td>
+
+                                <td>
+                                    <select formControlName="taxCategoryPur" id="taxCategoryPur" class="form-control">
+                                        <option>--Select--</option>
+                                        <option *ngFor="let sc of  taxCategoryListS" [ngValue]="sc.taxCategoryId">
+                                            {{sc.taxCategoryName}}
+                                        </option>
+                                    </select>
+                                </td>
                             </tr>
-                            </ng-template>
-                        </table>
+                        </ng-template>
+                    </table>
                     <!-- </div> -->
                 </div>
                 <div class="tab-pane fade" id="VehicleAdditionalDetails" role="tabpanel"
                     aria-labelledby="profile-tab-md">
-                    test
+                    <fieldset class="RFS">
+                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Vehicle
+                            Details&nbsp; </legend>
+                        <table style="width: fit-content;" class="center">
+                            <tr>
+                                <td style="width:15%" class="LabelFontStyle1"> Main&nbsp;Model&nbsp;:&nbsp;</td>
+                                <td>
+                                    <select style="width:fit-content" formControlName="mainModel" id="mainModel"
+                                        [(ngModel)]="mainModel" class="form-control"
+                                        (ngModelChange)="onOptionsSelectedVariant($event)"
+                                        [ngClass]="{ 'is-invalid': submitted && f.mainModel.errors }">
+                                        <option>--Select--</option>
+                                        <option *ngFor="let mm of mainModelList">
+                                            {{mm.code}}
+                                        </option>
+                                    </select>
+                                    <div *ngIf="submitted && f.mainModel.errors" class="invalid-feedback">
+                                        <div *ngIf="f.mainModel.errors.required">Please enter Main Model</div>
+                                    </div>
+                                </td>
+                                <td style="width: 15%;  " class="LabelFontStyle1"> Variant&nbsp;Code&nbsp;:&nbsp;</td>
+                                <td>
+                                    <select style="width:fit-content" formControlName="variantCode"
+                                        [(ngModel)]="variantCode" id="variantCode" class="form-control"
+                                        style="width: 170px;" (ngModelChange)="onOptionsSelectedColor($event)"
+                                        [ngClass]="{ 'is-invalid': submitted && f.variantCode.errors }"
+                                        (keyup)="onKey($event)" uppercase style="text-transform: uppercase;">
+                                        <option>--Select--</option>
+                                        <option *ngFor="let mm of VariantSearch" [ngValue]="mm.variant">
+                                            {{mm.variant}}-{{mm.varDescription}}
+                                        </option>
+                                    </select>
+                                    <div *ngIf="submitted && f.variantCode.errors" class="invalid-feedback">
+                                        <div *ngIf="f.variantCode.errors.required">Please enter Variant Code</div>
+                                    </div>
+                                </td>
+                                <td style="width: 15;  " class="LabelFontStyle1">Color&nbsp;Code&nbsp;:&nbsp;</td>
+                                <td>
+                                    <select formControlName="colorCode" (keyup)="onKey($event)" [(ngModel)]="colorCode"
+                                        id="colorCode" class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f.colorCode.errors }" uppercase
+                                        style="text-transform: uppercase;">
+                                        <option>--Select--</option>
+                                        <option *ngFor="let cc of ColourSearch" [ngValue]="cc.ColorCode">
+                                            {{cc.ColorCode}}-{{cc.colorDesc}}
+                                        </option>
+                                    </select>
+                                    <div *ngIf="submitted && f.colorCode.errors" class="invalid-feedback">
+                                        <div *ngIf="f.colorCode.errors.required">Please enter color Code </div>
+                                    </div>
+                                </td>
+                                <td style="width: 12%" class="LabelFontStyle1">Engine&nbsp;No&nbsp;:&nbsp;</td>
+                                <td>
+                                    <input formControlName="engineNo" value={{engineNo}} class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f.engineNo.errors }"
+                                        placeholder="Enter engine no"  style="text-transform: uppercase;">
+                                    <div *ngIf="submitted && f.engineNo.errors" class="invalid-feedback">
+                                        <div *ngIf="f.engineNo.errors.required">Please engine no</div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 12%" class="LabelFontStyle1">Chassis&nbsp;No&nbsp;:&nbsp;</td>
+                                <td>
+                                    <input formControlName="chassisNo" (keyup)="onKey($event)"  value={{chassisNo}} [(ngModel)]="chassisNo"
+                                        class="form-control" uppercase style="text-transform: uppercase;"
+                                        [ngClass]="{ 'is-invalid': submitted && f.chassisNo.errors }"  placeholder="Enter Chasis code">
+                                    <div *ngIf="submitted && f.chassisNo.errors"  class="invalid-feedback">
+                                        <div *ngIf="f.chassisNo.errors.required">Enter chasis no </div>
+                                        <div *ngIf="f.chassisNo.errors?.maxlength">Enter chasis no  </div>
+                                    </div>
+                                    <span  *ngIf="!itemMasterForm.get('chassisNo').valid && itemMasterForm.get('chassisNo').touched">Please Enter chasis no </span>
+                                </td>
+                                <td style="width: 12%" class="LabelFontStyle1">Vehicle&nbsp;Sale&nbsp;Date&nbsp;:&nbsp;</td>
+                                <td>
+                                    <input type="date" formControlName="vehicleDelvDate" value={{vehicleDelvDate}} class="form-control"
+                                        max="{{maxDate | date:'yyyy-MM-dd'}}" [ngClass]="{ 'is-invalid': submitted && f.vehicleDelvDate.errors }"
+                                        placeholder="Enter vehicle sale date">
+                                    <div *ngIf="submitted && f.vehicleDelvDate.errors"  class="invalid-feedback">
+                                        <div *ngIf="f.vehicleDelvDate.errors.required">Enter vehicle sale date </div>
+                                        <div *ngIf="f.vehicleDelvDate.errors?.maxlength">Enter vehicle sale  date </div>
+                                    </div>
+                                </td>
+                                <td style="width: 12%" class="LabelFontStyle1">Fule&nbsp;Type&nbsp;:&nbsp;</td>
+                                <td><input type="text" formControlName="fuelType" class="form-control"></td>
+                            <td style="width: 12%" class="LabelFontStyle1"> VIN&nbsp;No&nbsp;&nbsp;:&nbsp;</td>      
+                            <td><input type="text" formControlName="vin" class="form-control"> </td>
+                            </tr>
+                            <tr>
+                                 <td style="width: 12%" class="LabelFontStyle"> Dealer&nbsp;Code&nbsp;&nbsp;:&nbsp;</td> 
+                                <td colspan="3"> <select  formControlName="dealerCode"  id="dealerCode" class="form-control" style="width: 100%;">
+                                    <option>--Select--</option>
+                                    <option *ngFor="let sc of dealerCodeList" [ngValue]="sc.dealerCode">
+                                        {{sc.dealerCode}}--{{sc.dealerDesc}}
+                                    </option>
+                                </select>
+                            </td>
+                            </tr>
+                       </table>
+                    </fieldset>
+                    <fieldset class="RFS">
+                        <legend id="FormsPH_LGAadhaar" class="RFSL"  style="font-size: 10px;color: black;">Vehicle Insurer Details&nbsp; </legend>
+                        <table>
+                            <tr>
+                                <td style="width: 18%" class="LabelFontStyle"> Vehicle&nbsp;Insurer&nbsp;Name&nbsp;:&nbsp;</td>
+                                <td>
+                                    <select style="width:fit-content"
+                                        formControlName="insurerCompId" id="insurerCompId"
+                                        (ngModelChange)='onInsurerNameSelected($event)'
+                                        class="form-control">
+                                        <option>--Select--</option>
+                                        <option *ngFor="let sc of insNameList"
+                                            [ngValue]="sc.customerId">
+                                            {{sc.custName}}
+                                        </option>
+                                    </select>
+                                    <div *ngIf="submitted && f.insurerCompId.errors"  class="invalid-feedback">
+                                        <div *ngIf="f.insurerCompId.errors.required">Enter insurer  name </div>
+                                        <div *ngIf="f.insurerCompId.errors?.maxlength">Enter insurer  name </div>
+                                    </div>
+                                </td>
+                                <td style="width: 18%" class="LabelFontStyle"> Vehicle&nbsp;Insurance&nbsp;expiry&nbsp;date&nbsp;:&nbsp;</td>
+                                  <td><input type="date" class="form-control" min="{{minDate | date:'yyyy-MM-dd'}}"></td>
+                            </tr>
+                            <tr>
+                                <td style="width: 18%" class="LabelFontStyle"> Vehicle&nbsp;Insurer&nbsp;Site&nbsp;:&nbsp;</td>
+                                <td colspan="4">
+                                    <select style="width:100%"  formControlName="insurerSiteId" id="insurerSiteId"   class="form-control">
+                                        <option>--Select--</option>
+                                        <option *ngFor="let sc of insSiteList"
+                                            [ngValue]="sc.customerSiteId">
+                                            {{sc.address1}}{{sc.address2}}-{{sc.address3}}-{{sc.location}}-{{sc.city}}-{{sc.pinCd}}-{{sc.state}}
+                                        </option>
+                                    </select>
+                                    <div *ngIf="submitted && f.insurerSiteId.errors" class="invalid-feedback">
+                                        <div *ngIf="f.insurerSiteId.errors.required">Enter insurer site </div>
+                                        <div *ngIf="f.insurerSiteId.errors?.maxlength">Enter insurer site </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </fieldset>
                 </div>
                 <div class="tab-pane fade" id="CategoryDetails" role="tabpanel" aria-labelledby="contact-tab-md">
 

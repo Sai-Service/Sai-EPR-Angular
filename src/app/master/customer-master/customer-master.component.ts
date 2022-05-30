@@ -1009,12 +1009,12 @@ export class CustomerMasterComponent implements OnInit {
     // formValue.sGstNo = this.customerMasterForm.get('sGstNo').value;
     this.service.UpdateCustExeSiteMasterById(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD UPDATED SUCCESSFULLY');
+        alert(res.message);
         // window.location.reload();
         (document.getElementById('updregister') as HTMLInputElement).disabled = true;
       } else {
         if (res.code === 400) {
-          alert('ERROR OCCOURED IN PROCEESS');
+          alert(res.message+'---'+res.obj);
           // this.customerMasterForm.reset();
         }
       }
@@ -1058,11 +1058,11 @@ export class CustomerMasterComponent implements OnInit {
     formValue.termId=this.customerMasterForm.get('paymentType').value;
     this.service.UpdateCustMasterById(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD UPDATED SUCCESSFULLY');
+        alert(res.message);
         // window.location.reload();
       } else {
         if (res.code === 400) {
-          alert('ERROR OCCOURED IN PROCEESS');
+          alert(res.message+'---'+res.obj);
           this.customerMasterForm.reset();
         }
       }
@@ -1204,7 +1204,7 @@ export class CustomerMasterComponent implements OnInit {
 
 
   Select(customerSiteId: number) {
-    alert(customerSiteId);
+    // alert(customerSiteId);
     this.displayNewButton1 = false;
     this.displaystatus = false;
 

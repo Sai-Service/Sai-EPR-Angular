@@ -22,6 +22,7 @@ interface IItemMaster {
   bookletNo: string;
   toolkit: string;
   fuelType: string;
+  dealerCode:string;
   costing: string;
   stockable: string;
   purchasable: string;
@@ -41,8 +42,6 @@ interface IItemMaster {
   engineNo: string;
   vehicleDelvDate: Date;
   manYaer: string;
-  // octraiBillDate:Date;
-  // octraiType:string;
   warrantyStatus: string;
   ewStatus: string;
   ewStartDate: Date;
@@ -54,20 +53,12 @@ interface IItemMaster {
   ewInsurerSite: string;
   itemType: string;
   insurerCompId: string;
-  insurerSiteId: string;
+  insurerSiteId: number;
   interiors: string;
   rips: string;
   twoTone: string;
   hold: string;
   holdReason: string;
-  // escortLocation:string;
-  // escortReceipt:string;
-  // escortReceiptDt:Date;
-  // escortAmount:number;
-  // bwhLocation:string;
-  // bwhDebitMemo:number;
-  // bwhDebitMemoDt:Date;
-  // bwhEscortNo:number;
   cngKitNumber: number;
   cngCylinderNo: number;
   keyNo: number;
@@ -150,15 +141,32 @@ export class ItemMasterNewComponent implements OnInit {
   lookupValueDesc5: string;
   poChargeAccount: number;
   displayModal = true;
-  segment3:string;
-  segment4:string;
-  segment5:string;
+  segment3: string;
+  segment4: string;
+  segment5: string;
   showModal: boolean;
   public CostCenterList: Array<string> = [];
   public NaturalAccountList: Array<string> = [];
-  taxCategorySale:string;
-  taxCategoryPur:string;
-
+  taxCategorySale: string;
+  taxCategoryPur: string;
+  mainModel: string;
+  VariantSearch: Array<string>[];
+  ColourSearch: Array<string>[];
+  colorCode: string = '';
+  variantCode: string = '';
+  chassisNo: string = '';
+  engineNo:string;
+  vehicleDelvDate:Date;
+  public maxDate = new Date();
+  public dealerCodeList: Array<string> = [];
+  dealerCode:string;
+  fuelType:string;
+  vin:string;
+  public insSiteList: Array<string>[];
+  insurerCompId:number;
+  public insNameList: Array<string>[];
+  insurerSiteId:number;
+  public minDate = new Date();
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService) {
     this.itemMasterForm = fb.group({
       segmentName: [],
@@ -189,9 +197,20 @@ export class ItemMasterNewComponent implements OnInit {
       lookupValueDesc4: [],
       lookupValueDesc3: [],
       lookupValueDesc5: [],
-      poChargeAccount:[],
-      taxCategorySale:[],
-      taxCategoryPur:[],
+      poChargeAccount: [],
+      taxCategorySale: [],
+      taxCategoryPur: [],
+      mainModel: [],
+      colorCode: [],
+      variantCode: [],
+      chassisNo: [],
+      engineNo:[],
+      vehicleDelvDate:[],
+      dealerCode:[],
+      fuelType:[],
+      vin:[],
+      insurerCompId:[],
+      insurerSiteId:[],
     })
   }
 
@@ -221,7 +240,7 @@ export class ItemMasterNewComponent implements OnInit {
         }
       );
 
-      this.service.CostCenterList()
+    this.service.CostCenterList()
       .subscribe(
         data => {
           this.CostCenterList = data;
@@ -229,11 +248,27 @@ export class ItemMasterNewComponent implements OnInit {
         }
       );
 
-      this.service.NaturalAccountList()
+    this.service.NaturalAccountList()
       .subscribe(
         data => {
           this.NaturalAccountList = data;
           console.log(this.NaturalAccountList);
+        }
+      );
+
+      this.service.delearCodeList()
+      .subscribe(
+        data => {
+          this.dealerCodeList = data;
+          console.log(this.dealerCodeList);
+        }
+      );
+
+      this.service.insNameList()
+      .subscribe(
+        data => {
+          this.insNameList = data;
+          console.log(this.insNameList);
         }
       );
   }
@@ -426,7 +461,7 @@ export class ItemMasterNewComponent implements OnInit {
         this.segmentName = selloc + '.'
           + this.costCenter + '.'
           + this.poChargeAccount + '.'
-          + '0000'; 
+          + '0000';
       }
     );
 
@@ -467,5 +502,52 @@ export class ItemMasterNewComponent implements OnInit {
   }
 
 
+  onOptionsSelectedColor(variant) {
+    if (variant === undefined || variant === '') {
+    }
+    else {
+      this.orderManagementService.ColourSearchFn(variant)
+        .subscribe(
+          data => {
+            this.ColourSearch = data;
+            console.log(this.ColourSearch);
+            this.onKey(0);
+          }
+        );
+    }
+  }
 
+
+  onKey(event: any) {
+    if (Number(sessionStorage.getItem('divisionId')) === 1) {
+      const aaa = 'MV' + this.variantCode + '-' + this.colorCode + '-' + this.chassisNo;
+      this.itemMasterForm.patchValue({ segment: aaa })
+    }
+    else if (Number(sessionStorage.getItem('divisionId')) === 2) {
+      const aaa = 'BV' + this.variantCode + '-' + this.colorCode + '-' + this.chassisNo;
+      this.itemMasterForm.patchValue({ segment: aaa })
+    }
+  }
+
+  onOptionsSelectedVariant(mainModel) {
+    if (mainModel != undefined) {
+      this.orderManagementService.VariantSearchFn(mainModel)
+        .subscribe(
+          data => {
+            this.VariantSearch = data;
+            console.log(this.VariantSearch);
+          }
+        );
+    }
+    else { }
+  }
+  onInsurerNameSelected(customerId: number) {
+    this.service.insSiteList(customerId)
+      .subscribe(
+        data => {
+          this.insSiteList = data.customerSiteMasterList;
+          console.log(this.insSiteList);
+        }
+      );
+  }
 }

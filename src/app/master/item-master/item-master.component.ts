@@ -221,7 +221,8 @@ export class ItemMasterComponent implements OnInit {
   public ewStatusList: Array<string>[];
   public ewPeriodList: Array<string>[];
   public ewInsNameList: any;
-  VariantSearch: Array<string>[]; ColourSearch: Array<string>[];
+  VariantSearch: Array<string>[]; 
+  ColourSearch: Array<string>[];
   public ewInsurerSiteList: Array<string>[];
   public itemTypeList: Array<string>[];
   public insNameList: Array<string>[];

@@ -751,7 +751,8 @@
 
                                                     <td style="width: 15%;  " class="LabelFontStyle1">
                                                         Variant&nbsp;Code&nbsp;:&nbsp;</td>
-                                                    <td><select style="width:fit-content" formControlName="variantCode"
+                                                    <td>
+                                                        <select style="width:fit-content" formControlName="variantCode"
                                                             [(ngModel)]="variantCode" id="variantCode"
                                                             class="form-control" style="width: 170px;"
                                                             (ngModelChange)="onOptionsSelectedColor($event)"
@@ -886,7 +887,7 @@
                                                             *ngIf="!itemMasterForm.get('vehicleDelvDate').valid && itemMasterForm.get('vehicleDelvDate').touched">Please
                                                             Enter vehicle sale date </span>-->
                                                     </td>
-                                                    <td style="width: 12%" class="LabelFontStyle">
+                                                    <td style="width: 12%" class="LabelFontStyle1">
                                                         Fule&nbsp;Type&nbsp;:&nbsp;</td>
                                                     <td><input type="text" formControlName="fuelType"
                                                             class="form-control"></td>
