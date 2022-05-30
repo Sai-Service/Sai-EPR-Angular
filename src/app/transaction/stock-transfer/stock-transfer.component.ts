@@ -292,7 +292,7 @@ export class StockTransferComponent implements OnInit {
     // alert(this.deptName+'Depart');
     // alert(this.locId+'locID'+Number(sessionStorage.getItem('locId')));
 
-    this.service.searchall(this.locId).subscribe(
+    this.service.searchall(this.locId,this.divisionId,this.deptId).subscribe(
       data=>{
         this.pendingrec=data;
        console.log(this.pendingrec);
@@ -301,7 +301,7 @@ export class StockTransferComponent implements OnInit {
 
     )
 
-    this.service.searchallatother(Number(sessionStorage.getItem('locId'))).subscribe(
+    this.service.searchallatother(Number(sessionStorage.getItem('locId')),this.divisionId,this.deptId).subscribe(
       data=>{
         this.pendingatother=data;
        console.log(this.pendingrec);
@@ -750,7 +750,7 @@ searchAll()
 {
   //alert(this.locId+'Location');
 
-  this.service.searchall(this.locId).subscribe(
+  this.service.searchall(this.locId,this.divisionId,this.deptId).subscribe(
     data=>{
       this.pendingrec=data;
      console.log(this.pendingrec);
