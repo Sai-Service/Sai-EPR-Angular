@@ -249,11 +249,12 @@ export class PaymentArComponent implements OnInit {
   applySaveButton = false;
   validateStatus = false;
   showRefYellow = false;
-  applHistory = false;
-  chqBounceStatus = false;
-  printButton = true;
-  fromJc = false;
-  accountsLogin = false;
+  applHistory=false;
+  chqBounceStatus=false;
+  printButton=true;
+  fromJc=false;
+  fromOrderChetak=false;
+  accountsLogin=false;
 
   showInvoiceGrid = false;
   showRefundGrid = false;
@@ -487,31 +488,43 @@ export class PaymentArComponent implements OnInit {
     //      }
     // });
 
-    if (Number(sessionStorage.getItem('dept')) === 4) { this.accountsLogin = true; } else { this.accountsLogin = false; }
+if (Number(sessionStorage.getItem('dept')) ===4)  {this.accountsLogin=true;}else {this.accountsLogin=false;}
 
-    // alert ("DeptId : " +this.deptId + " accountsLogin="+this.accountsLogin);
-    if (this.deptId == 2) {
-      this.sub = this.router1.params.subscribe(params => {
-        var jcNum = params['jobCardNum'];
-        if (jcNum != undefined) {
-          this.fromJc = true;
-          this.refType = 'Service-Order'
-          this.GetJobCardDetails(jcNum);
-        }
-      });
+// alert ("DeptId : " +this.deptId + " accountsLogin="+this.accountsLogin);
 
-    }
-    if (this.deptId == 4) {
-      this.sub = this.router1.params.subscribe(params => {
-        this.referenceNo = this.router1.snapshot.queryParamMap.get('invNumber');
-        // this.searchByRcptNo= Number(this.router1.snapshot.queryParamMap.get('docSequenceValue'));
-        // alert(this.searchByRcptNo)
-        var methodId = this.router1.snapshot.queryParamMap.get('methodId');
-        var Amt = this.router1.snapshot.queryParamMap.get('recAmt');
-        if (this.referenceNo != undefined) {
-          this.payType = 'CONTROL ACCOUNT'
-          this.receiptMethodId = Number(methodId);
-          this.paymentAmt = Number(Amt);
+if(this.deptId==1){
+  this.sub = this.router1.params.subscribe(params => {
+     var  ordNumChetak = params['orderNumber'];
+    if (ordNumChetak != undefined){
+      this.fromOrderChetak=true;
+      this.refType='Sales-Order'
+    this.GetOrderDetails(ordNumChetak);
+  }
+});
+}
+
+if(this.deptId==2){
+    this.sub = this.router1.params.subscribe(params => {
+       var jcNum = params['jobCardNum'];
+      if (jcNum != undefined){
+        this.fromJc=true;
+        this.refType='Service-Order'
+      this.GetJobCardDetails(jcNum);}
+  });
+  }
+
+
+  if(this.deptId==4){
+    this.sub = this.router1.params.subscribe(params => {
+      this.referenceNo = this.router1.snapshot.queryParamMap.get('invNumber');
+      // this.searchByRcptNo= Number(this.router1.snapshot.queryParamMap.get('docSequenceValue'));
+      // alert(this.searchByRcptNo)
+     var methodId =   this.router1.snapshot.queryParamMap.get('methodId');
+     var Amt =this.router1.snapshot.queryParamMap.get('recAmt');
+     if ( this.referenceNo != undefined){
+       this.payType='CONTROL ACCOUNT'
+          this.receiptMethodId=Number(methodId);
+          this.paymentAmt=Number(Amt);
           // alert(this.receiptMethodId);  
           // if(this.receiptMethodId===143)
           // {
@@ -670,8 +683,13 @@ export class PaymentArComponent implements OnInit {
 
   }
 
-  GetJobCardDetails(jcNum) {
-    this.service.getJonCardNoSearch(jcNum)
+  GetOrderDetails(mOderNum){
+    alert ("Order Number :"+mOderNum);
+
+  }
+
+      GetJobCardDetails(jcNum) {
+      this.service.getJonCardNoSearch(jcNum)
       .subscribe(
         data => {
           // this.lstcomments = data.obj;

@@ -4011,6 +4011,7 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
       const url = (this.ServerUrl + `/SparesBackOrder/clearBackOrder?locId=${locId}`);
       return this.http.delete(url, options);
     }
+    
 
     getBackOrderStatusBajaj(locId): Observable<any> {
       return this.http.get(this.ServerUrl + `/SparesBackOrder/location?locId=${locId}`);
@@ -4032,10 +4033,7 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
 
     /////////////////////////DEAD STOCK /////////////////////
     getDeadStockList (mOuId,mFlag): Observable<any> {
-      // if(mth>0) {return this.http.get(this.ServerUrl + `/DedStock?ouId=${mOuId}&months=${mth}`);}
-      return this.http.get(this.ServerUrl + `/DedStock/list?ouId=${mOuId}&dFlag=${mFlag}`); 
-      // http://localhost:8081/DedStock/list?ouId=21&dFlag=Y
-      // http://localhost:8081/DedStock?ouId=21&months=10
+      return this.http.get(this.ServerUrl + `/DedStock/listProcess?ouId=${mOuId}`); 
     }
 
 

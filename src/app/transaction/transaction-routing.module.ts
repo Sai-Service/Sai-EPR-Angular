@@ -62,6 +62,7 @@ const routes: Routes = [
   {path:'PaymentReceipt',component:PaymentReceiptComponent},
   {path:'PaymentReceipt/:orderNumber',component:PaymentReceiptComponent},
   // {path:'PaymentAr/:regNo',component:PaymentArComponent},
+  {path:'PaymentAr/:orderNumber',component:PaymentArComponent},
   {path:'PaymentAr/:jobCardNum',component:PaymentArComponent},
   {path:'JournalVoucher/:docSequenceValue',component:JournalVoucherComponent},
   {path:'PaymentAr/:invNumber/:methodId/:recAmt',component:PaymentArComponent},
