@@ -580,6 +580,10 @@ UpdateItemLocatorMaster(LocatorMasterRecord) {
 getItemLocatorMasterSearch(locId,subId):Observable<any>{
   return this.http.get(this.ServerUrl + `/itemlctrmst/byLocSub?locId=${locId}&subInventoryId=${subId}`);
 }
+
+getItemLocatorMasterSearchNew(locId,subId,itemId):Observable<any>{
+  return this.http.get(this.ServerUrl + `/itemlctrmst/byLocSubItem?locId=${locId}&subInventoryId=${subId}&itemId=${itemId}`);
+}
 ////////////////////////////////Locator Master/////////////////////////////
 
  getLocatorMasterSearch(): Observable<any> {
