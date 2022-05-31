@@ -36,6 +36,7 @@
                                         <th scope="col">Trading Partner</th>
                                         <th scope="col">Supp No</th>
                                         <th scope="col">Supp Site</th>
+                                        <th scope="col">TDS Status</th>
                                         <th scope="col">Invoice Date</th>
                                         <th scope="col">Invoice No</th>
                                         <th scope="col">Document No</th>
@@ -83,7 +84,7 @@
                                             <ng-template #thenHeaderData>
                                                 <tr class="ItemStyle" style="text-decoration:none;">
                                                     <td>
-                                                        <button type="button"
+                                                        <button type="button" [style.display]="isVisibleSelectButton ? 'block' : 'none'"
                                                             (click)="selectINVLineDtl(i)">Select</button>
                                                     </td>
                                                     <input hidden type="number" formControlName="invoiceId"
@@ -166,6 +167,11 @@
                                                         <input type="text" disabled hidden
                                                             formControlName="taxCategoryName" class="form-control"
                                                             style="width: 150px;height: 25px;font-size: 11px;">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" disabled 
+                                                        formControlName="supTdsYN" class="form-control"
+                                                        style="width:50px;height: 25px;font-size: 11px;font-weight: bold;">
                                                     </td>
                                                     <td>
                                                         <input type="text" formControlName="invoiceDate" 
@@ -413,6 +419,11 @@
                                                         <input disabled type="text" class="form-control"
                                                             formControlName="siteName" value={{siteName}}
                                                             style="width: 65px;height: 25px;font-size: 10px;">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" disabled 
+                                                        formControlName="supTdsYN" class="form-control"
+                                                        style="width:50px;height: 25px;font-size: 11px;font-weight: bold;">
                                                     </td>
                                                     <td>
                                                         <input type="date" formControlName="invoiceDate" 

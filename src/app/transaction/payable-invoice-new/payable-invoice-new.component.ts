@@ -101,6 +101,7 @@ export class PayableInvoiceNewComponent implements OnInit {
   locId: number;
   locCode: string;
   source: string;
+  supTdsYN:string;
   userList3: any[] = [];
   chassisNoList: any = [];
   lastkeydown3: number = 0;
@@ -398,6 +399,7 @@ export class PayableInvoiceNewComponent implements OnInit {
   voucherNum: number;
   remark: string;
   trxNumber: number;
+  isVisibleSelectButton:boolean=false;
 
   constructor(private fb: FormBuilder, private router1: ActivatedRoute, private orderManagementService: OrderManagementService, private transactionService: TransactionService, private service: MasterService, private router: Router) {
     this.poInvoiceForm = fb.group({
@@ -410,6 +412,7 @@ export class PayableInvoiceNewComponent implements OnInit {
       invoiceNum: [''],
       invoiceAmt: [0.00],
       invoiceDate: [''],
+      supTdsYN:[],
       secondDateRange: [''],
       totalDistAmt: [],
       totalDistBaseAmt: [],
@@ -557,6 +560,7 @@ export class PayableInvoiceNewComponent implements OnInit {
       emplId: [],
       ouName: [],
       source: [],
+      supTdsYN:[],
       invoiceId: [],
       invoiceStatus: [],
       payGroup: [],
@@ -680,6 +684,7 @@ export class PayableInvoiceNewComponent implements OnInit {
 
   ngOnInit(): void {
     $("#wrapper").toggleClass("toggled");
+    this.isVisibleSelectButton=false;
     var patch = this.poInvoiceForm.get('obj') as FormArray;
     (patch.controls[0]).patchValue(
       {
@@ -885,13 +890,15 @@ export class PayableInvoiceNewComponent implements OnInit {
     var len = this.invLineDetailsArray().length;
     this.invoiceLineNo = this.invoiceLineNo + 1;
     var patch = this.poInvoiceForm.get('invLines') as FormArray;
+    var glDateArray = this.poInvoiceForm.get('obj').value;
     // var lineArray = this.poInvoiceForm.get('invLines').value();
     // if (lineArray[this.invoiceLineNo] )
+    // alert(glDateArray[0].glDate);
     (patch.controls[len - 1]).patchValue(
       {
         // lineNumber: len,
         lineNumber: this.invoiceLineNo,
-
+        glDate:glDateArray[0].glDate,
       }
     );
     // this.updateTotAmtPerline(this.invoiceLineNo)
@@ -1042,6 +1049,7 @@ export class PayableInvoiceNewComponent implements OnInit {
     this.lineDistributionArray().clear();
     this.tdsTaxDetailsArray().clear();
     this.displayHeaderData = false;
+    this.isVisibleSelectButton=true;
     let jsonData = this.poInvoiceForm.value;
     let invSearch: ISearch = Object.assign({}, jsonData);
     var searchObj: InvoiceSearchNew = new InvoiceSearchNew();
@@ -1535,10 +1543,11 @@ export class PayableInvoiceNewComponent implements OnInit {
     var distributionArray = this.poInvoiceForm.get('distribution') as FormArray;
     var distributionArrVal = this.poInvoiceForm.get('distribution').value;
     console.log(distributionArray);
-
+    var objarray = this.poInvoiceForm.get('obj').value;
     this.invoiceId = this.lstInvLineDeatails.invoiceId;
-    // alert(amount)
-    // alert(taxcat+'----');
+    var accDate = objarray[0].glDate;
+    // var accDate1 = this.pipe.transform(accDate, 'dd-MM-yyyy');
+    var gleDateNew = this.pipe.transform(objarray[0].glDate, 'y-MM-dd');
     if (amount === '' || amount == undefined || amount == null) {
       alert('Please enter amount.!');
       return;
@@ -1554,11 +1563,12 @@ export class PayableInvoiceNewComponent implements OnInit {
             // debugger;
             if (distributionArrVal[j].invoiceLineNum != null && distributionArrVal[j].invoiceLineNum == len) {
               if (itemtyp != 'MISCELLANEOUS') {
+                // alert(gleDateNew);
                 (distributionArray.controls[k]).patchValue(
                   {
                     amount: amount,
                     baseAmount: amount,
-                    accountingDate: this.glDate,
+                    accountingDate: gleDateNew,
                   }
                 );
                 if (taxcat != null) {
@@ -1569,6 +1579,7 @@ export class PayableInvoiceNewComponent implements OnInit {
             }
             else {
               if (itemtyp != 'MISCELLANEOUS') {
+                // alert(gleDateNew);
                 this.distribution1(k, itemtyp, amount, description);
                 if (taxcat != null) {
                   this.onOptionTaxCatSelected(taxcat, k)
@@ -1675,11 +1686,11 @@ export class PayableInvoiceNewComponent implements OnInit {
           lineTypeLookupCode: itemtyp,
           amount: amount,
           baseAmount: amount,
-          // accountingDate: this.glDate,
+          accountingDate: arrayControl[0].glDate,
           description: description,
         }
       );
-      this.accountingDate = this.glDate;
+      // this.accountingDate = this.glDate;
       // }
 
       this.distarr.set(invln, this.poInvoiceForm.get('distribution').value);
@@ -1919,10 +1930,13 @@ export class PayableInvoiceNewComponent implements OnInit {
         data => {
           this.siteIdList = data;
           console.log(this.siteIdList);
+          // alert(data.suppId.supTdsYN)
           this.lineDetailsArray().controls[0].patchValue({ taxCategoryName: data.taxCategoryName })
           if (data.suppId.supTdsYN === 'Y') {
+            // alert('--if---'+data.suppId.supTdsYN)
             this.lineDetailsArray().controls[0].patchValue({ payGroup: data.suppId.supTdsTyp });
-            this.isVisibleTDSTab = true;
+            this.lineDetailsArray().controls[0].patchValue({ supTdsYN: data.suppId.supTdsYN });
+            this.isVisibleTDSTab = false;
           }
           else if (data.suppId.supTdsYN === 'N') {
             this.isVisibleTDSTab = false;
@@ -2503,7 +2517,8 @@ export class PayableInvoiceNewComponent implements OnInit {
     let jsonData = this.poInvoiceForm.value.obj[0];
     jsonData.ouId = this.ouId;
     jsonData.emplId = this.emplId;
-    jsonData.amtAppToDisc = 0
+    jsonData.amtAppToDisc = 0;
+    this.isVisibleSelectButton=true;
     jsonData.accPayCodeCombId = 2079
     jsonData.currency = 'INR';
     var taxStr = [];
