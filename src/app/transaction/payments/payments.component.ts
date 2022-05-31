@@ -139,7 +139,7 @@ export class PaymentsComponent implements OnInit {
   private sub: any;
   receiptMethodId:number;
   refundStatus:string;
-  isarPayment:boolean=false;
+  // isarPayment:boolean=false;
   ispayAdvise:boolean=false;
   // public locIdList: Array<string> = [];
   constructor(private fb: FormBuilder, private router1: ActivatedRoute, private transactionService: TransactionService, private location: Location, private service: MasterService, private router: Router) {
@@ -404,12 +404,12 @@ jeSource: [],
       if (res.code === 200) {
         alert(res.message);
         this.PaymentReturnArr = res.obj;
-        if(this.selstatus=='Y'){
-          this.isarPayment=false;
-        }
-        else{
-        this.isarPayment=true;
-        }
+        // if(this.selstatus=='Y'){
+        //   this.isarPayment=false;
+        // }
+        // else{
+        // this.isarPayment=true;
+        // }
         this.ispayAdvise=true;
       } else {
         if (res.code === 400) {
