@@ -182,7 +182,11 @@
                                                             [style.display]="isVisibleinvoiceDateDate ? 'block' : 'none'"
                                                             class="form-control"
                                                             style="width: 150px;height: 25px;font-size: 11px;background-color: yellow;">
-                                                    </td>
+                                                            <!-- <input type="text" formControlName="invoiceDate" 
+                                                            [style.display]="isVisibleinvoiceDateDate ? 'block' : 'none'"
+                                                            class="form-control"
+                                                            style="width: 150px;height: 25px;font-size: 11px;background-color: yellow;"> -->
+                                                        </td>
                                                     <td>
                                                         <input type="text" class="form-control"
                                                             formControlName="invoiceNum" value={{invoiceNum}}
@@ -1256,7 +1260,10 @@
                                                         [formGroupName]="k" class="auto-style5">
                                                         <tr class="ItemStyle" style="text-decoration:none;">
                                                             <td>
-                                                                <input hidden formControlName="invoiceId"
+                                                                <input disabled formControlName="invoiceId"
+                                                                    class="form-control"
+                                                                    style="width: 60px;height: 25px;">
+                                                                    <input disabled type="number" formControlName="distCodeCombId"
                                                                     class="form-control"
                                                                     style="width: 60px;height: 25px;">
                                                             </td>

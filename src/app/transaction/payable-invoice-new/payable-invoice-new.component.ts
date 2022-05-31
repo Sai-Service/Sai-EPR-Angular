@@ -57,6 +57,7 @@ interface IpoInvoice {
   totalDistAmt: number;
   totalDistBaseAmt: number;
   distLineNumber: number;
+  distCodeCombId:number;
   invTransferStatus: string;
   lineNumber: number;
   lineTypeLookupCode: string;
@@ -419,6 +420,7 @@ export class PayableInvoiceNewComponent implements OnInit {
       poChargeAcCode: [],
       invTransferStatus: [],
       distLineNumber: [],
+      distCodeCombId:[],
       description: [],
       segment11: [],
       segment2: [],
@@ -496,11 +498,12 @@ export class PayableInvoiceNewComponent implements OnInit {
       invDistributionId: [],
       invoiceLineNum: [],
       distLineNumber: [],
+      distCodeCombId:[],
       amount: ['', [Validators.required]],
       accountingDate: [],
       baseAmount: ['', [Validators.required]],
       poSegment: [],
-      distCodeCombId: [],
+      // distCodeCombId: [],
       distCodeCombSeg: ['', [Validators.required]],
       poChargeAc: [],
       poChargeDesc: [],
@@ -1307,6 +1310,7 @@ export class PayableInvoiceNewComponent implements OnInit {
           var arraybaseNew = this.poInvoiceForm.get('obj') as FormArray;
           var arraybaseNew1 = arraybaseNew.getRawValue()
           var invId = arraybaseNew1[0].invoiceId;
+          // alert(invId)
           let tdscontrolInv = this.poInvoiceForm.get('tdsLines') as FormArray;
           let distLineArray = this.poInvoiceForm.get('distribution') as FormArray;
           // alert(data.invTdsLines.length);
@@ -1428,8 +1432,11 @@ export class PayableInvoiceNewComponent implements OnInit {
             }
             // }
           }
-          else if (arraybaseNew1[index].invTypeLookupCode === 'Standard Invoice' && data.invoiceStatus.includes('Validate') || data.invoiceStatus === 'Unpaid') {
+          else if (arraybaseNew1[index].invTypeLookupCode === 'Standard Invoice' && data.invoiceStatus !=undefined) {
+            alert(data.invoiceStatus)
+            if (data.invoiceStatus.includes('Validate') || data.invoiceStatus === 'Unpaid'){
             this.isVisiblePayment = true;
+          }
           }
           else {
             this.isVisible = true;
@@ -1487,6 +1494,7 @@ export class PayableInvoiceNewComponent implements OnInit {
 
   showTdsLines(mInvId, payGroup) {
     var invId;
+    // alert(mInvId)
     if (mInvId === 0) {
       var arraybase = this.poInvoiceForm.get('obj').value;
       invId = arraybase[0].invoiceId;
@@ -1504,24 +1512,37 @@ export class PayableInvoiceNewComponent implements OnInit {
             this.TdsDetailsArray().removeAt(i);
           }
           this.TdsDetailsArray().clear();
+          // debugger;
           for (let i = 0; i < this.lstTdsLineDetails.length; i++) {
             if (this.lstTdsLineDetails[i].description != undefined) {
               var description = this.lstTdsLineDetails[i].description.toUpperCase();
+              // alert(description);
               if (description.includes('ROUNDING') == false) {
                 var tdsLnGrp: FormGroup = this.tdsLineDetails();
                 this.TdsDetailsArray().push(tdsLnGrp);
               }
             }
           }
-          this.poInvoiceForm.get('tdsLines').patchValue(this.lstTdsLineDetails);
+          // this.poInvoiceForm.get('tdsLines').patchValue(this.lstTdsLineDetails);
+          let j = 0;
           let tdscontrolInv = this.poInvoiceForm.get('tdsLines') as FormArray;
           for (let i = 0; i < this.lstTdsLineDetails.length; i++) {
-            (tdscontrolInv.controls[i]).patchValue({ invoiceId: invId });
-            (tdscontrolInv.controls[i]).patchValue({ invoiceDistId: this.lstTdsLineDetails[i].invDistributionId });
-            (tdscontrolInv.controls[i]).patchValue({ description: this.lstTdsLineDetails[i].description });
-            (tdscontrolInv.controls[i].patchValue({ actualSectionCode: payGroup }))
+            var description = this.lstTdsLineDetails[i].description.toUpperCase();
+              // alert(description);
+              if (description.includes('ROUNDING') == false) {
+            (tdscontrolInv.controls[j]).patchValue({ invoiceId: invId });
+            (tdscontrolInv.controls[j]).patchValue({ invoiceDistId: this.lstTdsLineDetails[i].invDistributionId });
+            (tdscontrolInv.controls[j]).patchValue({ distCodeCombId: this.lstTdsLineDetails[i].distCodeCombId });
+            (tdscontrolInv.controls[j]).patchValue({ description: this.lstTdsLineDetails[i].description });
+            (tdscontrolInv.controls[j].patchValue({ actualSectionCode: payGroup }));
+            (tdscontrolInv.controls[j].patchValue({ baseAmount: this.lstTdsLineDetails[i].baseAmount}));
+            (tdscontrolInv.controls[j].patchValue({ distCodeCombSeg: this.lstTdsLineDetails[i].distCodeCombSeg}));
+            (tdscontrolInv.controls[j].patchValue({ distLineNumber: this.lstTdsLineDetails[i].distLineNumber}));
+            (tdscontrolInv.controls[j].patchValue({ invoiceLineNum: this.lstTdsLineDetails[i].invoiceLineNum}));
+            j = j + 1;  
+            }
+            // this.poInvoiceForm.get('tdsLines').patchValue(this.lstTdsLineDetails);distCodeCombSeg  distLineNumber  invoiceLineNum
           }
-
         });
   }
 
@@ -2805,6 +2826,7 @@ export class PayableInvoiceNewComponent implements OnInit {
 
       var tdsLines = this.poInvoiceForm.get('tdsLines').value;
       console.log(tdsLines);
+      // return;
       var arrayControl = this.poInvoiceForm.get('obj') as FormArray;
       var arrayControl1 = arrayControl.getRawValue();
       this.transactionService.PoInvoiceTdsDataSubmit(tdsLines).subscribe((res: any) => {
@@ -2813,10 +2835,11 @@ export class PayableInvoiceNewComponent implements OnInit {
           // alert(arrayControl1[0].invNumber);
           // this.apInvFindAfterSave(arrayControl1[0].invNumber);
           this.apInvFind(res.obj)
-          // this.TaxDetailsArray().clear();
+          this.TaxDetailsArray().clear();
           this.tdsTaxDetailsArray().clear();
           this.TdsDetailsArray().clear();
-          // this.invLineDetailsArray().clear();
+          this.invLineDetailsArray().clear();
+          this.lineDetailsArray().clear();
           // this.lineDistributionArray().clear();
           // window.location.reload();
         } else {
