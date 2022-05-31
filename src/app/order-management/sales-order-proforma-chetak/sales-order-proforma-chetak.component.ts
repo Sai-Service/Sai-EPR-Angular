@@ -26,7 +26,7 @@ export class SalesOrderProformaChetakComponent implements OnInit {
   pipe = new DatePipe('en-US');
   now = Date.now();
   public minDate = new Date();
-  
+
   itemSeg: string = "";
   orderNumber: number;
   emailId: string;
@@ -564,7 +564,7 @@ export class SalesOrderProformaChetakComponent implements OnInit {
 
             this.salesOrderBookingChetakForm.patchValue({ tcsYN: data.obj.tcsYN });
             this.salesOrderBookingChetakForm.patchValue({ custName: data.obj.custName });
-            this.salesOrderBookingChetakForm.patchValue({ custName: data.obj.mobile1 });
+            this.salesOrderBookingChetakForm.patchValue({ mobile1: data.obj.mobile1 });
             this.salesOrderBookingChetakForm.patchValue({ customerId: data.obj.customerId });
             this.salesOrderBookingChetakForm.patchValue({ classCodeType: data.obj.classCodeType });
             this.salesOrderBookingChetakForm.patchValue({ tcsPer: data.obj.tcsPer });
