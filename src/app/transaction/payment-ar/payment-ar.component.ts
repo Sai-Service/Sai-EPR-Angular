@@ -476,6 +476,8 @@ export class PaymentArComponent implements OnInit {
     console.log(this.loginArray);
     console.log(this.locId);
 
+    // alert ("Location id : "+this.locId );
+
     ////////////// Navigate from JobCard form /////////
 
     // this.sub = this.router1.params.subscribe(params => {
@@ -2030,11 +2032,12 @@ if(this.deptId==2){
               this.custName = null;
               this.custSiteAddress = null;
               this.paymentArForm.patchValue({ custAccountNo: '' });
-              alert("Customer Account no doesn't Exists.\nDivision/OpUnit -" + this.loginArray + "(" + this.divisionId + ") / " + this.ouName + "(" + this.ouId + ")")
+              alert("Customer Account doesn't Exists OR Not attached to \nDivision/OpUnit -" + this.loginArray + "(" + this.divisionId + ") / " + this.ouName + "(" + this.ouId + ")")
             }
             else {
               this.paymentArForm.patchValue({ custAccountNo: data.obj[0].accountNo });
               console.log(this.accountNoSearch);
+              this.enableCustAccount=false;
 
               this.paymentArForm.patchValue({
                 customerId: this.accountNoSearch[0].customerId,
