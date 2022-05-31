@@ -497,6 +497,7 @@ if (Number(sessionStorage.getItem('dept')) ===4)  {this.accountsLogin=true;}else
 if(this.deptId==1){
   this.sub = this.router1.params.subscribe(params => {
      var  ordNumChetak = params['orderNumber'];
+      alert ("orderNumber  :"+ordNumChetak  +" Dept :"+this.deptId);
     if (ordNumChetak != undefined){
       this.fromOrderChetak=true;
       this.refType='Sales-Order'
@@ -508,6 +509,7 @@ if(this.deptId==1){
 if(this.deptId==2){
     this.sub = this.router1.params.subscribe(params => {
        var jcNum = params['jobCardNum'];
+      //  alert ("Jobcard Num  :"+jcNum  +" Dept :"+this.deptId);
       if (jcNum != undefined){
         this.fromJc=true;
         this.refType='Service-Order'
