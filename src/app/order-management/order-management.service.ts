@@ -162,7 +162,7 @@ export class OrderManagementService {
   }
 
 
-  receiptView(receiptNo){
+  receiptView(receiptNo) {
     const REQUEST_URI = this.ServerUrl + `/omPayment/omSingleReceipt?receiptNumber=${receiptNo}`;
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
@@ -315,7 +315,7 @@ export class OrderManagementService {
   }
 
 
-  priceListNameListouwise(ouId, divisionId,deptId): Observable<any> {
+  priceListNameListouwise(ouId, divisionId, deptId): Observable<any> {
     return this.http.get(this.ServerUrl + `/pricelist/priceHdrOu?ouId=${ouId}&divisionId=${divisionId}&deptId=${deptId}&priceSubType=MRP`);
   }
   public OrderBook(BookRecord) {
@@ -326,8 +326,8 @@ export class OrderManagementService {
     return this.http.post(url, BookRecord, options);
   }
 
-  getOnHandQty(locId,invItemId,subInventoryId):Observable<any>{
-    return this.http.get(this.ServerUrl+`/onhandqty/onhandPrchng?locId=${locId}&itemCode=${invItemId}&subInventoryId=${subInventoryId}`)
+  getOnHandQty(locId, invItemId, subInventoryId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/onhandqty/onhandPrchng?locId=${locId}&itemCode=${invItemId}&subInventoryId=${subInventoryId}`)
   }
 
   public AccLineSave(AccLineRecord) {
@@ -488,7 +488,7 @@ export class OrderManagementService {
       return this.http.get(this.ServerUrl + `/orderHeader/getVehiclePrice?code=${model}&variant=${variant}&colorCode=${color}`);
     }
   }
-  dealerShipBaseAmtNew(model, variant, color,ouId): Observable<any> {
+  dealerShipBaseAmtNew(model, variant, color, ouId): Observable<any> {
     if (variant != null && variant != null) {
       return this.http.get(this.ServerUrl + `/orderHeader/getVehiclePrice?code=${model}&variant=${variant}&colorCode=${color}&ouId=${ouId}`);
     }
@@ -502,7 +502,7 @@ export class OrderManagementService {
     return this.http.put(url, options);
   }
 
- 
+
   // autoApplyInvoiceFn(currentDate){
   //   const options = {
   //     headers: this.headers
@@ -512,7 +512,7 @@ export class OrderManagementService {
   // }
 
 
-  autoApplyInvoiceFn(orderNumber){
+  autoApplyInvoiceFn(orderNumber) {
     const options = {
       headers: this.headers
     };
@@ -667,7 +667,7 @@ export class OrderManagementService {
     return this.http.put(url, UpdateSaleUpdateRecord, options);
   }
 
-  UpdatePrice(UpdatePrice){
+  UpdatePrice(UpdatePrice) {
     const options = {
       headers: this.headers
     };
@@ -722,7 +722,7 @@ export class OrderManagementService {
   //   });
   // }
 
-  public vehicleNoupdateFn(itemId, regNo, regDate,customerId) {
+  public vehicleNoupdateFn(itemId, regNo, regDate, customerId) {
     const options = {
       headers: this.headers
     };
@@ -815,33 +815,46 @@ export class OrderManagementService {
   }
 
 
-  printArReceipt(rcptNumber,refTp) {
+  printArReceipt(rcptNumber, refTp) {
     // alert ( "oms >> "+ refTp);
     // const REQUEST_URI = this.ServerUrl + `/arCashReceipts/arReceiptPrint/${rcptNumber}`;
     // const REQUEST_URI = this.ServerUrl + `/SalesReports/ReInsuranceReceipt?receiptNumber=${rcptNumber}`;
     // return this.http.get(REQUEST_URI, { responseType: 'arraybuffer',  headers: this.headers, });
 
-    if(refTp==='ReIns-Renewal') {
-       return this.http.get(this.ServerUrl + `/SalesReports/ReInsuranceReceipt?receiptNumber=${rcptNumber}`, { responseType: 'arraybuffer',  headers: this.headers, });
-      }  
-     else { 
-     return this.http.get(this.ServerUrl + `/arCashReceipts/arReceiptPrint/${rcptNumber}`, { responseType: 'arraybuffer',  headers: this.headers, });
+    if (refTp === 'ReIns-Renewal') {
+      return this.http.get(this.ServerUrl + `/SalesReports/ReInsuranceReceipt?receiptNumber=${rcptNumber}`, { responseType: 'arraybuffer', headers: this.headers, });
+    }
+    else {
+      return this.http.get(this.ServerUrl + `/arCashReceipts/arReceiptPrint/${rcptNumber}`, { responseType: 'arraybuffer', headers: this.headers, });
     }
 
-   }
+  }
 
 
-   reinsuarnceReceiptPrintFn(receiptNo){
-    const REQUEST_URI = this.ServerUrl +`/SalesReports/ReInsuranceReceipt?receiptNumber=${receiptNo}`;
+  reinsuarnceReceiptPrintFn(receiptNo) {
+    const REQUEST_URI = this.ServerUrl + `/SalesReports/ReInsuranceReceipt?receiptNumber=${receiptNo}`;
     return this.http.get(REQUEST_URI, {
       responseType: 'arraybuffer',
       headers: this.headers,
     });
-    
+
   }
 
 
+  public createProformaOrderCh(AccLineRecord1) {
+    const options = {
+      headers: this.headers
+    };
+    const url = this.ServerUrl + '/Proforma/ch';
+    return this.http.post(url, AccLineRecord1, options);
   }
+
+  proformaOrderSearchChetak(divisionId, orderNumber): Observable<any> {
+    return this.http.get(this.ServerUrl + `/Proforma/${divisionId}/ch/${orderNumber}`);
+  }
+
+
+}
 
 
 
