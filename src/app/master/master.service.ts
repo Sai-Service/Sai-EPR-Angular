@@ -2694,6 +2694,8 @@ OrderCategoryList(): Observable<any> {
       return this.http.get(this.ServerUrl + `/arCashReceipts/receipt/${rcptNumber}?locId=`+sessionStorage.getItem('locId'));
     }
 
+   
+
     getArReceiptDetailsByRcptNoAndlocDeptIDAccou(rcptNumber,locId): Observable<any> {
       return this.http.get(this.ServerUrl + `/arCashReceipts/receipt/${rcptNumber}?locId=`+locId);
     }
@@ -3010,6 +3012,8 @@ bulkPickTickCSV(formData: FormData ,priceListName:string,taxCategoryName:string,
       const url = (this.ServerUrl + `/EwScheme`);
       return this.http.put(url, EwSchemeMasterRecord, options);
     }
+
+
 
     RegNoListFN() : Observable<any> {
       return this.http.get(this.ServerUrl +`/itemMst/regList/1`);
@@ -3391,6 +3395,14 @@ UpdateVariantMaster(VariantMasterRecord) {
   };
   const url = (this.ServerUrl + `/VariantMst`);
   return this.http.put(url, VariantMasterRecord, options);
+}
+
+unappliedReceipt(rcptNumber): Observable<any> {
+  const options = {
+    headers: this.headers
+  };
+  const url = (this.ServerUrl + `/arCashReceipts/unapplyRcptManually?receiptNumber=${rcptNumber}`);
+  return this.http.put(url, rcptNumber, options);
 }
 
 mcpItemList(): Observable<any> {

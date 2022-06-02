@@ -62,7 +62,7 @@ export class PaymentArComponent implements OnInit {
   pipe = new DatePipe('en-US');
   now = Date.now();
   public minDate = new Date();
-
+  isVisibleUnApplyReceipt:boolean=false;
   message: string = "PleaseFixtheErrors!";
   msgType: string = "Close";
   // public DivisionIDList : Array<string>=[];
@@ -1221,7 +1221,14 @@ if(this.deptId==2){
     return revDays;
   }
 
+  unApplyReceipt(receiptNumber){
+    alert(receiptNumber)
+    this.service.unappliedReceipt(receiptNumber)
+    .subscribe(
+      data => {
 
+      })
+  }
 
   SelectReceipt(receiptNumber: any) {
     // alert('selectReceiptMethod'+'---'+receiptNumber)
@@ -1262,14 +1269,12 @@ if(this.deptId==2){
             this.GetCustomerSiteDetails(data.obj.oePayList[0].customerId)
 
             this.showRefundHist = false;
+          
             if (data.obj.oePayList[0].status === 'REFUND') {
               this.showReasonDetails = false; this.enableCancelButton = false; this.enableApplyButton = false;
               this.showRefundHist = true;
               return;
             }
-
-
-
             if (data.obj.oePayList[0].reversalReasonCode != null) {
               if (data.obj.oePayList[0].reversalReasonCode === 'ChqBounce') { this.chqBounceStatus = true; }
               this.printButton = false;
@@ -1383,7 +1388,13 @@ if(this.deptId==2){
               return;
             }
 
-
+            // alert(data.obj.oePayList[0].status);
+            if (data.obj.oePayList[0].status=='APPLIED'){
+              // alert(Number(sessionStorage.getItem('deptId')))
+              if (Number(sessionStorage.getItem('deptId'))==4){
+              this.isVisibleUnApplyReceipt=true;
+            }
+            }
 
             if (data.obj.oePayList[0].reversalReasonCode != null) {
               if (data.obj.oePayList[0].reversalReasonCode === 'ChqBounce') { this.chqBounceStatus = true; }
