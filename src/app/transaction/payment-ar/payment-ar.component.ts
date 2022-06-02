@@ -301,7 +301,7 @@ export class PaymentArComponent implements OnInit {
   paymentAr(paymentArForm: any) { }
 
 
-  constructor(private service: MasterService, private orderManagementService: OrderManagementService, private fb: FormBuilder, private router: Router, private router1: ActivatedRoute, private router2: ActivatedRoute) {
+  constructor(private service: MasterService, private orderManagementService: OrderManagementService, private fb: FormBuilder, private router: Router, private router1: ActivatedRoute, private router2: ActivatedRoute,private router4: ActivatedRoute) {
 
 
     this.paymentArForm = fb.group({
@@ -476,19 +476,7 @@ export class PaymentArComponent implements OnInit {
     console.log(this.loginArray);
     console.log(this.locId);
 
-    // alert ("Location id : "+this.locId );
-
-    ////////////// Navigate from JobCard form /////////
-
-    // this.sub = this.router1.params.subscribe(params => {
-    //   this.vehRegNo = params['regNo'];
-    //   this.attribute1=this.vehRegNo;
-    //   if (this.vehRegNo != undefined){
-    //     this.fromJc=true;
-    //     this.refType='Service-Order'
-    //   this.serchByRegNo(this.attribute1);
-    //      }
-    // });
+    
 
 if (Number(sessionStorage.getItem('dept')) ===4)  {this.accountsLogin=true;}else {this.accountsLogin=false;}
 
@@ -497,7 +485,7 @@ if (Number(sessionStorage.getItem('dept')) ===4)  {this.accountsLogin=true;}else
 if(this.deptId==1){
   this.sub = this.router1.params.subscribe(params => {
      var  ordNumChetak = params['orderNumber'];
-      alert ("orderNumber  :"+ordNumChetak  +" Dept :"+this.deptId);
+      // alert ("orderNumber  :"+ordNumChetak  +" Dept :"+this.deptId);
     if (ordNumChetak != undefined){
       this.fromOrderChetak=true;
       this.refType='Sales-Order'

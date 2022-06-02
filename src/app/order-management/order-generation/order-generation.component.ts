@@ -524,15 +524,17 @@ export class OrderGenerationComponent implements OnInit {
            this.orderGenerationForm.get('orderNumber').disable();
             this.viewLogFile = true;
            
-            this.cdmsRefNo = data[0].cdmsRefNo;
-            this.dlrCode = data[0].dlrCode;
-            this.status = data[0].status;
-            this.orderDate = data[0].orderDate;
-            this.consCriteria = data[0].consCriteria;
+            // this.cdmsRefNo = data[0].cdmsRefNo;
+            // this.dlrCode = data[0].dlrCode;
+            // this.status = data[0].status;
+            // this.orderDate = data[0].orderDate;
+            // this.consCriteria = data[0].consCriteria;
             // this.plHeaderId= data[0].priceListHeaderId;
 
-            this.orderGenerationForm.patchValue({ plHeaderId: data[0].priceListHeaderId});
-
+            this.orderGenerationForm.patchValue({dlrCode: data[0].dlrCode,status:data[0].status,
+                                                 orderDate: data[0].orderDate,consCriteria:data[0].consCriteria,
+                                                 plHeaderId: data[0].priceListHeaderId ,
+                                                 cdmsRefNo: data[0].cdmsRefNo });
 
            if( data[0].locId != Number(sessionStorage.getItem('locId'))) {alert ("Order Number - Location Mismatch..."); this.spinIcon=false; this.dataDisplay='';return;}
 
