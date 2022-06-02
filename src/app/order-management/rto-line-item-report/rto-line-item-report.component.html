@@ -69,6 +69,7 @@
         <tr class="GridHeader" style="font-size: 11px;">
                 <th >Select</th>
                 <th >Sr. No</th>
+                <th >RTO Location</th>
                 <th >Cust Name</th>
                 <th >Cust Address</th>
                 <th >Cust Contact No</th>
@@ -101,6 +102,7 @@
                     <input  type="checkbox" id="selectLine"  formControlName="selectLine"   value="selectLine" (change)="selectLineData($event,i)" >
                 </td>
                 <td style="padding-left: 5px; text-align: center;">{{com.ROWNUM}}</td>
+                <td style="padding-left: 5px; text-align: center;">{{com.ATTRIBUTE17}}</td>
                 <td style="padding-left: 5px; text-align: center;">{{com.CUSTNAME}}</td>
                 <td style="padding-left: 5px; text-align: center;">{{com.CUSTADD}}</td>
                 <td style="padding-left: 5px; text-align: center;">{{com.CUSTCONTACT}}</td>
