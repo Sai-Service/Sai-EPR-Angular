@@ -92,9 +92,9 @@
                           </td>
                           <td>
                             <input   data-toggle="modal" data-target="#myModal1"
-                            formControlName="LocatorSegment"  value={{LocatorSegment}} (click)="OpenLocator()"
+                            formControlName="attribute8"  value={{attrbite8}} (click)="OpenLocator()"
                             class="form-control" >
-                            <input hidden formControlName="locatorId">
+                            <input type="number" disabled formControlName="locatorId">
                             <div class="modal fade" id="myModal1" role="dialog" [style.display]="showModal" tabindex="-1" aria-hidden="true" >
                               <div class="modal-dialog">
                                 <div class="modal-content">
@@ -212,6 +212,8 @@
                           <input   data-toggle="modal" data-target="#myModal1"
                           formControlName="attribute8"  value={{attribute8}} (click)="OpenLocator(trxLineIndex)"
                           class="form-control" >
+                          <input type="number" disabled formControlName="locatorId">
+                          <input type="number" disabled formControlName="itemLocatorId">
                           <div class="modal fade" id="myModal1" role="dialog" [style.display]="showModal" tabindex="-1" aria-hidden="true" >
                             <div class="modal-dialog">
                               <div class="modal-content">
@@ -228,12 +230,7 @@
                                         <td>
                                             <input type="text" formControlName="Floor"  value={{Floor}} [(ngModel)]="Floor" class="form-control"
                                                                placeholder="Floor" style="width: 52px;" >
-                                            <!-- <div *ngIf="submitted && f. segment11.errors" class="invalid-feedback">
-                                                <div *ngIf="f.segment11.errors.required">Required Two Digit Code</div>
-                                                <div *ngIf="f.segment11.errors?.maxLength">Required Two Digit Code</div>
-                                                <div *ngIf="f.segment11.errors?.pattern">Required Two Digit Code</div> -->
-                                            <!-- <span *ngIf="!miscellaneousForm.get('Floor').valid && miscellaneousForm.get('Floor').touched">Required Two Digit Code</span> -->
-                                        <!-- </div> -->
+                                          
                                         </td>
                                     </tr>
                                     <tr>
@@ -274,7 +271,7 @@
                                   </table>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="close" data-dismiss="modal"  (click)="okLocator(content)">Ok</button>
+                                    <button type="button" class="btn-primary" data-dismiss="modal"  (click)="okLocator(content)">Ok</button>
                                 </div>
                               </div>
                             </div>
