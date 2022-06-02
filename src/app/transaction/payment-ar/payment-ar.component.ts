@@ -508,12 +508,12 @@ if(this.deptId==2){
 
   if(this.deptId==4){
     this.sub = this.router1.params.subscribe(params => {
-      this.referenceNo = this.router1.snapshot.queryParamMap.get('invNumber');
+      this.checkNo = this.router1.snapshot.queryParamMap.get('invNumber');
       // this.searchByRcptNo= Number(this.router1.snapshot.queryParamMap.get('docSequenceValue'));
       // alert(this.searchByRcptNo)
      var methodId =   this.router1.snapshot.queryParamMap.get('methodId');
      var Amt =this.router1.snapshot.queryParamMap.get('recAmt');
-     if ( this.referenceNo != undefined){
+     if ( this.checkNo != undefined){
        this.payType='CONTROL ACCOUNT'
           this.receiptMethodId=Number(methodId);
           this.paymentAmt=Number(Amt);
