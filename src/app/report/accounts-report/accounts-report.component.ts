@@ -363,6 +363,27 @@ reportName:string;
     this.isVisiblepanelAPGLUnpainAging=false;
     this.isVisiblepanelprePayment=true;
   }
+  else if (reportName=='bankReconciliation'){
+    this.reportName='Bank Reconciliation Report';
+    this.reportForm.get('locCode').reset();
+    this.reportForm.get('locId').reset();
+    this.reportForm.get('segment4').reset();
+    this.reportForm.get('accountName1').reset();
+    this.isVisibleGSTSaleRegister=false;
+    this.isVisibleGSTPurchaseRegister=false;
+    this.isVisibleGSTSaleRegister=false;
+    this.reportForm.get('locCode').disable();
+    this.isVisibleSparesdebtors=false;
+    this.isVisibleLocation=false;
+    this.isVisibleLocation1=false;
+    this.isVisiblepanelaccountName=true;
+    this.isVisiblepanelcashName=false;
+    this.isVisiblespInvAgging=false;
+    this.isVisiblepanelgltrialBalance=false;
+    this.panelCashBank=true;
+    this.isVisiblepanelAPGLUnpainAging=false;
+    this.isVisiblepanelprePayment=false;
+  }
   }
 
 
@@ -564,6 +585,20 @@ reportName:string;
           this.dataDisplay = ''
           this.isDisabled1=false;
         })      
+     }
+     else if (reportName ==='Bank Reconciliation Report'){
+      // alert(reportName);
+      var accountName=this.reportForm.get('accountName1').value;
+      // var naturalAccct = this.reportForm.get('segment4').value;
+      const fileName = 'download.pdf';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+     this.reportService.bankReconciliation(fromDate,toDate,sessionStorage.getItem('ouId'),accountName)
+       .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.isDisabled1 = false;
+        this.closeResetButton = true;
+        this.dataDisplay = ''
+       })      
      }
   }
 

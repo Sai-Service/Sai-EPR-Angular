@@ -218,8 +218,8 @@ export class ItemMasterLocatorComponent implements OnInit {
 
   okLocator()
   {
-   var subInventoryId=this.ItemlocatorMasterForm.get('subInventoryId').value;
-    // alert(subInventoryId)
+   var subInventoryId=this.ItemlocatorMasterForm.get('subId').value;
+    alert(subInventoryId)
     this.LocatorSegment=this.ItemlocatorMasterForm.get('Floor').value.toUpperCase()+'.'+
                                  this.ItemlocatorMasterForm.get('Rack').value.toUpperCase()+'.'+
                                  this.ItemlocatorMasterForm.get('RackNo').value.toUpperCase()+'.'+
@@ -232,6 +232,7 @@ export class ItemMasterLocatorComponent implements OnInit {
     (data =>{
        this.LocatorList = data
        if(this.LocatorList.code===200) {
+         alert(this.LocatorList.obj.locatorId)
         this.ItemlocatorMasterForm.patchValue({ locatorId: this.LocatorList.obj.locatorId })
        if(this.LocatorList.lengh==0) {
          alert('Invalid Code Combination');
@@ -409,9 +410,11 @@ export class ItemMasterLocatorComponent implements OnInit {
 
   Select(locatorId: number) {
     let select = this.lstcomments.find(d => d.locatorId === locatorId);
+    var subInventoryId= this.ItemlocatorMasterForm.get('subId').value;
+    // alert(subInventoryId);
     if (select) {
       this.ItemlocatorMasterForm.patchValue(select);
-      this.ItemlocatorMasterForm.patchValue({attribute8:select.segmentName,subInventoryCode:select.subInventoryCode});
+      this.ItemlocatorMasterForm.patchValue({attribute8:select.segmentName,subInventoryCode:select.subInventoryCode,subinventoryId:subInventoryId});
       this.displayButton = false;
       this.display = false;
     }

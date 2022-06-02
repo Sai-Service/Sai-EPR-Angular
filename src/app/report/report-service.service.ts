@@ -170,6 +170,21 @@ export class ReportServiceService {
     });
   }
 
+  bankReconciliation(fromDate,toDate,ouId,accountName){
+    const REQUEST_URI = this.ServerUrl +`/AccountsReports/BankRecoRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&bankName=${accountName}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+  reinsuarnceReceiptRegister(fromDate, toDate, ouId, locId, deptId){
+    const REQUEST_URI = this.ServerUrl +`/SalesReports/SalesReinsuranceRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&deptId=${deptId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
 
   creditNoteReg(fromDate, toDate,ouId, locId){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/SprCreditNoteRegister?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
