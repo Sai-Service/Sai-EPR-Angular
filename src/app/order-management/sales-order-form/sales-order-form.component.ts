@@ -91,6 +91,7 @@ interface ISalesBookingForm {
   invType: string;
   lesseeAccNo: number;
   lesseeCustId: number;
+  attribute17:string;
   taxAmounts: IterableIterator<any[]>;
 }
 
@@ -342,6 +343,7 @@ export class SalesOrderFormComponent implements OnInit {
   isDisabledOrderFind=false;
   isDisabledlesseeCustName = false;
   isDisabledtaxbtn: Array<boolean> = [];
+  attribute17:string;
   // isDisabledtaxbtn=false;
 
   displaysegmentInvType: Array<boolean> = [];
@@ -409,6 +411,7 @@ export class SalesOrderFormComponent implements OnInit {
       taxiYN: [''],
       basicValue: [''],
       weddingDate: [''],
+      attribute17:[],
       name: [''],
       lesseeCustName: [''],
       customerSiteId: [''],

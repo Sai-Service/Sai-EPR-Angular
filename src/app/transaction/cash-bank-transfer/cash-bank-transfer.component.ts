@@ -780,16 +780,33 @@ export class CashBankTransferComponent implements OnInit {
             var trfDesc =this.cashBankTransferForm.get('transferDescp').value;
             var prdNam  =this.cashBankTransferForm.get('openPeriod').value;
 
+            let selectedValue = this.fromAcctList.find(v => v.receiptMethodId == methodId);
+            if( selectedValue != undefined){
+              console.log(selectedValue);
+              var methodName =selectedValue.methodName;
+              var mthdPrfx= methodName.substring(0,12)
+            }
+
+            // alert ("From A/c Method  Name : "+  methodId +"-"+methodName + " , "+mthdPrfx);
+
             // if(prdNam===undefined || prdNam===null || prdNam.trim()==='') {
             //   this.cashBankTransferForm.get('fromAcctDescpId').reset()
             // }
             
             if (methodId>0) {
-              if(methodId===58) {this.showChqListModal=true;} else {
+
+              // if(methodId===58) {this.showChqListModal=true;} else {
+              //   this.showChqListModal=false;
+              //   this.trfAmount=null;
+              //   this.amtInWords=null;
+              // }
+
+              if(mthdPrfx==='Counter Coll') {this.showChqListModal=true;} else {
                 this.showChqListModal=false;
-                this.trfAmount=null;
-                this.amtInWords=null;
+                this.trfAmount=null;this.amtInWords=null;
               }
+
+
 
               var x=this.cashBankTransferForm.get('receiptMethodId').value;
               var y=this.cashBankTransferForm.get('toAcctDescpId').value;
@@ -905,7 +922,6 @@ export class CashBankTransferComponent implements OnInit {
           CheckDataValidationsCancel()
           {
             const formValue: ICashBankTransfer = this.cashBankTransferForm.value;
-
             if(formValue.reversalStatus==='N'|| formValue.transferCode===null ||formValue.transferCode===undefined ) {
               this.checkValidation=false;
               alert ("REVERSAL STATUS: Should be 'Y' ");
@@ -918,25 +934,22 @@ export class CashBankTransferComponent implements OnInit {
               alert ("REVERSAL PERIOD: Should not be null value...");
               return;
            } 
+
           
-          if (formValue.reversalDate===undefined || formValue.reversalDate===null)
-          {
-              this.checkValidation=false;
-              alert ("REVERSAL DATE: Should not be null value...");
-              return;
-           } 
-
-              this.checkValidation=true
-
-          }
-
+              if (formValue.reversalDate===undefined || formValue.reversalDate===null)
+              {
+                  this.checkValidation=false;
+                  alert ("REVERSAL DATE: Should not be null value...");
+                  return;
+              } 
+                  this.checkValidation=true
+              }
 
           CheckDataValidations()
           {
         
               const formValue: ICashBankTransfer = this.cashBankTransferForm.value;
               // alert("mainModel date :" +formValue.mainModel);
-
             
               if(formValue.transferCode===undefined || formValue.transferCode===null ) {
                   this.checkValidation=false;
@@ -949,7 +962,6 @@ export class CashBankTransferComponent implements OnInit {
                 alert ("TRANSFER DATE: Should not be null value");
                 return; 
              }
-           
                
              if (formValue.openPeriod===undefined || formValue.openPeriod===null)
              {
@@ -1093,31 +1105,36 @@ export class CashBankTransferComponent implements OnInit {
              var rcptMethidId =this.cashBankTransferForm.get('receiptMethodId').value;
              var bnkId =this.cashBankTransferForm.get('bankId').value;
              var docNo=this.cashBankTransferForm.get('docTrfNo').value;
-             if(rcptMethidId !=58) {this.showChqListModal=false; return;}
-
-             else {this.showChqListModal=true;     }
-            //  alert (rcptMethidId +","+this.showChqListModal);
+             var loc=this.cashBankTransferForm.get('locId').value;
+             
+            //  if(rcptMethidId !=58) {this.showChqListModal=false; return;}
+            //  else {this.showChqListModal=true;     }
+            //  this.showChqListModal=false;  
 
              if(this.displayButton===true){
 
-              this.service.getBnkChqList(bnkId,rcptMethidId,sessionStorage.getItem('locId'))
+              this.service.getBnkChqList(bnkId,rcptMethidId,loc)
               .subscribe(
                 data => {
                   this.lstChequeList = data.obj;
                   console.log(this.lstChequeList);
                   var len = this.rcptLineArray().length;
                   // alert("this.lstChequeList.length :"+this.lstChequeList.length);
+                  if(data.obj ===null ){alert ("Cheque List Details Not Found....") ;  return;}
+                  if(data.obj.length >0 ){
+                  
                   for (let i = 0; i < this.lstChequeList.length - len; i++) {
                     var invLnGrp: FormGroup = this.rcptLineDetails();
                     this.rcptLineArray().push(invLnGrp);
                   }
                   this.cashBankTransferForm.get('rcptLine').patchValue(this.lstChequeList);
-                } ); 
+                } else {alert ("Cheque List Details Not Found....") ;  return;}
+                }); 
 
               } else
               {
 
-                this.service.getBnkChqListDocNum(sessionStorage.getItem('locId'),rcptMethidId,docNo)
+                this.service.getBnkChqListDocNum(loc,rcptMethidId,docNo)
                 .subscribe(
                   data => {
                     this.lstChequeList = data;
@@ -1201,6 +1218,17 @@ export class CashBankTransferComponent implements OnInit {
                 var inWords =this.number2text(trfAmt);
                 this.amtInWords=inWords;
                      
+              }
+
+              validateTrfDate(trfDate) {
+                var currDate = new Date();
+                var trfDate1 = new Date(trfDate);
+                if (trfDate1 > currDate) {
+                  alert("TRANSFER DATE :" + "Should not be above Today's Date");
+                  this.transferDate = this.pipe.transform(this.now, 'y-MM-dd');
+                }
+            
+            
               }
 
 

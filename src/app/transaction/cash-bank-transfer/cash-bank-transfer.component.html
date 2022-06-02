@@ -89,11 +89,8 @@
                                     </td>  
                                  </ng-template>
 
-
                                  <td style="width: 15%" class="LabelFontStyle">Transfer&nbsp;Date:&nbsp;</td>
-                                 <td>
-                                        <input  disabled  type="date"  formControlName="transferDate"  id="transferDate" [(ngModel)]="transferDate" class="form-control"  >
-                                 </td>
+                                 <td><input type="date"  formControlName="transferDate"  id="transferDate" [(ngModel)]="transferDate" class="form-control"  (change)="validateTrfDate(transferDate)" style="background-color: yellow"></td>
                             </tr>
                             <tr>
 
@@ -595,7 +592,7 @@
         <div class="modal-content">
          <div class="modal-header">
           <!-- <h5 class="modal-title" id="exampleModal2Label">AR&nbsp;Receipt&nbsp;Application&nbsp;-&nbsp;Receipt&nbsp;No:&nbsp;{{this.receiptNumber}}&nbsp;BillToSite:&nbsp;{{this.billToSiteId}} </h5> -->
-          <h5 class="modal-title" id="ChqListModalLabel">&nbsp;Receipt&nbsp;List&nbsp;</h5>
+          <h5 class="modal-title" id="ChqListModalLabel">&nbsp;Receipt&nbsp;List  - &nbsp; {{this.fromAcctDescp}}({{this.receiptMethodId}})</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
