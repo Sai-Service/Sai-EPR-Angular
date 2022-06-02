@@ -1105,6 +1105,7 @@ export class CashBankTransferComponent implements OnInit {
              var rcptMethidId =this.cashBankTransferForm.get('receiptMethodId').value;
              var bnkId =this.cashBankTransferForm.get('bankId').value;
              var docNo=this.cashBankTransferForm.get('docTrfNo').value;
+             var loc=this.cashBankTransferForm.get('locId').value;
              
             //  if(rcptMethidId !=58) {this.showChqListModal=false; return;}
             //  else {this.showChqListModal=true;     }
@@ -1112,7 +1113,7 @@ export class CashBankTransferComponent implements OnInit {
 
              if(this.displayButton===true){
 
-              this.service.getBnkChqList(bnkId,rcptMethidId,sessionStorage.getItem('locId'))
+              this.service.getBnkChqList(bnkId,rcptMethidId,loc)
               .subscribe(
                 data => {
                   this.lstChequeList = data.obj;
@@ -1133,7 +1134,7 @@ export class CashBankTransferComponent implements OnInit {
               } else
               {
 
-                this.service.getBnkChqListDocNum(sessionStorage.getItem('locId'),rcptMethidId,docNo)
+                this.service.getBnkChqListDocNum(loc,rcptMethidId,docNo)
                 .subscribe(
                   data => {
                     this.lstChequeList = data;
