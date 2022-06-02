@@ -70,6 +70,8 @@ export class PaymentsComponent implements OnInit {
   partyId:number;
   source:string;
 
+  displayselButton: Array<boolean> = [];
+
   // payDate = this.pipe.transform(this.todaydate, 'dd-MMM-yyyy');
   // payDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   payDate = this.pipe.transform(Date.now(), 'y-MM-dd');
@@ -140,6 +142,7 @@ export class PaymentsComponent implements OnInit {
   receiptMethodId:number;
   refundStatus:string;
   isarPayment:boolean=false;
+  isSelPayment:boolean=true;
   ispayAdvise:boolean=false;
   // public locIdList: Array<string> = [];
   constructor(private fb: FormBuilder, private router1: ActivatedRoute, private transactionService: TransactionService, private location: Location, private service: MasterService, private router: Router) {
@@ -328,6 +331,7 @@ jeSource: [],
         });
       }
     })
+    this.displayselButton[0]=true;
   }
   SearchINVNO(INVNO) {
     // alert(INVNO +'---SearchINVNO')
@@ -389,6 +393,7 @@ jeSource: [],
   selectedPayment: any;
   selreeceiptmethod:any;
   selstatus:any;
+  selPayStatus:any;
   paymentdispSearch(docNo, i) {
 
     // alert(docNo);
@@ -398,6 +403,7 @@ jeSource: [],
     var docNo1 = arr[i].docNo;
     this.selreeceiptmethod=arr[i].receiptMethodId;
     this.selstatus=arr[i].refundStatus;
+    this.selPayStatus=arr[i].statusLookupCode;
 
 
     this.transactionService.paymentDocSearch(docNo1).subscribe((res: any) => {
@@ -896,10 +902,14 @@ console.log(jsonData);
             patch.controls[j].patchValue(this.paymentData);
             var payDateNew1New = this.pipe.transform(res.obj[j].payDate, 'y-MM-dd');
             this.payDate = payDateNew1New;
+            if(this.paymentData[j].statusLookupCode==='CLEARED'){
+              this.displayselButton[j] = false;            
           }
-
+          else{
+            this.displayselButton[j] = true;   
+          }
+        }
           this.paymentForm.get('obj1').patchValue(this.paymentData);
-       
           // this.paymentForm.patchValue(this.paymentData);
           console.log(this.paymentData);
 

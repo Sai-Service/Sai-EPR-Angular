@@ -652,6 +652,25 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory=false;
       this.panelamcHistrory=true;
     }
+    else if (reportName === 'reInsuarnceRegister') {
+      this.reportName = 'ReInsurance Register';
+      this.isVisiblefromtolocationdepartment = true;
+      this.isVisibleVehicleSaleRegister = false;
+      this.isVisibleSaleIND = false;
+      this.isSaleClosingStock = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisiblestockTransfer=false;
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.isVisibleDepartmentList = true;
+      }
+      this.isVisiblefromtoloccustaccno=false;
+      this.isVisibleSalesInventoryAging=false;
+      this.isVisiblepanelfromtolocation=false;
+      this.isVisiblepanelreceiptNo=false;
+      this.isVisiblepanelSalesAddonReconciliation=false;
+      this.isVisiblefromtosubinventory=false;
+      this.panelamcHistrory=false;
+    }
   }
 
 
@@ -1237,6 +1256,29 @@ export class SalesReportsComponent implements OnInit {
         this.dataDisplay = ''
       })
      }
+     else if (reportName === 'ReInsurance Register') {
+      //  alert(deptId);
+        const fileName = 'ReInsurance Register-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
+        const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+        if (Number(sessionStorage.getItem('deptId')) === 4) {
+          this.reportService.reinsuarnceReceiptRegister(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
+            .subscribe(data => {
+              saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+              this.isDisabled1 = false;
+              this.closeResetButton = true;
+              this.dataDisplay = ''
+            })
+        }
+        else if (Number(sessionStorage.getItem('deptId')) != 4) {
+          this.reportService.spReceiptRegisterReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
+            .subscribe(data => {
+              saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+              this.isDisabled1 = false;
+              this.closeResetButton = true;
+              this.dataDisplay = ''
+            })
+        }
+      }
   }
 
  

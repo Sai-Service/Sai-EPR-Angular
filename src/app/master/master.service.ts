@@ -580,6 +580,10 @@ UpdateItemLocatorMaster(LocatorMasterRecord) {
 getItemLocatorMasterSearch(locId,subId):Observable<any>{
   return this.http.get(this.ServerUrl + `/itemlctrmst/byLocSub?locId=${locId}&subInventoryId=${subId}`);
 }
+
+getItemLocatorMasterSearchNew(locId,subId,itemId):Observable<any>{
+  return this.http.get(this.ServerUrl + `/itemlctrmst/byLocSubItem?locId=${locId}&subInventoryId=${subId}&itemId=${itemId}`);
+}
 ////////////////////////////////Locator Master/////////////////////////////
 
  getLocatorMasterSearch(): Observable<any> {
@@ -1647,13 +1651,14 @@ getPriceDetail(locId,itemid,subInv,repNo,divId):Observable<any>{
 BillableType():Observable<any>{
   return this.http.get(this.ServerUrl+`/billableTy`);
 }
-searchall(locId):Observable<any>
+searchall(locId,divId,deptId):Observable<any>
 {
-  return this.http.get(this.ServerUrl+`/mmtTrx/PendingRecMyloc/${locId}`);
+  return this.http.get(this.ServerUrl+`/mmtTrx/PendingRecMyloc?locationId=${locId}&divisionId=${divId}&deptId=${deptId}`);
 }
-searchallatother(locId):Observable<any>
+searchallatother(locId,divId,deptId):Observable<any>
 {
-  return this.http.get(this.ServerUrl+`/mmtTrx/PendingRecOthLoc/${locId}`);
+  return this.http.get(this.ServerUrl+`/mmtTrx/PendingRecOthLoc?locationId=${locId}&divisionId=${divId}&deptId=${deptId}`);
+  
 }
 getreserqty(locId,itemID):Observable<any>{
   return this.http.get(this.ServerUrl+`/reserveQty/locResQty?locId=${locId}&invItemId=${itemID}`)

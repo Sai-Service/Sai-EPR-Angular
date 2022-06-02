@@ -19,7 +19,8 @@ interface IItemLocatorMaster {
   segment3: string;
   segment4: string;
   segment5: string;
-  LocatorSegment: string;
+  // LocatorSegment: string;
+  attribute8:string;
   status: string;
   endDate: Date;
   itemId:number;
@@ -31,6 +32,7 @@ interface IItemLocatorMaster {
   subInventoryCode:string;
   locCode:string;
   itemLocatorId:number;
+  attribute7:string;
 }
 
 
@@ -52,6 +54,7 @@ export class ItemMasterLocatorComponent implements OnInit {
   segment4: string;
   segment5: string;
   LocatorSegment: string;
+  attribute8:string;
   itemId:number;
   // copyAddv:string;
   orderedItem: string;
@@ -67,7 +70,7 @@ export class ItemMasterLocatorComponent implements OnInit {
   public statusList: Array<string> = [];
   public locationIdList: any = [];
   public subinventoryIdList: Array<string> = [];
-
+  attribute7:string;
   userList2: any[] = [];
   lastkeydown1: number = 0;
   divisionId: number;
@@ -109,6 +112,7 @@ export class ItemMasterLocatorComponent implements OnInit {
       status: [''],
       endDate: ['', [Validators.nullValidator]],
       LocatorSegment:[],
+      attribute8:[],
       Floor:[],
   Rack :[],
   RackNo:[],
@@ -123,6 +127,7 @@ export class ItemMasterLocatorComponent implements OnInit {
   subInventoryCode:[],
   locCode:[],
   itemLocatorId:[],
+  attribute7:[],
       // copyAddv:[],
     });
   }
@@ -196,23 +201,16 @@ export class ItemMasterLocatorComponent implements OnInit {
     return matches;
   };
   onOptiongetItem(event:any){
-    alert(event.target.value)
+    // alert(event.target.value)
     // var itemDesc=event;
     var itemDesc = event.target.value.toUpperCase();
-    // let select1=this.ItemIdList.find(d=>d.SEGMENT===event);
-    // this.ItemlocatorMasterForm.patchValue({itemId:select1.itemId})
-    //   this.service.getItemDetail(select1.itemId).subscribe
-    //   (data => {this.getItemDetail = data;
-    //     if(this.getItemDetail.description !=undefined){
-    //       this.ItemlocatorMasterForm.patchValue({description: this.getItemDetail.description});
-    //     }
-    //   } );
     this.orderManagementService.searchByItemSegmentDiv(this.divisionId, itemDesc)
       .subscribe(
         data => {
           this.orderedItem = data[0].description;
           console.log(data[0].description);
           this.ItemlocatorMasterForm.patchValue({description: data[0].description});
+          this.ItemlocatorMasterForm.patchValue({itemId: data[0].itemId});
         })
       }
   
@@ -220,32 +218,23 @@ export class ItemMasterLocatorComponent implements OnInit {
 
   okLocator()
   {
-   var subInventoryId=this.ItemlocatorMasterForm.get('subInventoryId').value;
+   var subInventoryId=this.ItemlocatorMasterForm.get('subId').value;
     alert(subInventoryId)
-    // alert(i);
-
-    this.LocatorSegment=this.ItemlocatorMasterForm.get('Floor').value+'.'+
-                                 this.ItemlocatorMasterForm.get('Rack').value+'.'+
-                                 this.ItemlocatorMasterForm.get('RackNo').value+'.'+
-                                 this.ItemlocatorMasterForm.get('Row').value+'.'+
-                                 this.ItemlocatorMasterForm.get('RowNo').value;
-
-
-    var LocatorSegment1=this.LocatorSegment;
-    // alert(this.LocatorSegment1);
-
-    this.ItemlocatorMasterForm.patchValue({'LocatorSegment': this.LocatorSegment})
-
+    this.LocatorSegment=this.ItemlocatorMasterForm.get('Floor').value.toUpperCase()+'.'+
+                                 this.ItemlocatorMasterForm.get('Rack').value.toUpperCase()+'.'+
+                                 this.ItemlocatorMasterForm.get('RackNo').value.toUpperCase()+'.'+
+                                 this.ItemlocatorMasterForm.get('Row').value.toUpperCase()+'.'+
+                                 this.ItemlocatorMasterForm.get('RowNo').value.toUpperCase();
+    var LocatorSegment1=this.LocatorSegment.toUpperCase();
+    // alert(LocatorSegment1);
+    this.ItemlocatorMasterForm.patchValue({'attribute8': this.LocatorSegment.toUpperCase()})
     this.service.LocatorNameList(LocatorSegment1,Number(sessionStorage.getItem('locId')),subInventoryId).subscribe
     (data =>{
        this.LocatorList = data
-
-       if(this.LocatorList.code===200)
-       {
+       if(this.LocatorList.code===200) {
+         alert(this.LocatorList.obj.locatorId)
         this.ItemlocatorMasterForm.patchValue({ locatorId: this.LocatorList.obj.locatorId })
-
-       if(this.LocatorList.lengh==0)
-       {
+       if(this.LocatorList.lengh==0) {
          alert('Invalid Code Combination');
        }
        else{
@@ -253,10 +242,8 @@ export class ItemMasterLocatorComponent implements OnInit {
        }
       }
       else if (this.LocatorList.code===400) {
-
         this.ItemlocatorMasterForm.patchValue({LocatorSegment : ''});
       }
-
       });
       this.ItemlocatorMasterForm.get('Floor').reset();
       this.ItemlocatorMasterForm.get('Rack').reset();
@@ -268,9 +255,9 @@ export class ItemMasterLocatorComponent implements OnInit {
 
    OpenLocator()
    {
-
-     var LocSegment=this.ItemlocatorMasterForm.get('LocatorSegment').value;
-
+     var LocSegment1=this.ItemlocatorMasterForm.get('attribute8').value;
+      var LocSegment = LocSegment1.toUpperCase();
+      // alert(LocSegment)
      if (LocSegment===null)
      {
        this.ItemlocatorMasterForm.get('Floor').reset();
@@ -283,11 +270,11 @@ export class ItemMasterLocatorComponent implements OnInit {
      {
        var temp = LocSegment.split('.');
        // alert(temp[0]);
-       this.Floor= temp[0];
-       this.Rack = temp[1];
-       this.RackNo = temp[2];
-       this.Row = temp[3];
-       this.RowNo = temp[4];
+       this.Floor= temp[0].toUpperCase();
+       this.Rack = temp[1].toUpperCase();
+       this.RackNo = temp[2].toUpperCase();
+       this.Row = temp[3].toUpperCase();
+       this.RowNo = temp[4].toUpperCase();
      }
          // this.showModal = true;
         //  this.content = i;
@@ -317,9 +304,10 @@ export class ItemMasterLocatorComponent implements OnInit {
     var segment5=this.ItemlocatorMasterForm.get('segment5').value;
     // alert(segment1 + '.' + segment2 + '.' + segment3 + '.' + segment4 + '.' + segment5);
     // var segment1=this.locatorMasterForm.get('')
-    const aaa = segment1 + '.' + segment2 + '.' + segment3 + '.' + segment4 + '.' + segment5;
+    const aaa = segment1.toUpperCase() + '.' + segment2.toUpperCase() + '.' + segment3.toUpperCase() + '.' + segment4.toUpperCase() + '.' + segment5.toUpperCase();
+      // alert(aaa)
     // this.segmentName = aaa;
-    this.ItemlocatorMasterForm.patchValue({segmentName:aaa})
+    this.ItemlocatorMasterForm.patchValue({attribute8:aaa})
   }
   transData(val) {
     delete val.locatorId;
@@ -359,18 +347,14 @@ export class ItemMasterLocatorComponent implements OnInit {
   }
 
   newMast() {
-    // this.submitted = true;
-    // if(this.ItemlocatorMasterForm.invalid){
-    //   return;
-    // }
-
-    const formValue: IItemLocatorMaster = this.ItemlocatorMasterForm.value;
+    const formValue: IItemLocatorMaster = this.ItemlocatorMasterForm.getRawValue();
     // var subId= this.subinventoryIdList.find(d => d.sub === locatorId);
     this.service.ItemLocatorMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
         // this.locatorMasterForm.reset();
-        window.location.reload();
+        // window.location.reload();
+        this.ItemlocatorMasterForm.disable()
       } else {
         if (res.code === 400) {
           alert(res.message);
@@ -382,18 +366,19 @@ export class ItemMasterLocatorComponent implements OnInit {
   }
 
   updateMast() {
-    const formValue: IItemLocatorMaster = this.ItemlocatorMasterForm.value;
+    const formValue: IItemLocatorMaster = this.ItemlocatorMasterForm.getRawValue();
     formValue.subInventoryId=this.ItemlocatorMasterForm.get('subId').value;
     let select = this.locationIdList.find(d => d.locCode === this.ItemlocatorMasterForm.get('locCode').value);
     formValue.locId=select.locId;
     this.service.UpdateItemLocatorMaster(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD UPDATED SUCCESSFULLY');
-        window.location.reload();
+        alert(res.message);
+        this.ItemlocatorMasterForm.disable();
+        // window.location.reload();
       } else {
         if (res.code === 400) {
-          alert('ERROR OCCOURED IN PROCEESS');
-          this.ItemlocatorMasterForm.reset();
+          alert(res.message);
+          // this.ItemlocatorMasterForm.reset();
         }
       }
     });
@@ -412,7 +397,8 @@ export class ItemMasterLocatorComponent implements OnInit {
     // alert(subId);
     var locId1=this.ItemlocatorMasterForm.get('locId').value;
     var subId=this.ItemlocatorMasterForm.get('subId').value;
-    this.service.getItemLocatorMasterSearch(this.locationId,subId)
+    var itemId=this.ItemlocatorMasterForm.get('itemId').value;
+    this.service.getItemLocatorMasterSearchNew(this.locationId,subId,itemId)
       .subscribe(
         data => {
           this.lstcomments = data;
@@ -424,9 +410,11 @@ export class ItemMasterLocatorComponent implements OnInit {
 
   Select(locatorId: number) {
     let select = this.lstcomments.find(d => d.locatorId === locatorId);
+    var subInventoryId= this.ItemlocatorMasterForm.get('subId').value;
+    // alert(subInventoryId);
     if (select) {
       this.ItemlocatorMasterForm.patchValue(select);
-      this.ItemlocatorMasterForm.patchValue({LocatorSegment:select.segmentName,subInventoryCode:select.subInventoryCode});
+      this.ItemlocatorMasterForm.patchValue({attribute8:select.segmentName,subInventoryCode:select.subInventoryCode,subinventoryId:subInventoryId});
       this.displayButton = false;
       this.display = false;
     }

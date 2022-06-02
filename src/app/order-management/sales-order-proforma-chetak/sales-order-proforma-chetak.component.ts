@@ -160,6 +160,11 @@ export class SalesOrderProformaChetakComponent implements OnInit {
   displayVehicleDetails = true;
   orderFound=false;
 
+//Booking Receipt Information
+paymentTermId;
+paymentType;
+
+
   @ViewChild('aForm') aForm: ElementRef;
   getfrmSubLoc: any;
   locData: any = [];
@@ -189,7 +194,7 @@ export class SalesOrderProformaChetakComponent implements OnInit {
       gstNo: [],
       panNo: [],
       custAccountNo: ['', [Validators.required]],
-      creditAmt: [],
+      creditAmt: ['',[Validators.required]],
       name: [],
       customerSiteId: [],
       taxCategoryName: [],
@@ -201,9 +206,9 @@ export class SalesOrderProformaChetakComponent implements OnInit {
       walkCustaddres: [],
       cntrOrdCustName: [],
       refCustNo: [],
-      custPoNumber: [],
-      custRefAddr:[],
-      custPoDate: [],
+      custPoNumber: ['',[Validators.required]],
+      custRefAddr:['',[Validators.required]],
+      custPoDate: ['',[Validators.required]],
       state: [],
       transactionTypeName: [],
       issueCodeType: [],
@@ -213,7 +218,7 @@ export class SalesOrderProformaChetakComponent implements OnInit {
       priceListId: [],
       orderedDate: [],
       flowStatusCode: [],
-      issuedBy: [],
+      issuedBy: ['',[Validators.required]],
       dept: [],
       loginArray: [],
       ouName: [],
@@ -239,7 +244,7 @@ export class SalesOrderProformaChetakComponent implements OnInit {
       model: [],
       fuelType: [],
       variant: [],
-      color: [],
+      color: ['',[Validators.required]],
       basicValue: [],
       oeOrderLinesAllList: this.fb.array([this.orderlineDetailsGroup()]),
     })
@@ -310,7 +315,16 @@ export class SalesOrderProformaChetakComponent implements OnInit {
     // this.locationId = Number(sessionStorage.getItem('locId'));
     this.deptName = (sessionStorage.getItem('deptName'));
     this.orderlineDetailsArray().controls[0].patchValue({ flowStatusCode: 'BOOKED' });
+    this.salesOrderBookingChetakForm.patchValue({model:'CHETAK'})
 
+    this.orderManagementService.VariantSearchFn('CHETAK')
+    .subscribe(
+      data => {
+        this.VariantSearch = data;
+        console.log(this.VariantSearch);
+        this.salesOrderBookingChetakForm.patchValue({variant:'00GL12'})
+      }
+    );
 
     this.service.payTermDescList()
       .subscribe(
@@ -439,7 +453,7 @@ export class SalesOrderProformaChetakComponent implements OnInit {
       window.location.reload();
       return;
     }
-    this.orderManagementService.VariantSearchFn(mainModel)
+    this.orderManagementService.VariantSearchFn('CHETAK')
       .subscribe(
         data => {
           this.VariantSearch = data;
@@ -496,7 +510,7 @@ export class SalesOrderProformaChetakComponent implements OnInit {
     this.isDisabled = true;
     this.isDisabled4 = true;
     this.salesOrderBookingChetakForm.disable();
-    this.orderManagementService.proformaOrderSearchNew(sessionStorage.getItem('divisionId'), orderNumber)
+    this.orderManagementService.proformaOrderSearchChetak(sessionStorage.getItem('divisionId'), orderNumber)
       .subscribe(
         data => {
           if (data.code === 200) {
@@ -518,9 +532,13 @@ export class SalesOrderProformaChetakComponent implements OnInit {
             var orderedDate1 = data.obj.orderedDate;
             var orderedDate2 = this.pipe.transform(orderedDate1, 'dd-MM-yyyy');
             this.salesOrderBookingChetakForm.patchValue(({ orderedDate: orderedDate2 }));
-            var custPoDate1 = data.obj.custPoDate;
-            var custPoDate2 = this.pipe.transform(custPoDate1, 'dd-MM-yyyy');
-            this.salesOrderBookingChetakForm.patchValue(({ custPoDate: custPoDate2 }));
+            // alert(data.obj.creditAmt)
+            // this.salesOrderBookingChetakForm.patchValue({creditAmt:data.obj.creditAmt});
+            // debugger;
+            this.creditAmt=data.obj.creditAmt;
+            this.custPoDate= data.obj.custPoDate;
+            // var custPoDate2 = this.pipe.transform(custPoDate1, 'dd-MM-yyyy');
+            // this.salesOrderBookingChetakForm.patchValue(({ custPoDate: custPoDate2 }));
             orLineCtrl = this.salesOrderBookingChetakForm.get('oeOrderLinesAllList') as FormArray;
             for (let i = 0; i < this.lstgetOrderLineDetails.length; i++) {
               orLineCtrl.controls[i].patchValue({
@@ -622,12 +640,15 @@ export class SalesOrderProformaChetakComponent implements OnInit {
 
 
   onOptionsSelectedcustSiteName(siteName) {
+    // alert(siteName)
     let selSite = this.custSiteList.find(d => d.siteName === siteName);
     console.log(selSite);
     console.log(this.custSiteList);
+    // if (selSite != undefined){
     if (selSite.ouId != (sessionStorage.getItem('ouId'))) {
       alert('First Create OU wise Site to continue process!')
     }
+  // }
     else {
       // alert(this.selCustomer)
       console.log(this.selCustomer);
@@ -647,7 +668,7 @@ export class SalesOrderProformaChetakComponent implements OnInit {
       this.weddingDate = this.selCustomer.weddingDate;
       this.taxCategoryName = this.selCustomer.taxCategoryName;
       this.custClassCode = this.selCustomer.classCodeType;
-      this.salesOrderBookingChetakForm.patchValue({ creditAmt: selSite.creditAmt });
+      // this.salesOrderBookingChetakForm.patchValue({ creditAmt: selSite.creditAmt });
       if (selSite.disPer != null) {
         // alert(selSite.disPer)
         this.salesOrderBookingChetakForm.patchValue({ discType: 'Header Level Discount' })
@@ -664,20 +685,20 @@ export class SalesOrderProformaChetakComponent implements OnInit {
         }
       }
     }
-    if (Number(sessionStorage.getItem('divisionId')) === 2) {
-      // alert(this.selCustomer.customerId+'----'+selSite.customerSiteId)
-      // this.service.crediteLimitFn(this.selCustomer.customerId, selSite.customerSiteId)
-      this.service.crediteLimitFn(this.selCustomer.customerId, sessionStorage.getItem('locId'), selSite.customerSiteId)
-        .subscribe(
-          data => {
-            if (data.code === 200) {
-              var newCrmAmt1 = Math.round(((data.obj.outStandingAmt) + Number.EPSILON) * 100) / 100;
-              this.salesOrderBookingChetakForm.patchValue({ creditAmt: newCrmAmt1 });
-              this.salesOrderBookingChetakForm.patchValue({ creditDays: data.obj.creditDays });
-              this.salesOrderBookingChetakForm.patchValue({ daysMsg: data.obj.daysMsg });
-            }
-          })
-    }
+    // if (Number(sessionStorage.getItem('divisionId')) === 2) {
+    //   // alert(this.selCustomer.customerId+'----'+selSite.customerSiteId)
+    //   // this.service.crediteLimitFn(this.selCustomer.customerId, selSite.customerSiteId)
+    //   this.service.crediteLimitFn(this.selCustomer.customerId, sessionStorage.getItem('locId'), selSite.customerSiteId)
+    //     .subscribe(
+    //       data => {
+    //         if (data.code === 200) {
+    //           var newCrmAmt1 = Math.round(((data.obj.outStandingAmt) + Number.EPSILON) * 100) / 100;
+    //           // this.salesOrderBookingChetakForm.patchValue({ creditAmt: newCrmAmt1 });
+    //           this.salesOrderBookingChetakForm.patchValue({ creditDays: data.obj.creditDays });
+    //           this.salesOrderBookingChetakForm.patchValue({ daysMsg: data.obj.daysMsg });
+    //         }
+    //       })
+    // }
 
   }
 
@@ -1146,6 +1167,21 @@ export class SalesOrderProformaChetakComponent implements OnInit {
     var formValue = this.transeData(this.salesOrderBookingChetakForm.value);
     console.log(this.salesOrderBookingChetakForm.value);
     console.log(formValue);
+    var custPoNumber = this.salesOrderBookingChetakForm.get('custPoNumber').value;
+    var creditAmt = this.salesOrderBookingChetakForm.get('creditAmt').value;
+    var custRefAddr= this.salesOrderBookingChetakForm.get('custRefAddr').value;
+    if (custPoNumber == undefined || custPoNumber ==null || custPoNumber==''){
+      alert('Please Enter CDMS Ref No.!');
+      return;
+    }
+    else if (custRefAddr == undefined || custRefAddr ==null || custRefAddr=='') {
+      alert('Please Enter Cust Details.!');
+      return;
+    }
+    else if (creditAmt == undefined || creditAmt ==null || creditAmt=='') {
+      alert('Please Enter Booking Amount.!');
+      return;
+    }
     let jsonData = this.salesOrderBookingChetakForm.getRawValue();
     var custPoDate = this.salesOrderBookingChetakForm.get('custPoDate').value;
     jsonData.orderedDate = this.pipe.transform(this.now, 'yyyy-MM-dd');
@@ -1158,7 +1194,7 @@ export class SalesOrderProformaChetakComponent implements OnInit {
     jsonData.deptId = sessionStorage.getItem('deptId');
     jsonData.divisionId = sessionStorage.getItem('divisionId');
     console.log(jsonData);
-    this.orderManagementService.createProformaOrderFFn(jsonData).subscribe((res: any) => {
+    this.orderManagementService.createProformaOrderCh(jsonData).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
         this.orderNumber = res.obj;

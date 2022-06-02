@@ -86,9 +86,13 @@
                                 [formGroupName]="i" class="auto-style5">
                                 <tr>
                                     <td>
+                                        <div *ngIf="displayselButton[i]; then thenenable; else elseDisable"> </div>
+                                        <ng-template #thenenable>
                                         <button type="button" class="btn btn-primary" data-toggle="modal"
                                             data-target="#myModal" (click)="paymentInvoiceFind(suppNo,ouId,i)"
                                             id="btnSelect">Select</button>
+                                        </ng-template>
+                                        <ng-template #elseDisable></ng-template>
                                     </td>
                                     <td>
                                         <table>
@@ -573,7 +577,7 @@
                         </button>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-primary" id="arPayment" [style.display]="isarPayment ? 'block' : 'none'" (click)="ArPaymentNavigation()" style="text-align: justify;">
+                        <button type="button" class="btn btn-primary" id="arPayment"   [style.display]="isarPayment ? 'block' : 'none'"  (click)="ArPaymentNavigation()" style="text-align: justify;">
                             AR Receipt
                         </button>
                     </td>

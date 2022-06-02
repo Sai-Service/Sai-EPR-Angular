@@ -203,8 +203,8 @@
                             class="form-control" (ngModelChange)="onOptionTdsSelect($event)"
                             [ngClass]="{ 'is-invalid': submitted && f.supTds.errors }">
                               <!-- <option>--Select--</option> -->
-                              <option >Yes</option>
-                              <option>No</option>
+                              <option value="Y">Yes</option>
+                              <option value="N">No</option>
                           </select>
                           <div *ngIf="submitted && f.supTds.errors" class="invalid-feedback">
                             <div *ngIf="f.supTds.errors.required">TDS cannot be blank</div>
