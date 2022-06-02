@@ -1,4 +1,4 @@
-.form-control {
+/* .form-control {
     font-family: Verdana,Sans-serif, Arial, Helvetica;
     font-size: 12px;
     outline: medium none;
@@ -7,15 +7,14 @@
     width: 180px;
     height: 50%;
     border-color: gray;
-   /* box-shadow: 5px 5px 8px rgb(13, 13, 19); */
-  }
+  } */
   
-  .LabelFontStyle2{
+  /* .LabelFontStyle2{
   text-align: left;
   }
   .LabelFontStyle{
   text-align: right;
-  }
+  } */
   .PageHeader1 {
     font-size:medium;
     font-weight: bold;
@@ -26,11 +25,7 @@
     text-align: center;
     padding: 2px;
     color: white;
-    /* background-color:#570906;   */
-    /* background-color:#ac3911; */
-    /* background-color:#e95420; */
     background-image: linear-gradient(#54b4eb, #2fa4e7 60%, #1d9ce5);
-    /* #40758b; */
   }
   .classic-tabs{
     width: 100%;
@@ -38,9 +33,7 @@
     
     
     .active{
-    /* color: red; */
     font-weight:bool;
-    /* background-color: #2b28e6; */
     color: rgb(6, 10, 66);
     }
     
@@ -65,8 +58,6 @@
       overflow: auto;
       /* width: 800px; */
       width: 100%;
-      /* height: 100%; */
-      /* width: 100%; */
     }
     
     button{
