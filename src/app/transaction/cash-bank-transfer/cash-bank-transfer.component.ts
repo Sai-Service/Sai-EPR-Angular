@@ -488,6 +488,7 @@ export class CashBankTransferComponent implements OnInit {
                 this.service.UpdateCashBankTrf(formValue ,docNum).subscribe((res: any) => {
                   if (res.code === 200) {
                     alert('RECORD UPDATED SUCCESSFULLY');
+                    // this.updateButton=false;
                     // window.location.reload();
                     this.updateArReceipt(this.docTrfNo);
                     this.cashBankTransferForm.disable();
