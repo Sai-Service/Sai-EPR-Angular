@@ -311,7 +311,7 @@
                                
                                 <div *ngIf="displayButton; then d11; else d21"></div>
                                 <ng-template #d11> 
-                                <td><input  disabled  type="date"  formControlName="clearingDate"  id="clearingDate" [(ngModel)]="clearingDate" class="form-control" > </td>
+                                <td><input    type="date"  formControlName="clearingDate"  id="clearingDate" [(ngModel)]="clearingDate" class="form-control" > </td>
                                 </ng-template>
                                 <ng-template #d21> 
                                     <td><input    type="date"  formControlName="clearingDate"  id="clearingDate" [(ngModel)]="clearingDate" class="form-control" style="background-color: yellow;" > </td>
@@ -415,7 +415,9 @@
                                         <ng-template #Upd1> 
                                              <td> <button type="button" class="btn btn-info" (click)="cashBnkTrfUpdate()">Update</button> </td> 
                                         </ng-template>
-                                        <ng-template #Upd2></ng-template>
+                                        <ng-template #Upd2>
+                                            <!-- <td> <button disabled type="button" class="btn btn-info" (click)="cashBnkTrfUpdate()">Update</button> </td>  -->
+                                        </ng-template>
 
                                         <div *ngIf="statusPost; then Block2; else Block21"></div>
                                         <ng-template #Block2> 
