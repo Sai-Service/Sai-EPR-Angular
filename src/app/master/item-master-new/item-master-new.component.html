@@ -268,6 +268,14 @@
                         <a class="nav-link active" id="home-tab-md" data-toggle="tab" href="#inventoryTab" role="tab"
                             aria-controls="home-md" aria-selected="true">Inventory</a>
                     </li>
+                    <!-- <li class="nav-item waves-effect waves-light">
+                        <a class="nav-link" id="sp-tab-md" data-toggle="tab" href="#sp-md" role="tab"
+                            aria-controls="sp-md" aria-selected="false">Spares / Accessories</a>
+                    </li> -->
+                </ul>
+            </div>
+            <div *ngIf="ssAccessories">
+                <ul class="nav nav-tabs md-tabs" id="myTabMD" role="tablist">
                     <li class="nav-item waves-effect waves-light">
                         <a class="nav-link" id="sp-tab-md" data-toggle="tab" href="#sp-md" role="tab"
                             aria-controls="sp-md" aria-selected="false">Spares / Accessories</a>
@@ -276,7 +284,6 @@
             </div>
             <div style="border: 0px;" class="tab-content card " id="myTabContentMD">
                 <div class="tab-pane fade show active" id="inventoryTab" role="tabpanel" aria-labelledby="home-tab-md">
-                    <!-- <div class="center"> -->
                     <table class="center" style="border: 1px;">
                         <tr>
                             <td colspan="6">
@@ -488,7 +495,6 @@
                             </tr>
                         </ng-template>
                     </table>
-                    <!-- </div> -->
                 </div>
                 <div class="tab-pane fade" id="VehicleAdditionalDetails" role="tabpanel"
                     aria-labelledby="profile-tab-md">
@@ -547,7 +553,7 @@
                                 <td>
                                     <input formControlName="engineNo" value={{engineNo}} class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.engineNo.errors }"
-                                        placeholder="Enter engine no"  style="text-transform: uppercase;">
+                                        placeholder="Enter engine no" style="text-transform: uppercase;">
                                     <div *ngIf="submitted && f.engineNo.errors" class="invalid-feedback">
                                         <div *ngIf="f.engineNo.errors.required">Please engine no</div>
                                     </div>
@@ -556,73 +562,81 @@
                             <tr>
                                 <td style="width: 12%" class="LabelFontStyle1">Chassis&nbsp;No&nbsp;:&nbsp;</td>
                                 <td>
-                                    <input formControlName="chassisNo" (keyup)="onKey($event)"  value={{chassisNo}} [(ngModel)]="chassisNo"
-                                        class="form-control" uppercase style="text-transform: uppercase;"
-                                        [ngClass]="{ 'is-invalid': submitted && f.chassisNo.errors }"  placeholder="Enter Chasis code">
-                                    <div *ngIf="submitted && f.chassisNo.errors"  class="invalid-feedback">
+                                    <input formControlName="chassisNo" (keyup)="onKey($event)" value={{chassisNo}}
+                                        [(ngModel)]="chassisNo" class="form-control" uppercase
+                                        style="text-transform: uppercase;"
+                                        [ngClass]="{ 'is-invalid': submitted && f.chassisNo.errors }"
+                                        placeholder="Enter Chasis code">
+                                    <div *ngIf="submitted && f.chassisNo.errors" class="invalid-feedback">
                                         <div *ngIf="f.chassisNo.errors.required">Enter chasis no </div>
-                                        <div *ngIf="f.chassisNo.errors?.maxlength">Enter chasis no  </div>
+                                        <div *ngIf="f.chassisNo.errors?.maxlength">Enter chasis no </div>
                                     </div>
-                                    <span  *ngIf="!itemMasterForm.get('chassisNo').valid && itemMasterForm.get('chassisNo').touched">Please Enter chasis no </span>
+                                    <span
+                                        *ngIf="!itemMasterForm.get('chassisNo').valid && itemMasterForm.get('chassisNo').touched">Please
+                                        Enter chasis no </span>
                                 </td>
-                                <td style="width: 12%" class="LabelFontStyle1">Vehicle&nbsp;Sale&nbsp;Date&nbsp;:&nbsp;</td>
+                                <td style="width: 12%" class="LabelFontStyle1">Vehicle&nbsp;Sale&nbsp;Date&nbsp;:&nbsp;
+                                </td>
                                 <td>
-                                    <input type="date" formControlName="vehicleDelvDate" value={{vehicleDelvDate}} class="form-control"
-                                        max="{{maxDate | date:'yyyy-MM-dd'}}" [ngClass]="{ 'is-invalid': submitted && f.vehicleDelvDate.errors }"
+                                    <input type="date" formControlName="vehicleDelvDate" value={{vehicleDelvDate}}
+                                        class="form-control" max="{{maxDate | date:'yyyy-MM-dd'}}"
+                                        [ngClass]="{ 'is-invalid': submitted && f.vehicleDelvDate.errors }"
                                         placeholder="Enter vehicle sale date">
-                                    <div *ngIf="submitted && f.vehicleDelvDate.errors"  class="invalid-feedback">
+                                    <div *ngIf="submitted && f.vehicleDelvDate.errors" class="invalid-feedback">
                                         <div *ngIf="f.vehicleDelvDate.errors.required">Enter vehicle sale date </div>
-                                        <div *ngIf="f.vehicleDelvDate.errors?.maxlength">Enter vehicle sale  date </div>
+                                        <div *ngIf="f.vehicleDelvDate.errors?.maxlength">Enter vehicle sale date </div>
                                     </div>
                                 </td>
                                 <td style="width: 12%" class="LabelFontStyle1">Fule&nbsp;Type&nbsp;:&nbsp;</td>
                                 <td><input type="text" formControlName="fuelType" class="form-control"></td>
-                            <td style="width: 12%" class="LabelFontStyle1"> VIN&nbsp;No&nbsp;&nbsp;:&nbsp;</td>      
-                            <td><input type="text" formControlName="vin" class="form-control"> </td>
+                                <td style="width: 12%" class="LabelFontStyle1"> VIN&nbsp;No&nbsp;&nbsp;:&nbsp;</td>
+                                <td><input type="text" formControlName="vin" class="form-control"> </td>
                             </tr>
                             <tr>
-                                 <td style="width: 12%" class="LabelFontStyle"> Dealer&nbsp;Code&nbsp;&nbsp;:&nbsp;</td> 
-                                <td colspan="3"> <select  formControlName="dealerCode"  id="dealerCode" class="form-control" style="width: 100%;">
-                                    <option>--Select--</option>
-                                    <option *ngFor="let sc of dealerCodeList" [ngValue]="sc.dealerCode">
-                                        {{sc.dealerCode}}--{{sc.dealerDesc}}
-                                    </option>
-                                </select>
-                            </td>
+                                <td style="width: 12%" class="LabelFontStyle"> Dealer&nbsp;Code&nbsp;&nbsp;:&nbsp;</td>
+                                <td colspan="3"> <select formControlName="dealerCode" id="dealerCode"
+                                        class="form-control" style="width: 100%;">
+                                        <option>--Select--</option>
+                                        <option *ngFor="let sc of dealerCodeList" [ngValue]="sc.dealerCode">
+                                            {{sc.dealerCode}}--{{sc.dealerDesc}}
+                                        </option>
+                                    </select>
+                                </td>
                             </tr>
-                       </table>
+                        </table>
                     </fieldset>
                     <fieldset class="RFS">
-                        <legend id="FormsPH_LGAadhaar" class="RFSL"  style="font-size: 10px;color: black;">Vehicle Insurer Details&nbsp; </legend>
+                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Vehicle
+                            Insurer Details&nbsp; </legend>
                         <table>
                             <tr>
-                                <td style="width: 18%" class="LabelFontStyle"> Vehicle&nbsp;Insurer&nbsp;Name&nbsp;:&nbsp;</td>
+                                <td style="width: 18%" class="LabelFontStyle">
+                                    Vehicle&nbsp;Insurer&nbsp;Name&nbsp;:&nbsp;</td>
                                 <td>
-                                    <select style="width:fit-content"
-                                        formControlName="insurerCompId" id="insurerCompId"
-                                        (ngModelChange)='onInsurerNameSelected($event)'
-                                        class="form-control">
+                                    <select style="width:fit-content" formControlName="insurerCompId" id="insurerCompId"
+                                        (ngModelChange)='onInsurerNameSelected($event)' class="form-control">
                                         <option>--Select--</option>
-                                        <option *ngFor="let sc of insNameList"
-                                            [ngValue]="sc.customerId">
+                                        <option *ngFor="let sc of insNameList" [ngValue]="sc.customerId">
                                             {{sc.custName}}
                                         </option>
                                     </select>
-                                    <div *ngIf="submitted && f.insurerCompId.errors"  class="invalid-feedback">
-                                        <div *ngIf="f.insurerCompId.errors.required">Enter insurer  name </div>
-                                        <div *ngIf="f.insurerCompId.errors?.maxlength">Enter insurer  name </div>
+                                    <div *ngIf="submitted && f.insurerCompId.errors" class="invalid-feedback">
+                                        <div *ngIf="f.insurerCompId.errors.required">Enter insurer name </div>
+                                        <div *ngIf="f.insurerCompId.errors?.maxlength">Enter insurer name </div>
                                     </div>
                                 </td>
-                                <td style="width: 18%" class="LabelFontStyle"> Vehicle&nbsp;Insurance&nbsp;expiry&nbsp;date&nbsp;:&nbsp;</td>
-                                  <td><input type="date" class="form-control" min="{{minDate | date:'yyyy-MM-dd'}}"></td>
+                                <td style="width: 18%" class="LabelFontStyle">
+                                    Vehicle&nbsp;Insurance&nbsp;expiry&nbsp;date&nbsp;:&nbsp;</td>
+                                <td><input type="date" class="form-control" min="{{minDate | date:'yyyy-MM-dd'}}"></td>
                             </tr>
                             <tr>
-                                <td style="width: 18%" class="LabelFontStyle"> Vehicle&nbsp;Insurer&nbsp;Site&nbsp;:&nbsp;</td>
+                                <td style="width: 18%" class="LabelFontStyle">
+                                    Vehicle&nbsp;Insurer&nbsp;Site&nbsp;:&nbsp;</td>
                                 <td colspan="4">
-                                    <select style="width:100%"  formControlName="insurerSiteId" id="insurerSiteId"   class="form-control">
+                                    <select style="width:100%" formControlName="insurerSiteId" id="insurerSiteId"
+                                        class="form-control">
                                         <option>--Select--</option>
-                                        <option *ngFor="let sc of insSiteList"
-                                            [ngValue]="sc.customerSiteId">
+                                        <option *ngFor="let sc of insSiteList" [ngValue]="sc.customerSiteId">
                                             {{sc.address1}}{{sc.address2}}-{{sc.address3}}-{{sc.location}}-{{sc.city}}-{{sc.pinCd}}-{{sc.state}}
                                         </option>
                                     </select>
@@ -634,11 +648,193 @@
                             </tr>
                         </table>
                     </fieldset>
+                    <fieldset class="RFS">
+                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">OEM Warranty
+                            Details&nbsp; </legend>
+                        <table>
+                            <tr>
+                                <td style="width: 12%" class="LabelFontStyle">
+                                    OEM&nbsp;Warranty&nbsp;End&nbsp;Date&nbsp;:&nbsp;</td>
+                                <td><input type="date" formControlName="oemWarrentyEndDate" class="form-control"
+                                        min="{{minDate | date:'yyyy-MM-dd'}}"></td>
+                            </tr>
+                        </table>
+                    </fieldset>
+                    <fieldset class="RFS">
+                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">EW Warranty
+                            Details&nbsp; </legend>
+                        <table>
+                            <tr>
+                                <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Booklet&nbsp;No&nbsp;:&nbsp;</td>
+                                <td>
+                                    <input type="ewBookletNo" formControlName="ewBookletNo" value={{ewBookletNo}}
+                                        class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f.ewBookletNo.errors }"
+                                        placeholder="Enter EW Booklet No">
+                                    <div *ngIf="submitted && f.ewBookletNo.errors" class="invalid-feedback">
+                                        <div *ngIf="f.ewBookletNo.errors.required">Enter EW booklet no</div>
+                                        <div *ngIf="f.ewBookletNo.errors?.maxlength">Enter EW booklet no </div>
+                                    </div>
+                                </td>
+                                <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Period&nbsp;:&nbsp;</td>
+                                <td>
+                                    <input type="text" formControlName="ewPeriod" id="ewPeriod" class="form-control">
+                                </td>
+                                <td style="width: 12%" class="LabelFontStyle"> EW&nbsp;Start&nbsp;Date&nbsp;:&nbsp;</td>
+                                <td>
+                                    <input type="date" formControlName="ewStartDate" value={{ewStartDate}}
+                                        class="form-control" min="{{minDate | date:'yyyy-MM-dd'}}"
+                                        [ngClass]="{ 'is-invalid': submitted && f.ewStartDate.errors }"
+                                        placeholder="Enter EW date">
+                                </td>
+                                <td style="width: 12%" class="LabelFontStyle"> EW&nbsp;End&nbsp;Date&nbsp;:&nbsp;</td>
+                                <td>
+                                    <input type="date" formControlName="ewEndDate" value={{ewEndDate}}
+                                        class="form-control" min="{{minDate | date:'yyyy-MM-dd'}}"
+                                        [ngClass]="{ 'is-invalid': submitted && f.ewEndDate.errors }"
+                                        placeholder="Enter EW date">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 12%" class="LabelFontStyle"> EW&nbsp;Insurer&nbsp;Name&nbsp;:&nbsp;
+                                </td>
+                                <td>
+                                    <select style="width:fit-content" formControlName="ewInsurerId" id="ewInsurerId"
+                                        class="form-control" (ngModelChange)='onEwInsNameSelected($event)'>
+                                        <option>--Select--</option>
+                                        <option *ngFor="let sc of ewInsNameList" [ngValue]="sc.customerId">
+                                            {{sc.custName}}
+                                        </option>
+                                    </select>
+                                </td>
+                                <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Insurer&nbsp;Site&nbsp;:&nbsp;
+                                </td>
+                                <td>
+                                    <select formControlName="ewInsurerSite" id="ewInsurerSite" class="form-control">
+                                        <option>--Select--</option>
+                                        <option *ngFor="let sc of ewInsurerSiteList">
+                                            {{sc.address1}}{{sc.address2}}-{{sc.address3}}-{{sc.address4}}-{{sc.city}}-{{sc.pinCd}}-{{sc.state}}
+                                        </option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                    </fieldset>
                 </div>
                 <div class="tab-pane fade" id="CategoryDetails" role="tabpanel" aria-labelledby="contact-tab-md">
+                    <fieldset class="RFS">
+                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">EW Warranty
+                            Details&nbsp; </legend>
+                        <table>
+                            <tr>
+                                <td width="15%" class="LabelFontStyle">
+                                    Temporary&nbsp;Registration&nbsp;No.&nbsp;:&nbsp;</td>
+                                <td><input type="text" formControlName="tempRegNo" class="form-control"></td>
+                                <td style="width: 15%;" class="LabelFontStyle">
+                                    Temporary&nbsp;Registration&nbsp;Date&nbsp;:&nbsp;</td>
+                                <td><input type="date" formControlName="tempRegDate" class="form-control"></td>
+                                <td style="width: 12%" class="LabelFontStyle"> Smart&nbsp;Card&nbsp;No&nbsp;:&nbsp;</td>
+                                <td>
+                                    <input type="text" formControlName="smartCardNumber" value={{smartCardNumber}}
+                                        class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f.smartCardNumber.errors }"
+                                        placeholder="Enter smart card number">
+                                </td>
+                                <td style="width: 12%" class="LabelFontStyle">
+                                    Smart&nbsp;Card&nbsp;Issue&nbsp;Ddate&nbsp;:&nbsp;</td>
+                                <td><input type="date" formControlName="smartCardIssueDate" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td style="width: 12%" class="LabelFontStyle"> Fast&nbsp;Tag&nbsp;No&nbsp;:&nbsp;</td>
+                                <td><input type="text" formControlName="fastTagNo" class="form-control"></td>
+                                <td style="width: 12%" class="LabelFontStyle">
+                                    Fast&nbsp;Tag&nbsp;Issue&nbsp;Date&nbsp;:&nbsp;</td>
+                                <td><input type="date" formControlName="fastTagIssueDate" class="form-control"></td>
+                                <td style="width: 12%" class="LabelFontStyle"> Loyalty&nbsp;card&nbsp;No&nbsp;:&nbsp;
+                                </td>
+                                <td><input type="text" formControlName="loyaltyCardNumber" class="form-control"></td>
+                                <td style="width: 12%" class="LabelFontStyle">
+                                    Loyalty&nbsp;card&nbsp;Issue&nbsp;Date&nbsp;:&nbsp;</td>
+                                <td><input type="date" formControlName="loyaltyCardDate" class="form-control"></td>
+                            </tr>
+                        </table>
+                    </fieldset>
+                    <fieldset class="RFS">
+                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Catelog
+                            Details&nbsp; </legend>
+                        <table>
+                            <tr>
+                                <td style="width: 12%" class="LabelFontStyle"> MFG&nbsp;Month-Year&nbsp;:&nbsp;</td>
+                                <td><input type="date" formControlName="monthYrManf" class="form-control"></td>
+                                <td style="width: 12%" class="LabelFontStyle"> CNG&nbsp;Kit&nbsp;No&nbsp;:&nbsp;</td>
+                                <td> <input type="text" formControlName="cngKitNumber" class="form-control"> </td>
+                                <td style="width: 12%" class="LabelFontStyle"> CNG&nbsp;Cylinder&nbsp;No&nbsp;:&nbsp;
+                                </td>
+                                <td> <input type="text" formControlName="cngCylinderNo" value={{cngCylinderNo}}
+                                        class="form-control" placeholder="Enter cng cylinder no"></td>
+                                <td style="width: 12%" class="LabelFontStyle"> Key&nbsp;No&nbsp;:&nbsp; </td>
+                                <td> <input type="text" formControlName="keyNo" value={{keyNo}} class="form-control"
+                                        placeholder="Enter key No"></td>
+                            </tr>
+                            <tr>
+                                <td style="width: 12%" class="LabelFontStyle"> Battery&nbsp;Make&nbsp;:&nbsp;</td>
+                                <td> <input type="batteryMake" formControlName="batteryMake" value={{batteryMake}}
+                                        class="form-control" placeholder="Enter battery make"> </td>
+                                <td style="width: 12%" class="LabelFontStyle"> Tyre&nbsp;Make&nbsp;:&nbsp;</td>
+                                <td> <input type="text" formControlName="tyreMake" class="form-control"> </td>
+                                <td style="width: 12%" class="LabelFontStyle"> Tyre&nbsp;No&nbsp;:&nbsp;</td>
+                                <td> <input type="text" formControlName="tyreNo" class="form-control"></td>
+                                <td style="width: 12%" class="LabelFontStyle"> Booklet&nbsp;No&nbsp;:&nbsp;</td>
+                                <td> <input type="text" formControlName="bookletNo" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td style="width: 12%" class="LabelFontStyle">Tool&nbsp;Kit&nbsp;:&nbsp;</td>
+                                <td> <input type="text" formControlName="toolkit" class="form-control"></td>
+                            </tr>
+                        </table>
+                    </fieldset>
+                    <fieldset class="RFS">
+                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Sales Linking&nbsp; </legend>
+                        <table>
+                            <tr>
+                                <td style="width: 12%" class="LabelFontStyle"> MFG&nbsp;Year&nbsp;:&nbsp;</td>
+                                <td><input type="date" formControlName="monthYrManf" class="form-control"
+                                        max="{{maxDate | date:'yyyy-MM-dd'"></td>
+                                <td style="width: 12%" class="LabelFontStyle">Interiors&nbsp;:&nbsp; </td>
+                                <td><input type="checkbox" [(ngModel)]="interiors" formControlName="interiors"
+                                        (change)="interiorsEvent($event)"></td>
+                                <td style="width: 12%" class="LabelFontStyle">RIPS&nbsp;:&nbsp;</td>
+                                <td> <input type="checkbox" formControlName="rips" [(ngModel)]='rips'
+                                        (change)="ripsEvent($event)"></td>
+                                <td style="width: 12%" class="LabelFontStyle"> Two&nbsp;Tone&nbsp;:&nbsp;</td>
+                                <td> <input type="checkbox" formControlName="twoTone" [(ngModel)]='twoTone'
+                                        (change)="twoToneEvent($event)"></td>
+                                <td style="width: 12%" class="LabelFontStyle">Hold&nbsp;:&nbsp;</td>
+                                <td> <input type="checkbox" formControlName="hold" [(ngModel)]='hold'
+                                        (change)="holdEvent($event)"> </td>
+                                <td style="width: 12%" class="LabelFontStyle"> Hold&nbsp;Reason&nbsp;:&nbsp;</td>
+                                <td>
+                                    <div *ngIf="displayHold; then thenBlockHold; else elseBlockHold"> </div>
+                                    <ng-template #thenBlockHold>
+                                        <input type="text" disabled formControlName="holdReason" class="form-control">
+                                    </ng-template>
+                                    <ng-template #elseBlockHold>
+                                        <select formControlName="holdReason" id="holdReason" class="form-control">
+                                            <option>--Select--</option>
+                                            <option *ngFor="let sc of holdReasonList" [ngVaue]="sc.code">
+                                                {{sc.code}}-{{sc.codeDesc}} </option>
+                                        </select>
+                                    </ng-template>
+                                </td>
+                            </tr>
+                            <tr>
 
+                            </tr>
+                        </table>
+                    </fieldset>
                 </div>
             </div>
+            
         </section>
     </fieldset>
 </form>

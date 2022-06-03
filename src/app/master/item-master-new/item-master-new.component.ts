@@ -22,7 +22,7 @@ interface IItemMaster {
   bookletNo: string;
   toolkit: string;
   fuelType: string;
-  dealerCode:string;
+  dealerCode: string;
   costing: string;
   stockable: string;
   purchasable: string;
@@ -102,6 +102,7 @@ export class ItemMasterNewComponent implements OnInit {
   displayisTaxable = true;
   ssVehical = false;
   ssSpares = false;
+  ssAccessories=false;
   submitted = false;
   public categoryIdList: Array<string> = [];
   public mainModelList: Array<string>[];
@@ -155,18 +156,56 @@ export class ItemMasterNewComponent implements OnInit {
   colorCode: string = '';
   variantCode: string = '';
   chassisNo: string = '';
-  engineNo:string;
-  vehicleDelvDate:Date;
+  engineNo: string;
+  vehicleDelvDate: Date;
   public maxDate = new Date();
   public dealerCodeList: Array<string> = [];
-  dealerCode:string;
-  fuelType:string;
-  vin:string;
+  dealerCode: string;
+  fuelType: string;
+  vin: string;
   public insSiteList: Array<string>[];
-  insurerCompId:number;
+  insurerCompId: number;
   public insNameList: Array<string>[];
-  insurerSiteId:number;
+  insurerSiteId: number;
   public minDate = new Date();
+  oemWarrentyEndDate: Date;
+  ewBookletNo: string;
+  ewPeriod: string;
+  ewStartDate: Date;
+  ewEndDate: Date;
+  ewInsurerId: number;
+  public ewInsNameList: any;
+  public ewInsurerSiteList: Array<string>[];
+  ewInsurerSite: string;
+  tempRegNo: string;
+  tempRegDate: Date;
+  smartCardNumber: string;
+  smartCardIssueDate: Date;
+  fastTagNo: string;
+  fastTagIssueDate: Date;
+  loyaltyCardNumber: string;
+  loyaltyCardDate: Date;
+  monthYrManf: Date;
+  cngKitNumber: string;
+  cngCylinderNo: string;
+  keyNo: string;
+  batteryMake: string;
+  tyreMake: string;
+  tyreNo: string;
+  bookletNo: string;
+  toolkit: string;
+  interiors: string;
+  rips: string;
+  twoTone: string;
+  hold: string;
+  displayHold = true;
+  public holdReasonList: Array<string>[];
+  marginCategory: string;
+  materialType: string;
+  lotSize: string;
+  dispupdate: boolean = true;
+  public taxCategoryDataList: Array<string> = [];
+
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService) {
     this.itemMasterForm = fb.group({
       segmentName: [],
@@ -204,13 +243,45 @@ export class ItemMasterNewComponent implements OnInit {
       colorCode: [],
       variantCode: [],
       chassisNo: [],
-      engineNo:[],
-      vehicleDelvDate:[],
-      dealerCode:[],
-      fuelType:[],
-      vin:[],
-      insurerCompId:[],
-      insurerSiteId:[],
+      engineNo: [],
+      vehicleDelvDate: [],
+      dealerCode: [],
+      fuelType: [],
+      vin: [],
+      insurerCompId: [],
+      insurerSiteId: [],
+      oemWarrentyEndDate: [],
+      ewBookletNo: [],
+      ewPeriod: [],
+      ewEndDate: [],
+      ewStartDate: [],
+      ewInsurerId: [],
+      ewInsurerSite: [],
+      tempRegNo: [],
+      tempRegDate: [],
+      smartCardNumber: [],
+      smartCardIssueDate: [],
+      fastTagNo: [],
+      fastTagIssueDate: [],
+      loyaltyCardNumber: [],
+      loyaltyCardDate: [],
+      monthYrManf: [],
+      cngKitNumber: [],
+      cngCylinderNo: [],
+      keyNo: [],
+      batteryMake: [],
+      tyreMake: [],
+      tyreNo: [],
+      bookletNo: [],
+      toolkit: [],
+      interiors: [],
+      rips: [],
+      twoTone: [],
+      hold: [],
+      holdReason: [],
+      marginCategory: [],
+      materialType: [],
+      lotSize: [],
     })
   }
 
@@ -256,7 +327,7 @@ export class ItemMasterNewComponent implements OnInit {
         }
       );
 
-      this.service.delearCodeList()
+    this.service.delearCodeList()
       .subscribe(
         data => {
           this.dealerCodeList = data;
@@ -264,13 +335,22 @@ export class ItemMasterNewComponent implements OnInit {
         }
       );
 
-      this.service.insNameList()
+    this.service.insNameList()
       .subscribe(
         data => {
           this.insNameList = data;
           console.log(this.insNameList);
         }
       );
+
+    this.service.holdReasonList()
+      .subscribe(
+        data => {
+          this.holdReasonList = data;
+          console.log(this.holdReasonList);
+        }
+      );
+    this.status = 'Active';
   }
 
   get f() { return this.itemMasterForm.controls; }
@@ -281,34 +361,35 @@ export class ItemMasterNewComponent implements OnInit {
 
 
   SearchItemCode(segment) {
-    // this.dispupdate = false;
+    this.dispupdate = false;
     this.service.getItemCodePach(segment)
       .subscribe(
         data => {
           this.lstcomments = data;
-          // this.taxCategoryDataList = data.taxCategoryNameList;
+          this.taxCategoryDataList = data.taxCategoryNameList;
           this.itemMasterForm.patchValue(this.lstcomments);
 
-          // let selloc = sessionStorage.getItem('locCode');
+          let selloc = sessionStorage.getItem('locCode');
 
-          // this.segmentName = selloc + '.'
-          //   + this.costCenter + '.'
-          //   + this.poChargeAccount + '.'
-          //   + '0000';
+          this.segmentName = selloc + '.'
+            + this.costCenter + '.'
+            + this.poChargeAccount + '.'
+            + '0000'; //this.lookupValueDesc5
 
-          // if (data.itemTypeForCat == 'ss_vehicle') {
-          //   this.ssVehical = true;
-          // }
-          // if (data.itemTypeForCat == 'ss_spares') {
-          //   this.ssSpares = true;
-          // }
+          if (data.itemTypeForCat == 'ss_vehicle') {
+            this.ssVehical = true;
+          }
+          if (data.itemTypeForCat == 'ss_spares') {
+            this.ssSpares = true;
+            this.ssAccessories=true;
+          }
         }
       );
   }
 
 
   onOptionsSelectedItemType(category: any) {
-    var category = category.target.value;
+    var category= category.target.value;
     // alert("onOptionsSelectedItemType");
     if (category == 'SS_VEHICLE') {
       this.disItemCode = false;
@@ -338,10 +419,10 @@ export class ItemMasterNewComponent implements OnInit {
         }
       );
     if (category == 'SS_VEHICLE') {
-      this.ssVehical = true; this.ssSpares = false;
+      this.ssVehical = true; this.ssSpares = false;this.ssAccessories=false;
       this.costCenter = select.costCenter
     }
-    if (category == 'SS_SPARES') { this.ssVehical = false; this.ssSpares = true; }
+    if (category == 'SS_SPARES') { this.ssVehical = false; this.ssSpares = true;this.ssAccessories=true }
 
     if (category === undefined) {
     }
@@ -390,6 +471,13 @@ export class ItemMasterNewComponent implements OnInit {
         )
       }
     }
+
+
+    this.itemMasterForm.get('hsnGstPer').reset();
+    this.itemMasterForm.get('hsnSacCode').reset();
+    this.taxCategoryListS = null;
+    this.taxCategoryListP = null;
+
   }
 
 
@@ -549,5 +637,61 @@ export class ItemMasterNewComponent implements OnInit {
           console.log(this.insSiteList);
         }
       );
+  }
+
+  onEwInsNameSelected(customerId: any) {
+
+    console.log(customerId);
+    let select = this.ewInsNameList.find(d => d.custName == customerId);
+    console.log(select.customerId);
+
+    this.SearchonEwInsName(select.customerId);
+  }
+  SearchonEwInsName(customerId) {
+
+    this.service.ewInsSiteList(customerId)
+      .subscribe(
+        data => {
+          this.ewInsurerSiteList = data;
+          console.log(this.ewInsurerSiteList);
+        }
+      );
+  }
+  interiorsEvent(e) {
+    if (e.target.checked) {
+      this.interiors = 'Y'
+    }
+    else {
+      this.interiors = 'N';
+    }
+  }
+
+  ripsEvent(e) {
+    if (e.target.checked) {
+      this.rips = 'Y'
+    }
+    else {
+      this.rips = 'N';
+    }
+  }
+
+  twoToneEvent(e) {
+    if (e.target.checked) {
+      this.twoTone = 'Y'
+    }
+    else {
+      this.twoTone = 'N';
+    }
+  }
+
+  holdEvent(e) {
+    if (e.target.checked) {
+      this.hold = 'Y'
+      this.displayHold = false;
+    }
+    else {
+      this.hold = 'N';
+      this.displayHold = true;
+    }
   }
 }

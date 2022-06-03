@@ -1359,9 +1359,7 @@
                                                     <td style="width: 12%" class="LabelFontStyle">
                                                         Hold&nbsp;Reason&nbsp;:&nbsp;</td>
                                                     <td>
-                                                        <div
-                                                            *ngIf="displayHold; then thenBlockHold; else elseBlockHold">
-                                                        </div>
+                                                        <div  *ngIf="displayHold; then thenBlockHold; else elseBlockHold">  </div>
                                                         <ng-template #thenBlockHold>
                                                             <input type="text" disabled formControlName="holdReason"
                                                                 class="form-control">

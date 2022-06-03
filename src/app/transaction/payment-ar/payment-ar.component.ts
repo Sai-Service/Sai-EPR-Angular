@@ -1048,16 +1048,41 @@ if(this.deptId==2){
 
     this.status = null;
     // var mDate = this.pipe.transform(rcptdate, 'dd-MMM-y');
+    if (Number(sessionStorage.getItem('deptId'))!=4){
     this.service.SearchRcptByCustNo(custActNo, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
       .subscribe(
         data => {
+          if (data.code==200){
           this.lstcomments = data.obj;
           console.log(this.lstcomments);
-          if (data.message === "Record Not Found ") {
-            alert("No Receipt Found for this date...")
-            this.lstcomments = null;
           }
+          else if (data.code==400){
+            alert(data.message)
+          }
+          // if (data.message === "Record Not Found ") {
+          //   alert("No Receipt Found for this date...")
+          //   this.lstcomments = null;
+          // }
         });
+      }
+      if (Number(sessionStorage.getItem('deptId'))==4){
+        alert(this.locId)
+        this.service.SearchRcptByCustNo(custActNo, sessionStorage.getItem('ouId'), this.locId, sessionStorage.getItem('deptId'))
+        .subscribe(
+          data => {
+            if (data.code==200){
+            this.lstcomments = data.obj;
+            console.log(this.lstcomments);
+          }
+          else if (data.code==400){
+            alert(data.message);
+          }
+            // if (data.message === "Record Not Found ") {
+            //   alert("No Receipt Found for this date...")
+            //   this.lstcomments = null;
+            // }
+          });
+      }
   }
 
 
