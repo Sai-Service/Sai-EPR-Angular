@@ -326,6 +326,7 @@ jeSource: [],
               this.suppId=this.lstsearchpayminvNew[x].suppId;
               this.source=this.lstsearchpayminvNew[x].source;
               arrcontrol.controls[x].get('payAmount').disable();
+              // this.displayselButton[0]=true;
             }
           }
         });
@@ -354,6 +355,7 @@ jeSource: [],
         invoiceNum: select.invoiceNum,
         invoiceAmt: select.invoiceAmt,
         unPaidAmt: select.invoiceAmt,
+        invoiceId:select.invoiceId,
       });
   }
 

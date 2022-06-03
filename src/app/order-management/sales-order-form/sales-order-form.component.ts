@@ -1757,6 +1757,7 @@ export class SalesOrderFormComponent implements OnInit {
         })
 
     this.SalesOrderBookingForm.get('accountNo').disable();
+    this.SalesOrderBookingForm.get('attribute17').disable();
     this.displayorderDetails = false;
     this.displayCreateOrderButton = true;
   }

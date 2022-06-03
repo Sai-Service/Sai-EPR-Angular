@@ -172,6 +172,7 @@ export class CustomerMasterComponent implements OnInit {
   displayNewButtonWithSite = false;
   Status1: any;
   lstcomments: any;
+  lstSiteList:any;
   searchByAccount: any;
   displayButton = true;
   birthDate: Date;
@@ -328,7 +329,7 @@ export class CustomerMasterComponent implements OnInit {
       termId: [],
       dealerCode: [],
       dealerType: [],
-      siteName: [],
+      siteName: [''],
       tcsYN: [],
       aadharNo: [],
       tdsApplDate: [],
@@ -466,11 +467,13 @@ export class CustomerMasterComponent implements OnInit {
       this.scity = this.customerMasterForm.get('city').value;
       this.spinCd = this.customerMasterForm.get('pinCd').value;
       this.sstate = this.state
+      // alert(this.lstSiteList[0].siteName);
       this.customerMasterForm.patchValue({ slocation: this.customerMasterForm.get('location').value });
       this.customerMasterForm.patchValue({ smobile1: this.customerMasterForm.get('mobile1').value });
       this.customerMasterForm.patchValue({ semailId: this.customerMasterForm.get('emailId').value });
       this.customerMasterForm.patchValue({ spanNo: this.customerMasterForm.get('panNo').value });
       this.customerMasterForm.patchValue({ sGstNo: this.customerMasterForm.get('gstNo').value });
+      // this.customerMasterForm.patchValue({siteName:this.lstSiteList.siteName});
     }
     else {
       this.saddress1 = null;
@@ -884,7 +887,17 @@ export class CustomerMasterComponent implements OnInit {
     if (formValue.sGstNo === '') {
       formValue.sGstNo = 'GSTUNREGISTERED';
     }
-
+    var siteName = this.customerMasterForm.get('siteName').value;
+    var souId= this.customerMasterForm.get('souId').value;
+    // alert(siteName +'-----'+ souId);
+    if (siteName =='' || siteName == null || siteName ==undefined){
+      alert('Please Select Site Name.!');
+      return;
+    }
+    else if (souId == ''|| souId==null || souId==undefined){
+      alert('Please Select OU Name.!');
+      return;
+    }
     this.service.CustMasterOnlySitSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
@@ -1002,8 +1015,19 @@ export class CustomerMasterComponent implements OnInit {
   }
 
   UpdateSiteCustMastExeSite() {
-
     const formValue: IcustomerMaster = this.transDataForSite(this.customerMasterForm.value);
+    var siteName=this.customerMasterForm.get('siteName').value;
+    var siteName = this.customerMasterForm.get('siteName').value;
+    var souId= this.customerMasterForm.get('souId').value;
+    // alert(siteName +'-----'+ souId);
+    // if (siteName =='' || siteName == null || siteName ==undefined){
+    //   alert('Please Select Site Name.!');
+    //   return;
+    // }
+    // else if (souId == ''|| souId==null || souId==undefined){
+    //   alert('Please Select OU Name.!');
+    //   return;
+    // }
     formValue.termId = this.customerMasterForm.get('paymentType').value;
     formValue.staxCategoryName = this.customerMasterForm.get('staxCatName').value;
     // formValue.sGstNo = this.customerMasterForm.get('sGstNo').value;
@@ -1159,6 +1183,7 @@ export class CustomerMasterComponent implements OnInit {
       .subscribe(
         data => {
           this.lstcomments = data.obj;
+          this.lstSiteList=data.obj.customerSiteMasterList;
           console.log(this.lstcomments);
           this.customerMasterForm.patchValue(this.lstcomments);
           this.displayenable = false;
