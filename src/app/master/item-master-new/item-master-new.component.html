@@ -268,20 +268,20 @@
                         <a class="nav-link active" id="home-tab-md" data-toggle="tab" href="#inventoryTab" role="tab"
                             aria-controls="home-md" aria-selected="true">Inventory</a>
                     </li>
-                    <!-- <li class="nav-item waves-effect waves-light">
-                        <a class="nav-link" id="sp-tab-md" data-toggle="tab" href="#sp-md" role="tab"
-                            aria-controls="sp-md" aria-selected="false">Spares / Accessories</a>
-                    </li> -->
-                </ul>
-            </div>
-            <div *ngIf="ssAccessories">
-                <ul class="nav nav-tabs md-tabs" id="myTabMD" role="tablist">
                     <li class="nav-item waves-effect waves-light">
                         <a class="nav-link" id="sp-tab-md" data-toggle="tab" href="#sp-md" role="tab"
                             aria-controls="sp-md" aria-selected="false">Spares / Accessories</a>
                     </li>
                 </ul>
             </div>
+            <!-- <div *ngIf="ssAccessories">
+                <ul class="nav nav-tabs md-tabs" id="myTabMD" role="tablist">
+                    <li class="nav-item waves-effect waves-light">
+                        <a class="nav-link" id="sp-tab-md" data-toggle="tab" href="#sp-md" role="tab"
+                            aria-controls="sp-md" aria-selected="false">Spares / Accessories</a>
+                    </li>
+                </ul>
+            </div> -->
             <div style="border: 0px;" class="tab-content card " id="myTabContentMD">
                 <div class="tab-pane fade show active" id="inventoryTab" role="tabpanel" aria-labelledby="home-tab-md">
                     <table class="center" style="border: 1px;">
@@ -463,7 +463,7 @@
                                 <td>
                                     <select formControlName="taxCategoryPur" id="taxCategoryPur" class="form-control">
                                         <option>--Select--</option>
-                                        <option *ngFor="let sc of  taxCategoryListP" [ngValue]="sc.taxCategoryId">
+                                        <option *ngFor="let sc of  taxCategoryListPIGST" [ngValue]="sc.taxCategoryId">
                                             {{sc.taxCategoryName}}
                                         </option>
                                     </select>
@@ -833,8 +833,96 @@
                         </table>
                     </fieldset>
                 </div>
+                <div class="tab-pane fade" id="sp-md" role="tabpanel" aria-labelledby="sp-tab-md">
+                    <table>
+                        <tr>
+                            <td style="width: 12%" class="LabelFontStyle"> Margin&nbsp;Cateogry&nbsp;:&nbsp;</td>
+                            <td><input type="text" formControlName="marginCategory" class="form-control"></td>
+                            <td style="width: 12%" class="LabelFontStyle"> Material&nbsp;type&nbsp;:&nbsp;</td>
+                            <td><input type="text" formControlName="materialType"  class="form-control"></td>
+                            <td style="width: 12%" class="LabelFontStyle">  Lot&nbsp;Size&nbsp;:&nbsp;</td>
+                            <td><input type="text" formControlName="lotSize" class="form-control"> </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
             
         </section>
     </fieldset>
+    <table class="center">
+        <tr>
+            <div *ngIf="dispupdate; then thenBlock1; else elseBlock1"></div>
+            <ng-template #thenBlock1>
+
+                <td class="center">
+                    <button type="submit" class="btn btn-primary" id="saveBtn" data-toggle="modal"
+                        data-target="#confirmAlert" (click)="getMessage('Save')">Save</button>
+                </td>
+                <td>
+                    <button disabled type="submit" class="btn btn-primary" id="updateBtn" data-toggle="modal"
+                        data-target="#confirmAlert" (click)="getMessage('Update')">Update</button>
+                </td>
+
+                <td>
+                    <button type="submit" class="btn btn-primary" id="resetBtn" data-toggle="modal"
+                        data-target="#confirmAlert" (click)="getMessage('Reset')">Reset</button>
+                </td>
+                <td>
+                    <button type="submit" class="btn btn-primary" id="closeBtn" data-toggle="modal"
+                        data-target="#confirmAlert" (click)="getMessage('Close')">Close</button>
+                </td>
+                <td>
+
+            </ng-template>
+            <ng-template #elseBlock1>
+                <td class="center">
+                    <button disabled type="submit" class="btn btn-primary" id="saveBtn" data-toggle="modal"
+                        data-target="#confirmAlert" (click)="getMessage('Save')">Save</button>
+                </td>
+                <td>
+                    <button type="submit" class="btn btn-primary" id="updateBtn" data-toggle="modal"
+                        data-target="#confirmAlert" (click)="getMessage('Update')">Update</button>
+                </td>
+                <td>
+                    <button type="submit" class="btn btn-primary" id="resetBtn" data-toggle="modal"
+                        data-target="#confirmAlert" (click)="getMessage('Reset')">Reset</button>
+                </td>
+                <td>
+                    <button type="submit" class="btn btn-primary" id="closeBtn" data-toggle="modal"
+                        data-target="#confirmAlert" (click)="getMessage('Close')">Close</button>
+                </td>
+                <td>
+
+            </ng-template>
+        </tr>
+    </table>
 </form>
+<div class="modal" id="confirmAlert" tabindex="-1" role="dialog" aria-hidden="true"
+    style="width: 500px; text-align: center;">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmation!</h5>
+            </div>
+            <div class="modal-body">
+                <label
+                    style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
+                    {{message}}
+                </label>
+            </div>
+            <div class="modal-footer">
+                <table class="center">
+                    <tr>
+                        <td>
+                            <button type="submit" class="btn btn-info" data-dismiss="modal" id="register"
+                                (click)="executeAction()">Yes</button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

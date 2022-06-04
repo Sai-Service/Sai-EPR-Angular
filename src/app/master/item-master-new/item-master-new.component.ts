@@ -122,6 +122,7 @@ export class ItemMasterNewComponent implements OnInit {
   hsnSacCodeDet: any = [];
   taxCategoryListS: any = [];
   taxCategoryListP: any = [];
+  taxCategoryListPIGST:any=[];
   userList3: any[] = [];
   lastkeydown3: number = 0;
   uom: string;
@@ -477,6 +478,7 @@ export class ItemMasterNewComponent implements OnInit {
     this.itemMasterForm.get('hsnSacCode').reset();
     this.taxCategoryListS = null;
     this.taxCategoryListP = null;
+    this.taxCategoryListPIGST=null;
 
   }
 
@@ -502,13 +504,22 @@ export class ItemMasterNewComponent implements OnInit {
                 data1 = this.taxCategoryListS;
               });
 
+            // this.service.taxCategoryListHSN(this.hsnGstPer, 'PURCHASE')
+            //   .subscribe(
+            //     data1 => {
+            //       this.taxCategoryListP = data1;
+            //       console.log(this.taxCategoryListP);
+            //       data1 = this.taxCategoryListP;
+            //     });
             this.service.taxCategoryListHSN(this.hsnGstPer, 'PURCHASE')
-              .subscribe(
-                data1 => {
-                  this.taxCategoryListP = data1;
-                  console.log(this.taxCategoryListP);
-                  data1 = this.taxCategoryListP;
-                });
+            .subscribe(
+              data1 => {
+                this.taxCategoryListPIGST = data1;
+                console.log(data1);
+                
+                console.log(this.taxCategoryListPIGST.includes('I-GST')==true);
+                data1 = this.taxCategoryListPIGST.includes('I-GST');
+              });
           });
     }
   }
@@ -694,4 +705,129 @@ export class ItemMasterNewComponent implements OnInit {
       this.displayHold = true;
     }
   }
+
+  message: string = "Please Fix the Errors !";
+  msgType: string = "Close";
+  getMessage(msgType: string) {
+    this.msgType = msgType;
+    if (msgType.includes("Save")) {
+      this.submitted = true;
+      (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
+      // if (this.itemMasterForm.invalid) {
+      //   alert('Some fields validation error (D)');
+      //   (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '');
+      //   return;
+      // }
+      this.message = "Do you want to SAVE the changes(Yes/No)?"
+
+    }
+
+    if (msgType.includes("Update")) {
+      this.submitted = true;
+      (document.getElementById('updateBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
+      if (this.itemMasterForm.invalid) {
+        alert('Some fields validation error (D)');
+        //this.submitted = false;
+        (document.getElementById('updateBtn') as HTMLInputElement).setAttribute('data-target', '');
+        return;
+      }
+      this.message = "Do you want to UPDATE the changes(Yes/No)?"
+
+    }
+
+    if (msgType.includes("Reset")) {
+      this.message = "Do you want to Reset the changes(Yes/No)?"
+    }
+
+    if (msgType.includes("Close")) {
+      this.message = "Do you want to Close the Form(Yes/No)?"
+    }
+    return;
+  }
+
+  executeAction() {
+    if (this.msgType.includes("Save")) {
+      this.newItemMast();
+    }
+
+    if (this.msgType.includes("Update")) {
+      this.updateItemMast();
+    }
+
+    if (this.msgType.includes("Reset")) {
+      this.resetItemMast();
+      //       this.itemMasterForm.reset();
+    }
+
+    if (this.msgType.includes("Close")) {
+      // this.closeItemCatMast();
+      this.router.navigate(['admin']);
+    }
+    return;
+  }
+
+
+  transData(val) {
+    delete val.segment11;
+    delete val.segment2;
+    delete val.segment3;
+    delete val.segment4;
+    delete val.segment5;
+    delete val.lookupValueDesc4;
+    delete val.lookupValueDesc1;
+    delete val.lookupValueDesc2;
+    delete val.lookupValueDesc3;
+    delete val.lookupValueDesc5;
+
+    return val;
+  }
+
+  newItemMast() {
+    // this.submitted = true;
+    // if(this.itemMasterForm.invalid){
+    //   alert('Error');
+    // return;
+    // } 
+    const formValue: IItemMaster = this.transData(this.itemMasterForm.value);
+    formValue.stockable = this.stockable;
+    formValue.costing = this.costing;
+    formValue.internalOrder = this.internalOrder;
+    formValue.assetItem = this.assetItem;
+    formValue.purchasable = this.purchasable;
+    formValue.isTaxable = this.isTaxable;
+    // formValue.costCenter= this.segment3;
+    // formValue.purchasable= this.purchasable;
+    this.service.VehItemSubmit(formValue).subscribe((res: any) => {
+      if (res.code === 200) {
+        alert(res.message);
+        this.itemMasterForm.disable();
+        // this.itemMasterForm.reset();
+      } else {
+        if (res.code === 400) {
+          alert('ERROR OCCOURED IN PROCEESS' + res.obj);
+          // this.itemMasterForm.reset();
+        }
+      }
+    });
+  }
+  resetItemMast() { window.location.reload(); }
+  closeItemMast() { this.router.navigate(['admin']); }
+ 
+  updateItemMast() {
+    const formValue: IItemMaster = this.itemMasterForm.value;
+    this.service.UpdateItemMasterById(formValue).subscribe((res: any) => {
+      if (res.code === 200) {
+        alert(res.message);
+        // window.location.reload();
+      } else {
+        if (res.code === 400) {
+          alert(res.message
+          );
+          // this.CompanyMasterForm.reset();
+          // window.location.reload();
+        }
+      }
+    });
+  }
+
 }
