@@ -1136,9 +1136,7 @@
                                                         {{sc.codeDesc}}</option>
                                                 </select>
                                             </td>
-                                            <div
-                                                *ngIf="DisplayfinanceSelectionYes; then thenfinanceSelectionYes; else elsefinanceSelectionYes">
-                                            </div>
+                                            <div *ngIf="DisplayfinanceSelectionYes; then thenfinanceSelectionYes; else elsefinanceSelectionYes"> </div>
                                             <ng-template #thenfinanceSelectionYes>
                                             </ng-template>
                                             <ng-template #elsefinanceSelectionYes>

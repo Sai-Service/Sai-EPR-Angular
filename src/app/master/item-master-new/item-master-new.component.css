@@ -102,11 +102,11 @@
   }
   
 
-  
+/*   
     input[type="text"]:disabled {
         background: rgb(208,208,208);
         color: black;
-      }
+      } */
   
       
   .modal {
@@ -127,7 +127,7 @@
     }
 
 
-    .form-control {
+    /* .form-control {
       font-family: Verdana,Sans-serif, Arial, Helvetica;
       font-size: 11px;
       outline: medium none;
@@ -136,4 +136,4 @@
       width: 190px;
       height: 50%;
       border-color: gray;
-    }
+    } */

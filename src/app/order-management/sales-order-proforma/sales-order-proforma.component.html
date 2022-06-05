@@ -609,6 +609,45 @@
             </table>
         </ng-template>
     </fieldset>
+    <fieldset class="RFS">
+        <legend id="FormsPH_LGAadhaar" class="RFSL" data-toggle="collapse" data-target="#radios"
+            style="font-size: 12px;color: black;font-weight: bold;">Finanance Details</legend>
+            <table>
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        Finance&nbsp;Type&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <select type="text" formControlName="financeyn" id="financeyn"
+                            class="form-control" style="width: 170px;"
+                            (change)="financeSelectionYes($event)">
+                            <option>--Select--</option>
+                            <option *ngFor="let sc of  financeTypeList" [value]="sc.codeDesc">
+                                {{sc.codeDesc}}</option>
+                        </select>
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        Financer&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <div *ngIf="DisplayfinanceSelectionYes; then thenfinanceSelectionYes; else elsefinanceSelectionYes"> </div>
+                        <ng-template #thenfinanceSelectionYes>
+                            <input disabled type="text" formControlName="attribute4" value={{attribute4}}
+                            class="form-control" style="width: 160px;font-weight: bold;">
+                        </ng-template>
+                        <ng-template #elsefinanceSelectionYes>
+                        <select type="text" formControlName="attribute4" id="attribute4"
+                            class="form-control" style="width: 170px;">
+                            <option>--Select--</option>
+                            <option *ngFor="let finName of  financerNameList"
+                                [ngValue]="finName.codeDesc">{{finName.codeDesc}}
+                            </option>
+                        </select>
+                        </ng-template>
+                    </td>
+                </tr>
+            </table>
+    </fieldset>
     <fieldset class="RFS" style="height: 300px;">
         <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Line & Tax
             Details</legend>

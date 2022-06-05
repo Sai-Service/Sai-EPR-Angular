@@ -26,6 +26,8 @@
             Header&nbsp;Details
         </legend>
         <table class="center">
+            <div *ngIf="displayActiveHeader; then thenActiveHeader; else elseActiveHeader"></div>
+            <ng-template #thenActiveHeader>
             <tr>
                 <td style="width:12%" class="LabelFontStyle1">Item&nbsp;Type&nbsp;:&nbsp;</td>
                 <td>
@@ -104,6 +106,56 @@
                         placeholder="Enter Item Description" style="text-transform: uppercase;width: 100%;">
                 </td>
             </tr>
+        </ng-template>
+        <ng-template #elseActiveHeader>
+            <tr>
+                <td style="width:12%" class="LabelFontStyle1">Item&nbsp;Type&nbsp;:&nbsp;</td>
+                <td>
+                    <input type="text" disabled class="form-control" formControlName="itemTypeForCat" value={{itemTypeForCat}}>
+                </td>
+                <td style="width: 12%" class="LabelFontStyle">Item&nbsp;Category&nbsp;:&nbsp;</td>
+                <td>
+                    <input hidden type="number" disabled class="form-control" formControlName="categoryId" value={{categoryId}}>
+                    <input type="text" disabled class="form-control" formControlName="categoryName" value={{categoryName}}>
+                </td>
+                <td style="width: 12%" class="LabelFontStyle">HSN&nbsp;/&nbsp;SAC&nbsp;:&nbsp;</td>
+                <td>
+                    <input type="text" formControlName="hsnSacCode" id="hsnSacCodeId" list="hsnsaclist"
+                        class="form-control" style="height: 20px;width:120px;" (change)='onHsnCodeSelected($event)'>
+                    <datalist id="hsnsaclist">
+                        <option value="--Select--">--Select--</option>
+                        <option *ngFor="let hsn of  hsnSacCodeList" [value]="hsn.hsnsaccode">
+                            {{hsn.hsnsaccode}}-{{hsn.description}}
+                        </option>
+                    </datalist>
+                </td>
+                <td style="width: 12%" class="LabelFontStyle">UOM&nbsp;:&nbsp;</td>
+                <td>
+                    <input type="text" disabled class="form-control" formControlName="uom" value={{uom}}>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 12%" class="LabelFontStyle">Status&nbsp;:&nbsp;</td>
+                <td>
+                    <select style="width:fit-content" formControlName="status" id="status" class="form-control"
+                        [ngModel]="status" (ngModelChange)='onOptionsSelected($event)'>
+                        <option *ngFor="let sc of  statusList">
+                            {{sc.codeDesc}}
+                        </option>
+                    </select>
+                </td>
+                <td style="width: 12%" class="LabelFontStyle">Item&nbsp;Code&nbsp;:&nbsp;</td>
+                    <td>
+                        <input disabled type="text" formControlName="segment" value={{segment}} [(ngModel)]='segment' class="form-control"
+                            placeholder="Enter Item code" style="text-transform: uppercase;">
+                    </td>
+                <td style="width: 12%" class="LabelFontStyle">Item&nbsp;Description&nbsp;:&nbsp;</td>
+                <td colspan="3">
+                    <input disabled type="text" formControlName="description" value={{description}} class="form-control"
+                        placeholder="Enter Item Description" style="text-transform: uppercase;width: 100%;">
+                </td>
+            </tr>
+        </ng-template>
             <tr>
                 <div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
                 <ng-template #thenBlockInactive>
@@ -451,9 +503,9 @@
                                 <td style="width: 12%" class="LabelFontStyle">
                                     Purchase&nbsp;S&CGST&nbsp;Category&nbsp;Name:&nbsp;</td>
                                 <td>
-                                    <select formControlName="taxCategorySale" id="taxCategorySale" class="form-control">
+                                    <select formControlName="taxCategoryPur" id="taxCategoryPur" class="form-control">
                                         <option>--Select--</option>
-                                        <option *ngFor="let sc of  taxCategoryListP" [ngValue]="sc.taxCategoryId">
+                                        <option *ngFor="let sc of  taxCategoryListPSAndCGST" [ngValue]="sc.taxCategoryId">
                                             {{sc.taxCategoryName}}
                                         </option>
                                     </select>
@@ -461,7 +513,7 @@
                                 <td style="width: 12%" class="LabelFontStyle">
                                     Purchase&nbsp;IGST&nbsp;Category&nbsp;Name:&nbsp;</td>
                                 <td>
-                                    <select formControlName="taxCategoryPur" id="taxCategoryPur" class="form-control">
+                                    <select formControlName="taxCategoryPurIGST" id="taxCategoryPurIGST" class="form-control">
                                         <option>--Select--</option>
                                         <option *ngFor="let sc of  taxCategoryListPIGST" [ngValue]="sc.taxCategoryId">
                                             {{sc.taxCategoryName}}
@@ -474,9 +526,9 @@
                                     Sales&nbsp;S&CGST&nbsp;Category&nbsp;Name:&nbsp;</td>
 
                                 <td>
-                                    <select formControlName="taxCategoryPur" id="taxCategoryPur" class="form-control">
+                                    <select formControlName="taxCategorySale" id="taxCategorySale" class="form-control">
                                         <option>--Select--</option>
-                                        <option *ngFor="let sc of  taxCategoryListS" [ngValue]="sc.taxCategoryId">
+                                        <option *ngFor="let sc of  taxCategoryListSalesSAndCGST" [ngValue]="sc.taxCategoryId">
                                             {{sc.taxCategoryName}}
                                         </option>
                                     </select>
@@ -485,9 +537,9 @@
                                     Sales&nbsp;IGST&nbsp;Category&nbsp;Name:&nbsp;</td>
 
                                 <td>
-                                    <select formControlName="taxCategoryPur" id="taxCategoryPur" class="form-control">
+                                    <select formControlName="taxCategorySaleIGST" id="taxCategorySaleIGST" class="form-control">
                                         <option>--Select--</option>
-                                        <option *ngFor="let sc of  taxCategoryListS" [ngValue]="sc.taxCategoryId">
+                                        <option *ngFor="let sc of  taxCategoryListSalesIGST" [ngValue]="sc.taxCategoryId">
                                             {{sc.taxCategoryName}}
                                         </option>
                                     </select>
