@@ -199,15 +199,16 @@
                           </td>
                           <td style="width: 15%" class="LabelFontStyle1">TDS&nbsp;:&nbsp;</td>
                           <td>
-                            <select formControlName="supTds" id="supTds" 
+                              <!-- supTds -->
+                            <select formControlName="supTdsYN" id="supTdsYN" 
                             class="form-control" (ngModelChange)="onOptionTdsSelect($event)"
-                            [ngClass]="{ 'is-invalid': submitted && f.supTds.errors }">
+                            [ngClass]="{ 'is-invalid': submitted && f.supTdsYN.errors }">
                               <!-- <option>--Select--</option> -->
                               <option value="Y">Yes</option>
                               <option value="N">No</option>
                           </select>
-                          <div *ngIf="submitted && f.supTds.errors" class="invalid-feedback">
-                            <div *ngIf="f.supTds.errors.required">TDS cannot be blank</div>
+                          <div *ngIf="submitted && f.supTdsYN.errors" class="invalid-feedback">
+                            <div *ngIf="f.supTdsYN.errors.required">TDS cannot be blank</div>
                         </div>
                     
                         </td>
