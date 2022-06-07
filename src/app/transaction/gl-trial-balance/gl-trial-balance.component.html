@@ -245,6 +245,7 @@
       </div>
 
       <div class="modal-footer">
+        <td> <button  (click)="glTbReportExport_Level1()" class="btn btn-success" style="width: fit-content;">Export To Excel</button></td>  
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
@@ -300,7 +301,6 @@
                         <ng-container  *ngFor="let com of lstTBActLineDet1 let i=index" class="ItemStyle" style="text-decoration:none;position: initial;font-size:large">
 
                         <tr style="text-decoration:none;position: initial;font-size:small">
-
                           <td style="padding-right: 5px;padding-top: 5px;border-color:black;text-align: right;">{{i+1}}</td>
                           <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: center;">{{com.trxNumber}}</td>
                           <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: center;">{{com.trxDate |date:'dd-MM-y'}}</td>
@@ -309,7 +309,6 @@
                           <td style="padding-right: 5px;padding-top: 5px;border-color:black;text-align: right;">{{com.invoiceAmt | number:'1.2-2'}}</td>
                           <td style="padding-right: 5px;padding-top: 5px;border-color:black;text-align: right;">{{com.totalAmt| number:'1.2-2'}}</td>
                           <!-- <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: left;">{{com.ouId}}</td> -->
-
                         </tr>
                         </ng-container>
 
@@ -323,6 +322,7 @@
       </div>
 
       <div class="modal-footer">
+        <td> <button  (click)="glTbReportExport_Level2()" class="btn btn-success" style="width: fit-content;">Export To Excel</button></td>  
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
