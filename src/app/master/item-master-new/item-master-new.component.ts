@@ -15,6 +15,7 @@ interface IItemMaster {
   description: string;
   loyaltyCardDate: Date;
   categoryId: number;
+  categoryName:string;
   uom: string;
   tyreMake: string;
   materialType: string;
@@ -22,7 +23,7 @@ interface IItemMaster {
   bookletNo: string;
   toolkit: string;
   fuelType: string;
-  dealerCode:string;
+  dealerCode: string;
   costing: string;
   stockable: string;
   purchasable: string;
@@ -75,6 +76,8 @@ interface IItemMaster {
   isTaxable: string;
   taxCategoryPur: number;
   taxCategorySale: number;
+  taxCategoryPurIGST:number;
+  taxCategorySaleIGST :number;
 }
 
 @Component({
@@ -102,6 +105,7 @@ export class ItemMasterNewComponent implements OnInit {
   displayisTaxable = true;
   ssVehical = false;
   ssSpares = false;
+  ssAccessories = false;
   submitted = false;
   public categoryIdList: Array<string> = [];
   public mainModelList: Array<string>[];
@@ -117,15 +121,21 @@ export class ItemMasterNewComponent implements OnInit {
   costCenter: number;
   itemTypeForCat: string;
   categoryId: number;
+  categoryName:string;
   hsnSacCode: string;
   hsnSacCodeDet: any = [];
   taxCategoryListS: any = [];
   taxCategoryListP: any = [];
+  taxCategoryListPIGST: any = [];
+  taxCategoryListPSAndCGST:any=[];
+  taxCategoryListSalesIGST:any=[];
+  taxCategoryListSalesSAndCGST:any=[];
   userList3: any[] = [];
   lastkeydown3: number = 0;
   uom: string;
   public uomList: Array<string> = [];
   displayInactive = true;
+  displayActiveHeader=true;
   endDate: Date;
   status: string;
   public statusList: Array<string> = [];
@@ -147,26 +157,66 @@ export class ItemMasterNewComponent implements OnInit {
   showModal: boolean;
   public CostCenterList: Array<string> = [];
   public NaturalAccountList: Array<string> = [];
-  taxCategorySale: string;
-  taxCategoryPur: string;
+  taxCategorySale: number;
+  taxCategoryPur: number;
+  taxCategoryPurIGST:number;
+  taxCategorySaleIGST :number;
   mainModel: string;
   VariantSearch: Array<string>[];
   ColourSearch: Array<string>[];
   colorCode: string = '';
   variantCode: string = '';
   chassisNo: string = '';
-  engineNo:string;
-  vehicleDelvDate:Date;
+  engineNo: string;
+  vehicleDelvDate: Date;
   public maxDate = new Date();
   public dealerCodeList: Array<string> = [];
-  dealerCode:string;
-  fuelType:string;
-  vin:string;
+  dealerCode: string;
+  fuelType: string;
+  vin: string;
   public insSiteList: Array<string>[];
-  insurerCompId:number;
+  insurerCompId: number;
   public insNameList: Array<string>[];
-  insurerSiteId:number;
+  insurerSiteId: number;
   public minDate = new Date();
+  oemWarrentyEndDate: Date;
+  ewBookletNo: string;
+  ewPeriod: string;
+  ewStartDate: Date;
+  ewEndDate: Date;
+  ewInsurerId: number;
+  public ewInsNameList: any;
+  public ewInsurerSiteList: Array<string>[];
+  ewInsurerSite: string;
+  tempRegNo: string;
+  tempRegDate: Date;
+  smartCardNumber: string;
+  smartCardIssueDate: Date;
+  fastTagNo: string;
+  fastTagIssueDate: Date;
+  loyaltyCardNumber: string;
+  loyaltyCardDate: Date;
+  monthYrManf: Date;
+  cngKitNumber: string;
+  cngCylinderNo: string;
+  keyNo: string;
+  batteryMake: string;
+  tyreMake: string;
+  tyreNo: string;
+  bookletNo: string;
+  toolkit: string;
+  interiors: string;
+  rips: string;
+  twoTone: string;
+  hold: string;
+  displayHold = true;
+  public holdReasonList: Array<string>[];
+  marginCategory: string;
+  materialType: string;
+  lotSize: string;
+  dispupdate: boolean = true;
+  public taxCategoryDataList: Array<string> = [];
+
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService) {
     this.itemMasterForm = fb.group({
       segmentName: [],
@@ -180,6 +230,7 @@ export class ItemMasterNewComponent implements OnInit {
       costCenter: [],
       itemTypeForCat: [],
       categoryId: [],
+      categoryName:[],
       hsnSacCode: [],
       hsnGstPer: [],
       uom: [],
@@ -200,17 +251,51 @@ export class ItemMasterNewComponent implements OnInit {
       poChargeAccount: [],
       taxCategorySale: [],
       taxCategoryPur: [],
+      taxCategoryPurIGST:[],
+      taxCategorySaleIGST :[],
       mainModel: [],
       colorCode: [],
       variantCode: [],
       chassisNo: [],
-      engineNo:[],
-      vehicleDelvDate:[],
-      dealerCode:[],
-      fuelType:[],
-      vin:[],
-      insurerCompId:[],
-      insurerSiteId:[],
+      engineNo: [],
+      vehicleDelvDate: [],
+      dealerCode: [],
+      fuelType: [],
+      vin: [],
+      insurerCompId: [],
+      insurerSiteId: [],
+      oemWarrentyEndDate: [],
+      ewBookletNo: [],
+      ewPeriod: [],
+      ewEndDate: [],
+      ewStartDate: [],
+      ewInsurerId: [],
+      ewInsurerSite: [],
+      tempRegNo: [],
+      tempRegDate: [],
+      smartCardNumber: [],
+      smartCardIssueDate: [],
+      fastTagNo: [],
+      fastTagIssueDate: [],
+      loyaltyCardNumber: [],
+      loyaltyCardDate: [],
+      monthYrManf: [],
+      cngKitNumber: [],
+      cngCylinderNo: [],
+      keyNo: [],
+      batteryMake: [],
+      tyreMake: [],
+      tyreNo: [],
+      bookletNo: [],
+      toolkit: [],
+      interiors: [],
+      rips: [],
+      twoTone: [],
+      hold: [],
+      holdReason: [],
+      marginCategory: [],
+      materialType: [],
+      lotSize: [],
     })
   }
 
@@ -256,7 +341,7 @@ export class ItemMasterNewComponent implements OnInit {
         }
       );
 
-      this.service.delearCodeList()
+    this.service.delearCodeList()
       .subscribe(
         data => {
           this.dealerCodeList = data;
@@ -264,13 +349,22 @@ export class ItemMasterNewComponent implements OnInit {
         }
       );
 
-      this.service.insNameList()
+    this.service.insNameList()
       .subscribe(
         data => {
           this.insNameList = data;
           console.log(this.insNameList);
         }
       );
+
+    this.service.holdReasonList()
+      .subscribe(
+        data => {
+          this.holdReasonList = data;
+          console.log(this.holdReasonList);
+        }
+      );
+    this.status = 'Active';
   }
 
   get f() { return this.itemMasterForm.controls; }
@@ -281,27 +375,58 @@ export class ItemMasterNewComponent implements OnInit {
 
 
   SearchItemCode(segment) {
-    // this.dispupdate = false;
+    this.dispupdate = false;
+    this.displayActiveHeader=false;
     this.service.getItemCodePach(segment)
       .subscribe(
         data => {
           this.lstcomments = data;
-          // this.taxCategoryDataList = data.taxCategoryNameList;
+          this.taxCategoryDataList = data.taxCategoryNameList;
           this.itemMasterForm.patchValue(this.lstcomments);
 
-          // let selloc = sessionStorage.getItem('locCode');
+          let selloc = sessionStorage.getItem('locCode');
 
-          // this.segmentName = selloc + '.'
-          //   + this.costCenter + '.'
-          //   + this.poChargeAccount + '.'
-          //   + '0000';
+          this.segmentName = selloc + '.'
+            + this.costCenter + '.'
+            + this.poChargeAccount + '.'
+            + '0000'; //this.lookupValueDesc5
 
-          // if (data.itemTypeForCat == 'ss_vehicle') {
-          //   this.ssVehical = true;
-          // }
-          // if (data.itemTypeForCat == 'ss_spares') {
-          //   this.ssSpares = true;
-          // }
+          if (data.itemTypeForCat == 'ss_vehicle') {
+            this.ssVehical = true;
+          }
+          if (data.itemTypeForCat == 'ss_spares') {
+            this.ssSpares = true;
+            this.ssAccessories = true;
+          }
+          if (data.isTaxable=='Y'){
+            this.displayisTaxable=false;
+          }
+          else {
+            this.displayisTaxable=true;
+          }
+          this.itemMasterForm.get('costCenter').disable();
+          this.itemMasterForm.get('poChargeAccount').disable();
+          // alert(data.taxCategoryNameList);
+          this.onHsnCodeSelectedSearch(data.hsnSacCode);
+          if (data.stockable === 'Y') {
+            // alert(this.stockable)
+            this.service.hsnSacCodeData('HSN').subscribe(
+              data => {
+                this.hsnSacCodeList = data;
+                console.log(this.hsnSacCodeList);
+    
+              }
+    
+            )
+          }
+          else {
+            this.service.hsnSacCodeData('SAC').subscribe(
+              data => {
+                this.hsnSacCodeList = data;
+              }
+    
+            )
+          }
         }
       );
   }
@@ -338,10 +463,10 @@ export class ItemMasterNewComponent implements OnInit {
         }
       );
     if (category == 'SS_VEHICLE') {
-      this.ssVehical = true; this.ssSpares = false;
+      this.ssVehical = true; this.ssSpares = false; this.ssAccessories = false;
       this.costCenter = select.costCenter
     }
-    if (category == 'SS_SPARES') { this.ssVehical = false; this.ssSpares = true; }
+    if (category == 'SS_SPARES') { this.ssVehical = false; this.ssSpares = true; this.ssAccessories = true }
 
     if (category === undefined) {
     }
@@ -390,12 +515,80 @@ export class ItemMasterNewComponent implements OnInit {
         )
       }
     }
+
+
+    this.itemMasterForm.get('hsnGstPer').reset();
+    this.itemMasterForm.get('hsnSacCode').reset();
+    this.taxCategoryListS = null;
+    this.taxCategoryListP = null;
+    this.taxCategoryListPIGST = null;
+    this.taxCategoryListPSAndCGST=null;
+    this.taxCategoryListSalesIGST=null;
+    this.taxCategoryListSalesSAndCGST=null;
+  }
+
+  onHsnCodeSelectedSearch(mHsnCode){
+    alert(mHsnCode)
+    if (mHsnCode != null) {
+      this.service.hsnSacCodeDet(mHsnCode)
+        .subscribe(
+          data => {
+            // this.hsnSacCodeList = data;
+            this.hsnSacCodeDet = data;
+            console.log(this.hsnSacCodeDet);
+            this.itemMasterForm.patchValue(this.hsnSacCodeDet.gstPercentage);
+            this.hsnGstPer = this.hsnSacCodeDet.gstPercentage;
+            alert(this.hsnGstPer);
+            this.service.taxCategoryListHSN(this.hsnGstPer, 'SALES')
+              .subscribe(data1 => {
+                this.taxCategoryListSalesIGST = data1;
+                let taxCategoryListSalesIGST = this.taxCategoryListSalesIGST.filter((customer) => (customer.taxCategoryName.includes('I-GST') == true  || customer.taxCategoryName.includes('I GST') == true));
+                console.log(taxCategoryListSalesIGST);
+                this.taxCategoryListSalesIGST=taxCategoryListSalesIGST;
+              });
+
+              this.service.taxCategoryListHSN(this.hsnGstPer, 'SALES')
+              .subscribe(data1 => {
+                this.taxCategoryListSalesSAndCGST = data1;
+                let taxCategoryListSalesSAndCGST = this.taxCategoryListSalesSAndCGST.filter((customer) => (customer.taxCategoryName.includes('I-GST') == false && customer.taxCategoryName.includes('I GST') == false ));
+                console.log(taxCategoryListSalesSAndCGST);
+                this.taxCategoryListSalesSAndCGST=taxCategoryListSalesSAndCGST;
+              });
+
+            // this.service.taxCategoryListHSN(this.hsnGstPer, 'SALES')
+            //   .subscribe(
+            //     data1 => {
+            //       this.taxCategoryListP = data1;
+            //       console.log(this.taxCategoryListP);
+            //       data1 = this.taxCategoryListP;
+            //     });
+            this.service.taxCategoryListHSN(this.hsnGstPer, 'PURCHASE')
+              .subscribe(
+                data1 => {
+                 this.taxCategoryListPIGST = data1;
+                  console.log(data1);
+                  let purchaseIGSTList = this.taxCategoryListPIGST.filter((customer) => (customer.taxCategoryName.includes('I-GST') == true ));
+                  console.log(purchaseIGSTList);
+                  this.taxCategoryListPIGST=purchaseIGSTList;
+                });
+                this.service.taxCategoryListHSN(this.hsnGstPer, 'PURCHASE')
+                .subscribe(
+                  data1 => {
+                   this.taxCategoryListPSAndCGST = data1;
+                    console.log(data1);
+                    let taxCategoryListPSAndCGST = this.taxCategoryListPSAndCGST.filter((customer) => (customer.taxCategoryName.includes('I-GST') == false ));
+                    console.log(taxCategoryListPSAndCGST);
+                    this.taxCategoryListPSAndCGST=taxCategoryListPSAndCGST;
+                  });
+
+                
+          });
+    }
   }
 
 
-
-
   onHsnCodeSelected(mHsnCode: any) {
+    alert(mHsnCode);
     var mHsnCode = mHsnCode.target.value;
     if (mHsnCode != null) {
       this.service.hsnSacCodeDet(mHsnCode)
@@ -406,21 +599,50 @@ export class ItemMasterNewComponent implements OnInit {
             console.log(this.hsnSacCodeDet);
             this.itemMasterForm.patchValue(this.hsnSacCodeDet.gstPercentage);
             this.hsnGstPer = this.hsnSacCodeDet.gstPercentage;
-            alert(this.hsnGstPer)
+            alert(this.hsnGstPer);
             this.service.taxCategoryListHSN(this.hsnGstPer, 'SALES')
               .subscribe(data1 => {
-                this.taxCategoryListS = data1;
-                console.log(this.taxCategoryListS);
-                data1 = this.taxCategoryListS;
+                this.taxCategoryListSalesIGST = data1;
+                let taxCategoryListSalesIGST = this.taxCategoryListSalesIGST.filter((customer) => (customer.taxCategoryName.includes('I-GST') == true  || customer.taxCategoryName.includes('I GST') == true));
+                console.log(taxCategoryListSalesIGST);
+                this.taxCategoryListSalesIGST=taxCategoryListSalesIGST;
               });
 
+              this.service.taxCategoryListHSN(this.hsnGstPer, 'SALES')
+              .subscribe(data1 => {
+                this.taxCategoryListSalesSAndCGST = data1;
+                let taxCategoryListSalesSAndCGST = this.taxCategoryListSalesSAndCGST.filter((customer) => (customer.taxCategoryName.includes('I-GST') == false && customer.taxCategoryName.includes('I GST') == false ));
+                console.log(taxCategoryListSalesSAndCGST);
+                this.taxCategoryListSalesSAndCGST=taxCategoryListSalesSAndCGST;
+              });
+
+            // this.service.taxCategoryListHSN(this.hsnGstPer, 'SALES')
+            //   .subscribe(
+            //     data1 => {
+            //       this.taxCategoryListP = data1;
+            //       console.log(this.taxCategoryListP);
+            //       data1 = this.taxCategoryListP;
+            //     });
             this.service.taxCategoryListHSN(this.hsnGstPer, 'PURCHASE')
               .subscribe(
                 data1 => {
-                  this.taxCategoryListP = data1;
-                  console.log(this.taxCategoryListP);
-                  data1 = this.taxCategoryListP;
+                 this.taxCategoryListPIGST = data1;
+                  console.log(data1);
+                  let purchaseIGSTList = this.taxCategoryListPIGST.filter((customer) => (customer.taxCategoryName.includes('I-GST') == true ));
+                  console.log(purchaseIGSTList);
+                  this.taxCategoryListPIGST=purchaseIGSTList;
                 });
+                this.service.taxCategoryListHSN(this.hsnGstPer, 'PURCHASE')
+                .subscribe(
+                  data1 => {
+                   this.taxCategoryListPSAndCGST = data1;
+                    console.log(data1);
+                    let taxCategoryListPSAndCGST = this.taxCategoryListPSAndCGST.filter((customer) => (customer.taxCategoryName.includes('I-GST') == false ));
+                    console.log(taxCategoryListPSAndCGST);
+                    this.taxCategoryListPSAndCGST=taxCategoryListPSAndCGST;
+                  });
+
+                
           });
     }
   }
@@ -550,4 +772,185 @@ export class ItemMasterNewComponent implements OnInit {
         }
       );
   }
+
+  onEwInsNameSelected(customerId: any) {
+
+    console.log(customerId);
+    let select = this.ewInsNameList.find(d => d.custName == customerId);
+    console.log(select.customerId);
+
+    this.SearchonEwInsName(select.customerId);
+  }
+  SearchonEwInsName(customerId) {
+
+    this.service.ewInsSiteList(customerId)
+      .subscribe(
+        data => {
+          this.ewInsurerSiteList = data;
+          console.log(this.ewInsurerSiteList);
+        }
+      );
+  }
+  interiorsEvent(e) {
+    if (e.target.checked) {
+      this.interiors = 'Y'
+    }
+    else {
+      this.interiors = 'N';
+    }
+  }
+
+  ripsEvent(e) {
+    if (e.target.checked) {
+      this.rips = 'Y'
+    }
+    else {
+      this.rips = 'N';
+    }
+  }
+
+  twoToneEvent(e) {
+    if (e.target.checked) {
+      this.twoTone = 'Y'
+    }
+    else {
+      this.twoTone = 'N';
+    }
+  }
+
+  holdEvent(e) {
+    if (e.target.checked) {
+      this.hold = 'Y'
+      this.displayHold = false;
+    }
+    else {
+      this.hold = 'N';
+      this.displayHold = true;
+    }
+  }
+
+  message: string = "Please Fix the Errors !";
+  msgType: string = "Close";
+  getMessage(msgType: string) {
+    this.msgType = msgType;
+    if (msgType.includes("Save")) {
+      this.submitted = true;
+      (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
+      // if (this.itemMasterForm.invalid) {
+      //   alert('Some fields validation error (D)');
+      //   (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '');
+      //   return;
+      // }
+      this.message = "Do you want to SAVE the changes(Yes/No)?"
+
+    }
+
+    if (msgType.includes("Update")) {
+      this.submitted = true;
+      (document.getElementById('updateBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
+      if (this.itemMasterForm.invalid) {
+        alert('Some fields validation error (D)');
+        //this.submitted = false;
+        (document.getElementById('updateBtn') as HTMLInputElement).setAttribute('data-target', '');
+        return;
+      }
+      this.message = "Do you want to UPDATE the changes(Yes/No)?"
+
+    }
+
+    if (msgType.includes("Reset")) {
+      this.message = "Do you want to Reset the changes(Yes/No)?"
+    }
+
+    if (msgType.includes("Close")) {
+      this.message = "Do you want to Close the Form(Yes/No)?"
+    }
+    return;
+  }
+
+  executeAction() {
+    if (this.msgType.includes("Save")) {
+      this.newItemMast();
+    }
+
+    if (this.msgType.includes("Update")) {
+      this.updateItemMast();
+    }
+
+    if (this.msgType.includes("Reset")) {
+      this.resetItemMast();
+      //       this.itemMasterForm.reset();
+    }
+
+    if (this.msgType.includes("Close")) {
+      // this.closeItemCatMast();
+      this.router.navigate(['admin']);
+    }
+    return;
+  }
+
+
+  transData(val) {
+    delete val.segment11;
+    delete val.segment2;
+    delete val.segment3;
+    delete val.segment4;
+    delete val.segment5;
+    delete val.lookupValueDesc4;
+    delete val.lookupValueDesc1;
+    delete val.lookupValueDesc2;
+    delete val.lookupValueDesc3;
+    delete val.lookupValueDesc5;
+
+    return val;
+  }
+
+  newItemMast() {
+    // this.submitted = true;
+    // if(this.itemMasterForm.invalid){
+    //   alert('Error');
+    // return;
+    // } 
+    const formValue: IItemMaster = this.transData(this.itemMasterForm.value);
+    formValue.stockable = this.stockable;
+    formValue.costing = this.costing;
+    formValue.internalOrder = this.internalOrder;
+    formValue.assetItem = this.assetItem;
+    formValue.purchasable = this.purchasable;
+    formValue.isTaxable = this.isTaxable;
+    // formValue.costCenter= this.segment3;
+    // formValue.purchasable= this.purchasable;
+    this.service.VehItemSubmit(formValue).subscribe((res: any) => {
+      if (res.code === 200) {
+        alert(res.message);
+        this.itemMasterForm.disable();
+        // this.itemMasterForm.reset();
+      } else {
+        if (res.code === 400) {
+          alert('ERROR OCCOURED IN PROCEESS' + res.obj);
+          // this.itemMasterForm.reset();
+        }
+      }
+    });
+  }
+  resetItemMast() { window.location.reload(); }
+  closeItemMast() { this.router.navigate(['admin']); }
+
+  updateItemMast() {
+    const formValue: IItemMaster = this.itemMasterForm.value;
+    this.service.UpdateItemMasterById(formValue).subscribe((res: any) => {
+      if (res.code === 200) {
+        alert(res.message);
+        // window.location.reload();
+      } else {
+        if (res.code === 400) {
+          alert(res.message
+          );
+          // this.CompanyMasterForm.reset();
+          // window.location.reload();
+        }
+      }
+    });
+  }
+
 }

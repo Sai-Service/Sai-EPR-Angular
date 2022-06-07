@@ -676,7 +676,7 @@ if(this.deptId==2){
   }
 
       GetOrderDetails(mOderNum){
-        alert ("Order Number :"+mOderNum);
+        // alert ("Order Number :"+mOderNum);
         this.orderManagementService.proformaOrderSearchNew(sessionStorage.getItem('divisionId'), mOderNum)
         .subscribe(
           data => {
@@ -1048,16 +1048,41 @@ if(this.deptId==2){
 
     this.status = null;
     // var mDate = this.pipe.transform(rcptdate, 'dd-MMM-y');
+    if (Number(sessionStorage.getItem('deptId'))!=4){
     this.service.SearchRcptByCustNo(custActNo, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
       .subscribe(
         data => {
+          if (data.code==200){
           this.lstcomments = data.obj;
           console.log(this.lstcomments);
-          if (data.message === "Record Not Found ") {
-            alert("No Receipt Found for this date...")
-            this.lstcomments = null;
           }
+          else if (data.code==400){
+            alert(data.message)
+          }
+          // if (data.message === "Record Not Found ") {
+          //   alert("No Receipt Found for this date...")
+          //   this.lstcomments = null;
+          // }
         });
+      }
+      if (Number(sessionStorage.getItem('deptId'))==4){
+        // alert(this.locId)
+        this.service.SearchRcptByCustNo(custActNo, sessionStorage.getItem('ouId'), this.locId, sessionStorage.getItem('deptId'))
+        .subscribe(
+          data => {
+            if (data.code==200){
+            this.lstcomments = data.obj;
+            console.log(this.lstcomments);
+          }
+          else if (data.code==400){
+            alert(data.message);
+          }
+            // if (data.message === "Record Not Found ") {
+            //   alert("No Receipt Found for this date...")
+            //   this.lstcomments = null;
+            // }
+          });
+      }
   }
 
 
@@ -1222,11 +1247,17 @@ if(this.deptId==2){
   }
 
   unApplyReceipt(receiptNumber){
-    alert(receiptNumber)
+    // alert(receiptNumber)
     this.service.unappliedReceipt(receiptNumber)
     .subscribe(
       data => {
-
+        if (data.code==200){
+          alert(data.message);
+          this.isVisibleUnApplyReceipt=false;
+        }
+        else if(data.code==400){
+          alert(data.message)
+        }
       })
   }
 
@@ -1531,10 +1562,10 @@ if(this.deptId==2){
     var patch = this.paymentArForm.get('invLine') as FormArray;
     var invLineArr = this.paymentArForm.get('invLine').value;
     var e = true;
-    alert("this.lstinvoices.length :" + this.lstinvoices.length);
+    // alert("this.lstinvoices.length :" + this.lstinvoices.length);
 
     for (let i = 0; i < this.lstinvoices.length; i++) {
-      alert("i1=" + i)
+      // alert("i1=" + i)
       if (invLineArr[i].applyrcptFlag === true) {
         patch.controls[i].patchValue({ applyrcptFlag: '' })
         this.applyReceiptFlag(e, i);
@@ -1984,7 +2015,7 @@ if(this.deptId==2){
           console.log(this.lstCustomer);
         }
       );
-    alert(this.lstCustomer);
+    // alert(this.lstCustomer);
   }
 
 

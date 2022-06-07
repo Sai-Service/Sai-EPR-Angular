@@ -178,10 +178,10 @@ isVisiblepanelfromtoOuId:boolean=false;
     }
     else if (reportName==='servicePendingVehicle'){
       this.reportName='Service Pending Vehicle Report';
-      this.isVisiblepanelfromtolocation=true;
+      this.isVisiblepanelfromtolocation=false;
       this.isVisiblefromtolocationdepartment=false;
       this.isVisiblegstsaiDebtors=false;
-      this.isVisiblepaneltolocation=false;
+      this.isVisiblepaneltolocation=true;
       this.isVisiblecustomerLedger=false;
       this.isVisibleGSTSaleRegister=false;
       this.panelamcHistrory=false;

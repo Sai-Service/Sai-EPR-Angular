@@ -345,6 +345,16 @@ export class ReportServiceService {
     });
   }
 
+
+  vehicleClosingStockAsOn(toDate,ouId){
+    const REQUEST_URI = this.ServerUrl +`/SalesReports/VehClsStkAoDRep?toDate=${toDate}&ouId=${ouId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+
   spPurRegDownLoadReport(ouId){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/download?fileName=GstPurchaseReg${ouId}.xls`;
     return this.http.get(REQUEST_URI, {

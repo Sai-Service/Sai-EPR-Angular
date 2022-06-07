@@ -73,7 +73,7 @@ interface IsupplierMaster {
   semailId: string;
   screateDebitMemoFlag: string;
   supTdsTyp: string;
-  supTds: string;
+  supTdsYN: string;
   sbankName: string;
   sacctNo: string;
   sifscCode: string;
@@ -211,7 +211,7 @@ export class SupplierMasterComponent implements OnInit {
   displayenable = true;
   supTdsTyp: string;
   getTdsType: any;
-  supTds: string;
+  supTdsYN: string;
   sbankName: string;
   sacctNo: string;
   sifscCode: string;
@@ -305,7 +305,7 @@ export class SupplierMasterComponent implements OnInit {
       semailId: [],
       screateDebitMemoFlag: [],
       supTdsTyp: [],
-      supTds: ['', [Validators.required]],
+      supTdsYN: ['', [Validators.required]],
       sbankName: [],
       sacctNo: [],
       sifscCode: [],
