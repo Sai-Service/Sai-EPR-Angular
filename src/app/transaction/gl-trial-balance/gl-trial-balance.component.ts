@@ -49,6 +49,7 @@ export class GlTrialBalanceComponent implements OnInit {
   periodNameList: any=[];
   lstTBList :any;
   lstTBActLineDet :any;
+  lstTBActLineDet1 :any;
 
   loginName: string;
   loginArray: string;
@@ -70,6 +71,10 @@ export class GlTrialBalanceComponent implements OnInit {
   natActDesc:string;
   glDebitAmt :number;
   glCreditAmt :number;
+
+  glSegment:string;
+  glDocNum:string;
+  glDocRefNum:string;
 
   exportExcel=false;
 
@@ -99,6 +104,10 @@ export class GlTrialBalanceComponent implements OnInit {
       natActDesc:[],
       glDebitAmt :[],
       glCreditAmt :[],
+
+      glSegment:[],
+      glDocNum:[],
+      glDocRefNum:[],
      
     })
   }
@@ -186,6 +195,35 @@ export class GlTrialBalanceComponent implements OnInit {
           return;
         }
         console.log(this.lstTBActLineDet);
+  });
+}
+
+
+SelectTbAct1(segment,glDocNum,refNum){
+
+  // var prdName =this.glTrialBalanceForm.get("periodName").value;
+  // var opuCode= this.locCode.substring(0,4)
+
+  this.glDocNum=glDocNum;
+  this.glDocRefNum=refNum;
+  this.glSegment=segment;
+
+  if(segment==null || segment==undefined || segment.trim()=='') {
+    alert ("Please Select Period..."); return;
+  }
+
+  
+  this.lstTBActLineDet1=null;
+   
+  this.service.getGLTrialBalanceActSelect1(segment, glDocNum,refNum)
+    .subscribe(
+      data => {
+        this.lstTBActLineDet1 = data.obj;
+        if(this.lstTBActLineDet1.length===0) {
+          alert (glDocNum +" - " + "Line Details Not Found.");
+          return;
+        }
+        console.log(this.lstTBActLineDet1);
   });
 }
 

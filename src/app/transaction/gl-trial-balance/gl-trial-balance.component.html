@@ -167,6 +167,7 @@
     </div>
 </form>
 
+<!-- ==================================Drilldown level 1============================================== -->
 
 <div class="modal fade" id="viewGLDetails" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-xl" role="document">
@@ -200,12 +201,12 @@
                   <thead>
                     <tr class="GridHeader">
                     <th>Srl#</th> 
+                    <th>Document No</th>
+                    <th>Refernce No</th>
                     <th>GL Code</th> 
                     <th>Category</th>
                     <th>Source</th>
                     <th>Description</th>
-                    <th>Refernce No</th>
-                    <th>Document No</th>
                     <th>Debit(INR)</th>
                     <th>Credit(INR)</th>
                     <th>Posted&nbsp;Date</th>
@@ -218,12 +219,16 @@
 
                         <tr style="text-decoration:none;position: initial;font-size:small">
                           <td style="padding-right: 5px;padding-top: 5px;border-color:black;text-align: right;">{{i+1}}</td>
+
+
+                          <td style="padding-left: 5px;padding-top: 10px;border-color:black;">
+                            <a href="#glDocNo" (click) ='SelectTbAct1(com.jeCategory,com.glDocNo,com.referenceNo)'   data-toggle="modal" data-target="#viewGLDetails1">{{com.glDocNo}}</a>
+                        </td> 
+                           <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: center;">{{com.referenceNo}}</td>
                           <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: left;">{{com.glcodeDescription}}</td>
                           <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: left;">{{com.jeCategory}}</td>
                           <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: left;">{{com.jeSource}}</td>
                           <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: left;">{{com.jeDescription}}</td>
-                          <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: center;">{{com.referenceNo}}</td>
-                          <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: center;">{{com.glDocNo}}</td>
                           <td style="padding-right: 5px;padding-top: 5px;border-color:black;text-align: right;">{{com.debitAmt | number:'1.2-2'}}</td>
                           <td style="padding-right: 5px;padding-top: 5px;border-color:black;text-align: right;">{{com.creditAmt| number:'1.2-2'}}</td>
                           <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: center;">{{com.postedDate |date:'dd-MM-y'}}</td>
@@ -245,6 +250,85 @@
     </div>
   </div>
 </div>
+
+<!-- ==================================Drilldown level 2============================================== -->
+
+
+<div class="modal fade" id="viewGLDetails1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle" style="margin-left: 40%;">Trial Balance GL Account Invoice Details</h5>
+       
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+              <table class="center" style="width: 100%;">
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle">Category&nbsp;:&nbsp;</td>
+                    <td style="font-weight: bold;">{{this.glSegment}}
+                    <td style="width: 15%" class="LabelFontStyle">Documnet&nbsp;No&nbsp;:&nbsp;</td>
+                    <td style="font-weight: bold;">{{this.glDocNum}}
+                    <td style="width: 15%" class="LabelFontStyle">Reference&nbsp;No&nbsp;:&nbsp;</td>
+                    <td style="font-weight: bold;">{{this.glDocRefNum}}
+                   
+                </tr>
+            </table>
+
+            <div class="container1">
+               <div class="grid_scroll_2">
+              <!-- <table class="auto-style4" class="GridFont"   style="border-color:#959595;width:100%;"> -->
+                <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+                  <thead>
+                    <tr class="GridHeader">
+                    <th>Srl#</th> 
+                    <th>Invoice Number</th>
+                    <th>Invoice Date</th>
+                    <th>Refernce No</th>
+                    <th>Name</th> 
+                    <th>Invoice Amt</th>
+                    <th>Total Amt</th>
+                    <!-- <th>ouId</th> -->
+                   </tr>
+                  </thead>
+                  <!-- <tbody> -->
+                                      
+                      <!-- <tr *ngFor="let com of lstTBActLineDet let i=index" class="ItemStyle" style="text-decoration:none;position: initial;font-size:medium"> -->
+                        <ng-container  *ngFor="let com of lstTBActLineDet1 let i=index" class="ItemStyle" style="text-decoration:none;position: initial;font-size:large">
+
+                        <tr style="text-decoration:none;position: initial;font-size:small">
+
+                          <td style="padding-right: 5px;padding-top: 5px;border-color:black;text-align: right;">{{i+1}}</td>
+                          <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: center;">{{com.trxNumber}}</td>
+                          <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: center;">{{com.trxDate |date:'dd-MM-y'}}</td>
+                          <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: center;">{{com.referenceNo}}</td>
+                          <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: left;">{{com.Name}}</td>
+                          <td style="padding-right: 5px;padding-top: 5px;border-color:black;text-align: right;">{{com.invoiceAmt | number:'1.2-2'}}</td>
+                          <td style="padding-right: 5px;padding-top: 5px;border-color:black;text-align: right;">{{com.totalAmt| number:'1.2-2'}}</td>
+                          <!-- <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: left;">{{com.ouId}}</td> -->
+
+                        </tr>
+                        </ng-container>
+
+                    <!-- </tbody> -->
+                
+                    </table>
+                 
+          </div>
+            </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
                           
 

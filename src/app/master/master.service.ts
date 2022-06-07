@@ -3967,6 +3967,11 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
       return this.http.get(this.ServerUrl + `/glHeader/drillDownGLWise?segment1=${ou}&naturalAccount=${natAc}&periodName=${prdName}`);
      }
 
+     getGLTrialBalanceActSelect1(seg,docNum,refNo): Observable<any> {
+      return this.http.get(this.ServerUrl + `/glHeader/drillDownTypeWise?segment1=${seg}&docSeqValue=${docNum}&docSequenceValue=${refNo}`);
+      // http://localhost:8081/glHeader/drillDownTypeWise?segment1=Receipts Reversal&docSeqValue=2222205700070&docSequenceValue=222210210901133
+    }
+
 
 
         ////////////////////customer relation manager master //////////////////////
