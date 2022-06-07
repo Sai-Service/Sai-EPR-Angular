@@ -29,6 +29,39 @@ export class glTbReport
 
 }
 
+export class glTbReport_L1
+{
+  srlNo:number;
+  divName: string;
+  ouName:string;
+  natAccount:string;
+  natAccountDesc: string;
+  glDocNo: string;
+  referenceNo: string;
+  glcodeDescription: string;
+  jeCategory: string;
+  jeSource: string;
+  jeDescription: string;
+  debitAmt: number;
+  creditAmt: number;
+  postedDate: string;
+  
+  printDateTime:string;
+
+}
+
+export class glTbReport_L2 
+{
+  srlNo:number;
+  divName: string;
+  ouName:string;
+  natAccount:string;
+  natAccountDesc: string;
+ 
+  printDateTime:string;
+
+}
+
 
 @Component({
   selector: 'app-gl-trial-balance',
@@ -233,7 +266,7 @@ SelectTbAct1(segment,glDocNum,refNum){
   'DIVISION',
   'OPERATING UNIT',
   'NATURAL ACCOUNT',
-  'ACCOUNT DESCIEPTION',
+  'ACCOUNT DESCREPTION',
   'OPENING BALANCE',
   'DEBITS',
   'CREDITS',
@@ -241,6 +274,37 @@ SelectTbAct1(segment,glDocNum,refNum){
   // 'PRINT DATE TIME',
 ]]
 
+glTbHeaderList_L1 = [[
+  'SrlNo',
+  'DIVISION',
+  'OPERATING UNIT',
+  'NATURAL ACCOUNT',
+  'ACCOUNT DESCIEPTION',
+  'DOCUMENT NO',
+  'REFERENCE NO',
+  'GL CODE',
+  'CATEGORY',
+  'SOURCE',
+  'DESCREPTION',
+  'DEBIT AMT',
+  'CREDIT AMT',
+  'POSTED DATE',
+
+  // 'PRINT DATE TIME',
+]]
+
+glTbHeaderList_L2 = [[
+  'SrlNo',
+  'DIVISION',
+  'OPERATING UNIT',
+  'NATURAL ACCOUNT',
+  'ACCOUNT DESCREPTION',
+  'OPENING BALANCE',
+  'DEBITS',
+  'CREDITS',
+  'CLOSING BALANCE',
+  // 'PRINT DATE TIME',
+]]
 
  glTbReportExport() {
   const wb: xlsx.WorkBook = xlsx.utils.book_new();
@@ -290,6 +354,49 @@ glTbReport2(){
     //  this.dataDisplay = ''
     //  this.isDisabled1=false;
    })      
+ }
+
+
+ glTbReportExport_Level1(){
+
+  const wb: xlsx.WorkBook = xlsx.utils.book_new();
+  const ws: xlsx.WorkSheet = xlsx.utils.json_to_sheet([]);
+  xlsx.utils.sheet_add_aoa(ws, this.glTbHeaderList_L1);
+  var orList = this.lstTBActLineDet
+  var xlOrdList: any = [];
+  // var ordLn = new glTbReport();
+ 
+  for (let i = 0; i < orList.length; i++) {
+    var ordLn = new  glTbReport_L1();
+    ordLn.srlNo=i+1;
+    ordLn.divName = sessionStorage.getItem('divisionName');
+    ordLn.ouName = sessionStorage.getItem('ouName');
+    ordLn.natAccount=this.natAccount;
+    ordLn.natAccountDesc=this.natActDesc;
+    ordLn.glDocNo = orList[i].glDocNo.toString();
+    ordLn.referenceNo = orList[i].referenceNo.toString();
+    ordLn.glcodeDescription = orList[i].glcodeDescription;
+    ordLn.jeCategory = orList[i].jeCategory;
+    ordLn.jeSource = orList[i].jeSource;
+    ordLn.jeDescription = orList[i].jeDescription;
+    ordLn.debitAmt = orList[i].debitAmt;
+    ordLn.creditAmt = orList[i].creditAmt;
+    ordLn.postedDate = this.pipe.transform(orList[i].postedDate, 'dd-MM-y hh:mm:ss a');  
+    xlOrdList.push(ordLn);
+   }
+   
+  var printdateTime =this.pipe.transform(Date.now(), 'ddMMyThhmmssa');  
+  var flName ='gltbreportDetails-'+printdateTime+'.xlsx'
+  xlsx.utils.sheet_add_json(ws, xlOrdList, { origin: 'A2', skipHeader: true });
+  xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
+  // xlsx.writeFile(wb, 'gltbreport.xlsx');
+  xlsx.writeFile(wb, flName);
+  
+
+ }
+
+ glTbReportExport_Level2(){
+   alert ("Not Available...WIP")
  }
 
 
