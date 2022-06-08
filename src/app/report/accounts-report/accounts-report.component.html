@@ -38,10 +38,6 @@
               <a class="dropdown-item" data-toggle="collapse" href="#panelGSTSaleRegister" role="tab"
                 (click)="reportDetails('gSTSaleRegister')">GST Sales Register</a>
             </li>
-            <!-- <li>
-              <a class="dropdown-item" data-toggle="collapse" href="#panelSparesdebtors" role="tab"
-                (click)="reportDetails('sparesdebtors')">Spares Debtors</a>
-            </li> -->
             <li>
               <a class="dropdown-item" data-toggle="collapse" href="#panelspInvAgging" role="tab"
                 (click)="reportDetails('spInvAgging')">Spares Inventory Aging</a>
@@ -74,6 +70,10 @@
               <a class="dropdown-item" data-toggle="collapse" href="#panelCashBank" role="tab"
                 (click)="reportDetails('bankReconciliation')">Bank Reconciliation Report</a>
             </li>
+            <li>
+              <a class="dropdown-item" data-toggle="collapse" href="#panelTolocationOu" role="tab"
+                  (click)="reportDetails('tdsRegister')">TDS Register</a>
+          </li>
           </ul>
         </li>
 
@@ -783,6 +783,88 @@
         </td>
       </tr>
     </table>
+    <table class="center" [style.display]="ispanelTolocationOu ? 'block' : 'none'" class="collapse"
+    style="margin-left: 20%;" id="panelTolocationOu">
+    <tr>
+        <td>
+            <table class="center">
+                <tr>
+                    <td colspan="4" class="LabelFontStyle" style="width: 100%;">
+                        {{reportName}}
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="center">
+                <tr>
+                  <td style="width: 15%" class="LabelFontStyle">
+                    &nbsp;From&nbsp;Date&nbsp;:&nbsp;
+                </td>
+                <td>
+                    <input type="date" class="form-control" formControlName="fromDate"
+                        max="{{minDate | date:'yyyy-MM-dd'}}">
+                </td>
+                  <td style="width: 15%" class="LabelFontStyle">
+                      &nbsp;To&nbsp;Date&nbsp;:&nbsp;
+                  </td>
+                  <td>
+                      <input type="date" class="form-control" formControlName="toDate"
+                          max="{{minDate | date:'yyyy-MM-dd'}}">
+                  </td>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        &nbsp;Operating&nbsp;Unit&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <input disabled type="text" class="form-control" formControlName="OUCode">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <table class="center">
+                            <tr>
+                                <td colspan="4">
+                                    <table class="center" style="width: 100%;">
+                                        <tr>
+                                            <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                                            <ng-template #hList2>
+                                                <div class="d-flex justify-content-center">
+                                                    <div class="spinner-border text-primary" role="status">
+                                                        <span class="sr-only" id="loading"></span>
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+                                            <ng-template #hList1> </ng-template>
+                                            <td class="LabelFontStyle" style="color: blue;width: fit-content;"
+                                                colspan="4">
+                                                &nbsp;{{dataDisplay}}&nbsp; </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <table class="center" style="width: 100%;margin-left: 50%;">
+                                        <tr>
+                                            <td>
+                                                <button class="btn-primary" [disabled]="isDisabled1"
+                                                    (click)="reportParameter(reportName)">View
+                                                    Report</button>
+                                            </td>
+
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
   </fieldset>
   <table class="center">
     <tr>

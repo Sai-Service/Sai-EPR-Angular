@@ -162,6 +162,14 @@ export class ReportServiceService {
     });
   }
 
+  tdsRegister(fromDate,toDate,ouId){
+    const REQUEST_URI = this.ServerUrl +`/AccountsReports/TDSRegister?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
   prePayment(ouId){
     const REQUEST_URI = this.ServerUrl +`/AccountsReports/PrepaymentRep?ouId=${ouId}`;
     return this.http.get(REQUEST_URI, {
