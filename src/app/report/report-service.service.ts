@@ -354,6 +354,14 @@ export class ReportServiceService {
     });
   }
 
+  deliverySummary(fromDate,toDate,ouId,locId){
+    const REQUEST_URI = this.ServerUrl +`/SalesReports/DeliverySummaryRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
 
   spPurRegDownLoadReport(ouId){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/download?fileName=GstPurchaseReg${ouId}.xls`;
