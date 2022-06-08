@@ -13,7 +13,7 @@
                     <input type="text"  class="form-control" formControlName="SubNo" value={{SubNo}} [(ngModel)]="SubNo" >
                 </td>
                 <td colspan="8" style="text-align: left; width: 100%;">
-                    <button type="submit" class="btn btn-primary" (click)="search(SubNo)" ><i class="fa fa-search"></i></button>
+                    <button type="button" class="btn btn-primary" (click)="search(SubNo)" ><i class="fa fa-search"></i></button>
                 </td>
             </tr>
         </table>
@@ -236,10 +236,10 @@
       <table class="center">
               <tr>
                 <td>
-                  <button type="submit" class="btn btn-primary" (click)="closesubTrf()">Close</button>
+                  <button type="button" class="btn btn-primary" (click)="closesubTrf()">Close</button>
                 </td>
                 <td>
-                  <button  type="submit" class="btn btn-primary" (click)="newSubtrf()" [style.display]="isVisiblenewSubtrf ? 'block' : 'none'">Save</button>
+                  <button  type="button" class="btn btn-primary" (click)="newSubtrf()" [style.display]="isVisiblenewSubtrf ? 'block' : 'none'">Save</button>
               </td>
               <td>
                 <button type="button" class="btn btn-primary" (click)="downloadSubGatePass()" [style.display]="isVisibledownloadSubGatePass ? 'block' : 'none'"
@@ -247,7 +247,7 @@
                 </button>
               </td>
               <td>
-                <button type="submit" class="btn btn-primary" (click)="resetsubTrf()" >Reset</button>
+                <button type="button" class="btn btn-primary" (click)="resetsubTrf()" >Reset</button>
               </td>
                </tr>
             </table>
