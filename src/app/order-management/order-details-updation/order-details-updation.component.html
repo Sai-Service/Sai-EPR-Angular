@@ -1,23 +1,214 @@
+
 <form [formGroup]="orderDetailsUpdationForm" (ngSubmit)="orderDetailsUpdation(orderDetailsUpdationForm.value)">
 
-    <div class="center">
+<div class="center">
+
         <table style="width: 100%;background-color: white;">
             <tr>
                 <td class="PageHeader">
-                    &nbsp;&nbsp;Order&nbsp;Details&nbsp;Updation&nbsp;
+                    &nbsp;&nbsp;ORDER&nbsp;DETAIL&nbsp;UPDATION&nbsp;&nbsp;
                 </td>
             </tr>
         </table>
+      
+<div class="center" style="width: 100%;">
+<div class="form-bg">
+<div class="center" style="width: 100%;">
+
+                    
+        <fieldset class="RFS">
+        <!-- <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">SEARCH</legend> -->
+        <table class="center" style="width: 100%;background-color: #FFE4B5;">
+            <tr>
+            <td >
+                <table class="center">
+                    <tr>
+                        <td  style="background-color: #FFE4B5;">&nbsp;Order&nbsp;Number&nbsp;:&nbsp;</td>
+                        
+                        <td style="background-color: #FFE4B5;">
+                            <input type="number" class="form-control" formControlName="orderNumber" [(ngModel)]='orderNumber'
+                                value={{orderNumber}}>
+                        </td>
     
-        <div class="center" style="width: 100%;">
-            <div class="form-bg">
-                <div class="center" style="width: 100%;">
-                    <fieldset class="RFS"> 
-                    <table>
-                    </table>
-                    </fieldset>
-                </div>
-            </div>
-        </div>
-    </div>
+                        <td style="background-color: #FFE4B5;">
+                            <button type="button" class="btn-primary" (click)="serchByOrderNum(orderNumber)"><i class="fa fa-search"
+                                    aria-hidden="true"></i></button>
+                        </td>
+    
+                    </tr>
+                </table>
+            </td>
+            </tr>
+        </table>
+        </fieldset>
+
+        <fieldset class="RFS">
+            <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">ORDER & VEHICLE DETAILS</legend>
+            <table>
+            <tr>
+            <td style="width: 22%;font-weight: bold;" class="LabelFontStyle"> Order&nbsp;No&nbsp;:&nbsp;  </td>
+            <td>
+                <input disabled type="text" class="form-control" formControlName="orderNumber"
+                    [(ngModel)]='orderNumber' value={{orderNumber}} style="font-weight: bold;"> </td>
+          
+
+            <td style="width: 15%" class="LabelFontStyle">Sales&nbsp;Person&nbsp;:&nbsp;</td>
+            <td>
+                <select formControlName="salesRepName" id="salesRepName" class="form-control"
+                    (ngModelChange)="onOptionsSelectedTL($event)" style="width:250px" >
+                    <!-- <option>--Select--</option> -->
+                    <option *ngFor="let pt of salesRepNameList" [(ngValue)]="pt.ticketNo">
+                        {{pt.ticketNo}}-{{pt.description}}
+                    </option>
+                </select>
+
+            </td>
+
+            <td style="width: 15%" class="LabelFontStyle"> TL&nbsp;Name&nbsp;:&nbsp;</td>
+            <td><input disabled type="text" formControlName="tlName" [(ngModel)]='tlName'
+                    value={{tlName}} class="form-control" style="width:250px"  ></td>
+            
+            <td style="width: 22%" class="LabelFontStyle">Order&nbsp;Date&nbsp;:&nbsp;</td>
+            <td><input disabled type="text" class="form-control" formControlName="orderDate"
+                            value={{orderDate}} [ngModel]="orderDate | date:'yyyy-MM-dd'"></td>
+            </tr>
+            
+            <tr>
+                <td style="width: 15%" class="LabelFontStyle">Model&nbsp;:&nbsp;</td>
+                <td>
+                    <select formControlName="model" id="model" class="form-control" 
+                        (ngModelChange)="onOptionsSelectedVariant($event)">
+                        <option>--Select--</option>
+                        <option *ngFor="let mm of mainModelList" [ngValue]="mm.code">
+                            {{mm.code}}
+                        </option>
+                    </select>
+                </td>
+                <td style="width: 15%" class="LabelFontStyle">Variant&nbsp;:&nbsp;</td>
+                <td>
+                    <select formControlName="variant" id="variant" class="form-control"
+                         (ngModelChange)="onOptionsSelectedColor($event)" style="width:250px" >
+                        <option>--Select--</option>
+                        <option *ngFor="let mm of VariantSearch" [ngValue]="mm.variant">
+                            {{mm.variant}}--{{mm.varDescription}}
+                        </option>
+                    </select>
+                </td>
+                <td style="width: 15%" class="LabelFontStyle">Color&nbsp;:&nbsp;</td>
+                <td>
+                    <select formControlName="color" id="color" class="form-control" style="width:250px" >
+                        <option>--Select--</option>
+                        <option *ngFor="let cc of ColourSearch" [ngValue]="cc.ColorCode">
+                            {{cc.ColorCode}}--{{cc.colorDesc}}
+                        </option>
+                    </select>
+                </td>
+                <td style="width: 15%" class="LabelFontStyle">Fuel&nbsp;Type&nbsp;:&nbsp;</td>
+                <td>
+                    <input disabled type="text" formControlName="fuelType" [(ngModel)]='fuelType'
+                        class="form-control" >
+                </td>
+
+            </tr>
+            </table>
+
+        </fieldset>
+
+        <fieldset class="RFS">
+        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">ADDITIONAL DETAILS</legend>
+        <table>
+        <tr>
+            <td style="width: 15%" class="LabelFontStyle">Finance&nbsp;Type&nbsp;:&nbsp;</td>
+            <td>
+                <select type="text" formControlName="financeType" id="financeType"
+                    class="form-control" (change)="financeSelectionYes($event)">
+                    <option>--Select--</option>
+                    <option *ngFor="let sc of  financeTypeList" [value]="sc.codeDesc">
+                        {{sc.codeDesc}}</option>
+                </select>
+            </td>
+
+            <div *ngIf="DisplayfinanceSelectionYes; then finYes1; else FinNo1"> </div>
+            <ng-template #FinNo1>
+            </ng-template>
+            <ng-template #finYes1>
+                <td style="width: 15%" class="LabelFontStyle">Financer&nbsp;:&nbsp;</td>
+                <td><select type="text" formControlName="financerName" id="financerName"
+                        class="form-control" >
+                        <option>--Select--</option>
+                        <option *ngFor="let finName of  financerNameList"
+                            [ngValue]="finName.codeDesc">{{finName.codeDesc}}
+                        </option>
+                </select>
+                </td>
+                <td style="width: 15%" class="LabelFontStyle">Finance&nbsp;Amount&nbsp;:&nbsp;</td>
+                <td><input type="text" formControlName="financeAmt" value={{financeAmt}} class="form-control" ></td>
+                <td style="width: 15%" class="LabelFontStyle">EMI&nbsp;:&nbsp;</td>
+                <td><input type="text" formControlName="emi" value={{emi}} class="form-control" ></td>
+            </ng-template>
+        </tr>
+
+        <div *ngIf="DisplayfinanceSelectionYes; then finYes2; else finNo2"> </div>
+        <ng-template #finNo2></ng-template>
+        <ng-template #finYes2>
+        <tr>
+            <td style="width: 15%" class="LabelFontStyle">Tenure&nbsp;:&nbsp;</td>
+            <td><input type="text" formControlName="tenure" value={{tenure}} class="form-control" ></td>
+            <td style="width: 15%" class="LabelFontStyle">Down&nbsp;Payment&nbsp;:&nbsp;</td>
+            <td><input type="text" formControlName="downPayment"   value={{downPayment}} class="form-control" ></td>
+        </tr>
+        </ng-template>
+        <tr>
+        <td style="width: 15%" class="LabelFontStyle">Exchange&nbsp;:&nbsp;</td>
+        <td>
+            <select type="text" formControlName="exchangeYN" id="exchangeYN"
+                class="form-control" 
+                (change)="exchangeYes($event)">
+                <option>--Select--</option>
+                <option *ngFor="let sc of  YesNoList" [value]="sc.cmnDesc">
+                    {{sc.cmnDesc}}
+                </option>
+            </select>
+        </td>
+
+        <div *ngIf="Displayexchange; then exYes1; else exNo1"></div>
+        <ng-template #exNo1>
+        </ng-template>
+        <ng-template #exYes1>
+            <td style="width: 15%" class="LabelFontStyle">Loyalty&nbsp;Bonus&nbsp;:&nbsp;</td>
+            <td><input type="text" formControlName="loyaltyBonus" class="form-control" ></td>
+            <td style="width: 15%" class="LabelFontStyle">Reg&nbsp;No&nbsp;/Remark&nbsp;:&nbsp;</td>
+            <td><input type="text" formControlName="exRegNo" class="form-control" ></td>
+            <td style="width: 15%" class="LabelFontStyle">Ins&nbsp;Charges&nbsp;:&nbsp;</td>
+            <td><input type="text" formControlName="insCharges" class="form-control" ></td>
+            <td style="width: 15%" class="LabelFontStyle">Offer&nbsp;Price&nbsp;:&nbsp;</td>
+            <td><input type="text" formControlName="offerPrice" class="form-control" > </td>
+        </ng-template>
+        </tr>
+
+        <div *ngIf="Displayexchange; then exYes2; else exNo2"></div>
+        <ng-template #exNo2></ng-template>
+        <ng-template #exYes2>
+        <tr>
+            <td style="width: 15%" class="LabelFontStyle">Dealer&nbsp;Name&nbsp;:&nbsp;</td>
+            <td>
+                <select type="text" formControlName="tvBroker" id="tvBroker"
+                    class="form-control" >
+                    <option>--Select--</option>
+                    <option *ngFor="let sc of  truValueList"
+                        [ngValue]="sc.custName">
+                        {{sc.custName}}
+                    </option>
+                </select>
+            </td>
+        </tr>
+        </ng-template>
+
+        </table>
+        </fieldset>
+
+</div>
+</div>
+</div>
+</div>
 </form>
