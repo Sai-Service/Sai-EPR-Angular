@@ -15,7 +15,7 @@ interface IItemMaster {
   description: string;
   loyaltyCardDate: Date;
   categoryId: number;
-  categoryName:string;
+  categoryName: string;
   uom: string;
   tyreMake: string;
   materialType: string;
@@ -76,8 +76,8 @@ interface IItemMaster {
   isTaxable: string;
   taxCategoryPur: number;
   taxCategorySale: number;
-  taxCategoryPurIGST:number;
-  taxCategorySaleIGST :number;
+  taxCategoryPurIGST: number;
+  taxCategorySaleIGST: number;
 }
 
 @Component({
@@ -121,21 +121,21 @@ export class ItemMasterNewComponent implements OnInit {
   costCenter: number;
   itemTypeForCat: string;
   categoryId: number;
-  categoryName:string;
+  categoryName: string;
   hsnSacCode: string;
   hsnSacCodeDet: any = [];
   taxCategoryListS: any = [];
   taxCategoryListP: any = [];
   taxCategoryListPIGST: any = [];
-  taxCategoryListPSAndCGST:any=[];
-  taxCategoryListSalesIGST:any=[];
-  taxCategoryListSalesSAndCGST:any=[];
+  taxCategoryListPSAndCGST: any = [];
+  taxCategoryListSalesIGST: any = [];
+  taxCategoryListSalesSAndCGST: any = [];
   userList3: any[] = [];
   lastkeydown3: number = 0;
   uom: string;
   public uomList: Array<string> = [];
   displayInactive = true;
-  displayActiveHeader=true;
+  displayActiveHeader = true;
   endDate: Date;
   status: string;
   public statusList: Array<string> = [];
@@ -159,8 +159,8 @@ export class ItemMasterNewComponent implements OnInit {
   public NaturalAccountList: Array<string> = [];
   taxCategorySale: number;
   taxCategoryPur: number;
-  taxCategoryPurIGST:number;
-  taxCategorySaleIGST :number;
+  taxCategoryPurIGST: number;
+  taxCategorySaleIGST: number;
   mainModel: string;
   VariantSearch: Array<string>[];
   ColourSearch: Array<string>[];
@@ -216,10 +216,22 @@ export class ItemMasterNewComponent implements OnInit {
   lotSize: string;
   dispupdate: boolean = true;
   public taxCategoryDataList: Array<string> = [];
+  displaytaxCategoryListPSAndCGST = true;
+  taxCategoryPurIGSTNm: string;
+  displaytaxCategoryListPIGST = true;
+  taxCategoryPurNm: string;
+  displaytaxCategoryListSalesSAndCGST = true;
+  taxCategorySaleIGSTNm: string;
+  displaytaxCategoryListSalesIGST = true;
+  taxCategorySaleNm: string;
+
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService) {
     this.itemMasterForm = fb.group({
       segmentName: [],
+      taxCategoryPurNm: [],
+      taxCategorySaleIGSTNm: [],
+      taxCategorySaleNm: [],
       segment1: [],
       stockable: [''],
       costing: [],
@@ -227,17 +239,17 @@ export class ItemMasterNewComponent implements OnInit {
       assetItem: [],
       purchasable: [],
       isTaxable: [],
-      costCenter: [],
-      itemTypeForCat: [],
-      categoryId: [],
-      categoryName:[],
-      hsnSacCode: [],
+      costCenter: ['', [Validators.required]],
+      itemTypeForCat: ['', [Validators.required]],
+      categoryId: ['', [Validators.required]],
+      categoryName: [],
+      hsnSacCode: ['', [Validators.required]],
       hsnGstPer: [],
-      uom: [],
+      uom: ['', [Validators.required]],
       status: [],
       endDate: [],
-      segment: [],
-      description: [],
+      segment: ['', [Validators.required]],
+      description: ['', [Validators.required]],
       segment11: [],
       lookupValueDesc1: [],
       segment2: [],
@@ -248,11 +260,11 @@ export class ItemMasterNewComponent implements OnInit {
       lookupValueDesc4: [],
       lookupValueDesc3: [],
       lookupValueDesc5: [],
-      poChargeAccount: [],
+      poChargeAccount: ['', [Validators.required]],
       taxCategorySale: [],
       taxCategoryPur: [],
-      taxCategoryPurIGST:[],
-      taxCategorySaleIGST :[],
+      taxCategoryPurIGST: [],
+      taxCategorySaleIGST: [],
       mainModel: [],
       colorCode: [],
       variantCode: [],
@@ -296,6 +308,7 @@ export class ItemMasterNewComponent implements OnInit {
       marginCategory: [],
       materialType: [],
       lotSize: [],
+      taxCategoryPurIGSTNm: [],
     })
   }
 
@@ -376,21 +389,18 @@ export class ItemMasterNewComponent implements OnInit {
 
   SearchItemCode(segment) {
     this.dispupdate = false;
-    this.displayActiveHeader=false;
     this.service.getItemCodePach(segment)
       .subscribe(
         data => {
           this.lstcomments = data;
+          this.displayActiveHeader = false;
           this.taxCategoryDataList = data.taxCategoryNameList;
           this.itemMasterForm.patchValue(this.lstcomments);
-
           let selloc = sessionStorage.getItem('locCode');
-
           this.segmentName = selloc + '.'
             + this.costCenter + '.'
             + this.poChargeAccount + '.'
             + '0000'; //this.lookupValueDesc5
-
           if (data.itemTypeForCat == 'ss_vehicle') {
             this.ssVehical = true;
           }
@@ -398,11 +408,11 @@ export class ItemMasterNewComponent implements OnInit {
             this.ssSpares = true;
             this.ssAccessories = true;
           }
-          if (data.isTaxable=='Y'){
-            this.displayisTaxable=false;
+          if (data.isTaxable == 'Y') {
+            this.displayisTaxable = false;
           }
           else {
-            this.displayisTaxable=true;
+            this.displayisTaxable = true;
           }
           this.itemMasterForm.get('costCenter').disable();
           this.itemMasterForm.get('poChargeAccount').disable();
@@ -414,9 +424,7 @@ export class ItemMasterNewComponent implements OnInit {
               data => {
                 this.hsnSacCodeList = data;
                 console.log(this.hsnSacCodeList);
-    
               }
-    
             )
           }
           else {
@@ -424,9 +432,14 @@ export class ItemMasterNewComponent implements OnInit {
               data => {
                 this.hsnSacCodeList = data;
               }
-    
+
             )
           }
+          // alert(data.taxCategoryPur);
+          this.displaytaxCategoryListPSAndCGST = false;
+          this.displaytaxCategoryListPIGST = false;
+          this.displaytaxCategoryListSalesIGST = false;
+          this.displaytaxCategoryListSalesSAndCGST = false;
         }
       );
   }
@@ -522,13 +535,13 @@ export class ItemMasterNewComponent implements OnInit {
     this.taxCategoryListS = null;
     this.taxCategoryListP = null;
     this.taxCategoryListPIGST = null;
-    this.taxCategoryListPSAndCGST=null;
-    this.taxCategoryListSalesIGST=null;
-    this.taxCategoryListSalesSAndCGST=null;
+    this.taxCategoryListPSAndCGST = null;
+    this.taxCategoryListSalesIGST = null;
+    this.taxCategoryListSalesSAndCGST = null;
   }
 
-  onHsnCodeSelectedSearch(mHsnCode){
-    alert(mHsnCode)
+  onHsnCodeSelectedSearch(mHsnCode) {
+    //  alert(mHsnCode+'----')
     if (mHsnCode != null) {
       this.service.hsnSacCodeDet(mHsnCode)
         .subscribe(
@@ -538,21 +551,21 @@ export class ItemMasterNewComponent implements OnInit {
             console.log(this.hsnSacCodeDet);
             this.itemMasterForm.patchValue(this.hsnSacCodeDet.gstPercentage);
             this.hsnGstPer = this.hsnSacCodeDet.gstPercentage;
-            alert(this.hsnGstPer);
+            // alert(this.hsnGstPer);
             this.service.taxCategoryListHSN(this.hsnGstPer, 'SALES')
               .subscribe(data1 => {
                 this.taxCategoryListSalesIGST = data1;
-                let taxCategoryListSalesIGST = this.taxCategoryListSalesIGST.filter((customer) => (customer.taxCategoryName.includes('I-GST') == true  || customer.taxCategoryName.includes('I GST') == true));
+                let taxCategoryListSalesIGST = this.taxCategoryListSalesIGST.filter((customer) => (customer.taxCategoryName.includes('I-GST') == true || customer.taxCategoryName.includes('I GST') == true));
                 console.log(taxCategoryListSalesIGST);
-                this.taxCategoryListSalesIGST=taxCategoryListSalesIGST;
+                this.taxCategoryListSalesIGST = taxCategoryListSalesIGST;
               });
 
-              this.service.taxCategoryListHSN(this.hsnGstPer, 'SALES')
+            this.service.taxCategoryListHSN(this.hsnGstPer, 'SALES')
               .subscribe(data1 => {
                 this.taxCategoryListSalesSAndCGST = data1;
-                let taxCategoryListSalesSAndCGST = this.taxCategoryListSalesSAndCGST.filter((customer) => (customer.taxCategoryName.includes('I-GST') == false && customer.taxCategoryName.includes('I GST') == false ));
+                let taxCategoryListSalesSAndCGST = this.taxCategoryListSalesSAndCGST.filter((customer) => (customer.taxCategoryName.includes('I-GST') == false && customer.taxCategoryName.includes('I GST') == false));
                 console.log(taxCategoryListSalesSAndCGST);
-                this.taxCategoryListSalesSAndCGST=taxCategoryListSalesSAndCGST;
+                this.taxCategoryListSalesSAndCGST = taxCategoryListSalesSAndCGST;
               });
 
             // this.service.taxCategoryListHSN(this.hsnGstPer, 'SALES')
@@ -565,30 +578,30 @@ export class ItemMasterNewComponent implements OnInit {
             this.service.taxCategoryListHSN(this.hsnGstPer, 'PURCHASE')
               .subscribe(
                 data1 => {
-                 this.taxCategoryListPIGST = data1;
+                  this.taxCategoryListPIGST = data1;
                   console.log(data1);
-                  let purchaseIGSTList = this.taxCategoryListPIGST.filter((customer) => (customer.taxCategoryName.includes('I-GST') == true ));
+                  let purchaseIGSTList = this.taxCategoryListPIGST.filter((customer) => (customer.taxCategoryName.includes('I-GST') == true));
                   console.log(purchaseIGSTList);
-                  this.taxCategoryListPIGST=purchaseIGSTList;
+                  this.taxCategoryListPIGST = purchaseIGSTList;
                 });
-                this.service.taxCategoryListHSN(this.hsnGstPer, 'PURCHASE')
-                .subscribe(
-                  data1 => {
-                   this.taxCategoryListPSAndCGST = data1;
-                    console.log(data1);
-                    let taxCategoryListPSAndCGST = this.taxCategoryListPSAndCGST.filter((customer) => (customer.taxCategoryName.includes('I-GST') == false ));
-                    console.log(taxCategoryListPSAndCGST);
-                    this.taxCategoryListPSAndCGST=taxCategoryListPSAndCGST;
-                  });
+            this.service.taxCategoryListHSN(this.hsnGstPer, 'PURCHASE')
+              .subscribe(
+                data1 => {
+                  this.taxCategoryListPSAndCGST = data1;
+                  console.log(data1);
+                  let taxCategoryListPSAndCGST = this.taxCategoryListPSAndCGST.filter((customer) => (customer.taxCategoryName.includes('I-GST') == false));
+                  console.log(taxCategoryListPSAndCGST);
+                  this.taxCategoryListPSAndCGST = taxCategoryListPSAndCGST;
+                });
 
-                
+
           });
     }
   }
 
 
   onHsnCodeSelected(mHsnCode: any) {
-    alert(mHsnCode);
+    // alert(mHsnCode);
     var mHsnCode = mHsnCode.target.value;
     if (mHsnCode != null) {
       this.service.hsnSacCodeDet(mHsnCode)
@@ -599,21 +612,23 @@ export class ItemMasterNewComponent implements OnInit {
             console.log(this.hsnSacCodeDet);
             this.itemMasterForm.patchValue(this.hsnSacCodeDet.gstPercentage);
             this.hsnGstPer = this.hsnSacCodeDet.gstPercentage;
-            alert(this.hsnGstPer);
+            // alert(this.hsnGstPer);
             this.service.taxCategoryListHSN(this.hsnGstPer, 'SALES')
               .subscribe(data1 => {
                 this.taxCategoryListSalesIGST = data1;
-                let taxCategoryListSalesIGST = this.taxCategoryListSalesIGST.filter((customer) => (customer.taxCategoryName.includes('I-GST') == true  || customer.taxCategoryName.includes('I GST') == true));
+                let taxCategoryListSalesIGST = this.taxCategoryListSalesIGST.filter((customer) => (customer.taxCategoryName.includes('I-GST') == true || customer.taxCategoryName.includes('I GST') == true));
                 console.log(taxCategoryListSalesIGST);
-                this.taxCategoryListSalesIGST=taxCategoryListSalesIGST;
+                this.taxCategoryListSalesIGST = taxCategoryListSalesIGST;
+                this.displaytaxCategoryListSalesIGST = true;
               });
 
-              this.service.taxCategoryListHSN(this.hsnGstPer, 'SALES')
+            this.service.taxCategoryListHSN(this.hsnGstPer, 'SALES')
               .subscribe(data1 => {
                 this.taxCategoryListSalesSAndCGST = data1;
-                let taxCategoryListSalesSAndCGST = this.taxCategoryListSalesSAndCGST.filter((customer) => (customer.taxCategoryName.includes('I-GST') == false && customer.taxCategoryName.includes('I GST') == false ));
+                let taxCategoryListSalesSAndCGST = this.taxCategoryListSalesSAndCGST.filter((customer) => (customer.taxCategoryName.includes('I-GST') == false && customer.taxCategoryName.includes('I GST') == false));
                 console.log(taxCategoryListSalesSAndCGST);
-                this.taxCategoryListSalesSAndCGST=taxCategoryListSalesSAndCGST;
+                this.taxCategoryListSalesSAndCGST = taxCategoryListSalesSAndCGST;
+                this.displaytaxCategoryListSalesSAndCGST = true;
               });
 
             // this.service.taxCategoryListHSN(this.hsnGstPer, 'SALES')
@@ -626,23 +641,25 @@ export class ItemMasterNewComponent implements OnInit {
             this.service.taxCategoryListHSN(this.hsnGstPer, 'PURCHASE')
               .subscribe(
                 data1 => {
-                 this.taxCategoryListPIGST = data1;
+                  this.taxCategoryListPIGST = data1;
                   console.log(data1);
-                  let purchaseIGSTList = this.taxCategoryListPIGST.filter((customer) => (customer.taxCategoryName.includes('I-GST') == true ));
+                  let purchaseIGSTList = this.taxCategoryListPIGST.filter((customer) => (customer.taxCategoryName.includes('I-GST') == true));
                   console.log(purchaseIGSTList);
-                  this.taxCategoryListPIGST=purchaseIGSTList;
+                  this.taxCategoryListPIGST = purchaseIGSTList;
+                  this.displaytaxCategoryListPIGST = true;
                 });
-                this.service.taxCategoryListHSN(this.hsnGstPer, 'PURCHASE')
-                .subscribe(
-                  data1 => {
-                   this.taxCategoryListPSAndCGST = data1;
-                    console.log(data1);
-                    let taxCategoryListPSAndCGST = this.taxCategoryListPSAndCGST.filter((customer) => (customer.taxCategoryName.includes('I-GST') == false ));
-                    console.log(taxCategoryListPSAndCGST);
-                    this.taxCategoryListPSAndCGST=taxCategoryListPSAndCGST;
-                  });
+            this.service.taxCategoryListHSN(this.hsnGstPer, 'PURCHASE')
+              .subscribe(
+                data1 => {
+                  this.taxCategoryListPSAndCGST = data1;
+                  console.log(data1);
+                  let taxCategoryListPSAndCGST = this.taxCategoryListPSAndCGST.filter((customer) => (customer.taxCategoryName.includes('I-GST') == false));
+                  console.log(taxCategoryListPSAndCGST);
+                  this.taxCategoryListPSAndCGST = taxCategoryListPSAndCGST;
+                  this.displaytaxCategoryListPSAndCGST = true;
+                });
 
-                
+
           });
     }
   }
@@ -911,6 +928,47 @@ export class ItemMasterNewComponent implements OnInit {
     //   alert('Error');
     // return;
     // } 
+   
+    // alert(this.isTaxable);
+    if (this.segment == undefined || this.segment == null || this.segment == '') {
+      alert('Select Item Code.!');
+      return;
+    }
+    else if (this.description == undefined || this.description == null || this.description == '') {
+      alert('Select Item Description.!');
+      return;
+    }
+    else if (this.uom == undefined || this.uom == null || this.uom ==''){
+      alert('Select UOM.!');
+      return;
+    }
+    else if (this.isTaxable == 'Y') {
+      // alert(this.taxCategoryPur)
+      if (this.taxCategoryPur == undefined || this.taxCategoryPur == null) {
+        alert('Select Purchase S&CGST Category Name And Then Click Save Button.!');
+        return;
+      }
+      else if (this.taxCategoryPurIGST == undefined || this.taxCategoryPurIGST == null) {
+        alert('Select Purchase IGST Category Name And Then Click Save Button.!');
+        return;
+      }
+      else if (this.taxCategorySale == undefined || this.taxCategorySale == null) {
+        alert('Select Sales S&CGST Category Name And Then Click Save Button.!');
+        return;
+      }
+      else if (this.taxCategorySaleIGST == undefined || this.taxCategorySaleIGST == null) {
+        alert('Select Sales IGST Category Name And Then Click Save Button.!');
+        return;
+      }
+    }
+    else if (this.costCenter == undefined || this.costCenter == null) {
+      alert('Select Cost Center.!');
+      return;
+    }
+    else if (this.poChargeAccount == undefined || this.poChargeAccount == null) {
+      alert('Select Natural Account.!');
+      return;
+    }
     const formValue: IItemMaster = this.transData(this.itemMasterForm.value);
     formValue.stockable = this.stockable;
     formValue.costing = this.costing;
@@ -918,8 +976,6 @@ export class ItemMasterNewComponent implements OnInit {
     formValue.assetItem = this.assetItem;
     formValue.purchasable = this.purchasable;
     formValue.isTaxable = this.isTaxable;
-    // formValue.costCenter= this.segment3;
-    // formValue.purchasable= this.purchasable;
     this.service.VehItemSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
@@ -937,7 +993,26 @@ export class ItemMasterNewComponent implements OnInit {
   closeItemMast() { this.router.navigate(['admin']); }
 
   updateItemMast() {
-    const formValue: IItemMaster = this.itemMasterForm.value;
+    if (this.isTaxable == 'Y') {
+      // alert(this.taxCategoryPur)
+      if (this.taxCategoryPur == undefined || this.taxCategoryPur == null) {
+        alert('Select Purchase S&CGST Category Name And Then Click Save Button.!');
+        return;
+      }
+      else if (this.taxCategoryPurIGST == undefined || this.taxCategoryPurIGST == null) {
+        alert('Select Purchase IGST Category Name And Then Click Save Button.!');
+        return;
+      }
+      else if (this.taxCategorySale == undefined || this.taxCategorySale == null) {
+        alert('Select Sales S&CGST Category Name And Then Click Save Button.!');
+        return;
+      }
+      else if (this.taxCategorySaleIGST == undefined || this.taxCategorySaleIGST == null) {
+        alert('Select Sales IGST Category Name And Then Click Save Button.!');
+        return;
+      }
+    }
+    const formValue: IItemMaster = this.itemMasterForm.getRawValue();
     this.service.UpdateItemMasterById(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
