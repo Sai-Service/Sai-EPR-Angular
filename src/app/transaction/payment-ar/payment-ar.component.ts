@@ -705,7 +705,7 @@ if(this.deptId==2){
 
             // this.serchByRegNo(data.obj.regNo);
             this.CustAccountNoSearch(data.obj.accountNo);
-            this.paymentAmt = data.obj.balanceAmt;
+            this.paymentAmt = data.obj.totBalance;
             this.referenceNo = data.obj.jobCardNum + '/' + data.obj.invoiceNumber;
             this.referenceDate = data.obj.jobCardDate;
 
