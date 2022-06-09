@@ -353,6 +353,14 @@ export class ReportServiceService {
     });
   }
 
+  sppurRegidetailReportSpares(fromDate,toDate,ouId,locId,deptId){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/PurchaseRegisterDtls?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&deptId=${deptId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
 
   vehicleClosingStockAsOn(toDate,ouId){
     const REQUEST_URI = this.ServerUrl +`/SalesReports/VehClsStkAoDRep?toDate=${toDate}&ouId=${ouId}`;

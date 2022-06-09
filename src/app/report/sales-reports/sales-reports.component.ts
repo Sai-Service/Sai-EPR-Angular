@@ -1361,6 +1361,7 @@ export class SalesReportsComponent implements OnInit {
       else if (reportName == 'Purchase Register Details'){
         const fileName = 'Purchase Register Details-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
         const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+        if (Number(sessionStorage.getItem('deptId'))==4){
         this.reportService.sppurRegidetailReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -1368,6 +1369,17 @@ export class SalesReportsComponent implements OnInit {
             this.closeResetButton = true;
             this.isDisabled1 = false;
           })
+        }
+        else if (Number(sessionStorage.getItem('deptId'))!=4){
+          this.reportService.sppurRegidetailReportSpares(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.dataDisplay = ''
+            this.closeResetButton = true;
+            this.isDisabled1 = false;
+          })
+          
+        }
       }
       else if (reportName=='Vehicle Closing Stock As on Date'){
         const fileName = 'Vehicle Closing Stock As on Date-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
