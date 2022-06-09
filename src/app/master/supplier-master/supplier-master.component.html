@@ -216,36 +216,41 @@
                         <ng-template #thenBlockTdsTyp>
                         </ng-template>
                         <ng-template  #elseBlockTdsTyp>
-                          <td style="width: 15%" class="LabelFontStyle1">Supplier&nbsp;TDS&nbsp;Type&nbsp;:&nbsp;</td>
+                          <td style="width: 15%" class="LabelFontStyle1">TDS&nbsp;Pay&nbsp;Group&nbsp;:&nbsp;</td>
                           <td>
-                              <select formControlName="supTdsTyp" id="supTdsTyp" class="form-control">
-                                <!-- <option>--Select--</option> -->
-                                <option *ngFor="let sc of  getTdsType">{{sc.code}}</option>
-                                <!-- <option>Individual</option> -->
-                            </select>
-                           <!-- <span *ngIf="!supplierMasterForm.get('suppNo').valid && supplierMasterForm.get('suppNo').touched">Please
-                               Enter supplier No </span> -->
+                            <select formControlName="supTdsTyp" value={{supTdsTyp}} class="form-control"  >
+                               <option>--Select--</option>
+                               <option *ngFor="let ts of tdsSectionList" [value]="ts.lookupValueDesc">  {{ts.lookupValueDesc}}
+                                 </option>
+                             </select>
                           </td>
                         </ng-template>
                           </tr>
-
                           <tr *ngIf="displaySupplier">
-                                         <!-- </tr> style="border-bottom-style: ridge;border-block-color: #92a8d1;width: 100%;" > -->
                           <td style="width: 15%" class="LabelFontStyle1">Supplier&nbsp;Name&nbsp;:&nbsp;</td>
-                              <td colspan="6">
+                              <td colspan="5">
                                   <input formControlName="name" value={{name}} class="form-control"
                                   [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
-                                  placeholder="Enter name" style="width: 75%; text-transform: uppercase;">
+                                  placeholder="Enter name" style="width: 100%; text-transform: uppercase;">
                                   <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
                                     <div *ngIf="f.name.errors.required">Supplier Name cannot be blank </div>
                                     <div *ngIf="f.name.errors.maxlength">Maximum 150 characters allowed</div>
                                     <div *ngIf="f.name.errors.minlength">Minimum 3 characters required</div>
                                     <div *ngIf="f.name.errors.pattern">Some special characters are not allowed</div>
                                 </div>
-                        
-                              <!-- <span *ngIf="!supplierMasterForm.get('name').valid && supplierMasterForm.get('name').touched">Please
-                                  Enter name </span> -->
                                  </td>
+                                 <div *ngIf="displayTdsTyp; then thenBlockTdsTyp; else elseBlockTdsTyp"></div>
+                        <ng-template #thenBlockTdsTyp>
+                        </ng-template>
+                        <ng-template  #elseBlockTdsTyp>
+                                 <td style="width: 15%" class="LabelFontStyle1">Supplier&nbsp;TDS&nbsp;Type&nbsp;:&nbsp;</td>
+                                 <td>
+                                     <select formControlName="tdsCompanyType" id="tdsCompanyType" class="form-control">
+                                        <option>--Select--</option>
+                                        <option *ngFor="let sc of  getTdsType" [value]="sc.code">{{sc.code}}</option>
+                                   </select>
+                                 </td>
+                        </ng-template>
                                  <input hidden formControlName="divisionId">
                                  <input hidden formControlName="compId">
                       </tr>

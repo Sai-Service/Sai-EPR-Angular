@@ -1474,9 +1474,10 @@ export class SalesOrderFormComponent implements OnInit {
             this.SalesOrderBookingForm.patchValue({ name: data.obj.billLocName });
             var balPay = Math.round(((data.obj.balancePay) + Number.EPSILON) * 100) / 100;
             this.SalesOrderBookingForm.patchValue({balancePay: balPay});
-            if (Number(sessionStorage.getItem('deptId'))!=4){
-            this.isVisible6 = true;
-          }
+          //   if (Number(sessionStorage.getItem('deptId'))!=4){
+          //   this.isVisible6 = true;
+          // }
+          this.isVisible6 = true;
             if (data.obj.financeType != 'None') {
               this.DisplayfinanceSelectionYes = false;
               this.DisplayfinanceSelectionYes1 = false;

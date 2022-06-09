@@ -733,6 +733,23 @@ export class SalesReportsComponent implements OnInit {
       this.panelamcHistrory=false;
       this.ispanelTolocationOu=true;
     }
+    else if (reportName === 'deliverySummary') {
+      this.reportName = 'Delivery Summary Report';
+      this.isVisiblefromtolocationdepartment = false;
+      this.isVisibleVehicleSaleRegister = false;
+      this.isVisibleSaleIND = false;
+      this.isSaleClosingStock = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisiblestockTransfer=false;
+      this.isVisiblefromtoloccustaccno=false;
+      this.isVisibleSalesInventoryAging=false;
+      this.isVisiblepanelfromtolocation=true;
+      this.isVisiblepanelreceiptNo=false;
+      this.isVisiblepanelSalesAddonReconciliation=false;
+      this.isVisiblefromtosubinventory=false;
+      this.panelamcHistrory=false;
+      this.ispanelTolocationOu=false;
+    }
   }
 
 
@@ -1344,6 +1361,7 @@ export class SalesReportsComponent implements OnInit {
       else if (reportName == 'Purchase Register Details'){
         const fileName = 'Purchase Register Details-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
         const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+        if (Number(sessionStorage.getItem('deptId'))==4){
         this.reportService.sppurRegidetailReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -1351,6 +1369,17 @@ export class SalesReportsComponent implements OnInit {
             this.closeResetButton = true;
             this.isDisabled1 = false;
           })
+        }
+        else if (Number(sessionStorage.getItem('deptId'))!=4){
+          this.reportService.sppurRegidetailReportSpares(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.dataDisplay = ''
+            this.closeResetButton = true;
+            this.isDisabled1 = false;
+          })
+          
+        }
       }
       else if (reportName=='Vehicle Closing Stock As on Date'){
         const fileName = 'Vehicle Closing Stock As on Date-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
@@ -1362,6 +1391,28 @@ export class SalesReportsComponent implements OnInit {
             this.closeResetButton = true;
             this.isDisabled1 = false;
           })
+      }
+      else if (reportName=='Delivery Summary Report'){
+        const fileName = 'Delivery Summary Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+        const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+        if (Number((sessionStorage.getItem('deptId')))==4){
+          this.reportService.deliverySummary(fromDate, toDate, sessionStorage.getItem('ouId'), locId)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+        }
+        else if (Number((sessionStorage.getItem('deptId')))!=4){
+          this.reportService.deliverySummary(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+        }
       }
   }
 

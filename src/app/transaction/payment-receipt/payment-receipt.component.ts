@@ -193,6 +193,9 @@ export class PaymentReceiptComponent implements OnInit  {
     console.log(this.locId);
     console.log(this.emplId);
 
+    if (Number(sessionStorage.getItem('deptId')) ==4){
+      this.isDisabledSave=true;
+    }
 
       this.service.OUIdList()
     .subscribe(
