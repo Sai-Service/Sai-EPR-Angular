@@ -38,6 +38,7 @@ export class OrderDetailsUpdationComponent implements OnInit {
   public financerNameList: any = [];
   public YesNoList: Array<string> = [];
   truValueList: any;
+  lstOrderHeader:any;
 
 
   loginName:string;
@@ -53,12 +54,12 @@ export class OrderDetailsUpdationComponent implements OnInit {
   emplId :number;
 
   orderNumber:number;
-  orderDate:string;
+  orderedDate:Date;
   model:string;
   variant:string;
   color:string;
   fuelType:string;
- 
+  salesRepId:number;
   salesRepName:string;
   tlName:string;
   
@@ -76,8 +77,9 @@ export class OrderDetailsUpdationComponent implements OnInit {
   offerPrice:number;
   tvBroker:string;
 
-  custAccountNo:number;
+  accountNo:number;
   custName:string;
+
   title:string;
   address1:string;
   address2:string;
@@ -85,7 +87,8 @@ export class OrderDetailsUpdationComponent implements OnInit {
   address4:string;
   city:string; 
   state:string;
-  picd:string;
+  pinCd:string;
+  leadTicketNo:string;
 
 
 
@@ -113,8 +116,11 @@ export class OrderDetailsUpdationComponent implements OnInit {
       orgId:[''],
 
       orderNumber:[],
+      orderedDate:[],
+      salesRepId:[],
       salesRepName:[],
       tlName:[],
+      leadTicketNo:[],
 
       model:[],
       variant:[],
@@ -134,6 +140,9 @@ export class OrderDetailsUpdationComponent implements OnInit {
       insCharges:[],
       offerPrice:[],
       tvBroker:[],
+
+      accountNo:[],
+      custName:[],
 
     })
 
@@ -261,8 +270,8 @@ export class OrderDetailsUpdationComponent implements OnInit {
   exchangeYes(event: any) {
     //  alert(event.target.value);
     if (event.target.value === 'Y') {
-      this.Displayexchange = false;
-      this.Displayexchange1 = false;
+      this.Displayexchange = true;
+      this.Displayexchange1 = true;
       this.service.truValueListFn()
         .subscribe(
           data1 => {
@@ -272,8 +281,8 @@ export class OrderDetailsUpdationComponent implements OnInit {
         );
     }
     else {
-      this.Displayexchange = true;
-      this.Displayexchange1 = true;
+      this.Displayexchange = false;
+      this.Displayexchange1 = false;
     }
     if (event.target.value === 'N') {
       this.orderDetailsUpdationForm.get('loyaltyBonus').reset();
@@ -283,6 +292,15 @@ export class OrderDetailsUpdationComponent implements OnInit {
     }
   }
 
-  serchByOrderNum(orderNumber) {alert (orderNumber+"............WIP.............");}
+  serchByOrderNum(orderNumber) {
 
+    this.orderManagementService.getsearchByOrderNo(orderNumber)
+      .subscribe(
+        data => {
+          this.lstOrderHeader = data.obj;
+          console.log(this.lstOrderHeader);
+          this.orderDetailsUpdationForm.patchValue(this.lstOrderHeader);
+        });
+
+      }
 }
