@@ -2593,6 +2593,12 @@
                                                     <tr>
 
                                                         <td>
+                                                            <button type="button" style="width: 5rem;"
+                                                                class="btn btn-primary" id="register"
+                                                                (click)="closeMast()">Close</button>
+                                                        </td>
+
+                                                        <td>
                                                             <button type="button"
                                                                 class="btn btn-primary" style="width: 5rem;"
                                                                 (click)="clearFormArray()">Reset</button>
@@ -2697,7 +2703,7 @@
                                                         <ng-template #A2></ng-template> -->
 
                                                         
-                                                        <td> <button type="button" class="btn btn-primary" id="register"  style="width: fit-content;" [routerLink]="['/admin/transaction/PaymentAr',this.jobCardNum]">Receipt</button> </td> 
+                                                        <td> <button type="button" class="btn btn-primary" id="register"  style="width: 5rem;" [routerLink]="['/admin/transaction/PaymentAr',this.jobCardNum]">Receipt</button> </td> 
                                                     </ng-template>
                                                     <ng-template #P2></ng-template>
 
