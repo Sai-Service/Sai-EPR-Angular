@@ -2374,7 +2374,6 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     this.CounterSaleOrderBookingForm.patchValue({ 'tcsAmt': tcsCal });
     if (tcsCal > 0) {
       alert('Added TCS-->' + tcsCal);
-
     }
     this.dataDisplay = 'Invoice Genration in progress....Do not refresh the Page';
     // this.isDisabled10 = true;

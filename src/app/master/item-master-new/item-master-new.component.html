@@ -44,7 +44,7 @@
                         <div *ngIf="f.itemTypeForCat.errors.required">Please enter Item type </div>
                     </div>
                 </td>
-                <td style="width: 12%" class="LabelFontStyle">Item&nbsp;Category&nbsp;:&nbsp;</td>
+                <td style="width: 12%" class="LabelFontStyle1">Item&nbsp;Category&nbsp;:&nbsp;</td>
                 <td>
                     <select style="width:fit-content" formControlName="categoryId" id="categoryId" class="form-control"
                         [ngClass]="{ 'is-invalid': submitted && f.categoryId.errors }">
@@ -57,7 +57,7 @@
                         <div *ngIf="f.categoryId.errors.required">Enter Item Category </div>
                     </div>
                 </td>
-                <td style="width: 12%" class="LabelFontStyle">HSN&nbsp;/&nbsp;SAC&nbsp;:&nbsp;</td>
+                <td style="width: 12%" class="LabelFontStyle1">HSN&nbsp;/&nbsp;SAC&nbsp;:&nbsp;</td>
                 <td>
                     <input type="text" formControlName="hsnSacCode" id="hsnSacCodeId" list="hsnsaclist"
                         class="form-control" style="height: 20px;width:120px;" (change)='onHsnCodeSelected($event)'>
@@ -68,7 +68,7 @@
                         </option>
                     </datalist>
                 </td>
-                <td style="width: 12%" class="LabelFontStyle">UOM&nbsp;:&nbsp;</td>
+                <td style="width: 12%" class="LabelFontStyle1">UOM&nbsp;:&nbsp;</td>
                 <td>
                     <select style="width:fit-content" formControlName="uom" id="uom" class="form-control">
                         <option value="--Select--">--Select--</option>
@@ -418,15 +418,15 @@
                                 Item&nbsp;Taxable&nbsp;:&nbsp;
                             </td>
                             <td>
-                                <div *ngIf="isTaxableShow; then thenBlockisTaxable; else elseBlockStatus"> </div>
-                                <ng-template #thenBlockStatus>
-                                    <input disabled type="checkbox" formControlName="isTaxable" checked
-                                        [(ngModel)]='isTaxable' (change)="internalOrderEvent($event)">
-                                </ng-template>
-                                <ng-template #elseBlockStatus>
-                                    <input disabled type="checkbox" formControlName="isTaxable" [(ngModel)]='isTaxable'
-                                        (change)="internalOrderEvent($event)">
-                                </ng-template>
+                                <div *ngIf="isTaxableShow; then thenBlockisTaxable; else elseBlockStatus"></div>
+                                  <ng-template #thenBlockStatus>
+                                  <input disabled type="checkbox" formControlName="isTaxable" checked  [(ngModel)]='isTaxable'
+                                  (change)="internalOrderEvent($event)">
+                                  </ng-template>
+                                   <ng-template #elseBlockStatus>
+                                 <input disabled type="checkbox" formControlName="isTaxable" [(ngModel)]='isTaxable'
+                                  (change)="internalOrderEvent($event)">
+                                  </ng-template>
                             </td>
                         </tr>
 
@@ -500,49 +500,77 @@
                         </ng-template>
                         <ng-template #elseBlockisTaxable>
                             <tr>
-                                <td style="width: 12%" class="LabelFontStyle">
+                                <td style="width: 12%" class="LabelFontStyle1">
                                     Purchase&nbsp;S&CGST&nbsp;Category&nbsp;Name:&nbsp;</td>
                                 <td>
-                                    <select formControlName="taxCategoryPur" id="taxCategoryPur" class="form-control">
-                                        <option>--Select--</option>
-                                        <option *ngFor="let sc of  taxCategoryListPSAndCGST" [ngValue]="sc.taxCategoryId">
-                                            {{sc.taxCategoryName}}
-                                        </option>
-                                    </select>
+                                    <div *ngIf="displaytaxCategoryListPSAndCGST; then thentaxCategoryListPSAndCGST; else elsetaxCategoryListPSAndCGST"></div>
+                                    <ng-template #thentaxCategoryListPSAndCGST>
+                                        <select formControlName="taxCategoryPur" id="taxCategoryPur" class="form-control" style="background-color: yellow;">
+                                            <option>--Select--</option>
+                                            <option *ngFor="let sc of  taxCategoryListPSAndCGST" [ngValue]="sc.taxCategoryId">
+                                                {{sc.taxCategoryName}}
+                                            </option>
+                                        </select>
+                                    </ng-template>
+                                    <ng-template #elsetaxCategoryListPSAndCGST>
+                                        <input disabled type="text" formControlName="taxCategoryPurIGSTNm" class="form-control" value={{taxCategoryPurIGSTNm}}>
+                                        <input disabled  hidden type="number" formControlName="taxCategoryPurIGST" class="form-control" value={{taxCategoryPurIGST}}>
+                                    </ng-template>
                                 </td>
-                                <td style="width: 12%" class="LabelFontStyle">
+                                <td style="width: 12%" class="LabelFontStyle1">
                                     Purchase&nbsp;IGST&nbsp;Category&nbsp;Name:&nbsp;</td>
                                 <td>
-                                    <select formControlName="taxCategoryPurIGST" id="taxCategoryPurIGST" class="form-control">
+                                    <div *ngIf="displaytaxCategoryListPIGST; then thentaxCategoryListPIGST; else elsetaxCategoryListPIGST"></div>
+                                    <ng-template #thentaxCategoryListPIGST>
+                                    <select formControlName="taxCategoryPurIGST" id="taxCategoryPurIGST" style="background-color: yellow;" class="form-control">
                                         <option>--Select--</option>
                                         <option *ngFor="let sc of  taxCategoryListPIGST" [ngValue]="sc.taxCategoryId">
                                             {{sc.taxCategoryName}}
                                         </option>
                                     </select>
+                                    </ng-template>
+                                    <ng-template #elsetaxCategoryListPIGST>
+                                        <input disabled type="text" formControlName="taxCategoryPurNm" class="form-control" value={{taxCategoryPurNm}}>
+                                        <input disabled  hidden type="number" formControlName="taxCategoryPur" class="form-control" value={{taxCategoryPur}}>
+                                    </ng-template>
                                 </td>
                             </tr>
                             <tr>
-                                <td style="width: 12%" class="LabelFontStyle">
+                                <td style="width: 12%" class="LabelFontStyle1">
                                     Sales&nbsp;S&CGST&nbsp;Category&nbsp;Name:&nbsp;</td>
 
                                 <td>
-                                    <select formControlName="taxCategorySale" id="taxCategorySale" class="form-control">
+                                    <div *ngIf="displaytaxCategoryListSalesSAndCGST; then thentaxCategoryListSalesSAndCGST; else elsetaxCategoryListSalesSAndCGST"></div>
+                                    <ng-template #thentaxCategoryListSalesSAndCGST>
+                                    <select formControlName="taxCategorySale" id="taxCategorySale" style="background-color: yellow;" class="form-control">
                                         <option>--Select--</option>
                                         <option *ngFor="let sc of  taxCategoryListSalesSAndCGST" [ngValue]="sc.taxCategoryId">
                                             {{sc.taxCategoryName}}
                                         </option>
                                     </select>
+                                    </ng-template>
+                                    <ng-template #elsetaxCategoryListSalesSAndCGST>
+                                        <input disabled type="text" formControlName="taxCategorySaleIGSTNm" class="form-control" value={{taxCategorySaleIGSTNm}}>
+                                        <input disabled  hidden type="number" formControlName="taxCategorySaleIGST" class="form-control" value={{taxCategorySaleIGST}}>
+                                    </ng-template>
                                 </td>
-                                <td style="width: 12%" class="LabelFontStyle">
+                                <td style="width: 12%" class="LabelFontStyle1">
                                     Sales&nbsp;IGST&nbsp;Category&nbsp;Name:&nbsp;</td>
 
                                 <td>
-                                    <select formControlName="taxCategorySaleIGST" id="taxCategorySaleIGST" class="form-control">
+                                    <div *ngIf="displaytaxCategoryListSalesIGST; then thentaxCategoryListSalesIGST; else elsetaxCategoryListSalesIGST"></div>
+                                    <ng-template #thentaxCategoryListSalesIGST>
+                                    <select formControlName="taxCategorySaleIGST" id="taxCategorySaleIGST" class="form-control" style="background-color: yellow;">
                                         <option>--Select--</option>
                                         <option *ngFor="let sc of  taxCategoryListSalesIGST" [ngValue]="sc.taxCategoryId">
                                             {{sc.taxCategoryName}}
                                         </option>
                                     </select>
+                                    </ng-template>
+                                    <ng-template #elsetaxCategoryListSalesIGST>
+                                        <input disabled type="text" formControlName="taxCategorySaleNm" class="form-control" value={{taxCategorySaleNm}}>
+                                        <input disabled  hidden type="number" formControlName="taxCategorySale" class="form-control" value={{taxCategorySale}}>
+                                    </ng-template>
                                 </td>
                             </tr>
                         </ng-template>
