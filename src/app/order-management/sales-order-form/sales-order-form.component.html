@@ -19,8 +19,8 @@
                     value={{orderNumber}}>
             </td>
             <td style="background-color: #FFE4B5;">
-                <button type="button" class="btn-primary" [disabled]="isDisabledOrderFind" (click)="OrderFind(orderNumber)"><i class="fa fa-search"
-                        aria-hidden="true"></i></button>
+                <button type="button" class="btn-primary" [disabled]="isDisabledOrderFind"
+                    (click)="OrderFind(orderNumber)"><i class="fa fa-search" aria-hidden="true"></i></button>
             </td>
         </tr>
     </table>
@@ -425,30 +425,52 @@
                                     </td>
                                     <td>
                                         <input type="date" class="form-control" formControlName="custPoDate"
-                                            value={{custPoDate}}
-                                            [ngClass]="{ 'is-invalid': submitted && f.custPoDate.errors }"
-                                            style="width:100%;">
+                                            value={{custPoDate}} style="width:100%;">
                                     </td>
-                                    <td style="width: 15%" class="LabelFontStyle">
+                                    <!-- <td style="width: 15%" class="LabelFontStyle">
                                         &nbsp;Reference&nbsp;No&nbsp;:&nbsp;
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" formControlName="refCustNo" value={{refCustNo}}
-                                            style="width:100%;">
-                                    </td>
+                                        <input type="text" class="form-control" formControlName="refCustNo"
+                                            value={{refCustNo}} style="width:100%;">
+                                    </td> -->
+
+
                                 </tr>
                                 <tr>
                                     <td style="width: 15%" class="LabelFontStyle">
                                         RTO&nbsp;Location&nbsp;
-                                    </td> 
+                                    </td>
                                     <td>
-                                        <select formControlName="attribute17" id="attribute17"  class="form-control" style="width: 170px;">
-                                        <option>--Select--</option>
-                                        <option value="PMC">PMC</option>
-                                        <option value="PCMC">PCMC</option>
-                                        <option value="LOWER PAREL">LOWER PAREL</option>
-                                        <option value="CRTM">CRTM</option>
-                                    </select>
+                                        <select formControlName="attribute17" id="attribute17" class="form-control"
+                                            style="width: 170px;">
+                                            <option>--Select--</option>
+                                            <option value="PMC">PMC</option>
+                                            <option value="PCMC">PCMC</option>
+                                            <option value="LOWER PAREL">LOWER PAREL</option>
+                                            <option value="CRTM">CRTM</option>
+                                        </select>
+                                    </td>
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        CDMS&nbsp;Customer&nbsp;No&nbsp;:&nbsp;
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" formControlName="msRefCustNo"
+                                            value={{msRefCustNo}} style="width:100%;">
+                                    </td>
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        CDMS&nbsp;Booking&nbsp;No&nbsp;:&nbsp;
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" formControlName="msRefNo"
+                                            value={{msRefNo}} style="width:100%;">
+                                    </td>
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        CDMS&nbsp;Invoice&nbsp;No&nbsp;:&nbsp;
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" formControlName="msRefType"
+                                            value={{msRefType}} style="width:100%;">
                                     </td>
                                 </tr>
                                 <!-- <tr>
@@ -625,7 +647,7 @@
                                 Insurance&nbsp;Type&nbsp;:&nbsp;
                             </td>
                             <td>
-                                <select formControlName="insType" id="insType" class="form-control" 
+                                <select formControlName="insType" id="insType" class="form-control"
                                     style="width: 170px;">
                                     <option>--Select--</option>
                                     <option *ngFor="let mm of insTypeList">
@@ -913,7 +935,8 @@
                             Customer&nbsp;PO&nbsp;Date&nbsp;:&nbsp;
                         </td>
                         <td>
-                            <input type="date" class="form-control" [(ngModel)]="csdDate" formControlName="csdDate"   style="width:100%;">
+                            <input type="date" class="form-control" [(ngModel)]="csdDate" formControlName="csdDate"
+                                style="width:100%;">
                         </td>
                         <td style="width: 15%" class="LabelFontStyle">
                             Index&nbsp;No&nbsp;:&nbsp;
@@ -984,7 +1007,7 @@
                                 <input disabled type="number" formControlName="basicValue" class="form-control"
                                     style="width: 150px; font-weight: bold;">
                             </td>
-                            
+
                             <td style="width: 15%" class="LabelFontStyle">
                                 Ex-Showroom&nbsp;Price:&nbsp;
                             </td>
@@ -1003,16 +1026,16 @@
                                 Balance&nbsp;Amt:&nbsp;
                             </td>
                             <td>
-                                <input disabled type="number" formControlName="balancePay" class="form-control" 
+                                <input disabled type="number" formControlName="balancePay" class="form-control"
                                     style="width: 150px; font-weight: bold;">
                             </td>
                         </tr>
-                        <tr>   
+                        <tr>
                             <td colspan="3">
                                 <button type="submit" class="btn btn-primary" (click)="modelDetailsUpdate()"
                                     [style.display]="isVisiblemodelDetailsUpdate ? 'block' : 'none'"
                                     style="width: fit-content;height: fit-content;">Model Details Update</button>
-                               
+
                             </td>
                         </tr>
                     </table>
@@ -1024,7 +1047,7 @@
                                 Model&nbsp;:&nbsp;
                             </td>
                             <td>
-                                <input disabled type="text" formControlName="model" class="form-control" 
+                                <input disabled type="text" formControlName="model" class="form-control"
                                     style="width: 150px;">
                             </td>
                             <td style="width: 15%" class="LabelFontStyle">
@@ -1137,7 +1160,9 @@
                                                         {{sc.codeDesc}}</option>
                                                 </select>
                                             </td>
-                                            <div *ngIf="DisplayfinanceSelectionYes; then thenfinanceSelectionYes; else elsefinanceSelectionYes"> </div>
+                                            <div
+                                                *ngIf="DisplayfinanceSelectionYes; then thenfinanceSelectionYes; else elsefinanceSelectionYes">
+                                            </div>
                                             <ng-template #thenfinanceSelectionYes>
                                             </ng-template>
                                             <ng-template #elsefinanceSelectionYes>
@@ -2438,40 +2463,17 @@
                                     (click)="navigateGatePass(orderNumber)">Generate Gate Pass</button>
                             </td>
                             <td>
-                                <button class="btn btn-primary" [style.display]="isVisibleAutoApplyInvoice ? 'block' : 'none'"
-                                (click)="autoApplyInvoice()"  style="width: fit-content;height: fit-content;">Auto Apply Invoice</button>
-                         
-<!-- <button type="button" class="btn btn-primary" [style.display]="isVisibleAutoApplyInvoice ? 'block' : 'none'" data-toggle="modal" data-target="#AutoApplyInvoice" style="width: fit-content;height: fit-content;">
-    Auto Apply Invoice
-  </button>
-  <div class="modal fade" id="AutoApplyInvoice" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <table class="center">
-                <tr>
-                    <td style="width: 15%" class="LabelFontStyle">
-                        &nbsp;Date&nbsp;:&nbsp;
-                    </td>
-                    <td>
-                        <input  type="date" class="form-control"
-                            formControlName="emailId" [(ngModel)]='emailId'
-                            value={{emailId}} style="width: 150px;">
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" (click)="autoApplyInvoice()" style="width: fit-content;height: fit-content;">Save changes</button>
-        </div>
-      </div>
-    </div>
-  </div> -->
+                                <button class="btn btn-primary"
+                                    [style.display]="isVisibleAutoApplyInvoice ? 'block' : 'none'"
+                                    (click)="autoApplyInvoice()" style="width: fit-content;height: fit-content;">Auto
+                                    Apply Invoice</button>
+
+                           
+                            </td>
+                            <td>
+                                <button class="btn btn-primary" [style.display]="isVisiblecancelledSalesOrder ? 'block' : 'none'"
+                                    style="width: fit-content;height: fit-content;"
+                                    (click)="cancelledSalesOrder()">Cancell Sales Order</button>
                             </td>
                         </tr>
                     </table>

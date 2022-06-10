@@ -9,6 +9,7 @@ import { OrderManagementService } from 'src/app/order-management/order-managemen
 import { Location,DatePipe } from "@angular/common";
 import { saveAs } from 'file-saver';
 import { SalesOrderobj } from './sales-orderobj';
+import { data } from 'jquery';
 
 
 const MIME_TYPES = {
@@ -331,6 +332,9 @@ export class SalesOrderFormComponent implements OnInit {
   custPoNumber: string;
   custPoDate: Date;
   refCustNo: string;
+  msRefNo : string ;
+  msRefType: string;
+  msRefCustNo : string;
   isDisabled3 = false;
   isDisabled4 = false;
   isDisabled5 = false;
@@ -376,6 +380,7 @@ export class SalesOrderFormComponent implements OnInit {
   isVisibleform21: boolean = false;
   isVisiblemodelDetailsUpdate: boolean = false;
   isVisibleCSDDetails: boolean = false;
+  isVisiblecancelledSalesOrder:boolean=false;
 
   closeResetButton = true;
   dataDisplay: any;
@@ -473,6 +478,9 @@ export class SalesOrderFormComponent implements OnInit {
       custPoNumber: [''],
       custPoDate: [''],
       refCustNo: [''],
+      msRefNo :  [''],
+      msRefType:  [''],
+      msRefCustNo : [''],      
       gstNo: [''],
       panNo: [''],
       tcs: [''],
@@ -1474,6 +1482,7 @@ export class SalesOrderFormComponent implements OnInit {
             this.SalesOrderBookingForm.patchValue({ name: data.obj.billLocName });
             var balPay = Math.round(((data.obj.balancePay) + Number.EPSILON) * 100) / 100;
             this.SalesOrderBookingForm.patchValue({balancePay: balPay});
+            this.SalesOrderBookingForm.get('custPoDate').disable();
           //   if (Number(sessionStorage.getItem('deptId'))!=4){
           //   this.isVisible6 = true;
           // }
@@ -1501,6 +1510,11 @@ export class SalesOrderFormComponent implements OnInit {
               if (Number(sessionStorage.getItem('deptId'))!=4){
               this.isVisible2 = true;
               }
+            }
+            if (Number(sessionStorage.getItem('deptId'))==4){
+              if (data.obj.orderStatus != 'INVOICED'){
+              this.isVisiblecancelledSalesOrder=true;
+            }
             }
             if (data.obj.flowStatusCode === 'CLOSED') {
               this.isVisible2 = false;
@@ -1746,6 +1760,9 @@ export class SalesOrderFormComponent implements OnInit {
               this.SalesOrderBookingForm.get('custPoNumber').disable();
               this.SalesOrderBookingForm.get('custPoDate').disable();
               this.SalesOrderBookingForm.get('refCustNo').disable();
+              this.SalesOrderBookingForm.get('msRefNo').disable();
+              this.SalesOrderBookingForm.get('msRefType').disable();
+              this.SalesOrderBookingForm.get('msRefCustNo').disable();            
               this.SalesOrderBookingForm.get('csdPoNo').disable();
               this.SalesOrderBookingForm.get('csdDate').disable();
               this.SalesOrderBookingForm.get('csdIndexNo').disable();
@@ -1754,6 +1771,13 @@ export class SalesOrderFormComponent implements OnInit {
               this.csdDate=csdDateNew;
               // alert(this.csdDate)
             }
+            var custPoDate1 = (data.obj.custPoDate)
+              var custPoDateNew = this.pipe.transform(custPoDate1, 'y-MM-dd');
+              this.SalesOrderBookingForm.patchValue({custPoDate:custPoDateNew});
+              this.SalesOrderBookingForm.get('custPoNumber').disable();
+              this.SalesOrderBookingForm.get('msRefCustNo').disable();
+              this.SalesOrderBookingForm.get('msRefNo').disable();
+              this.SalesOrderBookingForm.get('msRefType').disable();
           }
         })
 
@@ -2796,5 +2820,18 @@ export class SalesOrderFormComponent implements OnInit {
     }
   );
   }
+  cancelledSalesOrder(){
+    this.orderManagementService.cancelledSalesOrderFn(this.orderNumber)
+    .subscribe((res: any) => {
+      if (res.code===200){
+        alert(res.message)
+      }
+      else if (res.code===400){
+        alert(res.message)
+      }
+    }
+  );
+  }
+
 }
  
