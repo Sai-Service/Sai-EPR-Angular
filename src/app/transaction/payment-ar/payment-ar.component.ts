@@ -13,6 +13,7 @@ import { ReturnStatement } from '@angular/compiler';
 interface IPaymentRcptAr {
 
   referenceNo: string;
+  referenceDate:string;
   refType: string;
   ouId: number;
   locId: number;
@@ -44,6 +45,7 @@ interface IPaymentRcptAr {
 
   tdsAmount: number;
   tdstrxNumber: string;
+  policyTerm:number;
 
 
 
@@ -255,6 +257,7 @@ export class PaymentArComponent implements OnInit {
   fromJc=false;
   fromOrderChetak=false;
   accountsLogin=false;
+  reInsurance=false;
 
   showInvoiceGrid = false;
   showRefundGrid = false;
@@ -293,6 +296,8 @@ export class PaymentArComponent implements OnInit {
   runningTotalCr: number;
   runningTotalDr: number;
   private sub: any;
+
+  policyTerm:number;
 
   // applyTo: string;
 
@@ -419,6 +424,8 @@ export class PaymentArComponent implements OnInit {
       totalCr: [],
       runningTotalCr: [],
       runningTotalDr: [],
+
+      policyTerm:[],
 
       // applyrcptFlag: ['', [Validators.required]],
 
@@ -917,8 +924,13 @@ if(this.deptId==2){
   }
 
   onRefTypeSelected(mRefType) {
+    // alert ("Reference Type : "+ mRefType);
     if (mRefType === 'Advance' || mRefType === undefined) { this.showRefYellow = false; }
     else { this.showRefYellow = true; }
+
+    if(mRefType==='ReIns-Renewal') { this.reInsurance=true;this.showRefYellow = true;} else{this.reInsurance=false;}
+
+
   }
 
   onPayTypeSelected(payType: any, rmStatus: any) {
@@ -2841,10 +2853,34 @@ if(this.deptId==2){
       return;
     }
 
+    if (formValue.refType ==='ReIns-Renewal') {
+
+          if(formValue.referenceNo == null || formValue.referenceNo == undefined || formValue.referenceNo.trim() == '') {
+            alert("POLICY NO : Should not be null.");
+            this.checkValidation = false;
+            return;
+          }
+
+        // alert ("Policy Date :" +formValue.referenceDate);
+        if (formValue.referenceDate == null || formValue.referenceDate==undefined || formValue.referenceDate.trim() == '') {
+          alert("POLICY DATE : Policy date shouldnot be null.");
+          this.checkValidation = false;
+          return;
+        }
+        if (formValue.policyTerm == null || formValue.policyTerm==undefined || formValue.policyTerm<=0) {
+          alert("POLICY TERM : Please enter valid Policy term (period))");
+          this.checkValidation = false;
+          return;
+        }
+    }
+
     if (formValue.refType != 'Advance' && (formValue.referenceNo == null || formValue.referenceNo.trim() == '')) {
       alert("REFERENCE NO\nRef.number to be entered for Non-Advance Receipts");
+      this.checkValidation = false;
       return;
     }
+
+
 
     if (formValue.payType === undefined || formValue.payType === null) {
       this.checkValidation = false;
@@ -2880,7 +2916,7 @@ if(this.deptId==2){
           return;
         }
 
-        if (formValue.checkDate === undefined || formValue.checkDate === null) {
+        if (formValue.checkDate === undefined || formValue.checkDate === null || formValue.checkDate.trim() == '') {
           this.checkValidation = false;
           alert("CHECK/DD/CRD/NEF DATE: Please Select Chq/dd.. Date....");
           return;

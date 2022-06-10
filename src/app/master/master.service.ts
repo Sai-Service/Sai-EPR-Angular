@@ -3723,9 +3723,13 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
     }
 
 
-      getFromAcList(trfType): Observable<any> {
-         return this.http.get(this.ServerUrl +`/AccountTrf/AcctList/${trfType}`);
+      getFromAcList(trfType,ouId): Observable<any> {
+        //  return this.http.get(this.ServerUrl +`/AccountTrf/AcctList/${trfType}`);
+         return this.http.get(this.ServerUrl+`/AccountTrf/AcctListNew?tranType=${trfType}&ouId=${ouId}`);
+
         //  http://localhost:8081/AccountTrf/AcctList/CT
+
+        // http://localhost:8081/AccountTrf/AcctListNew?tranType=BT&ouId=21
        }
 
       getPayRecAccountCode(methodId,ouId,divId,locId): Observable<any> {
@@ -3813,14 +3817,19 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
 
         }
 
-        getBnkTrfSearchByDocNum(docNo): Observable<any> {
-            return this.http.get(this.ServerUrl+`/AccountTrf/trfDocSearch/${docNo}`);
+        getBnkTrfSearchByDocNum(docNo,ouId): Observable<any> {
+            // return this.http.get(this.ServerUrl+`/AccountTrf/trfDocSearch/${docNo}`);
+            return this.http.get(this.ServerUrl+`/AccountTrf/trfDocSearch?docTrfNo=${docNo}&ouId=${ouId}`);
+
             // http://localhost:8081/AccountTrf/trfDocSearch/2125210210009
+            // http://localhost:8081/AccountTrf/trfDocSearch?docTrfNo=22221027000064&ouId=21
         }
      
-        getBnkTrfSearchByDate(fDate,tDate): Observable<any> {
-            return this.http.get(this.ServerUrl+`/AccountTrf/TrfDtList?frmDate=${fDate}&toDate=${tDate}`);
+        getBnkTrfSearchByDate(fDate,tDate,ouId): Observable<any> {
+            return this.http.get(this.ServerUrl+`/AccountTrf/TrfDtList?frmDate=${fDate}&toDate=${tDate}&ouId=${ouId}`);
             // http://localhost:8081/AccountTrf/TrfDtList?frmDate=2021-10-25&toDate=2021-10-25
+            // http://localhost:8081/AccountTrf/TrfDtList?frmDate=2022-04-01&toDate=2022-06-10&ouId=21
+
         }
 
         getBnkChqListPosted(docNumber): Observable<any> {

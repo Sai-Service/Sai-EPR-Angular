@@ -18,6 +18,9 @@ interface IjobCard {
   matDiscountPer:number;
   matDiscout:number;
 
+  disCategory:string;
+  disAuthBy: string;
+
   jobCardNum: string;
   taxCategoryName: string;
   matStatus: string;
@@ -451,6 +454,9 @@ export class JobCardComponent implements OnInit {
   cdmsInvoiceNo: string;
   cdmsInvoiceDate: Date;
   cdmsInvoiceNoDp:string;
+
+  disCategory:string;
+  disAuthBy: string;
  
 
   // public minDatetime = new Date();
@@ -1997,13 +2003,12 @@ export class JobCardComponent implements OnInit {
             invTotAmt: Math.round(((this.lstcomments.labTotAmt + this.lstcomments.matTotAmt)+Number.EPSILON)*100)/100, 
            
             // addonLabDiscountPer1: Math.round((this.lstcomments.addonLabDiscountPer+Number.EPSILON)*100)/100,
-            // addonLabDiscount: Math.round((this.lstcomments.addonLabDiscount+Number.EPSILON)*100)/100, 
-          
+            addonLabDiscount: Math.round((this.lstcomments.addonLabDiscount+Number.EPSILON)*100)/100, 
             addonLabTaxableAmt: Math.round((this.lstcomments.addonLabTaxableAmt+Number.EPSILON)*100)/100, 
             addonLabTotTaxAmt: Math.round((this.lstcomments.addonLabTotTaxAmt+Number.EPSILON)*100)/100,
             addonLabTotAmt: Math.round((this.lstcomments.addonLabTotAmt+Number.EPSILON)*100)/100, 
             // addonMatDiscoutPer1: Math.round((this.lstcomments.addonMatDiscoutPer+Number.EPSILON)*100)/100,
-            // addonMatDiscout: Math.round((this.lstcomments.addonMatDiscout+Number.EPSILON)*100)/100,
+            addonMatDiscout: Math.round((this.lstcomments.addonMatDiscout+Number.EPSILON)*100)/100,
             addonMatTaxableAmt: Math.round((this.lstcomments.addonMatTaxableAmt+Number.EPSILON)*100)/100, 
             addonMatTotTaxAmt: Math.round((this.lstcomments.addonMatTotTaxAmt+Number.EPSILON)*100)/100, 
             addonMatTotAmt: Math.round((this.lstcomments.addonMatTotAmt+Number.EPSILON)*100)/100, 
@@ -2880,7 +2885,28 @@ export class JobCardComponent implements OnInit {
     if(formValue.disTypeMat==='Amount' && (formValue.matDiscout<=0 )){this.saveBillValidation = false;
         msg1="MATERIAL DISCOUNT AMT: Enter Valid Discount Amt...";alert(msg1);return;}
 
-    this.saveBillValidation=true;
+      var custDisc= Number(this.jobcardForm.get("labDiscount").value) +Number(this.jobcardForm.get("matDiscout").value)
+      var addonDisc= Number(this.jobcardForm.get("addonLabDiscount").value) +Number(this.jobcardForm.get("addonMatDiscout").value)
+      var totDisc=custDisc+addonDisc;
+     
+      // alert("Total Discount  Applied  : " + totDisc + " , " +formValue.disCategory  + " , "+formValue.disAuthBy);
+
+      if(totDisc>0) {
+      if (formValue.disCategory == null || formValue.disCategory == undefined || formValue.disCategory.trim() == '') {
+        alert("DISCOUNT  TYPE :  Please select Discount Type.");
+        this.saveBillValidation=false;
+        return;
+      }
+
+      if (formValue.disAuthBy == null || formValue.disAuthBy == undefined || formValue.disAuthBy.trim() == '') {
+        alert("AUTHORISED BY :  Please select Discount Approved By.");
+        this.saveBillValidation=false;
+        return;
+      }
+
+    }
+   
+      this.saveBillValidation=true;
   
   }
 
