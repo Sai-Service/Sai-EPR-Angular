@@ -1179,6 +1179,15 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
         }
       }
     }
+    var totAmt = this.CounterSaleOrderBookingForm.get('totAmt').value;
+      var crdAmt = this.CounterSaleOrderBookingForm.get('creditAmt').value;
+      if (totAmt >= crdAmt) {
+        alert('Credit Amount is exceeded.! ... Credit Amount is' + ' ' + crdAmt + ' ' + 'Total Amount is' + ' ' + totAmt + '.!');
+        this.progress = 0;
+        this.dataDisplay = ('Credit Amount is exceeded.! ... Credit Amount is' + ' ' + crdAmt + ' ' + 'Total Amount is' + ' ' + totAmt + '.!');
+        this.isDisabled = false;
+        return;
+      }
     for (let i = exLines; i < orderLines.length; i++) {
       orderLines[i].taxCategoryName = orderLines[i].taxCategoryName.taxCategoryName;
       orderLines[i].frmLocatorId = orderLines[i].frmLocatorName;
@@ -2452,6 +2461,17 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
         return;
       }
     }
+    // if (this.CounterSaleOrderBookingForm.get('transactionTypeName').value =='Spares Sale - Credit' || this.CounterSaleOrderBookingForm.get('createOrderType').value=='Pick Ticket'){
+      var totAmt = this.CounterSaleOrderBookingForm.get('totAmt').value;
+      var crdAmt = this.CounterSaleOrderBookingForm.get('creditAmt').value;
+      if (totAmt >= crdAmt) {
+        alert('Credit Amount is exceeded.! ... Credit Amount is' + ' ' + crdAmt + ' ' + 'Total Amount is' + ' ' + totAmt + '.!');
+        this.progress = 0;
+        this.dataDisplay = ('Credit Amount is exceeded.! ... Credit Amount is' + ' ' + crdAmt + ' ' + 'Total Amount is' + ' ' + totAmt + '.!');
+        this.isDisabled = false;
+        return;
+      }
+    // }
     for (let j = 0; j < orderLines.length; j++) {
       if (orderLines[j].segment === '' || orderLines[j].segment=== undefined || orderLines[j].segment===null
       && orderLines[j].taxCategoryName === '' || orderLines[j].taxCategoryName===undefined || orderLines[j].taxCategoryName===null
@@ -3444,4 +3464,29 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   remark(){
     this.CounterSaleOrderBookingForm.get('disPer').disable();
   }
+
+
+refreshCreadiAmt(){
+  var customerId = this.CounterSaleOrderBookingForm.get('customerId').value;
+  var customerSiteId= this.CounterSaleOrderBookingForm.get('customerSiteId').value;
+  this.service.crediteLimitFn(customerId, sessionStorage.getItem('locId'), customerSiteId)
+  .subscribe(
+    data => {
+      if (data.code === 200) {
+
+        var newCrmAmt1 = Math.round(((data.obj.outStandingAmt) + Number.EPSILON) * 100) / 100;
+        this.CounterSaleOrderBookingForm.patchValue({ creditAmt: newCrmAmt1 });
+        this.CounterSaleOrderBookingForm.patchValue({ creditDays: data.obj.creditDays });
+        this.CounterSaleOrderBookingForm.patchValue({ daysMsg: data.obj.daysMsg });
+        if (this.CounterSaleOrderBookingForm.get('daysMsg').value.includes('Exceeded')) {
+          alert('Credit Days is exceeded.!');
+          // this.isDisabled10 = true;
+        }
+        else if (this.allDatastore.totAmt >= data.obj.outStandingAmt) {
+          alert('Credit Amount is exceeded.! ... Credit Amount is' + ' ' + this.allDatastore.crdAmt + ' ' + 'Total Amount is' + ' ' + this.allDatastore.totAmt + '.!')
+        }
+      }
+    })
+}
+
 }

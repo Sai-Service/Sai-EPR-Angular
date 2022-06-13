@@ -536,6 +536,23 @@ export class ReportServiceService {
     });
   }
 
+  amcControlReport(fromDate,toDate,ouId){
+    const REQUEST_URI = this.ServerUrl +`/ServiceReports/AmcControlRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+  fscCouponData(fromDate,toDate,locId){
+    const REQUEST_URI = this.ServerUrl +`/SalesReports/FscCouponData?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+
   amcHistory(regNo,ouId){
     const REQUEST_URI = this.ServerUrl +`/ServiceReports/AmcHistory?regNo=${regNo}&ouId=${ouId}`;
     return this.http.get(REQUEST_URI, {

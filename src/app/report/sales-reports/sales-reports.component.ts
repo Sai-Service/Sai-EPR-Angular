@@ -750,6 +750,23 @@ export class SalesReportsComponent implements OnInit {
       this.panelamcHistrory=false;
       this.ispanelTolocationOu=false;
     }
+    else if (reportName === 'fscCouponData') {
+      this.reportName = 'FSC Coupon Data Report';
+      this.isVisiblefromtolocationdepartment = false;
+      this.isVisibleVehicleSaleRegister = false;
+      this.isVisibleSaleIND = false;
+      this.isSaleClosingStock = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisiblestockTransfer=false;
+      this.isVisiblefromtoloccustaccno=false;
+      this.isVisibleSalesInventoryAging=false;
+      this.isVisiblepanelfromtolocation=true;
+      this.isVisiblepanelreceiptNo=false;
+      this.isVisiblepanelSalesAddonReconciliation=false;
+      this.isVisiblefromtosubinventory=false;
+      this.panelamcHistrory=false;
+      this.ispanelTolocationOu=false;
+    }
   }
 
 
@@ -1406,6 +1423,28 @@ export class SalesReportsComponent implements OnInit {
         }
         else if (Number((sessionStorage.getItem('deptId')))!=4){
           this.reportService.deliverySummary(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+        }
+      }
+      else if (reportName=='FSC Coupon Data Report'){
+        const fileName = 'FSC Coupon Data Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+        const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+        if (Number(sessionStorage.getItem('deptId'))==4){
+          this.reportService.fscCouponData(fromDate,toDate,locId)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+        }
+        else if (Number(sessionStorage.getItem('deptId'))!=4){
+          this.reportService.fscCouponData(fromDate,toDate,sessionStorage.getItem('locId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
