@@ -416,7 +416,7 @@ export class SalesOrderFormComponent implements OnInit {
       taxiYN: [''],
       basicValue: [''],
       weddingDate: [''],
-      attribute17:[],
+      attribute17:['',[Validators.required]],
       name: [''],
       lesseeCustName: [''],
       customerSiteId: [''],
@@ -1397,6 +1397,13 @@ export class SalesOrderFormComponent implements OnInit {
     var transactionTypeName = this.SalesOrderBookingForm.get('transactionTypeName').value;
     var lesseeAccNo = this.SalesOrderBookingForm.get('lesseeAccNo').value;
     var lesseeCustName = this.SalesOrderBookingForm.get('lesseeCustName').value;
+    var rtoLocation = this.SalesOrderBookingForm.get('attribute17').value;
+    if (Number(sessionStorage.getItem('ouId'))==22 || Number(sessionStorage.getItem('divisionId'))==2){
+    if (rtoLocation == undefined || rtoLocation=='' || rtoLocation==null){
+      alert('Plesae Select RTO Location List.!');
+      return;
+    }
+  }
     if (transactionTypeName.includes('CSD')) {
       if (lesseeCustName === undefined || lesseeCustName === null || lesseeCustName === '' || lesseeAccNo === undefined || lesseeAccNo === null || lesseeAccNo === '') {
         alert('Please Enter CSD Customer Details.!');
@@ -1482,7 +1489,7 @@ export class SalesOrderFormComponent implements OnInit {
             this.SalesOrderBookingForm.patchValue({ name: data.obj.billLocName });
             var balPay = Math.round(((data.obj.balancePay) + Number.EPSILON) * 100) / 100;
             this.SalesOrderBookingForm.patchValue({balancePay: balPay});
-            this.SalesOrderBookingForm.get('custPoDate').disable();
+            // this.SalesOrderBookingForm.get('custPoDate').disable();
           //   if (Number(sessionStorage.getItem('deptId'))!=4){
           //   this.isVisible6 = true;
           // }
@@ -1683,7 +1690,11 @@ export class SalesOrderFormComponent implements OnInit {
                   this.SalesOrderBookingForm.get('exRegNo').disable();
                   this.SalesOrderBookingForm.get('insCharges').disable();
                   this.SalesOrderBookingForm.get('offerPrice').disable();
-
+                   this.SalesOrderBookingForm.get('custPoNumber').disable();
+                 this.SalesOrderBookingForm.get('msRefCustNo').disable();
+               this.SalesOrderBookingForm.get('msRefNo').disable();
+               this.SalesOrderBookingForm.get('msRefType').disable();
+                  this.SalesOrderBookingForm.get('custPoDate').disable();
                 }
                 if (this.lstgetOrderLineDetails[i].invType.includes('VEHICLE')) {
                   if (this.lstgetOrderLineDetails[i].flowStatusCode === 'INVOICED'){
@@ -1801,10 +1812,10 @@ export class SalesOrderFormComponent implements OnInit {
             var custPoDate1 = (data.obj.custPoDate)
               var custPoDateNew = this.pipe.transform(custPoDate1, 'y-MM-dd');
               this.SalesOrderBookingForm.patchValue({custPoDate:custPoDateNew});
-              this.SalesOrderBookingForm.get('custPoNumber').disable();
-              this.SalesOrderBookingForm.get('msRefCustNo').disable();
-              this.SalesOrderBookingForm.get('msRefNo').disable();
-              this.SalesOrderBookingForm.get('msRefType').disable();
+              // this.SalesOrderBookingForm.get('custPoNumber').disable();
+              // this.SalesOrderBookingForm.get('msRefCustNo').disable();
+              // this.SalesOrderBookingForm.get('msRefNo').disable();
+              // this.SalesOrderBookingForm.get('msRefType').disable();
           }
         })
 

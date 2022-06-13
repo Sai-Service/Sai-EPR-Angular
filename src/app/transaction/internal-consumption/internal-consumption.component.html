@@ -162,10 +162,14 @@
         Repair Order:
        </td>
        <td>
-         <select  class="form-control" formControlName="attribute1">
+         <!-- <select  class="form-control" formControlName="attribute1">
           <option>--Select--</option>
           <option *ngFor="let repairNo of workshopIssue">{{repairNo.jobCardNum}}--{{repairNo.regNo}}</option>
-        </select>
+        </select> -->
+        <input type="text" formControlName="attribute1" (keyup)="getUserIdsFirstWay($event)" id="userIdFirstWay" list="dynmicUserIds" class="form-control" >
+    <datalist id="dynmicUserIds">
+      <option *ngFor="let repairNo of workshopIssue">{{repairNo.jobCardNum}}--{{repairNo.regNo}}</option>
+    </datalist>
         </td>
          <td>
      <input hidden type="text" formControlName="locId" [(ngModel)]="locId">
