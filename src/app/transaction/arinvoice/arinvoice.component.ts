@@ -49,6 +49,7 @@ interface IArInvoice {
   custtaxCategoryName: string;
   siteName: string;
   concatenatedSegment: string;
+  irnYN:string;
 }
 @Component({
   selector: 'app-arinvoice',
@@ -145,6 +146,7 @@ export class ARInvoiceComponent implements OnInit {
   taxPer: number;
   lstinvoices: any[];
   isVisibleInvoice: boolean = false;
+  irnYN:string;
 
   billToCustNo: number;
   public taxCalforItem: any;
@@ -316,6 +318,7 @@ export class ARInvoiceComponent implements OnInit {
       docSeqValue: [],
       custtaxCategoryName: [],
       siteName: [],
+      irnYN:[],
 
       invLines: this.fb.array([this.lineDetailsGroup()]),
       invDisLines: this.fb.array([this.distLineDetails()]),
