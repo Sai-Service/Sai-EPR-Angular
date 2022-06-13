@@ -828,6 +828,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
             this.lstgetOrderLineDetails = data.obj.oeOrderLinesAllList;
             this.lstgetOrderTaxDetails = data.obj.taxAmounts;
             this.allDatastore = data.obj;
+            // this.gstNo=data.obj.
             this.CounterSaleOrderBookingForm.get('orderNumber').disable();
             // alert(data.obj.orderStatus +'----'+data.obj.gatePassYN)
             this.custClassCode = data.obj.classCodeType;
