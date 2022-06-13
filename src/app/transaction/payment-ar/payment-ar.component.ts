@@ -13,6 +13,7 @@ import { ReturnStatement } from '@angular/compiler';
 interface IPaymentRcptAr {
 
   referenceNo: string;
+  referenceDate:string;
   refType: string;
   ouId: number;
   locId: number;
@@ -44,6 +45,7 @@ interface IPaymentRcptAr {
 
   tdsAmount: number;
   tdstrxNumber: string;
+  policyTerm:number;
 
 
 
@@ -62,7 +64,7 @@ export class PaymentArComponent implements OnInit {
   pipe = new DatePipe('en-US');
   now = Date.now();
   public minDate = new Date();
-
+  isVisibleUnApplyReceipt:boolean=false;
   message: string = "PleaseFixtheErrors!";
   msgType: string = "Close";
   // public DivisionIDList : Array<string>=[];
@@ -255,6 +257,7 @@ export class PaymentArComponent implements OnInit {
   fromJc=false;
   fromOrderChetak=false;
   accountsLogin=false;
+  reInsurance=false;
 
   showInvoiceGrid = false;
   showRefundGrid = false;
@@ -293,6 +296,8 @@ export class PaymentArComponent implements OnInit {
   runningTotalCr: number;
   runningTotalDr: number;
   private sub: any;
+
+  policyTerm:number;
 
   // applyTo: string;
 
@@ -419,6 +424,8 @@ export class PaymentArComponent implements OnInit {
       totalCr: [],
       runningTotalCr: [],
       runningTotalDr: [],
+
+      policyTerm:[],
 
       // applyrcptFlag: ['', [Validators.required]],
 
@@ -676,7 +683,7 @@ if(this.deptId==2){
   }
 
       GetOrderDetails(mOderNum){
-        alert ("Order Number :"+mOderNum);
+        // alert ("Order Number :"+mOderNum);
         this.orderManagementService.proformaOrderSearchNew(sessionStorage.getItem('divisionId'), mOderNum)
         .subscribe(
           data => {
@@ -705,7 +712,7 @@ if(this.deptId==2){
 
             // this.serchByRegNo(data.obj.regNo);
             this.CustAccountNoSearch(data.obj.accountNo);
-            this.paymentAmt = data.obj.balanceAmt;
+            this.paymentAmt = data.obj.totBalance;
             this.referenceNo = data.obj.jobCardNum + '/' + data.obj.invoiceNumber;
             this.referenceDate = data.obj.jobCardDate;
 
@@ -917,8 +924,13 @@ if(this.deptId==2){
   }
 
   onRefTypeSelected(mRefType) {
+    // alert ("Reference Type : "+ mRefType);
     if (mRefType === 'Advance' || mRefType === undefined) { this.showRefYellow = false; }
     else { this.showRefYellow = true; }
+
+    if(mRefType==='ReIns-Renewal') { this.reInsurance=true;this.showRefYellow = true;} else{this.reInsurance=false;}
+
+
   }
 
   onPayTypeSelected(payType: any, rmStatus: any) {
@@ -1048,16 +1060,41 @@ if(this.deptId==2){
 
     this.status = null;
     // var mDate = this.pipe.transform(rcptdate, 'dd-MMM-y');
+    if (Number(sessionStorage.getItem('deptId'))!=4){
     this.service.SearchRcptByCustNo(custActNo, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
       .subscribe(
         data => {
+          if (data.code==200){
           this.lstcomments = data.obj;
           console.log(this.lstcomments);
-          if (data.message === "Record Not Found ") {
-            alert("No Receipt Found for this date...")
-            this.lstcomments = null;
           }
+          else if (data.code==400){
+            alert(data.message)
+          }
+          // if (data.message === "Record Not Found ") {
+          //   alert("No Receipt Found for this date...")
+          //   this.lstcomments = null;
+          // }
         });
+      }
+      if (Number(sessionStorage.getItem('deptId'))==4){
+        // alert(this.locId)
+        this.service.SearchRcptByCustNo(custActNo, sessionStorage.getItem('ouId'), this.locId, sessionStorage.getItem('deptId'))
+        .subscribe(
+          data => {
+            if (data.code==200){
+            this.lstcomments = data.obj;
+            console.log(this.lstcomments);
+          }
+          else if (data.code==400){
+            alert(data.message);
+          }
+            // if (data.message === "Record Not Found ") {
+            //   alert("No Receipt Found for this date...")
+            //   this.lstcomments = null;
+            // }
+          });
+      }
   }
 
 
@@ -1221,7 +1258,20 @@ if(this.deptId==2){
     return revDays;
   }
 
-
+  unApplyReceipt(receiptNumber){
+    // alert(receiptNumber)
+    this.service.unappliedReceipt(receiptNumber)
+    .subscribe(
+      data => {
+        if (data.code==200){
+          alert(data.message);
+          this.isVisibleUnApplyReceipt=false;
+        }
+        else if(data.code==400){
+          alert(data.message)
+        }
+      })
+  }
 
   SelectReceipt(receiptNumber: any) {
     // alert('selectReceiptMethod'+'---'+receiptNumber)
@@ -1262,14 +1312,12 @@ if(this.deptId==2){
             this.GetCustomerSiteDetails(data.obj.oePayList[0].customerId)
 
             this.showRefundHist = false;
+          
             if (data.obj.oePayList[0].status === 'REFUND') {
               this.showReasonDetails = false; this.enableCancelButton = false; this.enableApplyButton = false;
               this.showRefundHist = true;
               return;
             }
-
-
-
             if (data.obj.oePayList[0].reversalReasonCode != null) {
               if (data.obj.oePayList[0].reversalReasonCode === 'ChqBounce') { this.chqBounceStatus = true; }
               this.printButton = false;
@@ -1383,7 +1431,13 @@ if(this.deptId==2){
               return;
             }
 
-
+            // alert(data.obj.oePayList[0].status);
+            if (data.obj.oePayList[0].status=='APPLIED'){
+              // alert(Number(sessionStorage.getItem('deptId')))
+              if (Number(sessionStorage.getItem('deptId'))==4){
+              this.isVisibleUnApplyReceipt=true;
+            }
+            }
 
             if (data.obj.oePayList[0].reversalReasonCode != null) {
               if (data.obj.oePayList[0].reversalReasonCode === 'ChqBounce') { this.chqBounceStatus = true; }
@@ -1520,10 +1574,10 @@ if(this.deptId==2){
     var patch = this.paymentArForm.get('invLine') as FormArray;
     var invLineArr = this.paymentArForm.get('invLine').value;
     var e = true;
-    alert("this.lstinvoices.length :" + this.lstinvoices.length);
+    // alert("this.lstinvoices.length :" + this.lstinvoices.length);
 
     for (let i = 0; i < this.lstinvoices.length; i++) {
-      alert("i1=" + i)
+      // alert("i1=" + i)
       if (invLineArr[i].applyrcptFlag === true) {
         patch.controls[i].patchValue({ applyrcptFlag: '' })
         this.applyReceiptFlag(e, i);
@@ -1973,7 +2027,7 @@ if(this.deptId==2){
           console.log(this.lstCustomer);
         }
       );
-    alert(this.lstCustomer);
+    // alert(this.lstCustomer);
   }
 
 
@@ -2799,10 +2853,34 @@ if(this.deptId==2){
       return;
     }
 
+    if (formValue.refType ==='ReIns-Renewal') {
+
+          if(formValue.referenceNo == null || formValue.referenceNo == undefined || formValue.referenceNo.trim() == '') {
+            alert("POLICY NO : Should not be null.");
+            this.checkValidation = false;
+            return;
+          }
+
+        // alert ("Policy Date :" +formValue.referenceDate);
+        if (formValue.referenceDate == null || formValue.referenceDate==undefined || formValue.referenceDate.trim() == '') {
+          alert("POLICY DATE : Policy date shouldnot be null.");
+          this.checkValidation = false;
+          return;
+        }
+        if (formValue.policyTerm == null || formValue.policyTerm==undefined || formValue.policyTerm<=0) {
+          alert("POLICY TERM : Please enter valid Policy term (period))");
+          this.checkValidation = false;
+          return;
+        }
+    }
+
     if (formValue.refType != 'Advance' && (formValue.referenceNo == null || formValue.referenceNo.trim() == '')) {
       alert("REFERENCE NO\nRef.number to be entered for Non-Advance Receipts");
+      this.checkValidation = false;
       return;
     }
+
+
 
     if (formValue.payType === undefined || formValue.payType === null) {
       this.checkValidation = false;
@@ -2838,7 +2916,7 @@ if(this.deptId==2){
           return;
         }
 
-        if (formValue.checkDate === undefined || formValue.checkDate === null) {
+        if (formValue.checkDate === undefined || formValue.checkDate === null || formValue.checkDate.trim() == '') {
           this.checkValidation = false;
           alert("CHECK/DD/CRD/NEF DATE: Please Select Chq/dd.. Date....");
           return;

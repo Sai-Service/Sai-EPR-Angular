@@ -29,6 +29,39 @@ export class glTbReport
 
 }
 
+export class glTbReport_L1
+{
+  srlNo:number;
+  divName: string;
+  ouName:string;
+  natAccount:string;
+  natAccountDesc: string;
+  glDocNo: string;
+  referenceNo: string;
+  glcodeDescription: string;
+  jeCategory: string;
+  jeSource: string;
+  jeDescription: string;
+  debitAmt: number;
+  creditAmt: number;
+  postedDate: string;
+  
+  printDateTime:string;
+
+}
+
+export class glTbReport_L2 
+{
+  srlNo:number;
+  divName: string;
+  ouName:string;
+  natAccount:string;
+  natAccountDesc: string;
+ 
+  printDateTime:string;
+
+}
+
 
 @Component({
   selector: 'app-gl-trial-balance',
@@ -49,6 +82,7 @@ export class GlTrialBalanceComponent implements OnInit {
   periodNameList: any=[];
   lstTBList :any;
   lstTBActLineDet :any;
+  lstTBActLineDet1 :any;
 
   loginName: string;
   loginArray: string;
@@ -70,6 +104,10 @@ export class GlTrialBalanceComponent implements OnInit {
   natActDesc:string;
   glDebitAmt :number;
   glCreditAmt :number;
+
+  glSegment:string;
+  glDocNum:string;
+  glDocRefNum:string;
 
   exportExcel=false;
 
@@ -99,6 +137,10 @@ export class GlTrialBalanceComponent implements OnInit {
       natActDesc:[],
       glDebitAmt :[],
       glCreditAmt :[],
+
+      glSegment:[],
+      glDocNum:[],
+      glDocRefNum:[],
      
     })
   }
@@ -189,13 +231,42 @@ export class GlTrialBalanceComponent implements OnInit {
   });
 }
 
+
+SelectTbAct1(segment,glDocNum,refNum){
+
+  // var prdName =this.glTrialBalanceForm.get("periodName").value;
+  // var opuCode= this.locCode.substring(0,4)
+
+  this.glDocNum=glDocNum;
+  this.glDocRefNum=refNum;
+  this.glSegment=segment;
+
+  if(segment==null || segment==undefined || segment.trim()=='') {
+    alert ("Please Select Period..."); return;
+  }
+
+  
+  this.lstTBActLineDet1=null;
+   
+  this.service.getGLTrialBalanceActSelect1(segment, glDocNum,refNum)
+    .subscribe(
+      data => {
+        this.lstTBActLineDet1 = data.obj;
+        if(this.lstTBActLineDet1.length===0) {
+          alert (glDocNum +" - " + "Line Details Not Found.");
+          return;
+        }
+        console.log(this.lstTBActLineDet1);
+  });
+}
+
         
  glTbHeaderList = [[
   'SrlNo',
   'DIVISION',
   'OPERATING UNIT',
   'NATURAL ACCOUNT',
-  'ACCOUNT DESCIEPTION',
+  'ACCOUNT DESCREPTION',
   'OPENING BALANCE',
   'DEBITS',
   'CREDITS',
@@ -203,6 +274,37 @@ export class GlTrialBalanceComponent implements OnInit {
   // 'PRINT DATE TIME',
 ]]
 
+glTbHeaderList_L1 = [[
+  'SrlNo',
+  'DIVISION',
+  'OPERATING UNIT',
+  'NATURAL ACCOUNT',
+  'ACCOUNT DESCIEPTION',
+  'DOCUMENT NO',
+  'REFERENCE NO',
+  'GL CODE',
+  'CATEGORY',
+  'SOURCE',
+  'DESCREPTION',
+  'DEBIT AMT',
+  'CREDIT AMT',
+  'POSTED DATE',
+
+  // 'PRINT DATE TIME',
+]]
+
+glTbHeaderList_L2 = [[
+  'SrlNo',
+  'DIVISION',
+  'OPERATING UNIT',
+  'NATURAL ACCOUNT',
+  'ACCOUNT DESCREPTION',
+  'OPENING BALANCE',
+  'DEBITS',
+  'CREDITS',
+  'CLOSING BALANCE',
+  // 'PRINT DATE TIME',
+]]
 
  glTbReportExport() {
   const wb: xlsx.WorkBook = xlsx.utils.book_new();
@@ -252,6 +354,49 @@ glTbReport2(){
     //  this.dataDisplay = ''
     //  this.isDisabled1=false;
    })      
+ }
+
+
+ glTbReportExport_Level1(){
+
+  const wb: xlsx.WorkBook = xlsx.utils.book_new();
+  const ws: xlsx.WorkSheet = xlsx.utils.json_to_sheet([]);
+  xlsx.utils.sheet_add_aoa(ws, this.glTbHeaderList_L1);
+  var orList = this.lstTBActLineDet
+  var xlOrdList: any = [];
+  // var ordLn = new glTbReport();
+ 
+  for (let i = 0; i < orList.length; i++) {
+    var ordLn = new  glTbReport_L1();
+    ordLn.srlNo=i+1;
+    ordLn.divName = sessionStorage.getItem('divisionName');
+    ordLn.ouName = sessionStorage.getItem('ouName');
+    ordLn.natAccount=this.natAccount;
+    ordLn.natAccountDesc=this.natActDesc;
+    ordLn.glDocNo = orList[i].glDocNo.toString();
+    ordLn.referenceNo = orList[i].referenceNo.toString();
+    ordLn.glcodeDescription = orList[i].glcodeDescription;
+    ordLn.jeCategory = orList[i].jeCategory;
+    ordLn.jeSource = orList[i].jeSource;
+    ordLn.jeDescription = orList[i].jeDescription;
+    ordLn.debitAmt = orList[i].debitAmt;
+    ordLn.creditAmt = orList[i].creditAmt;
+    ordLn.postedDate = this.pipe.transform(orList[i].postedDate, 'dd-MM-y hh:mm:ss a');  
+    xlOrdList.push(ordLn);
+   }
+   
+  var printdateTime =this.pipe.transform(Date.now(), 'ddMMyThhmmssa');  
+  var flName ='gltbreportDetails-'+printdateTime+'.xlsx'
+  xlsx.utils.sheet_add_json(ws, xlOrdList, { origin: 'A2', skipHeader: true });
+  xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
+  // xlsx.writeFile(wb, 'gltbreport.xlsx');
+  xlsx.writeFile(wb, flName);
+  
+
+ }
+
+ glTbReportExport_Level2(){
+   alert ("Not Available...WIP")
  }
 
 

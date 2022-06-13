@@ -148,7 +148,7 @@ export class SalesOrderProformaComponent implements OnInit {
   public mainModelList: Array<string>[];
   public VariantSearch: Array<string>[];
   public ColourSearch: any;
-
+  DisplayfinanceSelectionYes=false;
   displayVehicleDetails = true;
 
   @ViewChild('aForm') aForm: ElementRef;
@@ -166,6 +166,10 @@ export class SalesOrderProformaComponent implements OnInit {
   variant: string;
   color: string;
   basicValue: number;
+  financeyn:string;
+  public financeTypeList: any;
+  public financerNameList: any = [];
+  attribute4:string;
 
   constructor(private fb: FormBuilder, private location1: Location, private service: MasterService, private orderManagementService: OrderManagementService) {
     this.CounterSaleOrderBookingForm = fb.group({
@@ -231,6 +235,8 @@ export class SalesOrderProformaComponent implements OnInit {
       variant: [],
       color: [],
       basicValue: [],
+      financeyn:[],
+      attribute4:[],
       oeOrderLinesAllList: this.fb.array([this.orderlineDetailsGroup()]),
     })
   }
@@ -269,7 +275,7 @@ export class SalesOrderProformaComponent implements OnInit {
       onHandQty: [''],
       id: [''],
       resveQty: [''],
-      frmLocatorId: ['']
+      frmLocatorId: [''],
     })
   }
 
@@ -316,6 +322,14 @@ export class SalesOrderProformaComponent implements OnInit {
         data1 => {
           this.createOrderTypeList = data1;
           console.log(this.createOrderTypeList);
+        }
+      );
+
+      this.orderManagementService.getFinTypeSearch1()
+      .subscribe(
+        data => {
+          this.financeTypeList = data;
+          console.log(this.financeTypeList);
         }
       );
 
@@ -1197,4 +1211,24 @@ export class SalesOrderProformaComponent implements OnInit {
       }
     }
   }
+
+  financeSelectionYes(event: any) {
+    // alert(event.target.value)
+    if (event.target.value != 'None') {
+      this.DisplayfinanceSelectionYes = false;
+      // this.DisplayfinanceSelectionYes1 = false;
+      this.orderManagementService.finananceList(event.target.value, sessionStorage.getItem('divisionId'))
+        .subscribe(
+          data => {
+            this.financerNameList = data;
+            console.log(this.financerNameList);
+          }
+        );
+    }
+    if (event.target.value === 'None') {
+      this.DisplayfinanceSelectionYes=true;
+     this.CounterSaleOrderBookingForm.patchValue({attribute4:'CASH'})
+    }
+  }
+
 }

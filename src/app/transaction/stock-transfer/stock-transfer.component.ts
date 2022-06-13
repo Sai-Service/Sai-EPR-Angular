@@ -115,6 +115,7 @@ export class StockTransferComponent implements OnInit {
   lstcomment: any;
   remarks: string;
   segment: string;
+  vin:string;
   locator: string;
   transCost:number;
   lineNumber:number;
@@ -132,6 +133,7 @@ export class StockTransferComponent implements OnInit {
   public itemMap = new Map<string, StockTransferRow >();
   totVal:number;
   transferSubInv:string;
+  isVisibleVinNumber:boolean=false;
   // public itemMap3 = new Map<string, StockTransferRow>();
 
   @ViewChild("myinput") myInputField: ElementRef;
@@ -184,6 +186,7 @@ export class StockTransferComponent implements OnInit {
       primaryQty: ['',[Validators.required]],
       locatorId: [''],
       segment: [''],
+      vin:[''],
       locator: [''],
       transCost: [],
       avlqty:[''],
@@ -282,6 +285,7 @@ export class StockTransferComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    $("#wrapper").toggleClass("toggled");
     this.locId = Number(sessionStorage.getItem('locId'));
     this.deptId = Number(sessionStorage.getItem('dept'));
     this.divisionId = Number(sessionStorage.getItem('divisionId'));
@@ -291,6 +295,13 @@ export class StockTransferComponent implements OnInit {
     // this.transCost=0.00;
     // alert(this.deptName+'Depart');
     // alert(this.locId+'locID'+Number(sessionStorage.getItem('locId')));
+
+    if (Number(sessionStorage.getItem('deptId'))==1){
+      this.isVisibleVinNumber=true;
+    }
+    else{
+      this.isVisibleVinNumber=false;
+    }
 
     this.service.searchall(this.locId,this.divisionId,this.deptId).subscribe(
       data=>{
@@ -367,7 +378,8 @@ export class StockTransferComponent implements OnInit {
 
   }
   onOptionItemDetails(event: any, i) {
-    // alert(event+'Item');
+    // alert(event.target.value+'Item');
+    var event=event.target.value;
     if(this.currentOp==='SEARCH'){
       return;
     }
@@ -382,7 +394,9 @@ export class StockTransferComponent implements OnInit {
    var trxLnArr1 = this.stockTranferForm.get('trxLinesList') as FormArray;
   //  trxLnArr1.controls[i].patchValue({itemId:select1.itemId})
     var itemId =select1.itemId;
-    trxLnArr1.controls[i].patchValue({itemId:itemId})
+    var vin=select1.vin;
+    trxLnArr1.controls[i].patchValue({itemId:itemId});
+    trxLnArr1.controls[i].patchValue({vin:vin});
   //  alert( itemId);
         // trxLnArr1.controls[i].patchValue({locatorId:this.getfrmSubLoc.locatorId})
     this.service.getItemDetail(select1.itemId).subscribe 
@@ -414,7 +428,7 @@ export class StockTransferComponent implements OnInit {
 
             if(getfrmSubLoc.length==1)
             {
-              // alert('if---------');
+              //  alert('if---------getfrmSubLoc.length'+'---'+ getfrmSubLoc.length);
             // trxLnArr1.controls[i].patchValue({frmLocator:selLocator[0].segmentName});
             trxLnArr1.controls[i].patchValue({frmLocator:selLocator[0].locatorId});
             trxLnArr1.controls[i].patchValue({locatorId:selLocator[0].locatorId});
@@ -423,6 +437,7 @@ export class StockTransferComponent implements OnInit {
             }
             else
             {
+              // alert('elseif---------getfrmSubLoc.length'+'---'+ getfrmSubLoc.length);
              // this.getfrmSubLoc=data;;
            //  trxLnArr2.controls[i].patchValue({onHandId:getfrmSubLoc});
            trxLnArr1.controls[i].patchValue({frmLocator:selLocator[0].segmentName});
@@ -737,7 +752,7 @@ deleteReserveLinewise(i, itemid, transferId) {
     var toSub=event.target.value
     var loc=this.stockTranferForm.get('transferOrgId').value;
   // var issTo=this.stockTranferForm.get('issueTo').value;
-  alert(event)
+  // alert(event)
   var selData=this.tosubInvCode.find(d=>d.subInventoryCode===toSub)
   
   this.service.issueByList(loc, selData.deptId, this.divisionId).subscribe

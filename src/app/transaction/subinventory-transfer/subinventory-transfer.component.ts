@@ -698,7 +698,6 @@ export class SubinventoryTransferComponent implements OnInit {
   }
 
   newSubtrf() {
-
     if (this.SubinventoryTransferForm.valid) {
       const formValue: IsubinventoryTransfer =
         this.SubinventoryTransferForm.value;
@@ -758,7 +757,7 @@ export class SubinventoryTransferComponent implements OnInit {
           //  var obj=res;
           // sessionStorage.setItem('shipmentNumber',obj[0].shipmentNumber);
           if (res.code === 200) {
-            alert('Record inserted Successfully');
+            alert(res.message);
             this.isVisiblenewSubtrf=false;
             this.isVisibledownloadSubGatePass=true;
             // this.shipmentNumber =res.obj.shipmentNumber;
@@ -914,8 +913,9 @@ export class SubinventoryTransferComponent implements OnInit {
 
   downloadSubGatePass() {
     const fileName = 'download.pdf';
-    alert(this.SubNo)
-      this.service.downloadSubGatePassFn(this.SubNo)
+   var shipmentNumber = this.SubinventoryTransferForm.get('shipmentNumber').value;
+    alert(shipmentNumber)
+      this.service.downloadSubGatePassFn(shipmentNumber)
         .subscribe(data => {
           var blob = new Blob([data], { type: 'application/pdf' });
           var url = URL.createObjectURL(blob);

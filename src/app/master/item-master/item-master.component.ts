@@ -1103,7 +1103,7 @@ export class ItemMasterComponent implements OnInit {
   }
   resetItemMast() { window.location.reload(); }
   closeItemMast() { this.router.navigate(['admin']); }
-  // searchItemMast(){}
+ 
   updateItemMast() {
     const formValue: IItemMaster = this.itemMasterForm.value;
     this.service.UpdateItemMasterById(formValue).subscribe((res: any) => {

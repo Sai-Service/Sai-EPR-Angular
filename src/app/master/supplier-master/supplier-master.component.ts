@@ -73,7 +73,8 @@ interface IsupplierMaster {
   semailId: string;
   screateDebitMemoFlag: string;
   supTdsTyp: string;
-  supTds: string;
+  tdsCompanyType:string;
+  supTdsYN: string;
   sbankName: string;
   sacctNo: string;
   sifscCode: string;
@@ -210,13 +211,15 @@ export class SupplierMasterComponent implements OnInit {
   screateDebitMemoFlag: string;
   displayenable = true;
   supTdsTyp: string;
+  tdsCompanyType:string;
   getTdsType: any;
-  supTds: string;
+  supTdsYN: string;
   sbankName: string;
   sacctNo: string;
   sifscCode: string;
   supNamedata: any;
   supName: string;
+  public tdsSectionList: any = [];
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.supplierMasterForm = fb.group({
@@ -305,7 +308,8 @@ export class SupplierMasterComponent implements OnInit {
       semailId: [],
       screateDebitMemoFlag: [],
       supTdsTyp: [],
-      supTds: ['', [Validators.required]],
+      tdsCompanyType:[],
+      supTdsYN: ['', [Validators.required]],
       sbankName: [],
       sacctNo: [],
       sifscCode: [],
@@ -399,6 +403,14 @@ export class SupplierMasterComponent implements OnInit {
         data => {
           this.locIdList = data;
           console.log(this.locIdList);
+        }
+      );
+
+      this.service.tdsSectionList()
+      .subscribe(
+        data => {
+          this.tdsSectionList = data;
+          console.log(this.tdsSectionList);
         }
       );
   }
@@ -637,7 +649,7 @@ export class SupplierMasterComponent implements OnInit {
     // formValue.address4=(this.supplierMasterForm.get('address4').value).toUpperCase();
     this.service.SupliMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFULLY');
+        alert(res.message);
         this.suppNo = res.obj.suppNo;
         this.searchBySuppCode(this.suppNo);
         this.displayadditional = false;
@@ -708,14 +720,15 @@ export class SupplierMasterComponent implements OnInit {
     //   // alert('In Validation(d) ');
     //   return;
     // }
-    const formValue: IsupplierMaster = this.transDataSupp(this.supplierMasterForm.value);
+    const formValue: IsupplierMaster = this.transDataSupp(this.supplierMasterForm.getRawValue());
+    // formValue.tdsCompanyType=this.supplierMasterForm.get('tdsCompanyType').value;
     this.service.UpdateSupliMasterById(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD UPDATED SUCCESSFULLY');
+        alert(res.message);
         // window.location.reload();
       } else {
         if (res.code === 400) {
-          alert('ERROR OCCOURED IN PROCEESS');
+          alert(res.message+'--'+res.obj);
           this.supplierMasterForm.reset();
         }
       }

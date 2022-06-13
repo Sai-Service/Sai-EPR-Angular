@@ -488,6 +488,7 @@ export class CashBankTransferComponent implements OnInit {
                 this.service.UpdateCashBankTrf(formValue ,docNum).subscribe((res: any) => {
                   if (res.code === 200) {
                     alert('RECORD UPDATED SUCCESSFULLY');
+                    // this.updateButton=false;
                     // window.location.reload();
                     this.updateArReceipt(this.docTrfNo);
                     this.cashBankTransferForm.disable();
@@ -623,10 +624,10 @@ export class CashBankTransferComponent implements OnInit {
 
     SearchByDocNo(mDocNo){
       // alert ("Document Num :" +mDocNo);
-      this.service.getBnkTrfSearchByDocNum(mDocNo)
+      this.service.getBnkTrfSearchByDocNum(mDocNo,sessionStorage.getItem('ouId'))
         .subscribe(
           data => {
-            this.lstcomments = data;
+            this.lstcomments = data.obj;
             console.log(this.lstcomments);
             this.exportExcel=true;
             this.selectdisp=true;
@@ -649,7 +650,7 @@ export class CashBankTransferComponent implements OnInit {
           var frmDt=this.cashBankTransferForm.get('fromDate').value;
           var toDt=this.cashBankTransferForm.get('toDate').value;
             //  alert("SearchByRcptNo-Receipt date : "+ frmDt+","+toDt  );
-          this.service.getBnkTrfSearchByDate(frmDt, toDt)
+          this.service.getBnkTrfSearchByDate(frmDt, toDt,sessionStorage.getItem('ouId'))
             .subscribe(
               data => {
                 this.lstcomments = data;
@@ -759,9 +760,8 @@ export class CashBankTransferComponent implements OnInit {
             var lookupValue1=selectedValue.lookupValue;
             // this.fromAcctDescp=lookupValue1;
             this.transferDescp=selectedValue.lookupValueDesc;
-          
            
-           this.service.getFromAcList(lookupValue1)
+           this.service.getFromAcList(lookupValue1,sessionStorage.getItem('ouId'))
            .subscribe(
              data => {
                this.fromAcctList = data.obj.frmAcList;

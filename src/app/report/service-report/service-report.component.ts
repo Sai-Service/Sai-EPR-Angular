@@ -178,10 +178,10 @@ isVisiblepanelfromtoOuId:boolean=false;
     }
     else if (reportName==='servicePendingVehicle'){
       this.reportName='Service Pending Vehicle Report';
-      this.isVisiblepanelfromtolocation=true;
+      this.isVisiblepanelfromtolocation=false;
       this.isVisiblefromtolocationdepartment=false;
       this.isVisiblegstsaiDebtors=false;
-      this.isVisiblepaneltolocation=false;
+      this.isVisiblepaneltolocation=true;
       this.isVisiblecustomerLedger=false;
       this.isVisibleGSTSaleRegister=false;
       this.panelamcHistrory=false;
@@ -363,6 +363,29 @@ isVisiblepanelfromtoOuId:boolean=false;
       this.isVisibleGSTSaleRegister=false;
       this.panelamcHistrory=false;
       this.isVisiblepanelfromtoOuId=true;
+    }
+
+    else if (reportName=='amcControlReport'){
+      this.reportName='Amc Control Report';
+      this.isVisiblegstsaiDebtors=false;
+      this.isVisiblepanelfromtolocation=false;
+      this.isVisiblefromtolocationdepartment=false;
+      this.isVisiblepaneltolocation=false;
+      this.isVisiblecustomerLedger=false;
+      this.isVisibleGSTSaleRegister=false;
+      this.panelamcHistrory=false;
+      this.isVisiblepanelfromtoOuId=true;
+    }
+    else if (reportName=='fscCouponData'){
+      this.reportName='FSC Coupon Data Report';
+      this.isVisiblegstsaiDebtors=false;
+      this.isVisiblepanelfromtolocation=true;
+      this.isVisiblefromtolocationdepartment=false;
+      this.isVisiblepaneltolocation=false;
+      this.isVisiblecustomerLedger=false;
+      this.isVisibleGSTSaleRegister=false;
+      this.panelamcHistrory=false;
+      this.isVisiblepanelfromtoOuId=false;
     }
   }
 
@@ -798,6 +821,39 @@ isVisiblepanelfromtoOuId:boolean=false;
           this.dataDisplay = ''
         })
     // }
+  }
+  else if (reportName=='Amc Control Report'){
+    const fileName = 'Amc Control Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      this.reportService.amcControlReport(fromDate,toDate,sessionStorage.getItem('ouId'))
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.isDisabled1 = false;
+          this.closeResetButton = true;
+          this.dataDisplay = ''
+        })
+  }
+  else if (reportName=='FSC Coupon Data Report'){
+    const fileName = 'FSC Coupon Data Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    if (Number(sessionStorage.getItem('deptId'))==4){
+      this.reportService.fscCouponData(fromDate,toDate,locId)
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.isDisabled1 = false;
+        this.closeResetButton = true;
+        this.dataDisplay = ''
+      })
+    }
+    else if (Number(sessionStorage.getItem('deptId'))!=4){
+      this.reportService.fscCouponData(fromDate,toDate,sessionStorage.getItem('locId'))
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.isDisabled1 = false;
+        this.closeResetButton = true;
+        this.dataDisplay = ''
+      })
+    }
   }
   }
 

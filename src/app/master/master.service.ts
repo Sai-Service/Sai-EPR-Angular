@@ -2694,6 +2694,8 @@ OrderCategoryList(): Observable<any> {
       return this.http.get(this.ServerUrl + `/arCashReceipts/receipt/${rcptNumber}?locId=`+sessionStorage.getItem('locId'));
     }
 
+   
+
     getArReceiptDetailsByRcptNoAndlocDeptIDAccou(rcptNumber,locId): Observable<any> {
       return this.http.get(this.ServerUrl + `/arCashReceipts/receipt/${rcptNumber}?locId=`+locId);
     }
@@ -3010,6 +3012,8 @@ bulkPickTickCSV(formData: FormData ,priceListName:string,taxCategoryName:string,
       const url = (this.ServerUrl + `/EwScheme`);
       return this.http.put(url, EwSchemeMasterRecord, options);
     }
+
+
 
     RegNoListFN() : Observable<any> {
       return this.http.get(this.ServerUrl +`/itemMst/regList/1`);
@@ -3393,6 +3397,14 @@ UpdateVariantMaster(VariantMasterRecord) {
   return this.http.put(url, VariantMasterRecord, options);
 }
 
+unappliedReceipt(rcptNumber): Observable<any> {
+  const options = {
+    headers: this.headers
+  };
+  const url = (this.ServerUrl + `/arCashReceipts/unapplyRcptManually?receiptNumber=${rcptNumber}`);
+  return this.http.put(url, rcptNumber, options);
+}
+
 mcpItemList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/McpItemMst');
 }
@@ -3711,9 +3723,13 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
     }
 
 
-      getFromAcList(trfType): Observable<any> {
-         return this.http.get(this.ServerUrl +`/AccountTrf/AcctList/${trfType}`);
+      getFromAcList(trfType,ouId): Observable<any> {
+        //  return this.http.get(this.ServerUrl +`/AccountTrf/AcctList/${trfType}`);
+         return this.http.get(this.ServerUrl+`/AccountTrf/AcctListNew?tranType=${trfType}&ouId=${ouId}`);
+
         //  http://localhost:8081/AccountTrf/AcctList/CT
+
+        // http://localhost:8081/AccountTrf/AcctListNew?tranType=BT&ouId=21
        }
 
       getPayRecAccountCode(methodId,ouId,divId,locId): Observable<any> {
@@ -3801,14 +3817,19 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
 
         }
 
-        getBnkTrfSearchByDocNum(docNo): Observable<any> {
-            return this.http.get(this.ServerUrl+`/AccountTrf/trfDocSearch/${docNo}`);
+        getBnkTrfSearchByDocNum(docNo,ouId): Observable<any> {
+            // return this.http.get(this.ServerUrl+`/AccountTrf/trfDocSearch/${docNo}`);
+            return this.http.get(this.ServerUrl+`/AccountTrf/trfDocSearch?docTrfNo=${docNo}&ouId=${ouId}`);
+
             // http://localhost:8081/AccountTrf/trfDocSearch/2125210210009
+            // http://localhost:8081/AccountTrf/trfDocSearch?docTrfNo=22221027000064&ouId=21
         }
      
-        getBnkTrfSearchByDate(fDate,tDate): Observable<any> {
-            return this.http.get(this.ServerUrl+`/AccountTrf/TrfDtList?frmDate=${fDate}&toDate=${tDate}`);
+        getBnkTrfSearchByDate(fDate,tDate,ouId): Observable<any> {
+            return this.http.get(this.ServerUrl+`/AccountTrf/TrfDtList?frmDate=${fDate}&toDate=${tDate}&ouId=${ouId}`);
             // http://localhost:8081/AccountTrf/TrfDtList?frmDate=2021-10-25&toDate=2021-10-25
+            // http://localhost:8081/AccountTrf/TrfDtList?frmDate=2022-04-01&toDate=2022-06-10&ouId=21
+
         }
 
         getBnkChqListPosted(docNumber): Observable<any> {
@@ -3954,6 +3975,11 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
       getGLTrialBalanceActSelect(ou,prdName,natAc): Observable<any> {
       return this.http.get(this.ServerUrl + `/glHeader/drillDownGLWise?segment1=${ou}&naturalAccount=${natAc}&periodName=${prdName}`);
      }
+
+     getGLTrialBalanceActSelect1(seg,docNum,refNo): Observable<any> {
+      return this.http.get(this.ServerUrl + `/glHeader/drillDownTypeWise?segment1=${seg}&docSeqValue=${docNum}&docSequenceValue=${refNo}`);
+      // http://localhost:8081/glHeader/drillDownTypeWise?segment1=Receipts Reversal&docSeqValue=2222205700070&docSequenceValue=222210210901133
+    }
 
 
 

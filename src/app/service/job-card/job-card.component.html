@@ -1885,17 +1885,13 @@
                                                                 formControlName="validTillDt">
                                                         </td>
 
-                                                        <!-- <td style="width: 15%" class="LabelFontStyle">
-                                                            Invoice&nbsp;Number&nbsp;:</td>
-                                                        <td>
-                                                            <input type="text" disabled class="form-control"
-                                                            formControlName="arInvNum" value="{{arInvNum}}"> -->
-
-                                                        <!-- </td> -->
+                                                        <td style="width: 15%" class="LabelFontStyle"> Bill&nbsp;Date&nbsp;:</td>
+                                                        <td> <input type="date" disabled class="form-control" formControlName="arInvDate"  value="{{arInvDate}}" style="font-weight: bolder;"> </td> 
+                                                     
 
                                                     </tr>
 
-                                                       <tr>
+                                                       <!-- <tr>
    
                                                            <td style="width: 15%" class="LabelFontStyle"> Bill&nbsp;Date&nbsp;:</td>
                                                            <td> <input type="date" disabled class="form-control" formControlName="arInvDate"  value="{{arInvDate}}" style="font-weight: bolder;"> </td> 
@@ -1905,7 +1901,7 @@
                                                      
                                                            <td style="width: 15%" class="LabelFontStyle"> Addon&nbsp;Bill&nbsp;No&nbsp;:</td>
                                                             <td> <input type="text" disabled class="form-control" formControlName="addonInvoiceNo"  value="{{addonInvoiceNo}}" style="font-weight: bolder;"> </td> 
-                                                        </tr>
+                                                        </tr> -->
                                                       
 
                                                 </fieldset>
@@ -1942,7 +1938,7 @@
                                                                                     <td>
                                                                                         <input disabled type="text" class="form-control" placeholder=""
                                                                                             formControlName="accountNo" [(ngModel)]="accountNo"
-                                                                                            (keydown.tab)="accountNoSearchfn1(accountNo)"  style="width: 120px;" >
+                                                                                            (keydown.tab)="accountNoSearchfn1(accountNo)"   >
                                                                                           
                                                                                         <input type="text" hidden formControlName="customerId">
                                                                                     </td>
@@ -1972,7 +1968,7 @@
                                                                                                     disabled
                                                                                                     class="form-control"
                                                                                                     placeholder=""
-                                                                                                    formControlName="contact1" style="width: 120px;" >
+                                                                                                    formControlName="contact1"  >
                                                                                             </td>
                                                                                             <!-- <td style="width: 15%"
                                                                                                 class="LabelFontStyle">
@@ -2002,7 +1998,7 @@
                                                                                             <td style="width: 15%" class="LabelFontStyle">
                                                                                                 &nbsp;Type:&nbsp;</td>
                                                                                             <td><input type="text" disabled formControlName="custType"
-                                                                                                    [(ngModel)]="custType" class="form-control" style="width: 120px;" >
+                                                                                                    [(ngModel)]="custType" class="form-control"  >
                                                                                            </td>
                                                                                         </tr>
 
@@ -2026,17 +2022,20 @@
                                                                                         <td style="width: 15%" class="LabelFontStyle"> Email:&nbsp;</td>
                                                                                         <td>
                                                                                             <input type="text"   disabled   class="form-control"  placeholder=""
-                                                                                                formControlName="emailId" style="width: 250px;">
+                                                                                                formControlName="emailId" style="width: 300px;">
                                                                                         </td>
+                                                                                        <td style="width: 15%" class="LabelFontStyle"> Bill&nbsp;Date&nbsp;:</td>
+                                                                                        <td> <input type="date" disabled class="form-control" formControlName="arInvDate"  value="{{arInvDate}}"  style="font-weight: bolder;"> </td> 
+                                                                                
 
                                                                                        
                                                                                     </tr>
-                                                                                        <tr>
+                                                                                        <!-- <tr>
                                                                                             <td style="width: 15%" class="LabelFontStyle">Bill&nbsp;No&nbsp;:</td>
                                                                                             <td> <input type="text" disabled class="form-control" formControlName="custInvoiceNo"  value="{{custInvoiceNo}}" style="font-weight: bolder;" > </td> 
                                                                                             <td style="width: 15%" class="LabelFontStyle"> Bill&nbsp;Date&nbsp;:</td>
                                                                                             <td> <input type="date" disabled class="form-control" formControlName="arInvDate"  value="{{arInvDate}}" style="width: 120px;" style="font-weight: bolder;"> </td> 
-                                                                                        </tr>
+                                                                                        </tr> -->
 
                                                                                       
                                                                              </table>
@@ -2103,7 +2102,7 @@
                                                                                 disabled
                                                                                 formControlName="bEmail"
                                                                                 class="form-control"
-                                                                                placeholder="" style="width: 250px;" >
+                                                                                placeholder="" style="width: 300px;" >
                                                                               
                                                                         </td>
                                                                           
@@ -2121,14 +2120,14 @@
 
 
                                                                         </tr>
-                                                                        <tr>
+                                                                        <!-- <tr>
                                                                           
                                                                             <td style="width: 15%" class="LabelFontStyle">Bill&nbsp;No&nbsp;:</td>
                                                                             <td> <input type="text" disabled class="form-control" formControlName="insInvoiceNo"  value="{{insInvoiceNo}}" style="font-weight: bolder;" > </td> 
                                                                             <td style="width: 15%" class="LabelFontStyle"> Bill&nbsp;Date&nbsp;:</td>
                                                                             <td> <input type="date" disabled class="form-control" formControlName="arInvDate"  value="{{arInvDate}}" style="width: 120px;" style="font-weight: bolder;"> </td> 
                                                                          
-                                                                        </tr>
+                                                                        </tr> -->
                                                                       
                                                                      
                                                                     </table>
@@ -2172,17 +2171,16 @@
                                                             <thead>
                                                                 <tr class="GridHeader">
                                                                    <th scope="col">Billable Type</th>
-                                                                  
+                                                                   <th scope="col" style="text-align: left;">Bill No&nbsp;&nbsp;</th>
+
                                                                     <th scope="col" style="text-align: right;">Actual Labour&nbsp;&nbsp;</th>
-                                                                    <th scope="col" style="text-align: left;">Disc Type</th>
-                                                                    <th scope="col" style="text-align: right;">Lab Dis%</th>
+                                                                    <!-- <th scope="col" style="text-align: right;">Lab Dis%</th> -->
                                                                     <th scope="col" style="text-align: right;">Labour Disount&nbsp;&nbsp;</th>
                                                                     <th scope="col" style="text-align: right;">Labour Taxable&nbsp;&nbsp;</th>
                                                                     <th scope="col" style="text-align: right;">Labour Tax Amt&nbsp;&nbsp;</th>
                                                                     <th scope="col" style="text-align: right;">Labour Total&nbsp;&nbsp;</th>
                                                                     <th scope="col" style="text-align: right;">Actual Material&nbsp;&nbsp;</th>
-                                                                    <th scope="col" style="text-align: left;">Disc Type</th>
-                                                                    <th scope="col" style="text-align: right;">Mat Dis%</th>
+                                                                    <!-- <th scope="col" style="text-align: right;">Mat Dis%</th>    -->
                                                                     <th scope="col" style="text-align: right;">Material Disount&nbsp;&nbsp;</th>
                                                                     <th scope="col" style="text-align: right;">Material Taxable&nbsp;&nbsp;</th>
                                                                     <th scope="col" style="text-align: right;">Material Tax&nbsp;&nbsp;</th>
@@ -2196,240 +2194,109 @@
                                                                 <tr class="ItemStyle" style="text-decoration:none;">
 
                                                                     <td style="width: 10em;text-align: center;" class="LabelFontStyle" >Customer&nbsp;</td>
+                                                                    <div *ngIf="showBodyshopCustomer; then bsBill; else srBill"></div>
+                                                                    <ng-template #srBill>
+                                                                        <td><input disabled type="text" formControlName="arInvNum"  [(ngValue)]="arInvNum" value={{arInvNum}}  style="width: 9em;font-weight: bold;font-size: small;" ></td>
+                                                                    </ng-template>
+                                                                    <ng-template #bsBill>
+                                                                        <td><input disabled type="text" formControlName="custInvoiceNo" [(ngValue)]="custInvoiceNo" value="{{custInvoiceNo}}"  style="width: 9em;font-weight: bold;font-size: small;" ></td>
+                                                                    </ng-template>
+
                                                                     <td><input disabled type="number" formControlName="labBasicAmt"   style="width: 7em;font-weight: bold;font-size: small;text-align: right;" ></td>
-                                                                 
+                                                                    
                                                                     <div *ngIf="showServiceCustomer ;then sr1; else sr2"></div>
                                                                     <ng-template #sr1>
-                                                                    <td>
-                                                                        <select  disabled formControlName="disTypeLab" value={{disTypeLab}} style="width: 5em;font-weight: bold;font-size: small;"
-                                                                            id="disTypeLab" class="form-control"
-                                                                            (ngModelChange)='onOptionsDisTypeLabSelected($event,"customer")'>
-                                                                            <option >--Select--</option>
-                                                                            <option *ngFor="let sc of  DisTypeMatList">
-                                                                                {{sc.model}}
-                                                                            </option>
-                                                                        </select>
-                                                                    </td>
-
-                                                                    <div *ngIf="showLabdisP ;then sdp1; else sdp2"></div>
-                                                                    <ng-template #sdp1>
-                                                                    <td><select   formControlName="labDiscountPer" 
-                                                                            id="labDiscountPer" class="form-control" style="width: 4em;font-weight: bold;font-size: small;"
-                                                                            (ngModelChange)="labDiscountPerCal($event,1)">
-                                                                            <!-- <option>--Select--</option> -->
-                                                                            <option >0</option>
-                                                                            <option
-                                                                                *ngFor="let sc of  labDiscountPerList" [value]="sc.code" >
-                                                                                {{sc.code}}
-                                                                            </option>
-                                                                        </select></td>
-                                                                    </ng-template>
-                                                                    <ng-template #sdp2>
-                                                                        <td><input  disabled type="number"   min="0"     formControlName="labDiscountPer" class="form-control"  style="width: 4em;font-weight: bold;font-size: small;"></td>
-                                                                    </ng-template>
-
-                                                                    <div *ngIf="showLabDisCol ;then sd1; else sd2"></div>
-                                                                    <ng-template #sd1>
-                                                                         <td><input  type="number"   min="0"     formControlName="labDiscount" class="form-control" (change)="labDiscountAmtCal($event,1)" style="width: 7em;font-weight: bold;font-size: small;"></td>
-                                                                    </ng-template>
-                                                                    <ng-template #sd2>
-                                                                         <td><input disabled type="number"   min="0"  formControlName="labDiscount" class="form-control"  style="width: 7em;font-weight: bold;font-size: small;"></td>
-                                                                    </ng-template>
-
+                                                                        <!-- <td><input  disabled type="number"   min="0"     formControlName="labDiscountPer"  class="form-control"  style="width: 4em;font-weight: bold;font-size: small;"></td> -->
+                                                                        <td><input disabled  type="number"   min="0"     formControlName="labDiscount" class="form-control" (change)="labDiscountAmtCal($event,1)" style="width: 7em;font-weight: bold;font-size: small;"></td>
                                                                     </ng-template>
                                                                     <ng-template #sr2>
-                                                                        <td><input disabled type="text"      formControlName="disTypeLab" class="form-control"  style="width: 5em;font-weight: bold;font-size: small;"></td>
-                                                                        <td><input disabled type="number"   min="0"  formControlName="labDiscountPer" class="form-control"  style="width: 4em;font-weight: bold;font-size: small;"></td>
+                                                                        <!-- <td><input disabled type="number"   min="0"  formControlName="labDiscountPer"  class="form-control"  style="width: 4em;font-weight: bold;font-size: small;"></td> -->
                                                                         <td><input disabled type="number"   min="0"  formControlName="labDiscount" class="form-control"  style="width: 7em;font-weight: bold;font-size: small;"></td>
                                                                     
-                                                                    </ng-template>
-
+                                                                    </ng-template>  
                                                                     
-
-                                                                    <td><input disabled type="number" min="0" formControlName="labTaxableAmt"  style="width: 7em;font-weight: bold;font-size: small;"    ></td>
-                                                                    <td><input disabled type="number" min="0" formControlName="labTotTaxAmt"  style="width: 7em;font-weight: bold;font-size: small;" ></td>
+                                                                    <td><input disabled type="number" min="0"  formControlName="labTaxableAmt"  style="width: 7em;font-weight: bold;font-size: small;"    ></td>
+                                                                    <td><input disabled type="number" min="0"  formControlName="labTotTaxAmt"  style="width: 7em;font-weight: bold;font-size: small;" ></td>
                                                                     <td><input disabled type="number" min="0"  formControlName="labTotAmt" style="width: 7em;font-weight: bold;font-size: small;"></td>
+                                                                   
+                                                                    
                                                                     <td><input disabled type="number" formControlName="matBasicAmt" style="width: 7em;font-weight: bold;font-size: small;text-align: right;"></td>
                                                                     
                                                                     <div *ngIf="showServiceCustomer ;then sr11; else sr21"></div>
                                                                     <ng-template #sr11>
-                                                                        <td>
-                                                                            <select disabled  formControlName="disTypeMat" value={{disTypeMat}} style="width: 5em;font-weight: bold;font-size: small;"
-                                                                                id="disTypeMat" class="form-control"
-                                                                                (ngModelChange)='onOptionsDisTypeMatSelected($event,"customer")'>
-                                                                                <option >--Select--</option>
-                                                                                <option *ngFor="let sc of  DisTypeMatList">
-                                                                                    {{sc.model}}
-                                                                                </option>
-                                                                            </select>
-                                                                            
-                                                                        </td>
-
-                                                                    <div *ngIf="showMatDisP ;then mdp1; else mdp2"></div>
-                                                                    <ng-template #mdp1>
-                                                                    <td><select    formControlName="matDiscountPer"  class="form-control" style="width: 4em;font-weight: bold;font-size: small;"
-                                                                        id="matDiscountPer" class="form-control"
-                                                                        (ngModelChange)="matDiscountPerCal($event,1)">
-                                                                        <!-- <option>--Select--</option> -->
-                                                                        <option >0</option>
-                                                                        <option
-                                                                            *ngFor="let sc of  matDiscountPerList" [value]="sc.code" >
-                                                                            {{sc.code}}
-                                                                        </option> 
-                                                                      </select></td>
-                                                                    </ng-template>
-                                                                    <ng-template #mdp2>
-                                                                        <td><input disabled type="number" min="0" formControlName="matDiscountPer"  style="width: 4em;font-weight: bold;font-size: small;" class="form-control"  ></td>
+                                                                    <!-- <td><input disabled type="number" min="0" formControlName="matDiscountPer"  style="width: 4em;font-weight: bold;font-size: small;" class="form-control"  ></td> -->
+                                                                    <td><input disabled  type="number" min="0" formControlName="matDiscout"  style="width: 7em;font-weight: bold;font-size: small;" class="form-control"  ></td>
                                                                     </ng-template>
 
-                                                                      <div *ngIf="showMatDisCol ;then md1; else md2"></div>
-                                                                      <ng-template #md1>
-                                                                        <td><input type="number" min="0" formControlName="matDiscout"  style="width: 7em;font-weight: bold;font-size: small;" class="form-control"  (change)="matDiscountAmtCal($event,1)"></td>
-                                                                      </ng-template>
-                                                                      <ng-template #md2>
-                                                                        <td><input disabled type="number" min="0" formControlName="matDiscout"  style="width: 7em;font-weight: bold;font-size: small;" class="form-control"  ></td>
-                                                                     </ng-template>
+                                                                     <ng-template #sr21> 
+                                                                    <!-- <td><input disabled type="number"   min="0"  formControlName="matDiscountPer" class="form-control"  style="width: 4em;font-weight: bold;font-size: small;"></td> -->
+                                                                    <td><input disabled type="number" min="0" formControlName="matDiscout"  style="width: 7em;font-weight: bold;font-size: small;" class="form-control"  ></td>
                                                                     </ng-template>
-                                                                    <ng-template #sr21> 
-                                                                        <td><input disabled type="text"      formControlName="disTypeMat" class="form-control"  style="width: 5em;font-weight: bold;font-size: small;"></td>
-                                                                        <td><input disabled type="number"   min="0"  formControlName="matDiscountPer" class="form-control"  style="width: 4em;font-weight: bold;font-size: small;"></td>
-                                                                        <td><input disabled type="number" min="0" formControlName="matDiscout"  style="width: 7em;font-weight: bold;font-size: small;" class="form-control"  ></td>
-                                                                    </ng-template>
-
+                                                                 
                                                                     <td><input disabled type="number" min="0" formControlName="matTaxableAmt" [(ngModel)]="matTaxableAmt" style="width: 7em;font-weight: bold;font-size: small;" ></td>
                                                                     <td><input disabled type="number" min="0" formControlName="matTotTaxAmt" [(ngModel)]="matTotTaxAmt" style="width: 7em;font-weight: bold;font-size: small;" ></td>
                                                                     <td><input disabled type="number" min="0"  formControlName="matTotAmt" style="width: 7em;font-weight: bold;font-size: small;">  </td>
                                                                     <td><input disabled type="number" min="0"  formControlName="invTotAmt" class="form-control"  style="width: 8em;font-weight: bold;font-size: small;"></td>
-                                                                   
-                                                                   
-
-                                                                            <div *ngIf="printInvoiceButton; then PINV1; else PINV2"></div>
-                                                                            <ng-template #PINV1>
-
-                                                                                <div *ngIf="showBodyshopCustomer; then bs1; else bs2"></div>
-                                                                                <ng-template #bs2>
-                                                                                     <td><button type="button" class="btn btn-primary" id="register" style="width: fit-content;" (click)="printWSInvoice()">Invoice</button> </td>
-                                                                                </ng-template>
-                                                                                <ng-template #bs1>
-                                                                                    <td><button  type="button" class="btn btn-primary"  id="register" style="width: fit-content;" (click)="printWSInvoiceDp('cust')">Invoice</button> </td>
-                                                                                </ng-template>
-                                                                        
-                                                                           </ng-template> <ng-template #PINV2></ng-template>
-                                                                        
-
+                                                                                         
+                                                                    <div *ngIf="printInvoiceButton; then PINV1; else PINV2"></div>
+                                                                    <ng-template #PINV1>
+                                              
+                                                                    <div *ngIf="showBodyshopCustomer; then bs1; else bs2"></div>
+                                                                    <ng-template #bs2>
+                                                                        <td><button type="button" class="btn btn-primary" id="register" style="width: fit-content;" (click)="printWSInvoice()">Invoice</button> </td>
+                                                                    </ng-template>
+                                                                    <ng-template #bs1>
+                                                                        <td><button  type="button" class="btn btn-primary"  id="register" style="width: fit-content;" (click)="printWSInvoiceDp('cust')">Invoice</button> </td>
+                                                                    </ng-template>
+                                                                                                                      
+                                                                   </ng-template> 
+                                                                   <ng-template #PINV2>
+                                                                     <td><button disabled type="button" class="btn btn-primary"  id="register" style="width: fit-content;" (click)="printWSInvoiceDp('cust')">Invoice</button> </td>
+                                                                   </ng-template>
                                                                 </tr>
 
                                                                 <!-- ===========================ADDON================================================= -->
+                                                                <div *ngIf="addonBillable; then ADN1; else ADN2"></div>
+                                                                <ng-template #ADN2></ng-template>
+                                                                <ng-template #ADN1>
+
                                                                 <div *ngIf="showServiceCustomer; then srvBlockAddon2; else insBlockAddon2"></div>
                                                                 <ng-template #srvBlockAddon2>
-
-                                                                <!-- <div *ngIf="printAddonInvButton; then addonLineYes; else addonLineNo"></div>
-                                                                <ng-template #addonLineYes> -->
-
 
                                                                 <tr class="ItemStyle" style="text-decoration:none;">
 
                                                                     <td style="width: 10em;text-align: center;" class="LabelFontStyle" >Addon&nbsp;</td>
+                                                                    <td><input disabled type="text"   formControlName="addonInvoiceNo"  value="{{addonInvoiceNo}}"  style="width: 9em; font-weight: bold;font-size: small;" ></td>
+
                                                                     <td><input disabled type="number" formControlName="addonLabBasicAmt" style="width: 7em;font-weight: bold;font-size: small;text-align: right;" ></td>
                                                                     
                                                                     <div *ngIf="showServiceCustomer ;then sraddon1; else sraddon2"></div>
                                                                     <ng-template #sraddon1>
-                                                                        <td>
-                                                                            <select disabled  formControlName="disTypeLab" value={{disTypeLab}} style="width: 5em;font-weight: bold;font-size: small;"
-                                                                                id="disTypeLab" class="form-control"
-                                                                                (ngModelChange)='onOptionsDisTypeLabSelected($event,"addon" )'>
-                                                                                <option >--Select--</option>
-                                                                                <option *ngFor="let sc of  DisTypeMatList">
-                                                                                    {{sc.model}}
-                                                                                </option>
-                                                                            </select>
-                                                                            
-                                                                        </td>
-
-                                                                    <div *ngIf="addonLabdisP ;then sdpaddon1; else sdpaddon2"></div>
-                                                                    <ng-template #sdpaddon1>
-                                                                    <td><select  formControlName="addonLabDiscountPer" 
-                                                                            id="addonLabDiscountPer" class="form-control" style="width: 4em;font-weight: bold;font-size: small;"
-                                                                            (ngModelChange)="labDiscountPerCal($event,41)">
-                                                                            <option>0</option>
-                                                                            <option
-                                                                                *ngFor="let sc of  labDiscountPerList" [value]="sc.code" >
-                                                                                {{sc.code}}
-                                                                            </option>
-                                                                        </select></td>
+                                                                        <!-- <td><input  disabled type="number"   min="0"     formControlName="addonLabDiscountPer"  class="form-control"  style="width: 4em;font-weight: bold;font-size: small;"></td> -->
+                                                                        <td><input disabled  type="number"   min="0"     formControlName="addonLabDiscount" value={{addonLabDiscount}} class="form-control" (change)="labDiscountAmtCal($event,41)" style="width: 7em;font-weight: bold;font-size: small;"></td>
                                                                     </ng-template>
-                                                                    <ng-template #sdpaddon2>
-                                                                        <td><input  disabled type="number"   min="0"     formControlName="addonLabDiscountPer" class="form-control"  style="width: 4em;font-weight: bold;font-size: small;"></td>
+                                                                    <ng-template #sraddon2>
+                                                                        <!-- <td><input disabled type="number"   min="0"  formControlName="addonLabDiscountPer" class="form-control"  style="width: 4em;font-weight: bold;font-size: small;"></td> -->
+                                                                        <td><input disabled type="number"   min="0"  formControlName="addonLabDiscount" value={{addonLabDiscount}}  class="form-control"  style="width: 7em;font-weight: bold;font-size: small;"></td>
                                                                     </ng-template>
-
-
-
-                                                                    <div *ngIf="addonLabDisCol ;then sdaddon1; else sdaddon2"></div>
-                                                                    <ng-template #sdaddon1>
-                                                                         <td><input   type="number"   min="0"     formControlName="addonLabDiscount" class="form-control" (change)="labDiscountAmtCal($event,41)" style="width: 7em;font-weight: bold;font-size: small;"></td>
-                                                                    </ng-template>
-                                                                    <ng-template #sdaddon2>
-                                                                         <td><input disabled type="number"   min="0"  formControlName="addonLabDiscount" class="form-control"  style="width: 7em;font-weight: bold;font-size: small;"></td>
-                                                                    </ng-template>
-
-                                                                </ng-template>
-                                                                <ng-template #sraddon2>
-                                                                    <td><input disabled type="number"   min="0"  formControlName="addonLabDiscountPer" class="form-control"  style="width: 4em;font-weight: bold;font-size: small;"></td>
-                                                                    <td><input disabled type="number"   min="0"  formControlName="addonLabDiscount" class="form-control"  style="width: 7em;font-weight: bold;font-size: small;"></td>
-                                                                
-                                                                </ng-template>
-
-                                                                    
-
-                                                                    <td><input disabled type="number" min="0" formControlName="addonLabTaxableAmt" [(ngModel)]="labTaxableAmt" style="width: 7em;font-weight: bold;font-size: small;"    ></td>
-                                                                    <td><input disabled type="number" min="0" formControlName="addonLabTotTaxAmt" [(ngModel)]="labTotTaxAmt" style="width: 7em;font-weight: bold;font-size: small;" ></td>
+                                                                    <td><input disabled type="number" min="0" formControlName="addonLabTaxableAmt"  style="width: 7em;font-weight: bold;font-size: small;"    ></td>
+                                                                    <td><input disabled type="number" min="0" formControlName="addonLabTotTaxAmt"  style="width: 7em;font-weight: bold;font-size: small;" ></td>
                                                                     <td><input disabled type="number" min="0"  formControlName="addonLabTotAmt" style="width: 7em;font-weight: bold;font-size: small;"></td>
-                                                                    
+                                                                                                                                    
                                                                     <td><input disabled type="number" formControlName="addonMatBasicAmt" style="width: 7em;font-weight: bold;font-size: small;text-align: right;"></td>
                                                                     
-                                                                    <div *ngIf="showServiceCustomer ;then sraddon11; else sraddon21"></div>
-                                                                    <ng-template #sraddon11>
-                                                                        <td>
-                                                                            <select disabled  formControlName="disTypeMat" value={{disTypeMat}} style="width: 5em;font-weight: bold;font-size: small;"
-                                                                                id="disTypeMat" class="form-control"
-                                                                                (ngModelChange)='onOptionsDisTypeMatSelected($event,"addon")'>
-                                                                                <option >--Select--</option>
-                                                                                
-                                                                                <option *ngFor="let sc of  DisTypeMatList">
-                                                                                    {{sc.model}}
-                                                                                </option>
-                                                                            </select>
-                                                                            
-                                                                        </td>
-
-                                                                    <div *ngIf="addonMatdisP ;then mdpaddon1; else mdpadddon2"></div>
-                                                                    <ng-template #mdpaddon1>
-                                                                    <td><select   formControlName="addonMatDiscoutPer"  class="form-control" style="width: 4em;font-weight: bold;font-size: small;"
-                                                                        id="addonMatDiscoutPer" class="form-control"
-                                                                        (ngModelChange)="matDiscountPerCal($event,41)">
-                                                                        <option>0</option>
-                                                                        <option
-                                                                            *ngFor="let sc of  matDiscountPerList" [value]="sc.code" >
-                                                                            {{sc.code}}
-                                                                        </option> 
-                                                                      </select></td>
-                                                                    </ng-template>
-                                                                    <ng-template #mdpadddon2>
-                                                                        <td><input disabled type="number" min="0" formControlName="addonMatDiscoutPer"  style="width: 4em;font-weight: bold;font-size: small;" class="form-control"  ></td>
+                                                                    <div *ngIf="showServiceCustomer ;then srvaddon11; else srvaddon21"></div>
+                                                                    <ng-template #srvaddon11>
+                                                                
+                                                                    <!-- <td><input disabled type="number" min="0" formControlName="addonMatDiscoutPer"  style="width: 4em;font-weight: bold;font-size: small;" class="form-control"  ></td> -->
+                                                                    <td><input disabled  type="number" min="0" formControlName="addonMatDiscout"  style="width: 7em;font-weight: bold;font-size: small;" class="form-control"  ></td>
                                                                     </ng-template>
 
-                                                                      <div *ngIf="addonMatDisCol ;then mdaddon1; else mdaddon2"></div>
-                                                                      <ng-template #mdaddon1>
-                                                                        <td><input  type="number" min="0" formControlName="addonMatDiscout"  style="width: 7em;font-weight: bold;font-size: small;" class="form-control"  (change)="matDiscountAmtCal($event,41)"></td>
-                                                                      </ng-template>
-                                                                      <ng-template #mdaddon2>
-                                                                        <td><input disabled type="number" min="0" formControlName="addonMatDiscout"  style="width: 7em;font-weight: bold;font-size: small;" class="form-control"  ></td>
-                                                                     </ng-template>
+                                                                    <ng-template #srvaddon21> 
+                                                                    <!-- <td><input disabled type="number"   min="0"  formControlName="addonMatDiscoutPer" class="form-control"  style="width: 4em;font-weight: bold;font-size: small;"></td> -->
+                                                                    <td><input disabled type="number" min="0" formControlName="addonMatDiscout"  style="width: 7em;font-weight: bold;font-size: small;" class="form-control"  ></td>
                                                                     </ng-template>
-                                                                    <ng-template #sraddon21> 
-                                                                        <td><input disabled type="number"   min="0"  formControlName="addonMatDiscoutPer" class="form-control"  style="width: 4em;font-weight: bold;font-size: small;"></td>
-                                                                        <td><input disabled type="number" min="0" formControlName="addonMatDiscout"  style="width: 7em;font-weight: bold;font-size: small;" class="form-control"  ></td>
-                                                                    </ng-template>
+                                                                       
 
                                                                     <td><input disabled type="number" min="0" formControlName="addonMatTaxableAmt"  style="width: 7em;font-weight: bold;font-size: small;" ></td>
                                                                     <td><input disabled type="number" min="0" formControlName="addonMatTotTaxAmt"  style="width: 7em;font-weight: bold;font-size: small;" ></td>
@@ -2439,14 +2306,85 @@
                                                                     <div *ngIf="printAddonInvButton; then PadnInv1; else PadnInv2"></div>
                                                                     <ng-template #PadnInv1>
                                                                         <td><button type="button" class="btn btn-primary" id="register" style="width: fit-content;" (click)="printWSAdnInvoice()">Invoice</button> </td>
-                                                                    </ng-template> <ng-template #PadnInv2></ng-template>
+                                                                    </ng-template> 
+                                                                    <ng-template #PadnInv2>
+                                                                        <td><button disabled type="button" class="btn btn-primary" id="register" style="width: fit-content;" (click)="printWSAdnInvoice()">Invoice</button> </td>
+                                                                    </ng-template>
                                                                 </tr>
+
                                                                 <!-- </ng-template>
                                                                 <ng-template #addonLineNo></ng-template> -->
 
                                                             </ng-template>
                                                             <ng-template #insBlockAddon2></ng-template>
+                                                            </ng-template>
                                                             <!-- ======================================================================================== -->
+
+                                                              <!-- ===========================CWI START================================================= -->
+                                                            
+                                                              
+                                                              <div *ngIf="cwiBillable; then CWI1; else CWI2"></div>
+                                                              <ng-template #CWI2></ng-template>
+                                                              <ng-template #CWI1>
+
+                                                              <div *ngIf="showServiceCustomer; then srvBlockCwi; else insBlockCwi"></div>
+                                                              <ng-template #srvBlockCwi>
+
+                                                              <tr class="ItemStyle" style="text-decoration:none;">
+
+                                                                  <td style="width: 10em;text-align: center;" class="LabelFontStyle" >CWI&nbsp;</td>
+                                                                  <td><input disabled type="text"   formControlName="cwiInvoiceNo" [(ngValue)]="cwiInvoiceNo"  value="{{cwiInvoiceNo}}"  style="width: 9em; font-weight: bold;font-size: small;" ></td>
+
+                                                                  <td><input disabled type="number" formControlName="cwiLabBasicAmt" style="width: 7em;font-weight: bold;font-size: small;text-align: right;" ></td>
+                                                                  
+                                                                  <div *ngIf="showServiceCustomer ;then srcw1; else srcw2"></div>
+                                                                  <ng-template #srcw1>
+                                                                      <!-- <td><input  disabled type="number"   min="0"     formControlName="cwiLabDiscountPer"  class="form-control"  style="width: 4em;font-weight: bold;font-size: small;"></td> -->
+                                                                      <td><input disabled  type="number"   min="0"     formControlName="cwiLabDiscount" class="form-control" (change)="labDiscountAmtCal($event,41)" style="width: 7em;font-weight: bold;font-size: small;"></td>
+                                                                  </ng-template>
+                                                                  <ng-template #srcw2>
+                                                                      <!-- <td><input disabled type="number"   min="0"  formControlName="cwiLabDiscountPer" class="form-control"  style="width: 4em;font-weight: bold;font-size: small;"></td> -->
+                                                                      <td><input disabled type="number"   min="0"  formControlName="cwiLabDiscount" class="form-control"  style="width: 7em;font-weight: bold;font-size: small;"></td>
+                                                                  </ng-template>
+                                                                  <td><input disabled type="number" min="0" formControlName="cwiLabTaxableAmt"  style="width: 7em;font-weight: bold;font-size: small;"    ></td>
+                                                                  <td><input disabled type="number" min="0" formControlName="cwiLabTotTaxAmt"  style="width: 7em;font-weight: bold;font-size: small;" ></td>
+                                                                  <td><input disabled type="number" min="0"  formControlName="cwiLabTotAmt" style="width: 7em;font-weight: bold;font-size: small;"></td>
+                                                                                                                                  
+                                                                  <td><input disabled type="number" formControlName="cwiMatBasicAmt" style="width: 7em;font-weight: bold;font-size: small;text-align: right;"></td>
+                                                                  
+                                                                  <div *ngIf="showServiceCustomer ;then srvcwi11; else srvcwi21"></div>
+                                                                  <ng-template #srvcwi11>
+                                                              
+                                                                  <!-- <td><input disabled type="number" min="0" formControlName="cwiMatDiscoutPer"  style="width: 4em;font-weight: bold;font-size: small;" class="form-control"  ></td> -->
+                                                                  <td><input disabled  type="number" min="0" formControlName="cwiMatDiscout"  style="width: 7em;font-weight: bold;font-size: small;" class="form-control"  ></td>
+                                                                  </ng-template>
+
+                                                                  <ng-template #srvcwi21> 
+                                                                  <!-- <td><input disabled type="number"   min="0"  formControlName="cwiMatDiscoutPer" class="form-control"  style="width: 4em;font-weight: bold;font-size: small;"></td> -->
+                                                                  <td><input disabled type="number" min="0" formControlName="cwiMatDiscout"  style="width: 7em;font-weight: bold;font-size: small;" class="form-control"  ></td>
+                                                                  </ng-template>
+                                                                     
+
+                                                                  <td><input disabled type="number" min="0" formControlName="cwiMatTaxableAmt"  style="width: 7em;font-weight: bold;font-size: small;" ></td>
+                                                                  <td><input disabled type="number" min="0" formControlName="cwiMatTotTaxAmt"  style="width: 7em;font-weight: bold;font-size: small;" ></td>
+                                                                  <td><input disabled type="number" min="0"  formControlName="cwiMatTotAmt" style="width: 7em;font-weight: bold;font-size: small;">  </td>
+                                                                  <td><input disabled type="number" min="0"  formControlName="cwiInvTotAmt" class="form-control"  style="width: 8em;font-weight: bold;font-size: small;"></td>
+
+                                                                  <div *ngIf="printCwiInvButton; then PCwiInv1; else PCwiInv2"></div>
+                                                                  <ng-template #PCwiInv1>
+                                                                      <td><button type="button" class="btn btn-primary" id="register" style="width: fit-content;" (click)="printWSCwiInvoice()">Invoice</button> </td>
+                                                                  </ng-template> 
+                                                                  <ng-template #PCwiInv2>
+                                                                      <td><button disabled type="button" class="btn btn-primary" id="register" style="width: fit-content;" (click)="printWSCwiInvoice()">Invoice</button> </td>
+                                                                  </ng-template>
+                                                              </tr>
+
+                                                                </ng-template>
+                                                                 <ng-template #insBlockCwi></ng-template>
+                                                              </ng-template>
+
+
+                                                          <!-- =====================================CWI END=================================================== -->
 
                                                                 <tr class="ItemStyle" style="text-decoration:none;">
                                                                     
@@ -2455,19 +2393,20 @@
                                                                             <ng-template #insBlock>
                                                       
                                                                             <td style="width: 15%;text-align: center;" class="LabelFontStyle">Insurance&nbsp;</td>
-                                                                           
+                                                                            <td><input disabled type="text" formControlName="insInvoiceNo" [(ngValue)]="insInvoiceNo"  value="{{insInvoiceNo}}"  style="width: 9em;font-weight: bold;font-size: small;" ></td>
+
                                                                             <td><input disabled type="number" min="0"   style="width: 7em;font-weight: bold;font-size: small;"  formControlName="insLabTaxableAmt"></td>
 
-                                                                            <td><input disabled type="text"      formControlName="disTypeLab" class="form-control"  style="width: 5em;font-weight: bold;font-size: small;"></td>
-                                                                            <td><input disabled type="number"   min="0"     formControlName="labDiscountPerIns" class="form-control"  style="width: 4em;font-weight: bold;font-size: small;"></td>
+                                                                            <!-- <td><input disabled type="text"      formControlName="disTypeLab" class="form-control"  style="width: 4em;font-weight: bold;font-size: small;"></td> -->
+                                                                            <!-- <td><input disabled type="number"   min="0"     formControlName="labDiscountPerIns" class="form-control"  style="width: 4em;font-weight: bold;font-size: small;"></td> -->
                                                                             <td><input disabled type="number"   min="0"     formControlName="labDiscountIns" class="form-control"  style="width: 7em;font-weight: bold;font-size: small;"></td>
                                                                             
                                                                             <td><input disabled type="number" min="0"       style="width: 7em;font-weight: bold;font-size: small;"  formControlName="insLabTaxableAmt"></td>
                                                                             <td><input disabled type="number" min="0"       style="width: 7em;font-weight: bold;font-size: small;"  formControlName="insLabTotTaxAmt"></td>
                                                                             <td><input disabled type="number" min="0"       formControlName="insLabTotAmt" style="width: 7em;font-weight: bold;font-size: small;"   formControlName="insLabTotAmt"></td>
                                                                             <td><input disabled type="number" min="0"       style="width: 7em;font-weight: bold;font-size: small;"  formControlName="insMatTaxableAmt"></td>
-                                                                            <td><input disabled type="text"                 formControlName="disTypeMat" class="form-control"  style="width: 5em;font-weight: bold;font-size: small;"></td>
-                                                                            <td><input disabled type="number"   min="0"     formControlName="matDiscountPerIns" class="form-control"  style="width: 4em;font-weight: bold;font-size: small;"></td>
+                                                                            <!-- <td><input disabled type="text"                 formControlName="disTypeMat" class="form-control"  style="width: 5em;font-weight: bold;font-size: small;"></td> -->
+                                                                            <!-- <td><input disabled type="number"   min="0"     formControlName="matDiscountPerIns" class="form-control"  style="width: 4em;font-weight: bold;font-size: small;"></td> -->
                                                                             <td><input disabled type="number"   min="0"     formControlName="matDiscoutIns" class="form-control"  style="width: 7em;font-weight: bold;font-size: small;"></td>
                                                                                                                                                    
                                                                             <td><input disabled type="number" min="0"   style="width: 7em;font-weight: bold;font-size: small;" formControlName="insMatTaxableAmt"></td>
@@ -2479,7 +2418,10 @@
                                                                             <div *ngIf="printInsInvoiceButton; then PINSINV1; else PINSINV2"></div>
                                                                             <ng-template #PINSINV1>
                                                                                 <td><button  type="button" class="btn btn-primary"  id="register" style="width: fit-content;" (click)="printWSInvoiceDp('ins')">Invoice</button> </td>
-                                                                            </ng-template> <ng-template #PINSINV2></ng-template>
+                                                                            </ng-template>
+                                                                             <ng-template #PINSINV2>
+                                                                                    <td><button disabled type="button" class="btn btn-primary"  id="register" style="width: fit-content;" (click)="printWSInvoiceDp('ins')">Invoice</button> </td>
+                                                                             </ng-template>
 
                                                                         </ng-template>
                                                                 </tr>
@@ -2515,6 +2457,7 @@
                                                         </table>
                                                     </fieldset>
 
+
                                                     <div *ngIf="showServiceCustomer ;then sr111; else sr211"></div>
                                                     <ng-template #sr111>
 
@@ -2541,15 +2484,20 @@
                                                             <td>
                                                                 <select  class="form-control" style="width: 12em;font-weight: bold;font-size: small;"
                                                                     formControlName="disAuthBy">
-                                                                    <option value="Location service">
-                                                                        Location service</option>
-                                                                    <option value="BS Manager">BS Manager
-                                                                    </option>
-                                                                    <option value="AGM">AGM</option>
+                                                                    <option value="Works Manager">Works Manager</option>
+                                                                    <option value="BS Manager">BS Manager</option>
+                                                                    <option value="AGM Service">AGM Service</option>
+                                                                    <option value="GM Service">GM Service</option>
+
                                                                 </select>
                                                             </td>
 
-                                                                                                                       
+                                                            <td style="width: 15%" class="LabelFontStyle">
+
+                                                            <td><button type="button" data-toggle="modal"  class="btn btn-primary" data-target="#DiscountDetails"  style="width:fit-content">Discount&nbsp;Details</button></td>
+
+                                                            <td style="width: 15%" class="LabelFontStyle">Remarks:&nbsp;</td>
+                                                            <td><input type="text" class="form-control"   formControlName="discountRemark"  value ="{{discountRemark}}" style="width:500px ;" placeholder=""></td>                                                          
                                                             <!-- <td style="width: 15%" class="LabelFontStyle">
                                                                 Disc&nbsp;Mode(Lbr)&nbsp;:</td>
                                                            
@@ -2590,32 +2538,44 @@
 
                                             
 
-                                                <br>
+                                                
                                                 <fieldset class="RFS">
-                                                    <legend id="FormsPH_LGAadhaar" class="RFSL"
-                                                        style="font-size: 10px;color: black;">
-                                                        <b> Payment details</b>
-                                                    </legend>
+                                                    <!-- <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;"> <b> Payment details</b> </legend> -->
+                                                    <table class="center">
                                                     <tr>
-                                                        <td style="width: 15%" class="LabelFontStyle">
-                                                            Outstanding&nbsp;Amount&nbsp;:</td>
-                                                        <td>
+                                                        <td style="width: 15%" class="LabelFontStyle">CDMS&nbsp;Bill&nbsp;No(SR):</td>
+                                                        <td><input type="text"  class="form-control" placeholder="" formControlName="cdmsInvoiceNo" style="background-color:yellow;" ></td>
+
+                                                        <div *ngIf="showServiceCustomer ;then dpcdmsYes; else dpcdmsNo"></div>
+                                                        <ng-template #dpcdmsNo>
+                                                            <td style="width: 15%" class="LabelFontStyle">CDMS&nbsp;Bill&nbsp;No(DP):</td>
+                                                            <td><input type="text"  class="form-control" placeholder="" formControlName="cdmsInvoiceNoDp" style="background-color:yellow;" ></td>
+                                                        </ng-template><ng-template #dpcdmsYes></ng-template>
+
+                                                        <td style="width: 15%" class="LabelFontStyle">CDMS&nbsp;Bill&nbsp;Date:</td>
+                                                        <td><input type="date"  class="form-control" placeholder="" formControlName="cdmsInvoiceDate" style="background-color:yellow;" ></td>
+
+
+                                                        <td style="width: 15%" class="LabelFontStyle">Outstanding&nbsp;Amt&nbsp;:</td>
+                                                        <td><input type="number" disabled class="form-control" placeholder="" formControlName="totBalance"></td>
+
+                                                        <td style="width: 15%" class="LabelFontStyle">Advance&nbsp;Amt&nbsp;:</td>
+                                                        <td> <input type="number" disabled class="form-control"  placeholder="" formControlName="advAmt"></td>
+                                                       
+                                                 
+                                                        <!-- <td>
                                                             <input type="number" disabled class="form-control"
-                                                                placeholder="" formControlName="balanceAmt">
-                                                        </td>
+                                                                placeholder="" formControlName="totBalanceAmt">
+                                                        </td> -->
+
+                                                        
 
                                                         <!-- <td>
                                                             <button type="submit" class="btn btn-primary" id="register"
                                                                 style="width: fit-content;">Details</button>
                                                         </td> -->
 
-                                                        <td style="width: 15%" class="LabelFontStyle">
-                                                            Advance&nbsp;Amount&nbsp;:</td>
-                                                        <td>
-                                                            <input type="number" disabled class="form-control"
-                                                                placeholder="" formControlName="advAmt">
-                                                        </td>
-                                                        <!-- <td>
+                                                           <!-- <td>
                                                             <button type="submit" class="btn btn-primary" id="register"
                                                                 style="width: fit-content;">Details</button>
                                                         </td> -->
@@ -2624,11 +2584,19 @@
                                                         <td> <input type="text" disabled class="form-control" formControlName="arInvNum"  value="{{arInvNum}}"> </td>
                                                      -->
                                                     </tr>
+                                                </table>
 
                                                 </fieldset>
+                                                <br>
 
                                                 <table class="center">
                                                     <tr>
+
+                                                        <td>
+                                                            <button type="button" style="width: 5rem;"
+                                                                class="btn btn-primary" id="register"
+                                                                (click)="closeMast()">Close</button>
+                                                        </td>
 
                                                         <td>
                                                             <button type="button"
@@ -2726,16 +2694,16 @@
                                              
                                                     <div *ngIf="printInvoiceButton; then P1; else P2"></div>
                                                     <ng-template #P1>
-                                                        <td><button type="button" class="btn btn-primary" id="register" style="width: fit-content;" (click)="printWSInvoice()">Print invoice</button> </td>
+                                                        <!-- <td><button type="button" class="btn btn-primary" id="register" style="width: fit-content;" (click)="printWSInvoice()">Print invoice</button> </td>
                                                        
                                                         <div *ngIf="printAddonInvButton; then A1; else A2"></div>
                                                         <ng-template #A1>
                                                             <td><button type="button" class="btn btn-primary" id="register" style="width: fit-content;" (click)="printWSAdnInvoice()">Print Addon Bill</button> </td>
                                                         </ng-template>
-                                                        <ng-template #A2></ng-template>
+                                                        <ng-template #A2></ng-template> -->
 
                                                         
-                                                        <td> <button type="button" class="btn btn-primary" id="register"  style="width: fit-content;" [routerLink]="['/admin/transaction/PaymentAr',this.jobCardNum]">Receipt</button> </td> 
+                                                        <td> <button type="button" class="btn btn-primary" id="register"  style="width: 5rem;" [routerLink]="['/admin/transaction/PaymentAr',this.jobCardNum]">Receipt</button> </td> 
                                                     </ng-template>
                                                     <ng-template #P2></ng-template>
 
@@ -2743,8 +2711,9 @@
                                                     <ng-template #dpcustInvYes>
                                                         <div *ngIf="printInvoiceButton; then P3; else P4"></div>
                                                         <ng-template #P3>
-                                                            <td><button  type="button" class="btn btn-primary"  id="register" style="width: fit-content;" (click)="printWSInvoiceDp('cust')">DP invoice(Cust)</button> </td>
+                                                            <!-- <td><button  type="button" class="btn btn-primary"  id="register" style="width: fit-content;" (click)="printWSInvoiceDp('cust')">DP invoice(Cust)</button> </td>
                                                             <td><button  type="button" class="btn btn-primary"  id="register" style="width: fit-content;" (click)="printWSInvoiceDp('ins')">DP invoice(Ins)</button> </td>
+                                                             -->
                                                             <td><button  type="button" class="btn btn-primary" id="register"  style="width: fit-content;" [routerLink]="['/admin/transaction/PaymentAr',this.jobCardNum]">Receipt</button> </td> 
                                                         </ng-template>
                                                         <ng-template #P4></ng-template>
@@ -3237,6 +3206,358 @@
 
                     </table>
                     </fieldset>
+
+                    <div class="modal-footer">
+                       <!-- <button type="button" class="btn btn-info" data-dismiss="modal">Close</button> -->
+                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+
+
+                </tr>
+            </table>
+         </div>
+        </div>
+    </div>
+   </div>
+
+   
+<!-- ----------------------- DICOUNT APPLY------------------------------------ -->
+<div class="modal fade" id="DiscountDetails" tabindex="-1" role="dialog" aria-labelledby="DiscountDetailsLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="max-width: fit-content;">
+        <div class="modal-content">
+         <div class="modal-header">
+
+          <h6 class="modal-title" id="DiscountDetailsLabel">&nbsp;{{this.regNo}} &nbsp;&nbsp;{{this.jobCardNum}} </h6>
+          
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+         </div>
+        
+         <div class="modal-body">
+            <table class="center" style="width: 100%;">
+                <tr>
+
+                    <fieldset class="RFS">
+                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;"><b> Discount Application</b> </legend>
+                        <table class="auto-style4" class="GridFont" cellspacing="0"
+                            cellpadding="4" border="0" id="ctl00_cpForm_grdActions"
+                            style="border-color:#959595;width:100%;border-collapse:collapse;">
+                            <thead>
+                                <tr class="GridHeader">
+                                    <th scope="col">Billable Type</th>
+                                   
+                                    <th scope="col" style="text-align: left;"> Lbr Dis Type</th>
+                                    <th scope="col" style="text-align: right;">Lbr Dis%</th>
+                                    <th scope="col" style="text-align: right;">Lbr Disount&nbsp;&nbsp;</th>
+                                   
+                                    <th scope="col" style="text-align: left;">Matrl Dis Type</th>
+                                    <th scope="col" style="text-align: right;">Matrl Dis%</th>
+                                    <th scope="col" style="text-align: right;">Matrl Disount&nbsp;&nbsp;</th>
+                                   
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr class="ItemStyle" style="text-decoration:none;">
+
+                                    <td style="width: 10em;text-align: center;" class="LabelFontStyle" >Customer&nbsp;</td>
+                               
+                                    <div *ngIf="showServiceCustomer ;then srm1; else srm2"></div>
+                                    <ng-template #srm1>
+                                    <td>
+                                        <select   formControlName="disTypeLab" value={{disTypeLab}} style="font-weight: bold;font-size: small;"
+                                            id="disTypeLab" class="form-control"
+                                            (ngModelChange)='onOptionsDisTypeLabSelected($event,1)'>
+                                            <!-- <option >--Select--</option> -->
+                                            <option></option>
+                                            <option >None</option>
+                                            <option *ngFor="let sc of  DisTypeMatList">
+                                                {{sc.model}}
+                                            </option>
+                                        </select>
+                                    </td>
+
+                                    <div *ngIf="showLabdisP ;then sdp1; else sdp2"></div>
+                                    <ng-template #sdp1>
+                                    <td><select   formControlName="labDiscountPer1"  value={{labDiscountPer1}}
+                                            id="labDiscountPer1" class="form-control" style="width: 4em;font-weight: bold;font-size: small;"
+                                            (ngModelChange)="labDiscountPerCal($event,1)">
+                                            <option >0</option>
+                                            <option
+                                                *ngFor="let sc of  labDiscountPerList" [value]="sc.code" >
+                                                {{sc.code}}
+                                            </option>
+                                        </select></td>
+                                    </ng-template>
+                                    <ng-template #sdp2>
+                                        <td><input  disabled type="number"   min="0"     formControlName="labDiscountPer" class="form-control"  style="width: 4em;font-weight: bold;font-size: small;"></td>
+                                    </ng-template>
+
+                                    <div *ngIf="showLabDisCol ;then sd1; else sd2"></div>
+                                    <ng-template #sd1>
+                                         <td><input  type="number"   min="0"     formControlName="labDiscount" class="form-control" (change)="labDiscountAmtCal($event,1)" style="width: 7em;font-weight: bold;font-size: small;"></td>
+                                    </ng-template>
+                                    <ng-template #sd2>
+                                         <td><input disabled type="number"   min="0"  formControlName="labDiscount" class="form-control"  style="width: 7em;font-weight: bold;font-size: small;"></td>
+                                    </ng-template>
+
+                                    </ng-template>
+                                    <ng-template #srm2> </ng-template>
+                                            
+
+                                    
+                                    <div *ngIf="showServiceCustomer ;then srm11; else srm21"></div>
+                                    <ng-template #srm11>
+                                        <td>
+                                            <select   formControlName="disTypeMat" value={{disTypeMat}} style="font-weight: bold;font-size: small;"
+                                                id="disTypeMat" class="form-control"
+                                                (ngModelChange)='onOptionsDisTypeMatSelected($event,1)'>
+                                                <!-- <option >--Select--</option> -->
+                                                <option></option>
+                                                <option >None</option>
+                                                <option *ngFor="let sc of  DisTypeMatList">
+                                                    {{sc.model}}
+                                                </option>
+                                            </select>
+                                            
+                                        </td>
+
+                                    <div *ngIf="showMatDisP ;then mdp1; else mdp2"></div>
+                                    <ng-template #mdp1>
+                                    <td><select    formControlName="matDiscountPer1" value={{matDiscountPer1}}   class="form-control" style="width: 4em;font-weight: bold;font-size: small;"
+                                        id="matDiscountPer1" class="form-control"
+                                        (ngModelChange)="matDiscountPerCal($event,1)">
+                                        <option >0</option>
+                                        <option
+                                            *ngFor="let sc of  matDiscountPerList" [value]="sc.code" >
+                                            {{sc.code}}
+                                        </option> 
+                                      </select></td>
+                                    </ng-template>
+                                    <ng-template #mdp2>
+                                        <td><input disabled type="number" min="0" formControlName="matDiscountPer"  style="width: 4em;font-weight: bold;font-size: small;" class="form-control"  ></td>
+                                    </ng-template>
+
+                                      <div *ngIf="showMatDisCol ;then mdm1; else mdm2"></div>
+                                      <ng-template #mdm1>
+                                        <td><input type="number" min="0" formControlName="matDiscout"  style="width: 7em;font-weight: bold;font-size: small;" class="form-control"  (change)="matDiscountAmtCal($event,1)"></td>
+                                      </ng-template>
+                                      <ng-template #mdm2>
+                                        <td><input disabled type="number" min="0" formControlName="matDiscout"  style="width: 7em;font-weight: bold;font-size: small;" class="form-control"  ></td>
+                                     </ng-template>
+
+                                    </ng-template>
+                                    <ng-template #srm21> 
+                                                               
+                                    </ng-template>
+                                       
+
+                                </tr>
+
+                                <!-- ===========================ADDON================================================= -->
+
+                                <div *ngIf="addonBillable; then ADD101; else ADD102"></div>
+                                <ng-template #ADD102></ng-template>
+                                <ng-template #ADD101>
+                            
+                                <tr class="ItemStyle" style="text-decoration:none;">
+
+                                    <td style="width: 10em;text-align: center;" class="LabelFontStyle" >Addon&nbsp;</td>
+                               
+                                    <div *ngIf="showServiceCustomer ;then srmadd1; else srmadd2"></div>
+                                    <ng-template #srmadd1>
+                                    <td>
+                                        <select   formControlName="disTypeLabAdn" value={{disTypeLabAdn}} [(ngModel)]="disTypeLabAdn" style="font-weight: bold;font-size: small;"
+                                            id="disTypeLabAdn" class="form-control"
+                                            (ngModelChange)='onOptionsDisTypeLabSelected($event,41)'>
+                                            <!-- <option >--Select--</option> -->
+                                            <option></option>
+                                            <option >None</option>
+                                            <option *ngFor="let sc of  DisTypeMatList">
+                                                {{sc.model}}
+                                            </option>
+                                        </select>
+                                    </td>
+
+
+                                    <div *ngIf="addonLabdisP ;then sdpadd1; else sdpadd2"></div>
+                                    <ng-template #sdpadd1>
+                                    <td><select   formControlName="addonLabDiscountPer1"  value={{addonLabDiscountPer1}}
+                                            id="addonLabDiscountPer1" class="form-control" style="width: 4em;font-weight: bold;font-size: small;"
+                                            (ngModelChange)="labDiscountPerCal($event,41)">
+                                            <option >0</option>
+                                            <option
+                                                *ngFor="let sc of  labDiscountPerList" [value]="sc.code" >
+                                                {{sc.code}}
+                                            </option>
+                                        </select></td>
+                                    </ng-template>
+                                    <ng-template #sdpadd2>
+                                        <td><input  disabled type="number"   min="0"     formControlName="addonLabDiscountPer" class="form-control"  style="width: 4em;font-weight: bold;font-size: small;"></td>
+                                    </ng-template>
+
+                                    <div *ngIf="addonLabDisCol ;then sdadd1; else sdadd2"></div>
+                                    <ng-template #sdadd1>
+                                         <td><input  type="number"   min="0"     formControlName="addonLabDiscount"  class="form-control" (change)="labDiscountAmtCal($event,41)" style="width: 7em;font-weight: bold;font-size: small;"></td>
+                                    </ng-template>
+                                    <ng-template #sdadd2>
+                                         <td><input disabled type="number"   min="0"  formControlName="addonLabDiscount"   class="form-control"  style="width: 7em;font-weight: bold;font-size: small;"></td>
+                                    </ng-template>
+                                    </ng-template>
+
+                                    <ng-template #srmadd2></ng-template>
+
+                                    
+
+                                    <div *ngIf="showServiceCustomer ;then srmadd11; else srmadd21"></div>
+                                    <ng-template #srmadd11>
+                                        <td>
+                                            <select   formControlName="disTypeMatAdn" value={{disTypeMatAdn}} style="font-weight: bold;font-size: small;"
+                                                id="disTypeMatAdn" class="form-control"
+                                                (ngModelChange)='onOptionsDisTypeMatSelected($event,41)'>
+                                                <!-- <option >--Select--</option> -->
+                                                <option></option>
+                                                <option >None</option>
+                                                <option *ngFor="let sc of  DisTypeMatList">
+                                                    {{sc.model}}
+                                                </option>
+                                            </select>
+                                            
+                                        </td>
+
+                                    <div *ngIf="addonMatdisP ;then mdpmadd1; else mdpmadd2"></div>
+                                    <ng-template #mdpmadd1>
+                                    <td><select    formControlName="addonMatDiscoutPer1" value={{addonMatDiscoutPer1}}   class="form-control" style="width: 4em;font-weight: bold;font-size: small;"
+                                        id="addonMatDiscoutPer1" class="form-control"
+                                        (ngModelChange)="matDiscountPerCal($event,41)">
+                                        <option >0</option>
+                                        <option
+                                            *ngFor="let sc of  matDiscountPerList" [value]="sc.code" >
+                                            {{sc.code}}
+                                        </option> 
+                                      </select></td>
+                                    </ng-template>
+                                    <ng-template #mdpmadd2>
+                                        <td><input disabled type="number" min="0" formControlName="addonMatDiscoutPer"  style="width: 4em;font-weight: bold;font-size: small;" class="form-control"  ></td>
+                                    </ng-template>
+
+                                      <div *ngIf="addonMatDisCol ;then mdmaddon1; else mdmaddon2"></div>
+                                      <ng-template #mdmaddon1>
+                                        <td><input type="number" min="0" formControlName="addonMatDiscout"  style="width: 7em;font-weight: bold;font-size: small;" class="form-control"  (change)="matDiscountAmtCal($event,41)"></td>
+                                      </ng-template>
+                                      <ng-template #mdmaddon2>
+                                        <td><input disabled type="number" min="0" formControlName="addonMatDiscout"  style="width: 7em;font-weight: bold;font-size: small;" class="form-control"  ></td>
+                                     </ng-template>
+                                    </ng-template>
+                                    <ng-template #srmadd21></ng-template>
+                                </tr>
+                                </ng-template>
+                            <!-- ======================================================================================== -->
+
+                             <!-- ===========================CWI================================================= -->
+
+                             <div *ngIf="cwiBillable; then CWI101; else CWI102"></div>
+                             <ng-template #CWI102></ng-template>
+                             <ng-template #CWI101>
+                             <tr class="ItemStyle" style="text-decoration:none;">
+
+                                <td style="width: 10em;text-align: center;" class="LabelFontStyle" >CWI&nbsp;</td>
+                           
+                                <div *ngIf="showServiceCustomer ;then srmcwi1; else srmcwi2"></div>
+                                <ng-template #srmcwi1>
+                                <td>
+                                    <select disabled  formControlName="disTypeLabCwi" value={{disTypeLabCwi}} style="font-weight: bold;font-size: small;"
+                                        id="disTypeLabCwi" class="form-control"
+                                        (ngModelChange)='onOptionsDisTypeLabSelected($event,21)'>
+                                        <!-- <option >--Select--</option> -->
+                                        <option >None</option>
+                                        <option *ngFor="let sc of  DisTypeMatList">
+                                            {{sc.model}}
+                                        </option>
+                                    </select>
+                                </td>
+
+
+                                <div *ngIf="cwiLabdisP ;then sdpcwi1; else sdpcwi2"></div>
+                                <ng-template #sdpcwi1>
+                                <td><select   formControlName="cwiLabDiscountPer1"  value={{cwiLabDiscountPer1}}
+                                        id="cwiLabDiscountPer1" class="form-control" style="width: 4em;font-weight: bold;font-size: small;"
+                                        (ngModelChange)="labDiscountPerCal($event,21)">
+                                        <option >0</option>
+                                        <option
+                                            *ngFor="let sc of  labDiscountPerList" [value]="sc.code" >
+                                            {{sc.code}}
+                                        </option>
+                                    </select></td>
+                                </ng-template>
+                                <ng-template #sdpcwi2>
+                                    <td><input  disabled type="number"   min="0"     formControlName="cwiLabDiscountPer" class="form-control"  style="width: 4em;font-weight: bold;font-size: small;"></td>
+                                </ng-template>
+
+                                <div *ngIf="cwiLabDisCol ;then sdcwi1; else sdcwi2"></div>
+                                <ng-template #sdcwi1>
+                                     <td><input  type="number"   min="0"     formControlName="cwiLabDiscount" class="form-control" (change)="labDiscountAmtCal($event,21)" style="width: 7em;font-weight: bold;font-size: small;"></td>
+                                </ng-template>
+                                <ng-template #sdcwi2>
+                                     <td><input disabled type="number"   min="0"  formControlName="cwiLabDiscount" class="form-control"  style="width: 7em;font-weight: bold;font-size: small;"></td>
+                                </ng-template>
+                                </ng-template>
+
+                                <ng-template #srmcwi2></ng-template>
+
+                                
+
+                                <div *ngIf="showServiceCustomer ;then srmcwi11; else srmcwi21"></div>
+                                <ng-template #srmcwi11>
+                                    <td>
+                                        <select disabled  formControlName="disTypeMatCwi" value={{disTypeMatCwi}} style="font-weight: bold;font-size: small;"
+                                            id="disTypeMatCwi" class="form-control"
+                                            (ngModelChange)='onOptionsDisTypeMatSelected($event,21)'>
+                                            <!-- <option >--Select--</option> -->
+                                            <option >None</option>
+                                            <option *ngFor="let sc of  DisTypeMatList">
+                                                {{sc.model}}
+                                            </option>
+                                        </select>
+                                        
+                                    </td>
+
+                                <div *ngIf="cwiMatdisP ;then mdpmcwi1; else mdpmcwi2"></div>
+                                <ng-template #mdpmcwi1>
+                                <td><select    formControlName="cwiMatDiscoutPer1" value={{cwiMatDiscoutPer1}}   class="form-control" style="width: 4em;font-weight: bold;font-size: small;"
+                                    id="cwiMatDiscoutPer1" class="form-control"
+                                    (ngModelChange)="matDiscountPerCal($event,21)">
+                                    <option >0</option>
+                                    <option
+                                        *ngFor="let sc of  matDiscountPerList" [value]="sc.code" >
+                                        {{sc.code}}
+                                    </option> 
+                                  </select></td>
+                                </ng-template>
+                                <ng-template #mdpmcwi2>
+                                    <td><input disabled type="number" min="0" formControlName="cwiMatDiscoutPer"  style="width: 4em;font-weight: bold;font-size: small;" class="form-control"  ></td>
+                                </ng-template>
+
+                                  <div *ngIf="cwiMatDisCol ;then mdmcwi1; else mdmcwi2"></div>
+                                  <ng-template #mdmcwi1>
+                                    <td><input type="number" min="0" formControlName="cwiMatDiscout"  style="width: 7em;font-weight: bold;font-size: small;" class="form-control"  (change)="matDiscountAmtCal($event,21)"></td>
+                                  </ng-template>
+                                  <ng-template #mdmcwi2>
+                                    <td><input disabled type="number" min="0" formControlName="cwiMatDiscout"  style="width: 7em;font-weight: bold;font-size: small;" class="form-control"  ></td>
+                                 </ng-template>
+                                </ng-template>
+                                <ng-template #srmcwi21></ng-template>
+                            </tr>
+                             </ng-template>
+                        <!-- ======================================================================================== -->
+
+                                                                    
+                            </tbody>
+                        </table>
+                    </fieldset>
+
+                
 
                     <div class="modal-footer">
                        <!-- <button type="button" class="btn btn-info" data-dismiss="modal">Close</button> -->

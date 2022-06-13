@@ -346,6 +346,7 @@
                                             <td style="width: 15%" class="LabelFontStyle1">Ref.&nbsp;Type:&nbsp;</td>
                                             <td><input disabled  style="font-weight: bold;"   type="text"   min="1" formControlName="refType"  id="refType"  [(ngModel)]="refType" class="form-control" >    </td>
                                             
+                                          
                                             <td style="width: 15%" class="LabelFontStyle">Ref.&nbsp;No:&nbsp;</td>
                                             <td> <input disabled  type="text" formControlName="referenceNo"  id="referenceNo"  [(ngModel)]="referenceNo" class="form-control" >  </td>
                                         
@@ -353,6 +354,8 @@
                                             <td><input  disabled  type="date"  formControlName="referenceDate"  id="referenceDate" 
                                                 max="{{minDate | date:'yyyy-MM-dd'}}" [(ngModel)]="referenceDate" class="form-control" ></td>
                                            
+
+
                                                 <td  style="width: 15%" class="LabelFontStyle1">TDS&nbsp;Amt:&nbsp;</td>
                                             <td><input   style="font-weight: bold;text-align: right;"   type="number"   min="1" formControlName="tdsAmount"  id="tdsAmount"  [(ngModel)]="tdsAmount" 
                                                 class="form-control"  style="background-color: yellow;"  (change)="validateTdsAmt(tdsAmount)"></td>
@@ -372,8 +375,15 @@
                                                 </select>
                                             </td>
                                    
+                                            <div *ngIf="reInsurance ,then reinYes1; else reinNo1")></div>
+                                            <ng-template #reinNo1>
+                                                 <td style="width: 15%" class="LabelFontStyle">Ref.&nbsp;No:&nbsp;</td>
+                                            </ng-template>
+                                            <ng-template #reinYes1>
+                                                <td style="width: 15%" class="LabelFontStyle">Policy&nbsp;No:&nbsp;</td>
+                                            </ng-template>
 
-                                             <td style="width: 15%" class="LabelFontStyle">Ref.&nbsp;No:&nbsp;</td>
+
 
                                             <div *ngIf="showRefYellow; then thenBlockRef1; else elseBlockRef1"></div>
                                             <ng-template #thenBlockRef1>
@@ -384,11 +394,26 @@
                                             </ng-template>
 
 
-                                        <td style="width: 15%" class="LabelFontStyle">Ref&nbsp;Date:&nbsp;</td>
-                                        <td><input   type="date"  formControlName="referenceDate"  id="referenceDate" 
-                                            max="{{minDate | date:'yyyy-MM-dd'}}" [(ngModel)]="referenceDate" class="form-control" ></td>
-                                   
-                                        <td  style="width: 15%" class="LabelFontStyle1">TDS&nbsp;Amt:&nbsp;</td>
+                                            <div *ngIf="reInsurance ,then reinYes2; else reinNo2")></div>
+                                            <ng-template #reinNo2>
+                                                <td style="width: 15%" class="LabelFontStyle">Ref&nbsp;Date:&nbsp;</td>
+                                            </ng-template>
+                                            <ng-template #reinYes2>
+                                                <td style="width: 15%" class="LabelFontStyle">Policy&nbsp;Date:&nbsp;</td>
+                                            </ng-template>
+
+                                            <div *ngIf="showRefYellow; then Y1; else Y2"></div>
+                                            <ng-template #Y1>
+                                            <td><input   type="date"  formControlName="referenceDate"  id="referenceDate"  style="background-color:yellow ;"
+                                                max="{{minDate | date:'yyyy-MM-dd'}}" [(ngModel)]="referenceDate" class="form-control"  ></td>
+                                            </ng-template>
+                                            <ng-template #Y2>
+                                                <td><input   type="date"  formControlName="referenceDate"  id="referenceDate" 
+                                                    max="{{minDate | date:'yyyy-MM-dd'}}" [(ngModel)]="referenceDate" class="form-control"  ></td>
+                                            </ng-template>
+
+                                       
+                                            <td  style="width: 15%" class="LabelFontStyle1">TDS&nbsp;Amt:&nbsp;</td>
                                         <td><input   style="font-weight: bold;text-align: right;"   type="number"   min="1" formControlName="tdsAmount"  id="tdsAmount"  [(ngModel)]="tdsAmount" 
                                             class="form-control"  style="background-color: yellow;"  (change)="validateTdsAmt(tdsAmount)"></td>
                                     </ng-template>
@@ -406,10 +431,24 @@
                                             </select>
                                         </td>
     
-                                        <td style="width: 15%" class="LabelFontStyle">Ref.&nbsp;No:&nbsp;</td>
-                                          <td> <input  disabled type="text" formControlName="referenceNo"  id="referenceNo"  [(ngModel)]="referenceNo" class="form-control"  >  </td>
+                                        <div *ngIf="reInsurance ,then reinYes11; else reinNo11")></div>
+                                        <ng-template #reinNo11>
+                                             <td style="width: 15%" class="LabelFontStyle">Ref.&nbsp;No:&nbsp;</td>
+                                        </ng-template>
+                                        <ng-template #reinYes11>
+                                            <td style="width: 15%" class="LabelFontStyle">Policy&nbsp;No:&nbsp;</td>
+                                        </ng-template>
                                        
-                                        <td style="width: 15%" class="LabelFontStyle">Ref&nbsp;Date:&nbsp;</td>
+                                        <td> <input  disabled type="text" formControlName="referenceNo"  id="referenceNo"  [(ngModel)]="referenceNo" class="form-control"  >  </td>
+                                       
+                                        <div *ngIf="reInsurance ,then reinYes21; else reinNo21")></div>
+                                        <ng-template #reinNo21>
+                                            <td style="width: 15%" class="LabelFontStyle">Ref&nbsp;Date:&nbsp;</td>
+                                        </ng-template>
+                                        <ng-template #reinYes21>
+                                            <td style="width: 15%" class="LabelFontStyle">Policy&nbsp;Date:&nbsp;</td>
+                                        </ng-template>                                        
+                                        
                                         <td><input disabled  type="date"  formControlName="referenceDate"  id="referenceDate" [(ngModel)]="referenceDate" class="form-control" ></td>
                                         <td  style="width: 15%" class="LabelFontStyle1">TDS&nbsp;Amount:&nbsp;</td>
                                         <td><input  disabled  style="font-weight: bold;text-align: right;"   type="number"   min="1" formControlName="tdsAmount"  id="tdsAmount"  [(ngModel)]="tdsAmount" class="form-control"  style="background-color: yellow;">    </td>
@@ -574,9 +613,15 @@
                                         </select>
                                         </td>
 
+                                        <div *ngIf="reInsurance ,then reinYes3; else reinNo3")></div>
+                                        <ng-template #reinYes3>
+                                            <td style="width: 15%" class="LabelFontStyle">Policy&nbsp;Term:&nbsp;</td>
+                                            <td> <input  min="1"  type="number" formControlName="policyTerm"  id="policyTerm"  [(ngModel)]="policyTerm" class="form-control"  style="background-color: yellow;">  </td>
+                                        </ng-template><ng-template #reinNo3></ng-template>
+
                                      <td style="width: 15%" class="LabelFontStyle">Remarks&nbsp;:&nbsp;</td>
         
-                                        <td colspan="5">
+                                        <td colspan="3">
                                             <input style="width: 100%; text-transform: uppercase;"   type="text" formControlName="comments"  id="comments" [(ngModel)] ="comments" class="form-control" placeholder="Enter remarks here" >
                                         </td>
                                     </tr>
@@ -819,6 +864,11 @@
                                 <td>
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#viewAccountingModel"  style="width: 8rem;" (click)="viewAccounting(receiptNumber)" >
                                     View Accounting
+                                    </button>
+                                </td> 
+                                <td [style.display]="isVisibleUnApplyReceipt ? 'block' : 'none'">
+                                    <button type="button" class="btn btn-primary"   style="width: 8rem;" (click)="unApplyReceipt(receiptNumber)" >
+                                    Un-Apply Receipt
                                     </button>
                                 </td>     
 

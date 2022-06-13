@@ -1015,7 +1015,7 @@ export class CustomerMasterComponent implements OnInit {
   }
 
   UpdateSiteCustMastExeSite() {
-    const formValue: IcustomerMaster = this.transDataForSite(this.customerMasterForm.value);
+    const formValue: IcustomerMaster = this.transDataForSite(this.customerMasterForm.getRawValue());
     var siteName=this.customerMasterForm.get('siteName').value;
     var siteName = this.customerMasterForm.get('siteName').value;
     var souId= this.customerMasterForm.get('souId').value;
