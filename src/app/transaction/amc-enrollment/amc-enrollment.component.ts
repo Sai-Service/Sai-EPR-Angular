@@ -65,6 +65,7 @@ export class AmcEnrollmentComponent implements OnInit {
   lstAmcSchemeList:any[];
   lstAmcSchLineDetails:any[];
   lstAmcSchHeaderDetails:any;
+  
   loginName:string;
   loginArray:string;
   divisionId:number;
