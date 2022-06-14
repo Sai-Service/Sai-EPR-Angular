@@ -669,7 +669,10 @@ hsnSacCodeDet(mHsnCode): Observable<any> {
   return this.http.get(this.ServerUrl +`/hsnSacMst/${mHsnCode}`);
 }
 
-
+hsnSacCodeDetNew(mHsnCode): Observable<any> {
+  // alert("ms >> "+mHsnCode);
+  return this.http.get(this.ServerUrl +`/hsnSacMst/ls/${mHsnCode}`);
+}
 
 internalOrderList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');

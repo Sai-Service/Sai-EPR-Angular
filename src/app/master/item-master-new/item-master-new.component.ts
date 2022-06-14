@@ -543,14 +543,14 @@ export class ItemMasterNewComponent implements OnInit {
   onHsnCodeSelectedSearch(mHsnCode) {
     //  alert(mHsnCode+'----')
     if (mHsnCode != null) {
-      this.service.hsnSacCodeDet(mHsnCode)
+      this.service.hsnSacCodeDetNew(mHsnCode)
         .subscribe(
           data => {
             // this.hsnSacCodeList = data;
             this.hsnSacCodeDet = data;
             console.log(this.hsnSacCodeDet);
-            this.itemMasterForm.patchValue(this.hsnSacCodeDet.gstPercentage);
-            this.hsnGstPer = this.hsnSacCodeDet.gstPercentage;
+            this.itemMasterForm.patchValue(this.hsnSacCodeDet[0].gstPercentage);
+            this.hsnGstPer = this.hsnSacCodeDet[0].gstPercentage;
             // alert(this.hsnGstPer);
             this.service.taxCategoryListHSN(this.hsnGstPer, 'SALES')
               .subscribe(data1 => {
@@ -604,15 +604,14 @@ export class ItemMasterNewComponent implements OnInit {
     // alert(mHsnCode);
     var mHsnCode = mHsnCode.target.value;
     if (mHsnCode != null) {
-      this.service.hsnSacCodeDet(mHsnCode)
+      this.service.hsnSacCodeDetNew(mHsnCode)
         .subscribe(
           data => {
             // this.hsnSacCodeList = data;
             this.hsnSacCodeDet = data;
             console.log(this.hsnSacCodeDet);
-            this.itemMasterForm.patchValue(this.hsnSacCodeDet.gstPercentage);
-            this.hsnGstPer = this.hsnSacCodeDet.gstPercentage;
-            // alert(this.hsnGstPer);
+            this.itemMasterForm.patchValue(this.hsnSacCodeDet[0].gstPercentage);
+            this.hsnGstPer = this.hsnSacCodeDet[0].gstPercentage;
             this.service.taxCategoryListHSN(this.hsnGstPer, 'SALES')
               .subscribe(data1 => {
                 this.taxCategoryListSalesIGST = data1;
@@ -658,8 +657,6 @@ export class ItemMasterNewComponent implements OnInit {
                   this.taxCategoryListPSAndCGST = taxCategoryListPSAndCGST;
                   this.displaytaxCategoryListPSAndCGST = true;
                 });
-
-
           });
     }
   }
@@ -938,6 +935,7 @@ export class ItemMasterNewComponent implements OnInit {
       alert('Select Item Description.!');
       return;
     }
+
     else if (this.uom == undefined || this.uom == null || this.uom ==''){
       alert('Select UOM.!');
       return;
