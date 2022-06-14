@@ -274,7 +274,7 @@ export class WsVehicleMasterComponent implements OnInit {
   lastRunKm:number;
   endDate:Date;
   oemWarrantyPeriod:number;
- 
+  isVisiblejobCardForm:boolean=false;
 
   public ServiceModelList   :Array<string> = [];
   public insNameList: Array<string>[];
@@ -466,6 +466,12 @@ export class WsVehicleMasterComponent implements OnInit {
     // this.locName=(sessionStorage.getItem('locName'));
     this.deptId = Number(sessionStorage.getItem('dept'));
     // this.emplId= Number(sessionStorage.getItem('emplId'));
+    if (Number(sessionStorage.getItem('deptId'))==1){
+      this.isVisiblejobCardForm=false;
+    }
+    else {
+      this.isVisiblejobCardForm=true;
+    }
 
     this.orgId = this.ouId;
     console.log(this.loginArray);

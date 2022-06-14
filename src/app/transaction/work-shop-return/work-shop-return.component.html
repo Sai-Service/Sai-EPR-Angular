@@ -65,11 +65,18 @@
                 JobCard Number:
               </td>
               <td>
-                <!-- <input type="text" class="form-control" formControlName="repairNo"> -->
-                <select  class="form-control" formControlName="repairNo" (ngModelChange)='onSelectjob($event)'>
+  
+                <!-- <select  class="form-control" formControlName="repairNo" (ngModelChange)='onSelectjob($event)'>
                     <option>--Select--</option>
                     <option *ngFor="let repairNo of issueReturn">{{repairNo.jobcardnum }}</option>
-                  </select>
+                  </select> -->
+                  <input type="text" formControlName="repairNo"
+                  (keyup)="getUserIdsFirstWay($event)" id="userIdFirstWay"
+                  list="dynmicUserIds" class="form-control" placeholder="Supplier details"
+                  (ngModelChange)="onSelectjob($event)">
+              <datalist id="dynmicUserIds">
+                <option *ngFor="let repairNo of issueReturn">{{repairNo.jobcardnum }}</option>
+              </datalist>
               </td>
               <td style="width: 15%" class="LabelFontStyle">
                 Billable Type:

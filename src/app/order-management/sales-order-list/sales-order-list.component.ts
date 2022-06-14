@@ -107,7 +107,9 @@ export class SalesOrderListComponent implements OnInit {
           this.DepartmentListNew = data;
           let createOrderList = this.DepartmentListNew.filter((dept) => (dept.divisionId==2));
           console.log(createOrderList);
-         this.DepartmentList= createOrderList;       
+          let createOrderListSales = this.DepartmentListNew.filter((dept) => (dept.code=='Sales'));
+          console.log(createOrderListSales);   
+         this.DepartmentList= createOrderListSales;       
         }
       );
   }

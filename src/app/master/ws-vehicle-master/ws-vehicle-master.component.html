@@ -1402,8 +1402,8 @@
                                         &nbsp;Customer Details</button>
                                     </td> -->
 
-                                    <td>
-                                        <button type="button" class="btn btn-info" (click)="jobCardForm()" >JobCard</button>
+                                    <td [style.display]="isVisiblejobCardForm ? 'block' : 'none'">
+                                        <button type="button" class="btn btn-info" (click)="jobCardForm()" >Job Card</button>
                                     </td>
                                     
                                 </tr>

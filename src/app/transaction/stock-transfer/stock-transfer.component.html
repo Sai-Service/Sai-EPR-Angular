@@ -153,12 +153,13 @@
           <tr>
             <td>
               <div class="grid_scroll">
-          <table  style="width:100%; border-collapse:collapse;" cellspacing="0"
-          cellpadding="4" class="auto-style4" class="GridFont">
-            <thead>
-                <tr class="GridHeader">
+          <table  style="width:100%; border-collapse:collapse;" cellspacing="0" cellpadding="4" class="auto-style4" class="GridFont">
+            <!-- class="GridHeader" -->
+            <thead  class="GridHeader">
+                <tr>
                         <th scope="col">Srl&nbsp;No.&nbsp;</th>
                         <th scope="col">Item&nbsp;Code&nbsp;</th>
+                        <th scope="col" style="border-top: none;border-bottom: none;margin-top: 5px;border-color: white;"  [style.display]="isVisibleVinNumber ? 'block' : 'none'">Vin&nbsp;Number&nbsp;</th>
                         <th scope="col">Item&nbsp;Description&nbsp;</th>
                         <th scope="col">UOM</th>
                         <!-- <th scope="col">Subinventory</th> -->
@@ -183,10 +184,9 @@
                  <input disabled hidden type="text" class="form-control"
                                                             formControlName="uuidRef" value={{uuidRef}}>
                 <!-- <td><select  class="form-control" style="height: 20px;width:120px;" formControlName="itemId" (ngModelChange)='onOptionItemDetails($event,trxLineIndex)'> -->
-                    <td><input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 100%;" (ngModelChange)='onOptionItemDetails($event,trxLineIndex)' />
+                    <td><input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 100%;" (change)='onOptionItemDetails($event,trxLineIndex)' />
                       <datalist id="dynmicUserIds1">
-                        <option *ngFor="let item of ItemIdList" [ngValue]="item.itemId">{{item.SEGMENT}}
-                          </option>
+                        <option *ngFor="let item of ItemIdList" [value]="item.SEGMENT">{{item.SEGMENT}}--{{item.vin}}</option>
                          </datalist>
                   <!-- <option></option>
                   <option *ngFor="let invId of ItemIdList" [ngValue]="invId.itemId">{{invId.SEGMENT}}</option>
@@ -195,6 +195,7 @@
                  </span>
                  <input hidden formControlName="itemId">
                 </td>
+                <td [style.display]="isVisibleVinNumber ? 'block' : 'none'"><input disabled type="text" class="form-control" style="height: 20px;width: 100%;"formControlName="vin"></td>
                 <td><input disabled type="text" class="form-control" style="height: 20px;width: 100%;"formControlName="description"></td>
                 <td><input disabled type="text" class="form-control" style="height: 20px;width: 100%;" formControlName="uom" ></td>
 
@@ -243,6 +244,7 @@
                 </td>
                <td><input disabled type="text"  class="form-control" style="height: 20px;" formControlName="segment">
                </td>
+               <td [style.display]="isVisibleVinNumber ? 'block' : 'none'"><input disabled type="text" class="form-control" style="height: 20px;" formControlName="vin"></td>
                <td><input disabled type="text" class="form-control" style="height: 20px;" formControlName="description"></td>
                <td><input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="uom" ></td>
                <td><input disabled type="number" class="form-control" style="height: 20px;width: 70px; text-align: right;" formControlName="transCost" value="{{ transCost | number:'1.2-2' }}"></td>

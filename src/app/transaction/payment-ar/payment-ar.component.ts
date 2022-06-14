@@ -658,7 +658,14 @@ if(this.deptId==2){
 
 
 
-
+      if (Number(sessionStorage.getItem('deptId'))==4){
+        this.paymentArForm.get('receiptDate').enable();
+        this.paymentArForm.get('glDate').enable();
+      }
+      else{
+        this.paymentArForm.get('receiptDate').disable();
+        this.paymentArForm.get('glDate').disable();
+      }
 
 
     this.service.RefReasonLst()

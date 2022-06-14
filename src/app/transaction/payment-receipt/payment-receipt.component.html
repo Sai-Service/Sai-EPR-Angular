@@ -122,6 +122,8 @@
 
                             <td style="width: 15%" class="LabelFontStyle">Payment&nbsp;Method:&nbsp;</td>
                             <td>  
+                                <div *ngIf="showreceiptMethodName; then thenreceiptMethodName; else elsereceiptMethodName"></div>
+                                <ng-template #thenreceiptMethodName>
                                 <select  formControlName="receiptMethodName" [(ngModel)]='receiptMethodName' value={{receiptMethodName}} (ngModelChange)='onmethodNameSelected($event)'  class="form-control">
                                     <option>--Select--</option>
                                     <option *ngFor="let sc of  ReceiptMethodList ">
@@ -129,6 +131,10 @@
                                     </option>
                                 </select>
                                 <input hidden type="number" formControlName="receiptMethodId">
+                                </ng-template>
+                                <ng-template #elsereceiptMethodName>
+                                    <input  type="text" formControlName="receiptMethodName" class="form-control">
+                                </ng-template>
                             </td>
                         </tr>
                         <tr>
@@ -236,10 +242,18 @@
                         </tr>
 
                             <tr>
-                                <td style="width: 15%" class="LabelFontStyle">Remark&nbsp;:</td>
+                                <td style="width: 15%" class="LabelFontStyle">Customer&nbsp;Pan&nbsp;No&nbsp;:</td>
                                 <td>
+                                    <input type="text" disabled formControlName="custPan"  id="custPan"  [(ngModel)] ="custPan" class="form-control">
+                                </td>
+                                <td style="width: 15%" class="LabelFontStyle">Customer&nbsp;GST&nbsp;No&nbsp;:</td>
+                                <td>
+                                    <input type="text" disabled formControlName="custGst"  id="custGst"  [(ngModel)] ="custGst" class="form-control">
+                                </td>
+                                <td style="width: 15%" class="LabelFontStyle">Remark&nbsp;:</td>
+                                <td colspan="2">
                                     <input type="text" formControlName="comment"  id="comment"  [(ngModel)] ="comment" class="form-control"
-                                        placeholder="Enter Remarks if any..." style="width: 265%;">
+                                        placeholder="Enter Remarks if any..." style="width: 100%;">
                                 </td>
                             </tr>
 

@@ -520,6 +520,15 @@ export class OrderManagementService {
     return this.http.post(url, options);
   }
 
+
+  cancelledSalesOrderFn(orderNumber){
+    const options = {
+      headers: this.headers
+    };
+    const url = this.ServerUrl + `/orderHeader/cancelSaleOrder?orderNumber=${orderNumber}`;
+    return this.http.put(url, options);
+  }
+
   // ////////////////************Order Payment Receipt **************//////////////////
   PaymentModeList(): Observable<any> {
     return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/PayType');

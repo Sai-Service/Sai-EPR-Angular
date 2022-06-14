@@ -914,6 +914,9 @@
                                 <input type="text" disabled formControlName="daysMsg" value={{daysMsg}}
                                     class="form-control" style="width: 150px;">
                             </td>
+                            <td>
+                                <button type="button" class="btn btn-primary" (click)="refreshCreadiAmt()"style="border: solid 1px Gray;width: fit-content">Refresh&nbsp;Credit&nbsp;Amt</button>
+                            </td>
                         </ng-template>
                         <div *ngIf="displaytcsYN; then thentcsYN; else elsetcsYN"> </div>
                         <ng-template #thentcsYN>

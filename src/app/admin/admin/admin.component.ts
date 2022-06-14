@@ -95,6 +95,7 @@ export class AdminComponent implements OnInit {
   isShown: boolean = false;
   displayUserIdwiseAccess: boolean = true;
   isVisibleSubInventoryTransfer:boolean=false;
+  isVisibleWsVehicleMaster:boolean=false;
   fullName: string;
   deptName: string;
   locCode: string;
@@ -251,6 +252,7 @@ export class AdminComponent implements OnInit {
       this.isVisible11=false;
       this.isVisible12=true;
       this.isVisible13=false
+      this.isVisibleWsVehicleMaster=true;
       this.isVisible14=true;
       this.isVisible15=true;
       this.isVisible16=true;
@@ -280,6 +282,7 @@ export class AdminComponent implements OnInit {
     if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId'))===2 && sessionStorage.getItem('deptName')==='Service'){
       this.isVisible11=false;
       this.isVisible12=false;
+      this.isVisibleWsVehicleMaster=false;
       this.isVisible13=true;
       this.isVisible14=false;
       this.isVisible37=false;
@@ -316,6 +319,7 @@ export class AdminComponent implements OnInit {
       this.isVisible37=true;
       this.isVisibleSubInventoryTransfer=false;
       this.isVisible13=false;
+      this.isVisibleWsVehicleMaster=false;
       this.isVisible14=true;
       this.isVisible15=true;
       this.isVisible16=true;
@@ -345,6 +349,7 @@ export class AdminComponent implements OnInit {
       // alert((sessionStorage.getItem('roleId')))
       this.isVisible11=true;
       this.isVisible12=false;
+      this.isVisibleWsVehicleMaster=false;
       this.isVisible13=false;
       this.isVisibleSubInventoryTransfer=false;
       this.isVisible14=true;
@@ -377,6 +382,7 @@ export class AdminComponent implements OnInit {
       // alert((sessionStorage.getItem('roleId')))
       this.isVisible11=true;
       this.isVisible12=false;
+      this.isVisibleWsVehicleMaster=false;
       this.isVisibleSubInventoryTransfer=false;
       this.isVisible13=false;
       this.isVisible14=true;
@@ -412,6 +418,7 @@ export class AdminComponent implements OnInit {
       this.isVisible11=true;
       this.isVisible12=false;
       this.isVisible37=true;
+      this.isVisibleWsVehicleMaster=false;
       this.isVisibleSubInventoryTransfer=false;
       this.isVisible13=false;
       this.isVisible14=true;

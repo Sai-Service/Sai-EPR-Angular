@@ -26,6 +26,7 @@ export class SalesOrderProformaComponent implements OnInit {
   emailId: string;
   classCodeType: string;
   public salesRepNameList: any;
+  DisplayfinanceType=false;
   allDatastore: any;
   custtaxCategoryName: string;
   emailId1: string;
@@ -53,6 +54,7 @@ export class SalesOrderProformaComponent implements OnInit {
   refCustNo: string;
   custPoNumber: string;
   custPoDate: Date;
+  financeType:string;
   state: string;
   customerId: number;
   transactionTypeName: string;
@@ -183,6 +185,7 @@ export class SalesOrderProformaComponent implements OnInit {
       customerId: [],
       gstNo: [],
       panNo: [],
+      financeType:[],
       custAccountNo: ['', [Validators.required]],
       creditAmt: [],
       name: [],
@@ -325,13 +328,13 @@ export class SalesOrderProformaComponent implements OnInit {
         }
       );
 
-      this.orderManagementService.getFinTypeSearch1()
-      .subscribe(
-        data => {
-          this.financeTypeList = data;
-          console.log(this.financeTypeList);
-        }
-      );
+      // this.orderManagementService.getFinTypeSearch1()
+      // .subscribe(
+      //   data => {
+      //     this.financeTypeList = data;
+      //     console.log(this.financeTypeList);
+      //   }
+      // );
 
     this.service.mainModelListDivisionWise(sessionStorage.getItem('divisionId'))
       .subscribe(
@@ -1214,21 +1217,33 @@ export class SalesOrderProformaComponent implements OnInit {
 
   financeSelectionYes(event: any) {
     // alert(event.target.value)
-    if (event.target.value != 'None') {
+    if (event.target.value != 'N') {
       this.DisplayfinanceSelectionYes = false;
-      // this.DisplayfinanceSelectionYes1 = false;
-      this.orderManagementService.finananceList(event.target.value, sessionStorage.getItem('divisionId'))
-        .subscribe(
-          data => {
-            this.financerNameList = data;
-            console.log(this.financerNameList);
-          }
-        );
+      this.DisplayfinanceType=true;
+      this.orderManagementService.getFinTypeSearch1()
+      .subscribe(
+        data => {
+          this.financeTypeList = data;
+          console.log(this.financeTypeList);
+        }
+      );
     }
-    if (event.target.value === 'None') {
+    if (event.target.value === 'N') {
       this.DisplayfinanceSelectionYes=true;
+      this.DisplayfinanceType=false;
      this.CounterSaleOrderBookingForm.patchValue({attribute4:'CASH'})
     }
   }
 
+  financeSelectionfinanceType(event){
+    // alert(event.target.value);
+    this.DisplayfinanceSelectionYes = false;
+    this.orderManagementService.finananceList(event.target.value, sessionStorage.getItem('divisionId'))
+      .subscribe(
+        data => {
+          this.financerNameList = data;
+          console.log(this.financerNameList);
+        }
+      );
+  }
 }
