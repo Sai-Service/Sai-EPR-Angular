@@ -429,6 +429,13 @@ getcompanySearch(): Observable<any> {
 }
 
 
+///////////////////////////common look up //////////////////////////
+
+cmnTypeListNew(divId): Observable<any>{
+  return this.http.get(this.ServerUrl + `/cmnLookup/AllCmnType/${divId}`);
+  // http://localhost:8081/cmnLookup/AllCmnType/2
+  }
+
 public commonMasterSubmit(commonMasterRecord) {
   const options = {
     headers: this.headers
@@ -439,7 +446,11 @@ public commonMasterSubmit(commonMasterRecord) {
 
 getCommonLookupSearch(searchText): Observable<any> {
   return this.http.get(this.ServerUrl + `/CompMst/${searchText}`);
+}
 
+getCommonLookupSearchNew(cmnTp,divId): Observable<any> {
+  return this.http.get(this.ServerUrl+`/cmnLookup/CmnTypeDivision?cmnType=${cmnTp}&divisionId=${divId}`)
+  // http://localhost:8081/cmnLookup/CmnTypeDivision?cmnType=PhysicalLocation&divisionId=2
 }
 
 

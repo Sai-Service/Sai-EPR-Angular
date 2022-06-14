@@ -80,7 +80,6 @@ export class OrderDetailsUpdationComponent implements OnInit {
   accountNo:number;
   custName:string;
 
-  title:string;
   address1:string;
   address2:string;
   address3:string;
@@ -88,6 +87,10 @@ export class OrderDetailsUpdationComponent implements OnInit {
   city:string; 
   state:string;
   pinCd:string;
+  title:string;
+  contactPerson:string;
+  contactNum:string;
+
   leadTicketNo:string;
 
 
@@ -101,7 +104,7 @@ export class OrderDetailsUpdationComponent implements OnInit {
   get f() { return this.orderDetailsUpdationForm.controls }
 
 
-  constructor(private fb: FormBuilder, private location1: Location, private service: MasterService, private orderManagementService: OrderManagementService) {
+  constructor(private fb: FormBuilder, private location1: Location, private service: MasterService, private router: Router, private orderManagementService: OrderManagementService) {
     this.orderDetailsUpdationForm = fb.group({ 
 
       loginArray:[''],
@@ -143,6 +146,10 @@ export class OrderDetailsUpdationComponent implements OnInit {
 
       accountNo:[],
       custName:[],
+
+      title:[],
+      contactPerson:[],
+      contactNum:[],
 
     })
 
@@ -303,4 +310,14 @@ export class OrderDetailsUpdationComponent implements OnInit {
         });
 
       }
+
+      resetMast() {
+        window.location.reload();
+      }
+    
+      closeMast() {
+        this.router.navigate(['admin']);
+      }
+
+      newMast(){alert ("Not implemented....Wip")}
 }

@@ -1,92 +1,86 @@
+<form [formGroup]="commonMasterForm" (ngSubmit)="commonMaster(commonMasterForm.value)" id="form_1" >
+
 <div class="center">
     <table style="width: 100%;background-color: white;">
         <tr>
-            <!-- class="PageHeader" -->
             <td colspan="4" class="PageHeader" style="width: 100%;" >
-                &nbsp;&nbsp;Common&nbsp;Master
+                &nbsp;&nbsp;Common&nbsp;Lookup&nbsp;Master
             </td>
         </tr>
     </table>
     <div class="center" style="width: 100%;">
         <div class="form-bg">
-            <form [formGroup]="commonMasterForm" (ngSubmit)="commonMaster(commonMasterForm.value)" id="form_1" >
-                <table class="center">
-                    <tr>
-                    <td style="width: 15%" class="LabelFontStyle">Common&nbsp;Type&nbsp;:&nbsp;</td>
+               <table class="center">
+
+                <!-- <div *ngIf="displayButton; then b1; else b2"></div>
+                <ng-template #b1>   -->
+                <input hidden disabled   type="number"  formControlName="emplId" class="form-control" [(ngModel)]="emplId">
+
+
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle">Division&nbsp;:&nbsp;</td>
                     <td>
-                        <input formControlName="cmnType" [(ngModel)]='cmnType' value={{cmnType}} class="form-control"
-                                        [ngClass]="{ 'is-invalid': submitted && f.cmnType.errors }"
-                                        placeholder="Enter common type">
-                                    <div *ngIf="submitted && f. cmnType.errors" class="invalid-feedback">
-                                        <div *ngIf="f.cmnType.errors.required">Enter common type</div>
-                                        <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
-                                </div> -->
-                                        <div *ngIf="f.cmnType.errors?.maxLength">Enter common type
-                                        </div>
-                                    </div>
-                                    <span
-                                        *ngIf="!commonMasterForm.get('cmnType').valid && commonMasterForm.get('cmnType').touched">
-                                        Enter common type </span>
+                        <select formControlName="divisionId" id="divisionId" class="form-control">
+                            <option>--Select--</option>
+                            <option *ngFor="let sc of  DivisionIDList"  [value]="sc.divisionId">
+                                {{sc.divisionName}}
+                            </option>
+                        </select>
                     </td>
-                    <td style="width: 15%" class="LabelFontStyle">Common&nbsp;Description&nbsp;:&nbsp;</td>
+
+                    <td style="width: 15%;" class="LabelFontStyle">Type&nbsp;Name:&nbsp;</td>
+                    <td >
+                        <select formControlName="cmnType" id="cmnType"   class="form-control" (ngModelChange)='onSelectType($event)'>
+                            <option>--Select--</option>
+                            <option *ngFor="let sc of  cmnTypeList" [ngValue] ="sc.CMNTYPE">
+                                {{sc.CMNDESC}}
+                            </option>
+                        </select>
+                    </td>
+                    <!-- <td style="width:100% ;" colspan="8" ><button type="button" class="btn btn-info" id="register" (click)="searchCmnMst()">Search</button></td>  -->
+                     <td style="width: 15%;" class="LabelFontStyle">Code&nbsp;:&nbsp;</td>
+                    <td> <input formControlName="code" [(ngModel)]='code' value={{code}} class="form-control"  placeholder="Enter code" > </td>
+                
+                </tr>
+                <tr>
+                      
+                    <td style="width: 15%;" class="LabelFontStyle">Description&nbsp;:&nbsp;</td>
+                    <td colspan="3"><input formControlName="codeDesc" [(ngModel)]='codeDesc'  class="form-control" placeholder="Enter code Description" style="width:100%;"></td>
+               
+                    <td style="width: 15%" class="LabelFontStyle">Status&nbsp;&nbsp;:</td>
+
                     <td>
-                        <input formControlName="cmnDesc" [(ngModel)]='cmnDesc' value={{cmnDesc}} class="form-control"
-                        [ngClass]="{ 'is-invalid': submitted && f.cmnDesc.errors }"
-                        placeholder="Enter common Description">
-                    <div *ngIf="submitted && f. cmnDesc.errors" class="invalid-feedback">
-                        <div *ngIf="f.cmnDesc.errors.required">Enter common Description</div>
-                        <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
-                </div> -->
-                        <div *ngIf="f.cmnDesc.errors?.maxLength">Enter common Description
-                        </div>
-                    </div>
-                    <span
-                        *ngIf="!commonMasterForm.get('cmnDesc').valid && commonMasterForm.get('cmnDesc').touched">
-                        Enter common Description </span>
-                       </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 15%" class="LabelFontStyle">Application&nbsp;:&nbsp;</td>
-                        <td>
-                         <select formControlName="application" id="application" class="form-control">
-                             <option>--Select--</option>
-                             <option *ngFor="let sc of  applicationList">
-                                 {{sc.application}}
-                             </option>
-                         </select>
-                         <div *ngIf="submitted && f. ouId.errors" class="invalid-feedback">
-                             <div *ngIf="f.application.errors.required">Select Application</div>
-                             <span
-                                 *ngIf="!commonMasterForm.get('application').valid && commonMasterForm.get('application').touched">Please
-                                 Enter valid OU Id </span>
-                         </div>
-                        </td>
-                         <td style="width: 15%" class="LabelFontStyle">Division&nbsp;:&nbsp;</td>
-                         <td>
-                             <select formControlName="divisionId" id="divisionId" class="form-control">
-                                 <option>--Select--</option>
-                                 <option *ngFor="let sc of  DivisionIDList"  [value]="sc.divisionId">
-                                     {{sc.divisionName}}
-                                 </option>
-                             </select>
-                             <div *ngIf="submitted && f.divisionId.errors" class="invalid-feedback">
-                                 <div *ngIf="f.divisionId.errors.required">Division Name is required</div>
-                                 <span
-                                     *ngIf="!commonMasterForm.get('divisionId').valid && commonMasterForm.get('divisionId').touched">Please
-                                     Enter valid Division Name </span>  
-                                     </div>          
-                         </td>
-                         <td>
-                             
-                         </td>
-                    </tr>
+                        <select formControlName="status" id="status" class="form-control"  [(ngModel)]="status" (ngModelChange)='onOptionsSelected($event)'>
+                        <option disabled>--Select--</option>
+                        <option *ngFor="let sc of  statusList" [ngValue] ="sc.code">
+                            {{sc.code}}
+                        </option>
+                    </select>
+                    </td>
+                </tr>
+                
+              
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle"> Start&nbsp;Date&nbsp;:</td>
+                    <td><input   type="date"   id="startDate"  formControlName="startDate"  [ngModel]="startDate" class="form-control"  max="{{minDate | date:'yyyy-MM-dd'}}" style="height: 25px;"></td>
+                        
+                    <div *ngIf="displayInactive; then Block1; else Block2"></div>
+                    <ng-template #Block1>  </ng-template>
+                    <ng-template #Block2>
+                        <td style="width: 18%" class="LabelFontStyle">Inactive&nbsp;Date:&nbsp;</td>
+                        <td><input disabled type="text" formControlName="endDate"  [ngModel]="endDate" class="form-control"  [ngModel]="endDate | date:'dd/MM/yyyy'"></td>
+                   </ng-template>
+                </tr>
                 </table>
+
+                <br>
+
                 <table class="center">
                     <tr >
-                       <td><button type="submit" class="btn btn-primary" id="register"
+                       <td><button type="button" class="btn btn-info" id="register"
                             (click)="saveComnMast()">Save</button></td>
-                        <td><button type="submit" class="btn btn-primary" id="register" (click)="commonMast()">Reset</button></td>
-                        <td><button type="submit" class="btn btn-primary" (click)="closeMast()" >close</button></td>
+                        <td><button type="button" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>
+                        <td><button type="button" class="btn btn-info" (click)="closeMast()" >close</button></td>
                     </tr>
                 </table>
                 <br>
@@ -94,22 +88,23 @@
                     <tr>
                         <td style="width: 15%;" class="LabelFontStyle">Common&nbsp;Type&nbsp;:&nbsp;</td>
                         <td >
-                            <select formControlName="cmnType" id="cmnType" class="form-control">
+                            <select formControlName="cmnType" id="cmnType"   class="form-control">
                                 <option>--Select--</option>
-                                <option *ngFor="let sc of  cmnTypeList">
-                                    {{sc.cmnType}}
+                                <option *ngFor="let sc of  cmnTypeList" [ngValue] ="sc.CMNTYPE">
+                                    {{sc.CMNDESC}}
                                 </option>
                             </select>
                         </td>
-                        <td style="width:100% ;" colspan="8" >
-                            <button type="submit" class="btn btn-primary" id="register"
-                                   (click)="searchCmnMst($event)">Search</button>
-                        </td> 
-                        </tr>
+                        <td style="width:100% ;" colspan="8" ><button type="button" class="btn btn-info" id="register" (click)="searchCmnMst()">Search</button></td> 
+                    </tr>
                 </table>
                 <br>
+
+
+
+                <!-- <div class="container1">
+                <div class="grid_scroll_3">
                 <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
-                    <!-- <table> -->
                     <tbody>
                      <tr class="GridHeader">
                          <th scope="col">Code</th>
@@ -117,103 +112,133 @@
                          <th scope="col">Description</th> 
                          <th scope="col">Active Date</th>
                          <th scope="col">Inactive Date</th>
-                         <th scope="col">Select one</th>
+                         <th scope="col">Select</th>
                      </tr>   
                     </tbody>
-                    <!-- <tr ></tr> class="ItemStyle" style="text-decoration:none;"> -->
+
+                    <ng-container  class="center" formArrayName="LineDetails">
+                    <ng-container   *ngFor="let group of cmnLineArray().controls; let k= index" [formGroupName]="k" class="auto-style5">  
                     <tr>
-                        <td> <input formControlName="code" [(ngModel)]='code' value={{code}} class="form-control"
-                            [ngClass]="{ 'is-invalid': submitted && f.cmnType.errors }"
-                            placeholder="Enter code" style="height: 22px;"> </td>
-                     <td><input formControlName="codeDesc" [(ngModel)]='codeDesc' value={{codeDesc}} class="form-control"
-                        [ngClass]="{ 'is-invalid': submitted && f.cmnType.errors }"
-                        placeholder="Enter code Description " style="height: 22px;"></td>
-                     <td><input formControlName="codeDesc" [(ngModel)]='codeDesc' value={{codeDesc}} class="form-control"
-                        [ngClass]="{ 'is-invalid': submitted && f.cmnType.errors }"
-                        placeholder="Enter code Description " style="height: 22px;"></td>
-                     <td><input type="date" formControlName="startDate" class="form-control"
-                        placeholder="Enter start Date" min="{{minDate | date:'yyyy-MM-dd'}}" style="height: 22px;" ></td>
-                     <td><input type="date" formControlName="startDate" class="form-control"
-                        placeholder="Enter End Date" min="{{minDate | date:'yyyy-MM-dd'}}" style="height: 22px;"></td>
-                     <!-- <td></td> -->
-                     <td>
-                     <!-- Trigger the modal with a button -->
-                     <button  type="button" class="btn-primary" data-toggle="modal" data-target="#myModal" style="width: 3rem;">
-                         ...
-                       </button>
-                     <!-- The Modal -->
-                 <div class="modal fade" id="myModal">
-                 <div class="modal-dialog modal-dialog-centered">
-                 <div class="modal-content">
-                 
-                 <!-- Modal Header -->
-                 <div class="modal-header">
-                 <label style="text-align: center;font-size: small;font-family: Verdana, Geneva, Tahoma, sans-serif;
-                 color: black;">
-                 Additional Information
-                 </label>
-                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                 </div>
-                 
-                 <!-- Modal body -->
-                 <div class="modal-body">
-                 <table>
-                 <tr>
-                 <td>
-                 <label>
-                 Service&nbsp;Vehicle&nbsp;Code&nbsp;:&nbsp;
-                 </label>
-                 </td>
-                 <td>
-                 <input type="text" class="form-control">
-                 </td>
-                 </tr>
-                 <tr>
-                 <td>
-                 <label>
-                 Service&nbsp;Sub&nbsp;Code&nbsp;:&nbsp;
-                 </label>
-                 </td>
-                 <td>
-                 <input type="text" class="form-control">
-                 </td>
-                 </tr>
-                 <tr>
-                 <td>
-                 <label>
-                 Credit&nbsp;Note&nbsp;Item&nbsp;:&nbsp;
-                 </label>
-                 </td>
-                 <td>
-                 <input type="text" class="form-control">
-                 </td>
-                 </tr>
-                 </table>
-                 </div>
-                 
-                 <!-- Modal footer -->
-                 <div class="modal-footer">
-                 <button type="button" class="btn btn-secondary" data-dismiss="modal" >Ok</button>
-                 </div>
-                 
-                 </div>
-                 </div>
-                 </div>                                    
-                 </td>
-                 </tr>    
-                     </table>
-                     <ng-container *ngIf="commonMasterForm.controls.itemRows!=null"> 
+                    <td> <input formControlName="code" [(ngModel)]='code' value={{code}} class="form-control"  placeholder="Enter code" style="height: 22px;"> </td>
+                     <td><input formControlName="codeDesc" [(ngModel)]='codeDesc' value={{codeDesc}} class="form-control" placeholder="Enter code Description " style="height: 22px;"></td>
+                     <td><input formControlName="codeDesc" [(ngModel)]='codeDesc' value={{codeDesc}} class="form-control" placeholder="Enter code Description " style="height: 22px;"></td>
+                     <td><input type="date" formControlName="startDate" class="form-control"  placeholder="Enter start Date" min="{{minDate | date:'yyyy-MM-dd'}}" style="height: 22px;" ></td>
+                     <td><input type="date" formControlName="endDate" class="form-control"    placeholder="Enter End Date" min="{{minDate | date:'yyyy-MM-dd'}}" style="height: 22px;"></td>
+                    </tr>
+                    </ng-container>
+                    </ng-container>  
+
+                <td>    
+                 <button  type="button" class="btn-primary" data-toggle="modal" data-target="#myModal" style="width: 3rem;">...</button>
+                </td>
+                  </tr>    
+                </table> -->
+                    
+                     <!-- <ng-container *ngIf="commonMasterForm.controls.itemRows!=null"> 
                          <div class="container1" *ngFor="let itemRows of commonMasterForm.controls.itemRows.controls;let i=index" [commonMasterForm]='1'>                       
                          </div>  
                      </ng-container>  
-                                     <button type="button"  [disabled]="commonMasterForm.invalid" (click)="addRow()" class="btn btn-primary">
-                                         Add Row
-                                     </button>
-            </form>
+                    <button type="button"  [disabled]="commonMasterForm.invalid" (click)="addRow()" class="btn btn-primary">
+                        Add Row
+                    </button> -->
+                <!-- </div>
+                </div> -->
         </div>
     </div>
 </div>
-<br>
+</form>
+
+
 <div class="container1">
- 
+    <div class="grid_scroll">
+    <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+   <tbody>
+        <tr class="GridHeader">
+            <th style="width:5rem" scope="col">Srl&nbsp;No&nbsp;</th>
+            <!-- <th style="width:6rem" scope="col">Regime Id</th> -->
+            <th style="width:10rem;text-align: center;" scope="col">Code</th>
+            <th style="width:20rem;text-align: left;" scope="col">Code Description</th>
+            <th style="width:10rem;text-align: center;" scope="col">Code Type</th>
+            <th style="width:10rem;text-align: center;" scope="col">Start Date</th>
+            <th style="width:10rem;text-align: center;" scope="col">End Date</th>
+            <th style="width:10rem;text-align: center;" scope="col">Status</th>
+        <th style="width:6rem" scope="col">Select</th>
+    </tr>
+   </tbody>
+   <tr *ngFor="let com of lstcomments let i=index" class="ItemStyle" style="text-decoration:none;font-size: small;">
+    
+    <td style="text-align: center;">{{i+1}}</td>
+    <!-- <td>{{com.regimeId}}</td> -->
+    <td style="text-align:center">{{com.code}}</td>
+    <td>{{com.codeDesc}}</td> 
+    <td style="text-align:center">{{com.cmnDesc}}</td>
+    <td style="text-align:center">{{com.startDate |date:'dd-MM-y'}}</td>
+    <td style="text-align:center">{{com.endDate |date:'dd-MM-y'}}</td>
+    <td style="text-align:center">{{com.status}}</td>
+    <td><button class="btn btn-secondary" (click)="Select(com.cmnId)">Select</button></td>   
+   </tr>
+    </table>
 </div>
+</div>
+     
+
+  
+<!-- <div class="container1">
+</div> -->
+
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+    <div class="modal-header">
+    <label style="text-align: center;font-size: small;font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: black;">
+    Additional Information
+    </label>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    </div>
+    
+    <div class="modal-body">
+    <table>
+    <tr>
+    <td>
+    <label>
+    Service&nbsp;Vehicle&nbsp;Code&nbsp;:&nbsp;
+    </label>
+    </td>
+    <td>
+    <input type="text" class="form-control">
+    </td>
+    </tr>
+    <tr>
+    <td>
+    <label>
+    Service&nbsp;Sub&nbsp;Code&nbsp;:&nbsp;
+    </label>
+    </td>
+    <td>
+    <input type="text" class="form-control">
+    </td>
+    </tr>
+    <tr>
+    <td>
+    <label>
+    Credit&nbsp;Note&nbsp;Item&nbsp;:&nbsp;
+    </label>
+    </td>
+    <td>
+    <input type="text" class="form-control">
+    </td>
+    </tr>
+    </table>
+    </div>
+    
+    <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" >Ok</button>
+    </div>
+    
+    </div>
+    </div>
+    </div>     
+
+   
