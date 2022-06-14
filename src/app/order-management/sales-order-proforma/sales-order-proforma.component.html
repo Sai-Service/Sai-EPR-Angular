@@ -615,17 +615,34 @@
             <table>
                 <tr>
                     <td style="width: 15%" class="LabelFontStyle">
-                        Finance&nbsp;Type&nbsp;:&nbsp;
+                        Finance&nbsp;Y/N&nbsp;:&nbsp;
                     </td>
                     <td>
                         <select type="text" formControlName="financeyn" id="financeyn"
                             class="form-control" style="width: 170px;"
                             (change)="financeSelectionYes($event)">
                             <option>--Select--</option>
+                                <option value="Y">Yes</option>
+                                <option value="N">No</option>
+                        </select>
+                    </td>
+                    <div *ngIf="DisplayfinanceType; then thenfinanceType; else elsefinanceType"> </div>
+                    <ng-template #thenfinanceType>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        Finance&nbsp;Type&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <select type="text" formControlName="financeType" id="financeType"
+                            class="form-control" style="width: 170px;"
+                            (change)="financeSelectionfinanceType($event)">
+                            <option>--Select--</option>
                             <option *ngFor="let sc of  financeTypeList" [value]="sc.codeDesc">
                                 {{sc.codeDesc}}</option>
                         </select>
                     </td>
+                    </ng-template>
+                    <ng-template #elsefinanceType>
+                    </ng-template>
                     <td style="width: 15%" class="LabelFontStyle">
                         Financer&nbsp;:&nbsp;
                     </td>

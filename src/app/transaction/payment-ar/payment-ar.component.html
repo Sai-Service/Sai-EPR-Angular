@@ -306,14 +306,15 @@
                                     <td> <input disabled  style="font-weight: bold; background-color: lightgreen;"  type="text" formControlName="receiptNumber"  id="receiptNumber" [(ngModel)]="receiptNumber" class="form-control"> </td>
                                 
                                     <td style="width: 15%" class="LabelFontStyle">Receipt&nbsp;Date:&nbsp;</td>
-                                    <td><input  disabled  type="date"  formControlName="receiptDate"  id="receiptDate" [(ngModel)]="receiptDate" class="form-control" style="background-color: lightgreen;" ></td>
+                                    <td><input  type="date"  formControlName="receiptDate"  id="receiptDate" [(ngModel)]="receiptDate" class="form-control"  ></td>
+                                    <!-- style="background-color: lightgreen;" -->
                                     
 
                                     <div *ngIf="displayButton ,then thenshowDet1Yes; else thenshowDet1No")></div>
                                     <ng-template #thenshowDet1Yes>
                                      
                                         <td style="width: 15%" class="LabelFontStyle">GL&nbsp;Date:&nbsp;</td>
-                                        <td><input  disabled type="date"  formControlName="glDate"  id="glDate" [(ngModel)]="glDate" class="form-control" 
+                                        <td><input   type="date"  formControlName="glDate"  id="glDate" [(ngModel)]="glDate" class="form-control" style="background-color: yellow;"
                                             max="{{minDate | date:'yyyy-MM-dd'}}" (change)="glPrdValidate(glDate)" ></td>
                                         
                                         <td  style="width: 15%" class="LabelFontStyle1">Receipt&nbsp;Amt:&nbsp;</td>
