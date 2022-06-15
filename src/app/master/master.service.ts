@@ -444,6 +444,17 @@ public commonMasterSubmit(commonMasterRecord) {
   return this.http.post(url, commonMasterRecord, options);
 }
 
+
+UpdateCommonMasterSubmit(commnMasterRecord,cmnId) {
+  const options = {
+    headers: this.headers
+  };
+  const url = (this.ServerUrl + `/cmnLookup/${cmnId}`);
+  return this.http.put(url, commnMasterRecord, options);
+  // http://localhost:8081/cmnLookup/732
+}
+
+
 getCommonLookupSearch(searchText): Observable<any> {
   return this.http.get(this.ServerUrl + `/CompMst/${searchText}`);
 }

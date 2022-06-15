@@ -65,6 +65,7 @@ onhandDetailsForm:FormGroup;
 
   showOrg = false;
   reserveData:any=[];
+  dedFlag:string;
 
 
 
@@ -95,6 +96,8 @@ onhandDetailsForm:FormGroup;
       searchItemId :[],
       searchItemCode:[],
       searchItemName:[],
+
+      dedFlag:[],
 
 
     })
@@ -226,6 +229,7 @@ var segment1 = '';
           this.segment=this.Itemdata[0].segment;
           this.desc=this.Itemdata[0].description;
           this.uom=this.Itemdata[0].uom;
+          this.dedFlag=this.Itemdata[0].dedFlag;
           this.mrp=this.Itemdata[0].mrp;
           this.hsnSacCode=this.Itemdata[0].hsnsacCode;
           this.purchPrice=this.Itemdata[0].ndp;

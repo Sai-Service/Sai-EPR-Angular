@@ -162,7 +162,7 @@ constructor(private service : MasterService, private fb: FormBuilder, private ro
   
     this.CheckDataValidations();
     if (this.checkValidation===true) {
-        alert("Data Validation Sucessfull....\nPosting data  to TAX REGIME TABLE")
+        alert("Data Validation Sucessfull....")
 
         const formValue: IJaiRegime =this.jaiRegimeMasterForm.value;
         this.service.JaiRegimeMasterSubmit(formValue).subscribe((res: any) => {

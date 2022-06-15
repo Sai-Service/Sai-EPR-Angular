@@ -13,15 +13,16 @@ import { DatePipe } from '@angular/common';
 
 
 interface ICommon {
+  cmnId:number;
   cmnTypeId:number;
   cmnType: string;
   cmnDesc: string;
   code:string;
   codeDesc:string;
   application: string;
-  divisionId: string;
-  startDate:Date;
-  endDate:Date,
+  divisionId: number;
+  startDate:string;
+  endDate:string,
   status:string;
 }
 
@@ -45,8 +46,8 @@ export class CommonMasterComponent implements OnInit {
   // startDate:Date;
   startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
 
-  endDate:Date;
-  status:string;
+  endDate:string;
+  status:string="Active";
   code:string;
   codeDesc:string;
   lstcomments: any[];
@@ -75,7 +76,9 @@ export class CommonMasterComponent implements OnInit {
   inactiveDate: Date;
   display = true;
   displayButton = true;
-  
+  checkValidation=false;
+  saveButton=true;
+  updButton=true;
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.commonMasterForm = fb.group({
       // itemRows: this.fb.array([this.inItemRows()]),
@@ -179,20 +182,54 @@ export class CommonMasterComponent implements OnInit {
   }
 
   saveComnMast() {
-    // alert("Hi1")
+
+    this.CheckDataValidations()
+    
+    if (this.checkValidation===true) {
+       alert("Data Validation Sucessfull....") 
+
     const formValue: ICommon = this.commonMasterForm.value;
     this.service.commonMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFULLY');
-        // window.location.reload();
+        alert('RECORD SAVED SUCCESSFULLY');
+        this.saveButton=false;
         this.commonMasterForm.disable();
+        
       } else {
         if (res.code === 400) {
-          alert('Error occured while storing Common Master details ' + res.message);
-          // window.location.reload();
+          alert('ERROR : RECORD NO SAVED ' + res.message);
+          this.saveButton=true;
         }
       }
     });
+  } else { alert ("Data Validation Failed....Save not done.")}
+  }
+
+  // updateComnMast(){alert ("Update ....WIP")}
+
+
+  updateComnMast() {
+
+    // this.CheckDataValidations();
+    // if (this.checkValidation===true) {
+    //     alert("Data Validation Sucessfull....\nPutting data to TAX REGIME MASTER  TABLE")
+    // alert ("Cmn Id = "+this.cmnId)
+
+        const formValue: ICommon = this.commonMasterForm.value;
+        this.service.UpdateCommonMasterSubmit(formValue, this.cmnId).subscribe((res: any) => {
+          if (res.code === 200) {
+            alert('RECORD UPDATED SUCCESSFULLY');
+            this.updButton=false;
+          } else {
+            if (res.code === 400) {
+              alert('ERROR OCCOURED IN PROCEESS');
+              this.updButton=true;
+              // this.jaiRegimeMasterForm.reset();
+            }
+          }
+          
+        });
+      // }else{ alert("Data Validation Not Sucessfull....\nData not Saved...")  }
   }
 
   onOptionsSelected(event: any) {
@@ -200,7 +237,8 @@ export class CommonMasterComponent implements OnInit {
     // alert(this.Status1);
     if (this.Status1 === 'Inactive') {
       this.displayInactive = false;
-      this.endDate = new Date();
+      // this.endDate = new Date();
+      this.endDate = this.pipe.transform(Date.now(), 'y-MM-dd');
     }
     else if (this.Status1 === 'Active') {
       this.commonMasterForm.get('endDate').reset();
@@ -219,7 +257,7 @@ export class CommonMasterComponent implements OnInit {
       data => {
         this.lstcomments = data;
         console.log(this.lstcomments);
-        this.displayButton=false;
+        // this.displayButton=false;
         }
     );
   }
@@ -234,7 +272,8 @@ Select(cmId: number) {
     this.commonMasterForm.patchValue(select);
     this.cmnId=select.cmnId;
     this.displayButton = false;
-    this.commonMasterForm.disable();
+    // this.updButton=true;
+    // this.commonMasterForm.disable();
     this.commonMasterForm.get('status').enable();
 
     this.display = false;
@@ -244,14 +283,10 @@ Select(cmId: number) {
 onSelectType(cmnTp){
   let select = this.cmnTypeList.find(d => d.CMNTYPE === cmnTp);
   if (select) {
- 
      var cmnTypeId1=  select.CMNTYPEID+1;
-     alert ("Desc :" +select.CMNDESC + " , id : "+select.CMNTYPEID + "," +cmnTypeId1);
+    //  alert ("Desc :" +select.CMNDESC + " , id : "+select.CMNTYPEID + "," +cmnTypeId1);
     this.commonMasterForm.patchValue({cmnDesc:select.CMNDESC ,cmnTypeId :cmnTypeId1 ,application :'ALL'})
   }
-
-  
-
 }
 
 resetMast() {
@@ -260,6 +295,62 @@ resetMast() {
 
 closeMast() {
   this.router.navigate(['admin']);
+}
+
+
+CheckDataValidations(){
+
+  const formValue: ICommon = this.commonMasterForm.value;
+
+  formValue.code =this.code.toUpperCase();
+  formValue.codeDesc=this.codeDesc.toUpperCase()
+
+  // alert ("code, desc : "+this.code + " , "+this.codeDesc);
+
+  if (formValue.divisionId===undefined || formValue.divisionId===null || formValue.divisionId<0)
+  {
+    this.checkValidation=false; 
+    alert ("DIVISION : Should not be null....");
+    return;
+  } 
+
+  if (formValue.cmnType===undefined || formValue.cmnType===null || formValue.cmnType.trim()==='')
+  {
+    this.checkValidation=false; 
+    alert ("TYPE NAME : Should not be null....");
+    return;
+  } 
+
+  if (formValue.code===undefined || formValue.code===null || formValue.code.trim()==='' )
+  {
+    this.checkValidation=false; 
+    alert ("CODE : Should not be null....");
+    return;
+  } 
+
+  if (formValue.codeDesc===undefined || formValue.codeDesc===null || formValue.codeDesc.trim()==='' )
+  {
+    this.checkValidation=false; 
+    alert ("CODE DESCRIPTION : Should not be null....");
+    return;
+  } 
+
+  if (formValue.status===undefined || formValue.status===null || formValue.status.trim()==='' )
+  {
+    this.checkValidation=false; 
+    alert ("STATUS : Should not be null....");
+    return;
+  } 
+
+  if (formValue.startDate===undefined || formValue.startDate===null || formValue.startDate.trim()==='' )
+  {
+    this.checkValidation=false; 
+    alert ("START DATE : Enter Valid Start Date....");
+    return;
+  } 
+
+    this.checkValidation=true;
+
 }
 
 }
