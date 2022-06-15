@@ -2854,7 +2854,6 @@ export class JobCardComponent implements OnInit {
       } else {
         if (res.code === 400) {
           this.genBillButton=true;
-
           this.saveBillButton=true;
           this.preInvButton=true;
           this.reopenButton=true;

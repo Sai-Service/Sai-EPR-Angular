@@ -11,65 +11,100 @@
     <div class="center" style="width: 100%;">
         <div class="form-bg">
                <table class="center">
-
-                <!-- <div *ngIf="displayButton; then b1; else b2"></div>
-                <ng-template #b1>   -->
-                <input hidden disabled   type="number"  formControlName="emplId" class="form-control" [(ngModel)]="emplId">
+             
+                <input hidden    type="number"  formControlName="emplId" class="form-control" [(ngModel)]="emplId">
+                <input hidden    type="number"  formControlName="cmnId" class="form-control" [(ngModel)]="cmnId">
 
 
                 <tr>
                     <td style="width: 15%" class="LabelFontStyle">Division&nbsp;:&nbsp;</td>
                     <td>
-                        <select formControlName="divisionId" id="divisionId" class="form-control">
-                            <option>--Select--</option>
+                        <select disabled formControlName="divisionId" id="divisionId" [(ngModel)]="divisionId" class="form-control">
+                            <!-- <option>--Select--</option> -->
                             <option *ngFor="let sc of  DivisionIDList"  [value]="sc.divisionId">
                                 {{sc.divisionName}}
                             </option>
                         </select>
                     </td>
 
-                    <td style="width: 15%;" class="LabelFontStyle">Type&nbsp;Name:&nbsp;</td>
-                    <td >
-                        <select formControlName="cmnType" id="cmnType"   class="form-control" (ngModelChange)='onSelectType($event)'>
-                            <option>--Select--</option>
-                            <option *ngFor="let sc of  cmnTypeList" [ngValue] ="sc.CMNTYPE">
-                                {{sc.CMNDESC}}
-                            </option>
-                        </select>
-                    </td>
-                    <!-- <td style="width:100% ;" colspan="8" ><button type="button" class="btn btn-info" id="register" (click)="searchCmnMst()">Search</button></td>  -->
-                     <td style="width: 15%;" class="LabelFontStyle">Code&nbsp;:&nbsp;</td>
-                    <td> <input formControlName="code" [(ngModel)]='code' value={{code}} class="form-control"  placeholder="Enter code" > </td>
-                
-                </tr>
-                <tr>
-                      
-                    <td style="width: 15%;" class="LabelFontStyle">Description&nbsp;:&nbsp;</td>
-                    <td colspan="3"><input formControlName="codeDesc" [(ngModel)]='codeDesc'  class="form-control" placeholder="Enter code Description" style="width:100%;"></td>
-               
-                    <td style="width: 15%" class="LabelFontStyle">Status&nbsp;&nbsp;:</td>
+                    <div *ngIf="displayButton; then saveYes1; else saveYes2"></div>
+                    <ng-template #saveYes1>  
+                        <td style="width: 15%;" class="LabelFontStyle">Type&nbsp;Name:&nbsp;</td>
+                        <td >
+                            <select formControlName="cmnType" id="cmnType"  [(ngModel)]='cmnType' class="form-control" (ngModelChange)='onSelectType($event)'>
+                                <option>--Select--</option>
+                                <option *ngFor="let sc of  cmnTypeList" [ngValue] ="sc.CMNTYPE">
+                                    {{sc.CMNDESC}}
+                                </option>
+                            </select>
+                        </td>
+                        <td style="width: 15%;" class="LabelFontStyle">Code&nbsp;:&nbsp;</td>
+                        <td> <input formControlName="code" [(ngModel)]='code' value={{code}} class="form-control"  placeholder="Enter code" style="background-color: yellow;text-transform: uppercase;" > </td>
+                    </ng-template>
 
+                    <ng-template #saveYes2>  
+                        <td style="width: 15%;" class="LabelFontStyle">Type&nbsp;Name:&nbsp;</td>
+                        <td >
+                            <select disabled formControlName="cmnType" id="cmnType"  [(ngModel)]='cmnType' class="form-control" (ngModelChange)='onSelectType($event)'>
+                                <option>--Select--</option>
+                                <option *ngFor="let sc of  cmnTypeList" [ngValue] ="sc.CMNTYPE">
+                                    {{sc.CMNDESC}}
+                                </option>
+                            </select>
+                        </td>
+                         <td style="width: 15%;" class="LabelFontStyle">Code&nbsp;:&nbsp;</td>
+                        <td> <input disabled formControlName="code" [(ngModel)]='code' value={{code}} class="form-control"  placeholder="Enter code" style="background-color: yellow;text-transform: uppercase;" > </td>
+                    </ng-template>
+                </tr>
+
+
+                <tr>
+                    <div *ngIf="displayButton; then upd1; else upd2"></div>
+                    <ng-template #upd1>  
+                  
+                    <td style="width: 15%;" class="LabelFontStyle">Description&nbsp;:&nbsp;</td>
+                    <td colspan="3"><input formControlName="codeDesc" [(ngModel)]='codeDesc'  class="form-control" placeholder="Enter code Description" style="width:100%;background-color: yellow;text-transform: uppercase;"></td>
+
+                    <td style="width: 15%" class="LabelFontStyle">Status&nbsp;&nbsp;:</td>
+                  
                     <td>
-                        <select formControlName="status" id="status" class="form-control"  [(ngModel)]="status" (ngModelChange)='onOptionsSelected($event)'>
-                        <option disabled>--Select--</option>
+                        <select disabled formControlName="status" id="status" class="form-control"  [(ngModel)]="status" (ngModelChange)='onOptionsSelected($event)'>
                         <option *ngFor="let sc of  statusList" [ngValue] ="sc.code">
                             {{sc.code}}
                         </option>
-                    </select>
+                       </select>
                     </td>
+                    </ng-template>
+
+                    <ng-template #upd2>  
+                  
+                        <td style="width: 15%;" class="LabelFontStyle">Description&nbsp;:&nbsp;</td>
+                        <td colspan="3"><input disabled formControlName="codeDesc" [(ngModel)]='codeDesc'  class="form-control" placeholder="Enter code Description" style="width:100%;background-color: yellow;text-transform: uppercase;"></td>
+    
+                        <td style="width: 15%" class="LabelFontStyle">Status&nbsp;&nbsp;:</td>
+                      
+                        <td>
+                            <select  formControlName="status" id="status" class="form-control"  [(ngModel)]="status" (ngModelChange)='onOptionsSelected($event)'>
+                            <option *ngFor="let sc of  statusList" [ngValue] ="sc.code">
+                                {{sc.code}}
+                            </option>
+                           </select>
+                        </td>
+                        </ng-template>
+
                 </tr>
-                
+               
               
                 <tr>
                     <td style="width: 15%" class="LabelFontStyle"> Start&nbsp;Date&nbsp;:</td>
-                    <td><input   type="date"   id="startDate"  formControlName="startDate"  [ngModel]="startDate" class="form-control"  max="{{minDate | date:'yyyy-MM-dd'}}" style="height: 25px;"></td>
+                    <td><input disabled  type="date"   id="startDate"  formControlName="startDate"  [ngModel]="startDate" class="form-control"  max="{{minDate | date:'yyyy-MM-dd'}}" style="height: 25px;"></td>
                         
                     <div *ngIf="displayInactive; then Block1; else Block2"></div>
                     <ng-template #Block1>  </ng-template>
                     <ng-template #Block2>
                         <td style="width: 18%" class="LabelFontStyle">Inactive&nbsp;Date:&nbsp;</td>
-                        <td><input disabled type="text" formControlName="endDate"  [ngModel]="endDate" class="form-control"  [ngModel]="endDate | date:'dd/MM/yyyy'"></td>
-                   </ng-template>
+                        <td><input disabled  type="date"   id="endDate"  formControlName="endDate"  [ngModel]="endDate" class="form-control"  max="{{minDate | date:'yyyy-MM-dd'}}" style="height: 25px;"></td>
+                    </ng-template>
                 </tr>
                 </table>
 
@@ -77,18 +112,33 @@
 
                 <table class="center">
                     <tr >
-                       <td><button type="button" class="btn btn-info" id="register"
-                            (click)="saveComnMast()">Save</button></td>
-                        <td><button type="button" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>
+                        <div *ngIf="displayButton; then Save1; else Save2"></div>
+                        <ng-template #Save1>
+
+                            <div *ngIf="saveButton; then S1; else S2"></div>
+                             <ng-template #S1>
+                             <td><button type="button" class="btn btn-info" id="register"  (click)="saveComnMast()">Save</button></td>
+                             </ng-template><ng-template #S2></ng-template>
+
+                            </ng-template>
+                        <ng-template #Save2>
+                            <div *ngIf="updButton; then U1; else U2"></div>
+                            <ng-template #U1>
+                                 <td><button type="button" class="btn btn-info" id="register"  (click)="updateComnMast()">Update</button></td>
+                            </ng-template> <ng-template #U2></ng-template>
+
+                        </ng-template>
+
+                       <td><button type="button" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>
                         <td><button type="button" class="btn btn-info" (click)="closeMast()" >close</button></td>
                     </tr>
                 </table>
                 <br>
                 <table style="width: 100%; background-color: #FFE4B5;">
                     <tr>
-                        <td style="width: 15%;" class="LabelFontStyle">Common&nbsp;Type&nbsp;:&nbsp;</td>
+                        <td style="width: 15%;" class="LabelFontStyle">Select&nbsp;Type&nbsp;:&nbsp;</td>
                         <td >
-                            <select formControlName="cmnType" id="cmnType"   class="form-control">
+                            <select formControlName="cmnType" id="cmnType" [(ngModel)]="cmnType"  class="form-control">
                                 <option>--Select--</option>
                                 <option *ngFor="let sc of  cmnTypeList" [ngValue] ="sc.CMNTYPE">
                                     {{sc.CMNDESC}}

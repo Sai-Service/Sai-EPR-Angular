@@ -171,7 +171,13 @@
                           value={{gstPer}} class="form-control"  style="width:250px;" >
                   </td>
 
-                <td></td><td></td>
+                  <td style="width: 15%" class="LabelFontStyle"> Dead&nbsp;Stock:&nbsp;</td>
+                  <td >
+                      <input disabled formControlName="dedFlag" [(ngModel)]="dedFlag"
+                          value={{dedFlag}} class="form-control" >
+                  </td>
+
+                <!-- <td></td><td></td> -->
 
                   <td style="width: 15%" class="LabelFontStyle"> Purchase&nbsp;Price&nbsp;&nbsp;:&nbsp;</td>
                 <td>
@@ -196,7 +202,8 @@
                    <tr class="GridHeader">
 
                                       <th scope="col">Operating Unit</th>
-                                      <th scope="col">Location</th>
+                                      <th scope="col">Location Code</th>
+                                      <th scope="col">Location Name</th>
                                       <th scope="col">Sub Inventory</th>
                                       <th scope="col">Quantity</th>
                                       <th scope="col">Locator</th>
@@ -208,11 +215,12 @@
                           <tr *ngFor="let com of Itemdata" class="ItemStyle" style="text-decoration:none;">
                           <td style="text-align: center;">{{com.ouName}}</td>
                           <td style="text-align: center;">{{com.locCode}}</td>
+                          <td style="text-align: center;">{{com.locName}}</td>
                           <td style="text-align: center;">{{com.subInventoryCode}}</td>
-                          <td style="text-align: center;">{{com.qty}}</td>
+                          <td style="text-align: right;padding-right: 30px">{{com.qty}}</td>
                           <td style="text-align: center;">{{com.segmentName}}</td>
                           <!-- <td style="text-align: center;">{{com.resQty}}</td> -->
-                          <td><a href="" data-toggle="modal" data-target="#viewReservemodal" (click)='viewReserve(com.locId,com.segment)' value="{{com.resQty}}">  {{com.resQty}}</a> </td>
+                          <td style="text-align:center ;"><a href="" data-toggle="modal" data-target="#viewReservemodal" (click)='viewReserve(com.locId,com.segment)' value="{{com.resQty}}" >  {{com.resQty}}</a> </td>
                         </tr>
 
 
