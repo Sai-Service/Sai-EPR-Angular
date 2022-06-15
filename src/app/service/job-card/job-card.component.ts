@@ -2852,13 +2852,13 @@ export class JobCardComponent implements OnInit {
         }
     
       } else {
-        if (res.code === 400) {
+        // if (res.code === 400) {
           this.genBillButton=true;
           this.saveBillButton=true;
           this.preInvButton=true;
           this.reopenButton=true;
-          alert(res.message);
-        }
+          alert(res.code+" - "+res.message);
+        // }
       }
     });
   }
