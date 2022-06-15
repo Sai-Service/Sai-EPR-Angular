@@ -77,6 +77,11 @@ apInvoiceCancellation(invoiceNum,emplId): Observable<any> {
     return this.http.get(this.ServerUrl +'/locationMst');
   }
 
+  searchByinvoiceNumFn(suppNo,invoiceNum): Observable<any> {
+    return this.http.get(this.ServerUrl +`/apInv/check?suppNo=${suppNo}&invoiceNum=${invoiceNum}`);
+  }
+
+
   DistributionDataList(distributionSet,amount): Observable<any> {
     // return this.http.get(this.ServerUrl +`/ApDistSetAll/distSetAmount?distributionSetName=${distributionSet}&distributionAmt=${amount}`);
     return this.http.get(this.ServerUrl +`/apInv/get/apinvDisLinewise?invAmount=${amount}&distSetName=${distributionSet}`);

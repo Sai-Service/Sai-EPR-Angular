@@ -3234,5 +3234,20 @@ export class PayableInvoiceNewComponent implements OnInit {
     );
   }
 
+
+  searchByinvoiceNum(invoiceNum){
+    // alert(invoiceNum);
+    this.transactionService.searchByinvoiceNumFn(this.suppNo,invoiceNum).subscribe((res: any) => {
+      if (res.code === 200) {
+      }
+      else if (res.code==400){
+        alert(res.message);
+        window.location.reload();
+        return;
+      }
+  })
+  }
+
+
 }
 

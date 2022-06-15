@@ -1182,6 +1182,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     }
     var totAmt = this.CounterSaleOrderBookingForm.get('totAmt').value;
       var crdAmt = this.CounterSaleOrderBookingForm.get('creditAmt').value;
+      if (crdAmt != null){
       if (totAmt >= crdAmt) {
         alert('Credit Amount is exceeded.! ... Credit Amount is' + ' ' + crdAmt + ' ' + 'Total Amount is' + ' ' + totAmt + '.!');
         this.progress = 0;
@@ -1189,6 +1190,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
         this.isDisabled = false;
         return;
       }
+    }
     for (let i = exLines; i < orderLines.length; i++) {
       orderLines[i].taxCategoryName = orderLines[i].taxCategoryName.taxCategoryName;
       orderLines[i].frmLocatorId = orderLines[i].frmLocatorName;
@@ -2465,6 +2467,9 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     // if (this.CounterSaleOrderBookingForm.get('transactionTypeName').value =='Spares Sale - Credit' || this.CounterSaleOrderBookingForm.get('createOrderType').value=='Pick Ticket'){
       var totAmt = this.CounterSaleOrderBookingForm.get('totAmt').value;
       var crdAmt = this.CounterSaleOrderBookingForm.get('creditAmt').value;
+      // alert(crdAmt);
+      // debugger;
+      if (crdAmt != null){
       if (totAmt >= crdAmt) {
         alert('Credit Amount is exceeded.! ... Credit Amount is' + ' ' + crdAmt + ' ' + 'Total Amount is' + ' ' + totAmt + '.!');
         this.progress = 0;
@@ -2472,6 +2477,8 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
         this.isDisabled = false;
         return;
       }
+    }
+    
     // }
     for (let j = 0; j < orderLines.length; j++) {
       if (orderLines[j].segment === '' || orderLines[j].segment=== undefined || orderLines[j].segment===null
