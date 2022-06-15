@@ -2593,10 +2593,55 @@ export class SalesOrderFormComponent implements OnInit {
   onOptionsSelectedcustSiteName(siteName) {
     //  alert(siteName);
     //  alert(sessionStorage.getItem('ouId'));
+    console.log( this.custSiteList);
     let selSite = this.custSiteList.find(d => d.siteName === siteName);
     console.log(selSite);
     // alert(selSite.ouId);
+    if (selSite.ouId != (sessionStorage.getItem('ouId'))) {
+      alert('First Create OU wise Site to continue process!')
+    }
+    else {
+      this.SalesOrderBookingForm.patchValue(selSite);
+      this.custName = this.selCustomer.custName;
+      this.customerId = this.selCustomer.customerId;
+      this.billToAddress = (selSite.address1 + ', '
+        + selSite.address2 + ', '
+        + selSite.address3 + ', '
+        + selSite.city + ', '
+        + selSite.pinCd + ', '
+        + selSite.state).toUpperCase();
+      this.shipToAddress = this.billToAddress;
+      this.birthDate = this.selCustomer.birthDate;
+      this.weddingDate = this.selCustomer.weddingDate;
+      // this.taxCategoryName = this.selCustomer.taxCategoryName;
+      if (selSite.disPer != null) {
+        // alert(selSite.disPer)
+        this.SalesOrderBookingForm.patchValue({ discType: 'Header Level Discount' })
+        this.SalesOrderBookingForm.patchValue({ disPer: selSite.disPer });
+        this.SalesOrderBookingForm.patchValue({ custTaxCat: selSite.taxCategoryName })
+        this.orderlineDetailsGroup().patchValue({ disPer: selSite.disPer })
+        // this.displaydisPer = false;
+        var patch = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+        // alert(patch.length)
+        for (let i = 0; i < patch.length; i++) {
+          (patch.controls[i]).patchValue({
+            disPer: selSite.disPer,
+          });
+        }
+      }
+    }
 
+
+  }
+
+
+  onOptionsSelectedcustSiteNameNew(siteName) {
+    //  alert(siteName.target.value);
+    //  alert(sessionStorage.getItem('ouId'));
+    console.log( this.custSiteList);
+    let selSite = this.custSiteList.find(d => d.siteName === siteName.target.value);
+    console.log(selSite);
+    // alert(selSite.ouId);
     if (selSite.ouId != (sessionStorage.getItem('ouId'))) {
       alert('First Create OU wise Site to continue process!')
     }
