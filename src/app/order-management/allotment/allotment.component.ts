@@ -84,7 +84,7 @@ export class AllotmentComponent implements OnInit {
           this.allotmentsearchlist = data;
           this.allAllotmentList = data;
           console.log(data);  
-          alert(data.length)
+          // alert(data.length)
           for (let i = 0; i < data.length; i++) {
             if (data[i].qtyAvail === 0) {
               this.displayChassisForm[i] = false;
