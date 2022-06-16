@@ -94,6 +94,7 @@ export class ItemMasterNewComponent implements OnInit {
   Status1: any;
   public SSitemTypeList: any;
   stockableShow = true;
+  displayGSTPer=true;
   costingShow = true;
   internalOrderShow = true;
   assetItemShow = true;
@@ -426,6 +427,63 @@ export class ItemMasterNewComponent implements OnInit {
                 console.log(this.hsnSacCodeList);
               }
             )
+            this.service.hsnSacCodeDetNew(data.hsnSacCode)
+            .subscribe(
+              data => {
+                // this.hsnSacCodeList = data;
+                this.hsnSacCodeDet = data;
+                // alert(this.hsnSacCodeDet.length)
+                console.log(this.hsnSacCodeDet);
+                if (this.hsnSacCodeDet.length===0){
+                  alert('Invalid HSN/SAC Code.! Please Confirm HSN/SAC Code.!')
+                }
+              else  if (this.hsnSacCodeDet.length==1){
+                this.displayGSTPer=true;
+                this.itemMasterForm.patchValue(this.hsnSacCodeDet[0].gstPercentage);
+                this.hsnGstPer = this.hsnSacCodeDet[0].gstPercentage;
+                this.service.taxCategoryListHSN(this.hsnGstPer, 'SALES')
+                  .subscribe(data1 => {
+                    this.taxCategoryListSalesIGST = data1;
+                    let taxCategoryListSalesIGST = this.taxCategoryListSalesIGST.filter((customer) => (customer.taxCategoryName.includes('I-GST') == true || customer.taxCategoryName.includes('I GST') == true));
+                    console.log(taxCategoryListSalesIGST);
+                    this.taxCategoryListSalesIGST = taxCategoryListSalesIGST;
+                    this.displaytaxCategoryListSalesIGST = true;
+                  });
+    
+                this.service.taxCategoryListHSN(this.hsnGstPer, 'SALES')
+                  .subscribe(data1 => {
+                    this.taxCategoryListSalesSAndCGST = data1;
+                    let taxCategoryListSalesSAndCGST = this.taxCategoryListSalesSAndCGST.filter((customer) => (customer.taxCategoryName.includes('I-GST') == false && customer.taxCategoryName.includes('I GST') == false));
+                    console.log(taxCategoryListSalesSAndCGST);
+                    this.taxCategoryListSalesSAndCGST = taxCategoryListSalesSAndCGST;
+                    this.displaytaxCategoryListSalesSAndCGST = true;
+                  });
+    
+                this.service.taxCategoryListHSN(this.hsnGstPer, 'PURCHASE')
+                  .subscribe(
+                    data1 => {
+                      this.taxCategoryListPIGST = data1;
+                      console.log(data1);
+                      let purchaseIGSTList = this.taxCategoryListPIGST.filter((customer) => (customer.taxCategoryName.includes('I-GST') == true));
+                      console.log(purchaseIGSTList);
+                      this.taxCategoryListPIGST = purchaseIGSTList;
+                      this.displaytaxCategoryListPIGST = true;
+                    });
+                this.service.taxCategoryListHSN(this.hsnGstPer, 'PURCHASE')
+                  .subscribe(
+                    data1 => {
+                      this.taxCategoryListPSAndCGST = data1;
+                      console.log(data1);
+                      let taxCategoryListPSAndCGST = this.taxCategoryListPSAndCGST.filter((customer) => (customer.taxCategoryName.includes('I-GST') == false));
+                      console.log(taxCategoryListPSAndCGST);
+                      this.taxCategoryListPSAndCGST = taxCategoryListPSAndCGST;
+                      this.displaytaxCategoryListPSAndCGST = true;
+                    });
+                  }
+                  else if (this.hsnSacCodeDet.length !=1){
+                    this.displayGSTPer=false;
+                  }
+              });
           }
           else {
             this.service.hsnSacCodeData('SAC').subscribe(
@@ -609,7 +667,13 @@ export class ItemMasterNewComponent implements OnInit {
           data => {
             // this.hsnSacCodeList = data;
             this.hsnSacCodeDet = data;
+            // alert(this.hsnSacCodeDet.length)
             console.log(this.hsnSacCodeDet);
+            if (this.hsnSacCodeDet.length===0){
+              alert('Invalid HSN/SAC Code.! Please Confirm HSN/SAC Code.!')
+            }
+          else  if (this.hsnSacCodeDet.length==1){
+            this.displayGSTPer=true;
             this.itemMasterForm.patchValue(this.hsnSacCodeDet[0].gstPercentage);
             this.hsnGstPer = this.hsnSacCodeDet[0].gstPercentage;
             this.service.taxCategoryListHSN(this.hsnGstPer, 'SALES')
@@ -630,13 +694,6 @@ export class ItemMasterNewComponent implements OnInit {
                 this.displaytaxCategoryListSalesSAndCGST = true;
               });
 
-            // this.service.taxCategoryListHSN(this.hsnGstPer, 'SALES')
-            //   .subscribe(
-            //     data1 => {
-            //       this.taxCategoryListP = data1;
-            //       console.log(this.taxCategoryListP);
-            //       data1 = this.taxCategoryListP;
-            //     });
             this.service.taxCategoryListHSN(this.hsnGstPer, 'PURCHASE')
               .subscribe(
                 data1 => {
@@ -657,9 +714,57 @@ export class ItemMasterNewComponent implements OnInit {
                   this.taxCategoryListPSAndCGST = taxCategoryListPSAndCGST;
                   this.displaytaxCategoryListPSAndCGST = true;
                 });
+              }
+              else if (this.hsnSacCodeDet.length !=1){
+                this.displayGSTPer=false;
+              }
           });
     }
   }
+
+  onhsnGstPerSelected(event){
+    // alert(event.target.value);
+    var hsnGstPer = event.target.value;
+    this.service.taxCategoryListHSN(hsnGstPer, 'SALES')
+    .subscribe(data1 => {
+      this.taxCategoryListSalesIGST = data1;
+      let taxCategoryListSalesIGST = this.taxCategoryListSalesIGST.filter((customer) => (customer.taxCategoryName.includes('I-GST') == true || customer.taxCategoryName.includes('I GST') == true));
+      console.log(taxCategoryListSalesIGST);
+      this.taxCategoryListSalesIGST = taxCategoryListSalesIGST;
+      this.displaytaxCategoryListSalesIGST = true;
+    });
+
+  this.service.taxCategoryListHSN(hsnGstPer, 'SALES')
+    .subscribe(data1 => {
+      this.taxCategoryListSalesSAndCGST = data1;
+      let taxCategoryListSalesSAndCGST = this.taxCategoryListSalesSAndCGST.filter((customer) => (customer.taxCategoryName.includes('I-GST') == false && customer.taxCategoryName.includes('I GST') == false));
+      console.log(taxCategoryListSalesSAndCGST);
+      this.taxCategoryListSalesSAndCGST = taxCategoryListSalesSAndCGST;
+      this.displaytaxCategoryListSalesSAndCGST = true;
+    });
+
+  this.service.taxCategoryListHSN(hsnGstPer, 'PURCHASE')
+    .subscribe(
+      data1 => {
+        this.taxCategoryListPIGST = data1;
+        console.log(data1);
+        let purchaseIGSTList = this.taxCategoryListPIGST.filter((customer) => (customer.taxCategoryName.includes('I-GST') == true));
+        console.log(purchaseIGSTList);
+        this.taxCategoryListPIGST = purchaseIGSTList;
+        this.displaytaxCategoryListPIGST = true;
+      });
+  this.service.taxCategoryListHSN(hsnGstPer, 'PURCHASE')
+    .subscribe(
+      data1 => {
+        this.taxCategoryListPSAndCGST = data1;
+        console.log(data1);
+        let taxCategoryListPSAndCGST = this.taxCategoryListPSAndCGST.filter((customer) => (customer.taxCategoryName.includes('I-GST') == false));
+        console.log(taxCategoryListPSAndCGST);
+        this.taxCategoryListPSAndCGST = taxCategoryListPSAndCGST;
+        this.displaytaxCategoryListPSAndCGST = true;
+      });
+  }
+
   onOptionsSelected(event: any) {
     this.Status1 = this.itemMasterForm.get('status').value;
     if (this.Status1 === 'Inactive') {
@@ -927,6 +1032,8 @@ export class ItemMasterNewComponent implements OnInit {
     // } 
    
     // alert(this.isTaxable);
+    var costCenter = this.itemMasterForm.get('costCenter').value;
+    var poChargeAccount = this.itemMasterForm.get('poChargeAccount').value;
     if (this.segment == undefined || this.segment == null || this.segment == '') {
       alert('Select Item Code.!');
       return;
@@ -942,28 +1049,32 @@ export class ItemMasterNewComponent implements OnInit {
     }
     else if (this.isTaxable == 'Y') {
       // alert(this.taxCategoryPur)
-      if (this.taxCategoryPur == undefined || this.taxCategoryPur == null) {
+      var taxCategoryPur=this.itemMasterForm.get('taxCategoryPur').value;
+      var taxCategoryPurIGST=this.itemMasterForm.get('taxCategoryPurIGST').value;
+      var taxCategorySale=this.itemMasterForm.get('taxCategorySale').value;
+      var taxCategorySaleIGST = this.itemMasterForm.get('taxCategorySaleIGST').value;
+      if (taxCategoryPur == undefined || taxCategoryPur == null) {
         alert('Select Purchase S&CGST Category Name And Then Click Save Button.!');
         return;
       }
-      else if (this.taxCategoryPurIGST == undefined || this.taxCategoryPurIGST == null) {
+      else if (taxCategoryPurIGST == undefined || taxCategoryPurIGST == null) {
         alert('Select Purchase IGST Category Name And Then Click Save Button.!');
         return;
       }
-      else if (this.taxCategorySale == undefined || this.taxCategorySale == null) {
+      else if (taxCategorySale == undefined || taxCategorySale == null) {
         alert('Select Sales S&CGST Category Name And Then Click Save Button.!');
         return;
       }
-      else if (this.taxCategorySaleIGST == undefined || this.taxCategorySaleIGST == null) {
+      else if (taxCategorySaleIGST == undefined || taxCategorySaleIGST == null) {
         alert('Select Sales IGST Category Name And Then Click Save Button.!');
         return;
       }
     }
-    else if (this.costCenter == undefined || this.costCenter == null) {
+    else if (costCenter == undefined || costCenter == null) {
       alert('Select Cost Center.!');
       return;
     }
-    else if (this.poChargeAccount == undefined || this.poChargeAccount == null) {
+    else if (poChargeAccount == undefined || poChargeAccount == null) {
       alert('Select Natural Account.!');
       return;
     }

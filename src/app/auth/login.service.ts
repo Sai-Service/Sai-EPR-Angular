@@ -33,4 +33,24 @@ export class LoginService {
 
   }
 
+
+  public resetPassword(userName: string, password: string,nPassword : string,cPassword : string) {
+    const body = {
+      'userName': userName,
+      'password': password,
+      'nPassword':nPassword,
+      'cPassword':cPassword
+    };
+    let options = {
+      headers: this.headers
+    };
+     const url = 'http://localhost:8081/resetpassword';
+    // const url='http://saihorizon.com:8051/ErpReplica/loginpage';
+    // const url='http://saidev.horizon.org:8080/ErpReplica/loginpage';
+    // const url= "http://saierp.horizon.org:8080/ErpReplica/loginpage"; 
+    console.log(body);
+    return this.httpclient.put(url, body, options)
+
+  }
+
 }

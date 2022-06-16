@@ -419,7 +419,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       disPer: [''],
       issueCodeType1: [''],
       issueCode: [''],
-      creditAmt: [''],
+      creditAmt: [0],
       creditDays: [''],
       daysMsg: [''],
       amountMsg: [''],
@@ -1182,7 +1182,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     }
     var totAmt = this.CounterSaleOrderBookingForm.get('totAmt').value;
       var crdAmt = this.CounterSaleOrderBookingForm.get('creditAmt').value;
-      if (crdAmt != null){
+      if (crdAmt != 0){
       if (totAmt >= crdAmt) {
         alert('Credit Amount is exceeded.! ... Credit Amount is' + ' ' + crdAmt + ' ' + 'Total Amount is' + ' ' + totAmt + '.!');
         this.progress = 0;
@@ -2468,7 +2468,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       var crdAmt = this.CounterSaleOrderBookingForm.get('creditAmt').value;
       // alert(crdAmt);
       // debugger;
-      if (crdAmt != null){
+      if (crdAmt != 0){
       if (totAmt >= crdAmt) {
         alert('Credit Amount is exceeded.! ... Credit Amount is' + ' ' + crdAmt + ' ' + 'Total Amount is' + ' ' + totAmt + '.!');
         this.progress = 0;

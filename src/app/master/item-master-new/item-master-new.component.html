@@ -68,17 +68,33 @@
                         </option>
                     </datalist>
                 </td>
+           
+                    <div *ngIf="displayGSTPer; then thenGSTPer; else elseGSTPer"></div>
+                    <ng-template #thenGSTPer>
+                    </ng-template>
+                    <ng-template #elseGSTPer>
+                        <td style="width: 12%" class="LabelFontStyle1">GST&nbsp;%&nbsp;:&nbsp;</td>
+                        <td>
+                            <select style="width:fit-content" formControlName="hsnGstPer"  (change)='onhsnGstPerSelected($event)'
+                            id="hsnGstPer" class="form-control" [(ngModel)]="hsnGstPer">
+                            <option *ngFor="let sc of  hsnSacCodeDet">
+                                {{sc.gstPercentage}}
+                            </option>
+                        </select>
+                        </td>
+                    </ng-template>
+              
+            </tr>
+            <tr>
                 <td style="width: 12%" class="LabelFontStyle1">UOM&nbsp;:&nbsp;</td>
                 <td>
-                    <select style="width:fit-content" formControlName="uom" id="uom" class="form-control">
+                    <select style="width:fit-content" formControlName="uom" id="uom" class="form-control" [(ngModel)]="uom" >
                         <option value="--Select--">--Select--</option>
                         <option *ngFor="let sc of uomList" [ngValue]="sc.code">
                             {{sc.code}}
                         </option>
                     </select>
                 </td>
-            </tr>
-            <tr>
                 <td style="width: 12%" class="LabelFontStyle">Status&nbsp;:&nbsp;</td>
                 <td>
                     <select style="width:fit-content" formControlName="status" id="status" class="form-control"
@@ -88,6 +104,20 @@
                         </option>
                     </select>
                 </td>
+                <div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
+                <ng-template #thenBlockInactive>
+                </ng-template>
+                <ng-template #elseBlockInactive>
+                    <td style="width: 12%" class="LabelFontStyle">
+                        Inactive&nbsp;Date:&nbsp;
+                    </td>
+                    <td>
+                        <input disabled type="text" formControlName="endDate" class="form-control"
+                            [ngModel]="endDate | date:'dd-MM-yyyy'">
+                    </td>
+                </ng-template>
+            </tr>
+            <tr>
                 <td style="width: 12%" class="LabelFontStyle">Item&nbsp;Code&nbsp;:&nbsp;</td>
                 <div *ngIf="disItemCode; then thenBlockdisItemCode; else elseBlockdisItemCode"></div>
                 <ng-template #thenBlockdisItemCode>
@@ -102,7 +132,7 @@
                 </ng-template>
                 <td style="width: 12%" class="LabelFontStyle">Item&nbsp;Description&nbsp;:&nbsp;</td>
                 <td colspan="3">
-                    <input formControlName="description" value={{description}} class="form-control"
+                    <input formControlName="description" [(ngModel)]="description" value={{description}} class="form-control"
                         placeholder="Enter Item Description" style="text-transform: uppercase;width: 100%;">
                 </td>
             </tr>
@@ -129,12 +159,27 @@
                         </option>
                     </datalist>
                 </td>
+                <div *ngIf="displayGSTPer; then thenGSTPer; else elseGSTPer"></div>
+                <ng-template #thenGSTPer>
+                </ng-template>
+                <ng-template #elseGSTPer>
+                    <td style="width: 12%" class="LabelFontStyle1">GST&nbsp;%&nbsp;:&nbsp;</td>
+                    <td>
+                        <select style="width:fit-content" formControlName="hsnGstPer"  (change)='onhsnGstPerSelected($event)'
+                        id="hsnGstPer" class="form-control" [(ngModel)]="hsnGstPer">
+                        <option>--Select--</option>
+                        <option *ngFor="let sc of  hsnSacCodeDet">
+                            {{sc.gstPercentage}}
+                        </option>
+                    </select>
+                    </td>
+                </ng-template>
+            </tr>
+            <tr>
                 <td style="width: 12%" class="LabelFontStyle">UOM&nbsp;:&nbsp;</td>
                 <td>
                     <input type="text" disabled class="form-control" formControlName="uom" value={{uom}}>
                 </td>
-            </tr>
-            <tr>
                 <td style="width: 12%" class="LabelFontStyle">Status&nbsp;:&nbsp;</td>
                 <td>
                     <select style="width:fit-content" formControlName="status" id="status" class="form-control"
@@ -144,19 +189,6 @@
                         </option>
                     </select>
                 </td>
-                <td style="width: 12%" class="LabelFontStyle">Item&nbsp;Code&nbsp;:&nbsp;</td>
-                    <td>
-                        <input disabled type="text" formControlName="segment" value={{segment}} [(ngModel)]='segment' class="form-control"
-                            placeholder="Enter Item code" style="text-transform: uppercase;">
-                    </td>
-                <td style="width: 12%" class="LabelFontStyle">Item&nbsp;Description&nbsp;:&nbsp;</td>
-                <td colspan="3">
-                    <input disabled type="text" formControlName="description" value={{description}} class="form-control"
-                        placeholder="Enter Item Description" style="text-transform: uppercase;width: 100%;">
-                </td>
-            </tr>
-        </ng-template>
-            <tr>
                 <div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
                 <ng-template #thenBlockInactive>
                 </ng-template>
@@ -170,6 +202,33 @@
                     </td>
                 </ng-template>
             </tr>
+            <tr>
+                <td style="width: 12%" class="LabelFontStyle">Item&nbsp;Code&nbsp;:&nbsp;</td>
+                    <td>
+                        <input disabled type="text" formControlName="segment" value={{segment}} [(ngModel)]='segment' class="form-control"
+                            placeholder="Enter Item code" style="text-transform: uppercase;">
+                    </td>
+                <td style="width: 12%" class="LabelFontStyle">Item&nbsp;Description&nbsp;:&nbsp;</td>
+                <td colspan="3">
+                    <input disabled type="text" formControlName="description" value={{description}} class="form-control"
+                        placeholder="Enter Item Description" style="text-transform: uppercase;width: 100%;">
+                </td>
+            </tr>
+        </ng-template>
+            <!-- <tr>
+                <div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
+                <ng-template #thenBlockInactive>
+                </ng-template>
+                <ng-template #elseBlockInactive>
+                    <td style="width: 12%" class="LabelFontStyle">
+                        Inactive&nbsp;Date:&nbsp;
+                    </td>
+                    <td>
+                        <input disabled type="text" formControlName="endDate" class="form-control"
+                            [ngModel]="endDate | date:'dd-MM-yyyy'">
+                    </td>
+                </ng-template>
+            </tr> -->
         </table>
     </fieldset>
     <div *ngIf="displayModal; then thenBlockModal; else elseBlockModal"> </div>
@@ -439,15 +498,11 @@
                             <td>
                                 <select style="width:fit-content" formControlName="costCenter" id="costCenter"
                                     class="form-control" [(ngModel)]="costCenter"
-                                    (ngModelChange)="onOptionsSelectedBranch($event,'CostCentre')"
-                                    [ngClass]="{ 'is-invalid': submitted && f.costCenter.errors }">
+                                    (ngModelChange)="onOptionsSelectedBranch($event,'CostCentre')">
                                     <option *ngFor="let sc of  CostCenterList" [ngValue]="sc.lookupValue">
                                         {{sc.lookupValue}}-{{sc.lookupValueDesc}}
                                     </option>
                                 </select>
-                                <div *ngIf="submitted && f.costCenter.errors" class="invalid-feedback">
-                                    <div *ngIf="f.costCenter.errors.required">Cost Center cannot be blank</div>
-                                </div>
                             </td>
                             <td>
                                 <div *ngIf="displayPoCharge; then thenBlockPoCharge; else elseBlockPoCharge"> </div>
