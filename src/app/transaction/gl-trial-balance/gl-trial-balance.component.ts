@@ -239,11 +239,19 @@ export class GlTrialBalanceComponent implements OnInit {
 
 
 SelectTbAct2(trxNum,refNum,catg,source){
-  // alert ("TrxNumber, Reference Number,Category ,source: "+ trxNum +","+refNum+","+catg+","+source);
+  alert ("Trans Number :" + trxNum + "\nReference Number : " +refNum + "\nCategory : "+catg +"\nSource : "+source);
   // Receivable
   if(source==='Receivable'){
   this.router.navigate(['/admin/transaction/ARInvoice', trxNum]);
-  } else {alert ("Not Implemented....wip")}
+  } 
+  else if(source==='Payables'){
+    this.router.navigate(['/admin/transaction/payableInvoice', trxNum]);
+  }  
+  else if(source==='Purchasing'){
+    // this.router.navigate(['/admin/master/PoReceiptForm', trxNum]);
+    alert ("Source - Purchasing , Category - "+catg +" ..Wip...")
+  } 
+  else {alert ("Work In Progress")}
   
 }
 
