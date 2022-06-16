@@ -42,6 +42,7 @@ interface Ipayment {
   receiptMethodId:number;
   refundStatus:string;
   // partyId:number;
+  locId:number;
   
 }
 
@@ -144,7 +145,9 @@ export class PaymentsComponent implements OnInit {
   isarPayment:boolean=false;
   isSelPayment:boolean=true;
   ispayAdvise:boolean=false;
-  // public locIdList: Array<string> = [];
+  public locIdList: Array<string> = [];
+  locId:number;
+
   constructor(private fb: FormBuilder, private router1: ActivatedRoute, private transactionService: TransactionService, private location: Location, private service: MasterService, private router: Router) {
     this.paymentForm = fb.group({
       suppNo: [],
@@ -170,6 +173,7 @@ jeSource: [],
   payStatus:[],
       docNo: [],
       emplId:[],
+
       obj1: this.fb.array([this.payHeaderLineDtl()]),
       obj: this.fb.array([this.payInvoiceLineDtl()]),
     })
@@ -232,6 +236,7 @@ jeSource: [],
       source:[],
       receiptMethodId:[],
       refundStatus:[],
+      locId:[],
     });
   }
 
@@ -285,13 +290,13 @@ jeSource: [],
           console.log(this.paymentIdListList);
         }
       );
-      // this.service.locationIdList1(this.ouId)
-      // .subscribe(
-      //   data => {
-      //     this.locIdList = data;
-      //     console.log(this.locIdList);
-      //   }
-      // );
+      this.service.locationIdList1(this.ouId)
+      .subscribe(
+        data => {
+          this.locIdList = data;
+          console.log(this.locIdList);
+        }
+      );
   
     this.sub = this.router1.params.subscribe(params => {
       this.INVNO = params['invNumber'];
