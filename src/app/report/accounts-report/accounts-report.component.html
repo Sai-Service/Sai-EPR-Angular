@@ -72,8 +72,16 @@
             </li>
             <li>
               <a class="dropdown-item" data-toggle="collapse" href="#panelTolocationOu" role="tab"
-                  (click)="reportDetails('tdsRegister')">TDS Register</a>
-          </li>
+                (click)="reportDetails('tdsRegister')">TDS Register</a>
+            </li>
+            <li>
+              <a class="dropdown-item" data-toggle="collapse" href="#panelGSTSaleRegister" role="tab"
+                (click)="reportDetails('tcsReport')">TCS Reports</a>
+            </li>
+            <li>
+              <a class="dropdown-item" data-toggle="collapse" href="#panelGSTSaleRegister" role="tab"
+                (click)="reportDetails('manualInvoice')">Manual Invoice Report</a>
+            </li>
           </ul>
         </li>
 
@@ -133,9 +141,6 @@
                   </option>
                 </select>
                 <input hidden disabled type="number" class="form-control" formControlName="locId">
-
-
-
               </td>
             </tr>
             <tr>
@@ -238,12 +243,9 @@
                   </option>
                 </select>
                 <input hidden disabled type="number" class="form-control" formControlName="locId">
-
-
-
               </td>
-            </tr>
 
+            </tr>
             <tr>
               <td colspan="4">
                 <table class="center">
@@ -527,8 +529,8 @@
       </tr>
     </table>
     <!-- style="margin-left: auto;margin-right: auto;" -->
-    <table  style="margin-left: 20%;" [style.display]="panelCashBank ? 'block' : 'none'"
-      class="collapse" id="panelCashBank">
+    <table style="margin-left: 20%;" [style.display]="panelCashBank ? 'block' : 'none'" class="collapse"
+      id="panelCashBank">
       <tr>
         <td>
           <table class="center">
@@ -583,16 +585,18 @@
               <td style="width: 15%" class="LabelFontStyle">
                 &nbsp;Cash/Bank&nbsp;name&nbsp;:&nbsp;
               </td>
-              <td  [style.display]="isVisiblepanelcashName ? 'block' : 'none'" >
-                <select formControlName="accountName" id="accountName" class="form-control" (change)="cashNameSelection($event)">
+              <td [style.display]="isVisiblepanelcashName ? 'block' : 'none'">
+                <select formControlName="accountName" id="accountName" class="form-control"
+                  (change)="cashNameSelection($event)">
                   <option>--Select--</option>
                   <option *ngFor="let sc of  accountNameList" [value]="sc.name">
                     {{sc.name}}
                   </option>
                 </select>
               </td>
-              <td  [style.display]="isVisiblepanelaccountName ? 'block' : 'none'" >
-                <select formControlName="accountName1" id="accountName1" class="form-control" (change)="accountNameSelection($event)">
+              <td [style.display]="isVisiblepanelaccountName ? 'block' : 'none'">
+                <select formControlName="accountName1" id="accountName1" class="form-control"
+                  (change)="accountNameSelection($event)">
                   <option>--Select--</option>
                   <option *ngFor="let sc of  accountNameList1" [value]="sc.name">
                     {{sc.name}}
@@ -603,7 +607,7 @@
                 Natural&nbsp;Account&nbsp;:
               </td>
               <td>
-                <input  disabled type="number" class="form-control" formControlName="segment4">
+                <input disabled type="number" class="form-control" formControlName="segment4">
               </td>
             </tr>
 
@@ -784,87 +788,85 @@
       </tr>
     </table>
     <table class="center" [style.display]="ispanelTolocationOu ? 'block' : 'none'" class="collapse"
-    style="margin-left: 20%;" id="panelTolocationOu">
-    <tr>
+      style="margin-left: 20%;" id="panelTolocationOu">
+      <tr>
         <td>
-            <table class="center">
-                <tr>
-                    <td colspan="4" class="LabelFontStyle" style="width: 100%;">
-                        {{reportName}}
-                    </td>
-                </tr>
-            </table>
+          <table class="center">
+            <tr>
+              <td colspan="4" class="LabelFontStyle" style="width: 100%;">
+                {{reportName}}
+              </td>
+            </tr>
+          </table>
         </td>
-    </tr>
-    <tr>
+      </tr>
+      <tr>
         <td>
-            <table class="center">
-                <tr>
-                  <td style="width: 15%" class="LabelFontStyle">
-                    &nbsp;From&nbsp;Date&nbsp;:&nbsp;
-                </td>
-                <td>
-                    <input type="date" class="form-control" formControlName="fromDate"
-                        max="{{minDate | date:'yyyy-MM-dd'}}">
-                </td>
-                  <td style="width: 15%" class="LabelFontStyle">
-                      &nbsp;To&nbsp;Date&nbsp;:&nbsp;
-                  </td>
-                  <td>
-                      <input type="date" class="form-control" formControlName="toDate"
-                          max="{{minDate | date:'yyyy-MM-dd'}}">
-                  </td>
-                    <td style="width: 15%" class="LabelFontStyle">
-                        &nbsp;Operating&nbsp;Unit&nbsp;:&nbsp;
-                    </td>
-                    <td>
-                        <input disabled type="text" class="form-control" formControlName="OUCode">
-                    </td>
-                </tr>
-                <tr>
+          <table class="center">
+            <tr>
+              <td style="width: 15%" class="LabelFontStyle">
+                &nbsp;From&nbsp;Date&nbsp;:&nbsp;
+              </td>
+              <td>
+                <input type="date" class="form-control" formControlName="fromDate"
+                  max="{{minDate | date:'yyyy-MM-dd'}}">
+              </td>
+              <td style="width: 15%" class="LabelFontStyle">
+                &nbsp;To&nbsp;Date&nbsp;:&nbsp;
+              </td>
+              <td>
+                <input type="date" class="form-control" formControlName="toDate" max="{{minDate | date:'yyyy-MM-dd'}}">
+              </td>
+              <td style="width: 15%" class="LabelFontStyle">
+                &nbsp;Operating&nbsp;Unit&nbsp;:&nbsp;
+              </td>
+              <td>
+                <input disabled type="text" class="form-control" formControlName="OUCode">
+              </td>
+            </tr>
+            <tr>
+              <td colspan="4">
+                <table class="center">
+                  <tr>
                     <td colspan="4">
-                        <table class="center">
-                            <tr>
-                                <td colspan="4">
-                                    <table class="center" style="width: 100%;">
-                                        <tr>
-                                            <div *ngIf="closeResetButton; then hList1; else hList2"></div>
-                                            <ng-template #hList2>
-                                                <div class="d-flex justify-content-center">
-                                                    <div class="spinner-border text-primary" role="status">
-                                                        <span class="sr-only" id="loading"></span>
-                                                    </div>
-                                                </div>
-                                            </ng-template>
-                                            <ng-template #hList1> </ng-template>
-                                            <td class="LabelFontStyle" style="color: blue;width: fit-content;"
-                                                colspan="4">
-                                                &nbsp;{{dataDisplay}}&nbsp; </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="4">
-                                    <table class="center" style="width: 100%;margin-left: 50%;">
-                                        <tr>
-                                            <td>
-                                                <button class="btn-primary" [disabled]="isDisabled1"
-                                                    (click)="reportParameter(reportName)">View
-                                                    Report</button>
-                                            </td>
-
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                        </table>
+                      <table class="center" style="width: 100%;">
+                        <tr>
+                          <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                          <ng-template #hList2>
+                            <div class="d-flex justify-content-center">
+                              <div class="spinner-border text-primary" role="status">
+                                <span class="sr-only" id="loading"></span>
+                              </div>
+                            </div>
+                          </ng-template>
+                          <ng-template #hList1> </ng-template>
+                          <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">
+                            &nbsp;{{dataDisplay}}&nbsp; </td>
+                        </tr>
+                      </table>
                     </td>
-                </tr>
-            </table>
+                  </tr>
+                  <tr>
+                    <td colspan="4">
+                      <table class="center" style="width: 100%;margin-left: 50%;">
+                        <tr>
+                          <td>
+                            <button class="btn-primary" [disabled]="isDisabled1"
+                              (click)="reportParameter(reportName)">View
+                              Report</button>
+                          </td>
+
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
         </td>
-    </tr>
-</table>
+      </tr>
+    </table>
   </fieldset>
   <table class="center">
     <tr>

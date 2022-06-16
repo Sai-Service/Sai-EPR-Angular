@@ -88,7 +88,6 @@
         <input hidden type="text" [(ngModel)]="ouId" formControlName="ouId">
         <td style="width: 15%" class="LabelFontStyle1">&nbsp;Source&nbsp;:&nbsp;</td>
         <td>
-            <!-- <input type="text" class="form-control" formControlName="source"> -->
             <select
             formControlName="source" name="source" id="source" class="form-control" >
                                     <option *ngFor="let sc of sourceList" [ngValue]="sc.code">
