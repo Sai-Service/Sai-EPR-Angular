@@ -188,7 +188,7 @@
                                                             style="width: 150px;height: 25px;font-size: 11px;background-color: yellow;"> -->
                                                         </td>
                                                     <td>
-                                                        <input type="text" class="form-control"
+                                                        <input type="text" class="form-control" [(ngModel)]="invoiceNum" (keydown.tab)="searchByinvoiceNum(invoiceNum)"
                                                             formControlName="invoiceNum" value={{invoiceNum}}
                                                             style="width: 120px;height: 25px;font-size: 10px;">
                                                     </td>

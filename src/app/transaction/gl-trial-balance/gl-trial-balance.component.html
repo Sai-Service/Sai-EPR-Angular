@@ -191,6 +191,8 @@
                     <td style="font-weight: bold;">{{this.glDebitAmt | number:'1.2-2'}}
                     <td style="width: 15%" class="LabelFontStyle">Credit&nbsp;Amt&nbsp;:</td>
                     <td style="font-weight: bold;">{{this.glCreditAmt | number:'1.2-2'}}
+                    <td> <button  (click)="glTbReportExport_Level1()" class="btn btn-success" style="width: fit-content;">Export</button></td>  
+
                 </tr>
             </table>
 
@@ -221,9 +223,14 @@
                           <td style="padding-right: 5px;padding-top: 5px;border-color:black;text-align: right;">{{i+1}}</td>
 
 
-                          <td style="padding-left: 5px;padding-top: 10px;border-color:black;">
+                          <!-- <td style="padding-left: 5px;padding-top: 10px;border-color:black;">
                             <a href="#glDocNo" (click) ='SelectTbAct1(com.jeCategory,com.glDocNo,com.referenceNo)'   data-toggle="modal" data-target="#viewGLDetails1">{{com.glDocNo}}</a>
-                        </td> 
+                          </td>  -->
+
+                          <td style="padding-left: 5px;padding-top: 10px;border-color:black;">
+                            <a href="#glDocNo" (click) ='SelectTbAct1(com.jeCategory,com.glDocNo,com.referenceNo,com.jeSource)'>{{com.glDocNo}}</a>
+                          </td> 
+
                            <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: center;">{{com.referenceNo}}</td>
                           <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: left;">{{com.glcodeDescription}}</td>
                           <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: left;">{{com.jeCategory}}</td>
@@ -240,17 +247,77 @@
                     </table>
                  
           </div>
-            </div>
+          </div>
+          <!-- ============================= -->
+          <!-- lstTBActLineDet1 -->
+          <br>
 
+       <div *ngIf="drilDown3; then D1; else D2"></div>
+       <ng-template #D2></ng-template>
+        <ng-template #D1> 
+          <!-- <h5 class="modal-title" id="exampleModalLongTitle" style="margin-left: 40%;">Trial Balance GL Account Invoice Details</h5> -->
+          <h5 class="modal-title" id="exampleModalLongTitle" style="margin-left: 40%;">Trial Balance GL Account Invoice Details</h5>
+
+          <table class="center" style="width: 100%;">
+            <tr>
+                <td style="width: 15%" class="LabelFontStyle">Category&nbsp;:&nbsp;</td>
+                <td style="font-weight: bold;">{{this.glSegment}}
+                <td style="width: 15%" class="LabelFontStyle">Source&nbsp;:&nbsp;</td>
+                <td style="font-weight: bold;">{{this.jeSource}}
+                <td style="width: 15%" class="LabelFontStyle">Documnet&nbsp;No&nbsp;:&nbsp;</td>
+                <td style="font-weight: bold;">{{this.glDocNum}}
+                <td style="width: 15%" class="LabelFontStyle">Reference&nbsp;No&nbsp;:&nbsp;</td>
+                <td style="font-weight: bold;">{{this.glDocRefNum}}
+               
+            </tr>
+        </table>
+
+        <div class="container1">
+          <div class="grid_scroll_3">
+           <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+             <thead>
+               <tr class="GridHeader">
+               <th>Srl#</th> 
+               <th>Invoice Number</th>
+               <th>Invoice Date</th>
+               <th>Refernce No</th>
+               <th>Name</th> 
+               <th>Invoice Amt</th>
+               <th>Total Amt</th>
+              </tr>
+             </thead>
+                <ng-container  *ngFor="let com of lstTBActLineDet1 let i=index" class="ItemStyle" style="text-decoration:none;position: initial;font-size:large">
+
+                   <tr style="text-decoration:none;position: initial;font-size:small">
+                     <td style="padding-right: 5px;padding-top: 5px;border-color:black;text-align: right;">{{i+1}}</td>
+                     <td style="padding-left: 5px;padding-top: 10px;border-color:black;">
+                       <a href="#trxNumber" type="submit" data-dismiss="modal"  (click) ='SelectTbAct2(com.trxNumber,com.referenceNo,this.glSegment,this.jeSource)' >{{com.trxNumber}}</a>
+                   </td> 
+
+                     <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: center;">{{com.trxDate |date:'dd-MM-y'}}</td>
+                     <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: center;">{{com.referenceNo}}</td>
+                     <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: left;">{{com.Name}}</td>
+                     <td style="padding-right: 5px;padding-top: 5px;border-color:black;text-align: right;">{{com.invoiceAmt | number:'1.2-2'}}</td>
+                     <td style="padding-right: 5px;padding-top: 5px;border-color:black;text-align: right;">{{com.totalAmt| number:'1.2-2'}}</td>
+                   </tr>
+                   </ng-container>
+               </table>
+        </div>
+       </div>
+        </ng-template>
+       <!-- ================================== -->
       </div>
 
       <div class="modal-footer">
-        <td> <button  (click)="glTbReportExport_Level1()" class="btn btn-success" style="width: fit-content;">Export To Excel</button></td>  
+        <!-- <td> <button  (click)="glTbReportExport_Level1()" class="btn btn-success" style="width: fit-content;">Export To Excel</button></td>   -->
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
 </div>
+
+
+
 
 <!-- ==================================Drilldown level 2============================================== -->
 
@@ -302,7 +369,12 @@
 
                         <tr style="text-decoration:none;position: initial;font-size:small">
                           <td style="padding-right: 5px;padding-top: 5px;border-color:black;text-align: right;">{{i+1}}</td>
-                          <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: center;">{{com.trxNumber}}</td>
+                          <!-- <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: center;">{{com.trxNumber}}</td> -->
+
+                          <td style="padding-left: 5px;padding-top: 10px;border-color:black;">
+                            <a href="#trxNumber" type="submit" data-dismiss="modal"  (click) ='SelectTbAct2(com.trxNumber,com.referenceNo,this.glSegment)' >{{com.trxNumber}}</a>
+                        </td> 
+
                           <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: center;">{{com.trxDate |date:'dd-MM-y'}}</td>
                           <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: center;">{{com.referenceNo}}</td>
                           <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: left;">{{com.Name}}</td>

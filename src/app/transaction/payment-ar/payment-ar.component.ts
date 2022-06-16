@@ -298,6 +298,7 @@ export class PaymentArComponent implements OnInit {
   private sub: any;
 
   policyTerm:number;
+  displayglDateDisabled=true;
 
   // applyTo: string;
 
@@ -485,7 +486,13 @@ export class PaymentArComponent implements OnInit {
 
     
 
-if (Number(sessionStorage.getItem('dept')) ===4)  {this.accountsLogin=true;}else {this.accountsLogin=false;}
+if (Number(sessionStorage.getItem('dept')) ===4)  {this.accountsLogin=true; 
+  this.displayglDateDisabled=false;
+}else {this.accountsLogin=false;
+  this.displayglDateDisabled=true;
+}
+
+
 
 // alert ("DeptId : " +this.deptId + " accountsLogin="+this.accountsLogin);
 
@@ -2832,7 +2839,7 @@ if(this.deptId==2){
     var sDate = new Date(this.GLPeriodCheck.startDate);
     var tDate = new Date(this.GLPeriodCheck.endDate);
 
-
+    // alert(tglDate+'----'+this.glDate +'-------'+ formValue.glDate);
     if (formValue.glDate === undefined || formValue.glDate === null || tglDate < sDate || tglDate > tDate) {
       this.checkValidation = false;
       alert("GL DATE: " + this.pipe.transform(tglDate, 'y-MM-dd') + " Should not be null / Should be within GL period.\nGL Period : " + this.GLPeriodCheck.startDate + " - " + this.GLPeriodCheck.endDate);

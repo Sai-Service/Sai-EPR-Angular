@@ -15,7 +15,6 @@ startDate:Date;
 endDate:Date;
 status:string;
 regimeId:number;
-
 }
 
 @Component({
@@ -27,7 +26,6 @@ export class JaiRegimeMasterComponent implements OnInit {
   jaiRegimeMasterForm: FormGroup;
 
   pipe = new DatePipe('en-US');
-
   loginName:string;
   loginArray:string;
   name:string;
@@ -68,7 +66,6 @@ export class JaiRegimeMasterComponent implements OnInit {
 
 constructor(private service : MasterService, private fb: FormBuilder, private router: Router) {
     this.jaiRegimeMasterForm = fb.group({
-
       loginArray:[''],
       loginName:[''],
       ouName :[''],
@@ -79,7 +76,6 @@ constructor(private service : MasterService, private fb: FormBuilder, private ro
       emplId:[''],
       orgId:[],
       divisionId:[],
-
       regimeCode: ['', [Validators.required, Validators.maxLength(7)]],
       regimeName: ['', [Validators.required]],
       regimeType: ['', [Validators.required]],
@@ -142,6 +138,8 @@ constructor(private service : MasterService, private fb: FormBuilder, private ro
       this.display = false;
     }
   }
+
+  
   searchMast() {
     this.service.getJaiRegimeSearch()
       .subscribe(
@@ -164,7 +162,7 @@ constructor(private service : MasterService, private fb: FormBuilder, private ro
   
     this.CheckDataValidations();
     if (this.checkValidation===true) {
-        alert("Data Validation Sucessfull....\nPosting data  to TAX REGIME TABLE")
+        alert("Data Validation Sucessfull....")
 
         const formValue: IJaiRegime =this.jaiRegimeMasterForm.value;
         this.service.JaiRegimeMasterSubmit(formValue).subscribe((res: any) => {

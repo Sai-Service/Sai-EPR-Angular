@@ -429,6 +429,13 @@ getcompanySearch(): Observable<any> {
 }
 
 
+///////////////////////////common look up //////////////////////////
+
+cmnTypeListNew(divId): Observable<any>{
+  return this.http.get(this.ServerUrl + `/cmnLookup/AllCmnType/${divId}`);
+  // http://localhost:8081/cmnLookup/AllCmnType/2
+  }
+
 public commonMasterSubmit(commonMasterRecord) {
   const options = {
     headers: this.headers
@@ -437,9 +444,24 @@ public commonMasterSubmit(commonMasterRecord) {
   return this.http.post(url, commonMasterRecord, options);
 }
 
+
+UpdateCommonMasterSubmit(commnMasterRecord,cmnId) {
+  const options = {
+    headers: this.headers
+  };
+  const url = (this.ServerUrl + `/cmnLookup/${cmnId}`);
+  return this.http.put(url, commnMasterRecord, options);
+  // http://localhost:8081/cmnLookup/732
+}
+
+
 getCommonLookupSearch(searchText): Observable<any> {
   return this.http.get(this.ServerUrl + `/CompMst/${searchText}`);
+}
 
+getCommonLookupSearchNew(cmnTp,divId): Observable<any> {
+  return this.http.get(this.ServerUrl+`/cmnLookup/CmnTypeDivision?cmnType=${cmnTp}&divisionId=${divId}`)
+  // http://localhost:8081/cmnLookup/CmnTypeDivision?cmnType=PhysicalLocation&divisionId=2
 }
 
 
@@ -669,7 +691,10 @@ hsnSacCodeDet(mHsnCode): Observable<any> {
   return this.http.get(this.ServerUrl +`/hsnSacMst/${mHsnCode}`);
 }
 
-
+hsnSacCodeDetNew(mHsnCode): Observable<any> {
+  // alert("ms >> "+mHsnCode);
+  return this.http.get(this.ServerUrl +`/hsnSacMst/ls/${mHsnCode}`);
+}
 
 internalOrderList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');

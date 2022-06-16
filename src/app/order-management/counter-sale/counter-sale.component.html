@@ -7,7 +7,7 @@
     <input hidden type="number" class="form-control" formControlName="ouId" [(ngModel)]='ouId'>
     <input hidden class="form-control" formControlName="billLocName" [(ngModel)]='billLocName'>
     <input hidden class="form-control" formControlName="shipLocName" [(ngModel)]='shipLocName'>
-    <input  class="form-control" formControlName="customerId" [(ngModel)]='customerId'>
+    <input hidden class="form-control" formControlName="customerId" [(ngModel)]='customerId'>
 
     <table style="width: 100%;background-color: white;">
         <tr>
@@ -158,7 +158,7 @@
                         <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
                             <div *ngIf="f.name.errors.required">Site Code cannot be blank</div>
                         </div>
-                        <input  disabled type="number" class="form-control" formControlName="customerSiteId"
+                        <input hidden disabled type="number" class="form-control" formControlName="customerSiteId"
                             [(ngModel)]='customerSiteId' value={{customerSiteId}} style="width: 160px;">
                         <input hidden disabled type="text" class="form-control" formControlName="taxCategoryName"
                             [(ngModel)]='taxCategoryName' value={{taxCategoryName}} style="width: 160px;">

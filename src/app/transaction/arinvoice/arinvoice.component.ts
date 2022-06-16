@@ -619,7 +619,21 @@ export class ARInvoiceComponent implements OnInit {
           this.searchByInvoiceNo(this.trxNumber1)
         }
       })
+
     }
+
+    if (Number(sessionStorage.getItem('deptId')) == 5) {
+      this.sub = this.router1.params.subscribe(params => {
+        this.trxNumber1 = params['invoiceNumber'];
+        // alert(this.trxNumber1)
+        if (this.trxNumber1 != undefined) {
+          this.searchByInvoiceNo(this.trxNumber1)
+        }
+      })
+
+    }
+
+
 
     this.glPrdStartDate = this.GLPeriodCheck.startDate;
     this.glPrdEndDate = this.GLPeriodCheck.endDate;

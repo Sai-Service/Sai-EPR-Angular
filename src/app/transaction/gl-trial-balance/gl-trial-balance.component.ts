@@ -8,6 +8,7 @@ import { ReportServiceService } from 'src/app/report/report-service.service'
 import { saveAs } from 'file-saver';
 
 
+
 const MIME_TYPES = {
   pdf: 'application/pdf',
   xls: 'application/vnd.ms-excel',
@@ -104,12 +105,14 @@ export class GlTrialBalanceComponent implements OnInit {
   natActDesc:string;
   glDebitAmt :number;
   glCreditAmt :number;
+  jeSource:string;
 
   glSegment:string;
   glDocNum:string;
   glDocRefNum:string;
 
   exportExcel=false;
+  drilDown3=false;
 
   get f() { return this.glTrialBalanceForm.controls; }
   glTrialBalance(glTrialBalanceForm:any) {  }
@@ -137,6 +140,7 @@ export class GlTrialBalanceComponent implements OnInit {
       natActDesc:[],
       glDebitAmt :[],
       glCreditAmt :[],
+      jeSource:[],
 
       glSegment:[],
       glDocNum:[],
@@ -217,7 +221,9 @@ export class GlTrialBalanceComponent implements OnInit {
   if(prdName==null || prdName==undefined || prdName.trim()=='') {
     alert ("Please Select Period..."); return;
   }
+  this.drilDown3=false;
   this.lstTBActLineDet=null;
+  this.lstTBActLineDet1=null;
    
   this.service.getGLTrialBalanceActSelect(opuCode, prdName,natAct)
     .subscribe(
@@ -232,7 +238,27 @@ export class GlTrialBalanceComponent implements OnInit {
 }
 
 
-SelectTbAct1(segment,glDocNum,refNum){
+SelectTbAct2(trxNum,refNum,catg,source){
+  alert ("Trans Number :" + trxNum + "\nReference Number : " +refNum + "\nCategory : "+catg +"\nSource : "+source);
+  // Receivable
+  if(source==='Receivable'){
+  this.router.navigate(['/admin/transaction/ARInvoice', trxNum]);
+  } 
+  else if(source==='Payables'){
+    this.router.navigate(['/admin/transaction/payableInvoice', trxNum]);
+  }  
+  else if(source==='Purchasing'){
+    // this.router.navigate(['/admin/master/PoReceiptForm', trxNum]);
+    alert ("Source - Purchasing , Category - "+catg +" ..Wip...")
+  } 
+  else {alert ("Work In Progress")}
+  
+}
+
+
+
+
+SelectTbAct1(segment,glDocNum,refNum,jSource){
 
   // var prdName =this.glTrialBalanceForm.get("periodName").value;
   // var opuCode= this.locCode.substring(0,4)
@@ -240,6 +266,7 @@ SelectTbAct1(segment,glDocNum,refNum){
   this.glDocNum=glDocNum;
   this.glDocRefNum=refNum;
   this.glSegment=segment;
+  this.jeSource=jSource;
 
   if(segment==null || segment==undefined || segment.trim()=='') {
     alert ("Please Select Period..."); return;
@@ -253,9 +280,11 @@ SelectTbAct1(segment,glDocNum,refNum){
       data => {
         this.lstTBActLineDet1 = data.obj;
         if(this.lstTBActLineDet1.length===0) {
+          this.drilDown3=false;
           alert (glDocNum +" - " + "Line Details Not Found.");
           return;
         }
+        this.drilDown3=true;
         console.log(this.lstTBActLineDet1);
   });
 }

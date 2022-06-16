@@ -156,7 +156,7 @@
                                 <ng-template #thenCustomerSite>
                                     <td>
                                         <select formControlName="name" id="name" class="form-control"
-                                            style="width: 200px;" (change)='onOptionsSelectedcustSiteName($event)'>
+                                            style="width: 200px;" (ngModelChange)='onOptionsSelectedcustSiteName($event)'>
                                             <!-- <option>--Select--</option> -->
                                             <option *ngFor="let custSite of custSiteList" [value]="custSite.siteName">
                                                 {{custSite.siteName}}
@@ -438,7 +438,7 @@
 
                                 </tr>
                                 <tr>
-                                    <td style="width: 15%" class="LabelFontStyle">
+                                    <td style="width: 15%" class="LabelFontStyle1">
                                         RTO&nbsp;Location&nbsp;
                                     </td>
                                     <td>

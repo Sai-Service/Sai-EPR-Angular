@@ -306,15 +306,32 @@
                                     <td> <input disabled  style="font-weight: bold; background-color: lightgreen;"  type="text" formControlName="receiptNumber"  id="receiptNumber" [(ngModel)]="receiptNumber" class="form-control"> </td>
                                 
                                     <td style="width: 15%" class="LabelFontStyle">Receipt&nbsp;Date:&nbsp;</td>
-                                    <td><input  disabled  type="date"  formControlName="receiptDate"  id="receiptDate" [(ngModel)]="receiptDate" class="form-control" style="background-color: lightgreen;" ></td>
+                                    <td>
+                                        <div *ngIf="displayglDateDisabled ,then thenglDateDisabled; else elseglDateDisabled")></div>
+                                        <ng-template #thenglDateDisabled>
+                                        <input  disabled  type="date"  formControlName="receiptDate"  id="receiptDate" [(ngModel)]="receiptDate" class="form-control" style="background-color: lightgreen;" >
+                                        </ng-template>
+                                        <ng-template #elseglDateDisabled>
+                                            <input   type="date"  formControlName="receiptDate"  id="receiptDate" [(ngModel)]="receiptDate" class="form-control"  >
+                                        </ng-template>
+                                    </td>
                                     
 
                                     <div *ngIf="displayButton ,then thenshowDet1Yes; else thenshowDet1No")></div>
                                     <ng-template #thenshowDet1Yes>
                                      
                                         <td style="width: 15%" class="LabelFontStyle">GL&nbsp;Date:&nbsp;</td>
-                                        <td><input  disabled type="date"  formControlName="glDate"  id="glDate" [(ngModel)]="glDate" class="form-control" 
-                                            max="{{minDate | date:'yyyy-MM-dd'}}" (change)="glPrdValidate(glDate)" ></td>
+                                        <td>
+                                            <div *ngIf="displayglDateDisabled ,then thenglDateDisabled; else elseglDateDisabled")></div>
+                                            <ng-template #thenglDateDisabled>
+                                            <input  disabled type="date"  formControlName="glDate"  id="glDate" [(ngModel)]="glDate" class="form-control" 
+                                            max="{{minDate | date:'yyyy-MM-dd'}}" (change)="glPrdValidate(glDate)" >
+                                            </ng-template>
+                                            <ng-template #elseglDateDisabled>
+                                                <input   type="date"  formControlName="glDate"  id="glDate" [(ngModel)]="glDate" class="form-control" 
+                                                max="{{minDate | date:'yyyy-MM-dd'}}" (change)="glPrdValidate(glDate)" >
+                                            </ng-template>
+                                        </td>
                                         
                                         <td  style="width: 15%" class="LabelFontStyle1">Receipt&nbsp;Amt:&nbsp;</td>
                                         <td>  <input style="font-weight: bold;text-align: right;"   type="number"   min="1" formControlName="paymentAmt"  id="paymentAmt"  [(ngModel)]="paymentAmt" class="form-control" (change)="validateAmt(paymentAmt)" (keyup)="onKey($event)" style="background-color: yellow;">    </td>
@@ -1032,8 +1049,8 @@
 
 
                                   <div class="container1">
-                                        <div class="grid_scroll_3">
-                                        <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+                                    <div class="grid_scroll_3">
+                                      <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
                                        <tbody>
                                             <tr class="GridHeader">
                                               
