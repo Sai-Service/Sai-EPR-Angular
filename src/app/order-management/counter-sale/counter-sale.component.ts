@@ -2154,7 +2154,6 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                       this.service.getfrmSubLocPrice(this.locId, select.itemId, this.subInventoryId).subscribe(
                         data => {
                           console.log(data);
-
                           if (data.length === 0) {
                             // alert('1')
                             alert('Item Not Found In Stock!.');

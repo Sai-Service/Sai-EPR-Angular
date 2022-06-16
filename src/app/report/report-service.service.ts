@@ -170,6 +170,23 @@ export class ReportServiceService {
     });
   }
 
+  tcsRegister(fromDate,toDate,ouId,locId){
+    const REQUEST_URI = this.ServerUrl +`/AccountsReports/TcsReport?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+  manualInvoice(fromDate,toDate,ouId,locId){
+    const REQUEST_URI = this.ServerUrl +`/AccountsReports/ManualInvoiceRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&sourceName=Manual`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+
   prePayment(ouId){
     const REQUEST_URI = this.ServerUrl +`/AccountsReports/PrepaymentRep?ouId=${ouId}`;
     return this.http.get(REQUEST_URI, {
