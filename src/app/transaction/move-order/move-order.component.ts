@@ -683,7 +683,7 @@ validate(i:number,qty1)
       console.log(data);
       if(data.code === 400){
         // alert(data.message);
-        window.location.reload();
+        // window.location.reload();
       }
       if(data.code===200)
       {
