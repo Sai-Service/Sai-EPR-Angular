@@ -79,6 +79,7 @@ export class InternalConsumptionComponent implements OnInit {
   public subInvCode: any;
   compNo: string;
   onHandQty: number;
+  JobNo:string;
   id: number;
   public transType: any = [];
   invItemId: number;
@@ -179,6 +180,8 @@ export class InternalConsumptionComponent implements OnInit {
   attribute1: number;
   attribute2: Date;
 
+  jobData:any;
+
   type1: string;
   dispheader: boolean = false;
   displable: boolean = false;
@@ -225,6 +228,7 @@ export class InternalConsumptionComponent implements OnInit {
       trans: [''],
       lookupValueDesc5: [''],
       codeCombinationId: [''],
+      JobNo:[],
       compileType: ['', Validators.required],
       reason: ['', Validators.required],
       compileStatus: [''],
@@ -1151,5 +1155,25 @@ searchFromArray(arr, regex) {
   }
   return matches;
 };
+
+
+searchByJobNo(){
+  //  alert(this.JobNo);
+  //  var jobno=(this.InternalConsumptionForm.get('JobNo').value);
+  if(this.JobNo==null || this.JobNo==undefined || this.JobNo.trim()=='') {
+   alert ("Enter a Valid Job Card No."); return;}
+   this.JobNo=this.JobNo.toUpperCase();
+
+  this.service.getsearchByIC(this.JobNo).subscribe(
+    data=>{
+      if (data.code==200){
+         this.jobData=data.obj; 
+        } 
+        else if (data.code==400){
+          alert(data.message)
+        }  
+    }
+  )
+}
 
 }
