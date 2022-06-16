@@ -24,6 +24,7 @@ interface ICommon {
   startDate:string;
   endDate:string,
   status:string;
+  attribute1:string;
 }
 
 @Component({
@@ -45,7 +46,7 @@ export class CommonMasterComponent implements OnInit {
   cmnDesc: string;
   // startDate:Date;
   startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
-
+  attribute1:string;
   endDate:string;
   status:string="Active";
   code:string;
@@ -88,6 +89,7 @@ export class CommonMasterComponent implements OnInit {
       cmnType: ['', [Validators.required]],
       cmnDesc: ['', [Validators.required]],
       application: ['', [Validators.required]],
+      attribute1:[],
 
       code:[],
       codeDesc:[],
@@ -303,7 +305,8 @@ CheckDataValidations(){
   const formValue: ICommon = this.commonMasterForm.value;
 
   formValue.code =this.code.toUpperCase();
-  formValue.codeDesc=this.codeDesc.toUpperCase()
+  formValue.codeDesc=this.codeDesc.toUpperCase();
+  formValue.attribute1=this.attribute1.toUpperCase();
 
   // alert ("code, desc : "+this.code + " , "+this.codeDesc);
 
