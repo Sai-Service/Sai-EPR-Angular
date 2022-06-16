@@ -1701,6 +1701,9 @@ getsearchByJob(jobno):Observable<any>{
  return this.http.get(this.ServerUrl+`/mtrlIssue/repair?repairNo=${jobno}`)
 }
 
+getsearchByIC(jobno):Observable<any>{
+  return this.http.get(this.ServerUrl+`/stockadj/jobcard/${jobno}`)
+ }
 
 subInvCode(deptId):Observable<any>{
   return this.http.get(this.ServerUrl +`/subInvMst/wipissue/${deptId}`);

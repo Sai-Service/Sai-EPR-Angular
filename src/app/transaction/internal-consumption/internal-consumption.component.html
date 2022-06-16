@@ -392,6 +392,60 @@
       </div>
     </div>
   </div>
+<br>
+<br>
+  <table style="width: 100%; background-color: #a4d3e9;">
+    <tr>
+        <td style="width: 15%" class="LabelFontStyle">Job&nbsp;Card&nbsp;Number&nbsp;:</td>
+        <!-- <td>
+            <input type="text"  class="form-control" formControlName="JobNo" id="JobNo" value="JobNo" name="JobNo" [(ngModel)]="JobNo"  style="font-size: small;text-transform: uppercase;">
+        </td> -->
+        <td style="background-color: #FFE4B5;">
+          <input class="form-control" formControlName="JobNo" [(ngModel)]='JobNo'
+              value={{JobNo}}>
+      </td>
+        <td colspan="8" style="text-align: left; width: 100%;">
+            <button type="button" class="btn btn-primary" (click)='searchByJobNo()' ><i class="fa fa-search"></i></button>
+        </td>
+    
+          
+      </tr>
+ 
+</table>
+<!-- <br> -->
+<div class="Container1">
+  <div class="grid_scroll">
+  <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%; font-size: small;">
+      <tbody>
+          <tr class="GridHeader">
+            <th scope="col">Srl#</th>
+            <th scope="col">IC No.</th>
+            <!-- <th scope="col">Line No</th> -->
+            <th scope="col">Registration No.</th>
+            <th scope="col">Item Code</th>
+            <th scope="col">Item Description</th>
+            <th scope="col">Reason</th>
+            <!-- <th scope="col">UOM</th> -->
+            <th scope="col">Quantity</th>
+            <th scope="col">Rate</th>
+            <th>Date</th>
+          </tr>
+          </tbody>
+          <tr *ngFor="let com of jobData let i=index" style="background-color:#E3EAEB;">
+            <td style="text-align: center;width: 3rem;">{{i+1}}</td>
+            <td>{{com.IcNo}}</td>
+            <td>{{com.regNo}}</td>
+            <td>{{com.itemCode}}</td>
+            <td>{{com.description}}</td>
+            <td>{{com.reason}}</td>
+            <!-- <td>{{com.uom}}</td> -->
+            <td style="text-align: right;">{{com.qty}}</td>
+            <td style="text-align: right;">{{com.amount}}</td>
+            <td style="text-align:  center;">{{com.IcDate}}</td>
+          </tr>
+  </table>
+  </div>
+</div>
 
   </form>
   </div>
