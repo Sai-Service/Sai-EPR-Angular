@@ -6,7 +6,7 @@ import { DatePipe,Location } from '@angular/common';
 import { MasterService } from 'src/app/master/master.service';
 import { saveAs } from 'file-saver';
 import { data } from 'jquery';
-
+import { TransactionService } from 'src/app/transaction/transaction.service';
 
 const MIME_TYPES = {
   pdf: 'application/pdf',
@@ -27,6 +27,7 @@ export class AccountsReportComponent implements OnInit {
   OUCode:string;
   locCode:string;
   locId:number;
+  public sourceList: Array<string> = [];
   public BillShipToList: Array<string> = [];
   periodNameList: any=[];
   accountName1:string;
@@ -63,7 +64,8 @@ export class AccountsReportComponent implements OnInit {
   isVisibleLocation:boolean=false;
   isVisibleLocation1:boolean=false;
   ispanelTolocationOu:boolean=false;
-  constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) {
+  source:string;
+  constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService,private transactionService: TransactionService) {
     this.reportForm = this.fb.group({
       fromDate:[''],
       toDate:[''],
@@ -71,6 +73,7 @@ export class AccountsReportComponent implements OnInit {
       locCode:[''],
       locId:[''],
       deptId:[],
+      source:[],
       spInvAging1:[''],
       spInvAging2:[''],
       spInvAging3:[''],
@@ -111,6 +114,13 @@ this.service.getLocationSearch1(sessionStorage.getItem('ouId'))
     this.BillShipToList = data;
   }
 );
+
+this.transactionService.sourceListFn().subscribe(data => {
+  this.sourceList = data;
+  console.log(this.sourceList);
+
+})
+
 
 this.service.accountNameList()
 .subscribe(
@@ -209,6 +219,7 @@ reportName:string;
     this.reportForm.get('toDate').reset();
     this.reportForm.get('locCode').reset();
     this.isVisibleGSTSaleRegister=true;
+    
     this.isVisibleGSTPurchaseRegister=false;
     this.isVisibleSparesdebtors=false;
     this.isVisiblespInvAgging=false;
@@ -223,7 +234,7 @@ reportName:string;
     this.reportForm.get('fromDate').reset();
     this.reportForm.get('toDate').reset();
     this.reportForm.get('locCode').reset();
-    this.isVisibleGSTSaleRegister=false;
+    this.isVisibleGSTSaleRegister=false;  
     this.isVisibleGSTPurchaseRegister=true;
     this.isVisibleSparesdebtors=false;
     this.isVisiblespInvAgging=false;
@@ -239,6 +250,7 @@ reportName:string;
     this.reportForm.get('toDate').reset();
     this.reportForm.get('locCode').reset();
     this.isVisibleGSTSaleRegister=false;
+    
     this.isVisibleGSTPurchaseRegister=true;
     this.isVisibleSparesdebtors=false;
     this.isVisiblespInvAgging=false;
@@ -254,6 +266,7 @@ reportName:string;
     this.reportForm.get('toDate').reset();
     this.reportForm.get('locCode').reset();
     this.isVisibleGSTSaleRegister=true;
+    
     this.isVisibleGSTPurchaseRegister=false;
     this.isVisibleSparesdebtors=false;
     this.isVisiblespInvAgging=false;
@@ -270,7 +283,7 @@ reportName:string;
     this.reportForm.get('locCode').reset();
     this.isVisibleGSTSaleRegister=false;
     this.isVisibleGSTPurchaseRegister=false;
-    this.isVisibleGSTSaleRegister=false;
+    
     this.isVisibleSparesdebtors=true;
     this.isVisiblespInvAgging=false;
     this.isVisiblepanelgltrialBalance=false;
@@ -283,7 +296,7 @@ reportName:string;
     this.reportName='Spares Inventory Aging';
     this.isVisibleGSTSaleRegister=false;
     this.isVisibleGSTPurchaseRegister=false;
-    this.isVisibleGSTSaleRegister=false;
+    
     this.isVisibleSparesdebtors=false;
     this.isVisiblespInvAgging=true;
     this.isVisiblepanelgltrialBalance=false;
@@ -296,7 +309,7 @@ reportName:string;
     this.reportName='GL Trial Balance';
     this.isVisibleGSTSaleRegister=false;
     this.isVisibleGSTPurchaseRegister=false;
-    this.isVisibleGSTSaleRegister=false;
+    
     this.isVisibleSparesdebtors=false;
     this.isVisiblespInvAgging=false;
     this.isVisiblepanelgltrialBalance=true;
@@ -313,7 +326,7 @@ reportName:string;
     this.reportName='Cash Book Report';
     this.isVisibleGSTSaleRegister=false;
     this.isVisibleGSTPurchaseRegister=false;
-    this.isVisibleGSTSaleRegister=false;
+    
     this.isVisibleSparesdebtors=false;
     this.isVisiblepanelaccountName=false;
     this.isVisiblepanelcashName=true;
@@ -335,7 +348,7 @@ reportName:string;
     this.reportForm.get('accountName1').reset();
     this.isVisibleGSTSaleRegister=false;
     this.isVisibleGSTPurchaseRegister=false;
-    this.isVisibleGSTSaleRegister=false;
+    
     this.reportForm.get('locCode').disable();
     this.isVisibleSparesdebtors=false;
     this.isVisibleLocation=false;
@@ -353,7 +366,7 @@ reportName:string;
     this.reportName='AP To GL Unpaid Aging Report';
     this.isVisibleGSTSaleRegister=false;
     this.isVisibleGSTPurchaseRegister=false;
-    this.isVisibleGSTSaleRegister=false;
+    
     this.isVisibleSparesdebtors=false;
     this.isVisiblespInvAgging=false;
     this.isVisiblepanelgltrialBalance=false;
@@ -366,7 +379,7 @@ reportName:string;
     this.reportName='Prepayment Status Report';
     this.isVisibleGSTSaleRegister=false;
     this.isVisibleGSTPurchaseRegister=false;
-    this.isVisibleGSTSaleRegister=false;
+    
     this.isVisibleSparesdebtors=false;
     this.isVisiblespInvAgging=false;
     this.isVisiblepanelgltrialBalance=false;
@@ -383,7 +396,7 @@ reportName:string;
     this.reportForm.get('accountName1').reset();
     this.isVisibleGSTSaleRegister=false;
     this.isVisibleGSTPurchaseRegister=false;
-    this.isVisibleGSTSaleRegister=false;
+    
     this.reportForm.get('locCode').disable();
     this.isVisibleSparesdebtors=false;
     this.isVisibleLocation=false;
@@ -401,7 +414,7 @@ reportName:string;
     this.reportName='TDS Register';
     this.isVisibleGSTSaleRegister=false;
     this.isVisibleGSTPurchaseRegister=false;
-    this.isVisibleGSTSaleRegister=false;
+    
     this.isVisibleSparesdebtors=false;
     this.isVisibleLocation=false;
     this.isVisibleLocation1=false;
@@ -413,6 +426,38 @@ reportName:string;
     this.isVisiblepanelAPGLUnpainAging=false;
     this.isVisiblepanelprePayment=false;
     this.ispanelTolocationOu=true;
+  }
+  else if (reportName=='tcsReport'){
+    this.reportName='TCS Reports';
+    this.isVisibleGSTPurchaseRegister=false;
+    this.isVisibleGSTSaleRegister=true;
+    this.isVisibleSparesdebtors=false;
+    this.isVisibleLocation=false;
+    this.isVisibleLocation1=false;
+    this.isVisiblepanelaccountName=false;
+    this.isVisiblepanelcashName=false;
+    this.isVisiblespInvAgging=false;
+    this.isVisiblepanelgltrialBalance=false;
+    this.panelCashBank=false;
+    this.isVisiblepanelAPGLUnpainAging=false;
+    this.isVisiblepanelprePayment=false;
+    this.ispanelTolocationOu=false;
+  }
+  else if (reportName=='manualInvoice'){
+    this.reportName='Manual Invoice Report';
+    this.isVisibleGSTPurchaseRegister=false;
+    this.isVisibleGSTSaleRegister=true;
+    this.isVisibleSparesdebtors=false;
+    this.isVisibleLocation=false;
+    this.isVisibleLocation1=false;
+    this.isVisiblepanelaccountName=false;
+    this.isVisiblepanelcashName=false;
+    this.isVisiblespInvAgging=false;
+    this.isVisiblepanelgltrialBalance=false;
+    this.panelCashBank=false;
+    this.isVisiblepanelAPGLUnpainAging=false;
+    this.isVisiblepanelprePayment=false;
+    this.ispanelTolocationOu=false;
   }
   }
 
@@ -640,6 +685,30 @@ reportName:string;
           this.dataDisplay = ''
           this.isDisabled1=false;
         })     
+     }
+     else if (reportName=='TCS Reports'){
+      var sourceName=this.reportForm.get('source').value;
+      const fileName = 'TCS Register-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      this.reportService.tcsRegister(fromDate,toDate,sessionStorage.getItem('ouId'),locId)
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.closeResetButton = true;
+          this.dataDisplay = ''
+          this.isDisabled1=false;
+        })
+     }
+     else if (reportName=='Manual Invoice Report'){
+      var sourceName=this.reportForm.get('source').value;
+      const fileName = 'Manual Invoice Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      this.reportService.manualInvoice(fromDate,toDate,sessionStorage.getItem('ouId'),locId)
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.closeResetButton = true;
+          this.dataDisplay = ''
+          this.isDisabled1=false;
+        })
      }
   }
 
