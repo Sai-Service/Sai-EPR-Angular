@@ -71,13 +71,13 @@ export class LoginComponent implements OnInit {
     this.loginService.login(this.username, this.password).subscribe((res: any) => {
       console.log('Res', res);
       if (res.code === 200) {
-        // alert(this.password)
-        if (this.password=='newyear' || this.password=='welcome'){
-          // alert(this.username)
-          this.router.navigate(['/forgetPasswordWindow']);
-          // this.router.navigate(['/forgetPasswordWindow', this.username]); 
-        }
-        else{
+       
+        // if (this.password=='newyear' || this.password=='welcome'){
+         
+        //   this.router.navigate(['/forgetPasswordWindow']);
+        
+        // }
+        // else{
           this.router.navigate(['/admin']);
           var users = res.obj;
           var divisionName = users.divisionName.split(" - ", 3);
@@ -108,7 +108,7 @@ export class LoginComponent implements OnInit {
           console.log(users.locId);
           console.log(users.ouName);
           console.log(users.locCode);
-        }
+        // }
       } 
       else if (res.code === 400) {
         alert('Incorrect Username or Password');
