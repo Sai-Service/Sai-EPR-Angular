@@ -1979,6 +1979,8 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
         // alert(itemType)
         // debugger;
         let select = (this.itemMap2.get(k)).find(d => d.segment === segment);
+        console.log(select);
+        
         //this.CounterSaleOrderBookingForm.patchValue({ itemId: select.itemId })
         if (segment != undefined) {
           this.displaysalesRepName = true;
@@ -2009,6 +2011,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                       var itemtaxCatNm: string = data.obj[i].taxCategoryName;
                       if (itemtaxCatNm.includes('Sale-I-GST')) {
                         // alert(itemtaxCatNm);
+                        var mrp=data.obj[0].mrp;
                         (controlinv.controls[k]).patchValue({
                           itemId: data.obj[i].itemId,
                           orderedItem: data.obj[i].description,
@@ -2043,7 +2046,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                           console.log(data);
                           if (data.length === 0) {
                             // alert('1')
-                            alert('Item Not Found In Stock!.');
+                            alert(('Item Not Found In Stock !.\n'+ 'Item Description :- '+select.description+".!\n")+"And MRP :- "+mrp);
                             var lotList = [{ locatorId: 0, segmentName: 'Not Found' }]
                             controlinv.controls[k].patchValue({ frmLocatorId: lotList });
                             controlinv.controls[k].patchValue({ onHandQty: 0 });
@@ -2107,6 +2110,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                     for (let i = 0; i < data.obj.length; i++) {
                       // alert(data.obj.length)
                       var taxCatNm: string = data.obj[i].taxCategoryName;
+                      var mrp=data.obj[0].mrp;
                       if (taxCatNm.includes('Sale-S&C') || taxCatNm.includes('Sales-S&C')) {
                         (controlinv.controls[k]).patchValue({
                           itemId: data.obj[i].itemId,
@@ -2156,7 +2160,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                           console.log(data);
                           if (data.length === 0) {
                             // alert('1')
-                            alert('Item Not Found In Stock!.');
+                            alert(('Item Not Found In Stock !.\n'+ 'Item Description :- '+select.description+".!\n")+"And MRP :- "+mrp);
                             var lotList = [{ locatorId: 0, segmentName: 'Not Found' }]
                             controlinv.controls[k].patchValue({ frmLocatorId: lotList });
                             controlinv.controls[k].patchValue({ onHandQty: 0 });
