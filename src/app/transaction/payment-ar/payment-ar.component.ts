@@ -792,13 +792,13 @@ if(this.deptId==2){
     var tDate = new Date(this.GLPeriodCheck.endDate);
     // alert("GlDate :"+glDt +" GL Period : "+this.GLPeriodCheck.startDate +" - "+ this.GLPeriodCheck.endDate);
     // alert("GlDate :"+tglDate +" GL Period : "+sDate +" - "+ tDate);
-
+    if (Number(sessionStorage.getItem('deptId'))!=4){
     if (tglDate < sDate || tglDate > tDate) {
       alert("GL date is not valid.. should be within GL period.\nGL Period : " + this.GLPeriodCheck.startDate + " - " + this.GLPeriodCheck.endDate);
       this.glDate = this.pipe.transform(this.now, 'y-MM-dd');
       return;
     }
-
+  }
   }
 
   glPrdValidateLine(i: any) {
@@ -2840,12 +2840,14 @@ if(this.deptId==2){
     var tDate = new Date(this.GLPeriodCheck.endDate);
 
     // alert(tglDate+'----'+this.glDate +'-------'+ formValue.glDate);
+    if (Number(sessionStorage.getItem('deptId'))!=4){
     if (formValue.glDate === undefined || formValue.glDate === null || tglDate < sDate || tglDate > tDate) {
       this.checkValidation = false;
       alert("GL DATE: " + this.pipe.transform(tglDate, 'y-MM-dd') + " Should not be null / Should be within GL period.\nGL Period : " + this.GLPeriodCheck.startDate + " - " + this.GLPeriodCheck.endDate);
       this.glDate = this.pipe.transform(this.now, 'y-MM-dd');
       return;
     }
+  }
 
 
     if (formValue.paymentAmt <= 0 || formValue.paymentAmt === undefined || formValue.paymentAmt === null) {
@@ -2989,6 +2991,7 @@ if(this.deptId==2){
 
     var sDate = new Date(this.GLPeriodCheck.startDate);
     var tDate = new Date(this.GLPeriodCheck.endDate);
+    if (Number(sessionStorage.getItem('deptId'))!=4){
     if (tglDate === undefined || tglDate === null || tglDate < sDate || tglDate > tDate) {
       // this.checkValidation = false;
       alert("GL DATE: Should not be null / Should be within GL period.\nGL Period : " + this.GLPeriodCheck.startDate + " - " + this.GLPeriodCheck.endDate);
@@ -2996,7 +2999,7 @@ if(this.deptId==2){
       this.applLineValidation = false;
       return;
     }
-
+  }
 
     // if (chkFlag === false || chkFlag === null || chkFlag === undefined) {
     //   alert("Line-" + j + " : Line not Selected.Pls Check Mark the Line");
@@ -3033,13 +3036,14 @@ if(this.deptId==2){
 
     var sDate = new Date(this.GLPeriodCheck.startDate);
     var tDate = new Date(this.GLPeriodCheck.endDate);
+    if (Number(sessionStorage.getItem('deptId'))!=4){
     if (tglDate === undefined || tglDate === null || tglDate < sDate || tglDate > tDate) {
       this.checkValidation = false;
       alert("GL DATE: Should not be null / Should be within GL period.\nGL Period : " + this.GLPeriodCheck.startDate + " - " + this.GLPeriodCheck.endDate);
       this.glDate = this.pipe.transform(this.now, 'y-MM-dd');
       return;
     }
-
+  }
     if (chkFlag === false || chkFlag === null || chkFlag === undefined) {
       alert("Line-" + j + " : Line not Selected.Pls Check Mark the Line");
       this.applLineValidation = false;

@@ -4,8 +4,8 @@ import { LoginService } from '../login.service';
 
 
 export interface IItem {
-  username:string;
-  password:string;
+  username: string;
+  password: string;
 }
 
 @Component({
@@ -18,15 +18,15 @@ export class LoginComponent implements OnInit {
   username: string;
   password: string;
   loginArray: any[];
-  divisionId:any[];
-  users:any[];
-  lstcomments1:any[];
-  divisionCode:string;
-  ticketNo:string;
+  divisionId: any[];
+  users: any[];
+  lstcomments1: any[];
+  divisionCode: string;
+  ticketNo: string;
 
-  currentDateList:any=[];
+  currentDateList: any = [];
 
-  constructor(private router: Router, private loginService: LoginService ) { }
+  constructor(private router: Router, private loginService: LoginService) { }
 
   ngOnInit(): void {
   }
@@ -51,64 +51,72 @@ export class LoginComponent implements OnInit {
   //     }
   //   });
   // }
+  forgetPassword(){
+    this.router.navigate(['/forgetPasswordWindow']);   
+    // this.router.navigate(['/forgetPasswordWindow', this.username]); 
+  }
+
 
   login() {
-    
-    if(this.username == undefined || this.username =="" ){
+
+    if (this.username == undefined || this.username == "") {
       alert('Please enter valid Username !');
       return;
     }
 
-    if(this.password == undefined || this.password ==""){
+    if (this.password == undefined || this.password == "") {
       alert('Please enter valid Password !');
       return;
     }
     this.loginService.login(this.username, this.password).subscribe((res: any) => {
       console.log('Res', res);
       if (res.code === 200) {
-        this.router.navigate(['/admin']);
-        var users=res.obj;
-        var divisionName = users.divisionName.split(" - ", 3); 
-        divisionName = divisionName[1];
        
-        sessionStorage.setItem('CompName',users.divisionName);
-        sessionStorage.setItem('divisionName',divisionName);
-        sessionStorage.setItem('divisionId',users.divisionId);
-        sessionStorage.setItem('roleId',users.roleId);
-        console.log(users.divisionName);
-        sessionStorage.setItem('ticketNo',users.ticketNo);
-        console.log(users.ticketNo);
-          sessionStorage.setItem('emplId',users.emplId);
-          sessionStorage.setItem('dept',users.deptId);
-          sessionStorage.setItem('deptName',users.deptName);
-          sessionStorage.setItem('name',users.fullName);
-          sessionStorage.setItem('ouName',users.ouName);
-          sessionStorage.setItem('ouId',users.ouId);
-          sessionStorage.setItem('locId',users.locId);
-          sessionStorage.setItem('divisionId',users.divisionId);
-          sessionStorage.setItem('locCode',users.locCode);
-          sessionStorage.setItem('deptId',users.deptId);
-          sessionStorage.setItem('fullName',users.fullName);
-          sessionStorage.setItem('locName',users.locName);
-          sessionStorage.setItem('roleId',users.roleId);
-
-console.log(users.ouId);
-console.log(users.locId);
-console.log(users.ouName);
-console.log(users.locCode);
-
-       } //else if (res.code === 204) {
-      //   console.log('Email and password does not match');
-      //   alert('Email and password does not match');
-
-      // }
-       else if (res.code === 400) {
+        // if (this.password=='newyear' || this.password=='welcome'){
+         
+        //   this.router.navigate(['/forgetPasswordWindow']);
+        
+        // }
+        // else{
+          this.router.navigate(['/admin']);
+          var users = res.obj;
+          var divisionName = users.divisionName.split(" - ", 3);
+          divisionName = divisionName[1];
+  
+          sessionStorage.setItem('CompName', users.divisionName);
+          sessionStorage.setItem('divisionName', divisionName);
+          sessionStorage.setItem('divisionId', users.divisionId);
+          sessionStorage.setItem('roleId', users.roleId);
+          console.log(users.divisionName);
+          sessionStorage.setItem('ticketNo', users.ticketNo);
+          console.log(users.ticketNo);
+          sessionStorage.setItem('emplId', users.emplId);
+          sessionStorage.setItem('dept', users.deptId);
+          sessionStorage.setItem('deptName', users.deptName);
+          sessionStorage.setItem('name', users.fullName);
+          sessionStorage.setItem('ouName', users.ouName);
+          sessionStorage.setItem('ouId', users.ouId);
+          sessionStorage.setItem('locId', users.locId);
+          sessionStorage.setItem('divisionId', users.divisionId);
+          sessionStorage.setItem('locCode', users.locCode);
+          sessionStorage.setItem('deptId', users.deptId);
+          sessionStorage.setItem('fullName', users.fullName);
+          sessionStorage.setItem('locName', users.locName);
+          sessionStorage.setItem('roleId', users.roleId);
+  
+          console.log(users.ouId);
+          console.log(users.locId);
+          console.log(users.ouName);
+          console.log(users.locCode);
+        // }
+      } 
+      else if (res.code === 400) {
         alert('Incorrect Username or Password');
-      }else {
+      } else {
         alert('Login Error - Application is not responsding properly!');
       }
     });
-  
+
   }
 
 
