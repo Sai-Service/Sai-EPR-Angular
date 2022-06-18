@@ -2831,6 +2831,8 @@ export class JobCardComponent implements OnInit {
     var jcTp =this.jobcardForm.get('jcType').value;
 
     this.serviceService.GenerateInvoiceFN(jobCardNum).subscribe((res: any) => {
+
+
       if (res.code === 200) {
         this.printInvoiceButton=true;
         this.saveBillButton=false;
@@ -2860,6 +2862,7 @@ export class JobCardComponent implements OnInit {
           alert(res.code+" - "+res.message);
         // }
       }
+
     });
   }
 

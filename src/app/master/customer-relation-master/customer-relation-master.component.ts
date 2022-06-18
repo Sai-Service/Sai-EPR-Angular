@@ -115,6 +115,8 @@ export class CustomerRelationMasterComponent implements OnInit {
         endDate: ['', [Validators.required]],
         emplId:[],
         locId:[],
+        // empTktNo:[],
+        // emplName:[],
        });
     }
   
