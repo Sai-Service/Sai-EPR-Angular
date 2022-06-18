@@ -42,6 +42,7 @@ interface ImoveOrder{
     uuidRef: string;
     attribute10:number;
     totalval:number;
+    totalAmt:number;
 }
 
 export class reserveLine {
@@ -145,8 +146,10 @@ export class MoveOrderComponent implements OnInit {
   fromLocator:string;
   totalval:number;
   displaybuttons:boolean=true;
+  totalAmt:number;
 
   public itemMap = new Map<string, StockTransferRow >();
+  total: any;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService,private serviceService: ServiceService) {
    this.moveOrderForm=fb.group({
@@ -172,6 +175,7 @@ export class MoveOrderComponent implements OnInit {
     deptName:[],
     regNo:[],
     totalval:[],
+    totalAmt:[],
     // subInventoryId:[],
     trxLinesList:this.fb.array([]),
 
@@ -728,6 +732,14 @@ validate(i:number,qty1)
           this.lstcomment1=data;    
      }
    )
+   this.service.gettotalAmt(jobno).subscribe(
+    data=>{
+         this.total=data; 
+        //  alert(data[0].totalAmt);
+         this.totalAmt=data[0].totalAmt;
+    }
+  )
+  
  }
 
  set isDisabled(value: boolean) {

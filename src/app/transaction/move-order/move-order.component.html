@@ -304,6 +304,10 @@
         <td colspan="8" style="text-align: left; width: 100%;">
             <button type="button" class="btn btn-primary" (click)='searchByJobNo(JobNo)' ><i class="fa fa-search"></i></button>
         </td>
+        <td style="width: 15%;" class="LabelFontStyle">Total &nbsp;Value&nbsp;:</td>
+        <td>
+          <input disabled type="number"  class="form-control" formControlName="totalAmt" id="totalAmt" [(ngModel)]="totalAmt"  style="font-size: small;text-transform: uppercase;">
+        </td>
     
           <td style="width: 15%" class="LabelFontStyle">WS&nbsp;Issue&nbsp;Number&nbsp;:</td>
           <td><input type="text"  class="form-control" formControlName="reqNo" id="reqNo" name="reqNo" #reqNo style="width:220px;text-transform: uppercase;"></td>
