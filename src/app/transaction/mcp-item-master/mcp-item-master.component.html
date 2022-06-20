@@ -11,46 +11,13 @@
         <div class="form-bg">
             <div class="center" style="width: 100%;">
                 <form [formGroup]="mcpItemMasterForm" (ngSubmit)="mcpItemMaster(mcpItemMasterForm.value)">
-
-                     <table class="center">
-                        <tr>
-
-                        <td  class="LabelFontStyle">Div/ouid/locid/deptid/empId&nbsp;:&nbsp;</td>
-
-                        <td   style="border: none;color: black;">
-                            <input type="text" disabled formControlName="loginArray"
-                                class="form-control" [(ngModel)]="loginArray" placeholder="">
-                        </td>
-                    
-                        <td>
-                            <input   style="width:30px ;"  disabled type="text" formControlName="ouId"
-                            class="form-control" [(ngModel)]="ouId" >
-                        </td>
-                    
-                        <td>
-                            <input  style="width:30px ;" disabled type="text" formControlName="locId"  [(ngModel)]="locId" class="form-control"  >
-                        </td>
-
-                        <td >
-                            <input  style="width:30px ;"  type="text" disabled formControlName="deptId"
-                            class="form-control" [(ngModel)]="deptId" placeholder="">
-
-                        </td>
-
-                        <td >
-                            <input  style="width: 20px;"  type="text" disabled formControlName="emplId"
-                            class="form-control" [(ngModel)]="emplId" placeholder="">
-
-                        </td>
-
-                        <td>
-                            <input  style="width:30px ;" disabled type="number" formControlName="itemId"  [(ngModel)]="itemId" class="form-control"  >
-                        </td>
-                       
-
-                                            
-                        </tr>
-                    </table>
+                   
+                            <input hidden disabled type="text"   formControlName="loginArray"  class="form-control" [(ngModel)]="loginArray">
+                            <input hidden disabled type="text"   formControlName="ouId"  class="form-control" [(ngModel)]="ouId" >
+                            <input hidden disabled type="text"   formControlName="locId"  [(ngModel)]="locId" class="form-control"  >
+                            <input hidden disabled type="text"   formControlName="deptId"  class="form-control" [(ngModel)]="deptId">
+                            <input hidden disabled type="text"   formControlName="emplId"  class="form-control" [(ngModel)]="emplId">
+                            <input hidden disabled type="number" formControlName="itemId"  [(ngModel)]="itemId" class="form-control"  >
 
                     <fieldset class="RFS">
                         <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">MCP ITEM DETAILS</legend>

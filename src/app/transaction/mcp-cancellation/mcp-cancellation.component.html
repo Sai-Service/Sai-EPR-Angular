@@ -1,3 +1,5 @@
+<form [formGroup]="mcpCancellationForm" (ngSubmit)="mcpCancellation(mcpCancellationForm.value)">
+
 <div class="center">
     <table style="width: 100%;background-color: white;">
         <tr>
@@ -10,7 +12,6 @@
     <div class="center" style="width: 100%;">
         <div class="form-bg">
             <div class="center" style="width: 100%;">
-                <form [formGroup]="mcpCancellationForm" (ngSubmit)="mcpCancellation(mcpCancellationForm.value)">
 
                      <table class="center">
                         <tr>
@@ -153,7 +154,7 @@
                         <td style="width: 15%" class="LabelFontStyle">Sale&nbsp;Date:&nbsp;</td>
     
                         <td>
-                            <input disabled  type="text"  formControlName="deliveryDate"  id="deliveryDate" [(ngModel)]="deliveryDate" class="form-control" >
+                            <input disabled  type="date"  formControlName="deliveryDate"  id="deliveryDate" [(ngModel)]="deliveryDate" class="form-control" >
                         </td>
     
                         <td style="width: 15%" class="LabelFontStyle">Selling&nbsp;Dealer:&nbsp;</td>
@@ -167,7 +168,7 @@
                                
                         </tr>
                         <tr>
-                            <td style="width: 15%" class="LabelFontStyle">Vehicle&nbsp;Item:&nbsp;</td>
+                            <td style="width: 15%" class="LabelFontStyle">Item&nbsp;Code:&nbsp;</td>
         
                             <td>
                                 <input disabled  type="text"  formControlName="vehicleItem"  id="vehicleItem" [(ngModel)]="vehicleItem" class="form-control" >
@@ -339,8 +340,23 @@
                                     <td>
                                         <input disabled style="text-align: right;font-weight: bold;"  type="number"  formControlName="packageAmt"  id="packageAmt" [(ngModel)]="packageAmt" class="form-control"  >
                                     </td>
+                                    <td></td>
 
-                                   
+                                    <div *ngIf="showDetailsButton; then Block1; else Block2"></div>
+                                    <ng-template #Block1>
+                                        <td>
+                                            <button type="button"  class="btn btn-primary" 
+                                            data-toggle="modal" data-target="#exampleModal21"   style="width: 9rem;color: black;">
+                                            Show&nbsp;Package&nbsp;Details</button>
+                                    </td>
+                                    </ng-template>
+                                    <ng-template #Block2>
+                                        <td>
+                                            <button disabled type="button"  class="btn btn-primary" 
+                                            data-toggle="modal" data-target="#exampleModal21"   style="width: 9rem;color: black;">
+                                            Show&nbsp;Package&nbsp;Details</button>
+                                    </td>
+                                    </ng-template>
                                     
                                 </tr>
                             </table>
@@ -735,7 +751,6 @@
 
 
 
-                </form>
             </div>
         </div>
     </div>
@@ -743,7 +758,7 @@
 <br>
 
 
-<div class="container1">
+<!-- <div class="container1">
     <div class="grid_scroll">
     <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
    <tbody>
@@ -757,7 +772,7 @@
             <th style="width:10rem" scope="col">Package Value</th>
             <th style="width:6rem"  scope="col">Select</th>
     </tr>
-   </tbody>
+   </tbody> -->
             <!-- <tr *ngFor="let com of lstcomments" class="ItemStyle" style="text-decoration:none;">
                 
                 <td>{{com.orgId}}</td>
@@ -770,6 +785,92 @@
                 <td><button class="btn btn-secondary" (click)="Select(com.receiptNumber)">Select</button></td>   
                
             </tr> -->
-    </table>
+    <!-- </table>
 </div>
-</div>
+</div> -->
+
+
+   <!-- =================modal================= -->
+   <div class="modal fade" id="exampleModal21" tabindex="-1" role="dialog" aria-labelledby="exampleModal21Label" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+         <div class="modal-header">
+          <h5 class="modal-title" id="exampleModal21Label">MCP&nbsp;Package&nbsp;No&nbsp;:&nbsp;{{this.packageNumber}} -{{this.packageDesc}}</h5>
+          <!-- MCP&nbsp;Package&nbsp;Item&nbsp;Details-&nbsp; -->
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+         </div>
+        
+         <div class="modal-body">
+         <table class="center" style="width: 100%;">
+            <tr>
+
+                <!-- <td style="width: 15%" class="LabelFontStyle">
+                    Package &nbsp;No&nbsp;:&nbsp;
+                </td>
+
+                <td>
+                    <input  readonly type="text" class="form-control" formControlName="packageNumber"  >
+                </td> -->
+                
+            </tr>
+         
+         </table>
+             <div class="container1">
+                <div class="grid_scroll_4">
+                <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+               <tbody>
+                    <tr class="GridHeader">
+
+                        <th style="width:6rem" scope="col">Srl#</th>
+                        <th style="width:6rem" scope="col">Item Number</th>
+                        <th style="width:20rem" scope="col">Item Description</th>
+                        <th style="width:5rem" scope="col">Item Type</th>
+                        <th style="width:5rem" scope="col">ErpCode</th>
+                        <th style="width:5rem" scope="col">Quantity</th>
+                        <th style="width:5rem" scope="col">Pkg Qty</th>
+                        <th style="width:5rem" scope="col">Erp Qty</th>
+                        <th style="width:5rem" scope="col">Price</th>
+                        <th style="width:5rem" scope="col">Basic Amt</th>
+                        <th style="width:5rem" scope="col">Discount%</th>
+                        <th style="width:5rem" scope="col">Disc Amt</th>
+                        <th style="width:5rem" scope="col">Gst Amt</th>
+                        <th style="width:5rem" scope="col">Net Amt</th>
+            </tr>
+               </tbody>
+               <ng-container  class="center" formArrayName="enqDtls">
+                <ng-container   *ngFor="let group of invLineArray().controls; let k= index" [formGroupName]="k" class="auto-style5">  
+
+                          <tr>
+                            <td style="text-align: right;">{{k+1}}</td>
+                            <td><input style="width:  100px;height: 25px;"  disabled  type="text" formControlName="itemNumber" class="form-control"   > </td>
+                            <td><input style="width: 200px;height: 25px;" type="text" disabled formControlName="itemDesc" class="form-control"></td>
+                            <td><input style="width: 100px;height: 25px;" type="text"  disabled formControlName="itemType" class="form-control"></td>   
+                            <td><input style="width: 120px;height: 25px;" type="text"  disabled formControlName="erpCode" class="form-control"></td>   
+                            <td><input style="width: 60px;height: 25px;text-align: right;" type="text"  disabled formControlName="quantity" class="form-control"></td>   
+                            <td><input style="width: 60px;height: 25px;text-align: right;" type="text"  disabled formControlName="pkgQuantity" class="form-control"></td>   
+                            <td><input style="width: 60px;height: 25px;text-align: right;" type="text"  disabled formControlName="erpQuantity" class="form-control"></td>   
+                            <td><input style="width: 80px;height: 25px;text-align: right;" type="text"  disabled formControlName="basicAmt" class="form-control"></td>   
+                            <td><input style="width: 80px;height: 25px;text-align: right;" type="text"  disabled formControlName="rate" class="form-control"></td>   
+                            <td><input style="width: 80px;height: 25px;text-align: right;" type="text"  disabled formControlName="discPer"  class="form-control"></td>   
+                            <td><input style="width: 80px;height: 25px;text-align: right;" type="text"  disabled formControlName="disAmt" class="form-control"></td>   
+                            <td><input style="width: 80px;height: 25px;text-align: right;" type="text"  disabled formControlName="gstAmt" class="form-control"></td>   
+                            <td><input style="width: 80px;height: 25px;text-align: right;" type="text"  disabled formControlName="netAmt" class="form-control"></td>   
+                        </tr>
+                        </ng-container>
+                        </ng-container>
+                </table>
+                    </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+         <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+    
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ==================================modal end========================== -->
+
+</form>

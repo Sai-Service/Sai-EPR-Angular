@@ -190,6 +190,7 @@ export class McpCancellationComponent implements OnInit {
           display = true;
           displayButton = false;
           checkValidation=false;
+          showDetailsButton=false;
          
           //////////////////////////////////
   
@@ -316,11 +317,38 @@ export class McpCancellationComponent implements OnInit {
             refundApprovedBy:[],
 
 
+            enqDtls: this.fb.array([this.invLineDetails()]),
+
           });
         }
 
+        invLineDetails() {
+          return this.fb.group({
+          itemNumber: [],
+          itemDesc: [],
+          itemId: [],  
+          itemType: [],
+          erpCode: [],
+          quantity:[],
+          pkgQuantity: [],
+          erpQuantity: [],
+          rate:[],
+          basicAmt:[],
+          discPer:[],
+          disAmt:[],
+          netAmt:[],
+          gstAmt:[],
+      
+        })
+      }
+  
+      invLineArray(): FormArray {
+        return <FormArray>this.mcpCancellationForm.get('enqDtls')
+      }
+
           ngOnInit(): void 
           {
+            $("#wrapper").toggleClass("toggled");
             this.name=  sessionStorage.getItem('name');
             this.loginArray=sessionStorage.getItem('divisionName');
             this.divisionId=Number(sessionStorage.getItem('divisionId'));
@@ -627,12 +655,10 @@ export class McpCancellationComponent implements OnInit {
         { 
           alert ("Both Register No  and Enrollment No is blank.\nPlease enter REGNO or ENROLLMENT NO and  click on Search");
           return;
-        }
-        
-        // mRegNo=mRegNo.toUpperCase();
-        // mEnrollNo=mEnrollNo.toUpperCase();
-        // var xEnr = mEnrollNo.toUpperCase();
-        //  alert(mRegNo );
+        } 
+
+        // if(mRegNo.length>0){mRegNo=mRegNo.toUpperCase();this.searchRegno=mRegNo;}
+        // if(mEnrollNo.length>0){mEnrollNo=mEnrollNo.toUpperCase();this.searchEnrollNo=mEnrollNo;}
 
         console.log(this.mcpCancellationForm.value);
         this.service.mcpRegSearch(mRegNo,mEnrollNo)
@@ -656,6 +682,21 @@ export class McpCancellationComponent implements OnInit {
                   this.GetVariantDeatils(this.lstMcplines.variantCode);
                   this.GetCustomerDetails(this.lstMcplines.customerId);
                   this.getPackageInfo(this.lstMcplines.packageNumber,this.lstMcplines.fuelType)
+
+
+                  for(let i=0; i<this.invLineArray.length; i++){ 
+                    this.invLineArray().removeAt(i);
+                  }
+ 
+                  this.invLineArray().clear();
+                  var control = this.mcpCancellationForm.get('enqDtls') as FormArray;
+                  for (let i=0; i<this.lstMcplines.enqDtls.length;i++) 
+                    {
+                      var enqDtls:FormGroup=this.invLineDetails();
+                      control.push(enqDtls);
+                    }
+                    this.showDetailsButton=true
+                  this.mcpCancellationForm.get('enqDtls').patchValue(this.lstMcplines.enqDtls);
 
                   this.packageAmt=this.lstMcplines.packageAmt.toFixed(2);
 
@@ -752,17 +793,17 @@ export class McpCancellationComponent implements OnInit {
 
               GetVehicleRegInfomation(mRegNo){
                 // alert("REGNO:"+mRegNo)
-                this.service.getVehRegDetails(mRegNo)
+                this.service.getVehRegDetailsNew(mRegNo)
         
                   .subscribe(
                     data => {
-                      this.vehicleItemDetails = data;
+                      this.vehicleItemDetails = data.obj;
                       console.log(this.vehicleItemDetails);
                       this.mcpCancellationForm.patchValue({
                         vehRegNo: this.vehicleItemDetails.regNo,
                         vehicleId: this.vehicleItemDetails.vin,
                         variantItemId: this.vehicleItemDetails.itemId.itemId,
-                        deliveryDate : this.vehicleItemDetails.vehicleDelvDate,
+                        deliveryDate : this.vehicleItemDetails.deliveryDate,
                         vehicleItem: this.vehicleItemDetails.itemId.segment,
                         dealerCode: this.vehicleItemDetails.dealerCode,
                         // itemDesc: this.VehicleRegDetails.itemId.segment,

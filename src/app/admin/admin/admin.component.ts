@@ -294,7 +294,7 @@ export class AdminComponent implements OnInit {
       this.isVisible19=false;
       this.isVisible20=false;
       this.isVisible21=true;
-      this.isVisible22=false;
+      this.isVisible22=true;
       this.isVisible23=true;
       this.isVisible24=true;
       this.isVisible25=false;
