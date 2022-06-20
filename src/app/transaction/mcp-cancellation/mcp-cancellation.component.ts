@@ -612,17 +612,20 @@ export class McpCancellationComponent implements OnInit {
       
         if (this.checkValidation) {
           alert("Data Validation Sucessfull....\nPosting Cancellation details.")
-
-          const formValue: IMcpCancel =this.transeData(this.mcpCancellationForm.value);
           this.displayButton=false;
+          const formValue: IMcpCancel =this.transeData(this.mcpCancellationForm.value);
+
+          
           // this.service.McpCancelUpdate(formValue.enrollmentNo,this.cancRsnId,formValue.netRefAmt,formValue).subscribe((res: any) => {
             this.service.McpCancelUpdate(formValue).subscribe((res: any) => {
           if (res.code === 200) {
          
             alert('RECORD UPDATED SUCCESSFUILY');
             // window.location.reload();
+            this.mcpCancellationForm.disable();
           } else {
             if (res.code === 400) {
+              this.displayButton=true;
             
               alert('ERROR OCCOURED IN PROCEESS');
               // this.mcpCancellationForm.reset();
@@ -649,25 +652,18 @@ export class McpCancellationComponent implements OnInit {
     
       searchMcpByRegNo(mRegNo,mEnrollNo){
 
-        // alert ("Registration No :"+mRegNo +"\nEnrollment No :"+mEnrollNo);
         
         if( (mRegNo===undefined || mRegNo.trim()==='') && (mEnrollNo===undefined || mEnrollNo.trim()==='') )
         { 
           alert ("Both Register No  and Enrollment No is blank.\nPlease enter REGNO or ENROLLMENT NO and  click on Search");
           return;
         } 
-
-        // if(mRegNo.length>0){mRegNo=mRegNo.toUpperCase();this.searchRegno=mRegNo;}
-        // if(mEnrollNo.length>0){mEnrollNo=mEnrollNo.toUpperCase();this.searchEnrollNo=mEnrollNo;}
-
         console.log(this.mcpCancellationForm.value);
         this.service.mcpRegSearch(mRegNo,mEnrollNo)
           .subscribe(
             data => {
               this.lstMcplines = data.obj;
-
-              // alert ("this.lstMcplines :" +this.lstMcplines );
-             
+            
               if (this.lstMcplines =='MCP Enrollment Not found !! ') {
                 alert ("MCP Enrollment Not found !!...\nRegistration No: " +mRegNo +"\nEnrollment No: " +mEnrollNo);
                 return;
@@ -675,8 +671,7 @@ export class McpCancellationComponent implements OnInit {
 
                 
                this.mcpCancellationForm.patchValue(this.lstMcplines);
-              // this.executive=this.lstMcplines.executive;
-              
+             
               // ---------------------------Header Details--------------------------------
                   this.GetVehicleRegInfomation(this.lstMcplines.regNo);
                   this.GetVariantDeatils(this.lstMcplines.variantCode);
@@ -777,6 +772,7 @@ export class McpCancellationComponent implements OnInit {
                     // this.cancelDate = this.pipe.transform(Date.now(), 'y-MM-dd');
                     this.refundAmt=this.netRefAmt;
                   }
+
                   this.displayButton=true;
 
                 // } else {
@@ -915,12 +911,12 @@ export class McpCancellationComponent implements OnInit {
                           return;
                       } 
 
-                      if (formValue.cancelRemarks===undefined || formValue.cancelRemarks===null || formValue.cancelRemarks.trim()==='')
-                      {
-                          this.checkValidation=false; 
-                          alert ("REMARKS : Should not be null....");
-                          return;
-                        } 
+                      // if (formValue.cancelRemarks===undefined || formValue.cancelRemarks===null || formValue.cancelRemarks.trim()==='')
+                      // {
+                      //     this.checkValidation=false; 
+                      //     alert ("REMARKS : Should not be null....");
+                      //     return;
+                      //   } 
                      
                     this.checkValidation=true
       

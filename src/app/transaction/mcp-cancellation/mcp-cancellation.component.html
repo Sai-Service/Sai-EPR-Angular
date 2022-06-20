@@ -4,7 +4,7 @@
     <table style="width: 100%;background-color: white;">
         <tr>
             <td class="PageHeader">
-                &nbsp;&nbsp;MCP&nbsp;TERMINATION&nbsp;
+                &nbsp;&nbsp;MCP | AMC&nbsp;TERMINATION&nbsp;
             </td>
         </tr>
     </table>
@@ -62,7 +62,7 @@
                           <td >
                               <table class="center">
                                   <tr>
-                                    <td  style="background-color: #FFE4B5;">MCP&nbsp;Enrollment&nbsp;No:&nbsp;</td>
+                                    <td  style="background-color: #FFE4B5;">Enrollment&nbsp;No:&nbsp;</td>
                                    <td style="background-color: #FFE4B5;">
                                         <input class="form-control" formControlName="searchEnrollNo" [(ngModel)]='searchEnrollNo'
                                             value={{searchEnrollNo}} >
@@ -267,7 +267,7 @@
                     </fieldset>
 
                     <fieldset class="RFS">
-                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">MCP PACKAGE DETAILS</legend>
+                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">MCP|AMC PACKAGE DETAILS</legend>
                             <table class="center">
                                 
                                <tr>
@@ -282,13 +282,13 @@
                                     <input  disabled type="date"  formControlName="enrollmentDt"  id="enrollmentDt" [(ngModel)]="enrollmentDt" class="form-control" >
                                 </td>
 
-                                <td style="width: 15%" class="LabelFontStyle">MCP&nbsp;Inv&nbsp;No:&nbsp;</td>
+                                <td style="width: 15%" class="LabelFontStyle">Invoice&nbsp;No:&nbsp;</td>
                                             
                                 <td>
                                     <input  disabled type="text"  formControlName="invoiceNo"  id="invoiceNo" [(ngModel)]="invoiceNo" class="form-control" >
                                 </td>
 
-                                <td style="width: 15%" class="LabelFontStyle">MCP&nbsp;Inv&nbsp;Date:&nbsp;</td>
+                                <td style="width: 15%" class="LabelFontStyle">Invoice&nbsp;Date:&nbsp;</td>
                                             
                                 <td>
                                     <input  disabled type="text"  formControlName="invoiceDate"  id="invoiceDate" [(ngModel)]="invoiceDate" class="form-control" >
@@ -363,7 +363,7 @@
                              </fieldset>
 
                              <fieldset class="RFS">
-                                <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">MCP PACKAGE UTILIZATION DETAILS</legend>
+                                <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">MCP|AMC PACKAGE UTILIZATION DETAILS</legend>
                                     <table class="center">
                                
                                  <tr>
@@ -441,11 +441,11 @@
                     </fieldset>
 
                     <fieldset class="RFS">
-                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">MCP CANCELLATION | REFUND DETAILS</legend>
+                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">MCP|AMC CANCELLATION | REFUND DETAILS</legend>
                         <table class="center">
                                
                             <tr>
-                                <td style="width: 15%" class="LabelFontStyle">Cancellation&nbsp;Charges:&nbsp;</td>
+                                <td style="width: 15%" class="LabelFontStyle">Charges:&nbsp;</td>
                               
                                 <!-- <td>
                                     <input disabled   type="text"  formControlName="mcpCancelCharges"  id="mcpCancelCharges" [(ngModel)]="mcpCancelCharges" class="form-control">
@@ -458,9 +458,9 @@
                                     <!-- <option value="Refund- ">REFUND</option> -->
                                 </select>
                             </td>
-                        </tr>
-                            <tr>
 
+
+                      
                             <td style="width: 15%" class="LabelFontStyle">Approved&nbsp;By:&nbsp;</td>
                               
                             <!-- <td>
@@ -484,8 +484,8 @@
                                     <input disabled style="text-align: right;font-weight: bold;"  type="text"  formControlName="cancRsnId"  id="cancRsnId" [(ngModel)]="cancRsnId" class="form-control"  >
                                 </td> -->
 
-                                <td>  
-                                    <select   formControlName="cancelRsnId" id="cancelRsnId" [(ngModel)]="cancelRsnId" class="form-control" style="background-color: yellow;" >
+                                <td colspan="3">  
+                                    <select   formControlName="cancelRsnId" id="cancelRsnId" [(ngModel)]="cancelRsnId" class="form-control" style="background-color: yellow;width:100%" >
                                         <!-- (ngModelChange)="onOptionsSelectedModel($event)">   -->
                                         <option>--Select--</option>
                                         <option *ngFor="let rs of mcpReasonList" [ngValue]="rs.cmnId">
@@ -494,17 +494,18 @@
                                     </select>
                                 </td>
 
-                                <td style="width: 15%" class="LabelFontStyle">Cancel&nbsp;Date:&nbsp;</td>
-                                <td>
-                                    <input  disabled   type="date"  formControlName="mcpCancelDate"  id="mcpCancelDate" [(ngModel)]="mcpCancelDate" class="form-control"  >
-                                </td>
-
-                              
+                                                         
                                
 
                             </tr>
 
                             <tr>
+
+                                    <td style="width: 15%" class="LabelFontStyle">Cancel&nbsp;Date:&nbsp;</td>
+                                    <td>
+                                        <input  disabled   type="date"  formControlName="mcpCancelDate"  id="mcpCancelDate" [(ngModel)]="mcpCancelDate" class="form-control"  >
+                                    </td>
+
                                     <td style="width: 15%;" class="LabelFontStyle">&nbsp;Part&nbsp;Refund:</td>
 
                                     <td>
@@ -526,6 +527,7 @@
                                 </tr>
 
                                 <tr>
+                                    <td></td><td></td>
                                     <td style="width: 15%;" class="LabelFontStyle">&nbsp;Part&nbsp;Tax&nbsp;Refund:</td>
                                    
                                     <td>
@@ -545,16 +547,9 @@
 
                                 </tr>
 
-                              
-
+                           
                                 <tr>
                                    
-
-                          
-                                    <td style="width: 15%;font-weight: bold ;" class="LabelFontStyle">&nbsp;Net&nbsp;Refund:&nbsp;</td>
-                                    <td>
-                                        <input  disabled style="text-align: right;font-weight: bold;"  type="number"  formControlName="netRefAmt"  id="netRefAmt" [(ngModel)]="netRefAmt" class="form-control"  >
-                                    </td>
 
                                     <td style="width: 15%;" class="LabelFontStyle">Remark&nbsp;:&nbsp;</td>
                                   
@@ -567,8 +562,13 @@
                                         </select>
                                     </td> -->
 
+                                    <td colspan="5">
+                                        <input  style="width: 100%;"  type="text"  formControlName="cancelRemarks"  id="cancelRemarks" [(ngModel)]="cancelRemarks" class="form-control" >
+                                    </td>
+
+                                    <td style="width: 15%;font-weight: bold ;" class="LabelFontStyle">&nbsp;Net&nbsp;Refund:&nbsp;</td>
                                     <td>
-                                        <input  style="width: 250%;background-color: yellow;"  type="text"  formControlName="cancelRemarks"  id="cancelRemarks" [(ngModel)]="cancelRemarks" class="form-control" >
+                                        <input  disabled style="text-align: right;font-weight: bold;"  type="number"  formControlName="netRefAmt"  id="netRefAmt" [(ngModel)]="netRefAmt" class="form-control"  >
                                     </td>
     
 
@@ -583,21 +583,13 @@
                     <!-- ===================================Buttons======================================== -->
                       <table class="center">
                         <tr>
-                            <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
-                            <ng-template #thenBlock1>
-                                <td>
-                                    <button type="button" class="btn btn-info" (click)="newMast()" [disabled]="!mcpCancellationForm">Cancel</button>
-                                </td>
-                                
-                                <td>
-                                    <button type="button" class="btn btn-info" (click)="searchMast()">Search</button>
-                                </td>
-
+                            <div *ngIf="showDetailsButton; then Block101; else Block102"></div>
+                            <ng-template #Block101>
+                                <td><button  type="button" class="btn btn-info" (click)="newMast()" >Cancel</button></td>
+                                <td><button type="button" class="btn btn-info" (click)="searchMast()">Search</button></td>
                                     <!-- ====================Reset Dialog ======================== -->
 
-                                <td>
-                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button>
-                                </td>
+                                <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button></td>
                                  <!-- Modal -->
                                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width:600px;">
                                         <div class="modal-dialog" role="document">
@@ -657,32 +649,14 @@
                         <!-- ==================================================== -->
 
                                     </ng-template>
-                                    <ng-template #elseBlock1>
-                                   
-                                            <!-- <td>
-                                                <button type="button" class="btn btn-info" (click)="updateMast()"[disabled]="!mcpEnquiryForm">Update</button>
-                                            </td> -->
+                                    <ng-template #Block102>
+                                       <td><button disabled type="button" class="btn btn-info" (click)="newMast()" >Cancel</button></td>
 
-                                            <!-- <td>
-                                                <button disbaled type="button" class="btn btn-info" (click)="newMast()" [disabled]="!mcpCancellationForm">Cancel</button>
-                                            </td> -->
-
-                                           
-                                            <td>
-                                                <button type="button" class="btn btn-info" (click)="searchMast()">Search</button>
-                                            </td>
+                                       <td><button type="button" class="btn btn-info" (click)="searchMast()">Search</button></td>
             
-                                            <!-- <td>
-                                                <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button>
-                                            </td>
-                                            <td>
-                                                <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close</button>
-                                                        </td> -->
-            <!-- ====================Reset Dialog ======================== -->
+                                    <!-- ====================Reset Dialog ======================== -->
 
-                                    <td>
-                                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button>
-                                    </td>
+                                    <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button></td>
                                     <!-- Modal -->
                                                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width:600px;">
                                                     <div class="modal-dialog" role="document">
@@ -795,7 +769,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
          <div class="modal-header">
-          <h5 class="modal-title" id="exampleModal21Label">MCP&nbsp;Package&nbsp;No&nbsp;:&nbsp;{{this.packageNumber}} -{{this.packageDesc}}</h5>
+          <h5 class="modal-title" id="exampleModal21Label">Package&nbsp;No&nbsp;:&nbsp;{{this.packageNumber}} -{{this.packageDesc}}</h5>
           <!-- MCP&nbsp;Package&nbsp;Item&nbsp;Details-&nbsp; -->
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
