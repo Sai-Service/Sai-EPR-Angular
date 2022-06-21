@@ -368,8 +368,8 @@ export class CustomerRelationMasterComponent implements OnInit {
                     custName:  this.lstCustDetails.custName,
                     address1: this.lstCustDetails.address1,
                     contactNo: this.lstCustDetails.mobile1,
-                    startDate: this.lstCustDetails.startDate,
-                    endDate:this.lstCustDetails.endDate,
+                    startDate: this.startDate,
+                    endDate:this.endDate,
                     emplId:this.employeeId,
                     locId:this.locId,
                   }
