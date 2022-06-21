@@ -225,10 +225,12 @@ getItemDetail(itemid):Observable<any>{
 ////////////AR Invoice ///////////////
 searchByInvoiceNoAR(trxNumber1):Observable<any>{
   return this.http.get(this.ServerUrl +`/arInv/invDtls/${trxNumber1}`)
+  
 }
 
 searchByInvoiceNoAROu(trxNumber1,ouId):Observable<any>{
   return this.http.get(this.ServerUrl +`/arInv/invDtls?invNum=${trxNumber1}&ouId=${ouId}`)
+  // http://localhost:8081/arInv/invDtls?invNum=222220222000002&ouId=22
 }
 
 DistributionCal(amount,taxableAmt, custTrxTypeId ):Observable<any>{

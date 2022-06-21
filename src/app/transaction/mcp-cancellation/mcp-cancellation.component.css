@@ -207,4 +207,13 @@
     text-align: left; 
   }
 
+  
+.grid_scroll_4 {
+  overflow: auto;
+  /* width: 800px; */
+  width: 100%;
+  height: 360px;
+  width: 100%;
+}
+
  

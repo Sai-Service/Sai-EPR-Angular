@@ -228,6 +228,8 @@ export class ServiceGatepassComponent implements OnInit {
                   customerId: this.getVehRegDetails.customerId,
                   mainModel: this.getVehRegDetails.mainModel,
                   vin: this.getVehRegDetails.vin,
+                  custName:this.getVehRegDetails.custName,
+                  custAccountNo:this.getVehRegDetails.custAccountNo,
                   
                 });
                   this.GetCustomerDetails(this.getVehRegDetails.customerId);

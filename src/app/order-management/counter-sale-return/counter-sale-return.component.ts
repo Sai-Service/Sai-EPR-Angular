@@ -934,21 +934,21 @@ for (let i = 0; i <  this.lineDetailsArray.length ; i++)
        this.rtnDocNo=select.trxNumber;
        this.rtnDocDate=select.trxDate;
        this.rtnTotAmt=select.invoiceAmount;
-      
 
       // alert( "Rtn taxableAmount : "+select.taxableAmount);
       
-       this.transactionService.searchByInvoiceNoAR(mrtnNo)
+       this.transactionService.searchByInvoiceNoAROu(mrtnNo,sessionStorage.getItem('ouId'))
        .subscribe(
          data => {
-           if(data.invLines.length >0) {
-            this.lstCntrRtnDetails = data.invLines;
-            this.rtnBaseAmt=data.taxableAmount;
-            this.rtnDisAmt=data.discount;
-            this.rtnTaxAmt=data.taxAmount;
+          
+          this.rtnBaseAmt=data.obj.taxableAmount;
+          this.rtnDisAmt=data.obj.discount;
+          this.rtnTaxAmt=data.obj.taxAmount;
+
+           if(data.obj.invLines.length >0) {
+            this.lstCntrRtnDetails = data.obj.invLines;
             console.log(this.lstCntrRtnDetails);
-              } else {alert ( "No Line Items Found.");}
-              
+            } else {alert ( "No Line Items Found.");}
           } );    
           
         }

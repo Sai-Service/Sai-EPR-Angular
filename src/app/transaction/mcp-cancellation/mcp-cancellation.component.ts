@@ -190,6 +190,7 @@ export class McpCancellationComponent implements OnInit {
           display = true;
           displayButton = false;
           checkValidation=false;
+          showDetailsButton=false;
          
           //////////////////////////////////
   
@@ -316,11 +317,38 @@ export class McpCancellationComponent implements OnInit {
             refundApprovedBy:[],
 
 
+            enqDtls: this.fb.array([this.invLineDetails()]),
+
           });
         }
 
+        invLineDetails() {
+          return this.fb.group({
+          itemNumber: [],
+          itemDesc: [],
+          itemId: [],  
+          itemType: [],
+          erpCode: [],
+          quantity:[],
+          pkgQuantity: [],
+          erpQuantity: [],
+          rate:[],
+          basicAmt:[],
+          discPer:[],
+          disAmt:[],
+          netAmt:[],
+          gstAmt:[],
+      
+        })
+      }
+  
+      invLineArray(): FormArray {
+        return <FormArray>this.mcpCancellationForm.get('enqDtls')
+      }
+
           ngOnInit(): void 
           {
+            $("#wrapper").toggleClass("toggled");
             this.name=  sessionStorage.getItem('name');
             this.loginArray=sessionStorage.getItem('divisionName');
             this.divisionId=Number(sessionStorage.getItem('divisionId'));
@@ -584,17 +612,20 @@ export class McpCancellationComponent implements OnInit {
       
         if (this.checkValidation) {
           alert("Data Validation Sucessfull....\nPosting Cancellation details.")
-
-          const formValue: IMcpCancel =this.transeData(this.mcpCancellationForm.value);
           this.displayButton=false;
+          const formValue: IMcpCancel =this.transeData(this.mcpCancellationForm.value);
+
+          
           // this.service.McpCancelUpdate(formValue.enrollmentNo,this.cancRsnId,formValue.netRefAmt,formValue).subscribe((res: any) => {
             this.service.McpCancelUpdate(formValue).subscribe((res: any) => {
           if (res.code === 200) {
          
             alert('RECORD UPDATED SUCCESSFUILY');
             // window.location.reload();
+            this.mcpCancellationForm.disable();
           } else {
             if (res.code === 400) {
+              this.displayButton=true;
             
               alert('ERROR OCCOURED IN PROCEESS');
               // this.mcpCancellationForm.reset();
@@ -621,27 +652,18 @@ export class McpCancellationComponent implements OnInit {
     
       searchMcpByRegNo(mRegNo,mEnrollNo){
 
-        // alert ("Registration No :"+mRegNo +"\nEnrollment No :"+mEnrollNo);
         
         if( (mRegNo===undefined || mRegNo.trim()==='') && (mEnrollNo===undefined || mEnrollNo.trim()==='') )
         { 
           alert ("Both Register No  and Enrollment No is blank.\nPlease enter REGNO or ENROLLMENT NO and  click on Search");
           return;
-        }
-        
-        // mRegNo=mRegNo.toUpperCase();
-        // mEnrollNo=mEnrollNo.toUpperCase();
-        // var xEnr = mEnrollNo.toUpperCase();
-        //  alert(mRegNo );
-
+        } 
         console.log(this.mcpCancellationForm.value);
         this.service.mcpRegSearch(mRegNo,mEnrollNo)
           .subscribe(
             data => {
               this.lstMcplines = data.obj;
-
-              // alert ("this.lstMcplines :" +this.lstMcplines );
-             
+            
               if (this.lstMcplines =='MCP Enrollment Not found !! ') {
                 alert ("MCP Enrollment Not found !!...\nRegistration No: " +mRegNo +"\nEnrollment No: " +mEnrollNo);
                 return;
@@ -649,13 +671,27 @@ export class McpCancellationComponent implements OnInit {
 
                 
                this.mcpCancellationForm.patchValue(this.lstMcplines);
-              // this.executive=this.lstMcplines.executive;
-              
+             
               // ---------------------------Header Details--------------------------------
                   this.GetVehicleRegInfomation(this.lstMcplines.regNo);
                   this.GetVariantDeatils(this.lstMcplines.variantCode);
                   this.GetCustomerDetails(this.lstMcplines.customerId);
                   this.getPackageInfo(this.lstMcplines.packageNumber,this.lstMcplines.fuelType)
+
+
+                  for(let i=0; i<this.invLineArray.length; i++){ 
+                    this.invLineArray().removeAt(i);
+                  }
+ 
+                  this.invLineArray().clear();
+                  var control = this.mcpCancellationForm.get('enqDtls') as FormArray;
+                  for (let i=0; i<this.lstMcplines.enqDtls.length;i++) 
+                    {
+                      var enqDtls:FormGroup=this.invLineDetails();
+                      control.push(enqDtls);
+                    }
+                    this.showDetailsButton=true
+                  this.mcpCancellationForm.get('enqDtls').patchValue(this.lstMcplines.enqDtls);
 
                   this.packageAmt=this.lstMcplines.packageAmt.toFixed(2);
 
@@ -736,6 +772,7 @@ export class McpCancellationComponent implements OnInit {
                     // this.cancelDate = this.pipe.transform(Date.now(), 'y-MM-dd');
                     this.refundAmt=this.netRefAmt;
                   }
+
                   this.displayButton=true;
 
                 // } else {
@@ -752,17 +789,17 @@ export class McpCancellationComponent implements OnInit {
 
               GetVehicleRegInfomation(mRegNo){
                 // alert("REGNO:"+mRegNo)
-                this.service.getVehRegDetails(mRegNo)
+                this.service.getVehRegDetailsNew(mRegNo)
         
                   .subscribe(
                     data => {
-                      this.vehicleItemDetails = data;
+                      this.vehicleItemDetails = data.obj;
                       console.log(this.vehicleItemDetails);
                       this.mcpCancellationForm.patchValue({
                         vehRegNo: this.vehicleItemDetails.regNo,
                         vehicleId: this.vehicleItemDetails.vin,
                         variantItemId: this.vehicleItemDetails.itemId.itemId,
-                        deliveryDate : this.vehicleItemDetails.vehicleDelvDate,
+                        deliveryDate : this.vehicleItemDetails.deliveryDate,
                         vehicleItem: this.vehicleItemDetails.itemId.segment,
                         dealerCode: this.vehicleItemDetails.dealerCode,
                         // itemDesc: this.VehicleRegDetails.itemId.segment,
@@ -874,12 +911,12 @@ export class McpCancellationComponent implements OnInit {
                           return;
                       } 
 
-                      if (formValue.cancelRemarks===undefined || formValue.cancelRemarks===null || formValue.cancelRemarks.trim()==='')
-                      {
-                          this.checkValidation=false; 
-                          alert ("REMARKS : Should not be null....");
-                          return;
-                        } 
+                      // if (formValue.cancelRemarks===undefined || formValue.cancelRemarks===null || formValue.cancelRemarks.trim()==='')
+                      // {
+                      //     this.checkValidation=false; 
+                      //     alert ("REMARKS : Should not be null....");
+                      //     return;
+                      //   } 
                      
                     this.checkValidation=true
       
