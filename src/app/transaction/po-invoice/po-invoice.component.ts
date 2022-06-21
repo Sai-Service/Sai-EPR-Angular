@@ -1185,6 +1185,7 @@ docSeqValue:number;
       return;
     }
     else {
+      alert('error');
       this.lineDistributionArray().clear();
       this.transactionService.distLinesDeatailsfa(this.invoiceId, lineNumber)
         .subscribe(

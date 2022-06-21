@@ -1170,17 +1170,18 @@ export class PayableInvoiceNewComponent implements OnInit {
   }
 
   onOptionsSelectedsuppName(name: any, i) {
+    // debugger;
     // alert(name);
     // alert(name.target.value+'----'+name)
-    this.service.supplierCodeList1()
-      .subscribe(
-        data => {
-          this.supplierCodeList1 = data;
-          console.log(this.supplierCodeList1);
-          // this.suppNo = name;
-          console.log(this.supplierCodeList1);
-        }
-      );
+    // this.service.supplierCodeList1()
+    //   .subscribe(
+    //     data => {
+    //       this.supplierCodeList1 = data;
+    //       console.log(this.supplierCodeList1);
+    //       // this.suppNo = name;
+    //       console.log(this.supplierCodeList1);
+    //     }
+    //   );
 
     // let selectedValue = this.supplierCodeList.find(v => v.suppNo == name);
     let selectedValue = this.supplierCodeList.find(v => v.name == name);
