@@ -109,7 +109,7 @@ export class McpCancellationComponent implements OnInit {
         mcpCancelDate = this.pipe.transform(Date.now(), 'y-MM-dd');
         packageId:number;
         packageNumber:string;
-        packageDesc:string;
+        packageDescription:string;
         pkgStartDate:Date;
         pkgEndDate:Date;
         uptoKm:number;
@@ -241,7 +241,7 @@ export class McpCancellationComponent implements OnInit {
             enrollmentDt:[],
             packageId:[],
             packageNumber:[],
-            packageDesc:[],
+            packageDescription:[],
             pkgStartDate:[],
             pkgEndDate:[],
             uptoKm:[],
@@ -676,7 +676,7 @@ export class McpCancellationComponent implements OnInit {
                   this.GetVehicleRegInfomation(this.lstMcplines.regNo);
                   this.GetVariantDeatils(this.lstMcplines.variantCode);
                   this.GetCustomerDetails(this.lstMcplines.customerId);
-                  this.getPackageInfo(this.lstMcplines.packageNumber,this.lstMcplines.fuelType)
+                  // this.getPackageInfo(this.lstMcplines.packageNumber,this.lstMcplines.fuelType)
 
 
                   for(let i=0; i<this.invLineArray.length; i++){ 
@@ -823,7 +823,7 @@ export class McpCancellationComponent implements OnInit {
                   if(this.getPkgDetails !=null){
       
                     //  this.packageType=this.getPkgDetails[0].packageType;
-                     this.packageDesc= this.getPkgDetails[0].packageDesc;
+                     this.packageDescription= this.getPkgDetails[0].packageDesc;
                     //  this.validMonths= this.getPkgDetails[0].validPeriod;
       
                   }
