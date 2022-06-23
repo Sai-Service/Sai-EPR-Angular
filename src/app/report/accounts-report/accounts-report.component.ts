@@ -27,6 +27,7 @@ export class AccountsReportComponent implements OnInit {
   OUCode:string;
   locCode:string;
   locId:number;
+  userName: string;
   public sourceList: Array<string> = [];
   public BillShipToList: Array<string> = [];
   periodNameList: any=[];
@@ -83,6 +84,7 @@ export class AccountsReportComponent implements OnInit {
       supNo:[''],
       accountName1:[''],
       segment4:[''],
+      userName: [''],
     })
    }
    
@@ -168,6 +170,8 @@ this.service.getInterBranchNatural()
   }
 );
 
+this.reportForm.patchValue({ userName: sessionStorage.getItem('ticketNo') })
+
 }
 
   report(reportForm) {
@@ -197,6 +201,7 @@ this.service.getInterBranchNatural()
   }
 reportName:string;
   reportDetails(reportName){
+  
     // alert(reportName);
     if (reportName==='gstPurRegister'){
     this.reportName='GST Purchase Register';
@@ -349,7 +354,8 @@ reportName:string;
     this.isVisibleGSTSaleRegister=false;
     this.isVisibleGSTPurchaseRegister=false;
     
-    this.reportForm.get('locCode').disable();
+    // this.reportForm.get('locCode').disable();
+    this.reportForm.get('locCode').enable();
     this.isVisibleSparesdebtors=false;
     this.isVisibleLocation=false;
     this.isVisibleLocation1=false;
@@ -474,6 +480,7 @@ reportName:string;
     var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
     var deptId=this.reportForm.get('deptId').value;
     var locId = this.reportForm.get('locId').value;
+    var userName = this.reportForm.get('userName').value;
     if (locId===null){
       locId=''
     }
@@ -604,7 +611,7 @@ reportName:string;
        const fileName = 'Cash Bank Reports-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     //  alert(fromDate+'---'+toDate+'---'+sessionStorage.getItem('ouId')+'----'+locId+'---'+accountName)
-     this.reportService.cashBankReport(fromDate,toDate,sessionStorage.getItem('ouId'),locId,accountName,naturalAccct)
+     this.reportService.cashBankReport(fromDate,toDate,sessionStorage.getItem('ouId'),locId,accountName,naturalAccct,userName)
        .subscribe(data => {
          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
          this.closeResetButton = true;
@@ -626,7 +633,7 @@ reportName:string;
        const fileName = 'Bank Book Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     //  alert(fromDate+'---'+toDate+'---'+sessionStorage.getItem('ouId')+'----'+locId+'---'+accountName)
-     this.reportService.cashBankReport(fromDate,toDate,sessionStorage.getItem('ouId'),locId,accountName,naturalAccct)
+     this.reportService.cashBankReport(fromDate,toDate,sessionStorage.getItem('ouId'),locId,accountName,naturalAccct,userName)
        .subscribe(data => {
          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
          this.closeResetButton = true;
