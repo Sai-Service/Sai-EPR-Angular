@@ -354,8 +354,8 @@ reportName:string;
     this.isVisibleGSTSaleRegister=false;
     this.isVisibleGSTPurchaseRegister=false;
     
-    // this.reportForm.get('locCode').disable();
-    this.reportForm.get('locCode').enable();
+    this.reportForm.get('locCode').disable();
+    // this.reportForm.get('locCode').enable();
     this.isVisibleSparesdebtors=false;
     this.isVisibleLocation=false;
     this.isVisibleLocation1=false;
