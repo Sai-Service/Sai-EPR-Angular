@@ -191,6 +191,7 @@ export class McpCancellationComponent implements OnInit {
           displayButton = false;
           checkValidation=false;
           showDetailsButton=false;
+          showCancelButton=false;
          
           //////////////////////////////////
   
@@ -652,7 +653,6 @@ export class McpCancellationComponent implements OnInit {
     
       searchMcpByRegNo(mRegNo,mEnrollNo){
 
-        
         if( (mRegNo===undefined || mRegNo.trim()==='') && (mEnrollNo===undefined || mEnrollNo.trim()==='') )
         { 
           alert ("Both Register No  and Enrollment No is blank.\nPlease enter REGNO or ENROLLMENT NO and  click on Search");
@@ -690,8 +690,24 @@ export class McpCancellationComponent implements OnInit {
                       var enqDtls:FormGroup=this.invLineDetails();
                       control.push(enqDtls);
                     }
-                    this.showDetailsButton=true
+
+                  this.showDetailsButton=true;
+
                   this.mcpCancellationForm.get('enqDtls').patchValue(this.lstMcplines.enqDtls);
+
+                  if(this.lstMcplines.totLabBalanced >0)  {
+                   this.showCancelButton=true;
+                    this.mcpCancellationForm.get("refundIncludeGst").enable();
+                    this.mcpCancellationForm.get("refundApprovedBy").enable();
+                    this.mcpCancellationForm.get("cancelRsnId").enable();
+                  } 
+                  else {
+                    this.showCancelButton=false;
+                    this.mcpCancellationForm.get("refundIncludeGst").disable();
+                    this.mcpCancellationForm.get("refundApprovedBy").disable();
+                    this.mcpCancellationForm.get("cancelRsnId").disable();
+                  }
+
 
                   this.packageAmt=this.lstMcplines.packageAmt.toFixed(2);
 
