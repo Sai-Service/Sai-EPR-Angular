@@ -1029,7 +1029,7 @@ export class AccessoriesReportComponent implements OnInit {
       const fileName = 'Spares Closing Stock As On Date-' + sessionStorage.getItem('locName').trim() + '-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.sprClsAsonDtReport(toDate, locId)
+        this.reportService.sprClsAsonDtReport(toDate, locId,subInventory)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -1038,7 +1038,7 @@ export class AccessoriesReportComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) { 
-        this.reportService.sprClsAsonDtReport(toDate, sessionStorage.getItem('locId'))
+        this.reportService.sprClsAsonDtReport(toDate, sessionStorage.getItem('locId'),subInventory)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;

@@ -670,8 +670,7 @@
                 <td colspan="3">
                     <select  formControlName="ewInsurerId" id="ewInsurerId"  (ngModelChange)='onEwInsurerNameSelected($event)' class="form-control" style="width: 100%;">
                     <option></option>
-                    <option *ngFor="let sc of insNameList"
-                        [ngValue]="sc.customerId">
+                    <option *ngFor="let sc of insNameList"  [ngValue]="sc.customerId">
                         {{sc.custName}}
                     </option>
                     </select>
@@ -682,8 +681,7 @@
            <td colspan="5">
             <select  formControlName="ewInsurerSite" id="ewInsurerSite" class="form-control" style="width: 100%;">
             <option>--Select--</option>
-            <option *ngFor="let sc of ewInsSiteList"
-                [ngValue]="sc.customerSiteId">
+            <option *ngFor="let sc of ewInsSiteList"    [ngValue]="sc.customerSiteId">
                 {{sc.address1}}{{sc.address2}}-{{sc.address3}}-{{sc.location}}-{{sc.city}}-{{sc.pinCd}}-{{sc.state}}
             </option>
             </select>
@@ -695,8 +693,7 @@
                 <td colspan="3">
                     <select disabled formControlName="ewInsurerId" id="ewInsurerId"  (ngModelChange)='onEwInsurerNameSelected($event)' class="form-control" style="width: 100%;">
                     <option></option>
-                    <option *ngFor="let sc of insNameList"
-                        [ngValue]="sc.customerId">
+                    <option *ngFor="let sc of insNameList"  [ngValue]="sc.customerId">
                         {{sc.custName}}
                     </option>
                     </select>
@@ -705,8 +702,7 @@
                 <td colspan="5">
                     <select disabled formControlName="ewInsurerSite" id="ewInsurerSite" class="form-control" style="width: 100%;">
                     <option>--Select--</option>
-                    <option *ngFor="let sc of ewInsSiteList"
-                        [ngValue]="sc.customerSiteId">
+                    <option *ngFor="let sc of ewInsSiteList"   [ngValue]="sc.customerSiteId">
                         {{sc.address1}}{{sc.address2}}-{{sc.address3}}-{{sc.location}}-{{sc.city}}-{{sc.pinCd}}-{{sc.state}}
                     </option>
                     </select>

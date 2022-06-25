@@ -133,10 +133,25 @@
                             <a class="dropdown-item" data-toggle="collapse" href="#isVisibleEwayBill" role="tab"
                               (click)="reportDetails('EwayBill')">Eway Bill Report</a>
                           </li>
+
                           <li>
                             <a class="dropdown-item" data-toggle="collapse" href="#panelGSTPurchaseRegister" role="tab"
                               (click)="reportDetails('IrnGenerationReport')">IRN Generation Report</a>
                           </li>
+
+                            
+                          <li>
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelGSTPurchaseRegister" role="tab"
+                              (click)="reportDetails('sparesIssSummaryTransWise')">Spares Issue Summary-Transaction Wise</a>
+                          </li>
+
+                         
+                          <li>
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelfromtosubinventory" role="tab"
+                                (click)="reportDetails('sparesZeroStkReport')">Spares Zero Stock Report</a>
+                        </li>
+
+
                     </ul>
                 </li>
             </ul>
@@ -485,7 +500,11 @@ style="margin-left: 20%;" id="panelspClosingStockAsOndate">
                     </select>
                     <input  disabled hidden type="number" class="form-control" formControlName="locId">
                 </td>
+
+                <td style="width: 15%" class="LabelFontStyle"> &nbsp;SubInventory&nbsp;:&nbsp; </td>
+                <td><input  disabled  type="text" class="form-control" formControlName="subInventory"></td>
             </tr>
+
          
             <tr>
                 <td colspan="4">

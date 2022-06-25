@@ -122,8 +122,8 @@ export class ReportServiceService {
     });
   }
 
-  sprClsAsonDtReport(toDate,locId){
-    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprClsAsonDt?toDate=${toDate}&locId=${locId}`;
+  sprClsAsonDtReport(toDate,locId,subInvcd){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprClsAsonDt?toDate=${toDate}&locId=${locId}&subInvCode=${subInvcd}`;
     return this.http.get(REQUEST_URI, {
       responseType: 'arraybuffer',
       headers: this.headers,
@@ -534,6 +534,29 @@ export class ReportServiceService {
       headers: this.headers,
     });
   }
+
+  sprIssSummaryReport(fromDate,toDate,ouId,locId,deptId){
+    // http://localhost:8081/SparesReports/SprIssueTransRep?fromDate=01-JUN-2022&toDate=25-JUN-2022&locId=2101
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprIssueTransRep?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+  sprZeroStockReport(fromDate,toDate,locId,subInvCode){
+    // http://localhost:8081/SparesReports/SprZeroStock?fromDate=01-JUN-2022&toDate=16-JUL-2022&ouId=22&locId=2102&subInvCode=SP
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprZeroStock?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}&subInvCode=${subInvCode}`;
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+
+
 
   invoiceSummaryReport(fromDate,toDate,locId){
     const REQUEST_URI = this.ServerUrl +`/ServiceReports/InvoiceSummary?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}`;

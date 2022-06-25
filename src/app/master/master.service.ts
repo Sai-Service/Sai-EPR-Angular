@@ -3986,7 +3986,7 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
       
       
       ///////////////////Back order File upload/////////////////////
-      UploadExcelBankStatement(formData: FormData,docType:string,mouId ,bnkAcccountId,stNumber) {
+      UploadExcelBankStatement(formData: FormData,docType:string,mouId ,bnkAcccountId,stNumber,glDt) {
           // alert ("Org Id :"+mouId + "  BankAccountId :"+bnkAcccountId);
           let headers1 = new HttpHeaders();
           var userId1=sessionStorage.getItem('userId');
@@ -3995,6 +3995,7 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
           formData.append('orgId', mouId);
           formData.append('bankAccountId', bnkAcccountId);
           formData.append('statementNumber', stNumber);
+          // formData.append('glDate', glDt);
           return this.http.post(this.ServerUrl + `/fileImport/uploadBankStmt`,formData)
           // http://localhost:8081/fileImport/uploadBankStmt/
         }

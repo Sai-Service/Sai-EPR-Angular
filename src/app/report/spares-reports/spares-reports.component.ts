@@ -669,6 +669,45 @@ export class SparesReportsComponent implements OnInit {
         this.isVisibleDepartmentList = true;
       }
     }
+
+    else if (reportName === 'sparesIssSummaryTransWise') {
+      this.reportName = 'Spares Issue Summary-Transaction Wise';
+      this.isVisibleGSTPurchaseRegister = true;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblestockTransfer = false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
+      this.isVisibleEwayBill=false;
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.isVisibleDepartmentList = true;
+      }
+    }
+
+    else if (reportName === 'sparesZeroStkReport') {
+      this.reportName = 'Spares Zero Stock Report';
+      this.isVisibleGSTPurchaseRegister = false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
+      this.isVisiblefromtosubinventory=true;
+      this.isVisiblecustomerLedger=false;
+      this.isVisibleEwayBill=false;
+    }
+
+
   }
 
   
@@ -1151,7 +1190,7 @@ export class SparesReportsComponent implements OnInit {
       const fileName = 'Spares Closing Stock As On Date-' + sessionStorage.getItem('locName').trim() + '-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.sprClsAsonDtReport(toDate, locId)
+        this.reportService.sprClsAsonDtReport(toDate, locId,subInventory)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -1160,7 +1199,7 @@ export class SparesReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.sprClsAsonDtReport(toDate, sessionStorage.getItem('locId'))
+        this.reportService.sprClsAsonDtReport(toDate, sessionStorage.getItem('locId'),subInventory)
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
           this.isDisabled1 = false;
@@ -1283,6 +1322,7 @@ export class SparesReportsComponent implements OnInit {
           })
       }
     }
+
     else if (reportName==='Sub Inventory Transfer Received Report'){
       const fileName = 'Sub Inventory Transfer Received Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
@@ -1305,6 +1345,7 @@ export class SparesReportsComponent implements OnInit {
         })
       }
     }
+
     else if (reportName==='Sub Inventory Transfer Made Report'){
       const fileName = 'Sub Inventory Transfer Made Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
@@ -1409,6 +1450,7 @@ export class SparesReportsComponent implements OnInit {
       })
     }
     else if (reportName ==='IRN Generation Report'){
+
       const fileName = 'IRN Generation Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
@@ -1431,7 +1473,60 @@ export class SparesReportsComponent implements OnInit {
         })
       }
     }
+
+    else if (reportName ==='Spares Issue Summary-Transaction Wise'){
+
+      const fileName = 'Spares Issue Summary-Transaction Wise-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        var deptId=this.sparesReportForm.get('deptId').value;
+        this.reportService.sprIssSummaryReport( fromDate,toDate,sessionStorage.getItem('ouId'),locId,deptId)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4){
+        this.reportService.sprIssSummaryReport(fromDate,toDate,sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'),sessionStorage.getItem('deptId'))
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.isDisabled1 = false;
+          this.closeResetButton = true;
+          this.dataDisplay = ''
+        })
+      }
+    }
+
+    else if (reportName==='Spares Zero Stock Report'){
+      const fileName = 'Spares Zero Stock Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if ((Number(sessionStorage.getItem('deptId'))===4)){
+        this.reportService.sprZeroStockReport(fromDate,toDate, locId, subInventory)
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.isDisabled1 = false;
+          this.closeResetButton = true;
+          this.dataDisplay = ''
+        })
+      }
+      else if ((Number(sessionStorage.getItem('deptId')))!=4){
+        this.reportService.sprZeroStockReport(fromDate,toDate, sessionStorage.getItem('locId'), subInventory)
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.isDisabled1 = false;
+          this.closeResetButton = true;
+          this.dataDisplay = ''
+        })
+      }
+    }
+
+
+
   }
+
+
   spPurRegDownLoad() {
     const fileName = 'Purchase-Register-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
