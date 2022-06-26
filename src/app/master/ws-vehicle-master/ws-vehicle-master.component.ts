@@ -1518,7 +1518,18 @@ export class WsVehicleMasterComponent implements OnInit {
 
 
   onSelectEwStatus(evnt) {
-     if(evnt==='Active') { this.enableEwDetails=true;  } else {this.enableEwDetails=false;}
+     if(evnt==='Active') { this.enableEwDetails=true;  } 
+
+     else {
+      this.enableEwDetails=false;
+      this.ewBookletNo=null;
+      this.ewStartDate=null;
+      this.ewEndDate=null;
+      this.wsVehicleMasterForm.get('ewType').reset();
+      this.wsVehicleMasterForm.get('ewInsurerId').reset();
+      this.wsVehicleMasterForm.get('ewInsurerSite').reset();
+    }
+
    } 
 
    onSelectMcpStatus(evnt) {

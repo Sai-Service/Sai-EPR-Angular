@@ -199,7 +199,9 @@
         <div *ngIf="DisplayfinanceSelectionYes; then finYes2; else finNo2"> </div>
         <ng-template #finNo2></ng-template>
         <ng-template #finYes2>
+
         <tr>
+            <td></td><td></td>
             <td style="width: 15%" class="LabelFontStyle">Tenure&nbsp;:&nbsp;</td>
             <td><input type="text" formControlName="tenure" value={{tenure}} class="form-control" ></td>
             <td style="width: 15%" class="LabelFontStyle">Down&nbsp;Payment&nbsp;:&nbsp;</td>
@@ -229,8 +231,7 @@
             <td><input type="text" formControlName="exRegNo" class="form-control" ></td>
             <td style="width: 15%" class="LabelFontStyle">Ins&nbsp;Charges&nbsp;:&nbsp;</td>
             <td><input type="text" formControlName="insCharges" class="form-control" ></td>
-            <td style="width: 15%" class="LabelFontStyle">Offer&nbsp;Price&nbsp;:&nbsp;</td>
-            <td><input type="text" formControlName="offerPrice" class="form-control" > </td>
+           
         </ng-template>
         </tr>
 
@@ -238,6 +239,10 @@
         <ng-template #exNo2></ng-template>
         <ng-template #exYes2>
         <tr>
+            <td></td><td></td>
+            <td style="width: 15%" class="LabelFontStyle">Offer&nbsp;Price&nbsp;:&nbsp;</td>
+            <td><input type="text" formControlName="offerPrice" class="form-control" > </td>
+
             <td style="width: 15%" class="LabelFontStyle">Dealer&nbsp;Name&nbsp;:&nbsp;</td>
             <td>
                 <select type="text" formControlName="tvBroker" id="tvBroker"

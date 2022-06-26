@@ -649,12 +649,13 @@ export class BankReconcillationComponent implements OnInit {
         this.dataDisplay ='File Upload in progress....Do not refresh the Page'
         var bnkAcId=this.bankReconcillationForm.get("bankAccountId").value
         var stNum=this.bankReconcillationForm.get("stNumber").value
+        var glDt=this.bankReconcillationForm.get("glDate").value
 
         var event=this.fileInput.nativeElement.files[0];
         console.log('doctype-check'+this.docType)
         let formData = new FormData();
         formData.append('file', event)
-           this.service.UploadExcelBankStatement(formData,this.docType,this.ouId,bnkAcId,stNum).subscribe((res: any) => {
+           this.service.UploadExcelBankStatement(formData,this.docType,this.ouId,bnkAcId,stNum,glDt).subscribe((res: any) => {
             if (res.code === 200) {
                this.resMsg = res.message+",  Code : "+res.code;;
               //this.lstMessage=res.obj.priceListDetailList;

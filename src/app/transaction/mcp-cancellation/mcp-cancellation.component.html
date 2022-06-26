@@ -308,7 +308,7 @@
                                 <td style="width: 15%" class="LabelFontStyle">Package&nbsp;Desc:&nbsp;</td>
                                 
                                 <td colspan="5">
-                                    <input disabled style="width: 100%;" disabled  type="text"  formControlName="packageDesc"  id="packageDesc" [(ngModel)]="packageDesc" class="form-control" >
+                                    <input disabled style="width: 100%;" disabled  type="text"  formControlName="packageDescription"  id="packageDescription" [(ngModel)]="packageDescription" class="form-control" >
                                 </td>
                             
                                </tr>
@@ -443,14 +443,14 @@
                     <fieldset class="RFS">
                         <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">MCP|AMC CANCELLATION | REFUND DETAILS</legend>
                         <table class="center">
-                               
+
+                                                       
                             <tr>
+                                <!-- <div *ngIf="showDetailsButton; then mcpchrg1; else mcpchrg2"></div>
+                                <ng-template #mcpchrg1> -->
                                 <td style="width: 15%" class="LabelFontStyle">Charges:&nbsp;</td>
                               
-                                <!-- <td>
-                                    <input disabled   type="text"  formControlName="mcpCancelCharges"  id="mcpCancelCharges" [(ngModel)]="mcpCancelCharges" class="form-control">
-                                </td> -->
-                                <td>
+                               <td>
                                 <select  formControlName="refundIncludeGst"  id ="refundIncludeGst"  [(ngModel)]="refundIncludeGst"  class="form-control" (ngModelChange)='OnChargesSelected($event)' style="background-color: yellow;"  >
                                     <!-- <option>--Select--</option> -->
                                     <option value="Y">Refund-With Taxes</option>
@@ -458,9 +458,6 @@
                                     <!-- <option value="Refund- ">REFUND</option> -->
                                 </select>
                             </td>
-
-
-                      
                             <td style="width: 15%" class="LabelFontStyle">Approved&nbsp;By:&nbsp;</td>
                               
                             <!-- <td>
@@ -583,7 +580,7 @@
                     <!-- ===================================Buttons======================================== -->
                       <table class="center">
                         <tr>
-                            <div *ngIf="showDetailsButton; then Block101; else Block102"></div>
+                            <div *ngIf="showCancelButton; then Block101; else Block102"></div>
                             <ng-template #Block101>
                                 <td><button  type="button" class="btn btn-info" (click)="newMast()" >Cancel</button></td>
                                 <td><button type="button" class="btn btn-info" (click)="searchMast()">Search</button></td>
@@ -769,7 +766,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
          <div class="modal-header">
-          <h5 class="modal-title" id="exampleModal21Label">Package&nbsp;No&nbsp;:&nbsp;{{this.packageNumber}} -{{this.packageDesc}}</h5>
+          <h5 class="modal-title" id="exampleModal21Label">Package&nbsp;No&nbsp;:&nbsp;{{this.packageNumber}} -{{this.packageDescription}}</h5>
           <!-- MCP&nbsp;Package&nbsp;Item&nbsp;Details-&nbsp; -->
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>

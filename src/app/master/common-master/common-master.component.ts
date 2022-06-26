@@ -306,9 +306,8 @@ CheckDataValidations(){
 
   formValue.code =this.code.toUpperCase();
   formValue.codeDesc=this.codeDesc.toUpperCase();
-  formValue.attribute1=this.attribute1.toUpperCase();
-
-  // alert ("code, desc : "+this.code + " , "+this.codeDesc);
+  // formValue.attribute1=this.attribute1.charAt(0).toUpperCase();
+  // alert ("code, desc ,attribute1: "+this.code + " , "+this.codeDesc+ " , "+this.attribute1);
 
   if (formValue.divisionId===undefined || formValue.divisionId===null || formValue.divisionId<0)
   {

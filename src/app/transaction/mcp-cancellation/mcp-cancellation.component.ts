@@ -109,7 +109,7 @@ export class McpCancellationComponent implements OnInit {
         mcpCancelDate = this.pipe.transform(Date.now(), 'y-MM-dd');
         packageId:number;
         packageNumber:string;
-        packageDesc:string;
+        packageDescription:string;
         pkgStartDate:Date;
         pkgEndDate:Date;
         uptoKm:number;
@@ -191,6 +191,7 @@ export class McpCancellationComponent implements OnInit {
           displayButton = false;
           checkValidation=false;
           showDetailsButton=false;
+          showCancelButton=false;
          
           //////////////////////////////////
   
@@ -241,7 +242,7 @@ export class McpCancellationComponent implements OnInit {
             enrollmentDt:[],
             packageId:[],
             packageNumber:[],
-            packageDesc:[],
+            packageDescription:[],
             pkgStartDate:[],
             pkgEndDate:[],
             uptoKm:[],
@@ -652,7 +653,6 @@ export class McpCancellationComponent implements OnInit {
     
       searchMcpByRegNo(mRegNo,mEnrollNo){
 
-        
         if( (mRegNo===undefined || mRegNo.trim()==='') && (mEnrollNo===undefined || mEnrollNo.trim()==='') )
         { 
           alert ("Both Register No  and Enrollment No is blank.\nPlease enter REGNO or ENROLLMENT NO and  click on Search");
@@ -676,7 +676,7 @@ export class McpCancellationComponent implements OnInit {
                   this.GetVehicleRegInfomation(this.lstMcplines.regNo);
                   this.GetVariantDeatils(this.lstMcplines.variantCode);
                   this.GetCustomerDetails(this.lstMcplines.customerId);
-                  this.getPackageInfo(this.lstMcplines.packageNumber,this.lstMcplines.fuelType)
+                  // this.getPackageInfo(this.lstMcplines.packageNumber,this.lstMcplines.fuelType)
 
 
                   for(let i=0; i<this.invLineArray.length; i++){ 
@@ -690,8 +690,24 @@ export class McpCancellationComponent implements OnInit {
                       var enqDtls:FormGroup=this.invLineDetails();
                       control.push(enqDtls);
                     }
-                    this.showDetailsButton=true
+
+                  this.showDetailsButton=true;
+
                   this.mcpCancellationForm.get('enqDtls').patchValue(this.lstMcplines.enqDtls);
+
+                  if(this.lstMcplines.totLabBalanced >0)  {
+                   this.showCancelButton=true;
+                    this.mcpCancellationForm.get("refundIncludeGst").enable();
+                    this.mcpCancellationForm.get("refundApprovedBy").enable();
+                    this.mcpCancellationForm.get("cancelRsnId").enable();
+                  } 
+                  else {
+                    this.showCancelButton=false;
+                    this.mcpCancellationForm.get("refundIncludeGst").disable();
+                    this.mcpCancellationForm.get("refundApprovedBy").disable();
+                    this.mcpCancellationForm.get("cancelRsnId").disable();
+                  }
+
 
                   this.packageAmt=this.lstMcplines.packageAmt.toFixed(2);
 
@@ -823,7 +839,7 @@ export class McpCancellationComponent implements OnInit {
                   if(this.getPkgDetails !=null){
       
                     //  this.packageType=this.getPkgDetails[0].packageType;
-                     this.packageDesc= this.getPkgDetails[0].packageDesc;
+                     this.packageDescription= this.getPkgDetails[0].packageDesc;
                     //  this.validMonths= this.getPkgDetails[0].validPeriod;
       
                   }

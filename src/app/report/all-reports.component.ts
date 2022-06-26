@@ -871,7 +871,7 @@ export class AllReportsComponent implements OnInit {
     var toDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
     const fileName = 'Spares Income Statement-' + sessionStorage.getItem('locName').trim() + '-' + toDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.sprClsAsonDtReport(toDate, sessionStorage.getItem('locId'))
+    this.reportService.sprClsAsonDtReport(toDate, sessionStorage.getItem('locId'),'SP')
       .subscribe(data => {
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
         this.isDisabled15 = false;

@@ -836,13 +836,19 @@ export class SalesOrderProformaComponent implements OnInit {
               if (data.code === 200) {
                 this.addonDescList = data.obj;
                 for (let i = 0; i < data.obj.length; i++) {
+                  
                   var itemtaxCatNm: string = data.obj[i].taxCategoryName;
+                  if(itemtaxCatNm != null){
                   if (itemtaxCatNm.includes('Sale-I-GST')) {
                     (controlinv.controls[k]).patchValue({
                       itemId: data.obj[i].itemId,
                       orderedItem: data.obj[i].description,
                       hsnSacCode: data.obj[i].hsnSacCode,
                       uom: data.obj[i].uom,
+                      unitSellingPrice: data.obj[i].priceValue,
+                      isTaxable: data.obj[i].isTaxable,
+                      pricingQty: 1,
+                      totAmt:data.obj[i].priceValue 
                     });
                     // this.orderManagementService.getTaxCategoriesForSales(custtaxCategoryName, data.obj[i].taxPercentage)
                     //   .subscribe(
@@ -860,6 +866,21 @@ export class SalesOrderProformaComponent implements OnInit {
                     //     }
                     //   );
                   }
+                }else if (data.obj[i].isTaxable === 'N' && itemtaxCatNm === null) {
+                 
+                  (controlinv.controls[k]).patchValue({
+                    itemId: data.obj[i].itemId,
+                    orderedItem: data.obj[i].description,
+                    hsnSacCode: data.obj[i].hsnSacCode,
+                    uom: data.obj[i].uom,
+                    unitSellingPrice: data.obj[i].priceValue,
+                    isTaxable: data.obj[i].isTaxable,
+                    pricingQty: 1,
+                    totAmt:data.obj[i].priceValue
+                  });
+
+                }
+
                 }
               }
               else if (data.code === 400) {

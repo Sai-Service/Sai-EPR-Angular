@@ -822,7 +822,6 @@ export class SaiExtendedWarrantyComponent implements OnInit {
 
 
         serchByRegNo(mRegNo) {
-
           //  ----------------------------------------------------
             var mreg=this.saiEwForm.get('vehRegNo').value
             if(mreg==null || mreg==undefined || mreg.trim()=='') {
@@ -832,7 +831,6 @@ export class SaiExtendedWarrantyComponent implements OnInit {
             mreg=mreg.trim();
             this.vehRegNo=mreg;
             //  ---------------------------------------------------
-
           this.service.getVehRegDetailsNew(mreg)
           .subscribe(
             data => {
@@ -859,9 +857,13 @@ export class SaiExtendedWarrantyComponent implements OnInit {
                 // ewStatusBookletno:this.getVehRegDetails.ewBookletNo,
                 // ewStatusStartDate:this.getVehRegDetails.ewStartDate,
                 // ewStatusPeriod:this.getVehRegDetails.ewPeriod,
+
          });
-          
-                
+
+              if(this.getVehRegDetails.customerId ===undefined || this.getVehRegDetails.customerId===null || this.getVehRegDetails.customerId <=0) {
+                alert ("Customer Id is Undefined  or Null. Please check.")
+                this.resetMast();
+              }
                 this.GetCustomerDetails(this.custId);
                 this.GetCustomerSiteDetails(this.custId);
                 this.deliveryDate = this.pipe.transform(this.deliveryDate, 'y-MM-dd');
