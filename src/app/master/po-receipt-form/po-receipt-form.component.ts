@@ -94,6 +94,8 @@ export class PoReceiptFormComponent implements OnInit {
   submitted = false;
   private sub: any;
   private sub1: any;
+  private sub2: any;
+  
   supplier: string;
   item: string;
   segment1: string;
@@ -415,6 +417,18 @@ export class PoReceiptFormComponent implements OnInit {
       );
 
 
+     
+  //     this.sub2 = this.router1.params.subscribe(params => {
+  //       var  porcptNum = params['receiptNo'];
+  //       //  alert ("po receiptNo  :"+porcptNum  );
+  //        this.receiptNo=porcptNum;
+  //      if (porcptNum != undefined){
+  //       this.poReceiptForm.patchValue({ receiptNo: porcptNum })
+  //      this.ReceiptFind(porcptNum);
+  //    }
+  //  });
+
+
     this.sub1 = this.router1.queryParams.subscribe(params => {
       // this.shipmentNumber = params.get('shipmentNumber');
       this.shipmentNumber = this.router1.snapshot.queryParamMap.get('shipmentNumber');
@@ -424,6 +438,10 @@ export class PoReceiptFormComponent implements OnInit {
       this.shipmentNoFind(this.shipmentNumber);
     }
     })
+
+   
+
+
 
 
 
