@@ -42,6 +42,8 @@ import { PayableInvoiceNewComponent } from './payable-invoice-new/payable-invoic
 import { DeadStockComponent } from './dead-stock/dead-stock.component';
 import { PoInvListComponent } from './po-inv-list/po-inv-list.component';
 import { GlTrialBalanceComponent } from './gl-trial-balance/gl-trial-balance.component';
+import { JvUploadComponent } from './jv-upload/jv-upload.component';
+import { PaymentObj } from './payments/payment-obj';
 // import { ShippingNetworkComponent } from './shipping-network/shipping-network.component';cd..
 
 
@@ -67,6 +69,7 @@ const routes: Routes = [
   {path:'PaymentAr',component:PaymentArComponent},
   {path:'PaymentAr/:docSequenceValue/:locId',component:PaymentArComponent},
   {path:'PaymentAr/:orderNumber',component:PaymentArComponent},
+  {path:'Payment/: trxNum /:catg' ,component:PaymentsComponent},
   {path:'SaiExtendedWarranty',component:SaiExtendedWarrantyComponent},
   {path:'SaiEwSchemeMaster',component:SaiEwSchemeMasterComponent},
   {path:'McpItemMaster',component:McpItemMasterComponent},
@@ -98,6 +101,7 @@ const routes: Routes = [
 {path:'DeadStock',component:DeadStockComponent},
 {path:'poInvList',component:PoInvListComponent},
 {path:'glTrialBalance',component:GlTrialBalanceComponent},
+{path:'JvUpload',component:JvUploadComponent},
 // {path :'ShippingNetwork',component:ShippingNetworkComponent},
 // {path:'CounterSaleReturn',component:CounterSaleReturnComponent},
  {path : '' ,redirectTo: 'Dashboard', pathMatch: 'full'}

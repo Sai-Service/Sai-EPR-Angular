@@ -40,10 +40,18 @@
                             class="form-control">
                     </td>
 
-                    <td colspan="8" style="text-align: left; width: 100%;">
-                        <button type="submit" (click)="searchPayment(searchBySuppName,searchByFrmDate,searchByToDate)"
+                    <td colspan="8" style="text-align: left; width: 40%;">
+                        <button type="button" (click)="searchPayment(searchBySuppName,searchByFrmDate,searchByToDate)"
                             class="btn btn-primary"><i class="fa fa-search"></i></button>
-
+                            <td style="width: 15%" class="LabelFontStyle">Payment&nbsp;No:&nbsp;</td>
+                            <td>
+                                <input type="number" formControlName="paymentNo" [(ngModel)]="paymentNo"
+                                    class="form-control">
+                            </td>
+        
+                            <td colspan="8" style="text-align: left; width: 40%;">
+                                <button type="button" (click)="searchByPaymentNo(paymentNo)"
+                                    class="btn btn-primary"><i class="fa fa-search"></i></button>
                 </tr>
             </table>
             <br>

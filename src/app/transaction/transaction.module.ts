@@ -45,6 +45,7 @@ import { PayableInvoiceNewComponent } from './payable-invoice-new/payable-invoic
 import { DeadStockComponent } from './dead-stock/dead-stock.component';
 import { PoInvListComponent } from './po-inv-list/po-inv-list.component';
 import { GlTrialBalanceComponent } from './gl-trial-balance/gl-trial-balance.component';
+import { JvUploadComponent } from './jv-upload/jv-upload.component';
 
 
 // import { ShippingNetworkComponent } from './shipping-network/shipping-network.component';
@@ -100,6 +101,7 @@ import { GlTrialBalanceComponent } from './gl-trial-balance/gl-trial-balance.com
     DeadStockComponent,
     PoInvListComponent,
     GlTrialBalanceComponent,
+    JvUploadComponent,
  
   
     // ShippingNetworkComponent,
