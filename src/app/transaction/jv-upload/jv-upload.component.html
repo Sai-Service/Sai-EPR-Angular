@@ -6,6 +6,36 @@
             </td>
         </tr>
         </table>
+        <table class="center">
+            <tr>
+                <td class="LabelFontStyle">
+                    &nbsp;&nbsp;Journal Type&nbsp;:&nbsp;
+                </td>
+                <td>
+                    <!-- <input type="text" class="form-control" disabled formControlName="location" style="width: 100px;" > -->
+                    <select class="form-control" formControlName="jeCategory">
+                        <option>--Select--</option>
+                        <option *ngFor="let jt of JournalType">{{jt.lookupValue}}</option>
+                    </select>
+                </td>
+                <td class="LabelFontStyle">
+                    &nbsp;&nbsp;Period&nbsp;Name&nbsp;:&nbsp;
+                </td>
+                <td>
+                    <!-- <input disabled type="text" class="form-control"  formControlName="userName"  > -->
+                    <select class="form-control"  formControlName="periodName" (ngModelChange)="onOptionGlPeriod($event)" #perName>
+                        <option>--Select--</option>
+                        <option *ngFor="let fy of PeriodName" [ngValue]="fy.periodName">{{fy.periodName}}</option>
+                    </select>
+                </td>
+                <td class="LabelFontStyle">
+                    &nbsp;&nbsp;Date&nbsp;:&nbsp;
+                </td>
+                <td>
+                    <input type="Date" class="form-control" formControlName="postedDate" id="postedDate" value={{postedDate}}>
+                </td>
+            </tr>
+        </table>
         <table style="width: 50%;" class="center">
             <tr>
                 <td class="LabelFontStyle">

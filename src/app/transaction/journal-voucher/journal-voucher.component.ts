@@ -83,7 +83,7 @@ export class JournalVoucherComponent implements OnInit {
   public TypeList:Array<string>=[];
   public issueByList:Array<string>=[];
   public FinancialYear:any=[];
-  public JournalType:any=[];
+  public JournalType:any=[]; 
   branch:any;
   segmentNameList:any;
   jeCategory:string;

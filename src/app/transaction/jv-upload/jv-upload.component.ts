@@ -7,6 +7,11 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location, } from "@angular/common";
 import * as xlsx from 'xlsx';
 
+interface IjvUpload{
+  jeCategory:string;
+  periodName:string;
+  postedDate :string;
+}
 @Component({
   selector: 'app-jv-upload',
   templateUrl: './jv-upload.component.html',
@@ -15,7 +20,11 @@ import * as xlsx from 'xlsx';
 export class JvUploadComponent implements OnInit {
 
   JvUploadForm: FormGroup;
+  periodName:string;
+  postedDate :string;
   files:string;
+  public JournalType:any=[];
+  public PeriodName:any;
 
   itemUploadedList:any=[];
   @ViewChild('fileInput') fileInput;
@@ -30,6 +39,17 @@ export class JvUploadComponent implements OnInit {
   JvUpload(JvUploadForm){}
 
   ngOnInit(): void {
+    this.service.JournalType().subscribe(
+      data=>{this.JournalType=data;
+      }
+    );
+
+    this.service.FinancialPeriod()
+    .subscribe(
+      data => {this.PeriodName = data.obj;
+        console.log(this.PeriodName);
+      }
+      );
   }
 
   uploadFile(event:any) {
@@ -66,5 +86,14 @@ export class JvUploadComponent implements OnInit {
         event.target.disabled = false;
        }, 60000);
   }
+
+  onOptionGlPeriod(event){
+
+    var selPer=this.PeriodName.find(d=>d.periodName===event);
+    if(selPer!=undefined){
+   (document.getElementById('postedDate') as HTMLInputElement).setAttribute('min',selPer.startDate);
+   (document.getElementById('postedDate') as HTMLInputElement).setAttribute('max',selPer.endDate);
+ }
+}
 
 }
