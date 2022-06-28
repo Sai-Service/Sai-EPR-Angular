@@ -8,22 +8,31 @@
         </table>
         <table class="center">
             <tr>
+                <td style="width: 15%"class="LabelFontStyle">
+                    Branch&nbsp;:
+                </td>
+                <td >
+                    <input disabled type="text" class="form-control" formControlName="OUName" [(ngModel)]='OUName'>
+                    <input hidden formControlName="orgId" [(ngModel)]='orgId'>
+                </td>
                 <td class="LabelFontStyle">
                     &nbsp;&nbsp;Journal Type&nbsp;:&nbsp;
                 </td>
                 <td>
                     <!-- <input type="text" class="form-control" disabled formControlName="location" style="width: 100px;" > -->
-                    <select class="form-control" formControlName="jeCategory">
+                    <select class="form-control" formControlName="jeSource">
                         <option>--Select--</option>
                         <option *ngFor="let jt of JournalType">{{jt.lookupValue}}</option>
                     </select>
                 </td>
+            </tr>
+            <tr>
                 <td class="LabelFontStyle">
                     &nbsp;&nbsp;Period&nbsp;Name&nbsp;:&nbsp;
                 </td>
                 <td>
                     <!-- <input disabled type="text" class="form-control"  formControlName="userName"  > -->
-                    <select class="form-control"  formControlName="periodName" (ngModelChange)="onOptionGlPeriod($event)" #perName>
+                    <select class="form-control"  formControlName="period" (ngModelChange)="onOptionGlPeriod($event)" #perName>
                         <option>--Select--</option>
                         <option *ngFor="let fy of PeriodName" [ngValue]="fy.periodName">{{fy.periodName}}</option>
                     </select>
@@ -32,7 +41,7 @@
                     &nbsp;&nbsp;Date&nbsp;:&nbsp;
                 </td>
                 <td>
-                    <input type="Date" class="form-control" formControlName="postedDate" id="postedDate" value={{postedDate}}>
+                    <input type="Date" class="form-control" formControlName="glDate" id="glDate" value={{glDate}}>
                 </td>
             </tr>
         </table>
@@ -52,6 +61,47 @@
             <tr>
               <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">&nbsp;{{dataDisplay }}&nbsp; </td>
             </tr>
+            </table>
+            <div *ngIf="displaydata; then thenvdisable; else elseEnable"> </div>
+            <ng-template #thenvdisable>
+            </ng-template>
+            <ng-template #elseEnable>
+            <table class="center" cellspacing="0" cellpadding="4" border="0"  style="border-color:#959595;border-collapse:collapse;">
+                <tr class="GridHeader" style="font-size: 14px;">
+                    <th scope="col" style="border: 1px solid black;width: 250px;">JV Number</th>
+                    <th scope="col" style="border: 1px solid black;width: 250px;">JV Type</th>
+                    <th scope="col" style="border: 1px solid black;">Total Credit Amount</th>
+                    <th scope="col" style="border: 1px solid black;">Total Debit Amount</th>
+                    <th scope="col" style="border: 1px solid black;width: 200px;">JV Status</th>
+                    <th scope="col" style="border: 1px solid black;width: 200px;">JV Date</th>
+                </tr>
+                <tr  class="ItemStyle" style="text-decoration:none;font-size: 14px;">
+                  <td style="border: 1px solid #000000;padding-left: 5px;padding-top: 10px;text-align: center;">
+                    <!-- <a   [routerLink]="['/admin/master/OPMasterDto',com.segment1]" href="{{segment1}}"> -->
+                        {{itemUploadedList.docSeqValue}}
+                    <!-- </a> -->
+                </td>
+                    <td style="border: 1px solid black;padding-right: 15px;text-align: right;">{{itemUploadedList.jeSource}}</td>
+                    <td style="border: 1px solid black;padding-right: 15px;text-align: right;">{{itemUploadedList.runningTotalCr}}</td>
+                    <td style="border: 1px solid black;padding-right: 15px;text-align: right;">{{itemUploadedList.runningTotalDr}}</td>
+                    <td style="border: 1px solid black;padding-right: 15px;text-align: center;">{{itemUploadedList.status}}</td>
+                    <td style="border: 1px solid black;padding-right: 5px;text-align: center;width: 30px;">{{itemUploadedList.postedDate}}</td>
+                </tr>
+            </table>
+           
+        </ng-template>
+        
+            <table class="center">
+                <tr>
+                    <td>
+                        <button type="submit" class="btn btn-primary" id="register" (click)="refresh()">
+                            Clear
+                        </button>
+                    </td>
+                    <td>
+                        <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
+                    </td>
+                </tr>
             </table>
 </form>
 

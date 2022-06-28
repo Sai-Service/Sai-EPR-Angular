@@ -648,6 +648,7 @@ copyGl()
            this.JournalVoucherForm.patchValue({periodName:data.obj.periodName});
            this.JournalVoucherForm.patchValue({runningTotalCr:data.obj.runningTotalCr});
            this.JournalVoucherForm.patchValue({runningTotalDr:data.obj.runningTotalDr});
+           this.JournalVoucherForm.patchValue({jeCategory:data.obj.jeSource});
 
            this.JournalVoucherForm.patchValue(data.obj.glLines);
            this.JournalVoucherForm.patchValue({emplId:sessionStorage.getItem('emplId')})

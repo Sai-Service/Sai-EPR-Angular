@@ -247,8 +247,8 @@ SelectTbAct2(trxNum,refNum,catg,source){
   else if(source==='Payables' && catg==='Purchase Invoice'){
     this.router.navigate(['/admin/transaction/payableInvoice', trxNum]);
   }  
-  else if(source==='Purchasing'){
-    // this.router.navigate(['/admin/master/PoReceiptForm', trxNum]);
+  else if(source==='Purchasing' && catg==='Po_Receipt'){
+    this.router.navigate(['/admin/master/PoReceiptForm'],{ queryParams: { trxNum: trxNum,catg:catg }});
     alert ("Source - Purchasing , Category - "+catg +" ..Wip...")
   } 
   else if(source==='Payables' && catg==='Payments' ){
