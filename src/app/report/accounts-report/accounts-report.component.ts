@@ -65,6 +65,7 @@ export class AccountsReportComponent implements OnInit {
   isVisibleLocation:boolean=false;
   isVisibleLocation1:boolean=false;
   ispanelTolocationOu:boolean=false;
+  isVisibleVendorLedgerReport:boolean=false;
   source:string;
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService,private transactionService: TransactionService) {
     this.reportForm = this.fb.group({
@@ -465,6 +466,27 @@ reportName:string;
     this.isVisiblepanelprePayment=false;
     this.ispanelTolocationOu=false;
   }
+
+  else if (reportName=='vendorLedgerReport'){
+    this.reportName='Vendor Ledger Report';
+    this.isVisibleGSTPurchaseRegister=false;
+    this.isVisibleGSTSaleRegister=false;
+    this.isVisibleSparesdebtors=false;
+    this.isVisibleLocation=false;
+    this.isVisibleLocation1=false;
+    this.isVisiblepanelaccountName=false;
+    this.isVisiblepanelcashName=false;
+    this.isVisiblespInvAgging=false;
+    this.isVisiblepanelgltrialBalance=false;
+    this.panelCashBank=false;
+    this.isVisiblepanelAPGLUnpainAging=false;
+    this.isVisiblepanelprePayment=false;
+    this.ispanelTolocationOu=false;
+    this.isVisibleVendorLedgerReport=true;
+    
+  }
+
+
   }
 
 
@@ -705,6 +727,7 @@ reportName:string;
           this.isDisabled1=false;
         })
      }
+
      else if (reportName=='Manual Invoice Report'){
       var sourceName=this.reportForm.get('source').value;
       const fileName = 'Manual Invoice Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
@@ -717,6 +740,22 @@ reportName:string;
           this.isDisabled1=false;
         })
      }
+
+     else if (reportName=='Vendor Ledger Report'){
+      // var supId=this.reportForm.get('source').value;
+      var suppNo=this.reportForm.get('supNo').value;
+      const fileName = 'Vendor Ledger Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      this.reportService.vendorLedgerRpt(fromDate,toDate,sessionStorage.getItem('ouId'),locId,suppNo)
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.closeResetButton = true;
+          this.dataDisplay = ''
+          this.isDisabled1=false;
+        })
+     }
+
+
   }
 
   public supplierCodeList: any[];
