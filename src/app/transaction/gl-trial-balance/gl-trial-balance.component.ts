@@ -244,11 +244,16 @@ SelectTbAct2(trxNum,refNum,catg,source){
   if(source==='Receivable'){
   this.router.navigate(['/admin/transaction/ARInvoice', trxNum]);
   } 
-  else if(source==='Payables'){
+  else if(source==='Payables' && catg==='Purchase Invoice'){
     this.router.navigate(['/admin/transaction/payableInvoice', trxNum]);
   }  
   else if(source==='Purchasing'){
     // this.router.navigate(['/admin/master/PoReceiptForm', trxNum]);
+    alert ("Source - Purchasing , Category - "+catg +" ..Wip...")
+  } 
+  else if(source==='Payables' && catg==='Payments' ){
+    // this.router.navigate(['/admin/transaction/Payment', trxNum]);
+    this.router.navigate(['/admin/transaction/Payment'], { queryParams: { trxNum: trxNum,catg:catg } } );
     alert ("Source - Purchasing , Category - "+catg +" ..Wip...")
   } 
   else {alert ("Work In Progress")}

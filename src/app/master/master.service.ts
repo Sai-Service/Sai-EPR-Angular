@@ -2953,6 +2953,9 @@ getModelWisePrice(orgId){
   bulkpouploadSalesNew(formData: FormData) {
     return this.http.post(this.ServerUrl + `/fileImport/uploadNewItem`, formData)
 }
+bulkjvuploadCsv(formData:FormData){
+  return this.http.post(this.ServerUrl + `/fileImport/uploadSalJV`, formData)
+}
 
 bulkPickTickCSVold(formData: FormData) {
   return this.http.post(this.ServerUrl + `/fileImport/uploadCS`, formData)

@@ -1170,17 +1170,18 @@ export class PayableInvoiceNewComponent implements OnInit {
   }
 
   onOptionsSelectedsuppName(name: any, i) {
+    // debugger;
     // alert(name);
     // alert(name.target.value+'----'+name)
-    this.service.supplierCodeList1()
-      .subscribe(
-        data => {
-          this.supplierCodeList1 = data;
-          console.log(this.supplierCodeList1);
-          // this.suppNo = name;
-          console.log(this.supplierCodeList1);
-        }
-      );
+    // this.service.supplierCodeList1()
+    //   .subscribe(
+    //     data => {
+    //       this.supplierCodeList1 = data;
+    //       console.log(this.supplierCodeList1);
+    //       // this.suppNo = name;
+    //       console.log(this.supplierCodeList1);
+    //     }
+    //   );
 
     // let selectedValue = this.supplierCodeList.find(v => v.suppNo == name);
     let selectedValue = this.supplierCodeList.find(v => v.name == name);
@@ -1232,6 +1233,8 @@ export class PayableInvoiceNewComponent implements OnInit {
       .subscribe(
         data => {
           console.log(data);
+
+          alert('data.invoiceStatus'+data.invoiceStatus);
           this.isSearchPatch = true;
           this.displayitemName = true;
           this.displayTaxCategory = false;
@@ -1296,12 +1299,12 @@ export class PayableInvoiceNewComponent implements OnInit {
             // alert(data.invLines[i].description)
           }
           for (let x = 0; x < data.invLines.length; x++) {
-            // if (data.invLines[x].description != undefined){
+            if (data.invLines[x].description != undefined){
             var description = data.invLines[x].description.toUpperCase()
             if (description.includes('ROUNDING') == true) {
               this.isVisibleRoundOffButton = false;
             }
-            // }
+            }
             // else {
             //   this.isVisibleRoundOffButton=true; 
             // }
@@ -1342,6 +1345,7 @@ export class PayableInvoiceNewComponent implements OnInit {
             (tdscontroltax.controls[i]).patchValue({ totTaxAmt: data.invTdsLines[i].taxAmount });
 
           }
+          // debugger;
           for (let j = 0; j < data.invDisLines.length; j++) {
             // var accDate = data.invDisLines[j].accountingDate;
             // var accDate1 = this.pipe.transform(accDate, 'dd-MM-yyyy');
@@ -1352,7 +1356,9 @@ export class PayableInvoiceNewComponent implements OnInit {
           if (data.invTdsLines.length === 0) {
             this.showTdsLines(data.invoiceId, data.payGroup);
           }
-          if (data.invoicestatus == '' || data.invoiceStatus == null || data.invoiceStatus === undefined) {
+          alert('data.invoiceStatus'+data.invoiceStatus);
+          if (data.invoiceStatus === '' || data.invoiceStatus === null || data.invoiceStatus === undefined) {
+            alert(data.invoiceStatus);
             this.isVisibleSave = false;
             this.isVisibleUpdateBtn = true;
             this.isVisibleValidate = true;
@@ -1527,7 +1533,10 @@ export class PayableInvoiceNewComponent implements OnInit {
           let j = 0;
           let tdscontrolInv = this.poInvoiceForm.get('tdsLines') as FormArray;
           for (let i = 0; i < this.lstTdsLineDetails.length; i++) {
+            if(this.lstTdsLineDetails[i].description!=null || this.lstTdsLineDetails[i].description!=undefined){
             var description = this.lstTdsLineDetails[i].description.toUpperCase();
+            // return;
+            
               // alert(description);
               if (description.includes('ROUNDING') == false) {
             (tdscontrolInv.controls[j]).patchValue({ invoiceId: invId });
@@ -1540,7 +1549,7 @@ export class PayableInvoiceNewComponent implements OnInit {
             (tdscontrolInv.controls[j].patchValue({ distLineNumber: this.lstTdsLineDetails[i].distLineNumber}));
             (tdscontrolInv.controls[j].patchValue({ invoiceLineNum: this.lstTdsLineDetails[i].invoiceLineNum}));
             j = j + 1;  
-            }
+              }}
             // this.poInvoiceForm.get('tdsLines').patchValue(this.lstTdsLineDetails);distCodeCombSeg  distLineNumber  invoiceLineNum
           }
         });

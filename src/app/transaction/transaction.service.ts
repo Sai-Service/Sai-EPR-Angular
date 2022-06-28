@@ -184,6 +184,10 @@ paymentSearch(suppNo,fromDate,toDate,divId):Observable<any>{
   return this.http.get(this.ServerUrl+`/apInvPayment/apPaymentDetail?suppNo=${suppNo}&frmDt=${fromDate}&toDate1=${toDate}&divisionId=${divId}`)
 }
 
+paymentSearchBydocNo(paymentNo):Observable<any>{
+  return this.http.get(this.ServerUrl+`/apInvPayment/apPaymentDocumentwise/${paymentNo}`)
+}
+
 paymentDocSearch(docNo):Observable<any>
 {
   return this.http.get(this.ServerUrl+`/apInvPayment/documentNo/${docNo}`);

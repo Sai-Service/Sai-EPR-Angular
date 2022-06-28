@@ -43,6 +43,7 @@ interface Ipayment {
   refundStatus:string;
   // partyId:number;
   locId:number;
+  paymentNo:number
   
 }
 
@@ -70,6 +71,7 @@ export class PaymentsComponent implements OnInit {
   todaydate = new Date();
   partyId:number;
   source:string;
+  paymentNo:number;
 
   displayselButton: Array<boolean> = [];
 
@@ -117,6 +119,7 @@ export class PaymentsComponent implements OnInit {
   searchByFrmDate: Date;
   searchBySuppName: string;
   paymentData: any[] = [];
+  paymentDocdata:any[]=[];
   displayselect: boolean = false;
   // pipe = new DatePipe('en-US');
   viewAccountingApRcpt: any;
@@ -140,6 +143,7 @@ export class PaymentsComponent implements OnInit {
   payAddress:string;
   emplId:number;
   private sub: any;
+  private sub1:any;
   receiptMethodId:number;
   refundStatus:string;
   isarPayment:boolean=false;
@@ -148,7 +152,7 @@ export class PaymentsComponent implements OnInit {
   public locIdList: Array<string> = [];
   locId:number;
 
-  constructor(private fb: FormBuilder, private router1: ActivatedRoute, private transactionService: TransactionService, private location: Location, private service: MasterService, private router: Router) {
+  constructor(private fb: FormBuilder, private router1: ActivatedRoute,private router2:ActivatedRoute, private transactionService: TransactionService, private location: Location, private service: MasterService, private router: Router) {
     this.paymentForm = fb.group({
       suppNo: [],
       ouName: [],
@@ -173,7 +177,7 @@ jeSource: [],
   payStatus:[],
       docNo: [],
       emplId:[],
-
+      paymentNo:[],
       obj1: this.fb.array([this.payHeaderLineDtl()]),
       obj: this.fb.array([this.payInvoiceLineDtl()]),
     })
@@ -298,6 +302,7 @@ jeSource: [],
         }
       );
   
+      
     this.sub = this.router1.params.subscribe(params => {
       this.INVNO = params['invNumber'];
       var searchObj: InvSearchNew = new InvSearchNew();
@@ -337,6 +342,19 @@ jeSource: [],
         });
       }
     })
+   
+    this.sub1 = this.router2.params.subscribe(params => {
+      var payNo = this.router2.snapshot.queryParamMap.get('trxNum');
+      var categ = Number(this.router1.snapshot.queryParamMap.get('catg'));
+      if ( payNo != undefined){
+       this.paymentNo=Number(payNo);
+         this.searchByPaymentNo(this.paymentNo);
+        }
+      
+      });
+    
+
+
     this.displayselButton[0]=true;
   }
   SearchINVNO(INVNO) {
@@ -929,6 +947,56 @@ console.log(jsonData);
       });
   }
 
+  searchByPaymentNo(paymentNo){
+    alert('searchPayment----'+paymentNo);
+      this.displaysiteName = true;
+      this.displaysiteAddress = true;
+      this.displayname = true;
+      this.displaytype = true;
+      this.payHeaderLineDtlArray().clear();
+      this.transactionService.paymentSearchBydocNo(paymentNo)
+        .subscribe((res: any) => {
+          if (res.code === 200) {
+            alert(res.message);
+            this.paymentDocdata = res.obj;
+            this.displayDetail=false;
+            this.displaystatus=true;
+            // alert(this.paymentData.length+'----this.paymentData.length')
+            for (let i = 0; i < this.paymentDocdata.length; i++) {
+              var payLnGrp1: FormGroup = this.payHeaderLineDtl();
+              this.payHeaderLineDtlArray().push(payLnGrp1);
+              
+            }
+            alert(this.payHeaderLineDtlArray().length+'len');
+            for (let j = 0; j < this.payHeaderLineDtlArray().length; j++) {
+              // debugger;
+              var patch=this.paymentForm.get('obj1') as FormArray;
+            //   // var selPay=this.suppIdList.find(d=>d.suppSiteId===res.obj[j])
+              patch.controls[j].patchValue(this.paymentDocdata);
+              var payDateNew1New = this.pipe.transform(res.obj[j].payDate, 'y-MM-dd');
+              this.payDate = payDateNew1New;
+              alert(this.paymentDocdata[j].statusLookupCode)
+              // debugger;
+              if(this.paymentDocdata[j].statusLookupCode==='CLEARED'){
+                this.displayselButton[j] = false;            
+            }
+            else{
+              this.displayselButton[j] = true;   
+            }
+          }
+            this.paymentForm.get('obj1').patchValue(this.paymentDocdata);
+            // this.paymentForm.patchValue(this.paymentData);
+            console.log(this.paymentData);
+  
+          } else {
+            if (res.code === 400) {
+              alert(res.msg);
+              // this.poReceiptForm.reset();
+            }
+          }
+        });
+    
+  }
       viewAcc(documentNo){
         // alert(documentNo)
         var docVal=this.paymentForm.get('obj').value;
