@@ -2472,7 +2472,9 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       var crdAmt = this.CounterSaleOrderBookingForm.get('creditAmt').value;
       // alert(crdAmt);
       // debugger;
-      if (crdAmt != 0){
+      var typ=this.CounterSaleOrderBookingForm.get('createOrderType').value;
+      if(typ!='Sales Order'){
+      if (crdAmt != 0 ){
       if (totAmt >= crdAmt) {
         alert('Credit Amount is exceeded.! ... Credit Amount is' + ' ' + crdAmt + ' ' + 'Total Amount is' + ' ' + totAmt + '.!');
         this.progress = 0;
@@ -2481,7 +2483,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
         return;
       }
     }
-    
+  }
     // }
     for (let j = 0; j < orderLines.length; j++) {
       if (orderLines[j].segment === '' || orderLines[j].segment=== undefined || orderLines[j].segment===null
@@ -2801,18 +2803,23 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     var newln = lineIndex + 1;
     this.setFocus('itemSeg' + newln);
     var crdAmt = this.CounterSaleOrderBookingForm.get('creditAmt').value;
+    var typ=this.CounterSaleOrderBookingForm.get('createOrderType').value;
+      if(typ!='Sales Order'){
     // alert(crdAmt)
-    if (crdAmt != undefined && crdAmt != null && crdAmt != '') {
+    // if (crdAmt >0){
+    if (crdAmt != undefined && crdAmt != null && crdAmt != '' && crdAmt >0 ) {
       if (totAmt >= crdAmt) {
         alert('Credit Amount is exceeded.! ... Credit Amount is' + ' ' + crdAmt + ' ' + 'Total Amount is' + ' ' + totAmt + '.!');
         this.setFocus('itemSeg' + lineIndex);
         // this.isDisabled10 = true;
         return;
       }
+    }}
+
       // else {
       //   this.isDisabled10 = false;
       // }
-    }
+    // }
   }
 
 
@@ -3499,5 +3506,7 @@ refreshCreadiAmt(){
       }
     })
 }
+
+
 
 }

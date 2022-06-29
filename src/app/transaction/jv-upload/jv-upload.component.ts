@@ -4,9 +4,16 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { MasterService } from 'src/app/master/master.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Location, } from "@angular/common";
+import { DatePipe, Location, } from "@angular/common";
 import * as xlsx from 'xlsx';
 
+interface IjvUpload{
+  jeSource:string;
+  period:string;
+  glDate:string;
+  orgId:number;
+  
+}
 @Component({
   selector: 'app-jv-upload',
   templateUrl: './jv-upload.component.html',
@@ -15,21 +22,50 @@ import * as xlsx from 'xlsx';
 export class JvUploadComponent implements OnInit {
 
   JvUploadForm: FormGroup;
-  files:string;
+  period:string;
+  glDate:string;
+  OUName:string;
+  orgId:number;
+  jeSource:string;
 
-  itemUploadedList:any=[];
+  files:string;
+  public JournalType:any=[];
+  public PeriodName:any;
+
+  displaydata:boolean=true;
+
+  itemUploadedList:any;
   @ViewChild('fileInput') fileInput;
   dataDisplay: any;
+  pipe = new DatePipe('en-US');
 
    constructor(private fb: FormBuilder, private router: Router, private location1: Location, private router1: ActivatedRoute, private service: MasterService) {
     this.JvUploadForm = this.fb.group({
       files:[],
+      OUName:[],
+      orgId:[],
+      glDate:[],
+      period:[],
+      jeSource:[],
     })
   }
 
   JvUpload(JvUploadForm){}
 
   ngOnInit(): void {
+    this.OUName=(sessionStorage.getItem('ouName'));
+    this.orgId=Number((sessionStorage.getItem('ouId')));
+    this.service.JournalType().subscribe(
+      data=>{this.JournalType=data;
+      }
+    );
+
+    this.service.FinancialPeriod()
+    .subscribe(
+      data => {this.PeriodName = data.obj;
+        console.log(this.PeriodName);
+      }
+      );
   }
 
   uploadFile(event:any) {
@@ -40,13 +76,18 @@ export class JvUploadComponent implements OnInit {
     }
     event.target.disabled = true;
     let formData = new FormData();
-    formData.append('file', this.fileInput.nativeElement.files[0])
+    formData.append('file', this.fileInput.nativeElement.files[0]);
+    var orgId=this.JvUploadForm.get('orgId').value;
+    var jeSrc=this.JvUploadForm.get('jeSource').value;
+    var periodName=this.JvUploadForm.get('period').value;
+    var glDate=this.pipe.transform(this.JvUploadForm.get('glDate').value,'dd-MM-yyyy');
     // if ((sessionStorage.getItem('deptName'))=== 'Sales') {
-      this.service.bulkjvuploadCsv(formData).subscribe((res: any) => {
+      this.service.bulkjvuploadCsv(formData,orgId,jeSrc,periodName,glDate).subscribe((res: any) => {
         if (res.code === 200) {
           alert(res.message);
           this.itemUploadedList=res.obj;  
           this.dataDisplay ='File Uploaded Sucessfully....'
+          this.displaydata=false;
           // this.closeResetButton=true;
          this.JvUploadForm.get('files').reset();
         }
@@ -66,5 +107,22 @@ export class JvUploadComponent implements OnInit {
         event.target.disabled = false;
        }, 60000);
   }
+
+  onOptionGlPeriod(event){
+
+    var selPer=this.PeriodName.find(d=>d.periodName===event);
+    if(selPer!=undefined){
+   (document.getElementById('postedDate') as HTMLInputElement).setAttribute('min',selPer.startDate);
+   (document.getElementById('postedDate') as HTMLInputElement).setAttribute('max',selPer.endDate);
+ }
+}
+
+refresh() {
+  window.location.reload();
+}
+
+close() {
+  this.location1.back();
+}
 
 }

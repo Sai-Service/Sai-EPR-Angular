@@ -83,7 +83,7 @@ export class JournalVoucherComponent implements OnInit {
   public TypeList:Array<string>=[];
   public issueByList:Array<string>=[];
   public FinancialYear:any=[];
-  public JournalType:any=[];
+  public JournalType:any=[]; 
   branch:any;
   segmentNameList:any;
   jeCategory:string;
@@ -648,6 +648,7 @@ copyGl()
            this.JournalVoucherForm.patchValue({periodName:data.obj.periodName});
            this.JournalVoucherForm.patchValue({runningTotalCr:data.obj.runningTotalCr});
            this.JournalVoucherForm.patchValue({runningTotalDr:data.obj.runningTotalDr});
+           this.JournalVoucherForm.patchValue({jeCategory:data.obj.jeSource});
 
            this.JournalVoucherForm.patchValue(data.obj.glLines);
            this.JournalVoucherForm.patchValue({emplId:sessionStorage.getItem('emplId')})

@@ -2245,11 +2245,22 @@ receiptdonetaxDeatils(trxId,trxLineId): Observable<any> {
   return this.http.get(this.ServerUrl +`/rcvShipment/trxLineDet?trxId=${trxId}&trxLineId=${trxLineId}&updVenOnTransaction=RCV_TRANSACTION`);
 }
 
+
+
 getsearchByReceiptNo(segment1,mLocId): Observable<any> {
   // alert ("Receipt/Rtn No :"+segment1  +","+mLocId);
    return this.http.get(this.ServerUrl +`/rcvShipment/receiptNoWise?receiptNo=${segment1}&billToLocId=${mLocId}`);
   // http://localhost:8081/rcvShipment/rtvReceiptNoWise?receiptNo=52121101119&shipFromLocId=121
  }
+
+ getsearchByGlReceiptNo(segment1): Observable<any> {
+  // alert ("Receipt/Rtn No :"+segment1  +","+mLocId);
+   return this.http.get(this.ServerUrl +`/rcvShipment/receiptNo?receiptNo=${segment1}`);
+  // http://localhost:8081/rcvShipment/rtvReceiptNoWise?receiptNo=52121101119&shipFromLocId=121
+ }
+
+
+
 
 
 
@@ -2953,8 +2964,14 @@ getModelWisePrice(orgId){
   bulkpouploadSalesNew(formData: FormData) {
     return this.http.post(this.ServerUrl + `/fileImport/uploadNewItem`, formData)
 }
-bulkjvuploadCsv(formData:FormData){
-  return this.http.post(this.ServerUrl + `/fileImport/uploadSalJV`, formData)
+bulkjvuploadCsv(formData: FormData,orgId,jeSrc,periodName,glDate){
+  formData.append('orgId', orgId);
+  formData.append('jeSource', jeSrc);
+  formData.append('period', periodName);
+  formData.append('glDate', glDate);
+  const REQUEST_URI = this.ServerUrl +'/fileImport/uploadSalJV';
+  return this.http.post(REQUEST_URI, formData);
+  
 }
 
 bulkPickTickCSVold(formData: FormData) {

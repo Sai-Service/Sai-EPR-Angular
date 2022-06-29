@@ -84,6 +84,7 @@ const routes: Routes = [
   {path:'PoReceiptForm/:receiptNo',component:PoReceiptFormComponent},
   {path:'PoReceiptForm/:segment1',component:PoReceiptFormComponent},
   {path:'PoReceiptForm/:segment1/:accountLocId',component:PoReceiptFormComponent},
+  {path:'PoReceiptForm/:trxNum/:catg',component:PoReceiptFormComponent},
   {path:'itemMasterNew',component:ItemMasterNewComponent},
   {path:'SubinventoryMaster',component:SubinventoryMasterComponent},
   {path:'PendingShipmentList',component:PendingShipmentListComponent},
