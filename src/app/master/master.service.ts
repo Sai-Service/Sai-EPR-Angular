@@ -2258,6 +2258,9 @@ getsearchByReceiptNo(segment1,mLocId): Observable<any> {
    return this.http.get(this.ServerUrl +`/rcvShipment/receiptNo?receiptNo=${segment1}`);
   // http://localhost:8081/rcvShipment/rtvReceiptNoWise?receiptNo=52121101119&shipFromLocId=121
  }
+ uploadVehBookings(formData: FormData) {
+  return this.http.post(this.ServerUrl + `/Proforma/upload/bookings`, formData)
+}
 
 
 
