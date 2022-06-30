@@ -221,12 +221,12 @@ export class PoReceiptFormComponent implements OnInit {
   @ViewChild("input4") input4:ElementRef;
   @ViewChild("input5") input5:ElementRef;
   @ViewChild("input6") input6:ElementRef;
-  ngAfterViewInit() {
-    this.myInputField.nativeElement.focus();
-  }
+  // ngAfterViewInit() {
+  //   this.myInputField.nativeElement.focus();
+  // }
   // recDate=this.pipe.transform(this.recDate,'dd-MM-yyyy');
 
-  constructor(private fb: FormBuilder, private location: Location, private router: Router, private service: MasterService, private router1: ActivatedRoute) {
+  constructor(private fb: FormBuilder, private location: Location, private router: Router, private service: MasterService, private router1: ActivatedRoute,private router3: ActivatedRoute) {
     this.poReceiptForm = fb.group({
       ouName: [''],
       accountLocId:[''],
@@ -449,7 +449,9 @@ export class PoReceiptFormComponent implements OnInit {
 
 
     this.sub = this.router1.params.subscribe(params => {
+      alert( params['segment1']);
       this.segment1 = params['segment1'];
+      alert(this.segment1);
       var locId =  params['accountLocId'];
       this.accountLocId=  params['accountLocId'];
       // alert(this.segment1 +'----'+ locId);
@@ -555,9 +557,9 @@ export class PoReceiptFormComponent implements OnInit {
     });
 
 
-    this.sub3 = this.router1.params.subscribe(params => {
-      var recNo = this.router1.snapshot.queryParamMap.get('trxNum');
-      var categ = (this.router1.snapshot.queryParamMap.get('catg'));
+    this.sub3 = this.router3.params.subscribe(params => {
+      var recNo = this.router3.snapshot.queryParamMap.get('trxNum');
+      var categ = (this.router3.snapshot.queryParamMap.get('catg'));
       if ( recNo != undefined){
         this.glReceiptFind(recNo);
         }

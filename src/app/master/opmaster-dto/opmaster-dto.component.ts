@@ -1535,6 +1535,7 @@ export class OPMasterDtoComponent implements OnInit {
   //   }
 
   goReceiptForm(segment1) {
+    alert(segment1);
     if (Number(sessionStorage.getItem('deptId'))!=4){
     this.router.navigate(['/admin/master/PoReceiptForm', segment1]);
   }

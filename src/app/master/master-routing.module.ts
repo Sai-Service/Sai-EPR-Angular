@@ -38,6 +38,7 @@ import { ItemMasterLocatorComponent } from './item-master-locator/item-master-lo
 import { ReceivableTranstypeMasterComponent } from './receivable-transtype-master/receivable-transtype-master.component';
 import { CustomerRelationMasterComponent } from './customer-relation-master/customer-relation-master.component';
 import { ItemMasterNewComponent } from './item-master-new/item-master-new.component';
+
 // import { SubinventoryTransferComponent } from '../transaction/subinventory-transfer/subinventory-transfer.component';
 
 

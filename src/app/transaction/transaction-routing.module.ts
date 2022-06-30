@@ -44,6 +44,7 @@ import { PoInvListComponent } from './po-inv-list/po-inv-list.component';
 import { GlTrialBalanceComponent } from './gl-trial-balance/gl-trial-balance.component';
 import { JvUploadComponent } from './jv-upload/jv-upload.component';
 import { PaymentObj } from './payments/payment-obj';
+import { VehicleBookingUploadComponent } from './vehicle-booking-upload/vehicle-booking-upload.component';
 // import { ShippingNetworkComponent } from './shipping-network/shipping-network.component';cd..
 
 
@@ -102,6 +103,7 @@ const routes: Routes = [
 {path:'poInvList',component:PoInvListComponent},
 {path:'glTrialBalance',component:GlTrialBalanceComponent},
 {path:'JvUpload',component:JvUploadComponent},
+{path:'VehicleBookUpload',component:VehicleBookingUploadComponent},
 // {path :'ShippingNetwork',component:ShippingNetworkComponent},
 // {path:'CounterSaleReturn',component:CounterSaleReturnComponent},
  {path : '' ,redirectTo: 'Dashboard', pathMatch: 'full'}
