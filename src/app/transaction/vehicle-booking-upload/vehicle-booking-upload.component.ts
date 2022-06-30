@@ -40,7 +40,7 @@ export class VehicleBookingUploadComponent implements OnInit {
     event.target.disabled = true;
     let formData = new FormData();
     formData.append('file', this.fileInput.nativeElement.files[0]);
-      this.service.bulkpouploadSpares(formData).subscribe((res: any) => 
+      this.service.uploadVehBookings(formData).subscribe((res: any) => 
       {
         if (res.code === 200) {
           alert(res.message);
