@@ -615,7 +615,7 @@ export class McpCancellationComponent implements OnInit {
           alert("Data Validation Sucessfull....\nPosting Cancellation details.")
           this.displayButton=false;
           const formValue: IMcpCancel =this.transeData(this.mcpCancellationForm.value);
-
+          this.showCancelButton=false;
           
           // this.service.McpCancelUpdate(formValue.enrollmentNo,this.cancRsnId,formValue.netRefAmt,formValue).subscribe((res: any) => {
             this.service.McpCancelUpdate(formValue).subscribe((res: any) => {
@@ -627,7 +627,7 @@ export class McpCancellationComponent implements OnInit {
           } else {
             if (res.code === 400) {
               this.displayButton=true;
-            
+              this.showCancelButton=true;
               alert('ERROR OCCOURED IN PROCEESS');
               // this.mcpCancellationForm.reset();
             }
@@ -678,7 +678,6 @@ export class McpCancellationComponent implements OnInit {
                   this.GetCustomerDetails(this.lstMcplines.customerId);
                   // this.getPackageInfo(this.lstMcplines.packageNumber,this.lstMcplines.fuelType)
 
-
                   for(let i=0; i<this.invLineArray.length; i++){ 
                     this.invLineArray().removeAt(i);
                   }
@@ -708,23 +707,26 @@ export class McpCancellationComponent implements OnInit {
                     this.mcpCancellationForm.get("cancelRsnId").disable();
                   }
 
+                  // alert ("reftot1 :");
 
                   this.packageAmt=this.lstMcplines.packageAmt.toFixed(2);
-
                   this.totLabAmt=this.lstMcplines.totLabAmt.toFixed(2);
                   this.totMatAmt=this.lstMcplines.totMatAmt.toFixed(2);
                   this.totLabDisc=this.lstMcplines.totLabDisc.toFixed(2);
                   this.totMatDisc=this.lstMcplines.totMatDisc.toFixed(2);
 
-                  
+                  // alert ("reftot12 :");
+
                   this.totLabUtilised=this.lstMcplines.totLabUtilised.toFixed(2);
                   this.totMatUtilised=this.lstMcplines.totMatUtilised.toFixed(2);
-
                   this.totLabBalanced=this.lstMcplines.totLabBalanced.toFixed(2);
                   this.totMatBalanced=this.lstMcplines.totMatBalanced.toFixed(2);
                   this.totMatBalTax=this.lstMcplines.totMatBalTax.toFixed(2);
                   this.totLabBalTax=this.lstMcplines.totLabBalTax.toFixed(2);
 
+                  // alert ("reftot3 :");
+
+                  // alert ("reftot2ax :"+this.lstMcplines.totMatBalTax+this.lstMcplines.totLabBalTax);
 
 
                   this.totAvailed= (this.lstMcplines.totLabUtilised+this.lstMcplines.totMatUtilised).toFixed(2);
@@ -733,6 +735,9 @@ export class McpCancellationComponent implements OnInit {
                   this.refTotal2=(this.lstMcplines.totMatBalTax+this.lstMcplines.totLabBalTax).toFixed(2);
                   var xy=this.lstMcplines.refundTaxableAmt +this.lstMcplines.totMatBalTax+this.lstMcplines.totLabBalTax;
                   this.netRefAmt=xy.toFixed(2);
+                 
+                 
+                  // this.mcpCancellationForm.patchValue({refTotal1 :(this.lstMcplines.totLabBalanced+this.lstMcplines.totMatBalanced)})
                   // this.refundApprovedBy='SYSTEM';
 
                   // var eDate=new Date(this.lstMcplines.enrollmentDt);
@@ -743,6 +748,7 @@ export class McpCancellationComponent implements OnInit {
 
 
                   var mTotAvailed=(this.lstMcplines.totLabUtilised+this.lstMcplines.totMatUtilised);
+                  var mTotBalance = this.totBalance;
                   // var mTotAvailed=1000;
                   // alert(eDate +","+cDate  +","+mTotAvailed);
 
@@ -775,12 +781,20 @@ export class McpCancellationComponent implements OnInit {
                     this.refundAmt=this.netRefAmt;
                   }
 
-                  if(eDate<cDate && mTotAvailed>0) 
+                  if(eDate<cDate && mTotAvailed>0 ) 
                   {
+                    if( mTotBalance >0) {
                     alert ("MCP Utilized-Partial Refund");
                     this.refundIncludeGst='N';
                     this.refundApprovedBy='SYSTEM';
                     this.cancelRemarks ='Utilized MCP -  Blance Amt Refund without Taxes';
+                    } else{
+                      alert ("MCP Fully Utilized.");
+                      this.refundIncludeGst=null;
+                      this.refundApprovedBy=null
+                      this.cancelRemarks ='MCP Fully utilizied.';
+                    }
+
                     this.totLabBalTax=0;
                     this.totMatBalTax=0;
                     this.refTotal2=0;

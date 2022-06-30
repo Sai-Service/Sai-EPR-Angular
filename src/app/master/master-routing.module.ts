@@ -82,7 +82,7 @@ const routes: Routes = [
   {path:'WsVehicleMaster', component:WsVehicleMasterComponent },
   {path:'VariantMaster', component:VariantMasterComponent },
   {path:'TaxThresholdSetup', component:TaxThresholdSetupComponent  },
-  {path:'PoReceiptForm/:receiptNo',component:PoReceiptFormComponent},
+  // {path:'PoReceiptForm/:receiptNo',component:PoReceiptFormComponent},
   {path:'PoReceiptForm/:segment1',component:PoReceiptFormComponent},
   {path:'PoReceiptForm/:segment1/:accountLocId',component:PoReceiptFormComponent},
   {path:'PoReceiptForm/:trxNum/:catg',component:PoReceiptFormComponent},

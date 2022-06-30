@@ -80,11 +80,11 @@ export class PoReceiptFormComponent implements OnInit {
   poReceiptForm: FormGroup;
   ouName: string;
   poNumber: string;
-  docSeqValue:string;
-  isVisible:boolean=true;
+  docSeqValue: string;
+  isVisible: boolean = true;
   public minDate = new Date();
-  recdate1:Date;
-  polineNum:number;
+  recdate1: Date;
+  polineNum: number;
   poInvNum: string;
   poInvDate: Date;
   content: Number;
@@ -93,10 +93,7 @@ export class PoReceiptFormComponent implements OnInit {
   title: string;
   submitted = false;
   private sub: any;
-  private sub3:any;
   private sub1: any;
-  private sub2: any;
-  
   supplier: string;
   item: string;
   segment1: string;
@@ -114,7 +111,8 @@ export class PoReceiptFormComponent implements OnInit {
   disabledLine = true;
   disabledViewAccounting = true;
   DisplayqtyReceived = true;
-  displaylocatorDesc: Array<boolean> = [];;
+  displaylocatorDesc: Array<boolean> = [];sub3: any;
+;
   // recDate=new Date();
   pipe = new DatePipe('en-US');
   now = Date.now();
@@ -198,7 +196,7 @@ export class PoReceiptFormComponent implements OnInit {
   // PO wise Date Paratemeter//////
   frmDate: Date;
   toDate: Date;
-  accountLocId:number;
+  accountLocId: number;
 
 
   xyzdis = false;
@@ -215,27 +213,28 @@ export class PoReceiptFormComponent implements OnInit {
   TRUER = false; recFagDiss = true;
 
   @ViewChild("myinput") myInputField: ElementRef;
-  @ViewChild("input1") input1:ElementRef;
-  @ViewChild("input2") input2:ElementRef;
-  @ViewChild("input3") input3:ElementRef;
-  @ViewChild("input4") input4:ElementRef;
-  @ViewChild("input5") input5:ElementRef;
-  @ViewChild("input6") input6:ElementRef;
-  // ngAfterViewInit() {
-  //   this.myInputField.nativeElement.focus();
-  // }
+  @ViewChild("input1") input1: ElementRef;
+  @ViewChild("input2") input2: ElementRef;
+  @ViewChild("input3") input3: ElementRef;
+  @ViewChild("input4") input4: ElementRef;
+  @ViewChild("input5") input5: ElementRef;
+  @ViewChild("input6") input6: ElementRef;
+
+  ngAfterViewInit() {
+     this.myInputField.nativeElement.focus();
+  }
   // recDate=this.pipe.transform(this.recDate,'dd-MM-yyyy');
 
   constructor(private fb: FormBuilder, private location: Location, private router: Router, private service: MasterService, private router1: ActivatedRoute,private router3: ActivatedRoute) {
     this.poReceiptForm = fb.group({
       ouName: [''],
-      accountLocId:[''],
+      accountLocId: [''],
       // poNumber: ['', Validators.required],
       poNumber: [''],
       supplier: [''],
       item: [''],
       poInvNum: [''],
-      poInvDate:[''],
+      poInvDate: [''],
       segment1: [''],
       shipmentNumber: [],
       ouId: [''],
@@ -276,7 +275,7 @@ export class PoReceiptFormComponent implements OnInit {
       name1: [''],
       runningTotalDr: [''],
       runningTotalCr: [''],
-      docSeqValue:[''],
+      docSeqValue: [''],
       shipmentNo: [''],
       segment3: [],
       segment11: [],
@@ -293,8 +292,8 @@ export class PoReceiptFormComponent implements OnInit {
       poLineId: [],
       poHeaderId: [],
       orderedQty: [],
-      shipLineId:[],
-      shipHeaderId:[],
+      shipLineId: [],
+      shipHeaderId: [],
       itemType: [],
       itemName: [],
       taxCategoryName: [],
@@ -328,9 +327,9 @@ export class PoReceiptFormComponent implements OnInit {
       // segment5: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(2)]],
       segment11: [''],
       segment2: [''],
-      segment3:  [''],
+      segment3: [''],
       segment4: [''],
-      segment5:  [''],
+      segment5: [''],
       polineNum: [''],
       locatorId: [''],
       selectFlag: [],
@@ -384,8 +383,8 @@ export class PoReceiptFormComponent implements OnInit {
 
   ngOnInit(): void {
     $("#wrapper").toggleClass("toggled");
-  var  recdate1=this.pipe.transform(this.now, 'dd-MM-yyyy');
-    this.poReceiptForm.patchValue({recDate:recdate1});
+    var recdate1 = this.pipe.transform(this.now, 'dd-MM-yyyy');
+    this.poReceiptForm.patchValue({ recDate: recdate1 });
     // alert(this.pipe.transform(this.now, 'dd-MM-yyyy'));
     // alert(recdate1)
     this.name = sessionStorage.getItem('name');
@@ -398,7 +397,7 @@ export class PoReceiptFormComponent implements OnInit {
     console.log(this.locId);
     console.log(this.emplId);
 
-    this.displayrecDate=true;
+    this.displayrecDate = true;
 
     // this.poReceiptForm.patchValue(this.lstcomments1.user);
     // var divisionCode = this.lstcomments1.user.divisionCode;
@@ -418,31 +417,15 @@ export class PoReceiptFormComponent implements OnInit {
       );
 
 
-     
-  //     this.sub2 = this.router1.params.subscribe(params => {
-  //       var  porcptNum = params['receiptNo'];
-  //       //  alert ("po receiptNo  :"+porcptNum  );
-  //        this.receiptNo=porcptNum;
-  //      if (porcptNum != undefined){
-  //       this.poReceiptForm.patchValue({ receiptNo: porcptNum })
-  //      this.ReceiptFind(porcptNum);
-  //    }
-  //  });
-
-
     this.sub1 = this.router1.queryParams.subscribe(params => {
       // this.shipmentNumber = params.get('shipmentNumber');
       this.shipmentNumber = this.router1.snapshot.queryParamMap.get('shipmentNumber');
       // alert(this.shipmentNumber);
       this.poReceiptForm.patchValue({ shipmentNumber: this.shipmentNumber })
-      if (this.shipmentNumber != null){
-      this.shipmentNoFind(this.shipmentNumber);
-    }
+      if (this.shipmentNumber != null) {
+        this.shipmentNoFind(this.shipmentNumber);
+      }
     })
-
-   
-
-
 
 
 
@@ -451,12 +434,11 @@ export class PoReceiptFormComponent implements OnInit {
     this.sub = this.router1.params.subscribe(params => {
       alert( params['segment1']);
       this.segment1 = params['segment1'];
-      alert(this.segment1);
-      var locId =  params['accountLocId'];
-      this.accountLocId=  params['accountLocId'];
+      var locId = params['accountLocId'];
+      this.accountLocId = params['accountLocId'];
       // alert(this.segment1 +'----'+ locId);
       console.log(this.poReceiptForm.value);
-      
+
       this.service.getsearchByPOlines(this.segment1)
         .subscribe(
           data => {
@@ -483,18 +465,18 @@ export class PoReceiptFormComponent implements OnInit {
                 for (let j = 0; j < data.obj.poLines.length; j++) {
                   // alert(data.obj.poLines[j].poLineId);
                   (controlinv.controls[j]).patchValue({
-                    totAmount:data.obj.poLines[j].totAmount.toFixed(2),
-                    unitPrice:data.obj.poLines[j].unitPrice.toFixed(2),
-                    baseAmount:data.obj.poLines[j].baseAmount.toFixed(2),
-                    sgstAmt:data.obj.poLines[j].sgstAmt.toFixed(2),
-                    cgstAmt:data.obj.poLines[j].cgstAmt.toFixed(2),
-                    igstAmt:data.obj.poLines[j].igstAmt.toFixed(2),
-                    taxAmount:data.obj.poLines[j].taxAmount.toFixed(2),
+                    totAmount: data.obj.poLines[j].totAmount.toFixed(2),
+                    unitPrice: data.obj.poLines[j].unitPrice.toFixed(2),
+                    baseAmount: data.obj.poLines[j].baseAmount.toFixed(2),
+                    sgstAmt: data.obj.poLines[j].sgstAmt.toFixed(2),
+                    cgstAmt: data.obj.poLines[j].cgstAmt.toFixed(2),
+                    igstAmt: data.obj.poLines[j].igstAmt.toFixed(2),
+                    taxAmount: data.obj.poLines[j].taxAmount.toFixed(2),
                   });
                 }
               }
               else {
-                const invCategory = data.obj.poLines[0].ctgDescription.substr(0, 3);
+                const invCategory = data.obj.rcvLines[0].ctgDescription.substr(0, 3);
                 // alert(invCategory);
                 if (this.ctgDescription === 'MCH') {
                   this.lstcompolines = data.obj;
@@ -530,22 +512,22 @@ export class PoReceiptFormComponent implements OnInit {
                   }
                   this.displaySaveButton = true;
                   this.poReceiptForm.patchValue(this.lstcompolines);
-                  this.baseAmount=data.obj.baseAmount.toFixed(2);
-                  this.totalAmt=data.obj.totalAmt.toFixed(2);
-                  this.taxAmt=data.obj.taxAmt.toFixed(2);
+                  this.baseAmount = data.obj.baseAmount.toFixed(2);
+                  this.totalAmt = data.obj.totalAmt.toFixed(2);
+                  this.taxAmt = data.obj.taxAmt.toFixed(2);
                   let controlinv = this.poReceiptForm.get('poLines') as FormArray;
                   for (let j = 0; j < data.obj.poLines.length; j++) {
                     // alert(data.obj.poLines[j].poLineId);
                     (controlinv.controls[j]).patchValue({
                       subInventoryId: data.obj.poLines[j].subInventoryId,
                       poLineId: data.obj.poLines[j].poLineId,
-                      totAmount:data.obj.poLines[j].totAmount.toFixed(2),
-                      unitPrice:data.obj.poLines[j].unitPrice.toFixed(2),
-                      baseAmount:data.obj.poLines[j].baseAmount.toFixed(2),
-                      sgstAmt:data.obj.poLines[j].sgstAmt.toFixed(2),
-                      cgstAmt:data.obj.poLines[j].cgstAmt.toFixed(2),
-                      igstAmt:data.obj.poLines[j].igstAmt.toFixed(2),
-                      taxAmount:data.obj.poLines[j].taxAmount.toFixed(2),
+                      totAmount: data.obj.poLines[j].totAmount.toFixed(2),
+                      unitPrice: data.obj.poLines[j].unitPrice.toFixed(2),
+                      baseAmount: data.obj.poLines[j].baseAmount.toFixed(2),
+                      sgstAmt: data.obj.poLines[j].sgstAmt.toFixed(2),
+                      cgstAmt: data.obj.poLines[j].cgstAmt.toFixed(2),
+                      igstAmt: data.obj.poLines[j].igstAmt.toFixed(2),
+                      taxAmount: data.obj.poLines[j].taxAmount.toFixed(2),
                     });
                     // this.lineDetailsGroup().patchValue({subInvetoryId:data.obj.poLines[j].subInventoryId})
                   }
@@ -561,7 +543,7 @@ export class PoReceiptFormComponent implements OnInit {
       var recNo = this.router3.snapshot.queryParamMap.get('trxNum');
       var categ = (this.router3.snapshot.queryParamMap.get('catg'));
       if ( recNo != undefined){
-        this.glReceiptFind(recNo);
+        // this.glReceiptFind(recNo);
         }
       
       });
@@ -618,92 +600,32 @@ export class PoReceiptFormComponent implements OnInit {
     this.poReceiptForm.get('poInvDate').reset();
     this.poReceiptForm.get('Comments').reset();
     this.displaySaveButton = false;
-    this.displayrecDate=false;
+    this.displayrecDate = false;
     // alert(segment1);
     console.log(this.poReceiptForm.value);
-    if (Number(sessionStorage.getItem('deptId'))!=4){
-    this.service.getsearchByReceiptNo(segment1, (sessionStorage.getItem('locId')))
-      .subscribe(
-        data => {
-          if (data.code === 200) {
-            this.lstcompolines = data.obj;
-            // alert(data.obj.receiptNo);
-            if (data.obj.shipmentNumber != null){
-              // alert(data.obj.shipmentNo);
-              this.isVisible=false;
-            }
-            else{
-              this.isVisible=true;
-            }
-            var recDate1 = (data.obj.recDate,'dd-MM-yyyy');
-            this.poReceiptForm.patchValue(({recDate: (data.obj.recDate,'dd-MM-yyyy')}));
-            let control = this.poReceiptForm.get('poLines') as FormArray;
-            for (var i = 0; i < this.lstcompolines.rcvLines.length; i++) {
-              var poLines: FormGroup = this.lineDetailsGroup();
-              control.push(poLines);
-            }
-            if (data.obj.poInvNum != null){
-              this.isVisible=false;
-            }
-            this.disabled = false;
-            this.disabledLine = false;
-            this.disabledViewAccounting = false;
-            this.poReceiptForm.get('poLines').patchValue(this.lstcompolines.rcvLines);
-            this.poReceiptForm.patchValue(this.lstcompolines);
-            this.locatorDesc = this.lstcompolines.rcvLines[0].locatorDesc;
-            this.recDate = this.lstcompolines.receiptDate;
-            
-            this.poReceiptForm.patchValue({ taxAmt: this.lstcompolines.totalTax });
-            let controlinv1 = this.poReceiptForm.get('poLines') as FormArray;
-            for (let j = 0; j<data.obj.rcvLines.length; j++) {
-              (controlinv1.controls[j]).patchValue({
-                subInventoryId:data.obj.rcvLines[j].subInventoryId})
-              // this.lineDetailsArray[j].patchValue({ subInventoryId: data.obj.rcvLines[j].subInventoryId })
-            }
-            let controlinv = this.poReceiptForm.get('poLines') as FormArray;
-            for (let j = 0; j < data.obj.rcvLines.length; j++) {
-              (controlinv.controls[j]).patchValue({
-                totAmount:data.obj.rcvLines[j].totAmount.toFixed(2),
-                unitPrice:data.obj.rcvLines[j].unitPrice.toFixed(2),
-                baseAmount:data.obj.rcvLines[j].baseAmount.toFixed(2),
-                sgstAmt:data.obj.rcvLines[j].sgstAmt.toFixed(2),
-                cgstAmt:data.obj.rcvLines[j].cgstAmt.toFixed(2),
-                igstAmt:data.obj.rcvLines[j].igstAmt.toFixed(2),
-                taxAmount:data.obj.rcvLines[j].taxAmount.toFixed(2),
-              });
-            }
-
-          }
-          else if (data.code === 400) {
-            alert(data.message)
-          }
-        }
-
-      );
-      }
-      else if (Number(sessionStorage.getItem('deptId'))==4){
-        this.service.getsearchByReceiptNo(segment1, this.accountLocId)
+    if (Number(sessionStorage.getItem('deptId')) != 4) {
+      this.service.getsearchByReceiptNo(segment1, (sessionStorage.getItem('locId')))
         .subscribe(
           data => {
             if (data.code === 200) {
               this.lstcompolines = data.obj;
               // alert(data.obj.receiptNo);
-              if (data.obj.shipmentNumber != null){
+              if (data.obj.shipmentNumber != null) {
                 // alert(data.obj.shipmentNo);
-                this.isVisible=false;
+                this.isVisible = false;
               }
-              else{
-                this.isVisible=true;
+              else {
+                this.isVisible = true;
               }
-              var recDate1 = (data.obj.recDate,'dd-MM-yyyy');
-              this.poReceiptForm.patchValue(({recDate: (data.obj.recDate,'dd-MM-yyyy')}));
+              var recDate1 = (data.obj.recDate, 'dd-MM-yyyy');
+              this.poReceiptForm.patchValue(({ recDate: (data.obj.recDate, 'dd-MM-yyyy') }));
               let control = this.poReceiptForm.get('poLines') as FormArray;
               for (var i = 0; i < this.lstcompolines.rcvLines.length; i++) {
                 var poLines: FormGroup = this.lineDetailsGroup();
                 control.push(poLines);
               }
-              if (data.obj.poInvNum != null){
-                this.isVisible=false;
+              if (data.obj.poInvNum != null) {
+                this.isVisible = false;
               }
               this.disabled = false;
               this.disabledLine = false;
@@ -712,35 +634,97 @@ export class PoReceiptFormComponent implements OnInit {
               this.poReceiptForm.patchValue(this.lstcompolines);
               this.locatorDesc = this.lstcompolines.rcvLines[0].locatorDesc;
               this.recDate = this.lstcompolines.receiptDate;
-              
+
               this.poReceiptForm.patchValue({ taxAmt: this.lstcompolines.totalTax });
               let controlinv1 = this.poReceiptForm.get('poLines') as FormArray;
-              for (let j = 0; j<data.obj.rcvLines.length; j++) {
+              for (let j = 0; j < data.obj.rcvLines.length; j++) {
                 (controlinv1.controls[j]).patchValue({
-                  subInventoryId:data.obj.rcvLines[j].subInventoryId})
+                  subInventoryId: data.obj.rcvLines[j].subInventoryId
+                })
                 // this.lineDetailsArray[j].patchValue({ subInventoryId: data.obj.rcvLines[j].subInventoryId })
               }
               let controlinv = this.poReceiptForm.get('poLines') as FormArray;
               for (let j = 0; j < data.obj.rcvLines.length; j++) {
                 (controlinv.controls[j]).patchValue({
-                  totAmount:data.obj.rcvLines[j].totAmount.toFixed(2),
-                  unitPrice:data.obj.rcvLines[j].unitPrice.toFixed(2),
-                  baseAmount:data.obj.rcvLines[j].baseAmount.toFixed(2),
-                  sgstAmt:data.obj.rcvLines[j].sgstAmt.toFixed(2),
-                  cgstAmt:data.obj.rcvLines[j].cgstAmt.toFixed(2),
-                  igstAmt:data.obj.rcvLines[j].igstAmt.toFixed(2),
-                  taxAmount:data.obj.rcvLines[j].taxAmount.toFixed(2),
+                  totAmount: data.obj.rcvLines[j].totAmount.toFixed(2),
+                  unitPrice: data.obj.rcvLines[j].unitPrice.toFixed(2),
+                  baseAmount: data.obj.rcvLines[j].baseAmount.toFixed(2),
+                  sgstAmt: data.obj.rcvLines[j].sgstAmt.toFixed(2),
+                  cgstAmt: data.obj.rcvLines[j].cgstAmt.toFixed(2),
+                  igstAmt: data.obj.rcvLines[j].igstAmt.toFixed(2),
+                  taxAmount: data.obj.rcvLines[j].taxAmount.toFixed(2),
                 });
               }
-  
+
             }
             else if (data.code === 400) {
               alert(data.message)
             }
           }
-  
+
         );
-      }
+    }
+    else if (Number(sessionStorage.getItem('deptId')) == 4) {
+      this.service.getsearchByReceiptNo(segment1, this.accountLocId)
+        .subscribe(
+          data => {
+            if (data.code === 200) {
+              this.lstcompolines = data.obj;
+              // alert(data.obj.receiptNo);
+              if (data.obj.shipmentNumber != null) {
+                // alert(data.obj.shipmentNo);
+                this.isVisible = false;
+              }
+              else {
+                this.isVisible = true;
+              }
+              var recDate1 = (data.obj.recDate, 'dd-MM-yyyy');
+              this.poReceiptForm.patchValue(({ recDate: (data.obj.recDate, 'dd-MM-yyyy') }));
+              let control = this.poReceiptForm.get('poLines') as FormArray;
+              for (var i = 0; i < this.lstcompolines.rcvLines.length; i++) {
+                var poLines: FormGroup = this.lineDetailsGroup();
+                control.push(poLines);
+              }
+              if (data.obj.poInvNum != null) {
+                this.isVisible = false;
+              }
+              this.disabled = false;
+              this.disabledLine = false;
+              this.disabledViewAccounting = false;
+              this.poReceiptForm.get('poLines').patchValue(this.lstcompolines.rcvLines);
+              this.poReceiptForm.patchValue(this.lstcompolines);
+              this.locatorDesc = this.lstcompolines.rcvLines[0].locatorDesc;
+              this.recDate = this.lstcompolines.receiptDate;
+
+              this.poReceiptForm.patchValue({ taxAmt: this.lstcompolines.totalTax });
+              let controlinv1 = this.poReceiptForm.get('poLines') as FormArray;
+              for (let j = 0; j < data.obj.rcvLines.length; j++) {
+                (controlinv1.controls[j]).patchValue({
+                  subInventoryId: data.obj.rcvLines[j].subInventoryId
+                })
+                // this.lineDetailsArray[j].patchValue({ subInventoryId: data.obj.rcvLines[j].subInventoryId })
+              }
+              let controlinv = this.poReceiptForm.get('poLines') as FormArray;
+              for (let j = 0; j < data.obj.rcvLines.length; j++) {
+                (controlinv.controls[j]).patchValue({
+                  totAmount: data.obj.rcvLines[j].totAmount.toFixed(2),
+                  unitPrice: data.obj.rcvLines[j].unitPrice.toFixed(2),
+                  baseAmount: data.obj.rcvLines[j].baseAmount.toFixed(2),
+                  sgstAmt: data.obj.rcvLines[j].sgstAmt.toFixed(2),
+                  cgstAmt: data.obj.rcvLines[j].cgstAmt.toFixed(2),
+                  igstAmt: data.obj.rcvLines[j].igstAmt.toFixed(2),
+                  taxAmount: data.obj.rcvLines[j].taxAmount.toFixed(2),
+                });
+              }
+
+            }
+            else if (data.code === 400) {
+              alert(data.message)
+            }
+          }
+
+        );
+    }
   }
 
 
@@ -829,7 +813,7 @@ export class PoReceiptFormComponent implements OnInit {
       );
   }
 
-  taxDeatils(i,poHeaderId) {
+  taxDeatils(i, poHeaderId) {
     var invLine = this.poReceiptForm.get('poLines').value;
     var poLineId = invLine[i].poLineId;
     this.service.receiptnotdonetaxDeatils(poHeaderId, poLineId)
@@ -849,7 +833,7 @@ export class PoReceiptFormComponent implements OnInit {
 
   taxDeatils1(i) {
     // alert(i);
-    var shipHeaderId=this.lstcompolines.shipHeaderId;
+    var shipHeaderId = this.lstcompolines.shipHeaderId;
     // alert(shipHeaderId);
     var invLine = this.poReceiptForm.get('poLines').value;
     var shipLineId = invLine[i].shipLineId;
@@ -867,10 +851,10 @@ export class PoReceiptFormComponent implements OnInit {
       })
   }
 
-  
+
   shipmentNoFind(shipmentNumber: String) {
     console.log(this.poReceiptForm.value);
-    this.service.getsearchByshipmentNo(shipmentNumber,sessionStorage.getItem('locId'))
+    this.service.getsearchByshipmentNo(shipmentNumber, sessionStorage.getItem('locId'))
       .subscribe(
         data => {
           if (data.code === 400) {
@@ -881,18 +865,18 @@ export class PoReceiptFormComponent implements OnInit {
             this.lineDetailsArray.clear();
             this.lstcompolines = data.obj;
             if (this.lstcompolines.poStatus === 'Receipt Generated') {
-             this.disabledViewAccounting=false;
+              this.disabledViewAccounting = false;
               console.log(this.poStatus);
               this.displaySaveButton = true;
               this.disabled = false;
-              this.isVisible=false;
+              this.isVisible = false;
               this.disabledLine = false;
               let control = this.poReceiptForm.get('poLines') as FormArray;
               for (let i = 0; i < this.lstcompolines.poLines.length; i++) {
                 var poLines: FormGroup = this.lineDetailsGroup();
                 control.push(poLines);
-                var totLineAmt=(data.obj.poLines[i].totAmount).toFixed(2);
-                this.lineDetailsGroup().patchValue({totAmount:(data.obj.poLines[i].totAmount).toFixed(2)})
+                var totLineAmt = (data.obj.poLines[i].totAmount).toFixed(2);
+                this.lineDetailsGroup().patchValue({ totAmount: (data.obj.poLines[i].totAmount).toFixed(2) })
               }
               this.displaySaveButton = false;
               this.poReceiptForm.patchValue(this.lstcompolines);
@@ -900,7 +884,7 @@ export class PoReceiptFormComponent implements OnInit {
             else {
               this.lstcompolines = data.obj;
               this.disabled = true;
-              this.isVisible=false;
+              this.isVisible = false;
               this.disabledLine = true;
               let control = this.poReceiptForm.get('poLines') as FormArray;
               for (let i = 0; i < this.lstcompolines.poLines.length; i++) {
@@ -912,13 +896,13 @@ export class PoReceiptFormComponent implements OnInit {
               for (let j = 0; j < data.obj.poLines.length; j++) {
                 // alert(data.obj.poLines[j].poLineId);
                 (control.controls[j]).patchValue({
-                  totAmount:data.obj.poLines[j].totAmount.toFixed(2),
-                  unitPrice:data.obj.poLines[j].unitPrice.toFixed(2),
-                  baseAmount:data.obj.poLines[j].baseAmount.toFixed(2),
-                  sgstAmt:data.obj.poLines[j].sgstAmt.toFixed(2),
-                  cgstAmt:data.obj.poLines[j].cgstAmt.toFixed(2),
-                  igstAmt:data.obj.poLines[j].igstAmt.toFixed(2),
-                  taxAmount:data.obj.poLines[j].taxAmount.toFixed(2),
+                  totAmount: data.obj.poLines[j].totAmount.toFixed(2),
+                  unitPrice: data.obj.poLines[j].unitPrice.toFixed(2),
+                  baseAmount: data.obj.poLines[j].baseAmount.toFixed(2),
+                  sgstAmt: data.obj.poLines[j].sgstAmt.toFixed(2),
+                  cgstAmt: data.obj.poLines[j].cgstAmt.toFixed(2),
+                  igstAmt: data.obj.poLines[j].igstAmt.toFixed(2),
+                  taxAmount: data.obj.poLines[j].taxAmount.toFixed(2),
                 });
               }
               this.locatorDesc = this.lstcompolines.rcvLines[0].locatorDesc;
@@ -1094,7 +1078,7 @@ export class PoReceiptFormComponent implements OnInit {
   }
 
   okLocator(i) {
-    
+
     console.log(this.lstcompolines.poLines[0].subInventoryId);
 
     var poControls = this.poReceiptForm.get('poLines').value;
@@ -1235,7 +1219,7 @@ export class PoReceiptFormComponent implements OnInit {
   poSave() {
     var loctorDesc1 = this.poReceiptForm.get('poLines').value;
     for (let i = 0; i < loctorDesc1.length; i++) {
-      if ( loctorDesc1[i].itemType === 'GOODS' && loctorDesc1[i].locatorDesc === null ) {
+      if (loctorDesc1[i].itemType === 'GOODS' && loctorDesc1[i].locatorDesc === null) {
         alert('Please Entered Locator !');
         return
       }
@@ -1246,7 +1230,7 @@ export class PoReceiptFormComponent implements OnInit {
     formValue.baseAmount = this.poReceiptForm.get('baseAmount').value;
     formValue.taxAmt = this.poReceiptForm.get('taxAmt').value;
     formValue.totalAmt = this.poReceiptForm.get('totalAmt').value;
-    formValue.billToLocId= Number(sessionStorage.getItem('locId'));
+    formValue.billToLocId = Number(sessionStorage.getItem('locId'));
     this.locId = Number(sessionStorage.getItem('locId'));
     console.log(formValue);
     this.service.poSaveSubmit(formValue).subscribe((res: any) => {
@@ -1279,7 +1263,7 @@ export class PoReceiptFormComponent implements OnInit {
         this.ledgerId = res.obj.ledgerId;
         this.runningTotalDr = res.obj.runningTotalDr;
         this.runningTotalCr = res.obj.runningTotalCr;
-        this.docSeqValue=res.obj.docSeqValue;
+        this.docSeqValue = res.obj.docSeqValue;
         console.log(this.description);
 
         this.viewAccounting1 = res.obj.glLines;
@@ -1298,7 +1282,7 @@ export class PoReceiptFormComponent implements OnInit {
     this.service.poinvCre(segment1).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
-        this.ReceiptFind(this.receiptNo);     
+        this.ReceiptFind(this.receiptNo);
       }
       else {
         if (res.code === 400) {
@@ -1312,33 +1296,33 @@ export class PoReceiptFormComponent implements OnInit {
   poAllFind(segment1: any) {
     // alert(this.segment1);
     // this.poNumber=this.poNumber;
-    if (Number(sessionStorage.getItem('deptId')) !=4){
-    this.service.poAllRecFind(segment1, (sessionStorage.getItem('locId'))).subscribe((res: any) => {
-      if (res.code === 200) {
-        this.poAllRecFind = res.obj;
-        console.log(this.poAllRecFind);
-        // alert(res.message);
-      } else {
-        if (res.code === 400) {
-          alert(res.message);
+    if (Number(sessionStorage.getItem('deptId')) != 4) {
+      this.service.poAllRecFind(segment1, (sessionStorage.getItem('locId'))).subscribe((res: any) => {
+        if (res.code === 200) {
+          this.poAllRecFind = res.obj;
+          console.log(this.poAllRecFind);
+          // alert(res.message);
+        } else {
+          if (res.code === 400) {
+            alert(res.message);
+          }
         }
-      }
-    });
-  }
-  else  if (Number(sessionStorage.getItem('deptId')) ==4){
-    // alert(this.accountLocId)
-    this.service.poAllRecFind(segment1,this.accountLocId).subscribe((res: any) => {
-      if (res.code === 200) {
-        this.poAllRecFind = res.obj;
-        console.log(this.poAllRecFind);
-        // alert(res.message);
-      } else {
-        if (res.code === 400) {
-          alert(res.message);
+      });
+    }
+    else if (Number(sessionStorage.getItem('deptId')) == 4) {
+      // alert(this.accountLocId)
+      this.service.poAllRecFind(segment1, this.accountLocId).subscribe((res: any) => {
+        if (res.code === 200) {
+          this.poAllRecFind = res.obj;
+          console.log(this.poAllRecFind);
+          // alert(res.message);
+        } else {
+          if (res.code === 400) {
+            alert(res.message);
+          }
         }
-      }
-    });
-  }
+      });
+    }
   }
 
 
@@ -1355,156 +1339,91 @@ export class PoReceiptFormComponent implements OnInit {
   }
 
 
-  keytab(event, maxLength,nxtEle)
-  {
-  
-    if(event.target.value.length===maxLength )
-    {
+  keytab(event, maxLength, nxtEle) {
+
+    if (event.target.value.length === maxLength) {
       // alert('Focus'+nxtEle);
-      if(nxtEle==='input2')
-      {
-     event.target.value = event.target.value.toUpperCase();
-      this.input2.nativeElement.focus();
-      }
-      if(nxtEle==='input3')
-      {
+      if (nxtEle === 'input2') {
         event.target.value = event.target.value.toUpperCase();
-      this.input3.nativeElement.focus();
+        this.input2.nativeElement.focus();
       }
-      if(nxtEle==='input4')
-      {
+      if (nxtEle === 'input3') {
         event.target.value = event.target.value.toUpperCase();
-      this.input4.nativeElement.focus();
+        this.input3.nativeElement.focus();
       }
-      if(nxtEle==='input5')
-      {
+      if (nxtEle === 'input4') {
         event.target.value = event.target.value.toUpperCase();
-      this.input5.nativeElement.focus();
-      (document.getElementById('btnok') as HTMLInputElement).disabled = false;
+        this.input4.nativeElement.focus();
       }
-      if(nxtEle==='input6')
-      {
+      if (nxtEle === 'input5') {
         event.target.value = event.target.value.toUpperCase();
-      this.input6.nativeElement.focus();
+        this.input5.nativeElement.focus();
+        (document.getElementById('btnok') as HTMLInputElement).disabled = false;
+      }
+      if (nxtEle === 'input6') {
+        event.target.value = event.target.value.toUpperCase();
+        this.input6.nativeElement.focus();
       }
     }
-    
+
 
   }
 
-   message: string = "Please Fix the Errors !";
-    msgType:string ="Close";
-    getMessage(msgType: string) {
-      this.msgType = msgType;
-      if (msgType.includes("Save")) {
-        this.submitted = true;
-        (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
-        if (this.poReceiptForm.invalid) {
-          //this.submitted = false;
-          (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '');
-            alert('saving PO - Validator error');
-          return;
-        }
-        this.message = "Do you want to SAVE the changes(Yes/No)?"
-        
-      }
-  
-      if (msgType.includes("Reset")) {
-        this.message = "Do you want to Reset the changes(Yes/No)?"
-      }
-      
-      if (msgType.includes("Close")) {
-        this.message = "Do you want to Close the Form(Yes/No)?"
-      }
-      if (msgType.includes("poInvoiceCreation")) {
-          this.message = "Do you want to Create PO AP Invoice(Yes/No)?"
-        }
+  message: string = "Please Fix the Errors !";
+  msgType: string = "Close";
+  getMessage(msgType: string) {
+    this.msgType = msgType;
+    if (msgType.includes("Save")) {
+      this.submitted = true;
+      (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
+      if (this.poReceiptForm.invalid) {
+        //this.submitted = false;
+        (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '');
+        alert('saving PO - Validator error');
+        return;
+      }
+      this.message = "Do you want to SAVE the changes(Yes/No)?"
 
-      return;
-    }
-  
-   executeAction() {
-      if(this.msgType.includes("Save")) {
+    }
+
+    if (msgType.includes("Reset")) {
+      this.message = "Do you want to Reset the changes(Yes/No)?"
+    }
+
+    if (msgType.includes("Close")) {
+      this.message = "Do you want to Close the Form(Yes/No)?"
+    }
+    if (msgType.includes("poInvoiceCreation")) {
+      this.message = "Do you want to Create PO AP Invoice(Yes/No)?"
+    }
+
+    return;
+  }
+
+  executeAction() {
+    if (this.msgType.includes("Save")) {
       alert('saving PO');
-        this.poSave();  
-      }
-  
-      if (this.msgType.includes("Reset")) {
-        window.location.reload();
-      }
-      
-      if (this.msgType.includes("Close")) {
-       this.close();
-      }
-
-      if (this.msgType.includes("poInvoiceCreation")) {
-        alert('PO Invoice creation');
-        this.poInvoiceCreation(this.segment1);
-      }
-      return;
-    }
-
-  glReceiptFind(receiptNo){
-
-    this.service.getsearchByGlReceiptNo(receiptNo).subscribe(
-      data => {    
-    if (data.code === 200) {
-      this.lstcompolines = data.obj;
-      // alert(data.obj.receiptNo);
-      if (data.obj.shipmentNumber != null){
-        // alert(data.obj.shipmentNo);
-        this.isVisible=false;
-      }
-      else{
-        this.isVisible=true;
-      }
-      var recDate1 = (data.obj.recDate,'dd-MM-yyyy');
-      this.poReceiptForm.patchValue(({recDate: (data.obj.recDate,'dd-MM-yyyy')}));
-      let control = this.poReceiptForm.get('poLines') as FormArray;
-      for (var i = 0; i < this.lstcompolines.rcvLines.length; i++) {
-        var poLines: FormGroup = this.lineDetailsGroup();
-        control.push(poLines);
-      }
-      if (data.obj.poInvNum != null){
-        this.isVisible=false;
-      }
-      this.disabled = false;
-      this.disabledLine = false;
-      this.disabledViewAccounting = false;
-      this.poReceiptForm.get('poLines').patchValue(this.lstcompolines.rcvLines);
-      this.poReceiptForm.patchValue(this.lstcompolines);
-      this.locatorDesc = this.lstcompolines.rcvLines[0].locatorDesc;
-      this.recDate = this.lstcompolines.receiptDate;
-      
-      this.poReceiptForm.patchValue({ taxAmt: this.lstcompolines.totalTax });
-      let controlinv1 = this.poReceiptForm.get('poLines') as FormArray;
-      for (let j = 0; j<data.obj.rcvLines.length; j++) {
-        (controlinv1.controls[j]).patchValue({
-          subInventoryId:data.obj.rcvLines[j].subInventoryId})
-        // this.lineDetailsArray[j].patchValue({ subInventoryId: data.obj.rcvLines[j].subInventoryId })
-      }
-      let controlinv = this.poReceiptForm.get('poLines') as FormArray;
-      for (let j = 0; j < data.obj.rcvLines.length; j++) {
-        (controlinv.controls[j]).patchValue({
-          totAmount:data.obj.rcvLines[j].totAmount.toFixed(2),
-          unitPrice:data.obj.rcvLines[j].unitPrice.toFixed(2),
-          baseAmount:data.obj.rcvLines[j].baseAmount.toFixed(2),
-          sgstAmt:data.obj.rcvLines[j].sgstAmt.toFixed(2),
-          cgstAmt:data.obj.rcvLines[j].cgstAmt.toFixed(2),
-          igstAmt:data.obj.rcvLines[j].igstAmt.toFixed(2),
-          taxAmount:data.obj.rcvLines[j].taxAmount.toFixed(2),
-        });
-      }
-
+      this.poSave();
     }
-    else if (data.code === 400) {
-      alert(data.message)
+
+    if (this.msgType.includes("Reset")) {
+      window.location.reload();
     }
-  
-  });
+
+    if (this.msgType.includes("Close")) {
+      this.close();
+    }
+
+    if (this.msgType.includes("poInvoiceCreation")) {
+      alert('PO Invoice creation');
+      this.poInvoiceCreation(this.segment1);
+    }
+    return;
   }
-  
-
 
 }
+
+
+
+
 
