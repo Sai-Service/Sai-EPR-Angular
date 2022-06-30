@@ -708,13 +708,15 @@ else{
       var patch = this.paymentForm.get('obj') as FormArray;
       var invAmt=arrcon[k].invoiceAmt;
       var unAmt=arrcon[k].unPaidAmt;
+      
       // alert(arrobj[this.selectPayment].invTypeLookupCode+'----this.selectPayment---'+this.selectPayment)
       if(arrobj[this.selectPayment].invTypeLookupCode==='Prepayment' && arrobj[this.selectPayment].docNo===null)
       {
         
       }
     else{
-      if(invAmt>unAmt){
+      alert(invAmt+'--'+unAmt);
+      if(invAmt>unAmt && unAmt<0){
         alert('Can not enter amount more than unpaid ammount')
         patch.controls[k].patchValue({'invoiceAmt':''});
         return;
@@ -982,6 +984,10 @@ console.log(jsonData);
             }
             else{
               this.displayselButton[j] = true;   
+            }
+            if(this.paymentDocdata[j].statusLookupCode==='CLEARED' && this.paymentDocdata[j].invTypeLookupCode==='Prepayment')
+            {
+              this.displayselButton[j] = true; 
             }
           }
             this.paymentForm.get('obj1').patchValue(this.paymentDocdata);

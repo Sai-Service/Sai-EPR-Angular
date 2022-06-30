@@ -1,0 +1,42 @@
+<form [formGroup]="VehBookUploadForm" (ngSubmit)="VehBookUpload(VehBookUploadForm.value)">
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <td class="PageHeader">
+                Vehicle&nbsp;Booking&nbsp;Upload&nbsp;
+            </td>
+        </tr>
+        </table>
+   
+        <table style="width: 50%;" class="center">
+            <tr>
+                <td class="LabelFontStyle">
+                    &nbsp;&nbsp;Select&nbsp;CSV&nbsp;:&nbsp;
+                </td>
+                <td colspan="3">
+                    <input class="form-control" type="file" #fileInput  accept=".csv" formControlName="files"[(ngModel)]="files" style="vertical-align: middle;margin-top: 22px;width: 350px;">&nbsp;&nbsp;  
+                </td>
+                <td>
+                    <button  class="btn btn-primary" (click)="uploadFile($event)" style="width: 100%;font-size: 11px;">Upload</button>    
+                </td>
+             
+            </tr>
+            <tr>
+              <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">&nbsp;{{dataDisplay }}&nbsp; </td>
+            </tr>
+            </table>
+         
+        
+            <table class="center">
+                <tr>
+                    <td>
+                        <button type="submit" class="btn btn-primary" id="register" (click)="refresh()">
+                            Clear
+                        </button>
+                    </td>
+                    <td>
+                        <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
+                    </td>
+                </tr>
+            </table>
+</form>
+

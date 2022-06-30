@@ -111,7 +111,8 @@ export class PoReceiptFormComponent implements OnInit {
   disabledLine = true;
   disabledViewAccounting = true;
   DisplayqtyReceived = true;
-  displaylocatorDesc: Array<boolean> = [];;
+  displaylocatorDesc: Array<boolean> = [];sub3: any;
+;
   // recDate=new Date();
   pipe = new DatePipe('en-US');
   now = Date.now();
@@ -224,7 +225,7 @@ export class PoReceiptFormComponent implements OnInit {
   }
   // recDate=this.pipe.transform(this.recDate,'dd-MM-yyyy');
 
-  constructor(private fb: FormBuilder, private location: Location, private router: Router, private service: MasterService, private router1: ActivatedRoute) {
+  constructor(private fb: FormBuilder, private location: Location, private router: Router, private service: MasterService, private router1: ActivatedRoute,private router3: ActivatedRoute) {
     this.poReceiptForm = fb.group({
       ouName: [''],
       accountLocId: [''],
@@ -431,6 +432,7 @@ export class PoReceiptFormComponent implements OnInit {
 
 
     this.sub = this.router1.params.subscribe(params => {
+      alert( params['segment1']);
       this.segment1 = params['segment1'];
       var locId = params['accountLocId'];
       this.accountLocId = params['accountLocId'];
@@ -537,6 +539,14 @@ export class PoReceiptFormComponent implements OnInit {
     });
 
 
+    this.sub3 = this.router3.params.subscribe(params => {
+      var recNo = this.router3.snapshot.queryParamMap.get('trxNum');
+      var categ = (this.router3.snapshot.queryParamMap.get('catg'));
+      if ( recNo != undefined){
+        // this.glReceiptFind(recNo);
+        }
+      
+      });
   }
 
   currentDate = new Date();

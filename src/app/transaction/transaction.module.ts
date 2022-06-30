@@ -46,6 +46,7 @@ import { DeadStockComponent } from './dead-stock/dead-stock.component';
 import { PoInvListComponent } from './po-inv-list/po-inv-list.component';
 import { GlTrialBalanceComponent } from './gl-trial-balance/gl-trial-balance.component';
 import { JvUploadComponent } from './jv-upload/jv-upload.component';
+import { VehicleBookingUploadComponent } from './vehicle-booking-upload/vehicle-booking-upload.component';
 
 
 // import { ShippingNetworkComponent } from './shipping-network/shipping-network.component';
@@ -102,6 +103,7 @@ import { JvUploadComponent } from './jv-upload/jv-upload.component';
     PoInvListComponent,
     GlTrialBalanceComponent,
     JvUploadComponent,
+    VehicleBookingUploadComponent,
  
   
     // ShippingNetworkComponent,
