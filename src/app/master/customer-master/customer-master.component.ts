@@ -1177,6 +1177,8 @@ export class CustomerMasterComponent implements OnInit {
       );
   }
 
+  
+
   searchByAccount1(accountNo) {
     this.displayNewButton = false;
     this.service.searchCustomerByAccount(accountNo)

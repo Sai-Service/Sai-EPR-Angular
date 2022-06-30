@@ -121,7 +121,13 @@
                                     <ng-template #custSearch201>
                                         <td style="width: 12%" class="LabelFontStyle">Phone&nbsp;No:&nbsp;</td>
                                         <td><input class="form-control" formControlName="mobile1" [(ngModel)]='mobile1'  value={{mobile1}}  style="width: 150px;"> </td>
-                                        <td style="background-color: #FFE4B5;"><button type="button" class="btn-primary" (click)="SearchByCustPhone(mobile1)"><i class="fa fa-search" aria-hidden="true"></i></button> </td>
+                                        <td style="background-color: #FFE4B5;">
+                                        <!-- <button type="button" class="btn-primary" (click)="SearchByCustPhone(mobile1)"><i class="fa fa-search" aria-hidden="true"></i></button> </td> -->
+
+                                        <button type="button" class="btn btn-primary" (click)="searchByContact(mobile1)"
+                                        data-toggle="modal" data-target="#contactNoSearchModel" style="width: 2rem;color: white;">
+                                        <i class="fa fa-search"></i> </button>
+                               
                                     
                                         <td style="width: 12%" class="LabelFontStyle">Cust&nbsp;No:&nbsp;</td>
                                         <td><input class="form-control" formControlName="custAccountNo" [(ngModel)]='custAccountNo'  value={{custAccountNo}} style="width: 150px;"> </td>
@@ -888,8 +894,11 @@
                                                 value={{mobile1}} >
                                         </td>
                                         <td style="background-color: #FFE4B5;">
-                                            <button type="button" class="btn-primary" (click)="SearchByCustPhone(mobile1)"><i class="fa fa-search"
-                                                    aria-hidden="true"></i></button>
+                                        <!-- <button type="button" class="btn-primary" (click)="SearchByCustPhone(mobile1)"><i class="fa fa-search"  aria-hidden="true"></i></button> -->
+                                        <button type="button" class="btn btn-primary" (click)="searchByContact(mobile1)"
+                                        data-toggle="modal" data-target="#contactNoSearchModel" style="width: 2rem;color: white;">
+                                        <i class="fa fa-search"></i> </button>
+
                                         </td>
                                         <td style="width: 12%" class="LabelFontStyle">Customer&nbsp;No:&nbsp;</td>
                             
@@ -1404,7 +1413,71 @@
                                     
                                 </tr>
                             </table>
-                            <!-- ==================================================== -->
+                            <!-- ================================SEARCH BY CONTACT NO ==================== -->
+
+                            <div class="modal fade" id="contactNoSearchModel" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-xl" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Additional&nbsp;Details</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <table>
+                                            <tr>
+                                                <table class="GridFont" id="excel-table" cellspacing="0"
+                                                    cellpadding="4">
+                                                    <tbody>
+                                                        <tr class="GridHeader">
+                                                            <th scope="col">Customer No</th>
+                                                            <th scope="col">Customer Name</th>
+                                                            <th scope="col">Address1</th>
+                                                            <th scope="col">Address2</th>
+                                                            <th scope="col">Address3</th>
+                                                            <th scope="col">Location</th>
+                                                            <th scope="col">City</th>
+                                                            <th scope="col">Pin Code</th>
+                                                            <th scope="col">State</th>
+                                                            <th scope="col">Mobile1</th>
+                                                            <th scope="col">Mobile2</th>
+                                                            <th scope="col">Email ID1</th>
+                                                            <th scope="col">Email ID2</th>
+                                                            <th scope="col">Select</th>
+                                                        </tr>
+                                                        <tr *ngFor="let com of accountNoSearchdata" class="ItemStyle"
+                                                            style="text-decoration:none;">
+                                                            <td style="width: 195px;">{{com.custAccountNo}}</td>
+                                                            <td style="width: 195px;">{{com.custName}}</td>
+                                                            <td style="width: 195px;">{{com.address1}}</td>
+                                                            <td style="width: 195px;">{{com.address2}}</td>
+                                                            <td style="width: 195px;">{{com.address3}}</td>
+                                                            <td style="width: 195px;">{{com.address4}}</td>
+                                                            <td style="width: 195px;">{{com.city}}</td>
+                                                            <td style="width: 195px;">{{com.pinCd}}</td>
+                                                            <td style="width: 195px;">{{com.state}}</td>
+                                                            <td style="width: 195px;">{{com.mobile1}}</td>
+                                                            <td style="width: 195px;">{{com.mobile2}}</td>
+                                                            <td style="width: 195px;">{{com.emailId}}</td>
+                                                            <td style="width: 195px;">{{com.emailId1}}</td>
+                                                            <td><button class="btn-info"
+                                                                    (click)="SearchByCustNo(com.custAccountNo)" style="width:fit-content ;"
+                                                                    data-dismiss="modal">Select</button></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-info" style="width:fit-content"
+                                            data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
 
 
