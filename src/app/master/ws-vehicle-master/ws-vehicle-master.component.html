@@ -917,10 +917,14 @@
                                                 value={{custName}} style="text-transform:uppercase;">
                                         </td>
         
-                                        <td>
+                                        <!-- <td>
                                             <button type="button" class="btn-primary" (click)="SearchByCustName(custName)"><i class="fa fa-search"
                                                     aria-hidden="true"></i></button>
-                                        </td>
+                                        </td> -->
+
+                                        <button type="button" class="btn btn-primary" (click)="custNameSearch(custName)"
+                                        data-toggle="modal" data-target="#customerNameSearchModel" style="width: 2rem;color: white;">
+                                        <i class="fa fa-search"></i> </button>
                                                        
                                       </tr>
                                   </table>
@@ -1420,7 +1424,7 @@
                             <div class="modal-dialog modal-xl" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Additional&nbsp;Details</h5>
+                                        <h5 class="modal-title" id="exampleModalLabel">Customer&nbsp;Details</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -1478,7 +1482,57 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- ----------------------------------customer name search modla------------------------------------ -->
 
+                        <div class="modal fade" id="customerNameSearchModel" tabindex="-1" role="dialog"
+                        aria-labelledby="customerNameSearchModel" aria-hidden="true">
+                        <div class="modal-dialog modal-xl" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="customerNameSearchModel">Customer&nbsp;Details</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <table>
+                                        <tr>
+                                            <table class="GridFont" id="excel-table" cellspacing="0"
+                                                cellpadding="4">
+                                                <tbody>
+                                                    <tr class="GridHeader">
+                                                        <th scope="col">Customer No</th>
+                                                        <th scope="col">Customer Name</th>
+                                                        <th scope="col">Address</th>
+                                                        <th scope="col">GST No</th>
+                                                        <th scope="col">Pan No</th>
+                                                        <th scope="col">Mobile</th>
+                                                        <th scope="col">Select</th>
+                                                    </tr>
+                                                    <tr *ngFor="let com of customerNameSearch" class="ItemStyle"
+                                                        style="text-decoration:none;">
+                                                        <td style="width: 195px;">{{com.accountNo}}</td>
+                                                        <td style="width: 195px;">{{com.custName}}</td>
+                                                        <td style="width: 195px;">{{com.billToAddress}}</td>
+                                                        <td style="width: 195px;">{{com.gstNo}}</td>
+                                                        <td style="width: 195px;">{{com.panNo}}</td>
+                                                        <td style="width: 195px;">{{com.mobile1}}</td>
+                                                        <td><button class="btn-info"
+                                                                (click)="SearchByCustNo(com.accountNo)" style="width:fit-content ;"
+                                                                data-dismiss="modal">Select</button></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-info" style="width:fit-content ;"
+                                        data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
 
 

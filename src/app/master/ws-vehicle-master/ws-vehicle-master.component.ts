@@ -8,8 +8,8 @@ import { NgForm } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { InteractionModeRegistry } from 'chart.js';
 import { now } from 'jquery';
-import { OrderManagementService } from 'src/app/order-management/order-management.service';
 import { ServiceService } from 'src/app/service/service.service';
+import { OrderManagementService } from 'src/app/order-management/order-management.service';
 
 interface IWsVehicleMaster {
   regNo: string;
@@ -82,6 +82,7 @@ export class WsVehicleMasterComponent implements OnInit {
   dealerCodeList:any;
   mainModelList:any;
   accountNoSearchdata: any;
+  customerNameSearch: any[];
 
   pipe = new DatePipe('en-US');
   public minDate = new Date()  ;
@@ -287,7 +288,7 @@ export class WsVehicleMasterComponent implements OnInit {
 
   wsVehicleMaster(wsVehicleMasterForm: any) { }
 
-  constructor(private service: MasterService,private serviceService: ServiceService, private fb: FormBuilder, private router: Router) {
+  constructor(private service: MasterService,private serviceService: ServiceService,private orderManagementService: OrderManagementService, private fb: FormBuilder, private router: Router) {
     this.wsVehicleMasterForm = fb.group({
 
       loginArray: [''],
@@ -977,6 +978,25 @@ export class WsVehicleMasterComponent implements OnInit {
           console.log(this.lstcomments);
           this.wsVehicleMasterForm.patchValue({ custAccountNo: data.obj.custAccountNo })
          
+        }
+      );
+  }
+
+  custNameSearch(custName) {
+    // alert(custName)
+    this.orderManagementService.custNameSearchFn1(custName, sessionStorage.getItem('divisionId'))
+      .subscribe(
+        data => {
+          if (data.code === 200) {
+            this.customerNameSearch = data.obj;
+            // console.log(this.accountNoSearch);
+          }
+          else {
+            if (data.code === 400) {
+              alert(data.message);
+              // this.display='block';
+            }
+          }
         }
       );
   }
