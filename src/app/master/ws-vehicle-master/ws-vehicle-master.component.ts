@@ -81,6 +81,7 @@ export class WsVehicleMasterComponent implements OnInit {
   // public dealerCodeList :Array<string>=[];
   dealerCodeList:any;
   mainModelList:any;
+  accountNoSearchdata: any;
 
   pipe = new DatePipe('en-US');
   public minDate = new Date()  ;
@@ -966,6 +967,20 @@ export class WsVehicleMasterComponent implements OnInit {
       );
   }
 
+  searchByContact(contactNo) {
+
+    // this.displayNewButton = false;
+    this.service.searchCustomerByContact(contactNo)
+      .subscribe(
+        data => {
+          this.accountNoSearchdata = data.obj;
+          console.log(this.lstcomments);
+          this.wsVehicleMasterForm.patchValue({ custAccountNo: data.obj.custAccountNo })
+         
+        }
+      );
+  }
+
   SearchByCustPhone(contactNo) {
     // alert("Search by Cust Phone..... wip :" + contactNo);
     this.service.searchCustomerByContact(contactNo)
@@ -1574,5 +1589,9 @@ export class WsVehicleMasterComponent implements OnInit {
   jobCardForm(){
     this.router.navigate(['/admin/service/JobCard']);
   }
+
+
+ 
+
 
 }
