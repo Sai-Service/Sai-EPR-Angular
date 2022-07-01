@@ -525,8 +525,9 @@ closeMast() {
                 this.amcEnrollmentForm.disable();
               } else {
                 if (res.code === 400) {
-                  alert('ERROR WHILE INSERTING');
+                  alert("Error....\n"+ res.message+"."+res.obj);
                   // this.amcSchemeMasterForm.reset();
+                  this.displayButton=true;
                 }
               }
             });

@@ -83,6 +83,7 @@ public statusList:Array<string>=[];
      segment4:['',[Validators.required]],
      segment5:['',[Validators.required]],
      accountType:['',[Validators.required]],
+
      detailPostingAllowedFlag:['',[Validators.required]],
      startDate:['',[Validators.required]],
      endDate:['',[Validators.nullValidator]],
@@ -90,39 +91,39 @@ public statusList:Array<string>=[];
      lookupValueDesc:['',[Validators.required]],
      codeCombinationId:[],
      lookupValueDesc4:[],
-lookupValueDesc1:[],
-lookupValueDesc2:[],
-lookupValueDesc3:[],
-lookupValueDesc5:[],
+      lookupValueDesc1:[],
+      lookupValueDesc2:[],
+      lookupValueDesc3:[],
+      lookupValueDesc5:[],
      status:['',[Validators.required]]
    });
    }
 
   ngOnInit(): void {
+
     this.service.branchlist().subscribe(
       data=>{
         this.branchList=data;
-      
-      }
-          );
-          this.service.locationlist().subscribe(
-            data=>{
-              this.locationList=data;
-            }
-          );
+      });
+
+      this.service.locationlist().subscribe(
+        data=>{
+          this.locationList=data;
+        });
+
      this.service.costcentre().subscribe(
        data=>{this.costCentre=data;
-      }
-     );     
+      });     
+      
     this.service.naturalaccount().subscribe(
       data=>{
         this.naturalAccount=data;
-      }
-    );
+      });
+
     this.service.interbranch().subscribe(
       data=>{this.interBranch=data;
-      }
-    );
+      });
+
     this.status ="Active"; 
     this.service.statusList().subscribe(
       data=>{this.statusList=data;
@@ -145,6 +146,7 @@ lookupValueDesc5:[],
       }
     );
   }
+
   postingAllowedEvent(e){
     if(e.target.checked){
       this.detailPostingAllowedFlag='Y'
@@ -179,19 +181,19 @@ lookupValueDesc5:[],
   {
     // alert(segment);
     // var InterBranch1=this.GlCodeCombinaionForm.get('segment1').value;
-     this.service.getInterBranch(segment, lType).subscribe(
-           data=>{this.branch=data;
-             console.log(this.branch);
+    this.service.getInterBranch(segment, lType).subscribe(
+    data=>{this.branch=data;
+    console.log(this.branch);
     if (this.branch != null) {
     //          this.GlCodeCombinaionForm.patchValue(this.branch);
     
 
     
     if(lType==='SS_Interbranch'){
-       this.lookupValueDesc5  =this.branch.lookupValueDesc;
+    this.lookupValueDesc5=this.branch.lookupValueDesc;
     }
      if(lType==='NaturalAccount'){      
-        this.lookupValueDesc4  =this.branch.lookupValueDesc;
+      this.lookupValueDesc4=this.branch.lookupValueDesc;
       //  this.accountType=this.branch.naturalAccount.accountType;
     //   // this.GlCodeCombinaionForm.patchValue(this.branch);
       //  this.accountType=this.branch.accountType;
@@ -199,20 +201,18 @@ lookupValueDesc5:[],
       
      }
     if(lType==='CostCentre'){
-      this.lookupValueDesc3  =this.branch.lookupValueDesc;
+      this.lookupValueDesc3=this.branch.lookupValueDesc;
     }
     if(lType==='SS_Location'){
-      this.lookupValueDesc2  =this.branch.lookupValueDesc;
+      this.lookupValueDesc2=this.branch.lookupValueDesc;
     }
     if(lType==='SS_Branch'){
       this.lookupValueDesc1 =this.branch.lookupValueDesc;
     }
   }
-   
-        }
-    ); 
-
+   }); 
    }
+
        
   onOptionsSelectedNatural(event:any)
   {

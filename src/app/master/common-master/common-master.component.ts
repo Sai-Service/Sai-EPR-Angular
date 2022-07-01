@@ -199,7 +199,7 @@ export class CommonMasterComponent implements OnInit {
         
       } else {
         if (res.code === 400) {
-          alert('ERROR : RECORD NO SAVED ' + res.message);
+          alert('ERROR : RECORD NOT SAVED.' + res.message);
           this.saveButton=true;
         }
       }
@@ -253,8 +253,7 @@ export class CommonMasterComponent implements OnInit {
   searchCmnMst(){
 
     var searchText=this.commonMasterForm.get('cmnType').value;
-       
-      this.service.getCommonLookupSearchNew(searchText,sessionStorage.getItem('divisionId'))
+    this.service.getCommonLookupSearchNew(searchText,sessionStorage.getItem('divisionId'))
     .subscribe(
       data => {
         this.lstcomments = data;

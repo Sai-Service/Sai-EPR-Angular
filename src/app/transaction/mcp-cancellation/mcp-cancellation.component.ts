@@ -12,17 +12,20 @@ import { OrderManagementService } from 'src/app/order-management/order-managemen
 
 interface IMcpCancel {   
   enrollmentNo :string;
-   refundAmt:number;
-   netRefAmt
-   cancelRsnId:number;
+  refundAmt:number;
+  netRefAmt:number;
+  cancelRsnId:number;
   // cancRemarksId:string;
   cancelRemarks:string;
   refundApprovedBy:string;
   refundIncludeGst:string;
+  segmentName:string;
+  segment1:string;
+  segment2:string;
+  segment3:string;
+  segment4:string;
+  segment5:string;
   
-
-
-
 }
 
 @Component({
@@ -44,6 +47,13 @@ export class McpCancellationComponent implements OnInit {
   public mcpReasonList      :Array<string>  = [];
   public mcpRemarkList      :Array<string>  = [];
   
+
+public branchList:Array<string>=[];
+public locationList:Array<string>=[];
+public costCentre:Array<string>=[];
+public naturalAccount:Array<string>=[];
+public interBranch:any[];
+public statusList:Array<string>=[];
   
   getVehRegDetails:any;
   getVehVinDetails:any;
@@ -53,6 +63,8 @@ export class McpCancellationComponent implements OnInit {
   CustomerSiteDetails:any;
   vehicleItemDetails:any;
   getPkgDetails:any[];
+  naturalaccount :any;
+
 
         loginName:string;
         loginArray:string;
@@ -194,6 +206,20 @@ export class McpCancellationComponent implements OnInit {
           showCancelButton=false;
          
           //////////////////////////////////
+
+          segmentName:string;
+          segment1:string;
+          segment2:string;
+          segment3:string;
+          segment4:string;
+          segment5:string;
+          lookupValueDesc4:string;
+          lookupValueDesc1:string;
+          lookupValueDesc2:string;
+          lookupValueDesc3:string;
+          lookupValueDesc5:string;
+          accountType:string;
+          branch:any;
   
 
   get f() { return this.mcpCancellationForm.controls; }
@@ -318,6 +344,22 @@ export class McpCancellationComponent implements OnInit {
             refundApprovedBy:[],
 
 
+
+            segmentName:['',[Validators.required]],
+            segment1:['',[Validators.required]],
+            segment2:['',[Validators.required]],
+            segment3:['',[Validators.required]],
+            segment4:['',[Validators.required]],
+            segment5:['',[Validators.required]],
+                  
+            lookupValueDesc1:[],
+            lookupValueDesc2:[],
+            lookupValueDesc3:[],
+            lookupValueDesc4:[],
+            lookupValueDesc5:[],
+            accountType:['',[Validators.required]],
+
+
             enqDtls: this.fb.array([this.invLineDetails()]),
 
           });
@@ -402,6 +444,30 @@ export class McpCancellationComponent implements OnInit {
                 console.log(this.mcpRemarkList);
               }
             );
+
+
+            this.service.branchlist().subscribe(
+              data=>{
+                this.branchList=data;
+              });
+        
+              this.service.locationlist().subscribe(
+                data=>{
+                  this.locationList=data;
+                });
+        
+             this.service.costcentre().subscribe(
+               data=>{this.costCentre=data;
+              });     
+              
+            this.service.naturalaccount().subscribe(
+              data=>{
+                this.naturalAccount=data;
+              });
+        
+            this.service.interbranch().subscribe(
+              data=>{this.interBranch=data;
+              });
 
             
 
@@ -588,7 +654,7 @@ export class McpCancellationComponent implements OnInit {
         delete val.divisionId;
         delete val.locId;
         delete val.locName;
-        delete val.ouId;
+        // delete val.ouId;
         delete val.deptId;
         delete val.orgId;
 
@@ -610,18 +676,19 @@ export class McpCancellationComponent implements OnInit {
         // alert("Cancel Mcp...wip");
        
         this.CheckDataValidations();
+
+        return
       
         if (this.checkValidation) {
           alert("Data Validation Sucessfull....\nPosting Cancellation details.")
           this.displayButton=false;
           const formValue: IMcpCancel =this.transeData(this.mcpCancellationForm.value);
           this.showCancelButton=false;
-          
+         
           // this.service.McpCancelUpdate(formValue.enrollmentNo,this.cancRsnId,formValue.netRefAmt,formValue).subscribe((res: any) => {
             this.service.McpCancelUpdate(formValue).subscribe((res: any) => {
           if (res.code === 200) {
-         
-            alert('RECORD UPDATED SUCCESSFUILY');
+              alert('RECORD UPDATED SUCCESSFUILY');
             // window.location.reload();
             this.mcpCancellationForm.disable();
           } else {
@@ -930,8 +997,21 @@ export class McpCancellationComponent implements OnInit {
                        alert ("REFUND AMT: Should not be below Zero");
                        return;
                    } 
+
+
+                   if(formValue.segment1===undefined || formValue.segment2===undefined || formValue.segment3===undefined ||formValue.segment4===undefined || formValue.segment5===undefined){
+                    this.checkValidation=false;  
+                    alert ("ACCOUNT CODE : Invalid GL Code combination... Please check");
+                    return;
+                   }
       
-                  
+                   if ( formValue.segmentName===undefined || formValue.segmentName===null || formValue.segmentName.trim()=='' )
+                   {
+                       this.checkValidation=false;  
+                       alert ("ACCOUNT: Should not be null");
+                       return;
+                   } 
+
 
                    
                       if (formValue.cancelRsnId < 0 || formValue.cancelRsnId===undefined || formValue.cancelRsnId===null )
@@ -940,6 +1020,8 @@ export class McpCancellationComponent implements OnInit {
                           alert ("REASON: Should not be null");
                           return;
                       } 
+
+
 
                       // if (formValue.cancelRemarks===undefined || formValue.cancelRemarks===null || formValue.cancelRemarks.trim()==='')
                       // {
@@ -951,6 +1033,58 @@ export class McpCancellationComponent implements OnInit {
                     this.checkValidation=true
       
                 }
+
+                GlCodeCombination(segment1,segment2,segment3,segment4,segment5)
+                {
+                  // alert(segment1);
+                  
+                  const combination=segment1+'.'+segment2+'.'+segment3+'.'+segment4+'.'+segment5;
+                  this.segmentName=combination;
+                  this.service.getnaturalaccount(segment4).subscribe(
+                    data=>{this.naturalaccount=data;
+                      console.log(this.naturalaccount);
+                      this.mcpCancellationForm.patchValue(this.naturalaccount);
+                    this.accountType=this.naturalaccount.accountType;
+                    }
+                  );
+                }
+
+
+                onOptionsSelectedBranch(segment:any, lType:string)
+                {
+                  // alert(segment);
+                  // var InterBranch1=this.GlCodeCombinaionForm.get('segment1').value;
+                  this.service.getInterBranch(segment, lType).subscribe(
+                  data=>{this.branch=data;
+                  console.log(this.branch);
+                  if (this.branch != null) {
+                  //          this.GlCodeCombinaionForm.patchValue(this.branch);
+                  
+              
+                  
+                  if(lType==='SS_Interbranch'){
+                  this.lookupValueDesc5=this.branch.lookupValueDesc;
+                  }
+                   if(lType==='NaturalAccount'){      
+                    this.lookupValueDesc4=this.branch.lookupValueDesc;
+                    //  this.accountType=this.branch.naturalAccount.accountType;
+                  //   // this.GlCodeCombinaionForm.patchValue(this.branch);
+                    //  this.accountType=this.branch.accountType;
+                    
+                    
+                   }
+                  if(lType==='CostCentre'){
+                    this.lookupValueDesc3=this.branch.lookupValueDesc;
+                  }
+                  if(lType==='SS_Location'){
+                    this.lookupValueDesc2=this.branch.lookupValueDesc;
+                  }
+                  if(lType==='SS_Branch'){
+                    this.lookupValueDesc1 =this.branch.lookupValueDesc;
+                  }
+                }
+                 }); 
+                 }
 
                
 
