@@ -44,6 +44,7 @@ interface Ipayment {
   // partyId:number;
   locId:number;
   paymentNo:number
+  payAmount:number;
   
 }
 
@@ -149,7 +150,8 @@ export class PaymentsComponent implements OnInit {
   isarPayment:boolean=false;
   isSelPayment:boolean=true;
   ispayAdvise:boolean=false;
-  public locIdList: Array<string> = [];
+  payAmount:number;
+  public locIdList: any = [];
   locId:number;
 
   constructor(private fb: FormBuilder, private router1: ActivatedRoute,private router2:ActivatedRoute, private transactionService: TransactionService, private location: Location, private service: MasterService, private router: Router) {
@@ -496,7 +498,7 @@ else{
       });
       this.paymentForm.get('obj').patchValue(this.lstinvoiceDetls);
       var paymentLineAmtArray =  this.paymentForm.get('obj') as FormArray;
-      alert(paymentLineAmtArray.length);
+      // alert(paymentLineAmtArray.length);
       for (let k=0; k<paymentLineAmtArray.length;k++){
         paymentLineAmtArray[k].invoiceAmt.disable(); 
       }
@@ -715,7 +717,7 @@ else{
         
       }
     else{
-      alert(invAmt+'--'+unAmt);
+      // alert(invAmt+'--'+unAmt);
       if(invAmt>unAmt && unAmt<0){
         alert('Can not enter amount more than unpaid ammount')
         patch.controls[k].patchValue({'invoiceAmt':''});
@@ -756,6 +758,7 @@ paymentSave(){
   
   var patch=this.paymentForm.get('obj1') as FormArray;
   var arrcon=patch.getRawValue();
+  // alert(arrcon[this.selectPayment].payAmount);
   var invTyp=arrcon[this.selectPayment].invTypeLookupCode;
    this.totAmt=0;
    const obj1=this.paymentForm.get('obj') as FormArray;
@@ -763,18 +766,6 @@ paymentSave(){
   for (var k=0;k<this.payInvoiceLineDtlArray.length;k++)   {
     this.totAmt=this.totAmt+totlCalControls[k].totAmt;
   }
-  const formValue: Ipayment = this.paymentForm.getRawValue();
-  console.log(this.paymentForm.get('emplId').value);
-  var jsonData=this.paymentForm.value.obj1[this.selectPayment];
-console.log(jsonData);
-  if(jsonData.bankAccountNo != undefined){
-  var value=jsonData.bankAccountNo.split('/');
-  jsonData.bankAccountNo= value[this.selectPayment];
-  }
-  jsonData.country ='India';
-  jsonData.currency='INR';
-  jsonData.ouId= this.ouId ;
- jsonData.emplId=Number(sessionStorage.getItem('emplId'));
   // jsonData.statusLookupCode=totlCalControls[0].statusLookupCode;
   // jsonData.bankAccountNum.delete;
   // jsonData.bankAccountId.delete;
@@ -810,13 +801,31 @@ console.log(jsonData);
 
     }
 else{
-  patch.controls[this.selectPayment].patchValue({payAmount:applAmt});}
+  // alert('Hello'+applAmt);
+  patch.controls[this.selectPayment].patchValue({payAmount:applAmt});
+  // alert(arrcon[this.selectPayment].payAmount+'amt');
+}
   }
+
+  const formValue: Ipayment = this.paymentForm.getRawValue();
+  console.log(this.paymentForm.get('emplId').value);
+  var jsonData=this.paymentForm.value.obj1[this.selectPayment];
+console.log(jsonData);
+  if(jsonData.bankAccountNo != undefined){
+  var value=jsonData.bankAccountNo.split('/');
+  jsonData.bankAccountNo= value[this.selectPayment];
+  }
+  jsonData.country ='India';
+  jsonData.currency='INR';
+  jsonData.ouId= this.ouId ;
+ jsonData.emplId=Number(sessionStorage.getItem('emplId'));
+  
 
   jsonData.totAmount = this.totAmount;
   jsonData.appAmt=this.appAmt;
   // alert(this.totAmount);
   jsonData.invPayment=invPayment;
+  // jsonData.payAmount=arrcon[this.selectPayment].payAmount;
   // let paymentObject=Object.assign(new PaymentObj(),jsonData);
   // paymentObject.setInvPayment(this.paymentForm.value.)
 console.log(jsonData);
@@ -935,6 +944,8 @@ console.log(jsonData);
           else{
             this.displayselButton[j] = true;   
           }
+          var selloc=this.locIdList.find(d=>d.locId===this.paymentData[j].locId)
+          this.paymentForm.get('obj1').patchValue({locId:selloc.location})
         }
           this.paymentForm.get('obj1').patchValue(this.paymentData);
           // this.paymentForm.patchValue(this.paymentData);
@@ -985,7 +996,7 @@ console.log(jsonData);
             else{
               this.displayselButton[j] = true;   
             }
-            if(this.paymentDocdata[j].statusLookupCode==='CLEARED' && this.paymentDocdata[j].invTypeLookupCode==='Prepayment')
+            if(this.paymentDocdata[j].statusLookupCode==='UNCLEARED' && this.paymentDocdata[j].invTypeLookupCode==='Prepayment')
             {
               this.displayselButton[j] = true; 
             }
