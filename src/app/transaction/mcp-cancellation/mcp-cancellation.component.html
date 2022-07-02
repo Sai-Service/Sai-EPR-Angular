@@ -660,7 +660,7 @@
 
                                     </ng-template>
                                     <ng-template #Block102>
-                                       <td><button  type="button" class="btn btn-info" (click)="newMast()" >Cancel</button></td>
+                                       <td><button  disabled type="button" class="btn btn-info" (click)="newMast()" >Cancel</button></td>
 
                                        <td><button type="button" class="btn btn-info" (click)="searchMast()">Search</button></td>
             
@@ -841,7 +841,7 @@
                     <td style="width: 30%;" class="LabelFontStyle1">Branch&nbsp;:</td>
                     <td>
                         <select class="form-control"  formControlName="segment1" id="segment1" [(ngModel)]='segment1' value={{segment1}} placeholder="Please enter branch code" (ngModelChange)='onOptionsSelectedBranch($event,"SS_Branch")' style="width: 140px;">
-                            <option> select</option>
+                            <option disabled> select</option>
                             <option *ngFor="let branch of branchList">
                                 {{branch.lookupValue}}
                             </option>
@@ -855,7 +855,7 @@
                     <td style="width: 30%;" class="LabelFontStyle1">Location&nbsp;:</td>
                     <td>
                         <select class="form-control"  formControlName="segment2" id="segment2" [(ngModel)]='segment2' value={{segment2}} placeholder="Please enter Location code" (ngModelChange)='onOptionsSelectedBranch($event,"SS_Location")' style="width: 140px;">
-                            <option> select</option>
+                            <option disabled>select</option>
                             <option *ngFor= "let Location of locationList">
                                 {{Location.lookupValue}}
                             </option>
@@ -869,7 +869,7 @@
                     <td style="width: 30%;" class="LabelFontStyle1">Cost&nbsp;Centre&nbsp;:</td>
                     <td>
                         <select class="form-control"  formControlName="segment3" id="segment3" [(ngModel)]='segment3' value={{segment3}} placeholder="Please enter cost centre code" (ngModelChange)='onOptionsSelectedBranch($event,"CostCentre")' style="width: 140px;">
-                            <option > select</option>
+                            <option disabled> select</option>
                             <option *ngFor="let costcentre of costCentre">
                                 {{costcentre.lookupValue}}
                             </option>
@@ -883,7 +883,7 @@
                     <td style="width: 30%;" class="LabelFontStyle1">Naural&nbsp;Account&nbsp;:</td>
                     <td>
                         <select class="form-control"  formControlName="segment4" id="segment4" [(ngModel)]='segment4' value={{segment4}} (ngModelChange)='onOptionsSelectedBranch($event,"NaturalAccount")' placeholder="Please enter natural account code" style="width: 140px;">
-                            <option> select</option>
+                            <option disabled> select</option>
                             <option *ngFor="let naturalaccount of naturalAccount">
                                 {{naturalaccount.lookupValue}}                                                        
                             </option>
@@ -897,7 +897,7 @@
                     <td style="width: 30%;" class="LabelFontStyle1">Inter&nbsp;Branch&nbsp;:</td>
                     <td>
                         <select class="form-control"  formControlName="segment5" id="segment5" [(ngModel)]='segment5' value={{segment5}} placeholder="Please enter Inter branch code" (ngModelChange)='onOptionsSelectedBranch($event,"SS_Interbranch")' style="width: 140px;">
-                            <option> select</option>
+                            <option disabled> select</option>
                             <option *ngFor="let interbranch of interBranch">
                                 {{interbranch.lookupValue}}
                             </option>

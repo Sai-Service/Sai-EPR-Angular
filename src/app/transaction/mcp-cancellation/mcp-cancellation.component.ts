@@ -677,7 +677,7 @@ public statusList:Array<string>=[];
        
         this.CheckDataValidations();
 
-        return
+        // return
       
         if (this.checkValidation) {
           alert("Data Validation Sucessfull....\nPosting Cancellation details.")
@@ -998,6 +998,13 @@ public statusList:Array<string>=[];
                        return;
                    } 
 
+                   if (formValue.cancelRsnId < 0 || formValue.cancelRsnId===undefined || formValue.cancelRsnId===null )
+                   {
+                       this.checkValidation=false;  
+                       alert ("REASON: Should not be null");
+                       return;
+                   } 
+
 
                    if(formValue.segment1===undefined || formValue.segment2===undefined || formValue.segment3===undefined ||formValue.segment4===undefined || formValue.segment5===undefined){
                     this.checkValidation=false;  
@@ -1014,12 +1021,7 @@ public statusList:Array<string>=[];
 
 
                    
-                      if (formValue.cancelRsnId < 0 || formValue.cancelRsnId===undefined || formValue.cancelRsnId===null )
-                      {
-                          this.checkValidation=false;  
-                          alert ("REASON: Should not be null");
-                          return;
-                      } 
+                    
 
 
 

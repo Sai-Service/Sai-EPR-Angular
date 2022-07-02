@@ -38,9 +38,14 @@
                             </select>
                         </td>
 
-                        <td style="width: 15%;" class="LabelFontStyle">Attribute&nbsp;:&nbsp;</td>
-                        <td> <input formControlName="attribute1" [(ngModel)]='attribute1' value={{attribute1}} class="form-control"  placeholder="Enter Attribute" > </td>
+                        <td style="width: 15%;" class="LabelFontStyle">Code&nbsp;:&nbsp;</td>
+                        <td> <input formControlName="code" [(ngModel)]='code' value={{code}} class="form-control"  placeholder="Enter code" style="background-color: yellow;text-transform: uppercase;" > </td>
+                  
+
+                        <!-- <td style="width: 15%;" class="LabelFontStyle">Attribute&nbsp;:&nbsp;</td>
+                        <td> <input disabled formControlName="attribute1" [(ngModel)]='attribute1' value={{attribute1}} class="form-control"  placeholder="Enter Attribute" > </td> -->
                    
+                        
                     </ng-template>
 
                     <ng-template #saveYes2>  
@@ -55,9 +60,14 @@
                             </select>
                         </td>
 
+                        <td style="width: 15%;" class="LabelFontStyle">Code&nbsp;:&nbsp;</td>
+                        <td> <input disabled formControlName="code" [(ngModel)]='code' value={{code}} class="form-control"  placeholder="Enter code" style="background-color: yellow;text-transform: uppercase;" > </td>
+                   
+<!-- 
                         <td style="width: 15%;" class="LabelFontStyle">Attribute&nbsp;:&nbsp;</td>
                         <td> <input disabled formControlName="attribute1" [(ngModel)]='attribute1' value={{attribute1}} class="form-control"  placeholder="Enter Attribute"  > </td>
-                      </ng-template>
+                       -->
+                    </ng-template>
                 </tr>
 
 
@@ -65,9 +75,7 @@
                     <div *ngIf="displayButton; then upd1; else upd2"></div>
                     <ng-template #upd1>  
                         
-                    <td style="width: 15%;" class="LabelFontStyle">Code&nbsp;:&nbsp;</td>
-                    <td> <input formControlName="code" [(ngModel)]='code' value={{code}} class="form-control"  placeholder="Enter code" style="background-color: yellow;text-transform: uppercase;" > </td>
-              
+                  
                   
                     <td style="width: 15%;" class="LabelFontStyle">Description&nbsp;:&nbsp;</td>
                     <td colspan="3"><input formControlName="codeDesc" [(ngModel)]='codeDesc'  class="form-control" placeholder="Enter code Description" style="width:100%;background-color: yellow;text-transform: uppercase;"></td>
@@ -77,9 +85,7 @@
 
                     <ng-template #upd2>  
                         
-                        <td style="width: 15%;" class="LabelFontStyle">Code&nbsp;:&nbsp;</td>
-                        <td> <input disabled formControlName="code" [(ngModel)]='code' value={{code}} class="form-control"  placeholder="Enter code" style="background-color: yellow;text-transform: uppercase;" > </td>
-                                 
+                                   
                         <td style="width: 15%;" class="LabelFontStyle">Description&nbsp;:&nbsp;</td>
                         <td colspan="3"><input disabled formControlName="codeDesc" [(ngModel)]='codeDesc'  class="form-control" placeholder="Enter code Description" style="width:100%;background-color: yellow;text-transform: uppercase;"></td>
                          
