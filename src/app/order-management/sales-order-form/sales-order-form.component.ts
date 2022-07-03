@@ -2726,8 +2726,11 @@ export class SalesOrderFormComponent implements OnInit {
     if (event.target.value != 'None') {
       this.DisplayfinanceSelectionYes = false;
       this.DisplayfinanceSelectionYes1 = false;
-      this.orderManagementService.finananceList(event.target.value, sessionStorage.getItem('divisionId'))
-        .subscribe(
+     
+      // this.orderManagementService.finananceList(event.target.value, sessionStorage.getItem('divisionId'))
+      // new API -- Changes done by rk 02/07/22
+      this.orderManagementService.finananceListNew(sessionStorage.getItem('divisionId'))
+      .subscribe(
           data => {
             this.financerNameList = data;
             console.log(this.financerNameList);

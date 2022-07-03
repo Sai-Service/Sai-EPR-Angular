@@ -33,6 +33,7 @@ export class OrderManagementService {
   getFinTypeSearch1(): Observable<any> {
     return this.http.get(this.ServerUrl + `/cmnLookup/FinanceType`);
   }
+
   getFinNameSearch(): Observable<any> {
     return this.http.get(this.ServerUrl + `/cmnLookup/FinanceType`);
   }
@@ -453,6 +454,11 @@ export class OrderManagementService {
 
   finananceList(finName, divisionId): Observable<any> {
     return this.http.get(this.ServerUrl + `/cmnLookup/FinanceCmpny?cmnType=FinCmpny&attribute1=${finName}&divisionId=${divisionId}`);
+  }
+
+  finananceListNew(divisionId): Observable<any> {
+    // http://localhost:8081/cmnLookup/Division/Finance/1
+    return this.http.get(this.ServerUrl + `/cmnLookup/Division/Finance/${divisionId}`);
   }
 
   custNameSearchFn(custName, ouId): Observable<any> {
