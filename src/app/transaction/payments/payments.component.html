@@ -154,10 +154,10 @@
                                     </td>
                                     <td>
                                         <select  type="text" class="form-control" formControlName="locId"
-                                        value={{locId}} [(ngModel)]='locId'
+                                        value={{locId}} 
                                         style="width: 100px;height: 25px;font-size: 10px;">
                                         <option>--Select--</option>
-                                        <option *ngFor="let sc of  locIdList" [ngValue]="sc.locId" >
+                                        <option *ngFor="let sc of  locIdList" [value]="sc.locId" >
                                             {{sc.locId}}-{{sc.locCode}}
                                             </option>
                                             </select>

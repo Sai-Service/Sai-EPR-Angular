@@ -795,15 +795,18 @@ paymentSave(){
   {
     this.paymentForm.patchValue({appAmt:arrcon[this.selectPayment].payAmount})
     this.totAmount=arrcon[this.selectPayment].payAmount
+    patch.controls[this.selectPayment].patchValue({payAmount:this.totAmount});
   }
   else{
     if(arrcon[this.selectPayment].invTypeLookupCode==='Prepayment' &&arrcon[this.selectPayment].docNo!=null){
 
     }
 else{
-  // alert('Hello'+applAmt);
+  // debugger;
+  alert('Hello'+applAmt);
   patch.controls[this.selectPayment].patchValue({payAmount:applAmt});
-  // alert(arrcon[this.selectPayment].payAmount+'amt');
+
+  alert(arrcon[this.selectPayment].payAmount+'amt');
 }
   }
 
@@ -826,6 +829,11 @@ console.log(jsonData);
   // alert(this.totAmount);
   jsonData.invPayment=invPayment;
   // jsonData.payAmount=arrcon[this.selectPayment].payAmount;
+  if(arrcon[this.selectPayment].invTypeLookupCode=== null){
+    jsonData.payAmount=this.appAmt;
+  }else{
+ jsonData.payAmount=arrcon[this.selectPayment].payAmount;
+  }
   // let paymentObject=Object.assign(new PaymentObj(),jsonData);
   // paymentObject.setInvPayment(this.paymentForm.value.)
 console.log(jsonData);
@@ -944,10 +952,16 @@ console.log(jsonData);
           else{
             this.displayselButton[j] = true;   
           }
-          var selloc=this.locIdList.find(d=>d.locId===this.paymentData[j].locId)
-          this.paymentForm.get('obj1').patchValue({locId:selloc.location})
+         
         }
           this.paymentForm.get('obj1').patchValue(this.paymentData);
+          var patch=this.paymentForm.get('obj1') as FormArray;
+            
+          for (let k = 0; k < this.payHeaderLineDtlArray().length; k++) {
+          var selloc=this.locIdList.find(d=>d.locId===this.paymentData[k].locId)
+          // debugger;
+          patch.controls[k].patchValue({locId:selloc.locId});
+          }
           // this.paymentForm.patchValue(this.paymentData);
           console.log(this.paymentData);
 
@@ -1000,11 +1014,16 @@ console.log(jsonData);
             {
               this.displayselButton[j] = true; 
             }
+           
           }
             this.paymentForm.get('obj1').patchValue(this.paymentDocdata);
             // this.paymentForm.patchValue(this.paymentData);
             console.log(this.paymentData);
-  
+            for (let k = 0; k < this.payHeaderLineDtlArray().length; k++) {
+              var selloc=this.locIdList.find(d=>d.locId===this.paymentData[k].locId)
+              // debugger;
+              patch.controls[k].patchValue({locId:selloc.locId});
+              }
           } else {
             if (res.code === 400) {
               alert(res.msg);
