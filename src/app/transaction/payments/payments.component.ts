@@ -799,14 +799,20 @@ paymentSave(){
   }
   else{
     if(arrcon[this.selectPayment].invTypeLookupCode==='Prepayment' &&arrcon[this.selectPayment].docNo!=null){
-
+      var appAmt=this.paymentForm.get('appAmt').value;
+      // alert(appAmt+'Amt'+arrcon[this.selectPayment].payAmount)
+      if(appAmt > arrcon[this.selectPayment].payAmount)
+      {
+        alert('Please select proper amount')
+        return;
+      }
     }
 else{
   // debugger;
-  alert('Hello'+applAmt);
+  // alert('Hello'+applAmt);
   patch.controls[this.selectPayment].patchValue({payAmount:applAmt});
 
-  alert(arrcon[this.selectPayment].payAmount+'amt');
+  // alert(arrcon[this.selectPayment].payAmount+'amt');
 }
   }
 
@@ -975,7 +981,7 @@ console.log(jsonData);
   }
 
   searchByPaymentNo(paymentNo){
-    alert('searchPayment----'+paymentNo);
+    // alert('searchPayment----'+paymentNo);
       this.displaysiteName = true;
       this.displaysiteAddress = true;
       this.displayname = true;
@@ -994,7 +1000,7 @@ console.log(jsonData);
               this.payHeaderLineDtlArray().push(payLnGrp1);
               
             }
-            alert(this.payHeaderLineDtlArray().length+'len');
+            // alert(this.payHeaderLineDtlArray().length+'len');
             for (let j = 0; j < this.payHeaderLineDtlArray().length; j++) {
               // debugger;
               var patch=this.paymentForm.get('obj1') as FormArray;
@@ -1002,7 +1008,7 @@ console.log(jsonData);
               patch.controls[j].patchValue(this.paymentDocdata);
               var payDateNew1New = this.pipe.transform(res.obj[j].payDate, 'y-MM-dd');
               this.payDate = payDateNew1New;
-              alert(this.paymentDocdata[j].statusLookupCode)
+              // alert(this.paymentDocdata[j].statusLookupCode)
               // debugger;
               if(this.paymentDocdata[j].statusLookupCode==='CLEARED'){
                 this.displayselButton[j] = false;            

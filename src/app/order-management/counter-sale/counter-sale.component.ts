@@ -1022,7 +1022,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                       this.CounterSaleOrderBookingForm.patchValue({ daysMsg: data.obj.daysMsg });
                       if (this.CounterSaleOrderBookingForm.get('daysMsg').value.includes('Exceeded')) {
                         alert('Credit Days is exceeded.!');
-                        // this.isDisabled10 = true;
+                        this.isDisabled10 = true;
                       }
                       else if (this.allDatastore.totAmt >= data.obj.outStandingAmt) {
                         alert('Credit Amount is exceeded.! ... Credit Amount is' + ' ' + this.allDatastore.crdAmt + ' ' + 'Total Amount is' + ' ' + this.allDatastore.totAmt + '.!')
