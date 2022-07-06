@@ -355,7 +355,6 @@ export class CustomerRelationMasterComponent implements OnInit {
 
               if(this.CustomerEmpMapList !=null) {
                 alert (custAcNo+" - Customer  Already Mapped to this Ticket No.");return; }
-
               else {
 
 

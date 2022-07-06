@@ -8,6 +8,7 @@ import { TransactionService } from 'src/app/transaction/transaction.service';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 import { Location,DatePipe } from "@angular/common";
 import { saveAs } from 'file-saver';
+import { data } from 'jquery';
 // import { SalesOrderobj } from './sales-orderobj';
 
 interface IOrderDetailUpdation {
@@ -53,7 +54,10 @@ export class OrderDetailsUpdationComponent implements OnInit {
   deptId:number; 
   emplId :number;
 
-  orderNumber:number;
+  custPoNumber:string;
+  custPoDate:Date;
+
+  orderNumber:number=222220910400113;
   orderedDate:Date;
   model:string;
   variant:string;
@@ -89,7 +93,7 @@ export class OrderDetailsUpdationComponent implements OnInit {
   pinCd:string;
   title:string;
   contactPerson:string;
-  contactNum:string;
+  mobile1:string;
 
   leadTicketNo:string;
 
@@ -117,6 +121,9 @@ export class OrderDetailsUpdationComponent implements OnInit {
       deptId :[],
       emplId:[''],
       orgId:[''],
+
+      custPoNumber:[],
+      custPoDate:[],
 
       orderNumber:[],
       orderedDate:[],
@@ -146,6 +153,15 @@ export class OrderDetailsUpdationComponent implements OnInit {
 
       accountNo:[],
       custName:[],
+
+      address1:[],
+      address2:[],
+      address3:[],
+      address4:[],
+      city:[],
+      state:[],
+      pinCd:[],
+      mobile1:[],
 
       title:[],
       contactPerson:[],
@@ -248,6 +264,7 @@ export class OrderDetailsUpdationComponent implements OnInit {
     
   financeSelectionYes(event: any) {
     // alert(event.target.value)
+    // alert(event)
     if (event.target.value != 'None') {
       this.DisplayfinanceSelectionYes = true;
       this.DisplayfinanceSelectionYes1 = true;
@@ -301,14 +318,34 @@ export class OrderDetailsUpdationComponent implements OnInit {
 
   serchByOrderNum(orderNumber) {
 
-    this.orderManagementService.getsearchByOrderNo(orderNumber)
+    this.orderManagementService.getsearchByOrderNoToUpdate(orderNumber)
       .subscribe(
         data => {
           this.lstOrderHeader = data.obj;
           console.log(this.lstOrderHeader);
           this.orderDetailsUpdationForm.patchValue(this.lstOrderHeader);
-        });
 
+          if(data.obj.financeType !='None') {
+            var x=data.obj.financeType;
+            this.DisplayfinanceSelectionYes=true;
+
+          this.orderManagementService.finananceList(x, sessionStorage.getItem('divisionId'))
+           .subscribe(
+            data => {
+            this.financerNameList = data;
+            console.log(this.financerNameList);
+          });
+            
+          } else {this.DisplayfinanceSelectionYes=false;}
+
+
+          if(data.obj.exchangeYN ==='Y') {
+            this.Displayexchange = true;
+
+
+          } else {this.Displayexchange = false;}
+        });
+       
       }
 
       resetMast() {
