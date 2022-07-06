@@ -110,6 +110,12 @@
                 </td>
 
             </tr>
+            <tr>
+                <td style="width: 15%" class="LabelFontStyle">Cust&nbsp;PO&nbsp;No:&nbsp;</td>
+                <td> <input  type="text" formControlName="custPoNumber" [(ngModel)]='custPoNumber' class="form-control"></td>
+                <td style="width: 15%" class="LabelFontStyle">Cust&nbsp;PO&nbsp;Date:&nbsp;</td>                
+                <td><input  type="date" formControlName="custPoDate" [(ngModel)]='custPoDate'  class="form-control"> </td>
+            </tr>
             </table>
 
         </fieldset>
@@ -133,7 +139,7 @@
                  <td style="width: 15%" class="LabelFontStyle">Address2&nbsp;:&nbsp;</td>
                 <td><input  type="text" formControlName="address2" value={{address2}} [(ngModel)] ="address2" class="form-control" style="width:300px;"></td>
                 <td style="width: 15%" class="LabelFontStyle">Contact&nbsp;No:&nbsp;</td>
-                <td><input  type="text" formControlName="contactNum" value={{contactNum}} [(ngModel)] ="contactNum" class="form-control" ></td>
+                <td><input  type="text" formControlName="mobile1" value={{mobile1}} [(ngModel)] ="mobile1" class="form-control" ></td>
             
                      
             </tr> 
@@ -190,9 +196,9 @@
                 </select>
                 </td>
                 <td style="width: 15%" class="LabelFontStyle">Finance&nbsp;Amount&nbsp;:&nbsp;</td>
-                <td><input type="text" formControlName="financeAmt" value={{financeAmt}} class="form-control" ></td>
+                <td><input type="number" formControlName="financeAmt" value={{financeAmt}} class="form-control" ></td>
                 <td style="width: 15%" class="LabelFontStyle">EMI&nbsp;:&nbsp;</td>
-                <td><input type="text" formControlName="emi" value={{emi}} class="form-control" ></td>
+                <td><input type="number" formControlName="emi" value={{emi}} class="form-control" ></td>
             </ng-template>
         </tr>
 
@@ -203,9 +209,9 @@
         <tr>
             <td></td><td></td>
             <td style="width: 15%" class="LabelFontStyle">Tenure&nbsp;:&nbsp;</td>
-            <td><input type="text" formControlName="tenure" value={{tenure}} class="form-control" ></td>
+            <td><input type="number" formControlName="tenure" value={{tenure}} class="form-control" ></td>
             <td style="width: 15%" class="LabelFontStyle">Down&nbsp;Payment&nbsp;:&nbsp;</td>
-            <td><input type="text" formControlName="downPayment"   value={{downPayment}} class="form-control" ></td>
+            <td><input type="number" formControlName="downPayment"   value={{downPayment}} class="form-control" ></td>
         </tr>
         </ng-template>
         <tr>
@@ -226,11 +232,11 @@
         </ng-template>
         <ng-template #exYes1>
             <td style="width: 15%" class="LabelFontStyle">Loyalty&nbsp;Bonus&nbsp;:&nbsp;</td>
-            <td><input type="text" formControlName="loyaltyBonus" class="form-control" ></td>
+            <td><input type="number" formControlName="loyaltyBonus" class="form-control" ></td>
             <td style="width: 15%" class="LabelFontStyle">Reg&nbsp;No&nbsp;/Remark&nbsp;:&nbsp;</td>
             <td><input type="text" formControlName="exRegNo" class="form-control" ></td>
             <td style="width: 15%" class="LabelFontStyle">Ins&nbsp;Charges&nbsp;:&nbsp;</td>
-            <td><input type="text" formControlName="insCharges" class="form-control" ></td>
+            <td><input type="number" formControlName="insCharges" class="form-control" ></td>
            
         </ng-template>
         </tr>
