@@ -723,6 +723,8 @@ style="margin-left: 10%;" id="panelstockTransfer">
                     &nbsp;Ship&nbsp;To&nbsp;Location&nbsp;:&nbsp;
                 </td>
                 <td>
+                    <div *ngIf="dispLocation; then dispall; else dispship"></div>
+                            <ng-template #dispall>
                     <select formControlName="tolocCode" id="tolocCode" class="form-control"
                         (ngModelChange)='onOptionsToLocation($event)'>
                         <option>--Select--</option>
@@ -730,6 +732,16 @@ style="margin-left: 10%;" id="panelstockTransfer">
                             {{sc.locCode}}
                         </option>
                     </select>
+                            </ng-template>
+                            <ng-template #dispship>
+                                <select formControlName="tolocCode" id="tolocCode" class="form-control"
+                                    (ngModelChange)='onOptionsToLocation($event)'>
+                                    <option>--Select--</option>
+                                    <option *ngFor="let sc of  BillShipToList" [value]="sc.toLocationId ">
+                                        {{sc.toLocation}}
+                                    </option>
+                                </select>
+                                        </ng-template>
                     <input  disabled hidden type="number" class="form-control" formControlName="tolocId">
                 </td>
             </tr>

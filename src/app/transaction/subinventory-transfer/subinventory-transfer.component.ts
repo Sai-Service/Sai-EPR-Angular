@@ -810,7 +810,7 @@ export class SubinventoryTransferComponent implements OnInit {
             .values(group.controls)
             .forEach((control: FormControl) => {
               control.markAsTouched();
-              alert(control.hasError);
+              // alert(control.hasError);
             });
         });
       } else if (control instanceof FormGroup) {

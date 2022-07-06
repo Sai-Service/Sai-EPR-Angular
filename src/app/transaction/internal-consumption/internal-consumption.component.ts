@@ -180,7 +180,7 @@ export class InternalConsumptionComponent implements OnInit {
   attribute1: number;
   attribute2: Date;
 
-  jobData:any;
+  jobData:any=[];
 
   type1: string;
   dispheader: boolean = false;
@@ -1158,7 +1158,7 @@ searchFromArray(arr, regex) {
 
 
 searchByJobNo(){
-  //  alert(this.JobNo);
+   alert(this.JobNo);
   //  var jobno=(this.InternalConsumptionForm.get('JobNo').value);
   if(this.JobNo==null || this.JobNo==undefined || this.JobNo.trim()=='') {
    alert ("Enter a Valid Job Card No."); return;}
@@ -1166,12 +1166,14 @@ searchByJobNo(){
 
   this.service.getsearchByIC(this.JobNo).subscribe(
     data=>{
-      if (data.code==200){
-         this.jobData=data.obj; 
-        } 
-        else if (data.code==400){
-          alert(data.message)
-        }  
+      // if (data.code==200){
+         this.jobData=data;
+         console.log(this.jobData);
+         
+        // } 
+        // else if (data.code==400){
+        //   alert(data.message)
+        // }  
     }
   )
 }
