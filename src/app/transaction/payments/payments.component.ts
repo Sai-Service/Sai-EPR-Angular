@@ -795,14 +795,23 @@ paymentSave(){
   {
     this.paymentForm.patchValue({appAmt:arrcon[this.selectPayment].payAmount})
     this.totAmount=arrcon[this.selectPayment].payAmount
+    patch.controls[this.selectPayment].patchValue({payAmount:this.totAmount});
   }
   else{
     if(arrcon[this.selectPayment].invTypeLookupCode==='Prepayment' &&arrcon[this.selectPayment].docNo!=null){
-
+      var appAmt=this.paymentForm.get('appAmt').value;
+      // alert(appAmt+'Amt'+arrcon[this.selectPayment].payAmount)
+      if(appAmt > arrcon[this.selectPayment].payAmount)
+      {
+        alert('Please select proper amount')
+        return;
+      }
     }
 else{
+  // debugger;
   // alert('Hello'+applAmt);
   patch.controls[this.selectPayment].patchValue({payAmount:applAmt});
+
   // alert(arrcon[this.selectPayment].payAmount+'amt');
 }
   }
@@ -826,6 +835,11 @@ console.log(jsonData);
   // alert(this.totAmount);
   jsonData.invPayment=invPayment;
   // jsonData.payAmount=arrcon[this.selectPayment].payAmount;
+  if(arrcon[this.selectPayment].invTypeLookupCode=== null){
+    jsonData.payAmount=this.appAmt;
+  }else{
+ jsonData.payAmount=arrcon[this.selectPayment].payAmount;
+  }
   // let paymentObject=Object.assign(new PaymentObj(),jsonData);
   // paymentObject.setInvPayment(this.paymentForm.value.)
 console.log(jsonData);
@@ -944,10 +958,16 @@ console.log(jsonData);
           else{
             this.displayselButton[j] = true;   
           }
-          var selloc=this.locIdList.find(d=>d.locId===this.paymentData[j].locId)
-          this.paymentForm.get('obj1').patchValue({locId:selloc.location})
+         
         }
           this.paymentForm.get('obj1').patchValue(this.paymentData);
+          var patch=this.paymentForm.get('obj1') as FormArray;
+            
+          for (let k = 0; k < this.payHeaderLineDtlArray().length; k++) {
+          var selloc=this.locIdList.find(d=>d.locId===this.paymentData[k].locId)
+          // debugger;
+          patch.controls[k].patchValue({locId:selloc.locId});
+          }
           // this.paymentForm.patchValue(this.paymentData);
           console.log(this.paymentData);
 
@@ -961,7 +981,7 @@ console.log(jsonData);
   }
 
   searchByPaymentNo(paymentNo){
-    alert('searchPayment----'+paymentNo);
+    // alert('searchPayment----'+paymentNo);
       this.displaysiteName = true;
       this.displaysiteAddress = true;
       this.displayname = true;
@@ -980,7 +1000,7 @@ console.log(jsonData);
               this.payHeaderLineDtlArray().push(payLnGrp1);
               
             }
-            alert(this.payHeaderLineDtlArray().length+'len');
+            // alert(this.payHeaderLineDtlArray().length+'len');
             for (let j = 0; j < this.payHeaderLineDtlArray().length; j++) {
               // debugger;
               var patch=this.paymentForm.get('obj1') as FormArray;
@@ -988,7 +1008,7 @@ console.log(jsonData);
               patch.controls[j].patchValue(this.paymentDocdata);
               var payDateNew1New = this.pipe.transform(res.obj[j].payDate, 'y-MM-dd');
               this.payDate = payDateNew1New;
-              alert(this.paymentDocdata[j].statusLookupCode)
+              // alert(this.paymentDocdata[j].statusLookupCode)
               // debugger;
               if(this.paymentDocdata[j].statusLookupCode==='CLEARED'){
                 this.displayselButton[j] = false;            
@@ -1000,11 +1020,16 @@ console.log(jsonData);
             {
               this.displayselButton[j] = true; 
             }
+           
           }
             this.paymentForm.get('obj1').patchValue(this.paymentDocdata);
             // this.paymentForm.patchValue(this.paymentData);
             console.log(this.paymentData);
-  
+            for (let k = 0; k < this.payHeaderLineDtlArray().length; k++) {
+              var selloc=this.locIdList.find(d=>d.locId===this.paymentData[k].locId)
+              // debugger;
+              patch.controls[k].patchValue({locId:selloc.locId});
+              }
           } else {
             if (res.code === 400) {
               alert(res.msg);
