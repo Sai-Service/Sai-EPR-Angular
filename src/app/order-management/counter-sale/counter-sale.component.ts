@@ -1025,7 +1025,8 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                         if (this.CounterSaleOrderBookingForm.get('daysMsg').value.includes('Exceeded')) {
                           alert('Credit Days is exceeded.!');
 
-                          this.isDisabled10 = true;
+                          // this.isDisabled10 = true;
+                          this.isDisabled=true;
                         }
                         else if (this.allDatastore.totAmt >= data.obj.outStandingAmt) {
                           alert('Credit Amount is exceeded.! ... Credit Amount is' + ' ' + this.allDatastore.crdAmt + ' ' + 'Total Amount is' + ' ' + this.allDatastore.totAmt + '.!')
@@ -1228,6 +1229,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
         this.closeResetButton = true;
         this.OrderFind(this.orderNumber);
         this.isDisabled10 = false;
+        
         // window.location.reload();
       } else {
         if (res.code === 400) {
@@ -2819,6 +2821,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
           alert('Credit Amount is exceeded.! ... Credit Amount is' + ' ' + crdAmt + ' ' + 'Total Amount is' + ' ' + totAmt + '.!');
           this.setFocus('itemSeg' + lineIndex);
           // this.isDisabled10 = true;
+          this.isDisabled=true;
           return;
         }
       }
@@ -3509,6 +3512,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
               if (this.CounterSaleOrderBookingForm.get('daysMsg').value.includes('Exceeded')) {
                 alert('Credit Days is exceeded.!');
                 // this.isDisabled10 = true;
+                this.isDisabled=true;
               }
               else if (this.allDatastore.totAmt >= data.obj.outStandingAmt) {
                 alert('Credit Amount is exceeded.! ... Credit Amount is' + ' ' + this.allDatastore.crdAmt + ' ' + 'Total Amount is' + ' ' + this.allDatastore.totAmt + '.!')
