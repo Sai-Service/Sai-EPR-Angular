@@ -415,8 +415,8 @@ export class ReportServiceService {
   // http://localhost:8081/AccountsReports/GstPurchaseRep?fromDate=01-FEB-2022&toDate=02-FEB-2022&ouId=21&locId=&deptId=5
  
 
-  spclosstrockReport(locId){
-    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprClosingStk?locId=${locId}`;
+  spclosstrockReport(locId,subInvCode){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprClosingStk?locId=${locId}&subInvCode=${subInvCode}`;
     return this.http.get(REQUEST_URI, {
       responseType: 'arraybuffer',
       headers: this.headers,
