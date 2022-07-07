@@ -324,7 +324,7 @@
           <tr class="GridHeader">
             <th scope="col">Srl#</th>
             <th scope="col">workshopIssue No.</th>
-            <!-- <th scope="col">Line No</th> -->
+            <th scope="col">IPO No</th>
             <th scope="col">Registration No.</th>
             <th scope="col">Item Code</th>
             <th scope="col">Item Description</th>
@@ -338,6 +338,7 @@
           <tr *ngFor="let com of lstcomment1 let i=index" style="background-color:#E3EAEB;">
             <td style="text-align: center;width: 3rem;">{{i+1}}</td>
             <td>{{com.requestNumber}}</td>
+            <td>{{com.ipoNumber}}</td>
             <td>{{com.regNo}}</td>
             <td>{{com.segment }}</td>
             <td>{{com.description}}</td>

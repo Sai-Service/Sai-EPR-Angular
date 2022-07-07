@@ -66,7 +66,7 @@ export class JournalVoucherComponent implements OnInit {
   runningTotalCr:number;
   OUName:string;
   ouId:number;
-  public status:string="INCOMPLETE";
+  public status:string="Incomplete";
   jeSource:string;
   name:string;
   emplId:number;

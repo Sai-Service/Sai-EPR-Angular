@@ -67,6 +67,7 @@ export class SparesReportsComponent implements OnInit {
   isVisibleEwayBill:boolean=false;
   isDisabled1 = false;
   userName1:string;
+  dispLocation:boolean=true;
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) {
     this.sparesReportForm = this.fb.group({
       fromDate: [''],
@@ -86,7 +87,7 @@ export class SparesReportsComponent implements OnInit {
       spInvAging2: [''],
       spInvAging3: [''],
       department: [''],
-      userName1:[''],
+      userName1:[''], 
       trxNumber:[''],
     })
   }
@@ -339,6 +340,13 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory=false;
       this.isVisiblecustomerLedger=false;
       this.isVisibleEwayBill=false;
+      this.dispLocation=false;
+
+      this.service.TolocationIdList(sessionStorage.getItem('locId')).subscribe
+      (data => {
+        this.BillShipToList = data;
+        console.log(this.BillShipToList);
+      });
     }
     else if (reportName === 'gststockTransferSummary') {
       this.reportName = 'Stock Transfer Made Summary Report';
@@ -355,6 +363,14 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory=false;
       this.isVisiblecustomerLedger=false;
       this.isVisibleEwayBill=false;
+
+      this.dispLocation=false;
+
+      this.service.TolocationIdList(sessionStorage.getItem('locId')).subscribe
+      (data => {
+        this.BillShipToList = data;
+        console.log(this.BillShipToList);
+      });
     }
     else if (reportName === 'gststockTransferReceivedDetails') {
       this.reportName = 'Stock Transfer Received Detail Report';
@@ -371,6 +387,14 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblespClosingStockAsOndate=false;
       this.isVisiblecustomerLedger=false;
       this.isVisibleEwayBill=false;
+
+      this.dispLocation=false;
+
+      this.service.TolocationIdList(sessionStorage.getItem('locId')).subscribe
+      (data => {
+        this.BillShipToList = data;
+        console.log(this.BillShipToList);
+      });
     }
     else if (reportName === 'gststockTransferReceivedSummary') {
       this.reportName = 'Spares Stock Transfer Received Summary Report';
@@ -387,6 +411,13 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblespClosingStockAsOndate=false;
       this.isVisiblecustomerLedger=false;
       this.isVisibleEwayBill=false;
+      this.dispLocation=false;
+
+      this.service.TolocationIdList(sessionStorage.getItem('locId')).subscribe
+      (data => {
+        this.BillShipToList = data;
+        console.log(this.BillShipToList);
+      });
     }
     else if (reportName === 'gstsparesCustomerOffTakeStatment') {
       this.reportName = 'Spares Customer Off Take Statement';
@@ -582,6 +613,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory=true;
       this.isVisiblecustomerLedger=false;
       this.isVisibleEwayBill=false;
+      
     }
     else if (reportName === 'internalConsumptionReport') {
       this.reportName = 'Internal Consumption Report';
