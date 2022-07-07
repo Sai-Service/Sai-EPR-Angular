@@ -96,14 +96,15 @@
             <tr class="GridHeader" style="font-size: 14px;">
                 <th >PO No.</th>
                 <th >PO Date</th>
-                <th >Supp Invoice No.</th>
                 <th >Supp Inv Date</th>
+                <th >Supp Invoice No.</th>
                 <th >GRR No.</th>
                 <th >GRR Date</th>
                 <th >Base Amt</th>
                 <th >Tax Amt</th>
                 <th >Total Amt</th>
                 <th>PO Status</th>
+                <!-- <th>Bill Submitted</th> -->
 
             </tr>
             <tr *ngFor="let com of poDetails ; let i= index" class="ItemStyle" style="text-decoration:none;font-size: 14px;">
@@ -136,7 +137,10 @@
                 </td>
                 <td style="padding-left: 5px; text-align: center;">{{com.authorizationStatus}}
                 </td>
-
+               <!-- <td style="width: 15%" class="LabelFontStyle">
+                <input type="checkbox" class="form-check-input" formControlName="enabledFlag" (change)="recoverableFlg1($event)" >
+                <label   class="LabelFontStyle">Submitted</label>
+            </td> -->
             </tr>
         </table>
         </div>

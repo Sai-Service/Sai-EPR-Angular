@@ -125,6 +125,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   // custPoDate:Date;
   salesRepId: string;
   creditAmt: number;
+  outStandingAmt:number;
   lineNumber: number;
   uuidRef: string;
   private allLineTotalAmt = 0;
@@ -420,6 +421,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       issueCodeType1: [''],
       issueCode: [''],
       creditAmt: [0],
+      outStandingAmt:[],
       creditDays: [''],
       daysMsg: [''],
       amountMsg: [''],
@@ -1017,7 +1019,9 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                     if (data.code === 200) {
 
                       var newCrmAmt1 = Math.round(((data.obj.outStandingAmt) + Number.EPSILON) * 100) / 100;
-                      this.CounterSaleOrderBookingForm.patchValue({ creditAmt: newCrmAmt1 });
+                      // this.CounterSaleOrderBookingForm.patchValue({ creditAmt: newCrmAmt1 });
+                      this.CounterSaleOrderBookingForm.patchValue({ creditAmt: data.obj.creditAmt });
+                      this.CounterSaleOrderBookingForm.patchValue({ outStandingAmt: newCrmAmt1 });
                       this.CounterSaleOrderBookingForm.patchValue({ creditDays: data.obj.creditDays });
                       this.CounterSaleOrderBookingForm.patchValue({ daysMsg: data.obj.daysMsg });
                       var typ = this.CounterSaleOrderBookingForm.get('transactionTypeName').value;
@@ -1190,8 +1194,21 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     var totAmt = this.CounterSaleOrderBookingForm.get('totAmt').value;
     var crdAmt = this.CounterSaleOrderBookingForm.get('creditAmt').value;
     var typ = this.CounterSaleOrderBookingForm.get('transactionTypeName').value;
-    if (!typ.includes('Accessories Sale')) {
-    if (crdAmt != 0) {
+    var subtyp = this.CounterSaleOrderBookingForm.get('createOrderType').value;
+    var outAmt:number=0;
+     outAmt=this.CounterSaleOrderBookingForm.get('outStandingAmt').value
+    // if (!typ.includes('Accessories Sale')) {
+      if(outAmt>crdAmt){
+        // alert(outAmt+crdAmt)
+        alert('Credit Amount is exceeded.! ... Credit Amount is' + ' ' + crdAmt + ' ' + 'Total Amount is' + ' ' + outAmt + '.!');
+         
+        this.isDisabled=true;
+        return;
+      }
+      if (typ.includes('Spares Sale') && !subtyp.includes('Sales Order')) {
+  
+    // if (!typ.includes('Accessories Sale')) {
+    // if (crdAmt != 0) {
       if (totAmt >= crdAmt) {
         alert('Credit Amount is exceeded.! ... Credit Amount is' + ' ' + crdAmt + ' ' + 'Total Amount is' + ' ' + totAmt + '.!');
         this.progress = 0;
@@ -1199,7 +1216,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
         this.isDisabled = false;
         return;
       }
-    }
+    // }
   }
     for (let i = exLines; i < orderLines.length; i++) {
       orderLines[i].taxCategoryName = orderLines[i].taxCategoryName.taxCategoryName;
@@ -1612,7 +1629,9 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
               var credAmt = this.CounterSaleOrderBookingForm.get('creditAmt').value;
               // var newCrAmt = Number(credAmt) - Number(data.obj.outStandingAmt);
               var newCrmAmt1 = Math.round(((data.obj.outStandingAmt) + Number.EPSILON) * 100) / 100;
-              this.CounterSaleOrderBookingForm.patchValue({ creditAmt: newCrmAmt1 });
+              // this.CounterSaleOrderBookingForm.patchValue({ creditAmt: newCrmAmt1 });
+              this.CounterSaleOrderBookingForm.patchValue({ creditAmt: data.obj.creditAmt });
+              this.CounterSaleOrderBookingForm.patchValue({ outStandingAmt: newCrmAmt1 });
               this.CounterSaleOrderBookingForm.patchValue({ creditDays: data.obj.creditDays });
               this.CounterSaleOrderBookingForm.patchValue({ daysMsg: data.obj.daysMsg });
             }
@@ -2482,8 +2501,19 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     var totAmt = this.CounterSaleOrderBookingForm.get('totAmt').value;
     var crdAmt = this.CounterSaleOrderBookingForm.get('creditAmt').value;
     var typ = this.CounterSaleOrderBookingForm.get('transactionTypeName').value;
-    if (!typ.includes('Accessories Sale')) {
-      if (crdAmt != 0) {
+    var subtyp = this.CounterSaleOrderBookingForm.get('createOrderType').value;
+    var outAmt:number=0;
+     outAmt=this.CounterSaleOrderBookingForm.get('outStandingAmt').value
+    // if (!typ.includes('Accessories Sale')) {
+      if(outAmt>crdAmt){
+        // alert(outAmt+crdAmt)
+        alert('Credit Amount is exceeded.! ... Credit Amount is' + ' ' + crdAmt + ' ' + 'Total Amount is' + ' ' + outAmt + '.!');
+         
+        this.isDisabled=true;
+        return;
+      }
+      if (typ.includes('Spares Sale') && !subtyp.includes('Sales Order')) {
+      // if (crdAmt != 0) {
         if (totAmt >= crdAmt) {
           alert('Credit Amount is exceeded.! ... Credit Amount is' + ' ' + crdAmt + ' ' + 'Total Amount is' + ' ' + totAmt + '.!');
           this.progress = 0;
@@ -2491,7 +2521,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
           this.isDisabled = false;
           return;
         }
-      }
+      // }
     }
     // }
     for (let j = 0; j < orderLines.length; j++) {
@@ -2812,18 +2842,34 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     var newln = lineIndex + 1;
     this.setFocus('itemSeg' + newln);
     var crdAmt = this.CounterSaleOrderBookingForm.get('creditAmt').value;
+    var outAmt:number=0;
+    // debugger;
+     outAmt = this.CounterSaleOrderBookingForm.get('outStandingAmt').value;
+    //  alert(outAmt+'outAmt')
     var typ = this.CounterSaleOrderBookingForm.get('transactionTypeName').value;
+    var outTotAmt:number=0;
+    outTotAmt=totAmt+outAmt;
+    this.CounterSaleOrderBookingForm.patchValue({ 'outStandingAmt': outTotAmt });
     if (!typ.includes('Accessories Sale')) {
       // alert(crdAmt)
       // if (crdAmt >0){
-      if (crdAmt != undefined && crdAmt != null && crdAmt != '' && crdAmt > 0) {
+      if ((crdAmt != undefined || crdAmt != null || crdAmt != '' )&& crdAmt >= 0) {
+        if(outAmt>crdAmt){
+          // alert(outAmt+crdAmt)
+          alert('Credit Amount is exceeded.! ... Credit Amount is' + ' ' + crdAmt + ' ' + 'Total Amount is' + ' ' + outAmt + '.!');
+          this.setFocus('itemSeg' + lineIndex);
+          
+          this.isDisabled=true;
+          return;
+        }
         if (totAmt >= crdAmt) {
-          alert('Credit Amount is exceeded.! ... Credit Amount is' + ' ' + crdAmt + ' ' + 'Total Amount is' + ' ' + totAmt + '.!');
+           alert('Credit Amount is exceeded.! ... Credit Amount is' + ' ' + crdAmt + ' ' + 'Total Amount is' + ' ' + totAmt + '.!');
           this.setFocus('itemSeg' + lineIndex);
           // this.isDisabled10 = true;
           this.isDisabled=true;
           return;
         }
+      
       }
     }
 
@@ -3504,18 +3550,36 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
           if (data.code === 200) {
 
             var newCrmAmt1 = Math.round(((data.obj.outStandingAmt) + Number.EPSILON) * 100) / 100;
-            this.CounterSaleOrderBookingForm.patchValue({ creditAmt: newCrmAmt1 });
+            // this.CounterSaleOrderBookingForm.patchValue({ creditAmt: newCrmAmt1 });
+            this.CounterSaleOrderBookingForm.patchValue({ creditAmt: data.obj.creditAmt });
+            this.CounterSaleOrderBookingForm.patchValue({ outStandingAmt: newCrmAmt1 });
             this.CounterSaleOrderBookingForm.patchValue({ creditDays: data.obj.creditDays });
             this.CounterSaleOrderBookingForm.patchValue({ daysMsg: data.obj.daysMsg });
             var typ = this.CounterSaleOrderBookingForm.get('transactionTypeName').value;
+            var outTotAmt:number=0;
+            var TotAmt:number=0;
+            TotAmt=this.CounterSaleOrderBookingForm.get('totAmt').value;
+            outTotAmt=TotAmt+data.obj.outStandingAmt;
             if (!typ.includes('Accessories Sale')) {
+              // debugger;
+              if(data.obj.daysMsg!=undefined||data.obj.daysMsg!=null){
               if (this.CounterSaleOrderBookingForm.get('daysMsg').value.includes('Exceeded')) {
                 alert('Credit Days is exceeded.!');
                 // this.isDisabled10 = true;
                 this.isDisabled=true;
               }
-              else if (this.allDatastore.totAmt >= data.obj.outStandingAmt) {
+            }
+              if (outTotAmt >= data.obj.creditAmt) {
                 alert('Credit Amount is exceeded.! ... Credit Amount is' + ' ' + this.allDatastore.crdAmt + ' ' + 'Total Amount is' + ' ' + this.allDatastore.totAmt + '.!')
+                this.isDisabled=true;
+              }
+              else if (TotAmt >= data.obj.creditAmt) {
+                alert('Credit Amount is exceeded.! ... Credit Amount is' + ' ' + this.allDatastore.crdAmt + ' ' + 'Total Amount is' + ' ' + this.allDatastore.totAmt + '.!')
+                this.isDisabled=true;
+              }
+              else{
+                // alert('else');
+                this.isDisabled=false;
               }
             }
           }
