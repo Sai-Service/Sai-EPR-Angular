@@ -1011,6 +1011,13 @@ public statusList:Array<string>=[];
                     alert ("ACCOUNT CODE : Invalid GL Code combination... Please check");
                     return;
                    }
+
+                   if(formValue.segment1==='Select' || formValue.segment2==='Select' || formValue.segment3==='Select' ||formValue.segment4==='Select' || formValue.segment5==='Select'){
+                    this.checkValidation=false;  
+                    alert ("ACCOUNT CODE : Invalid GL Code combination... Please check");
+                    return;
+                   }
+
       
                    if ( formValue.segmentName===undefined || formValue.segmentName===null || formValue.segmentName.trim()=='' )
                    {
@@ -1060,9 +1067,7 @@ public statusList:Array<string>=[];
                   data=>{this.branch=data;
                   console.log(this.branch);
                   if (this.branch != null) {
-                  //          this.GlCodeCombinaionForm.patchValue(this.branch);
-                  
-              
+                  // this.GlCodeCombinaionForm.patchValue(this.branch);
                   
                   if(lType==='SS_Interbranch'){
                   this.lookupValueDesc5=this.branch.lookupValueDesc;
@@ -1070,10 +1075,8 @@ public statusList:Array<string>=[];
                    if(lType==='NaturalAccount'){      
                     this.lookupValueDesc4=this.branch.lookupValueDesc;
                     //  this.accountType=this.branch.naturalAccount.accountType;
-                  //   // this.GlCodeCombinaionForm.patchValue(this.branch);
+                    // this.GlCodeCombinaionForm.patchValue(this.branch);
                     //  this.accountType=this.branch.accountType;
-                    
-                    
                    }
                   if(lType==='CostCentre'){
                     this.lookupValueDesc3=this.branch.lookupValueDesc;
@@ -1084,9 +1087,8 @@ public statusList:Array<string>=[];
                   if(lType==='SS_Branch'){
                     this.lookupValueDesc1 =this.branch.lookupValueDesc;
                   }
-                }
-                 }); 
-                 }
+                } }); 
+              }
 
                
 

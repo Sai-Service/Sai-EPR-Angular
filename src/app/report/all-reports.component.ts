@@ -420,7 +420,7 @@ export class AllReportsComponent implements OnInit {
     this.dataDisplay = 'Report Is Running....Do not refresh the Page';
     const fileName = 'SP-Closing-Stock-' + sessionStorage.getItem('locName').trim() + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.spclosstrockReport(sessionStorage.getItem('locId'))
+    this.reportService.spclosstrockReport(sessionStorage.getItem('locId'),this.subInvCode)
       .subscribe(data => {
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
         this.isDisabled4 = false;

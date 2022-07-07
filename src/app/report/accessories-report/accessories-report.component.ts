@@ -749,7 +749,7 @@ export class AccessoriesReportComponent implements OnInit {
       const fileName = 'SP-Closing-Stock-' + sessionStorage.getItem('locName').trim() + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.spclosstrockReport(locId)
+        this.reportService.spclosstrockReport(locId,subInventory)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -758,7 +758,7 @@ export class AccessoriesReportComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.spclosstrockReport(sessionStorage.getItem('locId'))
+        this.reportService.spclosstrockReport(sessionStorage.getItem('locId'),subInventory)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
