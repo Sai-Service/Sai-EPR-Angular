@@ -57,8 +57,8 @@ export class OrderDetailsUpdationComponent implements OnInit {
   custPoNumber:string;
   custPoDate:Date;
 
-  // orderNumber:number=222220910400113;
-  orderNumber:number
+  orderNumber:number=222220910400113;
+  // orderNumber:number
   orderedDate:Date;
   model:string;
   variant:string;

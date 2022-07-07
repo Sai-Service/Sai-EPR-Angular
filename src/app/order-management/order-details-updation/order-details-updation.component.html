@@ -52,10 +52,10 @@
                     [(ngModel)]='orderNumber' value={{orderNumber}} style="font-weight: bold;"> </td>
           
 
-            <td style="width: 15%" class="LabelFontStyle">Sales&nbsp;Person&nbsp;:&nbsp;</td>
+            <td style="width: 15%" class="LabelFontStyle">Executive&nbsp;:&nbsp;</td>
             <td>
                 <select formControlName="salesRepName" id="salesRepName" [(ngModel)]="salesRepName"  class="form-control"
-                    (ngModelChange)="onOptionsSelectedTL($event)" style="width:250px" >
+                    (ngModelChange)="onOptionsSelectedTL($event)" style="width:200px" >
                     <!-- <option>--Select--</option> -->
                     <option *ngFor="let pt of salesRepNameList" [(ngValue)]="pt.description">
                         {{pt.ticketNo}}-{{pt.description}}
@@ -66,11 +66,11 @@
 
             <td style="width: 15%" class="LabelFontStyle"> TL&nbsp;Name&nbsp;:&nbsp;</td>
             <td><input disabled type="text" formControlName="tlName" [(ngModel)]='tlName'
-                    value={{tlName}} class="form-control" style="width:250px"  ></td>
+                    value={{tlName}} class="form-control" style="width:200px"  ></td>
             
             <td style="width: 22%" class="LabelFontStyle">Order&nbsp;Date&nbsp;:&nbsp;</td>
             <td><input disabled type="date" class="form-control" formControlName="orderedDate"
-                            value={{orderedDate}} [ngModel]="orderedDate | date:'yyyy-MM-dd'"></td>
+                            value={{orderedDate}} [ngModel]="orderedDate | date:'yyyy-MM-dd'"  style="width:150px"></td>
             </tr>
             
             <tr>
@@ -87,7 +87,7 @@
                 <td style="width: 15%" class="LabelFontStyle">Variant&nbsp;:&nbsp;</td>
                 <td>
                     <select formControlName="variant" id="variant" class="form-control"
-                         (ngModelChange)="onOptionsSelectedColor($event)" style="width:250px" >
+                         (ngModelChange)="onOptionsSelectedColor($event)" style="width:200px" >
                         <option>--Select--</option>
                         <option *ngFor="let mm of VariantSearch" [ngValue]="mm.variant">
                             {{mm.variant}}--{{mm.varDescription}}
@@ -96,7 +96,7 @@
                 </td>
                 <td style="width: 15%" class="LabelFontStyle">Color&nbsp;:&nbsp;</td>
                 <td>
-                    <select formControlName="color" id="color" class="form-control" style="width:250px" >
+                    <select formControlName="color" id="color" class="form-control" style="width:200px" >
                         <option>--Select--</option>
                         <option *ngFor="let cc of ColourSearch" [ngValue]="cc.ColorCode">
                             {{cc.ColorCode}}--{{cc.colorDesc}}
@@ -106,7 +106,7 @@
                 <td style="width: 15%" class="LabelFontStyle">Fuel&nbsp;Type&nbsp;:&nbsp;</td>
                 <td>
                     <input disabled type="text" formControlName="fuelType" [(ngModel)]='fuelType'
-                        class="form-control" >
+                        class="form-control" style="width:150px">
                 </td>
 
             </tr>
@@ -195,10 +195,10 @@
                         </option>
                 </select>
                 </td>
-                <td style="width: 15%" class="LabelFontStyle">Finance&nbsp;Amount&nbsp;:&nbsp;</td>
+                <td style="width: 15%" class="LabelFontStyle">Finance&nbsp;Amt&nbsp;:&nbsp;</td>
                 <td><input type="number" formControlName="financeAmt" value={{financeAmt}} class="form-control" ></td>
                 <td style="width: 15%" class="LabelFontStyle">EMI&nbsp;:&nbsp;</td>
-                <td><input type="number" formControlName="emi" value={{emi}} class="form-control" ></td>
+                <td><input type="number" formControlName="emi" value={{emi}} class="form-control" style="width:145px;"></td>
             </ng-template>
         </tr>
 
@@ -233,10 +233,10 @@
         <ng-template #exYes1>
             <td style="width: 15%" class="LabelFontStyle">Loyalty&nbsp;Bonus&nbsp;:&nbsp;</td>
             <td><input type="number" formControlName="loyaltyBonus" class="form-control" ></td>
-            <td style="width: 15%" class="LabelFontStyle">Reg&nbsp;No&nbsp;/Remark&nbsp;:&nbsp;</td>
+            <td style="width: 15%" class="LabelFontStyle">RegNo/Remark&nbsp;:&nbsp;</td>
             <td><input type="text" formControlName="exRegNo" class="form-control" ></td>
             <td style="width: 15%" class="LabelFontStyle">Ins&nbsp;Charges&nbsp;:&nbsp;</td>
-            <td><input type="number" formControlName="insCharges" class="form-control" ></td>
+            <td><input type="number" formControlName="insCharges" class="form-control" style="width:145px;" ></td>
            
         </ng-template>
         </tr>
