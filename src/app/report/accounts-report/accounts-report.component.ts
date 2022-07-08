@@ -503,6 +503,7 @@ reportName:string;
     var deptId=this.reportForm.get('deptId').value;
     var locId = this.reportForm.get('locId').value;
     var userName = this.reportForm.get('userName').value;
+    var subInventory='SP';
     if (locId===null){
       locId=''
     }
@@ -597,7 +598,7 @@ reportName:string;
       }
     const fileName = 'Spares Inventory Aging Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.sspInvAgingReport(spInvAging1,spInvAging2,spInvAging3,sessionStorage.getItem('ouId'),locId)
+    this.reportService.sspInvAgingReport(spInvAging1,spInvAging2,spInvAging3,sessionStorage.getItem('ouId'),locId,subInventory,userName)
       .subscribe(data => {
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
         this.closeResetButton = true;
