@@ -1221,6 +1221,7 @@ export class PayableInvoiceNewComponent implements OnInit {
     var arraybaseNew = this.poInvoiceForm.get('obj') as FormArray;
     var arraybaseNew1 = arraybaseNew.getRawValue();
     var invoiceNum = this.lineDetailsArray().controls[index].get('invoiceNum').value;
+    var suppNo = this.lineDetailsArray().controls[index].get('suppNo').value;
     var invoiceAmt = this.lineDetailsArray().controls[index].get('invoiceAmt').value;
     if (invoiceAmt % 1 != 0) {
       this.isVisibleRoundOffButton = true;
@@ -1229,12 +1230,12 @@ export class PayableInvoiceNewComponent implements OnInit {
       this.isVisibleRoundOffButton = false;
     }
     this.invLineDetailsArray().clear();
-    this.transactionService.getApInvLineDetails(invoiceNum)
+    this.transactionService.getApInvLineDetailsSupwise(invoiceNum,suppNo)
       .subscribe(
         data => {
           console.log(data);
 
-          alert('data.invoiceStatus'+data.invoiceStatus);
+          // alert('data.invoiceStatus'+data.invoiceStatus);
           this.isSearchPatch = true;
           this.displayitemName = true;
           this.displayTaxCategory = false;

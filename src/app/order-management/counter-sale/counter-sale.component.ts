@@ -2524,14 +2524,15 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     var outAmt:number=0;
      outAmt=this.CounterSaleOrderBookingForm.get('outStandingAmt').value
     // if (!typ.includes('Accessories Sale')) {
-      if(outAmt>crdAmt){
-        // alert(outAmt+crdAmt)
-        alert('Credit Amount is exceeded.! ... Credit Amount is' + ' ' + crdAmt + ' ' + 'Total Amount is' + ' ' + outAmt + '.!');
-         
-        this.isDisabled=true;
-        return;
-      }
+  
       if (typ.includes('Spares Sale') && !subtyp.includes('Sales Order')) {
+        if(outAmt>crdAmt){
+          // alert(outAmt+crdAmt)
+          alert('Credit Amount is exceeded.! ... Credit Amount is' + ' ' + crdAmt + ' ' + 'Total Amount is' + ' ' + outAmt + '.!');
+           
+          this.isDisabled=true;
+          return;
+        }
       // if (crdAmt != 0) {
         if (totAmt >= crdAmt) {
           alert('Credit Amount is exceeded.! ... Credit Amount is' + ' ' + crdAmt + ' ' + 'Total Amount is' + ' ' + totAmt + '.!');
@@ -2864,13 +2865,13 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     var outAmt:number=0;
     // debugger;
      outAmt = this.custOriginalOutstanding;
-     alert(outAmt+'outAmt')
+    //  alert(outAmt+'outAmt')
     var typ = this.CounterSaleOrderBookingForm.get('transactionTypeName').value;
     var outTotAmt:number=0;
     
     outTotAmt=totAmt+outAmt;
     // debugger;
-    alert(outTotAmt);
+    // alert(outTotAmt);
     this.CounterSaleOrderBookingForm.patchValue({ 'outStandingAmt': outTotAmt });
     if (!typ.includes('Accessories Sale')) {
       // alert(crdAmt)
