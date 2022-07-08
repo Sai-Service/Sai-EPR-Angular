@@ -130,12 +130,13 @@ export class ReportServiceService {
     });
   }
 
-  sspInvAgingReport(spInvAging1,spInvAging2,spInvAging3,ouId,locId){
-    const REQUEST_URI = this.ServerUrl +`/SparesReports/InventoryAging?age1=${spInvAging1}&age2=${spInvAging2}&age3=${spInvAging3}&ouId=${ouId}&locId=${locId}`;
+  sspInvAgingReport(spInvAging1,spInvAging2,spInvAging3,ouId,locId,subInv,userNam){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/InventoryAging?age1=${spInvAging1}&age2=${spInvAging2}&age3=${spInvAging3}&subInvCode=${subInv}&locId=${locId}&ouId=${ouId}&userName=${userNam}`;
     return this.http.get(REQUEST_URI, {
       responseType: 'arraybuffer',
       headers: this.headers,
     });
+    // http://localhost:8081/SparesReports/InventoryAging?age1=30&age2=60&age3=90&subInvCode=SP&locId=2102&ouId=21&userName=DINESH
   }
 
   gltrialBalanceReport(ouCode,periodName){
