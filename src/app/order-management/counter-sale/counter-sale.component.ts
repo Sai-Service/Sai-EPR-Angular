@@ -345,7 +345,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
   tmpTotAmt: number = 0;
 
-
+  custOriginalOutstanding :number =0;
 
   display = 'none';
   @ViewChild("myinput") myInputField: ElementRef;
@@ -1019,6 +1019,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                     if (data.code === 200) {
 
                       var newCrmAmt1 = Math.round(((data.obj.outStandingAmt) + Number.EPSILON) * 100) / 100;
+                      this.custOriginalOutstanding =newCrmAmt1;
                       // this.CounterSaleOrderBookingForm.patchValue({ creditAmt: newCrmAmt1 });
                       this.CounterSaleOrderBookingForm.patchValue({ creditAmt: data.obj.creditAmt });
                       this.CounterSaleOrderBookingForm.patchValue({ outStandingAmt: newCrmAmt1 });
@@ -1629,11 +1630,29 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
               var credAmt = this.CounterSaleOrderBookingForm.get('creditAmt').value;
               // var newCrAmt = Number(credAmt) - Number(data.obj.outStandingAmt);
               var newCrmAmt1 = Math.round(((data.obj.outStandingAmt) + Number.EPSILON) * 100) / 100;
+              this.custOriginalOutstanding=newCrmAmt1;
               // this.CounterSaleOrderBookingForm.patchValue({ creditAmt: newCrmAmt1 });
               this.CounterSaleOrderBookingForm.patchValue({ creditAmt: data.obj.creditAmt });
               this.CounterSaleOrderBookingForm.patchValue({ outStandingAmt: newCrmAmt1 });
               this.CounterSaleOrderBookingForm.patchValue({ creditDays: data.obj.creditDays });
               this.CounterSaleOrderBookingForm.patchValue({ daysMsg: data.obj.daysMsg });
+
+              if(this.deptId==5){
+                if(data.obj.daysMsg!=undefined||data.obj.daysMsg!=null){
+                  if (this.CounterSaleOrderBookingForm.get('daysMsg').value.includes('Exceeded')){
+                    alert('Credit Days is exceeded.!');
+                    // this.displayCSOrderAndLineDt = false;
+                    
+    this.displaysegmentInvType[0] = false;
+
+    this.displayCounterSaleLine[0] = false;
+    this.isDisabled=true;
+
+
+                    return;
+                  }
+                }
+              }
             }
           })
     }
@@ -2844,11 +2863,14 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     var crdAmt = this.CounterSaleOrderBookingForm.get('creditAmt').value;
     var outAmt:number=0;
     // debugger;
-     outAmt = this.CounterSaleOrderBookingForm.get('outStandingAmt').value;
-    //  alert(outAmt+'outAmt')
+     outAmt = this.custOriginalOutstanding;
+     alert(outAmt+'outAmt')
     var typ = this.CounterSaleOrderBookingForm.get('transactionTypeName').value;
     var outTotAmt:number=0;
+    
     outTotAmt=totAmt+outAmt;
+    // debugger;
+    alert(outTotAmt);
     this.CounterSaleOrderBookingForm.patchValue({ 'outStandingAmt': outTotAmt });
     if (!typ.includes('Accessories Sale')) {
       // alert(crdAmt)
@@ -2861,6 +2883,9 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
           
           this.isDisabled=true;
           return;
+        }
+        else{
+          this.isDisabled=false;
         }
         if (totAmt >= crdAmt) {
            alert('Credit Amount is exceeded.! ... Credit Amount is' + ' ' + crdAmt + ' ' + 'Total Amount is' + ' ' + totAmt + '.!');
@@ -3550,6 +3575,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
           if (data.code === 200) {
 
             var newCrmAmt1 = Math.round(((data.obj.outStandingAmt) + Number.EPSILON) * 100) / 100;
+            this.custOriginalOutstanding=newCrmAmt1;
             // this.CounterSaleOrderBookingForm.patchValue({ creditAmt: newCrmAmt1 });
             this.CounterSaleOrderBookingForm.patchValue({ creditAmt: data.obj.creditAmt });
             this.CounterSaleOrderBookingForm.patchValue({ outStandingAmt: newCrmAmt1 });
@@ -3560,6 +3586,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
             var TotAmt:number=0;
             TotAmt=this.CounterSaleOrderBookingForm.get('totAmt').value;
             outTotAmt=TotAmt+data.obj.outStandingAmt;
+            this.CounterSaleOrderBookingForm.patchValue({ outStandingAmt: outTotAmt });
             if (!typ.includes('Accessories Sale')) {
               // debugger;
               if(data.obj.daysMsg!=undefined||data.obj.daysMsg!=null){

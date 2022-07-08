@@ -933,6 +933,10 @@ export class ARInvoiceComponent implements OnInit {
             if (data.obj.referenceNo != '') {
               this.displayinvItem = false;
             }
+            if(data.obj.balance==0)
+            {
+              this.isVisibleApply=false;
+            }
           }
           else {
             if (data.code === 400) {
