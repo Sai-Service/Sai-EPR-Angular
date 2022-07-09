@@ -3998,6 +3998,10 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
         return this.http.get(this.ServerUrl + `/glHeader/docSequenceValue/${paymentNo}`);
         
       }
+      viewAccountingbyApReceipt(paymentNo,invoiceId): Observable<any> {
+        return this.http.get(this.ServerUrl + `/glHeader/docSequenceValue?receiptNo=${paymentNo}&invoiceId=${invoiceId}`);
+        
+      }
     
 
       public bankReconPostSubmit(BankReconRecord) {

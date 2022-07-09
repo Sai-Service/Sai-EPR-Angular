@@ -1039,11 +1039,12 @@ console.log(jsonData);
         });
     
   }
-      viewAcc(documentNo){
+      viewAcc(documentNo,invoiceId){
         // alert(documentNo)
         var docVal=this.paymentForm.get('obj').value;
+        alert(invoiceId);
         // var docNo=docVal[0].docNo
-        this.service.viewAccountingApReceipt(documentNo).subscribe((res: any) => {
+        this.service.viewAccountingbyApReceipt(documentNo,invoiceId).subscribe((res: any) => {
           if (res.code === 200) {
             this.viewAccountingApRcpt = res.obj;
             this.description = res.obj[0].description;
@@ -1061,12 +1062,13 @@ console.log(jsonData);
               var gllnArr=res.obj[i].glLines;
               for(var j=0;j<gllnArr.length;j++){
                 if(gllnArr[j].invoiceId!=null){
-                var viewAcc=this.PaymentReturnArr.find(d=>d.invoiceId===gllnArr[j].invoiceId);
+                // var viewAcc=gllnArr[j].find(d=>d.gllnArr[j].invoiceId===invoiceId);
 
-                console.log(viewAcc);
-                this.viewAccounting1=gllnArr[j];
+                // console.log(viewAcc);
+                this.viewAccounting1=gllnArr;
                 }
             }}
+
             
             // this.viewAccounting1 = viewAcc;
             console.log(this.viewAccounting1);

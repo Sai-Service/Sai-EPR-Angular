@@ -1223,6 +1223,7 @@ export class PayableInvoiceNewComponent implements OnInit {
     var invoiceNum = this.lineDetailsArray().controls[index].get('invoiceNum').value;
     var suppNo = this.lineDetailsArray().controls[index].get('suppNo').value;
     var invoiceAmt = this.lineDetailsArray().controls[index].get('invoiceAmt').value;
+    var source=this.lineDetailsArray().controls[index].get('source').value;
     if (invoiceAmt % 1 != 0) {
       this.isVisibleRoundOffButton = true;
     }
@@ -1230,6 +1231,235 @@ export class PayableInvoiceNewComponent implements OnInit {
       this.isVisibleRoundOffButton = false;
     }
     this.invLineDetailsArray().clear();
+    
+    if(source==='REFUND'){
+      this.transactionService.getApInvLineDetails(invoiceNum)
+      .subscribe(
+        data => {
+          console.log(data);
+
+          // alert('data.invoiceStatus'+data.invoiceStatus);
+          this.isSearchPatch = true;
+          this.displayitemName = true;
+          this.displayTaxCategory = false;
+          if (data.invTdsLines.length === 0) {
+            this.isVisibleSaveTDS = true;
+          }
+          else if (data.invTdsLines.length != 0) {
+            this.isVisibleSaveTDS = false;
+            this.TdsDetailsArray().disable();
+            this.tdsTaxDetailsArray().disable()
+          }
+          this.poInvoiceForm.patchValue({
+            invoiceNum: data.invoiceNum,
+            segment1: data.invLines[0].poNumber,
+            invoiceStatus: data.invoiceStatus
+          })
+          this.isDisabled = true;
+          this.lstInvLineDeatails = data;
+          this.lstTdsLine = data.invDisLines;
+          console.log(data.invoiceStatus);
+          data.invLines.forEach(f => {
+            var invLnGrp: FormGroup = this.invLineDetails();
+            this.invLineDetailsArray().push(invLnGrp);
+          });
+
+          for (let i = 0; i < data.invDisLines.length; i++) {
+            var invLnGrp: FormGroup = this.distLineDetails();
+            this.lineDistributionArray().push(invLnGrp);
+          }
+          for (let i = 0; i < data.invDisLines.length; i++) {
+            // debugger;
+            // alert(data.invDisLines[i].description.includes('ROUNDING')+'-------'+ data.invDisLines[i].description)
+            if (data.invDisLines[i].description != undefined) {
+              var description = data.invDisLines[i].description.toUpperCase();
+              // alert(description);
+              if (data.invDisLines[i].lineTypeLookupCode != 'MISCELLANEOUS' && description.includes('ROUNDING') == false) {
+                var invLnGrp: FormGroup = this.tdsLineDetails();
+                this.TdsDetailsArray().push(invLnGrp);
+              }
+            }
+          }
+          for (let i = 0; i < data.taxLines.length; i++) {
+            var invLnGrp: FormGroup = this.TaxDetailsGroup();
+            this.TaxDetailsArray().push(invLnGrp);
+          }
+          for (let i = 0; i < data.invTdsLines.length; i++) {
+            var invLnGrp: FormGroup = this.tdsTaxDetailsGroup();
+            this.tdsTaxDetailsArray().push(invLnGrp);
+          }
+          console.log(data.taxLines);
+          this.poInvoiceForm.get('invLines').patchValue(data.invLines);
+          this.poInvoiceForm.get('taxLines').patchValue(data.taxLines);
+          this.poInvoiceForm.get('distribution').patchValue(data.invDisLines);
+          this.poInvoiceForm.get('tdsLines').patchValue(data.invTdsLines);
+          this.poInvoiceForm.get('tdsTaxLines').patchValue(data.invTdsLines);
+          let controlinv = this.poInvoiceForm.get('invLines') as FormArray;
+          for (let i = 0; i < data.invLines.length; i++) {
+            if (data.invLines[i].lineTypeLookupCode === 'ITEM' || data.invLines[i].lineTypeLookupCode === 'OTHER') {
+              (controlinv.controls[i]).patchValue({ taxCategoryName: data.invLines[i].taxCategoryName });
+              (controlinv.controls[i].patchValue({ invDescription: data.invLines[i].description }));
+            }
+            // alert(data.invLines[i].description)
+          }
+          for (let x = 0; x < data.invLines.length; x++) {
+            if (data.invLines[x].description != undefined){
+            var description = data.invLines[x].description.toUpperCase()
+            if (description.includes('ROUNDING') == true) {
+              this.isVisibleRoundOffButton = false;
+            }
+            }
+            // else {
+            //   this.isVisibleRoundOffButton=true; 
+            // }
+          }
+          var arraybase1 = this.poInvoiceForm.get('obj').value;
+          var arraybaseNew = this.poInvoiceForm.get('obj') as FormArray;
+          var arraybaseNew1 = arraybaseNew.getRawValue()
+          var invId = arraybaseNew1[0].invoiceId;
+          // alert(invId)
+          let tdscontrolInv = this.poInvoiceForm.get('tdsLines') as FormArray;
+          let distLineArray = this.poInvoiceForm.get('distribution') as FormArray;
+          // alert(data.invTdsLines.length);
+
+          let j = 0;
+          // alert(data.invTdsLines.length)
+          if (data.invTdsLines.length != 0) {
+            for (let i = 0; i < data.invDisLines.length; i++) {
+              var description = data.invDisLines[i].description.toUpperCase();
+              if (data.invDisLines[i].lineTypeLookupCode != 'MISCELLANEOUS' && description.includes('ROUNDING') == false) {
+                // alert(invId+'----'+ data.invDisLines[i].lineTypeLookupCode);
+                (tdscontrolInv.controls[j]).patchValue({ invoiceId: invId });
+                (tdscontrolInv.controls[j]).patchValue({ invoiceLineNum: data.invDisLines[i].invoiceLineNum });
+                (tdscontrolInv.controls[j]).patchValue({ invoiceDistId: data.invDisLines[i].invDistributionId });
+                (tdscontrolInv.controls[j]).patchValue({ distCodeCombSeg: data.invDisLines[i].distCodeCombSeg });
+                (tdscontrolInv.controls[j]).patchValue({ baseAmount: data.invDisLines[i].baseAmount });
+                (tdscontrolInv.controls[j]).patchValue({ description: data.invDisLines[i].description });
+                j = j + 1;
+              }
+            }
+          }
+          let tdscontroltax = this.poInvoiceForm.get('tdsTaxLines') as FormArray;
+          for (let i = 0; i < data.invTdsLines.length; i++) {
+            (tdscontroltax.controls[i]).patchValue({ lineNumber: data.invTdsLines[i].distLineNumber });
+            // (tdscontrolInv.controls[i]).patchValue({ taxRateName: data.invDisLines[i].invDistributionId });
+            (tdscontroltax.controls[i]).patchValue({ taxTypeName: data.invTdsLines[i].taxType });
+            (tdscontroltax.controls[i]).patchValue({ precedence1: data.invTdsLines[i].precedence1 });
+            // (tdscontrolInv.controls[i]).patchValue({ totTaxPer: data.invDisLines[i].description });
+            (tdscontroltax.controls[i]).patchValue({ totTaxAmt: data.invTdsLines[i].taxAmount });
+
+          }
+          // debugger;
+          for (let j = 0; j < data.invDisLines.length; j++) {
+            // var accDate = data.invDisLines[j].accountingDate;
+            // var accDate1 = this.pipe.transform(accDate, 'dd-MM-yyyy');
+            // (distLineArray.controls[j]).patchValue({ accountingDate: accDate1 });
+            this.accountingDate = data.invDisLines[j].accountingDate;
+          }
+          this.invoiceStatus = data.invoiceStatus;
+          if (data.invTdsLines.length === 0) {
+            this.showTdsLines(data.invoiceId, data.payGroup);
+          }
+          alert('data.invoiceStatus'+data.invoiceStatus);
+          if (data.invoiceStatus === '' || data.invoiceStatus === null || data.invoiceStatus === undefined) {
+            alert(data.invoiceStatus);
+            this.isVisibleSave = false;
+            this.isVisibleUpdateBtn = true;
+            this.isVisibleValidate = true;
+            // this.isVisibleRoundOffButton=true;
+          }
+          if (data.invoiceStatus != undefined) {
+            if (data.invoiceStatus.includes('Validate') || data.invoiceStatus === 'Unpaid') {
+              this.poInvoiceForm.disable();
+              this.displayAddNewLine = false;
+              this.invoiceStatus = data.invoiceStatus;
+              this.displayapInvCancelled = false;
+              this.isVisibleUpdateBtn = false;
+              this.isVisibleValidate = false;
+              this.isVisibleSaveTDS = false;
+              this.isVisibleRoundOffButton = false;
+              this.isVisibleviewAccounting = true;
+              this.TaxDetailsArray().disable();
+              this.TdsDetailsArray().disable();
+              this.lineDetailsArray().disable();
+              this.invLineDetailsArray().disable();
+              this.lineDistributionArray().disable();
+              this.tdsTaxDetailsArray().disable();
+              this.tdsTaxDetailsGroup().disable();
+              this.tdsLineDetails().disable();
+              this.displayapInvCancelled = false;
+              this.disDeleteButton = false;
+              this.isVisiblelineDetialsDeleteButton = false;
+              this.isVisibleSaveTDS = false;
+              
+            }
+          }
+          // alert(data.invoiceStatus)
+          // alert('index'+index)
+          // alert(arraybaseNew1[index].invTypeLookupCode +'-----');
+
+          if (data.invoiceStatus === undefined) {
+            if (arraybaseNew1[index].invTypeLookupCode != undefined) {
+              // alert(arraybaseNew1[index].invTypeLookupCode)
+              if (arraybaseNew1[index].invTypeLookupCode === 'CREDIT' || arraybaseNew1[index].invTypeLookupCode === 'STANDARD') {
+                this.displayAddNewLine = false;
+                this.displayapInvCancelled = false;
+                this.isVisibleUpdateBtn = false;
+                this.isVisibleRoundOffButton = false;
+                this.isVisibleValidate = false;
+                this.isVisibleSaveTDS = false;
+                this.isVisibleviewAccounting = true;
+                this.displayapInvCancelled = false;
+                this.isVisiblePayment = false;
+                this.TaxDetailsArray().disable();
+                this.TdsDetailsArray().disable();
+                this.lineDetailsArray().disable();
+                this.invLineDetailsArray().disable();
+                this.lineDistributionArray().disable();
+                this.tdsTaxDetailsArray().disable();
+                this.tdsTaxDetailsGroup().disable();
+                this.tdsLineDetails().disable();
+                this.disDeleteButton = false;
+                this.isVisiblelineDetialsDeleteButton = false;
+                this.isVisibleSaveTDS = false;
+              }
+            }
+          }
+          if (data.invoiceStatus === 'CANCELLED') {
+            this.displayapInvCancelled = true;
+            this.isVisible = false;
+            this.poInvoiceForm.disable();
+          }
+          // alert(data.source +'---'+arraybaseNew1[i].segment1);
+
+          if (arraybaseNew1[index].segment1 != undefined || arraybaseNew1[index].segment1 != null || arraybaseNew1[index].segment1 != '') {
+            this.poInvoiceForm.disable();
+          }
+          // if (data.invoiceStatus != undefined){
+          if (arraybaseNew1[index].invTypeLookupCode === 'Prepayment' && data.invoiceStatus.includes('Validate') || data.invoiceStatus === 'Unpaid') {
+            if (arraybaseNew1[index].invTypeLookupCode != 'CREDIT' || arraybaseNew1[index].invTypeLookupCode != 'STANDARD') {
+              this.isVisiblePayment = true;
+            }
+            // }
+          }
+          else if (arraybaseNew1[index].invTypeLookupCode === 'Standard Invoice' && data.invoiceStatus !=undefined) {
+            alert(data.invoiceStatus)
+            if (data.invoiceStatus.includes('Validate') || data.invoiceStatus === 'Unpaid'){
+            this.isVisiblePayment = true;
+          }
+          }
+          else {
+            this.isVisible = true;
+            this.displayapInvCancelled = false;
+          }
+          if (arraybaseNew1[index].segment != null || arraybaseNew1[index].segment != undefined || arraybaseNew1[index].segment != '') {
+            this.poInvoiceForm.disable();
+          }
+
+        }
+      )
+    }
+    else{
     this.transactionService.getApInvLineDetailsSupwise(invoiceNum,suppNo)
       .subscribe(
         data => {
@@ -1456,7 +1686,7 @@ export class PayableInvoiceNewComponent implements OnInit {
         }
       )
 
-
+      }
     // if (this.currentOP === 'Search') {
     //   // alert('in if search')
     //   this.tdsTaxDetailsArray().disable();
