@@ -44,6 +44,13 @@ UpdateValidate(invoiceNum) {
   const url = (this.ServerUrl + `/apInv/invValidate?invNum=${invoiceNum}`);
   return this.http.put(url, invoiceNum, options);
 }
+UpdateValidateSupwise(invoiceNum,suppNo) {
+  const options = {
+    headers: this.headers
+  };
+  const url = (this.ServerUrl + `/apInv/invValidateBySupp?invNum=${invoiceNum}&suppNo=${suppNo}`);
+  return this.http.put(url, invoiceNum, options);
+}
 
 apInvoiceCancellation(invoiceNum,emplId): Observable<any> {
   const options = {

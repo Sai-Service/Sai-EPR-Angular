@@ -2796,7 +2796,8 @@ export class PayableInvoiceNewComponent implements OnInit {
     if (amount == totalOfInvLineAmout && amount == totalOfDistributionAmout) {
       var arrayControl = this.poInvoiceForm.get('obj').value;
       var invoiceNum = this.lineDetailsArray().controls[this.selectedLine].get('invoiceNum').value;
-      this.transactionService.UpdateValidate(invoiceNum).subscribe((res: any) => {
+      var suppNo=this.lineDetailsArray().controls[this.selectedLine].get('suppNo').value;
+      this.transactionService.UpdateValidateSupwise(invoiceNum,suppNo).subscribe((res: any) => {
         if (res.code === 200) {
           alert(res.message);
           this.apInvFindAfterSave(res.obj.name)
