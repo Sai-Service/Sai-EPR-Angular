@@ -57,6 +57,13 @@ export class OrderDetailsUpdationComponent implements OnInit {
   custPoNumber:string;
   custPoDate:Date;
 
+  csdPoNo:string;
+  csdDate:Date;
+  csdIndexNo:string;
+  msRefType:string;
+  msRefNo:string;
+  msRefCustNo:string;
+
   orderNumber:number=222220910400113;
   // orderNumber:number
   orderedDate:Date;
@@ -96,6 +103,9 @@ export class OrderDetailsUpdationComponent implements OnInit {
   contactPerson:string;
   mobile1:string;
 
+  custGst:string;
+  custPan:string;
+
   leadTicketNo:string;
 
 
@@ -125,6 +135,12 @@ export class OrderDetailsUpdationComponent implements OnInit {
 
       custPoNumber:[],
       custPoDate:[],
+      csdPoNo:[],
+      csdDate:[],
+      csdIndexNo:[],
+      msRefType:[],
+      msRefNo:[],
+      msRefCustNo:[],
 
       orderNumber:[],
       orderedDate:[],
@@ -163,6 +179,8 @@ export class OrderDetailsUpdationComponent implements OnInit {
       state:[],
       pinCd:[],
       mobile1:[],
+      custGst:[],
+      custPan:[],
 
       title:[],
       contactPerson:[],
@@ -222,6 +240,14 @@ export class OrderDetailsUpdationComponent implements OnInit {
           console.log(this.financeTypeList);
         }
       );
+  }
+
+
+  getPanFromGst(gstn)
+  {
+    // alert ("gstn :"+gstn);
+    var pan1 = gstn.substr(2, 10);
+    this.custPan = pan1;
   }
 
   onOptionsSelectedTL(ticketNo: any) {

@@ -25,6 +25,11 @@ getJonCardNoSearchLoc(jcNum,jDate,jStatus,jRegNo,jLocId): Observable<any> {
   return this.http.get(this.ServerUrl +`/jobCard/jobList?jobDate=${jDate}&status=${jStatus}&locId=${jLocId}&jobCardNum=${jcNum}&regNo=${jRegNo}`);
   }
 
+getJonCardNoSearchOu(jcNum,jDate,jStatus,jRegNo,jouId): Observable<any> {
+  return this.http.get(this.ServerUrl +`/jobCard/jobListAccount?jobDate=${jDate}&status=${jStatus}&ouId=${jouId}&jobCardNum=${jcNum}&regNo=${jRegNo}`);
+  // http://localhost:8081/jobCard/jobListAccount?jobDate=2022-07-08&status=Opened&ouId=21&jobCardNum=null&regNo=null
+}
+
 
   getPendingjcListForGP(jRegNo,jLocId): Observable<any> {
   return this.http.get(this.ServerUrl +`/jobCard/pendingList?locId=${jLocId}&regNo=${jRegNo}`);
