@@ -44,6 +44,13 @@ UpdateValidate(invoiceNum) {
   const url = (this.ServerUrl + `/apInv/invValidate?invNum=${invoiceNum}`);
   return this.http.put(url, invoiceNum, options);
 }
+UpdateValidateSupwise(invoiceNum,suppNo) {
+  const options = {
+    headers: this.headers
+  };
+  const url = (this.ServerUrl + `/apInv/invValidateBySupp?invNum=${invoiceNum}&suppNo=${suppNo}`);
+  return this.http.put(url, invoiceNum, options);
+}
 
 apInvoiceCancellation(invoiceNum,emplId): Observable<any> {
   const options = {
@@ -55,6 +62,9 @@ apInvoiceCancellation(invoiceNum,emplId): Observable<any> {
 
   getApInvLineDetails(invoiceNum): Observable<any> {
     return this.http.get(this.ServerUrl + `/apInv/invDtls?invNum=${invoiceNum}`);
+  }
+  getApInvLineDetailsSupwise(invoiceNum,suppNo): Observable<any> {
+    return this.http.get(this.ServerUrl + `/apInv/invDtlsBySuppNo?invNum=${invoiceNum}&suppNo=${suppNo}`);
   }
 
   distLinesDeatailsfa(invoiceId,lineNumber): Observable<any> {

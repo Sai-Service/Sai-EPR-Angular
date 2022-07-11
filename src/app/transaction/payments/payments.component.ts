@@ -133,7 +133,7 @@ export class PaymentsComponent implements OnInit {
   periodName: string;
   runningTotalDr: number;
   runningTotalCr: number;
-  viewAccounting1: any;
+  viewAccounting1: any=[];
   description: string;
   ledgerId: string;
   docSeqValue: string;
@@ -1026,7 +1026,7 @@ console.log(jsonData);
             // this.paymentForm.patchValue(this.paymentData);
             console.log(this.paymentData);
             for (let k = 0; k < this.payHeaderLineDtlArray().length; k++) {
-              var selloc=this.locIdList.find(d=>d.locId===this.paymentData[k].locId)
+              var selloc=this.locIdList.find(d=>d.locId===this.paymentDocdata[k].locId)
               // debugger;
               patch.controls[k].patchValue({locId:selloc.locId});
               }
@@ -1039,11 +1039,12 @@ console.log(jsonData);
         });
     
   }
-      viewAcc(documentNo){
+      viewAcc(documentNo,invoiceId){
         // alert(documentNo)
         var docVal=this.paymentForm.get('obj').value;
+        alert(invoiceId);
         // var docNo=docVal[0].docNo
-        this.service.viewAccountingApReceipt(documentNo).subscribe((res: any) => {
+        this.service.viewAccountingbyApReceipt(documentNo,invoiceId).subscribe((res: any) => {
           if (res.code === 200) {
             this.viewAccountingApRcpt = res.obj;
             this.description = res.obj[0].description;
@@ -1055,8 +1056,21 @@ console.log(jsonData);
             this.runningTotalDr = res.obj[0].runningTotalDr;
             this.runningTotalCr = res.obj[0].runningTotalCr;
             this.docSeqValue = res.obj[0].docSeqValue;
-            console.log(this.description);
-            this.viewAccounting1 = res.obj[0].glLines;
+            console.log(this.PaymentReturnArr);
+            // debugger;
+            for(var i=0;i<res.obj.length;i++){
+              var gllnArr=res.obj[i].glLines;
+              for(var j=0;j<gllnArr.length;j++){
+                if(gllnArr[j].invoiceId!=null){
+                // var viewAcc=gllnArr[j].find(d=>d.gllnArr[j].invoiceId===invoiceId);
+
+                // console.log(viewAcc);
+                this.viewAccounting1=gllnArr;
+                }
+            }}
+
+            
+            // this.viewAccounting1 = viewAcc;
             console.log(this.viewAccounting1);
             console.log(this.viewAccountingApRcpt);
           } else {
