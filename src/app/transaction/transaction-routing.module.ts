@@ -58,7 +58,7 @@ const routes: Routes = [
   {path:'TdsInvoice',component:TdsInvoiceComponent},
   {path:'Payment',component:PaymentsComponent},
   {path:'Payment/:invNumber',component:PaymentsComponent},
-  {path:'payableInvoice/:invNumber',component:PayableInvoiceNewComponent},
+  // {path:'payableInvoice/:invNumber',component:PayableInvoiceNewComponent},comment by vinita
   {path:'ARInvoice', component:ARInvoiceComponent},
   {path:'ARInvoice/:invoiceNumber', component:ARInvoiceComponent},
   {path:'AvgCostUpdate',component:AvgCostUpdateComponent},
@@ -69,6 +69,7 @@ const routes: Routes = [
   {path:'PaymentAr/:invNumber/:methodId/:recAmt',component:PaymentArComponent},
   {path:'PaymentAr',component:PaymentArComponent},
   {path:'PaymentAr/:docSequenceValue/:locId',component:PaymentArComponent},
+  {path: 'payableInvoice/:invNo',component:PayableInvoiceNewComponent},
   {path:'PaymentAr/:orderNumber',component:PaymentArComponent},
   {path:'Payment/: trxNum /:catg' ,component:PaymentsComponent},
   {path:'SaiExtendedWarranty',component:SaiExtendedWarrantyComponent},

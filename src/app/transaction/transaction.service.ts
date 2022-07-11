@@ -29,6 +29,9 @@ export class TransactionService {
     return this.http.post(url, content, options);
   }
 
+  getsearchByApDoc(docNo): Observable<any> {
+    return this.http.get(this.ServerUrl + `/apInv/SearchDocNoWise?documentNo=${docNo}`);
+  }
   // public getsearchByPayment(content) {
   //   const options = {
   //     headers: this.headers
