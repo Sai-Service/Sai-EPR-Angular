@@ -109,13 +109,21 @@
                         class="form-control" style="width:150px">
                 </td>
 
+                <td>
+                    <button type="button"  class="btn btn-primary" 
+                    data-toggle="modal" data-target="#moreDetails"   style="width:fit-content;color: black;">
+                    More...</button>
+                </td>
+
             </tr>
-            <tr>
-                <td style="width: 15%" class="LabelFontStyle">Cust&nbsp;PO&nbsp;No:&nbsp;</td>
-                <td> <input  type="text" formControlName="custPoNumber" [(ngModel)]='custPoNumber' class="form-control"></td>
-                <td style="width: 15%" class="LabelFontStyle">Cust&nbsp;PO&nbsp;Date:&nbsp;</td>                
-                <td><input  type="date" formControlName="custPoDate" [(ngModel)]='custPoDate'  class="form-control"> </td>
-            </tr>
+           
+            <!-- <tr>
+                <td>
+                    <button type="button"  class="btn btn-primary" 
+                    data-toggle="modal" data-target="#moreDetails"   style="width:fit-content;color: black;">
+                    More...</button>
+                </td> -->
+            <!-- </tr> -->
             </table>
 
         </fieldset>
@@ -154,7 +162,7 @@
             </tr>
             <tr>
                
-                 <td style="width: 15%" class="LabelFontStyle">State&nbsp;:&nbsp;</td>
+                <td style="width: 15%" class="LabelFontStyle">State&nbsp;:&nbsp;</td>
                 <td><input  type="text" formControlName="state" value={{state}} [(ngModel)] ="state" class="form-control" style="width:300px;"></td>
                 <td style="width: 15%" class="LabelFontStyle">Contact&nbsp;Person&nbsp;:&nbsp;</td>
                 <td ><input  type="text" formControlName="contactPerson" value={{contactPerson}} [(ngModel)] ="contactPerson" class="form-control" style="width:300px;" ></td>
@@ -163,6 +171,17 @@
                 <td ><input  type="text" formControlName="pinCd" value={{pinCd}} [(ngModel)] ="pinCd" class="form-control" ></td>
        
             </tr>
+
+            <tr>
+               
+                <td style="width: 15%" class="LabelFontStyle">GST&nbsp;No:&nbsp;</td>
+                <td><input  type="text" formControlName="custGst" value={{custGst}} [(ngModel)] ="custGst" class="form-control" style="width:300px;" (change)="getPanFromGst(custGst)"></td>
+                <td style="width: 15%" class="LabelFontStyle">PAN&nbsp;:&nbsp;</td>
+                <td ><input disabled type="text" formControlName="custPan" value={{custPan}} [(ngModel)] ="custPan" class="form-control" style="width:300px;" ></td>
+           
+            </tr>
+
+
             </table>
         </fieldset>
 
@@ -282,4 +301,65 @@
 </div>
 </div>
 </div>
+
+
+<div class="modal fade" id="moreDetails" tabindex="-1" role="dialog" aria-labelledby="moreDetailsLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="max-width: fit-content;">
+        <div class="modal-content">
+         <div class="modal-header">
+          <h6 class="modal-title" id="exampleModal20Label">Order&nbsp;No:&nbsp;{{orderNumber}}</h6>
+          
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+         </div>
+        
+         <div class="modal-body">
+            <table class="center" style="width: 100%;">
+                <tr>
+
+                    <fieldset class="RFS">
+                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">OTHER DETAILS</legend>
+                    <table class="center">
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle">Cust&nbsp;PO&nbsp;No:&nbsp;</td>
+                            <td> <input  type="text" formControlName="custPoNumber" [(ngModel)]='custPoNumber' class="form-control"></td>
+                            <td style="width: 15%" class="LabelFontStyle">Cust&nbsp;PO&nbsp;Date:&nbsp;</td>                
+                            <td><input  type="date" formControlName="custPoDate" [(ngModel)]='custPoDate'  class="form-control"> </td>
+                        </tr>
+
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle">CSD&nbsp;PO&nbsp;No:&nbsp;</td>
+                            <td> <input  type="text" formControlName="csdPoNo" [(ngModel)]='csdPoNo' class="form-control"></td>
+                            <td style="width: 15%" class="LabelFontStyle">CSD&nbsp;PO&nbsp;Date:&nbsp;</td>                
+                            <td><input  type="date" formControlName="csdDate" [(ngModel)]='csdDate'  class="form-control"> </td>
+                            <td style="width: 15%" class="LabelFontStyle">CSD&nbsp;Index&nbsp;No:&nbsp;</td>                
+                            <td><input  type="text" formControlName="csdIndexNo" [(ngModel)]='csdIndexNo'  class="form-control"> </td>
+                        </tr>
+
+
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle">MSF&nbsp;Ref&nbsp;Type:&nbsp;</td>
+                            <td> <input  type="text" formControlName="msRefType" [(ngModel)]='msRefType' class="form-control"></td>
+                            <td style="width: 15%" class="LabelFontStyle">MSF&nbsp;Ref&nbsp;No:&nbsp;</td>                
+                            <td><input  type="date" formControlName="msRefNo" [(ngModel)]='msRefNo'  class="form-control"> </td>
+                            <td style="width: 15%" class="LabelFontStyle">MSF&nbsp;Ref&nbsp;CustNo:&nbsp;</td>                
+                            <td><input  type="text" formControlName="msRefCustNo" [(ngModel)]='msRefCustNo'  class="form-control"> </td>
+                        </tr>
+
+                       
+
+                    </table>
+                    </fieldset>
+                    <div class="modal-footer">
+                       <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+                    </div>
+                </tr>
+            </table>
+         </div>
+        </div>
+    </div>
+   </div>
+
+
 </form>

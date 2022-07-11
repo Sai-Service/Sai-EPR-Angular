@@ -1623,14 +1623,23 @@ export class JobCardComponent implements OnInit {
 
   Search(jobCardNo) {
 
+    //  ---------------------------For Account Login ------------------
+      if (Number(sessionStorage.getItem('dept')) ===4)  {
+            this.jobcardForm.disable();
+            this.jobcardForm.get('jobCardLabLines').disable();
+            this.jobcardForm.get('jobCardMatLines').disable();
+            this.jobcardForm.get('splitAmounts').disable();
+      }
+    // --------------------------------------------------------------
+
     var  jcNum=jobCardNo.toUpperCase();
     this.saveLabButton=true;
     this.displaybilling=true;
-    
     this.jobcardForm.reset();
     // this.lineDetailsArray.clear();
     this.jobcardForm.get('jobCardLabLines').reset();
     this.jobcardForm.get('jobCardMatLines').reset();
+
 
     var lenLab = this.lineDetailsArray.length;
     var lenMat = this.lineDistributionArray().length;
@@ -1818,6 +1827,7 @@ export class JobCardComponent implements OnInit {
           }
 
 
+        
         
           // debugger;
           this.jobcardForm.patchValue(this.lstcomments);
@@ -3715,25 +3725,34 @@ getMessage(msgType:string){
         var jDate=this.jobcardForm.get('JobOpenDt').value;
         var jStatus=this.jobcardForm.get('jobStatus1').value;
         var jLocId=this.locId;
+        var jOuId =this.ouId;
 
         if(jcNum==undefined || jcNum==null || jcNum.trim()=='') {jcNum=null;} else{jcNum=jcNum.toUpperCase();}
         if(jRegNo==undefined || jRegNo==null || jRegNo.trim()=='') {jRegNo=null} else {jRegNo=jRegNo.toUpperCase();}
         if(jDate==undefined || jDate==null || jDate=='' ) {jDate=null}
         if(jStatus==undefined || jStatus==null || jStatus.trim()=='') {jStatus=null}
 
-        // this.jobcardForm.reset();
-        // alert (jcNum +","+jRegNo +","+jDate +","+jStatus +","+jLocId);
 
-        this.serviceService.getJonCardNoSearchLoc(jcNum,jDate,jStatus,jRegNo,jLocId)
-        .subscribe(
-          data => {
-            // alert ("data.length :"+data.length);
-            if(data.length >0) {
-            this.lstJobcardList = data;
-            console.log(this.lstJobcardList); 
-            } else {  alert("No Jobcard found for the given criteria...")}
-
-           });
+        if (Number(sessionStorage.getItem('dept')) ===4)  {
+          this.serviceService.getJonCardNoSearchOu(jcNum,jDate,jStatus,jRegNo,jOuId)
+          .subscribe(
+            data => {
+              if(data.length >0) {
+              this.lstJobcardList = data;
+              console.log(this.lstJobcardList); 
+              } else {  alert("No Jobcard found for the given criteria...")}
+            });
+          } 
+        else{
+            this.serviceService.getJonCardNoSearchLoc(jcNum,jDate,jStatus,jRegNo,jLocId)
+            .subscribe(
+              data => {
+                if(data.length >0) {
+                this.lstJobcardList = data;
+                console.log(this.lstJobcardList); 
+                } else {  alert("No Jobcard found for the given criteria...")}
+              });
+          }
         
         }
 
