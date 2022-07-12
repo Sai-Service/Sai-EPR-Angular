@@ -347,9 +347,9 @@
                                                                         </option>
                                                                     </select> -->
                                                                     <input type="text" formControlName="description"
-                                                                    list="dynmicUserIds1" class="form-control" style="width: 100px;height: 25px;font-size: 10px;"
+                                                                    list="dynmicUserIds2" class="form-control" style="width: 100px;height: 25px;font-size: 10px;"
                                                                     (change)="onSelectChassis($event,i)" />
-                                                                <datalist id="dynmicUserIds1">
+                                                                <datalist id="dynmicUserIds2">
                                                                     <option *ngFor="let chassisList of chassisNoList"
                                                                     [value]="chassisList.orderedItem">{{chassisList.orderedItem}}
                                                                     </option>
