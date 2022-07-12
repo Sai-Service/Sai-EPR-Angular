@@ -28,6 +28,15 @@ export class OrderManagementService {
 
   }
 
+  UpdateOrderDetails(saleOrderRecord) {
+    const options = {
+      headers: this.headers
+    };
+    const url = (this.ServerUrl + `/orderHeader/orderUpdate`);
+    return this.http.put(url, saleOrderRecord, options);
+    // http://localhost:8081/orderHeader/orderUpdate
+  }
+
 
   categoryList(): Observable<any> {
     return this.http.get(this.ServerUrl + `/itemCategory/type`);

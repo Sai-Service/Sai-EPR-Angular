@@ -47,36 +47,12 @@
             <table>
             <tr>
             <td style="width: 22%;font-weight: bold;" class="LabelFontStyle"> Order&nbsp;No&nbsp;:&nbsp;  </td>
-            <td>
-                <input disabled type="text" class="form-control" formControlName="orderNumber"
-                    [(ngModel)]='orderNumber' value={{orderNumber}} style="font-weight: bold;"> </td>
-          
-
-            <td style="width: 15%" class="LabelFontStyle">Executive&nbsp;:&nbsp;</td>
-            <td>
-                <select formControlName="salesRepName" id="salesRepName" [(ngModel)]="salesRepName"  class="form-control"
-                    (ngModelChange)="onOptionsSelectedTL($event)" style="width:200px" >
-                    <!-- <option>--Select--</option> -->
-                    <option *ngFor="let pt of salesRepNameList" [(ngValue)]="pt.description">
-                        {{pt.ticketNo}}-{{pt.description}}
-                    </option>
-                </select>
-
-            </td>
-
-            <td style="width: 15%" class="LabelFontStyle"> TL&nbsp;Name&nbsp;:&nbsp;</td>
-            <td><input disabled type="text" formControlName="tlName" [(ngModel)]='tlName'
-                    value={{tlName}} class="form-control" style="width:200px"  ></td>
-            
-            <td style="width: 22%" class="LabelFontStyle">Order&nbsp;Date&nbsp;:&nbsp;</td>
-            <td><input disabled type="date" class="form-control" formControlName="orderedDate"
-                            value={{orderedDate}} [ngModel]="orderedDate | date:'yyyy-MM-dd'"  style="width:150px"></td>
-            </tr>
-            
-            <tr>
+            <td><input disabled type="text" class="form-control" formControlName="orderNumber"
+                [(ngModel)]='orderNumber' value={{orderNumber}} style="font-weight: bold;"> </td>
+        
                 <td style="width: 15%" class="LabelFontStyle">Model&nbsp;:&nbsp;</td>
                 <td>
-                    <select disabled formControlName="model" id="model" class="form-control" 
+                    <select disabled formControlName="model" id="model" class="form-control" style="width:230px"
                         (ngModelChange)="onOptionsSelectedVariant($event)">
                         <option>--Select--</option>
                         <option *ngFor="let mm of mainModelList" [ngValue]="mm.code">
@@ -84,30 +60,63 @@
                         </option>
                     </select>
                 </td>
-                <td style="width: 15%" class="LabelFontStyle">Variant&nbsp;:&nbsp;</td>
-                <td>
-                    <select formControlName="variant" id="variant" class="form-control"
-                         (ngModelChange)="onOptionsSelectedColor($event)" style="width:200px" >
-                        <option>--Select--</option>
-                        <option *ngFor="let mm of VariantSearch" [ngValue]="mm.variant">
-                            {{mm.variant}}--{{mm.varDescription}}
-                        </option>
-                    </select>
-                </td>
+
                 <td style="width: 15%" class="LabelFontStyle">Color&nbsp;:&nbsp;</td>
                 <td>
-                    <select formControlName="color" id="color" class="form-control" style="width:200px" >
+                    <select formControlName="color" id="color" class="form-control" style="width:230px" >
                         <option>--Select--</option>
                         <option *ngFor="let cc of ColourSearch" [ngValue]="cc.ColorCode">
                             {{cc.ColorCode}}--{{cc.colorDesc}}
                         </option>
                     </select>
                 </td>
+
                 <td style="width: 15%" class="LabelFontStyle">Fuel&nbsp;Type&nbsp;:&nbsp;</td>
                 <td>
                     <input disabled type="text" formControlName="fuelType" [(ngModel)]='fuelType'
-                        class="form-control" style="width:150px">
+                        class="form-control" style="width:100px">
                 </td>
+
+          
+
+            <!-- <td style="width: 15%" class="LabelFontStyle"> TL&nbsp;Name&nbsp;:&nbsp;</td>
+            <td><input disabled type="text" formControlName="tlName" [(ngModel)]='tlName'
+                    value={{tlName}} class="form-control" style="width:200px"  ></td>
+             -->
+                </tr>
+            
+            <tr>
+
+                <td style="width: 22%" class="LabelFontStyle">Order&nbsp;Date&nbsp;:&nbsp;</td>
+                <td><input disabled type="date" class="form-control" formControlName="orderedDate"
+                                value={{orderedDate}} [ngModel]="orderedDate | date:'yyyy-MM-dd'"  ></td>
+    
+                                
+             
+                <td style="width: 15%" class="LabelFontStyle">Variant&nbsp;:&nbsp;</td>
+                <td>
+                    <select formControlName="variant" id="variant" class="form-control"
+                         (ngModelChange)="onOptionsSelectedColor($event)" style="width:230px" >
+                        <option>--Select--</option>
+                        <option *ngFor="let mm of VariantSearch" [ngValue]="mm.variant">
+                            {{mm.variant}}--{{mm.varDescription}}
+                        </option>
+                    </select>
+                </td>
+               
+                <td style="width: 15%" class="LabelFontStyle">Executive&nbsp;:&nbsp;</td>
+                <td>
+                    <select formControlName="salesRepName" id="salesRepName" [(ngModel)]="salesRepName"  class="form-control"
+                        (ngModelChange)="onOptionsSelectedTL($event)" style="width:230px" >
+                        <!-- <option>--Select--</option> -->
+                        <option *ngFor="let pt of salesRepNameList" [(ngValue)]="pt.description">
+                            {{pt.ticketNo}}-{{pt.description}}
+                        </option>
+                    </select>
+    
+                </td>
+
+                <td></td>
 
                 <td>
                     <button type="button"  class="btn btn-primary" 
@@ -135,7 +144,7 @@
                 <td style="width: 15%" class="LabelFontStyle">Customer&nbsp;No&nbsp;:&nbsp;</td>
                 <td><input disabled type="number" formControlName="accountNo" value={{accountNo}} [(ngModel)] ="accountNo" class="form-control" ></td>
                 <td style="width: 15%" class="LabelFontStyle">Customer&nbsp;Name&nbsp;:&nbsp;</td>
-                <td ><input disabled type="text" formControlName="custName" value={{custName}} [(ngModel)] ="custName" class="form-control" style="width:300px ;" ></td>
+                <td ><input disabled type="text" formControlName="custName" value={{custName}} [(ngModel)] ="custName" class="form-control" style="width:290px ;" ></td>
                 <td style="width: 15%" class="LabelFontStyle">Title&nbsp;&nbsp;:&nbsp;</td>
                 <td ><input  type="text" formControlName="title" value={{title}} [(ngModel)] ="title" class="form-control" ></td>
                
@@ -143,9 +152,9 @@
 
             <tr>
                 <td style="width: 15%" class="LabelFontStyle">Address1&nbsp;:&nbsp;</td>
-                <td><input  type="text" formControlName="address1" value={{address1}} [(ngModel)] ="address1" class="form-control" style="width:300px;" ></td>
+                <td><input  type="text" formControlName="address1" value={{address1}} [(ngModel)] ="address1" class="form-control" style="width:290px;" ></td>
                  <td style="width: 15%" class="LabelFontStyle">Address2&nbsp;:&nbsp;</td>
-                <td><input  type="text" formControlName="address2" value={{address2}} [(ngModel)] ="address2" class="form-control" style="width:300px;"></td>
+                <td><input  type="text" formControlName="address2" value={{address2}} [(ngModel)] ="address2" class="form-control" style="width:290px;"></td>
                 <td style="width: 15%" class="LabelFontStyle">Contact&nbsp;No:&nbsp;</td>
                 <td><input  type="text" formControlName="mobile1" value={{mobile1}} [(ngModel)] ="mobile1" class="form-control" ></td>
             
@@ -153,9 +162,9 @@
             </tr> 
             <tr>
                 <td style="width: 15%" class="LabelFontStyle">Address3&nbsp;:&nbsp;</td>
-                <td><input  type="text" formControlName="address3" value={{address3}} [(ngModel)] ="address3" class="form-control" style="width:300px;"></td>
+                <td><input  type="text" formControlName="address3" value={{address3}} [(ngModel)] ="address3" class="form-control" style="width:290px;"></td>
                 <td style="width: 15%" class="LabelFontStyle">Address4&nbsp;:&nbsp;</td>
-                <td><input  type="text" formControlName="address4" value={{address4}} [(ngModel)] ="address4" class="form-control" style="width:300px;"></td>
+                <td><input  type="text" formControlName="address4" value={{address4}} [(ngModel)] ="address4" class="form-control" style="width:290px;"></td>
                 <td style="width: 15%" class="LabelFontStyle">City&nbsp;:&nbsp;</td>
                 <td><input  type="text" formControlName="city" value={{city}} [(ngModel)] ="city" class="form-control" ></td>
               
@@ -163,9 +172,9 @@
             <tr>
                
                 <td style="width: 15%" class="LabelFontStyle">State&nbsp;:&nbsp;</td>
-                <td><input  type="text" formControlName="state" value={{state}} [(ngModel)] ="state" class="form-control" style="width:300px;"></td>
+                <td><input  type="text" formControlName="state" value={{state}} [(ngModel)] ="state" class="form-control" style="width:290px;"></td>
                 <td style="width: 15%" class="LabelFontStyle">Contact&nbsp;Person&nbsp;:&nbsp;</td>
-                <td ><input  type="text" formControlName="contactPerson" value={{contactPerson}} [(ngModel)] ="contactPerson" class="form-control" style="width:300px;" ></td>
+                <td ><input  type="text" formControlName="contactPerson" value={{contactPerson}} [(ngModel)] ="contactPerson" class="form-control" style="width:290px;" ></td>
            
                 <td style="width: 15%" class="LabelFontStyle">PIN&nbsp;:&nbsp;</td>
                 <td ><input  type="text" formControlName="pinCd" value={{pinCd}} [(ngModel)] ="pinCd" class="form-control" ></td>
@@ -173,11 +182,14 @@
             </tr>
 
             <tr>
-               
+                
+   
+                <td style="width: 15%" class="LabelFontStyle">Email&nbsp;Id:&nbsp;</td>
+                <td><input  type="text" formControlName="emailId" value={{emailId}} [(ngModel)] ="emailId" class="form-control" style="width:290px;" (change)="getPanFromGst(custGst)"></td>
                 <td style="width: 15%" class="LabelFontStyle">GST&nbsp;No:&nbsp;</td>
-                <td><input  type="text" formControlName="custGst" value={{custGst}} [(ngModel)] ="custGst" class="form-control" style="width:300px;" (change)="getPanFromGst(custGst)"></td>
+                <td><input  type="text" formControlName="custGst" value={{custGst}} [(ngModel)] ="custGst" class="form-control" style="width:290px;" (change)="getPanFromGst(custGst)"></td>
                 <td style="width: 15%" class="LabelFontStyle">PAN&nbsp;:&nbsp;</td>
-                <td ><input disabled type="text" formControlName="custPan" value={{custPan}} [(ngModel)] ="custPan" class="form-control" style="width:300px;" ></td>
+                <td ><input  type="text" formControlName="custPan" value={{custPan}} [(ngModel)] ="custPan" class="form-control"  ></td>
            
             </tr>
 
@@ -191,7 +203,7 @@
         <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">ADDITIONAL DETAILS</legend>
         <table>
         <tr>
-            <td style="width: 15%" class="LabelFontStyle">Finance&nbsp;Type&nbsp;:&nbsp;</td>
+            <td style="width: 15%;color: blue;font-weight: bold;" class="LabelFontStyle">Finance&nbsp;Type&nbsp;:&nbsp;</td>
             <td>
                 <select type="text" formControlName="financeType" id="financeType"
                     class="form-control" (change)="financeSelectionYes($event)">
@@ -206,7 +218,7 @@
             </ng-template>
             <ng-template #finYes1>
                 <td style="width: 15%" class="LabelFontStyle">Financer&nbsp;:&nbsp;</td>
-                <td><select type="text" formControlName="financerName" id="financerName"
+                <td colspan="3"><select type="text" formControlName="financerName" id="financerName" style="width:100% ;"
                         class="form-control" >
                         <option>--Select--</option>
                         <option *ngFor="let finName of  financerNameList"
@@ -215,10 +227,8 @@
                 </select>
                 </td>
                 <td style="width: 15%" class="LabelFontStyle">Finance&nbsp;Amt&nbsp;:&nbsp;</td>
-                <td><input type="number" formControlName="financeAmt" value={{financeAmt}} class="form-control" ></td>
-                <td style="width: 15%" class="LabelFontStyle">EMI&nbsp;:&nbsp;</td>
-                <td><input type="number" formControlName="emi" value={{emi}} class="form-control" style="width:145px;"></td>
-            </ng-template>
+                <td><input type="number" formControlName="financeAmt" value={{financeAmt}} class="form-control" style="width:145px;"></td>
+                </ng-template>
         </tr>
 
         <div *ngIf="DisplayfinanceSelectionYes; then finYes2; else finNo2"> </div>
@@ -228,13 +238,16 @@
         <tr>
             <td></td><td></td>
             <td style="width: 15%" class="LabelFontStyle">Tenure&nbsp;:&nbsp;</td>
-            <td><input type="number" formControlName="tenure" value={{tenure}} class="form-control" ></td>
+            <td><input type="number" formControlName="tenure" value={{tenure}} class="form-control" style="width:145px;"></td>
             <td style="width: 15%" class="LabelFontStyle">Down&nbsp;Payment&nbsp;:&nbsp;</td>
-            <td><input type="number" formControlName="downPayment"   value={{downPayment}} class="form-control" ></td>
+            <td><input type="number" formControlName="downPayment" value={{downPayment}} class="form-control" ></td>
+            <td style="width: 15%" class="LabelFontStyle">EMI&nbsp;:&nbsp;</td>
+            <td><input type="number" formControlName="emi" value={{emi}} class="form-control" style="width:145px;"></td>
+  
         </tr>
         </ng-template>
         <tr>
-        <td style="width: 15%" class="LabelFontStyle">Exchange&nbsp;:&nbsp;</td>
+        <td style="width: 15%;color: blue;font-weight: bold;" class="LabelFontStyle">Exchange&nbsp;:&nbsp;</td>
         <td>
             <select type="text" formControlName="exchangeYN" id="exchangeYN"
                 class="form-control" 
@@ -251,12 +264,10 @@
         </ng-template>
         <ng-template #exYes1>
             <td style="width: 15%" class="LabelFontStyle">Loyalty&nbsp;Bonus&nbsp;:&nbsp;</td>
-            <td><input type="number" formControlName="loyaltyBonus" class="form-control" ></td>
-            <td style="width: 15%" class="LabelFontStyle">RegNo/Remark&nbsp;:&nbsp;</td>
-            <td><input type="text" formControlName="exRegNo" class="form-control" ></td>
-            <td style="width: 15%" class="LabelFontStyle">Ins&nbsp;Charges&nbsp;:&nbsp;</td>
-            <td><input type="number" formControlName="insCharges" class="form-control" style="width:145px;" ></td>
-           
+            <td><input type="number" formControlName="loyaltyBonus" class="form-control" style="width:145px;"></td>
+            <td style="width: 15%" class="LabelFontStyle">RegNo|Remark&nbsp;:&nbsp;</td>
+            <td colspan="3"><input type="text" formControlName="exRegNo" class="form-control" style="width: 100%;" ></td>
+               
         </ng-template>
         </tr>
 
@@ -264,13 +275,15 @@
         <ng-template #exNo2></ng-template>
         <ng-template #exYes2>
         <tr>
-            <td></td><td></td>
+            <!-- <td></td><td></td> -->
             <td style="width: 15%" class="LabelFontStyle">Offer&nbsp;Price&nbsp;:&nbsp;</td>
             <td><input type="text" formControlName="offerPrice" class="form-control" > </td>
-
+            <td style="width: 15%" class="LabelFontStyle">Ins&nbsp;Charges&nbsp;:&nbsp;</td>
+            <td><input type="number" formControlName="insCharges" class="form-control"  style="width:145px;"></td>
+      
             <td style="width: 15%" class="LabelFontStyle">Dealer&nbsp;Name&nbsp;:&nbsp;</td>
-            <td>
-                <select type="text" formControlName="tvBroker" id="tvBroker"
+            <td colspan="3">
+                <select type="text" formControlName="tvBroker" id="tvBroker" style="width: 100%;"
                     class="form-control" >
                     <option>--Select--</option>
                     <option *ngFor="let sc of  truValueList"
@@ -289,9 +302,16 @@
 
         <table class="center">
             <tr>
-                     <td><button type="button" class="btn btn-info" (click)="newMast()" >Save</button></td>
-                     <td><button type="button" class="btn btn-info" (click)="resetMast()">Reset</button></td>
-                     <td><button type="button" class="btn btn-info" (click)="closeMast()">Close</button></td>
+                <div *ngIf="saveButton; then SaveYes; else SaveNo"></div>
+                <ng-template #SaveYes>
+                    <td><button type="button" class="btn btn-info" (click)="updateMast()" >Save</button></td>
+                </ng-template> 
+                <ng-template #SaveNo>
+                    <td><button disabled type="button" class="btn btn-info" >Save</button></td>
+                </ng-template>
+                    
+                    <td><button type="button" class="btn btn-info" (click)="resetMast()">Reset</button></td>
+                    <td><button type="button" class="btn btn-info" (click)="closeMast()">Close</button></td>
 
             </tr>
         </table>
