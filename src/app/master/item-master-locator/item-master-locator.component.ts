@@ -218,8 +218,9 @@ export class ItemMasterLocatorComponent implements OnInit {
 
   okLocator()
   {
-   var subInventoryId=this.ItemlocatorMasterForm.get('subId').value;
-    alert(subInventoryId)
+  //  var subInventoryId=this.ItemlocatorMasterForm.get('subId').value;
+  var formValue=this.ItemlocatorMasterForm.value;
+    // alert(subInventoryId)
     this.LocatorSegment=this.ItemlocatorMasterForm.get('Floor').value.toUpperCase()+'.'+
                                  this.ItemlocatorMasterForm.get('Rack').value.toUpperCase()+'.'+
                                  this.ItemlocatorMasterForm.get('RackNo').value.toUpperCase()+'.'+
@@ -228,7 +229,7 @@ export class ItemMasterLocatorComponent implements OnInit {
     var LocatorSegment1=this.LocatorSegment.toUpperCase();
     // alert(LocatorSegment1);
     this.ItemlocatorMasterForm.patchValue({'attribute8': this.LocatorSegment.toUpperCase()})
-    this.service.LocatorNameList(LocatorSegment1,Number(sessionStorage.getItem('locId')),subInventoryId).subscribe
+    this.service.LocatorNameList(LocatorSegment1,Number(sessionStorage.getItem('locId')),formValue.subInventoryId).subscribe
     (data =>{
        this.LocatorList = data
        if(this.LocatorList.code===200) {

@@ -245,7 +245,10 @@ SelectTbAct2(trxNum,refNum,catg,source){
   this.router.navigate(['/admin/transaction/ARInvoice', trxNum]);
   } 
   else if(source==='Payables' && catg==='Purchase Invoice'){
-    this.router.navigate(['/admin/transaction/payableInvoice', trxNum]);
+    var invNo1=refNum.split('-');
+    var invNo=invNo1[0];
+    // alert(invNo);
+    this.router.navigate(['/admin/transaction/payableInvoice', invNo]);
   }  
   else if(source==='Purchasing' && catg==='Po_Receipt'){
     this.router.navigate(['/admin/master/PoReceiptForm'],{ queryParams: { trxNum: trxNum,catg:catg }});
@@ -256,6 +259,19 @@ SelectTbAct2(trxNum,refNum,catg,source){
     this.router.navigate(['/admin/transaction/Payment'], { queryParams: { trxNum: trxNum,catg:catg } } );
     alert ("Source - Purchasing , Category - "+catg +" ..Wip...")
   } 
+  else if(source==='Receivables' && catg==='Receipts' ){
+    // this.router.navigate(['/admin/transaction/Payment', trxNum]);
+    // this.router.navigate(['/admin/transaction/Payment'], { queryParams: { trxNum: trxNum,catg:catg } } );
+    this.router.navigate(['/admin/transaction/PaymentAr',trxNum]);
+    alert ("Source - Purchasing , Category - "+catg +" ..Wip...")
+  } 
+  else if(catg==='JV Manual Creation' ){
+    // this.router.navigate(['/admin/transaction/Payment', trxNum]);
+    var docSequenceValue =trxNum;
+    this.router.navigate(['/admin/transaction/journalVoucher',docSequenceValue] );
+    alert ("Category - "+catg +" ..Wip...")
+  } 
+
   else {alert ("Work In Progress")}
   
 }

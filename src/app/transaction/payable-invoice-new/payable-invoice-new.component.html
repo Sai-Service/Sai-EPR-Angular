@@ -347,9 +347,9 @@
                                                                         </option>
                                                                     </select> -->
                                                                     <input type="text" formControlName="description"
-                                                                    list="dynmicUserIds1" class="form-control" style="width: 100px;height: 25px;font-size: 10px;"
+                                                                    list="dynmicUserIds2" class="form-control" style="width: 100px;height: 25px;font-size: 10px;"
                                                                     (change)="onSelectChassis($event,i)" />
-                                                                <datalist id="dynmicUserIds1">
+                                                                <datalist id="dynmicUserIds2">
                                                                     <option *ngFor="let chassisList of chassisNoList"
                                                                     [value]="chassisList.orderedItem">{{chassisList.orderedItem}}
                                                                     </option>
@@ -398,7 +398,7 @@
                                                     <td>
                                                         <input disabled type="text" formControlName="invTypeLookupCode"
                                                             class="form-control" style="width: 150px;height: 25px;">
-                                                        <input type="text" disabled  class="form-control"
+                                                        <input type="text" disabled hidden class="form-control"
                                                             formControlName="source"
                                                             style="width: 90px;height: 25px;font-size: 10px;">
                                                     </td>

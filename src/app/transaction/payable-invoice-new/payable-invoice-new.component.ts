@@ -876,12 +876,10 @@ export class PayableInvoiceNewComponent implements OnInit {
 
 
     this.sub = this.router1.params.subscribe(params => {
-      this.invoiceNum = params['invNumber'];
-      // alert(this.invoiceNum)
-      var searchObj: InvoiceSearchNew = new InvoiceSearchNew();
-      { searchObj.invoiceNum = this.invoiceNum }
-      if (this.invoiceNum != undefined) {
-        this.apInvFindAfterSave(this.invoiceNum)
+      var docNo = params['invNo'];
+      alert(docNo)
+       if (docNo != undefined) {
+        this.InvDocFind(docNo)
       }
     }
     )
@@ -3009,10 +3007,12 @@ export class PayableInvoiceNewComponent implements OnInit {
       }
     }
     var totalOfDistributionAmout: number = 0;
+    // debugger;
     for (let j = 0; j < this.lineDistributionArray().length; j++) {
       var desc1: string = arrayCaontrolOfDistribution[j].description;
       if (desc1 === 'null' || desc1 === null) {
-        totalOfDistributionAmout = Math.round(((Number(arrayCaontrolOfDistribution[j].amount)) + Number.EPSILON) * 100) / 100;
+        totalOfDistributionAmout = Math.round(((totalOfDistributionAmout+Number(arrayCaontrolOfDistribution[j].amount)) + Number.EPSILON) * 100) / 100;
+
       }
       else {
         if (desc1.includes('Adhoc Disc')) {
@@ -3488,7 +3488,115 @@ export class PayableInvoiceNewComponent implements OnInit {
       }
   })
   }
+  InvDocFind(docNo) {
+    this.currentOP = 'Search';
+    this.lineDetailsArray().clear();
+    this.TaxDetailsArray().clear();
+    this.TdsDetailsArray().clear();
+    this.lineDistributionArray().clear();
+    this.tdsTaxDetailsArray().clear();
+    this.displayHeaderData = false;
+    this.isVisibleSelectButton=true;
+    let jsonData = this.poInvoiceForm.value;
+    let invSearch: ISearch = Object.assign({}, jsonData);
+    var searchObj: InvoiceSearchNew = new InvoiceSearchNew();
+    this.transactionService.getsearchByApDoc(docNo).subscribe((res: any) => {
+      if (res.code === 200) {
+        this.isDisabled = true;
+        this.isVisibleAddonType = false;
+        this.isVisibleSave = false;
+        this.isVisibleRoundOffButton = false;
+        this.isVisibleUpdateBtn = false;
+        this.isVisibleValidate = false;
+        if (res.obj.length === 0) {
+          alert('AP Invoice Details not Find !...');
+          this.poInvoiceForm.reset();
+        }
+        else if (res.obj.length != 0) {
+          // debugger;
+          this.lstsearchapinv = res.obj;
+          this.lstsearchapinv.forEach(f => {
+            var invLnGrp: FormGroup = this.lineDetailsGroup();
+            this.lineDetailsArray().push(invLnGrp);
+          });
+          this.poInvoiceForm.get('obj').patchValue(this.lstsearchapinv);
+          var patch = this.poInvoiceForm.get('obj') as FormArray;
+          for (let i = 0; i < this.lstsearchapinv.length; i++) {
+            let payDate = moment(this.lstsearchapinv[i].paymentRateDate, 'dd-MM-yyyy hh:mm:ss');
+            let payDtString = payDate.format('dd-MMM-yyyy');
+            let select = this.tdsSectionList.find(d => d.lookupValueDesc === res.obj[i].payGroup);
+            this.lineDetailsArray().controls[i].patchValue({ paymentRateDate: payDtString, invoiceId1: this.lstsearchapinv[i].invoiceId, internalSeqNum: this.lstsearchapinv[i].internalSeqNum });
+            var glDateNew1 = (res.obj[i].glDate)
+            var glDateNew = this.pipe.transform(glDateNew1, 'y-MM-dd');
+            var invoiceDateNew = this.pipe.transform(res.obj[i].invoiceDate, 'y-MM-dd');
+            this.isVisibleinvoiceDateText = false;
+            this.isVisibleinvoiceDateDate = true;
+            // this.invoiceDate = invoiceDateNew;
+            // this.glDate = glDateNew;
+            patch.controls[i].patchValue({ payGroup: res.obj[i].payGroup })
+            patch.controls[i].patchValue({ invoiceDate: invoiceDateNew })
+            patch.controls[i].patchValue({ glDate: glDateNew })
+            if (res.obj[i].paymentMethod === undefined || res.obj[i].paymentMethod === null) {
+              (patch.controls[i]).patchValue(
+                {
+                  paymentMethod: 'CASH',
+                }
+              );
+            }
+            if (res.obj[i].payGroup != undefined || res.obj[i].payGroup != null) {
+              (patch.controls[i]).patchValue(
+                {
+                  payGroup: res.obj[i].payGroup,
+                }
+              );
+              this.isVisibleTDSTab = true;
+            }
+            // debugger;
+            console.log(this.tdsSectionList);
+            if (res.obj[i].invoiceStatus === null) {
+              this.lineDetailsArray().controls[i].get('locationId').enable();
+              this.lineDetailsArray().controls[i].get('invTypeLookupCode').disable();
+              this.lineDetailsArray().controls[i].get('segment1').enable();
+              this.lineDetailsArray().controls[i].get('name').disable();
+              this.lineDetailsArray().controls[i].get('suppNo').disable();
+              this.lineDetailsArray().controls[i].get('siteName').disable();
+              this.lineDetailsArray().controls[i].get('invoiceDate').enable();
+              this.lineDetailsArray().controls[i].get('invoiceNum').enable();
+              this.lineDetailsArray().controls[i].get('internalSeqNum').disable();
+              this.lineDetailsArray().controls[i].get('glDate').enable();
+              this.lineDetailsArray().controls[i].get('currency').disable();
+              this.lineDetailsArray().controls[i].get('paymentRateDate').enable();
+              this.lineDetailsArray().controls[i].get('ouName').disable();
+              this.lineDetailsArray().controls[i].get('invoiceAmt').enable();
+              this.lineDetailsArray().controls[i].get('taxAmt').enable();
+            }
+            // alert(res.obj[i].segment1)
+            if (res.obj[i].segment1 != null) {
+              this.lineDetailsArray().controls[i].get('invoiceDate').enable();
+              this.isVisibleinvoiceDateDate = true;
+              this.lineDetailsArray().controls[i].get('taxAmt').disable();
+              this.lineDetailsArray().controls[i].get('invoiceAmt').disable();
 
+              // this.poInvoiceForm.disable();
+            }
+            if (res.obj[i].invoiceAmt % 1 != 0) {
+              this.isVisibleRoundOffButton = false;
+            }
+            // else{
+            //   this.isVisibleRoundOffButton=true;
+            // }
+          }
+          this.displayValidateButton = false;
+        }
+
+      }
+      else {
+        if (res.code === 400) {
+          alert(res.message);
+        }
+      }
+    });
+  }
 
 }
 
