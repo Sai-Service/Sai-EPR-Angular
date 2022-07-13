@@ -220,6 +220,8 @@ public statusList:Array<string>=[];
           lookupValueDesc5:string;
           accountType:string;
           branch:any;
+
+          amcMcpStatus: string;
   
 
   get f() { return this.mcpCancellationForm.controls; }
@@ -358,6 +360,8 @@ public statusList:Array<string>=[];
             lookupValueDesc4:[],
             lookupValueDesc5:[],
             accountType:['',[Validators.required]],
+
+            amcMcpStatus:[],
 
 
             enqDtls: this.fb.array([this.invLineDetails()]),
@@ -730,17 +734,21 @@ public statusList:Array<string>=[];
           .subscribe(
             data => {
               this.lstMcplines = data.obj;
-            
-              if (this.lstMcplines =='MCP Enrollment Not found !! ') {
-                alert ("MCP Enrollment Not found !!...\nRegistration No: " +mRegNo +"\nEnrollment No: " +mEnrollNo);
-                return;
-               }
 
+              if(data.code ===200) {
+
+                alert (data.message);
+            
+              // if (this.lstMcplines =='MCP Enrollment Not found !! ') {
+              //   alert ("MCP Enrollment Not found !!...\nRegistration No: " +mRegNo +"\nEnrollment No: " +mEnrollNo);
+              //   return;
+              //  }
                 
                this.mcpCancellationForm.patchValue(this.lstMcplines);
+              //  this.mcpCancellationForm.patchValue({vehRegNo :this.lstMcplines.regNo})
              
               // ---------------------------Header Details--------------------------------
-                  this.GetVehicleRegInfomation(this.lstMcplines.regNo);
+                  this.GetVehicleRegInfomation(data.obj.regNo);
                   this.GetVariantDeatils(this.lstMcplines.variantCode);
                   this.GetCustomerDetails(this.lstMcplines.customerId);
                   // this.getPackageInfo(this.lstMcplines.packageNumber,this.lstMcplines.fuelType)
@@ -762,6 +770,7 @@ public statusList:Array<string>=[];
                   this.mcpCancellationForm.get('enqDtls').patchValue(this.lstMcplines.enqDtls);
 
                   if(this.lstMcplines.totLabBalanced >0)  {
+                    
                    this.showCancelButton=true;
                     this.mcpCancellationForm.get("refundIncludeGst").enable();
                     this.mcpCancellationForm.get("refundApprovedBy").enable();
@@ -819,6 +828,8 @@ public statusList:Array<string>=[];
                   // var mTotAvailed=1000;
                   // alert(eDate +","+cDate  +","+mTotAvailed);
 
+                 if( this.lstMcplines.cancelRsnId<=0 || this.lstMcplines.cancelRsnId===null || this.lstMcplines.cancelRsnId===undefined){
+
                   if(eDate==cDate && mTotAvailed==0  ) 
                   {
                     alert ("MCP Unutilized - Same day Cancellation");
@@ -869,16 +880,19 @@ public statusList:Array<string>=[];
                     // this.cancelDate = this.pipe.transform(Date.now(), 'y-MM-dd');
                     this.refundAmt=this.netRefAmt;
                   }
+                }
 
-                  this.displayButton=true;
+                      this.displayButton=true;
+                      if(this.lstMcplines.cancelRsnId>0) {
+                        this.showCancelButton=false; 
+                        this.netRefAmt=this.lstMcplines.refundAmt.toFixed(2);
+                        this.mcpCancellationForm.disable();
+                        this.amcMcpStatus='Inactive|Cancelled';
+                      } else {this.amcMcpStatus='';}
+             
+                } else {  alert ("Error....");}
 
-                // } else {
-                // alert("MCP Enrollment Not found !! ");
-                
-                // }
-           
-               } ); 
-
+               }); 
                }
 
 
