@@ -255,9 +255,9 @@ oemWarrantyPeriod:number;
               this.variantMasterForm.patchValue(select);
               this.variantId = select.itemId;
               this.displayButton = false;
-              this.variantMasterForm.get('mainModel').disable();
-              this.variantMasterForm.get('variant').disable();
-              this.variantMasterForm.get('varDescription').disable();
+              // this.variantMasterForm.get('mainModel').disable();
+              // this.variantMasterForm.get('variant').disable();
+              // this.variantMasterForm.get('varDescription').disable();
               // this.vehicleType=this.lstcomments.typeOfBody;
            }
            
@@ -289,7 +289,7 @@ oemWarrantyPeriod:number;
           this.CheckDataValidations();
 
         if (this.checkValidation===true) {
-          alert("Data Validation Sucessfull....\nPosting data  to VARIANT TABLE")
+          alert("Data Validation Sucessfull....")
 
           const formValue: IVariantMaster =this.transeData(this.variantMasterForm.value);
           // console.log(formValue);
@@ -307,7 +307,7 @@ oemWarrantyPeriod:number;
               }
             }
           });
-        }else{ alert("Data Validation Not Sucessfull....\nPosting Not Done...")  }
+        }else{ alert("Data Validation Not Sucessfull....\nData not Saved...")  }
         }
   
         updateMast() {
@@ -315,7 +315,7 @@ oemWarrantyPeriod:number;
           this.CheckDataValidations();
 
           if (this.checkValidation===true) {
-          alert("Data Validation Sucessfull....\nPutting data to ORDER TYPE MASTER  TABLE")
+          alert("Data Validation Sucessfull....")
 
           const formValue: IVariantMaster =this.transeData(this.variantMasterForm.value);
             this.service.UpdateVariantMaster(formValue).subscribe((res: any) => {
