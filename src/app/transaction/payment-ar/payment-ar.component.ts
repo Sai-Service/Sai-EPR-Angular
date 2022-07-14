@@ -299,6 +299,7 @@ export class PaymentArComponent implements OnInit {
 
   policyTerm:number;
   displayglDateDisabled=true;
+  sub1: any;
 
   // applyTo: string;
 
@@ -307,7 +308,7 @@ export class PaymentArComponent implements OnInit {
   paymentAr(paymentArForm: any) { }
 
 
-  constructor(private service: MasterService, private orderManagementService: OrderManagementService, private fb: FormBuilder, private router: Router, private router1: ActivatedRoute, private router2: ActivatedRoute,private router4: ActivatedRoute) {
+  constructor(private service: MasterService, private orderManagementService: OrderManagementService, private fb: FormBuilder, private router: Router, private router1: ActivatedRoute, private router2: ActivatedRoute,private router3:ActivatedRoute, private router4: ActivatedRoute) {
 
 
     this.paymentArForm = fb.group({
@@ -562,6 +563,18 @@ if(this.deptId==2){
       });
     }
 
+    this.sub1 = this.router3.params.subscribe(params => {
+      var payNo = this.router3.snapshot.queryParamMap.get('trxNum');
+      var categ = Number(this.router1.snapshot.queryParamMap.get('catg'));
+      if ( payNo != undefined){
+       
+         this.SearchByReciptNo(payNo);
+         this.SelectReceipt(payNo);
+        }
+      
+      });
+    
+   
     /////////////////////////////////////////////////////
 
     //  alert ("this.fromJc :" +this.fromJc);
@@ -1060,6 +1073,8 @@ if(this.deptId==2){
           });
     }
   }
+
+  
 
   SearchRcptByCustNo(custActNo: any) {
     // alert ("custActNo Num : " +custActNo);
@@ -3208,5 +3223,21 @@ if(this.deptId==2){
         printWindow.open
       });
   }
+
+  SearchByReciptNo(ReceiptNo){
+   // alert ('else if ----'+ this.locId)
+      this.service.getArReceiptDetailsByRcptNo(ReceiptNo)
+        .subscribe(
+          data => {
+            this.lstcomments = data.obj;
+            console.log(this.lstcomments);
+            if (data.code === 400) {
+              alert(data.obj)
+              this.lstcomments = null;
+            }
+          });
+    }
+  
+
 }
 

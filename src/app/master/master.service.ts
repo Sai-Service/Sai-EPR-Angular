@@ -3529,6 +3529,12 @@ getCostDetail(locId,ItemId):Observable<any>
   return this.http.get(this.ServerUrl+`/averageCost/avgLocItem?locationId=${locId}&itemId=${ItemId}`)
 }
 
+getCostDetailforWarranty(locId,ItemId):Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/averageCost/item/mrp?locationId=${locId}&itemId=${ItemId}`)
+}
+
+
 viewMiscnote(stkAdjustNumber){
   // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/rcvShipment/StkTransferNote/${shipmentNumber}`;
   // local

@@ -72,6 +72,8 @@ const routes: Routes = [
   {path: 'payableInvoice/:invNo',component:PayableInvoiceNewComponent},
   {path:'PaymentAr/:orderNumber',component:PaymentArComponent},
   {path:'PaymentAr/:trxNum',component:PaymentArComponent},
+  {path:'PaymentAr/:trxNum/:catg',component:PaymentArComponent},
+  {path:'stockTransfer/:refNum',component:StockTransferComponent},
   {path:'Payment/: trxNum /:catg' ,component:PaymentsComponent},
   {path:'SaiExtendedWarranty',component:SaiExtendedWarrantyComponent},
   {path:'SaiEwSchemeMaster',component:SaiEwSchemeMasterComponent},

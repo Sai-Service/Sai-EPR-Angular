@@ -1,7 +1,7 @@
 // import { Component, OnInit } from '@angular/core';
 import { Component, OnInit, ViewChild, HostListener, ElementRef } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MasterService } from '../../master/master.service';
 import { DatePipe } from '@angular/common';
 import { v4 as uuidv4 } from 'uuid';
@@ -138,12 +138,13 @@ export class StockTransferComponent implements OnInit {
 
   @ViewChild("myinput") myInputField: ElementRef;
   emplId: number;
+  sub: any;
   // @ViewChild("segment") segment: ElementRef;
   ngAfterViewInit() {
     this.myInputField.nativeElement.focus();
   }
 
-  constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
+  constructor(private fb: FormBuilder, private router: Router,private router1:ActivatedRoute, private service: MasterService) {
     this.stockTranferForm = fb.group({
       ShipmentNo: [''],
       locId: [''],
@@ -453,6 +454,15 @@ export class StockTransferComponent implements OnInit {
           // this.AvailQty(this.frmLocator,i);
         });
         
+        this.sub = this.router1.params.subscribe(params => {
+          this.ShipmentNo = params['refNum'];
+           alert ("orderNumber  :"+this.ShipmentNo);
+         if (this.ShipmentNo != undefined){
+          
+         this.search(this.ShipmentNo);
+       }
+     });
+
       }
   }
   AvailQty(event:any,i:number)
