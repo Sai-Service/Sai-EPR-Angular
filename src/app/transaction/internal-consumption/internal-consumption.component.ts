@@ -515,6 +515,20 @@ export class InternalConsumptionComponent implements OnInit {
             trxLnArr1.controls[i].patchValue({ locId: Number(sessionStorage.getItem('locId')) })
           }
         });
+        var reasonArr1 =this.InternalConsumptionForm.get('reason').value;
+        var reasonArray=reasonArr1.split('-');
+        // alert(reasonArray[2]);
+        if(reasonArray[2].includes('Warranty')){
+          this.service.getCostDetailforWarranty(Number(sessionStorage.getItem('locId')), select1.itemId).subscribe
+          (data => {
+            this.CostDetail = data;
+            trxLnArr1.controls[i].patchValue({ itemUnitCost: this.CostDetail.rate });
+            if (this.CostDetail.rate === 0.0) {
+              alert(this.CostDetail.segment);
+            }
+          });
+        }
+        else{
       this.service.getCostDetail(Number(sessionStorage.getItem('locId')), select1.itemId).subscribe
         (data => {
           this.CostDetail = data;
@@ -523,6 +537,7 @@ export class InternalConsumptionComponent implements OnInit {
             alert(this.CostDetail.segment);
           }
         });
+      }
       this.service.getreserqty(Number(sessionStorage.getItem('locId')), select1.itemId).subscribe
         (data => {
           this.resrveqty = data;
