@@ -53,26 +53,34 @@
                 <table class="center">
                           
                 <tr>
-                    <td style="width: 15%" class="LabelFontStyle1">Model&nbsp;:&nbsp;</td>
+                    <div *ngIf="displayButton then Block1; else Block2"></div>
+                    <ng-template #Block1>
+                        <td style="width: 15%" class="LabelFontStyle1">Model&nbsp;:&nbsp;</td>
+                        <td> <select formControlName="mainModel" id="mainModel" [(ngModel)]="mainModel" class="form-control">
+                                <option disabled>--Select--</option>
+                                <option *ngFor="let mm of mainModelList"  [ngValue]="mm.cmnId">
+                                    {{mm.code}}
+                                </option>
+                            </select></td>
+                        <td style="width: 15%" class="LabelFontStyle1">Variant&nbsp;:&nbsp;</td>
+                        <td><input type="text" formControlName="variant"  [(ngModel)]="variant"   class="form-control" placeholder=""  > </td> 
+                        <td style="width: 15%" class="LabelFontStyle1">Variant&nbsp;Desc:&nbsp;</td>
+                        <td colspan="3"><input  type="text" formControlName="varDescription"  [(ngModel)]="varDescription"   class="form-control" placeholder="" style="width:100% ;" >  </td> 
+                    </ng-template>
+                    <ng-template #Block2>
+                        <td style="width: 15%" class="LabelFontStyle1">Model&nbsp;:&nbsp;</td>
+                        <td> <select disabled formControlName="mainModel" id="mainModel" [(ngModel)]="mainModel" class="form-control">
+                                <option disabled>--Select--</option>
+                                <option *ngFor="let mm of mainModelList"  [ngValue]="mm.cmnId">
+                                    {{mm.code}}
+                                </option>
+                            </select></td>
 
-                    <td>  
-                        <select formControlName="mainModel" id="mainModel" [(ngModel)]="mainModel" class="form-control">
-                            <option disabled>--Select--</option>
-                            <option *ngFor="let mm of mainModelList"  [ngValue]="mm.cmnId">
-                                {{mm.code}}
-                            </option>
-                        </select>
-                    </td>
-
-                    <td style="width: 15%" class="LabelFontStyle1">Variant&nbsp;:&nbsp;</td>
-                    <td>
-                        <input type="text" formControlName="variant"  [(ngModel)]="variant"   class="form-control" placeholder=""  > 
-                    </td> 
-
-                    <td style="width: 15%" class="LabelFontStyle1">Variant&nbsp;Desc:&nbsp;</td>
-                    <td colspan="3"> 
-                        <input  type="text" formControlName="varDescription"  [(ngModel)]="varDescription"   class="form-control" placeholder="" > 
-                    </td> 
+                        <td style="width: 15%" class="LabelFontStyle1">Variant&nbsp;:&nbsp;</td>
+                        <td><input disabled type="text" formControlName="variant"  [(ngModel)]="variant"   class="form-control" placeholder=""  > </td> 
+                        <td style="width: 15%" class="LabelFontStyle1">Variant&nbsp;Desc:&nbsp;</td>
+                        <td colspan="3"><input disabled type="text" formControlName="varDescription"  [(ngModel)]="varDescription"   class="form-control" placeholder="" style="width:100% ;">  </td> 
+                    </ng-template>
                    
                 </tr>
 

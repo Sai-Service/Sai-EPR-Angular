@@ -54,44 +54,36 @@
                     </table>
 
                     <fieldset class="RFS">
-                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
-                           SEARCH</legend>
-                    <table class="center" style="width: 100%;background-color: #FFE4B5;">
-                        <tr>
-                          <td >
-                              <table class="center">
-                                  <tr>
-                                    <td  style="background-color: #FFE4B5;">Enrollment&nbsp;No:&nbsp;</td>
-                                   <td style="background-color: #FFE4B5;">
-                                        <input class="form-control" formControlName="searchEnrollNo" [(ngModel)]='searchEnrollNo'
-                                            value={{searchEnrollNo}} >
-                                            <!-- style="text-transform:uppercase;" -->
-                                    </td>
+                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">SEARCH</legend>
+                        <table class="center" style="width: 100%;background-color: #FFE4B5;">
+                            <tr>
+                            <td >
+                                <table class="center">
+                                    <tr>
+                                        <td style="background-color: #FFE4B5;" class="LabelFontStyle">&nbsp;Enrollment&nbsp;No&nbsp;:&nbsp;</td>
+                                        <td style="background-color: #FFE4B5;"><input type="text" class="form-control" formControlName="searchEnrollNo" [(ngModel)]='searchEnrollNo' value={{searchEnrollNo}}></td>
+                                        <td style="background-color: #FFE4B5;" class="LabelFontStyle">&nbsp;Registration&nbsp;No&nbsp;:&nbsp;</td>
+                                        <td style="background-color: #FFE4B5;"><input type="text" class="form-control" formControlName="searchRegno" [(ngModel)]='searchRegno'  value={{searchRegno}}> </td>
+                                        <td style="background-color: #FFE4B5;"><button type="button" class="btn-primary" (click)="searchMcpByRegNo(searchRegno,searchEnrollNo)"><i class="fa fa-search" aria-hidden="true"></i></button> </td>
+                                        
+                                        <td></td><td></td>
+                                        <td style="background-color: #FFE4B5;color: blue;" class="LabelFontStyle">{{this.amcMcpStatus}}</td>
 
-                                                                        
-                                    
-                    
-                                    <td style="width: 15%" class="LabelFontStyle">Registration&nbsp;No:&nbsp;</td>
-                        
-                                    <td>
-                                        <input   type="text"  formControlName="searchRegno"  id="searchRegno" [(ngModel)]="searchRegno" class="form-control"  >
-                                        <!-- style="text-transform:uppercase;" -->
-                                    </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            </tr>
+                        </table>
 
-                                    <!-- <td style="background-color: #FFE4B5;">
-                                        <button type="button" class="btn-primary" (click)="SearchMcpByEnrollNo(searchRegno,searchEnrollNo)"><i class="fa fa-search"
-                                                aria-hidden="true"></i></button>
-                                    </td> -->
-                    
-                                    <td style="background-color: #FFE4B5;">
-                                        <button type="button" class="btn-primary" (click)="searchMcpByRegNo(searchRegno,searchEnrollNo)"><i class="fa fa-search"
-                                                aria-hidden="true"></i></button>
-                                    </td>
-                                  </tr>
-                              </table>
-                          </td>
+                    <!-- <table class="center" style="width: 100%;background-color: #FFE4B5;">
+                        <tr class="center">
+                            <td  style="background-color: #FFE4B5;">Enrollment&nbsp;No:&nbsp;</td>
+                            <td style="background-color: #FFE4B5;"> <input class="form-control" formControlName="searchEnrollNo" [(ngModel)]='searchEnrollNo' value={{searchEnrollNo}} > </td>
+                            <td style="width: 15%" class="LabelFontStyle">Registration&nbsp;No:&nbsp;</td>
+                            <td><input   type="text"  formControlName="searchRegno"  id="searchRegno" [(ngModel)]="searchRegno" class="form-control"  ></td>
+                            <td style="background-color: #FFE4B5;"><button type="button" class="btn-primary" (click)="searchMcpByRegNo(searchRegno,searchEnrollNo)"><i class="fa fa-search" aria-hidden="true"></i></button></td>
                         </tr>
-                    </table>
+                    </table> -->
                     </fieldset>
                   
                   
@@ -508,7 +500,7 @@
                                         <input disabled  style="text-align: right;font-weight: bold;" type="number"  formControlName="totMatBalanced"  id="totMatBalanced" [(ngModel)]="totMatBalanced" class="form-control"  placeholder="">
                                     </td>
     
-                                    <td style="width: 15%" class="LabelFontStyle">Labour&nbsp;Refund:&nbsp;</td>
+                                    <td style="width: 15%" class="LabelFontStyle">Lbr&nbsp;Refund:&nbsp;</td>
                                     <td>
                                         <input disabled style="text-align: right;font-weight: bold;"  type="number"  formControlName="totLabBalanced"  id="totLabBalanced" [(ngModel)]="totLabBalanced" class="form-control"  placeholder="">
                                     </td>
@@ -544,7 +536,7 @@
                                         <input disabled  style="text-align: right;font-weight: bold;" type="number"  formControlName="totMatBalTax"  id="totMatBalTax" [(ngModel)]="totMatBalTax" class="form-control"  placeholder="">
                                     </td>
     
-                                    <td style="width: 15%;" class="LabelFontStyle">Labour&nbsp;Tax&nbsp;Refund:&nbsp;</td>
+                                    <td style="width: 15%;" class="LabelFontStyle">Lbr&nbsp;Tax&nbsp;Refund:&nbsp;</td>
                                     <td>
                                         <input disabled style="text-align: right;font-weight: bold;"  type="number"  formControlName="totLabBalTax"  id="totLabBalTax" [(ngModel)]="totLabBalTax" class="form-control"  placeholder="">
                                     </td>

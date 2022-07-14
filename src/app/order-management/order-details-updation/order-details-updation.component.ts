@@ -64,7 +64,7 @@ export class OrderDetailsUpdationComponent implements OnInit {
   msRefNo:string;
   msRefCustNo:string;
 
-  orderNumber:number=222220910400113;
+  orderNumber:number=222220210600194;  // INVOICED : 222220910400113
   // orderNumber:number
   orderedDate:Date;
   model:string;
@@ -102,6 +102,7 @@ export class OrderDetailsUpdationComponent implements OnInit {
   title:string;
   contactPerson:string;
   mobile1:string;
+  emailId:string;
 
   custGst:string;
   custPan:string;
@@ -114,6 +115,7 @@ export class OrderDetailsUpdationComponent implements OnInit {
   DisplayfinanceSelectionYes1 = false;
   Displayexchange = false;
   Displayexchange1 = false;
+  saveButton=false;
 
   orderDetailsUpdation(orderDetailsUpdationForm: any) {}
   get f() { return this.orderDetailsUpdationForm.controls }
@@ -181,6 +183,7 @@ export class OrderDetailsUpdationComponent implements OnInit {
       mobile1:[],
       custGst:[],
       custPan:[],
+      emailId:[],
 
       title:[],
       contactPerson:[],
@@ -348,7 +351,11 @@ export class OrderDetailsUpdationComponent implements OnInit {
     this.orderManagementService.getsearchByOrderNoToUpdate(orderNumber)
       .subscribe(
         data => {
+
+          if(data.code===400) {alert(data.obj + " " +data.message);this.saveButton=false; ;return;}
+          this.saveButton=true;
           this.lstOrderHeader = data.obj;
+
           console.log(this.lstOrderHeader);
           this.orderDetailsUpdationForm.patchValue(this.lstOrderHeader);
 
@@ -383,5 +390,18 @@ export class OrderDetailsUpdationComponent implements OnInit {
         this.router.navigate(['admin']);
       }
 
-      newMast(){alert ("Not implemented....Wip")}
+      updateMast() {
+        const formValue: IOrderDetailUpdation = this.orderDetailsUpdationForm.value;
+        this.orderManagementService.UpdateOrderDetails(formValue).subscribe((res: any) => {
+          if (res.code === 200) {
+            alert('Record Updated Successfully');
+            // window.location.reload();
+          } else {
+            if (res.code === 400) {
+              alert('Error While updating Record');
+              // this.orderDetailsUpdationForm.reset();
+            }
+          }
+        });
+      };
 }
