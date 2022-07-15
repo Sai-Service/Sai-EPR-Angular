@@ -1167,7 +1167,7 @@
                                                                     <!-- <th scope="col">Uom</th> -->
                                                                     <th scope="col">Description</th>
                                                                     <th scope="col">Gen</th>
-                                                                    <th scope="col">Tax %</th>
+                                                                    <th scope="col">Tax Category</th>
                                                                     <th scope="col">Quantity</th>
                                                                     <th scope="col">Unit Price</th>
                                                                     <th scope="col">Basic Amt</th>
@@ -1289,7 +1289,7 @@
                                                                             <ng-template #splt21>
                                                                                 <!-- <div *ngIf="genericItemLab; then genYes2; else genNo2"> </div>
                                                                                 <ng-template #genYes2> -->
-                                                                                     <td><input  type="text" formControlName="description"  class="form-control"  style="height: 25px; width:350px" ></td>
+                                                                                     <td><input  type="text" formControlName="description"  class="form-control"  style="height: 25px; width:300px" ></td>
                                                                                <!-- </ng-template>
                                                                                <ng-template #genNo2>
                                                                                     <td><input disabled type="text" formControlName="description"  class="form-control"  style="height: 25px; width:350px" ></td>
@@ -1313,10 +1313,10 @@
                                                                                     </option>
                                                                                 </select> -->
 
-                                                                                <input hidden type="text" formControlName="taxCategoryName" [(ngModel)]="taxCategoryName" class="form-control" style="height: 25px;">
                                                                                 <input hidden  type="text"  formControlName="taxCategoryId"  style="width: 170px;"  id="taxCategoryId"  class="form-control">
+                                                                                <td> <input  disabled type="text" formControlName="taxCategoryName"  class="form-control" style="height: 25px;"></td>
 
-                                                                                <td> <input  type="number" disabled formControlName="taxPer"   class="form-control" style="width: 3rem; height: 25px; text-align: center;"> </td>
+                                                                                <input hidden  type="number" disabled formControlName="taxPer"   class="form-control" style="width: 3rem; height: 25px; text-align: center;"> 
 
                                                                             <td>
                                                                                 <input type="number" min="0"
@@ -3158,7 +3158,7 @@
                         <td><input disabled    type="text"  formControlName="oemWarrStatus"  id="oemWarrStatus"  class="form-control" > </td>
 
                         <td style="width: 15%" class="LabelFontStyle">&nbsp;OEM&nbsp;Expiry:&nbsp;</td>
-                        <td><input disabled  type="date"  formControlName="oemExpiryDate"  id="oemExpiryDate" class="form-control"> </td>
+                        <td><input disabled  type="date"  formControlName="oemWarrentyEndDate"  id="oemWarrentyEndDate" class="form-control"> </td>
                      
                     </tr>
 

@@ -63,7 +63,7 @@ interface IjobCard {
   insurerCompNo: number;
   insuDate: Date
   oemWarrStatus: string;
-  oemExpiryDate: Date;
+  oemWarrentyEndDate: Date;
   cngKitNumber: string;
   cngCylinderNo: string;
   cngEndDate:string;
@@ -564,7 +564,7 @@ export class JobCardComponent implements OnInit {
       insurerSiteId: [],
       insuDate: [],
       oemWarrStatus: [],
-      oemExpiryDate: [],
+      oemWarrentyEndDate: [],
       cngKitNumber: [],
       cngCylinderNo: [],
       cngEndDate:[],
