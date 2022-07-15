@@ -53,8 +53,8 @@
                                    
                                     <td style="width: 15%" class="LabelFontStyle">GL&nbsp;Period&nbsp;:&nbsp;</td>
                                     <td>
-                                      <select formControlName="periodName" id="periodName" class="form-control">
-                                      <option>--Select--</option>
+                                      <select formControlName="periodName" id="periodName" class="form-control" [(ngModel)]="periodName">
+                                      <!-- <option>--Select--</option> -->
                                       <option *ngFor="let sc of  periodNameList" [value]="sc.periodName">
                                         {{sc.periodName}}
                                       </option>
@@ -64,7 +64,7 @@
                                     <!-- <td style="background-color: #FFE4B5;"><button type="button" class="btn-primary" (click)="SearchTB()"><i class="fa fa-search"
                                                 aria-hidden="true"></i></button>
                                     </td> -->
-                                    <td> <button type="button" class="btn btn-info" (click)="SearchTB()" >Run</button> </td>
+                                    <td> <button type="button" class="btn btn-info" (click)="SearchTB(periodName)" >Run</button> </td>
                                     <td> <button type="button" class="btn btn-info" (click)="resetMast()" >Reset</button> </td>
                                     <div *ngIf="exportExcel; then TBEYes; else TBENo"></div>
                                     <ng-template #TBEYes> 

@@ -6,7 +6,7 @@ import { MasterService } from 'src/app/master/master.service';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 import { TransactionService } from '../transaction.service';
 import { ManualARInvoiceObj } from './manual-arinvoice-obj';
-import { DatePipe } from '@angular/common';
+import { DatePipe,Location } from '@angular/common';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 // import { stringify } from '@angular/compiler/src/util';
 // import { event } from 'jquery';
@@ -241,7 +241,7 @@ export class ARInvoiceComponent implements OnInit {
   result(activeTab) {
     this.activeTab = activeTab;
   }
-  constructor(private fb: FormBuilder, private router: Router, private router1: ActivatedRoute, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService) {
+  constructor(private fb: FormBuilder, private router: Router, private router1: ActivatedRoute, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService,private location1: Location) {
     this.arInvoiceForm = fb.group({
       // poHeaderId: [],
       source: [],
@@ -996,7 +996,8 @@ export class ARInvoiceComponent implements OnInit {
     }
   }
   closeMast() {
-    this.router.navigate(['admin']);
+    // this.router.navigate(['admin']);
+    this.location1.back();
   }
   clearFormArray() {
     window.location.reload();
