@@ -14,6 +14,7 @@ import { data } from 'jquery';
 import { DatePipe } from '@angular/common';
 import { Location } from "@angular/common";
 import * as XLSX from 'xlsx';
+import { MethodCall } from '@angular/compiler';
 
 
 
@@ -129,6 +130,7 @@ export class AllotmentComponent implements OnInit {
   Select(orderNumber:number, model: any, color: any, variant: any, locId) {
     // alert(orderNumber)
     //  alert(model+color+variant+this.locId);
+    
     this.orderManagementService.allotmentVehicleSearch(model, color, variant, this.locId)
       .subscribe(
         data => {
@@ -139,6 +141,9 @@ export class AllotmentComponent implements OnInit {
       );
   }
 
+  modalClose(){
+    this.allotmentVehiclesearchlist=[];
+  }
   selectOrderNumberEvent(e, orderNumber) {
     // alert(orderNumber);
     this.orderNumber1 = orderNumber;

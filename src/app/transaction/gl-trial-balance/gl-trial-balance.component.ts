@@ -174,6 +174,10 @@ export class GlTrialBalanceComponent implements OnInit {
       this.periodNameList = data.obj;
   }
 );
+if(sessionStorage.getItem('GLPeriod')!=null || sessionStorage.getItem('GLPeriod')!=undefined){
+  this.glTrialBalanceForm.patchValue({'periodName':sessionStorage.getItem('GLPeriod')})
+  this.SearchTB(sessionStorage.getItem('GLPeriod'));
+}
   }
 
 
@@ -185,9 +189,10 @@ export class GlTrialBalanceComponent implements OnInit {
 
   expExcel(){}
 
-  SearchTB(){
+  SearchTB(prdName){
 
-    var prdName =this.glTrialBalanceForm.get("periodName").value;
+    // var prdName =this.glTrialBalanceForm.get("periodName").value;
+    sessionStorage.setItem('GLPeriod',prdName);
     if(prdName==null || prdName==undefined || prdName.trim()=='') {
       alert ("Please Select Period..."); return;
     }
