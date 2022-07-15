@@ -419,9 +419,9 @@ export class SupplierMasterComponent implements OnInit {
   }
   currentAcctTyp: string;
   openCodeCombination(accountType: string) {
-    // alert(accountType);
+    alert(accountType);
     let SegmentName1 = this.supplierMasterForm.get(accountType).value;
-    // alert(SegmentName1);
+    alert(SegmentName1); 
     this.currentAcctTyp = accountType;
     if (SegmentName1 === null) {
       this.supplierMasterForm.get('segment11').reset();
@@ -463,7 +463,7 @@ export class SupplierMasterComponent implements OnInit {
         data => {
 
           this.segmentNameList = data.obj;
-          // alert(this.currentAcctTyp+'type')
+          alert(this.currentAcctTyp+'type')
           if (data.code === 200) {
             // this.AccountEnquiryForm.patchValue({codeCombinationId:this.segmentNameList.obj.codeCombinationId});
             if (data.obj.length == 0) {
@@ -488,8 +488,9 @@ export class SupplierMasterComponent implements OnInit {
                 this.prePayAcct = AcctCode;
               }
               if (this.currentAcctTyp === 'sprePayAcct') {
+                // alert('In prepay'+ Number(this.segmentNameList.codeCombinationId))
                 this.sprepayCodeCombId = Number(this.segmentNameList.codeCombinationId);
-                this.supplierMasterForm.patchValue({ 'sprePayAcct': Number(this.segmentNameList.codeCombinationId) });
+                this.supplierMasterForm.patchValue({ 'sprepayCodeCombId': Number(this.segmentNameList.codeCombinationId) });
                 this.sprePayAcct = AcctCode;
               }
             }
@@ -953,8 +954,8 @@ export class SupplierMasterComponent implements OnInit {
         sstatus: select.status,
         souId: select.ouId,
         siteName: select.siteName,
-        sliabilityAcct: select.attribute2,
-        sprePayAcct: select.attribute1,
+        sliabilityAcct: select.attribute1,
+        sprePayAcct: select.attribute2,
         sacctsPayCodeCombId: select.acctsPayCodeCombId,
         sprepayCodeCombId: select.prepayCodeCombId,
         screateDebitMemoFlag: select.createDebitMemoFlag
@@ -1036,8 +1037,8 @@ export class SupplierMasterComponent implements OnInit {
             this.supplierMasterForm.patchValue({
               panNo: this.lstcomments.supplierSiteMasterList[0].panNo,
               gstNo: this.lstcomments.supplierSiteMasterList[0].gstNo,
-              prePayAcct: this.lstcomments.supplierSiteMasterList[0].attribute1,
-              liabilityAcct: this.lstcomments.supplierSiteMasterList[0].attribute2,
+              prePayAcct: this.lstcomments.supplierSiteMasterList[0].attribute2,
+              liabilityAcct: this.lstcomments.supplierSiteMasterList[0].attribute1,
               taxCategoryName: this.lstcomments.supplierSiteMasterList[0].taxCategoryName,
               createDebitMemoFlag: this.lstcomments.supplierSiteMasterList[0].createDebitMemoFlag,
               contactPerson: this.lstcomments.supplierSiteMasterList[0].contactPerson,

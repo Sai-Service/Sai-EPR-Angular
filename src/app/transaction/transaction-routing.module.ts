@@ -55,6 +55,7 @@ const routes: Routes = [
   {path:'MoveOrder',component:MoveOrderComponent},
   {path:'stockTransfer',component:StockTransferComponent},
   {path:'miscTransaction',component:MiscellaneousTransactionComponent},
+  {path:'miscTransaction/:refNum',component:MiscellaneousTransactionComponent},
   {path:'TdsInvoice',component:TdsInvoiceComponent},
   {path:'Payment',component:PaymentsComponent},
   {path:'Payment/:invNumber',component:PaymentsComponent},
