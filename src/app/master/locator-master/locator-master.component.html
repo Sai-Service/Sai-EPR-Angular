@@ -14,6 +14,8 @@
                     <div *ngIf="display; then thenBlock; else elseBlock"></div>
                     <ng-template #thenBlock>
                         <tr>
+                            <input hidden formControlName="locatorId" [(ngModel)]='locatorId' value={{locatorId}} class="form-control">
+
                             <td style="width: 18%" class="LabelFontStyle1">
                                 Location&nbsp;:
                             </td>

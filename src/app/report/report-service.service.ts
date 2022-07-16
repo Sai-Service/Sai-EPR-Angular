@@ -602,6 +602,15 @@ export class ReportServiceService {
     });
   }
 
+  salesPendingPymntReport(fromDate,toDate,locId,ouId){
+    const REQUEST_URI = this.ServerUrl +`/SalesReports/SlPendingPymtRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+
+  }
+
 
   amcHistory(regNo,ouId){
     const REQUEST_URI = this.ServerUrl +`/ServiceReports/AmcHistory?regNo=${regNo}&ouId=${ouId}`;

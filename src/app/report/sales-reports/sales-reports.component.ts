@@ -767,6 +767,26 @@ export class SalesReportsComponent implements OnInit {
       this.panelamcHistrory=false;
       this.ispanelTolocationOu=false;
     }
+
+    else if (reportName === 'salesPendingPayment') {
+      this.reportName = 'Sales Pending Payment Report';
+      this.isVisiblefromtolocationdepartment = false;
+      this.isVisibleVehicleSaleRegister = false;
+      this.isVisibleSaleIND = false;
+      this.isSaleClosingStock = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisiblestockTransfer=false;
+      this.isVisiblefromtoloccustaccno=false;
+      this.isVisibleSalesInventoryAging=false;
+      this.isVisiblepanelfromtolocation=true;
+      this.isVisiblepanelreceiptNo=false;
+      this.isVisiblepanelSalesAddonReconciliation=false;
+      this.isVisiblefromtosubinventory=false;
+      this.panelamcHistrory=false;
+      this.ispanelTolocationOu=false;
+    }
+
+
   }
 
 
@@ -1453,6 +1473,33 @@ export class SalesReportsComponent implements OnInit {
           })
         }
       }
+
+      else if (reportName=='Sales Pending Payment Report'){
+        const fileName = 'Sales Pending Payment Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+        const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+        if (Number(sessionStorage.getItem('deptId'))==4){
+          this.reportService.salesPendingPymntReport(fromDate,toDate,locId,sessionStorage.getItem('ouId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+        }
+        else if (Number(sessionStorage.getItem('deptId'))!=4){
+          this.reportService.salesPendingPymntReport(fromDate,toDate,sessionStorage.getItem('locId'),sessionStorage.getItem('ouId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+        }
+      }
+
+
+
+
   }
 
  
