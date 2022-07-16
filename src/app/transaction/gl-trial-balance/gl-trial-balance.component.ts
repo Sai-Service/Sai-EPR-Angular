@@ -149,6 +149,12 @@ export class GlTrialBalanceComponent implements OnInit {
     })
   }
   ngOnInit(): void {
+    this.service.FinancialPeriod()
+      .subscribe(
+      data => {
+      this.periodNameList = data.obj;
+  }
+);
     $("#wrapper").toggleClass("toggled");
     this.name=  sessionStorage.getItem('name');
     this.loginArray=sessionStorage.getItem('divisionName');
@@ -168,15 +174,13 @@ export class GlTrialBalanceComponent implements OnInit {
    
    
 
-    this.service.FinancialPeriod()
-      .subscribe(
-      data => {
-      this.periodNameList = data.obj;
-  }
-);
+    
 if(sessionStorage.getItem('GLPeriod')!=null || sessionStorage.getItem('GLPeriod')!=undefined){
-  this.glTrialBalanceForm.patchValue({'periodName':sessionStorage.getItem('GLPeriod')})
+  console.log(sessionStorage.getItem('GLPeriod'));
+  this.periodName =sessionStorage.getItem('GLPeriod');
   this.SearchTB(sessionStorage.getItem('GLPeriod'));
+  
+  
 }
   }
 
@@ -185,6 +189,7 @@ if(sessionStorage.getItem('GLPeriod')!=null || sessionStorage.getItem('GLPeriod'
 
   resetMast() {
     window.location.reload();
+    sessionStorage.removeItem('GLPeriod');
   }
 
   expExcel(){}
@@ -273,6 +278,12 @@ SelectTbAct2(trxNum,refNum,catg,source){
   else if(source==='Inventory' && catg==='STKTRF_Receipt' ){
     // this.router.navigate(['/admin/transaction/Payment', trxNum]);
     this.router.navigate(['/admin/transaction/stockTransfer',refNum] );
+    // this.router.navigate(['/admin/transaction/PaymentAr',trxNum]);
+    alert ("Source - Purchasing , Category - "+catg +" ..Wip...")
+  } 
+  else if(source==='Inventory' && catg==='Stock Taking' ){
+    // this.router.navigate(['/admin/transaction/Payment', trxNum]);
+    this.router.navigate(['/admin/transaction/miscTransaction',refNum] );
     // this.router.navigate(['/admin/transaction/PaymentAr',trxNum]);
     alert ("Source - Purchasing , Category - "+catg +" ..Wip...")
   } 

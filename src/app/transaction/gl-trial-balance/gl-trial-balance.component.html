@@ -55,7 +55,7 @@
                                     <td>
                                       <select formControlName="periodName" id="periodName" class="form-control" [(ngModel)]="periodName">
                                       <!-- <option>--Select--</option> -->
-                                      <option *ngFor="let sc of  periodNameList" [value]="sc.periodName">
+                                      <option *ngFor="let sc of  periodNameList" [ngValue]="sc.periodName">
                                         {{sc.periodName}}
                                       </option>
                                     </select>

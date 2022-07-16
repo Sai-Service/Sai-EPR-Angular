@@ -343,7 +343,14 @@ export class StockTransferComponent implements OnInit {
         this.locIdList = data;
         console.log(this.locIdList);
       });
-
+      this.sub = this.router1.params.subscribe(params => {
+        this.ShipmentNo = params['refNum'];
+         alert ("orderNumber  :"+this.ShipmentNo);
+       if (this.ShipmentNo != undefined){
+        
+       this.search(this.ShipmentNo);
+     }
+   });
   // this.addnewtrxLinesList(-1);
 
 
@@ -454,14 +461,7 @@ export class StockTransferComponent implements OnInit {
           // this.AvailQty(this.frmLocator,i);
         });
         
-        this.sub = this.router1.params.subscribe(params => {
-          this.ShipmentNo = params['refNum'];
-           alert ("orderNumber  :"+this.ShipmentNo);
-         if (this.ShipmentNo != undefined){
-          
-         this.search(this.ShipmentNo);
-       }
-     });
+       
 
       }
   }

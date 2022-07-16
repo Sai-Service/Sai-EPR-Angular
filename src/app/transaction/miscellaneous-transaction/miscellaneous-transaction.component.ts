@@ -222,6 +222,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
   @ViewChild('Item') Item: ElementRef;
   @ViewChild('desc') desc: ElementRef;
   @ViewChild('stkAdjForm') stkAdjForm: ElementRef;
+  sub1: any;
 
   // @ViewChild("suppCode1") suppCode1: ElementRef;
   ngAfterViewInit() {
@@ -232,6 +233,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private route1: ActivatedRoute,
+    private router1:ActivatedRoute,
     private service: MasterService
   ) {
     this.miscellaneousForm = fb.group({
@@ -504,7 +506,20 @@ export class MiscellaneousTransactionComponent implements OnInit {
         this.issueByList = data;
         console.log(this.issueByList);
       });
-
+      this.service.TolocationIdList(this.locId).subscribe
+      (data => {
+        this.locIdList = data;
+        console.log(this.locIdList);
+      });
+     
+      this.sub1 = this.router1.params.subscribe(params => {
+        this.compNo = params['refNum'];
+        //  alert ("orderNumber  :"+this.compNo);
+       if (this.compNo != undefined){
+        
+       this.search(this.compNo);
+     }
+   });
     //   this.addnewcycleLinesList(-1);
 
     //   var patch = this.miscellaneousForm.get('trxLinesList') as  FormArray
@@ -1248,9 +1263,9 @@ export class MiscellaneousTransactionComponent implements OnInit {
       }
     });
   }
-  search(compNo) {
-    // alert(compNo);
-    if (compNo != undefined) {
+  search(compno) {
+    alert(compno);
+    if (compno != undefined) {
       this.currentOp = 'SEARCH';
       var compno = this.miscellaneousForm.get('compNo').value;
       var appflag = this.miscellaneousForm.get('trans').value;

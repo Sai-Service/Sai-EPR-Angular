@@ -453,7 +453,7 @@ export class SalesReportsComponent implements OnInit {
       this.ispanelTolocationOu=false;
     }
     else if (reportName==='gststockTransferReceivedSummary'){
-      this.reportName = 'Spares Stock Transfer Received Summary Report';
+      this.reportName = 'Sales Stock Transfer Received Summary Report';
       this.isVisiblefromtolocationdepartment = false;
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
@@ -1073,10 +1073,10 @@ export class SalesReportsComponent implements OnInit {
           })
       }
     }
-    else if (reportName === 'Spares Stock Transfer Received Summary Report') {
+    else if (reportName === 'Sales Stock Transfer Received Summary Report') {
       var tolocId = this.salesReportForm.get('tolocId').value;
       var subInventory='VH';
-      const fileName = 'Spares Stock Transfer Received Summary Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+      const fileName = 'Sales Stock Transfer Received Summary Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.SprStkTrfRecdSummaryReport(fromDate, toDate, locId, tolocId, subInventory)
