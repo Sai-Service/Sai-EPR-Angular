@@ -103,11 +103,12 @@
                 <th >Base Amt</th>
                 <th >Tax Amt</th>
                 <th >Total Amt</th>
-                <th>PO Status</th>
-                <!-- <th>Bill Submitted</th> -->
+                <th >PO Status</th>
+                <th >Submit</th>
 
             </tr>
             <tr *ngFor="let com of poDetails ; let i= index" class="ItemStyle" style="text-decoration:none;font-size: 14px;">
+              
                 <td style="border: 1px solid #000000;padding-left: 5px;padding-top: 10px;">
                     <div *ngIf="displaySegment; then thenSegment; else elseSegment"> </div>
                     <ng-template #thenSegment>
@@ -127,20 +128,19 @@
                      {{com.rcvLines[0].receiptNo}}
                     </td>              
                  
-                <td style="padding-left: 5px; text-align: center;">
-                    {{com.rcvLines[0].receiptDate}}</td>
-                <td style="padding-left: 5px; text-align: right;">{{com.baseAmount}}&nbsp;&nbsp;
-                </td>
-                <td style="padding-left: 5px; text-align: right;">{{com.totTaxAmt}}&nbsp;&nbsp;
-                </td>
-                <td style="padding-left: 5px; text-align: right;">{{com.totalAmt}}&nbsp;&nbsp;
-                </td>
-                <td style="padding-left: 5px; text-align: center;">{{com.authorizationStatus}}
-                </td>
+                <td style="padding-left: 5px; text-align: center;">{{com.rcvLines[0].receiptDate}}</td>
+                <td style="padding-left: 5px; text-align: right;">{{com.baseAmount}}&nbsp;&nbsp;</td>
+                <td style="padding-left: 5px; text-align: right;">{{com.totTaxAmt}}&nbsp;&nbsp; </td>
+                <td style="padding-left: 5px; text-align: right;">{{com.totalAmt}}&nbsp;&nbsp;  </td>
+                <td style="padding-left: 5px; text-align: center;">{{com.authorizationStatus}}  </td>
+
+                <td><input  type="checkbox"  style="text-align: center;width: 3rem;"  formControlName="enabledFlag" (change)="recoverableFlg1($event,i)"></td>
+
                <!-- <td style="width: 15%" class="LabelFontStyle">
                 <input type="checkbox" class="form-check-input" formControlName="enabledFlag" (change)="recoverableFlg1($event)" >
                 <label   class="LabelFontStyle">Submitted</label>
-            </td> -->
+               </td> -->
+
             </tr>
         </table>
         </div>
