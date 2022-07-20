@@ -1,4 +1,4 @@
-import { DatePipe } from '@angular/common';
+import { DatePipe ,Location} from '@angular/common';
 import {
   Component,
   OnInit,
@@ -234,7 +234,8 @@ export class MiscellaneousTransactionComponent implements OnInit {
     private router: Router,
     private route1: ActivatedRoute,
     private router1:ActivatedRoute,
-    private service: MasterService
+    private service: MasterService,
+    private location1: Location
   ) {
     this.miscellaneousForm = fb.group({
       compNo: [''],
@@ -713,8 +714,9 @@ export class MiscellaneousTransactionComponent implements OnInit {
   }
 
   close() {
-    this.router.navigate(['admin']);
+    // this.router.navigate(['admin']);
     this.deleteReserve();
+    this.location1.back();
   }
 
  
@@ -1264,10 +1266,10 @@ export class MiscellaneousTransactionComponent implements OnInit {
     });
   }
   search(compno) {
-    alert(compno);
+    // alert(compno);
     if (compno != undefined) {
       this.currentOp = 'SEARCH';
-      var compno = this.miscellaneousForm.get('compNo').value;
+      // var compno = this.miscellaneousForm.get('compNo').value;
       var appflag = this.miscellaneousForm.get('trans').value;
       // alert(compno);
 

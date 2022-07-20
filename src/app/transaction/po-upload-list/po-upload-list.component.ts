@@ -35,6 +35,7 @@ export class PoUploadListComponent implements OnInit {
   locCode:string;
   locId:number;
   enabledFlag: string;
+  // selectLine: string;
 
   constructor(private fb: FormBuilder, private router: Router, private location1: Location, private router1: ActivatedRoute, private service: MasterService) {
     this.poPendingListForm = this.fb.group({
@@ -251,8 +252,8 @@ export class PoUploadListComponent implements OnInit {
     if (e.target.checked === false) {
       this.enabledFlag = 'N'
     }
-
+  }
     // alert ('Recoverable flag =' + this.recoverableFlag);
-  }  // }
+    // }
 
 }
