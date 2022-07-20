@@ -34,6 +34,7 @@ export class PoUploadListComponent implements OnInit {
   deptId:number;
   locCode:string;
   locId:number;
+  enabledFlag: string;
   // selectLine: string;
 
   constructor(private fb: FormBuilder, private router: Router, private location1: Location, private router1: ActivatedRoute, private service: MasterService) {
@@ -43,6 +44,7 @@ export class PoUploadListComponent implements OnInit {
       deptId:[],
       locCode:[],
       locId:[],
+      enabledFlag:[],
     })
   }
 
@@ -241,7 +243,16 @@ export class PoUploadListComponent implements OnInit {
   //   this.router.navigate(['/admin/master/PoReceiptForm', segment1]);
   //   // alert(segment1);
 
- 
+  recoverableFlg1(e,index) {
+    alert ("Index : "+index);
+    
+    if (e.target.checked === true) {
+      this.enabledFlag = 'Y'
+    }
+    if (e.target.checked === false) {
+      this.enabledFlag = 'N'
+    }
+  }
     // alert ('Recoverable flag =' + this.recoverableFlag);
     // }
 
