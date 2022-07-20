@@ -191,6 +191,7 @@ export class InternalConsumptionComponent implements OnInit {
   currentOp: string;
   dispRow: boolean = true;
   displayRemoveRow: Array<boolean> = [];
+  name:string;
 
   public itemMap = new Map<string, IcTrans>();
 
@@ -202,6 +203,7 @@ export class InternalConsumptionComponent implements OnInit {
   @ViewChild("input5") input5: ElementRef;
   @ViewChild("input6") input6: ElementRef;
   @ViewChild("Item") Item: ElementRef;
+  getVehRegDetails: any;
 
   // @ViewChild("suppCode1") suppCode1: ElementRef;
   ngAfterViewInit() {
@@ -249,6 +251,7 @@ export class InternalConsumptionComponent implements OnInit {
       RowNo: [''],
       attribute1: [],
       attribute2: [],
+      name:[],
       cycleLinesList: this.fb.array([]),
 
     })
@@ -516,9 +519,12 @@ export class InternalConsumptionComponent implements OnInit {
           }
         });
         var reasonArr1 =this.InternalConsumptionForm.get('reason').value;
+        var valOp =this.InternalConsumptionForm.get('name').value;
         var reasonArray=reasonArr1.split('-');
+        var op=valOp.split('-');
+        var value1=op[1];
         // alert(reasonArray[2]);
-        if(reasonArray[2].includes('Warranty')){
+        if(reasonArray[2].includes('Warranty') && value1=='MRP'){
           this.service.getCostDetailforWarranty(Number(sessionStorage.getItem('locId')), select1.itemId).subscribe
           (data => {
             this.CostDetail = data;
@@ -527,6 +533,16 @@ export class InternalConsumptionComponent implements OnInit {
               alert(this.CostDetail.segment);
             }
           });
+        }
+        else if(reasonArray[2].includes('Warranty') && value1=='NDP'){
+          this.service.getCostDetail(Number(sessionStorage.getItem('locId')), select1.itemId).subscribe
+        (data => {
+          this.CostDetail = data;
+          trxLnArr1.controls[i].patchValue({ itemUnitCost: this.CostDetail.rate });
+          if (this.CostDetail.rate === 0.0) {
+            alert(this.CostDetail.segment);
+          }
+        });
         }
         else{
       this.service.getCostDetail(Number(sessionStorage.getItem('locId')), select1.itemId).subscribe
@@ -1191,6 +1207,22 @@ searchByJobNo(){
         // }  
     }
   )
+}
+
+calculatewarranty(event){
+  alert(event.target.value+'warr');
+  var value=event.target.value.split('--');
+  var jobNo=value[0]
+var wIregNum=this.workshopIssue.find(d=>d.jobCardNum===jobNo);
+console.log(wIregNum);
+var regNum=wIregNum.regNo;
+this.service.getVehRegDetail(regNum).subscribe(
+  data=>{
+    this.getVehRegDetails = data;
+    // debugger;
+     this.name=this.getVehRegDetails.name
+  }
+);
 }
 
 }

@@ -3122,6 +3122,9 @@ bulkPickTickCSV(formData: FormData ,priceListName:string,taxCategoryName:string,
       // http://localhost:8081/VehAddInfo/ws/RegNo/KL07BV4680
     }
 
+    getVehRegDetail(RegNo):Observable<any>{
+      return this.http.get(this.ServerUrl+`/VehAddInfo/valwarr/${RegNo}`);
+    }
     getVehDetailsByModelChassis(mdl,chas): Observable<any> {
       return this.http.get(this.ServerUrl + `/VehAddInfo/ws/mdlChs?mainModel=${mdl}&chassisNo=${chas}`);
      //http://localhost:8081/VehAddInfo/ws/mdlChs?mainModel=AVENGER&chassisNo=234568

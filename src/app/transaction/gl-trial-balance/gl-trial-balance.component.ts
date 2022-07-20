@@ -470,6 +470,8 @@ glTbReport2(){
  glTbReportExport_Level2(){
    alert ("Not Available...WIP")
  }
-
+ closeMast(){
+  this.router.navigate(['admin']);
+ }
 
 }
