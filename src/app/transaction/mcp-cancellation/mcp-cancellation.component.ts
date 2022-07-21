@@ -107,8 +107,8 @@ public statusList:Array<string>=[];
         invoiceDate:Date;
        
         ///////////////////////////////
-        searchRegno:string;
-        searchEnrollNo:string;
+        searchRegno:string='';
+        searchEnrollNo:string='';
         searchEnrollDate:Date;
 
         enrollmentNo:string;
@@ -724,11 +724,17 @@ public statusList:Array<string>=[];
     
       searchMcpByRegNo(mRegNo,mEnrollNo){
 
+        mRegNo=mRegNo.toUpperCase();
+        mEnrollNo=mEnrollNo.toUpperCase();
+
         if( (mRegNo===undefined || mRegNo.trim()==='') && (mEnrollNo===undefined || mEnrollNo.trim()==='') )
         { 
           alert ("Both Register No  and Enrollment No is blank.\nPlease enter REGNO or ENROLLMENT NO and  click on Search");
           return;
         } 
+
+        
+        
         console.log(this.mcpCancellationForm.value);
         this.service.mcpRegSearch(mRegNo,mEnrollNo)
           .subscribe(
