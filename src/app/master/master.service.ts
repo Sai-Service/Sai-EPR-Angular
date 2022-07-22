@@ -65,9 +65,11 @@ export class MasterService {
   regionList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/Region');
   }
+
   DivisionIDList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/divMst');
   }
+  
   poTypeList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/PoTypes');
   }
