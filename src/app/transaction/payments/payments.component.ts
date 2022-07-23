@@ -467,15 +467,27 @@ jeSource: [],
       // invArr.controls[0].get('invoiceAmt').disable();
     }
     if(suppNo1[index].invTypeLookupCode==='Prepayment' &&suppNo1[index].docNo===null)
+    
 {
+  for (var j=0;j<this.lstsearchpayminvNew.length;j++){
+    
+    if(this.lstsearchpayminvNew[j].source!='TDS Invoice' ){
   var payLnGrp: FormGroup = this.payInvoiceLineDtl();
   this.payInvoiceLineDtlArray().push(payLnGrp);
+  }
+}
   // alert(this.lstsearchpayminvNew[index].invoiceId+'--'+this.lstsearchpayminvNew[index].invoiceAmt)
   // this.paymentForm.patchValue({'invoiceId':this.lstsearchpayminvNew[0].invoiceId,'invoiceAmt':this.lstsearchpayminvNew[0].invoiceAmt});
   var dataobj1 = this.paymentForm.get('obj') as FormArray;
-  dataobj1.controls[index].patchValue({'invoiceNum': this.lstsearchpayminvNew[index].invoiceNum,
-                                          'invoiceAmt':this.lstsearchpayminvNew[index].invoiceAmt,
-                                          'invoiceId':this.lstsearchpayminvNew[index].invoiceId   });
+  for(var i=0;i<this.payInvoiceLineDtlArray().length;i++){
+    // debugger;
+    if(this.lstsearchpayminvNew[i].source!='TDS Invoice' ){
+  dataobj1.controls[i].patchValue({'invoiceNum': this.lstsearchpayminvNew[i].invoiceNum,
+                                          'invoiceAmt':this.lstsearchpayminvNew[i].invoiceAmt,
+                                          'invoiceId':this.lstsearchpayminvNew[i].invoiceId   });
+    dataobj1.controls[i].get('invoiceAmt').disable();
+    }
+    }
 }
 else{
   // alert(this.partyId+'PartyID');
@@ -705,8 +717,14 @@ else{
     if(this.selectFlag='Y'){
       // alert((this.selectFlag));
       // debugger;
-      var arrcon = this.paymentForm.get('obj').value;
-      var arrobj = this.paymentForm.get('obj1').value;
+      // var arrcon = this.paymentForm.get('obj').value;
+      var objVal=this.paymentForm.getRawValue();
+      var arrcon = objVal.obj;
+      console.log(objVal);
+      // .get('obj').value;
+      // var arrobj = this.paymentForm.get('obj1').value;
+      var arrobj = objVal.obj1;
+      // .get('obj1').value;
       var patch = this.paymentForm.get('obj') as FormArray;
       var invAmt=arrcon[k].invoiceAmt;
       var unAmt=arrcon[k].unPaidAmt;
@@ -726,7 +744,7 @@ else{
     }
     }
     this.appAmt = 0;
-    var arrayControle = this.paymentForm.get('obj').value;
+    var arrayControle = objVal.obj;
     for (let i = 0; i < this.payInvoiceLineDtlArray().length; i++) {
       // alert(arrayControle[i].selectFlag+'SelectFlag');
       if (arrayControle[i].selectFlag == true) {
@@ -794,7 +812,7 @@ paymentSave(){
   if(arrcon[this.selectPayment].invTypeLookupCode==='Prepayment' &&arrcon[this.selectPayment].docNo===null)
   {
     this.paymentForm.patchValue({appAmt:arrcon[this.selectPayment].payAmount})
-    this.totAmount=arrcon[this.selectPayment].payAmount
+    // this.totAmount=arrcon[this.selectPayment].payAmount
     patch.controls[this.selectPayment].patchValue({payAmount:this.totAmount});
   }
   else{
