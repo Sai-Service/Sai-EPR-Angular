@@ -29,7 +29,7 @@ export class OrderDetailsUpdationComponent implements OnInit {
   pipe = new DatePipe('en-US');
   now = Date.now();
   public minDate = new Date();
-
+  public stateList: Array<string>[];
   public salesRepNameList: any;
   public ticketNoSearch: any;
   public mainModelList: Array<string>[];
@@ -40,6 +40,9 @@ export class OrderDetailsUpdationComponent implements OnInit {
   public YesNoList: Array<string> = [];
   truValueList: any;
   lstOrderHeader:any;
+  brokerTypeList: any;
+  brokerList: any;
+  insTypeList: any = [];
 
 
   loginName:string;
@@ -109,6 +112,10 @@ export class OrderDetailsUpdationComponent implements OnInit {
 
   leadTicketNo:string;
 
+  brokerType:string;
+  instype:string;
+  subDealerId: number;
+  subDealerName: string;
 
 
   DisplayfinanceSelectionYes = false;
@@ -189,6 +196,11 @@ export class OrderDetailsUpdationComponent implements OnInit {
       contactPerson:[],
       contactNum:[],
 
+      brokerType:[],
+      instype:[],
+      subDealerId:[],
+      subDealerName:[],
+
     })
 
 
@@ -211,6 +223,31 @@ export class OrderDetailsUpdationComponent implements OnInit {
     this.orgId=this.ouId;
     console.log(this.loginArray);
     console.log(this.locId);
+
+    this.service.StateList()
+    .subscribe(
+      data => {
+        this.stateList = data;
+        console.log(this.stateList);
+      }
+    );
+
+    this.service.insTypeListFn()
+    .subscribe(
+      data => {
+        this.insTypeList = data;
+        console.log(this.insTypeList);
+      }
+    );
+
+    this.service.brokerTypeListFn()
+    .subscribe(
+      data => {
+        this.brokerTypeList = data;
+        console.log(this.brokerTypeList);
+      }
+    );
+
 
     this.service.YesNoList()
     .subscribe(
@@ -241,6 +278,19 @@ export class OrderDetailsUpdationComponent implements OnInit {
         data => {
           this.financeTypeList = data;
           console.log(this.financeTypeList);
+        }
+      );
+  }
+
+
+  onOptionsSelectedBrokerType(event: any) {
+    // alert(event.target.value);
+    var brokerType = event.target.value;
+    this.service.brokerListFnNew(brokerType)
+      .subscribe(
+        data => {
+          this.brokerList = data;
+          console.log(this.brokerList);
         }
       );
   }
