@@ -219,7 +219,9 @@ export class ItemMasterLocatorComponent implements OnInit {
   okLocator()
   {
   //  var subInventoryId=this.ItemlocatorMasterForm.get('subId').value;
-  var formValue=this.ItemlocatorMasterForm.value;
+     var formValue=this.ItemlocatorMasterForm.value;
+     formValue.subInventoryId=this.ItemlocatorMasterForm.get('subId').value;
+
     // alert(subInventoryId)
     this.LocatorSegment=this.ItemlocatorMasterForm.get('Floor').value.toUpperCase()+'.'+
                                  this.ItemlocatorMasterForm.get('Rack').value.toUpperCase()+'.'+
