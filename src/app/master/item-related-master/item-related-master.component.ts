@@ -146,12 +146,15 @@ export class ItemRelatedMasterComponent implements OnInit {
 
     this.service.RelatedItemMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFULLY');
+        alert('RECORD INSERTED SUCCESSFULLY..'+res.message);
      
       } else {
         if (res.code === 400) {
           alert('Error While Inserting Record.');
+          alert(res.message);
         }
+        else { alert("Code : " +res.code + "-"+res.message); }
+
       }
       
     });

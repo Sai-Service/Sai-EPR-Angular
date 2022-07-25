@@ -4189,9 +4189,9 @@ public  RelatedItemMasterSubmit(RelMasterRecord) {
   const options = {
     headers: this.headers
   };
-  const url = this.ServerUrl + '/relatedItemInsert';
+  const url = this.ServerUrl + '/relateditems/relatedItemInsert';
   return this.http.post(url, RelMasterRecord, options);
-  // http://localhost:8081/ relatedItemInsert/
+  // http://localhost:8081/relateditems/relatedItemInsert
 
 }
 
