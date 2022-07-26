@@ -3229,7 +3229,8 @@ export class PayableInvoiceNewComponent implements OnInit {
   }
 
   onOptionsSelectedNatural(event) {
-    if (event != undefined) {
+    // alert(event+'Event');
+    if (event != undefined ||event !=null) {
       let selectnaturalaccount = this.NaturalAccountList.find(v => v.naturalaccount == event);
       console.log(selectnaturalaccount);
       this.lookupValueDesc4 = selectnaturalaccount.description;

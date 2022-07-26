@@ -1946,16 +1946,18 @@
                                                             {{sc.naturalaccount}}
                                                         </option>
                                                     </select> -->
+                                                    <!-- (keyup)="getNaturalAccount($event)" (ngModelChange)="onOptionsSelectedNatural($event,'NaturalAccount')" -->
                                                     <input type="text" (keyup)="getNaturalAccount($event)"
                                                         formControlName="segment4" id="NaturalAccountFirstWay"
-                                                        list="dynmicUserIds3" class="form-control"
-                                                        (ngModelChange)="onOptionsSelectedNatural($event,'NaturalAccount')" />
+                                                        list="dynmicUserIds3" class="form-control" (change)="onOptionsSelectedNatural($event)"
+                                                        />
                                                     <datalist id="dynmicUserIds3">
                                                         <option *ngFor="let sc of  NaturalAccountList"
-                                                            [value]="sc.naturalaccount">
+                                                            [ngValue]="sc.naturalaccount">
                                                             {{sc.naturalaccount}}--{{sc.description}}
                                                         </option>
-                                                    </datalist>
+                                                     </datalist> 
+                                                    
                                                 </td>
                                                 <td>
                                                     <input type="text" disabled [(ngModel)]="lookupValueDesc4"
