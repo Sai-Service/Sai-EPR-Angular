@@ -42,6 +42,7 @@ import { ItemMasterLocatorComponent } from './item-master-locator/item-master-lo
 import { ReceivableTranstypeMasterComponent } from './receivable-transtype-master/receivable-transtype-master.component';
 import { CustomerRelationMasterComponent } from './customer-relation-master/customer-relation-master.component';
 import { ItemMasterNewComponent } from './item-master-new/item-master-new.component';
+import { ItemRelatedMasterComponent } from './item-related-master/item-related-master.component';
 
 
 // import { DashboardComponent } from './dashboard/dashboard.component';
@@ -83,7 +84,8 @@ import { ItemMasterNewComponent } from './item-master-new/item-master-new.compon
     ItemMasterLocatorComponent,
     ReceivableTranstypeMasterComponent,
     CustomerRelationMasterComponent,
-    ItemMasterNewComponent,  ],
+    ItemMasterNewComponent,
+    ItemRelatedMasterComponent,  ],
     
   // declarations: [DivisionMasterComponent, OrganizationMasterComponent, LocationMasterComponent, CompanyMasterComponent, FNDCommonLookupComponent, ItemCategortComponent, SupplierMasterComponent, LocatorMasterComponent, ItemMasterComponent, CommonMasterComponent, DocumentSequenceMasterComponent, EpmloyeeMasterComponent, CustomerMasterComponent, GlCodeCombinationComponent, HsnSacMasterComponent, OPMasterDtoComponent, JaiRegimeMasterComponent, TaxAccountsComponent, TaxCategoryMasterComponent, JaiTaxCategoryLineComponent, JaiTaxRatesMasterComponent, JaiTaxTypeComponent,FlexFieldComponent, PricelistMasterComponent, OmGruopMasterComponent, OrderTypeMasterComponent,SubinventoryMasterComponent,SaiEwSchemeComponent],
   

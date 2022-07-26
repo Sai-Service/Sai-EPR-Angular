@@ -155,10 +155,10 @@
                         <tr>
                             <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
                             <ng-template #thenBlock1>
-                            <td> <button type="submit" class="btn btn-info" id="register" (click)="newMast()">Save</button></td>
+                            <td> <button type="button" class="btn btn-info" id="register" (click)="newMast()">Save</button></td>
                             <!-- <td> <button type="submit" class="btn btn-info" id="register" (click)="searchMast(0)">Search</button></td> -->
-                            <td> <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>
-                            <td> <button type="submit" class="btn btn-info" id="register" (click)="closeMast()">Close</button></td>
+                            <td> <button type="button" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>
+                            <td> <button type="button" class="btn btn-info" id="register" (click)="closeMast()">Close</button></td>
                            
                             </ng-template>
                             <ng-template #elseBlock1>

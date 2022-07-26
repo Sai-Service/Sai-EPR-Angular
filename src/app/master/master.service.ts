@@ -65,9 +65,11 @@ export class MasterService {
   regionList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/Region');
   }
+
   DivisionIDList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/divMst');
   }
+  
   poTypeList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/PoTypes');
   }
@@ -4181,5 +4183,28 @@ printAmcDoc(amcNum){
 });
 // http://localhost:8081/McpEnrollMst/amcInvoicePrint/AMC2202-8
 }
+
+//////////////////////////////////////////RELATED ITEM MASTER /////////////////
+public  RelatedItemMasterSubmit(RelMasterRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/relateditems/relatedItemInsert';
+  return this.http.post(url, RelMasterRecord, options);
+  // http://localhost:8081/relateditems/relatedItemInsert
+
+}
+
+DeleteItemRelation() {
+  const options = {
+    headers: this.headers
+  };
+  const url = (this.ServerUrl + `/relateditems/removeSingle`);
+  return this.http.delete(url, options);
+
+  // http://localhost:8081/relateditems/ removeSingle
+}
+
+///////////////////////////////////////////////////////////////////////////////
   
 }

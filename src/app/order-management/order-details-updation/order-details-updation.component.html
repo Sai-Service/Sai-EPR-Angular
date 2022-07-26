@@ -174,7 +174,17 @@
             <tr>
                
                 <td style="width: 15%" class="LabelFontStyle">State&nbsp;:&nbsp;</td>
-                <td><input  type="text" formControlName="state" value={{state}} [(ngModel)] ="state" class="form-control" style="width:290px;"></td>
+                <!-- <td><input  type="text" formControlName="state" value={{state}} [(ngModel)] ="state" class="form-control" style="width:290px;"></td> -->
+               <td>
+                <select formControlName="state" id="state" [(ngModel)]='state'  class="form-control" style="width:290px;">
+                    <option></option>
+                    <option *ngFor="let sc of stateList">
+                    {{sc.codeDesc}}
+                   </option>
+                </select>
+            </td>
+                   
+               
                 <td style="width: 15%" class="LabelFontStyle">Contact&nbsp;Person&nbsp;:&nbsp;</td>
                 <td ><input  type="text" formControlName="contactPerson" value={{contactPerson}} [(ngModel)] ="contactPerson" class="form-control" style="width:290px;" ></td>
            
@@ -368,6 +378,41 @@
                             <td style="width: 15%" class="LabelFontStyle">MSF&nbsp;Ref&nbsp;CustNo:&nbsp;</td>                
                             <td><input  type="text" formControlName="msRefCustNo" [(ngModel)]='msRefCustNo'  class="form-control"> </td>
                         </tr>
+
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle">Broker&nbsp;Type&nbsp;:&nbsp;</td>
+                            <td>
+                                <select formControlName="brokerType" id="brokerType" class="form-control"
+                                    style="width: 170px;" (change)="onOptionsSelectedBrokerType($event)">
+                                    <option>--Select--</option>
+                                    <option *ngFor="let mm of brokerTypeList" [value]="mm.codeDesc">
+                                        {{mm.codeDesc}}
+                                    </option>
+                                </select>
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle">Broker&nbsp;Dealer&nbsp;:&nbsp;</td>
+                            <td>
+                                <select formControlName="subDealerId" id="subDealerId" class="form-control"
+                                    style="width: 170px;">
+                                    <option>--Select--</option>
+                                    <option *ngFor="let mm of brokerList" [ngValue]="mm.customerId">
+                                        {{mm.custName}}
+                                    </option>
+                                </select>
+                            </td>
+                       
+                            <td style="width: 15%" class="LabelFontStyle">Insurance&nbsp;Type&nbsp;:&nbsp;</td>
+                            <td>
+                                <select formControlName="insType" id="insType" class="form-control"
+                                    style="width: 170px;">
+                                    <option>--Select--</option>
+                                    <option *ngFor="let mm of insTypeList">
+                                        {{mm.code}}--{{mm.codeDesc}}
+                                    </option>
+                                </select>
+                            </td>
+                        </tr>
+
 
                        
 

@@ -38,6 +38,7 @@ import { ItemMasterLocatorComponent } from './item-master-locator/item-master-lo
 import { ReceivableTranstypeMasterComponent } from './receivable-transtype-master/receivable-transtype-master.component';
 import { CustomerRelationMasterComponent } from './customer-relation-master/customer-relation-master.component';
 import { ItemMasterNewComponent } from './item-master-new/item-master-new.component';
+import { ItemRelatedMasterComponent } from './item-related-master/item-related-master.component';
 
 // import { SubinventoryTransferComponent } from '../transaction/subinventory-transfer/subinventory-transfer.component';
 
@@ -93,9 +94,11 @@ const routes: Routes = [
   {path:'ItemMasterLocator',component:ItemMasterLocatorComponent},
   {path:'ReceivableTranstypeMaster',component:ReceivableTranstypeMasterComponent},
   {path:'CustomerRelationMaster',component:CustomerRelationMasterComponent},
+  {path:'ItemRelatedMaster',component:ItemRelatedMasterComponent},
   // {path:'SubinventoryTransfer',component:SubinventoryTransferComponent},
   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];
+
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

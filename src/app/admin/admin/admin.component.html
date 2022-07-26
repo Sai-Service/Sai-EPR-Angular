@@ -64,9 +64,9 @@
             <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/GatePass']">Sales Gate Pass</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/rtoLineItemReport']">RTO Report</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/SalesOrderProformaChetak']">Proforma-Chetak</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/OrderDetailsUpdation']">Order Detail Updation</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/VehicleBookUpload']">Vehicle Booking Upload CSV</a></li>
-           </ul>
+            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/OrderDetailsUpdation']">Order Detail Updation</a></li>
+          </ul>
         </li>
       </div>
       </ul>
@@ -260,6 +260,7 @@
       <div [style.display]="isVisible26 ? 'block' : 'none'">
         <!-- <li> <a class="dropdown-item" [routerLink]="['/admin/master/ItemMaster']">Item Master</a> </li> -->
         <li> <a class="dropdown-item" [routerLink]="['/admin/master/itemMasterNew']">Item Master</a> </li> 
+        <li> <a class="dropdown-item" [routerLink]="['/admin/master/ItemRelatedMaster']">Related Item Master</a> </li> 
         <li><a class="dropdown-item" [routerLink]="['/admin/transaction/BulkItemUploadCSV']">Bulk Upload Item</a></li>
       </div>
       </ul>
