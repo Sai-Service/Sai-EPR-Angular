@@ -50,13 +50,18 @@
         <br>
         <table class="center">
             <tr>
+                <div *ngIf="saveButton; then Block11; else Block12"></div>
+                <ng-template #Block11>
+                    <td> <button type="button" class="btn btn-info" id="sveBtn" (click)="newMast()">Save</button></td>
+                </ng-template><ng-template #Block12></ng-template>
+                
+                <div *ngIf="cancelButton; then Block21; else Block22"></div>
+                <ng-template #Block21>
+                    <td> <button type="button" class="btn btn-info" id="register" (click)="deleteRelation()">Cancel</button></td>
+                </ng-template><ng-template #Block22></ng-template>
 
-                <td> <button type="button" class="btn btn-info" id="sveBtn" (click)="newMast()">Save</button></td>
-                <td> <button type="button" class="btn btn-info" id="register" (click)="deleteRelation()">Cancel</button></td>
                 <td> <button type="button" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>
                 <td> <button type="button" class="btn btn-info" id="register" (click)="closeMast()">Close</button></td>
-
-            
             </tr>
         </table>
 
@@ -71,12 +76,12 @@
                             <td  style="background-color: #FFE4B5;">&nbsp;Item&nbsp;Code&nbsp;:&nbsp;</td>
                             
                             <td style="background-color: #FFE4B5;">
-                                <input type="text" class="form-control" formControlName="itemCode" [(ngModel)]='itemCode'
-                                    value={{itemCode}} placeholder="Enter Main Item Code">
+                                <input type="text" class="form-control" formControlName="itemCode1" [(ngModel)]='itemCode1'  
+                                    value={{itemCode1}} placeholder="Enter Main Item Code">
                             </td>
         
                             <td style="background-color: #FFE4B5;">
-                                <button type="button" class="btn-primary" (click)="serchByItem(itemCode)"><i class="fa fa-search"
+                                <button type="button" class="btn-primary" (click)="serchByItem(itemCode1)"><i class="fa fa-search"
                                         aria-hidden="true"></i></button>
                             </td>
         
@@ -107,14 +112,14 @@
             <th scope="col" style="width: 4rem;">Select</th>                
         </tr>
         </tbody>
-        <tr *ngFor="let com of abc2 let k = index" class="ItemStyle" style="text-decoration:none;font-size: medium;">
+        <tr *ngFor="let com of abc let k = index" class="ItemStyle" style="text-decoration:none;font-size:small;">
             <td style="width: 4rem; text-align: center;">{{k+1}}</td>
             <td style="text-align:center;">{{com.itemCode }}</td> 
             <td style="width: 4rem; text-align: center;">{{com.description}}</td>
             <td style="text-align: center;">{{com.uom}}</td> 
             <td style="text-align: center;">{{com.relItemCode}}</td>
             <td style="width: 4rem; text-align: center;">{{com.relDescription}}</td>         
-            <td style="text-align: center;"><button class="btn btn-info Saibtn-secondary" (click)="Select(com.ticketNo)">Select</button></td>
+            <td style="text-align: center;"><button class="btn btn-info Saibtn-secondary" (click)="Select(com.relatedItemId)">Select</button></td>
         </tr>
     </table>
     </div>

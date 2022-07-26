@@ -10,7 +10,8 @@ import { MasterService } from '../master.service';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 
 interface IRelItemMaster {
-  itemCode : number;
+  itemCode : string;
+  itemCode1 : string;
   description : string;
   uom : string;
   itemCategory:string;
@@ -44,7 +45,8 @@ export class ItemRelatedMasterComponent implements OnInit {
   divisionId : number;
   divisionName:string;
 
-  itemCode : number;
+  itemCode : string;
+  itemCode1 : string;
   description : string;
   uom : string;
   itemCategory:string;
@@ -56,6 +58,9 @@ export class ItemRelatedMasterComponent implements OnInit {
   relatedItemId : number;
   abc : any;
   abc2: any;
+
+  saveButton=true;
+  cancelButton=false;
 
   get f() {return this.relatedItemMasterForm.controls;}
 
@@ -84,6 +89,7 @@ export class ItemRelatedMasterComponent implements OnInit {
       itemId : [],
       relatedItemId : [],
       itemCategory:[],
+      itemCode1:[],
     })
    }
 
@@ -162,13 +168,21 @@ export class ItemRelatedMasterComponent implements OnInit {
 
   Validateitem(itemCode){
     this.service.getItemCodePach(itemCode).subscribe(data =>{
-      this.abc = data;
-      console.log(this.abc)
+      this.abc2 = data;
+      console.log(this.abc2)
 
-      this.description=this.abc.description;
-      this.uom=this.abc.uom;
-      this.itemId=this.abc.itemId;
-      this.itemCategory=this.abc.categoryName;
+      this.description=this.abc2.description;
+      this.uom=this.abc2.uom;
+      this.itemId=this.abc2.itemId;
+      this.itemCategory=this.abc2.categoryName;
+
+      // ---------------------List ------------------------------ 
+      this.service.getRelatedItem(data.itemId).subscribe(data =>{
+        this.abc = data;
+        console.log(this.abc)  });
+      // ---------------------------------------------------------
+
+
       // this.EmployeeMasterNewForm.patchValue(this.abc);
     })
   }
@@ -182,12 +196,57 @@ export class ItemRelatedMasterComponent implements OnInit {
     })
   }
 
-  serchByItem(itemCode){}
+  serchByItem(itmCode){
+    // alert ("Item code :" +itmCode);
+    if(itmCode ===null || itmCode===undefined || itmCode.trim()==='') {alert ("Enter Valid Item Code ...");return;}
+   
+      this.service.getItemCodePach(itmCode).subscribe(data =>{
+      this.abc2 = data;
+      console.log(this.abc2)
+      this.relatedItemMasterForm.patchValue({itemId : data.itemId});
+      this.relatedItemMasterForm.patchValue({itemCategory : data.categoryName});
+      // this.itemCategory=this.abc.categoryName;
+
+   
+    var mainItemId =this.relatedItemMasterForm.get("itemId").value;
+    if(mainItemId>0) {
+    this.service.getRelatedItem(mainItemId).subscribe(data =>{
+      this.abc = data;
+      console.log(this.abc)
+    })
+    } else {this.abc=null ;alert ("Invalid Item Code...")}
+
+});
+
+}
+
+Select(relItemId: number) {
+  // alert("Relation Item Id :" + relItemId);
+  let select = this.abc.find(d => d.relatedItemId === relItemId);
+  if (select) {
+    this.relatedItemMasterForm.patchValue(select);
+   
+    this.cancelButton = true;
+    this.saveButton=false;
+  }
+}
+
+ 
 
   deleteRelation() {
-    this.service.DeleteItemRelation().subscribe((res: any) => {
+    // const formValue = this.trData(this.relatedItemMasterForm.value);  
+    var relId =this.relatedItemMasterForm.get("relationId").value;
+    var mainItemId =this.relatedItemMasterForm.get("itemId").value;
+    this.service.DeleteItemRelation(relId).subscribe((res: any) => {
      if (res.code === 200) {
-        alert(res.message);
+      this.cancelButton=false;
+
+      this.service.getRelatedItem(mainItemId).subscribe(data =>{
+        this.abc = data;
+        console.log(this.abc)
+      })
+
+      alert(res.message);
      } else {
        if (res.code === 400) {
          alert(res.message);
