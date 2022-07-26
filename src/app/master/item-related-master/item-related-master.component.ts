@@ -61,6 +61,7 @@ export class ItemRelatedMasterComponent implements OnInit {
 
   saveButton=true;
   cancelButton=false;
+  checkValidation=false;
 
   get f() {return this.relatedItemMasterForm.controls;}
 
@@ -146,8 +147,11 @@ export class ItemRelatedMasterComponent implements OnInit {
 
 
   newMast(){
-    const formValue = this.trData(this.relatedItemMasterForm.value);  
-    
+
+    this.CheckDataValidations();
+
+    if (this.checkValidation===true) {
+      const formValue = this.trData(this.relatedItemMasterForm.value);  
     // const formValue: IRelItemMaster =this.trData(this.relatedItemMasterForm.value);
 
     this.service.RelatedItemMasterSubmit(formValue).subscribe((res: any) => {
@@ -164,12 +168,15 @@ export class ItemRelatedMasterComponent implements OnInit {
       }
       
     });
+  } else { alert ("Data Validation Failed. Please check and try again...");}
   }
 
   Validateitem(itemCode){
     this.service.getItemCodePach(itemCode).subscribe(data =>{
       this.abc2 = data;
       console.log(this.abc2)
+
+      if(this.abc2===null){return;}
 
       this.description=this.abc2.description;
       this.uom=this.abc2.uom;
@@ -190,6 +197,8 @@ export class ItemRelatedMasterComponent implements OnInit {
     this.service.getItemCodePach(relItemCode).subscribe(data =>{
       this.abc = data;
       console.log(this.abc)
+
+      if(this.abc===null){return;}
 
       this.relDescription=this.abc.description;
       this.relatedItemId =this.abc.itemId;
@@ -261,6 +270,29 @@ Select(relItemId: number) {
 
   closeMast() {
     this.router.navigate(['admin']);
+  }
+
+
+  CheckDataValidations(){
+    
+    const formValue: IRelItemMaster = this.relatedItemMasterForm.value;
+
+    if (formValue.itemId===undefined || formValue.itemId===null  || formValue.itemId <=0)
+    {
+      this.checkValidation=false; 
+      alert ("ITEM CODE : Please check Item Code");
+      return;
+    } 
+
+    if (formValue.relatedItemId===undefined || formValue.relatedItemId===null  || formValue.relatedItemId <=0)
+    {
+      this.checkValidation=false; 
+      alert ("RELATED ITEM CODE : Please check Related Item Code");
+      return;
+    } 
+
+      this.checkValidation=true;
+
   }
 
 
