@@ -3229,12 +3229,13 @@ export class PayableInvoiceNewComponent implements OnInit {
   }
 
   onOptionsSelectedNatural(event) {
-    // alert(event+'Event');
-    if (event != undefined ||event !=null) {
-      let selectnaturalaccount = this.NaturalAccountList.find(v => v.naturalaccount == event);
+    // debugger;
+    // alert(event+'Event'+event.target.value);
+    if (event.target.value != undefined ||event.target.value !=null) {
+      let selectnaturalaccount = this.NaturalAccountList.find(v => v.naturalaccount == event.target.value);
       console.log(selectnaturalaccount);
       this.lookupValueDesc4 = selectnaturalaccount.description;
-      this.service.getInterBranchNewApi(event).subscribe(
+      this.service.getInterBranchNewApi(event.target.value).subscribe(
         data => {
           this.InterBrancList = data.obj
         })
