@@ -54,6 +54,7 @@ export class SaiEwSchemeComponent implements OnInit {
       
         loginName:string;
         loginArray:string;
+        divisionId:number;
         name:string;
         ouName : string;
         locId: number;
@@ -113,6 +114,7 @@ export class SaiEwSchemeComponent implements OnInit {
             deptId :[],
             emplId:[''],
             orgId:[''],
+            divisionId:[],
       
             ewSchemeId:[],
             ewType:[],
@@ -140,6 +142,7 @@ export class SaiEwSchemeComponent implements OnInit {
 
           this.name=  sessionStorage.getItem('name');
           this.loginArray=sessionStorage.getItem('divisionName');
+          this.divisionId=Number(sessionStorage.getItem('divisionId'));
           this.loginName=sessionStorage.getItem('name');
           this.ouName = (sessionStorage.getItem('ouName'));
           this.ouId=Number(sessionStorage.getItem('ouId'));
@@ -164,7 +167,7 @@ export class SaiEwSchemeComponent implements OnInit {
 
           
 
-          this.service.EwTypeList()
+          this.service.EwTypeList(sessionStorage.getItem('divisionId'))
           .subscribe(
             data => {
               this.EwTypeList = data;
