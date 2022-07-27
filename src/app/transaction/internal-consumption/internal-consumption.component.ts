@@ -520,9 +520,11 @@ export class InternalConsumptionComponent implements OnInit {
         });
         var reasonArr1 =this.InternalConsumptionForm.get('reason').value;
         var valOp =this.InternalConsumptionForm.get('name').value;
+        if(valOp!=undefined){
         var reasonArray=reasonArr1.split('-');
         var op=valOp.split('-');
         var value1=op[1];
+        
         // alert(reasonArray[2]);
         if(reasonArray[2].includes('Warranty') && value1=='MRP'){
           this.service.getCostDetailforWarranty(Number(sessionStorage.getItem('locId')), select1.itemId).subscribe
@@ -543,7 +545,7 @@ export class InternalConsumptionComponent implements OnInit {
             alert(this.CostDetail.segment);
           }
         });
-        }
+        }}
         else{
       this.service.getCostDetail(Number(sessionStorage.getItem('locId')), select1.itemId).subscribe
         (data => {

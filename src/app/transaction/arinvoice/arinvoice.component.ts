@@ -1801,14 +1801,21 @@ export class ARInvoiceComponent implements OnInit {
 
   }
 
-  addDiscount(i) {
+  addDiscount(lnNum) {
     // const formValue: IpostPO = this.poMasterDtoForm.value;
     // formValue.polineNum = this.poLineTax;
-    const aa = this.poLineTax;
+    // debugger;
+       const aa = this.poLineTax;
     // alert(aa);
     var invLine = this.arInvoiceForm.get('invLines').value
     var arrayControl = this.arInvoiceForm.get('taxLines').value
-    const invItemId = arrayControl[0].taxItemId
+    var invItemId = arrayControl[0].taxItemId
+    if(invItemId!=null){
+      invItemId = arrayControl[0].taxItemId;
+    }
+    else{
+invItemId=0;
+    }
     const lineNo = arrayControl[0].invLineNo
     this.taxCat1 = invLine[lineNo - 1].taxCategoryId
     // this.taxCat1 =arrayControl[this.poLineTax].taxCategoryId
@@ -1826,20 +1833,22 @@ export class ARInvoiceComponent implements OnInit {
     let control = this.arInvoiceForm.get('taxLines') as FormArray;
     control.clear();
     // this.taxCatId
+    
     this.service.taxCalforItem(invItemId, this.taxCat1, diss, baseAmount)
       .subscribe(
         (data: any[]) => {
           this.taxCalforItem = data;
           // this.patchResultList(this.poLineTax, this.taxCalforItem);
           var sum = 0;
-          for (i = 0; i < this.taxCalforItem.length; i++) {
+          for (var i = 0; i < this.taxCalforItem.length; i++) {
 
             if (this.taxCalforItem[i].totTaxPer != 0) {
               sum = sum + this.taxCalforItem[i].totTaxAmt
             }
           }
-          const TotAmtLineWise1 = arrayControl[this.poLineTax].baseAmtLineWise
-          var tolAmoutLine = sum + TotAmtLineWise1
+          
+          // const TotAmtLineWise1 = arrayControl[this.poLineTax].baseAmtLineWise
+          // var tolAmoutLine = sum + TotAmtLineWise1 comment by vinita 2lines
           // alert(this.taxCalforItem[0].totTaxAmt);
           // var patch = this.poMasterDtoForm.get('poLines') as FormArray;
           // (patch.controls[aa]).patchValue(
@@ -1857,6 +1866,14 @@ export class ARInvoiceComponent implements OnInit {
           }
           // this.patchResultList(this.poLineTax, this.taxCalforItem);
         });
+
+        var control1 = this.arInvoiceForm.get('invDisLines') as FormArray;
+        debugger;
+        for (let i = 2; i < this.lineDistributionArray().length; i++) {
+          
+          control1.controls[i].patchValue({'amount':  this.taxarr[i].amount});
+          // control.controls[i].patchValue({ lineNum: i + 1 });
+        }
   }
   accountNoSearchfn(accountNo) {
     this.orderManagementService.accountNoSearchFn(accountNo, this.ouId, this.divisionId)
@@ -2624,6 +2641,7 @@ export class ARInvoiceComponent implements OnInit {
   }
 
   CalculateDistribution(index) {
+    // debugger;
     // this.lineDisdetails = this.lineDistributionArray() as FormArray;
     this.lineDistributionArray().clear();
     var patch = this.arInvoiceForm.get('invLines') as FormArray;
