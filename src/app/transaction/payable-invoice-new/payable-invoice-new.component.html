@@ -1947,17 +1947,22 @@
                                                         </option>
                                                     </select> -->
                                                     <!-- (keyup)="getNaturalAccount($event)" (ngModelChange)="onOptionsSelectedNatural($event,'NaturalAccount')" -->
-                                                    <input type="text" (keyup)="getNaturalAccount($event)"
+                                                    <!-- <input type="text" (keyup)="getNaturalAccount($event)"
                                                         formControlName="segment4" id="NaturalAccountFirstWay"
                                                         list="dynmicUserIds3" class="form-control" (change)="onOptionsSelectedNatural($event)"
                                                         />
                                                     <datalist id="dynmicUserIds3">
-                                                        <option *ngFor="let sc of  NaturalAccountList"
-                                                            [value]="sc.naturalaccount">
+                                                        <option *ngFor="let sc of  NaturalAccountList">
                                                             {{sc.naturalaccount}}--{{sc.description}}
                                                         </option>
-                                                     </datalist> 
-                                                    
+                                                     </datalist>  -->
+                                                     <input type="text"  formControlName="segment4" id="NaturalAccountFirstWay" list="dynmicUserIds3" class="form-control"   (ngModelChange)="onOptionsSelectedNatural($event)"/>
+                                                     <datalist id="dynmicUserIds3">
+                                                          <option>--Select--</option>
+                                                        <option *ngFor="let sc of  NaturalAccountList" [value]="sc">
+                                                            {{sc}}
+                                                        </option>
+                                                     </datalist>
                                                 </td>
                                                 <td>
                                                     <input type="text" disabled [(ngModel)]="lookupValueDesc4"
@@ -1971,14 +1976,14 @@
 
                                                 </td>
                                                 <td>
-                                                    <select formControlName="segment5" id="segment5"
-                                                        class="form-control"
-                                                        (ngModelChange)="onOptionsSelectedBranchNew($event)">
-                                                        <option>--Select--</option>
-                                                        <option *ngFor="let sc of  InterBrancList">
-                                                            {{sc.lookupValue}}
-                                                        </option>
-                                                    </select>
+                                                    <select formControlName="segment5" id="segment5" class="form-control"
+                                                    [(ngModel)]="segment5"
+                                                    (ngModelChange)="onOptionsSelectedBranch($event,'SS_Interbranch')">
+                                                    <option>--Select--</option>
+                                                    <option *ngFor="let sc of  InterBrancList" [ngValue]="sc.lookupValue">
+                                                        {{sc.lookupValue}}--{{sc.lookupValueDesc}}
+                                                    </option>
+                                                </select>
                                                 </td>
                                                 <td>
                                                     <input type="text"
