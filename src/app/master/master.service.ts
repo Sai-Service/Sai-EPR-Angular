@@ -4195,15 +4195,21 @@ public  RelatedItemMasterSubmit(RelMasterRecord) {
 
 }
 
-DeleteItemRelation() {
+public DeleteItemRelation(relationId) {
   const options = {
     headers: this.headers
   };
-  const url = (this.ServerUrl + `/relateditems/removeSingle`);
+  const url = (this.ServerUrl + `/relateditems/removeSingle?relationId=${relationId}`);
   return this.http.delete(url, options);
 
-  // http://localhost:8081/relateditems/ removeSingle
+  // http://localhost:8081/relateditems/removeSingle?relationId=2
 }
+
+getRelatedItem(itemCode): Observable<any> {
+  return this.http.get(this.ServerUrl +`/relateditems/${itemCode}`);
+  // http://localhost:8081/relateditems/6950 
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////
   

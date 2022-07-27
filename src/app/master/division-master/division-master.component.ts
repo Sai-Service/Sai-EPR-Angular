@@ -169,6 +169,7 @@ export class DivisionMasterComponent implements OnInit {
       this.display = false;
     }
   }
+  
 
 message:string="PleaseFixtheErrors!";
 msgType:string="Close";
