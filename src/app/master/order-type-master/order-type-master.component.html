@@ -143,7 +143,8 @@
                         <td style="width: 15%" class="LabelFontStyle">Primary&nbsp;Price&nbsp;List:&nbsp;</td>
 
                         <td>  
-                            <select formControlName="primaryPriceListId" id="primaryPriceListId" [(ngModel)]="primaryPriceListId" class="form-control" style="background-color: yellow;" >
+                            <select formControlName="primaryPriceListId" id="primaryPriceListId" [(ngModel)]="primaryPriceListId" class="form-control" 
+                            (ngModelChange)="onSelectionPrimePL($event)" style="background-color: yellow;" >
                                 <option disabled>--Select--</option>
                                 <option *ngFor="let sc of  PriceListIdList" [ngValue]="sc.priceListHeaderId" >
                                     {{sc.priceListHeaderId}}-{{sc.priceListName}}
@@ -156,7 +157,8 @@
                         <td style="width: 15%" class="LabelFontStyle">Secondary&nbsp;Price&nbsp;List:&nbsp;</td>
 
                         <td>  
-                            <select formControlName="secondaryPriceListId" id="secondaryPriceListId" [(ngModel)]="secondaryPriceListId" class="form-control" style="background-color: yellow;" >
+                            <select formControlName="secondaryPriceListId" id="secondaryPriceListId" [(ngModel)]="secondaryPriceListId" class="form-control" 
+                            (ngModelChange)="onSelectionSecPL($event)" style="background-color: yellow;" >
                                 <option disabled>--Select--</option>
                                 <option *ngFor="let sc of  PriceListIdList" [ngValue]="sc.priceListHeaderId"  >
                                     {{sc.priceListHeaderId}}-{{sc.priceListName}}

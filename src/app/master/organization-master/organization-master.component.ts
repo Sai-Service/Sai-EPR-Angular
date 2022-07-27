@@ -122,6 +122,7 @@ export class OrganizationMasterComponent implements OnInit {
         console.log(this.companyCodeList);
       }
     );
+    
     this.service.DivisionIDList()  
     .subscribe(
       data => {

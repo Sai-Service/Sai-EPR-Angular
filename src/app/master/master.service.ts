@@ -2579,6 +2579,7 @@ UpdateOrderTypeMasterById1(OrderTypeMasterRecord) {
   const url = (this.ServerUrl + `/OrderTrnType`);
   return this.http.put(url, OrderTypeMasterRecord, options);
 }
+
 getOrderTypeSearch(): Observable<any> {
   return this.http.get(this.ServerUrl + '/OrderTrnType');
 
