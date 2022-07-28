@@ -454,5 +454,25 @@ export class OrderTypeMasterComponent implements OnInit {
                 this.checkValidation=true
 
       }
+
+      onSelectionPrimePL(event){
+        if(event>0){
+        // alert ("PL Prime  Selected : "+event);
+        var x=this.orderTypeMasterForm.get('primaryPriceListId').value;
+        var y=this.orderTypeMasterForm.get('secondaryPriceListId').value;
+        if(x===y) {alert ("Primary And Secondary Price List Should not be Same...");
+         this.orderTypeMasterForm.get('primaryPriceListId').reset();
+        return;
+      }}}
+
+      onSelectionSecPL(event){
+        if(event>0){
+        // alert ("PL Secondary  Selected : "+event);
+        var x=this.orderTypeMasterForm.get('primaryPriceListId').value;
+        var y=this.orderTypeMasterForm.get('secondaryPriceListId').value;
+        if(x===y) {alert ("Primary And Secondary Price List Should not be Same...");
+         this.orderTypeMasterForm.get('secondaryPriceListId').reset();
+        return;
+      }}}
 }
 

@@ -91,7 +91,6 @@ export class CashBankTransferComponent implements OnInit {
       viewAccountingBankTrf: any;
       viewAccountingBnkTrfLines: any;
      
-
       fromAcctList :any;
       toAcctList:any;
       TransferTypeList:any;
@@ -815,6 +814,7 @@ export class CashBankTransferComponent implements OnInit {
                this.cashBankTransferForm.get('receiptMethodId').reset();
               return;
             }
+            
             
             let selectedValue = this.fromAcctList.find(v => v.receiptMethodId == methodId);
             if( selectedValue != undefined){
