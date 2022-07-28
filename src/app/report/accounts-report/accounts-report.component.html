@@ -96,6 +96,12 @@
     <br>
   </nav>
   <br>
+
+  <!-- <fieldset class="RFS">
+    <table class="center"   style="margin-left: 10%;"
+        [style.display]="isVisibleGSTPurchaseRegister ? 'block' : 'none'" class="collapse"
+        id="panelGSTPurchaseRegister"> -->
+
   <fieldset class="RFS">
     <table style="margin-left: auto;margin-right: auto;"
       [style.display]="isVisibleGSTPurchaseRegister ? 'block' : 'none'" class="collapse" id="panelGSTPurchaseRegister">
@@ -205,6 +211,7 @@
       <tr>
         <td>
           <table class="center">
+            <!-- <table class="center" style="width: 100%;"> -->
             <tr>
               <td colspan="4" class="LabelFontStyle" style="width: 100%;">
                 {{reportName}}
@@ -215,7 +222,7 @@
       </tr>
       <tr>
         <td>
-          <table class="center">
+          <table class="center" style="width: 100%;">
             <tr>
               <td style="width: 15%" class="LabelFontStyle">
                 &nbsp;From&nbsp;Date&nbsp;:&nbsp;
@@ -818,6 +825,7 @@
         </td>
       </tr>
     </table>
+    
     <table class="center" [style.display]="ispanelTolocationOu ? 'block' : 'none'" class="collapse"
       style="margin-left: 20%;" id="panelTolocationOu">
       <tr>
