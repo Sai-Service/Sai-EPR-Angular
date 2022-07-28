@@ -492,12 +492,24 @@
               <td>
                 <input type="text" disabled class="form-control" formControlName="OUCode" style="width: fit-content;">
               </td>
-              <td style="width: 15%" class="LabelFontStyle">GL&nbsp;Period&nbsp;:&nbsp;</td>
+              <!-- <td style="width: 15%" class="LabelFontStyle">GL&nbsp;Period&nbsp;:&nbsp;</td> 
               <td>
                 <select formControlName="periodName" id="periodName" class="form-control">
                   <option>--Select--</option>
                   <option *ngFor="let sc of  periodNameList" [value]="sc.periodName">
                     {{sc.periodName}}
+                  </option>
+                </select>
+              </td>  -->
+
+              <td style="width: 15%" class="LabelFontStyle">GL&nbsp;Period&nbsp;Year&nbsp;:&nbsp;</td>
+              <!-- <input type="number" class="form-control" formControlName="glPeriodYear" style="text-align:left;" > -->
+
+              <td>
+                <select formControlName="glPeriodYear" id="glPeriodYear" class="form-control">
+                  <option>--Select--</option>
+                  <option *ngFor="let sc of  glYearNameList" [value]="sc.periodYear">
+                    {{sc.periodYear}}
                   </option>
                 </select>
               </td>
