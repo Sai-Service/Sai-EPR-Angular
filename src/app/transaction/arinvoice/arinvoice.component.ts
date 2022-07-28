@@ -1848,7 +1848,7 @@ invItemId=0;
           }
           
           // const TotAmtLineWise1 = arrayControl[this.poLineTax].baseAmtLineWise
-          // var tolAmoutLine = sum + TotAmtLineWise1 comment by vinita 2lines
+          var tolAmoutLine = sum + baseAmount
           // alert(this.taxCalforItem[0].totTaxAmt);
           // var patch = this.poMasterDtoForm.get('poLines') as FormArray;
           // (patch.controls[aa]).patchValue(
@@ -1858,6 +1858,24 @@ invItemId=0;
           //     totAmtLineWise: tolAmoutLine,
           //   }////////////////////
           // );
+          var control1 = this.arInvoiceForm.get('invDisLines') as FormArray;
+        // debugger;
+        var taxln= this.taxarr.get(lineNo);
+        let j=2;
+        for (let i = 0; i < taxln.length; i++) {
+         
+          control1.controls[j+i].patchValue({'amount':this.taxCalforItem[i].totTaxAmt});
+          // control.controls[i].patchValue({ lineNum: i + 1 });
+        }
+        var controlinv = this.arInvoiceForm.get('invLines') as FormArray;
+        // debugger;
+        var taxln= this.taxarr.get(lineNo);
+        // let j=2;
+        // for (let i = 0; i < taxln.length; i++) {
+         
+          controlinv.controls[lnNum].patchValue({'taxRecoverable':sum});
+          controlinv.controls[lnNum].patchValue({'extendedAmount':tolAmoutLine});
+        // }
           this.TaxDetailsArray().clear()
           for (let i = 0; i < this.taxCalforItem.length; i++) {
             var invLnGrp: FormGroup = this.TaxDetailsGroup();
@@ -1867,13 +1885,7 @@ invItemId=0;
           // this.patchResultList(this.poLineTax, this.taxCalforItem);
         });
 
-        var control1 = this.arInvoiceForm.get('invDisLines') as FormArray;
-        debugger;
-        for (let i = 2; i < this.lineDistributionArray().length; i++) {
-          
-          control1.controls[i].patchValue({'amount':  this.taxarr[i].amount});
-          // control.controls[i].patchValue({ lineNum: i + 1 });
-        }
+        
   }
   accountNoSearchfn(accountNo) {
     this.orderManagementService.accountNoSearchFn(accountNo, this.ouId, this.divisionId)

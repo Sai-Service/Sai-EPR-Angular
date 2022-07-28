@@ -353,7 +353,7 @@ newmoveOrder()
  console.log(trans);
   const formValue:IworkshopReturn=this.WorkshopReturnForm.value;
   // var subCode=this.WorkshopReturnForm.get('frmSubInvCode').value;
-  // formValue.frmSubInvCode = subCode.subInventoryCode;
+  formValue.JobNo=this.WorkshopReturnForm.get('JobNo').value;
   this.service.moveOrderSubmit(formValue).subscribe((res:any)=>{
     var obj = res.obj;
         sessionStorage.setItem('requestNumber', obj);
@@ -383,7 +383,7 @@ newmoveOrder()
     {
       if (res.code === 400) {
         alert("Code already present in data base");
-        this.WorkshopReturnForm.reset();
+        // this.WorkshopReturnForm.reset();
       }
     }
   })
