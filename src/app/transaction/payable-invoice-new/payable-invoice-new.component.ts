@@ -3191,10 +3191,13 @@ export class PayableInvoiceNewComponent implements OnInit {
   fnCancatination(index) {
     var arrayControl = this.poInvoiceForm.get('distribution').value;
     var patch = this.poInvoiceForm.get('distribution') as FormArray;
+    var natacc=(this.poInvoiceForm.get('segment4').value).split('-')
+    
     arrayControl[index].segmentName = this.poInvoiceForm.get('segment11').value + '.'
       + this.poInvoiceForm.get('segment2').value + '.'
       + this.poInvoiceForm.get('segment3').value + '.'
-      + this.poInvoiceForm.get('segment4').value + '.'
+      // + this.poInvoiceForm.get('segment4').value + '.'
+      +natacc[0]+'.'
       + this.poInvoiceForm.get('segment5').value;
     this.segmentName1 = arrayControl[index].segmentName
     console.log(this.segmentName1);
