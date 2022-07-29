@@ -766,6 +766,17 @@ reportName:string;
           this.isDisabled1=false;
         })
      }
+     else if (reportName ==='JV Register'){
+      const fileName = 'JV Register-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      this.reportService.jvRegister(fromDate,toDate,sessionStorage.getItem('ouId'))
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.closeResetButton = true;
+          this.dataDisplay = ''
+          this.isDisabled1=false;
+        })     
+     }
 
 
   }

@@ -284,7 +284,6 @@ export class OrderTypeMasterComponent implements OnInit {
         if (select) {
           this.orderTypeMasterForm.patchValue(select);
           this.transactionTypeId = select.transactionTypeId;
-        
           this.ouId = select.ouId.ouId;
           this.displayButton = false;
           this.showOrg=false;
