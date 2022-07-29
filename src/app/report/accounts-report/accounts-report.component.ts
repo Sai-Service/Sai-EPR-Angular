@@ -494,6 +494,22 @@ reportName:string;
     this.ispanelTolocationOu=false;
     this.isVisibleVendorLedgerReport=true;
     
+  } else if (reportName=='jvRegister'){
+    this.reportName='JV Register';
+    this.isVisibleGSTSaleRegister=false;
+    this.isVisibleGSTPurchaseRegister=false;
+    
+    this.isVisibleSparesdebtors=false;
+    this.isVisibleLocation=false;
+    this.isVisibleLocation1=false;
+    this.isVisiblepanelaccountName=false;
+    this.isVisiblepanelcashName=false;
+    this.isVisiblespInvAgging=false;
+    this.isVisiblepanelgltrialBalance=false;
+    this.panelCashBank=false;
+    this.isVisiblepanelAPGLUnpainAging=false;
+    this.isVisiblepanelprePayment=false;
+    this.ispanelTolocationOu=true;
   }
 
 
