@@ -1212,6 +1212,11 @@ public viewAccountingAR(tranNo):Observable<any>
 {
   return this.http.get(this.ServerUrl+`/glHeader/arInv/${tranNo}`);
 }
+///Stock transfer////
+public viewAccountingST(tranNo):Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/glHeader/Invntory/${tranNo}`);
+}
 /////////////////////////////HSN-SAC CODE//////////////////////
 getHsnSacSearch(): Observable<any> {
     return this.http.get(this.ServerUrl + '/hsnsacMst');

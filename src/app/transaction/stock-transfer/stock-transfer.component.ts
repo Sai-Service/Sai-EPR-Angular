@@ -136,6 +136,23 @@ export class StockTransferComponent implements OnInit {
   isVisibleVinNumber:boolean=false;
   // public itemMap3 = new Map<string, StockTransferRow>();
 
+
+  jeSource: string;
+  name: string;
+  ledgerName: string;
+  jeCategory: string;
+  postedDate: Date;
+  periodName: string;
+  runningTotalDr: number;
+  runningTotalCr: number;
+
+  viewAccounting1: any[];
+  viewAccounting2: any[];
+  docSeqValue: string;
+  name1: number;
+  ledgerId: number;
+  description1: string;
+
   @ViewChild("myinput") myInputField: ElementRef;
   emplId: number;
   sub: any;
@@ -165,6 +182,19 @@ export class StockTransferComponent implements OnInit {
       transReference:[''],
       emplId:[],
       totVal:[],
+
+      jeSource: [],
+      name: [],
+      ledgerName: [],
+      jeCategory: [],
+      postedDate: [],
+      periodName: [],
+      runningTotalDr: [],
+      runningTotalCr: [],
+      ledgerId: [],
+      description1: [],
+      docSeqValue: [],
+
       trxLinesList: this.fb.array([]),
 
     }
@@ -1061,6 +1091,31 @@ viewStockgatePass() {
        totAmt = Math.round(((totAmt) + Number.EPSILON) * 100) / 100;
       this.stockTranferForm.patchValue({ 'totVal': totAmt });
     
+    }
+    viewAccounting(trxNumber: any) {
+      // alert(receiptNo);
+      this.service.viewAccountingST(trxNumber).subscribe((res: any) => {
+        if (res.code === 200) {
+          this.viewAccounting2 = res.obj;
+          this.description1 = res.obj.description;
+          this.periodName = res.obj.periodName;
+          this.postedDate = res.obj.postedDate;
+          this.jeCategory = res.obj.jeCategory;
+          this.name1 = res.obj.name;
+          this.ledgerId = res.obj.ledgerId;
+          this.runningTotalDr = res.obj.runningTotalDr;
+          this.runningTotalCr = res.obj.runningTotalCr;
+          this.docSeqValue = res.obj.docSeqValue;
+          console.log(this.description);
+          this.viewAccounting1 = res.obj.glLines;
+          console.log(this.viewAccounting1);
+          // alert(res.message);
+        } else {
+          if (res.code === 400) {
+            alert(res.message);
+          }
+        }
+      });
     }
 }
 

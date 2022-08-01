@@ -275,7 +275,7 @@ SelectTbAct2(trxNum,refNum,catg,source){
     // this.router.navigate(['/admin/transaction/PaymentAr',trxNum]);
     alert ("Source - Purchasing , Category - "+catg +" ..Wip...")
   } 
-  else if(source==='Inventory' && catg==='STKTRF_Receipt' ){
+   else if(source==='Inventory' && catg==='Inventory' ){
     // this.router.navigate(['/admin/transaction/Payment', trxNum]);
     this.router.navigate(['/admin/transaction/stockTransfer',refNum] );
     // this.router.navigate(['/admin/transaction/PaymentAr',trxNum]);
