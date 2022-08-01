@@ -282,7 +282,7 @@
                     <td style="width: 15%"  class="LabelFontStyle1">&nbsp;Customer&nbsp;Account&nbsp;:&nbsp;</td>
             <td>
                 <!-- <input type="number" min="0"  style="width: 5rem;" [(ngModel)]="billToCustNo" formControlName="billToCustNo" (keydown.tab)="accountNoSearchfn(billToCustNo)"  class="form-control"> -->
-                <input type="number" formControlName="billToCustNo" value={{billToCustNo}} [(ngModel)]="billToCustNo" (keydown.tab)="accountNoSearchfn(billToCustNo)"  class="form-control" style="width: 170px;">
+                <input type="number" formControlName="billToCustNo" value={{billToCustNo}} [(ngModel)]="billToCustNo" (keydown.tab)="accountNoSearchfn(billToCustNo, null)"  class="form-control" style="width: 170px;">
               </td>
               <input hidden formControlName="custtaxCategoryName">
             <td style="width: 15%"  class="LabelFontStyle">&nbsp;Name&nbsp;:&nbsp;</td>
@@ -564,7 +564,7 @@
                                                         (change)="onKey(i)"></td> 
                                                     </ng-template>
                                                     <ng-template #elsedisabletext>
-                                                <td><input disabled  type="number" style="width: 2rem;" class="form-control" formControlName="lineNum" (click)="openTaxDetails(i)" ></td>
+                                                <td><input   type="number" style="width: 2rem;" class="form-control" formControlName="lineNum" (click)="openTaxDetails(i)" ></td>
                                                 <td>
                                                       <input disabled type="text" formControlName="segment"  class="form-control"
                                                         style="height: 20px;width:120px;" />
@@ -1115,7 +1115,7 @@
                             &nbsp;Apply</button>
                         </td>
                         <td> <button disabled type="button" class="btn btn-primary" style="width: 8rem;" [style.display]="isVisibleUpdate ? 'block' : 'none'">Update</button></td>
-
+                        <!-- <td> <button type="button" class="btn btn-primary"  style="width: 8rem;" (click)="getTaxDetail()">Get Tax Detail</button></td> -->
                         <div *ngIf="disabledComplete ; then thenenableComplete; else elsedisableComplete"></div>
                         <ng-template #thenenableComplete> 
                         <td> <button type="button" class="btn btn-primary"  style="width: 8rem;" (click)="completeInvoice()">Complete</button></td>

@@ -1696,9 +1696,11 @@ export class PayableInvoiceNewComponent implements OnInit {
 
 
   paymentNavigation() {
+    // debugger;
     var arraybaseNew = this.poInvoiceForm.get('obj') as FormArray;
     var arraybaseNew1 = arraybaseNew.getRawValue();
-    for (let i = 0; i < arraybaseNew1.length; i++) {
+    // for (let i = 0; i < arraybaseNew1.length; i++) {
+      let i=this.selectedLine;
       var invNumber = arraybaseNew1[i].invoiceNum;
       var sourceType = arraybaseNew1[i].source;
       var invType = arraybaseNew1[i].invTypeLookupCode;
@@ -1715,7 +1717,7 @@ export class PayableInvoiceNewComponent implements OnInit {
         this.router.navigate(['/admin/transaction/Payment']);
       }
 
-    }
+    // }
   }
 
 
