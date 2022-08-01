@@ -211,6 +211,7 @@ this.reportForm.patchValue({ userName: sessionStorage.getItem('ticketNo') })
     this.location1.back();
   }
 reportName:string;
+
   reportDetails(reportName){
   
     // alert(reportName);

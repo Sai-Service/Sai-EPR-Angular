@@ -116,6 +116,7 @@ export class OrderDetailsUpdationComponent implements OnInit {
   instype:string;
   subDealerId: number;
   subDealerName: string;
+  attribute17: string;    // RTO Location
 
 
   DisplayfinanceSelectionYes = false;
@@ -200,6 +201,7 @@ export class OrderDetailsUpdationComponent implements OnInit {
       instype:[],
       subDealerId:[],
       subDealerName:[],
+      attribute17:[],
 
     })
 
