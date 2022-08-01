@@ -139,12 +139,16 @@ export class ReportServiceService {
     // http://localhost:8081/SparesReports/InventoryAging?age1=30&age2=60&age3=90&subInvCode=SP&locId=2102&ouId=21&userName=DINESH
   }
 
-  gltrialBalanceReport(ouCode,periodName){
-    const REQUEST_URI = this.ServerUrl +`/AccountsReports/GLTrailBal?ouPara=${ouCode}&periodName=${periodName}`;
+  gltrialBalanceReport(ouCode,glYearName){
+    // const REQUEST_URI = this.ServerUrl +`/AccountsReports/GLTrailBal?ouPara=${ouCode}&periodName=${periodName}`;
+    const REQUEST_URI = this.ServerUrl +`/AccountsReports/GLTrailBal?ouPara=${ouCode}&periodYear=${glYearName}`;
+   
     return this.http.get(REQUEST_URI, {
       responseType: 'arraybuffer',
       headers: this.headers,
     });
+    // Request URL: http://localhost:8081/AccountsReports/GLTrailBal?ouPara=12MU&periodYear=2022
+
   }
 
   cashBankReport(fromDate,toDate,ouId,locId,accountName,naturalAccct,userName){
@@ -161,6 +165,15 @@ export class ReportServiceService {
       responseType: 'arraybuffer',
       headers: this.headers,
     });
+  }
+
+  jvRegister(fromDate,toDate,ouId){
+    const REQUEST_URI = this.ServerUrl +`/AccountsReports/JVRegister?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+    // http://localhost:8081/AccountsReports/JVRegister?fromDate=01-APR-2022&toDate=29-JUL-2022&ouId=21
   }
 
   tdsRegister(fromDate,toDate,ouId){

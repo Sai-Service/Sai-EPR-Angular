@@ -88,6 +88,12 @@
                 (click)="reportDetails('vendorLedgerReport')">Vendor Ledger Report</a>
             </li>
 
+            <li>
+              <a class="dropdown-item" data-toggle="collapse" href="#panelTolocationOu" role="tab"
+                (click)="reportDetails('jvRegister')">JV Register</a>
+            </li>
+          
+
           </ul>
         </li>
 
@@ -96,6 +102,12 @@
     <br>
   </nav>
   <br>
+
+  <!-- <fieldset class="RFS">
+    <table class="center"   style="margin-left: 10%;"
+        [style.display]="isVisibleGSTPurchaseRegister ? 'block' : 'none'" class="collapse"
+        id="panelGSTPurchaseRegister"> -->
+
   <fieldset class="RFS">
     <table style="margin-left: auto;margin-right: auto;"
       [style.display]="isVisibleGSTPurchaseRegister ? 'block' : 'none'" class="collapse" id="panelGSTPurchaseRegister">
@@ -205,6 +217,7 @@
       <tr>
         <td>
           <table class="center">
+            <!-- <table class="center" style="width: 100%;"> -->
             <tr>
               <td colspan="4" class="LabelFontStyle" style="width: 100%;">
                 {{reportName}}
@@ -215,7 +228,7 @@
       </tr>
       <tr>
         <td>
-          <table class="center">
+          <table class="center" style="width: 100%;">
             <tr>
               <td style="width: 15%" class="LabelFontStyle">
                 &nbsp;From&nbsp;Date&nbsp;:&nbsp;
@@ -492,12 +505,24 @@
               <td>
                 <input type="text" disabled class="form-control" formControlName="OUCode" style="width: fit-content;">
               </td>
-              <td style="width: 15%" class="LabelFontStyle">GL&nbsp;Period&nbsp;:&nbsp;</td>
+              <!-- <td style="width: 15%" class="LabelFontStyle">GL&nbsp;Period&nbsp;:&nbsp;</td> 
               <td>
                 <select formControlName="periodName" id="periodName" class="form-control">
                   <option>--Select--</option>
                   <option *ngFor="let sc of  periodNameList" [value]="sc.periodName">
                     {{sc.periodName}}
+                  </option>
+                </select>
+              </td>  -->
+
+              <td style="width: 15%" class="LabelFontStyle">GL&nbsp;Period&nbsp;Year&nbsp;:&nbsp;</td>
+              <!-- <input type="number" class="form-control" formControlName="glPeriodYear" style="text-align:left;" > -->
+
+              <td>
+                <select formControlName="glPeriodYear" id="glPeriodYear" class="form-control">
+                  <option>--Select--</option>
+                  <option *ngFor="let sc of  glYearNameList" [value]="sc.periodYear">
+                    {{sc.periodYear}}
                   </option>
                 </select>
               </td>
@@ -806,6 +831,7 @@
         </td>
       </tr>
     </table>
+    
     <table class="center" [style.display]="ispanelTolocationOu ? 'block' : 'none'" class="collapse"
       style="margin-left: 20%;" id="panelTolocationOu">
       <tr>

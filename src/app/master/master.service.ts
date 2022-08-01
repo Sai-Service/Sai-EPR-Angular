@@ -1185,6 +1185,10 @@ public FinancialPeriod():Observable<any>{
   return this.http.get(this.ServerUrl+'/glPeriod/periodName');
 }
 
+public glPeriodYear():Observable<any>{
+  return this.http.get(this.ServerUrl+'/glPeriod/periodYear');
+}
+
 public AccountEnquirySearch(AccountEnquiryRecord):Observable<any>{
   const options = {
     headers: this.headers

@@ -31,6 +31,7 @@ export class AccountsReportComponent implements OnInit {
   public sourceList: Array<string> = [];
   public BillShipToList: Array<string> = [];
   periodNameList: any=[];
+  glYearNameList: any=[];
   accountName1:string;
   public DepartmentList: any=[];
   pipe = new DatePipe('en-US');
@@ -43,6 +44,7 @@ export class AccountsReportComponent implements OnInit {
   spInvAging2:number;
   spInvAging3:number;
   periodName:string;
+  glPeriodYear :number;
   isDisabled1 = false;
   accountName:string;
   isVisibleGSTSaleRegister: boolean = false;
@@ -80,6 +82,7 @@ export class AccountsReportComponent implements OnInit {
       spInvAging2:[''],
       spInvAging3:[''],
       periodName:[''],
+      glPeriodYear:[],
       accountName:[''],
       supplierNo:[''],
       supNo:[''],
@@ -158,6 +161,13 @@ this.service.FinancialPeriod()
 .subscribe(
   data => {
     this.periodNameList = data.obj;
+  }
+);
+
+this.service.glPeriodYear()
+.subscribe(
+  data => {
+    this.glYearNameList = data.obj;
   }
 );
 
@@ -484,6 +494,22 @@ reportName:string;
     this.ispanelTolocationOu=false;
     this.isVisibleVendorLedgerReport=true;
     
+  } else if (reportName=='jvRegister'){
+    this.reportName='JV Register';
+    this.isVisibleGSTSaleRegister=false;
+    this.isVisibleGSTPurchaseRegister=false;
+    
+    this.isVisibleSparesdebtors=false;
+    this.isVisibleLocation=false;
+    this.isVisibleLocation1=false;
+    this.isVisiblepanelaccountName=false;
+    this.isVisiblepanelcashName=false;
+    this.isVisiblespInvAgging=false;
+    this.isVisiblepanelgltrialBalance=false;
+    this.panelCashBank=false;
+    this.isVisiblepanelAPGLUnpainAging=false;
+    this.isVisiblepanelprePayment=false;
+    this.ispanelTolocationOu=true;
   }
 
 
@@ -609,10 +635,11 @@ reportName:string;
     else if (reportName ==='GL Trial Balance'){
      var ouName = sessionStorage.getItem('locCode');
      var ouCode= ouName.substring(0,4)
-      var periodName= this.reportForm.get('periodName').value;
+      // var periodName= this.reportForm.get('periodName').value;
+      var glYearName= this.reportForm.get('glPeriodYear').value;
       const fileName = 'GL Trial Balance-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
-    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.gltrialBalanceReport(ouCode,periodName)
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      this.reportService.gltrialBalanceReport(ouCode,glYearName)
       .subscribe(data => {
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
         this.closeResetButton = true;
@@ -754,6 +781,17 @@ reportName:string;
           this.dataDisplay = ''
           this.isDisabled1=false;
         })
+     }
+     else if (reportName ==='JV Register'){
+      const fileName = 'JV Register-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      this.reportService.jvRegister(fromDate,toDate,sessionStorage.getItem('ouId'))
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.closeResetButton = true;
+          this.dataDisplay = ''
+          this.isDisabled1=false;
+        })     
      }
 
 
