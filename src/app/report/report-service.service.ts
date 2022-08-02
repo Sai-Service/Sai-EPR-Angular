@@ -192,6 +192,15 @@ export class ReportServiceService {
     });
   }
 
+  refundRegister(fromDate,toDate,ouId,locId){
+    const REQUEST_URI = this.ServerUrl +`/AccountsReports/RefundRegister?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+    // http://localhost:8081/AccountsReports/RefundRegister?fromDate=01-APR-2022&toDate=02-AUG-2022&ouId=21&locId
+  }
+
   manualInvoice(fromDate,toDate,ouId,locId){
     const REQUEST_URI = this.ServerUrl +`/AccountsReports/ManualInvoiceRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&sourceName=Manual`;
     return this.http.get(REQUEST_URI, {
