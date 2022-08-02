@@ -580,7 +580,7 @@
                         </button>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-primary" id="register" (click)="cancelPayment()">
+                        <button type="button" class="btn btn-primary" id="register" (click)="cancelPayment()"  [style.display]="ispayCancel ? 'block' : 'none'">
                             Cancel
                         </button>
                     </td>

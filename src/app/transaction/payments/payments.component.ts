@@ -150,6 +150,7 @@ export class PaymentsComponent implements OnInit {
   isarPayment:boolean=false;
   isSelPayment:boolean=true;
   ispayAdvise:boolean=false;
+  ispayCancel:boolean=false;
   payAmount:number;
   public locIdList: any = [];
   locId:number;
@@ -444,6 +445,7 @@ jeSource: [],
         this.isarPayment=true;
         }
         this.ispayAdvise=true;
+        this.ispayCancel=true;
       } else {
         if (res.code === 400) {
           alert(res.msg);
