@@ -358,6 +358,18 @@
                             <td> <input  type="text" formControlName="custPoNumber" [(ngModel)]='custPoNumber' class="form-control"></td>
                             <td style="width: 15%" class="LabelFontStyle">Cust&nbsp;PO&nbsp;Date:&nbsp;</td>                
                             <td><input  type="date" formControlName="custPoDate" [(ngModel)]='custPoDate'  class="form-control"> </td>
+                       
+                            <td style="width: 15%" class="LabelFontStyle">RTO&nbsp;Location&nbsp;</td>
+                            <td>
+                                <select formControlName="attribute17" id="attribute17" class="form-control" >
+                                    <option>--Select--</option>
+                                    <option value="PMC">PMC</option>
+                                    <option value="PCMC">PCMC</option>
+                                    <option value="LOWER PAREL">LOWER PAREL</option>
+                                    <option value="CRTM">CRTM</option>
+                                </select>
+                            </td>
+
                         </tr>
 
                         <tr>
