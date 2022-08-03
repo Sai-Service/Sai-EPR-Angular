@@ -40,6 +40,7 @@ export class AccountsReportComponent implements OnInit {
   dataDisplay: any;
   progress = 0;
   deptId:number;
+  deptName:string;
   spInvAging1:number;
   spInvAging2:number;
   spInvAging3:number;
@@ -77,6 +78,7 @@ export class AccountsReportComponent implements OnInit {
       locCode:[''],
       locId:[''],
       deptId:[],
+      deptName:[],
       source:[],
       spInvAging1:[''],
       spInvAging2:[''],
@@ -200,6 +202,7 @@ this.reportForm.patchValue({ userName: sessionStorage.getItem('ticketNo') })
     console.log(deptList);
     
     this.reportForm.patchValue({deptId:deptList.cmnTypeId})
+    this.reportForm.patchValue({deptName :deptList.code})
   }
 
 
@@ -514,13 +517,9 @@ reportName:string;
   }
   else if (reportName=='refundRegister'){
     this.reportName='Refund Register';
-    this.isVisibleGSTPurchaseRegister=false;
-    this.isVisibleGSTSaleRegister=true;
+    this.isVisibleGSTSaleRegister=false;
+    this.isVisibleGSTPurchaseRegister=true;
     this.isVisibleSparesdebtors=false;
-    this.isVisibleLocation=false;
-    this.isVisibleLocation1=false;
-    this.isVisiblepanelaccountName=false;
-    this.isVisiblepanelcashName=false;
     this.isVisiblespInvAgging=false;
     this.isVisiblepanelgltrialBalance=false;
     this.panelCashBank=false;
@@ -544,6 +543,7 @@ reportName:string;
     var spreceipttoDate2 = this.reportForm.get('toDate').value;
     var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
     var deptId=this.reportForm.get('deptId').value;
+    var depName=this.reportForm.get('deptName').value;
     var locId = this.reportForm.get('locId').value;
     var userName = this.reportForm.get('userName').value;
     var subInventory='SP';
@@ -814,7 +814,7 @@ reportName:string;
       var sourceName=this.reportForm.get('source').value;
       const fileName = 'Refund Register-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      this.reportService.refundRegister(fromDate,toDate,sessionStorage.getItem('ouId'),locId)
+      this.reportService.refundRegister(fromDate,toDate,sessionStorage.getItem('ouId'),locId,depName)
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
           this.closeResetButton = true;

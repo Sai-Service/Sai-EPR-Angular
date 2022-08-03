@@ -93,8 +93,9 @@
                 (click)="reportDetails('jvRegister')">JV Register</a>
             </li>
 
+            
             <li>
-              <a class="dropdown-item" data-toggle="collapse" href="#panelGSTSaleRegister" role="tab"
+              <a class="dropdown-item" data-toggle="collapse" href="#panelGSTPurchaseRegister" role="tab"
                 (click)="reportDetails('refundRegister')">Refund Register</a>
             </li>
           
@@ -179,6 +180,7 @@
                   </option>
                 </select>
                 <input hidden disabled type="number" class="form-control" formControlName="deptId">
+                <input hidden disabled type="number" class="form-control" formControlName="deptName">
               </td>
             </tr>
             <tr>
@@ -216,6 +218,8 @@
         </td>
       </tr>
     </table>
+
+
 
     <table style="margin-left: auto;margin-right: auto;" [style.display]="isVisibleGSTSaleRegister ? 'block' : 'none'"
       class="collapse" id="panelGSTSaleRegister">
