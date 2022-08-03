@@ -45,6 +45,8 @@ import { GlTrialBalanceComponent } from './gl-trial-balance/gl-trial-balance.com
 import { JvUploadComponent } from './jv-upload/jv-upload.component';
 import { PaymentObj } from './payments/payment-obj';
 import { VehicleBookingUploadComponent } from './vehicle-booking-upload/vehicle-booking-upload.component';
+import { ReceiptWriteoffComponent } from './receipt-writeoff/receipt-writeoff.component';
+
 // import { ShippingNetworkComponent } from './shipping-network/shipping-network.component';cd..
 
 
@@ -109,6 +111,8 @@ const routes: Routes = [
 {path:'glTrialBalance',component:GlTrialBalanceComponent},
 {path:'JvUpload',component:JvUploadComponent},
 {path:'VehicleBookUpload',component:VehicleBookingUploadComponent},
+{path:'ReceiptWriteoff',component:ReceiptWriteoffComponent},
+
 // {path :'ShippingNetwork',component:ShippingNetworkComponent},
 // {path:'CounterSaleReturn',component:CounterSaleReturnComponent},
  {path : '' ,redirectTo: 'Dashboard', pathMatch: 'full'}

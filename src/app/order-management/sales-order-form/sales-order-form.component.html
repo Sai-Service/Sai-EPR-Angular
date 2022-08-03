@@ -960,7 +960,7 @@
                             <td>
                                 <select formControlName="model" id="model" class="form-control" style="width: 170px;"
                                     (ngModelChange)="onOptionsSelectedVariant($event)">
-                                    <option>--Select--</option>
+                                    <option disabled>--Select--</option>
                                     <option *ngFor="let mm of mainModelList" [ngValue]="mm.code">
                                         {{mm.code}}
                                     </option>
@@ -972,7 +972,7 @@
                             <td>
                                 <select formControlName="variant" id="variant" class="form-control"
                                     style="width:fit-content;" (ngModelChange)="onOptionsSelectedColor($event)">
-                                    <option>--Select--</option>
+                                    <option disabled>--Select--</option>
                                     <option *ngFor="let mm of VariantSearch" [ngValue]="mm.variant">
                                         {{mm.variant}}--{{mm.varDescription}}
                                     </option>
@@ -984,7 +984,7 @@
                             <td>
                                 <select formControlName="color" id="color" class="form-control" style="width: 170px;"
                                     (ngModelChange)="onOptionsSelectedBasicPrice($event)">
-                                    <option>--Select--</option>
+                                    <option disabled>--Select--</option>
                                     <option *ngFor="let cc of ColourSearch" [ngValue]="cc.ColorCode">
                                         {{cc.ColorCode}}--{{cc.colorDesc}}
                                     </option>
@@ -1030,14 +1030,12 @@
                                     style="width: 150px; font-weight: bold;">
                             </td>
                         </tr>
-                        <tr>
-                            <td colspan="3">
-                                <button type="submit" class="btn btn-primary" (click)="modelDetailsUpdate()"
-                                    [style.display]="isVisiblemodelDetailsUpdate ? 'block' : 'none'"
-                                    style="width: fit-content;height: fit-content;">Model Details Update</button>
 
-                            </td>
-                        </tr>
+                        <tr>
+                           <td colspan="3"><button type="submit" class="btn btn-primary" (click)="modelDetailsUpdate()"
+                             [style.display]="isVisiblemodelDetailsUpdate ? 'block' : 'none'"
+                             style="width: fit-content;height: fit-content;">Model Details Update</button></td>
+                     </tr>
                     </table>
                 </ng-template>
                 <ng-template #elseVehicleDetails>

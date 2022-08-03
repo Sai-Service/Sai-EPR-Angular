@@ -47,6 +47,7 @@ import { PoInvListComponent } from './po-inv-list/po-inv-list.component';
 import { GlTrialBalanceComponent } from './gl-trial-balance/gl-trial-balance.component';
 import { JvUploadComponent } from './jv-upload/jv-upload.component';
 import { VehicleBookingUploadComponent } from './vehicle-booking-upload/vehicle-booking-upload.component';
+import { ReceiptWriteoffComponent } from './receipt-writeoff/receipt-writeoff.component';
 
 
 // import { ShippingNetworkComponent } from './shipping-network/shipping-network.component';
@@ -104,6 +105,7 @@ import { VehicleBookingUploadComponent } from './vehicle-booking-upload/vehicle-
     GlTrialBalanceComponent,
     JvUploadComponent,
     VehicleBookingUploadComponent,
+    ReceiptWriteoffComponent,
  
   
     // ShippingNetworkComponent,

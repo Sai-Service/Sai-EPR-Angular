@@ -814,7 +814,7 @@ reportName:string;
       var sourceName=this.reportForm.get('source').value;
       const fileName = 'Refund Register-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      this.reportService.tcsRegister(fromDate,toDate,sessionStorage.getItem('ouId'),locId)
+      this.reportService.refundRegister(fromDate,toDate,sessionStorage.getItem('ouId'),locId)
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
           this.closeResetButton = true;
