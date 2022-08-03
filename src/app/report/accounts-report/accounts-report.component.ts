@@ -512,6 +512,22 @@ reportName:string;
     this.isVisiblepanelprePayment=false;
     this.ispanelTolocationOu=true;
   }
+  else if (reportName=='refundRegister'){
+    this.reportName='Refund Register';
+    this.isVisibleGSTPurchaseRegister=false;
+    this.isVisibleGSTSaleRegister=true;
+    this.isVisibleSparesdebtors=false;
+    this.isVisibleLocation=false;
+    this.isVisibleLocation1=false;
+    this.isVisiblepanelaccountName=false;
+    this.isVisiblepanelcashName=false;
+    this.isVisiblespInvAgging=false;
+    this.isVisiblepanelgltrialBalance=false;
+    this.panelCashBank=false;
+    this.isVisiblepanelAPGLUnpainAging=false;
+    this.isVisiblepanelprePayment=false;
+    this.ispanelTolocationOu=false;
+  }
 
 
   }
@@ -793,6 +809,18 @@ reportName:string;
           this.dataDisplay = ''
           this.isDisabled1=false;
         })     
+     }
+     else if (reportName=='Refund Register'){
+      var sourceName=this.reportForm.get('source').value;
+      const fileName = 'Refund Register-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      this.reportService.tcsRegister(fromDate,toDate,sessionStorage.getItem('ouId'),locId)
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.closeResetButton = true;
+          this.dataDisplay = ''
+          this.isDisabled1=false;
+        })
      }
 
 
