@@ -843,8 +843,50 @@ export class ARInvoiceComponent implements OnInit {
       .subscribe(
         data => {
           if (data.code === 200) {
+            // debu
             this.lstcomments = data.obj;
-            this.accountNoSearchfn(data.obj.billToCustNo, data.obj.billToSiteId)
+            // this.accountNoSearchfn(data.obj.billToCustNo, data.obj.billToSiteId)
+            this.orderManagementService.accountNoSearchFn(data.obj.billToCustNo, this.ouId, this.divisionId)
+            // this.service.searchCustomerByAccount(accountNo)
+            .subscribe(
+              data1 => {
+                this.accountNoSearch = data1.obj[0];
+                this.accountNoSite = data1.obj;
+                console.log(this.accountNoSearch);
+                let selectedValue = this.paymentTermList.find(v => v.lookupValue === this.accountNoSearch.paymentType);
+                this.arInvoiceForm.patchValue({
+                  billToCustNo: this.accountNoSearch.accountNo,
+                  billToCustName: this.accountNoSearch.custName,
+                  shipToCustNo: this.accountNoSearch.accountNo,
+                  shipToCustName: this.accountNoSearch.custName,
+                  shipToCustId: this.accountNoSearch.customerId,
+                  paymentTerm: selectedValue.lookupValueId,
+                });
+      
+                for (let i = 0; i < this.accountNoSite.length; i++) {
+                  // // alert(this.custSiteList.length + '----' + this.custSiteList[i].ouId + '-----' + sessionStorage.getItem('ouId'));
+                  // // && Number(this.accountNoSite[i].ouId) === Number(sessionStorage.getItem('ouId'))
+                  // if (this.accountNoSite.length === 1) {
+                  //   this.arInvoiceForm.patchValue({ siteName: this.accountNoSite[0].siteName });
+                  //   // this.onOptionsSelectedcustSiteName(this.accountNoSite[0].siteName);
+                  //   this.custTax = this.accountNoSite[i].taxCategoryName;
+                  // }
+                  // if (this.accountNoSite.length > 1) {
+                  //   if (Number(this.accountNoSite[i].ouId) === Number(sessionStorage.getItem('ouId'))) {
+                  //     this.arInvoiceForm.patchValue({ siteName: this.accountNoSite[i].siteName });
+                  //     //  this.onOptionsSelectedcustSiteName(this.custSiteList[i].siteName);
+                  //   }
+                  // }
+                    // debugger;
+                  if (data.obj.billToCustNo != undefined || data.obj.billToCustNo != null) {
+                    if (this.accountNoSearch.billToLocId === data.obj.billToSiteId) {
+                      // this.onOptionsSelectedcustSiteName(this.accountNoSite[i].siteName);
+                      this.custTax = this.accountNoSite[i].taxCategoryName;
+                    }
+                  }
+                } 
+      
+           //   });
             console.log(this.lstcomments);
             this.isVisibleArInvoiceLine = true;
             this.isVisibleArDist = true;
@@ -952,7 +994,7 @@ export class ARInvoiceComponent implements OnInit {
               this.orderManagementService.getTaxCategoriesForSales(this.custTax, taxPerln)
                 .subscribe(
                   data1 => {
-                    // debugger;
+                    debugger;
                     this.allTaxCategoryList = data1;
                     this.taxCategoryList[i] = data1;
                     console.log(this.taxCategoryList[i]);
@@ -964,7 +1006,7 @@ export class ARInvoiceComponent implements OnInit {
                         if (taxCatArr[x].taxCategoryId === data.obj.invLines[i].taxCategoryName.taxCategoryId) {
                           (patch.controls[i]).patchValue({
                             taxCategoryId: taxCatArr[x].taxCategoryId,
-                            taxCategoryName: taxCatArr[x],
+                            taxCategoryName: taxCatArr[x].taxCategoryName,
                           })
                         }
                       }
@@ -978,7 +1020,9 @@ export class ARInvoiceComponent implements OnInit {
               //  this.taxCategoryList[i].push(data.obj.invLines[i].taxCategoryName);
               // patch.controls[i].patchValue({taxCategoryName:data.obj.invLines[i].taxCategoryName});
             }
-          }
+          });
+          
+            }
           else {
             if (data.code === 400) {
               alert(data.message);
@@ -1880,18 +1924,24 @@ export class ARInvoiceComponent implements OnInit {
     this.service.taxCalforItem(invItemId, this.taxCat1, diss, baseAmount)
       .subscribe(
         (data: any[]) => {
+          // debugger;
           this.taxCalforItem = data;
           // this.patchResultList(this.poLineTax, this.taxCalforItem);
           var sum = 0;
+          var Disc=0;
           for (var i = 0; i < this.taxCalforItem.length; i++) {
 
             if (this.taxCalforItem[i].totTaxPer != 0) {
-              sum = sum + this.taxCalforItem[i].totTaxAmt
+               sum = sum + this.taxCalforItem[i].totTaxAmt
             }
+            if(this.taxCalforItem[i].taxRateName.includes('Discount')){
+              Disc=Disc+this.taxCalforItem[i].totTaxAmt
+            }
+            
           }
 
           // const TotAmtLineWise1 = arrayControl[this.poLineTax].baseAmtLineWise
-          var tolAmoutLine = sum + baseAmount
+          var tolAmoutLine =  baseAmount-Disc+sum;
           // alert(this.taxCalforItem[0].totTaxAmt);
           // var patch = this.poMasterDtoForm.get('poLines') as FormArray;
           // (patch.controls[aa]).patchValue(
