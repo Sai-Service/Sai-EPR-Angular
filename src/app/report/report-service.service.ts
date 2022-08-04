@@ -209,15 +209,17 @@ export class ReportServiceService {
     });
   }
 
-  vendorLedgerRpt(fromDate,toDate,ouId,locId,supId){
-    // http://localhost:8081/AccountsReports/VendorLedger?fromDate=01-APR-2022&toDate=30-APR-2022&ouId=21&locId=2102&suppId=3
-    const REQUEST_URI = this.ServerUrl +`/AccountsReports/VendorLedger?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&suppId=${supId}`;
+  vendorLedgerRpt(fromDate,toDate,ouId,locId,supNo,supSite){
+    // http://localhost:8081/AccountsReports/VendorLedger?fromDate=01-APR-2022&toDate=30-APR-2022&ouId=21&locId=2102&suppNo=3 ---old
+    // http://localhost:8081/AccountsReports/VendorLedger?fromDate=01-APR-2022&toDate=30-APR-2022&ouId=21&locId=2102&suppId=3&siteName=MUMBAI-MAHARASHTRA  --new
+    const REQUEST_URI = this.ServerUrl +`/AccountsReports/VendorLedger?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&suppNo=${supNo}&siteName=${supSite}`;
     return this.http.get(REQUEST_URI, {
       responseType: 'arraybuffer',
       headers: this.headers,
     });
   }
 
+  
 
   prePayment(ouId){
     const REQUEST_URI = this.ServerUrl +`/AccountsReports/PrepaymentRep?ouId=${ouId}`;

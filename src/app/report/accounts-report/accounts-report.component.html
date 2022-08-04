@@ -971,10 +971,10 @@
               </select>
               <input hidden disabled type="number" class="form-control" formControlName="locId">
             </td>
+          </tr>
+          <tr>
 
-              <td style="width: 15%" class="LabelFontStyle">
-                      &nbsp;Vendor&nbsp;name&nbsp;:&nbsp;
-                    </td>
+                  <td style="width: 15%" class="LabelFontStyle">&nbsp;Vendor&nbsp;name&nbsp;:&nbsp; </td>
 
                     <td>
                       <input type="text" formControlName="supplierNo" (keyup)="getUserIdsFirstWay($event)"
@@ -986,10 +986,22 @@
                       </datalist>
 
                       <input hidden disabled type="number" class="form-control" formControlName="supNo">
+                      <input hidden disabled type="number" class="form-control" formControlName="suppId">
+
                     </td>
-
-
-          </tr>
+               
+                
+                <td style="width: 15%" class="LabelFontStyle">&nbsp;Site&nbsp;name&nbsp;:&nbsp; </td>
+                <input hidden disabled type="number" class="form-control" formControlName="suppId">
+              
+                <td>
+                  <select formControlName="supSiteName" id="supSiteName" class="form-control">
+                    <option></option>
+                    <option *ngFor="let sc of  supSiteList" [value]="sc.siteName">
+                      {{sc.siteName}}
+                    </option>
+                  </select>
+              </tr>
           <tr>
             <td colspan="4">
               <table class="center">

@@ -32,6 +32,7 @@ export class AccountsReportComponent implements OnInit {
   public BillShipToList: Array<string> = [];
   periodNameList: any=[];
   glYearNameList: any=[];
+  supSiteList :any=[];
   accountName1:string;
   public DepartmentList: any=[];
   pipe = new DatePipe('en-US');
@@ -60,6 +61,10 @@ export class AccountsReportComponent implements OnInit {
   isVisiblepanelaccountName:boolean=false;
   supplierNo:string;
   supNo:number;
+  suppId:number;
+  supSiteId:number;
+  supSiteName:string;
+
   isVisiblepanelprePayment:boolean=false;
   isVisiblepanelcashName:boolean=false;
   public NaturalAccountList: any = [];
@@ -91,6 +96,9 @@ export class AccountsReportComponent implements OnInit {
       accountName1:[''],
       segment4:[''],
       userName: [''],
+      supSiteId:[''],
+      supSiteName:[''],
+      suppId:['']
     })
    }
    
@@ -789,9 +797,10 @@ reportName:string;
      else if (reportName=='Vendor Ledger Report'){
       // var supId=this.reportForm.get('source').value;
       var suppNo=this.reportForm.get('supNo').value;
+      var supSite =this.reportForm.get('supSiteName').value;
       const fileName = 'Vendor Ledger Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      this.reportService.vendorLedgerRpt(fromDate,toDate,sessionStorage.getItem('ouId'),locId,suppNo)
+      this.reportService.vendorLedgerRpt(fromDate,toDate,sessionStorage.getItem('ouId'),locId,suppNo,supSite)
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
           this.closeResetButton = true;
@@ -855,6 +864,16 @@ reportName:string;
     let selectedValue = this.supplierCodeList.find(v => v.name == suppName);
     console.log(selectedValue);
     this.reportForm.patchValue({supNo:selectedValue.suppNo})
+    this.reportForm.patchValue({suppId:selectedValue.suppId})
+    var suplrId=this.reportForm.get('suppId').value;
+    this.service.suppSiteList(suplrId)
+    .subscribe(
+      data => {
+        this.supSiteList = data;
+        console.log(this.supSiteList);
+      }
+    );
+
   }
 
   userList3: any[] = [];

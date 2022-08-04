@@ -287,9 +287,10 @@ export class MasterService {
     return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate');
     // return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate/Purchase');
   }
-  // suppIdList(suppId, ouId): Observable<any> {
-  //   return this.http.get(this.ServerUrl +`/supp/sites/${suppId}`);
-  // }
+
+  suppSiteList(suppId): Observable<any> {
+    return this.http.get(this.ServerUrl +`/supp/sites/${suppId}`);
+  }
 
   suppIdList(suppId, ouId) {
     const REQUEST_PARAMS = new HttpParams().set('suppId', suppId)
