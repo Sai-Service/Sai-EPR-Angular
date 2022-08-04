@@ -22,7 +22,7 @@ export class ReceiptWriteoffComponent implements OnInit {
   receiptWriteOffForm: FormGroup;
 
   public locIdList: Array<string> = [];
-  public writeOffList: any;
+  public writeOffList: any[];
 
 
   pipe = new DatePipe('en-US');
@@ -43,16 +43,17 @@ export class ReceiptWriteoffComponent implements OnInit {
 
   ticketNo: string;
   fullName : string;
-  writeoffAmt:number;
+  writeoffLimit:number=10;
+  writeOffTotal:number;
   // fromDate:Date;
   // toDate:Date;
-
+  public minDate = new Date();
   fromDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   toDate = this.pipe.transform(Date.now(), 'y-MM-dd');
 
-
-
-
+   wirteOffButton =false;
+   spinIcon = false;
+   dataDisplay: any;
    get f() {return this.receiptWriteOffForm.controls;}
 
    receiptWriteOff(receiptWriteOffForm: any){}
@@ -72,9 +73,10 @@ export class ReceiptWriteoffComponent implements OnInit {
 
       ticketNo: [],
       fullName : [],
-      writeoffAmt:[],
+      writeoffLimit:[],
       fromDate:[],
       toDate:[],
+      writeOffTotal:[],
 
 
     })
@@ -115,22 +117,55 @@ export class ReceiptWriteoffComponent implements OnInit {
 
 
   FindList(){
+    this.writeOffTotal=null;
+    this.writeOffList=null;
+    this.dataDisplay = 'Searching Records....Please dont refresh the Page';
+    // alert ("spin  -" +this.spinIcon  + " msg : "+this.dataDisplay);
     var fDate =this.receiptWriteOffForm.get('fromDate').value;
     var tDate =this.receiptWriteOffForm.get('toDate').value;
-    var wAmt =this.receiptWriteOffForm.get('writeoffAmt').value;
-
+    var wAmt =this.receiptWriteOffForm.get('writeoffLimit').value;
     var d1 = this.pipe.transform(fDate, 'dd-MMM-y');
     var d2 = this.pipe.transform(tDate, 'dd-MMM-y');
+    var lcId =this.receiptWriteOffForm.get("locId").value;
+
+    // alert("DATE1,DATE2: "+ d1 +","+ d2 );
+   
+    if(lcId <=0) { alert ("LOCATION : Select Location ...");return;}
+    if (fDate>tDate ) { alert ("DATE : Select Proper Date Range ...");return;}
+
+
+      this.spinIcon = true;
 
       this.service.getWriteOffList(this.locId,d1,d2,wAmt)
       .subscribe(
         data => {
           this.writeOffList = data.obj;
-          console.log(this.writeOffList);
-          }); 
-       }
+        
+          if(data.obj.length >0) { this.wirteOffButton=true;}
+           else { this.wirteOffButton=false;  alert ("No Record Found..."); 
+          this.spinIcon=false; this.dataDisplay=null; }
+           console.log(this.writeOffList);
+           this.spinIcon=false; this.dataDisplay=null;
 
-      WriteOff(){  }
+           var ttl=0;
+          //  alert ("ttl :" +  ttl + " this.writeOffList.length >> "+this.writeOffList.length);
+ 
+           for (let i = 0; i < this.writeOffList.length; i++) {
+             ttl = ttl + Number(this.writeOffList[i].balanceAmount);
+           }
+             this.receiptWriteOffForm.patchValue({writeOffTotal:ttl});
+ 
+
+          }); 
+
+         
+           
+        } 
+         
+
+       
+
+      WriteOff(){  alert ("Work in Progress...") }
 
       resetMast() {
         window.location.reload();
