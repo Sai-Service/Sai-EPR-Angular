@@ -994,7 +994,7 @@ export class ARInvoiceComponent implements OnInit {
               this.orderManagementService.getTaxCategoriesForSales(this.custTax, taxPerln)
                 .subscribe(
                   data1 => {
-                    debugger;
+                    // debugger;
                     this.allTaxCategoryList = data1;
                     this.taxCategoryList[i] = data1;
                     console.log(this.taxCategoryList[i]);
@@ -1699,12 +1699,15 @@ export class ARInvoiceComponent implements OnInit {
                         // this.distributioArr.push(exLines[j]);comment by vinnit1-3-22
                       }
                     }
+                    // alert(this.arInvoiceForm.get('glDate').value)
                     for (let i = 0; i < distrRes.length; i++) {
                       distrRes[i].invoiceLineNum = this.invLineNo;
+                      // distrRes[i].glDate=this.arInvoiceForm.get('glDate').value;
                       this.distributioArr.push(distrRes[i]);
                     }
                     for (let i = 0; i < data.invDisLines.length; i++) {
                       data.invDisLines[i].invoiceLineNum = this.invLineNo;
+                      // data.invDisLines[i].glDate=this.arInvoiceForm.get('glDate').value;
                       this.distributioArr.push(data.invDisLines[i]);
                     }
                     console.log(this.distributioArr);
@@ -1724,7 +1727,7 @@ export class ARInvoiceComponent implements OnInit {
                     // debugger;
                     this.distarr.set(this.invLineNo, this.distributioArr);
                     console.log(this.distarr)
-                    alert(this.distarr.size + 'afterArray')
+                    // alert(this.distarr.size + 'afterArray')
                     console.log(this.arInvoiceForm.get('invDisLines').value);
                   }
                 );
