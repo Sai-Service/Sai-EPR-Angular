@@ -239,6 +239,8 @@ export class JournalVoucherComponent implements OnInit {
     this.divId=Number(sessionStorage.getItem('divisionId'));
     (document.getElementById("btnRev") as HTMLInputElement).disabled = true;
     (document.getElementById("btnUpdate") as HTMLInputElement).disabled = true;
+    (document.getElementById("btnCancel") as HTMLInputElement).disabled = true;
+    
     this.isVisicod=true;
     
     // alert('employee'+this.emplId);
@@ -307,9 +309,12 @@ this.JournalVoucherForm.get('reversalPeriod').disable();
 this.JournalVoucherForm.get('reversalDate').disable();
 if(this.docSeqValue!=null && this.status=='INCOMPLETE'){
   (document.getElementById("btnUpdate") as HTMLInputElement).disabled = true;
+  (document.getElementById("btnCancel") as HTMLInputElement).disabled = true;
+  
 }
 else{
 (document.getElementById("btnUpdate") as HTMLInputElement).disabled = false;
+(document.getElementById("btnCancel") as HTMLInputElement).disabled = false;
 }
 this.glLines().controls[0].patchValue({ lineStatus: 'BOOKED' });
 // for(i=0;i<i<this.glLines().length;i++)
@@ -585,6 +590,7 @@ var segment = temp1[0];}
             // this.JournalVoucherForm.disable();
             (document.getElementById("btnSave") as HTMLInputElement).disabled = false;
             (document.getElementById("btnUpdate") as HTMLInputElement).disabled = true;
+            (document.getElementById("btnCancel") as HTMLInputElement).disabled = true;
           }
           else
          {
@@ -665,6 +671,8 @@ copyGl()
           if(data.obj.status==='INCOMPLETE' && data.obj.docSeqValue!=null)
           {
             (document.getElementById("btnSave") as HTMLInputElement).disabled = true;
+            (document.getElementById("btnCancel") as HTMLInputElement).disabled = false;
+            
             
 
           }
@@ -697,6 +705,7 @@ copyGl()
 
             (document.getElementById("btnSave") as HTMLInputElement).disabled = true;
             (document.getElementById("btnPost") as HTMLInputElement).disabled = true;
+            (document.getElementById("btnCancel") as HTMLInputElement).disabled = true;
              this.JournalVoucherForm.get('reversalPeriod').enable();
               this.JournalVoucherForm.get('reversalDate').enable();
               (document.getElementById("btnRev") as HTMLInputElement).disabled = false;
@@ -765,6 +774,27 @@ else
       this.docSeqValue=res.obj;
       (document.getElementById("btnUpdate") as HTMLInputElement).disabled = true;
       // this.JournalVoucherForm.disable();
+    }
+    else
+   {
+      if (res.code === 400)
+      {
+        alert("Code already present in data base");
+        this.JournalVoucherForm.reset();
+      }
+    }
+ })
+}
+cancelGl(){
+  const formValue:IJournalVoucher=this.JournalVoucherForm.value;
+  this.service.glUpdateStatus(formValue,formValue.docSeqValue  ).subscribe((res:any)=>{
+    if(res.code===200)
+    {
+      alert("Record updated Successfully");
+      console.log(res.obj);
+      this.docSeqValue=res.obj;
+      (document.getElementById("btnCancel") as HTMLInputElement).disabled = false;
+      this.JournalVoucherForm.disable();
     }
     else
    {

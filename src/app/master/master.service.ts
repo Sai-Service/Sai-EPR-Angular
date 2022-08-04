@@ -1850,6 +1850,14 @@ public glUpdate(glUpdateValue)
   const url=this.ServerUrl+'/glHeader/putGlHeader';
   return this.http.put(url,glUpdateValue,options);
 }
+public glUpdateStatus(glUpdateStaValue,docSeqValue)
+{
+  const options={
+    headers:this.headers
+  };
+  const url=this.ServerUrl+`/glHeader/updateHeaderStatus?docSeqValue=${docSeqValue}`;
+  return this.http.put(url,glUpdateStaValue,options);
+}
 
 public glCopy(glCopyValue)
 {

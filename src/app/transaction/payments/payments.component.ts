@@ -432,20 +432,24 @@ jeSource: [],
     this.selreeceiptmethod=arr[i].receiptMethodId;
     this.selstatus=arr[i].refundStatus;
     this.selPayStatus=arr[i].statusLookupCode;
-
+    if(this.selPayStatus==='VOIDED'){
+      this.ispayCancel=false;
+      this.isarPayment=false;
+    }
 
     this.transactionService.paymentDocSearch(docNo1).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
         this.PaymentReturnArr = res.obj;
         if(this.selstatus=='Y'){
+          
           this.isarPayment=false;
         }
         else{
         this.isarPayment=true;
         }
         this.ispayAdvise=true;
-        this.ispayCancel=true;
+        // this.ispayCancel=true;
       } else {
         if (res.code === 400) {
           alert(res.msg);
@@ -972,7 +976,7 @@ console.log(jsonData);
             patch.controls[j].patchValue(this.paymentData);
             var payDateNew1New = this.pipe.transform(res.obj[j].payDate, 'y-MM-dd');
             this.payDate = payDateNew1New;
-            if(this.paymentData[j].statusLookupCode==='CLEARED'){
+            if(this.paymentData[j].statusLookupCode==='CLEARED' || this.paymentData[j].statusLookupCode==='VOIDED'){
               this.displayselButton[j] = false;            
           }
           else{
@@ -1030,7 +1034,7 @@ console.log(jsonData);
               this.payDate = payDateNew1New;
               // alert(this.paymentDocdata[j].statusLookupCode)
               // debugger;
-              if(this.paymentDocdata[j].statusLookupCode==='CLEARED'){
+              if(this.paymentDocdata[j].statusLookupCode==='CLEARED' || this.paymentData[j].statusLookupCode==='VOIDED'){
                 this.displayselButton[j] = false;            
             }
             else{
@@ -1040,7 +1044,9 @@ console.log(jsonData);
             {
               this.displayselButton[j] = true; 
             }
-           
+            if(this.paymentDocdata[j].statusLookupCode==='VOIDED'){
+              this.payHeaderLineDtlArray().disable();
+            }
           }
             this.paymentForm.get('obj1').patchValue(this.paymentDocdata);
             // this.paymentForm.patchValue(this.paymentData);
@@ -1050,6 +1056,7 @@ console.log(jsonData);
               // debugger;
               patch.controls[k].patchValue({locId:selloc.locId});
               }
+              
           } else {
             if (res.code === 400) {
               alert(res.msg);
