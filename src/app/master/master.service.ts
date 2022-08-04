@@ -4230,9 +4230,28 @@ getRelatedItem(itemCode): Observable<any> {
 
 
 //////////////////// RECEIPT WRITE OFF///////////////////////////////////////////////////////////
+
+getEmpWriteOffLimit (ouId,tktNum) : Observable<any> {
+  return this.http.get(this.ServerUrl + `/empMst/EmpWriteOfDtls?ticketNo=${tktNum}&ouId=${ouId}`);
+    // http://localhost:8081/empMst/EmpWriteOfDtls?ticketNo=M28152&ouId=21
+
+}
+
 getWriteOffList (locId,frmDate,tDate,wAmt) : Observable<any> {
   return this.http.get(this.ServerUrl + `/arCashReceipts/receiptWriteOff?locId=${locId}&frmDt=${frmDate}&toDate1=${tDate}&toAmt=${wAmt}`);
   //http://localhost:8081/arCashReceipts/receiptWriteOff?locId=2101&frmDt=01-MAY-2022&toDate1=31-MAY-2022&toAmt=10
 }
+
+
+public ReceiptWriteOffSubmit(locId,frmDt,toDt,wAmt,tktNum) {
+  const options = {
+    headers: this.headers
+  };
+   const url = this.ServerUrl + `/arCashReceipts/arReceiptWriteOff?locId=${locId}&frmDt=${frmDt}&toDate1=${toDt}&toAmt=${wAmt}&ticketNo=${tktNum}`;
+  return this.http.post(url, options);
+  // http://localhost:8081/arCashReceipts/arReceiptWriteOff?locId=2101&frmDt=01-MAY-2022&toDate1=05-MAY-2022&toAmt=5&ticketNo=M28152
+
+}
+
 
 }
