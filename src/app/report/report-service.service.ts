@@ -192,13 +192,13 @@ export class ReportServiceService {
     });
   }
 
-  refundRegister(fromDate,toDate,ouId,locId){
-    const REQUEST_URI = this.ServerUrl +`/AccountsReports/RefundRegister?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
+  refundRegister(fromDate,toDate,ouId,locId,depName){
+    const REQUEST_URI = this.ServerUrl +`/AccountsReports/RefundRegister?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&deptName=${depName}`;
     return this.http.get(REQUEST_URI, {
       responseType: 'arraybuffer',
       headers: this.headers,
     });
-    // http://localhost:8081/AccountsReports/RefundRegister?fromDate=01-APR-2022&toDate=02-AUG-2022&ouId=21&locId
+    // http://localhost:8081/AccountsReports/RefundRegister?fromDate=01-APR-2022&toDate=02-AUG-2022&ouId=21&locId&deptName=Service  
   }
 
   manualInvoice(fromDate,toDate,ouId,locId){
@@ -630,6 +630,17 @@ export class ReportServiceService {
       responseType: 'arraybuffer',
       headers: this.headers,
     });
+
+  }
+
+  salesBookCancelReport(fromDate,toDate,locId,ouId){
+    const REQUEST_URI = this.ServerUrl +`/SalesReports/SlBookingCanc?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+
+    // http://localhost:8081/SalesReports/SlBookingCanc?fromDate=01-APR-2022&toDate=03-AUG-2022&ouId=21&locId=2101
 
   }
 

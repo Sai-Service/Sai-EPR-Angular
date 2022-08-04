@@ -382,6 +382,7 @@ export class SalesOrderFormComponent implements OnInit {
   isVisibleCSDDetails: boolean = false;
   isVisiblecancelledSalesOrder: boolean = false;
 
+  mdlDtlUpdButton=false;
   closeResetButton = true;
   dataDisplay: any;
   progress = 0;
@@ -1093,6 +1094,11 @@ export class SalesOrderFormComponent implements OnInit {
   onOptionsSelectedVariant(mainModel) {
     // if (this.currentOpration != 'orderSearch') {
     // alert('mainModel')
+    this.VariantSearch=null;
+    this.ColourSearch=null;
+    this.SalesOrderBookingForm.get('variant').reset();
+    this.SalesOrderBookingForm.get('color').reset();
+   
     this.orderManagementService.VariantSearchFn(mainModel)
       .subscribe(
         data => {
@@ -2865,7 +2871,14 @@ export class SalesOrderFormComponent implements OnInit {
     var color = this.SalesOrderBookingForm.get('color').value;
     var fuelType = this.SalesOrderBookingForm.get('fuelType').value;
     var basicValue = this.SalesOrderBookingForm.get('basicValue').value;
-    // alert(model+'---'+variant+'----'+color+'---'+fuelType+'---'+basicValue);
+
+    //  alert(model+'---'+variant+'----'+color+'---'+fuelType+'---'+basicValue);
+
+    if(model===undefined || model===null)     { alert ("Model: should not be Null.") ;return;}
+    if(variant===undefined || variant===null) { alert("Variant: should not be Null.");return;}
+    if(color===undefined || color===null)     { alert("Color: should not be Null.");return;}
+    if(basicValue===undefined || basicValue===null || basicValue<=0)     { alert("Basic Price: Invalid Basic Amount.");return;}
+
     this.orderManagementService.variantDetailsUpdate(this.orderNumber, model, variant, color, basicValue)
       .subscribe((res: any) => {
         if (res.code === 200) {

@@ -1,0 +1,114 @@
+<form [formGroup]="receiptWriteOffForm" (ngSubmit)="receiptWriteOff(receiptWriteOffForm.value)">
+
+<div class="center">
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <td class="PageHeader"> &nbsp;RECEIPT&nbsp;WRITE-OFF</td>
+        </tr>
+    </table>
+
+    <div class="center" style="width: 100%;">
+        <div class="form-bg">
+            <div class="center" style="width: 100%;">
+                   
+
+        <fieldset class="RFS">
+        <table class="center">
+
+            <tr>
+
+  
+                <input type="number" formControlName="emplId" [(ngModel)]="emplId" hidden>
+                <input type="number" formControlName="divisionId" [(ngModel)]="divisionId" hidden>
+                <input type="number" formControlName="ouId" [(ngModel)]="ouId" hidden>
+                <input type="number" formControlName="locId" [(ngModel)]="locId" hidden>
+
+                <td style="width: 15%" class="LabelFontStyle">Division&nbsp;:</td>
+                <td><input disabled type="text" class="form-control" formControlName="divisionName" [(ngModel)]="divisionName" ></td>
+    
+                <td style="width: 15%" class="LabelFontStyle">Operating&nbsp;Unit:</td>
+                <td><input  type="text" class="form-control" formControlName="ouName" [(ngModel)]="ouName" disabled ></td>
+              
+                <td style="width: 15%" class="LabelFontStyle">Location&nbsp;:&nbsp;</td>
+
+                <td>
+                <select   formControlName="locId" id="locId" [(ngModel)]="locId"  class="form-control" style="background-color:yellow;"   >
+                    <option disabled>--Select--</option>
+                    <option *ngFor="let sc of locIdList"  [ngValue]="sc.locId">
+                    {{sc.locCode}}-{{sc.locName}}
+                    </option>
+                </select>
+                </td>
+
+            </tr>
+            <!-- <tr>
+
+                <td style="width: 15%" class="LabelFontStyle">Ticket No:</td>
+                <td><input type="text" class="form-control" formControlName="ticketNo" [(ngModel)]="ticketNo" disabled></td>
+          
+                <td style="width: 15%" class="LabelFontStyle">Name:</td>
+                <td><input type="text" class="form-control" formControlName="fullName" [(ngModel)]="fullName" disabled ></td>
+              
+              
+            </tr> -->
+            <tr>
+                <td style="width: 15%" class="LabelFontStyle">Write Off Limit:</td>
+                <td><input type="number" class="form-control" formControlName="writeoffAmt" [(ngModel)]="writeoffAmt"  ></td>
+         
+             
+                <td style="width: 15%" class="LabelFontStyle">Date From:</td>
+                <td><input type="date" class="form-control" formControlName="fromDate" [(ngModel)]="fromDate" style="background-color:yellow ;"  ></td>
+           
+                <td style="width: 15%" class="LabelFontStyle">Date To:</td>
+                <td><input type="date" class="form-control" formControlName="toDate" [(ngModel)]="toDate"  style="background-color:yellow ;" ></td>
+                <!-- <td></td> -->
+              
+               </tr>
+        </table>
+    </fieldset>
+
+        <!-- <br> -->
+
+        <table class="center">
+            <tr>
+                <td><button type="button" class="btn btn-info" (click)="FindList()" >Find</button></td>
+                <td><button type="button" class="btn btn-info" (click)="WriteOff()" >Write-Off</button></td>
+                <td> <button type="button" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>
+                <td> <button type="button" class="btn btn-info" id="register" (click)="closeMast()">Close</button></td>
+       
+            </tr>
+        </table>
+        </div>
+        </div>
+    </div>
+</div>
+
+<div class="grid_scroll">
+    <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ct100_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+    <tbody>
+        <tr class="GridHeader">
+            <th scope="col" style="width: 3rem;">Sr. No.</th>
+            <th scope="col" style="width: 3rem;">Receipt Number</th>
+            <th scope="col" style="width: 5rem;">Receipt Date</th> 
+            <th scope="col" style="width: 5rem;">Customer Name</th>
+            <th scope="col" style="width: 3rem;">Receipt Type</th> 
+            <th scope="col" style="width: 8rem; ">Receipt Amt</th>               
+            <th scope="col" style="width: 4rem;">Balance Amt</th>                
+        </tr>
+        </tbody>
+        <tr *ngFor="let com of writeOffList let k = index" class="ItemStyle" style="text-decoration:none;font-size:small;">
+            <td style="width: 4rem; text-align:center ;">{{k+1}}</td>
+            <td style="width: 10rem; text-align:center ;">{{com.receiptNumber }}</td> 
+            <td style="width: 10rem; text-align:center ;">{{com.receiptDate |date:'dd-MM-y'}}</td>
+            <td style="width: 20rem;">{{com.custAccountNo}}-{{com.custName}}</td> 
+            <td style="width: 10rem; text-align:left ;">{{com.receiptMethodName}}</td>
+            <td style="width: 10rem; text-align:right;padding-right: 10px ;">{{com.amount |number:'1.2-2'}}</td>
+            <td style="width: 10rem; text-align:right;padding-right: 10px ;">{{com.balanceAmount | number:'1.2-2'}}</td>
+
+            <!-- <td style="text-align: center;"><button class="btn btn-info Saibtn-secondary" (click)="Select(com.relatedItemId)">Select</button></td> -->
+        </tr>
+    </table>
+    </div>
+
+</form>
+

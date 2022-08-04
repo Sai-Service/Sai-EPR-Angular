@@ -147,6 +147,11 @@
                                 (click)="reportDetails('salesPendingPayment')">Sales Pending Payment Report</a>
                         </li>
 
+                        <li>
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelfromtolocation" role="tab"
+                                (click)="reportDetails('salesBookingCancReport')">Sales Booking Cancellation Report</a>
+                        </li>
+
                     </ul>
                 </li>
 
@@ -451,6 +456,13 @@
                 <td>
                     <table class="center">
                         <tr>
+                            <td style="width: 15%" class="LabelFontStyle">
+                                &nbsp;Operating&nbsp;Unit&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                <input type="text" disabled class="form-control" formControlName="OUCode">
+                            </td>
+
                             <td style="width: 15%" class="LabelFontStyle">
                                 &nbsp;From&nbsp;Date&nbsp;:&nbsp;
                             </td>
@@ -994,7 +1006,16 @@
             <tr>
                 <td>
                     <table class="center">
+                        <!-- <tr>
+                            <td style="width: 15%" class="LabelFontStyle">
+                                &nbsp;Operating&nbsp;Unit&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                <input disabled type="text" class="form-control" formControlName="OUCode">
+                            </td>
+                        </tr> -->
                         <tr>
+
                             <td style="width: 15%" class="LabelFontStyle">
                                 &nbsp;From&nbsp;Date&nbsp;:&nbsp;
                             </td>

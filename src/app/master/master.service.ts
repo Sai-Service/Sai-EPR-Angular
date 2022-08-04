@@ -4229,6 +4229,10 @@ getRelatedItem(itemCode): Observable<any> {
 }
 
 
-///////////////////////////////////////////////////////////////////////////////
-  
+//////////////////// RECEIPT WRITE OFF///////////////////////////////////////////////////////////
+getWriteOffList (locId,frmDate,tDate,wAmt) : Observable<any> {
+  return this.http.get(this.ServerUrl + `/arCashReceipts/receiptWriteOff?locId=${locId}&frmDt=${frmDate}&toDate1=${tDate}&toAmt=${wAmt}`);
+  //http://localhost:8081/arCashReceipts/receiptWriteOff?locId=2101&frmDt=01-MAY-2022&toDate1=31-MAY-2022&toAmt=10
+}
+
 }
