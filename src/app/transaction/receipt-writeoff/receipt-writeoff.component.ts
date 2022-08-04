@@ -43,16 +43,16 @@ export class ReceiptWriteoffComponent implements OnInit {
 
   ticketNo: string;
   fullName : string;
-  writeoffAmt:number;
+  writeoffAmt:number=10;
   // fromDate:Date;
   // toDate:Date;
-
+  public minDate = new Date();
   fromDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   toDate = this.pipe.transform(Date.now(), 'y-MM-dd');
 
-
-
-
+   wirteOffButton =false;
+   spinIcon = false;
+   dataDisplay: any;
    get f() {return this.receiptWriteOffForm.controls;}
 
    receiptWriteOff(receiptWriteOffForm: any){}
@@ -115,22 +115,39 @@ export class ReceiptWriteoffComponent implements OnInit {
 
 
   FindList(){
+    this.dataDisplay = 'Searching Records....Please dont refresh the Page';
+       // alert ("spin  -" +this.spinIcon  + " msg : "+this.dataDisplay);
     var fDate =this.receiptWriteOffForm.get('fromDate').value;
     var tDate =this.receiptWriteOffForm.get('toDate').value;
     var wAmt =this.receiptWriteOffForm.get('writeoffAmt').value;
-
     var d1 = this.pipe.transform(fDate, 'dd-MMM-y');
     var d2 = this.pipe.transform(tDate, 'dd-MMM-y');
+    var lcId =this.receiptWriteOffForm.get("locId").value;
+
+    // alert("Location Id : "+lcId);
+   
+    if(lcId <=0) { alert ("LOCATION : Select Location ...");return;}
+    if (d1>d2 ) { alert ("DATE : Select Proper Date Range ...");return;}
+
+      this.spinIcon = true;
 
       this.service.getWriteOffList(this.locId,d1,d2,wAmt)
       .subscribe(
         data => {
           this.writeOffList = data.obj;
-          console.log(this.writeOffList);
+        
+          if(data.obj.length >0) { this.wirteOffButton=true;} 
+          else { this.wirteOffButton=false;  alert ("No Record Found..."); 
+          this.spinIcon=false; this.dataDisplay=null; }
+           console.log(this.writeOffList);
+           this.spinIcon=false; this.dataDisplay=null;
           }); 
+
+         
+
        }
 
-      WriteOff(){  }
+      WriteOff(){  alert ("Work in Progress...") }
 
       resetMast() {
         window.location.reload();

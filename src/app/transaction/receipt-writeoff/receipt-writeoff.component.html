@@ -57,10 +57,10 @@
          
              
                 <td style="width: 15%" class="LabelFontStyle">Date From:</td>
-                <td><input type="date" class="form-control" formControlName="fromDate" [(ngModel)]="fromDate" style="background-color:yellow ;"  ></td>
+                <td><input type="date" class="form-control" formControlName="fromDate" [(ngModel)]="fromDate" max="{{minDate | date:'yyyy-MM-dd'}}" style="background-color:yellow ;"  ></td>
            
                 <td style="width: 15%" class="LabelFontStyle">Date To:</td>
-                <td><input type="date" class="form-control" formControlName="toDate" [(ngModel)]="toDate"  style="background-color:yellow ;" ></td>
+                <td><input type="date" class="form-control" formControlName="toDate" [(ngModel)]="toDate" max="{{minDate | date:'yyyy-MM-dd'}}"  style="background-color:yellow ;" ></td>
                 <!-- <td></td> -->
               
                </tr>
@@ -72,10 +72,20 @@
         <table class="center">
             <tr>
                 <td><button type="button" class="btn btn-info" (click)="FindList()" >Find</button></td>
-                <td><button type="button" class="btn btn-info" (click)="WriteOff()" >Write-Off</button></td>
+                <div *ngIf ="wirteOffButton;then W1;else W2"></div>
+
+                <ng-template #W1>
+                    <td><button type="button" class="btn btn-info" (click)="WriteOff()" >Write-Off</button></td>
+                </ng-template>
+                <ng-template #W2>
+                    <td><button disabled type="button" class="btn btn-info" >Write-Off</button></td>
+                </ng-template>
+              
                 <td> <button type="button" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>
                 <td> <button type="button" class="btn btn-info" id="register" (click)="closeMast()">Close</button></td>
        
+
+               
             </tr>
         </table>
         </div>
@@ -109,6 +119,26 @@
         </tr>
     </table>
     </div>
+
+    <table class="center">
+    <tr>
+        <td>
+            <div *ngIf="spinIcon; then hList1; else hList2"></div>
+            <ng-template #hList1> 
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border text-primary" role="status" >
+                        <span class="sr-only" id="loading"></span>
+                
+                    </div>
+                    </div>
+            </ng-template>
+            <ng-template #hList2> </ng-template>
+        </td>
+        <td class="LabelFontStyle" style="color: blue;">&nbsp;{{this.dataDisplay}}&nbsp; </td>
+    </tr>
+   </table>
+  
+  
 
 </form>
 
