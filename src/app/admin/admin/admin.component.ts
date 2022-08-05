@@ -91,6 +91,7 @@ export class AdminComponent implements OnInit {
   isVisible37:boolean=true;
  isVisibleAccessories:boolean=true;
   isVisibleAccountsRepor:boolean=true;
+  isVisibleMaster:boolean=true;
   public show: boolean = false;
   isShown: boolean = false;
   displayUserIdwiseAccess: boolean = true;
@@ -278,6 +279,38 @@ export class AdminComponent implements OnInit {
       this.isVisible37=true;
       this.isVisibleAccountsRepor=false;
       this.isVisibleAccessories=false;
+    }
+    if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId'))===9 && sessionStorage.getItem('deptName')==='Account'){
+      this.isVisible11=false; 
+      this.isVisible12=false;
+      this.isVisible13=false
+      this.isVisibleWsVehicleMaster=false;
+      this.isVisible14=false;
+      this.isVisible15=false;
+      this.isVisible16=false;
+      this.isVisible17=false;
+      this.isVisible18=false;
+      this.isVisible19=false;
+      this.isVisible20=false;
+      this.isVisible21=false;
+      this.isVisible22=false;
+      this.isVisible23=false;
+      this.isVisible24=false;
+      this.isVisible25=false;
+      this.isVisible26=false;
+      this.isVisibleSubInventoryTransfer=false;
+      this.isVisible27=false;
+      this.isVisible28=false;
+      this.isVisible29=true;
+      this.isVisible30=true;
+      this.isVisible31=false;
+      this.isVisible32=false;
+      this.isVisible35=false;
+      this.isVisible36=true;
+      this.isVisible37=false;
+      this.isVisibleAccountsRepor=true;
+      this.isVisibleAccessories=false;
+      this.isVisibleMaster=false;
     }
     if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId'))===2 && sessionStorage.getItem('deptName')==='Service'){
       this.isVisible11=false;
