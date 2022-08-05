@@ -15,7 +15,7 @@
         <div class="collapse navbar-collapse" id="main_nav">
             <ul class="navbar-nav">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" (click)="department('Sales')"> Sales </a>
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" (click)="department('Sales')">Sales Reports </a>
                     <ul class="dropdown-menu">
                         <li>
                             <a class="dropdown-item" data-toggle="collapse" href="#panelVehicleSaleRegister" role="tab"
@@ -156,7 +156,7 @@
                 </li>
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" (click)="department('Sales')"> Stock </a>
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" (click)="department('Sales')">Stock Reports</a>
                     <ul class="dropdown-menu">
                         <li>
                             <a class="dropdown-item" data-toggle="collapse" href="#panelSaleClosingStock" role="tab"
@@ -190,7 +190,7 @@
                 </li>
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" (click)="department('Sales')"> Other </a>
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" (click)="department('Sales')">Other Reports </a>
                     <ul class="dropdown-menu">
                     
                         <li>
@@ -527,13 +527,8 @@
             <tr>
                 <td>
                     <table class="center">
+                       
                         <tr>
-                            <td style="width: 15%" class="LabelFontStyle">
-                                &nbsp;Operating&nbsp;Unit&nbsp;:&nbsp;
-                            </td>
-                            <td>
-                                <input type="text" disabled class="form-control" formControlName="OUCode">
-                            </td>
 
                             <td style="width: 15%" class="LabelFontStyle">
                                 &nbsp;From&nbsp;Date&nbsp;:&nbsp;
@@ -549,6 +544,17 @@
                                 <input type="date" class="form-control" formControlName="toDate"
                                     max="{{minDate | date:'yyyy-MM-dd'}}">
                             </td>
+                        </tr>
+                        <tr>
+                           
+                                <td style="width: 15%" class="LabelFontStyle">
+                                    &nbsp;Operating&nbsp;Unit&nbsp;:&nbsp;
+                                </td>
+                                <td>
+                                    <input type="text" disabled class="form-control" formControlName="OUCode">
+                                </td>
+           
+
                             <td style="width: 15%" class="LabelFontStyle">
                                 &nbsp;Location&nbsp;Code&nbsp;:&nbsp;
                             </td>
@@ -566,13 +572,16 @@
                                 <input disabled hidden type="number" class="form-control" formControlName="locId">
 
                             </td>
-                        </tr>
-                        <tr>
+                           
+
+                            </tr>
+                            <tr>
+                       
                             <td colspan="4">
                                 <table [style.display]="isVisibleDepartmentList ? 'block' : 'none'">
                                     <tr>
                                         <td style="width: 15%" class="LabelFontStyle">
-                                            &nbsp;Department&nbsp;List&nbsp;:&nbsp;
+                                            &nbsp;Department&nbsp;List:&nbsp;
                                         </td>
                                         <td>
                                             <select formControlName="locCode" id="locCode" class="form-control"
