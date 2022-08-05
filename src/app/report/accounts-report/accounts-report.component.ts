@@ -240,6 +240,8 @@ reportName:string;
     this.isVisiblepanelAPGLUnpainAging=false;
     this.isVisiblepanelprePayment=false;
     this.ispanelTolocationOu=false;
+    this.isVisibleVendorLedgerReport=false;
+
   }
   else if (reportName==='chequebounceReport'){
     this.reportName='Cheque Bounce Report';
@@ -256,6 +258,8 @@ reportName:string;
     this.isVisiblepanelAPGLUnpainAging=false;
     this.isVisiblepanelprePayment=false;
     this.ispanelTolocationOu=false;
+    this.isVisibleVendorLedgerReport=false;
+
   }
   else if (reportName==='gstPurSummary'){
     this.reportName='Purchase Register Summary';
@@ -271,6 +275,8 @@ reportName:string;
     this.isVisiblepanelAPGLUnpainAging=false;
     this.isVisiblepanelprePayment=false;
     this.ispanelTolocationOu=false;
+    this.isVisibleVendorLedgerReport=false;
+
   }
   else if (reportName==='receiptRegisterReport'){
     this.reportName='Receipt Register Report';
@@ -287,6 +293,8 @@ reportName:string;
     this.isVisiblepanelAPGLUnpainAging=false;
     this.isVisiblepanelprePayment=false;
     this.ispanelTolocationOu=false;
+    this.isVisibleVendorLedgerReport=false;
+
   }
   else if (reportName==='gSTSaleRegister'){
     this.reportName='GST Sales Register';
@@ -303,6 +311,8 @@ reportName:string;
     this.isVisiblepanelAPGLUnpainAging=false;
     this.isVisiblepanelprePayment=false;
     this.ispanelTolocationOu=false;
+    this.isVisibleVendorLedgerReport=false;
+
   }
   else if (reportName==='sparesdebtors'){
     this.reportName='Spares Debtors';
@@ -319,6 +329,8 @@ reportName:string;
     this.isVisiblepanelAPGLUnpainAging=false;
     this.isVisiblepanelprePayment=false;
     this.ispanelTolocationOu=false;
+    this.isVisibleVendorLedgerReport=false;
+
   }
   else if (reportName==='spInvAgging'){
     this.reportName='Spares Inventory Aging';
@@ -332,6 +344,8 @@ reportName:string;
     this.isVisiblepanelAPGLUnpainAging=false;
     this.isVisiblepanelprePayment=false;
     this.ispanelTolocationOu=false;
+    this.isVisibleVendorLedgerReport=false;
+
   }
   else if (reportName==='gltrialBalance'){
     this.reportName='GL Trial Balance';
@@ -345,6 +359,8 @@ reportName:string;
     this.isVisiblepanelAPGLUnpainAging=false;
     this.isVisiblepanelprePayment=false;
     this.ispanelTolocationOu=false;
+    this.isVisibleVendorLedgerReport=false;
+
   }
   else if (reportName==='cashBank'){
     this.reportForm.get('locCode').reset();
@@ -367,6 +383,8 @@ reportName:string;
     this.isVisiblepanelAPGLUnpainAging=false;
     this.isVisiblepanelprePayment=false;
     this.ispanelTolocationOu=false;
+    this.isVisibleVendorLedgerReport=false;
+
   }
   else if (reportName=='bankBook'){
     this.reportName='Bank Book Report';
@@ -390,6 +408,8 @@ reportName:string;
     this.isVisiblepanelAPGLUnpainAging=false;
     this.isVisiblepanelprePayment=false;
     this.ispanelTolocationOu=false;
+    this.isVisibleVendorLedgerReport=false;
+
   }
   else if (reportName==='APGLUnpainAging'){
     this.reportName='AP To GL Unpaid Aging Report';
@@ -403,6 +423,8 @@ reportName:string;
     this.isVisiblepanelAPGLUnpainAging=true;
     this.isVisiblepanelprePayment=false;
     this.ispanelTolocationOu=false;
+    this.isVisibleVendorLedgerReport=false;
+
   }
   else if (reportName==='prePayment'){
     this.reportName='Prepayment Status Report';
@@ -416,6 +438,8 @@ reportName:string;
     this.isVisiblepanelAPGLUnpainAging=false;
     this.isVisiblepanelprePayment=true;
     this.ispanelTolocationOu=false;
+    this.isVisibleVendorLedgerReport=false;
+
   }
   else if (reportName=='bankReconciliation'){
     this.reportName='Bank Reconciliation Report';
@@ -438,6 +462,8 @@ reportName:string;
     this.isVisiblepanelAPGLUnpainAging=false;
     this.isVisiblepanelprePayment=false;
     this.ispanelTolocationOu=false;
+    this.isVisibleVendorLedgerReport=false;
+
   }
   else if (reportName=='tdsRegister'){
     this.reportName='TDS Register';
@@ -455,6 +481,8 @@ reportName:string;
     this.isVisiblepanelAPGLUnpainAging=false;
     this.isVisiblepanelprePayment=false;
     this.ispanelTolocationOu=true;
+    this.isVisibleVendorLedgerReport=false;
+
   }
   else if (reportName=='tcsReport'){
     this.reportName='TCS Reports';
@@ -471,6 +499,8 @@ reportName:string;
     this.isVisiblepanelAPGLUnpainAging=false;
     this.isVisiblepanelprePayment=false;
     this.ispanelTolocationOu=false;
+    this.isVisibleVendorLedgerReport=false;
+
   }
   else if (reportName=='manualInvoice'){
     this.reportName='Manual Invoice Report';
@@ -487,10 +517,13 @@ reportName:string;
     this.isVisiblepanelAPGLUnpainAging=false;
     this.isVisiblepanelprePayment=false;
     this.ispanelTolocationOu=false;
+    this.isVisibleVendorLedgerReport=false;
+
   }
 
   else if (reportName=='vendorLedgerReport'){
     this.reportName='Vendor Ledger Report';
+
     this.isVisibleGSTPurchaseRegister=false;
     this.isVisibleGSTSaleRegister=false;
     this.isVisibleSparesdebtors=false;
@@ -510,7 +543,6 @@ reportName:string;
     this.reportName='JV Register';
     this.isVisibleGSTSaleRegister=false;
     this.isVisibleGSTPurchaseRegister=false;
-    
     this.isVisibleSparesdebtors=false;
     this.isVisibleLocation=false;
     this.isVisibleLocation1=false;
@@ -522,18 +554,25 @@ reportName:string;
     this.isVisiblepanelAPGLUnpainAging=false;
     this.isVisiblepanelprePayment=false;
     this.ispanelTolocationOu=true;
+    this.isVisibleVendorLedgerReport=false;
+
   }
   else if (reportName=='refundRegister'){
     this.reportName='Refund Register';
     this.isVisibleGSTSaleRegister=false;
     this.isVisibleGSTPurchaseRegister=true;
     this.isVisibleSparesdebtors=false;
+    this.isVisibleLocation=false;
+    this.isVisibleLocation1=false;
+    this.isVisiblepanelaccountName=false;
+    this.isVisiblepanelcashName=false;
     this.isVisiblespInvAgging=false;
     this.isVisiblepanelgltrialBalance=false;
     this.panelCashBank=false;
     this.isVisiblepanelAPGLUnpainAging=false;
     this.isVisiblepanelprePayment=false;
     this.ispanelTolocationOu=false;
+    this.isVisibleVendorLedgerReport=false;
   }
 
 

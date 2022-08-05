@@ -115,47 +115,36 @@
         id="panelGSTPurchaseRegister"> -->
 
   <fieldset class="RFS">
-    <table style="margin-left: auto;margin-right: auto;"
-      [style.display]="isVisibleGSTPurchaseRegister ? 'block' : 'none'" class="collapse" id="panelGSTPurchaseRegister">
-      <tr>
+    <br>
+    <table style="margin-left: auto;margin-right: auto;" [style.display]="isVisibleGSTPurchaseRegister ? 'block':'none'" 
+               class="center" id="panelGSTPurchaseRegister">
+                 <tr>
+                <td class="LabelFontStyle" >{{reportName}}</td>
+               </tr>
+
+      <!-- <tr>
         <td>
           <table class="center">
             <tr>
-              <td colspan="4" class="LabelFontStyle" style="width: 100%;">
-                {{reportName}}
-              </td>
+              <td colspan="4" class="LabelFontStyle" style="width: 100%;">{{reportName}}</td>
             </tr>
           </table>
         </td>
-      </tr>
-      <tr>
-        <td>
+      </tr> -->
+      <!-- <tr>
+        <td> -->
           <table class="center">
             <tr>
-              <td style="width: 15%" class="LabelFontStyle">
-                &nbsp;From&nbsp;Date&nbsp;:&nbsp;
-              </td>
-              <td>
-                <input type="date" class="form-control" formControlName="fromDate"
-                  max="{{minDate | date:'yyyy-MM-dd'}}">
-              </td>
-              <td style="width: 15%" class="LabelFontStyle">
-                &nbsp;To&nbsp;Date&nbsp;:&nbsp;
-              </td>
-              <td>
-                <input type="date" class="form-control" formControlName="toDate" max="{{minDate | date:'yyyy-MM-dd'}}">
-              </td>
+              <td style="width: 15%" class="LabelFontStyle"> &nbsp;Orgnization&nbsp;name&nbsp;:&nbsp;</td>
+              <td><input disabled type="text" class="form-control" formControlName="OUCode"></td>
+         
+              <td style="width: 15%" class="LabelFontStyle">&nbsp;From&nbsp;Date&nbsp;:&nbsp;</td>
+              <td><input type="date" class="form-control" formControlName="fromDate"  max="{{minDate | date:'yyyy-MM-dd'}}"></td>
+              <td style="width: 15%" class="LabelFontStyle">&nbsp;To&nbsp;Date&nbsp;:&nbsp;</td>
+              <td><input type="date" class="form-control" formControlName="toDate" max="{{minDate | date:'yyyy-MM-dd'}}"></td>
             </tr>
             <tr>
-              <td style="width: 15%" class="LabelFontStyle">
-                &nbsp;Orgnization&nbsp;name&nbsp;:&nbsp;
-              </td>
-              <td>
-                <input disabled type="text" class="form-control" formControlName="OUCode">
-              </td>
-              <td style="width: 15%" class="LabelFontStyle">
-                &nbsp;Location&nbsp;Code&nbsp;:&nbsp;
-              </td>
+               <td style="width: 15%" class="LabelFontStyle">&nbsp;Location&nbsp;Code&nbsp;:&nbsp;</td>
               <td>
                 <select formControlName="locCode" id="locCode" class="form-control"
                   (ngModelChange)='onOptionsLocation($event)'>
@@ -166,11 +155,8 @@
                 </select>
                 <input hidden disabled type="number" class="form-control" formControlName="locId">
               </td>
-            </tr>
-            <tr>
-              <td style="width: 15%" class="LabelFontStyle">
-                &nbsp;Department&nbsp;List&nbsp;:&nbsp;
-              </td>
+           
+              <td style="width: 15%" class="LabelFontStyle">&nbsp;Department&nbsp;List&nbsp;:&nbsp;</td>
               <td>
                 <select formControlName="locCode" id="locCode" class="form-control"
                   (ngModelChange)='onOptionsDepartmentList($event)'>
@@ -215,8 +201,8 @@
               </td>
             </tr>
           </table>
-        </td>
-      </tr>
+        <!-- </td>
+      </tr> -->
     </table>
 
 
@@ -952,14 +938,12 @@
             <td>
               <input type="date" class="form-control" formControlName="toDate" max="{{minDate | date:'yyyy-MM-dd'}}">
             </td>
+
+            <td style="width: 15%" class="LabelFontStyle"> &nbsp;Orgnization&nbsp;name&nbsp;:&nbsp; </td>
+            <td><input disabled type="text" class="form-control" formControlName="OUCode"></td>
           </tr>
           <tr>
-            <td style="width: 15%" class="LabelFontStyle">
-              &nbsp;Orgnization&nbsp;name&nbsp;:&nbsp;
-            </td>
-            <td>
-              <input disabled type="text" class="form-control" formControlName="OUCode">
-            </td>
+           
             <td style="width: 15%" class="LabelFontStyle">&nbsp;Location&nbsp;Code&nbsp;:&nbsp;</td>
             <td>
               <select formControlName="locCode" id="locCode" class="form-control"
@@ -971,24 +955,21 @@
               </select>
               <input hidden disabled type="number" class="form-control" formControlName="locId">
             </td>
-          </tr>
-          <tr>
+             <td style="width: 15%" class="LabelFontStyle">&nbsp;Vendor&nbsp;name&nbsp;:&nbsp; </td>
 
-                  <td style="width: 15%" class="LabelFontStyle">&nbsp;Vendor&nbsp;name&nbsp;:&nbsp; </td>
+              <td>
+                <input type="text" formControlName="supplierNo" (keyup)="getUserIdsFirstWay($event)"
+                  id="userIdFirstWay" list="dynmicUserIds" class="form-control" placeholder="Supplier details"
+                  (change)="onSupplierCodeSelected($event)">
+                <datalist id="dynmicUserIds">
+                  <option *ngFor="let item of supplierCodeList">
+                    {{item.name}}</option>
+                </datalist>
 
-                    <td>
-                      <input type="text" formControlName="supplierNo" (keyup)="getUserIdsFirstWay($event)"
-                        id="userIdFirstWay" list="dynmicUserIds" class="form-control" placeholder="Supplier details"
-                        (change)="onSupplierCodeSelected($event)">
-                      <datalist id="dynmicUserIds">
-                        <option *ngFor="let item of supplierCodeList">
-                          {{item.name}}</option>
-                      </datalist>
+                <input hidden disabled type="number" class="form-control" formControlName="supNo">
+                <input hidden disabled type="number" class="form-control" formControlName="suppId">
 
-                      <input hidden disabled type="number" class="form-control" formControlName="supNo">
-                      <input hidden disabled type="number" class="form-control" formControlName="suppId">
-
-                    </td>
+              </td>
                
                 
                 <td style="width: 15%" class="LabelFontStyle">&nbsp;Site&nbsp;name&nbsp;:&nbsp; </td>
