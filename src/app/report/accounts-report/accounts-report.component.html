@@ -24,79 +24,79 @@
           <ul class="dropdown-menu">
             <li>
               <a class="dropdown-item" data-toggle="collapse" href="#panelGSTPurchaseRegister" role="tab"
-                (click)="reportDetails('gstPurRegister')">GST Purchase Register</a>
+                (click)="reportDetails('gstPurRegister')">1. GST Purchase Register</a>
             </li>
             <li>
               <a class="dropdown-item" data-toggle="collapse" href="#panelGSTPurchaseRegister" role="tab"
-                (click)="reportDetails('gstPurSummary')">Purchase Register Summary</a>
+                (click)="reportDetails('gstPurSummary')">2. Purchase Register Summary</a>
             </li>
             <li>
               <a class="dropdown-item" data-toggle="collapse" href="#panelGSTPurchaseRegister" role="tab"
-                (click)="reportDetails('receiptRegisterReport')">Receipt Register Report</a>
+                (click)="reportDetails('receiptRegisterReport')">3. Receipt Register Report</a>
             </li>
             <li>
               <a class="dropdown-item" data-toggle="collapse" href="#panelGSTSaleRegister" role="tab"
-                (click)="reportDetails('gSTSaleRegister')">GST Sales Register</a>
+                (click)="reportDetails('gSTSaleRegister')">4. GST Sales Register</a>
             </li>
             <li>
               <a class="dropdown-item" data-toggle="collapse" href="#panelspInvAgging" role="tab"
-                (click)="reportDetails('spInvAgging')">Spares Inventory Aging</a>
+                (click)="reportDetails('spInvAgging')">5. Spares Inventory Aging</a>
             </li>
             <li>
               <a class="dropdown-item" data-toggle="collapse" href="#panelgltrialBalance" role="tab"
-                (click)="reportDetails('gltrialBalance')">GL Trial Balance</a>
+                (click)="reportDetails('gltrialBalance')">6. GL Trial Balance</a>
             </li>
             <li>
               <a class="dropdown-item" data-toggle="collapse" href="#panelGSTSaleRegister" role="tab"
-                (click)="reportDetails('chequebounceReport')">Cheque Bounce Report</a>
+                (click)="reportDetails('chequebounceReport')">7. Cheque Bounce Report</a>
             </li>
             <li>
               <a class="dropdown-item" data-toggle="collapse" href="#panelCashBank" role="tab"
-                (click)="reportDetails('cashBank')">Cash Book Report</a>
+                (click)="reportDetails('cashBank')">8. Cash Book Report</a>
             </li>
             <li>
               <a class="dropdown-item" data-toggle="collapse" href="#panelCashBank" role="tab"
-                (click)="reportDetails('bankBook')">Bank Book Report</a>
+                (click)="reportDetails('bankBook')">9. Bank Book Report</a>
             </li>
             <li>
               <a class="dropdown-item" data-toggle="collapse" href="#panelAPGLUnpainAging" role="tab"
-                (click)="reportDetails('APGLUnpainAging')">AP To GL Unpaid Aging Report</a>
+                (click)="reportDetails('APGLUnpainAging')">10. AP To GL Unpaid Aging Report</a>
             </li>
             <li>
               <a class="dropdown-item" data-toggle="collapse" href="#panelprePayment" role="tab"
-                (click)="reportDetails('prePayment')">Prepayment Status Report</a>
+                (click)="reportDetails('prePayment')">11. Prepayment Status Report</a>
             </li>
             <li>
               <a class="dropdown-item" data-toggle="collapse" href="#panelCashBank" role="tab"
-                (click)="reportDetails('bankReconciliation')">Bank Reconciliation Report</a>
+                (click)="reportDetails('bankReconciliation')">12. Bank Reconciliation Report</a>
             </li>
             <li>
               <a class="dropdown-item" data-toggle="collapse" href="#panelTolocationOu" role="tab"
-                (click)="reportDetails('tdsRegister')">TDS Register</a>
+                (click)="reportDetails('tdsRegister')">13. TDS Register</a>
             </li>
             <li>
               <a class="dropdown-item" data-toggle="collapse" href="#panelGSTSaleRegister" role="tab"
-                (click)="reportDetails('tcsReport')">TCS Reports</a>
+                (click)="reportDetails('tcsReport')">14. TCS Reports</a>
             </li>
             <li>
               <a class="dropdown-item" data-toggle="collapse" href="#panelGSTSaleRegister" role="tab"
-                (click)="reportDetails('manualInvoice')">Manual Invoice Report</a>
+                (click)="reportDetails('manualInvoice')">15. Manual Invoice Report</a>
             </li>
 
             <li>
               <a class="dropdown-item" data-toggle="collapse" href="#panelVendorLedgerReport" role="tab"
-                (click)="reportDetails('vendorLedgerReport')">Vendor Ledger Report</a>
+                (click)="reportDetails('vendorLedgerReport')">16. Vendor Ledger Report</a>
             </li>
 
             <li>
               <a class="dropdown-item" data-toggle="collapse" href="#panelTolocationOu" role="tab"
-                (click)="reportDetails('jvRegister')">JV Register</a>
+                (click)="reportDetails('jvRegister')">17. JV Register</a>
             </li>
 
             
             <li>
               <a class="dropdown-item" data-toggle="collapse" href="#panelGSTPurchaseRegister" role="tab"
-                (click)="reportDetails('refundRegister')">Refund Register</a>
+                (click)="reportDetails('refundRegister')">18. Refund Register</a>
             </li>
           
 
@@ -958,7 +958,7 @@
 
     <table style="margin-left: auto;margin-right: auto;" [style.display]="isVisibleVendorLedgerReport ? 'block' : 'none'"
     class="collapse" id="panelVendorLedgerReport">
-    <tr>
+    <!-- <tr>
       <td>
         <table class="center">
           <tr>
@@ -968,9 +968,18 @@
           </tr>
         </table>
       </td>
-    </tr>
-    <tr>
-      <td>
+    </tr> -->
+
+    <table class="center">
+      <tr>
+        <td class="LabelFontStyle" >
+          {{reportName}}
+        </td>
+      </tr>
+    </table>
+
+    <!-- <tr>
+      <td> -->
         <table class="center">
           <tr>
             <td style="width: 15%" class="LabelFontStyle">
@@ -1031,11 +1040,13 @@
                     </option>
                   </select>
               </tr>
-          <tr>
+        </table>
+
+          <!-- <tr>
             <td colspan="4">
               <table class="center">
                 <tr>
-                  <td colspan="4">
+                  <td colspan="4"> -->
                     <table class="center">
                       <tr>
                         <div *ngIf="closeResetButton; then hList1; else hList2"></div>
@@ -1051,8 +1062,10 @@
                           &nbsp;{{dataDisplay}}&nbsp; </td>
                       </tr>
                     </table>
+<!--                     
                   </td>
-                </tr>
+                </tr> -->
+                <table class="center">
                 <tr>
                   <td>
                     <button class="btn-primary" [disabled]="isDisabled1" (click)="reportParameter(reportName)">View
@@ -1060,11 +1073,11 @@
                   </td>
                 </tr>
               </table>
-            </td>
+            <!-- </td>
           </tr>
         </table>
       </td>
-    </tr>
+    </tr> -->
   </table>
 
   </fieldset>
