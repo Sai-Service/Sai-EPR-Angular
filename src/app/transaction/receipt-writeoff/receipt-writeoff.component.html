@@ -53,7 +53,7 @@
             </tr> -->
             <tr>
                 <td style="width: 15%" class="LabelFontStyle">Write Off Limit:</td>
-                <td><input type="number" class="form-control" formControlName="writeoffLimit" [(ngModel)]="writeoffLimit"  ></td>
+                <td><input disabled type="number" class="form-control" formControlName="writeoffLimit" [(ngModel)]="writeoffLimit" style="font-weight:bold ;" ></td>
          
              
                 <td style="width: 15%" class="LabelFontStyle">Date From:</td>
@@ -80,7 +80,7 @@
                 <div *ngIf ="wirteOffButton;then W1;else W2"></div>
 
                 <ng-template #W1>
-                    <td><button type="button" class="btn btn-info" (click)="WriteOff()" >Write-Off</button></td>
+                    <td><button type="button" class="btn btn-info" (click)="WriteOffSumbit()" >Write-Off</button></td>
                 </ng-template>
                 <ng-template #W2>
                     <td><button disabled type="button" class="btn btn-info" >Write-Off</button></td>

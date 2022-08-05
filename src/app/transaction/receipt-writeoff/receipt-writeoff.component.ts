@@ -23,7 +23,7 @@ export class ReceiptWriteoffComponent implements OnInit {
 
   public locIdList: Array<string> = [];
   public writeOffList: any[];
-
+  empWriteOffLimit:any;
 
   pipe = new DatePipe('en-US');
   now = Date.now();
@@ -43,7 +43,7 @@ export class ReceiptWriteoffComponent implements OnInit {
 
   ticketNo: string;
   fullName : string;
-  writeoffLimit:number=10;
+  writeoffLimit:number;
   writeOffTotal:number;
   // fromDate:Date;
   // toDate:Date;
@@ -113,10 +113,23 @@ export class ReceiptWriteoffComponent implements OnInit {
       }
     );
 
+
+    this.service.getEmpWriteOffLimit(sessionStorage.getItem('ouId'),sessionStorage.getItem('ticketNo'))
+    .subscribe(
+      data => {
+        this.empWriteOffLimit = data.obj;
+        console.log(this.empWriteOffLimit);
+        this.receiptWriteOffForm.patchValue({writeoffLimit:this.empWriteOffLimit.writeOffLimit})
+
+      }
+    );
+
+
   }
 
 
   FindList(){
+    this.wirteOffButton=false;
     this.writeOffTotal=null;
     this.writeOffList=null;
     this.dataDisplay = 'Searching Records....Please dont refresh the Page';
@@ -140,7 +153,6 @@ export class ReceiptWriteoffComponent implements OnInit {
       .subscribe(
         data => {
           this.writeOffList = data.obj;
-        
           if(data.obj.length >0) { this.wirteOffButton=true;}
            else { this.wirteOffButton=false;  alert ("No Record Found..."); 
           this.spinIcon=false; this.dataDisplay=null; }
@@ -148,24 +160,44 @@ export class ReceiptWriteoffComponent implements OnInit {
            this.spinIcon=false; this.dataDisplay=null;
 
            var ttl=0;
-          //  alert ("ttl :" +  ttl + " this.writeOffList.length >> "+this.writeOffList.length);
- 
            for (let i = 0; i < this.writeOffList.length; i++) {
              ttl = ttl + Number(this.writeOffList[i].balanceAmount);
            }
              this.receiptWriteOffForm.patchValue({writeOffTotal:ttl});
- 
-
-          }); 
-
-         
-           
+           })
         } 
          
 
        
 
-      WriteOff(){  alert ("Work in Progress...") }
+      WriteOffSumbit(){  alert ("Work in Progress...") 
+      const formValue: IReceiptWriteOff =this.receiptWriteOffForm.value;
+      this.wirteOffButton=false;
+      var fDate =this.receiptWriteOffForm.get('fromDate').value;
+      var tDate =this.receiptWriteOffForm.get('toDate').value;
+      var wAmt =this.receiptWriteOffForm.get('writeoffLimit').value;
+      var d1 = this.pipe.transform(fDate, 'dd-MMM-y');
+      var d2 = this.pipe.transform(tDate, 'dd-MMM-y');
+      var lcId =this.receiptWriteOffForm.get("locId").value;
+      var tktNum=(sessionStorage.getItem('ticketNo'));
+
+
+      this.service.ReceiptWriteOffSubmit(lcId,d1,d2,wAmt,tktNum).subscribe((res: any) => {
+        if (res.code === 200) {
+          // alert('RECORD UPDATED SUCCESSFUILY');
+          alert(res.message);
+           this.receiptWriteOffForm.disable();
+        } else {
+          if (res.code === 400) {
+            alert('Error occured while updateing data.');
+            
+          }
+        }
+      });
+
+    }
+
+
 
       resetMast() {
         window.location.reload();

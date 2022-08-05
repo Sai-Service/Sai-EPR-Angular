@@ -89,3 +89,17 @@ fieldset {
 	/* background-color: #fefeff; */
 	/* width: 100%; */
 }
+
+
+.form-control {
+	font-family: Verdana,Sans-serif, Arial, Helvetica;
+	font-size: 11px;
+	outline: medium none;
+	font-weight: 200;
+	padding: 2px;
+	vertical-align: top;
+	width: 170px;
+	height: 20%;
+	border-color: black;
+	color: #373535;
+  }
