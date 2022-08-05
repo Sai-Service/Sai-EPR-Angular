@@ -432,10 +432,7 @@ jeSource: [],
     this.selreeceiptmethod=arr[i].receiptMethodId;
     this.selstatus=arr[i].refundStatus;
     this.selPayStatus=arr[i].statusLookupCode;
-    if(this.selPayStatus==='VOIDED'){
-      this.ispayCancel=false;
-      this.isarPayment=false;
-    }
+    
 
     this.transactionService.paymentDocSearch(docNo1).subscribe((res: any) => {
       if (res.code === 200) {
@@ -448,8 +445,14 @@ jeSource: [],
         else{
         this.isarPayment=true;
         }
+        if(this.selPayStatus==='VOIDED'){
+          this.ispayCancel=false;
+          this.isarPayment=false;
+        }
+        else{this.ispayCancel=true;
+        }
         this.ispayAdvise=true;
-        // this.ispayCancel=true;
+        
       } else {
         if (res.code === 400) {
           alert(res.msg);
