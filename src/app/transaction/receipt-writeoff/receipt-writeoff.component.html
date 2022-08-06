@@ -3,7 +3,7 @@
 <div class="center">
     <table style="width: 100%;background-color: white;">
         <tr>
-            <td class="PageHeader"> &nbsp;RECEIPT&nbsp;WRITE-OFF</td>
+            <td class="PageHeader"> &nbsp;AR-Receipt&nbsp;Write-Off</td>
         </tr>
     </table>
 
@@ -17,15 +17,12 @@
 
             <tr>
 
-  
                 <input type="number" formControlName="emplId" [(ngModel)]="emplId" hidden>
                 <input type="number" formControlName="divisionId" [(ngModel)]="divisionId" hidden>
                 <input type="number" formControlName="ouId" [(ngModel)]="ouId" hidden>
                 <input type="number" formControlName="locId" [(ngModel)]="locId" hidden>
-
                 <td style="width: 15%" class="LabelFontStyle">Division&nbsp;:</td>
                 <td><input disabled type="text" class="form-control" formControlName="divisionName" [(ngModel)]="divisionName" ></td>
-    
                 <td style="width: 15%" class="LabelFontStyle">Operating&nbsp;Unit:</td>
                 <td><input  type="text" class="form-control" formControlName="ouName" [(ngModel)]="ouName" disabled ></td>
               

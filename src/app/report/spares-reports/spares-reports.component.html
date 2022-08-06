@@ -720,14 +720,25 @@ style="margin-left: 10%;" id="panelstockTransfer">
                     <input type="text" disabled class="form-control" formControlName="locCode">
                 </td>
                 <td [style.display]="isVisiblelocationLOV ? 'block' : 'none'">
+                   
                     <select formControlName="locCode" id="locCode" class="form-control"
                         (ngModelChange)='onOptionsLocation($event)'>
                         <option>--Select--</option>
                         <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
                             {{sc.locCode}}
                         </option>
-                    </select>
+                    </select> 
                     <input  disabled hidden type="number" class="form-control" formControlName="locId">
+
+
+                    <!-- <select formControlName="fromlocCode" id="fromlocCode" class="form-control"
+                    (ngModelChange)='onOptionsLocation($event)'>
+                    <option>--Select--</option>
+                    <option *ngFor="let sc of  BillShipToList" [value]="sc.fromLocationId">
+                        {{sc.fromLocation}}
+                    </option>
+                   </select>
+                    <input  disabled hidden type="number" class="form-control" formControlName="fromLocId"> -->
                 </td>
                 <td style="width: 15%" class="LabelFontStyle">
                     &nbsp;Ship&nbsp;To&nbsp;Location&nbsp;:&nbsp;
