@@ -3649,6 +3649,10 @@ getTdsDetails(mInvoiceId): Observable<any> {
   // http://localhost:8081/apInv/apTdsDis?invId=27
 }
 
+cancelApInvoice(mInvoiceId,mEmplId):Observable<any>{
+  return this.http.get(this.ServerUrl+`/apInv/apInvCancel?invNum=${mInvoiceId}&emplId=${mEmplId}`);
+}
+
 getTdsTaxDetails(mItemId,mBaseAmt,mTaxCatId): Observable<any> {
    return this.http.get(this.ServerUrl+`/poHdr/potaxcal?itemId=${mItemId}&baseAmt=${mBaseAmt}&taxCateId=${mTaxCatId}`);
   // http://localhost:8081/poHdr/potaxcal?itemId=1&baseAmt=1000&taxCateId=14071

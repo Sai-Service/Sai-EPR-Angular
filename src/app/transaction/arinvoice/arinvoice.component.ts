@@ -1825,6 +1825,12 @@ export class ARInvoiceComponent implements OnInit {
         patch.controls[index].patchValue({ unitSellingPrice: '' }, { basicAmt: '' });
       }
     }
+    else{
+      if (Math.sign(arrayControl[index].unitSellingPrice) == -1) {
+        alert('Kindly enter the unit selling price as positive value ')
+        patch.controls[index].patchValue({ unitSellingPrice: '' }, { basicAmt: '' });
+      }
+    }
     // alert(arrayControl[index].orderedQty);
 
     arrayControl[index].baseAmtLineWise = arrayControl[index].unitSellingPrice * arrayControl[index].orderedQty;
@@ -1894,7 +1900,7 @@ export class ARInvoiceComponent implements OnInit {
   addDiscount(lnNum) {
     // const formValue: IpostPO = this.poMasterDtoForm.value;
     // formValue.polineNum = this.poLineTax;
-    // debugger;
+    debugger;
     const aa = this.poLineTax;
     // alert(aa);
     var invLine = this.arInvoiceForm.get('invLines').value
@@ -1927,7 +1933,7 @@ export class ARInvoiceComponent implements OnInit {
     this.service.taxCalforItem(invItemId, this.taxCat1, diss, baseAmount)
       .subscribe(
         (data: any[]) => {
-          // debugger;
+          debugger;
           this.taxCalforItem = data;
           // this.patchResultList(this.poLineTax, this.taxCalforItem);
           var sum = 0;
@@ -1944,7 +1950,11 @@ export class ARInvoiceComponent implements OnInit {
           }
 
           // const TotAmtLineWise1 = arrayControl[this.poLineTax].baseAmtLineWise
-          var tolAmoutLine =  baseAmount-Disc+sum;
+          var tolAmoutLine =  Math.abs(baseAmount)-Math.abs(Disc)+Math.abs(sum);
+
+          if(this.arInvoiceForm.get('class').value==='Credit Memo'){
+            tolAmoutLine=-tolAmoutLine
+          }
           // alert(this.taxCalforItem[0].totTaxAmt);
           // var patch = this.poMasterDtoForm.get('poLines') as FormArray;
           // (patch.controls[aa]).patchValue(
