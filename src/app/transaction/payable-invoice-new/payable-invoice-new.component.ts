@@ -196,6 +196,7 @@ export class PayableInvoiceNewComponent implements OnInit {
   isVisibleUpdateBtn: boolean = false;
   isVisibleAPCancelled: boolean = false;
   isVisiblePayment: boolean = false;
+  isVisibleCancel:boolean=false;
   isVisibleSave: boolean = true;
   isVisibleValidate: boolean = false;
   isVisibleSaveTDS: boolean = false;
@@ -1216,6 +1217,7 @@ export class PayableInvoiceNewComponent implements OnInit {
     this.displayViewTaxDetails = false;
     this.selectedLine = index;
     this.displaydescription = false;
+    
     var arraybaseNew = this.poInvoiceForm.get('obj') as FormArray;
     var arraybaseNew1 = arraybaseNew.getRawValue();
     var invoiceNum = this.lineDetailsArray().controls[index].get('invoiceNum').value;
@@ -1377,6 +1379,7 @@ export class PayableInvoiceNewComponent implements OnInit {
                 this.isVisibleSaveTDS = false;
                 this.isVisibleRoundOffButton = false;
                 this.isVisibleviewAccounting = true;
+                this.isVisibleCancel=true;
                 this.TaxDetailsArray().disable();
                 this.TdsDetailsArray().disable();
                 this.lineDetailsArray().disable();
@@ -1390,6 +1393,9 @@ export class PayableInvoiceNewComponent implements OnInit {
                 this.isVisiblelineDetialsDeleteButton = false;
                 this.isVisibleSaveTDS = false;
 
+              }
+              if (data.invoiceStatus.includes('Not Validated') ) {
+                this.isVisibleCancel=true;
               }
             }
             // alert(data.invoiceStatus)
@@ -1720,6 +1726,19 @@ export class PayableInvoiceNewComponent implements OnInit {
     // }
   }
 
+  paymentCancel(){
+    var invoiceId = this.lineDetailsArray().controls[this.selectedLine].get('invoiceId1').value;
+    this.service.cancelApInvoice(invoiceId,sessionStorage.getItem('emplId'))
+    .subscribe(
+      data => {
+        if(data.code==200){
+          alert(data.message);
+          this.isVisibleCancel=false;
+        }
+
+      }
+    );
+  }
 
   openTDSTab() {
     // alert('hiii')
