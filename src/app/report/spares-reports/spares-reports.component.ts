@@ -40,6 +40,9 @@ export class SparesReportsComponent implements OnInit {
   subInventory: string;
   subInvCode: any;
   segment: string;
+  fromlocCode:string;
+  fromLocId:number;
+
   tolocCode: string;
   tolocId: number;
   orderNumber: number;
@@ -79,6 +82,8 @@ export class SparesReportsComponent implements OnInit {
       userName: [''],
       subInventory: [''],
       segment: [''],
+      fromlocCode:[],
+      fromLocId:[],
       tolocCode: [''],
       tolocId: [''],
       custAccNo: [''],
@@ -748,7 +753,8 @@ export class SparesReportsComponent implements OnInit {
 
   onOptionsLocation(event) {
     // alert(event);
-    this.sparesReportForm.patchValue({ locId: event })
+    // this.sparesReportForm.patchValue({ locId: event })
+    this.sparesReportForm.patchValue({ fromLocId: event })
   }
 
   onOptionsToLocation(event) {
@@ -774,6 +780,7 @@ export class SparesReportsComponent implements OnInit {
     var toDate1 = this.sparesReportForm.get('toDate').value;
     var toDate = this.pipe.transform(toDate1, 'dd-MMM-yyyy');
     var locId = this.sparesReportForm.get('locId').value;
+    var fromlocId = this.sparesReportForm.get('fromLocId').value;
     var tolocId = this.sparesReportForm.get('tolocId').value;
     var deptId = this.sparesReportForm.get('deptId').value;
     var userName = this.sparesReportForm.get('userName').value;
