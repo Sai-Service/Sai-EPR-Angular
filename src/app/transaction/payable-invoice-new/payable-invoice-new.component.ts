@@ -1394,6 +1394,9 @@ export class PayableInvoiceNewComponent implements OnInit {
                 this.isVisibleSaveTDS = false;
 
               }
+              if (data.invoiceStatus.includes('Not Validated') ) {
+                this.isVisibleCancel=true;
+              }
             }
             // alert(data.invoiceStatus)
             // alert('index'+index)
