@@ -27,6 +27,7 @@ export class SparesReportsComponent implements OnInit {
   locId: number;
   trxNumber:number;
   public BillShipToList: Array<string> = [];
+  public BillShipFromList: Array<string> = [];
   periodNameList: any = [];
 
   public DepartmentList: any = [];
@@ -131,6 +132,14 @@ export class SparesReportsComponent implements OnInit {
         }
       );
 
+      this.service.getLocationSearch1(sessionStorage.getItem('ouId'))
+      .subscribe(
+        data => {
+          this.BillShipFromList = data;
+        }
+      );
+
+
     this.service.DepartmentListNew()
       .subscribe(
         data => {
@@ -152,10 +161,12 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblelocationLOV = true;
       this.isVisiblelocationInput = false;
       this.sparesReportForm.patchValue({ subInventory: 'SP' })
+      this.dispLocation=true;
     }
     else {
       this.isVisiblelocationLOV = false;
       this.isVisiblelocationInput = true;
+      this.dispLocation=false;
     }
 
     this.service.subInvCode2(sessionStorage.getItem('deptId'), sessionStorage.getItem('divisionId')).subscribe(
@@ -345,13 +356,15 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory=false;
       this.isVisiblecustomerLedger=false;
       this.isVisibleEwayBill=false;
-      this.dispLocation=false;
 
+      // this.dispLocation=false;
+      if (this.dispLocation==false){
       this.service.TolocationIdList(sessionStorage.getItem('locId')).subscribe
       (data => {
         this.BillShipToList = data;
         console.log(this.BillShipToList);
-      });
+      });}
+
     }
     else if (reportName === 'gststockTransferSummary') {
       this.reportName = 'Stock Transfer Made Summary Report';
@@ -369,13 +382,13 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblecustomerLedger=false;
       this.isVisibleEwayBill=false;
 
-      this.dispLocation=false;
-
+      // this.dispLocation=false;
+      if (this.dispLocation==false){
       this.service.TolocationIdList(sessionStorage.getItem('locId')).subscribe
       (data => {
         this.BillShipToList = data;
         console.log(this.BillShipToList);
-      });
+      });}
     }
     else if (reportName === 'gststockTransferReceivedDetails') {
       this.reportName = 'Stock Transfer Received Detail Report';
@@ -393,13 +406,13 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblecustomerLedger=false;
       this.isVisibleEwayBill=false;
 
-      this.dispLocation=false;
-
+      // this.dispLocation=false;
+      if (this.dispLocation==false){
       this.service.TolocationIdList(sessionStorage.getItem('locId')).subscribe
       (data => {
         this.BillShipToList = data;
         console.log(this.BillShipToList);
-      });
+      });}
     }
     else if (reportName === 'gststockTransferReceivedSummary') {
       this.reportName = 'Spares Stock Transfer Received Summary Report';
@@ -416,13 +429,13 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblespClosingStockAsOndate=false;
       this.isVisiblecustomerLedger=false;
       this.isVisibleEwayBill=false;
-      this.dispLocation=false;
-
+      // this.dispLocation=false;
+      if (this.dispLocation==false){
       this.service.TolocationIdList(sessionStorage.getItem('locId')).subscribe
       (data => {
         this.BillShipToList = data;
         console.log(this.BillShipToList);
-      });
+      });}
     }
     else if (reportName === 'gstsparesCustomerOffTakeStatment') {
       this.reportName = 'Spares Customer Off Take Statement';
@@ -752,13 +765,31 @@ export class SparesReportsComponent implements OnInit {
 
 
   onOptionsLocation(event) {
-    // alert(event);
-    // this.sparesReportForm.patchValue({ locId: event })
-    this.sparesReportForm.patchValue({ fromLocId: event })
+    // alert("From Location : "+ event);
+    this.sparesReportForm.patchValue({ locId: event })
+    // this.sparesReportForm.patchValue({ fromLocId: event })
+
+    if(event>0){
+      var x=this.sparesReportForm.get('locCode').value;
+      var y=this.sparesReportForm.get('tolocCode').value;
+      if(x===y) {alert ("From/To Locations Should not be Same...");
+       this.sparesReportForm.get('locCode').reset();
+      return;
+    }}
+  
+
   }
 
   onOptionsToLocation(event) {
-    this.sparesReportForm.patchValue({ tolocId: event })
+    // alert("To Location : "+ event);
+    this.sparesReportForm.patchValue({ tolocId: event });
+    if(event>0){
+      var x=this.sparesReportForm.get('locCode').value;
+      var y=this.sparesReportForm.get('tolocCode').value;
+      if(x===y) {alert ("From/To Locations Should not be Same...");
+       this.sparesReportForm.get('tolocCode').reset();
+      return;
+    }}
   }
 
   onOptionsDepartmentList(event: string) {

@@ -1294,6 +1294,7 @@ if(this.deptId==2){
         }
       })
   }
+  
 
   SelectReceipt(receiptNumber: any) {
     // alert('selectReceiptMethod'+'---'+receiptNumber)

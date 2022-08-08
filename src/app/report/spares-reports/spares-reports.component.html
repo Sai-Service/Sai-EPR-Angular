@@ -724,22 +724,14 @@ style="margin-left: 10%;" id="panelstockTransfer">
                     <select formControlName="locCode" id="locCode" class="form-control"
                         (ngModelChange)='onOptionsLocation($event)'>
                         <option>--Select--</option>
-                        <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
-                            {{sc.locCode}}
+                        <option *ngFor="let sc of  BillShipFromList" [value]="sc.locId">
+                            {{sc.locCode}}-{{sc.locName}}
                         </option>
                     </select> 
                     <input  disabled hidden type="number" class="form-control" formControlName="locId">
 
-
-                    <!-- <select formControlName="fromlocCode" id="fromlocCode" class="form-control"
-                    (ngModelChange)='onOptionsLocation($event)'>
-                    <option>--Select--</option>
-                    <option *ngFor="let sc of  BillShipToList" [value]="sc.fromLocationId">
-                        {{sc.fromLocation}}
-                    </option>
-                   </select>
-                    <input  disabled hidden type="number" class="form-control" formControlName="fromLocId"> -->
                 </td>
+
                 <td style="width: 15%" class="LabelFontStyle">
                     &nbsp;Ship&nbsp;To&nbsp;Location&nbsp;:&nbsp;
                 </td>
@@ -750,10 +742,11 @@ style="margin-left: 10%;" id="panelstockTransfer">
                                 (ngModelChange)='onOptionsToLocation($event)'>
                                 <option>--Select--</option>
                                 <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
-                                    {{sc.locCode}}
+                                    {{sc.locCode}}-{{sc.locName}}
                                 </option>
                             </select>
                     </ng-template>
+
                     <ng-template #dispship>
                                 <select formControlName="tolocCode" id="tolocCode" class="form-control"
                                     (ngModelChange)='onOptionsToLocation($event)'>
