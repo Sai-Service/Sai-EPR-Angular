@@ -543,11 +543,12 @@ export class OrderManagementService {
   }
 
 
-  cancelledSalesOrderFn(orderNumber){
+  cancelledSalesOrderFn(orderNumber,rsnCode){
+    // http://localhost:8081/orderHeader/cancelSaleOrder?orderNumber=222210112200086&reasonCode=cancelbyuser
     const options = {
       headers: this.headers
     };
-    const url = this.ServerUrl + `/orderHeader/cancelSaleOrder?orderNumber=${orderNumber}`;
+    const url = this.ServerUrl + `/orderHeader/cancelSaleOrder?orderNumber=${orderNumber}&reasonCode=${rsnCode}`;
     return this.http.put(url, options);
   }
 
