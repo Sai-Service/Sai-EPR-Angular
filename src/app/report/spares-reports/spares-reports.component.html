@@ -47,7 +47,7 @@
                         </li>
                         <li>
                             <a class="dropdown-item" data-toggle="collapse" href="#panelgstsaiDebtors" role="tab"
-                                (click)="reportDetails('gstsaiDebtors')">7. Sai Debtors</a>
+                                (click)="reportDetails('gstsaiDebtors')">7. Spares Debtor Report</a>
                         </li>
                         <li>
                             <a class="dropdown-item" data-toggle="collapse" href="#panelStockLedger" role="tab"
@@ -216,7 +216,8 @@
                             <td [style.display]="isVisiblelocationLOV ? 'block' : 'none'">
                                 <select formControlName="locCode" id="locCode" class="form-control"
                                     (ngModelChange)='onOptionsLocation($event)'>
-                                    <option>--Select--</option>
+                                    <!-- <option>--Select--</option> -->
+                                    <option></option>
                                     <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
                                         {{sc.locCode}}
                                     </option>
@@ -224,24 +225,31 @@
                                 <input  disabled hidden type="number" class="form-control" formControlName="locId">
 
                             </td>
+
+                            <td style="width: 15%" class="LabelFontStyle" >&nbsp;Dept&nbsp;:&nbsp;</td>
+                            <input type="text" disabled class="form-control" formControlName="department">
+                            <input hidden type="number" class="form-control" formControlName="deptId">
+                   
                         
-                            <td colspan="4">
+                            <!-- <td colspan="4">
                                 <table [style.display]="isVisibleDepartmentList ? 'block' : 'none'" >
                                     <tr>
                                         <td style="width: 15%" class="LabelFontStyle" >&nbsp;Dept&nbsp;:&nbsp;</td>
                                         <td>
-                                            <!-- <select formControlName="deptId" id="deptId" class="form-control">
-                                            <option>--Select--</option>
-                                            <option *ngFor="let sc of  DepartmentList" [value]="sc.cmnTypeId">
-                                                {{sc.code}}
-                                            </option>
-                                        </select> -->
+                                           
                                         <input type="text" disabled class="form-control" formControlName="department">
                                         <input hidden type="number" class="form-control" formControlName="deptId">
                                         </td>
                                     </tr>
                                 </table>
-                            </td>
+                            </td> -->
+
+                                        <!-- <select formControlName="deptId" id="deptId" class="form-control">
+                                            <option>--Select--</option>
+                                            <option *ngFor="let sc of  DepartmentList" [value]="sc.cmnTypeId">
+                                                {{sc.code}}
+                                            </option>
+                                        </select> -->
                            
                         </tr>
                     </table>
@@ -250,7 +258,7 @@
                               <table class="center">
                                 <tr>
                                   <td colspan="4"> -->
-                                    <table class="center" style="width: 100%;">
+                                    <!-- <table class="center" style="width: 100%;">
                                       <tr>
                                         <div *ngIf="closeResetButton; then hList1; else hList2"></div>
                                         <ng-template #hList2>
@@ -261,10 +269,33 @@
                                           </div>
                                         </ng-template>
                                         <ng-template #hList1> </ng-template>
-                                        <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">
+                                        <td class="LabelFontStyle" style="color: blue;width: fit-content;" >
                                           &nbsp;{{dataDisplay}}&nbsp; </td>
+
+
                                       </tr>
-                                    </table>
+                                    </table> -->
+
+
+                                    <table class="center">
+                                        <tr>
+                                            <td>
+                                                <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                                                <ng-template #hList2> 
+                                                    <div class="d-flex justify-content-center">
+                                                        <div class="spinner-border text-primary" role="status" >
+                                                            <span class="sr-only" id="loading"></span>
+                                                    
+                                                        </div>
+                                                        </div>
+                                                </ng-template>
+                                                <ng-template #hList1> </ng-template>
+                                            </td>
+                                            <td class="LabelFontStyle" style="color: blue;">&nbsp;{{this.dataDisplay}}&nbsp; </td>
+                                        </tr>
+                                       </table>
+
+
                                   <!-- </td>
                                 </tr>
                                 <tr>
@@ -326,7 +357,7 @@
                         <td [style.display]="isVisiblelocationLOV ? 'block' : 'none'">
                             <select formControlName="locCode" id="locCode" class="form-control"
                                 (ngModelChange)='onOptionsLocation($event)'>
-                                <option>--Select--</option>
+                                <option></option>
                                 <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
                                     {{sc.locCode}}
                                 </option>
@@ -340,28 +371,25 @@
                     </tr>
                 </table>
 
-                    <!-- <tr>
-                        <td colspan="4">
-                          <table class="center">
-                            <tr>
-                              <td colspan="4"> -->
-                                <table class="center" style="width: 100%;">
-                                  <tr>
-                                    <div *ngIf="closeResetButton; then hList1; else hList2"></div>
-                                    <ng-template #hList2>
-                                      <div class="d-flex justify-content-center">
-                                        <div class="spinner-border text-primary" role="status">
-                                          <span class="sr-only" id="loading"></span>
-                                        </div>
-                                      </div>
-                                    </ng-template>
-                                    <ng-template #hList1> </ng-template>
-                                    <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">
-                                      &nbsp;{{dataDisplay}}&nbsp; </td>
-                                  </tr>
+                                <table class="center">
+                                    <tr>
+                                        <td>
+                                            <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                                            <ng-template #hList2> 
+                                                <div class="d-flex justify-content-center">
+                                                    <div class="spinner-border text-primary" role="status" >
+                                                        <span class="sr-only" id="loading"></span>
+                                                
+                                                    </div>
+                                                    </div>
+                                            </ng-template>
+                                            <ng-template #hList1> </ng-template>
+                                        </td>
+                                        <td class="LabelFontStyle" style="color: blue;">&nbsp;{{this.dataDisplay}}&nbsp; </td>
+                                    </tr>
                                 </table>
-                              <!-- </td>
-                            </tr>
+                                
+
                             <tr>
                               <td colspan="4"> -->
                                   <table class="center" style="width: 100%;margin-left: 50%;">
@@ -411,7 +439,7 @@
                         &nbsp;To&nbsp;Date&nbsp;:&nbsp;
                     </td>
                     <td>
-                        <input type="date" class="form-control" formControlName="toDate"
+                        <input type="date" class="form-control" formControlName="toDate" [(ngModel)]="toDate"
                             max="{{minDate | date:'yyyy-MM-dd'}}">
                     </td>
                     <td style="width: 15%" class="LabelFontStyle">
@@ -423,7 +451,7 @@
                     <td [style.display]="isVisiblelocationLOV ? 'block' : 'none'">
                         <select formControlName="locCode" id="locCode" class="form-control"
                             (ngModelChange)='onOptionsLocation($event)'>
-                            <option>--Select--</option>
+                            <option></option>
                             <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
                                 {{sc.locCode}}
                             </option>
@@ -438,7 +466,8 @@
                     <td>
                         <input  type="number" class="form-control"  formControlName="custAccNo" [(ngModel)]="custAccNo">
                     </td>
-                  <td colspan="4">
+                 
+                    <!-- <td colspan="4">
                       <table [style.display]="isVisibleDepartmentList ? 'block' : 'none'">
                         <td style="width: 15%" class="LabelFontStyle">
                             &nbsp;Department&nbsp;:&nbsp;
@@ -448,32 +477,48 @@
                             <input hidden type="number" class="form-control" formControlName="deptId">
                         </td>
                       </table>
-                  </td>
+                  </td> -->
+                  <td style="width: 15%" class="LabelFontStyle">&nbsp;Department&nbsp;:&nbsp;</td>
+                  <td>
+                    <input type="text" disabled class="form-control" formControlName="department">
+                    <input hidden type="number" class="form-control" formControlName="deptId">
+                 </td>
+
                 </tr>
+
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle">Aging&nbsp;1&nbsp;:&nbsp;</td>
+                    <td><input type="number" class="form-control" formControlName="spDbAging1" [(ngModel)]="spDbAging1" ></td>
+                    <td style="width: 15%" class="LabelFontStyle">Aging&nbsp;2&nbsp;:&nbsp;</td>
+                    <td><input type="number" class="form-control" formControlName="spDbAging2" [(ngModel)]="spDbAging2"  ></td>
+                </tr>
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle">Aging&nbsp;3&nbsp;:&nbsp;</td>
+                    <td><input type="number" class="form-control" formControlName="spDbAging3" [(ngModel)]="spDbAging3"  ></td>
+                    <td style="width: 15%" class="LabelFontStyle">Aging&nbsp;4&nbsp;:&nbsp;</td>
+                    <td><input type="number" class="form-control" formControlName="spDbAging4" [(ngModel)]="spDbAging4" ></td>
+                </tr>
+
             </table>
-                <!-- <tr>
-                    <td colspan="4">
-                      <table class="center">
-                        <tr>
-                          <td colspan="4"> -->
-                            <table class="center" style="width: 100%;">
-                              <tr>
-                                <div *ngIf="closeResetButton; then hList1; else hList2"></div>
-                                <ng-template #hList2>
-                                  <div class="d-flex justify-content-center">
-                                    <div class="spinner-border text-primary" role="status">
-                                      <span class="sr-only" id="loading"></span>
-                                    </div>
-                                  </div>
-                                </ng-template>
-                                <ng-template #hList1> </ng-template>
-                                <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">
-                                  &nbsp;{{dataDisplay}}&nbsp; </td>
-                              </tr>
-                            </table>
-                          <!-- </td>
-                        </tr>
-                        <tr>
+
+                                 <table class="center">
+                                    <tr>
+                                        <td>
+                                            <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                                            <ng-template #hList2> 
+                                                <div class="d-flex justify-content-center">
+                                                    <div class="spinner-border text-primary" role="status" >
+                                                        <span class="sr-only" id="loading"></span>
+                                                
+                                                    </div>
+                                                    </div>
+                                            </ng-template>
+                                            <ng-template #hList1> </ng-template>
+                                        </td>
+                                        <td class="LabelFontStyle" style="color: blue;">&nbsp;{{this.dataDisplay}}&nbsp; </td>
+                                    </tr>
+                                </table>
+                        <!-- <tr>
                           <td colspan="4"> -->
                               <table class="center" style="width: 100%;margin-left: 50%;">
                                   <tr>
@@ -535,7 +580,7 @@ style="margin-left: 20%;" id="panelspClosingStockAsOndate">
                 <td [style.display]="isVisiblelocationLOV ? 'block' : 'none'">
                     <select formControlName="locCode" id="locCode" class="form-control"
                         (ngModelChange)='onOptionsLocation($event)'>
-                        <option>--Select--</option>
+                        <option></option>
                         <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
                             {{sc.locCode}}
                         </option>
@@ -548,30 +593,25 @@ style="margin-left: 20%;" id="panelspClosingStockAsOndate">
             </tr>
 
         </table>
-            <!-- <tr>
-                <td colspan="4">
-                  <table class="center">
-                    <tr>
-                      <td colspan="4"> -->
-                        <table class="center" style="width: 100%;">
-                          <tr>
-                            <div *ngIf="closeResetButton; then hList1; else hList2"></div>
-                            <ng-template #hList2>
-                              <div class="d-flex justify-content-center">
-                                <div class="spinner-border text-primary" role="status">
-                                  <span class="sr-only" id="loading"></span>
-                                </div>
-                              </div>
-                            </ng-template>
-                            <ng-template #hList1> </ng-template>
-                            <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">
-                              &nbsp;{{dataDisplay}}&nbsp; </td>
-                          </tr>
+                        <table class="center">
+                            <tr>
+                                <td>
+                                    <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                                    <ng-template #hList2> 
+                                        <div class="d-flex justify-content-center">
+                                            <div class="spinner-border text-primary" role="status" >
+                                                <span class="sr-only" id="loading"></span>
+                                        
+                                            </div>
+                                            </div>
+                                    </ng-template>
+                                    <ng-template #hList1> </ng-template>
+                                </td>
+                                <td class="LabelFontStyle" style="color: blue;">&nbsp;{{this.dataDisplay}}&nbsp; </td>
+                            </tr>
                         </table>
-                      <!-- </td>
-                    </tr>
-                    <tr>
-                      <td colspan="4"> -->
+
+
                           <table class="center" style="width: 100%;margin-left: 50%;">
                               <tr>
                                 <td>
@@ -639,7 +679,7 @@ id="panelStockLedger">
                 <td [style.display]="isVisiblelocationLOV ? 'block' : 'none'">
                     <select formControlName="locCode" id="locCode" class="form-control"
                         (ngModelChange)='onOptionsLocation($event)'>
-                        <option>--Select--</option>
+                        <option></option>
                         <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
                             {{sc.locCode}}
                         </option>
@@ -673,30 +713,23 @@ id="panelStockLedger">
                 </td>
             </tr>
         </table>
-            <!-- <tr>
-                <td colspan="4">
-                  <table class="center">
-                    <tr>
-                      <td colspan="4"> -->
-                        <table class="center" style="width: 100%;">
-                          <tr>
-                            <div *ngIf="closeResetButton; then hList1; else hList2"></div>
-                            <ng-template #hList2>
-                              <div class="d-flex justify-content-center">
-                                <div class="spinner-border text-primary" role="status">
-                                  <span class="sr-only" id="loading"></span>
-                                </div>
-                              </div>
-                            </ng-template>
-                            <ng-template #hList1> </ng-template>
-                            <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">
-                              &nbsp;{{dataDisplay}}&nbsp; </td>
-                          </tr>
+                        <table class="center">
+                            <tr>
+                                <td>
+                                    <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                                    <ng-template #hList2> 
+                                        <div class="d-flex justify-content-center">
+                                            <div class="spinner-border text-primary" role="status" >
+                                                <span class="sr-only" id="loading"></span>
+                                        
+                                            </div>
+                                            </div>
+                                    </ng-template>
+                                    <ng-template #hList1> </ng-template>
+                                </td>
+                                <td class="LabelFontStyle" style="color: blue;">&nbsp;{{this.dataDisplay}}&nbsp; </td>
+                            </tr>
                         </table>
-                      <!-- </td>
-                    </tr> -->
-                    <!-- <tr>
-                      <td colspan="4"> -->
                           <table class="center" >
                           <!-- style="width: 100%;margin-left: 50%;"> -->
                               <tr>
@@ -809,30 +842,24 @@ style="margin-left: 10%;" id="panelstockTransfer">
                 </td>
             </tr>
         </table>
-            <!-- <tr> -->
-                <!-- <td colspan="4">
-                  <table class="center">
-                    <tr>
-                      <td colspan="4"> -->
-                        <table class="center" style="width: 100%;">
-                          <tr>
-                            <div *ngIf="closeResetButton; then hList1; else hList2"></div>
-                            <ng-template #hList2>
-                              <div class="d-flex justify-content-center">
-                                <div class="spinner-border text-primary" role="status">
-                                  <span class="sr-only" id="loading"></span>
-                                </div>
-                              </div>
-                            </ng-template>
-                            <ng-template #hList1> </ng-template>
-                            <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">
-                              &nbsp;{{dataDisplay}}&nbsp; </td>
-                          </tr>
-                        </table>
-                      <!-- </td>
-                    </tr> -->
-                    <!-- <tr>
-                      <td colspan="4"> -->
+                            <table class="center">
+                                <tr>
+                                    <td>
+                                        <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                                        <ng-template #hList2> 
+                                            <div class="d-flex justify-content-center">
+                                                <div class="spinner-border text-primary" role="status" >
+                                                    <span class="sr-only" id="loading"></span>
+                                            
+                                                </div>
+                                                </div>
+                                        </ng-template>
+                                        <ng-template #hList1> </ng-template>
+                                    </td>
+                                    <td class="LabelFontStyle" style="color: blue;">&nbsp;{{this.dataDisplay}}&nbsp; </td>
+                                </tr>
+                            </table>
+
                           <table class="center" style="width: 100%;margin-left: 50%;">
                               <tr>
                                 <td>
@@ -901,7 +928,7 @@ style="margin-left: 10%;" id="panelSparesBackOrderQty">
                 <td [style.display]="isVisiblelocationLOV ? 'block' : 'none'">
                     <select formControlName="locCode" id="locCode" class="form-control"
                         (ngModelChange)='onOptionsLocation($event)'>
-                        <option>--Select--</option>
+                        <option></option>
                         <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
                             {{sc.locCode}}
                         </option>
@@ -922,30 +949,23 @@ style="margin-left: 10%;" id="panelSparesBackOrderQty">
                 </td>
             </tr>
         </table>
-            <!-- <tr>
-                <td colspan="4">
-                  <table class="center">
-                    <tr>
-                      <td colspan="4"> -->
-                        <table class="center" style="width: 100%;">
-                          <tr>
-                            <div *ngIf="closeResetButton; then hList1; else hList2"></div>
-                            <ng-template #hList2>
-                              <div class="d-flex justify-content-center">
-                                <div class="spinner-border text-primary" role="status">
-                                  <span class="sr-only" id="loading"></span>
-                                </div>
-                              </div>
-                            </ng-template>
-                            <ng-template #hList1> </ng-template>
-                            <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">
-                              &nbsp;{{dataDisplay}}&nbsp; </td>
-                          </tr>
+                        <table class="center">
+                            <tr>
+                                <td>
+                                    <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                                    <ng-template #hList2> 
+                                        <div class="d-flex justify-content-center">
+                                            <div class="spinner-border text-primary" role="status" >
+                                                <span class="sr-only" id="loading"></span>
+                                        
+                                            </div>
+                                            </div>
+                                    </ng-template>
+                                    <ng-template #hList1> </ng-template>
+                                </td>
+                                <td class="LabelFontStyle" style="color: blue;">&nbsp;{{this.dataDisplay}}&nbsp; </td>
+                            </tr>
                         </table>
-                      <!-- </td>
-                    </tr> -->
-                    <!-- <tr>
-                      <td colspan="4"> -->
                           <table class="center" style="width: 100%;margin-left: 50%;">
                               <tr>
                                 <td>
@@ -1015,7 +1035,7 @@ style="margin-left: 20%;" id="panelsparesMiscIssueReceipt">
                 <td [style.display]="isVisiblelocationLOV ? 'block' : 'none'">
                     <select formControlName="locCode" id="locCode" class="form-control"
                         (ngModelChange)='onOptionsLocation($event)'>
-                        <option>--Select--</option>
+                        <option></option>
                         <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
                             {{sc.locCode}}
                         </option>
@@ -1024,31 +1044,23 @@ style="margin-left: 20%;" id="panelsparesMiscIssueReceipt">
                 </td>
             </tr>
         </table>
-            <!-- <tr>
-                <td colspan="4">
-                  <table class="center">
-                    <tr>
-                      <td colspan="4"> -->
-                        <table class="center" style="width: 100%;">
-                          <tr>
-                            <div *ngIf="closeResetButton; then hList1; else hList2"></div>
-                            <ng-template #hList2>
-                              <div class="d-flex justify-content-center">
-                                <div class="spinner-border text-primary" role="status">
-                                  <span class="sr-only" id="loading"></span>
-                                </div>
-                              </div>
-                            </ng-template>
-                            <ng-template #hList1> </ng-template>
-                            <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">
-                              &nbsp;{{dataDisplay}}&nbsp; </td>
-                          </tr>
-                        </table>
-                      <!-- </td>
-                    </tr> -->
-                  <!-- </table> -->
-                    <!-- <tr>
-                      <td colspan="4"> -->
+                            <table class="center">
+                                <tr>
+                                    <td>
+                                        <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                                        <ng-template #hList2> 
+                                            <div class="d-flex justify-content-center">
+                                                <div class="spinner-border text-primary" role="status" >
+                                                    <span class="sr-only" id="loading"></span>
+                                            
+                                                </div>
+                                                </div>
+                                        </ng-template>
+                                        <ng-template #hList1> </ng-template>
+                                    </td>
+                                    <td class="LabelFontStyle" style="color: blue;">&nbsp;{{this.dataDisplay}}&nbsp; </td>
+                                </tr>
+                            </table>
                           <table class="center" style="width: 100%;margin-left: 50%;">
                               <tr>
                                 <td>
@@ -1118,7 +1130,7 @@ style="margin-left: 10%;" id="panelsparesInventoryAging">
                 <td [style.display]="isVisiblelocationLOV ? 'block' : 'none'">
                     <select formControlName="locCode" id="locCode" class="form-control"
                         (ngModelChange)='onOptionsLocation($event)'>
-                        <option>--Select--</option>
+                        <option></option>
                         <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
                             {{sc.locCode}}
                         </option>
@@ -1136,30 +1148,23 @@ style="margin-left: 10%;" id="panelsparesInventoryAging">
             </tr>
         </table>
 
-            <!-- <tr> -->
-                <!-- <td colspan="4">
-                  <table class="center">
-                    <tr>
-                      <td colspan="4"> -->
-                        <table class="center" style="width: 100%;">
-                          <tr>
-                            <div *ngIf="closeResetButton; then hList1; else hList2"></div>
-                            <ng-template #hList2>
-                              <div class="d-flex justify-content-center">
-                                <div class="spinner-border text-primary" role="status">
-                                  <span class="sr-only" id="loading"></span>
-                                </div>
-                              </div>
-                            </ng-template>
-                            <ng-template #hList1> </ng-template>
-                            <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">
-                              &nbsp;{{dataDisplay}}&nbsp; </td>
-                          </tr>
+                        <table class="center">
+                            <tr>
+                                <td>
+                                    <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                                    <ng-template #hList2> 
+                                        <div class="d-flex justify-content-center">
+                                            <div class="spinner-border text-primary" role="status" >
+                                                <span class="sr-only" id="loading"></span>
+                                        
+                                            </div>
+                                            </div>
+                                    </ng-template>
+                                    <ng-template #hList1> </ng-template>
+                                </td>
+                                <td class="LabelFontStyle" style="color: blue;">&nbsp;{{this.dataDisplay}}&nbsp; </td>
+                            </tr>
                         </table>
-                      <!-- </td>
-                    </tr>
-                    <tr>
-                      <td colspan="4"> -->
                           <table class="center" style="width: 100%;margin-left: 50%;">
                               <tr>
                                 <td>
@@ -1220,7 +1225,7 @@ style="margin-left: 10%;" id="panelSparesDebtorsExecutiveWise">
                 <td [style.display]="isVisiblelocationLOV ? 'block' : 'none'">
                     <select formControlName="locCode" id="locCode" class="form-control"
                         (ngModelChange)='onOptionsLocation($event)'>
-                        <option>--Select--</option>
+                        <option></option>
                         <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
                             {{sc.locCode}}
                         </option>
@@ -1265,30 +1270,23 @@ style="margin-left: 10%;" id="panelSparesDebtorsExecutiveWise">
                
             </tr>
         </table>
-            <!-- <tr> -->
-                <!-- <td colspan="4">
-                  <table class="center">
-                    <tr>
-                      <td colspan="4"> -->
-                        <table class="center" style="width: 100%;">
-                          <tr>
-                            <div *ngIf="closeResetButton; then hList1; else hList2"></div>
-                            <ng-template #hList2>
-                              <div class="d-flex justify-content-center">
-                                <div class="spinner-border text-primary" role="status">
-                                  <span class="sr-only" id="loading"></span>
-                                </div>
-                              </div>
-                            </ng-template>
-                            <ng-template #hList1> </ng-template>
-                            <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">
-                              &nbsp;{{dataDisplay}}&nbsp; </td>
-                          </tr>
+                        <table class="center">
+                            <tr>
+                                <td>
+                                    <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                                    <ng-template #hList2> 
+                                        <div class="d-flex justify-content-center">
+                                            <div class="spinner-border text-primary" role="status" >
+                                                <span class="sr-only" id="loading"></span>
+                                        
+                                            </div>
+                                            </div>
+                                    </ng-template>
+                                    <ng-template #hList1> </ng-template>
+                                </td>
+                                <td class="LabelFontStyle" style="color: blue;">&nbsp;{{this.dataDisplay}}&nbsp; </td>
+                            </tr>
                         </table>
-                      <!-- </td>
-                    </tr> -->
-                    <!-- <tr>
-                      <td colspan="4"> -->
                           <table class="center" style="width: 100%;margin-left: 50%;">
                               <tr>
                                 <td>
@@ -1358,7 +1356,7 @@ id="panelfromtosubinventory">
                 <td [style.display]="isVisiblelocationLOV ? 'block' : 'none'">
                     <select formControlName="locCode" id="locCode" class="form-control"
                         (ngModelChange)='onOptionsLocation($event)'>
-                        <option>--Select--</option>
+                        <option></option>
                         <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
                             {{sc.locCode}}
                         </option>
@@ -1377,30 +1375,23 @@ id="panelfromtosubinventory">
             </tr>
         </table>
 
-            <!-- <tr>
-                <td colspan="4">
-                  <table class="center">
-                    <tr>
-                      <td colspan="4"> -->
-                        <table class="center" style="width: 100%;">
-                          <tr>
-                            <div *ngIf="closeResetButton; then hList1; else hList2"></div>
-                            <ng-template #hList2>
-                              <div class="d-flex justify-content-center">
-                                <div class="spinner-border text-primary" role="status">
-                                  <span class="sr-only" id="loading"></span>
-                                </div>
-                              </div>
-                            </ng-template>
-                            <ng-template #hList1> </ng-template>
-                            <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">
-                              &nbsp;{{dataDisplay}}&nbsp; </td>
-                          </tr>
+                        <table class="center">
+                            <tr>
+                                <td>
+                                    <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                                    <ng-template #hList2> 
+                                        <div class="d-flex justify-content-center">
+                                            <div class="spinner-border text-primary" role="status" >
+                                                <span class="sr-only" id="loading"></span>
+                                        
+                                            </div>
+                                            </div>
+                                    </ng-template>
+                                    <ng-template #hList1> </ng-template>
+                                </td>
+                                <td class="LabelFontStyle" style="color: blue;">&nbsp;{{this.dataDisplay}}&nbsp; </td>
+                            </tr>
                         </table>
-                      <!-- </td>
-                    </tr>
-                    <tr>
-                      <td colspan="4"> -->
                           <table class="center" style="width: 100%;margin-left: 50%;">
                               <tr>
                                 <td>
@@ -1489,31 +1480,23 @@ id="panelfromtosubinventory">
             </tr>
         </table>
           
-            <!-- <tr>
-                <td colspan="4">
-                  <table class="center">
-                    <tr>
-                      <td colspan="4"> -->
-                        <table class="center" style="width: 100%;">
-                          <tr>
-                            <div *ngIf="closeResetButton; then hList1; else hList2"></div>
-                            <ng-template #hList2>
-                              <div class="d-flex justify-content-center">
-                                <div class="spinner-border text-primary" role="status">
-                                  <span class="sr-only" id="loading"></span>
-                                </div>
-                              </div>
-                            </ng-template>
-                            <ng-template #hList1> </ng-template>
-                            <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">
-                              &nbsp;{{dataDisplay}}&nbsp; </td>
-                          </tr>
-                        </table>
-
-                      <!-- </td>
-                    </tr>
-                    <tr>
-                      <td colspan="4"> -->
+                            <table class="center">
+                                <tr>
+                                    <td>
+                                        <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                                        <ng-template #hList2> 
+                                            <div class="d-flex justify-content-center">
+                                                <div class="spinner-border text-primary" role="status" >
+                                                    <span class="sr-only" id="loading"></span>
+                                            
+                                                </div>
+                                                </div>
+                                        </ng-template>
+                                        <ng-template #hList1> </ng-template>
+                                    </td>
+                                    <td class="LabelFontStyle" style="color: blue;">&nbsp;{{this.dataDisplay}}&nbsp; </td>
+                                </tr>
+                            </table>
                           <table class="center" style="width: 100%;margin-left: 50%;">
                               <tr>
                                 <td>
@@ -1575,28 +1558,24 @@ id="panelfromtosubinventory">
             <!-- </td>
           </tr> -->
           
-          <!-- <tr>
-            <td colspan="4">
-              <table class="center">
-                <tr>
-                  <td colspan="4"> -->
                     <table class="center">
-                      <tr>
-                        <div *ngIf="closeResetButton; then hList1; else hList2"></div>
-                        <ng-template #hList2>
-                          <div class="d-flex justify-content-center">
-                            <div class="spinner-border text-primary" role="status">
-                              <span class="sr-only" id="loading"></span>
-                            </div>
-                          </div>
-                        </ng-template>
-                        <ng-template #hList1> </ng-template>
-                        <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">
-                          &nbsp;{{dataDisplay}}&nbsp; </td>
-                      </tr>
+                        <tr>
+                            <td>
+                                <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                                <ng-template #hList2> 
+                                    <div class="d-flex justify-content-center">
+                                        <div class="spinner-border text-primary" role="status" >
+                                            <span class="sr-only" id="loading"></span>
+                                    
+                                        </div>
+                                        </div>
+                                </ng-template>
+                                <ng-template #hList1> </ng-template>
+                            </td>
+                            <td class="LabelFontStyle" style="color: blue;">&nbsp;{{this.dataDisplay}}&nbsp; </td>
+                        </tr>
                     </table>
-                  <!-- </td>
-                </tr>  -->
+
                 <table class="center">
                 <tr>
                   <td>
