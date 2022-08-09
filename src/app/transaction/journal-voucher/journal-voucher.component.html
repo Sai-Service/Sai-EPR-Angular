@@ -220,10 +220,10 @@
                             </td>
                             <input hidden formControlName="codeCombinationId"  [(ngModel)]="codeCombinationId">
                             <td>
-                                    <input type="text" class="form-control"  style="height: 20px;width: 100px;text-align: right;"formControlName="enteredDr"(ngModelChange)="debitTotalCal()">
+                                    <input type="text" class="form-control"  style="height: 20px;width: 100px;text-align: right;"formControlName="enteredDr"(change)="debitTotalCal()">
                             </td>
                             <td>
-                                    <input type="text" class="form-control"  style="height: 20px;width: 100px;text-align: right;"formControlName="enteredCr" (ngModelChange)="creditTotalCal()">
+                                    <input type="text" class="form-control"  style="height: 20px;width: 100px;text-align: right;"formControlName="enteredCr" (change)="creditTotalCal()">
                             </td>
                             <td>
                                     <input type="text" class="form-control"  style="height: 20px;width: 250px;"formControlName="description" >
@@ -271,7 +271,7 @@
                             <input disabled  formControlName="runningTotalDr" id="runningTotalDr" class="form-control" style="height: 20px;width: 100px;text-align: right;">
                         </td>
                         <td >
-                            <input disabled  formControlName="runningTotalCr" id="runningTotalCr" class="form-control"  style="height: 20px;width: 100px;text-align: right;">
+                            <input disabled type="number"  formControlName="runningTotalCr" id="runningTotalCr" class="form-control"  style="height: 20px;width: 100px;text-align: right;">
                         </td>
                         <td style="width: 8rem;">
 
@@ -296,7 +296,7 @@
                 <button type="submit" class="btn btn-primary" (click)="close()">Close</button>
               </td>
               <td>
-                <button type="submit" class="btn btn-primary" (click)="saveGl()" id="btnSave" >Save</button>
+                <button type="submit" class="btn btn-primary" (click)="saveGl()" id="btnSave" [style.display]="isVisibleSave ? 'block' : 'none'" >Save</button>
               </td>
               <td>
                 <button type="submit" class="btn btn-primary" (click)="updateGl()" id="btnUpdate" >Update</button>

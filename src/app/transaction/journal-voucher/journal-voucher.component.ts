@@ -75,6 +75,8 @@ export class JournalVoucherComponent implements OnInit {
   reversalPeriod:string;
   reversalDate:Date;
 
+  isVisibleSave:boolean=true;
+
   public InterBrancList:Array<string>=[];
   public BranchList:Array<any>=[];
   public CostCenterList:Array<string>=[];
@@ -506,16 +508,17 @@ var segment = temp1[0];}
 
     creditTotalCal()
     {
-
-      var arrayControl=this.JournalVoucherForm.get('glLines').value
+      debugger;
+      var arrayControl : any[]=this.JournalVoucherForm.get('glLines').value
       // this.JournalVoucherForm.get('runningTotalCr').value
       // alert(totalcr);
       this.runningTotalCr=0
 
       for(var i=0;i<arrayControl.length;i++)
       {
-        // alert(arrayControl[i].enteredCr);
-        this.runningTotalCr=this.runningTotalCr+Number(arrayControl[i].enteredCr);
+       if(arrayControl[i].enteredCr != undefined || arrayControl[i].enteredCr != null){
+        this.runningTotalCr=this.runningTotalCr + Number(arrayControl[i].enteredCr);
+       }
       }
       this.JournalVoucherForm.patchValue({'runningTotalCr':this.runningTotalCr});
 
@@ -527,8 +530,10 @@ var segment = temp1[0];}
 
       for(var i=0;i<arrayControl.length;i++)
       {
+        if(arrayControl[i].enteredDr != undefined || arrayControl[i].enteredDr != null){
        this.runningTotalDr=this.runningTotalDr+Number(arrayControl[i].enteredDr);
       }
+    }
       this.JournalVoucherForm.patchValue({'runningTotalDr':this.runningTotalDr});
 
     }
@@ -588,7 +593,8 @@ var segment = temp1[0];}
             console.log(res.obj);
             this.docSeqValue=res.obj;
             // this.JournalVoucherForm.disable();
-            (document.getElementById("btnSave") as HTMLInputElement).disabled = false;
+            // (document.getElementById("btnSave") as HTMLInputElement).disabled = false;
+            this.isVisibleSave=false;
             (document.getElementById("btnUpdate") as HTMLInputElement).disabled = true;
             (document.getElementById("btnCancel") as HTMLInputElement).disabled = true;
           }
@@ -668,9 +674,10 @@ copyGl()
             
 
           }
-          if(data.obj.status==='INCOMPLETE' && data.obj.docSeqValue!=null)
+          if(data.obj.status==='Incomplete' && data.obj.docSeqValue!=null)
           {
-            (document.getElementById("btnSave") as HTMLInputElement).disabled = true;
+            (document.getElementById("btnUpdate") as HTMLInputElement).disabled = false;
+            this.isVisibleSave=false;
             (document.getElementById("btnCancel") as HTMLInputElement).disabled = false;
             
             
@@ -703,7 +710,8 @@ copyGl()
             // this.JournalVoucherForm.get('glLines').get('segmentName').disable();
 
 
-            (document.getElementById("btnSave") as HTMLInputElement).disabled = true;
+            // (document.getElementById("btnSave") as HTMLInputElement).disabled = true;
+            this.isVisibleSave=false;
             (document.getElementById("btnPost") as HTMLInputElement).disabled = true;
             (document.getElementById("btnCancel") as HTMLInputElement).disabled = true;
              this.JournalVoucherForm.get('reversalPeriod').enable();
@@ -774,6 +782,7 @@ else
       this.docSeqValue=res.obj;
       (document.getElementById("btnUpdate") as HTMLInputElement).disabled = true;
       // this.JournalVoucherForm.disable();
+      this.search(this.JournalVoucherForm.get('docSeqValue').value)
     }
     else
    {
