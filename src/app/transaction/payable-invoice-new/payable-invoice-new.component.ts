@@ -232,7 +232,7 @@ export class PayableInvoiceNewComponent implements OnInit {
   invoiceDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   accountingDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   // paymentMethod = 'CHEQUE';
-
+  showViewActLine = false;
 
   currency: 'INR';
   segment1: string;
@@ -325,6 +325,7 @@ export class PayableInvoiceNewComponent implements OnInit {
   public lstsearchapinv: any;
   // nverValidedCnd:false;
   // ValidedCnd:true;
+  viewAccountingLines: Array<string> = [];
   // public locIdList1: Array<string> = [];
   locIdList1: any = [];
   // public BranchList: Array<string> = [];
@@ -1361,15 +1362,18 @@ export class PayableInvoiceNewComponent implements OnInit {
               this.showTdsLines(data.invoiceId, data.payGroup);
             }
             alert('data.invoiceStatus' + data.invoiceStatus);
+            // debugger;
             if (data.invoiceStatus === '' || data.invoiceStatus === null || data.invoiceStatus === undefined) {
               alert(data.invoiceStatus);
               this.isVisibleSave = false;
               this.isVisibleUpdateBtn = true;
               this.isVisibleValidate = true;
+              this.isVisibleCancel=true; 
               // this.isVisibleRoundOffButton=true;
             }
             if (data.invoiceStatus != undefined) {
               if (data.invoiceStatus.includes('Validate') || data.invoiceStatus === 'Unpaid') {
+                alert('In Validate')
                 this.poInvoiceForm.disable();
                 this.displayAddNewLine = false;
                 this.invoiceStatus = data.invoiceStatus;
@@ -1394,9 +1398,9 @@ export class PayableInvoiceNewComponent implements OnInit {
                 this.isVisibleSaveTDS = false;
 
               }
-              if (data.invoiceStatus.includes('Not Validated') ) {
-                this.isVisibleCancel=true;
-              }
+              // if (data.invoiceStatus==='Not Validated' ) {
+              //   this.isVisibleCancel=true;
+              // }
             }
             // alert(data.invoiceStatus)
             // alert('index'+index)
@@ -1432,6 +1436,7 @@ export class PayableInvoiceNewComponent implements OnInit {
             if (data.invoiceStatus === 'CANCELLED') {
               this.displayapInvCancelled = true;
               this.isVisible = false;
+              this.isVisibleviewAccounting=true;
               this.poInvoiceForm.disable();
             }
             // alert(data.source +'---'+arraybaseNew1[i].segment1);
@@ -1597,6 +1602,7 @@ export class PayableInvoiceNewComponent implements OnInit {
               this.isVisibleSave = false;
               this.isVisibleUpdateBtn = true;
               this.isVisibleValidate = true;
+              this.isVisibleCancel=true;
               // this.isVisibleRoundOffButton=true;
             }
             if (data.invoiceStatus != undefined) {
@@ -1659,6 +1665,7 @@ export class PayableInvoiceNewComponent implements OnInit {
             if (data.invoiceStatus === 'CANCELLED') {
               this.displayapInvCancelled = true;
               this.isVisible = false;
+              this.isVisibleviewAccounting=true;
               this.poInvoiceForm.disable();
             }
             // alert(data.source +'---'+arraybaseNew1[i].segment1);
@@ -1677,6 +1684,7 @@ export class PayableInvoiceNewComponent implements OnInit {
               alert(data.invoiceStatus)
               if (data.invoiceStatus.includes('Validate') || data.invoiceStatus === 'Unpaid') {
                 this.isVisiblePayment = true;
+                this.isVisibleCancel=true;
               }
             }
             else {
@@ -1727,6 +1735,7 @@ export class PayableInvoiceNewComponent implements OnInit {
   }
 
   paymentCancel(){
+    // const formValue: = this.paymentForm.getRawValue();
     var invoiceId = this.lineDetailsArray().controls[this.selectedLine].get('invoiceId1').value;
     this.service.cancelApInvoice(invoiceId,sessionStorage.getItem('emplId'))
     .subscribe(
@@ -1735,7 +1744,9 @@ export class PayableInvoiceNewComponent implements OnInit {
           alert(data.message);
           this.isVisibleCancel=false;
         }
-
+        else if (data.code === 400) {
+          alert(data.message)
+        }
       }
     );
   }
@@ -2721,20 +2732,25 @@ export class PayableInvoiceNewComponent implements OnInit {
 
 
   viewAccounting() {
+    this.viewAccounting2 = null;
+    this.viewAccountingLines = null;
+    this.showViewActLine = false;
+    this.runningTotalCr = null;
+    this.runningTotalDr = null;
     var invoiceNum = this.lineDetailsArray().controls[this.selectedLine].get('invoiceNum').value;
     this.service.viewAPAccounting(invoiceNum).subscribe((res: any) => {
       if (res.code === 200) {
         this.viewAccounting2 = res.obj;
-        this.description = res.obj.description;
-        this.periodName = res.obj.periodName;
-        this.postedDate = res.obj.postedDate;
-        this.jeCategory = res.obj.jeCategory;
-        this.name1 = res.obj.name;
-        this.ledgerId = res.obj.ledgerId;
-        this.runningTotalDr = res.obj.runningTotalDr;
-        this.runningTotalCr = res.obj.runningTotalCr;
-        this.docSeqValue = res.obj.docSeqValue;
-        console.log(this.description);
+        // this.description = res.obj.description;
+        // this.periodName = res.obj.periodName;
+        // this.postedDate = res.obj.postedDate;
+        // this.jeCategory = res.obj.jeCategory;
+        // this.name1 = res.obj.name;
+        // this.ledgerId = res.obj.ledgerId;
+        // this.runningTotalDr = res.obj.runningTotalDr;
+        // this.runningTotalCr = res.obj.runningTotalCr;
+        // this.docSeqValue = res.obj.docSeqValue;
+        // console.log(this.description);
 
         this.viewAccounting1 = res.obj.glLines;
         console.log(this.viewAccounting1);
@@ -2748,7 +2764,30 @@ export class PayableInvoiceNewComponent implements OnInit {
   }
 
 
+  ViewActSelect(index) {
+    // alert ("View Act Line ..."+index);
+    this.showViewActLine = true;
+    var invoiceNum = this.lineDetailsArray().controls[this.selectedLine].get('invoiceNum').value;
+    this.service.viewAPAccounting(invoiceNum).subscribe((res: any) => {
+      if (res.code === 200) {
+        this.viewAccountingLines = res.obj[index].glLines;
+        console.log(this.viewAccountingLines);
+        this.runningTotalDr = res.obj[index].runningTotalDr;
+        this.runningTotalCr = res.obj[index].runningTotalCr;
+        // this.paymentArForm.patchValue({totalDr:res.obj[index].runningTotalDr})
+        // this.paymentArForm.patchValue({totalCr:res.obj[index].runningTotalCr})
+        // alert(this.runningTotalDr +","+this.runningTotalCr);
+      }
+      else {
+        if (res.code === 400) {
+          alert(res.message);
+        }
+      }
+    });
 
+
+
+  }
 
   HeaderValidate() {
     var arrayControl = this.poInvoiceForm.get('obj').value;

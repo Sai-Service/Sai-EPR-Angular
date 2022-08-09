@@ -3650,7 +3650,13 @@ getTdsDetails(mInvoiceId): Observable<any> {
 }
 
 cancelApInvoice(mInvoiceId,mEmplId):Observable<any>{
-  return this.http.get(this.ServerUrl+`/apInv/apInvCancel?invNum=${mInvoiceId}&emplId=${mEmplId}`);
+  // return this.http.get(this.ServerUrl+`/apInv/apInvCancel?invNum=${mInvoiceId}&emplId=${mEmplId}`);
+  const options = {
+    headers: this.headers
+  };
+  const url = (this.ServerUrl + `/apInv/apInvCancel?invNum=${mInvoiceId}&emplId=${mEmplId}`);
+  return this.http.put(url, options);
+
 }
 
 getTdsTaxDetails(mItemId,mBaseAmt,mTaxCatId): Observable<any> {
