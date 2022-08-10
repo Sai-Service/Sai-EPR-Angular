@@ -526,6 +526,7 @@ export class InternalConsumptionComponent implements OnInit {
         var value1=op[1];
         
         // alert(reasonArray[2]);
+        // if(reasonArray[2]!=undefined){
         if(reasonArray[2].includes('OEM') && value1=='MRP'){
           this.service.getCostDetailforWarranty(Number(sessionStorage.getItem('locId')), select1.itemId).subscribe
           (data => {
@@ -545,7 +546,7 @@ export class InternalConsumptionComponent implements OnInit {
             alert(this.CostDetail.segment);
           }
         });
-        }}
+        }
         else if(reasonArray[2].includes('EW')){
           this.service.getCostDetailforWarranty(Number(sessionStorage.getItem('locId')), select1.itemId).subscribe
           (data => {
@@ -555,7 +556,8 @@ export class InternalConsumptionComponent implements OnInit {
               alert(this.CostDetail.segment);
             }
           });
-        }
+        }}
+      // }
         else{
       this.service.getCostDetail(Number(sessionStorage.getItem('locId')), select1.itemId).subscribe
         (data => {
@@ -566,6 +568,7 @@ export class InternalConsumptionComponent implements OnInit {
           }
         });
       }
+    
       this.service.getreserqty(Number(sessionStorage.getItem('locId')), select1.itemId).subscribe
         (data => {
           this.resrveqty = data;

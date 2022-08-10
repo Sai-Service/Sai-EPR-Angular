@@ -931,7 +931,7 @@ console.log(jsonData);
     console.log(this.selectedPayment);
     this.transactionService.paymentCancel(this.selectedPayment).subscribe((res: any) => {
       if (res.code === 200) {
-        // alert(res.message);
+        alert(res.code.message);
         // alert(res.obj);
         console.log(res.obj);
       } else {
