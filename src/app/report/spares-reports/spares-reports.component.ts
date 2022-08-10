@@ -19,9 +19,11 @@ const MIME_TYPES = {
 })
 export class SparesReportsComponent implements OnInit {
   sparesReportForm: FormGroup;
+  pipe = new DatePipe('en-US');
+  now = new Date();
   public minDate = new Date();
-  fromDate: Date;
-  toDate: Date;
+  fromDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+  toDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   OUCode: string;
   locCode: string;
   locId: number;
@@ -31,8 +33,7 @@ export class SparesReportsComponent implements OnInit {
   periodNameList: any = [];
 
   public DepartmentList: any = [];
-  pipe = new DatePipe('en-US');
-  now = new Date();
+  
   closeResetButton = true;
   dataDisplay: any;
   progress = 0;
@@ -51,6 +52,12 @@ export class SparesReportsComponent implements OnInit {
   spInvAging1: number;
   spInvAging2: number;
   spInvAging3: number;
+
+  spDbAging1: number=15;
+  spDbAging2: number=30;
+  spDbAging3: number=45;
+  spDbAging4: number=60;
+
   invItemList = new Array();
   isVisibleGSTPurchaseRegister: boolean = false;
   isVisiblelocationInput: boolean = false;
@@ -75,7 +82,7 @@ export class SparesReportsComponent implements OnInit {
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) {
     this.sparesReportForm = this.fb.group({
       fromDate: [''],
-      toDate: [''],
+      toDate: [],
       OUCode: [''],
       locCode: [''],
       locId: [''],
@@ -95,6 +102,11 @@ export class SparesReportsComponent implements OnInit {
       department: [''],
       userName1:[''], 
       trxNumber:[''],
+
+      spDbAging1:[],
+      spDbAging2:[],
+      spDbAging3:[],
+      spDbAging4:[],
     })
   }
 
@@ -307,7 +319,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleEwayBill=false;
     }
     else if (reportName === 'gstsaiDebtors') {
-      this.reportName = 'Sai Debtors';
+      this.reportName = 'Spares Debtor Report';
       if (Number(sessionStorage.getItem('deptId'))===4){
         this.isVisibleDepartmentList=true;
       }
@@ -998,24 +1010,54 @@ export class SparesReportsComponent implements OnInit {
           })
       }
     }
-    else if (reportName === 'Sai Debtors') {
+    else if (reportName === 'Spares Debtor Report') {
+      this.isDisabled1=false;
       var custAccNo = this.sparesReportForm.get('custAccNo').value;
       if (custAccNo === undefined || custAccNo === null) {
         custAccNo = '';
       }
+
+      var d1= this.sparesReportForm.get('toDate').value;
+      var tDate = this.pipe.transform(d1, 'dd-MMM-y');
+
+      var locId= this.sparesReportForm.get('locId').value;
+
+      var spDbAg1= this.sparesReportForm.get('spDbAging1').value;
+      var spDbAg2= this.sparesReportForm.get('spDbAging2').value;
+      var spDbAg3= this.sparesReportForm.get('spDbAging3').value;
+      var spDbAg4= this.sparesReportForm.get('spDbAging4').value;
+
+      // alert(spDbAg1+","+spDbAg2+","+spDbAg3+","+spDbAg4);
+
+      if (spDbAg1 > spDbAg2){
+        alert('Please check Aging1-2.!');this.closeResetButton=true; this.dataDisplay = 'Please check Aging.';return;}
+      else if (spDbAg1 >spDbAg3){
+        alert('Please check Aging1-3.!');this.closeResetButton=true;this.dataDisplay = 'Please check Aging.'; return;}
+      else if (spDbAg1 > spDbAg4){
+        alert('Please check Aging1-4.!');this.closeResetButton=true;this.dataDisplay = 'Please check Aging.'; return;}
+
+     else if (spDbAg2 > spDbAg3){
+        alert('Please check Aging2-3.!');this.closeResetButton=true;this.dataDisplay = 'Please check Aging.'; return;}
+      else if (spDbAg2 > spDbAg4){
+        alert('Please check Aging2-4.!');this.closeResetButton=true;this.dataDisplay = 'Please check Aging.'; return;}
+
+      else if (spDbAg3 > spDbAg4){
+        alert('Please check Aging3-4.!');this.closeResetButton=true;this.dataDisplay = 'Please check Aging.'; return;}
+
+      this.isDisabled1=true;
       const fileName = 'SP-Debtors-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.SPDebtorReport(toDate, sessionStorage.getItem('ouId'), locId,custAccNo,deptId)
+        this.reportService.SPDebtorReport(tDate, sessionStorage.getItem('ouId'), locId,custAccNo,deptId,spDbAg1,spDbAg2,spDbAg3,spDbAg4)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
             this.closeResetButton = true;
             this.dataDisplay = ''
-          })
+          });
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.SPDebtorReport(toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'),custAccNo,deptId)
+        this.reportService.SPDebtorReport(tDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'),custAccNo,deptId,spDbAg1,spDbAg2,spDbAg3,spDbAg4)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;

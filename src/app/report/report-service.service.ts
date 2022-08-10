@@ -19,8 +19,8 @@ export class ReportServiceService {
    }
 
 
-   SPDebtorReport(invcDt1,ouId,locId,custAcctNo,deptId){
-    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprDebtors?toDate=${invcDt1}&ouId=${ouId}&locId=${locId}&custAcctNo=${custAcctNo}&deptId=${deptId}`;
+   SPDebtorReport(invcDt1,ouId,locId,custAcctNo,deptId,ag1,ag2,ag3,ag4){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprDebtors?toDate=${invcDt1}&ouId=${ouId}&locId=${locId}&custAcctNo=${custAcctNo}&deptId=${deptId}&age1=${ag1}&age2=${ag2}&age3=${ag3}&age4=${ag4}`;
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',

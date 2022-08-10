@@ -1004,7 +1004,10 @@ export class SalesOrderFormComponent implements OnInit {
 
   onOptionsSelectedCategory(orderType: string, lnNo: number) {
     this.invType = orderType;
-    // alert(orderType)
+
+   
+
+
     // this.flowStatusCode='BOOKED';
     // alert(this.flowStatusCode);
     if (this.itemMap.has(orderType)) {
@@ -1018,6 +1021,13 @@ export class SalesOrderFormComponent implements OnInit {
     }
     let controlinv = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     var variant = this.SalesOrderBookingForm.get('variant').value;
+
+    if (orderType ==='SS_ADDON_EW') {
+      alert("Invoice Type : " +orderType + " Not allowed here..");
+      (controlinv.controls[lnNo]).patchValue({ 'invType': '--Select--' });
+      return;
+    }
+
     this.orderManagementService.getItemByCatTypeNew(orderType, sessionStorage.getItem('divisionId'), variant)
       .subscribe(
         data => {
@@ -2922,13 +2932,13 @@ export class SalesOrderFormComponent implements OnInit {
       );
   }
   cancelledSalesOrder() {
-    this.orderManagementService.cancelledSalesOrderFn(this.orderNumber)
+    this.orderManagementService.cancelledSalesOrderFn(this.orderNumber,'cancelByUser')
       .subscribe((res: any) => {
         if (res.code === 200) {
           alert(res.message)
         }
         else if (res.code === 400) {
-          alert(res.message)
+          alert(res.message+"\n"+res.obj)
         }
       }
       );
