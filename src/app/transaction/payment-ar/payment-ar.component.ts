@@ -47,10 +47,6 @@ interface IPaymentRcptAr {
   tdstrxNumber: string;
   policyTerm:number;
 
-
-
-
-
 }
 
 @Component({
@@ -209,7 +205,9 @@ export class PaymentArComponent implements OnInit {
   searchByCustNo: number;
 
   // searchByDate: Date;
-  searchByDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+  // searchByDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+  searchByDate1=new Date("2022-04-26")
+  searchByDate = this.pipe.transform(this.searchByDate1, 'y-MM-dd');
   ordNumber: number;
   cancelReason: string;
 
@@ -300,6 +298,12 @@ export class PaymentArComponent implements OnInit {
   policyTerm:number;
   displayglDateDisabled=true;
   sub1: any;
+
+  unApplyFlag: string;
+  isDisabled1=true;
+  isDisabled2=true ;
+  unAppAllFlag:string;
+
 
   // applyTo: string;
 
@@ -428,10 +432,12 @@ export class PaymentArComponent implements OnInit {
       runningTotalDr: [],
 
       policyTerm:[],
+      unAppAllFlag:[],
 
       // applyrcptFlag: ['', [Validators.required]],
 
       invLine: this.fb.array([this.invLineDetails()]),
+      appliedInvLine: this.fb.array([this.appliedinvLineDetails()]),
     });
   }
 
@@ -462,9 +468,29 @@ export class PaymentArComponent implements OnInit {
     })
   }
 
+  appliedinvLineDetails() {
+    return this.fb.group({
+      unApplyFlag: [],
+      applyTo:[],
+      trxNumber: [],
+      trxDate: [],
+      invoiceAmount: [],
+      glDate: [],
+      applDate: [],
+      applAmt: [],
+      invType: [],
+    })
+  }
+
   invLineArray(): FormArray {
     return <FormArray>this.paymentArForm.get('invLine')
   }
+
+  appliedInvLineArray(): FormArray {
+    return <FormArray>this.paymentArForm.get('appliedInvLine')
+  }
+
+
 
   ngOnInit(): void {
     $("#wrapper").toggleClass("toggled");
@@ -3238,6 +3264,99 @@ if(this.deptId==2){
             }
           });
     }
+
+    unApplyFlag1(e,index) {
+      // alert ("Index : "+index  + " Doc No :"+  this.lstApplyHistory[index].trxNumber);
+     
+      
+      if (e.target.checked === true) {
+        this.unApplyFlag = 'Y'
+      }
+      if (e.target.checked === false) {
+        this.unApplyFlag = 'N'
+      }
+    }
+
+
+    
+      LoadAppliedInvoices() {
+            this.isDisabled2=true;
+            this.customerSiteId = this.billToSiteId;
+            this.custAddr = this.custSiteAddress;
+            this.receiptAmount = this.paymentAmt;
+            this.tApplAmt = this.totAppliedtAmount;
+            this.tUapplAmt = this.totUnAppliedtAmount;
+
+            this.appliedInvLineArray().reset();
+            var len = this.appliedInvLineArray().length;
+            var y = 0;
+            // alert("this.lsthist.length  >>" +this.lstApplyHistory.length);
+            for (let i = 0; i < this.lstApplyHistory.length - len; i++) {
+              var invLnGrp: FormGroup = this.appliedinvLineDetails();
+              this.appliedInvLineArray().push(invLnGrp);
+
+            }
+            this.paymentArForm.get('appliedInvLine').patchValue(this.lstApplyHistory);
+            /////////////////////////////////////////////////////////
+            if(this.lstApplyHistory.length >0) {this.isDisabled1=false;} else {this.isDisabled1=true;}
+
+          for (let i = 0; i < this.lstApplyHistory.length; i++) {
+            this.appliedInvLineArray().controls[i].get('unApplyFlag').enable();
+          }
+               
+          }
+      
+          validateUnapply(){
+             
+          this.isDisabled1=true;
+          var applLineArr = this.paymentArForm.get('appliedInvLine').value;
+          var len1 = applLineArr.length;
+
+          // alert("UnApply Validate ....wip "+this.isDisabled1);
+
+          // this.validateStatus = false;
+          // this.applySaveButton = false;
+    
+          for (let i = len1 - 1; i >= 0; i--) {
+            if (this.appliedInvLineArray().controls[i].get('unApplyFlag').value != true) {
+              this.appliedInvLineArray().removeAt(i);
+            } 
+
+         
+
+    
+          }
+
+           var applLineArr1 = this.paymentArForm.get('appliedInvLine').value;
+          //  var patch = this.paymentArForm.get('appliedInvLine') as FormArray;
+
+          for (let i = 0; i < applLineArr1.length; i++) {
+            this.appliedInvLineArray().controls[i].get('unApplyFlag').disable();
+          }
+
+          if(applLineArr1.length >0) {this.isDisabled2=false;} else {this.isDisabled2=true;}
+
+        }
+        
+        
+        UnapplySelectAll (){
+
+          var patch = this.paymentArForm.get('appliedInvLine') as FormArray;
+          var applLineArr1 = this.paymentArForm.get('appliedInvLine').value;
+      
+            for (let i = 0; i < applLineArr1.length; i++) {
+              if (applLineArr1[i].unApplyFlag === true) {
+                patch.controls[i].patchValue({ unApplyFlag: '' })
+              } else {
+                patch.controls[i].patchValue({ unApplyFlag: true })
+              }
+            }
+        }
+
+
+
+          UnapplySave(){alert("UnApply Save ....wip")}
+
   
 
 }

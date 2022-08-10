@@ -22,8 +22,12 @@ const MIME_TYPES = {
 export class AccountsReportComponent implements OnInit {
   reportForm: FormGroup;
   public minDate = new Date();
-  fromDate:Date;
-  toDate:Date;
+  pipe = new DatePipe('en-US');
+  now = new Date();
+  // fromDate:Date;
+  // toDate:Date;
+  fromDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+  toDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   OUCode:string;
   locCode:string;
   locId:number;
@@ -35,8 +39,7 @@ export class AccountsReportComponent implements OnInit {
   supSiteList :any=[];
   accountName1:string;
   public DepartmentList: any=[];
-  pipe = new DatePipe('en-US');
-  now = new Date();
+ 
   closeResetButton = true;
   dataDisplay: any;
   progress = 0;
@@ -228,8 +231,10 @@ reportName:string;
     // alert(reportName);
     if (reportName==='gstPurRegister'){
     this.reportName='GST Purchase Register';
-    this.reportForm.get('fromDate').reset();
-    this.reportForm.get('toDate').reset();
+    // this.reportForm.get('fromDate').reset();
+    // this.reportForm.get('toDate').reset();
+    this.fromDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+    this.toDate = this.pipe.transform(Date.now(), 'y-MM-dd');
     this.reportForm.get('locCode').reset();
     this.isVisibleGSTSaleRegister=false;
     this.isVisibleGSTPurchaseRegister=true;
@@ -245,8 +250,8 @@ reportName:string;
   }
   else if (reportName==='chequebounceReport'){
     this.reportName='Cheque Bounce Report';
-    this.reportForm.get('fromDate').reset();
-    this.reportForm.get('toDate').reset();
+    this.fromDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+    this.toDate = this.pipe.transform(Date.now(), 'y-MM-dd');
     this.reportForm.get('locCode').reset();
     this.isVisibleGSTSaleRegister=true;
     
@@ -263,8 +268,8 @@ reportName:string;
   }
   else if (reportName==='gstPurSummary'){
     this.reportName='Purchase Register Summary';
-    this.reportForm.get('fromDate').reset();
-    this.reportForm.get('toDate').reset();
+    this.fromDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+    this.toDate = this.pipe.transform(Date.now(), 'y-MM-dd');
     this.reportForm.get('locCode').reset();
     this.isVisibleGSTSaleRegister=false;  
     this.isVisibleGSTPurchaseRegister=true;
@@ -280,8 +285,8 @@ reportName:string;
   }
   else if (reportName==='receiptRegisterReport'){
     this.reportName='Receipt Register Report';
-    this.reportForm.get('fromDate').reset();
-    this.reportForm.get('toDate').reset();
+    this.fromDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+    this.toDate = this.pipe.transform(Date.now(), 'y-MM-dd');
     this.reportForm.get('locCode').reset();
     this.isVisibleGSTSaleRegister=false;
     
@@ -298,8 +303,8 @@ reportName:string;
   }
   else if (reportName==='gSTSaleRegister'){
     this.reportName='GST Sales Register';
-    this.reportForm.get('fromDate').reset();
-    this.reportForm.get('toDate').reset();
+    this.fromDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+    this.toDate = this.pipe.transform(Date.now(), 'y-MM-dd');
     this.reportForm.get('locCode').reset();
     this.isVisibleGSTSaleRegister=true;
     
@@ -316,8 +321,8 @@ reportName:string;
   }
   else if (reportName==='sparesdebtors'){
     this.reportName='Spares Debtors';
-    this.reportForm.get('fromDate').reset();
-    this.reportForm.get('toDate').reset();
+    this.fromDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+    this.toDate = this.pipe.transform(Date.now(), 'y-MM-dd');
     this.reportForm.get('locCode').reset();
     this.isVisibleGSTSaleRegister=false;
     this.isVisibleGSTPurchaseRegister=false;

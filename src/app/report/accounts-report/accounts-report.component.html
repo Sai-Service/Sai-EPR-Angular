@@ -145,9 +145,9 @@
               <td><input disabled type="text" class="form-control" formControlName="OUCode"></td>
          
               <td style="width: 15%" class="LabelFontStyle">&nbsp;From&nbsp;Date&nbsp;:&nbsp;</td>
-              <td><input type="date" class="form-control" formControlName="fromDate"  max="{{minDate | date:'yyyy-MM-dd'}}"></td>
+              <td><input type="date" class="form-control" formControlName="fromDate"  [(ngModel)]="fromDate" max="{{minDate | date:'yyyy-MM-dd'}}"></td>
               <td style="width: 15%" class="LabelFontStyle">&nbsp;To&nbsp;Date&nbsp;:&nbsp;</td>
-              <td><input type="date" class="form-control" formControlName="toDate" max="{{minDate | date:'yyyy-MM-dd'}}"></td>
+              <td><input type="date" class="form-control" formControlName="toDate" [(ngModel)]="toDate" max="{{minDate | date:'yyyy-MM-dd'}}"></td>
             </tr>
             <tr>
                <td style="width: 15%" class="LabelFontStyle">&nbsp;Location&nbsp;Code&nbsp;:&nbsp;</td>
@@ -246,9 +246,9 @@
           
               <td style="width: 15%" class="LabelFontStyle">&nbsp;From&nbsp;Date&nbsp;:&nbsp; </td>
               <td>
-                <input type="date" class="form-control" formControlName="fromDate" max="{{minDate | date:'yyyy-MM-dd'}}"></td>
+                <input type="date" class="form-control" formControlName="fromDate" [(ngModel)]="fromDate" max="{{minDate | date:'yyyy-MM-dd'}}"></td>
               <td style="width: 15%" class="LabelFontStyle">&nbsp;To&nbsp;Date&nbsp;:&nbsp;</td>
-              <td><input type="date" class="form-control" formControlName="toDate" max="{{minDate | date:'yyyy-MM-dd'}}"></td>
+              <td><input type="date" class="form-control" formControlName="toDate" [(ngModel)]="toDate" max="{{minDate | date:'yyyy-MM-dd'}}"></td>
           
               <td style="width: 15%" class="LabelFontStyle">&nbsp;Location&nbsp;:&nbsp;</td>
               <td>
@@ -336,7 +336,7 @@
                 &nbsp;To&nbsp;Date&nbsp;:&nbsp;
               </td>
               <td>
-                <input type="date" class="form-control" formControlName="toDate" max="{{minDate | date:'yyyy-MM-dd'}}">
+                <input type="date" class="form-control" formControlName="toDate" [(ngModel)]="toDate" max="{{minDate | date:'yyyy-MM-dd'}}">
               </td>
             </tr>
             <tr>
@@ -621,14 +621,14 @@
                 &nbsp;From&nbsp;Date&nbsp;:&nbsp;
               </td>
               <td>
-                <input type="date" class="form-control" formControlName="fromDate"
+                <input type="date" class="form-control" formControlName="fromDate" [(ngModel)]="fromDate"
                   max="{{minDate | date:'yyyy-MM-dd'}}">
               </td>
               <td style="width: 15%" class="LabelFontStyle">
                 &nbsp;To&nbsp;Date&nbsp;:&nbsp;
               </td>
               <td>
-                <input type="date" class="form-control" formControlName="toDate" max="{{minDate | date:'yyyy-MM-dd'}}">
+                <input type="date" class="form-control" formControlName="toDate" [(ngModel)]="toDate" max="{{minDate | date:'yyyy-MM-dd'}}">
               </td>
             </tr>
             <tr>
@@ -913,14 +913,14 @@
                 &nbsp;From&nbsp;Date&nbsp;:&nbsp;
               </td>
               <td>
-                <input type="date" class="form-control" formControlName="fromDate"
+                <input type="date" class="form-control" formControlName="fromDate" [(ngModel)]="fromDate"
                   max="{{minDate | date:'yyyy-MM-dd'}}">
               </td>
               <td style="width: 15%" class="LabelFontStyle">
                 &nbsp;To&nbsp;Date&nbsp;:&nbsp;
               </td>
               <td>
-                <input type="date" class="form-control" formControlName="toDate" max="{{minDate | date:'yyyy-MM-dd'}}">
+                <input type="date" class="form-control" formControlName="toDate" [(ngModel)]="toDate" max="{{minDate | date:'yyyy-MM-dd'}}">
               </td>
               <td style="width: 15%" class="LabelFontStyle">
                 &nbsp;Operating&nbsp;Unit&nbsp;:&nbsp;
@@ -1002,14 +1002,14 @@
               &nbsp;From&nbsp;Date&nbsp;:&nbsp;
             </td>
             <td>
-              <input type="date" class="form-control" formControlName="fromDate"
+              <input type="date" class="form-control" formControlName="fromDate" [(ngModel)]="fromDate"
                 max="{{minDate | date:'yyyy-MM-dd'}}">
             </td>
             <td style="width: 15%" class="LabelFontStyle">
               &nbsp;To&nbsp;Date&nbsp;:&nbsp;
             </td>
             <td>
-              <input type="date" class="form-control" formControlName="toDate" max="{{minDate | date:'yyyy-MM-dd'}}">
+              <input type="date" class="form-control" formControlName="toDate" [(ngModel)]="toDate" max="{{minDate | date:'yyyy-MM-dd'}}">
             </td>
 
             <td style="width: 15%" class="LabelFontStyle"> &nbsp;Orgnization&nbsp;name&nbsp;:&nbsp; </td>
