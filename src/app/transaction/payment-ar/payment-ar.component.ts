@@ -470,6 +470,7 @@ export class PaymentArComponent implements OnInit {
 
   appliedinvLineDetails() {
     return this.fb.group({
+      applicationId:[],
       unApplyFlag: [],
       applyTo:[],
       trxNumber: [],

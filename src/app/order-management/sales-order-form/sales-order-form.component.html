@@ -1532,6 +1532,20 @@
                                         <option value="false">No</option>
                                     </select>
                                 </td>
+                            
+                                <td style="width: 15%" class="LabelFontStyle"> </td>
+                                <td style="width: 15%" class="LabelFontStyle"> </td>
+                                <td style="width: 15%" class="LabelFontStyle"> </td>
+                            <td>
+                            <table [style.display]="isVisiblecancelledSalesOrder ? 'block' : 'none'" >
+                               <tr>
+                                <td style="width: 15%" class="LabelFontStyle">&nbsp;Reason&nbsp;Code&nbsp;:&nbsp;</td>
+                                <td ><input type="text"  class="form-control" formControlName="orderCancelrsnCode"></td>
+                            </tr> 
+                            </table>
+                            </td>
+
+
                             </tr>
                         </table>
                         <legend id="FormsPH_LGAadhaar" class="RFSL"
@@ -2473,6 +2487,7 @@
                                     style="width: fit-content;height: fit-content;"
                                     (click)="cancelledSalesOrder()">Cancel Sales Order</button>
                             </td>
+
                         </tr>
                     </table>
                 </fieldset>
