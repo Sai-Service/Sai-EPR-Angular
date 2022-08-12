@@ -2611,6 +2611,8 @@ if(this.deptId==2){
 
     if (this.checkValidation === true) {
       // alert("Data Validation Sucessfull....\nPosting data  to AR PAYMENT TABLE");
+      var  resp=confirm("Do You Want to Save this Receipt ???");
+      if(resp==true) {
 
       const formValue: IPaymentRcptAr = this.transeData(this.paymentArForm.value);
 
@@ -2635,6 +2637,7 @@ if(this.deptId==2){
           }
         }
       });
+    }
     }
     // else { alert("Data Validation Not Sucessfull....\nPosting Not Done...") }
 
@@ -2709,7 +2712,10 @@ if(this.deptId==2){
 
     this.CheckCancelValidation();
     if (this.cancelValidation) {
-      // alert("Data Validation Sucessfull....\nCancelling Receipt.")
+
+      var  resp=confirm("Do You Want to Reverse this Receipt ???");
+      if(resp==true) {
+
       this.enableCancelButton = false;
 
       // const formValue: IPaymentRcptAr =this.transeData(this.paymentArForm.value);
@@ -2734,6 +2740,7 @@ if(this.deptId==2){
           }
         }
       });
+    }
     } else { alert("Data Validation Not Sucessfull....\nCancellation not done...") }
   }
 
@@ -3356,7 +3363,10 @@ if(this.deptId==2){
 
 
 
-          UnapplySave(){alert("UnApply Save ....wip")}
+          UnapplySave(){alert("UnApply Save ....wip")
+          var  resp=confirm("Do You Want to Save this Receipt ???");
+          if(resp==true) {}
+        }
 
   
 

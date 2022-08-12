@@ -443,17 +443,25 @@ export class OrderDetailsUpdationComponent implements OnInit {
       }
 
       updateMast() {
+
+        var  resp=confirm("Do You Want to Update Sale Order Details ???");
+
+        if(resp==true) {
+          this.saveButton=false;
+
         const formValue: IOrderDetailUpdation = this.orderDetailsUpdationForm.value;
         this.orderManagementService.UpdateOrderDetails(formValue).subscribe((res: any) => {
           if (res.code === 200) {
             alert('Record Updated Successfully');
-            // window.location.reload();
+            this.orderDetailsUpdationForm.disable();
           } else {
             if (res.code === 400) {
               alert('Error While updating Record');
               // this.orderDetailsUpdationForm.reset();
+              this.saveButton=true;
             }
           }
         });
-      };
+      }
+    }
 }

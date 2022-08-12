@@ -2936,6 +2936,10 @@ export class SalesOrderFormComponent implements OnInit {
   }
   cancelledSalesOrder() {
 
+    var  resp=confirm("Do You Want to Cancel This Sale Order ???");
+
+    if(resp==true) {
+    
     var rsnCode = this.SalesOrderBookingForm.get('orderCancelrsnCode').value;
 
     if(rsnCode==null || rsnCode==undefined || rsnCode.trim()=='') {
@@ -2952,8 +2956,8 @@ export class SalesOrderFormComponent implements OnInit {
         else if (res.code === 400) {
           alert(res.message+"\n"+res.obj)
         }
-      }
-      );
+      });
+    }
   }
 
 }
