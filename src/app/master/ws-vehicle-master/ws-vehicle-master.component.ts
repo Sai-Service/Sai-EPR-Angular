@@ -641,6 +641,7 @@ export class WsVehicleMasterComponent implements OnInit {
     return val;
   }
 
+  
   newMast() {
 
     const formValue: IWsVehicleMaster =this.transeData( this.wsVehicleMasterForm.value);

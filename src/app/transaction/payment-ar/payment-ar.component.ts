@@ -46,6 +46,8 @@ interface IPaymentRcptAr {
   tdsAmount: number;
   tdstrxNumber: string;
   policyTerm:number;
+  customerSiteId: number;
+
 
 }
 
@@ -142,6 +144,7 @@ export class PaymentArComponent implements OnInit {
   dmsCustNo: number;
   custName: string;
   customerSiteId: number;
+  custSiteName:string;
   customerSiteAddress: string;
   custCity: string;
   custState: String;
@@ -204,10 +207,9 @@ export class PaymentArComponent implements OnInit {
   searchByRcptNo: number;
   searchByCustNo: number;
 
-  // searchByDate: Date;
-  // searchByDate = this.pipe.transform(Date.now(), 'y-MM-dd');
-  searchByDate1=new Date("2022-04-26")
-  searchByDate = this.pipe.transform(this.searchByDate1, 'y-MM-dd');
+  searchByDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+  // searchByDate1=new Date("2022-04-26")
+  // searchByDate = this.pipe.transform(this.searchByDate1, 'y-MM-dd');
   ordNumber: number;
   cancelReason: string;
 
@@ -369,6 +371,7 @@ export class PaymentArComponent implements OnInit {
       dmsCustNo: [],
       custName: [],
       customerSiteId: [],
+      custSiteName:[],
       customerSiteAddress: [],
       custCity: [],
       custState: [],
@@ -950,6 +953,7 @@ if(this.deptId==2){
             // alert("Tds% :"+this.CustomerSiteDetails.customerId.tdsPer);
             this.paymentArForm.patchValue({
               customerSiteId: this.CustomerSiteDetails.customerSiteId,
+              custSiteName:this.CustomerSiteDetails.siteName,
               customerSiteAddress: this.CustomerSiteDetails.address1 + "," +
                 this.CustomerSiteDetails.address2 + "," +
                 this.CustomerSiteDetails.address3 + "," +
@@ -2110,6 +2114,13 @@ if(this.deptId==2){
 
   }
 
+  onOptionsSelectedcustSiteName(siteName) {
+    let selSite = this.accountNoSearch.find(d => d.siteName === siteName);
+    this.paymentArForm.patchValue({ 
+      customerSiteId:selSite.billToLocId, 
+      })
+  }
+
 
   CustAccountNoSearch(accountNo) {
     // alert("CustAccountNoSearch:"+accountNo);
@@ -2138,7 +2149,7 @@ if(this.deptId==2){
                 custName: this.accountNoSearch[0].custName,
                 billToSiteId: this.accountNoSearch[0].billToLocId,
                 billToCustId: this.accountNoSearch[0].billToLocId,
-                customerSiteId: this.accountNoSearch[0].customerSiteId,
+                // customerSiteId: this.accountNoSearch[0].customerSiteId,
                 customerSiteAddress: this.accountNoSearch[0].billToAddress,
                 custCity: this.accountNoSearch[0].siteName,
                 custState: this.accountNoSearch[0].state,
@@ -2215,7 +2226,7 @@ if(this.deptId==2){
     delete val.receiptMethodName;
     delete val.receiptAmount;
     delete val.custAddr;
-    delete val.customerSiteId;
+    // delete val.customerSiteId;
     delete val.custSiteAddress;
     delete val.cancelReason;
     // delete val.cancelDate;
@@ -2877,6 +2888,13 @@ if(this.deptId==2){
       alert("CUST NO : Should not be null / Enter valid Customer No");
       return;
     }
+
+    if (formValue.customerSiteId === undefined || formValue.customerSiteId === null || formValue.customerSiteId <=0) {
+      this.checkValidation = false;
+      alert("CUSTOMER SITE : Should not be null....");
+      return;
+    }
+
 
 
     if (formValue.billToSiteId === undefined || formValue.billToSiteId === null) {

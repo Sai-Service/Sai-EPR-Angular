@@ -164,13 +164,11 @@
                     <input  formControlName="glDate" class="form-control" [(ngModel)]="glDate" value="{{glDate | date:'dd-MM-yyyy'}}" style="background-color: yellow;"  >
                 </ng-template>           
             </td>
-            <td style="width: 15%" class="LabelFontStyle">&nbsp;IRN (Y/N)&nbsp;:&nbsp;</td>
+            <td style="width: 15%" class="LabelFontStyle1">&nbsp;IRN (Y/N)&nbsp;:&nbsp;</td>
             <td>
-                <!-- <input type="text" disabled formControlName="irnYN" [(ngModel)]="irnYN" class="form-control"> -->
-                <select
-                formControlName="irnYN" name="irnYN" id="irnYN" class="form-control" >
-                                        <option value="Y">Y</option>
-                                        <option value="N">N</option>
+                <select formControlName="irnYN" name="irnYN" id="irnYN" value={{irnYN}}  class="form-control"  style="background-color: yellow" >
+                       <option value="N" selected>N</option>
+                       <option value="Y">Y</option> 
                 </select>
             </td>
             <input hidden formControlName="emplId"[(ngModel)]="emplId">
