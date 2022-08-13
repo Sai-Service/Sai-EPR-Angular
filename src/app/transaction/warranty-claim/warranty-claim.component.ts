@@ -318,6 +318,9 @@ export class WarrantyClaimComponent implements OnInit {
 
     this.lineValidation=true;
     if (this.lineValidation) {
+      var  resp=confirm("Save Warranty Claim Details???");
+      if(resp==true) {
+
       let variants = <FormArray>this.lineDetailsArray();
       var div = Number(sessionStorage.getItem('divisionId'))
       var ou = Number(sessionStorage.getItem('ouId'));
@@ -339,6 +342,7 @@ export class WarrantyClaimComponent implements OnInit {
         }
 
       });
+    }
     } else { alert("Incomplete line details. Save Failed....") }
   }
 

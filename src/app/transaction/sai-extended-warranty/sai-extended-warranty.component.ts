@@ -1349,6 +1349,9 @@ export class SaiExtendedWarrantyComponent implements OnInit {
           this.CheckDataValidations();
 
           if (this.checkValidation===true) {
+
+            var  resp=confirm("Save EW Enrollment ???");
+            if(resp==true) {
             this.displayButton=false;
             // alert("Data Validation Sucessfull....\nPosting data  to EW CUSTOMER TABLE")
             const formValue: IExtendedWarranty =this.transeData(this.saiEwForm.value);
@@ -1374,6 +1377,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
               }
             }
             });
+          }
 
           } 
           // else{ alert("Data Validation Not Sucessfull....\nPosting Not Done...")  }

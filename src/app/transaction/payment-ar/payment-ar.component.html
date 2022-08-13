@@ -233,7 +233,7 @@
 
                         </ng-template>
                         <ng-template #elseBlockCustno>
-                            <td> <input style="text-align: left;"  disabled type="number" formControlName="custAccountNo"  id="custAccountNo" [(ngModel)]="custAccountNo" (change)="CustAccountNoSearch(custAccountNo)"   class="form-control"  placeholder=""></td>
+                            <td> <input style="text-align: left;"  disabled type="number" formControlName="custAccountNo"  id="custAccountNo" [(ngModel)]="custAccountNo" (change)="CustAccountNoSearch(custAccountNo)"   class="form-control"></td>
                         </ng-template>
 
                         <!-- <td>
@@ -282,7 +282,7 @@
                         </tr>
                         <tr>
                         
-                    <td style="width: 15%" class="LabelFontStyle1">Cust&nbsp;Site:&nbsp;</td>
+                    <td style="width: 15%" class="LabelFontStyle1">Customer&nbsp;Site:&nbsp;</td>
                     <div *ngIf="displayButton ,then site11; else site12")></div>
                     <ng-template #site11>
                         <td colspan="3">
@@ -302,7 +302,7 @@
                     </ng-template>
 
                         <td style="width: 15%" class="LabelFontStyle1">Site&nbsp;No:&nbsp;</td>
-                       <td><input  disabled type="number" class="form-control"  formControlName="customerSiteId" [(ngModel)]='customerSiteId'  value={{customerSiteId}} ></td>
+                       <td><input  disabled type="number" class="form-control"  formControlName="customerSiteId" [(ngModel)]='customerSiteId'  value={{customerSiteId}} style="text-align:left ;" ></td>
                     </tr>
                     </table>
                     </fieldset>
