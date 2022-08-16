@@ -155,6 +155,12 @@ export class PaymentsComponent implements OnInit {
   public locIdList: any = [];
   locId:number;
 
+  viewAccounting2: any[];
+  viewAccountingLines: Array<string> = [];
+  showViewActLine = false;
+  isVisibleviewAccounting: boolean = false;
+  // viewAccounting1: any[];
+
   constructor(private fb: FormBuilder, private router1: ActivatedRoute,private router2:ActivatedRoute, private transactionService: TransactionService, private location: Location, private service: MasterService, private router: Router) {
     this.paymentForm = fb.group({
       suppNo: [],
@@ -422,6 +428,7 @@ jeSource: [],
   selreeceiptmethod:any;
   selstatus:any;
   selPayStatus:any;
+  // sel
   paymentdispSearch(docNo, i) {
 
     // alert(docNo);
@@ -448,10 +455,12 @@ jeSource: [],
         if(this.selPayStatus==='VOIDED'){
           this.ispayCancel=false;
           this.isarPayment=false;
+          // this.isVisibleviewAccounting=true;
         }
         else{this.ispayCancel=true;
         }
         this.ispayAdvise=true;
+        this.isVisibleviewAccounting=true;
         
       } else {
         if (res.code === 400) {
@@ -1151,6 +1160,64 @@ console.log(jsonData);
             var printWindow = window.open(url, '', 'width=800,height=500');
             printWindow.open
           })
+      }
+
+      viewAccounting() {
+        this.viewAccounting2 = null;
+        this.viewAccountingLines = null;
+        this.showViewActLine = false;
+        this.runningTotalCr = null;
+        this.runningTotalDr = null;
+        var invoiceNum = this.payHeaderLineDtlArray().controls[this.selectPayment].get('docNo').value;
+        this.service.viewPayAccounting(invoiceNum).subscribe((res: any) => {
+          if (res.code === 200) {
+            this.viewAccounting2 = res.obj;
+            // this.description = res.obj.description;
+            // this.periodName = res.obj.periodName;
+            // this.postedDate = res.obj.postedDate;
+            // this.jeCategory = res.obj.jeCategory;
+            // this.name1 = res.obj.name;
+            // this.ledgerId = res.obj.ledgerId;
+            // this.runningTotalDr = res.obj.runningTotalDr;
+            // this.runningTotalCr = res.obj.runningTotalCr;
+            // this.docSeqValue = res.obj.docSeqValue;
+            // console.log(this.description);
+    
+            this.viewAccounting1 = res.obj.glLines;
+            console.log(this.viewAccounting1);
+            // alert(res.message);
+          } else {
+            if (res.code === 400) {
+              alert(res.message);
+            }
+          }
+        });
+      }
+    
+    
+      ViewActSelect(index) {
+        // alert ("View Act Line ..."+index);
+        this.showViewActLine = true;
+        var invoiceNum = this.payHeaderLineDtlArray().controls[this.selectPayment].get('docNo').value;
+        this.service.viewPayAccounting(invoiceNum).subscribe((res: any) => {
+          if (res.code === 200) {
+            this.viewAccountingLines = res.obj[index].glLines;
+            console.log(this.viewAccountingLines);
+            this.runningTotalDr = res.obj[index].runningTotalDr;
+            this.runningTotalCr = res.obj[index].runningTotalCr;
+            // this.paymentArForm.patchValue({totalDr:res.obj[index].runningTotalDr})
+            // this.paymentArForm.patchValue({totalCr:res.obj[index].runningTotalCr})
+            // alert(this.runningTotalDr +","+this.runningTotalCr);
+          }
+          else {
+            if (res.code === 400) {
+              alert(res.message);
+            }
+          }
+        });
+    
+    
+    
       }
 
     }
