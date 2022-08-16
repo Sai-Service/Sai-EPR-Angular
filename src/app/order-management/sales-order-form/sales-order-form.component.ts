@@ -10,6 +10,7 @@ import { Location, DatePipe } from "@angular/common";
 import { saveAs } from 'file-saver';
 import { SalesOrderobj } from './sales-orderobj';
 import { data } from 'jquery';
+import { relativeTimeRounding } from 'moment';
 
 
 const MIME_TYPES = {
@@ -395,6 +396,7 @@ export class SalesOrderFormComponent implements OnInit {
   pipe = new DatePipe('en-US');
   now = Date.now();
   csdDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+  orderCancelrsnCode :string;
 
   constructor(private fb: FormBuilder, private router1: ActivatedRoute, private location: Location, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService) {
     this.SalesOrderBookingForm = fb.group({
@@ -485,6 +487,7 @@ export class SalesOrderFormComponent implements OnInit {
       gstNo: [''],
       panNo: [''],
       tcs: [''],
+      orderCancelrsnCode:[],
       oeOrderLinesAllList: this.fb.array([this.orderlineDetailsGroup()]),
       taxAmounts: this.fb.array([this.TaxDetailsGroup()])
     })
@@ -2932,7 +2935,20 @@ export class SalesOrderFormComponent implements OnInit {
       );
   }
   cancelledSalesOrder() {
-    this.orderManagementService.cancelledSalesOrderFn(this.orderNumber,'cancelByUser')
+
+    var  resp=confirm("Do You Want to Cancel This Sale Order ???");
+
+    if(resp==true) {
+    
+    var rsnCode = this.SalesOrderBookingForm.get('orderCancelrsnCode').value;
+
+    if(rsnCode==null || rsnCode==undefined || rsnCode.trim()=='') {
+      alert ("REASON CODE : Please enter Order Cancellation Reaseon...");
+    return;
+    }
+
+
+    this.orderManagementService.cancelledSalesOrderFn(this.orderNumber,rsnCode)
       .subscribe((res: any) => {
         if (res.code === 200) {
           alert(res.message)
@@ -2940,8 +2956,8 @@ export class SalesOrderFormComponent implements OnInit {
         else if (res.code === 400) {
           alert(res.message+"\n"+res.obj)
         }
-      }
-      );
+      });
+    }
   }
 
 }

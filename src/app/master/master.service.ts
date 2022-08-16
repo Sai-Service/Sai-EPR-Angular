@@ -1170,6 +1170,11 @@ searchCustomerByAccount(accountNo): Observable<any>{
   return this.http.get(this.ServerUrl+`/Customer/getByCustAcctNo?accountNo=${accountNo}`);
 }
 
+custAccountNoSearch(accountNo,ouId,divId): Observable<any> {
+  // alert("ms >>account no:"+accountNo+","+ouId +","+divId);
+   return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}&divisionId=${divId}`);
+}
+
 exicutiveNameByCustName(accountNo,locId): Observable<any>{
   return this.http.get(this.ServerUrl+`/empCust/exeDtls?accountNo=${accountNo}&locId=${locId}`);
 }
@@ -2715,10 +2720,7 @@ OrderCategoryList(): Observable<any> {
 
  
 
-  custAccountNoSearch(accountNo,ouId,divId): Observable<any> {
-    // alert("ms >>account no:"+accountNo+","+ouId +","+divId);
-     return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}&divisionId=${divId}`);
-  }
+ 
 
   getArReceiptSearchByRcptNo(rcptNumber,ouId): Observable<any>
   {

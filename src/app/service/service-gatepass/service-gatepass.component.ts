@@ -389,6 +389,9 @@ GenerateGatePass() {
 if(this.checkValidation===false) {
   return;
 }
+
+// var  resp=confirm("Generate GatePass ???");
+// if(resp==true) {
 this.gpButton=false;
 var delAuthBy;
 var jcNum=this.serviceGatepassForm.get('jobCardNum').value;
@@ -414,6 +417,7 @@ this.serviceService.generateServiceGatePass(regNum,sessionStorage.getItem('locId
       }
     }
   });
+// }
 }
 
 printGP(){

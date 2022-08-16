@@ -129,6 +129,8 @@ export class ReceiptWriteoffComponent implements OnInit {
 
 
   FindList(){
+
+    
     this.wirteOffButton=false;
     this.writeOffTotal=null;
     this.writeOffList=null;
@@ -167,10 +169,26 @@ export class ReceiptWriteoffComponent implements OnInit {
            })
         } 
          
+      ConfirmAlertFunction0() {
+          var txt;
+          if (confirm("Confirm Write Off ???")) {
+            txt = "YES" } else {txt = "NO"; }
+          // document.getElementById("demo").innerHTML = txt;
+         return txt;
+        }
+  
 
+        ConfirmAlertFunction() {
+          var resp;
+          resp=confirm("Confirm Write Off ???");return resp;
+        }
+  
        
 
-      WriteOffSumbit(){  alert ("Work in Progress...") 
+      WriteOffSumbit(){  
+       var resp1= this.ConfirmAlertFunction();
+      //  alert ("Response : "+resp1);
+      if (resp1) {
       const formValue: IReceiptWriteOff =this.receiptWriteOffForm.value;
       this.wirteOffButton=false;
       var fDate =this.receiptWriteOffForm.get('fromDate').value;
@@ -195,7 +213,8 @@ export class ReceiptWriteoffComponent implements OnInit {
         }
       });
 
-    }
+    } else { alert ("Write Off Not Done...");}
+  }
 
 
 

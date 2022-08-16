@@ -151,7 +151,10 @@
                                 (click)="reportDetails('sparesZeroStkReport')">31. Spares Zero Stock Report</a>
                         </li>
 
-
+                        <li>
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelGSTPurchaseRegister" role="tab"
+                              (click)="reportDetails('sparesIssSummaryAvgCost')">32.Spares Issue Summary-Average Cost</a>
+                        </li>
                     </ul>
                 </li>
             </ul>
@@ -195,14 +198,14 @@
                                 &nbsp;From&nbsp;Date&nbsp;:&nbsp;
                             </td>
                             <td>
-                                <input type="date" class="form-control" formControlName="fromDate"
+                                <input type="date" class="form-control" formControlName="fromDate" [(ngModel)]="fromDate"
                                     max="{{minDate | date:'yyyy-MM-dd'}}">
                             </td>
                             <td style="width: 15%" class="LabelFontStyle">
                                 &nbsp;To&nbsp;Date&nbsp;:&nbsp;
                             </td>
                             <td>
-                                <input type="date" class="form-control" formControlName="toDate"
+                                <input type="date" class="form-control" formControlName="toDate" [(ngModel)]="toDate"
                                     max="{{minDate | date:'yyyy-MM-dd'}}">
                             </td>
                         </tr>
@@ -323,8 +326,7 @@
         </table>
 
 
-        <table class="center" [style.display]="isVisibleonlyLocationCode ? 'block' : 'none'" class="collapse"
-        style="margin-left: 30%;" id="panelonlyLocationCode">
+        <table class="center" [style.display]="isVisibleonlyLocationCode ? 'block' : 'none'" class="collapse"    id="panelonlyLocationCode">
         <!-- <tr>
             <td>
                 <table class="center">
@@ -390,9 +392,10 @@
                                 </table>
                                 
 
-                            <tr>
+                            <!-- <tr>
                               <td colspan="4"> -->
-                                  <table class="center" style="width: 100%;margin-left: 50%;">
+                                  <table class="center" >
+                                  <!-- style="width: 100%;margin-left: 50%;"> -->
                                       <tr>
                                         <td>
                                             <button class="btn-primary" [disabled]="isDisabled1" (click)="reportParameter(reportName)">View
@@ -568,7 +571,7 @@ style="margin-left: 20%;" id="panelspClosingStockAsOndate">
                     &nbsp;To&nbsp;Date&nbsp;:&nbsp;
                 </td>
                 <td>
-                    <input type="date" class="form-control" formControlName="toDate"
+                    <input type="date" class="form-control" formControlName="toDate"  [(ngModel)]="toDate"
                         max="{{minDate | date:'yyyy-MM-dd'}}">
                 </td>
                 <td style="width: 15%" class="LabelFontStyle">
@@ -660,14 +663,14 @@ id="panelStockLedger">
                     &nbsp;From&nbsp;Date&nbsp;:&nbsp;
                 </td>
                 <td>
-                    <input type="date" class="form-control" formControlName="fromDate"
+                    <input type="date" class="form-control" formControlName="fromDate" [(ngModel)]="fromDate"
                         max="{{minDate | date:'yyyy-MM-dd'}}">
                 </td>
                 <td style="width: 15%" class="LabelFontStyle">
                     &nbsp;To&nbsp;Date&nbsp;:&nbsp;
                 </td>
                 <td>
-                    <input type="date" class="form-control" formControlName="toDate"
+                    <input type="date" class="form-control" formControlName="toDate" [(ngModel)]="toDate"
                         max="{{minDate | date:'yyyy-MM-dd'}}">
                 </td>
                 <td style="width: 15%" class="LabelFontStyle">
@@ -783,14 +786,14 @@ style="margin-left: 10%;" id="panelstockTransfer">
                     &nbsp;From&nbsp;Date&nbsp;:&nbsp;
                 </td>
                 <td>
-                    <input type="date" class="form-control" formControlName="fromDate"
+                    <input type="date" class="form-control" formControlName="fromDate" [(ngModel)]="fromDate"
                         max="{{minDate | date:'yyyy-MM-dd'}}">
                 </td>
                 <td style="width: 15%" class="LabelFontStyle">
                     &nbsp;To&nbsp;Date&nbsp;:&nbsp;
                 </td>
                 <td>
-                    <input type="date" class="form-control" formControlName="toDate"
+                    <input type="date" class="form-control" formControlName="toDate"  [(ngModel)]="toDate"
                         max="{{minDate | date:'yyyy-MM-dd'}}">
                 </td>
             </tr>
@@ -907,14 +910,14 @@ style="margin-left: 10%;" id="panelSparesBackOrderQty">
                     &nbsp;From&nbsp;Date&nbsp;:&nbsp;
                 </td>
                 <td>
-                    <input type="date" class="form-control" formControlName="fromDate"
+                    <input type="date" class="form-control" formControlName="fromDate" [(ngModel)]="fromDate"
                         max="{{minDate | date:'yyyy-MM-dd'}}">
                 </td>
                 <td style="width: 15%" class="LabelFontStyle">
                     &nbsp;To&nbsp;Date&nbsp;:&nbsp;
                 </td>
                 <td>
-                    <input type="date" class="form-control" formControlName="toDate"
+                    <input type="date" class="form-control" formControlName="toDate" [(ngModel)]="toDate"
                         max="{{minDate | date:'yyyy-MM-dd'}}">
                 </td>
             </tr>
@@ -1014,14 +1017,14 @@ style="margin-left: 20%;" id="panelsparesMiscIssueReceipt">
                     &nbsp;From&nbsp;Date&nbsp;:&nbsp;
                 </td>
                 <td>
-                    <input type="date" class="form-control" formControlName="fromDate"
+                    <input type="date" class="form-control" formControlName="fromDate" [(ngModel)]="fromDate"
                         max="{{minDate | date:'yyyy-MM-dd'}}">
                 </td>
                 <td style="width: 15%" class="LabelFontStyle">
                     &nbsp;To&nbsp;Date&nbsp;:&nbsp;
                 </td>
                 <td>
-                    <input type="date" class="form-control" formControlName="toDate"
+                    <input type="date" class="form-control" formControlName="toDate" [(ngModel)]="toDate"
                         max="{{minDate | date:'yyyy-MM-dd'}}">
                 </td>
             </tr>
@@ -1213,7 +1216,7 @@ style="margin-left: 10%;" id="panelSparesDebtorsExecutiveWise">
                     &nbsp;To&nbsp;Date&nbsp;:&nbsp;
                 </td>
                 <td>
-                    <input type="date" class="form-control" formControlName="toDate"
+                    <input type="date" class="form-control" formControlName="toDate" [(ngModel)]="toDate"
                         max="{{minDate | date:'yyyy-MM-dd'}}">
                 </td>
                 <td style="width: 15%" class="LabelFontStyle">
@@ -1337,14 +1340,14 @@ id="panelfromtosubinventory">
                     &nbsp;From&nbsp;Date&nbsp;:&nbsp;
                 </td>
                 <td>
-                    <input type="date" class="form-control" formControlName="fromDate"
+                    <input type="date" class="form-control" formControlName="fromDate"  [(ngModel)]="fromDate"
                         max="{{minDate | date:'yyyy-MM-dd'}}">
                 </td>
                 <td style="width: 15%" class="LabelFontStyle">
                     &nbsp;To&nbsp;Date&nbsp;:&nbsp;
                 </td>
                 <td>
-                    <input type="date" class="form-control" formControlName="toDate"
+                    <input type="date" class="form-control" formControlName="toDate" [(ngModel)]="toDate"
                         max="{{minDate | date:'yyyy-MM-dd'}}">
                 </td>
                 <td style="width: 15%" class="LabelFontStyle">
@@ -1392,7 +1395,8 @@ id="panelfromtosubinventory">
                                 <td class="LabelFontStyle" style="color: blue;">&nbsp;{{this.dataDisplay}}&nbsp; </td>
                             </tr>
                         </table>
-                          <table class="center" style="width: 100%;margin-left: 50%;">
+                          <table class="center" >
+                          <!-- style="width: 100%;margin-left: 50%;"> -->
                               <tr>
                                 <td>
                                     <button class="btn-primary" [disabled]="isDisabled1" (click)="reportParameter(reportName)">View
@@ -1442,14 +1446,14 @@ id="panelfromtosubinventory">
                     &nbsp;From&nbsp;Date&nbsp;:&nbsp;
                 </td>
                 <td>
-                    <input type="date" class="form-control" formControlName="fromDate"
+                    <input type="date" class="form-control" formControlName="fromDate" [(ngModel)]="fromDate"
                         max="{{minDate | date:'yyyy-MM-dd'}}">
                 </td>
                 <td style="width: 15%" class="LabelFontStyle">
                     &nbsp;To&nbsp;Date&nbsp;:&nbsp;
                 </td>
                 <td>
-                    <input type="date" class="form-control" formControlName="toDate"
+                    <input type="date" class="form-control" formControlName="toDate" [(ngModel)]="toDate"
                         max="{{minDate | date:'yyyy-MM-dd'}}">
                 </td>
             </tr>

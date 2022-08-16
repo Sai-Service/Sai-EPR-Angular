@@ -641,17 +641,15 @@ export class WsVehicleMasterComponent implements OnInit {
     return val;
   }
 
+  
   newMast() {
 
     const formValue: IWsVehicleMaster =this.transeData( this.wsVehicleMasterForm.value);
     this.CreateItemCode();
     this.CheckDataValidations();
- 
-    
- 
-    if (this.checkValidation) {
-      alert("Data Validation done Sucessfully....")
-
+     if (this.checkValidation) {
+      var  resp=confirm("Do You Want to Save this Record ???");
+      if(resp==true) {
       this.saveButton=false;
       this.updateButton=false;
       this.displayButton=false;
@@ -676,6 +674,7 @@ export class WsVehicleMasterComponent implements OnInit {
           }
         }
       });
+    }
     } else { alert("Data Validation Failed....\nRecord not saved..") }
   }
 
@@ -687,6 +686,9 @@ export class WsVehicleMasterComponent implements OnInit {
     this.CheckDataValidations();
    
     if (this.checkValidation) {
+
+      var  resp=confirm("Do You Want to Update this Record ???");
+      if(resp==true) {
       this.updateButton=false;
       // alert("Data Validation Sucessfully....")
       this.service.UpdateWsVehicleMaster(formValue).subscribe((res: any) => {
@@ -702,6 +704,7 @@ export class WsVehicleMasterComponent implements OnInit {
         }
       }
     });
+  }
   }
   }
 

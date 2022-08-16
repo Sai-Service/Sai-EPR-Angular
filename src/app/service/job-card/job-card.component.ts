@@ -2404,9 +2404,15 @@ export class JobCardComponent implements OnInit {
   }
 
   saveArInvoice() {
+
+   
     const formValue: IjobCard = this.tranceFun(this.jobcardForm.value);
     this.CheckJobHraderValidation()
+
     if(this.jobHeaderValidation) {
+    
+    var  resp=confirm("Do You Want Save this Job Card Details ???");
+    if(resp==true) {
 
     formValue.emplId = Number(sessionStorage.getItem('emplId'));
     formValue.dmsCustId = Number(this.jobcardForm.get('dmsCustId').value);
@@ -2439,8 +2445,11 @@ export class JobCardComponent implements OnInit {
         }
       }
     });
-  } else {alert ("Please Update Job Header Details and Proceed...");}
+
   }
+  } else {alert ("Please Update Job Header Details and Proceed...");}
+
+}
 
 
 
@@ -2832,6 +2841,10 @@ export class JobCardComponent implements OnInit {
   }
 
   GenerateInvoice(jobCardNum) {
+    var  resp=confirm("Do You Want to Generate Invoice for this Vehicle ???");
+
+    if(resp==true) {
+
     this.genBillButton=false;
     this.printAddonInvButton=false;
     this.saveBillButton=false;
@@ -2875,6 +2888,7 @@ export class JobCardComponent implements OnInit {
 
     });
   }
+}
 
   CheckSaveBillValidation() {
     const formValue: IjobCard = this.jobcardForm.value;
@@ -2925,6 +2939,9 @@ export class JobCardComponent implements OnInit {
 
   BillingCal() {
 
+    var  resp=confirm("Do You Want to Save the Bill Details ???");
+
+    if(resp==true) {
 
    this.CheckSaveBillValidation()
     if(this.saveBillValidation) {
@@ -2947,6 +2964,7 @@ export class JobCardComponent implements OnInit {
       }
     });
   }
+}
   }
 
   applyDiscnt() {

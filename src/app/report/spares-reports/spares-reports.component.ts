@@ -768,6 +768,25 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblecustomerLedger=false;
       this.isVisibleEwayBill=false;
     }
+    else if (reportName === 'sparesIssSummaryAvgCost') {
+      this.reportName = 'Spares Issue Summary-Average Cost';
+      this.isVisibleGSTPurchaseRegister = true;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblestockTransfer = false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
+      this.isVisibleEwayBill=false;
+      // if (Number(sessionStorage.getItem('deptId')) === 4) {
+      //   this.isVisibleDepartmentList = true;
+      // }
+    }
 
 
   }
@@ -1632,6 +1651,23 @@ export class SparesReportsComponent implements OnInit {
           this.dataDisplay = ''
         })
       }
+    }
+
+    else if (reportName ==='Spares Issue Summary-Average Cost'){
+
+      const fileName = 'Spares Issue Summary-Average Cost-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        var deptId=this.sparesReportForm.get('deptId').value;
+        this.reportService.sprIssSummaryAvgCostReport( fromDate,toDate,locId,sessionStorage.getItem('deptId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+     
     }
 
 

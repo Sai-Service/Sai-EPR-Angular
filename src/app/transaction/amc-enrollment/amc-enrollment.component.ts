@@ -514,6 +514,9 @@ closeMast() {
             const formValue: IAmcEnroll =this.transeData(this.amcEnrollmentForm.value);
               this.checkAmcHeaderValidations();
               if(this.amcHeaderValidation) {
+                var  resp=confirm("Save AMC Enrollment ???");
+                if(resp==true) {
+
               this.displayButton=false;
             this.service.AmcEnrollMasterSubmit(formValue).subscribe((res: any) => {
               if (res.code === 200) {
@@ -531,6 +534,7 @@ closeMast() {
                 }
               }
             });
+          }
           }
           }
 

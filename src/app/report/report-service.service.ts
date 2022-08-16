@@ -579,6 +579,16 @@ export class ReportServiceService {
     });
   }
 
+  sprIssSummaryAvgCostReport(fromDate,toDate,locId,deptId){
+    // http://localhost:8081/SparesReports/SprIssueTransAvgRep?fromDate=01-AUG-2022&toDate=25-AUG-2022&locId=2101
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprIssueTransAvgRep?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
   sprZeroStockReport(fromDate,toDate,locId,subInvCode){
     // http://localhost:8081/SparesReports/SprZeroStock?fromDate=01-JUN-2022&toDate=16-JUL-2022&ouId=22&locId=2102&subInvCode=SP
     const REQUEST_URI = this.ServerUrl +`/SparesReports/SprZeroStock?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}&subInvCode=${subInvCode}`;

@@ -684,7 +684,9 @@ public statusList:Array<string>=[];
         // return
       
         if (this.checkValidation) {
-          alert("Data Validation Sucessfull....\nPosting Cancellation details.")
+          // alert("Data Validation Sucessfull....\nPosting Cancellation details.")
+          var  resp=confirm("Do You Want To Cancel This Enrollment???");
+          if(resp==true) {
           this.displayButton=false;
           const formValue: IMcpCancel =this.transeData(this.mcpCancellationForm.value);
           this.showCancelButton=false;
@@ -704,6 +706,7 @@ public statusList:Array<string>=[];
             }
           }
         });
+      }
       }else{ alert("Data Validation Not Sucessfull....\nData not Saved...")  }
       }
       

@@ -52,8 +52,10 @@ export class SalesReportsComponent implements OnInit {
   isVisiblelocationLOV: boolean = false;
   isVisiblelocationInput: boolean = false;
   isVisibleDepartmentList: boolean = false;
-  fromDate: Date;
-  toDate: Date;
+  // fromDate: Date;
+  // toDate: Date;
+  fromDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+  toDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   locId: number;
   isVisibleSaleIND: boolean = false;
   isSaleClosingStock: boolean = false;

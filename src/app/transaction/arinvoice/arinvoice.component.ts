@@ -546,6 +546,7 @@ export class ARInvoiceComponent implements OnInit {
 
 
   ngOnInit(): void {
+    $("#wrapper").toggleClass("toggled");
     this.ouId = Number(sessionStorage.getItem('ouId'));
     this.divisionId = Number(sessionStorage.getItem('divisionId'))
     this.emplId = Number(sessionStorage.getItem('emplId'));
@@ -1491,6 +1492,10 @@ export class ARInvoiceComponent implements OnInit {
   // }
   Save() {
     // debugger;
+
+  var irnYesno=this.arInvoiceForm.get("irnYN").value;
+  if(irnYesno==null|| irnYesno==undefined || irnYesno.trim()=='') {alert ("IRN(Y/N) : Please Select IRN Status ...");return;}
+
     let jsonData = this.arInvoiceForm.getRawValue();
     jsonData.ouId = this.ouId;
     var arrayControl = this.arInvoiceForm.get('invLines').value;
