@@ -92,11 +92,13 @@ export class AdminComponent implements OnInit {
  isVisibleAccessories:boolean=true;
   isVisibleAccountsRepor:boolean=true;
   isVisibleMaster:boolean=true;
+  isVisibleCustMaster:boolean=true;
   public show: boolean = false;
   isShown: boolean = false;
+  isVisibleGL:boolean=false;
   displayUserIdwiseAccess: boolean = true;
   isVisibleSubInventoryTransfer:boolean=false;
-  isVisibleWsVehicleMaster:boolean=false;
+  isVisibleWsVehicleMaster:boolean=false; 
   fullName: string;
   deptName: string;
   locCode: string;
@@ -311,12 +313,14 @@ export class AdminComponent implements OnInit {
       this.isVisibleAccountsRepor=true;
       this.isVisibleAccessories=false;
       this.isVisibleMaster=false;
+      this.isVisibleGL=true;
+      this.isVisibleCustMaster=false;
     }
     if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId'))===2 && sessionStorage.getItem('deptName')==='Service'){
       this.isVisible11=false;
       this.isVisible12=false;
       this.isVisibleWsVehicleMaster=false;
-      this.isVisible13=true;
+      this.isVisible13=true; 
       this.isVisible14=false;
       this.isVisible37=false;
       this.isVisible15=false;

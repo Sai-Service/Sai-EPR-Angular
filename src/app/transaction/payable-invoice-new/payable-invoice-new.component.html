@@ -1814,24 +1814,26 @@
                                     (click)="refresh()">Clear</button>
                             </td>
                             <td>
-                                <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
+                                <button type="button" (click)="close()" class="btn btn-primary">Close</button>
                             </td>
                             <td>
-                                <button type="submit" (click)="apInvCancelled()" class="btn btn-primary"
+                                <button type="button" (click)="apInvCancelled()" class="btn btn-primary"
                                     [style.display]="isVisibleAPCancelled ? 'block' : 'none'"
                                     style="width: fit-content;">AP Inv Cancelled</button>
                             </td>
                             <td>
-                                <button type="submit" class="btn btn-primary" (click)="HeaderValidate()"
-                                    [style.display]="isVisibleSave ? 'block' : 'none'">Save</button>
+                                <button type="button" class="btn btn-primary" id="saveBtn"
+                                    [style.display]="isVisibleSave ? 'block' : 'none'" data-toggle="modal" data-target="#confirmAlert"
+                                    (click)=" getMessage('SAVE')">Save</button>
                             </td>
+                            <!-- (click)="HeaderValidate()" -->
                             <td>
                                 <!-- (click)="apInvoiceSave()" -->
-                                <button type="submit" class="btn btn-primary" (click)=" HeaderValidate()"
+                                <button type="button" class="btn btn-primary" (click)=" HeaderValidate()"
                                     [style.display]="isVisibleUpdateBtn ? 'block' : 'none'">Update</button>
                             </td>
                             <td>
-                                <button type="submit" class="btn btn-primary" (click)="Validate()"
+                                <button type="button" class="btn btn-primary" (click)="Validate()"
                                     [style.display]="isVisibleValidate ? 'block' : 'none'">Validate</button>
                             </td>
                             <!-- <td>
@@ -2117,6 +2119,34 @@
                 </form>
             </div>
 
+        </div>
+    </div>
+</div>
+<div class="modal" id="confirmAlert" tabindex="-1" role="dialog" [ngStyle]="{'display':display}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmation!</h5>
+            </div>
+            <div class="modal-body">
+                <label
+                    style="font-size: small; color: black; font-weight: bold; text-align: left; vertical-align: middle; margin-left: 35%">
+                    {{message}}
+                </label>
+            </div>
+            <div class="modal-footer">
+                <table class="center" style="width: 50%;">
+                    <tr>
+                        <td>
+                            <button type="button" class="btn btn-info" data-dismiss="modal" id="register"
+                                (click)="executeAction()">Yes</button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-info" data-dismiss="modal" (click)="closeModalDialog()">No</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
 </div>
