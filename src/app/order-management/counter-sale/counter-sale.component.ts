@@ -3472,7 +3472,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
     if (msgType.includes("Close")) { this.message = "Do you want to Close the Form(Yes/No)?" }
     return;
-  }
+  } 
 
 
   executeAction() {

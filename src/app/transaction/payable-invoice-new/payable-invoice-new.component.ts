@@ -3673,6 +3673,38 @@ export class PayableInvoiceNewComponent implements OnInit {
       }
     });
   }
+  message: string = "Please Fix the Errors!";
+  cnfMsgType: string = "Close";
+  // msgType:string ="Navigate";
+  getMessage(msgType: string) {
+    this.cnfMsgType = msgType;
+    if (msgType.includes("SAVE")) {
+      this.submitted = true;
+      (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
+      this.message = "Do you want to SAVE the changes (Yes/No)?"
+    }
+    if (msgType.includes("Navigate")) {
+      this.message = "Do you want to Navigate the Form(Yes/No)?"
+    }
 
+    if (msgType.includes("Reset")) { this.message = "Do you want to Reset the changes(Yes/No)?" }
+
+    if (msgType.includes("Close")) { this.message = "Do you want to Close the Form(Yes/No)?" }
+    return;
+  } 
+
+
+  executeAction() {
+    if (this.cnfMsgType.includes("INVOICE")) {
+      this.HeaderValidate();
+    }
+    //     if(this.msgType.includes("Navigate")) {
+    //       this.router.navigate(['/admin/master/customerMaster'])
+    //  }
+  }
+  closeModalDialog() {
+    this.display = 'none'; //set none css after close dialog
+    // this.myInputField.nativeElement.focus();
+  }
 }
 

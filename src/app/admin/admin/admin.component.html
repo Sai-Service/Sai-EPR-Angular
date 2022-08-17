@@ -8,13 +8,14 @@
     <li class="nav-item dropdown">
       <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-expanded="false" aria-haspopup="true"  data-toggle="dropdown" (click)="LoadModal()" data-toggle="modal" data-target="#partSearch">Search</a>
     </li>
-
+    <div [style.display]="isVisibleCustMaster ? 'block' : 'none'">
      <li class="nav-item dropdown">
       <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
         aria-haspopup="true"  [routerLink]="['/admin/master/customerMaster']" aria-expanded="false">
         Customer Master
       </a>
     </li> 
+    </div>
     <li class="nav-item dropdown" [style.display]="isVisibleWsVehicleMaster ? 'block' : 'none'">
       <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
         aria-haspopup="true"  [routerLink]="['/admin/master/WsVehicleMaster']" aria-expanded="false">
@@ -333,6 +334,11 @@
       </div> -->
       
     </li>
+  </div>
+  <div [style.display]="isVisibleGL ? 'block' : 'none'">
+    <!-- <li class="nav-item dropdown"> -->
+  <li><a class="dropdown-item" [routerLink]="['/admin/transaction/glTrialBalance']">GL Trial Balance</a> </li>
+    <!-- </li> -->
   </div>
   <div [style.display]="isVisibleMaster ? 'block' : 'none'">
     <li class="nav-item dropdown">

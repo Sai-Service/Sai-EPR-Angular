@@ -2363,6 +2363,9 @@ viewAPAccounting(invoiceNum): Observable<any> {
   return this.http.get(this.ServerUrl + `/glHeader/apInv?invoiceNum=${invoiceNum}`);
 }
 
+viewPayAccounting(invoiceNum): Observable<any> {
+  return this.http.get(this.ServerUrl + `/glHeader/docSequenceValue/${invoiceNum}`);
+}
 getsearchByshipmentNo(shipmentNo,locId): Observable<any> {
   return this.http.get(this.ServerUrl + `/rcvShipment/shipmentNo?shipmentNumber=${shipmentNo}&shipFromLocId=${locId}`);
 }
