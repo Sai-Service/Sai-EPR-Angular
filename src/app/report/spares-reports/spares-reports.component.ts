@@ -79,6 +79,8 @@ export class SparesReportsComponent implements OnInit {
   isDisabled1 = false;
   userName1:string;
   dispLocation:boolean=true;
+  rptValidation=true;
+
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) {
     this.sparesReportForm = this.fb.group({
       fromDate: [''],
@@ -854,6 +856,9 @@ export class SparesReportsComponent implements OnInit {
       alert('Please Select location Code.!');
       return;
     }
+    var fDate =this.sparesReportForm.get('fromDate').value;
+    var tDate =this.sparesReportForm.get('toDate').value;
+
     //   alert(reportName.includes('Spares Closing Stock'))
     // if ( reportName.includes('Spares Closing Stock') ===false || reportName.includes('Sai Debtors')===false){
     //   if (fromDate === null ||fromDate ===undefined|| fromDate==='' ) {
@@ -895,7 +900,11 @@ export class SparesReportsComponent implements OnInit {
         return;
       }
     }
+
     if (reportName === 'Purchase Register Details') {
+
+      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         const fileName = 'Purchase Register Details-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
         const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
@@ -920,6 +929,8 @@ export class SparesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Spares Purchase Register - Summary') {
+      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+
       const fileName = 'Spares Purchase Register - Summary-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
@@ -942,6 +953,8 @@ export class SparesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Spares Issue Details Report') {
+      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+
       const fileName = 'Spares Issue Details Report-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
@@ -964,6 +977,8 @@ export class SparesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Spares Issue Summary') {
+      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+
       const fileName = 'Spares Issue Summary Report-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
@@ -986,6 +1001,8 @@ export class SparesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Spares Receipt Register') {
+      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+
       const fileName = 'Spares Receipt Register-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
@@ -1030,6 +1047,9 @@ export class SparesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Spares Debtor Report') {
+
+      this.toDateValidation(tDate);if(this.rptValidation==false){return;}
+
       this.isDisabled1=false;
       var custAccNo = this.sparesReportForm.get('custAccNo').value;
       if (custAccNo === undefined || custAccNo === null) {
@@ -1037,7 +1057,7 @@ export class SparesReportsComponent implements OnInit {
       }
 
       var d1= this.sparesReportForm.get('toDate').value;
-      var tDate = this.pipe.transform(d1, 'dd-MMM-y');
+      var tDate1 = this.pipe.transform(d1, 'dd-MMM-y');
 
       var locId= this.sparesReportForm.get('locId').value;
 
@@ -1067,7 +1087,7 @@ export class SparesReportsComponent implements OnInit {
       const fileName = 'SP-Debtors-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.SPDebtorReport(tDate, sessionStorage.getItem('ouId'), locId,custAccNo,deptId,spDbAg1,spDbAg2,spDbAg3,spDbAg4)
+        this.reportService.SPDebtorReport(tDate1, sessionStorage.getItem('ouId'), locId,custAccNo,deptId,spDbAg1,spDbAg2,spDbAg3,spDbAg4)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -1076,7 +1096,7 @@ export class SparesReportsComponent implements OnInit {
           });
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.SPDebtorReport(tDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'),custAccNo,deptId,spDbAg1,spDbAg2,spDbAg3,spDbAg4)
+        this.reportService.SPDebtorReport(tDate1, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'),custAccNo,deptId,spDbAg1,spDbAg2,spDbAg3,spDbAg4)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -1086,6 +1106,9 @@ export class SparesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Stock Ledger') {
+
+      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.stockLedgerReport(fromDate, toDate, subInventory, segment, locId, userName)
           .subscribe(data => {
@@ -1112,6 +1135,8 @@ export class SparesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Stock Transfer Made Detail Report') {
+      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+
       const fileName = 'Stock Transfer Made Detail Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
@@ -1134,6 +1159,8 @@ export class SparesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Stock Transfer Made Summary Report') {
+      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+
       const fileName = 'Stock Transfer Made Summary Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
@@ -1156,6 +1183,8 @@ export class SparesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Stock Transfer Received Detail Report') {
+      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+
       const fileName = 'Stock Transfer Received Detail Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
@@ -1178,6 +1207,8 @@ export class SparesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Spares Stock Transfer Received Summary Report') {
+      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+
       const fileName = 'Spares Stock Transfer Received Summary Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
@@ -1200,6 +1231,8 @@ export class SparesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Spares Customer Off Take Statement') {
+      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+
       const fileName = 'Spares-Customer-Off-Take-Statement-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
@@ -1222,6 +1255,8 @@ export class SparesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Spares Back Order Qty Report') {
+      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+
       var custAccNo = this.sparesReportForm.get('custAccNo').value;
       var orderNumber = this.sparesReportForm.get('orderNumber').value;
       if (custAccNo === undefined || custAccNo === null) {
@@ -1252,6 +1287,8 @@ export class SparesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Spares Misc Issue Receipt Report') {
+      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+
       const fileName = 'Spares Misc Issue Receipt Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
@@ -1274,6 +1311,8 @@ export class SparesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Spares Sales Return Register') {
+      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+
       const fileName = 'Spares Sales Return Register-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
@@ -1296,6 +1335,8 @@ export class SparesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Income Statement') {
+      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+
       const fileName = 'Spares Income Statement-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
@@ -1318,6 +1359,8 @@ export class SparesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Spares Closing Stock As On Date') {
+      this.toDateValidation(tDate);if(this.rptValidation==false){return;}
+
       const fileName = 'Spares Closing Stock As On Date-' + sessionStorage.getItem('locName').trim() + '-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
@@ -1340,6 +1383,8 @@ export class SparesReportsComponent implements OnInit {
        }
     }
     else if (reportName === 'Spares Proforma Details Report') {
+      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+
       const fileName = 'Spares Proforma Details Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
@@ -1362,6 +1407,8 @@ export class SparesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Cheque Bounce Report') {
+      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+
       const fileName = 'Cheque Bounce Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
@@ -1424,6 +1471,8 @@ export class SparesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Spares Debtors Executive Wise report') {
+      this.toDateValidation(tDate);if(this.rptValidation==false){return;}
+
       var custAcctNo = this.sparesReportForm.get('custAccNo').value;
       var ticketNo = this.sparesReportForm.get('userName1').value
       if (custAcctNo === undefined || custAcctNo === null) {
@@ -1455,6 +1504,8 @@ export class SparesReportsComponent implements OnInit {
     }
 
     else if (reportName==='Sub Inventory Transfer Received Report'){
+      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+
       const fileName = 'Sub Inventory Transfer Received Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if ((Number(sessionStorage.getItem('deptId'))===4)){
@@ -1478,6 +1529,8 @@ export class SparesReportsComponent implements OnInit {
     }
 
     else if (reportName==='Sub Inventory Transfer Made Report'){
+      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+
       const fileName = 'Sub Inventory Transfer Made Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if ((Number(sessionStorage.getItem('deptId'))===4)){
@@ -1500,6 +1553,8 @@ export class SparesReportsComponent implements OnInit {
       } 
     }
     else if (reportName==='Internal Consumption Report'){
+      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+
       const fileName = 'Internal Consumption Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if ((Number(sessionStorage.getItem('deptId'))===4)){
@@ -1522,6 +1577,8 @@ export class SparesReportsComponent implements OnInit {
       } 
     }
     else if (reportName === 'Customer Ledger Report') {
+      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+
       var custAccNo = this.sparesReportForm.get('custAccNo').value;
       if (custAccNo === undefined || custAccNo === '' || custAccNo === null) {
         alert('First Enter customer Account No.!');
@@ -1544,6 +1601,8 @@ export class SparesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Credit Note Register') {
+      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+
       const fileName = 'Credit Note Register-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
@@ -1581,6 +1640,7 @@ export class SparesReportsComponent implements OnInit {
       })
     }
     else if (reportName ==='IRN Generation Report'){
+      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
       const fileName = 'IRN Generation Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
@@ -1606,6 +1666,7 @@ export class SparesReportsComponent implements OnInit {
     }
 
     else if (reportName ==='Spares Issue Summary-Transaction Wise'){
+      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
       const fileName = 'Spares Issue Summary-Transaction Wise-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
@@ -1631,6 +1692,8 @@ export class SparesReportsComponent implements OnInit {
     }
 
     else if (reportName==='Spares Zero Stock Report'){
+      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+
       const fileName = 'Spares Zero Stock Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if ((Number(sessionStorage.getItem('deptId'))===4)){
@@ -1654,6 +1717,7 @@ export class SparesReportsComponent implements OnInit {
     }
 
     else if (reportName ==='Spares Issue Summary-Average Cost'){
+      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
       const fileName = 'Spares Issue Summary-Average Cost-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
@@ -1716,6 +1780,31 @@ export class SparesReportsComponent implements OnInit {
       console.log(department);
       this.DepartmentList = department;
     }
+  }
+
+
+  fromToDateValidation(fDate,tDate){
+    this.rptValidation=true;
+   
+    if(fDate==null || fDate == undefined || fDate.trim() == ''){this.rptValidation=false;}
+    if(tDate==null || tDate == undefined || tDate.trim() == ''){this.rptValidation=false;}
+
+    if (fDate>tDate ) { this.rptValidation=false;}
+    if(this.rptValidation==false) {alert ("Please Check From date / To Date..");
+    this.closeResetButton=true;
+    this.dataDisplay='';
+    this.isDisabled1=false; }
+  }
+
+  toDateValidation(tDate){
+    this.rptValidation=true;
+   
+    if(tDate==null || tDate == undefined || tDate.trim() == ''){this.rptValidation=false;}
+
+    if(this.rptValidation==false) {alert ("Please Check Date..");
+    this.closeResetButton=true;
+    this.dataDisplay='';
+    this.isDisabled1=false; }
   }
 
 }
