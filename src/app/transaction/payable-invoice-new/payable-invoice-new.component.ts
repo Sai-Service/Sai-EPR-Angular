@@ -3695,7 +3695,7 @@ export class PayableInvoiceNewComponent implements OnInit {
 
 
   executeAction() {
-    if (this.cnfMsgType.includes("INVOICE")) {
+    if (this.cnfMsgType.includes("SAVE")) {
       this.HeaderValidate();
     }
     //     if(this.msgType.includes("Navigate")) {
