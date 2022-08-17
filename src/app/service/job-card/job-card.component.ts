@@ -2319,26 +2319,32 @@ export class JobCardComponent implements OnInit {
 
   updateArInvoice() {
        const formValue: IjobCard = this.tranceFun(this.jobcardForm.value);
+
+      //  this.CheckJobHraderValidation()
+
+      //  if(this.jobHeaderValidation) {
+       
+       var  resp=confirm("Do You Want to Update this Job Card Details ???");
+       if(resp==true) {
+   
         formValue.emplId = Number(sessionStorage.getItem('emplId'));
         formValue.dmsCustId = Number(this.jobcardForm.get('dmsCustId').value);
-      var matDis=this.jobcardForm.get('matDiscout').value;
-      var labDis=this.jobcardForm.get('labDiscount').value;
+        var matDis=this.jobcardForm.get('matDiscout').value;
+        var labDis=this.jobcardForm.get('labDiscount').value;
         // alert ( "matDis,labDis :" +matDis +","+labDis);
 
       // if(this.dispReadyInvoice===false) {alert( "Updation Not allowed...");  return;}
 
         var jcId =this.jobcardForm.get("jobCardId").value
         var jtype =this.jobcardForm.get('jcType').value
-             
-      // {alert("Update Jcard....wip..."+jcId); 
-
-      this.serviceService.jobcardUpdateSubmit(formValue).subscribe((res: any) => {
+        this.serviceService.jobcardUpdateSubmit(formValue).subscribe((res: any) => {
         if (res.code === 200) { alert(res.message);  } else  {
         if (res.code === 400) { alert(res.message); }
-        }
+        } });
 
-      });
-      } 
+      }
+      // } 
+    }
 
   CheckJobHraderValidation(){
     const formValue: IjobCard = this.tranceFun(this.jobcardForm.value);
@@ -2411,7 +2417,7 @@ export class JobCardComponent implements OnInit {
 
     if(this.jobHeaderValidation) {
     
-    var  resp=confirm("Do You Want Save this Job Card Details ???");
+    var  resp=confirm("Do You Want to Create this Job Card ???");
     if(resp==true) {
 
     formValue.emplId = Number(sessionStorage.getItem('emplId'));

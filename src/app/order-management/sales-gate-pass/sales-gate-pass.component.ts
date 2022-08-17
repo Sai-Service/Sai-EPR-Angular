@@ -60,6 +60,10 @@ export class SalesGatePassComponent implements OnInit {
   isVisiblegatePassDetails: boolean = false;
   isVisiblegatePassVehicleDetails:boolean=false;
 
+  insType :string;
+  insPolicyNo:string;
+  insPolicyDate:string;
+
 
   constructor(private fb: FormBuilder, private router: Router, private router1: ActivatedRoute, private service: MasterService, private orderManagementService: OrderManagementService) {
     this.SalesGatepassForm = fb.group({
@@ -88,6 +92,10 @@ export class SalesGatePassComponent implements OnInit {
       salesExeName: [],
       balOutstandAmt: [],
       excessAmt: [],
+
+      insType :[],
+      insPolicyNo:[],
+      insPolicyDate:[],
     })
   }
   ngOnInit(): void {

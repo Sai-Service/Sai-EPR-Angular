@@ -56,7 +56,7 @@
     </tr>
     <tr>
         <td style="width: 15%" class="LabelFontStyle">  Customer&nbsp;Name&nbsp;: </td>
-        <td><input disabled type="text" formControlName="custName" [(ngModel)]='custName' id="custName" value="custName"  class="form-control" style="height: 20px;width: 160px;"></td>
+        <td colspan="3"><input disabled type="text" formControlName="custName" [(ngModel)]='custName' id="custName" value="custName"  class="form-control" style="height: 20px;width: 100%;"></td>
         <td style="width: 15%" class="LabelFontStyle">  Customer&nbsp;Address&nbsp;: </td>
         <td colspan="3"><input disabled type="text" formControlName="custAdd" [(ngModel)]='custAdd' id="custAdd" value="custAdd"  class="form-control" style="height: 20px;width: 100%;"></td>
     </tr>
@@ -94,6 +94,16 @@
         <td style="width: 15%" class="LabelFontStyle"> Gatepass&nbsp;No&nbsp;: </td>
         <td><input disabled type="number" formControlName="gatepassNo" [ngModel]="gatepassNo" id="gatepassNo" value="gatepassNo"  class="form-control" style="height: 20px;width: 160px;"></td>
     </tr>
+
+    <tr>
+        <td style="width: 15%" class="LabelFontStyle">Insurance&nbsp;Type&nbsp;:&nbsp;</td>
+        <td><input disabled type="text" formControlName="insType" [(ngModel)]='insType' value={{insType}} class="form-control" style="height: 20px;width: 160px;" ></td>
+        <td style="width: 15%" class="LabelFontStyle"> Policy&nbsp;Number&nbsp;: </td>
+        <td><input disabled type="text" formControlName="insPolicyNo" [ngModel]="insPolicyNo" id="insPolicyNo" value="insPolicyNo"  class="form-control"  style="height: 20px;width: 160px;"></td>
+        <td style="width: 15%" class="LabelFontStyle"> Policy&nbsp;Date&nbsp;:</td>
+        <td><input disabled type="date" formControlName="insPolicyDate"  id="insPolicyDate" value="insPolicyDate" [(ngModel)]="insPolicyDate" class="form-control" style="height: 20px;width: 160px;"></td>
+
+    </tr>
 </table>
     </fieldset>
     <div [style.display]="isVisiblegatePassVehicleDetails ? 'block' : 'none'">
@@ -102,18 +112,30 @@
            Vehicle Details Updation</legend>
            <table class="center" style="width: 100%;">
             <tr>
-                <td style="font-weight: bold;" class="LabelFontStyle1"> Vehicle&nbsp;Item&nbsp;:&nbsp;  </td>
-                <td><input disabled  class="form-control" formControlName="segment" style="border:solid 1px black" [(ngModel)]="segment"> 
-                    <input disabled hidden type="number" class="form-control" formControlName="itemId" [(ngModel)]="itemId" style="border:solid 1px black" >
-                </td>&nbsp;&nbsp; 
+                <input disabled hidden type="number" class="form-control" formControlName="itemId" [(ngModel)]="itemId" style="border:solid 1px black" >
+
+                <!-- <td style="font-weight: bold;" class="LabelFontStyle1"> Vehicle&nbsp;Item&nbsp;:&nbsp;  </td>
+                <td><input disabled  class="form-control" formControlName="segment" style="border:solid 1px black" [(ngModel)]="segment"> </td>
+                 -->
+                <!-- </td>&nbsp;&nbsp;  -->
+
                 <td style="font-weight: bold;" class="LabelFontStyle1"> Vehicle&nbsp;No&nbsp;:&nbsp;  </td>
-                <td><input  class="form-control" formControlName="regNo" style="border:solid 1px black" [(ngModel)]="regNo"> </td>
+                <td><input  class="form-control" formControlName="regNo" style="border:solid 1px black" [(ngModel)]="regNo" placeholder="Enter Vehicle Registration No"> </td>
                 <td style="font-weight: bold;" class="LabelFontStyle1"> Vehicle&nbsp;Date&nbsp;:&nbsp;  </td>
                 <td><input type="date"  class="form-control" formControlName="regDate" style="border:solid 1px black" [(ngModel)]="regDate"> </td>
+               </tr>   
+
+            <tr>
+                <td style="width: 15%" class="LabelFontStyle"> Policy&nbsp;Number&nbsp;: </td>
+                <td><input  type="text" formControlName="insPolicyNo" [ngModel]="insPolicyNo" id="insPolicyNo" value="insPolicyNo"  class="form-control"  placeholder="Enter Insurance Policy no"></td>
+                <td style="width: 15%" class="LabelFontStyle"> Policy&nbsp;Date&nbsp;:</td>
+                <td><input  type="date" formControlName="insPolicyDate"  id="insPolicyDate" value="insPolicyDate" [(ngModel)]="insPolicyDate" class="form-control" ></td>
+                <td></td>
                 <td  class="center">
-                    <button type="submit" class="btn btn-primary" id="register" (click)="vehicleNoupdate(itemId,regNo,regDate)" style="width: fit-content;">vehicle No Update</button> 
+                    <button type="submit" class="btn btn-primary" id="register" (click)="vehicleNoupdate(itemId,regNo,regDate)" style="width: fit-content;">Update Vehicle No & Policy No</button> 
                 </td>
-            </tr>   
+           
+            </tr>
            </table>
     </fieldset>
 </div>
