@@ -49,9 +49,9 @@ export class SparesReportsComponent implements OnInit {
   tolocId: number;
   orderNumber: number;
   custAccNo: number;
-  spInvAging1: number;
-  spInvAging2: number;
-  spInvAging3: number;
+  spInvAging1: number=30;
+  spInvAging2: number=60;
+  spInvAging3: number=90;
 
   spDbAging1: number=15;
   spDbAging2: number=30;
@@ -1048,44 +1048,47 @@ export class SparesReportsComponent implements OnInit {
     }
     else if (reportName === 'Spares Debtor Report') {
 
-      this.toDateValidation(tDate);if(this.rptValidation==false){return;}
-
       this.isDisabled1=false;
+      this.toDateValidation(tDate);if(this.rptValidation==false){return;}
       var custAccNo = this.sparesReportForm.get('custAccNo').value;
-      if (custAccNo === undefined || custAccNo === null) {
-        custAccNo = '';
-      }
 
-      var d1= this.sparesReportForm.get('toDate').value;
+      if (custAccNo<=0 || custAccNo==undefined || custAccNo==null ) {
+        this.closeResetButton=true;this.dataDisplay = 'Please check Customer No.'
+        return; }
+
+
+
+      var d1= this.sparesReportForm.get('toDate').value;   
       var tDate1 = this.pipe.transform(d1, 'dd-MMM-y');
-
       var locId= this.sparesReportForm.get('locId').value;
-
+      
       var spDbAg1= this.sparesReportForm.get('spDbAging1').value;
       var spDbAg2= this.sparesReportForm.get('spDbAging2').value;
       var spDbAg3= this.sparesReportForm.get('spDbAging3').value;
       var spDbAg4= this.sparesReportForm.get('spDbAging4').value;
 
-      // alert(spDbAg1+","+spDbAg2+","+spDbAg3+","+spDbAg4);
+      if(spDbAg1<0 || spDbAg1==null || spDbAg1==undefined) {this.rptValidation=false;}
+      if(spDbAg2<0 || spDbAg2==null || spDbAg2==undefined) {this.rptValidation=false;}
+      if(spDbAg3<0 || spDbAg3==null || spDbAg3==undefined) {this.rptValidation=false;}
+      if(spDbAg4<0 || spDbAg4==null || spDbAg4==undefined) {this.rptValidation=false;}
 
-      if (spDbAg1 > spDbAg2){
-        alert('Please check Aging1-2.!');this.closeResetButton=true; this.dataDisplay = 'Please check Aging.';return;}
-      else if (spDbAg1 >spDbAg3){
-        alert('Please check Aging1-3.!');this.closeResetButton=true;this.dataDisplay = 'Please check Aging.'; return;}
-      else if (spDbAg1 > spDbAg4){
-        alert('Please check Aging1-4.!');this.closeResetButton=true;this.dataDisplay = 'Please check Aging.'; return;}
+      if (spDbAg1 > spDbAg2) {this.rptValidation=false;}
+      else if (spDbAg1 >spDbAg3){this.rptValidation=false;}
+      else if (spDbAg1 > spDbAg4){this.rptValidation=false;}
+      else if (spDbAg2 > spDbAg3){this.rptValidation=false;}
+      else if (spDbAg2 > spDbAg4){this.rptValidation=false;}
+      else if (spDbAg3 > spDbAg4){this.rptValidation=false;}
 
-     else if (spDbAg2 > spDbAg3){
-        alert('Please check Aging2-3.!');this.closeResetButton=true;this.dataDisplay = 'Please check Aging.'; return;}
-      else if (spDbAg2 > spDbAg4){
-        alert('Please check Aging2-4.!');this.closeResetButton=true;this.dataDisplay = 'Please check Aging.'; return;}
 
-      else if (spDbAg3 > spDbAg4){
-        alert('Please check Aging3-4.!');this.closeResetButton=true;this.dataDisplay = 'Please check Aging.'; return;}
-
+    if(this.rptValidation ==false) {this.closeResetButton=true;this.dataDisplay = 'Please check Aging Values.';  return; }
+ 
+      
       this.isDisabled1=true;
+
+
       const fileName = 'SP-Debtors-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+     
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.SPDebtorReport(tDate1, sessionStorage.getItem('ouId'), locId,custAccNo,deptId,spDbAg1,spDbAg2,spDbAg3,spDbAg4)
           .subscribe(data => {
@@ -1431,24 +1434,26 @@ export class SparesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Spares Inventory Aging Report') {
+      this.isDisabled1=false;
+      this.rptValidation=true;
       var spInvAging1 = this.sparesReportForm.get('spInvAging1').value;
       var spInvAging2 = this.sparesReportForm.get('spInvAging2').value;
       var spInvAging3 = this.sparesReportForm.get('spInvAging3').value;
-      if (spInvAging1 > spInvAging2) {
-        alert('Please check Aging.!');
-        this.dataDisplay = 'Please check Aging.';
-        return;
-      }
-      else if (spInvAging1 > spInvAging3) {
-        alert('Please check Aging.!');
-        this.dataDisplay = 'Please check Aging.';
-        return;
-      }
-      else if (spInvAging2 > spInvAging3) {
-        alert('Please check Aging.!');
-        this.dataDisplay = 'Please check Aging.';
-        return;
-      }
+      
+
+      if(spInvAging1<0 || spInvAging1==null || spInvAging1==undefined) {this.rptValidation=false;}
+      if(spInvAging2<0 || spInvAging2==null || spInvAging2==undefined) {this.rptValidation=false;}
+      if(spInvAging3<0 || spInvAging3==null || spInvAging3==undefined) {this.rptValidation=false;}
+
+      
+      if (spInvAging1 > spInvAging2) {this.rptValidation=false;}
+      else if (spInvAging1 >spInvAging3){this.rptValidation=false;}
+      else if (spInvAging2 > spInvAging3){this.rptValidation=false;}
+
+      if(this.rptValidation ==false) {this.closeResetButton=true;this.dataDisplay = 'Please check Aging Values.';  return; }
+     
+      this.isDisabled1=true;
+
       const fileName = 'Spares Inventory Aging Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
