@@ -224,7 +224,7 @@ export class SalesGatePassComponent implements OnInit {
   SalesGatepass(SalesGatepassForm) { }
 
   vehicleNoupdate(itemId, regNo, regDate) {
-    if (regNo === undefined || regNo === undefined || regDate === undefined) {
+    if (regNo === undefined || itemId === undefined || regDate === undefined) {
       alert('Please Enter All required Details...!')
       return;
     }
