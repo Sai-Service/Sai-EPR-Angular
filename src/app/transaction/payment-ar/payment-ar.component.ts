@@ -1312,6 +1312,9 @@ if(this.deptId==2){
   }
 
   unApplyReceipt(receiptNumber){
+
+    var  resp=confirm("Do You Want to Un-Apply This Receipt ???");
+    if(resp==true) {
     // alert(receiptNumber)
     this.service.unappliedReceipt(receiptNumber)
     .subscribe(
@@ -1324,6 +1327,7 @@ if(this.deptId==2){
           alert(data.message)
         }
       })
+    }
   }
   
 
@@ -3381,9 +3385,9 @@ if(this.deptId==2){
 
 
 
-          UnapplySave(){alert("UnApply Save ....wip")
-          var  resp=confirm("Do You Want to Save this Receipt ???");
-          if(resp==true) {}
+          UnapplySave(){
+          var  resp=confirm("Do You Want to Un-Apply this Transaction(s)???");
+          if(resp==true) {alert("UnApply Save ....WIP")}
         }
 
   
