@@ -1049,13 +1049,18 @@ export class SparesReportsComponent implements OnInit {
     else if (reportName === 'Spares Debtor Report') {
 
       this.isDisabled1=false;
+      // alert('Hello');
       this.toDateValidation(tDate);if(this.rptValidation==false){return;}
       var custAccNo = this.sparesReportForm.get('custAccNo').value;
 
-      if (custAccNo<=0 || custAccNo==undefined || custAccNo==null ) {
-        this.closeResetButton=true;this.dataDisplay = 'Please check Customer No.'
-        return; }
+      // if (custAccNo<=0 || custAccNo==undefined || custAccNo==null ) {
+      //   this.closeResetButton=true;
+      //   // this.dataDisplay = 'Please check Customer No.'
+      //   return; }comment by vinita
 
+      if (custAccNo<=0 || custAccNo==undefined || custAccNo==null ) {
+        custAccNo='';
+          }
 
 
       var d1= this.sparesReportForm.get('toDate').value;   
