@@ -1,12 +1,12 @@
 import { Component, OnInit} from '@angular/core';
 import { FormGroup, FormBuilder} from '@angular/forms';
 import { Router, ActivatedRoute} from '@angular/router';
-import { ReportServiceService } from 'src/app/report/report-service.service'
+import { ReportServiceService } from '../report-service.service'
 import { DatePipe,Location } from '@angular/common';
-import { MasterService } from 'src/app/master/master.service';
+import { MasterService } from '../../master/master.service';
 import { saveAs } from 'file-saver';
 import { data } from 'jquery';
-import { TransactionService } from 'src/app/transaction/transaction.service';
+import { TransactionService } from '../../transaction/transaction.service';
 
 const MIME_TYPES = {
   pdf: 'application/pdf',
@@ -867,6 +867,9 @@ reportName:string;
       var sourceName=this.reportForm.get('source').value;
       const fileName = 'Refund Register-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      // if(deptName==='NULL'){
+      //   deptName='';
+      // }
       this.reportService.refundRegister(fromDate,toDate,sessionStorage.getItem('ouId'),locId,depName)
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
