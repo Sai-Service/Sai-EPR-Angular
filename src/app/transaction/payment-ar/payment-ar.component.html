@@ -580,7 +580,8 @@
                                                 <select disabled formControlName="receiptMethodId" id="receiptMethodId" [(ngModel)]="receiptMethodId" class="form-control"  style="background-color: yellow;">
                                                     <option disabled>--Select--</option>
                                                     <option *ngFor="let sc of  ReceiptMethodList " [ngValue]="sc.receiptMethodId">
-                                                        {{sc.receiptMethodId}}-{{sc.methodName}} 
+                                                        <!-- {{sc.receiptMethodId}}- -->
+                                                        {{sc.methodName}} 
                                                     </option>
                                                 </select>
         

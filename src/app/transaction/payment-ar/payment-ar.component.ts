@@ -986,7 +986,8 @@ if(this.deptId==2){
 
   onPayTypeSelected(payType: any, rmStatus: any) {
     // alert('paytype =' +payType  + " LocId :"+ this.locId + " Ou Id :"+this.ouId + " Deptid : "+ this.deptId + " Status :"+rmStatus);
-
+    this.ReceiptMethodList=null;
+    
     if (this.deptId != 4) {
       if (payType === 'CONTROL ACCOUNT') {
         this.paymentArForm.get('payType').reset();
@@ -2960,8 +2961,6 @@ if(this.deptId==2){
       this.checkValidation = false;
       return;
     }
-
-
 
     if (formValue.payType === undefined || formValue.payType === null) {
       this.checkValidation = false;
