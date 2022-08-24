@@ -636,8 +636,10 @@ export class ReportServiceService {
     });
   }
 
-  salesPendingPymntReport(fromDate,toDate,locId,ouId){
-    const REQUEST_URI = this.ServerUrl +`/SalesReports/SlPendingPymtRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
+  salesPendingPymntReport(toDate,locId,ouId){
+    // const REQUEST_URI = this.ServerUrl +`/SalesReports/SlPendingPymtRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
+    const REQUEST_URI = this.ServerUrl +`/SalesReports/SlPendingPymtRep?toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
+    // http://localhost:8081/SalesReports/SlPendingPymtRep?toDate=05-APR-2022&ouId=22&locId=2203
     return this.http.get(REQUEST_URI, {
       responseType: 'arraybuffer',
       headers: this.headers,
