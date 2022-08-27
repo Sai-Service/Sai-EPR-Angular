@@ -2706,7 +2706,20 @@ OrderCategoryList(): Observable<any> {
     const url =(this.ServerUrl +`/arCashReceipts/apply/inv/${mRcptNo}`);
     return this.http.post(url, ArReceiptApplyRecord, options);
   }
-  ////////////////////////// ///////////////////////////////////////
+  ////////////////////////// UNAPPLY///////////////////////////////////////
+
+  UnApplyArReceiptSubmit(ArReceiptUnApplyRecord,mRcptNo) {
+    // alert( "MS >> AR RECEIPT REVERSAL" +ArReceiptReversalRecord);
+    const options = {
+      headers: this.headers
+    };
+    const url = (this.ServerUrl + `/arCashReceipts/unapplyRcptManNew/${mRcptNo}`);
+    return this.http.put(url, ArReceiptUnApplyRecord, options);
+    // http://localhost:8081/arCashReceipts/unapplyRcptManNew/{receiptNumber}
+  }
+
+
+
 
    ////////////////////////// RECEIPT REFUND SUBMIT /////////////////////
    public ArReceiptRefundSubmit(ArReceiptRefundRecord) {
@@ -2752,11 +2765,6 @@ OrderCategoryList(): Observable<any> {
       return this.http.get(this.ServerUrl + `/arCashReceipts/Search/${deptId}?accountNo=${custActNo}&orgId=${ouId}&locId=${locId}`);
       
     }
-
-
-   
-
-
 
     getArReceiptDetailsByRcptNo (rcptNumber): Observable<any> {
       return this.http.get(this.ServerUrl + `/arCashReceipts/receipt/${rcptNumber}`);

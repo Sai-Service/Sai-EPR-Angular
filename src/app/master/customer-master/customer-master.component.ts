@@ -1207,6 +1207,12 @@ export class CustomerMasterComponent implements OnInit {
           var payTerm = this.payTermDescList.find(d => d.lookupValueId === this.lstcomments.termId);
           this.customerMasterForm.patchValue({ title: this.lstcomments.title, paymentType: payTerm.lookupValueId });
           this.displayadditional = false;
+          this.customerMasterForm.get('fName').disable();
+          this.customerMasterForm.get('mName').disable();
+          this.customerMasterForm.get('lName').disable();
+          this.customerMasterForm.get('custName').disable();
+          
+
           this.customerMasterForm.get('address1').disable();
           this.customerMasterForm.get('address2').disable();
           this.customerMasterForm.get('address3').disable();

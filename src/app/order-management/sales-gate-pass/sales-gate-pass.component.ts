@@ -1,5 +1,3 @@
-
-
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
@@ -26,6 +24,10 @@ const MIME_TYPES = {
 })
 export class SalesGatePassComponent implements OnInit {
   SalesGatepassForm: FormGroup;
+
+  public insNameList: Array<string>[];
+  public insSiteList: Array<string>[];
+
   gatepassNo: number;
   dateOfDelv: Date;
   itemId: number;
@@ -37,6 +39,8 @@ export class SalesGatePassComponent implements OnInit {
   vehicleNo: String;
   serviceLoc: String;
   orderNumber: number;
+  // orderNumber=222220210600263;
+   
   trxNumber: number;
   trxDate: Date;
   dmsSob: String;
@@ -61,8 +65,14 @@ export class SalesGatePassComponent implements OnInit {
   isVisiblegatePassVehicleDetails:boolean=false;
 
   insType :string;
-  insPolicyNo:string;
-  insPolicyDate:string;
+  insuDate:string;
+  policyNo :string='222220210600263';
+  insuPeriod:number;
+  insurerCompId:number;
+  insurerSiteId:number;
+  insurerIdName:string;
+  insurerSiteName:string;
+  isDisabledIns=true;
 
 
   constructor(private fb: FormBuilder, private router: Router, private router1: ActivatedRoute, private service: MasterService, private orderManagementService: OrderManagementService) {
@@ -94,8 +104,13 @@ export class SalesGatePassComponent implements OnInit {
       excessAmt: [],
 
       insType :[],
-      insPolicyNo:[],
-      insPolicyDate:[],
+      policyNo:[],
+      insuDate:[],
+      insuPeriod:[],
+      insurerCompId:[],
+      insurerSiteId:[],
+      insurerIdName:[],
+      insurerSiteName:[],
     })
   }
   ngOnInit(): void {
@@ -112,6 +127,7 @@ export class SalesGatePassComponent implements OnInit {
       }
     });
 
+
     this.service.getLocationSearch1(sessionStorage.getItem('ouId'))
       .subscribe(
         data => {
@@ -119,6 +135,14 @@ export class SalesGatePassComponent implements OnInit {
           console.log(this.BillShipList);
         }
       );
+
+
+      this.service.insNameList()
+      .subscribe(
+        data => {
+        this.insNameList = data;
+        console.log(this.insNameList);
+      } );
   }
 
   gatePassOrderNo(orderNumber) {
@@ -150,13 +174,16 @@ export class SalesGatePassComponent implements OnInit {
           this.contactPerson = this.lstcomments.contactPerson;
           this.gatepassNo = this.lstcomments.gatePassNo;
           this.dateOfDelv = this.lstcomments.orderDate;
+          this.insType= this.lstcomments.insType;
           if (this.lstcomments.gatePassNo != 0) {
             this.isVisiblegatePassDetails = false;
             this.isVisiblegatePassVehicleDetails=false;
+
           }
           else if (this.lstcomments.gatePassNo === 0 && this.lstcomments.vehicleNo ==='NA') {
             this.isVisiblegatePassDetails = false;
             this.isVisiblegatePassVehicleDetails=true;
+
           }
           else if (this.lstcomments.gatePassNo === 0 && this.lstcomments.vehicleNo !='NA'){
             this.isVisiblegatePassDetails = true;
@@ -204,6 +231,27 @@ export class SalesGatePassComponent implements OnInit {
   //   );
   //    }
 
+  // -------------------New GatePass Fn ---by rk 27/8/22
+  SalesGatePassPost(){
+    const formValue =this.SalesGatepassForm.value;
+
+    this.orderManagementService.SalesGatePassGenSubmit(formValue).subscribe((res: any) => {
+      if (res.code === 200) {
+        alert(res.message);
+        this.gatePassOrderNo(this.orderNumber);
+        //window.location.reload();
+        this.gatepassNo = res.obj;
+      } else {
+        if (res.code === 400) {
+          alert(res.message + '---' + res.obj);
+          // window.location.reload();
+        }
+      }
+    });
+  }
+
+
+// -------------------Old GatePass Fn ---
   orderNumberPost(orderNumber, locId) {
     this.orderManagementService.orderNoPost(orderNumber, this.emplId, locId).subscribe((res: any) => {
       if (res.code === 200) {
@@ -218,10 +266,13 @@ export class SalesGatePassComponent implements OnInit {
         }
       }
     });
-
   }
 
+
+
   SalesGatepass(SalesGatepassForm) { }
+  get f() { return this.SalesGatepassForm.controls; }
+
 
   vehicleNoupdate(itemId, regNo, regDate) {
     if (regNo === undefined || itemId === undefined || regDate === undefined) {
@@ -268,5 +319,39 @@ export class SalesGatePassComponent implements OnInit {
         printWindow.open
       });
   }
+
+  onInsurerNameSelected(customerId: number) {
+    // alert('in '+ customerId)
+    if(customerId >0) {
+    this.service.insSiteList(customerId)
+      .subscribe(
+        data => {
+          this.insSiteList = data.customerSiteMasterList;
+          console.log(this.insSiteList);
+        }
+      );
+  } }
+
+
+  validatePolicyDate(policyDate) {
+    var currDate = new Date();
+    var invDate = this.SalesGatepassForm.get('invoiceDt').value;
+    var billDate = new Date(invDate);
+    var insDate =new Date(policyDate);
+    alert (insDate +","+billDate);
+    if (insDate < billDate) {
+      alert("POLICY DATE :" + "Should not be below Vehcile Sale Date");
+      this.insuDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+    }
+  }
+
+    validatePolicyTerm(prd) { 
+      // alert ("Period : "+prd);
+      if(prd<0 || prd ==undefined || prd==null) {alert ("POLICY TERM : Please Enter valid Policy Period..")
+      this.SalesGatepassForm.patchValue({insuPeriod:0});
+     }
+      
+
+    }
 
 }

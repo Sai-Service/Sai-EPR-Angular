@@ -914,18 +914,18 @@
                                 </td> 
 
                                 <!-- Current Code ....Vinita/Jyoti -->
-                                <td [style.display]="isVisibleUnApplyReceipt ? 'block' : 'none'">
+                                <!-- <td [style.display]="isVisibleUnApplyReceipt ? 'block' : 'none'">
                                     <button type="button" class="btn btn-primary"   style="width: 8rem;" (click)="unApplyReceipt(receiptNumber)" >
                                     Un-Apply Receipt
                                     </button>
-                                </td>  
+                                </td>   -->
 
                                  <!-- New Code ....Rk -->
-                                <!-- <td [style.display]="isVisibleUnApplyReceipt ? 'block' : 'none'">
+                                <td [style.display]="isVisibleUnApplyReceipt ? 'block' : 'none'">
                                     <button type="button"  class="btn btn-primary" 
                                     data-toggle="modal" data-target="#appliedList"  (click)="LoadAppliedInvoices()" style="width:fit-content;color: black;">
                                     &nbsp;Un-Apply Receipt</button>
-                                </td> -->
+                                </td>
 
 
                                    <!-- ==========================SEARCH & APPLY =============================== -->
@@ -1559,7 +1559,7 @@
                                    
 
                                    <button [disabled]="isDisabled1" style="width: 8em;" type="button" class="btn btn-info" (click)="validateUnapply()">Validate</button>
-                                   <button [disabled]="isDisabled2" style="width: 8em;" type="button" class="btn btn-info" (click)="UnapplySave()">Save</button>
+                                   <button [disabled]="isDisabled2" style="width: 8em;" type="button" class="btn btn-info" (click)="UnapplySave()">UnApply</button>
 
                                    
 

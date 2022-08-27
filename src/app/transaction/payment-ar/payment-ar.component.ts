@@ -10,8 +10,8 @@ import { relativeTimeRounding } from 'moment';
 import { ServiceService } from 'src/app/service/service.service';
 import { ReturnStatement } from '@angular/compiler';
 
-interface IPaymentRcptAr {
 
+interface IPaymentRcptAr {
   referenceNo: string;
   referenceDate:string;
   refType: string;
@@ -26,7 +26,6 @@ interface IPaymentRcptAr {
   receiptNumber: number;
   receiptDate: Date;
   receiptStatus: string;
-
   payType: string;
   receiptMethodId: number;
   paymentAmt: number;
@@ -34,7 +33,6 @@ interface IPaymentRcptAr {
   bankBranch: string;
   checkNo: string;
   checkDate: string;
-
   reversalDate: string;
   reversalComment: string;
   reversalReasonCode: string;
@@ -42,13 +40,10 @@ interface IPaymentRcptAr {
   reversalCategory: string;
   status: string;
   chqBounceCharge: number;
-
   tdsAmount: number;
   tdstrxNumber: string;
   policyTerm:number;
   customerSiteId: number;
-
-
 }
 
 @Component({
@@ -1491,8 +1486,8 @@ if(this.deptId==2){
             }
 
             // alert(data.obj.oePayList[0].status);
-            if (data.obj.oePayList[0].status=='APPLIED'){
-              // alert(Number(sessionStorage.getItem('deptId')))
+            // if (data.obj.oePayList[0].status=='APPLIED'){
+              if (data.obj.oePayList[0].totAppliedtAmount>0){
               if (Number(sessionStorage.getItem('deptId'))==4){
               this.isVisibleUnApplyReceipt=true;
             }
@@ -2480,7 +2475,6 @@ if(this.deptId==2){
 
 
     for (let i = 0; i < len1; i++) {
-
       // if (applLineArr[i].applyrcptFlag === true) {
       this.CheckLineValidations(i);
       // } 
@@ -2540,6 +2534,54 @@ if(this.deptId==2){
         }
       }
     });
+  }
+
+
+  UnapplySave(){
+    var  resp=confirm("Do You Want to Un-Apply this Transaction(s)???");
+    if(resp==true) {
+      this.isDisabled2=true;
+    var patch = this.paymentArForm.get('appliedInvLine') as FormArray;
+    var applLineArr = this.paymentArForm.get('appliedInvLine').value;
+    var len1 = applLineArr.length;
+
+    // alert ("this.appliedInvLineArray().length  :" +len1);
+
+    
+    let variants = <FormArray>this.appliedInvLineArray();
+    var receiptNumber = this.paymentArForm.get('receiptNumber').value;
+    var receiptDate = this.paymentArForm.get('receiptDate').value;
+    var customerId = this.paymentArForm.get('customerId').value;
+    var custAccountNo = this.paymentArForm.get('custAccountNo').value;
+    var customerSiteId = this.paymentArForm.get('customerSiteId').value;
+    var custName = this.paymentArForm.get('custName').value;
+
+   
+    for (let i = 0; i < this.appliedInvLineArray().length; i++) {
+      let variantFormGroup = <FormGroup>variants.controls[i];
+      variantFormGroup.addControl('receiptNumber', new FormControl(receiptNumber, Validators.required));
+      variantFormGroup.addControl('receiptDate', new FormControl(receiptDate, Validators.required));
+      variantFormGroup.addControl('customerId', new FormControl(customerId, Validators.required));
+      variantFormGroup.addControl('custAccountNo', new FormControl(custAccountNo, Validators.required));
+      variantFormGroup.addControl('customerSiteId', new FormControl(customerSiteId, Validators.required));
+      variantFormGroup.addControl('custName', new FormControl(custName, Validators.required));
+   
+    }
+
+        console.log(variants.value);
+
+            this.service.UnApplyArReceiptSubmit(variants.value,receiptNumber).subscribe((res: any) => {
+              if (res.code === 200) {
+                alert('Record Unapplied Successfully -'+res.message);
+              } else {
+                if (res.code === 400) {
+                  this.isDisabled2=false;;
+
+                  alert('Error While Unapplying Record:-'+res.message );
+                }
+              }
+            });
+          }
   }
 
 
@@ -3384,10 +3426,7 @@ if(this.deptId==2){
 
 
 
-          UnapplySave(){
-          var  resp=confirm("Do You Want to Un-Apply this Transaction(s)???");
-          if(resp==true) {alert("UnApply Save ....WIP")}
-        }
+       
 
   
 
