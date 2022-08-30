@@ -101,6 +101,12 @@ export class SalesReportsComponent implements OnInit {
   panelamcHistrory:boolean=false;
   ispanelTolocationOu:boolean=false;
 
+  age1: number=20;
+  age2: number=30;
+  age3: number=45;
+  age4: number=60;
+
+
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) {
     this.salesReportForm = this.fb.group({
       fromDate: [''],
@@ -1038,13 +1044,13 @@ export class SalesReportsComponent implements OnInit {
           this.closeResetButton = true;
           return;
         }
-        this.reportService.SPDebtorReport(toDate, sessionStorage.getItem('ouId'), locId, custAccNo, deptId,0,0,0,0)
-          .subscribe(data => {
-            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-            this.isDisabled1 = false;
-            this.closeResetButton = true;
-            this.dataDisplay = ''
-          })
+        this.reportService.SPDebtorReport(toDate, sessionStorage.getItem('ouId'), locId, custAccNo, deptId,this.age1,this.age2,this.age3,this.age4)
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.isDisabled1 = false;
+          this.closeResetButton = true;
+          this.dataDisplay = ''
+        })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
         this.reportService.SPDebtorReport(toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), custAccNo, sessionStorage.getItem('deptId'),0,0,0,0)

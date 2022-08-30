@@ -401,6 +401,19 @@
                             </td>
                         </tr>
                         <tr>
+                            <td style="width: 15%" class="LabelFontStyle">Aging&nbsp;1&nbsp;:&nbsp;</td>
+                            <td><input type="number" class="form-control" formControlName="age1" [(ngModel)]="age1" ></td>
+                            <td style="width: 15%" class="LabelFontStyle">Aging&nbsp;2&nbsp;:&nbsp;</td>
+                            <td><input type="number" class="form-control" formControlName="age2" [(ngModel)]="age2"  ></td>
+                        </tr>
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle">Aging&nbsp;3&nbsp;:&nbsp;</td>
+                            <td><input type="number" class="form-control" formControlName="age3" [(ngModel)]="age3"  ></td>
+                            <td style="width: 15%" class="LabelFontStyle">Aging&nbsp;4&nbsp;:&nbsp;</td>
+                            <td><input type="number" class="form-control" formControlName="age4" [(ngModel)]="age4" ></td>
+                        </tr>
+
+                        <tr>
                             <td colspan="4">
                                 <table class="center">
                                     <tr>
@@ -799,7 +812,7 @@
                                     max="{{minDate | date:'yyyy-MM-dd'}}">
                             </td>
                         </tr>
-                        <tr>
+                        <!-- <tr>
                             <td style="width: 15%" class="LabelFontStyle">
                                 &nbsp;Ship&nbsp;From&nbsp;Location&nbsp;:&nbsp;
                             </td>
@@ -829,7 +842,42 @@
                                 </select>
                                 <input disabled hidden type="number" class="form-control" formControlName="tolocId">
                             </td>
+                        </tr> comment by vinita-->
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle">
+                                &nbsp;Ship&nbsp;To&nbsp;Location&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                <select formControlName="tolocCode" id="tolocCode" class="form-control"
+                                    (ngModelChange)='onOptionsLocation($event)'>
+                                    <option>--Select--</option>
+                                    <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
+                                        {{sc.locCode}}
+                                    </option>
+                                </select>
+                                <input disabled hidden type="number" class="form-control" formControlName="tolocId">
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle">
+                                &nbsp;Ship&nbsp;From&nbsp;Location&nbsp;:&nbsp;
+                            </td>
+                            <td [style.display]="isVisiblelocationInput ? 'block' : 'none'">
+                                <input type="text" disabled class="form-control" formControlName="locCode">
+                            </td>
+                            <td [style.display]="isVisiblelocationLOV ? 'block' : 'none'">
+                                <select formControlName="locCode" id="locCode" class="form-control"
+                                    (ngModelChange)='onOptionsToLocation($event)'>
+                                    <option>--Select--</option>
+                                    <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
+                                        {{sc.locCode}}
+                                    </option>
+                                </select>
+                                <input disabled hidden type="number" class="form-control" formControlName="locId">
+                            </td>                       
+                                                      
                         </tr>
+                        <tr>                            
+                            <td><input type="text" class="form-control" [(ngModel)]='deptId' formControlName="deptId"  disabled hidden></td>
+                            </tr>
                         <tr>
                             <td colspan="4">
                                 <table class="center">
