@@ -590,13 +590,14 @@
                                             &nbsp;Department&nbsp;List:&nbsp;
                                         </td>
                                         <td>
-                                            <select formControlName="locCode" id="locCode" class="form-control"
+                                            <!-- <select formControlName="locCode" id="locCode" class="form-control"
                                             (ngModelChange)='onOptionsDepartmentList($event)'>
                                             <option>--Select--</option>
                                             <option *ngFor="let sc of  DepartmentList" [value]="sc.code">
                                               {{sc.code}}
                                             </option>
-                                          </select>
+                                          </select> -->
+                                          <input type="text" disabled class="form-control" formControlName="locCode">
                                           <input hidden disabled type="number" class="form-control" formControlName="deptId">
                                         </td>
                                     </tr>

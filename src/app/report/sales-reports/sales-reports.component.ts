@@ -151,8 +151,8 @@ export class SalesReportsComponent implements OnInit {
   ngOnInit(): void {
     this.salesReportForm.patchValue({ OUCode: sessionStorage.getItem('ouId') + '-' + sessionStorage.getItem('ouName') })
     this.salesReportForm.patchValue({ locCode: sessionStorage.getItem('locId') + '-' + sessionStorage.getItem('locName') })
-    this.salesReportForm.patchValue({ department: 'Spares' });
-    this.salesReportForm.patchValue({ department: '5' });
+    this.salesReportForm.patchValue({ locCode: 'Sales' });
+    this.salesReportForm.patchValue({ deptId: '1' });
 
     // Prevent closing from click inside dropdown
     $(document).on('click', '.dropdown-menu', function (e) {
@@ -1481,8 +1481,11 @@ export class SalesReportsComponent implements OnInit {
       else if (reportName == 'Purchase Register Details'){
         const fileName = 'Purchase Register Details-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
         const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+        // var departId=this.DepartmentList.filter(d=>d.code== this.locCode)
+        // alert(deptId+this.locCode);
         if (Number(sessionStorage.getItem('deptId'))==4){
-        this.reportService.sppurRegidetailReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
+        // this.reportService.sppurRegidetailReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
+        this.reportService.sppurRegidetailReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), deptId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.dataDisplay = ''
