@@ -241,20 +241,15 @@
         <table class="center" style="margin-left: 10%;"
             [style.display]="isVisibleVehicleSaleRegister ? 'block' : 'none'" class="collapse"
             id="panelVehicleSaleRegister">
-            <tr>
-                <td>
-                    <table class="center">
-                        <tr>
-                            <td colspan="4" class="LabelFontStyle" style="width: 100%;">
-                                {{reportName}}
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <table class="center">
+           
+            <table class="center">
+                <tr>
+                  <td class="LabelFontStyle" style="font-size:large ;font-weight:bold ;" >{{reportName}}</td>
+                </tr>
+            </table>
+            <br>
+
+                     <table class="center">
                         <tr>
                             <td style="width: 15%" class="LabelFontStyle">
                                 &nbsp;From&nbsp;Date&nbsp;:&nbsp;
@@ -288,53 +283,50 @@
 
                             </td>
                         </tr>
+                    </table>
+
+                    <table class="center">
                         <tr>
                             <td colspan="4">
-                                <table class="center">
+                                <table class="center" style="width: 100%;">
                                     <tr>
-                                        <td colspan="4">
-                                            <table class="center" style="width: 100%;">
-                                                <tr>
-                                                    <div *ngIf="closeResetButton; then hList1; else hList2"></div>
-                                                    <ng-template #hList2>
-                                                        <div class="d-flex justify-content-center">
-                                                            <div class="spinner-border text-primary" role="status">
-                                                                <span class="sr-only" id="loading"></span>
-                                                            </div>
-                                                        </div>
-                                                    </ng-template>
-                                                    <ng-template #hList1> </ng-template>
-                                                    <td class="LabelFontStyle" style="color: blue;width: fit-content;"
-                                                        colspan="4">
-                                                        &nbsp;{{dataDisplay}}&nbsp; </td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                                        <ng-template #hList2>
+                                            <div class="d-flex justify-content-center">
+                                                <div class="spinner-border text-primary" role="status">
+                                                    <span class="sr-only" id="loading"></span>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                        <ng-template #hList1> </ng-template>
+                                        <td class="LabelFontStyle" style="color: blue;width: fit-content;"
+                                            colspan="4">
+                                            &nbsp;{{dataDisplay}}&nbsp; </td>
                                     </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="center">
+                        <tr>
+                            <td colspan="4">
+                                <table class="center" style="width: 100%;margin-left: 50%;">
                                     <tr>
-                                        <td colspan="4">
-                                            <table class="center" style="width: 100%;margin-left: 50%;">
-                                                <tr>
-                                                    <td>
-                                                        <button class="btn-primary" [disabled]="isDisabled1"
-                                                            (click)="reportParameter(reportName)">View
-                                                            Report</button>
-                                                    </td>
-                                                </tr>
-                                            </table>
+                                        <td>
+                                            <button class="btn-primary" [disabled]="isDisabled1"
+                                                (click)="reportParameter(reportName)">View
+                                                Report</button>
                                         </td>
                                     </tr>
                                 </table>
                             </td>
                         </tr>
                     </table>
-                </td>
-            </tr>
         </table>
 
         <table class="center" [style.display]="isVisibleSaleIND ? 'block' : 'none'" class="collapse"
             style="margin-left: 20%;" id="panelSaleIND">
-            <tr>
+            <!-- <tr>
                 <td>
                     <table class="center">
                         <tr>
@@ -344,9 +336,16 @@
                         </tr>
                     </table>
                 </td>
-            </tr>
-            <tr>
-                <td>
+            </tr> -->
+
+            <table class="center">
+                <tr>
+                  <td class="LabelFontStyle" style="font-size:large ;font-weight:bold ;" >{{reportName}}</td>
+                </tr>
+            </table>
+            <br>
+            <!-- <tr>
+                <td> -->
                     <table class="center">
                         <tr>
                             <td style="width: 15%" class="LabelFontStyle">
@@ -412,12 +411,14 @@
                             <td style="width: 15%" class="LabelFontStyle">Aging&nbsp;4&nbsp;:&nbsp;</td>
                             <td><input type="number" class="form-control" formControlName="age4" [(ngModel)]="age4" ></td>
                         </tr>
+                    </table>
 
-                        <tr>
-                            <td colspan="4">
-                                <table class="center">
+
+                        <!-- <tr>
+                            <td colspan="4"> -->
+                                <!-- <table class="center">
                                     <tr>
-                                        <td colspan="4">
+                                        <td colspan="4"> -->
                                             <table class="center" style="width: 100%;">
                                                 <tr>
                                                     <div *ngIf="closeResetButton; then hList1; else hList2"></div>
@@ -434,10 +435,10 @@
                                                         &nbsp;{{dataDisplay}}&nbsp; </td>
                                                 </tr>
                                             </table>
-                                        </td>
+                                        <!-- </td>
                                     </tr>
                                     <tr>
-                                        <td colspan="4">
+                                        <td colspan="4"> -->
                                             <table class="center" style="width: 100%;margin-left: 50%;">
                                                 <tr>
                                                     <td>
@@ -448,14 +449,14 @@
 
                                                 </tr>
                                             </table>
-                                        </td>
+                                        <!-- </td>
                                     </tr>
                                 </table>
                             </td>
                         </tr>
                     </table>
                 </td>
-            </tr>
+            </tr> -->
         </table>
 
 
@@ -532,7 +533,8 @@
         <table class="center" style="margin-left: 10%;"
             [style.display]="isVisiblefromtolocationdepartment ? 'block' : 'none'" class="collapse"
             id="panelfromtolocationdepartment">
-            <tr>
+
+            <!-- <tr>
                 <td>
                     <table class="center">
                         <tr>
@@ -542,12 +544,27 @@
                         </tr>
                     </table>
                 </td>
-            </tr>
-            <tr>
-                <td>
+            </tr> -->
+
+            <table class="center">
+                <tr>
+                  <td class="LabelFontStyle" style="font-size:large ;font-weight:bold ;" >{{reportName}}</td>
+                </tr>
+            </table>
+            <br>
+
+            <!-- <tr>
+                <td> -->
                     <table class="center">
                        
                         <tr>
+                            <td style="width: 15%" class="LabelFontStyle">
+                                &nbsp;Operating&nbsp;Unit&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                <input type="text" disabled class="form-control" formControlName="OUCode">
+                            </td>
+
 
                             <td style="width: 15%" class="LabelFontStyle">
                                 &nbsp;From&nbsp;Date&nbsp;:&nbsp;
@@ -565,14 +582,7 @@
                             </td>
                         </tr>
                         <tr>
-                           
-                                <td style="width: 15%" class="LabelFontStyle">
-                                    &nbsp;Operating&nbsp;Unit&nbsp;:&nbsp;
-                                </td>
-                                <td>
-                                    <input type="text" disabled class="form-control" formControlName="OUCode">
-                                </td>
-           
+                      
 
                             <td style="width: 15%" class="LabelFontStyle">
                                 &nbsp;Location&nbsp;Code&nbsp;:&nbsp;
@@ -593,14 +603,12 @@
                             </td>
                            
 
-                            </tr>
-                            <tr>
-                       
+                                                 
                             <td colspan="4">
                                 <table [style.display]="isVisibleDepartmentList ? 'block' : 'none'">
                                     <tr>
                                         <td style="width: 15%" class="LabelFontStyle">
-                                            &nbsp;Department&nbsp;List:&nbsp;
+                                            &nbsp;Department&nbsp;:&nbsp;
                                         </td>
                                         <td>
                                             <!-- <select formControlName="locCode" id="locCode" class="form-control"
@@ -610,19 +618,22 @@
                                               {{sc.code}}
                                             </option>
                                           </select> -->
-                                          <input type="text" disabled class="form-control" formControlName="locCode">
-                                          <input hidden disabled type="number" class="form-control" formControlName="deptId">
+                                          <input type="text"   disabled class="form-control" formControlName="locCode">
+                                          <input type="number"  hidden disabled class="form-control" formControlName="deptId">
                                         </td>
                                     </tr>
                                 </table>
                             </td>
 
                         </tr>
-                        <tr>
+                    </table>
+                    
+
+                        <!-- <tr>
                             <td colspan="4">
                                 <table class="center">
                                     <tr>
-                                        <td colspan="4">
+                                        <td colspan="4"> -->
                                             <table class="center" style="width: 100%;">
                                                 <tr>
                                                     <div *ngIf="closeResetButton; then hList1; else hList2"></div>
@@ -639,10 +650,12 @@
                                                         &nbsp;{{dataDisplay}}&nbsp; </td>
                                                 </tr>
                                             </table>
+                                            
+                                            <!-- </table>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td colspan="4">
+                                        <td colspan="4"> -->
                                             <table class="center" style="width: 100%;margin-left: 50%;">
                                                 <tr>
                                                     <td>
@@ -652,14 +665,14 @@
                                                     </td>
                                                 </tr>
                                             </table>
-                                        </td>
+                                        <!-- </td>
                                     </tr>
                                 </table>
                             </td>
                         </tr>
                     </table>
                 </td>
-            </tr>
+            </tr> -->
         </table>
 
 

@@ -6,6 +6,7 @@ import { DatePipe, Location, CommonModule } from '@angular/common';
 import { MasterService } from 'src/app/master/master.service';
 import { saveAs } from 'file-saver';
 
+
 const MIME_TYPES = {
   pdf: 'application/pdf',
   xls: 'application/vnd.ms-excel',
@@ -62,7 +63,7 @@ export class SalesReportsComponent implements OnInit {
   isSaleClosingStock: boolean = false;
   OUCode: string;
   custAccNo: string;
-  deptId: number;
+  deptId: number=1;
   isVisiblefromtolocationdepartment: boolean = false;
   isVisiblecustomerLedger: boolean = false;
   isVisiblespPurRegDownLoad: boolean = false;
@@ -114,7 +115,7 @@ export class SalesReportsComponent implements OnInit {
       locId: [''],
       OUCode: [''],
       custAccNo: [''],
-      deptId: [''],
+      deptId: [],
       department: [''],
       tolocCode:[''],
       tolocId:[''],
@@ -158,8 +159,8 @@ export class SalesReportsComponent implements OnInit {
     this.salesReportForm.patchValue({ OUCode: sessionStorage.getItem('ouId') + '-' + sessionStorage.getItem('ouName') })
     this.salesReportForm.patchValue({ locCode: sessionStorage.getItem('locId') + '-' + sessionStorage.getItem('locName') })
     this.salesReportForm.patchValue({ locCode: 'Sales' });
-    this.salesReportForm.patchValue({ deptId: '1' });
-
+    this.salesReportForm.patchValue({ deptId: 1 });
+ 
     // Prevent closing from click inside dropdown
     $(document).on('click', '.dropdown-menu', function (e) {
       e.stopPropagation();
@@ -891,6 +892,7 @@ export class SalesReportsComponent implements OnInit {
     var toDate = this.pipe.transform(toDate1, 'dd-MMM-yyyy');
     var locId = this.salesReportForm.get('locId').value;
     var deptId = this.salesReportForm.get('deptId').value;
+
     if (locId === null) {
       alert('Please Select location Code.!');
       return;
@@ -1076,7 +1078,7 @@ export class SalesReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.spReceiptRegisterReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
+        this.reportService.spReceiptRegisterReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
