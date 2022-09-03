@@ -1229,24 +1229,26 @@
                             </td>
                             <td>
                                 <input type="date" class="form-control" formControlName="fromDate" [(ngModel)]="fromDate"
-                                    max="{{minDate | date:'yyyy-MM-dd'}}">
+                                    max="{{minDate | date:'yyyy-MM-dd'}}" style="width:10rem ;">
                             </td>
                             <td style="width: 15%" class="LabelFontStyle">
                                 &nbsp;To&nbsp;Date&nbsp;:&nbsp;
                             </td>
                             <td>
                                 <input type="date" class="form-control" formControlName="toDate" [(ngModel)]="toDate"
-                                    max="{{minDate | date:'yyyy-MM-dd'}}">
+                                    max="{{minDate | date:'yyyy-MM-dd'}}" style="width:10rem ;">
                             </td>
+
                             <td style="width: 15%" class="LabelFontStyle">
-                                &nbsp;Location&nbsp;Code&nbsp;:&nbsp;
+                                &nbsp;Location&nbsp;:&nbsp;
                             </td>
+
                             <td [style.display]="isVisiblelocationInput ? 'block' : 'none'">
                                 <input type="text" disabled class="form-control" formControlName="locCode">
                             </td>
 
-                            <td [style.display]="isVisiblelocationLOV ? 'block' : 'none'">
-                                <select formControlName="locCode" id="locCode" class="form-control"
+                            <td [style.display]="isVisiblelocationLOV ? 'block' : 'none'" >
+                                <select formControlName="locCode" id="locCode" class="form-control" style="width:10rem ;"
                                     (ngModelChange)='onOptionsLocation($event)'>
                                     <option>--Select--</option>
                                     <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
@@ -1256,16 +1258,15 @@
                                 <input disabled hidden type="number" class="form-control" formControlName="locId">
 
                             </td>
-                        </tr>
-                        <tr>
+                        
                             <td colspan="4">
                                 <table [style.display]="isVisibleDepartmentList ? 'block' : 'none'">
 
                                     <td style="width: 15%" class="LabelFontStyle">
-                                        &nbsp;Department&nbsp;:&nbsp;
+                                        &nbsp;Dept&nbsp;:&nbsp;
                                     </td>
-                                    <td>
-                                        <select formControlName="locCode" id="locCode" class="form-control"
+                                    <td >
+                                        <select formControlName="locCode" id="locCode" class="form-control" style="width:10rem ;"
                                             (ngModelChange)='onOptionsDepartmentList($event)'>
                                             <option>--Select--</option>
                                             <option *ngFor="let sc of  DepartmentList" [value]="sc.code">
@@ -1277,6 +1278,7 @@
                                     </td>
                                 </table>
                             </td>
+
                         </tr>
                     </table>
 
