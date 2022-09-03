@@ -847,7 +847,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblestockTransfer=false;
       this.isVisiblefromtoloccustaccno=false;
       this.isVisibleSalesInventoryAging=false;
-      // this.isVisiblepanelfromtolocation=true;
+      this.isVisiblepanelfromtolocation=false;
       this.isVisiblepanelreceiptNo=false;
       this.isVisiblepanelSalesAddonReconciliation=false;
       this.isVisiblefromtosubinventory=false;
