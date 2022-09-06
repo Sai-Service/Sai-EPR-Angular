@@ -113,7 +113,7 @@ export class OrderDetailsUpdationComponent implements OnInit {
   leadTicketNo:string;
 
   brokerType:string;
-  instype:string;
+  insType:string;
   subDealerId: number;
   subDealerName: string;
   attribute17: string;    // RTO Location
@@ -124,7 +124,8 @@ export class OrderDetailsUpdationComponent implements OnInit {
   Displayexchange = false;
   Displayexchange1 = false;
   saveButton=false;
-
+  DisplaySubDealName=true;
+  subDealerDesc:string;
   orderDetailsUpdation(orderDetailsUpdationForm: any) {}
   get f() { return this.orderDetailsUpdationForm.controls }
 
@@ -198,11 +199,11 @@ export class OrderDetailsUpdationComponent implements OnInit {
       contactNum:[],
 
       brokerType:[],
-      instype:[],
+      insType:[],
       subDealerId:[],
       subDealerName:[],
       attribute17:[],
-
+      subDealerDesc:[],
     })
 
 
@@ -287,6 +288,7 @@ export class OrderDetailsUpdationComponent implements OnInit {
 
   onOptionsSelectedBrokerType(event: any) {
     // alert(event.target.value);
+    this.DisplaySubDealName=true;
     var brokerType = event.target.value;
     this.service.brokerListFnNew(brokerType)
       .subscribe(
@@ -409,7 +411,18 @@ export class OrderDetailsUpdationComponent implements OnInit {
           this.lstOrderHeader = data.obj;
 
           console.log(this.lstOrderHeader);
+          this.DisplaySubDealName=false;
           this.orderDetailsUpdationForm.patchValue(this.lstOrderHeader);
+          
+          // var seldealerdata=this.brokerList.find(d=>d.customerId===this.lstOrderHeader.subDealerId)
+          // this.orderDetailsUpdationForm.get('subDealerId').patchValue(seldealerdata.custName);
+          
+          if(this.lstOrderHeader.model==='CHETAK')
+          {
+            var name=this.lstOrderHeader.custName.split(' - ');
+            this.orderDetailsUpdationForm.get('custName').patchValue(name[1]); 
+            this.orderDetailsUpdationForm.get('custName').enable();
+          }
 
           if(data.obj.financeType !='None') {
             var x=data.obj.financeType;

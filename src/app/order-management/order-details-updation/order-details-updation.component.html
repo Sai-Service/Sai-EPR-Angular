@@ -403,7 +403,9 @@
                                 </select>
                             </td>
                             <td style="width: 15%" class="LabelFontStyle">Broker&nbsp;Dealer&nbsp;:&nbsp;</td>
-                            <td>
+                            <div *ngIf="DisplaySubDealName; then SubDealId; else SubDealName"> </div>
+                            <ng-template #SubDealId>
+                             <td>
                                 <select formControlName="subDealerId" id="subDealerId" class="form-control"
                                     style="width: 170px;">
                                     <option>--Select--</option>
@@ -412,7 +414,13 @@
                                     </option>
                                 </select>
                             </td>
-                       
+                        </ng-template>
+                        <ng-template #SubDealName>
+                            <td>
+                            <input type="text" formControlName="subDealerDesc" class="form-control"
+                            style="width: 170px;">
+                            </td>
+                            </ng-template>
                             <td style="width: 15%" class="LabelFontStyle">Insurance&nbsp;Type&nbsp;:&nbsp;</td>
                             <td>
                                 <select formControlName="insType" id="insType" class="form-control"
