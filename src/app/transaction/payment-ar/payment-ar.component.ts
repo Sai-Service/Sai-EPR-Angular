@@ -2572,6 +2572,7 @@ if(this.deptId==2){
 
             this.service.UnApplyArReceiptSubmit(variants.value,receiptNumber).subscribe((res: any) => {
               if (res.code === 200) {
+                this.isVisibleUnApplyReceipt=false;
                 alert('Record Unapplied Successfully -'+res.message);
               } else {
                 if (res.code === 400) {
