@@ -439,7 +439,7 @@ jeSource: [],
     this.selreeceiptmethod=arr[i].receiptMethodId;
     this.selstatus=arr[i].refundStatus;
     this.selPayStatus=arr[i].statusLookupCode;
-    
+this.selectPayment=i;    
 
     this.transactionService.paymentDocSearch(docNo1).subscribe((res: any) => {
       if (res.code === 200) {
@@ -476,6 +476,7 @@ jeSource: [],
   selectPayment:number=0;
   paymentInvoiceFind(suppNo: number, ouId: number,index) {
     this.selectPayment=index;
+    // alert(this.selectPayment+'this.selectPayment')
     var suppNo1 = this.paymentForm.get('obj1').value;
      console.log(suppNo1);
     this.payInvoiceLineDtlArray().clear();
@@ -879,7 +880,40 @@ console.log(jsonData);
   // let paymentObject=Object.assign(new PaymentObj(),jsonData);
   // paymentObject.setInvPayment(this.paymentForm.value.)
 console.log(jsonData);
+if(jsonData.paymentTypeFlag==='QuickPay'){
+  this.transactionService.paymentSaveQuickSubmit(JSON.stringify(jsonData)).subscribe((res: any) => {
+    if (res.code === 200) {
+      alert(res.message);
+      // alert(res.obj);
+      console.log(res.obj);
 
+      this.PaymentReturnArr =res.obj[0];
+      console.log(this.PaymentReturnArr);
+      patch.controls[0].patchValue({docNo: this.PaymentReturnArr.docSeqValue})
+      this.paymentForm.get('obj1').disable();
+      (document.getElementById('btnSelect') as HTMLInputElement).disabled = true;
+    } else {
+      if (res.code === 400) {
+        alert(res.message+'--'+res.obj);
+        // this.poReceiptForm.reset();
+      }
+    }
+    const totlPayHeaderControls = this.paymentForm.get('obj1').value;
+    // if(this.appAmt>totlPayHeaderControls[0].payAmount || this.appAmt<totlPayHeaderControls[0].payAmount)
+    // {
+    //   alert('in If');
+    //   (document.getElementById('btnSave') as HTMLInputElement).disabled = true;
+    //   alert("You can not apply payment where actual amount is greater than selected Amount");
+
+    // }
+    // else{
+    //   alert('in else');
+    //   (document.getElementById('btnSave') as HTMLInputElement).disabled = false;
+    // }comment by vinita
+
+  });
+}
+ else{ 
   this.transactionService.paymentSaveSubmit(JSON.stringify(jsonData)).subscribe((res: any) => {
     if (res.code === 200) {
       alert(res.message);
@@ -911,6 +945,7 @@ console.log(jsonData);
     // }comment by vinita
 
   });
+}
 }
 
  
@@ -1081,7 +1116,7 @@ console.log(jsonData);
       viewAcc(documentNo,invoiceId){
         // alert(documentNo)
         var docVal=this.paymentForm.get('obj').value;
-        alert(invoiceId);
+        // alert(invoiceId);
         // var docNo=docVal[0].docNo
         this.service.viewAccountingbyApReceipt(documentNo,invoiceId).subscribe((res: any) => {
           if (res.code === 200) {
@@ -1168,7 +1203,9 @@ console.log(jsonData);
         this.showViewActLine = false;
         this.runningTotalCr = null;
         this.runningTotalDr = null;
+        // alert(this.selectPayment);
         var invoiceNum = this.payHeaderLineDtlArray().controls[this.selectPayment].get('docNo').value;
+        // alert(invoiceNum+'Invoice No');
         this.service.viewPayAccounting(invoiceNum).subscribe((res: any) => {
           if (res.code === 200) {
             this.viewAccounting2 = res.obj;

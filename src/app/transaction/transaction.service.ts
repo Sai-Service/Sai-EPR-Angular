@@ -185,6 +185,14 @@ public paymentSaveSubmit(poRecord) {
   return this.http.post(url, poRecord, options);
 }
 
+public paymentSaveQuickSubmit(poRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/apInvPayment/NewPostQuick';
+  return this.http.post(url, poRecord, options);
+}
+
 public paymentCancel(paymentRecord){
   const options = {
     headers: this.headers
