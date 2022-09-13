@@ -543,7 +543,7 @@ export class PoReceiptFormComponent implements OnInit {
       var recNo = this.router3.snapshot.queryParamMap.get('trxNum');
       var categ = (this.router3.snapshot.queryParamMap.get('catg'));
       if ( recNo != undefined){
-        // this.glReceiptFind(recNo);
+        this.glReceiptFind(recNo);
         }
       
       });

@@ -1852,8 +1852,9 @@
                                     [style.display]="isVisiblePayment ? 'block' : 'none'">Payment</button>
                             </td>
                             <td>
-                                <button type="button" class="btn btn-primary" (click)="paymentCancel()"
-                                    [style.display]="isVisibleCancel ? 'block' : 'none'">Cancel</button>
+                                 <button type="button" class="btn btn-primary"
+                                    [style.display]="isVisibleCancel ? 'block' : 'none'"data-toggle="modal" data-target="#confirmAlert"
+                                    (click)=" getMessage('CANCEL')">Cancel</button>
                             </td>
                         </tr>
                     </table>

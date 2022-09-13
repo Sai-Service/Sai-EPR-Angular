@@ -6,6 +6,7 @@ import { MasterService } from '../../master/master.service';
 import { DatePipe } from '@angular/common';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Location } from "@angular/common";
 import { relativeTimeRounding } from 'moment';
 import { ServiceService } from 'src/app/service/service.service';
 import { ReturnStatement } from '@angular/compiler';
@@ -309,7 +310,7 @@ export class PaymentArComponent implements OnInit {
   paymentAr(paymentArForm: any) { }
 
 
-  constructor(private service: MasterService, private orderManagementService: OrderManagementService, private fb: FormBuilder, private router: Router, private router1: ActivatedRoute, private router2: ActivatedRoute,private router3:ActivatedRoute, private router4: ActivatedRoute) {
+  constructor(private service: MasterService,private location: Location, private orderManagementService: OrderManagementService, private fb: FormBuilder, private router: Router, private router1: ActivatedRoute, private router2: ActivatedRoute,private router3:ActivatedRoute, private router4: ActivatedRoute) {
 
 
     this.paymentArForm = fb.group({
@@ -1059,7 +1060,8 @@ if(this.deptId==2){
   }
 
   closeMast() {
-    this.router.navigate(['admin']);
+    // this.router.navigate(['admin']);
+    this.location.back();
   }
 
   // resetForm(){

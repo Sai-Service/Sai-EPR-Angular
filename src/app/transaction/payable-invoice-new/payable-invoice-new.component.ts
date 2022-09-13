@@ -3683,6 +3683,9 @@ export class PayableInvoiceNewComponent implements OnInit {
       (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
       this.message = "Do you want to SAVE the changes (Yes/No)?"
     }
+    if (msgType.includes("CANCEL")) {
+            this.message = "Do you want to SAVE the changes (Yes/No)?"
+    }
     if (msgType.includes("Navigate")) {
       this.message = "Do you want to Navigate the Form(Yes/No)?"
     }
@@ -3697,6 +3700,9 @@ export class PayableInvoiceNewComponent implements OnInit {
   executeAction() {
     if (this.cnfMsgType.includes("SAVE")) {
       this.HeaderValidate();
+    }
+    if (this.cnfMsgType.includes("CANCEL")) {
+    this.paymentCancel();
     }
     //     if(this.msgType.includes("Navigate")) {
     //       this.router.navigate(['/admin/master/customerMaster'])
