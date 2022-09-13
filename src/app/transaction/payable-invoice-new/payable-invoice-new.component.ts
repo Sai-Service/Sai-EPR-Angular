@@ -1825,7 +1825,7 @@ export class PayableInvoiceNewComponent implements OnInit {
 
 
   selectDisLineDtl(k) {
-    // alert(k)
+    // alert(k);
     var lineNumber = this.invLineDetailsArray().controls[k].get('lineNumber').value;
     var invoiceId = this.invLineDetailsArray().controls[k].get('invoiceId').value;
     var taxcat = this.invLineDetailsArray().controls[k].get('taxCategoryName').value;
@@ -1846,6 +1846,7 @@ export class PayableInvoiceNewComponent implements OnInit {
     }
     else {
       if (this.invoiceId == null) {
+        this.updateTotAmtPerline(k);
         alert('Distribution Line Added. Please Enter Code Combination Value in Ditribution Tab.!');
         if (distributionArray != null || distributionArray != undefined) {
           var len = k + 1;
@@ -1903,6 +1904,7 @@ export class PayableInvoiceNewComponent implements OnInit {
           );
       }
     }
+
   }
 
   setFocus(name) {
@@ -2457,7 +2459,7 @@ export class PayableInvoiceNewComponent implements OnInit {
 
 
   updateTotAmtPerline(lineIndex) {
-    // alert(lineIndex)
+    // alert(lineIndex);
     var formArr = this.poInvoiceForm.get('invLines') as FormArray;
     var formVal = formArr.getRawValue();
     console.log(formVal);
@@ -2917,7 +2919,7 @@ export class PayableInvoiceNewComponent implements OnInit {
         // alert(invNum);
         this.poInvoiceForm.patchValue({ invoiceId: res.obj.id });
         var invNumber = res.obj.name;
-        // alert(invNumber)
+        alert(invNumber)
         this.showTdsLines(res.obj.id, this.payGroup);
         this.apInvFindAfterSave(invNumber);
         // this.poInvoiceForm.reset();
@@ -2952,7 +2954,8 @@ export class PayableInvoiceNewComponent implements OnInit {
     let jsonData = this.poInvoiceForm.value;
     let invSearch: ISearch = Object.assign({}, jsonData);
     var searchObj: InvoiceSearchNew = new InvoiceSearchNew();
-    { searchObj.invoiceNum = invNumber }
+    { searchObj.invoiceNum = invNumber
+      searchObj.suppNo=this.suppNo }
     this.transactionService.getsearchByApINV(JSON.stringify(searchObj)).subscribe((res: any) => {
       if (res.code === 200) {
         this.isDisabled = true;
