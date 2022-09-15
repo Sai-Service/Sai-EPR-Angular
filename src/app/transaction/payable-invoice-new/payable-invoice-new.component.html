@@ -706,15 +706,106 @@
                     </div>
                     <div class="modal fade" id="myModelCal" role="dialog" aria-hidden="true"
                     style="width: 100%;margin-left: 0;">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
+                    <div class="modal-dialog modal-xl" role="document">
+                      <div class="modal-content">
                             <div class="modal-header">
                                 <h4 class="modal-title" id="myModalLabel"
                                     style="text-align: left; font-size: medium; margin-left: 45%; font-family: Verdana,Sans-serif, Arial, Helvetica;font-weight: bold;">
                                     Calculate Vendor Balance</h4>
-                                    <button type="button" class="close" data-dismiss="modal"
-                                    aria-hidden="true">&times;</button>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span></button>
                                 </div>
+                            
+                            <div class="modal-body">
+                                <table style="width: 100%; border: solid 1px Gray;">
+                                    <th colspan="4" style="text-align: left;">&nbsp;Search&nbsp;</th>
+                                    <tr>
+                                        <td class="LabelFontStyle"></td>
+                                        <td>
+
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="LabelFontStyle">&nbsp;Supplier&nbsp;Name&nbsp;:</td>
+                                        <td>
+                                            
+                                            <input type="text" formControlName="supname" ([ngModel])="supname"
+                                            list="dynmicUserIds4" class="form-control"  style="width: 160px;height: 25px;font-size: 10px;"
+                                            (ngModelChange)="CalculateBal($event)">
+                                        <datalist id="dynmicUserIds4">
+                                            <option *ngFor="let item of  supplierCodeList"
+                                            [ngValue]="item.suppId">{{item.name}}--{{item.suppId}}
+                                            </option>
+                                        </datalist>
+                                        
+                            </td>
+                                            <!-- <input type="number" min="0" formControlName="suppNo" value={{suppNo}}
+                                                class="form-control">
+                                        </td> -->
+                                        <td class="LabelFontStyle">&nbsp;Balance&nbsp;Amount&nbsp;:</td>
+                                        <td>
+                                            <input disabled type="number" min="0" formControlName="BalAmt"  [(ngModel)]="BalAmt"
+                                                class="form-control">
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary" 
+                                            (click)="ShowBalData(supname)">view Data</button>
+                                        </td>
+                                     
+                                    </tr>
+                                    <!-- <tr>
+                                        <td>
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                            (click)="CalculateBal(supname)">Balance</button>
+                                        </td> -->
+                                        
+                                    <!-- </tr> -->
+                                </table>
+                                <div class="container1">
+                                    <div class="grid_scroll_2">
+                                      <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+                                       <thead>
+                                         <tr class="GridHeader">
+                                         <th>Srl No</th>  
+                                         <th>Supplier No</th>
+                                         <th>Supplier Name</th>
+                                         <th>Invoice No</th> 
+                                         <th>Invoice Date</th>
+                                         <th>Invoice Amount</th>
+                                         <th>Paid Amount</th>
+                                         <th>Balance Amount</th>
+                                         </tr>
+                                       </thead>
+                                                                          
+                                           <ng-container  *ngFor="let com of balData let i=index" class="ItemStyle" style="text-decoration:none;position: initial;font-size:large">
+                     
+                                             <tr style="text-decoration:none;position: initial;font-size:small">
+                                               <td style="padding-right: 5px;padding-top: 5px;border-color:black;text-align: right;">{{i+1}}</td>
+                     
+                     
+                                               <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: center;">{{com.suppNo}}</td>
+                                               <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: left;">{{com.name}}</td>
+                                               <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: left;">{{com.invoiceNum}}</td>
+                                               <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: left;">{{com.invoiceDate  |date:'dd-MM-y'}}</td>
+                                               <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: left;">{{com.invoiceAmt}}</td>
+                                               <td style="padding-right: 5px;padding-top: 5px;border-color:black;text-align: right;">{{com.paidAmt | number:'1.2-2'}}</td>
+                                               <td style="padding-right: 5px;padding-top: 5px;border-color:black;text-align: right;">{{com.balanceAmt| number:'1.2-2'}}</td>
+                                               
+                                             </tr>
+                                             </ng-container>
+                     
+                                      
+                                     
+                                         </table>
+                                      
+                               </div>
+                               </div>
+                            </div>
+                            <div class="modal-footer">
+                                
+                            </div>
                             </div>
                     </div>
                     </div>

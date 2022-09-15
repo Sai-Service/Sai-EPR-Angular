@@ -94,6 +94,9 @@ interface ISearch {
   templateUrl: './payable-invoice-new.component.html',
   styleUrls: ['./payable-invoice-new.component.css']
 })
+
+
+
 export class PayableInvoiceNewComponent implements OnInit {
 
   @ViewChild('dateRangePicker', { static: true })
@@ -403,6 +406,9 @@ export class PayableInvoiceNewComponent implements OnInit {
   remark: string;
   trxNumber: number;
   isVisibleSelectButton: boolean = false;
+  BalAmt:number;
+  supname:string;
+  balData: any;
 
   constructor(private fb: FormBuilder, private router1: ActivatedRoute, private orderManagementService: OrderManagementService, private transactionService: TransactionService, private service: MasterService, private router: Router) {
     this.poInvoiceForm = fb.group({
@@ -447,6 +453,8 @@ export class PayableInvoiceNewComponent implements OnInit {
       runningTotalCr: [],
       name1: [],
       source: [],
+      BalAmt:[],
+      supname:[],
       obj: this.fb.array([this.lineDetailsGroup()]),
       invLines: this.fb.array([this.invLineDetails()]),
       distribution: this.fb.array([this.distLineDetails()]),
@@ -3715,5 +3723,30 @@ export class PayableInvoiceNewComponent implements OnInit {
     this.display = 'none'; //set none css after close dialog
     // this.myInputField.nativeElement.focus();
   }
+  CalculateBal(supnam1){
+    // alert(this.supname+'--'+ supnam1);
+    
+    var selSupp=supnam1.split('--');
+    this.suppId=selSupp[1];
+    this.transactionService.SuppBalPayment(selSupp[1],Number(sessionStorage.getItem('ouId'))).subscribe(
+      data=>{
+        if(data.code==200){
+          // alert(data.message);
+          this.BalAmt=data.obj;
+        }
+        else if (data.code === 400) {
+          alert(data.message)
+        }
+  })
+  
+}
+ShowBalData(supname){
+  // alert(supname+'supname'+this.suppId);
+  this.transactionService.SuppBalData(this.suppId,Number(sessionStorage.getItem('ouId'))).subscribe(
+    data=>{
+      this.balData=data;
+  })
+}
+
 }
 

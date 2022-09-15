@@ -78,6 +78,17 @@ export class AccountsReportComponent implements OnInit {
   ispanelTolocationOu:boolean=false;
   isVisibleVendorLedgerReport:boolean=false;
   source:string;
+
+  age1: number=20;
+  age2: number=30;
+  age3: number=45;
+  age4: number=60;
+  isVisibleDepartmentList: boolean = false;
+  custAccNo: string;
+  isVisiblelocationLOV: boolean = false;
+  isVisiblelocationInput: boolean = false;
+  isVisibleSaleIND: boolean = false;
+
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService,private transactionService: TransactionService) {
     this.reportForm = this.fb.group({
       fromDate:[''],
@@ -282,6 +293,24 @@ reportName:string;
     this.ispanelTolocationOu=false;
     this.isVisibleVendorLedgerReport=false;
 
+  }
+  else if (reportName === 'gstSparesSaiDebtors') {
+    this.reportName = 'Sai Debtors'
+    this.isVisibleGSTSaleRegister=false;  
+    this.isVisibleGSTPurchaseRegister=false;
+    this.isVisibleSaleIND=true;
+    this.isVisibleSparesdebtors=false;
+    this.isVisiblespInvAgging=false;
+    this.isVisiblepanelgltrialBalance=false;
+    this.panelCashBank=false;
+    this.isVisiblepanelAPGLUnpainAging=false;
+    this.isVisiblepanelprePayment=false;
+    this.ispanelTolocationOu=false;
+    this.isVisibleVendorLedgerReport=false;
+    if (Number(sessionStorage.getItem('deptId')) === 4) {
+      this.isVisibleDepartmentList = true;
+      this.isVisiblelocationLOV=true;
+    }
   }
   else if (reportName==='receiptRegisterReport'){
     this.reportName='Receipt Register Report';
@@ -635,7 +664,34 @@ reportName:string;
           this.isDisabled1 = false;
         })
     }
-
+    else if (reportName === 'Sai Debtors') {
+      alert('Hello');
+      // var custAccNo = this.reportForm.get('custAccNo').value;
+      var custAccNo=' ';
+      var deptId = this.reportForm.get('deptId').value;
+      if (custAccNo === undefined || custAccNo === null) {
+        custAccNo = '';
+      }
+      // alert(deptId);
+      const fileName = 'Sai Debtors-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        if (deptId===null || deptId == undefined || deptId ==''){
+          alert('Please Select Department ID.!');
+          this.dataDisplay = 'Please Select Department ID.....Do not refresh the Page';
+          this.isDisabled1 = false;
+          this.closeResetButton = true;
+          return;
+        }
+        this.reportService.SPDebtorReport(toDate, sessionStorage.getItem('ouId'), locId, custAccNo, deptId,this.age1,this.age2,this.age3,this.age4)
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.isDisabled1 = false;
+          this.closeResetButton = true;
+          this.dataDisplay = ''
+        })
+      }
+    }
     else if (reportName==='Receipt Register Report'){
       const fileName = 'Receipt Register Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
@@ -973,5 +1029,23 @@ reportName:string;
     let naturalAccountName = this.accountNameList1.find(v => v.name == naturalCode);
     console.log(naturalAccountName);
     this.reportForm.patchValue({segment4:naturalAccountName.id})
+  }
+  SPdebtorsReport() {
+    // this.isDisabled2 = true;
+    this.closeResetButton = false;
+    this.progress = 0;
+    this.dataDisplay = 'Report Is Running....Do not refresh the Page';
+    var invcDt2 = this.reportForm.get('invcDt1').value;
+    var fromDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
+    //const fileName = 'download.pdf';
+    const fileName = 'SP-Debtors-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.SPDebtorReport(fromDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'), sessionStorage.getItem('deptId'),0,0,0,0)
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        // this.isDisabled2 = false;
+        this.closeResetButton = true;
+        this.dataDisplay = ''
+      })
   }
 }
