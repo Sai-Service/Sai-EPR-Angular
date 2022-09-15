@@ -1374,6 +1374,10 @@ if(this.deptId==2){
               this.showRefundHist = true;
               return;
             }
+            if (data.obj.oePayList[0].status === 'REVERSED') {
+              this.isVisibleUnApplyReceipt=false;
+              return;
+            }
             if (data.obj.oePayList[0].reversalReasonCode != null) {
               if (data.obj.oePayList[0].reversalReasonCode === 'ChqBounce') { this.chqBounceStatus = true; }
               this.printButton = false;
@@ -1484,6 +1488,10 @@ if(this.deptId==2){
             if (data.obj.oePayList[0].status === 'REFUND') {
               this.showReasonDetails = false; this.enableCancelButton = false; this.enableApplyButton = false;
               this.showRefundHist = true;
+              return;
+            }
+            if (data.obj.oePayList[0].status === 'REVERSED') {
+              this.isVisibleUnApplyReceipt=false;
               return;
             }
 
