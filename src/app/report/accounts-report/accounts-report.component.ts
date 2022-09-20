@@ -88,7 +88,7 @@ export class AccountsReportComponent implements OnInit {
   isVisiblelocationLOV: boolean = false;
   isVisiblelocationInput: boolean = false;
   isVisibleSaleIND: boolean = false;
-
+  rptValidation=true;
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService,private transactionService: TransactionService) {
     this.reportForm = this.fb.group({
       fromDate:[''],
@@ -665,7 +665,7 @@ reportName:string;
         })
     }
     else if (reportName === 'Sai Debtors') {
-      alert('Hello');
+      // alert('Hello');
       // var custAccNo = this.reportForm.get('custAccNo').value;
       var custAccNo=' ';
       var deptId = this.reportForm.get('deptId').value;
@@ -677,11 +677,12 @@ reportName:string;
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         if (deptId===null || deptId == undefined || deptId ==''){
-          alert('Please Select Department ID.!');
-          this.dataDisplay = 'Please Select Department ID.....Do not refresh the Page';
-          this.isDisabled1 = false;
-          this.closeResetButton = true;
-          return;
+          // alert('Please Select Department ID.!');
+          // this.dataDisplay = 'Please Select Department ID.....Do not refresh the Page';
+          // this.isDisabled1 = false;
+          // this.closeResetButton = true;
+          // return;
+          deptId='';
         }
         this.reportService.SPDebtorReport(toDate, sessionStorage.getItem('ouId'), locId, custAccNo, deptId,this.age1,this.age2,this.age3,this.age4)
         .subscribe(data => {
@@ -717,15 +718,67 @@ reportName:string;
     }
 
     else if (reportName==='Spares Debtors'){
-      const fileName = 'Spares Debtors-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+      var custAccNo1 = this.reportForm.get('custAccNo').value;
+
+      // if (custAccNo<=0 || custAccNo==undefined || custAccNo==null ) {
+      //   this.closeResetButton=true;
+      //   // this.dataDisplay = 'Please check Customer No.'
+      //   return; }comment by vinita
+
+      if (custAccNo1 <=0 || custAccNo1==undefined || custAccNo1==null ) {
+        custAccNo='';
+          }
+
+
+      var d1= this.reportForm.get('toDate').value;   
+      var tDate1 = this.pipe.transform(d1, 'dd-MMM-y');
+      var locId= this.reportForm.get('locId').value;
+      
+      var spDbAg1= this.reportForm.get('age1').value;
+      var spDbAg2= this.reportForm.get('age2').value;
+      var spDbAg3= this.reportForm.get('age3').value;
+      var spDbAg4= this.reportForm.get('age4').value;
+
+      if(spDbAg1<0 || spDbAg1==null || spDbAg1==undefined) {this.rptValidation=false;}
+      if(spDbAg2<0 || spDbAg2==null || spDbAg2==undefined) {this.rptValidation=false;}
+      if(spDbAg3<0 || spDbAg3==null || spDbAg3==undefined) {this.rptValidation=false;}
+      if(spDbAg4<0 || spDbAg4==null || spDbAg4==undefined) {this.rptValidation=false;}
+
+      if (spDbAg1 > spDbAg2) {this.rptValidation=false;}
+      else if (spDbAg1 >spDbAg3){this.rptValidation=false;}
+      else if (spDbAg1 > spDbAg4){this.rptValidation=false;}
+      else if (spDbAg2 > spDbAg3){this.rptValidation=false;}
+      else if (spDbAg2 > spDbAg4){this.rptValidation=false;}
+      else if (spDbAg3 > spDbAg4){this.rptValidation=false;}
+
+
+    if(this.rptValidation ==false) {this.closeResetButton=true;this.dataDisplay = 'Please check Aging Values.';  return; }
+ 
+      
+      this.isDisabled1=true;
+
+
+      const fileName = 'SP-Debtors-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      this.reportService.SPDebtorReport(toDate,sessionStorage.getItem('ouId'), locId,locId,locId,0,0,0,0)
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.dataDisplay = ''
-          this.closeResetButton = true;
-          this.isDisabled1 = false;
-        })
+     
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.SPDebtorReport(tDate1, sessionStorage.getItem('ouId'), locId,custAccNo,deptId,spDbAg1,spDbAg2,spDbAg3,spDbAg4)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          });
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.SPDebtorReport(tDate1, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'),custAccNo,deptId,spDbAg1,spDbAg2,spDbAg3,spDbAg4)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
     }
 
     else if (reportName ==='Spares Inventory Aging'){

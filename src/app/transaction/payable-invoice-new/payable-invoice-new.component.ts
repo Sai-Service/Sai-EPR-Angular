@@ -1524,10 +1524,12 @@ export class PayableInvoiceNewComponent implements OnInit {
                 }
               }
             }
+            // debugger;
+            if(data.taxLines!=undefined){
             for (let i = 0; i < data.taxLines.length; i++) {
               var invLnGrp: FormGroup = this.TaxDetailsGroup();
               this.TaxDetailsArray().push(invLnGrp);
-            }
+            }}
             for (let i = 0; i < data.invTdsLines.length; i++) {
               var invLnGrp: FormGroup = this.tdsTaxDetailsGroup();
               this.tdsTaxDetailsArray().push(invLnGrp);
@@ -2202,8 +2204,10 @@ export class PayableInvoiceNewComponent implements OnInit {
 
 
   onHsnCodeSelected(event, index) {
+    // alert(event);
     console.log(event);
-    let selectgstPercentage = this.hsnSacCodeList.find(v => v.hsnsaccode == event);
+    var gstPer=event.split('--');
+    let selectgstPercentage = this.hsnSacCodeList.find(v => v.hsnsaccode == gstPer[0]);
     console.log(selectgstPercentage);
     if (event != null && event != 'NA') {
       var gstPercentage = selectgstPercentage.gstPercentage;
@@ -2216,7 +2220,7 @@ export class PayableInvoiceNewComponent implements OnInit {
       console.log(this.poInvoiceForm.get('taxCategoryName'));
       console.log(this.lineDetailsArray().controls[0].get('taxCategoryName').value);
       var CusttaxCategoryName = this.lineDetailsArray().controls[0].get('taxCategoryName').value;
-      this.service.taxCategoryListNew(CusttaxCategoryName, gstPercentage)
+      this.service.taxCategoryListNew(CusttaxCategoryName, gstPer[1])
         .subscribe(
           data1 => {
             this.taxCategoryList[index] = data1;
