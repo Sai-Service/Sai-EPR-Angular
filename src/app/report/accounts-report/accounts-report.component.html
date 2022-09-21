@@ -164,7 +164,7 @@
               <td>
                 <select formControlName="locCode" id="locCode" class="form-control"
                   (ngModelChange)='onOptionsLocation($event)'>
-                  <option>--Select--</option>
+                  <option></option>
                   <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
                     {{sc.locCode}}
                   </option>
@@ -176,7 +176,7 @@
               <td>
                 <select formControlName="locCode" id="locCode" class="form-control"
                   (ngModelChange)='onOptionsDepartmentList($event)'>
-                  <option>--Select--</option>
+                  <option></option>
                   <option *ngFor="let sc of  DepartmentList" [value]="sc.code">
                     {{sc.code}}
                   </option>

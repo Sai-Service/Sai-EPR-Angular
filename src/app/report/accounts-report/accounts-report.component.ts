@@ -221,7 +221,14 @@ this.reportForm.patchValue({ userName: sessionStorage.getItem('ticketNo') })
 
 
   onOptionsDepartmentList(event:string){
-    // alert(event);
+   
+    if(event==null || event ==undefined || event.trim()=='') {
+      // alert(event + "dept event ");
+      this.reportForm.patchValue({deptId:''})
+      this.reportForm.patchValue({deptName :''})
+      return;
+    }
+    
     var deptList = this.DepartmentList.find(d => d.code === event);
     console.log(deptList);
     
@@ -668,9 +675,9 @@ reportName:string;
     var locId = this.reportForm.get('locId').value;
     var userName = this.reportForm.get('userName').value;
     var subInventory='SP';
-    if (locId===null){
-      locId=''
-    }
+    if (locId===null){ locId='' }
+    if (deptId===null){deptId=''}
+
     if (reportName==='GST Purchase Register'){
     const fileName = 'GST Purchase Register-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
