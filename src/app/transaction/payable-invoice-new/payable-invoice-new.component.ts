@@ -94,6 +94,9 @@ interface ISearch {
   templateUrl: './payable-invoice-new.component.html',
   styleUrls: ['./payable-invoice-new.component.css']
 })
+
+
+
 export class PayableInvoiceNewComponent implements OnInit {
 
   @ViewChild('dateRangePicker', { static: true })
@@ -403,6 +406,9 @@ export class PayableInvoiceNewComponent implements OnInit {
   remark: string;
   trxNumber: number;
   isVisibleSelectButton: boolean = false;
+  BalAmt:number;
+  supname:string;
+  balData: any;
 
   constructor(private fb: FormBuilder, private router1: ActivatedRoute, private orderManagementService: OrderManagementService, private transactionService: TransactionService, private service: MasterService, private router: Router) {
     this.poInvoiceForm = fb.group({
@@ -447,6 +453,8 @@ export class PayableInvoiceNewComponent implements OnInit {
       runningTotalCr: [],
       name1: [],
       source: [],
+      BalAmt:[],
+      supname:[],
       obj: this.fb.array([this.lineDetailsGroup()]),
       invLines: this.fb.array([this.invLineDetails()]),
       distribution: this.fb.array([this.distLineDetails()]),
@@ -1516,10 +1524,12 @@ export class PayableInvoiceNewComponent implements OnInit {
                 }
               }
             }
+            // debugger;
+            if(data.taxLines!=undefined){
             for (let i = 0; i < data.taxLines.length; i++) {
               var invLnGrp: FormGroup = this.TaxDetailsGroup();
               this.TaxDetailsArray().push(invLnGrp);
-            }
+            }}
             for (let i = 0; i < data.invTdsLines.length; i++) {
               var invLnGrp: FormGroup = this.tdsTaxDetailsGroup();
               this.tdsTaxDetailsArray().push(invLnGrp);
@@ -1825,7 +1835,7 @@ export class PayableInvoiceNewComponent implements OnInit {
 
 
   selectDisLineDtl(k) {
-    // alert(k)
+    // alert(k);
     var lineNumber = this.invLineDetailsArray().controls[k].get('lineNumber').value;
     var invoiceId = this.invLineDetailsArray().controls[k].get('invoiceId').value;
     var taxcat = this.invLineDetailsArray().controls[k].get('taxCategoryName').value;
@@ -1846,6 +1856,7 @@ export class PayableInvoiceNewComponent implements OnInit {
     }
     else {
       if (this.invoiceId == null) {
+        this.updateTotAmtPerline(k);
         alert('Distribution Line Added. Please Enter Code Combination Value in Ditribution Tab.!');
         if (distributionArray != null || distributionArray != undefined) {
           var len = k + 1;
@@ -1903,6 +1914,7 @@ export class PayableInvoiceNewComponent implements OnInit {
           );
       }
     }
+
   }
 
   setFocus(name) {
@@ -2192,8 +2204,10 @@ export class PayableInvoiceNewComponent implements OnInit {
 
 
   onHsnCodeSelected(event, index) {
+    // alert(event);
     console.log(event);
-    let selectgstPercentage = this.hsnSacCodeList.find(v => v.hsnsaccode == event);
+    var gstPer=event.split('--');
+    let selectgstPercentage = this.hsnSacCodeList.find(v => v.hsnsaccode == gstPer[0]);
     console.log(selectgstPercentage);
     if (event != null && event != 'NA') {
       var gstPercentage = selectgstPercentage.gstPercentage;
@@ -2206,7 +2220,7 @@ export class PayableInvoiceNewComponent implements OnInit {
       console.log(this.poInvoiceForm.get('taxCategoryName'));
       console.log(this.lineDetailsArray().controls[0].get('taxCategoryName').value);
       var CusttaxCategoryName = this.lineDetailsArray().controls[0].get('taxCategoryName').value;
-      this.service.taxCategoryListNew(CusttaxCategoryName, gstPercentage)
+      this.service.taxCategoryListNew(CusttaxCategoryName, gstPer[1])
         .subscribe(
           data1 => {
             this.taxCategoryList[index] = data1;
@@ -2457,7 +2471,7 @@ export class PayableInvoiceNewComponent implements OnInit {
 
 
   updateTotAmtPerline(lineIndex) {
-    // alert(lineIndex)
+    // alert(lineIndex);
     var formArr = this.poInvoiceForm.get('invLines') as FormArray;
     var formVal = formArr.getRawValue();
     console.log(formVal);
@@ -2917,7 +2931,7 @@ export class PayableInvoiceNewComponent implements OnInit {
         // alert(invNum);
         this.poInvoiceForm.patchValue({ invoiceId: res.obj.id });
         var invNumber = res.obj.name;
-        // alert(invNumber)
+        alert(invNumber)
         this.showTdsLines(res.obj.id, this.payGroup);
         this.apInvFindAfterSave(invNumber);
         // this.poInvoiceForm.reset();
@@ -2952,7 +2966,8 @@ export class PayableInvoiceNewComponent implements OnInit {
     let jsonData = this.poInvoiceForm.value;
     let invSearch: ISearch = Object.assign({}, jsonData);
     var searchObj: InvoiceSearchNew = new InvoiceSearchNew();
-    { searchObj.invoiceNum = invNumber }
+    { searchObj.invoiceNum = invNumber
+      searchObj.suppNo=this.suppNo }
     this.transactionService.getsearchByApINV(JSON.stringify(searchObj)).subscribe((res: any) => {
       if (res.code === 200) {
         this.isDisabled = true;
@@ -3683,6 +3698,9 @@ export class PayableInvoiceNewComponent implements OnInit {
       (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
       this.message = "Do you want to SAVE the changes (Yes/No)?"
     }
+    if (msgType.includes("CANCEL")) {
+            this.message = "Do you want to SAVE the changes (Yes/No)?"
+    }
     if (msgType.includes("Navigate")) {
       this.message = "Do you want to Navigate the Form(Yes/No)?"
     }
@@ -3698,6 +3716,9 @@ export class PayableInvoiceNewComponent implements OnInit {
     if (this.cnfMsgType.includes("SAVE")) {
       this.HeaderValidate();
     }
+    if (this.cnfMsgType.includes("CANCEL")) {
+    this.paymentCancel();
+    }
     //     if(this.msgType.includes("Navigate")) {
     //       this.router.navigate(['/admin/master/customerMaster'])
     //  }
@@ -3706,5 +3727,30 @@ export class PayableInvoiceNewComponent implements OnInit {
     this.display = 'none'; //set none css after close dialog
     // this.myInputField.nativeElement.focus();
   }
+  CalculateBal(supnam1){
+    // alert(this.supname+'--'+ supnam1);
+    
+    var selSupp=supnam1.split('--');
+    this.suppId=selSupp[1];
+    this.transactionService.SuppBalPayment(selSupp[1],Number(sessionStorage.getItem('ouId'))).subscribe(
+      data=>{
+        if(data.code==200){
+          // alert(data.message);
+          this.BalAmt=data.obj;
+        }
+        else if (data.code === 400) {
+          alert(data.message)
+        }
+  })
+  
+}
+ShowBalData(supname){
+  // alert(supname+'supname'+this.suppId);
+  this.transactionService.SuppBalData(this.suppId,Number(sessionStorage.getItem('ouId'))).subscribe(
+    data=>{
+      this.balData=data;
+  })
+}
+
 }
 

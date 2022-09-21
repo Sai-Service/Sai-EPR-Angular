@@ -1294,7 +1294,9 @@ export class ARInvoiceComponent implements OnInit {
               this.arInvoiceForm.patchValue({ codeCombinationId: this.segmentNameList.obj.codeCombinationId });
               this.codeCombinationId = Number(this.segmentNameList.obj.codeCombinationId);
               var dislines = this.arInvoiceForm.get('invDisLines').value;
-
+              console.log(dislines);
+              console.log(this.distarr);
+              this.distarr.clear();
               this.distarr.set(this.invLineNo, dislines);
               console.log(this.distarr);
             }
@@ -1689,7 +1691,7 @@ export class ARInvoiceComponent implements OnInit {
                     var distrRes: any = data1;
                     this.distributioArr = [];
                     var exLineArr = Array.from(this.distarr.values());
-                    // debugger;
+                    // debugger;1
                     var isDistAdded = false;
                     for (let i = 0; i < exLineArr.length; i++) {
                       var exLines = exLineArr[i];

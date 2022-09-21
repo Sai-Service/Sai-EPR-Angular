@@ -293,6 +293,12 @@ SelectTbAct2(trxNum,refNum,catg,source){
     this.router.navigate(['/admin/transaction/JournalVoucher',docSequenceValue] );
     alert ("Category - "+catg +" ..Wip...")
   } 
+  else if(source==='Receivables' && catg==='Receipts Application' ){
+    // this.router.navigate(['/admin/transaction/Payment', trxNum]);
+    this.router.navigate(['/admin/transaction/PaymentAr'], { queryParams: { trxNum: trxNum,catg:catg } } );
+    // this.router.navigate(['/admin/transaction/PaymentAr',trxNum]);
+    alert ("Source - Purchasing , Category - "+catg +" ..Wip...")
+  } 
 
   else {alert ("Work In Progress")}
   

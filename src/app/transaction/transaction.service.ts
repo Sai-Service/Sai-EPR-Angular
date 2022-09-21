@@ -165,7 +165,12 @@ paymentMethodName(ouId,methodTyp):Observable<any>{
 paymentDocNameList(docCategoryCode): Observable<any> {
   return this.http.get(this.ServerUrl +`/cePaymentDoc/DocName/${docCategoryCode}`);
 }
-
+SuppBalPayment(suppId,ouId): Observable<any> {
+  return this.http.get(this.ServerUrl +`/apInv/BalanceAmt?suppId=${suppId}&ouId=${ouId}`);
+}
+SuppBalData(suppId,ouId): Observable<any> {
+  return this.http.get(this.ServerUrl +`/apInv/BalancePayment?suppId=${suppId}&ouId=${ouId}`);
+}
 viewPaymentAdvice(docSeq,docCat,ouId):Observable<any>{
   // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/rcvShipment/StkTransferNote/${shipmentNumber}`;
   // local
@@ -182,6 +187,14 @@ public paymentSaveSubmit(poRecord) {
     headers: this.headers
   };
   const url = this.ServerUrl + '/apInvPayment/NewPost';
+  return this.http.post(url, poRecord, options);
+}
+
+public paymentSaveQuickSubmit(poRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/apInvPayment/NewPostQuick';
   return this.http.post(url, poRecord, options);
 }
 
