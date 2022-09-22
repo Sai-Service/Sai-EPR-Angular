@@ -1536,7 +1536,9 @@ export class PayableInvoiceNewComponent implements OnInit {
             }
             console.log(data.taxLines);
             this.poInvoiceForm.get('invLines').patchValue(data.invLines);
+            if(data.taxLines!=undefined){
             this.poInvoiceForm.get('taxLines').patchValue(data.taxLines);
+            }
             this.poInvoiceForm.get('distribution').patchValue(data.invDisLines);
             this.poInvoiceForm.get('tdsLines').patchValue(data.invTdsLines);
             this.poInvoiceForm.get('tdsTaxLines').patchValue(data.invTdsLines);
