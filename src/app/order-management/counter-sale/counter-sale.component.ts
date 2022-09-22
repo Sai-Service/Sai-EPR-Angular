@@ -2564,7 +2564,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
         this.isDisabled = false;
         return;
       }
-      if (orderLines[j].segment.length > 8) {
+      if (orderLines[j].segment.length > 8 && (this.deptId===5 || this.deptId ===6) && this.divisionId===2) {
         alert('Line No' + ' ' + orderLines[j].segment + ' ' + 'Select Item Is Wrong... Please confirm');
         this.closeResetButton = true;
         this.dataDisplay = ''
