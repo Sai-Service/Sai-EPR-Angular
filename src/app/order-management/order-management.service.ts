@@ -763,7 +763,7 @@ export class OrderManagementService {
   //   });
   // }
 
-  public vehicleNoupdateFn(itemId, regNo, regDate, customerId) {
+  public vehicleNoupdateFn_old(itemId, regNo, regDate, customerId) {
     const options = {
       headers: this.headers
     };
@@ -771,7 +771,16 @@ export class OrderManagementService {
     return this.http.put(url, options);
   }
 
+  public vehicleNoInsuranceupdateFn(gpInsuranceRecord) {
+    const options = {
+      headers: this.headers
+    };
+    const url = (this.ServerUrl + `/VehAddInfo/updateInsurance`);
+    return this.http.put(url,gpInsuranceRecord, options);
+  }
 
+
+ 
   OrderReversal(orderNumber, emplId, reversalReason) {
     const REQUEST_PARAMS = new HttpParams().set('orderNumber', orderNumber)
       .set('emplId', emplId)

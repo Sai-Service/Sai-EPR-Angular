@@ -158,6 +158,11 @@
                                 (click)="reportDetails('salesBookingCancReport')">Sales Booking Cancellation Report</a>
                         </li>
 
+                        <li>
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelfromtolocation" role="tab"
+                                (click)="reportDetails('salesRtoRegister')">Sales RTO Register</a>
+                        </li>
+
                     </ul>
                 </li>
 
@@ -307,6 +312,7 @@
                             </td>
                         </tr>
                     </table>
+
                     <table class="center">
                         <tr>
                             <td colspan="4">
@@ -1250,7 +1256,7 @@
                             <td [style.display]="isVisiblelocationLOV ? 'block' : 'none'" >
                                 <select formControlName="locCode" id="locCode" class="form-control" style="width:10rem ;"
                                     (ngModelChange)='onOptionsLocation($event)'>
-                                    <option>--Select--</option>
+                                    <option></option>
                                     <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
                                         {{sc.locCode}}
                                     </option>
@@ -1287,7 +1293,7 @@
                                 <table class="center">
                                     <tr>
                                         <td colspan="4"> -->
-                                            <table class="center" style="width: 100%;">
+                                            <table class="center" >
                                                 <tr>
                                                     <div *ngIf="closeResetButton; then hList1; else hList2"></div>
                                                     <ng-template #hList2>

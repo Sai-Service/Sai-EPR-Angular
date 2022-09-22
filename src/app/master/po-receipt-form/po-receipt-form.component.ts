@@ -428,9 +428,6 @@ export class PoReceiptFormComponent implements OnInit {
     })
 
 
-
-
-
     this.sub = this.router1.params.subscribe(params => {
       alert( params['segment1']);
       this.segment1 = params['segment1'];

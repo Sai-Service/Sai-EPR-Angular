@@ -66,7 +66,7 @@ export class SalesGatePassComponent implements OnInit {
 
   insType :string;
   insuDate:string;
-  policyNo :string='222220210600263';
+  policyNo :string ; //='222220210600263';
   insuPeriod:number;
   insurerCompId:number;
   insurerSiteId:number;
@@ -115,7 +115,8 @@ export class SalesGatePassComponent implements OnInit {
   }
   ngOnInit(): void {
     this.emplId = Number(sessionStorage.getItem('emplId'));
-    this.shipToLoc = Number(sessionStorage.getItem('locCode'));
+    // this.shipToLoc = Number(sessionStorage.getItem('locCode'));
+    // this.shipToLoc = Number(sessionStorage.getItem('locId'));
     this.isVisiblegatePassDetails = false;
     this.isVisiblegatePassVehicleDetails=false;
 
@@ -175,6 +176,7 @@ export class SalesGatePassComponent implements OnInit {
           this.gatepassNo = this.lstcomments.gatePassNo;
           this.dateOfDelv = this.lstcomments.orderDate;
           this.insType= this.lstcomments.insType;
+
           if (this.lstcomments.gatePassNo != 0) {
             this.isVisiblegatePassDetails = false;
             this.isVisiblegatePassVehicleDetails=false;
@@ -185,7 +187,7 @@ export class SalesGatePassComponent implements OnInit {
             this.isVisiblegatePassVehicleDetails=true;
 
           }
-          else if (this.lstcomments.gatePassNo === 0 && this.lstcomments.vehicleNo !='NA'){
+          else if (this.lstcomments.gatePassNo === 0 && this.lstcomments.vehicleNo !='NA' ){
             this.isVisiblegatePassDetails = true;
             this.isVisiblegatePassVehicleDetails=false;
           }
@@ -235,6 +237,10 @@ export class SalesGatePassComponent implements OnInit {
   SalesGatePassPost(){
     const formValue =this.SalesGatepassForm.value;
 
+    var srvLoc =this.SalesGatepassForm.get('shipToLoc').value;
+
+    if(srvLoc==undefined || srvLoc==null || srvLoc<=0) { alert ("Please Select Service Location.");return;}
+
     this.orderManagementService.SalesGatePassGenSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
@@ -275,15 +281,25 @@ export class SalesGatePassComponent implements OnInit {
 
 
   vehicleNoupdate(itemId, regNo, regDate) {
+
     if (regNo === undefined || itemId === undefined || regDate === undefined) {
       alert('Please Enter All required Details...!')
       return;
     }
+
+    var policuNum=this.SalesGatepassForm.get('policyNo').value;
+    if(regNo==undefined|| regNo==null || regNo.trim()==''){ alert("Reg No should not be null..");return;}
+    if(policuNum==undefined|| policuNum==null || policuNum.trim()==''){ alert("Policy No should not be null..");return;}
+
+    // alert ("Regno & Policy no is ok...."); return;
+
     var customerId=this.lstcomments.customerId;
     var orderedDate2 = this.pipe.transform(regDate, 'MM/dd/yyyy');
-  //  alert(customerId);
-  //  return;
-    this.orderManagementService.vehicleNoupdateFn(itemId, regNo, orderedDate2,customerId).subscribe((res: any) => {
+
+    const formValue= this.SalesGatepassForm.value;
+
+      // this.orderManagementService.vehicleNoupdateFn(itemId, regNo, orderedDate2,customerId).subscribe((res: any) => {
+    this.orderManagementService.vehicleNoInsuranceupdateFn(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
         this.gatePassOrderNo(this.orderNumber);
