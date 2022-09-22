@@ -2575,7 +2575,6 @@ if(this.deptId==2){
       variantFormGroup.addControl('custAccountNo', new FormControl(custAccountNo, Validators.required));
       variantFormGroup.addControl('customerSiteId', new FormControl(customerSiteId, Validators.required));
       variantFormGroup.addControl('custName', new FormControl(custName, Validators.required));
-   
     }
 
         console.log(variants.value);

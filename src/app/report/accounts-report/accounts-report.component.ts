@@ -57,6 +57,8 @@ export class AccountsReportComponent implements OnInit {
   isVisibleSparesdebtors:boolean=false;
   isVisiblespInvAgging:boolean=false;
   isVisiblepanelgltrialBalance:boolean=false;
+  isVisiblePeriodName=false;
+  isVisiblePeriodYear=false;
   panelCashBank:boolean=false;
   accountNameList:any=[];
   accountNameList1:any=[];
@@ -219,7 +221,14 @@ this.reportForm.patchValue({ userName: sessionStorage.getItem('ticketNo') })
 
 
   onOptionsDepartmentList(event:string){
-    // alert(event);
+   
+    if(event==null || event ==undefined || event.trim()=='') {
+      // alert(event + "dept event ");
+      this.reportForm.patchValue({deptId:''})
+      this.reportForm.patchValue({deptName :''})
+      return;
+    }
+    
     var deptList = this.DepartmentList.find(d => d.code === event);
     console.log(deptList);
     
@@ -394,8 +403,10 @@ reportName:string;
     this.isVisiblepanelprePayment=false;
     this.ispanelTolocationOu=false;
     this.isVisibleVendorLedgerReport=false;
-
+    this.isVisiblePeriodName=false;
+    this.isVisiblePeriodYear=true;
   }
+
   else if (reportName==='cashBank'){
     this.reportForm.get('locCode').reset();
     this.reportForm.get('locId').reset();
@@ -591,6 +602,7 @@ reportName:string;
     this.isVisibleVendorLedgerReport=false;
 
   }
+
   else if (reportName=='refundRegister'){
     this.reportName='Refund Register';
     this.isVisibleGSTSaleRegister=false;
@@ -607,6 +619,41 @@ reportName:string;
     this.isVisiblepanelprePayment=false;
     this.ispanelTolocationOu=false;
     this.isVisibleVendorLedgerReport=false;
+  }
+
+  else if (reportName=='rtvRegister'){
+    this.reportName='Return To Vendor Register';
+    this.isVisibleGSTSaleRegister=false;
+    this.isVisibleGSTPurchaseRegister=true;
+    this.isVisibleSparesdebtors=false;
+    this.isVisibleLocation=false;
+    this.isVisibleLocation1=false;
+    this.isVisiblepanelaccountName=false;
+    this.isVisiblepanelcashName=false;
+    this.isVisiblespInvAgging=false;
+    this.isVisiblepanelgltrialBalance=false;
+    this.panelCashBank=false;
+    this.isVisiblepanelAPGLUnpainAging=false;
+    this.isVisiblepanelprePayment=false;
+    this.ispanelTolocationOu=false;
+    this.isVisibleVendorLedgerReport=false;
+  }
+
+  else if (reportName==='gltrialBalanceYtd'){
+    this.reportName='GL Trial Balance-YTD';
+    this.isVisibleGSTSaleRegister=false;
+    this.isVisibleGSTPurchaseRegister=false;
+    
+    this.isVisibleSparesdebtors=false;
+    this.isVisiblespInvAgging=false;
+    this.isVisiblepanelgltrialBalance=true;
+    this.panelCashBank=false;
+    this.isVisiblepanelAPGLUnpainAging=false;
+    this.isVisiblepanelprePayment=false;
+    this.ispanelTolocationOu=false;
+    this.isVisibleVendorLedgerReport=false;
+    this.isVisiblePeriodName=true;
+    this.isVisiblePeriodYear=false;
   }
 
 
@@ -628,9 +675,9 @@ reportName:string;
     var locId = this.reportForm.get('locId').value;
     var userName = this.reportForm.get('userName').value;
     var subInventory='SP';
-    if (locId===null){
-      locId=''
-    }
+    if (locId===null){ locId='' }
+    if (deptId===null){deptId=''}
+
     if (reportName==='GST Purchase Register'){
     const fileName = 'GST Purchase Register-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
@@ -825,6 +872,7 @@ reportName:string;
         this.isDisabled1=false;
       })      
     }
+
     else if (reportName ==='Cash Book Report'){
       // alert(reportName);
       var accountName=this.reportForm.get('accountName').value;
@@ -987,6 +1035,42 @@ reportName:string;
           this.isDisabled1=false;
         })
      }
+
+     else if (reportName=='Return To Vendor Register'){
+      var sourceName=this.reportForm.get('source').value;
+      const fileName = 'RTV Register-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      // if(deptName==='NULL'){
+      //   deptName='';
+      // }
+      this.reportService.rtvRegister(fromDate,toDate,sessionStorage.getItem('ouId'),locId,deptId)
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.closeResetButton = true;
+          this.dataDisplay = ''
+          this.isDisabled1=false;
+        })
+     }
+
+     else if (reportName ==='GL Trial Balance-YTD'){
+      var ouName = sessionStorage.getItem('locCode');
+      var ouCode= ouName.substring(0,4)
+       // var periodName= this.reportForm.get('periodName').value;
+       var glYearName= this.reportForm.get('glPeriodYear').value;
+       var glPrdName= this.reportForm.get('periodName').value;
+       const fileName = 'GL Trial Balance YTD-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+       this.reportService.gltrialBalanceReportYtd(ouCode,glPrdName)
+       .subscribe(data => {
+         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+         this.closeResetButton = true;
+         this.dataDisplay = ''
+         this.isDisabled1=false;
+       })      
+     }
+
+
+
 
 
   }

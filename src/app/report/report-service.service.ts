@@ -151,6 +151,19 @@ export class ReportServiceService {
 
   }
 
+  gltrialBalanceReportYtd(ouCode,glPrdName){
+    // const REQUEST_URI = this.ServerUrl +`/AccountsReports/GLTrailBal?ouPara=${ouCode}&periodName=${periodName}`;
+    const REQUEST_URI = this.ServerUrl +`/AccountsReports/GLTrailYtd?periodYear=${glPrdName}&ouPara=${ouCode}`;
+   
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+
+    // http://localhost:8081/AccountsReports/GLTrailYtd?periodYear=APR-22-23&ouPara=12MU
+  }
+
+
   cashBankReport(fromDate,toDate,ouId,locId,accountName,naturalAccct,userName){
     const REQUEST_URI = this.ServerUrl +`/AccountsReports/CashbankReg?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&accountName=${accountName}&naturalCode=${naturalAccct}&userName=${userName}`;
     return this.http.get(REQUEST_URI, {
@@ -199,6 +212,17 @@ export class ReportServiceService {
       headers: this.headers,
     });
     // http://localhost:8081/AccountsReports/RefundRegister?fromDate=01-APR-2022&toDate=02-AUG-2022&ouId=21&locId&deptName=Service  
+  }
+
+  rtvRegister(fromDate,toDate,ouId,locId,deptId){
+    const REQUEST_URI = this.ServerUrl +`/AccountsReports/RTVRegister?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&deptId=${deptId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  
+    // http://localhost:8081/AccountsReports/RTVRegister?fromDate=01-APR-2022&toDate=19-SEP-2022&ouId=21&locId=2101&deptId=1
+  
   }
 
   manualInvoice(fromDate,toDate,ouId,locId){
