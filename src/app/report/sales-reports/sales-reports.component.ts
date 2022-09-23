@@ -876,6 +876,26 @@ export class SalesReportsComponent implements OnInit {
 
     }
 
+    else if (reportName === 'salesRtoRegister') {
+      this.reportName = 'Sales RTO Register';
+      this.isVisiblefromtolocationdepartment = false;
+      this.isVisibleVehicleSaleRegister = false;
+      this.isVisibleSaleIND = false;
+      this.isSaleClosingStock = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisiblestockTransfer=false;
+      this.isVisiblefromtoloccustaccno=false;
+      this.isVisibleSalesInventoryAging=false;
+      this.isVisiblepanelfromtolocation=true;
+      this.isVisiblepanelreceiptNo=false;
+      this.isVisiblepanelSalesAddonReconciliation=false;
+      this.isVisiblefromtosubinventory=false;
+      this.panelamcHistrory=false;
+      this.ispanelTolocationOu=false;
+      this.isVisiblepaneltolocation=false;
+
+    }
+
 
   }
 
@@ -1545,6 +1565,8 @@ export class SalesReportsComponent implements OnInit {
           })
         }
       }
+
+
       else if (reportName=='FSC Coupon Data Report'){
         const fileName = 'FSC Coupon Data Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
         const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
@@ -1614,9 +1636,28 @@ export class SalesReportsComponent implements OnInit {
           })
         }
       }
-
-
-
+      else if (reportName=='Sales RTO Register'){
+        const fileName = 'Sales RTO Register-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+        const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+        if (Number((sessionStorage.getItem('deptId')))==4){
+          this.reportService.salesRTOReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+        }
+        else if (Number((sessionStorage.getItem('deptId')))!=4){
+          this.reportService.salesRTOReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+        }
+      }
 
   }
 

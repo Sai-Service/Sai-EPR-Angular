@@ -453,6 +453,16 @@ export class ReportServiceService {
     });
   }
 
+  salesRTOReport(fromDate,toDate,ouId,locId){
+    const REQUEST_URI = this.ServerUrl +`/SalesReports/SalesRTOReg?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+
+    // http://localhost:8081/SalesReports/SalesRTOReg?fromDate=01-Sep-2022&toDate=21-Sep-2022&ouId=21&locId=2101
+  }
+
 
   spPurRegDownLoadReport(ouId){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/download?fileName=GstPurchaseReg${ouId}.xls`;

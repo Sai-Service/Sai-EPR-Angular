@@ -98,13 +98,15 @@
         <td><input disabled type="number" formControlName="gatepassNo" [ngModel]="gatepassNo" id="gatepassNo" value="gatepassNo"  class="form-control" style="height: 20px;width: 160px;"></td>
     </tr>
 
-    <div *ngIf="isVisiblegatePassDetails; then Block1; else Block2"></div>
+    <!-- <div *ngIf="isVisiblegatePassDetails; then Block1; else Block2"></div> -->
+    <div *ngIf="isVisiblegatePassVehicleDetails; then Block1; else Block2"></div>
+   
     <ng-template #Block1>
     <tr>
         <td style="width: 15%" class="LabelFontStyle">Insurance&nbsp;Type&nbsp;:&nbsp;</td>
         <td><input disabled type="text" formControlName="insType" [(ngModel)]='insType' value={{insType}} class="form-control" style="height: 20px;width: 160px;" ></td>
         <td style="width: 15%" class="LabelFontStyle"> Policy&nbsp;Number&nbsp;: </td>
-        <td><input   type="text" formControlName="policyNo" [(ngModel)]="policyNo " id="policyNo"   class="form-control" style="height: 20px;width: 160px;"  placeholder="Insurance Policy no"></td>
+        <td><input   type="text" formControlName="policyNo" [(ngModel)]="policyNo " id="policyNo"   class="form-control" style="height: 20px;width: 160px;background-color:yellow ;"  placeholder="Insurance Policy no"></td>
         <td style="width: 15%" class="LabelFontStyle"> Policy&nbsp;Date&nbsp;:</td>
         <td><input type="date" formControlName="insuDate"  id="insuDate" value="insuDate" [(ngModel)]="insuDate"   class="form-control" style="height: 20px;width: 160px;" ></td>
         <!-- (change)="validatePolicyDate(insuDate)"  -->
@@ -142,9 +144,9 @@
             <td style="width: 15%" class="LabelFontStyle">Insurance&nbsp;Type&nbsp;:&nbsp;</td>
             <td><input disabled type="text" formControlName="insType" [(ngModel)]='insType' value={{insType}} class="form-control" style="height: 20px;width: 160px;" ></td>
             <td style="width: 15%" class="LabelFontStyle"> Policy&nbsp;Number&nbsp;: </td>
-            <td><input disabled  type="text" formControlName="policyNo" [(ngModel)]="policyNo " id="policyNo"   class="form-control" style="height: 20px;width: 160px;"  placeholder="Insurance Policy no"></td>
+            <td><input disabled  type="text" formControlName="policyNo" [(ngModel)]="policyNo" id="policyNo"   class="form-control" style="height: 20px;width: 160px;"  placeholder="Insurance Policy no"></td>
             <td style="width: 15%" class="LabelFontStyle"> Policy&nbsp;Date&nbsp;:</td>
-            <td><input disabled type="date" formControlName="insuDate"  id="insuDate" value="insuDate" [(ngModel)]="insuDate"   class="form-control" style="height: 20px;width: 160px;" ></td>
+            <td><input disabled type="date" formControlName="insuDate"  id="insuDate"  [(ngModel)]="insuDate"  class="form-control" style="height: 20px;width: 160px;" ></td>
             <td style="width: 15%" class="LabelFontStyle"> Policy&nbsp;Term&nbsp;: </td>
             <td><input disabled  type="number" formControlName="insuPeriod" [(ngModel)]="insuPeriod" id="insuPeriod"  (change)="validatePolicyTerm(insuPeriod)"  class="form-control" style="height: 20px;width: 160px;"  placeholder="Policy Term"></td>
         </tr>
@@ -152,7 +154,7 @@
          <tr>
            <td style="width: 12%" class="LabelFontStyle">Ins&nbsp;Company:&nbsp;</td>
             <td colspan="3">
-                <select disabled formControlName="insurerCompId" id="insurerCompId"  (ngModelChange)='onInsurerNameSelected($event)' class="form-control" style="width: 100%;">
+                <select disabled formControlName="insurerCompId" id="insurerCompId" [(ngModel)]="insurerCompId" (ngModelChange)='onInsurerNameSelected($event)' class="form-control" style="width: 100%;">
                 <option></option>
                 <option *ngFor="let sc of insNameList"
                     [ngValue]="sc.customerId">
@@ -163,7 +165,7 @@
           
                 <td style="width: 12%" class="LabelFontStyle">Ins&nbsp;Site:&nbsp;</td>
                 <td colspan="3">
-                <select disabled formControlName="insurerSiteId" id="insurerSiteId" class="form-control" style="width: 100%;">
+                <select disabled formControlName="insurerSiteId" id="insurerSiteId" [(ngModel)]="insurerSiteId" class="form-control" style="width: 100%;">
                 <option></option>
                 <option *ngFor="let sc of insSiteList"
                     [ngValue]="sc.customerSiteId">
@@ -180,8 +182,8 @@
     </fieldset>
     <div [style.display]="isVisiblegatePassVehicleDetails ? 'block' : 'none'">
     <fieldset class="RFS">
-        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
-           Vehicle Details Updation</legend>
+        <!-- <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;"> -->
+           <!-- Vehicle Details Updation</legend> -->
            <table class="center" style="width: 100%;">
             <tr>
                 <input disabled hidden type="number" class="form-control" formControlName="itemId" [(ngModel)]="itemId" style="border:solid 1px black" >
@@ -192,11 +194,11 @@
                 <!-- </td>&nbsp;&nbsp;  -->
 
                 <td style="font-weight: bold;" class="LabelFontStyle1"> Vehicle&nbsp;No&nbsp;:&nbsp;  </td>
-                <td><input  class="form-control" formControlName="regNo" style="border:solid 1px black" [(ngModel)]="regNo" placeholder="Enter Vehicle Registration No"> </td>
+                <td><input  class="form-control" formControlName="regNo" style="border:solid 1px black;background-color: yellow;" [(ngModel)]="regNo" placeholder="Enter Vehicle Registration No"> </td>
                 <td style="font-weight: bold;" class="LabelFontStyle1"> Vehicle&nbsp;Date&nbsp;:&nbsp;  </td>
                 <td><input type="date"  class="form-control" formControlName="regDate" style="border:solid 1px black" [(ngModel)]="regDate"> </td>
               
-              <td><button type="submit" class="btn btn-primary" id="register" (click)="vehicleNoupdate(itemId,regNo,regDate)" style="width: fit-content;">Update Vehicle No</button>  </td>
+              <td><button type="submit" class="btn btn-primary" id="register" (click)="vehicleNoupdate(itemId,regNo,regDate)" style="width: fit-content;">Update Vehicle No/Policy Details</button>  </td>
   
             
             </tr>   
@@ -222,11 +224,11 @@
               <table> 
                   <tr>
                     <td style="font-weight: bold;" class="LabelFontStyle1"> Order&nbsp;No&nbsp;:&nbsp;  </td>
-                    <td><input  class="form-control" formControlName="orderNumber" style="border:solid 1px black" [(ngModel)]="orderNumber"> </td>&nbsp;&nbsp;
+                    <td><input disabled class="form-control" formControlName="orderNumber" style="border:solid 1px black" [(ngModel)]="orderNumber"> </td>&nbsp;&nbsp;
                     <td style="font-weight: bold;" class="LabelFontStyle1"> Service&nbsp;Location&nbsp;:&nbsp;  </td>
                     <td>
                         <select formControlName="shipToLoc" id="shipToLoc" [(ngModel)]="shipToLoc" class="form-control">
-                            <option>--Select--</option>
+                            <option></option>
                             <option *ngFor="let sc of  BillShipList" [value]="sc.locId">
                                 {{sc.locCode}}--{{sc.locName}}
                             </option>
