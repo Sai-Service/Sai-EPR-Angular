@@ -200,7 +200,7 @@
                                             <tr>
                                                 <td>
                                                         <input formControlName="rcvSupp1" [(ngModel)]='rcvSupp1' value={{rcvSupp1}}
-                                                        class="form-control" placeholder="Enter Supp no" style="width: 100px;">
+                                                        class="form-control" placeholder="Enter Supp no" style="width: 130px;" >
                                                 </td>
                                                 <td>
                                                     <!-- <div class="container"> -->
@@ -276,7 +276,32 @@
                                         </table>
                                     </td>                
                                 </tr>
+
                                 <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Location&nbsp;:&nbsp;</td>
+
+                                    <div *ngIf="isEisableLocationInSearch; then actYes; else actNo"></div>
+                                    <ng-template #actYes>
+                                    <td>
+                                        <select  formControlName="locId" id="locId" [(ngModel)]="locId" class="form-control" >
+                                        <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
+                                            {{sc.locCode}}
+                                        </option>
+                                        </select>
+                                    </td>
+                                    </ng-template>
+                                    <ng-template #actNo>
+                                        <td>
+                                            <select disabled formControlName="locId" id="locId" [(ngModel)]="locId" class="form-control" >
+                                            <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
+                                                {{sc.locCode}}
+                                            </option>
+                                            </select>
+                                        </td>
+                                    </ng-template>
+
+
+
                                     <td style="width: 15%" class="LabelFontStyle">
                                         &nbsp;Po&nbsp;Dt&nbsp;Wise&nbsp;Receipt:&nbsp;
                                     </td>
@@ -350,7 +375,7 @@
                                         <table>
                                             <tr>
                                                 <td>
-                                                    <input type="date" formControlName="poDate" [(ngModel)]='poDate' value={{poDate}}  onkeydown="return false"  class="form-control">
+                                                    <input type="date" formControlName="poDate" [(ngModel)]='poDate' value={{poDate}} style="width: 130px;" onkeydown="return false"  class="form-control">
                                                 </td>
                                                 <td>
                                                     <!-- Button trigger modal -->
@@ -430,6 +455,9 @@
                                            </tr>
                                        </table>
                                    </td>
+
+
+                                   
                                  
                                 </tr>
                             </table>

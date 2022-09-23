@@ -192,6 +192,7 @@ export class PoReceiptFormComponent implements OnInit {
   viewAccounting1: any[];
   viewAccounting2: any[];
   displayrecDate = true;
+  public BillShipToList: Array<string> = [];
 
   // PO wise Date Paratemeter//////
   frmDate: Date;
@@ -207,7 +208,7 @@ export class PoReceiptFormComponent implements OnInit {
   selectedAll: any;
   selectedNames: any;
   poDate: Date;
-
+  isEisableLocationInSearch=false;
   displaySaveButton = false;
   displaysubInvDesc: Array<boolean> = [];
   TRUER = false; recFagDiss = true;
@@ -399,6 +400,11 @@ export class PoReceiptFormComponent implements OnInit {
 
     this.displayrecDate = true;
 
+    if (Number(sessionStorage.getItem('deptId')) == 4){
+      this.isEisableLocationInSearch=true;} 
+      else { this.isEisableLocationInSearch=false; }
+    
+
     // this.poReceiptForm.patchValue(this.lstcomments1.user);
     // var divisionCode = this.lstcomments1.user.divisionCode;
     //  console.log(divisionCode);
@@ -407,6 +413,13 @@ export class PoReceiptFormComponent implements OnInit {
 
 
     // this.lstcomments= [];
+
+    this.service.getLocationSearch1(sessionStorage.getItem('ouId'))
+    .subscribe(
+      data => {
+        this.BillShipToList = data;
+      }
+    );
 
     this.service.cityList()
       .subscribe(
@@ -429,7 +442,7 @@ export class PoReceiptFormComponent implements OnInit {
 
 
     this.sub = this.router1.params.subscribe(params => {
-      alert( params['segment1']);
+      // alert( params['segment1']);
       this.segment1 = params['segment1'];
       var locId = params['accountLocId'];
       this.accountLocId = params['accountLocId'];
@@ -662,7 +675,8 @@ export class PoReceiptFormComponent implements OnInit {
         );
     }
     else if (Number(sessionStorage.getItem('deptId')) == 4) {
-      this.service.getsearchByReceiptNo(segment1, this.accountLocId)
+      // this.service.getsearchByReceiptNo(segment1, this.accountLocId)
+      this.service.getsearchByReceiptNo(segment1, this.locId)
         .subscribe(
           data => {
             if (data.code === 200) {
@@ -1320,6 +1334,11 @@ export class PoReceiptFormComponent implements OnInit {
         }
       });
     }
+  }
+
+  onOptionsLocationSelected(event) {
+    // alert(event);
+    this.poReceiptForm.patchValue({ locId: event })
   }
 
 

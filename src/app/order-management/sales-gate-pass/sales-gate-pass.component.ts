@@ -176,6 +176,11 @@ export class SalesGatePassComponent implements OnInit {
           this.gatepassNo = this.lstcomments.gatePassNo;
           this.dateOfDelv = this.lstcomments.orderDate;
           this.insType= this.lstcomments.insType;
+          this.insurerCompId= this.lstcomments.insurerCompId;
+          this.insurerSiteId= this.lstcomments.insurerSiteId;
+          this.insuDate= this.lstcomments.insuDate;
+          this.policyNo= this.lstcomments.policyNo;
+          this.insuPeriod= this.lstcomments.insuPeriod;
 
           if (this.lstcomments.gatePassNo != 0) {
             this.isVisiblegatePassDetails = false;

@@ -144,9 +144,9 @@
             <td style="width: 15%" class="LabelFontStyle">Insurance&nbsp;Type&nbsp;:&nbsp;</td>
             <td><input disabled type="text" formControlName="insType" [(ngModel)]='insType' value={{insType}} class="form-control" style="height: 20px;width: 160px;" ></td>
             <td style="width: 15%" class="LabelFontStyle"> Policy&nbsp;Number&nbsp;: </td>
-            <td><input disabled  type="text" formControlName="policyNo" [(ngModel)]="policyNo " id="policyNo"   class="form-control" style="height: 20px;width: 160px;"  placeholder="Insurance Policy no"></td>
+            <td><input disabled  type="text" formControlName="policyNo" [(ngModel)]="policyNo" id="policyNo"   class="form-control" style="height: 20px;width: 160px;"  placeholder="Insurance Policy no"></td>
             <td style="width: 15%" class="LabelFontStyle"> Policy&nbsp;Date&nbsp;:</td>
-            <td><input disabled type="date" formControlName="insuDate"  id="insuDate" value="insuDate" [(ngModel)]="insuDate"   class="form-control" style="height: 20px;width: 160px;" ></td>
+            <td><input disabled type="date" formControlName="insuDate"  id="insuDate"  [(ngModel)]="insuDate"  class="form-control" style="height: 20px;width: 160px;" ></td>
             <td style="width: 15%" class="LabelFontStyle"> Policy&nbsp;Term&nbsp;: </td>
             <td><input disabled  type="number" formControlName="insuPeriod" [(ngModel)]="insuPeriod" id="insuPeriod"  (change)="validatePolicyTerm(insuPeriod)"  class="form-control" style="height: 20px;width: 160px;"  placeholder="Policy Term"></td>
         </tr>
@@ -154,7 +154,7 @@
          <tr>
            <td style="width: 12%" class="LabelFontStyle">Ins&nbsp;Company:&nbsp;</td>
             <td colspan="3">
-                <select disabled formControlName="insurerCompId" id="insurerCompId"  (ngModelChange)='onInsurerNameSelected($event)' class="form-control" style="width: 100%;">
+                <select disabled formControlName="insurerCompId" id="insurerCompId" [(ngModel)]="insurerCompId" (ngModelChange)='onInsurerNameSelected($event)' class="form-control" style="width: 100%;">
                 <option></option>
                 <option *ngFor="let sc of insNameList"
                     [ngValue]="sc.customerId">
@@ -165,7 +165,7 @@
           
                 <td style="width: 12%" class="LabelFontStyle">Ins&nbsp;Site:&nbsp;</td>
                 <td colspan="3">
-                <select disabled formControlName="insurerSiteId" id="insurerSiteId" class="form-control" style="width: 100%;">
+                <select disabled formControlName="insurerSiteId" id="insurerSiteId" [(ngModel)]="insurerSiteId" class="form-control" style="width: 100%;">
                 <option></option>
                 <option *ngFor="let sc of insSiteList"
                     [ngValue]="sc.customerSiteId">
