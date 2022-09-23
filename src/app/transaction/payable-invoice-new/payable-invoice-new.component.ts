@@ -1536,7 +1536,9 @@ export class PayableInvoiceNewComponent implements OnInit {
             }
             console.log(data.taxLines);
             this.poInvoiceForm.get('invLines').patchValue(data.invLines);
+            if(data.taxLines!=undefined){
             this.poInvoiceForm.get('taxLines').patchValue(data.taxLines);
+            }
             this.poInvoiceForm.get('distribution').patchValue(data.invDisLines);
             this.poInvoiceForm.get('tdsLines').patchValue(data.invTdsLines);
             this.poInvoiceForm.get('tdsTaxLines').patchValue(data.invTdsLines);
@@ -3460,8 +3462,15 @@ export class PayableInvoiceNewComponent implements OnInit {
 
   prepaymentData(event) {
     var headerVal = this.poInvoiceForm.get('obj').value;
+    var patch=this.poInvoiceForm.get('obj') as FormArray;
     var invtype = headerVal[0].invTypeLookupCode;
     // alert(invtype);
+    if(invtype=='Credit Memo'){
+      if (Math.sign(headerVal[0].invoiceAmt) == 1) {
+        alert('Kindly enter the Invoice Amount price as negative value ')
+        patch.controls[0].patchValue({ invoiceAmt: '' }, { invoiceAmt: '' });
+      }
+    }
     if (invtype == 'Prepayment') {
       var supId = headerVal[0].suppId;
       var supsitId = headerVal[0].supplierSiteId;
