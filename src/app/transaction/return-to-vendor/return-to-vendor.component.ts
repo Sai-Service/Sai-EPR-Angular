@@ -194,7 +194,8 @@ export class ReturnToVendorComponent implements OnInit {
 
       userList2: any[] = [];
       lastkeydown1: number = 0;
-     
+      dataDisplay :string;
+      spinIcon=true;
 
 
    constructor(private service: MasterService,private orderManagementService:OrderManagementService,private  fb: FormBuilder, private router: Router) {
@@ -523,18 +524,17 @@ export class ReturnToVendorComponent implements OnInit {
        SearchByPoRcptNumberHeader(mRcptNumber:any){
           // this.resetMast();
           // this.lineDetailsArray.reset();
-          if(mRcptNumber==undefined || mRcptNumber==null)
-          {
-            alert ("Please Enter Receipt No.");
-            return;
-          }
-
+          if(mRcptNumber==undefined || mRcptNumber==null) {alert ("Please Enter Receipt No.");return;}
+         
+          this.spinIcon=false;
+          this.dataDisplay='Loading...Please Wait...'
+          // alert ("spinbutton :"+this.spinIcon +" , "+this.dataDisplay);
           // this.lineDetailsArray.controls[0].get('itemName').disable();
           this.service.getsearchByReceiptNo(mRcptNumber,this.locId)
           .subscribe(
             data => {
 
-              if(data.code===400) {alert (data.message) ;return; }
+              if(data.code===400) {alert (data.message) ;this.spinIcon=true;this.dataDisplay='';return; }
               
               this.lstReceiptHeader = data.obj;
               this.lstReceiptItemLines=data.obj.rcvLines;
@@ -584,6 +584,7 @@ export class ReturnToVendorComponent implements OnInit {
                 this.shipHeaderId=this.lstReceiptHeader.shipHeaderId;
                 // this.returntoVendorForm.patchValue(this.lstReceiptHeader);
                 // this.shipHeaderId=null;
+                this.spinIcon=true;this.dataDisplay='';
               } 
               
               else{
@@ -599,6 +600,7 @@ export class ReturnToVendorComponent implements OnInit {
               
             }
           } );  
+          // this.spinIcon=true;this.dataDisplay='';
          
          }
 
@@ -1326,7 +1328,9 @@ export class ReturnToVendorComponent implements OnInit {
        this.rtnDocNo=select.receiptNo;
       //  this.rtnDocDate=select.receiptDate;
        this.rtnDocDate=this.pipe.transform(select.receiptDate, 'dd-MM-yyyy');
-       this.totalAmt=select.totalAmt;
+      //  this.totalAmt=select.totalAmt;
+        var totalAmt1=Math.round((select.totalAmt + Number.EPSILON) * 100) / 100
+        this.totalAmt=totalAmt1;
       
        this.service.getsearchByReceiptNoLine(this.segment1,mrtnNo)
        .subscribe(
@@ -1334,7 +1338,7 @@ export class ReturnToVendorComponent implements OnInit {
            if(data.obj !=null) {
             this.lstRtnDetails = data.obj;
             console.log(this.lstRtnDetails);
-              } else {alert ( "No Line Items Found in this PO Receipt.");}
+              } else {alert ("No Line Items Found in this PO Receipt.");}
               
           } );    
           
