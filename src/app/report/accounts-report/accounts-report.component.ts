@@ -655,6 +655,22 @@ reportName:string;
     this.isVisiblePeriodName=true;
     this.isVisiblePeriodYear=false;
   }
+  else if (reportName==='gltrialBalancePtd'){
+    this.reportName='GL Trial Balance-PTD';
+    this.isVisibleGSTSaleRegister=false;
+    this.isVisibleGSTPurchaseRegister=false;
+    
+    this.isVisibleSparesdebtors=false;
+    this.isVisiblespInvAgging=false;
+    this.isVisiblepanelgltrialBalance=true;
+    this.panelCashBank=false;
+    this.isVisiblepanelAPGLUnpainAging=false;
+    this.isVisiblepanelprePayment=false;
+    this.ispanelTolocationOu=false;
+    this.isVisibleVendorLedgerReport=false;
+    this.isVisiblePeriodName=false;
+    this.isVisiblePeriodYear=true;
+  }
 
 
   }
@@ -1069,9 +1085,22 @@ reportName:string;
        })      
      }
 
-
-
-
+     else if (reportName ==='GL Trial Balance-PTD'){
+      var ouName = sessionStorage.getItem('locCode');
+      var ouCode= ouName.substring(0,4)
+       // var periodName= this.reportForm.get('periodName').value;
+       var glYearName= this.reportForm.get('glPeriodYear').value;
+       var glPrdName= this.reportForm.get('periodName').value;
+       const fileName = 'GL Trial Balance YTD-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+       this.reportService.gltrialBalanceReportPtd(ouCode,glYearName)
+       .subscribe(data => {
+         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+         this.closeResetButton = true;
+         this.dataDisplay = ''
+         this.isDisabled1=false;
+       })      
+     }
 
   }
 
