@@ -2304,6 +2304,10 @@ export class PayableInvoiceNewComponent implements OnInit {
           return;
         }
       }
+      
+      var hsnsac=arrayControl[k].hsnSacCode.split('--');
+      // alert(hsnsac);
+      
       var objarray = this.poInvoiceForm.get('obj').value;
       this.indexVal = arrayControl[k].lineNumber;
       // alert(this.indexVal);
@@ -2313,6 +2317,7 @@ export class PayableInvoiceNewComponent implements OnInit {
       var existlinecnt = controlinv.length;
       (controlinv.controls[k]).patchValue({ taxCategoryId: select.taxCategoryId });
       (controlinv.controls[k]).patchValue({ locId: objarray[0].locationId });
+      (controlinv.controls[k]).patchValue({'hsnSacCode':hsnsac[0]});
       var disAm = 0;
       var sum = 0;
       // var klen = k + 1;
@@ -2862,6 +2867,7 @@ export class PayableInvoiceNewComponent implements OnInit {
     this.isVisibleSelectButton = true;
     jsonData.accPayCodeCombId = 2079
     jsonData.currency = 'INR';
+    
     var taxStr = [];
     var distributionArray = this.poInvoiceForm.get('distribution').value;
     var invLinesArray1 = this.poInvoiceForm.get('obj') as FormArray;
@@ -2876,6 +2882,8 @@ export class PayableInvoiceNewComponent implements OnInit {
       }
     }
     for (let i = 0; i < invLinesArray.length; i++) {
+      // var hsn=invLinesArray[i].hsnSacCode.split('--');
+      // invLinesArray[i].hsnSacCode=hsn[0];
       // alert(invLinesArray[i].glDate +'----'+invLinesArray[i].name);
       if (invLinesArray[i].glDate === undefined) {
         alert('Please Select GL Date.!');
@@ -2917,6 +2925,7 @@ export class PayableInvoiceNewComponent implements OnInit {
     if (tdsVals.taxCategoryId === null) {
       manInvObj.setInvTdsLines(this.poInvoiceForm.get('tdsLines').value);
     }
+    
     manInvObj.setTaxLines(taxStr);
     console.log(JSON.stringify(manInvObj));
     var reqArr: any[];
