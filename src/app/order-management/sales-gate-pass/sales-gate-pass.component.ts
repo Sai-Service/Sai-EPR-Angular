@@ -284,17 +284,14 @@ export class SalesGatePassComponent implements OnInit {
   SalesGatepass(SalesGatepassForm) { }
   get f() { return this.SalesGatepassForm.controls; }
 
+  vehiclePolicyupdate(itemId, regNo, regDate) {
 
-  vehicleNoupdate(itemId, regNo, regDate) {
-
-    if (regNo === undefined || itemId === undefined || regDate === undefined) {
-      alert('Please Enter All required Details...!')
-      return;
-    }
 
     var policuNum=this.SalesGatepassForm.get('policyNo').value;
-    if(regNo==undefined|| regNo==null || regNo.trim()==''){ alert("Reg No should not be null..");return;}
+    var policyDate=this.SalesGatepassForm.get('insuDate').value;
+       
     if(policuNum==undefined|| policuNum==null || policuNum.trim()==''){ alert("Policy No should not be null..");return;}
+    if(policyDate==undefined|| policyDate==null || policyDate.trim()==''){ alert("Policy Date should not be null..");return;}
 
     // alert ("Regno & Policy no is ok...."); return;
 
@@ -316,6 +313,42 @@ export class SalesGatePassComponent implements OnInit {
       }
     });
   }
+
+
+  vehicleNoupdate(itemId, regNo, regDate) {
+
+    if (regNo === undefined || itemId === undefined || regDate === undefined) {
+      alert('Please Enter All required Details...!')
+      return;
+    }
+
+    if(regNo==undefined|| regNo==null || regNo.trim()==''){ alert("Reg No should not be null..");return;}
+   
+    var policuNum=this.SalesGatepassForm.get('policyNo').value;
+    var policyDate=this.SalesGatepassForm.get('insuDate').value;
+       
+    if(policuNum==undefined|| policuNum==null || policuNum.trim()==''){ alert("Policy No should not be null..");return;}
+    if(policyDate==undefined|| policyDate==null || policyDate.trim()==''){ alert("Policy Date should not be null..");return;}
+
+    var customerId=this.lstcomments.customerId;
+    var orderedDate2 = this.pipe.transform(regDate, 'MM/dd/yyyy');
+
+    const formValue= this.SalesGatepassForm.value;
+
+      // this.orderManagementService.vehicleNoupdateFn(itemId, regNo, orderedDate2,customerId).subscribe((res: any) => {
+    this.orderManagementService.vehicleNoInsuranceupdateFn(formValue).subscribe((res: any) => {
+      if (res.code === 200) {
+        alert(res.message);
+        this.gatePassOrderNo(this.orderNumber);
+        this.gatepassNo = res.obj;
+      } else {
+        if (res.code === 400) {
+          alert(res.message + '---' + res.obj);
+        }
+      }
+    });
+  }
+
 
   resetMast() {
     window.location.reload();

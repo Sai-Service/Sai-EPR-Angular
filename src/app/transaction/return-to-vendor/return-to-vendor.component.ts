@@ -415,16 +415,16 @@ export class ReturnToVendorComponent implements OnInit {
             else 
             {
               var baseAmt =lineRtnQty *uPrice;
-              var taxAmt   =baseAmt * taxP/100;
+              var taxAmt   = baseAmt * taxP/100;
               var totAmt   =baseAmt+taxAmt;
 
               baseAmt=Math.round((baseAmt + Number.EPSILON) * 100) / 100
               taxAmt=Math.round((taxAmt + Number.EPSILON) * 100) / 100
               totAmt=Math.round((totAmt + Number.EPSILON) * 100) / 100
 
-            patch.controls[index].patchValue({baseAmount:baseAmt})
-            patch.controls[index].patchValue({taxAmount:taxAmt})
-            patch.controls[index].patchValue({totAmount:totAmt})
+              patch.controls[index].patchValue({baseAmount:baseAmt})
+              patch.controls[index].patchValue({taxAmount:taxAmt})
+              patch.controls[index].patchValue({totAmount:totAmt})
             }
 
                 var rtnLineArr = this.returntoVendorForm.get('rcvLines').value;
