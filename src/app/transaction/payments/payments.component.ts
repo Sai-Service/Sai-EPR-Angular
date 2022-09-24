@@ -990,7 +990,9 @@ export class PaymentsComponent implements OnInit {
     var arr = this.paymentForm.get('obj1').value;
     // alert(this.PaymentReturnArr[0].documentNo);
     console.log(this.paymentData);
+  
     this.selectedPayment = this.paymentData.find(d => Number(d.docNo) === this.PaymentReturnArr[0].documentNo);
+    this.selectedPayment.emplId=(Number(sessionStorage.getItem('emplId')));
     console.log(this.selectedPayment);
     this.transactionService.paymentCancel(this.selectedPayment).subscribe((res: any) => {
       if (res.code === 200) {
