@@ -163,6 +163,19 @@ export class ReportServiceService {
     // http://localhost:8081/AccountsReports/GLTrailYtd?periodYear=APR-22-23&ouPara=12MU
   }
 
+  gltrialBalanceReportPtd(ouCode,glYearName){
+    // const REQUEST_URI = this.ServerUrl +`/AccountsReports/GLTrailBal?ouPara=${ouCode}&periodName=${periodName}`;
+    const REQUEST_URI = this.ServerUrl +`/AccountsReports/GLTrailPTD?ouPara=${ouCode}&periodYear=${glYearName}`;
+   
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+
+    // http://localhost:8081/AccountsReports/GLTrailPTD?ouPara=12MU&periodYear=2022
+
+  }
+
 
   cashBankReport(fromDate,toDate,ouId,locId,accountName,naturalAccct,userName){
     const REQUEST_URI = this.ServerUrl +`/AccountsReports/CashbankReg?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&accountName=${accountName}&naturalCode=${naturalAccct}&userName=${userName}`;
