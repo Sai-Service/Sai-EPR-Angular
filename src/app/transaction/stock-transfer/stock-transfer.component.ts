@@ -194,6 +194,7 @@ export class StockTransferComponent implements OnInit {
       ledgerId: [],
       description1: [],
       docSeqValue: [],
+      name1:[],
 
       trxLinesList: this.fb.array([]),
 
@@ -1101,7 +1102,7 @@ viewStockgatePass() {
           this.periodName = res.obj.periodName;
           this.postedDate = res.obj.postedDate;
           this.jeCategory = res.obj.jeCategory;
-          this.name1 = res.obj.name;
+          this.name = res.obj.name;
           this.ledgerId = res.obj.ledgerId;
           this.runningTotalDr = res.obj.runningTotalDr;
           this.runningTotalCr = res.obj.runningTotalCr;

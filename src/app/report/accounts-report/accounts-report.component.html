@@ -702,8 +702,8 @@
               <td [style.display]="isVisiblePeriodYear ? 'block' : 'none'">
                 <select formControlName="glPeriodYear" id="glPeriodYear" class="form-control">
                   <option>--Select--</option>
-                  <option *ngFor="let sc of  glYearNameList" [value]="sc.periodYear">
-                    {{sc.periodYear}}
+                  <option *ngFor="let sc of  periodNameList" [value]="sc.periodName">
+                    {{sc.periodName}}
                   </option>
                 </select>
               </td>
