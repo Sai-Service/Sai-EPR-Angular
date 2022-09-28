@@ -105,6 +105,7 @@ transform: translate(-50%, -50%);
     border-style: ridge;
 
 }
+
 .grid_scroll_3{
   overflow: auto;
   /* width: 800px; */
@@ -112,6 +113,16 @@ transform: translate(-50%, -50%);
   height: 360px;
   width: 100%;
 }
+
+.grid_scroll_33{
+  overflow: auto;
+  /* width: 800px; */
+  width: 100%;
+  height: 160px;
+  width: 100%;
+}
+
+
 
 .btn-info{
     width: 5em;

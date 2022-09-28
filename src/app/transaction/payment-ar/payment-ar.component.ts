@@ -262,6 +262,9 @@ export class PaymentArComponent implements OnInit {
   insuranceFlag: string;
   refType: string;
 
+  showOTHERModal=false;
+
+
 
   loginName: string;
   loginArray: string;
@@ -301,6 +304,7 @@ export class PaymentArComponent implements OnInit {
   isDisabled1=true;
   isDisabled2=true ;
   unAppAllFlag:string;
+  othLineValidation=false;
 
 
   // applyTo: string;
@@ -437,8 +441,20 @@ export class PaymentArComponent implements OnInit {
 
       invLine: this.fb.array([this.invLineDetails()]),
       appliedInvLine: this.fb.array([this.appliedinvLineDetails()]),
+      othRefLine: this.fb.array([this.othLineDetails()]),
     });
   }
+
+  othLineDetails() {
+    return this.fb.group({ 
+      othRcptNo:[],
+      othRefNo:[],
+      othRefDate:[],
+      othAmtReceived:[],
+      othBankName:[],
+    })
+  }
+
 
   invLineDetails() {
     return this.fb.group({
@@ -480,6 +496,10 @@ export class PaymentArComponent implements OnInit {
       applAmt: [],
       invType: [],
     })
+  }
+
+  othLineArray(): FormArray {
+    return <FormArray>this.paymentArForm.get('othRefLine')
   }
 
   invLineArray(): FormArray {
@@ -983,6 +1003,11 @@ if(this.deptId==2){
   onPayTypeSelected(payType: any, rmStatus: any) {
     // alert('paytype =' +payType  + " LocId :"+ this.locId + " Ou Id :"+this.ouId + " Deptid : "+ this.deptId + " Status :"+rmStatus);
     this.ReceiptMethodList=null;
+    this.showOTHERModal=false;
+    if (payType === 'OTHER') {
+      // alert ("pytype OTHER selected...");
+      this.showOTHERModal=true;
+    }
     
     if (this.deptId != 4) {
       if (payType === 'CONTROL ACCOUNT') {
@@ -3436,8 +3461,68 @@ if(this.deptId==2){
 
 
 
-       
+        addRow(index) {
+          this.CheckOthLineValidations(index);
 
+         if (this.othLineValidation) {
+
+          this.othLineArray().push(this.othLineDetails());
+        }
+       }
+        
+        
+        
+        RemoveRow(index) {
+          if (index===0){
+        
+          }
+          else {
+            this.othLineArray().removeAt(index);
+          }
+        
+        }
+
+       
+        CheckOthLineValidations(i) {
+
+          // alert('addrow index '+i);
+  
+          var prcLineArr1 = this.paymentArForm.get('othRefLine').value;
+          var lineValue1=prcLineArr1[i].othRefNo;
+          var lineValue2=prcLineArr1[i].othRefDate;
+          var lineValue3=prcLineArr1[i].othAmtReceived;
+          var lineValue4=prcLineArr1[i].othBankName;
+
+  
+          // alert("Line Value :"+lineValue1);
+           var j=i+1;
+          if(lineValue1===undefined || lineValue1===null || lineValue1.trim()=='' ){
+            alert("Line-"+j+ " REFERENCE NO:  Should not be null value.");
+            this.othLineValidation=false;
+            return;
+          }
+  
+          if(lineValue2===undefined || lineValue2===null || lineValue2==='' ){
+            alert("Line-"+j+ " REFERENCE DATE :  Should not be null value");
+            this.othLineValidation=false;
+            return;
+          }
+  
+          if(lineValue3===undefined || lineValue3===null || lineValue3<=0){
+            alert("Line-"+j+ " AMOUNT :  Should  be grater than Zero");
+            this.othLineValidation=false;
+            return;
+          }
+
+          if(lineValue4===undefined || lineValue4===null || lineValue4.trim()==''){
+            alert("Line-"+j+ " AMOUNT :  Should  be grater than Zero");
+            this.othLineValidation=false;
+            return;
+          }
+  
+          this.othLineValidation=true;
+  
+          }
   
 
 }
