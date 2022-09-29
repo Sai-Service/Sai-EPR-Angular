@@ -22,6 +22,8 @@ interface IRtnToVendor {
   ouId:number;
   totalAmt:number;
   supplierName:string;
+  poRcptBaseAmt:number;
+  poRcptTaxAmt:number;
   PoRctTotalAmt:number;
   baseAmount:number;
   taxAmt:number;
@@ -85,8 +87,8 @@ export class ReturnToVendorComponent implements OnInit {
   
   // public ItemLocatorList: Array<string> = [];
 
-  ItemLocatorList:any;
-  OnHandQty1:any;
+      ItemLocatorList:any;
+      OnHandQty1:any;
 
       // locatorId:string;
       loginName:string;
@@ -123,6 +125,8 @@ export class ReturnToVendorComponent implements OnInit {
       receiptNo:number;
       originalReceiptNo:number;
       totalAmt:number;
+      poRcptBaseAmt:number;
+      poRcptTaxAmt:number;
       PoRctTotalAmt:number;
       billToLocId:number;
       shipmentDate:Date;
@@ -239,6 +243,8 @@ export class ReturnToVendorComponent implements OnInit {
             gstDocNo:[],
             gstDocDate:[],
             baseAmount:[],
+            poRcptBaseAmt:[],
+            poRcptTaxAmt:[],
             PoRctTotalAmt:[],
             apInvNum:[],
             apInvDate:[],
@@ -578,6 +584,8 @@ export class ReturnToVendorComponent implements OnInit {
                 this.poDate=this.lstReceiptHeader.poDate;
                 this.receiptNo=this.lstReceiptHeader.receiptNo;
                 this.receiptDate=this.lstReceiptHeader.receiptDate;
+                this.poRcptBaseAmt=this.lstReceiptHeader.baseAmount.toFixed(2);
+                this.poRcptTaxAmt=this.lstReceiptHeader.totalTax.toFixed(2);
                 this.PoRctTotalAmt=this.lstReceiptHeader.totalAmt.toFixed(2);
                 this.suppNo=this.lstReceiptHeader.suppNo;
                 this.suppInvNo=this.lstReceiptHeader.suppInvNo;

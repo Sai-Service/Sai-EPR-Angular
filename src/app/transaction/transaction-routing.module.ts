@@ -46,6 +46,7 @@ import { JvUploadComponent } from './jv-upload/jv-upload.component';
 import { PaymentObj } from './payments/payment-obj';
 import { VehicleBookingUploadComponent } from './vehicle-booking-upload/vehicle-booking-upload.component';
 import { ReceiptWriteoffComponent } from './receipt-writeoff/receipt-writeoff.component';
+import { ShortLandedGrrComponent } from './short-landed-grr/short-landed-grr.component';
 
 // import { ShippingNetworkComponent } from './shipping-network/shipping-network.component';cd..
 
@@ -112,6 +113,8 @@ const routes: Routes = [
 {path:'JvUpload',component:JvUploadComponent},
 {path:'VehicleBookUpload',component:VehicleBookingUploadComponent},
 {path:'ReceiptWriteoff',component:ReceiptWriteoffComponent},
+{path:'ShortLandedGrr',component:ShortLandedGrrComponent},
+
 
 // {path :'ShippingNetwork',component:ShippingNetworkComponent},
 // {path:'CounterSaleReturn',component:CounterSaleReturnComponent},

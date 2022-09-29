@@ -1002,13 +1002,29 @@
                                                 </td>
 
                                                 <td style="width: 15%" class="LabelFontStyle">&nbsp;Supplier&nbsp;Name:&nbsp; </td>  
-                                                <td colspan="3">
+                                                <td colspan="5">
                                                 <input  type ="text" disabled formControlName="supplierName" [(ngModel)]='supplierName'
                                                                     value={{supplierName}} class="form-control"
                                                                     style="width:100%" >
                                                 </td>
 
-                                                <td style="width: 15%" class="LabelFontStyle"> &nbsp;Receipt&nbsp;Amt:&nbsp; </td> 
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 15%" class="LabelFontStyle"> &nbsp;Taxable&nbsp;Amt:&nbsp; </td> 
+                                                <td>
+                                                    <input   type ="number" disabled formControlName="poRcptBaseAmt" [(ngModel)]='poRcptBaseAmt'
+                                                                            value={{poRcptBaseAmt}} class="form-control"
+                                                                        style="text-align: right;" >
+                                                </td>
+                        
+                                                <td style="width: 15%" class="LabelFontStyle"> &nbsp;Tax&nbsp;Amt:&nbsp; </td> 
+                                                <td>
+                                                    <input   type ="number" disabled formControlName="poRcptTaxAmt" [(ngModel)]='poRcptTaxAmt'
+                                                                            value={{poRcptTaxAmt}} class="form-control"
+                                                                        style="text-align: right;" >
+                                                </td>
+
+                                                <td style="width: 15%" class="LabelFontStyle"> &nbsp;Total&nbsp;Amt:&nbsp; </td> 
                                                 <td>
                                                     <input   type ="number" disabled formControlName="PoRctTotalAmt" [(ngModel)]='PoRctTotalAmt'
                                                                             value={{PoRctTotalAmt}} class="form-control"

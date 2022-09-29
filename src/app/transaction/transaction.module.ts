@@ -48,6 +48,7 @@ import { GlTrialBalanceComponent } from './gl-trial-balance/gl-trial-balance.com
 import { JvUploadComponent } from './jv-upload/jv-upload.component';
 import { VehicleBookingUploadComponent } from './vehicle-booking-upload/vehicle-booking-upload.component';
 import { ReceiptWriteoffComponent } from './receipt-writeoff/receipt-writeoff.component';
+import { ShortLandedGrrComponent } from './short-landed-grr/short-landed-grr.component';
 
 
 // import { ShippingNetworkComponent } from './shipping-network/shipping-network.component';
@@ -106,6 +107,7 @@ import { ReceiptWriteoffComponent } from './receipt-writeoff/receipt-writeoff.co
     JvUploadComponent,
     VehicleBookingUploadComponent,
     ReceiptWriteoffComponent,
+    ShortLandedGrrComponent,
  
   
     // ShippingNetworkComponent,
