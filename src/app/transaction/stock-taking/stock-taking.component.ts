@@ -698,6 +698,11 @@ export class StockTakingComponent implements OnInit {
             this.isVisiblePro=false;
             this.displayButton=false;
           }
+          if(data.obj.compileStatus==='OPEN'){
+            this.isVisiblePro=false;
+            this.uploadButton=true;
+            this.displayButton=true;
+          }
           this.currentop = 'search'
         }
       })
