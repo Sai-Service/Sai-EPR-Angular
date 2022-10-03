@@ -314,7 +314,7 @@
                          </div> -->
 
             </tr>
-            <tr>
+            <!-- <tr>
               <td  style="width: 15%" class="LabelFontStyle"></td>
               <td rowspan="2" style="width: 18%;margin-right: 30px;">
                   <div  *ngIf="displayprocess; then thenvis; else elseinvs"></div>
@@ -342,8 +342,40 @@
               <ng-template #elseinvs>
               </ng-template>
               </td>
-            </tr>
+            </tr> -->
           </table>
+          <table style="width: 50%;" class="center"  >
+         
+            <tr>
+                <td class="LabelFontStyle">
+                    &nbsp;&nbsp;Select&nbsp;CSV&nbsp;:&nbsp;
+                </td>
+                <div *ngIf="uploadButton; then thenBlockUp; else elseBlockUp">
+                </div> 
+             <ng-template #thenBlockUp> 
+                <td colspan="3">
+                    <input class="form-control" type="file" #fileInput  accept=".csv" formControlName="files"[(ngModel)]="files" style="vertical-align: middle;margin-top: 22px;width: 350px;">&nbsp;&nbsp;  
+                </td>
+                <td>
+                    <button  class="btn btn-primary" (click)="uploadFile($event)" style="width: 100%;font-size: 11px;">Upload</button>    
+                </td>
+          </ng-template>
+          <ng-template #elseBlockUp>
+                  <td colspan="3">
+                    <input disabled class="form-control" type="file" #fileInput  accept=".csv" formControlName="files"[(ngModel)]="files" style="vertical-align: middle;margin-top: 22px;width: 350px;">&nbsp;&nbsp;  
+                </td>
+                <td>
+                    <button disabled class="btn btn-primary" (click)="uploadFile($event)" style="width: 100%;font-size: 11px;">Upload</button>    
+                </td>
+             
+            </ng-template>
+             
+            </tr>
+        
+            <tr>
+              <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">&nbsp;{{dataDisplay1}}&nbsp; </td>
+            </tr>
+            </table>
           <br>
           <div formArrayName="cycleLinesList">
             <div class="grid_scroll">
@@ -352,12 +384,11 @@
                 <tr>
                   <td>
                     <div class="grid_scroll">
-                <table  style="width:100%; border-collapse:collapse;" cellspacing="0"
-                cellpadding="4" class="auto-style4" class="GridFont">
+                <table   class="GridFont"  style="border-color:#494949;border-collapse:collapse;width: 100%;">
                   <thead>
                       <tr class="GridHeader">
-                              <th scope="col">Srl No.</th>
-                              <th scope="col">Type</th>
+                              <!-- <th scope="col">Srl No.</th> -->
+                              <!-- <th scope="col">Type</th> -->
                               <th scope="col">Item Code</th>
                               <th scope="col">Item Description</th>
                               <th scope="col">UOM</th>
@@ -367,15 +398,27 @@
                               <th scope="col">System Quantity</th>
                               <th scope="col">Physical Quantity</th>
                               <th scope="col">Adjustment Quantity</th>
-                              <th scope="col">Add</th>
-                              <th scope="col">Delete</th>
+                              <!-- <th scope="col">Add</th>
+                              <th scope="col">Delete</th> -->
                       </tr>
                     </thead>
                     <tbody>
+                    
+                    <tr *ngFor="let com of lstData" style="background-color:#E3EAEB;">
+                      <td>{{com.segment}}</td>
+                      <td>{{com.description}}</td>
+                      <td>{{com.uom}}</td>
+                      <td>{{com.systemAmt}}</td>
+                      <td>{{com.subInventory}}</td>
+                      <td>{{com.LocatorSegment}}</td>
+                      <td>{{com.systemQty}}</td>
+                      <td>{{com.physicalQty}}</td>
+                      <td>{{com.adjustmentQty}}</td>
+                     </tr>
                       <!-- <tr>
                         <input type="number" min="0"  hidden formControlName="trxLineId">
                       </tr> -->
-                    <ng-container *ngFor="let cycleLinesLists of cycleLinesList().controls; let trxLineIndex=index" [formGroupName]="trxLineIndex">
+                    <!-- <ng-container *ngFor="let cycleLinesLists of cycleLinesList().controls; let trxLineIndex=index" [formGroupName]="trxLineIndex">
                    <tr>
                       <td><input type="text" class="form-control"  style="height: 20px;width: 50px;" formControlName="srlNo">
                       </td>
@@ -396,10 +439,10 @@
                       </td>
                                     <input hidden type="number" formControlName="itemId">
                                     <input hidden type="number" formControlName="invItemId">
-                      <!-- </td> -->
-                      <!-- <td> -->
+                      </td>
+                      <td>
                         <input hidden type='number' formControlName="locId" [(ngModel)]="locId">
-                      <!-- </td> -->
+                      </td>
                       <td><input type="text" class="form-control" style="height: 20px;" formControlName="description"></td>
                       <td><input type="text" class="form-control" style="height: 20px;width: 40px;" formControlName="uom" ></td>
                       <td><input type="number" class="form-control" style="height: 20px;width: 70px;padding-right: 5px;" formControlName="itemUnitCost" ></td>
@@ -413,7 +456,7 @@
                       <select class="form-control" style="height: 20px; width: 110px;" formControlName="LocatorSegment">
                         <option>--Select--</option>
                         <option *ngFor="let locId of getfrmSubLoc" >{{locId.segmentName}}</option>
-                        <!-- [ngValue]="locId.locatorId" -->
+                        [ngValue]="locId.locatorId"
                       </select>
                     </td>
                       </ng-template>
@@ -422,17 +465,17 @@
                       <input   data-toggle="modal" data-target="#myModal1"
                       formControlName="LocatorSegment"  value={{LocatorSegment}} (click)="OpenLocator(trxLineIndex)"
                       class="form-control" style="height: 20px;width: 100px;">
-                          <!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Small Modal</button> -->
+                          <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Small Modal</button>
                         </td>
                         </ng-template>
-                       <!-- </td> -->
+                       </td>
                       <td><input disabled type="number" class="form-control" style="height: 20px;width: 100%;" formControlName="systemQty" ></td>
                       <td><input type="number" class="form-control" style="height: 20px;width: 100%;" formControlName="physicalQty" (ngModelChange)="CalculateAdjQuantity(trxLineIndex)" ></td>
                       <td><input disabled type="number" class="form-control" style="height: 20px;width: 100%;" formControlName="adjustmentQty"></td>
                       <td><button type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;"(click)="addnewcycleLinesList()"></button></td>
                       <td><button type="button" class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removenewcycleLinesList(trxLineIndex)"></button></td>
                     </tr>
-                    </ng-container>
+                    </ng-container> -->
                     </tbody>
                 </table>
               </div>
@@ -450,28 +493,54 @@
                 <td>
                   <button type="submit" class="btn btn-primary" (click)="resetstkTaking()">Reset</button>
                 </td>
+                <td>
+                  <button type="button"  [style.display]="isVisiblePro ? 'block' : 'none'" class="btn btn-primary" id="processButton"  (click)="process()">Process</button>
+                </td>
                 <div *ngIf="displayButton; then thenBlock2; else elseBlock2">
                 </div>
                 <ng-template #thenBlock2>
+                
                 <td>
-                  <button type="submit" [disabled] class="btn btn-primary" id="processButton"  (click)="process()">Process</button>
-                </td>
-                <td>
-                  <button disabled type="submit" class="btn btn-primary"(click)="Approval()" >Approve</button>
+                  <button  type="button" class="btn btn-primary"(click)="Approval()">Approve</button>
                 </td>
                 </ng-template>
                 <ng-template #elseBlock2>
-                <td>
+                <!-- <td>
                   <button type="submit" class="btn btn-primary" (click)="UpdateMiscData()" >Update</button>
 
-                </td>
+                </td> -->
                 <td>
-                  <button type="submit" class="btn btn-primary"(click)="Approval()" >Approve</button>
+                  <button disabled type="submit" class="btn btn-primary"(click)="Approval()" >Approve</button>
                 </td>
               </ng-template>
+              <!-- <td>
+                <button type="button" class="btn btn-primary"(click)="uploadFile()" >Upload</button>
+              </td> -->
 
               </tr>
             </table>
+
+            <br>
+            <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+              <tbody>
+                  <tr class="GridHeader">
+                    <th scope="col">Compile Number</th>
+                    <th scope="col">Compile Date</th>
+                    <th scope="col">Reason</th>
+                    <th scope="col">Gl Code</th>
+                    <th scope="col">Status</th>
+                   
+                  </tr>
+                  </tbody>
+                  <tr *ngFor="let com of dataList" style="background-color:#E3EAEB;">
+                    <td>{{com.compileName}}</td>
+                    <td>{{com.compileDate}}</td>
+                    <td>{{com.reason}}</td>
+                    <td>{{com.segmentName}}</td>
+                    <td>{{com.compileStatus}}</td>
+                   </tr>
+          </table>
+
             <div class="modal fade" id="myModal1" role="dialog" [style.display]="showModal" tabindex="-1" aria-hidden="true" >
               <div class="modal-dialog">
                 <div class="modal-content">

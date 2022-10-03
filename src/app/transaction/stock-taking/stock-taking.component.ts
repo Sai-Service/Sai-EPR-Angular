@@ -1,8 +1,10 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit,ViewChild} from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MasterService } from 'src/app/master/master.service';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+
 
 interface IStockaking {
   compileId1: number;
@@ -87,7 +89,7 @@ export class StockTakingComponent implements OnInit {
   public TypeList: Array<string> = [];
   displayLocator: Array<boolean> = [];
   public transType: Array<string> = [];
-  displayButton: boolean = true;
+  displayButton: boolean = false;
   getfrmSubLoc: any;
   locId: number;
   deptId: number;
@@ -114,6 +116,17 @@ export class StockTakingComponent implements OnInit {
   pipe = new DatePipe('en-US');
   now=new Date();
   compileDate=this.pipe.transform(this.now,'dd-MM-yyyy')
+
+  @ViewChild('fileInput') fileInput;
+  itemUploadedList:any;
+  dataDisplay1: any;
+  files:string;
+  displaydata:boolean=true;
+  dataList: any;
+  lstData: any;
+  isVisiblePro:boolean=false;
+  uploadButton:boolean=false;
+
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.StockTakingForm = fb.group({
@@ -148,6 +161,8 @@ export class StockTakingComponent implements OnInit {
       Row: [''],
       RowNo: [''],
       trans: ['Adjustment'],
+      files:[],
+
       cycleLinesList: this.fb.array([]),
     })
   }
@@ -264,12 +279,20 @@ export class StockTakingComponent implements OnInit {
         this.TypeList = data;
       }
     )
-    this.service.ItemIdDivisionList(this.divisionId).subscribe(
-      data => {
-        this.ItemIdList = data;
-        console.log(this.ItemIdList);
+    this.service.dataDisplay(this.locId).subscribe((res: any) => {
+      if (res.code === 200) {
+  
+            this.dataList=res.obj;
+          }
+          console.log(this.dataList);
+  
+        });
+    // this.service.ItemIdDivisionList(this.divisionId).subscribe(
+    //   data => {
+    //     this.ItemIdList = data;
+    //     console.log(this.ItemIdList);
 
-      });
+    //   });
     var patch = this.StockTakingForm.get('cycleLinesList') as FormArray
 
     (patch.controls[0]).patchValue(
@@ -608,29 +631,31 @@ export class StockTakingComponent implements OnInit {
       ((res: any) => {
         var obj = res.obj.compileName;
         this.compileId = res.obj.compileId;
-        this.StockTakingForm.patchValue({ 'compileId': res.obj.compileId })
+        this.StockTakingForm.patchValue({ 'compileId': res.obj.compileId,'totalCompileItems':res.obj.totalCompileItems,
+        'totalItemValue': res.obj.totalItemValue })
         sessionStorage.setItem('compileName', obj);
         if (res.code === 200) {
           this.compileName = obj;
           alert("Record Inserted Successfully");
-          let control = this.StockTakingForm.get('cycleLinesList') as FormArray;
-          var len = this.cycleLinesList().length;
-          for (let i = 0; i < res.obj.cycleLinesList.length - len; i++) {
-            var trxlist: FormGroup = this.newcycleLinesList();
-            this.cycleLinesList().push(trxlist);
+          // let control = this.StockTakingForm.get('cycleLinesList') as FormArray;
+          // var len = this.cycleLinesList().length;
+          // for (let i = 0; i < res.obj.cycleLinesList.length - len; i++) {
+          //   var trxlist: FormGroup = this.newcycleLinesList();
+          //   this.cycleLinesList().push(trxlist);
 
-          }
+          // }
           this.StockTakingForm.patchValue(res.obj);
-          for (let i = 0; i < this.cycleLinesList().length; i++) {
+          // for (let i = 0; i < this.cycleLinesList().length; i++) {
 
-            this.StockTakingForm.patchValue({ 'srlNo': i + 1 })
-            control.controls[i].patchValue({ srlNo: i + 1 })
-            this.StockTakingForm.patchValue({ 'segment': res.obj.cycleLinesList[i].segment });
-            this.StockTakingForm.patchValue({ 'subInventory': res.obj.cycleLinesList[i].subInventory });
-          }
+          //   this.StockTakingForm.patchValue({ 'srlNo': i + 1 })
+          //   control.controls[i].patchValue({ srlNo: i + 1 })
+          //   this.StockTakingForm.patchValue({ 'segment': res.obj.cycleLinesList[i].segment });
+          //   this.StockTakingForm.patchValue({ 'subInventory': res.obj.cycleLinesList[i].subInventory });
+          // }
           this.StockTakingForm.disable();
           document.getElementById("processButton").removeAttribute("Enabled");;
           this.displayButton=false;
+          this.isVisiblePro=false;
         }
         else {
           if (res.code === 400) {
@@ -650,7 +675,8 @@ export class StockTakingComponent implements OnInit {
           alert("Can not View data");
         }
         if (data.code === 200) {
-          //       // this.lstcomment=data.obj;
+                this.lstData=data.obj.cycleLinesList;
+                console.log(this.lstData);
           let control = this.StockTakingForm.get('cycleLinesList') as FormArray;
           var len = this.cycleLinesList().length;
           for (let i = 0; i < data.obj.cycleLinesList.length - len; i++) {
@@ -668,6 +694,10 @@ export class StockTakingComponent implements OnInit {
           this.StockTakingForm.get('segmentName').disable();
           this.StockTakingForm.get('approvedBy').disable();
           //  this.displayprocess=false;
+          if(data.obj.compileStatus==='CLOSED'){
+            this.isVisiblePro=false;
+            this.displayButton=false;
+          }
           this.currentop = 'search'
         }
       })
@@ -743,6 +773,18 @@ export class StockTakingComponent implements OnInit {
         this.StockTakingForm.patchValue({ codeCombinationId: this.acccodedesc.codeCombinationId })
       }
     );
+    // this.isVisiblePro=true;
+
+    alert(this.dataList[0].compileStatus+"this.dataList.compileStatus")
+    if(this.dataList.compileStatus==='OPEN')
+    {
+      alert("You can not create new compile Id");
+      this.isVisiblePro=false;
+      return;
+    }
+    else{
+    this.isVisiblePro=true;
+    }
   }
 
   validate(i: number, qty1) {//alert("Validate");
@@ -768,6 +810,43 @@ export class StockTakingComponent implements OnInit {
     this.router.navigate(['admin']);
   }
 
+  uploadFile(event:any) {
+    var file =this.StockTakingForm.get('files').value;
+    if (file===undefined){
+      alert('First Select CSV & Then Click upload Button !..');
+      return;
+    }
+    event.target.disabled = true;
+    let formData = new FormData();
+    formData.append('file', this.fileInput.nativeElement.files[0]);
+    this.service.bulkstockTakinguploadCsv(formData).subscribe((res: any) => {
+        if (res.code === 200) {
+          alert(res.message);
+          this.itemUploadedList=res.obj;  
+          this.dataDisplay1 ='File Uploaded Sucessfully....'
+          this.displaydata=false;
+          // this.closeResetButton=true;
+         this.StockTakingForm.get('files').reset();
+         var compilNo=this.StockTakingForm.get('compNo').value;
+       this.search(compilNo);
+        }
+        else{
+          if (res.code===400){    
+            alert(res.message);
+            this.itemUploadedList = res.obj;
+            this.dataDisplay1='File Uploading Failed....'
+            // this.closeResetButton=true;
+            this.StockTakingForm.get('files').reset();
+            // this.itemButton1=false;
+          }
+        }
+      })
+
+      setTimeout(() => {
+        event.target.disabled= false;
+       }, 60000);
+       
+  }
 
 }
 
