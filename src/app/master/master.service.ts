@@ -2461,6 +2461,20 @@ public rtvSaveSubmit(rtvRecord) {
 }
 // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\PRICE LIST MASTER\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
+//////////////////////////////////SHORT LANDED CLAIM SAVE///////////////////////////////////////////////////////////
+
+public shortLandedClaimSave(rtvRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/rcvShipment/ShortLanded';
+  return this.http.post(url, rtvRecord, options);
+}
+// \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\PRICE LIST MASTER\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+
+
+
 PriceTypeList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/cmnLookup/PriceListType');
 }
@@ -2716,6 +2730,15 @@ OrderCategoryList(): Observable<any> {
     const url = (this.ServerUrl + `/arCashReceipts/unapplyRcptManNew/${mRcptNo}`);
     return this.http.put(url, ArReceiptUnApplyRecord, options);
     // http://localhost:8081/arCashReceipts/unapplyRcptManNew/{receiptNumber}
+  }
+
+
+  public ArPaymentOtherDetPost(arPayOthRecord) {
+    const options = {
+      headers: this.headers
+    };
+    const url = this.ServerUrl + '/arCashReceipts/arOthReceiptDet';
+    return this.http.post(url, arPayOthRecord, options); 
   }
 
 

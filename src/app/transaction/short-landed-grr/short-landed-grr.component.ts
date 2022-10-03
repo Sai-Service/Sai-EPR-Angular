@@ -248,7 +248,7 @@ export class ShortLandedGrrComponent implements OnInit {
      
       poChargeAcc:[],
       qtyReceived:[],
-      shortQty:[],
+      qtyReturn:[],
       qtyOnHand:[],
       locId:[],
       baseAmount:[],
@@ -432,7 +432,7 @@ export class ShortLandedGrrComponent implements OnInit {
           
                   for (let i = 0; i <  this.lineDetailsArray.length ; i++) 
                   {
-                    this.lineDetailsArray.controls[i].get('shortQty').disable();
+                    this.lineDetailsArray.controls[i].get('qtyReturn').disable();
                     patch.controls[i].patchValue({itemType:'RETURN'})
                     var x=varLineArr[i].invItemId;
                     var y=varLineArr[i].subInventoryId;
@@ -510,7 +510,7 @@ export class ShortLandedGrrComponent implements OnInit {
               patch.controls[i].patchValue({totAmount:0}) 
            } else 
            {
-            patch.controls[i].patchValue({shortQty:varLineArr[i].qtyReceived})
+            patch.controls[i].patchValue({qtyReturn:varLineArr[i].qtyReceived})
            }
        
           }
@@ -524,7 +524,7 @@ export class ShortLandedGrrComponent implements OnInit {
           var mItemId =rtvLineArr[index].invItemId;
           var subinvId =rtvLineArr[index].subInventoryId;
           var mLocatorId=rtvLineArr[index].locatorId;
-          var rtnQty=rtvLineArr[index].shortQty;
+          var rtnQty=rtvLineArr[index].qtyReturn;
     
           // alert ("Qty to be rtnd :" + rtnQty);
     
@@ -540,7 +540,7 @@ export class ShortLandedGrrComponent implements OnInit {
     
           if ( e.target.checked) {
             // this.showQtyRtncol =true;
-            this.lineDetailsArray.controls[index].get('shortQty').enable();
+            this.lineDetailsArray.controls[index].get('qtyReturn').enable();
             var len1=rtvLineArr.length;
            
     
@@ -564,12 +564,12 @@ export class ShortLandedGrrComponent implements OnInit {
                   alert ("Onhand Quantity not Available/Return Qty grater than Available Qty - Avaialable Qty : " +avlQty);
                   patch.controls[index].patchValue({qtyOnHand:avlQty})
                   patch.controls[index].patchValue({selectFlag:''})
-                  patch.controls[index].patchValue({shortQty:''})
+                  patch.controls[index].patchValue({qtyReturn:''})
                   patch.controls[index].patchValue({selectFlag:''})
                   patch.controls[index].patchValue({baseAmount:0})
                   patch.controls[index].patchValue({taxAmount:0})
                   patch.controls[index].patchValue({totAmount:0})
-                  this.lineDetailsArray.controls[index].get('shortQty').disable();
+                  this.lineDetailsArray.controls[index].get('qtyReturn').disable();
                   this.CalculateTotal();
                   return;
                  }
@@ -580,7 +580,7 @@ export class ShortLandedGrrComponent implements OnInit {
                 
         } else { 
              
-          patch.controls[index].patchValue({shortQty:''})
+          patch.controls[index].patchValue({qtyReturn:''})
           patch.controls[index].patchValue({baseAmount:0})
           patch.controls[index].patchValue({taxAmount:0})
           patch.controls[index].patchValue({totAmount:0})
@@ -588,7 +588,7 @@ export class ShortLandedGrrComponent implements OnInit {
           this.CalculateTotal();
          
           // this.showQtyRtncol =false;
-          this.lineDetailsArray.controls[index].get('shortQty').disable();
+          this.lineDetailsArray.controls[index].get('qtyReturn').disable();
           // this.ItemLocatorList=null;
           
         
@@ -636,7 +636,7 @@ export class ShortLandedGrrComponent implements OnInit {
 
         var patch = this.shortLandGrrForm.get('rcvLines') as FormArray;
         var qtyLineArr = this.shortLandGrrForm.get('rcvLines').value;
-        var lineRtnQty = qtyLineArr[index].shortQty;
+        var lineRtnQty = qtyLineArr[index].qtyReturn;
         var lineRcdQty  = qtyLineArr[index].qtyReceived;
         var uPrice= qtyLineArr[index].unitPrice;
         var taxP= qtyLineArr[index].taxPercentage;
@@ -649,13 +649,13 @@ export class ShortLandedGrrComponent implements OnInit {
         {
            alert ("Invalid Quantity.\n[SHORT QTY] should be as per UOM  Or \nShould not be grater than [QTY RECEIVED] Or [ON HAND QTY]")
     
-           patch.controls[index].patchValue({shortQty:''})
+           patch.controls[index].patchValue({qtyReturn:''})
            patch.controls[index].patchValue({baseAmount:0})
            patch.controls[index].patchValue({taxAmount:0})
            patch.controls[index].patchValue({totAmount:0})
            patch.controls[index].patchValue({selectFlag:''})
 
-           this.lineDetailsArray.controls[index].get('shortQty').disable();
+           this.lineDetailsArray.controls[index].get('qtyReturn').disable();
            this.showLocator=false;
            this.validQtyEntered=false;
            this.validateStatus=true;
@@ -784,7 +784,7 @@ export class ShortLandedGrrComponent implements OnInit {
       var len1=rtnLineArr.length;
 
       var rcdQty =rtnLineArr[index].qtyReceived;
-      var shQty =rtnLineArr[index].shortQty;
+      var shQty =rtnLineArr[index].qtyReturn;
       var avlQty=rtnLineArr[index].qtyOnHand;
       var itmName =rtnLineArr[index].itemName;
       var chkFlag   = rtnLineArr[index].selectFlag;
@@ -823,4 +823,136 @@ export class ShortLandedGrrComponent implements OnInit {
     closeMast() {
       this.router.navigate(['admin']);
     }
+
+    CheckLineValidations(i) {
+       
+      var rtvLineArr = this.shortLandGrrForm.get('rcvLines').value;
+      var itemcd = rtvLineArr[i].itemName;
+      var shQty = rtvLineArr[i].qtyReturn;
+      var chkFlag = rtvLineArr[i].selectFlag;
+      var j = i + 1;
+  
+      if (itemcd === undefined || itemcd === null) {
+        alert("Line-" + j + " ITEM NUMBER :  Please select Item Code");
+        this.lineValidation = false;
+        return;
+      }
+
+      if (shQty === undefined || shQty === null || shQty <=0 ) {
+        alert("Line-" + j + " SHORT QTY :  Enter a valid quantity");
+        this.lineValidation = false;
+        return;
+      }
+  
+       
+      this.lineValidation = true;
+    }
+
+
+    validateClaim() 
+    {
+      var patch = this.shortLandGrrForm.get('rcvLines') as FormArray;
+      var rtvLineArr = this.shortLandGrrForm.get('rcvLines').value;
+      var len1 = rtvLineArr.length;
+     
+      for (let i = 0; i < len1; i++) {
+            var x=rtvLineArr[i].qtyReturn
+              if( x==undefined  || x<=0) {
+                patch.controls[i].patchValue({selectFlag:''});
+                var  resp=confirm("LINE : " + (i+1) + " : IS INCOMPLETE.PROCEED ???");
+                  if(resp==false) { return;}
+                }
+
+      }
+
+    
+      var lrm=0;
+      for (let i = len1 - 1; i >= 0; i--) {
+         if (this.lineDetailsArray.controls[i].get('selectFlag').value != true) {
+          this.lineDetailsArray.removeAt(i);
+          lrm=lrm+1;
+      
+        } }
+
+        if (lrm===len1) { this.resetMast();} 
+        else {
+           this.saveButton = true; 
+           this.validateStatus=false;
+           this.showQtyRtncol=false;
+          }
+
+        var rtvLineArr1 = this.shortLandGrrForm.get('rcvLines').value;
+        var len2 = this.lineDetailsArray.length;
+        
+      for (let i = 0; i < len2; i++) {
+                 
+        if (rtvLineArr1[i].selectFlag === true) {
+          this.CheckLineValidations(i);
+        }
+
+      }
+     
+            if (this.lineValidation) {
+              for (let i = 0; i < len1; i++) {
+                this.lineDetailsArray.controls[i].get('selectFlag').disable();
+               }
+                  this.saveButton = true;
+                  this.showQtyRtncol=false;
+                  this.validateStatus=false;
+                 
+                }   else  {
+                  alert ("Data Validation Failed . Please check Line Item Number| Return Qty");
+                   this.saveButton = false;
+                   this.validateStatus=true;
+                 }
+                   this.CalculateTotal();
+        }
+
+
+
+   
+
+    shortClaimSave(){
+      var rtnLineArr = this.shortLandGrrForm.get('rcvLines').value;
+
+      var len1=rtnLineArr.length;
+    
+       for (let i = 0; i < len1 ; i++)  {
+        this.CheckRtnLineValidations(i)
+       }
+
+       if ( this.rtnLineValidation) {
+
+        var  resp=confirm("Confirm Save Short Landed Claim ???");
+        if(resp==false) { return;}
+
+      const formValue = this.shortLandGrrForm.value;
+
+      this.locId=Number(sessionStorage.getItem('locId'));
+
+        console.log(this.lstReceiptLines);
+        this.shipHeaderId=null;
+        this.saveButton=false;
+        
+   
+        this.service.shortLandedClaimSave(formValue).subscribe((res: any) => {
+          if (res.code === 200) {
+            this.rtnDocNo=res.obj;
+            this.disabled = false;
+            this.disabledLine=false;
+            this.displayButton=false;
+            alert(res.message);
+            // this.returntoVendorForm.reset();
+            this.shortLandGrrForm.disable();
+          } else {
+            if (res.code === 400) {
+              alert(res.message+'--'+ res.obj);
+              // this.returntoVendorForm.reset();
+            }
+          }
+        });
+    } else { alert ("Validation Failed ... \nPosting not done...");} 
+  }
+
+
 }

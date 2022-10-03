@@ -4,7 +4,7 @@
         <table style="width: 100%;background-color: white;">
             <tr>
                 <td class="PageHeader">
-                    &nbsp;&nbsp;SHORT&nbsp;LANDED&nbsp;GRR&nbsp;
+                    &nbsp;&nbsp;Short&nbsp;Landed&nbsp;Grr&nbsp;Claim
                 </td>
             </tr>
         </table>
@@ -279,7 +279,7 @@
                                             </ng-template>
 
                                            
-                                            <td><input disabled  type="number" formControlName="shortQty" class="form-control" style="height: 25px;width: 60px;background-color: yellow;" (change)="validateQty(i)" > </td> 
+                                            <td><input disabled  type="number" formControlName="qtyReturn" class="form-control" style="height: 25px;width: 60px;background-color: yellow;" (change)="validateQty(i)" > </td> 
 
                                            <td><input disabled type="number" formControlName="qtyReceived"  class="form-control" style="height: 25px;width: 60px;" ></td>
                                            <td><input disabled type="number" formControlName="qtyOnHand" class="form-control" style="height: 25px;width: 60px;" ></td> 
@@ -334,26 +334,209 @@
 
                                     <td> <button type="submit" class="btn btn-info" (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i class="fa fa-plus"></i></button></td>
                                     <td> <button type="submit" class="btn btn-info" (click)="RemoveRow(i)" style="width: min-content;"><i class="fa fa-trash"></i></button>  </td>
-                                            
-
-
-
-                            
-                                                </tr>
+                                   </tr>
                                
                                     </ng-container>
                                 </ng-container>
                             </tbody>
 
                          
-                        </table>     
-                  
-                 
-                    </div> 
+                        </table> 
+                    </div>
+                        
+                        <table class="center">
+                        <tr>
 
+                        <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
+                        <ng-template #thenBlock1>
+                        <td>
+                              <div *ngIf="validateStatus ,then vStatusYes; else vStatusNo")></div>
+                                <ng-template #vStatusYes>
+                                     <button style="width: 8em;" type="button" class="btn btn-info" (click)="validateClaim(applyTo)">Validate</button>
+                                </ng-template>
+                                <ng-template #vStatusNo>
+                                   <button disabled style="width: 8em;" type="button" class="btn btn-info" (click)="validateClaim(applyTo)">Validate</button>
+                               </ng-template>
+                        </td>
+                        <td>
+                            <div *ngIf="saveButton ,then SaveYes; else SaveNo")></div>
+                            <ng-template #SaveYes>
+                                <button style="width: 8em;" type="button" class="btn btn-info" (click)="shortClaimSave()">Save</button>
+                            </ng-template>
+                            <ng-template #SaveNo>
+                                <button disabled style="width: 8em;" type="button" class="btn btn-info" (click)="shortClaimSave()">Save</button>
+                            </ng-template>
 
+                        </td>
 
-                    
+                        <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button></td>
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="max-width: 500px; ">
+                            <div class="modal-dialog" role="document" >
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <label style="font-size: small; color: black;font-weight: bold; text-align:center;vertical-align: middle;">
+                                        <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                                        Want&nbsp;to&nbsp;Reset. &nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
+                                    </label>
+                                </div>
+                                <div class="modal-footer">
+                                    <table class="center">
+                                        <tr>
+                                            <td>
+                                                <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                                            </td>
+                                            <td>
+                                                <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Yes</button> 
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+
+                         <!-- =====================Close Dialog Box====================== -->
+                         <td>
+                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalLong">Close</button>
+                            </td>
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" style="width:600px;">
+                                <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <label style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
+                                            <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                                            Want&nbsp;to&nbsp;Close.&nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
+                                        </label>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <table class="center">
+                                            <tr>
+                                                <td>
+                                                <button  type="submit" class="btn btn-info" data-dismiss="modal" id="register"   (click)="closeMast()">Yes</button>
+                                                </td>
+                                                <td>
+                                                <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </ng-template>
+
+                        <ng-template #elseBlock1>
+                                   
+                            <td>
+                                <button type="button" class="btn btn-info" (click)="printDoc()"[disabled]="!returntoVendorForm">Print</button>
+                            </td>
+                            <td>
+                                <!-- <button type="button" class="btn btn-info" (click)="searchMast()">Search</button> -->
+                            </td>
+                            <!-- <td>
+                                <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button>
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close</button>
+                                        </td> -->
+<!-- ====================Reset Dialog ======================== -->
+
+                    <td>
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button>
+                    </td>
+                    <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width:600px;">
+                        <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <label style="font-size: small; color: black;font-weight: bold; text-align:center;vertical-align: middle;">
+                                    <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                                    Want&nbsp;to&nbsp;Reset. &nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
+                                </label>
+                            </div>
+                            <div class="modal-footer">
+                                <table class="center">
+                                    <tr>
+                                        <td>
+                                            <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                                        </td>
+                                        <td>
+                                            <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Yes</button> 
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+
+                     <!-- =====================Close Dialog Box====================== -->
+                                        <td>
+                                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalLong">Close</button>
+                                        </td>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" style="width:600px;">
+                                            <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                    <label style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
+                                                        <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                                                        Want&nbsp;to&nbsp;Close.&nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
+                                                    </label>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <table class="center">
+                                                        <tr>
+                                                            <td>
+                                                            <button  type="submit" class="btn btn-info" data-dismiss="modal" id="register"   (click)="closeMast()">Yes</button>
+                                                            </td>
+                                                            <td>
+                                                            <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+
+             <!-- =====================Close Dialog Box====================== -->
+                <td>
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalLong">Close</button>
+                </td>
+                        <!-- Modal -->
+                    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" style="width:600px;">
+                        <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <label style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
+                                    <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                                    Want&nbsp;to&nbsp;Close.&nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
+                                </label>
+                            </div>
+                            <div class="modal-footer">
+                                <table class="center">
+                                    <tr>
+                                        <td>
+                                        <button  type="submit" class="btn btn-info" data-dismiss="modal" id="register"   (click)="closeMast()">Yes</button>
+                                        </td>
+                                        <td>
+                                        <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                 <!-- ==================================================== -->
+                    </ng-template>
+
+                        </tr>
+                        </table>
+                
                 </div>
             </div>
         </div>

@@ -1033,6 +1033,7 @@ export class ReturnToVendorComponent implements OnInit {
             var length1=this.lstReceiptLines.length-1;
             this.lineDetailsArray.removeAt(length1);
               var len=this.lineDetailsArray.length;
+            
               for ( let i=0;i<this.lstReceiptLines.length-len;i++){
                 var rcvLines:FormGroup=this.lineDetailsGroup();
                   control.push(rcvLines);
