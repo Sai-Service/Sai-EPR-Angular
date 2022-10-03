@@ -646,6 +646,37 @@ export class ReportServiceService {
     });
   }
 
+  stockTakingBlankFormatReport(locId,compileName){
+    // http://localhost:8081/SparesReports/StkBlankFormat?compileName=12MU.2101-22221012500126&locId=2101
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/StkBlankFormat?compileName=${compileName}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+  stockTakingQtyReport(locId,compileName){
+    // http://localhost:8081/SparesReports/StkQtyDtlsFormat?compileName=12MU.2101-22221012500126&locId=2101
+
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/StkQtyDtlsFormat?compileName=${compileName}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+  stockTakingPhyStockUpldReport(locId,compileName){
+    // http://localhost:8081/SparesReports/PhyStkUploadFormat?compileName=12MU.2101-22221012500128&locId=2101
+
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/PhyStkUploadFormat?compileName=${compileName}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
 
 
 

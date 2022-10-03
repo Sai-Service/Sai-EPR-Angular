@@ -141,6 +141,23 @@
                                 (click)="reportDetails('internalConsumptionReport')">Internal Consumption Report</a>
                         </li>
 
+                        <li>
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelStockTaking" role="tab"
+                                (click)="reportDetails('stkTakingBlankFormat')">Stock Taking Report - Blank Format</a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelStockTaking" role="tab"
+                                (click)="reportDetails('stkTakingQtyDet')">Stock Taking Report - Qty Details</a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelStockTaking" role="tab"
+                                (click)="reportDetails('stkTakingPhyStk')">Stock Taking - Physical Stock Upload</a>
+                        </li>
+
+                       
+
 
                     </ul>
                 </li>
@@ -165,6 +182,7 @@
                             <a class="dropdown-item" data-toggle="collapse" href="#isVisiblesparesMiscIssueReceipt" role="tab"
                               (click)="reportDetails('creditNoteReg')">Credit Note Register</a>
                           </li>
+
                           <li>
                             <a class="dropdown-item" data-toggle="collapse" href="#isVisibleEwayBill" role="tab"
                               (click)="reportDetails('EwayBill')">Eway Bill Report</a>
@@ -1583,14 +1601,10 @@ id="panelfromtosubinventory">
           <tr> -->
             <!-- <td> -->
               <table class="center" style="margin-left: 30%;">
-                <tr>
-                 
-                  <td style="width: 15%" class="LabelFontStyle">
-                    &nbsp;Invoice&nbsp;Number&nbsp;:&nbsp;
-                  </td>
-                  <td>
-                    <input  type="number" class="form-control" formControlName="trxNumber">
-                  </td>
+                
+                 <tr>
+                  <td style="width: 15%" class="LabelFontStyle">&nbsp;Invoice&nbsp;Number&nbsp;:&nbsp;</td>
+                  <td><input  type="number" class="form-control" formControlName="trxNumber"></td>
                   
                 </tr>
               </table>
@@ -1628,6 +1642,73 @@ id="panelfromtosubinventory">
         </table>
       </td>
     </tr> -->
+  </table>
+
+  <table style="margin-left: auto;margin-right: auto;" [style.display]="isVisiblepanelStockTaking ? 'block' : 'none'" class="collapse" id="panelStockTaking">
+   
+
+          <table class="center">
+            <tr>
+              <td class="LabelFontStyle" style="font-size:large ;font-weight:bold ;" >{{reportName}}</td>
+            </tr>
+        </table>
+        <br>
+      
+              <table class="center" style="margin-left: 30%;">
+                <tr>
+
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            &nbsp;Location&nbsp;Code&nbsp;:&nbsp;
+                        </td>
+                        <td [style.display]="isVisiblelocationInput ? 'block' : 'none'">
+                            <input type="text" disabled class="form-control" formControlName="locCode">
+                        </td>
+                        <td [style.display]="isVisiblelocationLOV ? 'block' : 'none'">
+                            <select formControlName="locCode" id="locCode" class="form-control"
+                                (ngModelChange)='onOptionsLocation($event)'>
+                                <option></option>
+                                <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
+                                    {{sc.locCode}}
+                                </option>
+                            </select>
+                            <input  disabled hidden type="number" class="form-control" formControlName="locId">
+                        </td>
+                 
+                            <td style="width: 15%" class="LabelFontStyle">&nbsp;Compile&nbsp;Code&nbsp;:&nbsp;</td>
+                            <td><input  type="text" class="form-control" formControlName="compileCode" ></td>
+                  
+                </tr>
+              </table>
+         
+          
+                    <table class="center">
+                        <tr>
+                            <td>
+                                <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                                <ng-template #hList2> 
+                                    <div class="d-flex justify-content-center">
+                                        <div class="spinner-border text-primary" role="status" >
+                                            <span class="sr-only" id="loading"></span>
+                                    
+                                        </div>
+                                        </div>
+                                </ng-template>
+                                <ng-template #hList1> </ng-template>
+                            </td>
+                            <td class="LabelFontStyle" style="color: blue;">&nbsp;{{this.dataDisplay}}&nbsp; </td>
+                        </tr>
+                    </table>
+
+                <table class="center">
+                <tr>
+                  <td>
+                    <button class="btn-primary" [disabled]="isDisabled1" (click)="reportParameter(reportName)">View
+                      Report</button>
+                  </td>
+                </tr>
+              </table>
+           
   </table>
 
 
