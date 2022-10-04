@@ -778,7 +778,7 @@ export class StockTakingComponent implements OnInit {
         this.StockTakingForm.patchValue({ codeCombinationId: this.acccodedesc.codeCombinationId })
       }
     );
-    // this.isVisiblePro=true;
+    this.isVisiblePro=true;
 
     alert(this.dataList[0].compileStatus+"this.dataList.compileStatus")
     if(this.dataList.compileStatus==='OPEN')
