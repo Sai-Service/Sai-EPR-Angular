@@ -2051,15 +2051,9 @@
                                                 <td><input style="width: 150px;height: 25px;"                           type="number" formControlName="othAmtReceived"    class="form-control"></td>
                                                 <td><input style="width: 300px;height: 25px;text-align: left;"        type="text" formControlName="othBankName"       class="form-control"></td>   
                                                
-                                                <td>
-                                                    <button type="submit" class="btn btn-info" (click)="addRow(k)" (keydown.shift.arrowdown)="addRow(k)" style="width: min-content;"><i
-                                                    class="fa fa-plus"></i></button>
-                                                </td>
-
-                                                <td>
-                                                    <button type="submit" class="btn btn-info" (click)="RemoveRow(k)" style="width: min-content;"><i
-                                                    class="fa fa-trash"></i></button>
-                                                </td>
+                                                <td><button [disabled]="othAddRemoveButton"  type="button" class="btn btn-info" (click)="addRow(k)" (keydown.shift.arrowdown)="addRow(k)" style="width: min-content;"><i  class="fa fa-plus"></i></button></td>
+                                                <td><button [disabled]="othAddRemoveButton"  type="button" class="btn btn-info" (click)="RemoveRow(k)" style="width: min-content;"><i  class="fa fa-trash"></i></button></td>
+                                                
                                             </tr>
                                             </ng-container>
                                         </ng-container>

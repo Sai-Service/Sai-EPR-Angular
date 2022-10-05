@@ -322,6 +322,15 @@
         <div [style.display]="isVisibleAccessories ? 'block' : 'none'">
           <li><a class="dropdown-submenu" [routerLink]="['/admin/Report/AccessoriesReport']">Accessories Reports</a></li>
           </div>
+
+          <div [style.display]="isVisibleAccessories ? 'block' : 'none'">
+            <li><a class="dropdown-submenu" [routerLink]="['/admin/Report/ServerReport']">Server Report</a></li>
+            </div>
+
+          <!-- <div>
+            <li><a class="dropdown-item" [routerLink]="['/admin/Report/ServerReport']">Server Report</a></li>
+          </div> -->
+        
       </ul>
       
       <!-- <div [style.display]="isVisible35 ? 'block' : 'none'">
@@ -336,6 +345,7 @@
       
     </li>
   </div>
+
   <div [style.display]="isVisibleGL ? 'block' : 'none'">
     <!-- <li class="nav-item dropdown"> -->
   <li><a class="dropdown-item" [routerLink]="['/admin/transaction/glTrialBalance']">GL Trial Balance</a> </li>

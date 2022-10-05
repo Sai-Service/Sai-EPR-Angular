@@ -894,6 +894,13 @@ purchaseRegisterSummary(fromDate,toDate,ouId,locId,deptId){
   });
 }
 
+getServerReportById(tktNum): Observable<any> {
+  return this.http.get(this.ServerUrl + `/fndRequest/fndRequestor/${tktNum}`);
+  // http://localhost:8081/fndRequest/fndRequestor/M2152
+
+}
+
+
 
 }
 

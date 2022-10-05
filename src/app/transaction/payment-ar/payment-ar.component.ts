@@ -100,7 +100,7 @@ export class PaymentArComponent implements OnInit {
   lstinvoices: any[];
   lstCustomer: any[];
   lstApplyHistory: any[];
-  lstRcptOtherDetails:any[];
+  lstRcptOtherDetails:any;
 
 
 
@@ -266,6 +266,8 @@ export class PaymentArComponent implements OnInit {
 
   showOTHERModal=false;
   othSaveButton=false;
+  othAddRemoveButton=false;
+  // othDelButton=true;
 
 
 
@@ -1398,6 +1400,7 @@ if(this.deptId==2){
 
                   var len = this.othLineArray().length;
                   for (let i = 0; i < this.lstRcptOtherDetails.length - len; i++) {
+                    
                     var avlLnGrp: FormGroup = this.othLineDetails();
                     this.othLineArray().push(avlLnGrp);
                   }
@@ -1421,14 +1424,26 @@ if(this.deptId==2){
             this.GetCustomerSiteDetails(data.obj.oePayList[0].customerId)
 
             this.showRefundHist = false;
+
+            // if (data.obj.oePayList[0].receiptStatus === 'Closed') {
+            //   this.othSaveButton=false;
+            //   this.othAddRemoveButton=true;
+            //   this.paymentArForm.disable();
+            //   return;
+            // }
           
             if (data.obj.oePayList[0].status === 'REFUND') {
               this.showReasonDetails = false; this.enableCancelButton = false; this.enableApplyButton = false;
               this.showRefundHist = true;
+              this.othSaveButton=false;
+              // this.paymentArForm.disable();
               return;
             }
             if (data.obj.oePayList[0].status === 'REVERSED') {
               this.isVisibleUnApplyReceipt=false;
+              this.othSaveButton=false;
+              this.othAddRemoveButton=true;
+              this.paymentArForm.disable();
               return;
             }
             if (data.obj.oePayList[0].reversalReasonCode != null) {
@@ -2734,7 +2749,7 @@ if(this.deptId==2){
       // alert("Data Validation Sucessfull....\nPosting data  to AR PAYMENT TABLE");
       var  resp=confirm("Do You Want to Save this Receipt ???");
       if(resp==true) {
-
+        this.displayButton = false;
       const formValue: IPaymentRcptAr = this.transeData(this.paymentArForm.value);
 
       this.service.ArReceiptSubmit(formValue).subscribe((res: any) => {
@@ -2750,11 +2765,10 @@ if(this.deptId==2){
           this.balanceAmount == this.paymentAmt;
 
           // this.paymentArForm.reset();
-          this.displayButton = false;
         } else {
           if (res.code === 400) {
             alert('Error While Saving Record:-' + res.obj);
-            // this.paymentArForm.reset();
+            this.displayButton = true;
           }
         }
       });
@@ -3455,15 +3469,10 @@ if(this.deptId==2){
             if (this.appliedInvLineArray().controls[i].get('unApplyFlag').value != true) {
               this.appliedInvLineArray().removeAt(i);
             } 
-
-         
-
-    
           }
 
            var applLineArr1 = this.paymentArForm.get('appliedInvLine').value;
           //  var patch = this.paymentArForm.get('appliedInvLine') as FormArray;
-
           for (let i = 0; i < applLineArr1.length; i++) {
             this.appliedInvLineArray().controls[i].get('unApplyFlag').disable();
           }
