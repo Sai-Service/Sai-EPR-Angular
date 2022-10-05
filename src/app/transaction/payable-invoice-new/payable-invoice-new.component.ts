@@ -1233,6 +1233,7 @@ export class PayableInvoiceNewComponent implements OnInit {
     var suppNo = this.lineDetailsArray().controls[index].get('suppNo').value;
     var invoiceAmt = this.lineDetailsArray().controls[index].get('invoiceAmt').value;
     var source = this.lineDetailsArray().controls[index].get('source').value;
+    var invStatus = this.lineDetailsArray().controls[index].get('invoiceStatus').value;
     if (invoiceAmt % 1 != 0) {
       this.isVisibleRoundOffButton = true;
     }
@@ -1477,7 +1478,7 @@ export class PayableInvoiceNewComponent implements OnInit {
         )
     }
     else {
-      this.transactionService.getApInvLineDetailsSupwise(invoiceNum, suppNo)
+      this.transactionService.getApInvLnStatusDetailsSupwise(invoiceNum, suppNo,invStatus)
         .subscribe(
           data => {
             console.log(data);

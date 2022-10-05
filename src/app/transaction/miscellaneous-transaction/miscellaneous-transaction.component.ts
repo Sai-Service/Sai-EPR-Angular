@@ -210,6 +210,22 @@ export class MiscellaneousTransactionComponent implements OnInit {
   dispRow: boolean = true;
   displayCost:boolean=true;
 
+  jeSource: string;
+  name: string;
+  ledgerName: string;
+  jeCategory: string;
+  postedDate: Date;
+  periodName: string;
+  runningTotalDr: number;
+  runningTotalCr: number;
+
+  viewAccounting1: any[];
+  viewAccounting2: any[];
+  docSeqValue: string;
+  name1: number;
+  ledgerId: number;
+  description1: string;
+
   public itemMap = new Map<string, miscTrans>();
 
   @ViewChild('myinput') myinput: ElementRef;
@@ -276,6 +292,20 @@ export class MiscellaneousTransactionComponent implements OnInit {
       RowNo: [''],
       attribute1:[''],
       attribute2:[''],
+
+      jeSource: [],
+      name: [],
+      ledgerName: [],
+      jeCategory: [],
+      postedDate: [],
+      periodName: [],
+      runningTotalDr: [],
+      runningTotalCr: [],
+      ledgerId: [],
+      description1: [],
+      docSeqValue: [],
+      name1:[],
+      
       cycleLinesList: this.fb.array([]),
     });
   }
@@ -1465,6 +1495,32 @@ export class MiscellaneousTransactionComponent implements OnInit {
         var printWindow = window.open(url, '', 'width=800,height=500');
         printWindow.open
       })
+  }
+
+  viewAccounting(trxNumber: any) {
+    // alert(receiptNo);
+    this.service.viewAccountingST(trxNumber).subscribe((res: any) => {
+      if (res.code === 200) {
+        this.viewAccounting2 = res.obj;
+        this.description1 = res.obj.description;
+        this.periodName = res.obj.periodName;
+        this.postedDate = res.obj.postedDate;
+        this.jeCategory = res.obj.jeCategory;
+        this.name = res.obj.name;
+        this.ledgerId = res.obj.ledgerId;
+        this.runningTotalDr = res.obj.runningTotalDr;
+        this.runningTotalCr = res.obj.runningTotalCr;
+        this.docSeqValue = res.obj.docSeqValue;
+        console.log(this.description);
+        this.viewAccounting1 = res.obj.glLines;
+        console.log(this.viewAccounting1);
+        // alert(res.message);
+      } else {
+        if (res.code === 400) {
+          alert(res.message);
+        }
+      }
+    });
   }
 
 }
