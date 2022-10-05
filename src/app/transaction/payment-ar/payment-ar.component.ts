@@ -2060,6 +2060,7 @@ if(this.deptId==2){
               this.paymentArForm.get('selectAllflag1').disable();
             } else {
               this.paymentArForm.get('selectAllflag1').disable();
+              alert ("No Record(s) Found....");
               this.validateStatus = false; return;
             }
 
