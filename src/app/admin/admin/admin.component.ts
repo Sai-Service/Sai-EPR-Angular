@@ -89,6 +89,7 @@ export class AdminComponent implements OnInit {
   isVisible35:boolean=true;
   isVisible36:boolean=true;
   isVisible37:boolean=true;
+  isVisibleServerReport:boolean=true;
  isVisibleAccessories:boolean=true;
   isVisibleAccountsRepor:boolean=true;
   isVisibleMaster:boolean=true;

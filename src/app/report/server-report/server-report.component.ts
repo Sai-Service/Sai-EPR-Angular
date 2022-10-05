@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { ReportServiceService } from 'src/app/report/report-service.service'
-import { DatePipe, Location, CommonModule } from '@angular/common';
-import { MasterService } from 'src/app/master/master.service';
+import { Component, OnInit} from '@angular/core';
+import { FormGroup, FormBuilder} from '@angular/forms';
+import { Router, ActivatedRoute} from '@angular/router';
+import { ReportServiceService } from '../report-service.service'
+import { DatePipe,Location } from '@angular/common';
+import { MasterService } from '../../master/master.service';
 import { saveAs } from 'file-saver';
-
+import { data } from 'jquery';
+import { TransactionService } from '../../transaction/transaction.service';
 
 const MIME_TYPES = {
   pdf: 'application/pdf',
@@ -41,8 +42,8 @@ export class ServerReportComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.requestor=String(sessionStorage.getItem('ticketNo')); 
-    var tkt ='M2152'
+    // this.requestor=String(sessionStorage.getItem('ticketNo'));
+    var tkt =sessionStorage.getItem('ticketNo');
     this.reportService.getServerReportById(tkt)  
     .subscribe(data => {
         this.reportlist = data;
@@ -51,4 +52,24 @@ export class ServerReportComponent implements OnInit {
     );
   }
 
-}
+  DownloadRptFile(requestId,reqName,requestDate,fileNam) {
+     // const fileName = reqName + "-RequestId-"+String(requestId) +"-"+ requestDate + '.xls';
+      const fileName=fileNam.substr(11,);
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      this.reportService.fndRquestDownload(requestId)
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.dataDisplay = ''
+          this.closeResetButton = true;
+          this.isDisabled1 = false;
+        })
+      }
+
+
+    }
+
+ 
+
+  
+
+
