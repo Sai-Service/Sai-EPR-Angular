@@ -373,11 +373,80 @@
             </tr>
         
             <tr>
-              <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">&nbsp;{{dataDisplay1}}&nbsp; </td>
+                 <!-- ------------Spinner---------------------- -->
+                 <!-- <div *ngIf="spinIcon1; then hList3; else hList4"></div>
+                 <ng-template #hList3>
+                 <div class="d-flex justify-content-center">
+                     <div class="spinner-border text-primary" role="status">
+                     <span class="sr-only" id="loading"></span>
+                     </div>
+                 </div>
+                 </ng-template>
+                 <ng-template #hList4></ng-template>
+                 <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">
+                 &nbsp;{{this.dataDisplay}}&nbsp; </td>
+                  ------------Spinner---------------------- -->
+
+              <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">&nbsp;{{dataDisplay}}&nbsp; </td>
             </tr>
+            </table>
+            <br>
+            <table class="center">
+              <tr>
+                 <td>
+                  <button type="submit" class="btn btn-primary" (click)="close()">Close</button>
+                </td>
+                <td>
+                  <button type="submit" class="btn btn-primary" (click)="resetstkTaking()">Reset</button>
+                </td>
+                <td>
+                  <button type="button"  [style.display]="isVisiblePro ? 'block' : 'none'" class="btn btn-primary" id="processButton"  (click)="process()">Process</button>
+                </td>
+                <div *ngIf="displayButton; then thenBlock2; else elseBlock2">
+                </div>
+                <ng-template #thenBlock2>
+                
+                <td>
+                  <!-- <button  type="button" class="btn btn-primary"(click)="Approval()">Approve</button> -->
+                  <button type="button" class="btn btn-primary"
+                  data-toggle="modal" data-target="#confirmAlert"
+                  (click)=" getMessage('Approve')">Approve</button>
+                </td>
+                </ng-template>
+                <ng-template #elseBlock2>
+                <!-- <td>
+                  <button type="submit" class="btn btn-primary" (click)="UpdateMiscData()" >Update</button>
+
+                </td> -->
+                <td>
+                  <button disabled type="submit" class="btn btn-primary"(click)="Approval()" >Approve</button>
+                </td>
+              </ng-template>
+              <!-- <td>
+                <button type="button" class="btn btn-primary"(click)="uploadFile()" >Upload</button>
+              </td> -->
+
+              </tr>
+              <tr>
+                   <!-- ------------Spinner---------------------- -->
+                   <div *ngIf="spinIcon; then hList1; else hList2"></div>
+                   <ng-template #hList2>
+                   <div class="d-flex justify-content-center">
+                       <div class="spinner-border text-primary" role="status">
+                       <span class="sr-only" id="loading"></span>
+                       </div>
+                   </div>
+                   </ng-template>
+                   <ng-template #hList1></ng-template>
+                   <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">
+                   &nbsp;{{this.dataDisplay1}}&nbsp; </td>
+                    <!-- ------------Spinner---------------------- -->
+
+              </tr>
             </table>
           <br>
           <div formArrayName="cycleLinesList">
+            <div class="container1">
             <div class="grid_scroll">
 
               <table class="center">
@@ -484,60 +553,9 @@
               </table>
               </div>
             </div>
+          </div>
             <br>
-            <table class="center">
-              <tr>
-                 <td>
-                  <button type="submit" class="btn btn-primary" (click)="close()">Close</button>
-                </td>
-                <td>
-                  <button type="submit" class="btn btn-primary" (click)="resetstkTaking()">Reset</button>
-                </td>
-                <td>
-                  <button type="button"  [style.display]="isVisiblePro ? 'block' : 'none'" class="btn btn-primary" id="processButton"  (click)="process()">Process</button>
-                </td>
-                <div *ngIf="displayButton; then thenBlock2; else elseBlock2">
-                </div>
-                <ng-template #thenBlock2>
-                
-                <td>
-                  <button  type="button" class="btn btn-primary"(click)="Approval()">Approve</button>
-                </td>
-                </ng-template>
-                <ng-template #elseBlock2>
-                <!-- <td>
-                  <button type="submit" class="btn btn-primary" (click)="UpdateMiscData()" >Update</button>
-
-                </td> -->
-                <td>
-                  <button disabled type="submit" class="btn btn-primary"(click)="Approval()" >Approve</button>
-                </td>
-              </ng-template>
-              <!-- <td>
-                <button type="button" class="btn btn-primary"(click)="uploadFile()" >Upload</button>
-              </td> -->
-
-              </tr>
-              <tr>
-                <td colspan="4">
-                  <table class="center" style="width: 100%;">
-                    <tr>
-                      <div *ngIf="closeResetButton; then hList1; else hList2"></div>
-                      <ng-template #hList2>
-                        <div class="d-flex justify-content-center">
-                          <div class="spinner-border text-primary" role="status">
-                            <span class="sr-only" id="loading"></span>
-                          </div>
-                        </div>
-                      </ng-template>
-                      <ng-template #hList1> </ng-template>
-                      <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">
-                        &nbsp;{{dataDisplay1}}&nbsp; </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-            </table>
+          
 
             <br>
             <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
@@ -630,4 +648,32 @@
 
 
     </form>
+</div>
+<div class="modal" id="confirmAlert" tabindex="-1" role="dialog" [ngStyle]="{'display':display}" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title">Confirmation!</h5>
+          </div>
+          <div class="modal-body">
+              <label
+                  style="font-size: small; color: black; font-weight: bold; text-align: left; vertical-align: middle; margin-left: 35%">
+                  {{message}}
+              </label>
+          </div>
+          <div class="modal-footer">
+              <table class="center" style="width: 50%;">
+                  <tr>
+                      <td>
+                          <button type="button" class="btn btn-info" data-dismiss="modal" id="register"
+                              (click)="executeAction()">Yes</button>
+                      </td>
+                      <td>
+                          <button type="button" class="btn btn-info" data-dismiss="modal" (click)="closeModalDialog()">No</button>
+                      </td>
+                  </tr>
+              </table>
+          </div>
+      </div>
+  </div>
 </div>
