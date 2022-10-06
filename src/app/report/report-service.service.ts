@@ -715,9 +715,7 @@ export class ReportServiceService {
   }
 
   salesPendingPymntReport(toDate,locId,ouId){
-    // const REQUEST_URI = this.ServerUrl +`/SalesReports/SlPendingPymtRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
     const REQUEST_URI = this.ServerUrl +`/SalesReports/SlPendingPymtRep?toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
-    // http://localhost:8081/SalesReports/SlPendingPymtRep?toDate=05-APR-2022&ouId=22&locId=2203
     return this.http.get(REQUEST_URI, {
       responseType: 'arraybuffer',
       headers: this.headers,
@@ -893,6 +891,21 @@ purchaseRegisterSummary(fromDate,toDate,ouId,locId,deptId){
     headers: this.headers,
   });
 }
+
+getServerReportById(tktNum): Observable<any> {
+  return this.http.get(this.ServerUrl + `/fndRequest/fndRequestor/${tktNum}`);
+  // http://localhost:8081/fndRequest/fndRequestor/M2152
+
+}
+
+fndRquestDownload(requestId){
+   const REQUEST_URI = this.ServerUrl +`/fndRequest/download?requestId=${requestId}`;
+  return this.http.get(REQUEST_URI, {
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
+}
+
 
 
 }

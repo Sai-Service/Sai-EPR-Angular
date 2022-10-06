@@ -2278,6 +2278,18 @@ export class MasterService {
     return this.http.get(this.ServerUrl + `/rcvShipment/rtvSearch?segment1=${mPoNumber}&receiptNo=${mRcptNumber}`);
   }
 
+  
+//////////////////////////////////SHORT LANDED CLAIM SAVE///////////////////////////////////////////////////////////
+
+public shortLandedClaimSave(rtvRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/rcvShipment/ShortLanded';
+  return this.http.post(url, rtvRecord, options);
+}
+// \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\PRICE LIST MASTER\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
 
 
 
@@ -2680,6 +2692,15 @@ export class MasterService {
     const url = (this.ServerUrl + `/arCashReceipts/unapplyRcptManNew/${mRcptNo}`);
     return this.http.put(url, ArReceiptUnApplyRecord, options);
     // http://localhost:8081/arCashReceipts/unapplyRcptManNew/{receiptNumber}
+  }
+
+
+  public ArPaymentOtherDetPost(arPayOthRecord) {
+    const options = {
+      headers: this.headers
+    };
+    const url = this.ServerUrl + '/arCashReceipts/arOthReceiptDet';
+    return this.http.post(url, arPayOthRecord, options); 
   }
 
 

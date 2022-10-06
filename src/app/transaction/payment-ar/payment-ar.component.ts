@@ -9,7 +9,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location } from "@angular/common";
 import { relativeTimeRounding } from 'moment';
 import { ServiceService } from 'src/app/service/service.service';
-import { ReturnStatement } from '@angular/compiler';
+import { ReturnStatement, ThrowStmt } from '@angular/compiler';
 
 
 interface IPaymentRcptAr {
@@ -100,6 +100,7 @@ export class PaymentArComponent implements OnInit {
   lstinvoices: any[];
   lstCustomer: any[];
   lstApplyHistory: any[];
+  lstRcptOtherDetails:any;
 
 
 
@@ -123,6 +124,7 @@ export class PaymentArComponent implements OnInit {
   receiptStatus = 'Open';
   status = 'UNAPP';
 
+  cashReceiptId:number;
   receiptMethodId: number;
   // paymentCollection: string;
   receiptMethodName: string;
@@ -263,6 +265,9 @@ export class PaymentArComponent implements OnInit {
   refType: string;
 
   showOTHERModal=false;
+  othSaveButton=false;
+  othAddRemoveButton=false;
+  // othDelButton=true;
 
 
 
@@ -334,6 +339,7 @@ export class PaymentArComponent implements OnInit {
       emplId: [],
       roleId: [],
 
+      cashReceiptId:[],
       receiptNumber: [],
       receiptDate: [],
       glDate: [],
@@ -441,17 +447,20 @@ export class PaymentArComponent implements OnInit {
 
       invLine: this.fb.array([this.invLineDetails()]),
       appliedInvLine: this.fb.array([this.appliedinvLineDetails()]),
-      othRefLine: this.fb.array([this.othLineDetails()]),
+      rcptOthDet: this.fb.array([this.othLineDetails()]),
     });
   }
 
   othLineDetails() {
     return this.fb.group({ 
+      rcptDtlsId:[],
+      // cashReceiptId:[],
       othRcptNo:[],
       othRefNo:[],
-      othRefDate:[],
+      othRefDt:[],
       othAmtReceived:[],
       othBankName:[],
+      balanceAmt:[],
     })
   }
 
@@ -498,8 +507,10 @@ export class PaymentArComponent implements OnInit {
     })
   }
 
+
+
   othLineArray(): FormArray {
-    return <FormArray>this.paymentArForm.get('othRefLine')
+    return <FormArray>this.paymentArForm.get('rcptOthDet')
   }
 
   invLineArray(): FormArray {
@@ -1358,6 +1369,7 @@ if(this.deptId==2){
     // alert('selectReceiptMethod'+'---'+receiptNumber)
     this.displayButton = false;
     this.display = false;
+    this.othSaveButton=true;
     if (Number(sessionStorage.getItem('deptId')) != 4) {
       this.service.getArReceiptDetailsByRcptNoAndloc(receiptNumber)
         .subscribe(
@@ -1367,6 +1379,8 @@ if(this.deptId==2){
             console.log(this.receiptDetails);
             // ---------------------------Applied history
             this.lstApplyHistory = data.obj.invApplyLst;
+            
+
             console.log(this.lstApplyHistory);
 
             var len1 = data.obj.invApplyLst.length;
@@ -1377,7 +1391,24 @@ if(this.deptId==2){
               this.applHistory = false;
             }
 
-            // --------------------------------------------
+            // -------------------------------------------- Other Rcpt Details-----
+
+               this.lstRcptOtherDetails=data.obj.oePayList[0].rcptOthDet;
+
+                 console.log(this.lstRcptOtherDetails);
+                 
+
+                  var len = this.othLineArray().length;
+                  for (let i = 0; i < this.lstRcptOtherDetails.length - len; i++) {
+                    
+                    var avlLnGrp: FormGroup = this.othLineDetails();
+                    this.othLineArray().push(avlLnGrp);
+                  }
+
+                  this.paymentArForm.get('rcptOthDet').patchValue(this.lstRcptOtherDetails);
+
+
+            // -----------------------------------------------------------------------
 
             this.paymentArForm.patchValue(this.receiptDetails);
 
@@ -1393,14 +1424,26 @@ if(this.deptId==2){
             this.GetCustomerSiteDetails(data.obj.oePayList[0].customerId)
 
             this.showRefundHist = false;
+
+            // if (data.obj.oePayList[0].receiptStatus === 'Closed') {
+            //   this.othSaveButton=false;
+            //   this.othAddRemoveButton=true;
+            //   this.paymentArForm.disable();
+            //   return;
+            // }
           
             if (data.obj.oePayList[0].status === 'REFUND') {
               this.showReasonDetails = false; this.enableCancelButton = false; this.enableApplyButton = false;
               this.showRefundHist = true;
+              this.othSaveButton=false;
+              // this.paymentArForm.disable();
               return;
             }
             if (data.obj.oePayList[0].status === 'REVERSED') {
               this.isVisibleUnApplyReceipt=false;
+              this.othSaveButton=false;
+              this.othAddRemoveButton=true;
+              this.paymentArForm.disable();
               return;
             }
             if (data.obj.oePayList[0].reversalReasonCode != null) {
@@ -2017,6 +2060,7 @@ if(this.deptId==2){
               this.paymentArForm.get('selectAllflag1').disable();
             } else {
               this.paymentArForm.get('selectAllflag1').disable();
+              alert ("No Record(s) Found....");
               this.validateStatus = false; return;
             }
 
@@ -2706,7 +2750,7 @@ if(this.deptId==2){
       // alert("Data Validation Sucessfull....\nPosting data  to AR PAYMENT TABLE");
       var  resp=confirm("Do You Want to Save this Receipt ???");
       if(resp==true) {
-
+        this.displayButton = false;
       const formValue: IPaymentRcptAr = this.transeData(this.paymentArForm.value);
 
       this.service.ArReceiptSubmit(formValue).subscribe((res: any) => {
@@ -2722,11 +2766,10 @@ if(this.deptId==2){
           this.balanceAmount == this.paymentAmt;
 
           // this.paymentArForm.reset();
-          this.displayButton = false;
         } else {
           if (res.code === 400) {
             alert('Error While Saving Record:-' + res.obj);
-            // this.paymentArForm.reset();
+            this.displayButton = true;
           }
         }
       });
@@ -3427,15 +3470,10 @@ if(this.deptId==2){
             if (this.appliedInvLineArray().controls[i].get('unApplyFlag').value != true) {
               this.appliedInvLineArray().removeAt(i);
             } 
-
-         
-
-    
           }
 
            var applLineArr1 = this.paymentArForm.get('appliedInvLine').value;
           //  var patch = this.paymentArForm.get('appliedInvLine') as FormArray;
-
           for (let i = 0; i < applLineArr1.length; i++) {
             this.appliedInvLineArray().controls[i].get('unApplyFlag').disable();
           }
@@ -3487,9 +3525,9 @@ if(this.deptId==2){
 
           // alert('addrow index '+i);
   
-          var prcLineArr1 = this.paymentArForm.get('othRefLine').value;
+          var prcLineArr1 = this.paymentArForm.get('rcptOthDet').value;
           var lineValue1=prcLineArr1[i].othRefNo;
-          var lineValue2=prcLineArr1[i].othRefDate;
+          var lineValue2=prcLineArr1[i].othRefDt;
           var lineValue3=prcLineArr1[i].othAmtReceived;
           var lineValue4=prcLineArr1[i].othBankName;
 
@@ -3523,6 +3561,57 @@ if(this.deptId==2){
           this.othLineValidation=true;
   
           }
+
+          othDetSave(){
+
+            this.othSaveButton=false;
+
+            var othLineArr = this.paymentArForm.get('rcptOthDet').value;
+            var len1 = othLineArr.length;
+  
+            for (let i = 0; i < len1 ; i++)
+              {
+                this.CheckOthLineValidations(i);
+              }
+  
+              if(this.othLineValidation===false) {
+                alert("Line Validation Failed...\nPlease check all  line data fileds are updated properly..")
+                this.othSaveButton=true;
+                return;
+              }
+
+              if (this.othLineValidation )
+              {
+             
+              const formValue: IPaymentRcptAr = this.paymentArForm.value;
+              let variants = <FormArray>this.othLineArray();
+              var receiptNumber = this.paymentArForm.get('receiptNumber').value;
+              var cashReceiptId= this.paymentArForm.get('cashReceiptId').value;
+              // alert ("receipt Number : "+ receiptNumber);
+
+              for (let i = 0; i < this.othLineArray().length; i++) {
+                let variantFormGroup = <FormGroup>variants.controls[i];
+                variantFormGroup.addControl('receiptnumber', new FormControl(receiptNumber, Validators.required));
+                variantFormGroup.addControl('cashReceiptId', new FormControl(cashReceiptId, Validators.required));
+
+              }
+
+              console.log(variants.value);
+             
+              this.service.ArPaymentOtherDetPost(variants.value).subscribe((res: any) => {
+                if (res.code === 200) {
+                  alert(res.message);
+                 
+                } else {
+                  if (res.code === 400) {
+                    alert(res.message);
+                    // this.displayTdsButton = true;
+                  }
+                }
+              });
+            } else { alert("Line data Validation Not Sucessfull....\nData Not Saved..."); }
+          
+        }
   
 
 }

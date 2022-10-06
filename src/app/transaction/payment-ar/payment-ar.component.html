@@ -23,7 +23,9 @@
                         <td> <input hidden style="width:30px ;" type="number"  formControlName="customerId"  id="customerId" [(ngModel)]="customerId" class="form-control" ></td>
                         <td> <input hidden disabled style="width:30px ;" type="number"  formControlName="ouId"  id="ouId" [(ngModel)]="ouId" class="form-control" ></td>
                         <td> <input hidden disabled style="width:30px ;" type="number"  formControlName="deptId"  id="deptId" [(ngModel)]="deptId" class="form-control" ></td>
-                                 
+                        <td> <input hidden disabled type="number"  formControlName="cashReceiptId" [(ngModel)]="cashReceiptId" ></td>
+
+                        
                       </tr>
                     </table>
 
@@ -584,14 +586,40 @@
 
                                         <td style="width: 15%" class="LabelFontStyle1">Receipt&nbsp;Mode:&nbsp;</td>
     
-                                        <td>  
+                                        <!-- <td>  
                                             <select  disabled  formControlName="payType" id="payType" [(ngModel)]="payType" class="form-control" (ngModelChange)='onPayTypeSelected($event,"Active")' style="background-color: yellow;" >
                                                 <option disabled>--Select--</option>
                                                 <option *ngFor="let sc of  PaymentModeList" [ngValue]="sc.lookupValue"  >
                                                     {{sc.lookupValue}} 
                                                 </option>
                                             </select>
-                                        </td>
+                                        </td> -->
+
+                                            <td>
+                                            <table>
+                                            <tr>
+                                            <td>  
+                                                <select  disabled  formControlName="payType" id="payType" [(ngModel)]="payType" class="form-control" (ngModelChange)='onPayTypeSelected($event,"Active")' style="background-color: yellow;" >
+                                                    <option disabled>--Select--</option>
+                                                    <option *ngFor="let sc of  PaymentModeList" [ngValue]="sc.lookupValue"  >
+                                                        {{sc.lookupValue}} 
+                                                    </option>
+                                                </select>
+                                            </td>
+        
+                                            <div *ngIf="showOTHERModal; then Yes1; else No1"></div>
+                                            <ng-template #Yes1> 
+                                            <td>
+                                               <button type="button"  class="btn btn-primary" 
+                                                data-toggle="modal" data-target="#othRefModal"   style="width: 2rem;color: black;">
+                                                &nbsp;...&nbsp;</button>
+        
+                                            </td> 
+                                            </ng-template>
+                                            <ng-template #No1></ng-template>
+                                            </tr>
+                                            </table>
+                                            </td>
     
                                         <td style="width: 15%" class="LabelFontStyle1">Receipt&nbsp;Method:&nbsp;</td>
                                             <td>  
@@ -2008,25 +2036,24 @@
                                         </tbody>
                                                                             
 
-                                        <ng-container  class="center" formArrayName="othRefLine">
+                                        <ng-container  class="center" formArrayName="rcptOthDet">
                                             <ng-container   *ngFor="let group of othLineArray().controls; let k= index" [formGroupName]="k" class="auto-style5">  
                                                <!-- <tr *ngFor="let com of lstinvoices let i=index" class="ItemStyle" style="text-decoration:none;"> -->
                                                <tr>
+
+                                                <input hidden  formControlName="rcptDtlsId"     class="form-control">
+                                                <!-- <input hidden  formControlName="cashReceiptId"  class="form-control"> -->
+                                                <!-- <input hidden  formControlName="receiptnumber"  class="form-control"> -->
+
                                                 <td style="text-align: center;background-color:lightgreen;border-color:blueviolet;">{{k+1}}</td>
                                                 <td><input style="width: 200px;height: 25px;text-align: left;"        type="text" formControlName="othRefNo"          class="form-control"></td>
-                                                <td><input style="width: 150px;height: 25px;text-align: center;"        type="date" formControlName="othRefDate"        class="form-control"></td>
+                                                <td><input style="width: 150px;height: 25px;text-align: center;"        type="date" formControlName="othRefDt"        class="form-control"></td>
                                                 <td><input style="width: 150px;height: 25px;"                           type="number" formControlName="othAmtReceived"    class="form-control"></td>
                                                 <td><input style="width: 300px;height: 25px;text-align: left;"        type="text" formControlName="othBankName"       class="form-control"></td>   
                                                
-                                                <td>
-                                                    <button type="submit" class="btn btn-info" (click)="addRow(k)" (keydown.shift.arrowdown)="addRow(k)" style="width: min-content;"><i
-                                                    class="fa fa-plus"></i></button>
-                                                </td>
-
-                                                <td>
-                                                    <button type="submit" class="btn btn-info" (click)="RemoveRow(k)" style="width: min-content;"><i
-                                                    class="fa fa-trash"></i></button>
-                                                </td>
+                                                <td><button [disabled]="othAddRemoveButton"  type="button" class="btn btn-info" (click)="addRow(k)" (keydown.shift.arrowdown)="addRow(k)" style="width: min-content;"><i  class="fa fa-plus"></i></button></td>
+                                                <td><button [disabled]="othAddRemoveButton"  type="button" class="btn btn-info" (click)="RemoveRow(k)" style="width: min-content;"><i  class="fa fa-trash"></i></button></td>
+                                                
                                             </tr>
                                             </ng-container>
                                         </ng-container>
@@ -2038,12 +2065,18 @@
 
                        
 
-                       <!-- <button [disabled]="isDisabled1" style="width: 8em;" type="button" class="btn btn-info" (click)="validateUnapply()">Validate</button>
-                       <button [disabled]="isDisabled2" style="width: 8em;" type="button" class="btn btn-info" (click)="UnapplySave()">UnApply</button> -->
-
+                       <!-- <button [disabled]="isDisabled1" style="width: 8em;" type="button" class="btn btn-info" (click)="validateUnapply()">Validate</button> -->
                        
+                      
+                       <!-- <button [disabled]="othSaveButtonDisabled"  style="width: 8em;"  type="button" class="btn btn-info" (click)="othDetSave()">Save</button> -->
+                      
+                       <div *ngIf="othSaveButton ,then othSaveButton1; else othSaveButton2")></div>
+                        <ng-template #othSaveButton1>
+                        <button   style="width: 8em;"  type="button" class="btn btn-info" (click)="othDetSave()">Save</button>
+                        </ng-template>
+                        <ng-template #othSaveButton2></ng-template>
 
-                        <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+                       <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
                     </div>
               </div>
             </div>

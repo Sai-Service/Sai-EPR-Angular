@@ -326,25 +326,13 @@ export class AvgCostUpdateComponent implements OnInit {
     }
   }
 
-
-
-
-
-
-
-
-
   addRow(index) {
-
      this.CheckLineValidations(index);
-
         if (this.lineValidation)
       {
         //  alert(this.lineValidation);
           this.lineDetailsArray().push(this.lineDetailsGroup());
-
       }
-
   }
 
 
@@ -409,6 +397,7 @@ export class AvgCostUpdateComponent implements OnInit {
     }
 
     newMast() {
+
           this.CheckHeaderValidations();
 
           if (this.headerValidation==true ) { alert("Header Validation Sucessfull...") }
@@ -438,7 +427,9 @@ export class AvgCostUpdateComponent implements OnInit {
             alert("Data Validation Sucessfull....\nPosting data  to AVG COST UPDATE TABLE")
           // alert(this.avgCostUpdateForm.get('locId').value);
           const formValue: IAvgCostUpdate = this.avgCostUpdateForm.value;
+
           let variants = <FormArray>this.lineDetailsArray();
+
           var locationId = this.avgCostUpdateForm.get('locId').value;
           var transSourceTypeId = this.avgCostUpdateForm.get('transSourceTypeId').value;
           var codeCombinationId = this.avgCostUpdateForm.get('codeCombinationId').value;
@@ -446,6 +437,7 @@ export class AvgCostUpdateComponent implements OnInit {
           var reasonCode = this.avgCostUpdateForm.get('reasonCode').value;
           var lastUpdatedBy = this.avgCostUpdateForm.get('emplId').value;
           var createdBy = this.avgCostUpdateForm.get('emplId').value;
+          
           for (let i = 0; i < this.lineDetailsArray().length; i++) {
             let variantFormGroup = <FormGroup>variants.controls[i];
             variantFormGroup.addControl('locationId', new FormControl(locationId, Validators.required));
@@ -475,7 +467,8 @@ export class AvgCostUpdateComponent implements OnInit {
           });
 
             }else{ alert("Data Validation Not Sucessfull....\nPosting Not Done...")  }
-    }
+        }
+
 
     // updateMast() {
 

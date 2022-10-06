@@ -8,11 +8,12 @@ import { NgxDateRangeModule } from 'ngx-daterange';
 import { AccountsReportComponent } from './accounts-report/accounts-report.component';
 import { SparesReportsComponent } from './spares-reports/spares-reports.component';
 import { AccessoriesReportComponent } from './accessories-report/accessories-report.component';
+import { ServerReportComponent } from './server-report/server-report.component';
 
 
 
 @NgModule({
-  declarations: [ServiceReportComponent, SalesReportsComponent, AccountsReportComponent, SparesReportsComponent, AccessoriesReportComponent],
+  declarations: [ServiceReportComponent, SalesReportsComponent, AccountsReportComponent, SparesReportsComponent, AccessoriesReportComponent,ServerReportComponent],
   imports: [
     CommonModule,
     ReportsRoutingModule,
