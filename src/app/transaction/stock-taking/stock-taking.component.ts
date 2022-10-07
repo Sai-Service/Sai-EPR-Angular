@@ -119,14 +119,19 @@ export class StockTakingComponent implements OnInit {
 
   @ViewChild('fileInput') fileInput;
   itemUploadedList:any;
-  dataDisplay1: any;
+  // dataDisplay1: any;
   files:string;
   displaydata:boolean=true;
   dataList: any;
   lstData: any;
   isVisiblePro:boolean=false;
   uploadButton:boolean=false;
-
+  
+  dataDisplay1 :string;
+  spinIcon=true;
+  dataDisplay :string;
+  spinIcon1=true;
+  display = 'none';
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.StockTakingForm = fb.group({
@@ -598,6 +603,7 @@ export class StockTakingComponent implements OnInit {
     this.service.approve(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert("Cycle Count Approve Successfully");
+        this.displayButton=false;
         // window.location.reload();
       }
       else {
@@ -626,6 +632,8 @@ export class StockTakingComponent implements OnInit {
   }
   process() {
     this.currentop = 'process';
+     this.spinIcon=false;
+    this.dataDisplay1='Data is Processing...Please Wait...'
     const formValue: IStockaking = this.transData(this.StockTakingForm.value);
     this.service.miscellaneousSubmit(formValue).subscribe
       ((res: any) => {
@@ -637,6 +645,8 @@ export class StockTakingComponent implements OnInit {
         if (res.code === 200) {
           this.compileName = obj;
           alert("Record Inserted Successfully");
+          this.spinIcon=true;
+          this.dataDisplay1='';
           // let control = this.StockTakingForm.get('cycleLinesList') as FormArray;
           // var len = this.cycleLinesList().length;
           // for (let i = 0; i < res.obj.cycleLinesList.length - len; i++) {
@@ -660,6 +670,8 @@ export class StockTakingComponent implements OnInit {
         else {
           if (res.code === 400) {
             alert("Code already present in data base");
+            this.spinIcon=true;
+          this.dataDisplay1='';
             this.StockTakingForm.reset();
           }
         }
@@ -822,13 +834,15 @@ export class StockTakingComponent implements OnInit {
       return;
     }
     event.target.disabled = true;
+    // this.spinIcon1=false;
     let formData = new FormData();
     formData.append('file', this.fileInput.nativeElement.files[0]);
     this.service.bulkstockTakinguploadCsv(formData).subscribe((res: any) => {
         if (res.code === 200) {
           alert(res.message);
-          this.itemUploadedList=res.obj;  
-          this.dataDisplay1 ='File Uploaded Sucessfully....'
+          this.itemUploadedList=res.obj; 
+          // this.spinIcon1=false; 
+          this.dataDisplay='File Uploaded Sucessfully....'
           this.displaydata=false;
           // this.closeResetButton=true;
          this.StockTakingForm.get('files').reset();
@@ -851,6 +865,31 @@ export class StockTakingComponent implements OnInit {
         event.target.disabled= false;
        }, 60000);
        
+  }
+
+  message: string = "Please Fix the Errors!";
+  cnfMsgType: string = "Close";
+  // msgType:string ="Navigate";
+  getMessage(msgType: string) {
+    this.cnfMsgType = msgType;
+    if (msgType.includes("Approve")) {
+      // this.submitted = true;
+      // (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
+      this.message = "Do you want to Approve the changes (Yes/No)?"
+    }
+    
+  } 
+
+
+  executeAction() {
+    if (this.cnfMsgType.includes("Approve")) {
+      this.Approval();
+    }
+    
+  }
+  closeModalDialog() {
+    this.display = 'none'; //set none css after close dialog
+    // this.myInputField.nativeElement.focus();
   }
 
 }
