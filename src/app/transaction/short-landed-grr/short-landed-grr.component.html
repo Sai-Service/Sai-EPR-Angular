@@ -33,6 +33,7 @@
                                         <button type="button" class="btn-primary" (click)="SearchByPoRcptNumberHeader(receiptNo)"><i class="fa fa-search"
                                                 aria-hidden="true"></i></button>
                                     </td>
+                                    
                                     <!-- ------------Spinner---------------------- -->
                                     <div *ngIf="spinIcon; then hList1; else hList2"></div>
                                     <ng-template #hList2>
@@ -117,13 +118,18 @@
                         <td> <input disabled type="text"   formControlName="receiptNo" [(ngModel)]='receiptNo'  value={{receiptNo}} class="form-control"   ></td>
 
                         <td style="width: 15%" class="LabelFontStyle">&nbsp;Debit&nbsp;Note&nbsp;No:&nbsp;</td>  
-                        <td><input  type ="text" disabled formControlName="debitNoteNo" [(ngModel)]='debitNoteNo' value={{debitNoteNo}} class="form-control" placeholder="" ></td>   
+                        <td><input  type ="number" disabled formControlName="debitNoteNo" [(ngModel)]='debitNoteNo' value={{debitNoteNo}} class="form-control" placeholder="" ></td>   
 
                         <td style="width: 15%" class="LabelFontStyle">&nbsp;Debit&nbsp;Note&nbsp;Date:&nbsp;</td>  
                         <td><input  type ="text" disabled formControlName="debitNoteDate" [(ngModel)]='debitNoteDate' value={{debitNoteDate}} class="form-control" placeholder="" ></td>   
 
-                        <td style="width: 15%" class="LabelFontStyle">&nbsp;Debit&nbsp;Note&nbsp;Amt:&nbsp;</td>  
-                        <td><input  type ="number" disabled formControlName="debitNoteAmt" [(ngModel)]='debitNoteAmt' value={{debitNoteAmt}} class="form-control" placeholder="" ></td>   
+                        <!-- <td style="width: 15%" class="LabelFontStyle">&nbsp;Debit&nbsp;Note&nbsp;Amt:&nbsp;</td>  
+                        <td><input  type ="number" disabled formControlName="debitNoteAmt" [(ngModel)]='debitNoteAmt' value={{debitNoteAmt}} class="form-control" placeholder="" ></td>    -->
+
+                        <td style="width: 15%" class="LabelFontStyle">&nbsp;Total&nbsp;Amt:&nbsp;</td>  
+                        <td><input  type ="number" disabled formControlName="totalAmt" [(ngModel)]='totalAmt' value={{totalAmt}} class="form-control" placeholder="" ></td>   
+
+
 
                         </tr>
 
@@ -139,6 +145,50 @@
                         </tr>
                     </table>
                     </fieldset>
+
+                    <div *ngIf ="rtnSearch;then Blk1;else Blk2"></div>
+                    <ng-template #Blk1>
+                                                
+                            <div class="container1">
+                                <div class="grid_scroll">
+                                <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="font-size: small;border-color:#959595;border-collapse:collapse;width: 100%;">
+                                    <tbody>
+                                            <tr class="GridHeader">
+                                            <th style="width:5rem"  scope="col">Srl&nbsp;No&nbsp;</th> 
+                                            <th style="width:10rem"  scope="col">Item&nbsp;No&nbsp;</th>
+                                            <th style="width:15rem" scope="col">Item&nbsp;Desc</th>
+                                            <th style="width:5rem"  scope="col">HSN&nbsp;No&nbsp;</th>
+                                            <th style="width:5rem"  scope="col">Rtn&nbsp;Qty&nbsp;</th>
+                                            <th style="width:5rem"  scope="col">Unit&nbsp;Price&nbsp;</th> 
+                                            <th style="width:5rem"  scope="col">Base&nbsp;Amt&nbsp;</th>
+                                            <th style="width:2rem" scope="col">Tax%&nbsp;</th>
+                                            <th style="width:5rem"  scope="col">Tax&nbsp;Amt&nbsp;</th>
+                                            <th style="width:5rem"  scope="col">Total&nbsp;Amt&nbsp;</th>
+                                            
+                                        </tr>
+                                    </tbody>
+                                    <tr *ngFor="let com of lstRtnDetails let i= index" class="ItemStyle" style="text-decoration:none;" >
+                                            <td style="text-align: center;">{{i+1}}</td>
+                                            <td style="text-align: left;">{{com.itemName}}</td>
+                                            <td style="text-align: left;">{{com.itemDesc}}</td>
+                                            <td style="text-align: center;">{{com.hsnCode}}</td>
+                                            <td style="text-align: center;">{{com.qtyReceived}}</td>
+                                            <td style="text-align: right;">{{com.unitPrice | number:'0.00'}}</td>
+                                            <td style="text-align: right;">{{com.baseAmount | number:'0.00'}}</td>
+                                            <td style="text-align: right;">{{com.taxPercentage | number:'0.00'}}</td>
+                                            <td style="text-align: right;">{{com.taxAmount | number:'0.00'}}</td>
+                                            <td style="text-align: right;">{{com.totAmount | number:'0.00'}}</td>
+                                            
+                                    </tr> 
+                                </table>
+                            </div>
+                            </div>
+
+                        </ng-template>
+                    <!-- ------------------------------------------- -->
+                    <ng-template #Blk2>
+
+
 
                     <div class="grid_scroll">
                       
@@ -342,23 +392,37 @@
 
                          
                         </table> 
-                    </div>
+                     </div>
+                    </ng-template>
+
                         
                         <table class="center">
                         <tr>
 
                         <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
                         <ng-template #thenBlock1>
-                        <td>
-                              <div *ngIf="validateStatus ,then vStatusYes; else vStatusNo")></div>
-                                <ng-template #vStatusYes>
-                                     <button style="width: 8em;" type="button" class="btn btn-info" (click)="validateClaim(applyTo)">Validate</button>
-                                </ng-template>
-                                <ng-template #vStatusNo>
-                                   <button disabled style="width: 8em;" type="button" class="btn btn-info" (click)="validateClaim(applyTo)">Validate</button>
-                               </ng-template>
+
+                            <div *ngIf="rtnSearch ,then rtn1; else rtn2")></div>
+                            <ng-template #rtn1> 
+                                <td>
+                                    <button type="button" class="btn btn-info" (click)="printDocShortClaim()"[disabled]="!shortLandGrrForm">Print</button>
+                                </td>
+
+                            </ng-template>
+
+                            <ng-template #rtn2>
+                            <td>
+                            <div *ngIf="validateStatus ,then vStatusYes; else vStatusNo")></div>
+                            <ng-template #vStatusYes>
+                                 <button style="width: 8em;" type="button" class="btn btn-info" (click)="validateClaim(applyTo)">Validate</button>
+                            </ng-template>
+                            <ng-template #vStatusNo>
+                               <button disabled style="width: 8em;" type="button" class="btn btn-info" (click)="validateClaim(applyTo)">Validate</button>
+                           </ng-template>
+                         
                         </td>
-                        <td>
+                            
+                            <td>
                             <div *ngIf="saveButton ,then SaveYes; else SaveNo")></div>
                             <ng-template #SaveYes>
                                 <button style="width: 8em;" type="button" class="btn btn-info" (click)="shortClaimSave()">Save</button>
@@ -368,7 +432,9 @@
                             </ng-template>
 
                         </td>
+                    </ng-template>
 
+                       
                         <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button></td>
                         <!-- Modal -->
                         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="max-width: 500px; ">
@@ -430,7 +496,7 @@
                         <ng-template #elseBlock1>
                                    
                             <td>
-                                <button type="button" class="btn btn-info" (click)="printDoc()"[disabled]="!returntoVendorForm">Print</button>
+                                <button type="button" class="btn btn-info" (click)="printDocShortClaim()"[disabled]="!shortLandGrrForm">Print</button>
                             </td>
                             <td>
                                 <!-- <button type="button" class="btn btn-info" (click)="searchMast()">Search</button> -->
@@ -687,9 +753,8 @@
 
           
 
-           <div class="container1">
+           <!-- <div class="container1">
               <div class="grid_scroll_3">
-               <!-- <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="font-size:small; border-color:#959595;border-collapse:collapse;width: 100%;"> -->
                <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="font-size:small; border-color:brown;border-collapse:collapse;width: 100%;">
              
                  <tbody>
@@ -711,11 +776,7 @@
                                                                         
                        </tr>
                    </tbody>
-                   <!-- <tr *ngFor="let com of PoRcptLineItemList" class="ItemStyle" style="text-decoration:none;"> -->
-
-                       <!-- <tr *ngFor="let com of lstRtnDetails let i= index" class="ItemStyle" style="text-decoration:none;"> -->
-                           <tr *ngFor="let com of lstReceiptItemLines let i= index" class="ItemStyle" style="text-decoration:none;">
-                           <!-- lstRtnDetails -->
+                          <tr *ngFor="let com of lstReceiptItemLines let i= index" class="ItemStyle" style="text-decoration:none;">
                            <td style="text-align: center;">{{i+1}}</td>
                            <td style="width:10rem;text-align: left;">{{com.itemName}}</td>
                            <td style="width:25rem;text-align: left;">{{com.itemDesc}}</td>
@@ -733,7 +794,8 @@
                        </tr>
                </table>
              </div>
-           </div>
+           </div> -->
+
             <div class="modal-footer">
                <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
            </div>
@@ -742,5 +804,34 @@
 </div>
 </div>
 
-    <!-- ------------------------------------------------------------------------------------------ -->
 </form>
+<br>
+<div> <h5>Claim History</h5></div>
+<div class="container1">
+    <div class="grid_scroll">
+    <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="font-size:small ; border-color:#959595;border-collapse:collapse;width: 100%;">
+        <tbody>
+                <tr class="GridHeader">
+                <th style="width:5rem"  scope="col">Srl&nbsp;No&nbsp;</th> 
+                <th style="width:5rem"  scope="col">Claim&nbsp;No&nbsp;</th>
+                <th style="width:10rem" scope="col">Claim&nbsp;Date</th>
+                <th style="width:5rem"  scope="col">DebitNote&nbsp;No&nbsp;</th>
+                <th style="width:10rem" scope="col">DebitNote&nbsp;Date</th>
+                <th style="width:10rem" scope="col">Claim&nbsp;Amt&nbsp;</th>
+                 <th style="width:6rem" scope="col">Select</th>
+            </tr>
+        </tbody>
+        <tr *ngFor="let com of lstDebtiNotes let i= index" class="ItemStyle" style="text-decoration:none;" >
+                <td style="text-align: center;">{{i+1}}</td>
+                <td style="text-align: center;">{{com.receiptNo}}</td>
+                <td style="text-align: center;">{{com.receiptDate | date:'dd-MM-y'}}</td>
+                <td style="text-align: center;">{{com.debitNoteNo}}</td>
+                <td style="text-align: center;">{{com.debitNoteDate | date:'dd-MM-y'}}</td>   
+                <td style="text-align: center;">{{com.totalAmt | number:'1.2-2'}}</td>  
+                <td><button class="btn btn-info" (click)="Select(com.receiptNo)">Select</button></td>   
+        </tr> 
+    </table>
+</div>
+</div>
+
+    <!-- ------------------------------------------------------------------------------------------ -->

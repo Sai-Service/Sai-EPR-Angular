@@ -93,8 +93,24 @@
                                     &nbsp;{{this.dataDisplay}}&nbsp; </td>
                                      <!-- ------------Spinner---------------------- -->
                                      
-                                </tr>
+                                
 
+                                <div *ngIf ="dispReceiptLines;then enableButtonYes;else enableButtonNo"></div>
+                                <ng-template #enableButtonYes>
+                               <td>
+                                   <button  type="button"  class="btn btn-primary" 
+                                   data-toggle="modal" data-target="#PoReceiptLineItems" style="width: 8rem;color: black;">
+                                   View&nbsp;Receipt&nbsp;Details&nbsp;</button>
+                               </td>
+                               </ng-template>
+                               <ng-template #enableButtonNo>
+                               <td>
+                                   <button disabled type="button"  class="btn btn-primary" 
+                                   data-toggle="modal" data-target="#PoReceiptLineItems" style="width: 8rem;color: black;">
+                                   View&nbsp;Receipt&nbsp;Details&nbsp;</button>
+                               </td>
+                               </ng-template> 
+                            </tr>
                                        
                             </table>
                         </td>
@@ -254,7 +270,7 @@
                                                     placeholder="" >
                             </td>
 
-                        <div *ngIf ="dispReceiptLines;then enableButtonYes;else enableButtonNo"></div>
+                        <!-- <div *ngIf ="dispReceiptLines;then enableButtonYes;else enableButtonNo"></div>
                         <ng-template #enableButtonYes>
                        <td>
                            <button  type="button"  class="btn btn-primary" 
@@ -268,7 +284,7 @@
                            data-toggle="modal" data-target="#PoReceiptLineItems" style="width: 8rem;color: black;">
                            &nbsp;Receipt&nbsp;Details&nbsp;</button>
                        </td>
-                       </ng-template> 
+                       </ng-template>  -->
                         </tr>
 
                         <tr>
@@ -1110,6 +1126,7 @@
 </form>
 <br>
 
+<div> <h5>Return History</h5></div>
 <div class="container1">
     <div class="grid_scroll">
     <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="font-size:small ; border-color:#959595;border-collapse:collapse;width: 100%;">
@@ -1136,6 +1153,7 @@
     </table>
 </div>
 </div>
+
 <div class="container">
 <div class="row">
 <div class ="col-xs-12">

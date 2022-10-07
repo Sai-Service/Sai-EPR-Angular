@@ -556,6 +556,7 @@ export class ReturnToVendorComponent implements OnInit {
               this.lstReceiptHeader = data.obj;
               this.lstReceiptItemLines=data.obj.rcvLines;
               this.lstDebtiNotes=data.obj.rtvLines;
+              
               console.log(this.lstReceiptHeader);
 
              if(data.code===200){
