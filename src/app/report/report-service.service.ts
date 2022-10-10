@@ -28,6 +28,17 @@ export class ReportServiceService {
     });
   }
 
+  SPDebtorAgingSummary(invcDt1,ouId,locId,custAcctNo,deptId,ag1,ag2,ag3,ag4){
+    // http://localhost:8081/SparesReports/SprDebtSummary?toDate=08-OCT-2022&ouId=21&locId=2102&custAcctNo&deptId=5&age1=30&age2=45&age3=60&age4=75
+
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprDebtSummary?toDate=${invcDt1}&ouId=${ouId}&locId=${locId}&custAcctNo=${custAcctNo}&deptId=${deptId}&age1=${ag1}&age2=${ag2}&age3=${ag3}&age4=${ag4}`;
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
   stockMadeDetailsReport(fromDate, toDate,locId,tolocId,subInvCode,deptId){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/SprStkTrfMade?fromDate=${fromDate}&toDate=${toDate}&fromLoc=${locId}&toLoc=${tolocId}&subInvCode=${subInvCode}&deptId=${deptId}`;
     return this.http.get(REQUEST_URI, {

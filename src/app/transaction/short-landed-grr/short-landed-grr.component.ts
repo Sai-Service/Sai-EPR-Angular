@@ -89,7 +89,7 @@ export class ShortLandedGrrComponent implements OnInit {
       taxAmt:number;
       public itemType= 'RETURN';
 
-      debitNoteNo:string;
+      debitNoteNo:number;
       debitNoteDate=this.pipe.transform(Date.now(), 'dd-MM-yyyy');
       debitNoteAmt:number;
 
@@ -309,6 +309,7 @@ export class ShortLandedGrrComponent implements OnInit {
         this.lstReceiptHeader = data.obj;
         this.lstReceiptItemLines=data.obj.rcvLines;
         this.lstDebtiNotes=data.obj.rtvLines;
+
         console.log(this.lstReceiptHeader);
 
        if(data.code===200){
@@ -937,7 +938,8 @@ export class ShortLandedGrrComponent implements OnInit {
    
         this.service.shortLandedClaimSave(formValue).subscribe((res: any) => {
           if (res.code === 200) {
-            this.rtnDocNo=res.obj;
+            alert ("Debit Note Number :"+res.obj);
+            this.debitNoteNo=res.obj;
             this.disabled = false;
             this.disabledLine=false;
             this.displayButton=false;
@@ -953,6 +955,51 @@ export class ShortLandedGrrComponent implements OnInit {
         });
     } else { alert ("Validation Failed ... \nPosting not done...");} 
   }
+
+
+  printDocShortClaim(){
+
+    alert ("Not Implemented ... Wip");
+
+    return;
+    var mRtnRcptNumber=this.shortLandGrrForm.get('debitNoteNo').value
+    const fileName = 'download.pdf';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.service.printRTVdocument(mRtnRcptNumber)
+      .subscribe(data => {
+        var blob = new Blob([data], { type: 'application/pdf' });
+        var url = URL.createObjectURL(blob);
+        var printWindow = window.open(url, '', 'width=800,height=500');
+        printWindow.open
+        
+      });
+  }
+
+  Select(mrtnNo){
+    // alert("PO / Receipt Number :"+this.segment1 +","+this.receiptNo);
+    this.enableCheckBox=false;
+    this.rtnSearch=true;
+    // this.validateStatus=false;
+
+    let select = this.lstDebtiNotes.find(d => d.receiptNo === mrtnNo);
+     this.debitNoteNo=select.receiptNo;
+    //  this.rtnDocDate=select.receiptDate;
+     this.debitNoteDate=this.pipe.transform(select.receiptDate, 'dd-MM-yyyy');
+    //  this.totalAmt=select.totalAmt;
+      var totalAmt1=Math.round((select.totalAmt + Number.EPSILON) * 100) / 100
+      this.totalAmt=totalAmt1;
+    
+     this.service.getsearchByReceiptNoLine(this.segment1,mrtnNo)
+     .subscribe(
+       data => {
+         if(data.obj !=null) {
+          this.lstRtnDetails = data.obj;
+          console.log(this.lstRtnDetails);
+            } else {alert ("No Line Items Found in this PO Receipt.");}
+            
+        } );    
+        
+      }
 
 
 }

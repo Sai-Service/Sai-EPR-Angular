@@ -174,6 +174,11 @@
                             <a class="dropdown-item" data-toggle="collapse" href="#panelgstsaiDebtors" role="tab"
                                 (click)="reportDetails('gstsaiDebtors')">Spares Debtor Report</a>
                         </li>
+
+                        <li>
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelgstsaiDebtors" role="tab"
+                                (click)="reportDetails('gstSprAgingSummary')">Spares Debtors Aging Report Summary</a>
+                        </li>
                         <li>
                             <a class="dropdown-item" data-toggle="collapse" href="#panelsparesMiscIssueReceipt" role="tab"
                                 (click)="reportDetails('gstChequeBounceReport')">Cheque Bounce Report</a>
@@ -466,18 +471,11 @@
 
 
     <table class="center" [style.display]="isVisiblegstsaiDebtors ? 'block' : 'none'" class="collapse"
-    style="margin-left: 20%;" id="panelgstsaiDebtors">
-    <!-- <tr>
-        <td>
-            <table class="center">
-                <tr>
-                    <td colspan="4" class="LabelFontStyle" style="width: 100%;">
-                        {{reportName}}
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr> -->
+     id="panelgstsaiDebtors">
+
+    <!-- <table class="center" [style.display]="isVisiblegstsaiDebtors ? 'block' : 'none'" class="collapse"
+    style="margin-left: 20%;" id="panelgstsaiDebtors"> -->
+   
     <table class="center">
         <tr>
           <td class="LabelFontStyle" style="font-size:large ;font-weight:bold ;" >{{reportName}}</td>
@@ -783,6 +781,7 @@ id="panelStockLedger">
                                 <td class="LabelFontStyle" style="color: blue;">&nbsp;{{this.dataDisplay}}&nbsp; </td>
                             </tr>
                         </table>
+
                           <table class="center" >
                           <!-- style="width: 100%;margin-left: 50%;"> -->
                               <tr>
@@ -1221,7 +1220,9 @@ style="margin-left: 10%;" id="panelsparesInventoryAging">
                                 <td class="LabelFontStyle" style="color: blue;">&nbsp;{{this.dataDisplay}}&nbsp; </td>
                             </tr>
                         </table>
-                          <table class="center" style="width: 100%;margin-left: 50%;">
+
+                          <table class="center" >
+                          <!-- style="width: 100%;margin-left: 50%;"> -->
                               <tr>
                                 <td>
                                     <button class="btn-primary" [disabled]="isDisabled1" (click)="reportParameter(reportName)">View
