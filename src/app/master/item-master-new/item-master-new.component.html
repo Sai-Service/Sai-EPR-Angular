@@ -2,7 +2,7 @@
     <table style="width: 100%;background-color: white;">
         <tr>
             <td class="PageHeader">
-                &nbsp;&nbsp;Item&nbsp;Master
+                &nbsp;&nbsp;ITEM&nbsp;MASTER
             </td>
             <td>
                 <table style="width: 100%; background-color: #FFE4B5;" class="center">
@@ -560,7 +560,7 @@
                                 <td>
                                     <div *ngIf="displaytaxCategoryListPSAndCGST; then thentaxCategoryListPSAndCGST; else elsetaxCategoryListPSAndCGST"></div>
                                     <ng-template #thentaxCategoryListPSAndCGST>
-                                        <select formControlName="taxCategoryPur" id="taxCategoryPur" class="form-control" style="background-color: yellow;">
+                                        <select formControlName="taxCategoryPur" id="taxCategoryPur" [(ngModel)]="taxCategoryPur" class="form-control" style="background-color: yellow;">
                                             <option>--Select--</option>
                                             <option *ngFor="let sc of  taxCategoryListPSAndCGST" [ngValue]="sc.taxCategoryId">
                                                 {{sc.taxCategoryName}}
@@ -568,7 +568,7 @@
                                         </select>
                                     </ng-template>
                                     <ng-template #elsetaxCategoryListPSAndCGST>
-                                        <input disabled type="text" formControlName="taxCategoryPurIGSTNm" class="form-control" value={{taxCategoryPurIGSTNm}}>
+                                        <input disabled type="text" formControlName="taxCategoryPurIGSTNm" [(ngModel)]="taxCategoryPurIGSTNm"   class="form-control" value={{taxCategoryPurIGSTNm}}>
                                         <input disabled  hidden type="number" formControlName="taxCategoryPurIGST" class="form-control" value={{taxCategoryPurIGST}}>
                                     </ng-template>
                                 </td>

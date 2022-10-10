@@ -7,7 +7,7 @@ import { OrderManagementService } from 'src/app/order-management/order-managemen
 import { DatePipe } from '@angular/common';
 import { IFinanaceExchangeForm } from 'src/app/order-management/sales-order-form/sales-order-form.component';
 
-interface IjobCard {}
+interface IPaintIssue {}
 
 
 @Component({
