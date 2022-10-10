@@ -12,11 +12,12 @@ import { SidebarModule } from "ng-sidebar";
 import { AuthModule } from './auth/auth.module';
 import { AdminModule } from './admin/admin.module';
 import { MasterModule} from './master/master.module';
-import {TransactionModule } from './transaction/transaction.module';
+import { TransactionModule } from './transaction/transaction.module';
 import { BankModule} from './bank/bank.module';
 import { OrderManagementModule} from './order-management/order-management.module';
 import { ServiceModule } from './service/service.module';
-import{faMasterModule} from './fixed-asset/famaster.module';
+import { faMasterModule} from './fixed-asset/famaster.module';
+import { PaintModule} from './paint/paint.module';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -46,6 +47,7 @@ import { AllReportsComponent } from './report/all-reports.component';
     PoReceiptFormComponent,
     FaCommanMasterComponent,
     AllReportsComponent,
+    
    
   
     // CounterSaleReturnComponent,
@@ -75,6 +77,7 @@ import { AllReportsComponent } from './report/all-reports.component';
     OrderManagementModule,
     ServiceModule,
     faMasterModule,
+    PaintModule,
     // NgxSpinnerModule
   ],
   providers: [
