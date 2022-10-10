@@ -1511,9 +1511,10 @@ export class SalesReportsComponent implements OnInit {
         const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
         // var departId=this.DepartmentList.filter(d=>d.code== this.locCode)
         // alert(deptId+this.locCode);
+        var locaId=this.salesReportForm.get('locId').value;
         if (Number(sessionStorage.getItem('deptId'))==4){
         // this.reportService.sppurRegidetailReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
-        this.reportService.sppurRegidetailReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), deptId)
+        this.reportService.sppurRegidetailReport(fromDate, toDate, sessionStorage.getItem('ouId'), locaId, deptId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.dataDisplay = ''
