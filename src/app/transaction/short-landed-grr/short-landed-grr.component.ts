@@ -958,6 +958,10 @@ export class ShortLandedGrrComponent implements OnInit {
 
 
   printDocShortClaim(){
+
+    alert ("Not Implemented ... Wip");
+
+    return;
     var mRtnRcptNumber=this.shortLandGrrForm.get('debitNoteNo').value
     const fileName = 'download.pdf';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
