@@ -1191,6 +1191,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
           return;
         }
       }
+      // this.updateTotAmtPerline(k);//added by vinita
     }
     var totAmt = this.CounterSaleOrderBookingForm.get('totAmt').value;
     var crdAmt = this.CounterSaleOrderBookingForm.get('creditAmt').value;
@@ -2903,6 +2904,12 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     //   this.isDisabled10 = false;
     // }
     // }
+    // debugger;
+    // let taxMapData :any  =this.taxMap.get(lineIndex);
+    // for(var i=0 ; i<taxMapData.length;i++){
+
+    // }
+    
   }
 
 
