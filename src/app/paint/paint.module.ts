@@ -6,10 +6,11 @@ import { NgxDateRangeModule } from 'ngx-daterange';
 import { PaintRoutingModule } from './paint-routing.module';
 import { PaintIssueDpComponent } from './paint-issue-dp/paint-issue-dp.component';
 import { PaintCreationComponent } from './paint-creation/paint-creation.component';
+import { PaintMixingMasterComponent } from './paint-mixing-master/paint-mixing-master.component';
 
 
 @NgModule({
-  declarations: [PaintIssueDpComponent, PaintCreationComponent],
+  declarations: [PaintIssueDpComponent, PaintCreationComponent, PaintMixingMasterComponent],
   imports: [
     CommonModule,
     PaintRoutingModule,
