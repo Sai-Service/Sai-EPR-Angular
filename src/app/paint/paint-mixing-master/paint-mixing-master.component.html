@@ -1,0 +1,151 @@
+<div class="center">
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <td class="PageHeader"> &nbsp;PAINT&nbsp;MIXING&nbsp;MASTER</td>
+        </tr>
+    </table>
+
+    <div class="center" style="width: 100%;">
+        <div class="form-bg">
+            <div class="center" style="width: 100%;">
+              <form [formGroup]="paintMixingMasterForm" (ngSubmit)="paintMixingMaster(paintMixingMasterForm.value)">
+                   
+        <fieldset class="RFS">
+        <table class="center">
+    
+          
+                <tr>
+  
+                <input type="number" formControlName="itemId" [(ngModel)]="itemId" hidden>
+                <input type="number" formControlName="relatedItemId" [(ngModel)]="relatedItemId" hidden>
+               
+                <td style="width: 15%" class="LabelFontStyle">Item&nbsp;Code:</td>
+                <td><input type="text" class="form-control" formControlName="itemCode" [(ngModel)]="itemCode" (change)="Validateitem(itemCode)"   ></td>
+    
+                <td style="width: 15%" class="LabelFontStyle">Item&nbsp;Description:</td>
+                <td><input type="text" class="form-control" formControlName="description" [(ngModel)]="description" disabled style="width:350px ;"></td>
+               </tr>
+               <tr>
+                <td style="width: 15%" class="LabelFontStyle">UOM:</td>
+                <td><input type="text" class="form-control" formControlName="uom" [(ngModel)]="uom" disabled></td>
+          
+                <td style="width: 15%" class="LabelFontStyle">Category:</td>
+                <td><input type="text" class="form-control" formControlName="itemCategory" [(ngModel)]="itemCategory" disabled style="width:350px ;"></td>
+           
+               
+               </tr>
+            <tr>
+               
+                <td style="width: 15%" class="LabelFontStyle">Related&nbsp;Item&nbsp;Code:</td>
+                <td><input type="text" class="form-control" formControlName="relItemCode" [(ngModel)]="relItemCode" (change)="Validateitem1(relItemCode)"></td>
+                <td style="width: 15%" class="LabelFontStyle">Description</td>
+                <td><input type="text" class="form-control" formControlName="relDescription" [(ngModel)]="relDescription" disabled style="width:350px ;"></td>
+            </tr>
+        </table>
+        </fieldset>
+        
+        
+        
+        <br>
+        <table class="center">
+            <tr>
+                <div *ngIf="saveButton; then Block11; else Block12"></div>
+                <ng-template #Block11>
+                    <td> <button type="button" class="btn btn-info" id="sveBtn" (click)="newMast()">Save</button></td>
+                </ng-template><ng-template #Block12></ng-template>
+                
+                <div *ngIf="cancelButton; then Block21; else Block22"></div>
+                <ng-template #Block21>
+                    <td> <button type="button" class="btn btn-info" id="register" (click)="deleteRelation()">Cancel</button></td>
+                </ng-template><ng-template #Block22></ng-template>
+
+                <td> <button type="button" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>
+                <td> <button type="button" class="btn btn-info" id="register" (click)="closeMast()">Close</button></td>
+            </tr>
+        </table>
+
+        <br>
+        <fieldset class="RFS">
+            <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">SEARCH</legend>
+            <table class="center" style="width: 100%;background-color: #FFE4B5;">
+                <tr>
+                <td >
+                    <table class="center">
+                        <tr>
+                            <td  style="background-color: #FFE4B5;">&nbsp;Item&nbsp;Code&nbsp;:&nbsp;</td>
+                            
+                            <td style="background-color: #FFE4B5;">
+                                <input type="text" class="form-control" formControlName="itemCode1" [(ngModel)]='itemCode1'  
+                                    value={{itemCode1}} placeholder="Enter Main Item Code">
+                            </td>
+        
+                            <td style="background-color: #FFE4B5;">
+                                <button type="button" class="btn-primary" (click)="serchByItem(itemCode1)"><i class="fa fa-search"
+                                        aria-hidden="true"></i></button>
+                            </td>
+
+
+                              <!-- ------------Spinner---------------------- -->
+                              <div *ngIf="spinIcon; then hList1; else hList2"></div>
+                              <ng-template #hList2>
+                              <div class="d-flex justify-content-center">
+                                  <div class="spinner-border text-primary" role="status">
+                                  <span class="sr-only" id="loading"></span>
+                                  </div>
+                              </div>
+                              </ng-template>
+                              <ng-template #hList1></ng-template>
+                              <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">
+                              &nbsp;{{this.dataDisplay}}&nbsp; </td>
+                               <!-- ------------Spinner---------------------- -->
+        
+                        </tr>
+                    </table>
+                </td>
+                </tr>
+            </table>
+    
+            
+            </fieldset>
+     
+    
+    <!-- <br> -->
+
+
+
+    <div class="grid_scroll">
+    <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ct100_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+    <tbody>
+        <tr class="GridHeader">
+            <th scope="col" style="width: 3rem;">Sr. No.</th>
+            <th scope="col" style="width: 3rem;">Part Number</th>
+            <th scope="col" style="width: 5rem;">Part Description</th> 
+            <th scope="col" style="width: 5rem;">UOM</th>
+            <th scope="col" style="width: 3rem;">Related Part Number</th> 
+            <th scope="col" style="width: 8rem; ">Description</th>               
+            <th scope="col" style="width: 4rem;">Select</th>                
+        </tr>
+        </tbody>
+        <tr *ngFor="let com of abc let k = index" class="ItemStyle" style="text-decoration:none;font-size:small;">
+            <td style="width: 4rem; text-align: center;">{{k+1}}</td>
+            <td style="text-align:center;">{{com.itemCode }}</td> 
+            <td style="width: 4rem; text-align: center;">{{com.description}}</td>
+            <td style="text-align: center;">{{com.uom}}</td> 
+            <td style="text-align: center;">{{com.relItemCode}}</td>
+            <td style="width: 4rem; text-align: center;">{{com.relDescription}}</td>         
+            <td style="text-align: center;"><button class="btn btn-info Saibtn-secondary" (click)="Select(com.relatedItemId)">Select</button></td>
+        </tr>
+    </table>
+    </div>
+    
+
+
+</form>
+</div>
+</div>
+</div>
+</div>
+
+
+    
+    
