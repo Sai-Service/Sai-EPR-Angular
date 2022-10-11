@@ -150,7 +150,6 @@
           <li><a class="dropdown-item" [routerLink]="['/admin/service/ServiceGatepass']">Gate Pass</a></li>
           <li><a class="dropdown-item" [routerLink]="['/admin/master/WsVehicleMaster']">Vehicle Master WS</a></li>
           <li><a class="dropdown-item" [routerLink]="['/admin/service/laborList']">Labor List</a></li>
-       
         </ul>
       </li>
     </div>
@@ -351,6 +350,9 @@
   <li><a class="dropdown-item" [routerLink]="['/admin/transaction/glTrialBalance']">GL Trial Balance</a> </li>
     <!-- </li> -->
   </div>
+
+
+
   <div [style.display]="isVisibleMaster ? 'block' : 'none'">
     <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle " id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
@@ -430,6 +432,22 @@
       </ul>
     </li>
   </div>
+
+  <div [style.display]="isVisibleMaster ? 'block' : 'none'">
+    <li class="nav-item dropdown">
+     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+       aria-haspopup="true" aria-expanded="false">
+       Paint Management
+     </a>
+       <ul class="dropdown-menu">
+         <!-- <li><a class="dropdown-item" [routerLink]="['/admin/service/JobcardOpening']">JobCard Opening</a></li> -->
+         <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintIssueDp']">Paint Issue(dp)</a></li>
+         <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintCreation']">Paint Mixing(dp)</a></li>
+
+       </ul>
+     </li>
+   </div>
+
     <!-- <li class="nav-item-dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
         aria-haspopup="true" aria-expanded="false">

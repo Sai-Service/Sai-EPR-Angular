@@ -1,5 +1,6 @@
 import { Component, NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+
 import { MiscellaneousTransactionComponent } from './miscellaneous-transaction/miscellaneous-transaction.component';
 import { MoveOrderComponent } from './move-order/move-order.component';
 import { PoInvoiceComponent } from './po-invoice/po-invoice.component';
@@ -126,4 +127,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
+
 export class TransactionRoutingModule { }
