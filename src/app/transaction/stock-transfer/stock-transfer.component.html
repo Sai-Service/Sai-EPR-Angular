@@ -160,6 +160,13 @@
                         <th scope="col">Srl&nbsp;No.&nbsp;</th>
                         <th scope="col">Item&nbsp;Code&nbsp;</th>
                         <th scope="col" style="border-top: none;border-bottom: none;margin-top: 5px;border-color: white;"  [style.display]="isVisibleVinNumber ? 'block' : 'none'">Vin&nbsp;Number&nbsp;</th>
+                        <div *ngIf="displayheader; then thendispheader; else elseBlockheader"> </div>
+                        <ng-template #thendispheader>
+                          <th scope="col">Engine&nbsp;Number&nbsp;</th>
+                        </ng-template>
+                        <ng-template #elseBlockheader>
+                        <!-- <th scope="col">Engine&nbsp;Number&nbsp;</th> -->
+                      </ng-template>
                         <th scope="col">Item&nbsp;Description&nbsp;</th>
                         <th scope="col">UOM</th>
                         <!-- <th scope="col">Subinventory</th> -->
@@ -196,6 +203,12 @@
                  <input hidden formControlName="itemId">
                 </td>
                 <td [style.display]="isVisibleVinNumber ? 'block' : 'none'"><input disabled type="text" class="form-control" style="height: 20px;width: 100%;"formControlName="vin"></td>
+                <div *ngIf="displayline; then thendispline; else elseBlockline"> </div>
+                <ng-template #thendispline>
+                <td><input disabled type="text" class="form-control" style="height: 20px;width: 100%;"formControlName="engineNo"></td>
+                </ng-template>
+                <ng-template #elseBlockline>
+                </ng-template>
                 <td><input disabled type="text" class="form-control" style="height: 20px;width: 100%;"formControlName="description"></td>
                 <td><input disabled type="text" class="form-control" style="height: 20px;width: 100%;" formControlName="uom" ></td>
 
@@ -245,6 +258,7 @@
                <td><input disabled type="text"  class="form-control" style="height: 20px;" formControlName="segment">
                </td>
                <td [style.display]="isVisibleVinNumber ? 'block' : 'none'"><input disabled type="text" class="form-control" style="height: 20px;" formControlName="vin"></td>
+               <td [style.display]="isVisibleEngNumber ? 'block' : 'none'"><input disabled type="text" class="form-control" style="height: 20px;width: 100%;"formControlName="engineNo"></td>
                <td><input disabled type="text" class="form-control" style="height: 20px;" formControlName="description"></td>
                <td><input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="uom" ></td>
                <td><input disabled type="number" class="form-control" style="height: 20px;width: 70px; text-align: right;" formControlName="transCost" value="{{ transCost | number:'1.2-2' }}"></td>

@@ -116,6 +116,7 @@ export class StockTransferComponent implements OnInit {
   remarks: string;
   segment: string;
   vin:string;
+  engineNo:number;
   locator: string;
   transCost:number;
   lineNumber:number;
@@ -134,6 +135,9 @@ export class StockTransferComponent implements OnInit {
   totVal:number;
   transferSubInv:string;
   isVisibleVinNumber:boolean=false;
+  isVisibleEngNumber:boolean=false;
+  displayheader:boolean=false;
+  displayline:boolean=false;
   // public itemMap3 = new Map<string, StockTransferRow>();
 
 
@@ -219,6 +223,7 @@ export class StockTransferComponent implements OnInit {
       locatorId: [''],
       segment: [''],
       vin:[''],
+      engineNo:[''],
       locator: [''],
       transCost: [],
       avlqty:[''],
@@ -330,9 +335,14 @@ export class StockTransferComponent implements OnInit {
 
     if (Number(sessionStorage.getItem('deptId'))==1){
       this.isVisibleVinNumber=true;
+      this.displayheader=true;
+      this.displayline=true
     }
+
     else{
       this.isVisibleVinNumber=false;
+      this.displayheader=false;
+      this.displayline=false;
     }
 
     this.service.searchall(this.locId,this.divisionId,this.deptId).subscribe(
@@ -434,8 +444,10 @@ export class StockTransferComponent implements OnInit {
   //  trxLnArr1.controls[i].patchValue({itemId:select1.itemId})
     var itemId =select1.itemId;
     var vin=select1.vin;
+    var eng=select1.engineNo;
     trxLnArr1.controls[i].patchValue({itemId:itemId});
     trxLnArr1.controls[i].patchValue({vin:vin});
+    trxLnArr1.controls[i].patchValue({engineNo:eng});
   //  alert( itemId);
         // trxLnArr1.controls[i].patchValue({locatorId:this.getfrmSubLoc.locatorId})
     this.service.getItemDetail(select1.itemId).subscribe 
