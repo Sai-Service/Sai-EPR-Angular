@@ -1539,10 +1539,13 @@ export class SalesOrderFormComponent implements OnInit {
                 this.isVisible2 = true;
               }
             }
+        
             if (Number(sessionStorage.getItem('deptId')) == 4) {
-              if (data.obj.orderStatus != 'INVOICED') {
+              if (data.obj.orderStatus != 'INVOICED'&& data.obj.flowStatusCode !='CANCELLED')
+                {
                 this.isVisiblecancelledSalesOrder = true;
               }
+
             }
             if (data.obj.flowStatusCode === 'CLOSED') {
               this.isVisible2 = false;
