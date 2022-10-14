@@ -895,6 +895,24 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepaneltolocation=false;
 
     }
+    else if (reportName === 'pendBookingChetakLy') {
+      this.reportName = 'Chetak Pending Booking-Last Year'
+      this.isVisibleVehicleSaleRegister = false;
+      this.isVisibleSaleIND = false;
+      this.isSaleClosingStock = true;
+      this.isVisiblefromtolocationdepartment = false;
+      this.isVisiblestockTransfer=false;
+      this.isVisiblefromtoloccustaccno=false;
+      this.isVisibleSalesInventoryAging=false;
+      this.isVisiblepanelfromtolocation=false;
+      this.isVisiblepanelreceiptNo=false;
+      this.isVisiblepanelSalesAddonReconciliation=false;
+      this.isVisiblefromtosubinventory=false;
+      this.panelamcHistrory=false;
+      this.ispanelTolocationOu=false;
+      this.isVisiblepaneltolocation=false;
+
+    }
 
 
   }
@@ -1005,6 +1023,7 @@ export class SalesReportsComponent implements OnInit {
           })
       }
     }
+
     else if (reportName === 'Vehicle Closing Stock') {
       const fileName = 'Vehicle Closing Stock-' + sessionStorage.getItem('locName').trim() + '-' + '-TO-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
@@ -1027,6 +1046,7 @@ export class SalesReportsComponent implements OnInit {
           })
       }
     }
+
     else if (reportName === 'GST Sales Register') {
       const fileName = 'GST Sales Register-' + sessionStorage.getItem('locName').trim() + '-' + '-TO-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
@@ -1657,6 +1677,28 @@ export class SalesReportsComponent implements OnInit {
             this.closeResetButton = true;
             this.dataDisplay = ''
           })
+        }
+      }
+      else if (reportName === 'Chetak Pending Booking-Last Year') {
+        const fileName = 'Chetak Pending Booking-LastYear-' + sessionStorage.getItem('locName').trim() + '-' + '-TO-' + '.xls';
+        const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+        if (Number(sessionStorage.getItem('deptId')) === 4) {
+          this.reportService.ChetakPendingBookingLastYear(sessionStorage.getItem('ouId'))
+            .subscribe(data => {
+              saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+              this.dataDisplay = ''
+              this.closeResetButton = true;
+              this.isDisabled1 = false;
+            })
+        }
+        else if (Number(sessionStorage.getItem('deptId')) != 4) {
+          this.reportService.ChetakPendingBookingLastYear(sessionStorage.getItem('ouId'))
+            .subscribe(data => {
+              saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+              this.dataDisplay = ''
+              this.closeResetButton = true;
+              this.isDisabled1 = false;
+            })
         }
       }
 

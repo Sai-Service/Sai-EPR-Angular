@@ -163,6 +163,11 @@
                                 (click)="reportDetails('salesRtoRegister')">Sales RTO Register</a>
                         </li>
 
+                        <li>
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelSaleClosingStock" role="tab"
+                                (click)="reportDetails('pendBookingChetakLy')">Chetak Pending Booking-Last Year</a>
+                        </li>
+
                     </ul>
                 </li>
 
@@ -467,7 +472,7 @@
 
 
         <table class="center" [style.display]="isSaleClosingStock ? 'block' : 'none'" class="collapse"
-            style="margin-left: 20%;" id="panelSaleClosingStock">
+            style="margin-left: 10%;" id="panelSaleClosingStock">
             <!-- <tr>
                 <td>
                     <table class="center">
@@ -506,7 +511,7 @@
                                 <table class="center">
                                     <tr>
                                         <td colspan="4"> -->
-                                            <table class="center" style="width: 100%;">
+                                            <table class="center" >
                                                 <tr>
                                                     <div *ngIf="closeResetButton; then hList1; else hList2"></div>
                                                     <ng-template #hList2>

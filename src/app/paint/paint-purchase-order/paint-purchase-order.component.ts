@@ -1170,7 +1170,7 @@ export class PaintPurchaseOrderComponent implements OnInit {
    );
    // this.displayPoLine[aa] = true;
    this.displayPoLine.push(true);
-   this.hideArray[index] = true;
+  //  this.hideArray[index] = true;   // commented by rk 14.10.22
    // debugger;
    var lineNum=(index-1);
    this.displayTaxCategotySelect[lineNum]=false;
@@ -1876,8 +1876,11 @@ export class PaintPurchaseOrderComponent implements OnInit {
 
  onOptioninvItemIdSelected(x,index) {
 
+  // debugger;
+  alert ("x,index :" +x +","+index);
   var paintLineArr = this.paintPoForm.get('poLines').value;
-  var patch = this.paintPoForm.get('poLines') as FormArray;
+  // var patch = this.paintPoForm.get('poLines') as FormArray;
+  alert ("item code : "+ paintLineArr[index].segment);
 
   var itemCode = paintLineArr[index].segment;
   alert (index + " , "+ itemCode);
