@@ -2030,6 +2030,10 @@ export class MasterService {
     return this.http.get(this.ServerUrl + `/itemMst/itemName/${itmCode}`);
   }
 
+  getItemDetailsByCodeNew(itmCode): Observable<any> {
+    return this.http.get(this.ServerUrl + `/itemMst/itemName1/${itmCode}`);
+  }
+
 
   getDealerAMCLabStatus(regNo, labCode): Observable<any> {
     return this.http.get(this.ServerUrl + `/jobCard/amcLabValidation?regNo=${regNo}&labCode=${labCode}`);

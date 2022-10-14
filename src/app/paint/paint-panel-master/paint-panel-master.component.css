@@ -1,5 +1,9 @@
+/* td{
+    padding: 6px;
+  } */
 
-.centerModal1 {
+  
+  .centerModal1 {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -14,20 +18,6 @@
   transform: translate(-50%, -50%);
   }
   
-  .auto-style4
-  {
-      color:#333333;
-      font-family:Verdana;
-      font-size:small;
-      height:16px;
-      width: 100%;
-      text-align: left; 
-      margin-right:0px; 
-      margin-left: 0px;
-      border-color: #35357c;
-      border-style: ridge;
-  
-  }
   
   .grid_scroll_1
   {
@@ -38,13 +28,14 @@
   
   }
   
-   .form-control {
+  
+    .form-control {
       font-family: Verdana,Sans-serif, Arial, Helvetica;
       font-size: 12px;
       outline: medium none;
       padding: 3px;
       vertical-align: top;
-      width: 180px;
+      width: 200px;
       height: 100%;
       border-color: gray;
      /* box-shadow: 5px 5px 8px rgb(13, 13, 19); */
@@ -99,10 +90,25 @@
       overflow: auto;
       /* width: 800px; */
       width: 100%;
-      height: 250px;
+      height: 300px;
       width: 100%;
   }
   
+  
+  .auto-style4
+  {
+      color:#333333;
+      font-family:Verdana;
+      font-size:small;
+      height:16px;
+      width: 100%;
+      text-align: left; 
+      margin-right:0px; 
+      margin-left: 0px;
+      border-color: #35357c;
+      border-style: ridge;
+  
+  }
   .grid_scroll_3{
     overflow: auto;
     /* width: 800px; */
@@ -231,3 +237,4 @@
     }
   
    
+    

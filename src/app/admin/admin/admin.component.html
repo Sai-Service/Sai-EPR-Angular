@@ -433,7 +433,7 @@
     </li>
   </div>
 
-  <div [style.display]="isVisibleMaster ? 'block' : 'none'">
+  <div [style.display]="isVisibilePaintSystem ? 'block' : 'none'">
     <li class="nav-item dropdown">
      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
        aria-haspopup="true" aria-expanded="false">
@@ -443,10 +443,12 @@
          <!-- <li><a class="dropdown-item" [routerLink]="['/admin/service/JobcardOpening']">JobCard Opening</a></li> -->
          <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintIssueDp']">Paint Issue(dp)</a></li>
          <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintCreation']">Paint Mixing(dp)</a></li>
+         <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintPurchaseOrder']">Paint Purchase Order</a></li>
+         <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintPoReceipt']">Paint PO Receipt</a></li>
          <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintMixingMaster']">Paint Mixing Master</a></li>
-
-
-         
+         <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintPanelMaster']">Paint Panel Master</a></li>
+         <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintItemMaster']">Paint Item Master</a></li>
+        
        </ul>
      </li>
    </div>

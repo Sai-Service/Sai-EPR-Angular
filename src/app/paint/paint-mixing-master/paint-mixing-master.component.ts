@@ -225,7 +225,11 @@ export class PaintMixingMasterComponent implements OnInit {
     if(mainItemId>0) {
     this.service.getRelatedItem(mainItemId).subscribe(data =>{
       this.abc = data;
+      // alert ("this.abc :"+this.abc + " ," +this.abc.length);
+      if(this.abc.length==0) { alert ("No Record(s) Found...");return;}
+
       console.log(this.abc)
+      
     })
     this.spinIcon=true;this.dataDisplay='';
 

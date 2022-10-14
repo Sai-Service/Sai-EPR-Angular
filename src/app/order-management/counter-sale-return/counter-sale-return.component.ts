@@ -223,11 +223,6 @@ export class CounterSaleReturnComponent implements OnInit {
       runningTotalCr: [],
       runningTotalDr:[],
     
-
-
-
-
-
       rtnFromDate:[],
       rtnToDate:[],
       searchCntrSaleOrderNo:['',Validators.pattern('[0-9]*')],

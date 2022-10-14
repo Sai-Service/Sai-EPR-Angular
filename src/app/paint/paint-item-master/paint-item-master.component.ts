@@ -6,10 +6,10 @@ import { Router } from '@angular/router';
 import { Validators, FormArray } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
-import { MasterService } from '../master.service';
+import { MasterService } from 'src/app/master/master.service';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 
-interface IItemMaster {
+interface IPaintItemMaster {
   segment: string;
   oemWarrentyEndDate: Date;
   description: string;
@@ -78,16 +78,19 @@ interface IItemMaster {
   taxCategorySale: number;
   taxCategoryPurIGST: number;
   taxCategorySaleIGST: number;
+  attribute10:string;
 }
 
+
+
 @Component({
-  selector: 'app-item-master-new',
-  templateUrl: './item-master-new.component.html',
-  styleUrls: ['./item-master-new.component.css']
+  selector: 'app-paint-item-master',
+  templateUrl: './paint-item-master.component.html',
+  styleUrls: ['./paint-item-master.component.css']
 })
-export class ItemMasterNewComponent implements OnInit {
-  itemMasterForm: FormGroup;
-  
+export class PaintItemMasterComponent implements OnInit {
+  paintItemMasterForm: FormGroup;
+
   segmentName: string;
   segment1: string;
   lstcomments: any[];
@@ -216,6 +219,7 @@ export class ItemMasterNewComponent implements OnInit {
   marginCategory: string;
   materialType: string;
   lotSize: string;
+  attribute10:string;
   dispupdate: boolean = true;
   public taxCategoryDataList: Array<string> = [];
   displaytaxCategoryListPSAndCGST = true;
@@ -229,7 +233,7 @@ export class ItemMasterNewComponent implements OnInit {
 
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService) {
-    this.itemMasterForm = fb.group({
+    this.paintItemMasterForm = fb.group({
       segmentName: [],
       taxCategoryPurNm: [],
       taxCategorySaleIGSTNm: [],
@@ -311,6 +315,7 @@ export class ItemMasterNewComponent implements OnInit {
       materialType: [],
       lotSize: [],
       taxCategoryPurIGSTNm: [],
+      attribute10:[],
     })
   }
 
@@ -382,10 +387,10 @@ export class ItemMasterNewComponent implements OnInit {
     this.status = 'Active';
   }
 
-  get f() { return this.itemMasterForm.controls; }
+  get f() { return this.paintItemMasterForm.controls; }
 
 
-  itemMaster(itemMaster: any) {
+  paintItemMaster(paintItemMasterForm: any) {
   }
 
 
@@ -397,7 +402,7 @@ export class ItemMasterNewComponent implements OnInit {
           this.lstcomments = data;
           this.displayActiveHeader = false;
           this.taxCategoryDataList = data.taxCategoryNameList;
-          this.itemMasterForm.patchValue(this.lstcomments);
+          this.paintItemMasterForm.patchValue(this.lstcomments);
           let selloc = sessionStorage.getItem('locCode');
           this.segmentName = selloc + '.'
             + this.costCenter + '.'
@@ -416,8 +421,8 @@ export class ItemMasterNewComponent implements OnInit {
           else {
             this.displayisTaxable = true;
           }
-          this.itemMasterForm.get('costCenter').disable();
-          this.itemMasterForm.get('poChargeAccount').disable();
+          this.paintItemMasterForm.get('costCenter').disable();
+          this.paintItemMasterForm.get('poChargeAccount').disable();
           // alert(data.taxCategoryNameList);
           this.onHsnCodeSelectedSearch(data.hsnSacCode);
           if (data.stockable === 'Y') {
@@ -440,7 +445,7 @@ export class ItemMasterNewComponent implements OnInit {
                 }
               else  if (this.hsnSacCodeDet.length==1){
                 this.displayGSTPer=true;
-                this.itemMasterForm.patchValue(this.hsnSacCodeDet[0].gstPercentage);
+                this.paintItemMasterForm.patchValue(this.hsnSacCodeDet[0].gstPercentage);
                 this.hsnGstPer = this.hsnSacCodeDet[0].gstPercentage;
                 this.service.taxCategoryListHSN(this.hsnGstPer, 'SALES')
                   .subscribe(data1 => {
@@ -589,8 +594,8 @@ export class ItemMasterNewComponent implements OnInit {
     }
 
 
-    this.itemMasterForm.get('hsnGstPer').reset();
-    this.itemMasterForm.get('hsnSacCode').reset();
+    this.paintItemMasterForm.get('hsnGstPer').reset();
+    this.paintItemMasterForm.get('hsnSacCode').reset();
     this.taxCategoryListS = null;
     this.taxCategoryListP = null;
     this.taxCategoryListPIGST = null;
@@ -608,7 +613,7 @@ export class ItemMasterNewComponent implements OnInit {
             // this.hsnSacCodeList = data;
             this.hsnSacCodeDet = data;
             console.log(this.hsnSacCodeDet);
-            this.itemMasterForm.patchValue(this.hsnSacCodeDet[0].gstPercentage);
+            this.paintItemMasterForm.patchValue(this.hsnSacCodeDet[0].gstPercentage);
             this.hsnGstPer = this.hsnSacCodeDet[0].gstPercentage;
             // alert(this.hsnGstPer);
             this.service.taxCategoryListHSN(this.hsnGstPer, 'SALES')
@@ -675,7 +680,7 @@ export class ItemMasterNewComponent implements OnInit {
             }
           else  if (this.hsnSacCodeDet.length==1){
             this.displayGSTPer=true;
-            this.itemMasterForm.patchValue(this.hsnSacCodeDet[0].gstPercentage);
+            this.paintItemMasterForm.patchValue(this.hsnSacCodeDet[0].gstPercentage);
             this.hsnGstPer = this.hsnSacCodeDet[0].gstPercentage;
             this.service.taxCategoryListHSN(this.hsnGstPer, 'SALES')
               .subscribe(data1 => {
@@ -767,7 +772,7 @@ export class ItemMasterNewComponent implements OnInit {
   }
 
   onOptionsSelected(event: any) {
-    this.Status1 = this.itemMasterForm.get('status').value;
+    this.Status1 = this.paintItemMasterForm.get('status').value;
     if (this.Status1 === 'Inactive') {
       this.displayInactive = false;
       this.endDate = new Date();
@@ -811,17 +816,17 @@ export class ItemMasterNewComponent implements OnInit {
 
 
   openCodeComb() {
-    let segmentName1 = this.itemMasterForm.get('segmentName').value;
+    let segmentName1 = this.paintItemMasterForm.get('segmentName').value;
     if (segmentName1 === null) {
-      this.itemMasterForm.get('segment11').reset();
-      this.itemMasterForm.get('segment2').reset();
-      this.itemMasterForm.get('segment3').reset();
-      this.itemMasterForm.get('segment4').reset();
-      this.itemMasterForm.get('lookupValueDesc1').reset();
-      this.itemMasterForm.get('lookupValueDesc2').reset();
-      this.itemMasterForm.get('lookupValueDesc3').reset();
-      this.itemMasterForm.get('lookupValueDesc4').reset();
-      this.itemMasterForm.get('lookupValueDesc5').reset();
+      this.paintItemMasterForm.get('segment11').reset();
+      this.paintItemMasterForm.get('segment2').reset();
+      this.paintItemMasterForm.get('segment3').reset();
+      this.paintItemMasterForm.get('segment4').reset();
+      this.paintItemMasterForm.get('lookupValueDesc1').reset();
+      this.paintItemMasterForm.get('lookupValueDesc2').reset();
+      this.paintItemMasterForm.get('lookupValueDesc3').reset();
+      this.paintItemMasterForm.get('lookupValueDesc4').reset();
+      this.paintItemMasterForm.get('lookupValueDesc5').reset();
     }
     if (segmentName1 != null) {
       var temp = segmentName1.split('.');
@@ -863,11 +868,11 @@ export class ItemMasterNewComponent implements OnInit {
   onKey(event: any) {
     if (Number(sessionStorage.getItem('divisionId')) === 1) {
       const aaa = 'MV' + this.variantCode + '-' + this.colorCode + '-' + this.chassisNo;
-      this.itemMasterForm.patchValue({ segment: aaa })
+      this.paintItemMasterForm.patchValue({ segment: aaa })
     }
     else if (Number(sessionStorage.getItem('divisionId')) === 2) {
       const aaa = 'BV' + this.variantCode + '-' + this.colorCode + '-' + this.chassisNo;
-      this.itemMasterForm.patchValue({ segment: aaa })
+      this.paintItemMasterForm.patchValue({ segment: aaa })
     }
   }
 
@@ -956,7 +961,7 @@ export class ItemMasterNewComponent implements OnInit {
     if (msgType.includes("Save")) {
       this.submitted = true;
       (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
-      // if (this.itemMasterForm.invalid) {
+      // if (this.paintItemMasterForm.invalid) {
       //   alert('Some fields validation error (D)');
       //   (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '');
       //   return;
@@ -968,7 +973,7 @@ export class ItemMasterNewComponent implements OnInit {
     if (msgType.includes("Update")) {
       this.submitted = true;
       (document.getElementById('updateBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
-      if (this.itemMasterForm.invalid) {
+      if (this.paintItemMasterForm.invalid) {
         alert('Some fields validation error (D)');
         //this.submitted = false;
         (document.getElementById('updateBtn') as HTMLInputElement).setAttribute('data-target', '');
@@ -999,7 +1004,7 @@ export class ItemMasterNewComponent implements OnInit {
 
     if (this.msgType.includes("Reset")) {
       this.resetItemMast();
-      //       this.itemMasterForm.reset();
+      //       this.paintItemMasterForm.reset();
     }
 
     if (this.msgType.includes("Close")) {
@@ -1027,14 +1032,14 @@ export class ItemMasterNewComponent implements OnInit {
 
   newItemMast() {
     // this.submitted = true;
-    // if(this.itemMasterForm.invalid){
+    // if(this.paintItemMasterForm.invalid){
     //   alert('Error');
     // return;
     // } 
    
     // alert(this.isTaxable);
-    var costCenter = this.itemMasterForm.get('costCenter').value;
-    var poChargeAccount = this.itemMasterForm.get('poChargeAccount').value;
+    var costCenter = this.paintItemMasterForm.get('costCenter').value;
+    var poChargeAccount = this.paintItemMasterForm.get('poChargeAccount').value;
     if (this.segment == undefined || this.segment == null || this.segment == '') {
       alert('Select Item Code.!');
       return;
@@ -1050,10 +1055,10 @@ export class ItemMasterNewComponent implements OnInit {
     }
     else if (this.isTaxable == 'Y') {
       // alert(this.taxCategoryPur)
-      var taxCategoryPur=this.itemMasterForm.get('taxCategoryPur').value;
-      var taxCategoryPurIGST=this.itemMasterForm.get('taxCategoryPurIGST').value;
-      var taxCategorySale=this.itemMasterForm.get('taxCategorySale').value;
-      var taxCategorySaleIGST = this.itemMasterForm.get('taxCategorySaleIGST').value;
+      var taxCategoryPur=this.paintItemMasterForm.get('taxCategoryPur').value;
+      var taxCategoryPurIGST=this.paintItemMasterForm.get('taxCategoryPurIGST').value;
+      var taxCategorySale=this.paintItemMasterForm.get('taxCategorySale').value;
+      var taxCategorySaleIGST = this.paintItemMasterForm.get('taxCategorySaleIGST').value;
       if (taxCategoryPur == undefined || taxCategoryPur == null) {
         alert('Select Purchase S&CGST Category Name And Then Click Save Button.!');
         return;
@@ -1079,7 +1084,7 @@ export class ItemMasterNewComponent implements OnInit {
       alert('Select Natural Account.!');
       return;
     }
-    const formValue: IItemMaster = this.transData(this.itemMasterForm.value);
+    const formValue: IPaintItemMaster = this.transData(this.paintItemMasterForm.value);
     formValue.stockable = this.stockable;
     formValue.costing = this.costing;
     formValue.internalOrder = this.internalOrder;
@@ -1089,12 +1094,12 @@ export class ItemMasterNewComponent implements OnInit {
     this.service.VehItemSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
-        this.itemMasterForm.disable();
-        // this.itemMasterForm.reset();
+        this.paintItemMasterForm.disable();
+        // this.paintItemMasterForm.reset();
       } else {
         if (res.code === 400) {
           alert('ERROR OCCOURED IN PROCEESS' + res.obj);
-          // this.itemMasterForm.reset();
+          // this.paintItemMasterForm.reset();
         }
       }
     });
@@ -1122,7 +1127,7 @@ export class ItemMasterNewComponent implements OnInit {
         return;
       }
     }
-    const formValue: IItemMaster = this.itemMasterForm.getRawValue();
+    const formValue: IPaintItemMaster = this.paintItemMasterForm.getRawValue();
     this.service.UpdateItemMasterById(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
@@ -1139,3 +1144,5 @@ export class ItemMasterNewComponent implements OnInit {
   }
 
 }
+
+ 
