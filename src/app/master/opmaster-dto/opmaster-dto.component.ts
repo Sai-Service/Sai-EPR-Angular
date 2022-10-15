@@ -4,6 +4,7 @@ import { Data, Router } from '@angular/router';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { MasterService } from '../master.service';
 import { DatePipe } from '@angular/common';
+
 interface IpostPO {
   poHeaderId: number;
   poLineId: number;
@@ -1853,6 +1854,8 @@ export class OPMasterDtoComponent implements OnInit {
       }
     }
   }
+
+
   onOptioninvItemIdSelected(itemId, index) {
 
     if (itemId != null) {
@@ -2028,6 +2031,8 @@ export class OPMasterDtoComponent implements OnInit {
 
     // alert(supplierSiteId +'----'+ selectedValue.taxCategoryName)
   }
+
+  
   onContextValueSelected(contextValue: any) {
     if (contextValue === 'TrueValue') {
       this.displayContexValue = false;
@@ -2502,6 +2507,7 @@ export class OPMasterDtoComponent implements OnInit {
         this.displayHSN[lineNum] = true;
         this.lineDetailsArray.controls[lineNum].patchValue({ discLineAmt: 0 })
         this.lineDetailsArray.controls[lineNum].patchValue({ baseAmtLineWise: 0 })
+        
         this.service.invItemList2New(itemType, (sessionStorage.getItem('deptName')), (sessionStorage.getItem('divisionId')), '36DH1601')
           .subscribe(
             data => {

@@ -1,4 +1,3 @@
-// import { Component, OnInit } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { NgForm } from '@angular/forms';
@@ -8,11 +7,11 @@ import { Router } from '@angular/router';
 import { Validators, FormArray } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
-import { MasterService } from '../master.service';
+import { MasterService } from 'src/app/master/master.service';
 import { DatePipe } from '@angular/common';
 
 
-interface ICommon {
+interface IPanel {
   cmnId:number;
   cmnTypeId:number;
   cmnType: string;
@@ -28,12 +27,12 @@ interface ICommon {
 }
 
 @Component({
-  selector: 'app-common-master',
-  templateUrl: './common-master.component.html',
-  styleUrls: ['./common-master.component.css']
+  selector: 'app-paint-panel-master',
+  templateUrl: './paint-panel-master.component.html',
+  styleUrls: ['./paint-panel-master.component.css']
 })
-export class CommonMasterComponent implements OnInit {
-  commonMasterForm: FormGroup;
+export class PaintPanelMasterComponent implements OnInit {
+ paintPanelMasterForm :FormGroup;
 
   pipe = new DatePipe('en-US');
   now = Date.now();
@@ -81,7 +80,7 @@ export class CommonMasterComponent implements OnInit {
   saveButton=true;
   updButton=true;
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
-    this.commonMasterForm = fb.group({
+    this.paintPanelMasterForm = fb.group({
       // itemRows: this.fb.array([this.inItemRows()]),
 
       cmnId:[],
@@ -125,11 +124,11 @@ export class CommonMasterComponent implements OnInit {
 
 
   // addRow() {
-  //   const control = <FormArray>this.commonMasterForm.controls['itemRows'];
+  //   const control = <FormArray>this.paintPanelMasterForm.controls['itemRows'];
   //   control.push(this.inItemRows());
   // }
 
-  get f() { return this.commonMasterForm.controls; }
+  get f() { return this.paintPanelMasterForm.controls; }
 
   ngOnInit(): void {
 
@@ -179,7 +178,7 @@ export class CommonMasterComponent implements OnInit {
 
   }
 
-  commonMaster(commonMaster: any) {
+  paintPanelMaster(paintPanelMasterForm: any) {
 
   }
 
@@ -190,12 +189,12 @@ export class CommonMasterComponent implements OnInit {
     if (this.checkValidation===true) {
        alert("Data Validation Sucessfull....") 
 
-    const formValue: ICommon = this.commonMasterForm.value;
+    const formValue: IPanel = this.paintPanelMasterForm.value;
     this.service.commonMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD SAVED SUCCESSFULLY');
         this.saveButton=false;
-        this.commonMasterForm.disable();
+        this.paintPanelMasterForm.disable();
         
       } else {
         if (res.code === 400) {
@@ -217,7 +216,7 @@ export class CommonMasterComponent implements OnInit {
     //     alert("Data Validation Sucessfull....\nPutting data to TAX REGIME MASTER  TABLE")
     // alert ("Cmn Id = "+this.cmnId)
 
-        const formValue: ICommon = this.commonMasterForm.value;
+        const formValue: IPanel = this.paintPanelMasterForm.value;
         this.service.UpdateCommonMasterSubmit(formValue, this.cmnId).subscribe((res: any) => {
           if (res.code === 200) {
             alert('RECORD UPDATED SUCCESSFULLY');
@@ -235,7 +234,7 @@ export class CommonMasterComponent implements OnInit {
   }
 
   onOptionsSelected(event: any) {
-    this.Status1 = this.commonMasterForm.get('status').value;
+    this.Status1 = this.paintPanelMasterForm.get('status').value;
     // alert(this.Status1);
     if (this.Status1 === 'Inactive') {
       this.displayInactive = false;
@@ -243,7 +242,7 @@ export class CommonMasterComponent implements OnInit {
       this.endDate = this.pipe.transform(Date.now(), 'y-MM-dd');
     }
     else if (this.Status1 === 'Active') {
-      this.commonMasterForm.get('endDate').reset();
+      this.paintPanelMasterForm.get('endDate').reset();
       this.displayInactive=true;
     }
   }
@@ -252,8 +251,8 @@ export class CommonMasterComponent implements OnInit {
 
   searchCmnMst(){
 
-    var searchText=this.commonMasterForm.get('cmnType').value;
-    // alert (searchText);
+    // var searchText=this.paintPanelMasterForm.get('cmnType').value;
+    var searchText='Panel'
     this.service.getCommonLookupSearchNew(searchText,sessionStorage.getItem('divisionId'))
     .subscribe(
       data => {
@@ -271,12 +270,12 @@ Select(cmId: number) {
   // alert ('cmnId='+cmId)
   let select = this.lstcomments.find(d => d.cmnId === cmId);
   if (select) {
-    this.commonMasterForm.patchValue(select);
+    this.paintPanelMasterForm.patchValue(select);
     this.cmnId=select.cmnId;
     this.displayButton = false;
     // this.updButton=true;
-    // this.commonMasterForm.disable();
-    this.commonMasterForm.get('status').enable();
+    // this.paintPanelMasterForm.disable();
+    this.paintPanelMasterForm.get('status').enable();
 
     this.display = false;
   }
@@ -287,7 +286,7 @@ onSelectType(cmnTp){
   if (select) {
      var cmnTypeId1=  select.CMNTYPEID+1;
     //  alert ("Desc :" +select.CMNDESC + " , id : "+select.CMNTYPEID + "," +cmnTypeId1);
-    this.commonMasterForm.patchValue({cmnDesc:select.CMNDESC ,cmnTypeId :cmnTypeId1 ,application :'ALL'})
+    this.paintPanelMasterForm.patchValue({cmnDesc:select.CMNDESC ,cmnTypeId :cmnTypeId1 ,application :'ALL'})
   }
 }
 
@@ -302,7 +301,7 @@ closeMast() {
 
 CheckDataValidations(){
 
-  const formValue: ICommon = this.commonMasterForm.value;
+  const formValue: IPanel = this.paintPanelMasterForm.value;
 
   formValue.code =this.code.toUpperCase();
   formValue.codeDesc=this.codeDesc.toUpperCase();

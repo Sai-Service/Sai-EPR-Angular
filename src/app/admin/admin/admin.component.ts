@@ -90,7 +90,7 @@ export class AdminComponent implements OnInit {
   isVisible36:boolean=true;
   isVisible37:boolean=true;
   isVisibleServerReport:boolean=true;
- isVisibleAccessories:boolean=true;
+  isVisibleAccessories:boolean=true;
   isVisibleAccountsRepor:boolean=true;
   isVisibleMaster:boolean=true;
   isVisibleCustMaster:boolean=true;
@@ -100,6 +100,7 @@ export class AdminComponent implements OnInit {
   displayUserIdwiseAccess: boolean = true;
   isVisibleSubInventoryTransfer:boolean=false;
   isVisibleWsVehicleMaster:boolean=false; 
+  isVisibilePaintSystem:boolean=false;
   fullName: string;
   deptName: string;
   locCode: string;
@@ -252,6 +253,42 @@ export class AdminComponent implements OnInit {
     //   this.isVisible2 = true;
     // }
     // && ((sessionStorage.getItem('roleId'))==='NaN'|| (sessionStorage.getItem('roleId'))===undefined || (sessionStorage.getItem('roleId'))===null|| (sessionStorage.getItem('roleId'))==='')
+   
+    if (Number(sessionStorage.getItem('divisionId')) === 1 && Number(sessionStorage.getItem('roleId'))===1 && sessionStorage.getItem('deptName')==='Spares' && sessionStorage.getItem('ticketNo') ==='P5678')
+    {
+      this.isVisible11=false;
+      this.isVisible12=false;
+      this.isVisible13=false
+      this.isVisibleWsVehicleMaster=false;
+      this.isVisible14=false;
+      this.isVisible15=false;
+      this.isVisible16=false;
+      this.isVisible17=false;
+      this.isVisible18=false;
+      this.isVisible19=false;
+      this.isVisible20=false;
+      this.isVisible21=false;
+      this.isVisible22=false;
+      this.isVisible23=false;
+      this.isVisible24=false;
+      this.isVisible25=false;
+      this.isVisible26=false;
+      this.isVisibleSubInventoryTransfer=false;
+      this.isVisible27=false;
+      this.isVisible28=false;
+      this.isVisible29=false;
+      this.isVisible30=false;
+      this.isVisible31=false;
+      this.isVisible32=false;
+      this.isVisible35=false;
+      this.isVisible36=false;
+      this.isVisible37=false;
+      this.isVisibleAccountsRepor=false;
+      this.isVisibleAccessories=false;
+      this.isVisibilePaintSystem=true
+
+    }
+
     if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId'))===3 && sessionStorage.getItem('deptName')==='Sales'){
       this.isVisible11=false;
       this.isVisible12=true;
@@ -282,7 +319,9 @@ export class AdminComponent implements OnInit {
       this.isVisible37=true;
       this.isVisibleAccountsRepor=false;
       this.isVisibleAccessories=false;
+      this.isVisibilePaintSystem=false;
     }
+
     if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId'))===9 && sessionStorage.getItem('deptName')==='Account'){
       this.isVisible11=false; 
       this.isVisible12=false;
@@ -316,6 +355,8 @@ export class AdminComponent implements OnInit {
       this.isVisibleMaster=false;
       this.isVisibleGL=true;
       this.isVisibleCustMaster=false;
+      this.isVisibilePaintSystem=false;
+
     }
     if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId'))===2 && sessionStorage.getItem('deptName')==='Service'){
       this.isVisible11=false;
@@ -347,6 +388,8 @@ export class AdminComponent implements OnInit {
       this.isVisible36=false;
       this.isVisibleAccountsRepor=false;
       this.isVisibleAccessories=false;
+      this.isVisibilePaintSystem=false;
+
     }
 
 
@@ -381,6 +424,8 @@ export class AdminComponent implements OnInit {
       this.isVisible36=false;
       this.isVisibleAccountsRepor=false;
       this.isVisibleAccessories=true;
+      this.isVisibilePaintSystem=false;
+
     }
 
     if (Number(sessionStorage.getItem('divisionId')) === 2 && sessionStorage.getItem('deptName')==='Spares' && Number(sessionStorage.getItem('roleId'))===4){
@@ -414,6 +459,8 @@ export class AdminComponent implements OnInit {
       this.isVisible36=false;
       this.isVisibleAccountsRepor=false;
       this.isVisibleAccessories=false;
+      this.isVisibilePaintSystem=false;
+
     }
 
     if (Number(sessionStorage.getItem('divisionId')) === 2 && sessionStorage.getItem('deptName')==='Accessories' && Number(sessionStorage.getItem('roleId'))===4){
@@ -447,6 +494,8 @@ export class AdminComponent implements OnInit {
       this.isVisible36=false;
       this.isVisibleAccountsRepor=false;
       this.isVisibleAccessories=true;
+      this.isVisibilePaintSystem=false;
+
     }
 
 
@@ -482,6 +531,8 @@ export class AdminComponent implements OnInit {
       this.isVisible36=false;
       this.isVisibleAccountsRepor=false;
       this.isVisibleAccessories=true;
+      this.isVisibilePaintSystem=false;
+
     }
     if (Number(sessionStorage.getItem('deptId'))===4){
       this.isVisibleAccountsRepor=true;

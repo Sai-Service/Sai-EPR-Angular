@@ -66,8 +66,7 @@ export class OrderDetailsUpdationComponent implements OnInit {
   msRefType:string;
   msRefNo:string;
   msRefCustNo:string;
-
-  orderNumber:number=222220210600194;  // INVOICED : 222220910400113
+  orderNumber:number ;    //=222220210600194;  // INVOICED : 222220910400113
   // orderNumber:number
   orderedDate:Date;
   model:string;
@@ -77,7 +76,6 @@ export class OrderDetailsUpdationComponent implements OnInit {
   salesRepId:number;
   salesRepName:string;
   tlName:string;
-  
   financeType:string;
   financerName:string;
   financeAmt:number;

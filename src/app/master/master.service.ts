@@ -1728,6 +1728,11 @@ export class MasterService {
   issueByList(locId, deptId, divisionId): Observable<any> {
     return this.http.get(this.ServerUrl + `/empMst/EmpLocDept?locId=${locId}&divisionId=${divisionId}&deptId=${deptId}`)
   }
+
+  paintColorCodeList(divisionId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/itemMst/onlyPn/${divisionId}`)
+  }
+
   ItemIdList(): Observable<any> {
     return this.http.get(this.ServerUrl + '/itemMst/category');
   }
@@ -2028,6 +2033,10 @@ export class MasterService {
 
   getItemDetailsByCode(itmCode): Observable<any> {
     return this.http.get(this.ServerUrl + `/itemMst/itemName/${itmCode}`);
+  }
+
+  getItemDetailsByCodeNew(itmCode): Observable<any> {
+    return this.http.get(this.ServerUrl + `/itemMst/itemName1/${itmCode}`);
   }
 
 
