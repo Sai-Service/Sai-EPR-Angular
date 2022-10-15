@@ -1011,20 +1011,22 @@ export class PaymentsComponent implements OnInit {
 
 
   searchPayment(searchBySuppName, searchByFrmDate, searchByToDate) {
-    // alert('searchPayment----');
+    // alert('searchPayment----'+searchBySuppName);
     console.log(this.supplierCodeList)
+    var suppData=searchBySuppName.split('--');
+    // let selectgstPercentage = this.hsnSacCodeList.find(v => v.hsnsaccode == gstPer[0]);
     // frmDate = this.pipe.transform(searchByFrmDate, 'dd-MMM-yyyy');
     // toDate = this.pipe.transform(searchByToDate, 'dd-MMM-yyyy');
-    var suppNo = this.supplierCodeList.find(d => d.name === searchBySuppName)
-    console.log(suppNo);
-    var suppNo1 = suppNo.suppNo;
-    console.log(suppNo1);
+    // var suppNo = this.supplierCodeList.find(d => d.name === suppData[0])
+    // console.log(suppNo);
+    // var suppNo1 = suppNo.suppNo;
+    // console.log(suppNo1);
     this.displaysiteName = true;
     this.displaysiteAddress = true;
     this.displayname = true;
     this.displaytype = true;
     this.payHeaderLineDtlArray().clear();
-    this.transactionService.paymentSearch(suppNo1, this.pipe.transform(searchByFrmDate, 'dd-MMM-yyyy'), this.pipe.transform(searchByToDate, 'dd-MMM-yyyy'), sessionStorage.getItem('divisionId'))
+    this.transactionService.paymentSearch(suppData[1], this.pipe.transform(searchByFrmDate, 'dd-MMM-yyyy'), this.pipe.transform(searchByToDate, 'dd-MMM-yyyy'), sessionStorage.getItem('divisionId'))
       .subscribe((res: any) => {
         if (res.code === 200) {
           alert(res.message);
