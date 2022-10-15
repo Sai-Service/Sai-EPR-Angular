@@ -22,8 +22,8 @@
                         <select formControlName="searchBySuppName" id="searchBySuppName" class="form-control"
                             [(ngModel)]="searchBySuppName" style="width: 160px;height: 25px;font-size: 10px;">
                             <option>--Select--</option>
-                            <option *ngFor="let sup of  supplierCodeList" [value]="sup.name">
-                                {{sup.name}}
+                            <option *ngFor="let sup of  supplierCodeList">
+                                {{sup.name}}--{{sup.suppNo}}
                             </option>
                         </select>
                     </td>

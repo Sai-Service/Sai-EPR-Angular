@@ -2207,7 +2207,7 @@ export class PayableInvoiceNewComponent implements OnInit {
 
 
   onHsnCodeSelected(event, index) {
-    // alert(event);
+    // alert(event); 
     console.log(event);
     var gstPer=event.split('--');
     let selectgstPercentage = this.hsnSacCodeList.find(v => v.hsnsaccode == gstPer[0]);
