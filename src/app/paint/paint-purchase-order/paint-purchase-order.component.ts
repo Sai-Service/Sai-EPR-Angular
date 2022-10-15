@@ -1162,15 +1162,10 @@ export class PaintPurchaseOrderComponent implements OnInit {
    var aa = index + 1;
    // alert('index value--' + '  '+index+' '+ aa);
    var patch = this.paintPoForm.get('poLines') as FormArray;
-   (patch.controls[index]).patchValue(
-     {
-       polineNum: aa,
-       // itemType: 'EXPENCE',
-     }
-   );
+   (patch.controls[index]).patchValue({polineNum: aa,});
    // this.displayPoLine[aa] = true;
    this.displayPoLine.push(true);
-  //  this.hideArray[index] = true;   // commented by rk 14.10.22
+   this.hideArray[index] = true;   
    // debugger;
    var lineNum=(index-1);
    this.displayTaxCategotySelect[lineNum]=false;
@@ -1731,11 +1726,10 @@ export class PaintPurchaseOrderComponent implements OnInit {
    // delete val.name;
    return val;
  }
+
  newPOMast() {
-   // this.displayNewButtonApprove = true;
-   // this.displayNewButtonUpdate = true;
-   // this.displayNewButtonSave = false;
-   // this.displayNewButtonReset = false;
+  alert ("In Save.....");
+  
    this.authorizationStatus = 'Inprogress';
    const formValue: IpostPO = this.transData(this.paintPoForm.getRawValue());
    formValue.authorizationStatus = 'Inprogress';
@@ -1743,27 +1737,11 @@ export class PaintPurchaseOrderComponent implements OnInit {
    formValue.divisionId = this.divisionId;
    formValue.currencyCode = 'INR';
    var arrayControl = this.paintPoForm.get('poLines').value
-   // this.baseAmount = 0;
-   // this.totTaxAmt = 0;
-   // this.totalAmt = 0;
-   // this.discheadrAmt = 0;
-
-   // for (var i = 0; i < arrayControl.length; i++) {
-   //   this.baseAmount = (this.baseAmount + (arrayControl[i].baseAmtLineWise - arrayControl[i].discLineAmt));
-   //   this.totTaxAmt = (this.totTaxAmt + arrayControl[i].taxAmtLineWise);
-   //   this.totalAmt = (this.baseAmount + this.totTaxAmt);
-   // }
-   // console.log(this.discLineAmt);
-   // console.log(this.baseAmount);
-   // console.log(this.totalAmt);
-   // this.totalAmt = ((this.baseAmount-this.discLineAmt) + this.totTaxAmt);
-   // formValue.totalAmt = this.totalAmt;
-   // formValue.baseAmount = this.baseAmount;
-   // formValue.totTaxAmt = this.totTaxAmt;
+  
    formValue.poType = this.poType;
    formValue.dept = Number(this.dept);
    formValue.supplierCode = this.supplierCode;
-   // debugger;
+  //  debugger;
    this.service.poSubmit(formValue).subscribe((res: any) => {
      var obj = res.obj;
      sessionStorage.setItem('poNo', obj);
@@ -1873,8 +1851,189 @@ export class PaintPurchaseOrderComponent implements OnInit {
      }
    }
  }
+ 
+ onOptioninvItemIdSelected(itemId, index) {
 
- onOptioninvItemIdSelected(x,index) {
+  if (itemId != null) {
+    let selectedValue = this.invItemList.find(v => v.segment == itemId);
+    console.log(selectedValue);
+
+    if (selectedValue != undefined) {
+      console.log(selectedValue);
+      this.selectedInvItem.push(selectedValue);
+      // var arrayControl = this.poMasterDtoForm.get('poLines').value;
+      var arrayControlNew = this.paintPoForm.get('poLines') as FormArray;
+      var arrayControl = arrayControlNew.getRawValue()
+      var patch = this.paintPoForm.get('poLines') as FormArray;
+      this.itemType = arrayControl[index].itemType;
+      this.invItemId = selectedValue.itemId;
+      console.log(this.invItemId, this.taxCat);
+      this.lineDetailsArray.controls[index].get('taxCategoryName').enable();
+      this.lineDetailsArray.controls[index].get('orderedQty').enable();
+      this.lineDetailsArray.controls[index].get('unitPrice').enable();
+      if (this.itemType === "GOODS") {
+        this.service.ItemDetailsList(this.invItemId, this.selSuppTaxCatNm, this.billToLoc).subscribe((res: any) => {
+          if (res.code === 200) {
+            if (res.obj.itemId === null) {
+              alert('Item Or PO Charge Account Not Found in Master !')
+              var patch = this.paintPoForm.get('poLines') as FormArray;
+              (patch.controls[index]).patchValue({
+                segment: ' ',
+              });
+              this.lineDetailsArray.controls[index].get('invCategory').reset();
+              this.lineDetailsArray.controls[index].get('invDescription').reset();
+              this.lineDetailsArray.controls[index].get('uom').reset();
+              this.lineDetailsArray.controls[index].get('hsnSacCode').reset();
+              this.lineDetailsArray.controls[index].get('taxCategoryName').reset();
+              this.lineDetailsArray.controls[index].get('segmentName').reset();
+              this.lineDetailsArray.controls[index].get('hsnSacCode').disable();
+              this.lineDetailsArray.controls[index].get('taxCategoryName').disable();
+              return;
+            }
+            else {
+              this.ItemDetailsList = res.obj;
+              this.displayTaxCategotySelect[index]=true;
+              // alert(this.ItemDetailsList.gstPercentage);
+              var patch = this.paintPoForm.get('poLines') as FormArray;
+
+              this.taxCategoryId = this.ItemDetailsList.taxCategoryId;
+              var gstPercentage = this.ItemDetailsList.gstPercentage;
+              // alert(gstPercentage)
+              // var supplierSiteId = this.poMasterDtoForm.get('supplierSiteId').value;
+              // console.log(this.suppIdList);
+              // let selectedValue = this.suppIdList.find(v => v.suppSiteId == supplierSiteId);
+              // console.log(selectedValue);
+
+              if (this.selSuppTaxCatNm != null && gstPercentage != null) {
+                this.service.taxCategoryListNew(this.selSuppTaxCatNm, gstPercentage)
+                  .subscribe(
+                    data1 => {
+                      // this.taxCategoryMap.set(index,data1);
+                      this.taxCategoryList[index] = data1;
+                      console.log(this.taxCategoryList);
+                    }
+                  );
+              }
+              if (this.ItemDetailsList.segmentName === null) {
+                (patch.controls[index]).patchValue(
+                  {
+                    diss1: 0,
+                    invDescription: this.ItemDetailsList.invDescription,
+                    invCategory: this.ItemDetailsList.invCategory,
+                    uom: this.ItemDetailsList.uom,
+                    hsnSacCode: this.ItemDetailsList.hsnSacCode,
+                    taxCategoryName: this.ItemDetailsList.taxCategoryName,
+                    segmentName: this.segmentName1,
+                    poChargeAcc: Number(this.ItemDetailsList.codeCombinationId),
+                    taxCategoryId: Number(this.ItemDetailsList.taxCategoryId),
+                    invItemId: this.invItemId,
+                    gstPercentage: this.ItemDetailsList.gstPercentage,
+                    density: this.ItemDetailsList.density
+                  }
+                );
+              }
+              else {
+
+                const invCategory = this.ItemDetailsList.invCategory.substr(0, 3);
+                if (invCategory === 'MCH') {
+                  (patch.controls[index]).patchValue(
+                    {
+                      diss1: 0,
+                      uom: this.ItemDetailsList.uom,
+                      orderedQty: 1,
+                      invDescription: this.ItemDetailsList.invDescription,
+                      invCategory: this.ItemDetailsList.invCategory,
+                      hsnSacCode: this.ItemDetailsList.hsnSacCode,
+                      taxCategoryName: this.ItemDetailsList.taxCategoryName,
+                      segmentName: this.ItemDetailsList.segmentName,
+                      poChargeAcc: Number(this.ItemDetailsList.codeCombinationId),
+                      taxCategoryId: Number(this.ItemDetailsList.taxCategoryId),
+                      invItemId: this.invItemId,
+                      gstPercentage: this.ItemDetailsList.gstPercentage,
+                      density: this.ItemDetailsList.density
+                    }
+                  );
+                }
+                else {
+                  // alert('not null');
+                  (patch.controls[index]).patchValue(
+                    {
+                      diss1: 0,
+                      uom: this.ItemDetailsList.uom,
+                      invDescription: this.ItemDetailsList.invDescription,
+                      invCategory: this.ItemDetailsList.invCategory,
+                      hsnSacCode: this.ItemDetailsList.hsnSacCode,
+                      taxCategoryName: this.ItemDetailsList.taxCategoryName,
+                      segmentName: this.ItemDetailsList.segmentName,
+                      poChargeAcc: Number(this.ItemDetailsList.codeCombinationId),
+                      taxCategoryId: Number(this.ItemDetailsList.taxCategoryId),
+                      invItemId: this.invItemId,
+                      gstPercentage: this.ItemDetailsList.gstPercentage,
+                      density: this.ItemDetailsList.density
+                    }
+                  );
+                }
+              }
+            }
+          }
+          else {
+            if (res.code === 400) {
+              alert('Error : ' + res.message);
+            }
+          }
+        });
+
+      }
+      if (this.itemType === "EXPENCE") {
+        this.service.expenceItemDetailsList(this.invItemId)
+          .subscribe(
+            data => {
+              this.ItemDetailsList = data;
+              console.log(this.ItemDetailsList);
+              var patch = this.paintPoForm.get('poLines') as FormArray;
+              if (this.ItemDetailsList.taxCategoryId != null) {
+                this.taxCategoryId = this.ItemDetailsList.taxCategoryId
+              }
+              (patch.controls[index]).patchValue(
+                {
+                  diss1: 0,
+                  uom: this.ItemDetailsList.uom,
+                  invDescription: data.invDescription,
+                  invCategory: data.invCategory,
+                  hsnSacCode: this.ItemDetailsList.hsnSacCode,
+                  taxCategoryName: this.ItemDetailsList.taxCategoryName,
+                  segmentName: this.ItemDetailsList.segmentName,
+                  poChargeAcc: Number(this.ItemDetailsList.codeCombinationId),
+                  taxCategoryId: Number(this.ItemDetailsList.taxCategoryId),
+                  invItemId: this.invItemId,
+                  gstPercentage: this.ItemDetailsList.gstPercentage,
+                  density: this.ItemDetailsList.density
+                }
+              );
+              this.hsnSacCode1.nativeElement.focus();
+            }
+          );
+      }
+    }
+    else {
+      // alert('Select Proper Item.. This Item Not In Master.!')
+      this.lineDetailsArray.controls[index].get('invCategory').reset();
+      this.lineDetailsArray.controls[index].get('invDescription').reset();
+      this.lineDetailsArray.controls[index].get('uom').reset();
+      this.lineDetailsArray.controls[index].get('hsnSacCode').reset();
+      this.lineDetailsArray.controls[index].get('taxCategoryName').reset();
+      this.lineDetailsArray.controls[index].get('segmentName').reset();
+      this.lineDetailsArray.controls[index].get('taxCategoryName').disable();
+      this.lineDetailsArray.controls[index].get('orderedQty').disable();
+      this.lineDetailsArray.controls[index].get('unitPrice').disable();
+    }
+  }
+
+  // alert(supplierSiteId +'----'+ selectedValue.taxCategoryName)
+}
+
+
+ onOptioninvItemIdSelected_Test(x,index) {
 
   // debugger;
   alert ("x,index :" +x +","+index);
@@ -2537,7 +2696,6 @@ export class PaintPurchaseOrderComponent implements OnInit {
 
  onOptioninvitemTypeSelected(e: any, lineNum) {
    var itemType = e.target.value;
-
 
    if (this.itemMap.has(itemType)) {
      this.invItemList = this.itemMap.get(itemType);

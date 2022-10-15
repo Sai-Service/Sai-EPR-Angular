@@ -360,6 +360,24 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepaneltolocation=false;
 
     }
+    else if (reportName === 'gstSaleClosingStockNew') {
+      this.reportName = 'Vehicle Closing Stock-New'
+      this.isVisibleVehicleSaleRegister = false;
+      this.isVisibleSaleIND = false;
+      this.isSaleClosingStock = true;
+      this.isVisiblefromtolocationdepartment = false;
+      this.isVisiblestockTransfer=false;
+      this.isVisiblefromtoloccustaccno=false;
+      this.isVisibleSalesInventoryAging=false;
+      this.isVisiblepanelfromtolocation=false;
+      this.isVisiblepanelreceiptNo=false;
+      this.isVisiblepanelSalesAddonReconciliation=false;
+      this.isVisiblefromtosubinventory=false;
+      this.panelamcHistrory=false;
+      this.ispanelTolocationOu=false;
+      this.isVisiblepaneltolocation=false;
+
+    }
     else if (reportName === 'gstSaleRegister') {
       this.reportName = 'GST Sales Register'
       this.isVisibleVehicleSaleRegister = true;
@@ -1026,6 +1044,28 @@ export class SalesReportsComponent implements OnInit {
 
     else if (reportName === 'Vehicle Closing Stock') {
       const fileName = 'Vehicle Closing Stock-' + sessionStorage.getItem('locName').trim() + '-' + '-TO-' + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.vehicleClosingStockReport(sessionStorage.getItem('ouId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.dataDisplay = ''
+            this.closeResetButton = true;
+            this.isDisabled1 = false;
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.vehicleClosingStockReport(sessionStorage.getItem('ouId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.dataDisplay = ''
+            this.closeResetButton = true;
+            this.isDisabled1 = false;
+          })
+      }
+    }
+    else if (reportName === 'Vehicle Closing Stock-New') {
+      const fileName = 'Vehicle Closing StockNew-' + sessionStorage.getItem('locName').trim() + '-' + '-TO-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.vehicleClosingStockReport(sessionStorage.getItem('ouId'))

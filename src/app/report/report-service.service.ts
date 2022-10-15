@@ -884,6 +884,17 @@ vehicleClosingStockReport(orgId){
   });
 }
 
+vehicleClosingStockReportNew(orgId){
+  // http://localhost:8081/SalesReports/VehClosingStkNew?orgId=22
+
+  const REQUEST_URI = this.ServerUrl +`/SalesReports/VehClosingStkNew?orgId=${orgId}`;
+  return this.http.get(REQUEST_URI, {
+    // params: REQUEST_PARAMS,
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
+}
+
 
 ChetakPendingBookingLastYear(orgId){
   // http://localhost:8081/SalesReports/ChetakPendingBooking

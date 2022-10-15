@@ -182,6 +182,20 @@
        <input hidden formControlName="name"  [(ngModel)]="name">
          </td>
       </tr>
+      <tr>
+        <td style="width: 15%" class="LabelFontStyle">Color :</td>
+        <!-- <td><input  type="text" class="form-control" formControlName="colorCode" [(ngModel)]="colorCode" style="background-color: yellow"></td> -->
+
+         <td>
+           <select class="form-control" formControlName="colorCode" [(ngModel)]="colorCode" (ngModelChange)="onSelectColor($event)" style="background-color: yellow">
+              <option disabled>--Select--</option>
+              <option *ngFor="let clr of paintColorList" [ngValue]="clr.SEGMENT"  >
+                {{clr.SEGMENT}}-{{clr.DESCRIPTION}}
+              </option>
+            </select>
+        </td>
+
+      </tr>
     </table>
     </fieldset>
     <!-- <br> -->

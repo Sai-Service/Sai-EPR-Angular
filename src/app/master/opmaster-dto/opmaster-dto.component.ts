@@ -1854,6 +1854,8 @@ export class OPMasterDtoComponent implements OnInit {
       }
     }
   }
+
+
   onOptioninvItemIdSelected(itemId, index) {
 
     if (itemId != null) {
@@ -2029,6 +2031,8 @@ export class OPMasterDtoComponent implements OnInit {
 
     // alert(supplierSiteId +'----'+ selectedValue.taxCategoryName)
   }
+
+  
   onContextValueSelected(contextValue: any) {
     if (contextValue === 'TrueValue') {
       this.displayContexValue = false;

@@ -59,6 +59,9 @@ interface IPaintMixing {
   CostDetail: number;
   attribute1: number;
   attribute2: Date;
+
+  colorCode :string;
+
 }
 
 export class IcTrans {
@@ -79,6 +82,8 @@ export class PaintCreationComponent implements OnInit {
 
   public ItemIdList: any[];
   public subInvCode: any;
+  public paintColorList :any[];
+
   compNo: string;
   onHandQty: number;
   JobNo:string;
@@ -195,6 +200,8 @@ export class PaintCreationComponent implements OnInit {
   displayRemoveRow: Array<boolean> = [];
   name:string;
 
+  colorCode :string;
+
   public itemMap = new Map<string, IcTrans>();
 
   @ViewChild("myinput") myinput: ElementRef;
@@ -254,6 +261,8 @@ export class PaintCreationComponent implements OnInit {
       attribute1: [],
       attribute2: [],
       name:[],
+      colorCode:[],
+
       cycleLinesList: this.fb.array([]),
 
     })
@@ -380,6 +389,12 @@ export class PaintCreationComponent implements OnInit {
     this.displayLocator[0] = false;
 
 
+    this.service.paintColorCodeList(this.divisionId).subscribe(
+      data => {
+      this.paintColorList = data;
+      console.log(this.paintColorList);
+    });
+
 
     this.service.subInvCode2(this.deptId, this.divisionId).subscribe(
       data => {
@@ -431,6 +446,7 @@ export class PaintCreationComponent implements OnInit {
         })
       }
     );
+
     this.service.ReasonList().subscribe(
       data => {
         this.reasonlist = data;
@@ -454,6 +470,9 @@ export class PaintCreationComponent implements OnInit {
         this.issueByList = data;
         console.log(this.issueByList);
       });
+
+     
+
 
 
     this.addnewcycleLinesList(-1);
@@ -1065,6 +1084,11 @@ export class PaintCreationComponent implements OnInit {
     }
   }
 
+  onSelectColor(event) {
+    if(event !=undefined || event !=null || event.trim() !='') {
+    alert ("Color Selected  : "+event);
+    }
+  }
 
   onSelectReason(event) {
     var reasonArr = event.split('-');
