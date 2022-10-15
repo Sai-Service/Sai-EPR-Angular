@@ -167,20 +167,16 @@
         <td style="width: 15%" class="LabelFontStyle">
           Repair Order:
          </td>
-         <td>
-           <!-- <select  class="form-control" formControlName="attribute1">
-            <option>--Select--</option>
+          <td>
+          <input disabled type="text" formControlName="attribute1" (keyup)="getUserIdsFirstWay($event)" id="userIdFirstWay" list="dynmicUserIds" class="form-control" (change)="calculatewarranty($event)">
+          <datalist id="dynmicUserIds">
             <option *ngFor="let repairNo of workshopIssue">{{repairNo.jobCardNum}}--{{repairNo.regNo}}</option>
-          </select> -->
-          <input type="text" formControlName="attribute1" (keyup)="getUserIdsFirstWay($event)" id="userIdFirstWay" list="dynmicUserIds" class="form-control" (change)="calculatewarranty($event)">
-      <datalist id="dynmicUserIds">
-        <option *ngFor="let repairNo of workshopIssue">{{repairNo.jobCardNum}}--{{repairNo.regNo}}</option>
-      </datalist>
+          </datalist>
           </td>
-           <td>
-       <input hidden type="text" formControlName="locId" [(ngModel)]="locId">
-       <input hidden formControlName="name"  [(ngModel)]="name">
-         </td>
+          <td>
+          <input hidden type="text" formControlName="locId" [(ngModel)]="locId">
+          <input hidden formControlName="name"  [(ngModel)]="name">
+          </td>
       </tr>
       <tr>
         <td style="width: 15%" class="LabelFontStyle">Color :</td>
@@ -194,6 +190,13 @@
               </option>
             </select>
         </td>
+
+        <td style="width: 15%" class="LabelFontStyle">Total Qty :</td>
+        <td><input readonly type="number" class="form-control" formControlName="totIssuedQty" [(ngModel)]="totIssuedQty" ></td>
+       
+        <td style="width: 15%" class="LabelFontStyle">Total Value :</td>
+        <td><input readonly type="number" class="form-control" formControlName="totIssuedValue" [(ngModel)]="totIssuedValue" ></td>
+
 
       </tr>
     </table>
@@ -294,7 +297,9 @@
                <input hidden type="number" formControlName="onHandQty">
               <td><input disabled type="number" class="form-control" style="height: 20px;width: 100%;" formControlName="avlqty" ></td>
               <input hidden  type="number"  formControlName="resveQty">
-              <td><input type="number" min="0"  class="form-control" style="height: 20px;width: 100%;" formControlName="physicalQty"(change)="validate(trxLineIndex,qty)" #qty>
+              <!-- <td><input type="number" min="0"  class="form-control" style="height: 20px;width: 100%;" formControlName="physicalQty"(change)="validate(trxLineIndex,qty)" #qty> -->
+               <td><input type="number" min="0"  class="form-control" style="height: 20px;width: 100%;" formControlName="physicalQty"(change)="validate(trxLineIndex,qty)">
+                
                 <span
               *ngIf="getGroupControllinewise(trxLineIndex,'physicalQty').touched && getGroupControllinewise(trxLineIndex,'physicalQty').invalid" class="error">Valid Item
              </span>

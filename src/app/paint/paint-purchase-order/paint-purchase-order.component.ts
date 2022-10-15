@@ -1727,8 +1727,20 @@ export class PaintPurchaseOrderComponent implements OnInit {
    return val;
  }
 
+ validatePOLine() {
+  var poLineArr = this.paintPoForm.get('poLines').value
+  var patch = this.paintPoForm.get('poLines') as FormArray;
+  alert ("poLineArr.lengt : "+poLineArr.length);
+  for (let i = 0; i < poLineArr.length; i++) {
+    patch.controls[i].patchValue({ orderedQty: poLineArr[i].wtInGrams });
+    patch.controls[i].patchValue({ unitPrice : poLineArr[i].ratePerGram });
+  }
+ }
+
  newPOMast() {
-  alert ("In Save.....");
+  alert ("In PO Save.....");
+
+   this.validatePOLine();
   
    this.authorizationStatus = 'Inprogress';
    const formValue: IpostPO = this.transData(this.paintPoForm.getRawValue());
@@ -1741,6 +1753,7 @@ export class PaintPurchaseOrderComponent implements OnInit {
    formValue.poType = this.poType;
    formValue.dept = Number(this.dept);
    formValue.supplierCode = this.supplierCode;
+   
   //  debugger;
    this.service.poSubmit(formValue).subscribe((res: any) => {
      var obj = res.obj;

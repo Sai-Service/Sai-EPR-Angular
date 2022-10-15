@@ -1523,8 +1523,13 @@ export class MasterService {
   getsearchByShipmentNo(shipNo): Observable<any> {
     return this.http.get(this.ServerUrl + `/mmtTrx/stktrf/${shipNo}`)
   }
+
   ItemIdListDept(deptId, locId, subId): Observable<any> {
     return this.http.get(this.ServerUrl + `/itemMst/itemDepartent1?deptId=${deptId}&locationId=${locId}&subInventoryId=${subId}`)
+  }
+
+  ItemIdListDeptPaint(deptId, locId, subId,clrCode): Observable<any> {
+    return this.http.get(this.ServerUrl + `/itemMst/itemDepartent1?deptId=${deptId}&locationId=${locId}&subInventoryId=${subId}&colorCode=${clrCode}`)
   }
 
   ItemIdListDeptByCode(deptId, locId, subId, itemCode): Observable<any> {
