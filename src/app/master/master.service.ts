@@ -3585,6 +3585,7 @@ public shortLandedClaimSave(rtvRecord) {
     const url = this.ServerUrl + '/stockadj';
     return this.http.post(url, miscRecord, options);
   }
+
   miscSubmit(miscelRecord): Observable<any> {
     const options = {
       headers: this.headers
@@ -3592,6 +3593,18 @@ public shortLandedClaimSave(rtvRecord) {
     const url = this.ServerUrl + '/stockadj/misc';
     return this.http.post(url, miscelRecord, options);
   }
+
+  paintMixingSaveSubmit(miscelRecord): Observable<any> {
+    const options = {
+      headers: this.headers
+    }
+    const url = this.ServerUrl + '/stockadj/PaintMixing';
+    return this.http.post(url, miscelRecord, options);
+  }
+
+
+
+
   approve(appmiscRecord): Observable<any> {
     const options = {
       headers: this.headers

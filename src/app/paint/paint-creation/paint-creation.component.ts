@@ -959,7 +959,6 @@ export class PaintCreationComponent implements OnInit {
   }
 
   searchByCompileID(itemId) {
-
     // alert(itemId+'ID')
     var compileId = this.paintCreationForm.get('compileId').value;
     // alert(compileId+'CompileID');
@@ -1067,22 +1066,14 @@ export class PaintCreationComponent implements OnInit {
         formValue.attribute1 = itemCode1[0];
       }
     
-      this.service.miscSubmit(formValue).subscribe
+      this.service.paintMixingSaveSubmit(formValue).subscribe
         ((res: any) => {
           if (res.code === 200) {
             this.compileName = res.obj.compileName;
             this.totalCompileItems = res.obj.totalCompileItems;
             this.totalItemValue = res.obj.totalItemValue;
             this.compileStatus = res.obj.compileStatus;
-            // this.lstcomment=data.obj;
             alert(res.message);
-            // this.paintCreationForm.patchValue(obj);
-            // let control =this.paintCreationForm.get('cycleLinesList') as FormArray;
-            // var len = this.cycleLinesList().length;
-            // for(let i=0; i<res.obj.cycleLinesList.length-len; i++){
-            //   var trxlist:FormGroup=this.newcycleLinesList();
-            //   this.cycleLinesList().push(trxlist);
-
             this.paintCreationForm.disable();
             this.displayButton = false;
             this.displayaddButton = false;
@@ -1090,7 +1081,7 @@ export class PaintCreationComponent implements OnInit {
           else {
             if (res.code === 400) {
               alert(res.message);
-              this.paintCreationForm.reset();
+              // this.paintCreationForm.reset();
             }
           }
         })
