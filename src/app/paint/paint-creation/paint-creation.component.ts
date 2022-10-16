@@ -937,6 +937,10 @@ export class PaintCreationComponent implements OnInit {
     
     this.paintCreationForm.patchValue({totIssuedQty :totQty});
     this.paintCreationForm.patchValue({totIssuedValue :totValue})
+
+    this.paintCreationForm.patchValue({totalCompileItems :totQty});
+    this.paintCreationForm.patchValue({totalItemValue :totValue})
+
     //alert(avalqty+'avalqty');
     //alert(trxLnArr[i].physicalQty +' qty');
     if (qty > avalqty && this.paintCreationForm.get('compileType').value !== 13) {
