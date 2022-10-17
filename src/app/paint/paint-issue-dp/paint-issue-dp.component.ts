@@ -897,6 +897,24 @@ export class PaintIssueDpComponent implements OnInit {
     let avalqty = trxLnArr[i].avlqty;
     let qty = trxLnArr[i].physicalQty;
     let uomCode = trxLnArr[i].uom;
+    // --------------------------------------
+
+    var totQty=0;
+    var totValue=0;
+    for (let i = 0; i < trxLnArr.length; i++) {
+      totQty=totQty+trxLnArr[i].physicalQty;
+      totValue=totValue+(trxLnArr[i].itemUnitCost * trxLnArr[i].physicalQty)
+    }
+    
+    // this.paintIssueForm.patchValue({totIssuedQty :totQty});
+    // this.paintIssueForm.patchValue({totIssuedValue :totValue})
+
+    this.paintIssueForm.patchValue({totalCompileItems :totQty});
+    this.paintIssueForm.patchValue({totalItemValue :totValue})
+
+
+
+    // ---------------------------------------
     //alert(avalqty+'avalqty');
     //alert(trxLnArr[i].physicalQty +' qty');
     if (qty > avalqty && this.paintIssueForm.get('compileType').value !== 13) {

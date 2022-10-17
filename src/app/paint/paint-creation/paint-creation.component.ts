@@ -927,6 +927,7 @@ export class PaintCreationComponent implements OnInit {
     let avalqty = trxLnArr[i].avlqty;
     let qty = trxLnArr[i].physicalQty;
     let uomCode = trxLnArr[i].uom;
+   
     var totQty=0;
     var totValue=0;
     for (let i = 0; i < trxLnArr.length; i++) {
