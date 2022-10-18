@@ -581,6 +581,7 @@ if(this.deptId==2){
   if(this.deptId==4){
     this.sub = this.router1.params.subscribe(params => {
       this.checkNo = this.router1.snapshot.queryParamMap.get('invNumber');
+      this.paymentArForm.get('checkNo').disable();
       // this.searchByRcptNo= Number(this.router1.snapshot.queryParamMap.get('docSequenceValue'));
       // alert(this.searchByRcptNo)
      var methodId =   this.router1.snapshot.queryParamMap.get('methodId');
