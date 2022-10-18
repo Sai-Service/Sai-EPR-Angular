@@ -433,25 +433,50 @@
     </li>
   </div>
 
+
   <div [style.display]="isVisibilePaintSystem ? 'block' : 'none'">
     <li class="nav-item dropdown">
-     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-       aria-haspopup="true" aria-expanded="false">
-       Paint Management
-     </a>
-       <ul class="dropdown-menu">
-         <!-- <li><a class="dropdown-item" [routerLink]="['/admin/service/JobcardOpening']">JobCard Opening</a></li> -->
-         <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintIssueDp']">Paint Issue(dp)</a></li>
-         <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintCreation']">Paint Mixing(dp)</a></li>
-         <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintPurchaseOrder']">Paint Purchase Order</a></li>
-         <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintPoReceipt']">Paint PO Receipt</a></li>
-         <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintMixingMaster']">Paint Mixing Master</a></li>
-         <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintPanelMaster']">Paint Panel Master</a></li>
-         <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintItemMaster']">Paint Item Master</a></li>
+      <a class="nav-link dropdown-toggle " id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"  aria-expanded="false">Paint Management </a>
+      <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+       
+        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Master</a>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintItemMaster']">Paint Item Master</a></li>
+                <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintMixingMaster']">Paint Mixing Master</a></li>
+                <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintPanelMaster']">Paint Panel Master</a></li>
+              </ul>
+        </li>
+
+        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Transactions</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintIssueDp']">Workhop Issue</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintCreation']">Colour Mixing</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintPurchaseOrder']">Paint Purchase Order</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintPoReceipt']">Paint PO Receipt</a></li>
+        </ul>
+
+        <!-- <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Reports</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintPanelMaster']">Report1</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintPanelMaster']">Report2</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintPanelMaster']">Report3</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintPanelMaster']">Report4</a></li>
+          </ul>
+        </li> -->
         
-       </ul>
-     </li>
-   </div>
+
+       <li><a class="dropdown-submenu" style="padding-left: 28px ;" [routerLink]="['/admin/Report/PaintReports']">Reports</a></li>
+       <!-- <li><a class="dropdown-submenu" [routerLink]="['/admin/Report/SparesReportsNew']">Spares Reports-New</a></li> -->
+
+      
+      </ul>
+    </li>
+  </div>
+
+
+  
+
+  
 
     <!-- <li class="nav-item-dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"

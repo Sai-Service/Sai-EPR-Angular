@@ -1523,8 +1523,13 @@ export class MasterService {
   getsearchByShipmentNo(shipNo): Observable<any> {
     return this.http.get(this.ServerUrl + `/mmtTrx/stktrf/${shipNo}`)
   }
+
   ItemIdListDept(deptId, locId, subId): Observable<any> {
     return this.http.get(this.ServerUrl + `/itemMst/itemDepartent1?deptId=${deptId}&locationId=${locId}&subInventoryId=${subId}`)
+  }
+
+  ItemIdListDeptPaint(deptId, locId, subId,clrCode): Observable<any> {
+    return this.http.get(this.ServerUrl + `/itemMst/itemDepartent1?deptId=${deptId}&locationId=${locId}&subInventoryId=${subId}&colorCode=${clrCode}`)
   }
 
   ItemIdListDeptByCode(deptId, locId, subId, itemCode): Observable<any> {
@@ -1731,6 +1736,11 @@ export class MasterService {
 
   paintColorCodeList(divisionId): Observable<any> {
     return this.http.get(this.ServerUrl + `/itemMst/onlyPn/${divisionId}`)
+  }
+
+  paintPanelCodeList(divisionId,cmtype): Observable<any> {
+    // http://localhost:8081/cmnLookup/CmnTypeDivision?cmnType=Panel&divisionId=1
+    return this.http.get(this.ServerUrl + `/cmnLookup/CmnTypeDivision?cmnType=${cmtype}&divisionId=${divisionId}`)
   }
 
   ItemIdList(): Observable<any> {
@@ -3580,6 +3590,7 @@ public shortLandedClaimSave(rtvRecord) {
     const url = this.ServerUrl + '/stockadj';
     return this.http.post(url, miscRecord, options);
   }
+
   miscSubmit(miscelRecord): Observable<any> {
     const options = {
       headers: this.headers
@@ -3587,6 +3598,18 @@ public shortLandedClaimSave(rtvRecord) {
     const url = this.ServerUrl + '/stockadj/misc';
     return this.http.post(url, miscelRecord, options);
   }
+
+  paintMixingSaveSubmit(miscelRecord): Observable<any> {
+    const options = {
+      headers: this.headers
+    }
+    const url = this.ServerUrl + '/stockadj/PaintMixing';
+    return this.http.post(url, miscelRecord, options);
+  }
+
+
+
+
   approve(appmiscRecord): Observable<any> {
     const options = {
       headers: this.headers

@@ -1064,8 +1064,8 @@ export class PaintPurchaseOrderComponent implements OnInit {
      itemType: [],
      unitPrice: ['', [Validators.required]],
      density:[],
-     wtInGrams:[],
-     ratePerGram:[],
+     invoiceQty:[],
+     invoiceRate:[],
      // orderedQty: ['', [Validators.required, Validators.pattern("^[-]{1}[0-9]*$")]],    //^[0-9]\d*(\.\d+)?$
      // orderedQty: ['', [Validators.pattern("^[-]{1}[0-9]*$")]],    //^[0-9]\d*(\.\d+)?$
      orderedQty: [''],
@@ -1727,8 +1727,21 @@ export class PaintPurchaseOrderComponent implements OnInit {
    return val;
  }
 
+ validatePOLine() {
+  var poLineArr = this.paintPoForm.get('poLines').value
+  var patch = this.paintPoForm.get('poLines') as FormArray;
+  // alert ("poLineArr.lengt : "+poLineArr.length);
+  for (let i = 0; i < poLineArr.length; i++) {
+    patch.controls[i].patchValue({ orderedQty: poLineArr[i].wtInGrams });
+    patch.controls[i].patchValue({ unitPrice : poLineArr[i].ratePerGram });
+  }
+  alert ("Validation Done...");
+ }
+
  newPOMast() {
-  alert ("In Save.....");
+  alert ("In PO Save.....");
+
+  //  this.validatePOLine();
   
    this.authorizationStatus = 'Inprogress';
    const formValue: IpostPO = this.transData(this.paintPoForm.getRawValue());
@@ -1741,6 +1754,7 @@ export class PaintPurchaseOrderComponent implements OnInit {
    formValue.poType = this.poType;
    formValue.dept = Number(this.dept);
    formValue.supplierCode = this.supplierCode;
+   
   //  debugger;
    this.service.poSubmit(formValue).subscribe((res: any) => {
      var obj = res.obj;
@@ -1869,8 +1883,8 @@ export class PaintPurchaseOrderComponent implements OnInit {
       this.invItemId = selectedValue.itemId;
       console.log(this.invItemId, this.taxCat);
       this.lineDetailsArray.controls[index].get('taxCategoryName').enable();
-      this.lineDetailsArray.controls[index].get('orderedQty').enable();
-      this.lineDetailsArray.controls[index].get('unitPrice').enable();
+      this.lineDetailsArray.controls[index].get('invoiceQty').enable();
+      this.lineDetailsArray.controls[index].get('invoiceRate').enable();
       if (this.itemType === "GOODS") {
         this.service.ItemDetailsList(this.invItemId, this.selSuppTaxCatNm, this.billToLoc).subscribe((res: any) => {
           if (res.code === 200) {
@@ -2222,8 +2236,8 @@ export class PaintPurchaseOrderComponent implements OnInit {
        this.lineDetailsArray.controls[index].get('taxCategoryName').reset();
        this.lineDetailsArray.controls[index].get('segmentName').reset();
        this.lineDetailsArray.controls[index].get('taxCategoryName').disable();
-       this.lineDetailsArray.controls[index].get('orderedQty').disable();
-       this.lineDetailsArray.controls[index].get('unitPrice').disable();
+       this.lineDetailsArray.controls[index].get('invoiceQty').disable();
+       this.lineDetailsArray.controls[index].get('invoiceRate').disable();
      }
     });
    }
@@ -2319,15 +2333,15 @@ export class PaintPurchaseOrderComponent implements OnInit {
    var trxLnArrNew = this.paintPoForm.get('poLines') as FormArray;
    var trxLnArr = trxLnArrNew.getRawValue();
    var trxLnArr1 = this.paintPoForm.get('poLines') as FormArray
-   var orderedQty = trxLnArr[index].orderedQty;
+   var invoiceQty = trxLnArr[index].invoiceQty;
    var uomCode = trxLnArr[index].uom;
   
 
 
    if (uomCode === 'NO') {
-     if (!(Number.isInteger(orderedQty))) {
+     if (!(Number.isInteger(invoiceQty))) {
        alert('Please enter correct No');
-       trxLnArr1.controls[index].patchValue({ orderedQty: '' });
+       trxLnArr1.controls[index].patchValue({ invoiceQty: '' });
        return;
      }
    }
@@ -2336,17 +2350,17 @@ export class PaintPurchaseOrderComponent implements OnInit {
    var patch = this.paintPoForm.get('poLines') as FormArray;
    console.log(arrayControl);
 
-   trxLnArr[index].baseAmtLineWise = Math.round(((trxLnArr[index].unitPrice * trxLnArr[index].orderedQty) + Number.EPSILON) * 100) / 100;
+   trxLnArr[index].baseAmtLineWise = Math.round(((trxLnArr[index].invoiceRate * trxLnArr[index].invoiceQty) + Number.EPSILON) * 100) / 100;
    var baseAmount = Math.round(((trxLnArr[index].baseAmtLineWise) + Number.EPSILON) * 100) / 100;
    // alert(baseAmount);
 
   // ----Addeby by rk on 13.10.22----
  
   var itemDensity = trxLnArr[index].density;
-  var qtyInGrms =itemDensity*orderedQty;
-  var ratePerGram1= (trxLnArr[index].baseAmtLineWise/qtyInGrms).toFixed(5)
+  var orderedQty1 =itemDensity*invoiceQty;
+  var unitPrice1= (trxLnArr[index].baseAmtLineWise/orderedQty1).toFixed(5)
 
-  // alert ( "Density, qtyggms, ratePerGm : "+itemDensity +","+qtyInGrms+","+ratePerGram1);
+  // alert ( "Density, qtyggms, ratePerGm : "+itemDensity +","+orderedQty1+","+unitPrice1);
   
   // ----------------------------
 
@@ -2385,8 +2399,8 @@ export class PaintPurchaseOrderComponent implements OnInit {
              taxAmtLineWise: Math.round(((sum) + Number.EPSILON) * 100) / 100,
              totAmtLineWise: Math.round(((trxLnArr[index].baseAmtLineWise + sum-diss) + Number.EPSILON) * 100) / 100,
 
-             wtInGrams: Math.round(((qtyInGrms) + Number.EPSILON) * 100) / 100,
-             ratePerGram: ratePerGram1,
+             orderedQty: Math.round(((orderedQty1) + Number.EPSILON) * 100) / 100,
+             unitPrice: unitPrice1,
 
 
            });
@@ -2404,11 +2418,11 @@ export class PaintPurchaseOrderComponent implements OnInit {
 
  validate(index: number) {
    var trxLnArr = this.paintPoForm.get('poLines').value;
-   var orderedQty = trxLnArr[index].orderedQty;
+   var invoiceQty = trxLnArr[index].invoiceQty;
    var uomCode = trxLnArr[index].uom;
    if (uomCode === 'NO') {
      // alert(Number.isInteger(qty1)+'Status');
-     if (!(Number.isInteger(orderedQty))) {
+     if (!(Number.isInteger(invoiceQty))) {
        alert('Please enter correct No');
        return;
      }
@@ -2749,8 +2763,8 @@ export class PaintPurchaseOrderComponent implements OnInit {
        this.paintPoForm.get('suppInvNo').disable();
        this.paintPoForm.get('suppInvDate').disable();
        if (sessionStorage.getItem('deptName') === 'Sales' && itemType === 'GOODS') {
-         this.lineDetailsArray.controls[lineNum].patchValue({ orderedQty: 1 })
-         this.lineDetailsArray.controls[lineNum].get('orderedQty').disable();
+         this.lineDetailsArray.controls[lineNum].patchValue({ invoiceQty: 1 })
+         this.lineDetailsArray.controls[lineNum].get('invoiceQty').disable();
        }
 
      }

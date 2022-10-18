@@ -61,6 +61,8 @@ interface IPaintMixing {
   attribute2: Date;
 
   colorCode :string;
+  totIssuedQty:number;
+  totIssuedValue:number;
 
 }
 
@@ -201,6 +203,8 @@ export class PaintCreationComponent implements OnInit {
   name:string;
 
   colorCode :string;
+  totIssuedQty:number;
+  totIssuedValue:number;
 
   public itemMap = new Map<string, IcTrans>();
 
@@ -262,6 +266,8 @@ export class PaintCreationComponent implements OnInit {
       attribute2: [],
       name:[],
       colorCode:[],
+      totIssuedQty:[],
+      totIssuedValue:[],
 
       cycleLinesList: this.fb.array([]),
 
@@ -270,6 +276,7 @@ export class PaintCreationComponent implements OnInit {
   cycleLinesList(): FormArray {
     return this.paintCreationForm.get("cycleLinesList") as FormArray
   }
+
   newcycleLinesList(): FormGroup {
     return this.fb.group({
       compileId: [''],
@@ -304,12 +311,12 @@ export class PaintCreationComponent implements OnInit {
       var trxLnArr1 = this.paintCreationForm.get('cycleLinesList').value;
       var itemqty = trxLnArr1[i].physicalQty;
       var item1 = trxLnArr1[i].segment;
-      // alert(item1);
-      if (item1 === '') {
-        alert('Please enter Blank Data');
-        return;
-      }
+      // alert(item1 +","+itemqty +",index:"+i);
 
+      if (item1.trim()   === '' || item1==undefined ) {alert('Incomplete Line Details...ItemCode');return;}
+      if (itemqty<=0 || itemqty==undefined) {alert('Incomplete Line Details...ItemQty');return;}
+
+      // alert ("testing..."+this.cycleLinesList().length)
 
       if (!this.itemMap.has(item1)) {
         this.reservePos(i);
@@ -319,10 +326,12 @@ export class PaintCreationComponent implements OnInit {
         this.reservePos(i);
       }
     }
+   
     var len1 = this.cycleLinesList().length;
     if (len1 == i + 1) {
 
       this.cycleLinesList().push(this.newcycleLinesList());
+
       var patch = this.paintCreationForm.get('cycleLinesList') as FormArray;
       var len = this.cycleLinesList().length;
       (patch.controls[len - 1]).patchValue(
@@ -918,6 +927,21 @@ export class PaintCreationComponent implements OnInit {
     let avalqty = trxLnArr[i].avlqty;
     let qty = trxLnArr[i].physicalQty;
     let uomCode = trxLnArr[i].uom;
+   
+    var totQty=0;
+    var totValue=0;
+    for (let i = 0; i < trxLnArr.length; i++) {
+
+      totQty=totQty+trxLnArr[i].physicalQty;
+      totValue=totValue+(trxLnArr[i].itemUnitCost * trxLnArr[i].physicalQty)
+    }
+    
+    this.paintCreationForm.patchValue({totIssuedQty :totQty});
+    this.paintCreationForm.patchValue({totIssuedValue :totValue})
+
+    this.paintCreationForm.patchValue({totalCompileItems :totQty});
+    this.paintCreationForm.patchValue({totalItemValue :totValue})
+
     //alert(avalqty+'avalqty');
     //alert(trxLnArr[i].physicalQty +' qty');
     if (qty > avalqty && this.paintCreationForm.get('compileType').value !== 13) {
@@ -940,7 +964,6 @@ export class PaintCreationComponent implements OnInit {
   }
 
   searchByCompileID(itemId) {
-
     // alert(itemId+'ID')
     var compileId = this.paintCreationForm.get('compileId').value;
     // alert(compileId+'CompileID');
@@ -1048,22 +1071,14 @@ export class PaintCreationComponent implements OnInit {
         formValue.attribute1 = itemCode1[0];
       }
     
-      this.service.miscSubmit(formValue).subscribe
+      this.service.paintMixingSaveSubmit(formValue).subscribe
         ((res: any) => {
           if (res.code === 200) {
             this.compileName = res.obj.compileName;
             this.totalCompileItems = res.obj.totalCompileItems;
             this.totalItemValue = res.obj.totalItemValue;
             this.compileStatus = res.obj.compileStatus;
-            // this.lstcomment=data.obj;
             alert(res.message);
-            // this.paintCreationForm.patchValue(obj);
-            // let control =this.paintCreationForm.get('cycleLinesList') as FormArray;
-            // var len = this.cycleLinesList().length;
-            // for(let i=0; i<res.obj.cycleLinesList.length-len; i++){
-            //   var trxlist:FormGroup=this.newcycleLinesList();
-            //   this.cycleLinesList().push(trxlist);
-
             this.paintCreationForm.disable();
             this.displayButton = false;
             this.displayaddButton = false;
@@ -1071,7 +1086,7 @@ export class PaintCreationComponent implements OnInit {
           else {
             if (res.code === 400) {
               alert(res.message);
-              this.paintCreationForm.reset();
+              // this.paintCreationForm.reset();
             }
           }
         })
@@ -1087,6 +1102,12 @@ export class PaintCreationComponent implements OnInit {
   onSelectColor(event) {
     if(event !=undefined || event !=null || event.trim() !='') {
     alert ("Color Selected  : "+event);
+    this.service.ItemIdListDeptPaint(this.deptId, Number(sessionStorage.getItem('locId')), this.subInvCode.subInventoryId,event).subscribe(
+      data => {
+        this.ItemIdList = data;
+        // console.log(this.invItemId);
+      });
+
     }
   }
 
@@ -1109,11 +1130,11 @@ export class PaintCreationComponent implements OnInit {
         console.log(data);
       }
     );
-    this.service.ItemIdListDept(this.deptId, Number(sessionStorage.getItem('locId')), this.subInvCode.subInventoryId).subscribe(
-      data => {
-        this.ItemIdList = data;
-        // console.log(this.invItemId);
-      });
+
+    // this.service.ItemIdListDept(this.deptId, Number(sessionStorage.getItem('locId')), this.subInvCode.subInventoryId).subscribe(
+    //   data => {
+    //     this.ItemIdList = data;
+    //   });
 
   }
   keytab(event, maxLength, nxtEle) {

@@ -1255,7 +1255,7 @@ export class PaintPoReceiptComponent implements OnInit {
       } else {
         if (res.code === 400) {
           alert(res.message);
-          window.location.reload();
+          // window.location.reload();
         }
       }
     });
@@ -1434,8 +1434,9 @@ export class PaintPoReceiptComponent implements OnInit {
       alert('PO Invoice creation');
       this.poInvoiceCreation(this.segment1);
     }
-    return;
+    // return;
   }
+
   glReceiptFind(receiptno){
     
       this.service.getsearchByGlReceiptNo(receiptno)

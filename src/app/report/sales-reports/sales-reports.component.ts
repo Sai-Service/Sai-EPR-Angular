@@ -18,6 +18,7 @@ const MIME_TYPES = {
   templateUrl: './sales-reports.component.html',
   styleUrls: ['./sales-reports.component.css']
 })
+
 export class SalesReportsComponent implements OnInit {
   salesReportForm: FormGroup;
   closeResetButton = true;

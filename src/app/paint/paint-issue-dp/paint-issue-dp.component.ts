@@ -59,6 +59,7 @@ interface IPaintIssue {
   CostDetail: number;
   attribute1: number;
   attribute2: Date;
+  panelCode:string;
 }
 
 export class IcTrans {
@@ -77,6 +78,11 @@ export class PaintIssueDpComponent implements OnInit {
 
   public ItemIdList: any[];
   public subInvCode: any;
+  public panelList :any[];
+
+  panelCode:string;
+  panelQty:number=0;
+  panelFlag:string;
   compNo: string;
   onHandQty: number;
   JobNo:string;
@@ -252,6 +258,10 @@ export class PaintIssueDpComponent implements OnInit {
       attribute1: [],
       attribute2: [],
       name:[],
+      panelCode:[],
+      panelQty:[],
+      panelFlag:[],
+
       cycleLinesList: this.fb.array([]),
 
     })
@@ -374,9 +384,13 @@ export class PaintIssueDpComponent implements OnInit {
     this.divisionId = Number(sessionStorage.getItem('divisionId'));
     // document.getElementById("processButton").setAttribute("disabled","disabled");
     this.approvedBy = (sessionStorage.getItem('name'));
-
     this.displayLocator[0] = false;
 
+    this.service.paintPanelCodeList(this.divisionId,'Panel').subscribe(
+      data => {
+      this.panelList = data;
+      console.log(this.panelList);
+    });
 
 
     this.service.subInvCode2(this.deptId, this.divisionId).subscribe(
@@ -897,6 +911,24 @@ export class PaintIssueDpComponent implements OnInit {
     let avalqty = trxLnArr[i].avlqty;
     let qty = trxLnArr[i].physicalQty;
     let uomCode = trxLnArr[i].uom;
+    // --------------------------------------
+
+    var totQty=0;
+    var totValue=0;
+    for (let i = 0; i < trxLnArr.length; i++) {
+      totQty=totQty+trxLnArr[i].physicalQty;
+      totValue=totValue+(trxLnArr[i].itemUnitCost * trxLnArr[i].physicalQty)
+    }
+    
+    // this.paintIssueForm.patchValue({totIssuedQty :totQty});
+    // this.paintIssueForm.patchValue({totIssuedValue :totValue})
+
+    this.paintIssueForm.patchValue({totalCompileItems :totQty});
+    this.paintIssueForm.patchValue({totalItemValue :totValue})
+
+
+
+    // ---------------------------------------
     //alert(avalqty+'avalqty');
     //alert(trxLnArr[i].physicalQty +' qty');
     if (qty > avalqty && this.paintIssueForm.get('compileType').value !== 13) {
@@ -1239,5 +1271,32 @@ this.service.getVehRegDetail(regNum).subscribe(
   }
 );
 }
+
+onSelectPanel(e,index){
+
+  // alert("Index : " + index+","+e.target.checked);
+
+  if (e.target.checked === true) {
+    this.panelFlag = 'Y'
+    this.panelQty=this.panelQty+Number(this.panelList[index].attribute1);
+    var att1=this.panelList[index].attribute1 
+    
+    // alert ("Index : " +index + ","+ this.panelList[index].codeDesc  + ","+att1 )
+  }
+    if (e.target.checked === false) {this.panelFlag  = 'N' 
+      this.panelQty=this.panelQty-Number(this.panelList[index].attribute1);
+  }
+   this.description=this.panelQty.toString();
+  // var totPanelCount=0;
+  // for (let i = 0; i < this.panelList.length; i++) {
+  //   if(this.panelList[index].panelFlag==true) {
+  //   var totPanelCount=totPanelCount+Number(this.panelList[index].attribute1 )
+  // }
+  // }
+
+  // this.paintIssueForm.patchValue({panelQty :totPanelCount});
+}
+
+LoadPanelList(){}
 
 }

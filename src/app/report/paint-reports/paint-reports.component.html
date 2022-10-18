@@ -1,0 +1,129 @@
+<form [formGroup]="paintReportForm" (ngSubmit)="paintReport(paintReportForm.value)">
+    <div class="center">
+        <table style="width: 100%;background-color: white;">
+            <tr>
+                <td class="PageHeader">
+                    &nbsp;Paint&nbsp;Reports&nbsp;&nbsp;
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <nav class="navbar navbar-expand-lg bg-primary" style="margin-top: 5px;">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_nav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="main_nav">
+            <ul class="navbar-nav">
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" (click)="department('Spares')">Purchase & Stock </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelGSTPurchaseRegister" role="tab"
+                                (click)="reportDetails('gstPurRegister')">Purchase Register</a>
+                        </li>
+                      
+                       
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <br>
+
+    <fieldset class="RFS">
+        <br>
+
+        <table class="center"   style="margin-left: 10%;"
+            [style.display]="isVisibleGSTPurchaseRegister ? 'block' : 'none'" class="collapse"
+            id="panelGSTPurchaseRegister">
+          
+            <table class="center">
+                <tr>
+                     <td class="LabelFontStyle" style="font-size:large ;font-weight:bold ;" >{{reportName}}</td>
+                </tr>
+            </table>
+            <br>
+
+           
+                    <table class="center">
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle"> &nbsp;From&nbsp;Date&nbsp;:&nbsp; </td>
+                            <td><input type="date" class="form-control" formControlName="fromDate" [(ngModel)]="fromDate" max="{{minDate | date:'yyyy-MM-dd'}}"></td>
+                            <td style="width: 15%" class="LabelFontStyle">&nbsp;To&nbsp;Date&nbsp;:&nbsp;</td>
+                            <td><input type="date" class="form-control" formControlName="toDate" [(ngModel)]="toDate"  max="{{minDate | date:'yyyy-MM-dd'}}"> </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle"> &nbsp;Location&nbsp;Code&nbsp;:&nbsp; </td>
+                            <td [style.display]="isVisiblelocationInput ? 'block' : 'none'">
+                                <input type="text" disabled class="form-control" formControlName="locCode">
+                            </td>
+                            <td [style.display]="isVisiblelocationLOV ? 'block' : 'none'">
+                                <select formControlName="locCode" id="locCode" class="form-control"
+                                    (ngModelChange)='onOptionsLocation($event)'>
+                                    <option></option>
+                                    <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
+                                        {{sc.locCode}}
+                                    </option>
+                                </select>
+                                <input  disabled hidden type="number" class="form-control" formControlName="locId">
+
+                            </td>
+
+                            <td style="width: 15%" class="LabelFontStyle" >&nbsp;Dept&nbsp;:&nbsp;</td>
+                            <input type="text" disabled class="form-control" formControlName="department">
+                            <input hidden type="number" class="form-control" formControlName="deptId">
+                   
+                        </tr>
+                    </table>
+                      
+
+                    <table class="center">
+                        <tr>
+                            <td>
+                                <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                                <ng-template #hList2> 
+                                    <div class="d-flex justify-content-center">
+                                        <div class="spinner-border text-primary" role="status" >
+                                            <span class="sr-only" id="loading"></span>
+                                    
+                                        </div>
+                                        </div>
+                                </ng-template>
+                                <ng-template #hList1> </ng-template>
+                            </td>
+                            <td class="LabelFontStyle" style="color: blue;">&nbsp;{{this.dataDisplay}}&nbsp; </td>
+                        </tr>
+                        </table>
+
+                        <table class="center" >
+                            <tr>
+                            <td>
+                                <button class="btn-primary" [disabled]="isDisabled1" (click)="reportParameter(reportName)">View
+                                    Report</button>
+                                </td>
+                                <!-- <td [style.display]="isVisiblespPurRegDownLoad ? 'block' : 'none'">
+                                    <button class="btn-primary" [disabled]="isDisabled1" (click)="spPurRegDownLoad()">DownLoad</button>
+                            </td> -->
+                            </tr>
+                        </table>
+                                 
+        </table>
+    </fieldset>
+
+    <table class="center">
+        <tr>
+            <td>
+                <button type="submit" class="btn btn-primary" id="register" (click)="refresh()">
+                    Clear
+                </button>
+            </td>
+            <td>
+                <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
+            </td>
+        </tr>
+    </table>
+
+</form>
