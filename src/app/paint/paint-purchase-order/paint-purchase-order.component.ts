@@ -2360,7 +2360,7 @@ export class PaintPurchaseOrderComponent implements OnInit {
   var orderedQty1 =itemDensity*invoiceQty;
   var unitPrice1= (trxLnArr[index].baseAmtLineWise/orderedQty1).toFixed(5)
 
-  alert ( "Density, qtyggms, ratePerGm : "+itemDensity +","+orderedQty1+","+unitPrice1);
+  // alert ( "Density, qtyggms, ratePerGm : "+itemDensity +","+orderedQty1+","+unitPrice1);
   
   // ----------------------------
 
