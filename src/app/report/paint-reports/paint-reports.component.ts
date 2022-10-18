@@ -232,6 +232,7 @@ export class PaintReportsComponent implements OnInit {
   }
 
   spPurRegDownLoad() {
+    
     const fileName = 'Purchase-Register-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.spPurRegDownLoadReport(sessionStorage.getItem('ouId'))
@@ -244,6 +245,8 @@ export class PaintReportsComponent implements OnInit {
   }
 
   reportParameter(reportName) {
+    alert ("....Report Not ready....wip");
+    return;
     this.isDisabled1 = true;
     this.closeResetButton = false;
     this.progress = 0;
