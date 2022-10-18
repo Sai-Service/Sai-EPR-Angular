@@ -250,7 +250,6 @@ export class PoUploadListComponent implements OnInit {
   //   // alert(segment1);
 
   recoverableFlg1(e, index) {
-    alert("Index : " + index);
 
     if (e.target.checked === true) {
       this.enabledFlag = 'Y'

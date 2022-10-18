@@ -180,6 +180,49 @@
        <input hidden formControlName="name"  [(ngModel)]="name">
          </td>
       </tr>
+      <tr>
+        <td></td>
+
+        <!-- <td>
+          <button type="button" class="btn btn-primary" (click)="LoadPanelList()" style="width:fit-content ;" >Select Panel Details</button>
+       </td> -->
+
+       <td >
+        <button type="button"  class="btn btn-primary" 
+        data-toggle="modal" data-target="#paintPanelList"  (click)="LoadPanelList()" style="width:fit-content;color: black;">
+        &nbsp;Select Panel Details</button>
+    </td>
+
+        <td style="width: 15%" class="LabelFontStyle">Panels# :</td>
+        <td>
+        <input  hidden disabled type="number" class="form-control" formControlName="panelQty" [(ngModel)]="panelQty">
+      </td>
+         <!-- <td colspan="3">
+           <select  multiple  aria-expanded="true" class="form-control selectBox" formControlName="panelCode" [(ngModel)]="panelCode" (ngModelChange)="onSelectPanel(0)" style="background-color: yellow;">
+              <option disabled>--Select--</option>
+              <option class="selectbox" *ngFor="let pan of panelList" [ngValue]="pan.attribute1"  >
+                {{pan.attribute1}}-{{pan.codeDesc}}
+              </option>
+            </select>
+        </td> -->
+
+        <!-- <td style="width: 15%" class="LabelFontStyle">Panel# :</td> -->
+<!-- 
+        <td>
+          <div class="multiselect">
+            <div class="selectBox" onclick="onSelectPanel($event)">
+              <select multiple  >
+                <option>Select an option</option>
+                <option *ngFor="let pan of panelList" [ngValue]="pan.attribute1"  >
+                  {{pan.attribute1}}-{{pan.codeDesc}}
+                </option>
+              </select>
+              <div class="overSelect"></div>
+            </div>
+          </div>
+       </td> -->
+
+      </tr>
     </table>
     </fieldset>
 
@@ -458,6 +501,66 @@
     </table>
     </div>
   </div>
+
+  <!-- ------------------------- PANEL LIST------------ -->
+
+
+  <div class="modal fade" id="paintPanelList" tabindex="-1" role="dialog" aria-labelledby="paintPanelListLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        
+        <div class="modal-header">
+            <h5 class="modal-title" id="paintPanelListLabel" style="text-align: center;" >&nbsp;PANEL&nbsp;LIST&nbsp;</h5>
+         
+          <button type="button" class="close " data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        
+        <div class="modal-body">
+            <table class="center" style="width: 100%;">
+                <tr>
+
+                  <td style="width: 15%" class="LabelFontStyle">Panels# :</td>
+                   <td> <input disabled type="number" class="form-control" formControlName="panelQty" [(ngModel)]="panelQty"></td>
+                </tr>
+              </table>
+
+
+            <div class="container1">
+               <div class="grid_scroll_13">
+                 <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="font-size:small; border-color:brown;border-collapse:collapse;width: 100%;">
+                                  <tbody>
+                                    <tr class="GridHeader">
+                                       <th style="width:5rem" scope="col">Select</th>
+                                        <th style="width:3rem" scope="col">Srl#</th>
+                                        <th style="width:12rem" scope="col">Description</th>
+                                        <th style="width:12rem" scope="col">Panel</th>
+                                      
+                                     </tr>
+                                </tbody>
+                                
+                                       <tr *ngFor="let com of panelList let k=index" class="ItemStyle" style="text-decoration:none;">
+                                        <td><input type="checkbox" style="text-align:center;width:3rem;border-color:blueviolet;"  formControlName="panelFlag"    (change)="onSelectPanel($event,k)"></td>
+
+                                        <td style="text-align: center;">{{k+1}}</td>
+                                        <td style="padding-left: 5px; text-align: left;width:25rem;">{{com.codeDesc}}</td>
+                                        <td style="padding-left: 5px; text-align: center;width:5rem;">{{com.attribute1}}&nbsp;&nbsp;</td>
+                                    
+                                    </tr>
+                                    
+
+                </table>
+              </div>
+            </div>
+             <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+      </div>
+    </div>
+</div>
+</div>
+<!-- ------------------------------------- -->
   
     </form>
     </div>

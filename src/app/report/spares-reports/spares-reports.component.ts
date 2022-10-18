@@ -17,6 +17,7 @@ const MIME_TYPES = {
   templateUrl: './spares-reports.component.html',
   styleUrls: ['./spares-reports.component.css']
 })
+
 export class SparesReportsComponent implements OnInit {
   sparesReportForm: FormGroup;
   pipe = new DatePipe('en-US');

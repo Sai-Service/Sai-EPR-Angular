@@ -1738,6 +1738,11 @@ export class MasterService {
     return this.http.get(this.ServerUrl + `/itemMst/onlyPn/${divisionId}`)
   }
 
+  paintPanelCodeList(divisionId,cmtype): Observable<any> {
+    // http://localhost:8081/cmnLookup/CmnTypeDivision?cmnType=Panel&divisionId=1
+    return this.http.get(this.ServerUrl + `/cmnLookup/CmnTypeDivision?cmnType=${cmtype}&divisionId=${divisionId}`)
+  }
+
   ItemIdList(): Observable<any> {
     return this.http.get(this.ServerUrl + '/itemMst/category');
   }

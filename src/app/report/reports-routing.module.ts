@@ -7,6 +7,7 @@ import { SalesReportsComponent } from './sales-reports/sales-reports.component';
 import { ServiceReportComponent } from './service-report/service-report.component';
 import { SparesReportsComponent } from './spares-reports/spares-reports.component';
 import { ServerReportComponent } from './server-report/server-report.component';
+import { PaintReportsComponent } from './paint-reports/paint-reports.component';
 
 
 
@@ -18,6 +19,9 @@ const routes: Routes = [
   {path:'SparesReportsNew',component:SparesReportsComponent},
   {path:'AccessoriesReport',component:AccessoriesReportComponent},
   {path:'ServerReport',component:ServerReportComponent},
+  {path:'PaintReports',component:PaintReportsComponent},
+
+
   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];
 
