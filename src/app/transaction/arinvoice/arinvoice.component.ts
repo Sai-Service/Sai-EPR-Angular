@@ -1239,7 +1239,7 @@ export class ARInvoiceComponent implements OnInit {
 
   custNameSearch(billToCustName) {
     // alert(billToCustName)
-    this.orderManagementService.custNameSearchFn(billToCustName, sessionStorage.getItem('divisionId'))
+    this.orderManagementService.custNameSearchFn1(billToCustName, sessionStorage.getItem('divisionId'))
       .subscribe(
         data => {
           if (data.code === 200) {
