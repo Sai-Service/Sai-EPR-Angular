@@ -354,6 +354,7 @@ export class PaintCreationComponent implements OnInit {
     // this.displayRemoveRow[i]=true;
     // alert(i);
   }
+
   removenewcycleLinesList(trxLineIndex) {
     var len1 = this.cycleLinesList().length;
     if (len1 === 1) {
@@ -362,11 +363,14 @@ export class PaintCreationComponent implements OnInit {
     }
     var trxLnArr1 = this.paintCreationForm.get('cycleLinesList').value;
     var itemid = trxLnArr1[trxLineIndex].segment;
-    // alert(itemid+'Delete');
     if (itemid != null) {
+      // alert(itemid+'Delete-deleteReserveLinewise');
+
       this.deleteReserveLinewise(trxLineIndex);
       this.itemMap.delete(itemid);
     }
+
+    // alert( "RemoveAt");
     this.cycleLinesList().removeAt(trxLineIndex);
     var patch = this.paintCreationForm.get('cycleLinesList') as FormArray;
     var len = this.cycleLinesList().length;
@@ -376,11 +380,10 @@ export class PaintCreationComponent implements OnInit {
       }
     );
 
-    var btnrm = document.getElementById("btnrm" + (trxLineIndex - 1)) as HTMLInputElement;
-    if (document.contains(btnrm)) {
-      (document.getElementById("btnrm" + (trxLineIndex - 1)) as HTMLInputElement).disabled = true;
-      // (document.getElementById('btnrm'+i+1) as HTMLInputElement).disabled = true;
-    }
+    // var btnrm = document.getElementById("btnrm" + (trxLineIndex - 1)) as HTMLInputElement;
+    // if (document.contains(btnrm)) {
+    //   (document.getElementById("btnrm" + (trxLineIndex - 1)) as HTMLInputElement).disabled = true;
+    // }
 
     this.displayLocator[trxLineIndex] = true;
     this.CalculateLineTotal();
@@ -676,8 +679,9 @@ export class PaintCreationComponent implements OnInit {
         trxLnArr1.controls[i].patchValue({ resveQty: reserve });
         if (avlqty1 < 0) {
           alert("Transfer is not allowed,Item has Reserve quantity - " + reserve);
-          this.cycleLinesList().clear();
-          this.addnewcycleLinesList(i);
+          // this.cycleLinesList().clear();
+          // this.addnewcycleLinesList(i);
+
         }
 
       });
@@ -1093,7 +1097,7 @@ export class PaintCreationComponent implements OnInit {
 
   onSelectColor(event) {
     if(event !=undefined || event !=null || event.trim() !='') {
-    alert ("Color Selected  : "+event);
+    // alert ("Color Selected  : "+event);
     this.service.ItemIdListDeptPaint(this.deptId, Number(sessionStorage.getItem('locId')), this.subInvCode.subInventoryId,event).subscribe(
       data => {
         this.ItemIdList = data;

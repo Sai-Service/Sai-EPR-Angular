@@ -367,11 +367,13 @@ export class PaintIssueDpComponent implements OnInit {
       }
     );
 
-    var btnrm = document.getElementById("btnrm" + (trxLineIndex - 1)) as HTMLInputElement;
-    if (document.contains(btnrm)) {
-      (document.getElementById("btnrm" + (trxLineIndex - 1)) as HTMLInputElement).disabled = true;
-      // (document.getElementById('btnrm'+i+1) as HTMLInputElement).disabled = true;
-    }
+
+    // var btnrm = document.getElementById("btnrm" + (trxLineIndex - 1)) as HTMLInputElement;
+    // if (document.contains(btnrm)) {
+    //   (document.getElementById("btnrm" + (trxLineIndex - 1)) as HTMLInputElement).disabled = true;
+    // }
+
+    // (document.getElementById('btnrm'+i+1) as HTMLInputElement).disabled = true;
 
     this.displayLocator[trxLineIndex] = true;
     this.CalculateLineTotal();
@@ -664,8 +666,8 @@ export class PaintIssueDpComponent implements OnInit {
         trxLnArr1.controls[i].patchValue({ resveQty: reserve });
         if (avlqty1 < 0) {
           alert("Transfer is not allowed,Item has Reserve quantity - " + reserve);
-          this.cycleLinesList().clear();
-          this.addnewcycleLinesList(i);
+          // this.cycleLinesList().clear();
+          // this.addnewcycleLinesList(i);
         }
 
       });
