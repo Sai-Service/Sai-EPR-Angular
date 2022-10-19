@@ -3522,9 +3522,15 @@ public shortLandedClaimSave(rtvRecord) {
   TransactionTypeIC(): Observable<any> {
     return this.http.get(this.ServerUrl + `/mtlTrxTypes/IC/9`);
   }
+
   ReasonList(): Observable<any> {
     return this.http.get(this.ServerUrl + '/mtlTransReasons');
   }
+
+  PaintReasonList(): Observable<any> {
+    return this.http.get(this.ServerUrl + '/mtlTransReasons/paint');
+  }
+  
   reasonaccCode(locId, reason, costCode): Observable<any> {
     return this.http.get(this.ServerUrl + `/mtlTransReasons/reason?locId=${locId}&reasonName=${reason}&costCode=${costCode}`)
   }

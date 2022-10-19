@@ -149,7 +149,7 @@ export class PaintIssueDpComponent implements OnInit {
   segmentNameList: any;
   codeCombinationId: number;
   compileType: number;
-  reason: string;
+  reason: string='ICPN02';
   reasonlist: any;
   compileStatus: string = "OPEN"
   entryStatusCode: number;
@@ -448,7 +448,7 @@ export class PaintIssueDpComponent implements OnInit {
         })
       }
     );
-    this.service.ReasonList().subscribe(
+    this.service.PaintReasonList().subscribe(
       data => {
         this.reasonlist = data;
         let selreasonlist: any = [];
