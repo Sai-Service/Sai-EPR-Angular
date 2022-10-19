@@ -2972,7 +2972,7 @@ if(this.deptId==2){
 
   CheckDataValidations() {
 
-    const formValue: IPaymentRcptAr = this.paymentArForm.value;
+    const formValue: IPaymentRcptAr = this.paymentArForm.getRawValue();
 
     // alert ("OPERATING UNIT :" +formValue.ouId);
     var msg1;
