@@ -530,6 +530,7 @@ export class PaintCreationComponent implements OnInit {
     if (this.currentOp === 'SEARCH') {
       return;
     }
+    // alert ("event :"+event +","+i)
 
     let select1 = this.ItemIdList.find(d => d.SEGMENT === event);
     if (select1 != undefined) {
@@ -648,6 +649,7 @@ export class PaintCreationComponent implements OnInit {
 
         });
     }
+     else {alert ("Wrong Item Selected....Pls select proper Item from the list.");}
 
   }
   AvailQty(event: any, i) {
@@ -1098,6 +1100,7 @@ export class PaintCreationComponent implements OnInit {
   onSelectColor(event) {
     if(event !=undefined || event !=null || event.trim() !='') {
     // alert ("Color Selected  : "+event);
+    this.ItemIdList=null;
     this.service.ItemIdListDeptPaint(this.deptId, Number(sessionStorage.getItem('locId')), this.subInvCode.subInventoryId,event).subscribe(
       data => {
         this.ItemIdList = data;

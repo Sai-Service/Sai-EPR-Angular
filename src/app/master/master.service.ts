@@ -1266,6 +1266,11 @@ export class MasterService {
     return this.http.get(this.ServerUrl + `/poHdr/poNum?segment1=${poNo}&locId=${locId}`);
   }
 
+  getsearchByPOHederPaint(poNo, locId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/poHdr/paintPoNum?segment1=${poNo}&locId=${locId}`);
+    // http://localhost:8081/poHdr/paintPoNum?segment1=2221205802099&locId=1207
+  }
+
 
 
 
@@ -1529,7 +1534,7 @@ export class MasterService {
   }
 
   ItemIdListDeptPaint(deptId, locId, subId,clrCode): Observable<any> {
-    return this.http.get(this.ServerUrl + `/itemMst/itemDepartent1?deptId=${deptId}&locationId=${locId}&subInventoryId=${subId}&colorCode=${clrCode}`)
+    return this.http.get(this.ServerUrl + `/itemMst/itemDepartent3?deptId=${deptId}&locationId=${locId}&subInventoryId=${subId}&colorCode=${clrCode}`)
   }
 
   ItemIdListDeptByCode(deptId, locId, subId, itemCode): Observable<any> {
@@ -3530,7 +3535,7 @@ public shortLandedClaimSave(rtvRecord) {
   PaintReasonList(): Observable<any> {
     return this.http.get(this.ServerUrl + '/mtlTransReasons/paint');
   }
-  
+
   reasonaccCode(locId, reason, costCode): Observable<any> {
     return this.http.get(this.ServerUrl + `/mtlTransReasons/reason?locId=${locId}&reasonName=${reason}&costCode=${costCode}`)
   }

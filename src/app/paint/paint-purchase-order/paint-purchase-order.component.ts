@@ -1263,7 +1263,7 @@ export class PaintPurchaseOrderComponent implements OnInit {
    // alert(poNo);
    this.currentOp = 'Search';
    console.log(this.paintPoForm.value);
-   this.service.getsearchByPOHeder(poNo, (sessionStorage.getItem('locId')))
+   this.service.getsearchByPOHederPaint(poNo, (sessionStorage.getItem('locId')))
      .subscribe(
        data => {
          console.log(data);
