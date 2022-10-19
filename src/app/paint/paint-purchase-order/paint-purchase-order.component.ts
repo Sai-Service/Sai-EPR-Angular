@@ -1392,6 +1392,7 @@ export class PaintPurchaseOrderComponent implements OnInit {
                  }));
                });
              }
+             this.paintPoForm.disable();
 
            }
            if (status === "APPROVED") {
@@ -1550,13 +1551,17 @@ export class PaintPurchaseOrderComponent implements OnInit {
  //   }
 
  goReceiptForm(segment1) {
-   alert(segment1);
+  //  alert(segment1);
    if (Number(sessionStorage.getItem('deptId'))!=4){
-   this.router.navigate(['/admin/master/PoReceiptForm', segment1]);
+  //  this.router.navigate(['/admin/master/PoReceiptForm', segment1]);
+   this.router.navigate(['/admin/paint/PaintPoReceipt', segment1]);
+
  }
  else if (Number(sessionStorage.getItem('deptId'))== 4){
    // alert(this.accountLocId)
-   this.router.navigate(['/admin/master/PoReceiptForm', segment1,this.accountLocId]);
+  //  this.router.navigate(['/admin/master/PoReceiptForm', segment1,this.accountLocId]);
+   this.router.navigate(['/admin/paint/PaintPoReceipt', segment1,this.accountLocId]);
+
  }
    // alert(segment1);
  }
@@ -1912,6 +1917,14 @@ export class PaintPurchaseOrderComponent implements OnInit {
 
               this.taxCategoryId = this.ItemDetailsList.taxCategoryId;
               var gstPercentage = this.ItemDetailsList.gstPercentage;
+
+              var itmDensity =1;
+              if(this.ItemDetailsList.density ==null || this.ItemDetailsList.density==undefined || this.ItemDetailsList.density==0 )
+              { itmDensity =1; } else { itmDensity=this.ItemDetailsList.density   }
+
+              patch.controls[index].patchValue( { density: itmDensity})
+
+
               // alert(gstPercentage)
               // var supplierSiteId = this.poMasterDtoForm.get('supplierSiteId').value;
               // console.log(this.suppIdList);
@@ -1942,7 +1955,7 @@ export class PaintPurchaseOrderComponent implements OnInit {
                     taxCategoryId: Number(this.ItemDetailsList.taxCategoryId),
                     invItemId: this.invItemId,
                     gstPercentage: this.ItemDetailsList.gstPercentage,
-                    density: this.ItemDetailsList.density
+                    // density: this.ItemDetailsList.density
                   }
                 );
               }
@@ -1964,7 +1977,7 @@ export class PaintPurchaseOrderComponent implements OnInit {
                       taxCategoryId: Number(this.ItemDetailsList.taxCategoryId),
                       invItemId: this.invItemId,
                       gstPercentage: this.ItemDetailsList.gstPercentage,
-                      density: this.ItemDetailsList.density
+                      // density: this.ItemDetailsList.density
                     }
                   );
                 }
@@ -1983,7 +1996,7 @@ export class PaintPurchaseOrderComponent implements OnInit {
                       taxCategoryId: Number(this.ItemDetailsList.taxCategoryId),
                       invItemId: this.invItemId,
                       gstPercentage: this.ItemDetailsList.gstPercentage,
-                      density: this.ItemDetailsList.density
+                      // density: this.ItemDetailsList.density
                     }
                   );
                 }

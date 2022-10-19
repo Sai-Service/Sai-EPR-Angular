@@ -11,13 +11,17 @@ import { PaintItemMasterComponent } from './paint-item-master/paint-item-master.
 
 
 const routes: Routes = [
-  {path:'PaintIssueDp', component: PaintIssueDpComponent},
-  {path:'PaintCreation', component: PaintCreationComponent},
   {path:'PaintMixingMaster', component: PaintMixingMasterComponent},
-  {path:'PaintPurchaseOrder', component: PaintPurchaseOrderComponent},
-  {path:'PaintPoReceipt', component: PaintPoReceiptComponent},
   {path:'PaintPanelMaster', component: PaintPanelMasterComponent},
   {path:'PaintItemMaster', component: PaintItemMasterComponent},
+  {path:'PaintIssueDp', component: PaintIssueDpComponent},
+  {path:'PaintCreation', component: PaintCreationComponent},
+  {path:'PaintPurchaseOrder', component: PaintPurchaseOrderComponent},
+  {path:'PaintPoReceipt', component: PaintPoReceiptComponent},
+  {path:'PaintPoReceipt/:segment1',component:PaintPoReceiptComponent},
+  {path:'PaintPoReceipt/:segment1/:accountLocId',component:PaintPoReceiptComponent},
+  {path:'PaintPoReceipt/:trxNum/:catg',component:PaintPoReceiptComponent},
+  {path:'PaintPoReceipt/:shipmentNumber',component:PaintPoReceiptComponent},
 
   {path : '' ,redirectTo: 'Dashboard', pathMatch: 'full'}
 ];

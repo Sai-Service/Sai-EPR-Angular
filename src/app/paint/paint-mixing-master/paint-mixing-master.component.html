@@ -19,10 +19,10 @@
                 <input type="number" formControlName="itemId" [(ngModel)]="itemId" hidden>
                 <input type="number" formControlName="relatedItemId" [(ngModel)]="relatedItemId" hidden>
                
-                <td style="width: 15%" class="LabelFontStyle">Item&nbsp;Code:</td>
+                <td style="width: 15%" class="LabelFontStyle">Main&nbsp;Colour&nbsp;Code:</td>
                 <td><input type="text" class="form-control" formControlName="itemCode" [(ngModel)]="itemCode" (change)="Validateitem(itemCode)"   ></td>
     
-                <td style="width: 15%" class="LabelFontStyle">Item&nbsp;Description:</td>
+                <td style="width: 15%" class="LabelFontStyle">&nbsp;Description:</td>
                 <td><input type="text" class="form-control" formControlName="description" [(ngModel)]="description" disabled style="width:350px ;"></td>
                </tr>
                <tr>
@@ -36,7 +36,7 @@
                </tr>
             <tr>
                
-                <td style="width: 15%" class="LabelFontStyle">Related&nbsp;Item&nbsp;Code:</td>
+                <td style="width: 15%" class="LabelFontStyle">Base&nbsp;Colour&nbsp;Code:</td>
                 <td><input type="text" class="form-control" formControlName="relItemCode" [(ngModel)]="relItemCode" (change)="Validateitem1(relItemCode)"></td>
                 <td style="width: 15%" class="LabelFontStyle">Description</td>
                 <td><input type="text" class="form-control" formControlName="relDescription" [(ngModel)]="relDescription" disabled style="width:350px ;"></td>
@@ -72,11 +72,11 @@
                 <td >
                     <table class="center">
                         <tr>
-                            <td  style="background-color: #FFE4B5;">&nbsp;Item&nbsp;Code&nbsp;:&nbsp;</td>
+                            <td  style="background-color: #FFE4B5;">&nbsp;Main&nbsp;Colour&nbsp;Code:&nbsp;</td>
                             
                             <td style="background-color: #FFE4B5;">
                                 <input type="text" class="form-control" formControlName="itemCode1" [(ngModel)]='itemCode1'  
-                                    value={{itemCode1}} placeholder="Enter Main Item Code">
+                                    value={{itemCode1}} placeholder="Enter Main Colour Code">
                             </td>
         
                             <td style="background-color: #FFE4B5;">
@@ -118,11 +118,11 @@
     <tbody>
         <tr class="GridHeader">
             <th scope="col" style="width: 3rem;">Sr. No.</th>
-            <th scope="col" style="width: 3rem;">Part Number</th>
-            <th scope="col" style="width: 5rem;">Part Description</th> 
+            <th scope="col" style="width: 3rem;">Main Colour</th>
+            <th scope="col" style="width: 5rem;">Description</th> 
             <th scope="col" style="width: 5rem;">UOM</th>
-            <th scope="col" style="width: 3rem;">Related Part Number</th> 
-            <th scope="col" style="width: 8rem; ">Description</th>               
+            <th scope="col" style="width: 3rem;">Base Colour</th> 
+            <th scope="col" style="width: 8rem; ">Base Colour Name</th>               
             <th scope="col" style="width: 4rem;">Select</th>                
         </tr>
         </tbody>
@@ -132,7 +132,7 @@
             <td style="width: 4rem; text-align: center;">{{com.description}}</td>
             <td style="text-align: center;">{{com.uom}}</td> 
             <td style="text-align: center;">{{com.relItemCode}}</td>
-            <td style="width: 4rem; text-align: center;">{{com.relDescription}}</td>         
+            <td style="width: 4rem; text-align: left;">{{com.relDescription}}</td>         
             <td style="text-align: center;"><button class="btn btn-info Saibtn-secondary" (click)="Select(com.relatedItemId)">Select</button></td>
         </tr>
     </table>

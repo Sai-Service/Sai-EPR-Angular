@@ -350,6 +350,7 @@ export class PaintIssueDpComponent implements OnInit {
       alert('You can not delete the line');
       return;
     }
+
     var trxLnArr1 = this.paintIssueForm.get('cycleLinesList').value;
     var itemid = trxLnArr1[trxLineIndex].segment;
     // alert(itemid+'Delete');
@@ -373,7 +374,11 @@ export class PaintIssueDpComponent implements OnInit {
     }
 
     this.displayLocator[trxLineIndex] = true;
+    this.CalculateLineTotal();
+
   }
+
+
 
 
   ngOnInit(): void {
@@ -913,20 +918,16 @@ export class PaintIssueDpComponent implements OnInit {
     let uomCode = trxLnArr[i].uom;
     // --------------------------------------
 
-    var totQty=0;
-    var totValue=0;
-    for (let i = 0; i < trxLnArr.length; i++) {
-      totQty=totQty+trxLnArr[i].physicalQty;
-      totValue=totValue+(trxLnArr[i].itemUnitCost * trxLnArr[i].physicalQty)
-    }
-    
-    // this.paintIssueForm.patchValue({totIssuedQty :totQty});
-    // this.paintIssueForm.patchValue({totIssuedValue :totValue})
+    // var totQty=0;
+    // var totValue=0;
+    // for (let i = 0; i < trxLnArr.length; i++) {
+    //   totQty=totQty+trxLnArr[i].physicalQty;
+    //   totValue=totValue+(trxLnArr[i].itemUnitCost * trxLnArr[i].physicalQty)
+    // }
+    // this.paintIssueForm.patchValue({totalCompileItems :totQty});
+    // this.paintIssueForm.patchValue({totalItemValue :totValue})
 
-    this.paintIssueForm.patchValue({totalCompileItems :totQty});
-    this.paintIssueForm.patchValue({totalItemValue :totValue})
-
-
+    this.CalculateLineTotal();
 
     // ---------------------------------------
     //alert(avalqty+'avalqty');
@@ -941,13 +942,13 @@ export class PaintIssueDpComponent implements OnInit {
       trxLnArr1.controls[i].patchValue({ physicalQty: '' });
       qty1.focus();
     }
-    if (uomCode === 'NO') {
-      // alert(Number.isInteger(qty)+'Status');
-      if (!(Number.isInteger(qty))) {
-        alert('Please enter correct No');
-        trxLnArr1.controls[i].patchValue({ physicalQty: '' });
-      }
-    }
+    // if (uomCode === 'NO') {
+    //   // alert(Number.isInteger(qty)+'Status');
+    //   if (!(Number.isInteger(qty))) {
+    //     alert('Please enter correct No');
+    //     trxLnArr1.controls[i].patchValue({ physicalQty: '' });
+    //   }
+    // }
   }
 
   searchByCompileID(itemId) {
@@ -1298,5 +1299,19 @@ onSelectPanel(e,index){
 }
 
 LoadPanelList(){}
+
+CalculateLineTotal() {
+  var trxLnArr = this.paintIssueForm.get('cycleLinesList').value;
+  var trxLnArr1 = this.paintIssueForm.get('cycleLinesList') as FormArray
+
+  var totQty=0;
+  var totValue=0;
+  for (let i = 0; i < trxLnArr.length; i++) {
+    totQty=totQty+trxLnArr[i].physicalQty;
+    totValue=totValue+(trxLnArr[i].itemUnitCost * trxLnArr[i].physicalQty)
+  }
+  this.paintIssueForm.patchValue({totalCompileItems :totQty});
+  this.paintIssueForm.patchValue({totalItemValue :totValue})
+}
 
 }

@@ -383,6 +383,7 @@ export class PaintCreationComponent implements OnInit {
     }
 
     this.displayLocator[trxLineIndex] = true;
+    this.CalculateLineTotal();
   }
 
 
@@ -928,19 +929,8 @@ export class PaintCreationComponent implements OnInit {
     let qty = trxLnArr[i].physicalQty;
     let uomCode = trxLnArr[i].uom;
    
-    var totQty=0;
-    var totValue=0;
-    for (let i = 0; i < trxLnArr.length; i++) {
-
-      totQty=totQty+trxLnArr[i].physicalQty;
-      totValue=totValue+(trxLnArr[i].itemUnitCost * trxLnArr[i].physicalQty)
-    }
-    
-    this.paintCreationForm.patchValue({totIssuedQty :totQty});
-    this.paintCreationForm.patchValue({totIssuedValue :totValue})
-
-    this.paintCreationForm.patchValue({totalCompileItems :totQty});
-    this.paintCreationForm.patchValue({totalItemValue :totValue})
+   
+    this.CalculateLineTotal();
 
     //alert(avalqty+'avalqty');
     //alert(trxLnArr[i].physicalQty +' qty');
@@ -954,13 +944,15 @@ export class PaintCreationComponent implements OnInit {
       trxLnArr1.controls[i].patchValue({ physicalQty: '' });
       qty1.focus();
     }
-    if (uomCode === 'NO') {
-      // alert(Number.isInteger(qty)+'Status');
-      if (!(Number.isInteger(qty))) {
-        alert('Please enter correct No');
-        trxLnArr1.controls[i].patchValue({ physicalQty: '' });
-      }
-    }
+
+          // alert(Number.isInteger(qty)+'Status');
+
+    // if (uomCode === 'NO') {
+    //   if (!(Number.isInteger(qty))) {
+    //     alert('Please enter correct No');
+    //     trxLnArr1.controls[i].patchValue({ physicalQty: '' });
+    //   }
+    // }
   }
 
   searchByCompileID(itemId) {
@@ -1285,6 +1277,24 @@ this.service.getVehRegDetail(regNum).subscribe(
      this.name=this.getVehRegDetails.name
   }
 );
+}
+
+
+CalculateLineTotal() {
+  var trxLnArr = this.paintCreationForm.get('cycleLinesList').value;
+  var trxLnArr1 = this.paintCreationForm.get('cycleLinesList') as FormArray
+var totQty=0;
+var totValue=0;
+for (let i = 0; i < trxLnArr.length; i++) {
+
+  totQty=totQty+trxLnArr[i].physicalQty;
+  totValue=totValue+(trxLnArr[i].itemUnitCost * trxLnArr[i].physicalQty)
+}
+
+this.paintCreationForm.patchValue({totIssuedQty :totQty});
+this.paintCreationForm.patchValue({totIssuedValue :totValue})
+this.paintCreationForm.patchValue({totalCompileItems :totQty});
+this.paintCreationForm.patchValue({totalItemValue :totValue})
 }
 
 }
