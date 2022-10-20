@@ -704,6 +704,65 @@
                         </div>
 
                     </div>
+                    <div class="modal fade" id="myModelPaymentDetail" role="dialog" aria-hidden="true"
+                    style="width: 100%;margin-left: 0;">
+                    <div class="modal-dialog modal-xl" role="document">
+                      <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="myModalLabel"
+                                    style="text-align: left; font-size: medium; margin-left: 45%; font-family: Verdana,Sans-serif, Arial, Helvetica;font-weight: bold;">
+                                    Payment Details</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span></button>
+                                </div>
+                            
+                            <div class="modal-body">
+                                <div class="container1">
+                                    <div class="grid_scroll_2">
+                                      <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+                                       <thead>
+                                         <tr class="GridHeader">
+                                         <th>Srl No</th>  
+                                         <th>Payment Type</th>
+                                         <th>Payment No</th>
+                                         <th>Payment Amount</th> 
+                                         <th>Payment Method</th>
+                                         <!-- <th>Invoice Amount</th>
+                                         <th>Paid Amount</th>
+                                         <th>Balance Amount</th> -->
+                                         </tr>
+                                       </thead>
+                                                                          
+                                           <ng-container  *ngFor="let com of payData let i=index" class="ItemStyle" style="text-decoration:none;position: initial;font-size:large">
+                     
+                                             <tr style="text-decoration:none;position: initial;font-size:small">
+                                               <td style="padding-right: 5px;padding-top: 5px;border-color:black;text-align: right;">{{i+1}}</td>
+                     
+                     
+                                               <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: center;">{{com.PAYMENTTYPEFLAG}}</td>
+                                               <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: left;">{{com.PAYMENTNO}}</td> -->
+                                               <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: left;">{{com.PAYAMOUNT}}</td>
+                                               <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: left;">{{com.PAYMENTMETHODLOOKUPCODE  |date:'dd-MM-y'}}</td>
+                                               <!-- <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: left;">{{com.invoiceAmt}}</td>
+                                               <td style="padding-right: 5px;padding-top: 5px;border-color:black;text-align: right;">{{com.paidAmt | number:'1.2-2'}}</td>
+                                               <td style="padding-right: 5px;padding-top: 5px;border-color:black;text-align: right;">{{com.balanceAmt| number:'1.2-2'}}</td> --> -->
+                                               
+                                             </tr>
+                                             </ng-container>
+                     
+                                      
+                                     
+                                         </table>
+                                      
+                               </div>
+                               </div>
+                            </div>
+                            <div class="modal-footer">
+                                
+                            </div>
+                            </div>
+                    </div>
+                    </div>
                     <div class="modal fade" id="myModelCal" role="dialog" aria-hidden="true"
                     style="width: 100%;margin-left: 0;">
                     <div class="modal-dialog modal-xl" role="document">
@@ -1965,6 +2024,15 @@
                                     [style.display]="isVisibleCancel ? 'block' : 'none'"data-toggle="modal" data-target="#confirmAlert"
                                     (click)=" getMessage('CANCEL')">Cancel</button>
                             </td>
+                            <div *ngIf="displayPayData; then thenBlockData; else elseShowData"></div>
+                    <ng-template #thenBlockData>
+                    </ng-template>
+                    <ng-template #elseShowData>
+                            <td >
+                                <button data-toggle="modal" data-target="#myModelPaymentDetail" 
+                                style="width: 8rem;" (click)="paymentDetails()">Payment Details</button>
+                            </td>
+                        </ng-template>
                         </tr>
                     </table>
 

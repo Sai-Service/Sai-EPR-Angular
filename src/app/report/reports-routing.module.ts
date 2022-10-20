@@ -8,6 +8,7 @@ import { ServiceReportComponent } from './service-report/service-report.componen
 import { SparesReportsComponent } from './spares-reports/spares-reports.component';
 import { ServerReportComponent } from './server-report/server-report.component';
 import { PaintReportsComponent } from './paint-reports/paint-reports.component';
+import { TemplateDownloadComponent } from './template-download/template-download.component';
 
 
 
@@ -20,7 +21,7 @@ const routes: Routes = [
   {path:'AccessoriesReport',component:AccessoriesReportComponent},
   {path:'ServerReport',component:ServerReportComponent},
   {path:'PaintReports',component:PaintReportsComponent},
-
+  {path:'templateDownload',component:TemplateDownloadComponent},
 
   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];
