@@ -204,6 +204,7 @@ export class PaintReportsComponent implements OnInit {
   reportName: string;
 
   reportDetails(reportName) {
+
     if (reportName === 'gstPurRegister') {
       this.reportName = 'Purchase Register Details';
       if (this.reportName === 'Purchase Register Details') {
@@ -228,6 +229,63 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblepanelStockTaking=false;
 
     }
+    else if (reportName === 'gstpurRegSumm') {
+      this.reportName = 'Spares Purchase Register - Summary';
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.isVisibleDepartmentList = true;
+      }
+      this.isVisibleGSTPurchaseRegister = true;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
+      this.isVisibleEwayBill=false;
+      this.isVisiblepanelStockTaking=false;
+
+    }
+    else if (reportName === 'gstStockLedger') {
+      this.reportName = 'Stock Ledger';
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisibleGSTPurchaseRegister = false;
+      this.isVisibleStockLedger = true;
+      this.isVisiblestockTransfer = false;
+      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
+      this.isVisibleEwayBill=false;
+      this.isVisiblepanelStockTaking=false;
+
+    }
+    else if (reportName === 'gstsparesInventoryAging') {
+      this.reportName = 'Spares Inventory Aging Report';
+      this.isVisibleGSTPurchaseRegister = false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = true;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
+      this.isVisibleEwayBill=false;
+      this.isVisiblepanelStockTaking=false;
+
+    }
 
   }
 
@@ -245,8 +303,8 @@ export class PaintReportsComponent implements OnInit {
   }
 
   reportParameter(reportName) {
-    alert ("....Report Not ready....wip");
-    return;
+    // alert ("....Report Not ready....wip");
+    // return;
     this.isDisabled1 = true;
     this.closeResetButton = false;
     this.progress = 0;
@@ -269,6 +327,8 @@ export class PaintReportsComponent implements OnInit {
     }
     var fDate =this.paintReportForm.get('fromDate').value;
     var tDate =this.paintReportForm.get('toDate').value;
+
+
     if (reportName === 'Purchase Register Details') {
 
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
@@ -296,6 +356,103 @@ export class PaintReportsComponent implements OnInit {
           })
       }
     }
+    else if (reportName === 'Spares Purchase Register - Summary') {
+      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+
+      const fileName = 'Spares Purchase Register - Summary-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.sppurRegiSummReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if ((Number(sessionStorage.getItem('deptId'))) != 4) {
+        this.reportService.sppurRegiSummReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+    }
+    else if (reportName === 'Stock Ledger') {
+      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+       if (Number(sessionStorage.getItem('deptId')) === 4) {
+         this.reportService.stockLedgerReport(fromDate, toDate, subInventory, segment, locId, userName)
+           .subscribe(data => {
+             var blob = new Blob([data], { type: 'application/pdf' });
+             var url = URL.createObjectURL(blob);
+             var printWindow = window.open(url, '', 'width=800,height=500');
+             printWindow.open;
+             this.isDisabled1 = false;
+             this.closeResetButton = true;
+             this.dataDisplay = ''
+           })
+       }
+       else if (Number(sessionStorage.getItem('deptId')) != 4) {
+         this.reportService.stockLedgerReport(fromDate, toDate, subInventory, segment, sessionStorage.getItem('locId'), userName)
+           .subscribe(data => {
+             var blob = new Blob([data], { type: 'application/pdf' });
+             var url = URL.createObjectURL(blob);
+             var printWindow = window.open(url, '', 'width=800,height=500');
+             printWindow.open;
+             this.isDisabled1 = false;
+             this.closeResetButton = true;
+             this.dataDisplay = ''
+           })
+       }
+     }
+     else if (reportName === 'Spares Inventory Aging Report') {
+      this.isDisabled1=false;
+      this.rptValidation=true;
+      var spInvAging1 = this.paintReportForm.get('spInvAging1').value;
+      var spInvAging2 = this.paintReportForm.get('spInvAging2').value;
+      var spInvAging3 = this.paintReportForm.get('spInvAging3').value;
+      
+
+      if(spInvAging1<0 || spInvAging1==null || spInvAging1==undefined) {this.rptValidation=false;}
+      if(spInvAging2<0 || spInvAging2==null || spInvAging2==undefined) {this.rptValidation=false;}
+      if(spInvAging3<0 || spInvAging3==null || spInvAging3==undefined) {this.rptValidation=false;}
+
+      
+      if (spInvAging1 > spInvAging2) {this.rptValidation=false;}
+      else if (spInvAging1 >spInvAging3){this.rptValidation=false;}
+      else if (spInvAging2 > spInvAging3){this.rptValidation=false;}
+
+      if(this.rptValidation ==false) {this.closeResetButton=true;this.dataDisplay = 'Please check Aging Values.';  return; }
+     
+      this.isDisabled1=true;
+
+      const fileName = 'Spares Inventory Aging Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.sspInvAgingReport(spInvAging1, spInvAging2, spInvAging3, sessionStorage.getItem('ouId'), locId ,subInventory,userName)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.sspInvAgingReport(spInvAging1, spInvAging2, spInvAging3, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'),subInventory,userName)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+    }
+
+
+
+
   }
 
   fromToDateValidation(fDate,tDate){
@@ -364,6 +521,28 @@ export class PaintReportsComponent implements OnInit {
       let department = this.DepartmentList.filter((customer) => ((customer.codeDesc.includes('Spares') == true)));
       console.log(department);
       this.DepartmentList = department;
+    }
+  }
+
+  filterRecord(event) {
+    var itemCode = event.target.value;
+    if (itemCode.length === 4) {
+      // if (event.keyCode == 13) {
+      this.service.invItemList2New('GOODS', 'Spares', (sessionStorage.getItem('divisionId')), itemCode.toUpperCase())
+        .subscribe((data) => {
+          if (data.length === 0) {
+            alert('Item Not Present in Master');
+            return;
+          }
+          else {
+            this.invItemList = data;
+          }
+        });
+      // }
+    }
+    else if (itemCode.length === 3) {
+      alert('Please Enter 4 characters of item number!!');
+      return;
     }
   }
 
