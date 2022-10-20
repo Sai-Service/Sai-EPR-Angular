@@ -66,6 +66,9 @@ apInvoiceCancellation(invoiceNum,emplId): Observable<any> {
   getApInvLineDetails(invoiceNum): Observable<any> {
     return this.http.get(this.ServerUrl + `/apInv/invDtls?invNum=${invoiceNum}`);
   }
+  getApPaymentDetails(suppNo,invoiceNum): Observable<any> {
+    return this.http.get(this.ServerUrl + `/apInv/payDetailInvNowise?suppNo=${suppNo}&invoiceNum=${invoiceNum}`);
+  }
   getApInvLineDetailsSupwise(invoiceNum,suppNo): Observable<any> {
     return this.http.get(this.ServerUrl + `/apInv/invDtlsBySuppNo?invNum=${invoiceNum}&suppNo=${suppNo}`);
   }

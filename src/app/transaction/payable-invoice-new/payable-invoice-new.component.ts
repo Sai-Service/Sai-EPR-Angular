@@ -210,6 +210,8 @@ export class PayableInvoiceNewComponent implements OnInit {
   isVisiblelineDetialsDeleteButton: boolean = false;
   isVisibleAddonType: boolean = false;
   isVisibleRoundOffButton: boolean = false;
+  isVisiblepayDetail:boolean=false;
+  displayPayData:boolean=false;
   // invoiceDate = this.pipe.transform(this.now, 'yyyy-MM-ddTHH:mm');
   // invoiceDate = this.pipe.transform(this.now, 'dd-MMM-yyyy');
   // accountingDate = new Date();
@@ -409,6 +411,7 @@ export class PayableInvoiceNewComponent implements OnInit {
   BalAmt:number;
   supname:string;
   balData: any;
+  payData: any;
 
   constructor(private fb: FormBuilder, private router1: ActivatedRoute, private orderManagementService: OrderManagementService, private transactionService: TransactionService, private service: MasterService, private router: Router) {
     this.poInvoiceForm = fb.group({
@@ -1378,9 +1381,14 @@ export class PayableInvoiceNewComponent implements OnInit {
               this.isVisibleUpdateBtn = true;
               this.isVisibleValidate = true;
               this.isVisibleCancel=true; 
+              this.displayPayData=true;
+
               // this.isVisibleRoundOffButton=true;
             }
             if (data.invoiceStatus != undefined) {
+              // if(data.invoiceStatus.includes('Validated')){
+              //   this.isVisiblepayDetail=true;
+              // }
               if (data.invoiceStatus.includes('Validate') || data.invoiceStatus === 'Unpaid') {
                 alert('In Validate')
                 this.poInvoiceForm.disable();
@@ -1405,6 +1413,7 @@ export class PayableInvoiceNewComponent implements OnInit {
                 this.disDeleteButton = false;
                 this.isVisiblelineDetialsDeleteButton = false;
                 this.isVisibleSaveTDS = false;
+                // this.isVisiblepayDetail=true;
 
               }
               // if (data.invoiceStatus==='Not Validated' ) {
@@ -3146,7 +3155,16 @@ export class PayableInvoiceNewComponent implements OnInit {
     }
 
   }
-
+  paymentDetails(){
+    var invoiceNum = this.lineDetailsArray().controls[this.selectedLine].get('invoiceNum').value;
+    var suppNo = this.lineDetailsArray().controls[this.selectedLine].get('suppNo').value;
+    
+    this.transactionService.getApPaymentDetails(suppNo,invoiceNum).subscribe((res: any) => {
+      if (res.code === 200) {
+        this.payData=res.obj;
+      }
+    });
+  }
 
   SaveTdsDetails() {
     var tdsLineArr = this.poInvoiceForm.get('tdsLines').value;
