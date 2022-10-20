@@ -21,21 +21,26 @@
                     <ul class="dropdown-menu">
                         <li>
                             <a class="dropdown-item" data-toggle="collapse" href="#panelGSTPurchaseRegister" role="tab"
-                                (click)="reportDetails('gstPurRegister')">Purchase&nbsp;Register&nbsp;Details</a>
+                                (click)="reportDetails('gstPurRegister')">Paint Purchase&nbsp;Register&nbsp;Details</a>
                         </li>
                         <li>
                             <a class="dropdown-item" data-toggle="collapse" href="#panelGSTPurchaseRegister" role="tab"
-                                (click)="reportDetails('gstpurRegSumm')">Purchase&nbsp;Register&nbsp;Summary</a>
+                                (click)="reportDetails('gstpurRegSumm')">Paint Purchase&nbsp;Register&nbsp;Summary</a>
                         </li>
 
                         <li>
                             <a class="dropdown-item" data-toggle="collapse" href="#panelStockLedger" role="tab"
-                                (click)="reportDetails('gstStockLedger')">Stock Ledger</a>
+                                (click)="reportDetails('gstStockLedger')">Paint Stock Ledger</a>
                         </li>
 
                         <li>
                             <a class="dropdown-item" data-toggle="collapse" href="#panelsparesInventoryAging" role="tab"
-                                (click)="reportDetails('gstsparesInventoryAging')">Inventory Aging Report</a>
+                                (click)="reportDetails('gstsparesInventoryAging')">Paint Inventory Aging Report</a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelonlyLocationCode" role="tab"
+                                (click)="reportDetails('gstClosingReport')">Paint Closing Stock Report</a>
                         </li>
                       
                        
@@ -323,19 +328,87 @@ style="margin-left: 10%;" id="panelsparesInventoryAging">
                 <!-- -----------------------------Inventory Aging Section End ---------------------- -->
 
 
+                <table class="center" [style.display]="isVisibleonlyLocationCode ? 'block' : 'none'" class="collapse"    id="panelonlyLocationCode">
+                   
+            
+                    <table class="center">
+                        <tr>
+                          <td class="LabelFontStyle" style="font-size:large ;font-weight:bold ;" >{{reportName}}</td>
+                        </tr>
+                    </table>
+                    <br>
+            
+                  
+                            <table class="center">
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        &nbsp;Location&nbsp;Code&nbsp;:&nbsp;
+                                    </td>
+                                    <td [style.display]="isVisiblelocationInput ? 'block' : 'none'">
+                                        <input type="text" disabled class="form-control" formControlName="locCode">
+                                    </td>
+                                    <td [style.display]="isVisiblelocationLOV ? 'block' : 'none'">
+                                        <select formControlName="locCode" id="locCode" class="form-control"
+                                            (ngModelChange)='onOptionsLocation($event)'>
+                                            <option></option>
+                                            <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
+                                                {{sc.locCode}}
+                                            </option>
+                                        </select>
+                                        <input  disabled hidden type="number" class="form-control" formControlName="locId">
+                                    </td>
+            
+                                    <td style="width: 15%" class="LabelFontStyle"> &nbsp;SubInventory&nbsp;:&nbsp; </td>
+                                    <td><input  disabled  type="text" class="form-control" formControlName="subInventory"></td>
+                             
+                                </tr>
+                            </table>
+            
+                                            <table class="center">
+                                                <tr>
+                                                    <td>
+                                                        <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                                                        <ng-template #hList2> 
+                                                            <div class="d-flex justify-content-center">
+                                                                <div class="spinner-border text-primary" role="status" >
+                                                                    <span class="sr-only" id="loading"></span>
+                                                            
+                                                                </div>
+                                                                </div>
+                                                        </ng-template>
+                                                        <ng-template #hList1> </ng-template>
+                                                    </td>
+                                                    <td class="LabelFontStyle" style="color: blue;">&nbsp;{{this.dataDisplay}}&nbsp; </td>
+                                                </tr>
+                                            </table>
+                                            
+            
+                                       
+                                              <table class="center" >
+                                                  <tr>
+                                                    <td>
+                                                        <button class="btn-primary" [disabled]="isDisabled1" (click)="reportParameter(reportName)">View
+                                                          Report</button>
+                                                      </td>
+                                                     
+                                                  </tr>
+                                              </table>
+                                        
+                      </table>
+
     </fieldset>
 
-    <table class="center">
-        <tr>
-            <td>
-                <button type="submit" class="btn btn-primary" id="register" (click)="refresh()">
-                    Clear
-                </button>
-            </td>
-            <td>
-                <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
-            </td>
-        </tr>
-    </table>
+            <table class="center">
+                <tr>
+                    <td>
+                        <button type="submit" class="btn btn-primary" id="register" (click)="refresh()">
+                            Clear
+                        </button>
+                    </td>
+                    <td>
+                        <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
+                    </td>
+                </tr>
+            </table>
 
 </form>

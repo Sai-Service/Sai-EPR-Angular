@@ -206,8 +206,8 @@ export class PaintReportsComponent implements OnInit {
   reportDetails(reportName) {
 
     if (reportName === 'gstPurRegister') {
-      this.reportName = 'Purchase Register Details';
-      if (this.reportName === 'Purchase Register Details') {
+      this.reportName = 'Paint Purchase Register Details';
+      if (this.reportName === 'Paint Purchase Register Details') {
         this.isVisiblespPurRegDownLoad = true;
       }
       if (Number(sessionStorage.getItem('deptId')) === 4) {
@@ -230,7 +230,7 @@ export class PaintReportsComponent implements OnInit {
 
     }
     else if (reportName === 'gstpurRegSumm') {
-      this.reportName = 'Spares Purchase Register - Summary';
+      this.reportName = 'Paint Purchase Register - Summary';
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.isVisibleDepartmentList = true;
       }
@@ -251,7 +251,7 @@ export class PaintReportsComponent implements OnInit {
 
     }
     else if (reportName === 'gstStockLedger') {
-      this.reportName = 'Stock Ledger';
+      this.reportName = 'Paint Stock Ledger';
       this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = false;
       this.isVisibleGSTPurchaseRegister = false;
@@ -269,7 +269,7 @@ export class PaintReportsComponent implements OnInit {
 
     }
     else if (reportName === 'gstsparesInventoryAging') {
-      this.reportName = 'Spares Inventory Aging Report';
+      this.reportName = 'Paint Inventory Aging Report';
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleonlyLocationCode = false;
       this.isVisiblespClosingStockAsOndate=false;
@@ -279,6 +279,24 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = true;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
+      this.isVisibleEwayBill=false;
+      this.isVisiblepanelStockTaking=false;
+
+    }
+    else if (reportName === 'gstClosingReport') {
+      this.reportName = 'Paint Closing Stock Report';
+      this.isVisibleonlyLocationCode = true;
+      this.isVisiblegstsaiDebtors = false;
+       this.isVisiblespClosingStockAsOndate=false;
+      this.isVisibleGSTPurchaseRegister = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
       this.isVisiblefromtosubinventory=false;
       this.isVisiblecustomerLedger=false;
@@ -329,12 +347,12 @@ export class PaintReportsComponent implements OnInit {
     var tDate =this.paintReportForm.get('toDate').value;
 
 
-    if (reportName === 'Purchase Register Details') {
+    if (reportName === 'Paint Purchase Register Details') {
 
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        const fileName = 'Purchase Register Details-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+        const fileName = 'Paint Purchase Register Details-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
         const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
         this.reportService.sppurRegidetailReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
           .subscribe(data => {
@@ -345,7 +363,7 @@ export class PaintReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        const fileName = 'Purchase Register Details-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+        const fileName = 'Paint Purchase Register Details-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
         const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
         this.reportService.sppurRegidetailReportSpares(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
           .subscribe(data => {
@@ -356,10 +374,10 @@ export class PaintReportsComponent implements OnInit {
           })
       }
     }
-    else if (reportName === 'Spares Purchase Register - Summary') {
+    else if (reportName === 'Paint Purchase Register - Summary') {
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
-      const fileName = 'Spares Purchase Register - Summary-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
+      const fileName = 'Paint Purchase Register - Summary-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.sppurRegiSummReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
@@ -380,7 +398,7 @@ export class PaintReportsComponent implements OnInit {
           })
       }
     }
-    else if (reportName === 'Stock Ledger') {
+    else if (reportName === 'Paint Stock Ledger') {
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
        if (Number(sessionStorage.getItem('deptId')) === 4) {
          this.reportService.stockLedgerReport(fromDate, toDate, subInventory, segment, locId, userName)
@@ -407,7 +425,7 @@ export class PaintReportsComponent implements OnInit {
            })
        }
      }
-     else if (reportName === 'Spares Inventory Aging Report') {
+     else if (reportName === 'Paint Inventory Aging Report') {
       this.isDisabled1=false;
       this.rptValidation=true;
       var spInvAging1 = this.paintReportForm.get('spInvAging1').value;
@@ -428,7 +446,7 @@ export class PaintReportsComponent implements OnInit {
      
       this.isDisabled1=true;
 
-      const fileName = 'Spares Inventory Aging Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+      const fileName = 'Paint Inventory Aging Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.sspInvAgingReport(spInvAging1, spInvAging2, spInvAging3, sessionStorage.getItem('ouId'), locId ,subInventory,userName)
@@ -441,6 +459,28 @@ export class PaintReportsComponent implements OnInit {
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
         this.reportService.sspInvAgingReport(spInvAging1, spInvAging2, spInvAging3, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'),subInventory,userName)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+    }
+    else if (reportName === 'Paint Closing Stock Report') {
+      const fileName = 'SP-Closing-Stock-' + sessionStorage.getItem('locName').trim() + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.spclosstrockReport(locId,subInventory)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.spclosstrockReport(sessionStorage.getItem('locId'),subInventory)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;

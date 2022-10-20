@@ -1095,7 +1095,7 @@ export class SparesReportsComponent implements OnInit {
       }
     }
 
-    
+
     else if (reportName === 'Spares Issue Details Report') {
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
@@ -1190,6 +1190,7 @@ export class SparesReportsComponent implements OnInit {
           })
       }
     }
+    
     else if (reportName === 'Spares Debtor Report') {
 
       this.isDisabled1=false;
