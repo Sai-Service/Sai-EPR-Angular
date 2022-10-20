@@ -593,7 +593,7 @@ export class PaintItemMasterComponent implements OnInit {
       }
     }
 
-
+   alert ("Testing....");
     this.paintItemMasterForm.get('hsnGstPer').reset();
     this.paintItemMasterForm.get('hsnSacCode').reset();
     this.taxCategoryListS = null;

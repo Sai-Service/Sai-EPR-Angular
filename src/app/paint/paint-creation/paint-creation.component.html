@@ -2,7 +2,7 @@
     <form [formGroup]="paintCreationForm" (ngSubmit)="paintCreation(paintCreationForm.value)">
     <table style="width: 100%;background-color: white;">
       <tr>
-        <td class="PageHeader">&nbsp;&nbsp;COLOUR&nbsp;MIXING&nbsp;(Paint)
+        <td class="PageHeader">&nbsp;MAIN&nbsp;COLOUR&nbsp;CREATION&nbsp;
         </td>
         <table style="width: 100%; background-color: #a4d3e9;">
           <tr>
@@ -309,7 +309,7 @@
                 </div>
                 <ng-template #thenBlockopen>
                     <td><button type="button" class="btn btn-primary fa fa-plus" id="btnadd{{trxLineIndex}}" style="width: 2rem;"(click)="addnewcycleLinesList(trxLineIndex)"></button></td>
-              <td><button type="button" class="btn btn-primary fa fa-trash" id="btnrm{{trxLineIndex}}" style="width: 2rem;" (click)="removenewcycleLinesList(trxLineIndex)"></button></td>
+                    <td><button type="button" class="btn btn-primary fa fa-trash" id="btnrm{{trxLineIndex}}" style="width: 2rem;" (click)="removenewcycleLinesList(trxLineIndex)"></button></td>
                 </ng-template>
                 <ng-template #elseBlockfreeze>
                     <td><button disabled type="button" class="btn btn-primary fa fa-plus" id="btnadd{{trxLineIndex}}"  style="width: 2rem;"(click)="addnewcycleLinesList(trxLineIndex)"></button></td>

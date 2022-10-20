@@ -152,7 +152,7 @@ export class PaintCreationComponent implements OnInit {
   segmentNameList: any;
   codeCombinationId: number;
   compileType: number;
-  reason: string;
+  reason: string='ICPN01';
   reasonlist: any;
   compileStatus: string = "OPEN"
   entryStatusCode: number;
@@ -354,6 +354,7 @@ export class PaintCreationComponent implements OnInit {
     // this.displayRemoveRow[i]=true;
     // alert(i);
   }
+
   removenewcycleLinesList(trxLineIndex) {
     var len1 = this.cycleLinesList().length;
     if (len1 === 1) {
@@ -362,11 +363,14 @@ export class PaintCreationComponent implements OnInit {
     }
     var trxLnArr1 = this.paintCreationForm.get('cycleLinesList').value;
     var itemid = trxLnArr1[trxLineIndex].segment;
-    // alert(itemid+'Delete');
     if (itemid != null) {
+      // alert(itemid+'Delete-deleteReserveLinewise');
+
       this.deleteReserveLinewise(trxLineIndex);
       this.itemMap.delete(itemid);
     }
+
+    // alert( "RemoveAt");
     this.cycleLinesList().removeAt(trxLineIndex);
     var patch = this.paintCreationForm.get('cycleLinesList') as FormArray;
     var len = this.cycleLinesList().length;
@@ -376,13 +380,13 @@ export class PaintCreationComponent implements OnInit {
       }
     );
 
-    var btnrm = document.getElementById("btnrm" + (trxLineIndex - 1)) as HTMLInputElement;
-    if (document.contains(btnrm)) {
-      (document.getElementById("btnrm" + (trxLineIndex - 1)) as HTMLInputElement).disabled = true;
-      // (document.getElementById('btnrm'+i+1) as HTMLInputElement).disabled = true;
-    }
+    // var btnrm = document.getElementById("btnrm" + (trxLineIndex - 1)) as HTMLInputElement;
+    // if (document.contains(btnrm)) {
+    //   (document.getElementById("btnrm" + (trxLineIndex - 1)) as HTMLInputElement).disabled = true;
+    // }
 
     this.displayLocator[trxLineIndex] = true;
+    this.CalculateLineTotal();
   }
 
 
@@ -456,7 +460,7 @@ export class PaintCreationComponent implements OnInit {
       }
     );
 
-    this.service.ReasonList().subscribe(
+    this.service.PaintReasonList().subscribe(
       data => {
         this.reasonlist = data;
         let selreasonlist: any = [];
@@ -526,6 +530,7 @@ export class PaintCreationComponent implements OnInit {
     if (this.currentOp === 'SEARCH') {
       return;
     }
+    // alert ("event :"+event +","+i)
 
     let select1 = this.ItemIdList.find(d => d.SEGMENT === event);
     if (select1 != undefined) {
@@ -644,6 +649,7 @@ export class PaintCreationComponent implements OnInit {
 
         });
     }
+     else {alert ("Wrong Item Selected....Pls select proper Item from the list.");}
 
   }
   AvailQty(event: any, i) {
@@ -675,8 +681,9 @@ export class PaintCreationComponent implements OnInit {
         trxLnArr1.controls[i].patchValue({ resveQty: reserve });
         if (avlqty1 < 0) {
           alert("Transfer is not allowed,Item has Reserve quantity - " + reserve);
-          this.cycleLinesList().clear();
-          this.addnewcycleLinesList(i);
+          // this.cycleLinesList().clear();
+          // this.addnewcycleLinesList(i);
+
         }
 
       });
@@ -928,19 +935,8 @@ export class PaintCreationComponent implements OnInit {
     let qty = trxLnArr[i].physicalQty;
     let uomCode = trxLnArr[i].uom;
    
-    var totQty=0;
-    var totValue=0;
-    for (let i = 0; i < trxLnArr.length; i++) {
-
-      totQty=totQty+trxLnArr[i].physicalQty;
-      totValue=totValue+(trxLnArr[i].itemUnitCost * trxLnArr[i].physicalQty)
-    }
-    
-    this.paintCreationForm.patchValue({totIssuedQty :totQty});
-    this.paintCreationForm.patchValue({totIssuedValue :totValue})
-
-    this.paintCreationForm.patchValue({totalCompileItems :totQty});
-    this.paintCreationForm.patchValue({totalItemValue :totValue})
+   
+    this.CalculateLineTotal();
 
     //alert(avalqty+'avalqty');
     //alert(trxLnArr[i].physicalQty +' qty');
@@ -954,13 +950,15 @@ export class PaintCreationComponent implements OnInit {
       trxLnArr1.controls[i].patchValue({ physicalQty: '' });
       qty1.focus();
     }
-    if (uomCode === 'NO') {
-      // alert(Number.isInteger(qty)+'Status');
-      if (!(Number.isInteger(qty))) {
-        alert('Please enter correct No');
-        trxLnArr1.controls[i].patchValue({ physicalQty: '' });
-      }
-    }
+
+          // alert(Number.isInteger(qty)+'Status');
+
+    // if (uomCode === 'NO') {
+    //   if (!(Number.isInteger(qty))) {
+    //     alert('Please enter correct No');
+    //     trxLnArr1.controls[i].patchValue({ physicalQty: '' });
+    //   }
+    // }
   }
 
   searchByCompileID(itemId) {
@@ -1101,7 +1099,8 @@ export class PaintCreationComponent implements OnInit {
 
   onSelectColor(event) {
     if(event !=undefined || event !=null || event.trim() !='') {
-    alert ("Color Selected  : "+event);
+    // alert ("Color Selected  : "+event);
+    this.ItemIdList=null;
     this.service.ItemIdListDeptPaint(this.deptId, Number(sessionStorage.getItem('locId')), this.subInvCode.subInventoryId,event).subscribe(
       data => {
         this.ItemIdList = data;
@@ -1285,6 +1284,24 @@ this.service.getVehRegDetail(regNum).subscribe(
      this.name=this.getVehRegDetails.name
   }
 );
+}
+
+
+CalculateLineTotal() {
+  var trxLnArr = this.paintCreationForm.get('cycleLinesList').value;
+  var trxLnArr1 = this.paintCreationForm.get('cycleLinesList') as FormArray
+var totQty=0;
+var totValue=0;
+for (let i = 0; i < trxLnArr.length; i++) {
+
+  totQty=totQty+trxLnArr[i].physicalQty;
+  totValue=totValue+(trxLnArr[i].itemUnitCost * trxLnArr[i].physicalQty)
+}
+
+this.paintCreationForm.patchValue({totIssuedQty :totQty});
+this.paintCreationForm.patchValue({totIssuedValue :totValue})
+this.paintCreationForm.patchValue({totalCompileItems :totQty});
+this.paintCreationForm.patchValue({totalItemValue :totValue})
 }
 
 }

@@ -149,7 +149,7 @@ export class PaintIssueDpComponent implements OnInit {
   segmentNameList: any;
   codeCombinationId: number;
   compileType: number;
-  reason: string;
+  reason: string='ICPN02';
   reasonlist: any;
   compileStatus: string = "OPEN"
   entryStatusCode: number;
@@ -350,6 +350,7 @@ export class PaintIssueDpComponent implements OnInit {
       alert('You can not delete the line');
       return;
     }
+
     var trxLnArr1 = this.paintIssueForm.get('cycleLinesList').value;
     var itemid = trxLnArr1[trxLineIndex].segment;
     // alert(itemid+'Delete');
@@ -366,14 +367,20 @@ export class PaintIssueDpComponent implements OnInit {
       }
     );
 
-    var btnrm = document.getElementById("btnrm" + (trxLineIndex - 1)) as HTMLInputElement;
-    if (document.contains(btnrm)) {
-      (document.getElementById("btnrm" + (trxLineIndex - 1)) as HTMLInputElement).disabled = true;
-      // (document.getElementById('btnrm'+i+1) as HTMLInputElement).disabled = true;
-    }
+
+    // var btnrm = document.getElementById("btnrm" + (trxLineIndex - 1)) as HTMLInputElement;
+    // if (document.contains(btnrm)) {
+    //   (document.getElementById("btnrm" + (trxLineIndex - 1)) as HTMLInputElement).disabled = true;
+    // }
+
+    // (document.getElementById('btnrm'+i+1) as HTMLInputElement).disabled = true;
 
     this.displayLocator[trxLineIndex] = true;
+    this.CalculateLineTotal();
+
   }
+
+
 
 
   ngOnInit(): void {
@@ -443,7 +450,7 @@ export class PaintIssueDpComponent implements OnInit {
         })
       }
     );
-    this.service.ReasonList().subscribe(
+    this.service.PaintReasonList().subscribe(
       data => {
         this.reasonlist = data;
         let selreasonlist: any = [];
@@ -659,8 +666,8 @@ export class PaintIssueDpComponent implements OnInit {
         trxLnArr1.controls[i].patchValue({ resveQty: reserve });
         if (avlqty1 < 0) {
           alert("Transfer is not allowed,Item has Reserve quantity - " + reserve);
-          this.cycleLinesList().clear();
-          this.addnewcycleLinesList(i);
+          // this.cycleLinesList().clear();
+          // this.addnewcycleLinesList(i);
         }
 
       });
@@ -913,20 +920,16 @@ export class PaintIssueDpComponent implements OnInit {
     let uomCode = trxLnArr[i].uom;
     // --------------------------------------
 
-    var totQty=0;
-    var totValue=0;
-    for (let i = 0; i < trxLnArr.length; i++) {
-      totQty=totQty+trxLnArr[i].physicalQty;
-      totValue=totValue+(trxLnArr[i].itemUnitCost * trxLnArr[i].physicalQty)
-    }
-    
-    // this.paintIssueForm.patchValue({totIssuedQty :totQty});
-    // this.paintIssueForm.patchValue({totIssuedValue :totValue})
+    // var totQty=0;
+    // var totValue=0;
+    // for (let i = 0; i < trxLnArr.length; i++) {
+    //   totQty=totQty+trxLnArr[i].physicalQty;
+    //   totValue=totValue+(trxLnArr[i].itemUnitCost * trxLnArr[i].physicalQty)
+    // }
+    // this.paintIssueForm.patchValue({totalCompileItems :totQty});
+    // this.paintIssueForm.patchValue({totalItemValue :totValue})
 
-    this.paintIssueForm.patchValue({totalCompileItems :totQty});
-    this.paintIssueForm.patchValue({totalItemValue :totValue})
-
-
+    this.CalculateLineTotal();
 
     // ---------------------------------------
     //alert(avalqty+'avalqty');
@@ -941,13 +944,13 @@ export class PaintIssueDpComponent implements OnInit {
       trxLnArr1.controls[i].patchValue({ physicalQty: '' });
       qty1.focus();
     }
-    if (uomCode === 'NO') {
-      // alert(Number.isInteger(qty)+'Status');
-      if (!(Number.isInteger(qty))) {
-        alert('Please enter correct No');
-        trxLnArr1.controls[i].patchValue({ physicalQty: '' });
-      }
-    }
+    // if (uomCode === 'NO') {
+    //   // alert(Number.isInteger(qty)+'Status');
+    //   if (!(Number.isInteger(qty))) {
+    //     alert('Please enter correct No');
+    //     trxLnArr1.controls[i].patchValue({ physicalQty: '' });
+    //   }
+    // }
   }
 
   searchByCompileID(itemId) {
@@ -1298,5 +1301,19 @@ onSelectPanel(e,index){
 }
 
 LoadPanelList(){}
+
+CalculateLineTotal() {
+  var trxLnArr = this.paintIssueForm.get('cycleLinesList').value;
+  var trxLnArr1 = this.paintIssueForm.get('cycleLinesList') as FormArray
+
+  var totQty=0;
+  var totValue=0;
+  for (let i = 0; i < trxLnArr.length; i++) {
+    totQty=totQty+trxLnArr[i].physicalQty;
+    totValue=totValue+(trxLnArr[i].itemUnitCost * trxLnArr[i].physicalQty)
+  }
+  this.paintIssueForm.patchValue({totalCompileItems :totQty});
+  this.paintIssueForm.patchValue({totalItemValue :totValue})
+}
 
 }

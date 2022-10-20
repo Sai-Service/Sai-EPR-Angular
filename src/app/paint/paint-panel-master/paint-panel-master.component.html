@@ -4,7 +4,7 @@
         <table style="width: 100%;background-color: white;">
             <tr>
                 <td colspan="4" class="PageHeader" style="width: 100%;" >
-                    &nbsp;&nbsp;Paint&nbsp;Panel&nbsp;Master
+                    &nbsp;&nbsp;PAINT&nbsp;PANEL&nbsp;MASTER
                 </td>
             </tr>
         </table>
@@ -78,7 +78,7 @@
                             <td style="width: 15%;" class="LabelFontStyle">Description&nbsp;:&nbsp;</td>
                             <td colspan="3"><input formControlName="codeDesc" [(ngModel)]='codeDesc'  class="form-control" placeholder="Enter code Description" style="width:100%;background-color: yellow;text-transform: uppercase;"></td>
     
-                            <td style="width: 15%;" class="LabelFontStyle">Attribute&nbsp;:&nbsp;</td>
+                            <td style="width: 15%;" class="LabelFontStyle">Panel#&nbsp;:&nbsp;</td>
                             <td> <input  formControlName="attribute1" [(ngModel)]='attribute1' value={{attribute1}} class="form-control"  placeholder=""  > </td>
                                       
                         </ng-template>
@@ -88,7 +88,7 @@
                             <td style="width: 15%;" class="LabelFontStyle">Description&nbsp;:&nbsp;</td>
                             <td colspan="3"><input disabled formControlName="codeDesc" [(ngModel)]='codeDesc'  class="form-control" placeholder="Enter code Description" style="width:100%;background-color: yellow;text-transform: uppercase;"></td>
                                 
-                            <td style="width: 15%;" class="LabelFontStyle">Attribute&nbsp;:&nbsp;</td>
+                            <td style="width: 15%;" class="LabelFontStyle">Panel#&nbsp;:&nbsp;</td>
                             <td> <input disabled formControlName="attribute1" [(ngModel)]='attribute1' value={{attribute1}} class="form-control"  placeholder=""  > </td>
                        
                         </ng-template>
@@ -226,12 +226,12 @@
             <tr class="GridHeader">
                 <th style="width:5rem" scope="col">Srl&nbsp;No&nbsp;</th>
                 <!-- <th style="width:6rem" scope="col">Regime Id</th> -->
-                <th style="width:10rem;text-align: center;" scope="col">Code</th>
-                <th style="width:20rem;text-align: left;" scope="col">Code Description</th>
-                <th style="width:10rem;text-align: center;" scope="col">Code Type</th>
+                <th style="width:10rem;text-align: center;" scope="col">Panel Code</th>
+                <th style="width:20rem;text-align: left;" scope="col">Panel Description</th>
+                <th style="width:10rem;text-align: center;" scope="col">Type</th>
+                <th style="width:10rem;text-align: center;" scope="col">Panel#</th>
                 <th style="width:10rem;text-align: center;" scope="col">Start Date</th>
                 <th style="width:10rem;text-align: center;" scope="col">End Date</th>
-                <th style="width:10rem;text-align: center;" scope="col">Attribute</th>
                 <th style="width:10rem;text-align: center;" scope="col">Status</th>
             <th style="width:6rem" scope="col">Select</th>
         </tr>
@@ -243,9 +243,9 @@
         <td style="text-align:center">{{com.code}}</td>
         <td>{{com.codeDesc}}</td> 
         <td style="text-align:center">{{com.cmnDesc}}</td>
+        <td style="text-align:center">{{com.attribute1}}</td>
         <td style="text-align:center">{{com.startDate |date:'dd-MM-y'}}</td>
         <td style="text-align:center">{{com.endDate |date:'dd-MM-y'}}</td>
-        <td style="text-align:center">{{com.attribute1}}</td>
         <td style="text-align:center">{{com.status}}</td>
         <td><button class="btn btn-secondary" (click)="Select(com.cmnId)">Select</button></td>   
        </tr>
