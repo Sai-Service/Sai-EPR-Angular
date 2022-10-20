@@ -1599,10 +1599,16 @@ export class MasterService {
   }
 
   searchByItemf9(itemid, locId, ouId, divId, deptId): Observable<any> {
-    // alert("MS>>> "+ itemid+","+locId+","+ouId+","+divId);
-    // return this.http.get(this.ServerUrl+`/itemMst/ItemDtlsF9?locId=${locId}&itemId=${itemid}&ouId=${ouId}&divisionId=${divId}`)
-    return this.http.get(this.ServerUrl + `/itemMst/ItemDtlsF9?locId=${locId}&itemId=${itemid}&ouId=${ouId}&divisionId=${divId}&deptId=${deptId}`)
-  }
+    if(divId===2) {
+     return this.http.get(this.ServerUrl + `/itemMst/ItemDtlsF9?locId=${locId}&itemId=${itemid}&ouId=${ouId}&divisionId=${divId}&deptId=${deptId}`)
+    } else {
+      return this.http.get(this.ServerUrl + `/itemMst/PaintF9?locId=${locId}&itemId=${itemid}&ouId=${ouId}&divisionId=${divId}&deptId=${deptId}`)
+    }
+
+    }
+
+
+ 
 
   searchByItemSegmentDiv(divId, itemSeg): Observable<any> {
     return this.http.get(this.ServerUrl + `/itemMst/details/${divId}/${itemSeg}`)
