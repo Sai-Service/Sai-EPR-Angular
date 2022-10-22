@@ -41,6 +41,36 @@
                 <td style="width: 15%" class="LabelFontStyle">Description</td>
                 <td><input type="text" class="form-control" formControlName="relDescription" [(ngModel)]="relDescription" disabled style="width:350px ;"></td>
             </tr>
+
+            <tr>
+    
+                <td style="width: 15%" class="LabelFontStyle">Status&nbsp;&nbsp;:</td>
+
+                <div *ngIf="displayButton; then upd11; else upd21"></div>
+                <ng-template #upd11>  
+                    <td> <input disabled formControlName="status" [(ngModel)]='status' value={{status}} class="form-control"  > </td>
+                </ng-template>
+
+                <ng-template #upd21>  
+                   <td>
+                        <select  formControlName="status" id="status" class="form-control"  [(ngModel)]="status" (ngModelChange)='onOptionsSelected($event)'>
+                        <option *ngFor="let sc of  statusList" [ngValue] ="sc.code">
+                            {{sc.code}}
+                        </option>
+                       </select>
+                  </td>
+                </ng-template>
+
+                <td style="width: 15%" class="LabelFontStyle"> Start&nbsp;Date&nbsp;:</td>
+                <td><input disabled  type="date"   id="startDate"  formControlName="startDate"  [ngModel]="startDate" class="form-control"  max="{{minDate | date:'yyyy-MM-dd'}}" style="height: 25px;"></td>
+                    
+                <div *ngIf="displayInactive; then Block1; else Block2"></div>
+                <ng-template #Block1>  </ng-template>
+                <ng-template #Block2>
+                    <td style="width: 18%" class="LabelFontStyle">Inactive&nbsp;Date:&nbsp;</td>
+                    <td><input disabled  type="date"   id="endDate"  formControlName="endDate"  [ngModel]="endDate" class="form-control"  max="{{minDate | date:'yyyy-MM-dd'}}" style="height: 25px;"></td>
+                </ng-template>
+            </tr>
         </table>
         </fieldset>
         
@@ -74,15 +104,27 @@
                         <tr>
                             <td  style="background-color: #FFE4B5;">&nbsp;Main&nbsp;Colour&nbsp;Code:&nbsp;</td>
                             
-                            <td style="background-color: #FFE4B5;">
+                            <!-- <td style="background-color: #FFE4B5;">
                                 <input type="text" class="form-control" formControlName="itemCode1" [(ngModel)]='itemCode1'  
                                     value={{itemCode1}} placeholder="Enter Main Colour Code">
-                            </td>
+                            </td> -->
+
+                            <td>
+                                <select class="form-control" formControlName="itemCode1" [(ngModel)]="itemCode1"  style="width:300px ;">
+                                    <!-- (ngModelChange)="onSelectColor($event)" -->
+                                   <option disabled>--Select--</option>
+                                   <option *ngFor="let clr of paintColorList" [ngValue]="clr.SEGMENT"  >
+                                     {{clr.SEGMENT}}-{{clr.DESCRIPTION}}
+                                   </option>
+                                 </select>
+                             </td>
         
                             <td style="background-color: #FFE4B5;">
                                 <button type="button" class="btn-primary" (click)="serchByItem(itemCode1)"><i class="fa fa-search"
                                         aria-hidden="true"></i></button>
                             </td>
+
+                            <td>{{this.itemCode1Desc}}</td>
 
 
                               <!-- ------------Spinner---------------------- -->
@@ -118,21 +160,22 @@
     <tbody>
         <tr class="GridHeader">
             <th scope="col" style="width: 3rem;">Sr. No.</th>
-            <th scope="col" style="width: 3rem;">Main Colour</th>
-            <th scope="col" style="width: 5rem;">Description</th> 
-            <th scope="col" style="width: 5rem;">UOM</th>
+             <!-- <th scope="col" style="width: 3rem;">Main Colour</th> -->
+            <!-- <th scope="col" style="width: 5rem;">Description</th>  -->
             <th scope="col" style="width: 3rem;">Base Colour</th> 
-            <th scope="col" style="width: 8rem; ">Base Colour Name</th>               
+            <th scope="col" style="width: 8rem; ">Base Colour Name</th>   
+            <th scope="col" style="width: 5rem;">UOM</th>
             <th scope="col" style="width: 4rem;">Select</th>                
         </tr>
         </tbody>
         <tr *ngFor="let com of abc let k = index" class="ItemStyle" style="text-decoration:none;font-size:small;">
             <td style="width: 4rem; text-align: center;">{{k+1}}</td>
-            <td style="text-align:center;">{{com.itemCode }}</td> 
-            <td style="width: 4rem; text-align: center;">{{com.description}}</td>
-            <td style="text-align: center;">{{com.uom}}</td> 
+            <!-- <td style="text-align:center;">{{com.itemCode }}</td>  -->
+            <!-- <td style="width: 4rem; text-align: center;">{{com.description}}</td> -->
             <td style="text-align: center;">{{com.relItemCode}}</td>
-            <td style="width: 4rem; text-align: left;">{{com.relDescription}}</td>         
+            <td style="width: 4rem; text-align: left;">{{com.relDescription}}</td>   
+            <td style="text-align: center;">{{com.uom}}</td> 
+                
             <td style="text-align: center;"><button class="btn btn-info Saibtn-secondary" (click)="Select(com.relatedItemId)">Select</button></td>
         </tr>
     </table>

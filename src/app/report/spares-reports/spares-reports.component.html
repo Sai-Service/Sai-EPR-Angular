@@ -1370,25 +1370,14 @@ style="margin-left: 10%;" id="panelSparesDebtorsExecutiveWise">
 
 <table class="center"   style="margin-left: 10%;" [style.display]="isVisiblefromtosubinventory ? 'block' : 'none'" class="collapse"
 id="panelfromtosubinventory">
-<!-- <tr>
-    <td>
-        <table class="center">  
-            <tr>
-                <td colspan="4" class="LabelFontStyle" style="width: 100%;">
-                    {{reportName}}
-                </td>
-            </tr>
-        </table>
-    </td>
-</tr> -->
+
 <table class="center">
     <tr>
       <td class="LabelFontStyle" style="font-size:large ;font-weight:bold ;" >{{reportName}}</td>
     </tr>
 </table>
 <br>
-<!-- <tr>
-    <td> -->
+
         <table class="center">
             <tr>
                 <td style="width: 15%" class="LabelFontStyle">
@@ -1405,6 +1394,8 @@ id="panelfromtosubinventory">
                     <input type="date" class="form-control" formControlName="toDate" [(ngModel)]="toDate"
                         max="{{minDate | date:'yyyy-MM-dd'}}">
                 </td>
+            </tr>
+            <tr>
                 <td style="width: 15%" class="LabelFontStyle">
                     &nbsp;Location&nbsp;Code&nbsp;:&nbsp;
                 </td>
@@ -1421,8 +1412,7 @@ id="panelfromtosubinventory">
                     </select>
                     <input  disabled hidden type="number" class="form-control" formControlName="locId">
                 </td>   
-            </tr>
-            <tr>
+           
                
                 <td style="width: 15%" class="LabelFontStyle">
                     &nbsp;SubInventory&nbsp;:&nbsp;

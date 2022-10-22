@@ -20,6 +20,10 @@ interface IPaintMixingMaster {
   itemId : number;
   relatedItemId : number;
 
+  startDate:string;
+  endDate:string,
+  status:string;
+
 }
 
 @Component({
@@ -29,6 +33,11 @@ interface IPaintMixingMaster {
 })
 export class PaintMixingMasterComponent implements OnInit {
   paintMixingMasterForm: FormGroup;
+
+  pipe = new DatePipe('en-US');
+  now = Date.now();
+  public minDate = new Date();
+
 
   loginName:string;
   loginArray:string;
@@ -43,8 +52,18 @@ export class PaintMixingMasterComponent implements OnInit {
   divisionId : number;
   divisionName:string;
 
+  public paintColorList :any[];
+  public statusList : Array<string> = [];
+
+
+  startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+  endDate:string;
+  status:string="Active";
+
   itemCode : string;
   itemCode1 : string;
+  itemCode1Desc : string;
+
   description : string;
   uom : string;
   itemCategory:string;
@@ -63,6 +82,11 @@ export class PaintMixingMasterComponent implements OnInit {
 
   dataDisplay :string;
   spinIcon=true;
+  displayButton = true;
+  displayInactive = true;
+
+  Status1: any;
+
 
   get f() {return this.paintMixingMasterForm.controls;}
 
@@ -92,6 +116,11 @@ export class PaintMixingMasterComponent implements OnInit {
       relatedItemId : [],
       itemCategory:[],
       itemCode1:[],
+      itemCode1Desc :[],
+
+      startDate:[],
+      endDate:[],
+      status:[],
     })
    }
 
@@ -114,6 +143,20 @@ export class PaintMixingMasterComponent implements OnInit {
     this.orgId=this.ouId;
     console.log(this.loginArray);
     console.log(this.locId);
+
+    this.service.paintColorCodeList(this.divisionId).subscribe(
+      data => {
+      this.paintColorList = data;
+      console.log(this.paintColorList);
+    });
+
+    this.service.statusList()
+    .subscribe(
+      data => {
+        this.statusList = data;
+        console.log(this.statusList);
+      });
+
   }
 
   trData(val) 
@@ -218,9 +261,10 @@ export class PaintMixingMasterComponent implements OnInit {
       console.log(this.abc2)
       this.paintMixingMasterForm.patchValue({itemId : data.itemId});
       this.paintMixingMasterForm.patchValue({itemCategory : data.categoryName});
+      this.paintMixingMasterForm.patchValue({itemCode1Desc : data.description});
+     
       // this.itemCategory=this.abc.categoryName;
-
-   
+  
     var mainItemId =this.paintMixingMasterForm.get("itemId").value;
     if(mainItemId>0) {
     this.service.getRelatedItem(mainItemId).subscribe(data =>{
@@ -247,6 +291,22 @@ Select(relItemId: number) {
    
     this.cancelButton = true;
     this.saveButton=false;
+    this.displayButton = false;
+
+  }
+}
+
+onOptionsSelected(event: any) {
+  this.Status1 = this.paintMixingMasterForm.get('status').value;
+  // alert(this.Status1);
+  if (this.Status1 === 'Inactive') {
+    this.displayInactive = false;
+    // this.endDate = new Date();
+    this.endDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+  }
+  else if (this.Status1 === 'Active') {
+    this.paintMixingMasterForm.get('endDate').reset();
+    this.displayInactive=true;
   }
 }
 
