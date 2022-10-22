@@ -11,10 +11,11 @@ import { PaintPurchaseOrderComponent } from './paint-purchase-order/paint-purcha
 import { PaintPoReceiptComponent } from './paint-po-receipt/paint-po-receipt.component';
 import { PaintPanelMasterComponent } from './paint-panel-master/paint-panel-master.component';
 import { PaintItemMasterComponent } from './paint-item-master/paint-item-master.component';
+import { PaintPoListComponent } from './paint-po-list/paint-po-list.component';
 
 
 @NgModule({
-  declarations: [PaintIssueDpComponent, PaintCreationComponent, PaintMixingMasterComponent, PaintPurchaseOrderComponent, PaintPoReceiptComponent, PaintPanelMasterComponent, PaintItemMasterComponent],
+  declarations: [PaintIssueDpComponent, PaintCreationComponent, PaintMixingMasterComponent, PaintPurchaseOrderComponent, PaintPoReceiptComponent, PaintPanelMasterComponent, PaintItemMasterComponent, PaintPoListComponent],
   imports: [
     CommonModule,
     PaintRoutingModule,

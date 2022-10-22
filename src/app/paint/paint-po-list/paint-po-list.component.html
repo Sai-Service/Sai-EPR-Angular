@@ -1,0 +1,171 @@
+<form [formGroup]="paintPoPendingListForm" (ngSubmit)="paintPoPendingList(paintPoPendingListForm.value)">
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <td class="PageHeader">
+                Purchase&nbsp;Order&nbsp;List&nbsp;
+            </td>
+        </tr>
+    </table>
+        <table class="center" style="width: 100%;background-color: #FFE4B5;">
+            <tr>
+                <td>
+                    <table class="center">
+                        <tr [style.display]="isVisibledeptAndLocation ? 'block' : 'none'">
+                            <td style="width: 15%" class="LabelFontStyle">
+                                &nbsp;Location&nbsp;Code&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                <select formControlName="locCode" id="locCode" class="form-control"
+                                (ngModelChange)='onOptionsLocation($event)'>
+                                <option>--Select--</option>
+                                <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
+                                    {{sc.locCode}}
+                                </option>
+                            </select>
+                            <input  disabled hidden type="number" class="form-control" formControlName="locId">
+                            </td>
+
+                            
+                            <td style="width: 15%" class="LabelFontStyle" >
+                                &nbsp;Department&nbsp;List&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                  <select formControlName="deptId" id="deptId" class="form-control">
+                                <option>--Select--</option>
+                                <option *ngFor="let sc of  DepartmentList" [value]="sc.cmnTypeId">
+                                    {{sc.code}}
+                                </option>
+                            </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <table>
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        &nbsp;From&nbsp;Date&nbsp;:&nbsp;
+                                    </td>
+                                    <td>
+                                        <input type="date" class="form-control" formControlName="startDt"  [(ngModel)]="startDt"
+                                        value={{startDt}}  max="{{minDate | date:'yyyy-MM-dd'}}">
+                                    </td>
+
+
+        
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        &nbsp;To&nbsp;Date&nbsp;:&nbsp;
+                                    </td>
+                                    <td>
+                                        <input type="date" class="form-control" formControlName="endDt" [(ngModel)]="endDt"
+                                        value={{endDt}} max="{{minDate | date:'yyyy-MM-dd'}}">
+                                    </td>
+                                    <td>
+                                        <button type="submit" class="btn btn-primary" id="search" (click)="getPO()">
+                                            Get&nbsp;PO&nbsp;List
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </tr>
+                        <tr>
+                          <table>
+                              <tr>
+                                <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                                <ng-template #hList2> 
+                                    <div class="d-flex justify-content-center">
+                                        <div class="spinner-border text-primary" role="status" >
+                                              <span class="sr-only" id="loading"></span>
+                                       
+                                        </div>
+                                    </div>
+                              </ng-template>
+                              <ng-template #hList1> </ng-template>
+
+                               <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">&nbsp;{{dataDisplay }}&nbsp; </td>
+                              </tr>
+                          </table>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <div class="col-md-12 table-responsive" #epltable>
+            <div style="padding-bottom: 10px;padding-top: 10px;">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <button (click)="exportToExcel()" class="btn btn-success" style="width: fit-content;">Export To Excel</button>
+                    </div>
+                </div>
+            </div>
+            
+        <div class="grid_scroll">
+        <table  class="GridFont"  style="border-color:#959595;border-collapse:collapse;width: 100%;">
+            <tr class="GridHeader" style="font-size: 14px;">
+                <th >PO No.</th>
+                <th >PO Date</th>
+                <th >Supp Inv Date</th>
+                <th >Supp Invoice No.</th>
+                <th >GRR No.</th>
+                <th >GRR Date</th>
+                <th >Base Amt</th>
+                <th >Tax Amt</th>
+                <th >Total Amt</th>
+                <th >PO Status</th>
+                <th >Submit</th>
+
+            </tr>
+            <tr *ngFor="let com of poDetails ; let i= index" class="ItemStyle" style="text-decoration:none;font-size: 14px;">
+              
+                <td style="border: 1px solid #000000;padding-left: 5px;padding-top: 10px;">
+                    <div *ngIf="displaySegment; then thenSegment; else elseSegment"> </div>
+                    <ng-template #thenSegment>
+                    <a [routerLink]="['/admin/paint/PaintPurchaseOrder',com.segment1]" href="{{segment1}}">{{com.segment1}}</a>
+                    </ng-template>
+                    <ng-template #elseSegment>
+                  <u>  <a  (click)="navigation(com.segment1)" style="color: blue;" >{{com.segment1}}</a> </u>
+                </ng-template>
+                </td>
+                <td style="padding-left: 5px; text-align: center;">{{com.poDate}}</td>
+                <td style="padding-left: 5px; text-align: center;">{{com.suppInvNo}}</td>
+                <td style="padding-left: 5px; text-align: center;">{{com.suppInvDate}}</td>
+                <td *ngIf="isPending[i]" style="padding-left: 5px; text-align: center; background-color:orangered ;" >
+                    {{com.rcvLines[0].receiptNo}}
+                </td>
+                    <td *ngIf="!isPending[i]" style="padding-left: 5px; text-align: center;">
+                     {{com.rcvLines[0].receiptNo}}
+                    </td>              
+                 
+                <td style="padding-left: 5px; text-align: center;">{{com.rcvLines[0].receiptDate}}</td>
+                <td style="padding-left: 5px; text-align: right;">{{com.baseAmount}}&nbsp;&nbsp;</td>
+                <td style="padding-left: 5px; text-align: right;">{{com.totTaxAmt}}&nbsp;&nbsp; </td>
+                <td style="padding-left: 5px; text-align: right;">{{com.totalAmt}}&nbsp;&nbsp;  </td>
+                <td style="padding-left: 5px; text-align: center;">{{com.authorizationStatus}}  </td>
+
+                <td><input  type="checkbox"  style="text-align: center;width: 3rem;"  formControlName="enabledFlag" (change)="recoverableFlg1($event,i)"></td>
+
+               <!-- <td style="width: 15%" class="LabelFontStyle">
+                <input type="checkbox" class="form-check-input" formControlName="enabledFlag" (change)="recoverableFlg1($event)" >
+                <label   class="LabelFontStyle">Submitted</label>
+               </td> -->
+
+            </tr>
+        </table>
+        </div>
+    </div>
+    <!-- </div> -->
+    
+    <table class="center">
+        <tr>
+            <td>
+                <button type="submit" class="btn btn-primary" id="register" (click)="refresh()">
+                    Clear
+                </button>
+            </td>
+            <td>
+                <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
+            </td>
+            <td>
+                <button type="button" (click)="update()" class="btn btn-primary">Update</button>
+            </td>
+        </tr>
+    </table>
+</form>
