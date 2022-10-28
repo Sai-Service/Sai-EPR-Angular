@@ -1032,6 +1032,8 @@ export class PaintIssueDpComponent implements OnInit {
             }
 
             this.paintIssueForm.patchValue(data.obj);
+            this.totalItemValue=Math.round((data.obj.totalItemValue+Number.EPSILON)*100)/100;
+
             this.currentOp = 'INSERT';
             // this.paintIssueForm.get('cycleLinesList').patchValue(data.obj.cycleLinesList);
             this.paintIssueForm.disable();

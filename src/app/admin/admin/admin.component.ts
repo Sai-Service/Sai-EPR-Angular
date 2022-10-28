@@ -648,7 +648,7 @@ export class AdminComponent implements OnInit {
   F9SearchItemCode(abc) {
     // const formValue: IAdmin = this.adminForm1.value;
     // alert ("WIP...." + this.adminForm1.get('searchItemName').value);
-
+  //  alert ("Tsting...f9")
     var segment1 = this.adminForm1.get('searchItemCode').value;
     segment1 = segment1.toUpperCase();
 
@@ -690,6 +690,8 @@ export class AdminComponent implements OnInit {
       // else {alert ("Item Code not found/Invalid Item Code")}
     });
   }
+
+
 
   F9SearchItemDesc(itemDesc) {
     //var itemDesc=this.adminForm1.get('searchByItemDesc').value
@@ -792,9 +794,10 @@ export class AdminComponent implements OnInit {
       return;
     }
   }
+
   filterRecord(event) {
     var itemCode1 = event.target.value;
-
+  //  alert ("in filter record")
     
     if (event.keyCode == 13) {
       var itemCode = '';
@@ -823,6 +826,7 @@ export class AdminComponent implements OnInit {
         return;
         }
       }
+
       if (itemCode.length === 8 ) {
         // alert('in len if' + itemCode.toUpperCase());
         console.log(this.ItemIdList);
@@ -841,7 +845,31 @@ export class AdminComponent implements OnInit {
           });
 
         }
+      }  
+      
+      else {
+
+      if (itemCode.length >= 4 ) {
+        console.log(this.ItemIdList);
+        let select1 = this.ItemIdList.find(
+          (d) => d.segment === itemCode.toUpperCase()
+        );
+        if (select1 != undefined) {
+          this.getF9Data(select1.itemId);
+        }else{
+          this.service
+          .searchByItemSegmentDiv(this.divisionId, itemCode.toUpperCase())
+          .subscribe((data) => {
+            this.ItemIdList = data;
+            this.getF9Data(select1.itemId);
+          });
+
+        }
       }
+    }
+
+
+
     }
   }
 

@@ -530,7 +530,16 @@ export class PaintCreationComponent implements OnInit {
     if (this.currentOp === 'SEARCH') {
       return;
     }
-    // alert ("event :"+event +","+i)
+
+
+    // var itemCode = '';
+    // if (event.includes('--')) {
+    //   var itemCode2 = event.split('--');
+    //   itemCode = itemCode2[0]; 
+    // }
+
+    // alert ("event :"+event +", item code :"+itemCode+","+i)
+
 
     let select1 = this.ItemIdList.find(d => d.SEGMENT === event);
     if (select1 != undefined) {
@@ -1039,6 +1048,9 @@ export class PaintCreationComponent implements OnInit {
             }
 
             this.paintCreationForm.patchValue(data.obj);
+            this.totalItemValue=Math.round((data.obj.totalItemValue+Number.EPSILON)*100)/100;
+
+
             this.currentOp = 'INSERT';
             // this.paintCreationForm.get('cycleLinesList').patchValue(data.obj.cycleLinesList);
             this.paintCreationForm.disable();

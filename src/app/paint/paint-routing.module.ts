@@ -8,6 +8,7 @@ import { PaintPurchaseOrderComponent } from './paint-purchase-order/paint-purcha
 import { PaintPoReceiptComponent }     from './paint-po-receipt/paint-po-receipt.component';
 import { PaintPanelMasterComponent }   from './paint-panel-master/paint-panel-master.component';
 import { PaintItemMasterComponent } from './paint-item-master/paint-item-master.component';
+import { PaintPoListComponent } from './paint-po-list/paint-po-list.component';
 
 
 const routes: Routes = [
@@ -22,6 +23,9 @@ const routes: Routes = [
   {path:'PaintPoReceipt/:segment1/:accountLocId',component:PaintPoReceiptComponent},
   {path:'PaintPoReceipt/:trxNum/:catg',component:PaintPoReceiptComponent},
   {path:'PaintPoReceipt/:shipmentNumber',component:PaintPoReceiptComponent},
+  {path:'PaintPoList', component: PaintPoListComponent},
+  {path:'PaintPurchaseOrder/:poNo/:locId',component:PaintPurchaseOrderComponent},
+  {path:'PaintPurchaseOrder/:poNo',component:PaintPurchaseOrderComponent},
 
   {path : '' ,redirectTo: 'Dashboard', pathMatch: 'full'}
 ];
