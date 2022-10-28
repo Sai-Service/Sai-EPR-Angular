@@ -1236,6 +1236,14 @@ this.service.getVehRegDetail(regNum).subscribe(
     this.getVehRegDetails = data;
     // debugger;
      this.name=this.getVehRegDetails.name
+     alert(this.name);
+     if(this.name.includes('Invalid')){
+      // this.removenewcycleLinesList(-1);
+      var trxLnArr1 = this.InternalConsumptionForm.get('cycleLinesList') as FormArray;
+      trxLnArr1.controls[0].disable();
+      this.displayButton=false;
+      // return;
+     }
   }
 );
 }

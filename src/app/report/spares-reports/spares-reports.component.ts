@@ -6,7 +6,7 @@ import { DatePipe, Location } from '@angular/common';
 import { MasterService } from 'src/app/master/master.service';
 import { saveAs } from 'file-saver';
 
-const MIME_TYPES = {
+const MIME_TYPES = { 
   pdf: 'application/pdf',
   xls: 'application/vnd.ms-excel',
   xlsx: 'application/vnc.openxmlformats-officedocument.spreadsheetxml.sheet'
