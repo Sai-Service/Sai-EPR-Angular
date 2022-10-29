@@ -1009,10 +1009,16 @@ export class PaintIssueDpComponent implements OnInit {
       this.service.getSearchViewByIc(compno).subscribe
         (data => {
           if (data.code === 400) {
-            alert("Can not View data");
+            // alert("Can not View data");
+            alert(data.message+"\n"+data.obj);
           }
           if (data.code === 200) {
             //       // this.lstcomment=data.obj;
+
+            if(data.obj.reason==='ICPN01-21-Paint Mixing Color'){ 
+              alert ("This is Paint Mixing issue Transaction.\nPlease use Colour Mixing Form to get the details.");
+              return;
+            }
             let control = this.paintIssueForm.get('cycleLinesList') as FormArray;
             var len = this.cycleLinesList().length;
             for (let i = 0; i < data.obj.cycleLinesList.length - len; i++) {
@@ -1086,8 +1092,8 @@ export class PaintIssueDpComponent implements OnInit {
           }
           else {
             if (res.code === 400) {
-              alert(res.message);
-              this.paintIssueForm.reset();
+              alert(res.message +"\n"+res.obj);
+              // this.paintIssueForm.reset();
             }
           }
         })

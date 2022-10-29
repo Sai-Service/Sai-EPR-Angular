@@ -87,6 +87,7 @@ export class PaintCreationComponent implements OnInit {
   public paintColorList :any[];
 
   compNo: string;
+  referenceNo:string;
   onHandQty: number;
   JobNo:string;
   id: number;
@@ -226,6 +227,7 @@ export class PaintCreationComponent implements OnInit {
   constructor(private fb: FormBuilder, private router: Router, private route1: ActivatedRoute, private service: MasterService) {
     this.paintCreationForm = fb.group({
       compNo: [''],
+      referenceNo:[],
       compileName: [''],
       compileId: [''],
       locId: [''],
@@ -1025,10 +1027,17 @@ export class PaintCreationComponent implements OnInit {
       this.service.getSearchViewByIc(compno).subscribe
         (data => {
           if (data.code === 400) {
-            alert("Can not View data");
+            // alert("Can not View data");
+            alert(data.message+"\n"+data.obj);
+
           }
           if (data.code === 200) {
             //       // this.lstcomment=data.obj;
+
+            if(data.obj.reason==='ICPN02-21-Paint Issue to BodyShop'){ 
+              alert ("This is WS issue Transaction.\nPlease use WS Issue Form to get the details.");
+              return;
+            }
             let control = this.paintCreationForm.get('cycleLinesList') as FormArray;
             var len = this.cycleLinesList().length;
             for (let i = 0; i < data.obj.cycleLinesList.length - len; i++) {
@@ -1088,6 +1097,7 @@ export class PaintCreationComponent implements OnInit {
             this.totalCompileItems = res.obj.totalCompileItems;
             this.totalItemValue = res.obj.totalItemValue;
             this.compileStatus = res.obj.compileStatus;
+            this.referenceNo= res.obj.referenceNo;
             alert(res.message);
             this.paintCreationForm.disable();
             this.displayButton = false;
@@ -1095,7 +1105,7 @@ export class PaintCreationComponent implements OnInit {
           }
           else {
             if (res.code === 400) {
-              alert(res.message);
+              alert(res.message+"\n"+res.obj);
               // this.paintCreationForm.reset();
             }
           }

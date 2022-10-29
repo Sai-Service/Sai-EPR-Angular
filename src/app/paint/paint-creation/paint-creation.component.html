@@ -101,7 +101,7 @@
            </span>
         </td>
         <td style="width: 15%" class="LabelFontStyle">
-            Reason:
+            Issue Type:
           </td>
           <td>
             <select class="form-control" formControlName="reason" [(ngModel)]="reason" (ngModelChange)="onSelectReason($event)">
@@ -196,6 +196,13 @@
        
         <!-- <td style="width: 15%" class="LabelFontStyle">Total Value :</td> -->
         <td><input readonly  hidden type="number" class="form-control" formControlName="totIssuedValue" [(ngModel)]="totIssuedValue" ></td>
+
+
+        <td style="width: 15%" class="LabelFontStyle">Receipt Ref No: </td>
+         <td>
+           <input disabled type="text" class="form-control" formControlName="referenceNo" [(ngModel)]="referenceNo">
+        </td>
+
 
 
       </tr>
