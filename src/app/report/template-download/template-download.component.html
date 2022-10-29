@@ -1,1 +1,76 @@
-<p>template-download works!</p>
+<form [formGroup]="templateForm" (ngSubmit)="TeplateDownLoad(templateForm.value)">
+    <div class="center">
+        <table style="width: 100%;background-color: white;">
+            <tr>
+                <td class="PageHeader">
+                    &nbsp;Templates&nbsp;&nbsp;
+                </td>
+            </tr>
+        </table>
+    </div>
+    <br>
+    <br>
+    <div>
+    <table class="center" cellspacing="0" cellpadding="4" border="0"  style="border-color:#959595;border-collapse:collapse;">
+            <tr class="GridHeader" style="font-size: 14px;">
+            <th scope="col" style="border: 1px solid black;width: 250px;">Template Name</th>
+            <th scope="col" style="border: 1px solid black;width: 250px;">Select</th>
+    </tr>
+    <tr  class="ItemStyle" style="text-decoration:none;font-size: 14px;">
+        <td style="border: 1px solid black;padding-right: 15px;text-align: center;">Item Upload</td>
+        <td style="border: 1px solid black;padding-right: 15px;text-align: center;">
+             <button type="button" class="btn btn-primary" id="register" (click)="templateDownLoad('spItem')">
+            Download
+        </button></td>
+    </tr>
+    <tr  class="ItemStyle" style="text-decoration:none;font-size: 14px;">
+        <td style="border: 1px solid black;padding-right: 15px;text-align: center;">Spares Purchase Upload</td>
+        <td style="border: 1px solid black;padding-right: 15px;text-align: center;"> <button type="button" class="btn btn-primary" id="register">
+            Download
+        </button></td>
+    </tr>
+    <tr  class="ItemStyle" style="text-decoration:none;font-size: 14px;">
+        <td style="border: 1px solid black;padding-right: 15px;text-align: center;">Bajaj Vehicle Purchase Upload</td>
+        <td style="border: 1px solid black;padding-right: 15px;text-align: center;"> <button type="button" class="btn btn-primary" id="register">
+            Download
+        </button></td>
+    </tr>
+    <tr  class="ItemStyle" style="text-decoration:none;font-size: 14px;">
+        <td style="border: 1px solid black;padding-right: 15px;text-align: center;">GL Trial Balance Upload</td>
+        <td style="border: 1px solid black;padding-right: 15px;text-align: center;"> <button type="button" class="btn btn-primary" id="register">
+            Download
+        </button></td>
+    </tr>
+    <tr  class="ItemStyle" style="text-decoration:none;font-size: 14px;">
+        <td style="border: 1px solid black;padding-right: 15px;text-align: center;">Stock Taking Process Upload</td>
+        <td style="border: 1px solid black;padding-right: 15px;text-align: center;"> <button type="button" class="btn btn-primary" id="register">
+            Download
+        </button></td>
+    </tr>
+    <tr  class="ItemStyle" style="text-decoration:none;font-size: 14px;">
+        <td style="border: 1px solid black;padding-right: 15px;text-align: center;">Price List Upload</td>
+        <td style="border: 1px solid black;padding-right: 15px;text-align: center;"> <button type="button" class="btn btn-primary" id="register">
+            Download
+        </button></td>
+    </tr>
+    <tr  class="ItemStyle" style="text-decoration:none;font-size: 14px;">
+        <td style="border: 1px solid black;padding-right: 15px;text-align: center;">AR Receipt Upload</td>
+        <td style="border: 1px solid black;padding-right: 15px;text-align: center;"> <button type="button" class="btn btn-primary" id="register">
+            Download
+        </button></td>
+    </tr>
+    <tr  class="ItemStyle" style="text-decoration:none;font-size: 14px;">
+        <td style="border: 1px solid black;padding-right: 15px;text-align: center;">AR Invoice Upload</td>
+        <td style="border: 1px solid black;padding-right: 15px;text-align: center;"> <button type="button" class="btn btn-primary" id="register">
+            Download
+        </button></td>
+    </tr>
+    <tr  class="ItemStyle" style="text-decoration:none;font-size: 14px;">
+        <td style="border: 1px solid black;padding-right: 15px;text-align: center;">Customer Upload</td>
+        <td style="border: 1px solid black;padding-right: 15px;text-align: center;"> <button type="button" class="btn btn-primary" id="register">
+            Download
+        </button></td>
+    </tr>
+    </table>
+</div>
+</form>
