@@ -334,8 +334,6 @@ export class SalesGatePassComponent implements OnInit {
     var orderedDate2 = this.pipe.transform(regDate, 'MM/dd/yyyy');
 
     const formValue= this.SalesGatepassForm.value;
-
-      // this.orderManagementService.vehicleNoupdateFn(itemId, regNo, orderedDate2,customerId).subscribe((res: any) => {
     this.orderManagementService.vehicleNoInsuranceupdateFn(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
@@ -346,7 +344,22 @@ export class SalesGatePassComponent implements OnInit {
           alert(res.message + '---' + res.obj);
         }
       }
+      
     });
+
+    this.orderManagementService.vehicleNoupdateFn_old(itemId, regNo, orderedDate2,customerId).subscribe((res: any) => {
+      // this.orderManagementService.vehicleNoInsuranceupdateFn(formValue).subscribe((res: any) => {
+        if (res.code === 200) {
+          alert(res.message);
+          this.gatePassOrderNo(this.orderNumber);
+          this.gatepassNo = res.obj;
+        } else {
+          if (res.code === 400) {
+            alert(res.message + '---' + res.obj);
+          }
+        }
+      });
+    
   }
 
 
