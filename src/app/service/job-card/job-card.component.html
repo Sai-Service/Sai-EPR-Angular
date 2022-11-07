@@ -1516,23 +1516,23 @@
 
                                                         <div *ngIf="saveMatButton; then M1; else M2"></div>
                                                         <ng-template #M1>
-                                                            <td><button type="butt on" class="btn btn-primary" (click)="saveMaterial()" style="width: 8rem;">Save  Material</button> </td>
+                                                            <td><button type="button" class="btn btn-primary" (click)="saveMaterial()" style="width: 8rem;">Save  Material</button> </td>
                                                         </ng-template>
 
                                                         <ng-template #M2>
-                                                           <td><button disabled type="butt on" class="btn btn-primary" (click)="saveMaterial()" style="width: 8rem;">Save  Material</button>   </td>
+                                                           <td><button disabled type="button" class="btn btn-primary" (click)="saveMaterial()" style="width: 8rem;">Save  Material</button>   </td>
                                                         </ng-template>
 
                                                         <div *ngIf="importMatButton; then imp1; else imp2"></div>
                                                         <ng-template #imp1>
                                                             <td>
-                                                                <button type="butt on" class="btn btn-primary"  (click)="MatImptWip(jobCardNum)"
+                                                                <button type="button" class="btn btn-primary"  (click)="MatImptWip(jobCardNum)"
                                                                     style="width: fit-content; text-align: center;">Import Material from WIP</button>
                                                             </td>
                                                         </ng-template>
                                                         <ng-template #imp2>
                                                             <td>
-                                                                <button disabled type="butt on" class="btn btn-primary"  (click)="MatImptWip(jobCardNum)"
+                                                                <button disabled type="button" class="btn btn-primary"  (click)="MatImptWip(jobCardNum)"
                                                                     style="width: fit-content; text-align: center;">Import Material from WIP</button>
                                                             </td>
                                                         </ng-template>
@@ -2613,7 +2613,7 @@
                                                                 (click)="applyDiscnt()">Apply Discount</button>
                                                         </td> -->
                                                         <td>
-                                                            <button type="butt on" class="btn btn-primary"
+                                                            <button type="button" class="btn btn-primary"
                                                                 style="width: 6rem;" (click)="BillingCal()">Save Bill</button>
                                                         </td>
                                                        </ng-template>

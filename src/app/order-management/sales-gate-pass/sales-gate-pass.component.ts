@@ -27,7 +27,7 @@ export class SalesGatePassComponent implements OnInit {
 
   public insNameList: Array<string>[];
   public insSiteList: Array<string>[];
-
+  isDisabled = false;
   gatepassNo: number;
   dateOfDelv: Date;
   itemId: number;
@@ -240,6 +240,7 @@ export class SalesGatePassComponent implements OnInit {
 
   // -------------------New GatePass Fn ---by rk 27/8/22
   SalesGatePassPost(){
+    this.isDisabled = true;
     const formValue =this.SalesGatepassForm.value;
 
     var srvLoc =this.SalesGatepassForm.get('shipToLoc').value;

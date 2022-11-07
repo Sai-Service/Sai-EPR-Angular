@@ -454,6 +454,14 @@ export class ReportServiceService {
     });
   }
 
+  sparesDbAgingExicutiveSum(toDate,ouId,locId,ticketNo,custAcctNo,deptId){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/DebtorsExecSummary?toDate=${toDate}&ouId=${ouId}&locId=${locId}&ticketNo=${ticketNo}&custAcctNo=${custAcctNo}&deptId=${deptId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
   sppurRegidetailReport(fromDate,toDate,ouId,locId,deptId){
     const REQUEST_URI = this.ServerUrl +`/AccountsReports/GstPurchaseRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&deptId=${deptId}`;
     return this.http.get(REQUEST_URI, {

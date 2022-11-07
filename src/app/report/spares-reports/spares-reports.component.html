@@ -181,6 +181,10 @@
                                 (click)="reportDetails('gstSprAgingSummary')">Spares Debtors Aging Report Summary</a>
                         </li>
                         <li>
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelspDebtAgByExicutiveSummary" role="tab"
+                                (click)="reportDetails('sparesDbAgingExicutiveSum')">Spares Debtors Aging Report - Executive summary</a>
+                        </li>
+                        <li>
                             <a class="dropdown-item" data-toggle="collapse" href="#panelsparesMiscIssueReceipt" role="tab"
                                 (click)="reportDetails('gstChequeBounceReport')">Cheque Bounce Report</a>
                         </li>
@@ -591,6 +595,120 @@
     </tr>  -->
 </table>
 
+
+
+
+<table class="center" [style.display]="panelspDebtAgByExicutiveSummary ? 'block' : 'none'" class="collapse"
+id="panelspDebtAgByExicutiveSummary">
+
+<!-- <table class="center" [style.display]="isVisiblegstsaiDebtors ? 'block' : 'none'" class="collapse"
+style="margin-left: 20%;" id="panelgstsaiDebtors"> -->
+
+<table class="center">
+   <tr>
+     <td class="LabelFontStyle" style="font-size:large ;font-weight:bold ;" >{{reportName}}</td>
+   </tr>
+</table>
+<br>
+<!-- <tr>
+   <td> -->
+       <table class="center">
+           <tr>
+               <td style="width: 15%" class="LabelFontStyle">
+                   &nbsp;To&nbsp;Date&nbsp;:&nbsp;
+               </td>
+               <td>
+                   <input type="date" class="form-control" formControlName="toDate" [(ngModel)]="toDate"
+                       max="{{minDate | date:'yyyy-MM-dd'}}">
+               </td>
+               <td style="width: 15%" class="LabelFontStyle">
+                   &nbsp;Location&nbsp;Code&nbsp;:&nbsp;
+               </td>
+               <td [style.display]="isVisiblelocationInput ? 'block' : 'none'">
+                   <input type="text" disabled class="form-control" formControlName="locCode">
+               </td>
+               <td [style.display]="isVisiblelocationLOV ? 'block' : 'none'">
+                   <select formControlName="locCode" id="locCode" class="form-control"
+                       (ngModelChange)='onOptionsLocation($event)'>
+                       <option></option>
+                       <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
+                           {{sc.locCode}}
+                       </option>
+                   </select>
+                   <input  disabled hidden type="number" class="form-control" formControlName="locId">
+               </td>
+           </tr>
+           <tr>
+            <td style="width: 15%" class="LabelFontStyle">
+                &nbsp;Ticket&nbsp;No&nbsp;:&nbsp;
+            </td>
+            <td>
+                <input  type="text" class="form-control"  formControlName="userName" [(ngModel)]="userName">
+            </td>
+               <td style="width: 15%" class="LabelFontStyle">
+                   &nbsp;Cust&nbsp;Account&nbsp;No&nbsp;:&nbsp;
+               </td>
+               <td>
+                   <input  type="number" class="form-control"  formControlName="custAccNo" [(ngModel)]="custAccNo">
+               </td>
+            
+               <!-- <td colspan="4">
+                 <table [style.display]="isVisibleDepartmentList ? 'block' : 'none'">
+                   <td style="width: 15%" class="LabelFontStyle">
+                       &nbsp;Department&nbsp;:&nbsp;
+                   </td>
+                   <td>
+                       <input type="text" disabled class="form-control" formControlName="department">
+                       <input hidden type="number" class="form-control" formControlName="deptId">
+                   </td>
+                 </table>
+             </td> -->
+             <td style="width: 15%" class="LabelFontStyle">&nbsp;Department&nbsp;:&nbsp;</td>
+             <td>
+               <input type="text" disabled class="form-control" formControlName="department">
+               <input hidden type="number" class="form-control" formControlName="deptId">
+            </td>
+
+           </tr>
+       </table>
+
+                            <table class="center">
+                               <tr>
+                                   <td>
+                                       <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                                       <ng-template #hList2> 
+                                           <div class="d-flex justify-content-center">
+                                               <div class="spinner-border text-primary" role="status" >
+                                                   <span class="sr-only" id="loading"></span>
+                                           
+                                               </div>
+                                               </div>
+                                       </ng-template>
+                                       <ng-template #hList1> </ng-template>
+                                   </td>
+                                   <td class="LabelFontStyle" style="color: blue;">&nbsp;{{this.dataDisplay}}&nbsp; </td>
+                               </tr>
+                           </table>
+                   <!-- <tr>
+                     <td colspan="4"> -->
+                         <table class="center" style="width: 100%;margin-left: 50%;">
+                             <tr>
+                               <td>
+                                   <button class="btn-primary" [disabled]="isDisabled1" (click)="reportParameter(reportName)">View
+                                     Report</button>
+                                 </td>
+                                
+                             </tr>
+                         </table>
+                     <!-- </td>
+                   </tr>
+                 </table>
+               </td>
+             </tr>
+       </table>
+   </td>
+</tr>  -->
+</table>
 
 
 <table class="center" [style.display]="isVisiblespClosingStockAsOndate ? 'block' : 'none'" class="collapse"

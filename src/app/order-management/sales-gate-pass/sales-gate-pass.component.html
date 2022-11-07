@@ -237,7 +237,7 @@
                     </td>&nbsp;&nbsp;
                     <td>
                         <!-- <button type="button" style="width:fit-content ;" class="btn btn-secondary" data-dismiss="modal" (click)="orderNumberPost(orderNumber,shipToLoc)">Generate&nbsp;Gatepass</button> -->
-                        <button type="button" style="width:fit-content ;" class="btn btn-secondary" data-dismiss="modal" (click)="SalesGatePassPost()">Generate&nbsp;Gatepass</button>
+                        <button type="button" style="width:fit-content ;" [disabled]="isDisabled" class="btn btn-secondary" data-dismiss="modal" (click)="SalesGatePassPost()">Generate&nbsp;Gatepass</button>
 
                     </td>
         
