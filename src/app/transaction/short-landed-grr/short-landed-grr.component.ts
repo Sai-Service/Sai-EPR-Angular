@@ -92,6 +92,8 @@ export class ShortLandedGrrComponent implements OnInit {
       debitNoteNo:number;
       debitNoteDate=this.pipe.transform(Date.now(), 'dd-MM-yyyy');
       debitNoteAmt:number;
+      APdebitNote:string;
+      claimNo:number;
 
       rtnDocNo:string;
       rtnDocDate=this.pipe.transform(Date.now(), 'dd-MM-yyyy');
@@ -172,6 +174,8 @@ export class ShortLandedGrrComponent implements OnInit {
       debitNoteNo:[],
       debitNoteDate:[],
       debitNoteAmt:[],
+      APdebitNote:[],
+      claimNo:[],
 
       poStatus:[],
       shipHeaderId:[],
@@ -938,8 +942,9 @@ export class ShortLandedGrrComponent implements OnInit {
    
         this.service.shortLandedClaimSave(formValue).subscribe((res: any) => {
           if (res.code === 200) {
-            alert ("Debit Note Number :"+res.obj);
-            this.debitNoteNo=res.obj;
+            // alert (res.obj.name+"Debit Note Number :"+res.obj.id);
+            this.debitNoteNo=res.obj.id;
+            this.APdebitNote=res.obj.name;
             this.disabled = false;
             this.disabledLine=false;
             this.displayButton=false;
@@ -982,7 +987,11 @@ export class ShortLandedGrrComponent implements OnInit {
     // this.validateStatus=false;
 
     let select = this.lstDebtiNotes.find(d => d.receiptNo === mrtnNo);
+    console.log(select);
      this.debitNoteNo=select.receiptNo;
+     this.APdebitNote=select.debitNoteNo;
+     this.claimNo=select.claimNo;
+     this.shortLandGrrForm.get('claimNo').disable();
     //  this.rtnDocDate=select.receiptDate;
      this.debitNoteDate=this.pipe.transform(select.receiptDate, 'dd-MM-yyyy');
     //  this.totalAmt=select.totalAmt;
