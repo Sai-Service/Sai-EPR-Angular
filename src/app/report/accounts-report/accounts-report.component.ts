@@ -177,7 +177,8 @@ this.service.DepartmentListNew()
   }
 );
 
-this.service.supplierCodeListNew()
+
+this.service.supplierCodeWithEmplListNew()
 .subscribe(
   data1 => {
     this.supplierCodeList = data1;
