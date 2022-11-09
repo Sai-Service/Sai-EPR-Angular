@@ -1142,7 +1142,7 @@ export class SparesReportsComponent implements OnInit {
           })
       }
       else if ((Number(sessionStorage.getItem('deptId'))) != 4) {
-        this.reportService.sparesDbAgingExicutiveSum(toDate, sessionStorage.getItem('ouId'), locId, userName,custAccNo,deptId)
+        this.reportService.sparesDbAgingExicutiveSum(toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), userName,custAccNo,deptId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
