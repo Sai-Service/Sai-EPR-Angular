@@ -712,7 +712,23 @@ reportName:string;
     this.isVisiblecustomerLedger=false;
   }
 
-
+  else if (reportName==='empLedgerReport'){
+    this.reportName='23. Employee Ledger Report';
+    this.isVisibleGSTSaleRegister=false;
+    this.isVisibleGSTPurchaseRegister=false;
+    
+    this.isVisibleSparesdebtors=false;
+    this.isVisiblespInvAgging=false;
+    this.isVisiblepanelgltrialBalance=false;
+    this.panelCashBank=false;
+    this.isVisiblepanelAPGLUnpainAging=false;
+    this.isVisiblepanelprePayment=false;
+    this.ispanelTolocationOu=true;
+    this.isVisibleVendorLedgerReport=false;
+    this.isVisiblePeriodName=false;
+    this.isVisiblePeriodYear=false;
+    this.isVisiblecustomerLedger=false;
+  }
   }
 
 
@@ -1172,7 +1188,17 @@ reportName:string;
         });
       }
     }
-
+    else if (reportName ==='23. Employee Ledger Report'){
+      const fileName = '23. Employee Ledger Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      this.reportService.empLedgerReport(fromDate,toDate,sessionStorage.getItem('ouId'))
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.closeResetButton = true;
+          this.dataDisplay = ''
+          this.isDisabled1=false;
+        })     
+     }
   }
   fromToDateValidation(fDate,tDate){
     this.rptValidation=true;

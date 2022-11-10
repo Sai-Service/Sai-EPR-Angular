@@ -198,6 +198,14 @@ export class ReportServiceService {
   }
 
 
+  empLedgerReport(fromDate,toDate,ouId){
+    const REQUEST_URI = this.ServerUrl +`/AccountsReports/EmplLedger?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
   cashBankReport(fromDate,toDate,ouId,locId,accountName,naturalAccct,userName){
     const REQUEST_URI = this.ServerUrl +`/AccountsReports/CashbankReg?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&accountName=${accountName}&naturalCode=${naturalAccct}&userName=${userName}`;
     return this.http.get(REQUEST_URI, {
