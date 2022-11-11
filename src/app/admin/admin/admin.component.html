@@ -54,6 +54,7 @@
         <div [style.display]="isVisible12 ? 'block' : 'none'">
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Sales Order</a>
           <ul class="dropdown-menu">
+            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/VehicleAndAddonPriceUpload']">Vehicle & Addon Price Ulpoad</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/modelWisePrice']">Model Wise Price List</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/SalesProforma']">Proforma INV</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/ClosingStock']">Closing Stock</a></li>

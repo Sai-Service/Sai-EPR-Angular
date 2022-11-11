@@ -2947,6 +2947,21 @@ public shortLandedClaimSave(rtvRecord) {
     return this.http.post(REQUEST_URI, formData);
   }
 
+
+  bulkpouploadSalesVhiecleAndAddonItem(formData: FormData,file, addonFile,emplId,priceListName) {
+    formData.append('file', file);
+    formData.append('addonFile', addonFile);
+    formData.append('emplId', emplId);
+    formData.append('priceListName', priceListName);
+    const REQUEST_URI = this.ServerUrl + `/orderHeader/uploadVehiclePriceList`;
+    return this.http.post(REQUEST_URI, formData);
+  }
+
+
+  // bulkpouploadSalesVhiecleAndAddonItem(file,addonfile,empId,priceListName) {
+  //   return this.http.get(this.ServerUrl + `/orderHeader/uploadVehiclePriceList?file=${file}&addonfile=${addonfile}&empId=${empId}&priceListName=${priceListName}`)
+  // }
+
   pendingPOList(emplId) {
     return this.http.get(this.ServerUrl + `/poHdr/user/All?userId=${emplId}`)
   }

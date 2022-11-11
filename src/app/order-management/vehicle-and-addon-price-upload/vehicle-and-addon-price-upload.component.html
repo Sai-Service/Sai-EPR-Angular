@@ -1,0 +1,94 @@
+<form [formGroup]="bulkUploadCSVVehilceAndAddonForm"
+    (ngSubmit)="bulkUploadCSVVehilceAndAddon(bulkUploadCSVVehilceAndAddonForm.value)">
+    <fieldset class="RFS">
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <td class="PageHeader">
+                &nbsp;Vehicle&nbsp;And&nbsp;Addon&nbsp;Price&nbsp;Upload&nbsp;
+            </td>
+        </tr>
+    </table>
+    <div class="progress form-group" *ngIf="progress > 0">
+        <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width.%]="progress"> </div>
+    </div>
+    <table class="center">
+        <tr>
+            <td class="LabelFontStyle">
+                &nbsp;&nbsp;User&nbsp;Name&nbsp;:&nbsp;
+            </td>
+            <td>
+                <input type="text" class="form-control" disabled formControlName="userName" style="width: 100px;">
+            </td>
+            <td style="width: 15%" class="LabelFontStyle">
+                &nbsp;&nbsp;PriceList&nbsp;Name&nbsp;:&nbsp;
+            </td>
+            <td>
+                <select formControlName="priceListName" id="priceListName" #myinput data-live-search="true"
+                    class="form-control">
+                    <option>--Select--</option>
+                    <option *ngFor="let sc of  pricelIstList">
+                        {{sc.priceListName}}
+                    </option>
+                </select>
+            </td>
+        </tr>
+    </table>
+    <!-- <td colspan="6" style="width: 100%;padding-top: 0px;"> -->
+        <table style="width: 50%;padding-top: 0px;align-content: center;">
+            <tr>
+                <td class="LabelFontStyle">
+                    &nbsp;&nbsp;Select&nbsp;CSV&nbsp;:&nbsp;
+                </td>
+                <td colspan="3">
+                    <input class="form-control" type="file" #fileInput accept=".csv" formControlName="file"
+                        style="vertical-align: middle;margin-top: 22px;width: 350px;">&nbsp;&nbsp;
+                </td>
+                <td colspan="3">
+                    <input class="form-control" type="file" #addonFileInput accept=".csv" formControlName="addonFile"
+                        style="vertical-align: middle;margin-top: 22px;width: 350px;">&nbsp;&nbsp;
+                </td>
+                <td>
+                    <button class="btn btn-primary" (click)="uploadCSVFile()" [disabled]="isDisabledUpload"
+                        style="width: 100%;font-size: 11px;">Upload</button>
+                </td>
+                
+            </tr>
+          
+            <tr>
+                
+                
+                <td   class="LabelFontStyle" style="color: blue;width: fit-content;text-align: center; width: 100%;" colspan="6">
+                    
+                    <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                    <ng-template #hList2> 
+                        <div class="d-flex justify-content-center">
+                            <div class="spinner-border text-primary" role="status" >
+                                  <span class="sr-only" id="loading"></span>
+                           
+                            </div>
+                        </div>
+                        
+                  </ng-template>
+                  <ng-template #hList1> </ng-template>
+                    &nbsp;{{dataDisplay }}&nbsp; 
+                </td>
+            </tr>
+        </table>
+    <!-- </td> -->
+        <table class="center">
+            <tr>
+                <td>
+                    <button type="submit" class="btn btn-primary" id="register" (click)="refresh()">
+                        Clear
+                    </button>
+                </td>
+                <td>
+                    <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
+                </td>
+                <td>
+                    <button type="submit" (click)="updatePriceList()" class="btn btn-primary" style="width: 100%;">Check Updated Price List</button>
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+</form>

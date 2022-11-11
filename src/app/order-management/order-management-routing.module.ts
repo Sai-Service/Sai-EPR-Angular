@@ -28,6 +28,7 @@ import { EwayBillCustomerNoWiseComponent } from './eway-bill-customer-no-wise/ew
 import { ReserveQtyClearComponent } from './reserve-qty-clear/reserve-qty-clear.component';
 import { SalesOrderProformaChetakComponent } from './sales-order-proforma-chetak/sales-order-proforma-chetak.component';
 import { OrderDetailsUpdationComponent } from './order-details-updation/order-details-updation.component';
+import { VehicleAndAddonPriceUploadComponent } from './vehicle-and-addon-price-upload/vehicle-and-addon-price-upload.component';
 
 
 const routes: Routes = [
@@ -62,6 +63,7 @@ const routes: Routes = [
   {path:'ReserveQtyClear',component:ReserveQtyClearComponent},
   {path:'SalesOrderProformaChetak',component:SalesOrderProformaChetakComponent},
   {path:'OrderDetailsUpdation',component:OrderDetailsUpdationComponent},
+  {path:'VehicleAndAddonPriceUpload',component:VehicleAndAddonPriceUploadComponent},
   {path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];
 

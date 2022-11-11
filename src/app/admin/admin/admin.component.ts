@@ -320,6 +320,9 @@ export class AdminComponent implements OnInit {
       this.isVisibleAccountsRepor=false;
       this.isVisibleAccessories=false;
       this.isVisibilePaintSystem=false;
+      // if (sessionStorage.getItem('deptName')==='Account'){
+
+      // }
     }
 
     if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId'))===9 && sessionStorage.getItem('deptName')==='Account'){
