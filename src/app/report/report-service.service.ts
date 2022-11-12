@@ -462,8 +462,8 @@ export class ReportServiceService {
     });
   }
 
-  sparesDbAgingExicutiveSum(toDate,ouId,locId,ticketNo,custAcctNo,deptId){
-    const REQUEST_URI = this.ServerUrl +`/SparesReports/DebtorsExecSummary?toDate=${toDate}&ouId=${ouId}&locId=${locId}&ticketNo=${ticketNo}&custAcctNo=${custAcctNo}&deptId=${deptId}`;
+  sparesDbAgingExicutiveSum(toDate,ouId,locId,ticketNo,custAcctNo,deptId,age1,age2,age3,age4){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/DebtorsExecSummary?toDate=${toDate}&ouId=${ouId}&locId=${locId}&ticketNo=${ticketNo}&custAcctNo=${custAcctNo}&deptId=${deptId}&age1=${age1}&age2=${age2}&age3=${age3}&age4=${age4}`;
     return this.http.get(REQUEST_URI, {
       responseType: 'arraybuffer',
       headers: this.headers,
@@ -714,7 +714,16 @@ export class ReportServiceService {
     });
   }
 
+  spConsumptionReport(fromDate,toDate, locId){
+    // http://localhost:8081/SparesReports/PhyStkUploadFormat?compileName=12MU.2101-22221012500128&locId=2101
 
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprItemConsumption?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
 
 
   invoiceSummaryReport(fromDate,toDate,locId){

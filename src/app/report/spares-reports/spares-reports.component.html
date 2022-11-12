@@ -49,15 +49,14 @@
                             <a class="dropdown-item" data-toggle="collapse" href="#panelspClosingStockAsOndate" role="tab"
                                 (click)="reportDetails('gstSparesClosingStockAsOnDate')">Spares Closing Stock As On Date</a>
                         </li>
-                       
-                       
-                        
-                         
                           <li>
                             <a class="dropdown-item" data-toggle="collapse" href="#panelfromtosubinventory" role="tab"
                                 (click)="reportDetails('sparesZeroStkReport')">Spares Zero Stock Report</a>
                         </li>
-                       
+                        <li>
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelGSTPurchaseRegister" role="tab"
+                                (click)="reportDetails('spConsumptionReport')">Spares Item Consumption Report</a>
+                        </li>
                     </ul>
                 </li>
 
@@ -670,6 +669,18 @@ style="margin-left: 20%;" id="panelgstsaiDebtors"> -->
             </td>
 
            </tr>
+           <tr>
+            <td style="width: 15%" class="LabelFontStyle">Aging&nbsp;1&nbsp;:&nbsp;</td>
+            <td><input type="number" class="form-control" formControlName="spDbAging1" [(ngModel)]="spDbAging1" ></td>
+            <td style="width: 15%" class="LabelFontStyle">Aging&nbsp;2&nbsp;:&nbsp;</td>
+            <td><input type="number" class="form-control" formControlName="spDbAging2" [(ngModel)]="spDbAging2"  ></td>
+        </tr>
+        <tr>
+            <td style="width: 15%" class="LabelFontStyle">Aging&nbsp;3&nbsp;:&nbsp;</td>
+            <td><input type="number" class="form-control" formControlName="spDbAging3" [(ngModel)]="spDbAging3"  ></td>
+            <td style="width: 15%" class="LabelFontStyle">Aging&nbsp;4&nbsp;:&nbsp;</td>
+            <td><input type="number" class="form-control" formControlName="spDbAging4" [(ngModel)]="spDbAging4" ></td>
+        </tr>
        </table>
 
                             <table class="center">

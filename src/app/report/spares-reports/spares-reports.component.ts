@@ -958,7 +958,24 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblepanelStockTaking=false;
       this.panelspDebtAgByExicutiveSummary=true;
     }
-
+    else if (reportName === 'spConsumptionReport') {
+      this.reportName = 'Spares Item Consumption Report';
+      this.isVisibleGSTPurchaseRegister = true;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblestockTransfer = false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
+      this.isVisibleEwayBill=false;
+      this.isVisiblepanelStockTaking=false;
+      this.panelspDebtAgByExicutiveSummary=false;
+    }
   }
 
   
@@ -1130,10 +1147,26 @@ export class SparesReportsComponent implements OnInit {
       if (custAccNo === null || custAccNo === undefined || custAccNo === ''){
         custAccNo='';
       }
+      var age1= this.sparesReportForm.get('spDbAging1').value;
+      var age2= this.sparesReportForm.get('spDbAging2').value;
+      var age3= this.sparesReportForm.get('spDbAging3').value;
+      var age4= this.sparesReportForm.get('spDbAging4').value;
+
+      if(age1<0 || age1==null || age1==undefined) {this.rptValidation=false;}
+      if(age2<0 || age2==null || age2==undefined) {this.rptValidation=false;}
+      if(age3<0 || age3==null || age3==undefined) {this.rptValidation=false;}
+      if(age4<0 || age4==null || age4==undefined) {this.rptValidation=false;}
+      if (age1 > age2) {this.rptValidation=false;}
+      else if (age1 >age3){this.rptValidation=false;}
+      else if (age1 > age4){this.rptValidation=false;}
+      else if (age2 > age3){this.rptValidation=false;}
+      else if (age2 > age4){this.rptValidation=false;}
+      else if (age3 > age4){this.rptValidation=false;}
+    if(this.rptValidation ==false) {this.closeResetButton=true;this.dataDisplay = 'Please check Aging Values.';  return; }
       const fileName = 'Spares Debtors Aging Report - Executive summary-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.sparesDbAgingExicutiveSum(toDate, sessionStorage.getItem('ouId'), locId, userName,custAccNo,deptId)
+        this.reportService.sparesDbAgingExicutiveSum(toDate, sessionStorage.getItem('ouId'), locId, userName,custAccNo,deptId,age1,age2,age3,age4)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -1142,7 +1175,7 @@ export class SparesReportsComponent implements OnInit {
           })
       }
       else if ((Number(sessionStorage.getItem('deptId'))) != 4) {
-        this.reportService.sparesDbAgingExicutiveSum(toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), userName,custAccNo,deptId)
+        this.reportService.sparesDbAgingExicutiveSum(toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), userName,custAccNo,deptId,age1,age2,age3,age4)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -2084,8 +2117,28 @@ export class SparesReportsComponent implements OnInit {
      
     }
 
-
-
+    else if (reportName ==='Spares Item Consumption Report'){
+      const fileName = 'Spares Item Consumption Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      var locId=this.sparesReportForm.get('locId').value;
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.spConsumptionReport( fromDate,toDate, locId)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      } else if ((Number(sessionStorage.getItem('deptId'))) !=4){
+        this.reportService.spConsumptionReport(fromDate,toDate, sessionStorage.getItem('locId'))
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.isDisabled1 = false;
+          this.closeResetButton = true;
+          this.dataDisplay = ''
+        })
+    }
+  }
   }
 
 
