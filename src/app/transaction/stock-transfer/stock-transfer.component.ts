@@ -386,7 +386,7 @@ export class StockTransferComponent implements OnInit {
       });
       this.sub = this.router1.params.subscribe(params => {
         this.ShipmentNo = params['refNum'];
-         alert ("orderNumber  :"+this.ShipmentNo);
+        //  alert ("orderNumber  :"+this.ShipmentNo);
        if (this.ShipmentNo != undefined){
         
        this.search(this.ShipmentNo);
