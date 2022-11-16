@@ -533,7 +533,7 @@
                                         <td>
                                             <div *ngIf="displayrecDate; then thenrecDate; else elserecDate"></div>
                                               <ng-template #thenrecDate>
-                                                <input disabled formControlName="recDate" value="{{recDate}}"   class="form-control" value={{recDate}} class="form-control">
+                                                <input  disabled formControlName="recDate" value="{{recDate}}"   class="form-control" value={{recDate}} class="form-control">
                                               </ng-template>
                                               <ng-template #elserecDate>
                                                 <input type="date" disabled formControlName="recDate"  value="{{recDate}}" onkeydown="return false"   class="form-control">

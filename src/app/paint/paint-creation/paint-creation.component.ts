@@ -528,18 +528,18 @@ export class PaintCreationComponent implements OnInit {
     this.router.navigate(['admin']);
   }
 
-  onOptiongetItem(event: any, i) {
-    if (this.currentOp === 'SEARCH') {
-      return;
-    }
+  onOptiongetItem(event1: any, i) {
+    if (this.currentOp === 'SEARCH') {   return;  }
 
-
+    var event=event1
     // var itemCode = '';
-    // if (event.includes('--')) {
-    //   var itemCode2 = event.split('--');
+    // if (event1.includes(':')) {
+    //   var itemCode2 = event1.split(':');
     //   itemCode = itemCode2[0]; 
+    //   event=itemCode
     // }
 
+    
     // alert ("event :"+event +", item code :"+itemCode+","+i)
 
 
