@@ -1053,6 +1053,10 @@ export class PaintIssueDpComponent implements OnInit {
   }
 
   saveMisc() {
+    if(this.panelQty >23)  
+    {
+      alert ("Panel Count Should not exceed 23. Please Check");return;
+    }
     this.displayButton = true;
     this.displayaddButton = true;
     if (this.paintIssueForm.valid) {
@@ -1297,6 +1301,7 @@ onSelectPanel(e,index){
     if (e.target.checked === false) {this.panelFlag  = 'N' 
       this.panelQty=this.panelQty-Number(this.panelList[index].attribute1);
   }
+   if(this.panelQty >23) { alert ("Maximum Panels should not exceed 23. Please check")}
    this.description=this.panelQty.toString();
   // var totPanelCount=0;
   // for (let i = 0; i < this.panelList.length; i++) {
@@ -1307,6 +1312,7 @@ onSelectPanel(e,index){
 
   // this.paintIssueForm.patchValue({panelQty :totPanelCount});
 }
+
 
 LoadPanelList(){}
 
@@ -1320,6 +1326,7 @@ CalculateLineTotal() {
     totQty=totQty+trxLnArr[i].physicalQty;
     totValue=totValue+(trxLnArr[i].itemUnitCost * trxLnArr[i].physicalQty)
   }
+  totValue=Math.round((totValue+Number.EPSILON)*100)/100;
   this.paintIssueForm.patchValue({totalCompileItems :totQty});
   this.paintIssueForm.patchValue({totalItemValue :totValue})
 }
