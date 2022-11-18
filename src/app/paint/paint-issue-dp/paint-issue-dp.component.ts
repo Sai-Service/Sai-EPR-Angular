@@ -149,7 +149,8 @@ export class PaintIssueDpComponent implements OnInit {
   segmentNameList: any;
   codeCombinationId: number;
   compileType: number;
-  reason: string='ICPN02';
+  // reason: string="ICPN02-32-Paint Issue to BodyShop";
+  reason: string;
   reasonlist: any;
   compileStatus: string = "OPEN"
   entryStatusCode: number;
@@ -385,7 +386,6 @@ export class PaintIssueDpComponent implements OnInit {
 
   ngOnInit(): void {
 
-
     this.locId = Number(sessionStorage.getItem('locId'));
     this.deptId = Number(sessionStorage.getItem('dept'));
     this.divisionId = Number(sessionStorage.getItem('divisionId'));
@@ -450,6 +450,7 @@ export class PaintIssueDpComponent implements OnInit {
         })
       }
     );
+
     this.service.PaintReasonList().subscribe(
       data => {
         this.reasonlist = data;
@@ -462,6 +463,10 @@ export class PaintIssueDpComponent implements OnInit {
         this.reasonlist = selreasonlist;
       }
     )
+
+    // this.onSelectReason("ICPN02-32-Paint Issue to BodyShop")
+
+
     this.service.TypeList().subscribe(
       data => {
         this.TypeList = data;
@@ -486,7 +491,11 @@ export class PaintIssueDpComponent implements OnInit {
 
     );
     this.displayRemoveRow[0] = false;
+
+
+
   }
+
   paintIssue(paintIssueForm: any) { }
 
   getInvItemId($event) {
@@ -1053,9 +1062,9 @@ export class PaintIssueDpComponent implements OnInit {
   }
 
   saveMisc() {
-    if(this.panelQty >23)  
+    if(this.panelQty >22)  
     {
-      alert ("Panel Count Should not exceed 23. Please Check");return;
+      alert ("Panel Count Should not exceed 22. Please Check");return;
     }
     this.displayButton = true;
     this.displayaddButton = true;
@@ -1113,7 +1122,9 @@ export class PaintIssueDpComponent implements OnInit {
 
   onSelectReason(event) {
     var reasonArr = event.split('-');
-    // alert(reasonArr)
+
+    // alert(reasonArr+","+reasonArr[0] +","+reasonArr[1])
+
     this.service.reasonaccCode(this.locId, reasonArr[0], reasonArr[1]).subscribe(
 
       data => {
@@ -1137,6 +1148,8 @@ export class PaintIssueDpComponent implements OnInit {
       });
 
   }
+
+
   keytab(event, maxLength, nxtEle) {
     console.log(event);
     // let sib=event.srcElement.nextElementSibling;
@@ -1301,7 +1314,7 @@ onSelectPanel(e,index){
     if (e.target.checked === false) {this.panelFlag  = 'N' 
       this.panelQty=this.panelQty-Number(this.panelList[index].attribute1);
   }
-   if(this.panelQty >23) { alert ("Maximum Panels should not exceed 23. Please check")}
+   if(this.panelQty >22) { alert ("Maximum Panels should not exceed 22. Please check")}
    this.description=this.panelQty.toString();
   // var totPanelCount=0;
   // for (let i = 0; i < this.panelList.length; i++) {

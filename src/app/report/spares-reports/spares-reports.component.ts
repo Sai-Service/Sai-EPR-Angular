@@ -321,6 +321,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblepanelStockTaking=false;
       this.panelspDebtAgByExicutiveSummary=false;
     }
+
     else if (reportName === 'gstClosingReport') {
       this.reportName = 'Spares Closing Stock Report';
       this.isVisibleonlyLocationCode = true;
@@ -339,6 +340,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblepanelStockTaking=false;
       this.panelspDebtAgByExicutiveSummary=false;
     }
+
     else if (reportName === 'gstsaiDebtors') {
       this.reportName = 'Spares Debtor Report';
       if (Number(sessionStorage.getItem('deptId'))===4){
@@ -1256,6 +1258,7 @@ export class SparesReportsComponent implements OnInit {
           })
       }
     }
+
     else if (reportName === 'Spares Closing Stock Report') {
       const fileName = 'SP-Closing-Stock-' + sessionStorage.getItem('locName').trim() + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
@@ -1578,6 +1581,7 @@ export class SparesReportsComponent implements OnInit {
           })
       }
     }
+    
     else if (reportName === 'Spares Misc Issue Receipt Report') {
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
@@ -1602,6 +1606,7 @@ export class SparesReportsComponent implements OnInit {
           })
       }
     }
+
     else if (reportName === 'Spares Sales Return Register') {
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 

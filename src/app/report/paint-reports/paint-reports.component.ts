@@ -306,6 +306,26 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblepanelStockTaking=false;
 
     }
+
+    else if (reportName === 'gstClosingReport') {
+      this.reportName = 'Paint Closing Stock Report';
+      this.isVisibleonlyLocationCode = true;
+      this.isVisiblegstsaiDebtors = false;
+       this.isVisiblespClosingStockAsOndate=false;
+      this.isVisibleGSTPurchaseRegister = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
+      this.isVisibleEwayBill=false;
+      this.isVisiblepanelStockTaking=false;
+    }
+
+
     else if (reportName === 'internalConsumptionReport') {
       this.reportName = 'Consumption Report';
       this.isVisibleGSTPurchaseRegister = false;
@@ -323,6 +343,23 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleEwayBill=false;
       this.isVisiblepanelStockTaking=false;
 
+    }
+    else if (reportName === 'gstsparesMiscIssueReceipt') {
+      this.reportName = 'Paint Misc Issue Receipt Report';
+      this.isVisibleGSTPurchaseRegister = false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = true;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
+      this.isVisibleEwayBill=false;
+      this.isVisiblepanelStockTaking=false;
     }
 
   
@@ -490,13 +527,37 @@ export class PaintReportsComponent implements OnInit {
     }
    
    
-    else if (reportName === 'Paint Closing Stock Report') {
-      this.toDateValidation(tDate);if(this.rptValidation==false){return;}
+    // else if (reportName === 'Paint Closing Stock Report') {
+    //   this.toDateValidation(tDate);if(this.rptValidation==false){return;}
 
-      const fileName = 'Paint Closing Stock Report-' + sessionStorage.getItem('locName').trim() + '-' + toDate + '.xls';
+    //   const fileName = 'Paint Closing Stock Report-' + sessionStorage.getItem('locName').trim() + '-' + toDate + '.xls';
+    //   const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    //   if (Number(sessionStorage.getItem('deptId')) === 4) {
+    //     this.reportService.sprClsAsonDtReport(toDate, locId,subInventory)
+    //       .subscribe(data => {
+    //         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+    //         this.isDisabled1 = false;
+    //         this.closeResetButton = true;
+    //         this.dataDisplay = ''
+    //       })
+    //   }
+    //   else if (Number(sessionStorage.getItem('deptId')) != 4) {
+    //     this.reportService.sprClsAsonDtReport(toDate, sessionStorage.getItem('locId'),subInventory)
+    //     .subscribe(data => {
+    //       saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+    //       this.isDisabled1 = false;
+    //       this.closeResetButton = true;
+    //       this.dataDisplay = ''
+    //     })
+    //    }
+    // }
+
+
+    else if (reportName === 'Paint Closing Stock Report') {
+      const fileName = 'PAINT-Closing-Stock-' + sessionStorage.getItem('locName').trim() + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.sprClsAsonDtReport(toDate, locId,subInventory)
+        this.reportService.spclosstrockReport(locId,subInventory)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -505,15 +566,17 @@ export class PaintReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.sprClsAsonDtReport(toDate, sessionStorage.getItem('locId'),subInventory)
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.isDisabled1 = false;
-          this.closeResetButton = true;
-          this.dataDisplay = ''
-        })
-       }
+        this.reportService.spclosstrockReport(sessionStorage.getItem('locId'),subInventory)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
     }
+    
+
     else if (reportName==='Consumption Report'){
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
@@ -537,6 +600,31 @@ export class PaintReportsComponent implements OnInit {
           this.dataDisplay = ''
         })
       } 
+    }
+
+    else if (reportName === 'Paint Misc Issue Receipt Report') {
+      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+
+      const fileName = 'Paint Misc Issue Receipt Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.spSparesMiscIssueReceiptReport(fromDate, toDate, locId)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.spSparesMiscIssueReceiptReport(fromDate, toDate, sessionStorage.getItem('locId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
     }
    
 

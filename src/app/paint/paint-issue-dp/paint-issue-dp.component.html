@@ -3,7 +3,7 @@
     <table style="width: 100%;background-color: white;">
       <tr>
         <td class="PageHeader">
-          &nbsp;&nbsp;Workshop&nbsp;Issue&nbsp;(Paint)
+          &nbsp;&nbsp;BodyShop&nbsp;Issue&nbsp;(Paint)
         </td>
         <table style="width: 100%; background-color: #a4d3e9;">
           <tr>
@@ -101,6 +101,7 @@
         <td style="width: 15%" class="LabelFontStyle">
             Issue Type:
           </td>
+         
           <td>
             <select class="form-control" formControlName="reason" [(ngModel)]="reason" (ngModelChange)="onSelectReason($event)">
               <option>--Select--</option>
@@ -110,6 +111,13 @@
               *ngIf="getGroupControl('reason').touched && getGroupControl('reason').invalid">Valid Transaction Type
              </span>
           </td>
+
+          <!-- <td>
+            <input readonly  class="form-control"  formControlName="reason" [(ngModel)]="reason" >
+          </td> -->
+
+
+
           <td style="width: 15%" class="LabelFontStyle">
               Account Code:
              </td>
