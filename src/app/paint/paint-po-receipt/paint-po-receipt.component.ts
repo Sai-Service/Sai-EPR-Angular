@@ -1418,7 +1418,7 @@ export class PaintPoReceiptComponent implements OnInit {
 
   executeAction() {
     if (this.msgType.includes("Save")) {
-      alert('saving PO');
+      // alert('saving PO');
       this.poSave();
     }
 

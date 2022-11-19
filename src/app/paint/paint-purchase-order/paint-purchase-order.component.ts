@@ -1744,7 +1744,7 @@ export class PaintPurchaseOrderComponent implements OnInit {
  }
 
  newPOMast() {
-  alert ("In PO Save.....");
+  // alert ("In PO Save.....");
 
   //  this.validatePOLine();
   
