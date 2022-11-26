@@ -727,9 +727,9 @@
                                          <th>Payment No</th>
                                          <th>Payment Amount</th> 
                                          <th>Payment Method</th>
-                                         <!-- <th>Invoice Amount</th>
-                                         <th>Paid Amount</th>
-                                         <th>Balance Amount</th> -->
+                                          <th>Payment type</th>
+                                         <!-- <th>Paid Amount</th> -->
+                                         <!-- <th>Balance Amount</th> -->
                                          </tr>
                                        </thead>
                                                                           
@@ -740,13 +740,13 @@
                      
                      
                                                <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: center;">{{com.PAYMENTTYPEFLAG}}</td>
-                                               <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: left;">{{com.PAYMENTNO}}</td> -->
+                                               <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: left;">{{com.PAYMENTNO}}</td> 
                                                <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: left;">{{com.PAYAMOUNT}}</td>
-                                               <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: left;">{{com.PAYMENTMETHODLOOKUPCODE  |date:'dd-MM-y'}}</td>
-                                               <!-- <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: left;">{{com.invoiceAmt}}</td>
-                                               <td style="padding-right: 5px;padding-top: 5px;border-color:black;text-align: right;">{{com.paidAmt | number:'1.2-2'}}</td>
-                                               <td style="padding-right: 5px;padding-top: 5px;border-color:black;text-align: right;">{{com.balanceAmt| number:'1.2-2'}}</td> --> -->
-                                               
+                                               <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: left;">{{com.BANKACCOUNTNUM}}</td>
+                                               <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: left;">{{com.PAYMENTMETHODLOOKUPCODE}}</td>
+                                               <!-- <td style="padding-right: 5px;padding-top: 5px;border-color:black;text-align: right;">{{com.paidAmt | number:'1.2-2'}}</td>
+                                               <td style="padding-right: 5px;padding-top: 5px;border-color:black;text-align: right;">{{com.balanceAmt| number:'1.2-2'}}</td> --> 
+                                                
                                              </tr>
                                              </ng-container>
                      

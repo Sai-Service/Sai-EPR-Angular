@@ -1017,7 +1017,7 @@ if(this.deptId==2){
     this.ReceiptMethodList=null;
     this.showOTHERModal=false;
     if (payType === 'OTHER') {
-      alert ("pytype OTHER selected..."+this.deptId );
+      // alert ("pytype OTHER selected..."+this.deptId );
       this.showOTHERModal=true;
       // this.showBankDetails=true;
     }
@@ -1394,22 +1394,18 @@ if(this.deptId==2){
             }
 
             // -------------------------------------------- Other Rcpt Details-----
-
+            this.othLineArray().clear();
+               console.log(this.lstRcptOtherDetails);
                this.lstRcptOtherDetails=data.obj.oePayList[0].rcptOthDet;
-
-                 console.log(this.lstRcptOtherDetails);
-                 
 
                   var len = this.othLineArray().length;
                   for (let i = 0; i < this.lstRcptOtherDetails.length - len; i++) {
-                    
                     var avlLnGrp: FormGroup = this.othLineDetails();
                     this.othLineArray().push(avlLnGrp);
                   }
 
                   this.paymentArForm.get('rcptOthDet').patchValue(this.lstRcptOtherDetails);
-
-
+            
             // -----------------------------------------------------------------------
 
             this.paymentArForm.patchValue(this.receiptDetails);
@@ -1538,6 +1534,25 @@ if(this.deptId==2){
             } else {
               this.applHistory = false;
             }
+
+               // -------------------------------------------- Other Rcpt Details-----
+
+              //  for (let i = 0; i < this.lineDetailsArray.length; i++) {
+              //   this.lineDetailsArray().removeAt(i);
+              // }
+              this.othLineArray().clear();
+
+               console.log(this.lstRcptOtherDetails);
+               this.lstRcptOtherDetails=data.obj.oePayList[0].rcptOthDet;
+
+                  var len = this.othLineArray().length;
+                  for (let i = 0; i < this.lstRcptOtherDetails.length - len; i++) {
+                    var avlLnGrp: FormGroup = this.othLineDetails();
+                    this.othLineArray().push(avlLnGrp);
+                  }
+                  this.paymentArForm.get('rcptOthDet').patchValue(this.lstRcptOtherDetails);
+             // -----------------------------------------------------------------------
+
 
             // --------------------------------------------
 
