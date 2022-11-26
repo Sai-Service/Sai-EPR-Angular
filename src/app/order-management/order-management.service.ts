@@ -516,6 +516,13 @@ export class OrderManagementService {
     }
   }
 
+  proformaList(color,model,variant,custAcctNo): Observable<any> {
+    if (variant != null && variant != null) {
+      return this.http.get(this.ServerUrl + `/Proforma/proformaList?colorCode=${color}&model=${model}&variant=${variant}&custAcctNo=${custAcctNo}`);
+    }
+  }
+
+
   public variantDetailsUpdate(orderNumber, model, variant, color, basicValue) {
     const options = {
       headers: this.headers

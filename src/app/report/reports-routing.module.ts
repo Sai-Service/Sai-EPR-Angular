@@ -9,6 +9,7 @@ import { SparesReportsComponent } from './spares-reports/spares-reports.componen
 import { ServerReportComponent } from './server-report/server-report.component';
 import { PaintReportsComponent } from './paint-reports/paint-reports.component';
 import { TemplateDownloadComponent } from './template-download/template-download.component';
+import { ShellReportComponent } from './shell-report/shell-report.component';
 
 
 
@@ -22,7 +23,7 @@ const routes: Routes = [
   {path:'ServerReport',component:ServerReportComponent},
   {path:'PaintReports',component:PaintReportsComponent},
   {path:'templateDownload',component:TemplateDownloadComponent},
-
+  {path:'ShellReport',component:ShellReportComponent},
   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];
 

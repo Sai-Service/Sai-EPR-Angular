@@ -54,7 +54,7 @@ export class SalesReportsComponent implements OnInit {
   isVisiblelocationLOV: boolean = false;
   isVisiblelocationInput: boolean = false;
   isVisibleDepartmentList: boolean = false;
-
+  isVisiblegstsaiDebtors:boolean=false;
   // fromDate: Date;
   // toDate: Date;
   fromDate = this.pipe.transform(Date.now(), 'y-MM-dd');
@@ -71,6 +71,7 @@ export class SalesReportsComponent implements OnInit {
   isVisiblestockTransfer:boolean=false;
   isVisiblefromtoloccustaccno:boolean=false;
   isVisibleSalesInventoryAging:boolean=false;
+  inVisiblepanelSaleSaiDebtors:boolean=false;
   spInvAging1:number;
   spInvAging2:number;
   spInvAging3:number;
@@ -98,6 +99,7 @@ export class SalesReportsComponent implements OnInit {
   public InterBrancList: any = [];
   public CostCenterList: Array<string> = [];
   isVisiblefromtosubinventory:boolean=false;
+  isVisiblepanelfromtolocation1:boolean=false;
   subInventory:string;
   subInvCode: any;
   panelamcHistrory:boolean=false;
@@ -123,7 +125,6 @@ export class SalesReportsComponent implements OnInit {
       spInvAging1:[],
       spInvAging2:[],
       spInvAging3:[],
-
       vhslRegisterFromDt: [''],
       vhslRegisterToDt: [''],
       locCode: [''],
@@ -136,6 +137,10 @@ export class SalesReportsComponent implements OnInit {
       frGstSaleReg: [''],
       toGstSaleReg: [''],
       invcDt1: [''],
+      age1:[],
+      age2:[],
+      age3:[],
+      age4:[],
       location: [''],
       receiptNo:[''],
       segment1:[],
@@ -279,12 +284,13 @@ export class SalesReportsComponent implements OnInit {
       this.isVisibleSalesInventoryAging=false;
       this.isVisiblepanelfromtolocation=false;
       this.isVisiblepanelreceiptNo=false;
+      this.isVisiblepanelfromtolocation1=false;
       this.isVisiblepanelSalesAddonReconciliation=false;
       this.isVisiblefromtosubinventory=false;
       this.panelamcHistrory=false;
       this.ispanelTolocationOu=false;
       this.isVisiblepaneltolocation=false;
-
+      this.inVisiblepanelSaleSaiDebtors=false;
     }
     else if (reportName === 'gstSaleIND') {
       this.reportName = 'Sales Invoiced Not Delivered'
@@ -296,6 +302,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblestockTransfer=false;
       this.isVisiblefromtoloccustaccno=false;
       this.isVisibleSalesInventoryAging=false;
+      this.isVisiblepanelfromtolocation1=false;
       this.isVisiblepanelfromtolocation=false;
       this.isVisiblepanelreceiptNo=false;
       this.isVisiblepanelSalesAddonReconciliation=false;
@@ -303,7 +310,7 @@ export class SalesReportsComponent implements OnInit {
       this.panelamcHistrory=false;
       this.ispanelTolocationOu=false;
       this.isVisiblepaneltolocation=false;
-
+      this.inVisiblepanelSaleSaiDebtors=false;
     }
     else if (reportName === 'gstVehicleBookingReg') {
       this.reportName = 'Vehicle Booking Register'
@@ -315,6 +322,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblestockTransfer=false;
       this.isVisiblefromtoloccustaccno=false;
       this.isVisibleSalesInventoryAging=false;
+      this.isVisiblepanelfromtolocation1=false;
       this.isVisiblepanelfromtolocation=false;
       this.isVisiblepanelreceiptNo=false;
       this.isVisiblepanelSalesAddonReconciliation=false;
@@ -322,7 +330,7 @@ export class SalesReportsComponent implements OnInit {
       this.panelamcHistrory=false;
       this.ispanelTolocationOu=false;
       this.isVisiblepaneltolocation=false;
-
+      this.inVisiblepanelSaleSaiDebtors=false;
     }
     else if (reportName === 'gstSaleAllotNotInv') {
       this.reportName = 'Sales Alloted Not Invoiced Report'
@@ -336,12 +344,13 @@ export class SalesReportsComponent implements OnInit {
       this.isVisibleSalesInventoryAging=false;
       this.isVisiblepanelfromtolocation=false;
       this.isVisiblepanelreceiptNo=false;
+      this.isVisiblepanelfromtolocation1=false;
       this.isVisiblepanelSalesAddonReconciliation=false;
       this.isVisiblefromtosubinventory=false;
       this.panelamcHistrory=false;
       this.ispanelTolocationOu=false;
       this.isVisiblepaneltolocation=false;
-
+      this.inVisiblepanelSaleSaiDebtors=false;
     }
     else if (reportName === 'gstSaleClosingStock') {
       this.reportName = 'Vehicle Closing Stock'
@@ -353,13 +362,14 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblefromtoloccustaccno=false;
       this.isVisibleSalesInventoryAging=false;
       this.isVisiblepanelfromtolocation=false;
+      this.isVisiblepanelfromtolocation1=false;
       this.isVisiblepanelreceiptNo=false;
       this.isVisiblepanelSalesAddonReconciliation=false;
       this.isVisiblefromtosubinventory=false;
       this.panelamcHistrory=false;
       this.ispanelTolocationOu=false;
       this.isVisiblepaneltolocation=false;
-
+      this.inVisiblepanelSaleSaiDebtors=false;
     }
     else if (reportName === 'gstSaleClosingStockNew') {
       this.reportName = 'Vehicle Closing Stock-New'
@@ -372,12 +382,13 @@ export class SalesReportsComponent implements OnInit {
       this.isVisibleSalesInventoryAging=false;
       this.isVisiblepanelfromtolocation=false;
       this.isVisiblepanelreceiptNo=false;
+      this.isVisiblepanelfromtolocation1=false;
       this.isVisiblepanelSalesAddonReconciliation=false;
       this.isVisiblefromtosubinventory=false;
       this.panelamcHistrory=false;
       this.ispanelTolocationOu=false;
       this.isVisiblepaneltolocation=false;
-
+      this.inVisiblepanelSaleSaiDebtors=false;
     }
     else if (reportName === 'gstSaleRegister') {
       this.reportName = 'GST Sales Register'
@@ -387,6 +398,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblefromtolocationdepartment = false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblestockTransfer=false;
+      this.isVisiblepanelfromtolocation1=false;
       this.isVisiblefromtoloccustaccno=false;
       this.isVisibleSalesInventoryAging=false;
       this.isVisiblepanelfromtolocation=false;
@@ -396,12 +408,15 @@ export class SalesReportsComponent implements OnInit {
       this.panelamcHistrory=false;
       this.ispanelTolocationOu=false;
       this.isVisiblepaneltolocation=false;
-
+      this.inVisiblepanelSaleSaiDebtors=false;
     }
     else if (reportName === 'gstSparesSaiDebtors') {
-      this.reportName = 'Sai Debtors'
+      // alert(reportName +'---'+this.inVisiblepanelSaleSaiDebtors);
+      this.reportName = 'Sai Debtors';
+      this.isVisiblegstsaiDebtors=true;
       this.isVisibleVehicleSaleRegister = false;
-      this.isVisibleSaleIND = true;
+      this.isVisibleSaleIND = false;
+      this.inVisiblepanelSaleSaiDebtors=true;
       this.isSaleClosingStock = false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblefromtolocationdepartment = false;
@@ -419,7 +434,8 @@ export class SalesReportsComponent implements OnInit {
       this.panelamcHistrory=false;
       this.ispanelTolocationOu=false;
       this.isVisiblepaneltolocation=false;
-
+      this.inVisiblepanelSaleSaiDebtors=false;
+      this.isVisiblepanelfromtolocation1=false;
     }
     else if (reportName === 'gstReceiptRegister') {
       this.reportName = 'Receipt Register';
@@ -441,7 +457,8 @@ export class SalesReportsComponent implements OnInit {
       this.panelamcHistrory=false;
       this.ispanelTolocationOu=false;
       this.isVisiblepaneltolocation=false;
-
+      this.isVisiblepanelfromtolocation1=false;
+      this.inVisiblepanelSaleSaiDebtors=false;
     }
 
     else if (reportName === 'customerLedger') {
@@ -461,10 +478,11 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepanelreceiptNo=false;
       this.isVisiblepanelSalesAddonReconciliation=false;
       this.isVisiblefromtosubinventory=false;
+      this.isVisiblepanelfromtolocation1=false;
       this.panelamcHistrory=false;
       this.ispanelTolocationOu=false;
       this.isVisiblepaneltolocation=false;
-
+      this.inVisiblepanelSaleSaiDebtors=false;
     }
     else if (reportName === 'gststockTransferSummary') {
       this.reportName = 'Stock Transfer Made Detail Report';
@@ -480,10 +498,11 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepanelreceiptNo=false;
       this.isVisiblepanelSalesAddonReconciliation=false;
       this.isVisiblefromtosubinventory=false;
+      this.isVisiblepanelfromtolocation1=false;
       this.panelamcHistrory=false;
       this.ispanelTolocationOu=false;
       this.isVisiblepaneltolocation=false;
-
+      this.inVisiblepanelSaleSaiDebtors=false;
     }
     else if (reportName ==='gststockTransferReceivedDetails'){
       this.reportName = 'Stock Transfer Received Detail Report';
@@ -502,7 +521,8 @@ export class SalesReportsComponent implements OnInit {
       this.panelamcHistrory=false;
       this.ispanelTolocationOu=false;
       this.isVisiblepaneltolocation=false;
-
+      this.isVisiblepanelfromtolocation1=false;
+      this.inVisiblepanelSaleSaiDebtors=false;
     }
     else if (reportName==='gststockTransferReceivedSummary'){
       this.reportName = 'Sales Stock Transfer Received Summary Report';
@@ -514,6 +534,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblecustomerLedger = false;
       this.isVisiblefromtoloccustaccno=false;
       this.isVisibleSalesInventoryAging=false;
+      this.isVisiblepanelfromtolocation1=false;
       this.isVisiblepanelfromtolocation=false;
       this.isVisiblepanelreceiptNo=false;
       this.isVisiblepanelSalesAddonReconciliation=false;
@@ -521,7 +542,7 @@ export class SalesReportsComponent implements OnInit {
       this.panelamcHistrory=false;
       this.ispanelTolocationOu=false;
       this.isVisiblepaneltolocation=false;
-
+      this.inVisiblepanelSaleSaiDebtors=false;
     }
     else if (reportName==='saleProformaSummary'){
       this.reportName = 'Sales Proforma Summary Report';
@@ -540,7 +561,8 @@ export class SalesReportsComponent implements OnInit {
       this.panelamcHistrory=false;
       this.ispanelTolocationOu=false;
       this.isVisiblepaneltolocation=false;
-
+      this.isVisiblepanelfromtolocation1=false;
+      this.inVisiblepanelSaleSaiDebtors=false;
     }
     else if (reportName==='creditNoteReg'){
       this.reportName = 'Credit Note Register';
@@ -551,6 +573,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblestockTransfer=false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblefromtoloccustaccno=false;
+      this.isVisiblepanelfromtolocation1=false;
       this.isVisibleSalesInventoryAging=false;
       this.isVisiblepanelfromtolocation=false;
       this.isVisiblepanelreceiptNo=false;
@@ -559,7 +582,7 @@ export class SalesReportsComponent implements OnInit {
       this.panelamcHistrory=false;
       this.ispanelTolocationOu=false;
       this.isVisiblepaneltolocation=false;
-
+      this.inVisiblepanelSaleSaiDebtors=false;
     }
     else if (reportName==='subDealerRep'){
       this.reportName = 'SubDealer-Sales Register Report';
@@ -570,6 +593,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblestockTransfer=false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblefromtoloccustaccno=true;
+      this.isVisiblepanelfromtolocation1=false;
       this.isVisibleSalesInventoryAging=false;
       this.isVisiblepanelfromtolocation=false;
       this.isVisiblepanelreceiptNo=false;
@@ -578,7 +602,7 @@ export class SalesReportsComponent implements OnInit {
       this.panelamcHistrory=false;
       this.ispanelTolocationOu=false;
       this.isVisiblepaneltolocation=false;
-
+      this.inVisiblepanelSaleSaiDebtors=false;
     }
     else if (reportName==='salesaggingReports'){
       this.reportName = 'Sales Aging Report';
@@ -596,8 +620,9 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory=false;
       this.panelamcHistrory=false;
       this.ispanelTolocationOu=false;
+      this.isVisiblepanelfromtolocation1=false;
       this.isVisiblepaneltolocation=false;
-
+      this.inVisiblepanelSaleSaiDebtors=false;
     }
     else if (reportName==='saleAddonRegister'){
       this.reportName = 'Sales Addon Register';
@@ -613,10 +638,11 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepanelreceiptNo=false;
       this.isVisiblepanelSalesAddonReconciliation=false;
       this.isVisiblefromtosubinventory=false;
+      this.isVisiblepanelfromtolocation1=false;
       this.panelamcHistrory=false;
       this.ispanelTolocationOu=false;
       this.isVisiblepaneltolocation=false;
-
+      this.inVisiblepanelSaleSaiDebtors=false;
     }
     else if (reportName==='EWSaleRegister'){
       this.reportName = 'EW Sales Register';
@@ -632,10 +658,11 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepanelreceiptNo=false;
       this.isVisiblepanelSalesAddonReconciliation=false;
       this.isVisiblefromtosubinventory=false;
+      this.isVisiblepanelfromtolocation1=false;
       this.panelamcHistrory=false;
       this.ispanelTolocationOu=false;
       this.isVisiblepaneltolocation=false;
-
+      this.inVisiblepanelSaleSaiDebtors=false;
     }
     else if (reportName==='reinsuarnceReceiptPrint'){
       this.reportName = 'Reinsurance Receipt Print';
@@ -654,7 +681,8 @@ export class SalesReportsComponent implements OnInit {
       this.panelamcHistrory=false;
       this.ispanelTolocationOu=false;
       this.isVisiblepaneltolocation=false;
-
+      this.isVisiblepanelfromtolocation1=false;
+      this.inVisiblepanelSaleSaiDebtors=false;
     }
     else if (reportName ==='salesAddonReconciliation'){
       this.reportName = 'Sales Addon Reconciliation';
@@ -672,8 +700,9 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory=false;
       this.panelamcHistrory=false;
       this.ispanelTolocationOu=false;
+      this.isVisiblepanelfromtolocation1=false;
       this.isVisiblepaneltolocation=false;
-
+      this.inVisiblepanelSaleSaiDebtors=false;
     }
     else if (reportName ==='sparesSubinvTransReceived'){
       this.reportName ='Sub Inventory Transfer Received Report';
@@ -691,8 +720,9 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory=true;
       this.panelamcHistrory=false;
       this.ispanelTolocationOu=false;
+      this.isVisiblepanelfromtolocation1=false;
       this.isVisiblepaneltolocation=false;
-
+      this.inVisiblepanelSaleSaiDebtors=false;
     }
     else if (reportName ==='sparesSubinvTransMade'){
       this.reportName ='Sub Inventory Transfer Made Report';
@@ -708,9 +738,10 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepanelreceiptNo=false;
       this.isVisiblepanelSalesAddonReconciliation=false;
       this.isVisiblefromtosubinventory=true;
+      this.isVisiblepanelfromtolocation1=false;
       this.panelamcHistrory=false;
       this.isVisiblepaneltolocation=false;
-
+      this.inVisiblepanelSaleSaiDebtors=false;
     }
     else if (reportName === 'IrnGenerationReport'){
       this.reportName ='IRN Generation Report';
@@ -733,7 +764,8 @@ export class SalesReportsComponent implements OnInit {
       this.panelamcHistrory=false;
       this.ispanelTolocationOu=false;
       this.isVisiblepaneltolocation=false;
-
+      this.isVisiblepanelfromtolocation1=false;
+      this.inVisiblepanelSaleSaiDebtors=false;
     }
     else if (reportName ==='amcHistrory'){
       this.reportName ='AMC History Report';
@@ -752,7 +784,8 @@ export class SalesReportsComponent implements OnInit {
       this.panelamcHistrory=true;
       this.ispanelTolocationOu=false;
       this.isVisiblepaneltolocation=false;
-
+      this.isVisiblepanelfromtolocation1=false;
+      this.inVisiblepanelSaleSaiDebtors=false;
     }
     else if (reportName === 'reInsuarnceRegister') {
       this.reportName = 'ReInsurance Register';
@@ -774,7 +807,8 @@ export class SalesReportsComponent implements OnInit {
       this.panelamcHistrory=false;
       this.ispanelTolocationOu=false;
       this.isVisiblepaneltolocation=false;
-
+      this.isVisiblepanelfromtolocation1=false;
+      this.inVisiblepanelSaleSaiDebtors=false;
     }
     else if (reportName === 'gstPurRegister') {
       this.reportName = 'Purchase Register Details';
@@ -796,7 +830,8 @@ export class SalesReportsComponent implements OnInit {
       this.panelamcHistrory=false;
       this.ispanelTolocationOu=false;
       this.isVisiblepaneltolocation=false;
-
+      this.isVisiblepanelfromtolocation1=false;
+      this.inVisiblepanelSaleSaiDebtors=false;
     }
     else if (reportName === 'vehicleClosingStockAsOn') {
       this.reportName = 'Vehicle Closing Stock As on Date';
@@ -815,7 +850,8 @@ export class SalesReportsComponent implements OnInit {
       this.panelamcHistrory=false;
       this.ispanelTolocationOu=true;
       this.isVisiblepaneltolocation=false;
-
+      this.inVisiblepanelSaleSaiDebtors=false;
+      this.isVisiblepanelfromtolocation1=false;
     }
     else if (reportName === 'deliverySummary') {
       this.reportName = 'Delivery Summary Report';
@@ -834,7 +870,8 @@ export class SalesReportsComponent implements OnInit {
       this.panelamcHistrory=false;
       this.ispanelTolocationOu=false;
       this.isVisiblepaneltolocation=false;
-
+      this.inVisiblepanelSaleSaiDebtors=false;
+      this.isVisiblepanelfromtolocation1=false;
     }
     else if (reportName === 'fscCouponData') {
       this.reportName = 'FSC Coupon Data Report';
@@ -853,7 +890,8 @@ export class SalesReportsComponent implements OnInit {
       this.panelamcHistrory=false;
       this.ispanelTolocationOu=false;
       this.isVisiblepaneltolocation=false;
-
+      this.inVisiblepanelSaleSaiDebtors=false;
+      this.isVisiblepanelfromtolocation1=false;
     }
 
     else if (reportName === 'salesPendingPayment') {
@@ -873,7 +911,8 @@ export class SalesReportsComponent implements OnInit {
       this.panelamcHistrory=false;
       this.ispanelTolocationOu=false;
       this.isVisiblepaneltolocation=true;
-
+      this.inVisiblepanelSaleSaiDebtors=false;
+      this.isVisiblepanelfromtolocation1=false;
     }
     else if (reportName === 'salesBookingCancReport') {
       this.reportName = 'Sales Booking Cancellation Report';
@@ -892,7 +931,8 @@ export class SalesReportsComponent implements OnInit {
       this.panelamcHistrory=false;
       this.ispanelTolocationOu=false;
       this.isVisiblepaneltolocation=false;
-
+      this.inVisiblepanelSaleSaiDebtors=false;
+      this.isVisiblepanelfromtolocation1=false;
     }
 
     else if (reportName === 'salesRtoRegister') {
@@ -912,13 +952,15 @@ export class SalesReportsComponent implements OnInit {
       this.panelamcHistrory=false;
       this.ispanelTolocationOu=false;
       this.isVisiblepaneltolocation=false;
-
+      this.inVisiblepanelSaleSaiDebtors=false;
+      this.isVisiblepanelfromtolocation1=false;
     }
     else if (reportName === 'pendBookingChetakLy') {
       this.reportName = 'Chetak Pending Booking-Last Year'
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
       this.isSaleClosingStock = true;
+      this.isVisiblepanelfromtolocation1=false;
       this.isVisiblefromtolocationdepartment = false;
       this.isVisiblestockTransfer=false;
       this.isVisiblefromtoloccustaccno=false;
@@ -930,9 +972,29 @@ export class SalesReportsComponent implements OnInit {
       this.panelamcHistrory=false;
       this.ispanelTolocationOu=false;
       this.isVisiblepaneltolocation=false;
-
+      this.inVisiblepanelSaleSaiDebtors=false;
     }
 
+    else if (reportName === 'receiptOtherDetails') {
+      this.reportName = 'Receipt-Other Details Report'
+      this.isVisibleVehicleSaleRegister = false;
+      this.isVisibleSaleIND = false;
+      this.ispanelTolocationOu=false;
+      this.isSaleClosingStock = false;
+      this.isVisiblefromtolocationdepartment = false;
+      this.isVisiblestockTransfer=false;
+      this.isVisiblefromtoloccustaccno=false;
+      this.isVisibleSalesInventoryAging=false;
+      this.isVisiblepanelreceiptNo=false;
+      this.isVisiblepanelSalesAddonReconciliation=false;
+      this.isVisiblefromtosubinventory=false;
+      this.panelamcHistrory=false;
+      this.ispanelTolocationOu=false;
+      this.isVisiblepaneltolocation=false;
+      this.inVisiblepanelSaleSaiDebtors=false;
+      this.isVisiblepanelfromtolocation1=true;
+    }
+    
 
   }
 
@@ -1742,7 +1804,28 @@ export class SalesReportsComponent implements OnInit {
             })
         }
       }
-
+      else if (reportName === 'Receipt-Other Details Report') {
+        const fileName = 'Receipt-Other Details Report-' + sessionStorage.getItem('locName').trim() + '-' + '-TO-' + '.xls';
+        const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+        if (Number(sessionStorage.getItem('deptId')) === 4) {
+          this.reportService.receiptOtherDetails(fromDate,toDate,sessionStorage.getItem('ouId'),locId)
+            .subscribe(data => {
+              saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+              this.dataDisplay = ''
+              this.closeResetButton = true;
+              this.isDisabled1 = false;
+            })
+        }
+        else if (Number(sessionStorage.getItem('deptId')) != 4) {
+          this.reportService.receiptOtherDetails(fromDate,toDate,sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'))
+            .subscribe(data => {
+              saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+              this.dataDisplay = ''
+              this.closeResetButton = true;
+              this.isDisabled1 = false;
+            })
+        }
+      }
   }
 
  

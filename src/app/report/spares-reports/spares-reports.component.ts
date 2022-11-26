@@ -996,6 +996,24 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblepanelStockTaking=false;
       this.panelspDebtAgByExicutiveSummary=false;
     }
+    else if (reportName==='receiptOtherDetails'){
+      this.reportName = 'Receipt-Other Details Report';
+      this.isVisibleGSTPurchaseRegister = true;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblestockTransfer = false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
+      this.isVisibleEwayBill=false;
+      this.isVisiblepanelStockTaking=false;
+      this.panelspDebtAgByExicutiveSummary=false;
+    }
   }
 
   
@@ -2221,6 +2239,29 @@ export class SparesReportsComponent implements OnInit {
           this.isDisabled1 = false;
           this.closeResetButton = true;
           this.dataDisplay = ''
+        })
+    }
+  }
+
+  else if (reportName==='Receipt-Other Details Report'){
+    const fileName = 'Receipt-Other Details Report-' + sessionStorage.getItem('locName').trim() + '-' + '-TO-' + '.xls';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    if (Number(sessionStorage.getItem('deptId')) === 4) {
+      this.reportService.receiptOtherDetails(fromDate,toDate,sessionStorage.getItem('ouId'),locId)
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.dataDisplay = ''
+          this.closeResetButton = true;
+          this.isDisabled1 = false;
+        })
+    }
+    else if (Number(sessionStorage.getItem('deptId')) != 4) {
+      this.reportService.receiptOtherDetails(fromDate,toDate,sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'))
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.dataDisplay = ''
+          this.closeResetButton = true;
+          this.isDisabled1 = false;
         })
     }
   }
