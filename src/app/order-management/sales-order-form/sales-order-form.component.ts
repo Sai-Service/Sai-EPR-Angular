@@ -210,6 +210,7 @@ export class SalesOrderFormComponent implements OnInit {
   indexVal: number;
   allDatastore: any;
   activeLineNo: number = 1;
+  pfOrderNo:string;
   divisionName: string;
   dept: number;
   poLineTax: number;
@@ -306,6 +307,7 @@ export class SalesOrderFormComponent implements OnInit {
   public taxCalforItem: any;
   categoryList: any[];
   accountNoSearch: any[];
+  orderList:any[];
   public addonDescList: any[];
   lstgetOrderLineDetails: any[];
   lstgetOrderTaxDetails: any[];
@@ -313,6 +315,7 @@ export class SalesOrderFormComponent implements OnInit {
   displayaccountNo = true;
   displayAllButtons = true;
   displaycustAccountNo = true;
+  displaypfOrderNo=true;
   currentOpration: string;
   displayVehicleDetails = true;
   displayCreateOrderButton = false;
@@ -410,6 +413,7 @@ export class SalesOrderFormComponent implements OnInit {
       csdIndexNo: [''],
       csdDate: [''],
       csdPoNo: [''],
+      pfOrderNo:[''],
       lesseeContactNo: [''],
       exShowRoomPrice: [0],
       totalPaidAmt: [0],
@@ -1075,6 +1079,7 @@ export class SalesOrderFormComponent implements OnInit {
     if (Number(sessionStorage.getItem('divisionId')) === 2) {
       var model = this.SalesOrderBookingForm.get('model').value;
       var variant = this.SalesOrderBookingForm.get('variant').value;
+      var custAcctNo=this.SalesOrderBookingForm.get('accountNo').value;
       this.orderManagementService.dealerShipBaseAmtNew(model, variant, color, sessionStorage.getItem('ouId'))
         .subscribe(
           data => {
@@ -1084,6 +1089,13 @@ export class SalesOrderFormComponent implements OnInit {
             else {
               this.SalesOrderBookingForm.patchValue({ basicValue: data.obj[0].basicValue });
             }
+          }
+        );
+          // alert(this.accountNo);
+        this.orderManagementService.proformaList(color,model,variant,custAcctNo)
+        .subscribe(
+          data => {
+            this.orderList=data;
           }
         );
     }
@@ -1484,6 +1496,7 @@ export class SalesOrderFormComponent implements OnInit {
     this.isDisabled3 = true;
     this.isDisabled4 = true;
     this.isDisabled8 = false;
+    this.displaypfOrderNo=false;
     // this.isDisabledOrderFind=false;
     this.isDisabledlesseeCustName = true;
     this.currentOpration = 'orderSearch';
@@ -2405,7 +2418,7 @@ export class SalesOrderFormComponent implements OnInit {
   }
 
   downloadAllInvoice(invType, trxNumber) {
-    alert(trxNumber)
+    // alert(trxNumber)
     if (invType === 'SS_VEHICLE') {
       this.orderManagementService.downloadVehicleINV(this.orderNumber)
         .subscribe(data => {

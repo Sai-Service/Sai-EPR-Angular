@@ -64,6 +64,7 @@ export class AccountsReportComponent implements OnInit {
   accountNameList1:any=[];
   isVisiblepanelAPGLUnpainAging:boolean=false;
   isVisiblepanelaccountName:boolean=false;
+  isVisiblegstsaiDebtors:boolean=false;
   supplierNo:string;
   supNo:number;
   suppId:number;
@@ -91,7 +92,9 @@ export class AccountsReportComponent implements OnInit {
   custAccNo: string;
   isVisiblelocationLOV: boolean = false;
   isVisiblelocationInput: boolean = false;
+
   isVisibleSaleIND: boolean = false;
+isVisiblepanelfromtolocation: boolean = false;
   rptValidation=true;
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService,private transactionService: TransactionService) {
     this.reportForm = this.fb.group({
@@ -106,6 +109,11 @@ export class AccountsReportComponent implements OnInit {
       spInvAging1:[''],
       spInvAging2:[''],
       spInvAging3:[''],
+      age4:[],
+      age1:[],
+      age2:[],
+      age3:[],
+      department:[],
       periodName:[''],
       glPeriodYear:[],
       accountName:[''],
@@ -269,9 +277,10 @@ reportName:string;
     this.isVisiblepanelAPGLUnpainAging=false;
     this.isVisiblepanelprePayment=false;
     this.ispanelTolocationOu=false;
+    this.isVisiblepanelfromtolocation=false;
     this.isVisibleVendorLedgerReport=false;
     this.isVisiblecustomerLedger=false;
-
+    this.isVisiblegstsaiDebtors=false;
   }
   else if (reportName === 'customerLedger') {
     this.reportName = 'Customer Ledger Report';
@@ -291,6 +300,8 @@ reportName:string;
     if (Number(sessionStorage.getItem('deptId')) === 4) {
       this.isVisibleDepartmentList = true;
     }
+    this.isVisiblegstsaiDebtors=false;
+    this.isVisiblepanelfromtolocation=false;
   }
   else if (reportName==='chequebounceReport'){
     this.reportName='Cheque Bounce Report';
@@ -309,7 +320,8 @@ reportName:string;
     this.ispanelTolocationOu=false;
     this.isVisibleVendorLedgerReport=false;
     this.isVisiblecustomerLedger=false
-
+    this.isVisiblepanelfromtolocation=false;
+    this.isVisiblegstsaiDebtors=false;
   }
   else if (reportName==='gstPurSummary'){
     this.reportName='Purchase Register Summary';
@@ -327,6 +339,8 @@ reportName:string;
     this.ispanelTolocationOu=false;
     this.isVisibleVendorLedgerReport=false;
     this.isVisiblecustomerLedger=false;
+    this.isVisiblepanelfromtolocation=false;
+    this.isVisiblegstsaiDebtors=false;
   }
   else if (reportName === 'gstSparesSaiDebtors') {
     this.reportName = 'Sai Debtors'
@@ -346,6 +360,9 @@ reportName:string;
       this.isVisibleDepartmentList = true;
       this.isVisiblelocationLOV=true;
     }
+
+    this.isVisiblegstsaiDebtors=false;
+    this.isVisiblepanelfromtolocation=false;
   }
   else if (reportName==='receiptRegisterReport'){
     this.reportName='Receipt Register Report';
@@ -364,7 +381,8 @@ reportName:string;
     this.ispanelTolocationOu=false;
     this.isVisibleVendorLedgerReport=false;
     this.isVisiblecustomerLedger=false;
-
+    this.isVisiblepanelfromtolocation=false;
+    this.isVisiblegstsaiDebtors=false;
   }
   else if (reportName==='gSTSaleRegister'){
     this.reportName='GST Sales Register';
@@ -383,7 +401,8 @@ reportName:string;
     this.ispanelTolocationOu=false;
     this.isVisibleVendorLedgerReport=false;
     this.isVisiblecustomerLedger=false;
-
+    this.isVisiblegstsaiDebtors=false;
+    this.isVisiblepanelfromtolocation=false;
   }
   else if (reportName==='sparesdebtors'){
     this.reportName='Spares Debtors';
@@ -402,7 +421,8 @@ reportName:string;
     this.ispanelTolocationOu=false;
     this.isVisibleVendorLedgerReport=false;
     this.isVisiblecustomerLedger=false;
-
+    this.isVisiblepanelfromtolocation=false;
+    this.isVisiblegstsaiDebtors=false;
   }
   else if (reportName==='spInvAgging'){
     this.reportName='Spares Inventory Aging';
@@ -415,9 +435,11 @@ reportName:string;
     this.panelCashBank=false;
     this.isVisiblepanelAPGLUnpainAging=false;
     this.isVisiblepanelprePayment=false;
+    this.isVisiblepanelfromtolocation=false;
     this.ispanelTolocationOu=false;
     this.isVisibleVendorLedgerReport=false;
     this.isVisiblecustomerLedger=false;
+    this.isVisiblegstsaiDebtors=false;
   }
   else if (reportName==='gltrialBalance'){
     this.reportName='GL Trial Balance';
@@ -435,6 +457,8 @@ reportName:string;
     this.isVisiblePeriodName=false;
     this.isVisiblePeriodYear=true;
     this.isVisiblecustomerLedger=false;
+    this.isVisiblegstsaiDebtors=false;
+    this.isVisiblepanelfromtolocation=false;
   }
 
   else if (reportName==='cashBank'){
@@ -459,8 +483,9 @@ reportName:string;
     this.isVisiblepanelprePayment=false;
     this.ispanelTolocationOu=false;
     this.isVisibleVendorLedgerReport=false;
+    this.isVisiblepanelfromtolocation=false;
     this.isVisiblecustomerLedger=false;
-
+    this.isVisiblegstsaiDebtors=false;
   }
   else if (reportName=='bankBook'){
     this.reportName='Bank Book Report';
@@ -483,10 +508,11 @@ reportName:string;
     this.panelCashBank=true;
     this.isVisiblepanelAPGLUnpainAging=false;
     this.isVisiblepanelprePayment=false;
+    this.isVisiblepanelfromtolocation=false;
     this.ispanelTolocationOu=false;
     this.isVisibleVendorLedgerReport=false;
     this.isVisiblecustomerLedger=false;
-
+    this.isVisiblegstsaiDebtors=false;
   }
   else if (reportName==='APGLUnpainAging'){
     this.reportName='AP To GL Unpaid Aging Report';
@@ -501,8 +527,9 @@ reportName:string;
     this.isVisiblepanelprePayment=false;
     this.ispanelTolocationOu=false;
     this.isVisibleVendorLedgerReport=false;
+    this.isVisiblepanelfromtolocation=false;
     this.isVisiblecustomerLedger=false;
-
+    this.isVisiblegstsaiDebtors=false;
   }
   else if (reportName==='prePayment'){
     this.reportName='Prepayment Status Report';
@@ -518,7 +545,8 @@ reportName:string;
     this.ispanelTolocationOu=false;
     this.isVisibleVendorLedgerReport=false;
     this.isVisiblecustomerLedger=false;
-
+    this.isVisiblepanelfromtolocation=false;
+    this.isVisiblegstsaiDebtors=false;
   }
   else if (reportName=='bankReconciliation'){
     this.reportName='Bank Reconciliation Report';
@@ -543,6 +571,8 @@ reportName:string;
     this.ispanelTolocationOu=false;
     this.isVisibleVendorLedgerReport=false;
     this.isVisiblecustomerLedger=false;
+    this.isVisiblepanelfromtolocation=false;
+    this.isVisiblegstsaiDebtors=false;
 
   }
   else if (reportName=='tdsRegister'){
@@ -563,6 +593,8 @@ reportName:string;
     this.ispanelTolocationOu=true;
     this.isVisibleVendorLedgerReport=false;
     this.isVisiblecustomerLedger=false;
+    this.isVisiblepanelfromtolocation=false;
+    this.isVisiblegstsaiDebtors=false;
   }
   else if (reportName=='tcsReport'){
     this.reportName='TCS Reports';
@@ -581,7 +613,8 @@ reportName:string;
     this.ispanelTolocationOu=false;
     this.isVisibleVendorLedgerReport=false;
     this.isVisiblecustomerLedger=false;
-
+    this.isVisiblegstsaiDebtors=false;
+    this.isVisiblepanelfromtolocation=false;
   }
   else if (reportName=='manualInvoice'){
     this.reportName='Manual Invoice Report';
@@ -600,6 +633,8 @@ reportName:string;
     this.ispanelTolocationOu=false;
     this.isVisibleVendorLedgerReport=false;
     this.isVisiblecustomerLedger=false;
+    this.isVisiblegstsaiDebtors=false;
+    this.isVisiblepanelfromtolocation=false;
   }
 
   else if (reportName=='vendorLedgerReport'){
@@ -619,7 +654,8 @@ reportName:string;
     this.isVisiblepanelprePayment=false;
     this.ispanelTolocationOu=false;
     this.isVisibleVendorLedgerReport=true;
-    
+    this.isVisiblegstsaiDebtors=false;
+    this.isVisiblepanelfromtolocation=false;
   } else if (reportName=='jvRegister'){
     this.reportName='JV Register';
     this.isVisibleGSTSaleRegister=false;
@@ -637,6 +673,8 @@ reportName:string;
     this.ispanelTolocationOu=true;
     this.isVisibleVendorLedgerReport=false;
     this.isVisiblecustomerLedger=false;
+    this.isVisiblegstsaiDebtors=false;
+    this.isVisiblepanelfromtolocation=false;
   }
 
   else if (reportName=='refundRegister'){
@@ -656,6 +694,8 @@ reportName:string;
     this.ispanelTolocationOu=false;
     this.isVisibleVendorLedgerReport=false;
     this.isVisiblecustomerLedger=false;
+    this.isVisiblepanelfromtolocation=false;
+    this.isVisiblegstsaiDebtors=false;
   }
 
   else if (reportName=='rtvRegister'){
@@ -673,8 +713,10 @@ reportName:string;
     this.isVisiblepanelAPGLUnpainAging=false;
     this.isVisiblepanelprePayment=false;
     this.ispanelTolocationOu=false;
+    this.isVisiblepanelfromtolocation=false;
     this.isVisibleVendorLedgerReport=false;
     this.isVisiblecustomerLedger=false;
+    this.isVisiblegstsaiDebtors=false;
   }
 
   else if (reportName==='gltrialBalanceYtd'){
@@ -692,7 +734,9 @@ reportName:string;
     this.isVisibleVendorLedgerReport=false;
     this.isVisiblePeriodName=true;
     this.isVisiblePeriodYear=false;
+    this.isVisiblepanelfromtolocation=false;
     this.isVisiblecustomerLedger=false;
+    this.isVisiblegstsaiDebtors=false;
   }
   else if (reportName==='gltrialBalancePtd'){
     this.reportName='GL Trial Balance-PTD';
@@ -710,13 +754,15 @@ reportName:string;
     this.isVisiblePeriodName=false;
     this.isVisiblePeriodYear=true;
     this.isVisiblecustomerLedger=false;
+    this.isVisiblegstsaiDebtors=false;
+    this.isVisiblepanelfromtolocation=false;
   }
 
   else if (reportName==='empLedgerReport'){
     this.reportName='23. Employee Ledger Report';
     this.isVisibleGSTSaleRegister=false;
     this.isVisibleGSTPurchaseRegister=false;
-    
+    this.isVisiblegstsaiDebtors=false;
     this.isVisibleSparesdebtors=false;
     this.isVisiblespInvAgging=false;
     this.isVisiblepanelgltrialBalance=false;
@@ -728,6 +774,45 @@ reportName:string;
     this.isVisiblePeriodName=false;
     this.isVisiblePeriodYear=false;
     this.isVisiblecustomerLedger=false;
+    this.isVisiblepanelfromtolocation=false;
+  }
+  else if (reportName==='gstsaiDebtors'){
+    this.reportName='24. Spares Debtor Report';
+    this.isVisibleGSTSaleRegister=false;
+    this.isVisibleGSTPurchaseRegister=false;
+    
+    this.isVisibleSparesdebtors=false;
+    this.isVisiblespInvAgging=false;
+    this.isVisiblepanelgltrialBalance=false;
+    this.panelCashBank=false;
+    this.isVisiblepanelAPGLUnpainAging=false;
+    this.isVisiblepanelprePayment=false;
+    this.ispanelTolocationOu=false;
+    this.isVisibleVendorLedgerReport=false;
+    this.isVisiblePeriodName=false;
+    this.isVisiblePeriodYear=false;
+    this.isVisiblecustomerLedger=false;
+    this.isVisiblegstsaiDebtors=true;
+    this.isVisiblepanelfromtolocation=false;
+  }
+  else if (reportName==='receiptOtherDetails'){
+    this.reportName='25. Receipt-Other Details Report';
+    this.isVisibleGSTSaleRegister=false;
+    this.isVisibleGSTPurchaseRegister=false;
+    this.isVisibleSparesdebtors=false;
+    this.isVisiblespInvAgging=false;
+    this.isVisiblepanelgltrialBalance=false;
+    this.panelCashBank=false;
+    this.isVisiblepanelAPGLUnpainAging=false;
+    this.isVisiblepanelprePayment=false;
+    this.ispanelTolocationOu=false;
+    this.isVisibleVendorLedgerReport=false;
+    this.isVisiblePeriodName=false;
+    this.isVisiblePeriodYear=false;
+    this.isVisiblecustomerLedger=false;
+    this.isVisiblegstsaiDebtors=false;
+    this.isVisiblepanelfromtolocation=false;
+    this.isVisibleGSTSaleRegister=true;
   }
   }
 
@@ -1199,6 +1284,70 @@ reportName:string;
           this.isDisabled1=false;
         })     
      }
+     else if (reportName ==='24. Spares Debtor Report'){
+     
+      var custAccNo1 = this.reportForm.get('custAccNo').value;
+
+      // if (custAccNo<=0 || custAccNo==undefined || custAccNo==null ) {
+      //   this.closeResetButton=true;
+      //   // this.dataDisplay = 'PleagstSparesSaiDebtorsse check Customer No.'
+      //   return; }comment by vinita
+
+      if (custAccNo1<=0 || custAccNo1==undefined || custAccNo1==null ) {
+        custAccNo='';
+          }
+      var d1= this.reportForm.get('toDate').value;   
+      var tDate1 = this.pipe.transform(d1, 'dd-MMM-y');
+      var locId= this.reportForm.get('locId').value;
+      var spDbAg1= this.reportForm.get('age1').value;
+      var spDbAg2= this.reportForm.get('age2').value;
+      var spDbAg3= this.reportForm.get('age3').value;
+      var spDbAg4= this.reportForm.get('age3').value;
+
+      if(spDbAg1<0 || spDbAg1==null || spDbAg1==undefined) {this.rptValidation=false;}
+      if(spDbAg2<0 || spDbAg2==null || spDbAg2==undefined) {this.rptValidation=false;}
+      if(spDbAg3<0 || spDbAg3==null || spDbAg3==undefined) {this.rptValidation=false;}
+      if(spDbAg4<0 || spDbAg4==null || spDbAg4==undefined) {this.rptValidation=false;}
+
+      if (spDbAg1 > spDbAg2) {this.rptValidation=false;}
+      else if (spDbAg1 >spDbAg3){this.rptValidation=false;}
+      else if (spDbAg1 > spDbAg4){this.rptValidation=false;}
+      else if (spDbAg2 > spDbAg3){this.rptValidation=false;}
+      else if (spDbAg2 > spDbAg4){this.rptValidation=false;}
+      else if (spDbAg3 > spDbAg4){this.rptValidation=false;}
+
+
+    if(this.rptValidation ==false) {this.closeResetButton=true;this.dataDisplay = 'Please check Aging Values.';  return; }
+      this.isDisabled1=true;
+      const fileName = 'SP-Debtors-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+     
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.SPDebtorReport(tDate1, sessionStorage.getItem('ouId'), locId,custAccNo,deptId,spDbAg1,spDbAg2,spDbAg3,spDbAg4)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          });
+      }
+
+     }
+     else if (reportName ==='25. Receipt-Other Details Report'){
+      alert(reportName)
+      this.isDisabled1=true;
+      const fileName = 'Receipt-Other Details Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+     
+      this.reportService.receiptOtherDetails(fromDate,toDate,sessionStorage.getItem('ouId'),locId)
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.dataDisplay = ''
+        this.closeResetButton = true;
+        this.isDisabled1 = false;
+     })
+      }
+
   }
   fromToDateValidation(fDate,tDate){
     this.rptValidation=true;

@@ -1030,7 +1030,28 @@
                                     style="width: 150px; font-weight: bold;">
                             </td>
                         </tr>
-
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Proforma&nbsp;:&nbsp;
+                            </td>
+                            <div *ngIf="displaypfOrderNo; then thenpfOrderNo; else elsepfOrderNo"> </div>
+                            <ng-template #thenpfOrderNo>
+                            <td>
+                                <select formControlName="pfOrderNo" id="pfOrderNo" class="form-control" style="width: 170px;">
+                                <option disabled>--Select--</option>
+                                <option *ngFor="let pro of orderList" [ngValue]="pro.ORDERNUMBER">
+                                    {{pro.ORDERNUMBER}}
+                                </option>
+                            </select>
+                            </td>
+                            </ng-template>
+                            <ng-template #elsepfOrderNo>
+                            <td>
+                            <input disabled type="number" formControlName="pfOrderNo" class="form-control"
+                            style="width: 150px; font-weight: bold;">
+                            </td>
+                        </ng-template>
+                        </tr>
                         <tr>
                            <td colspan="3"><button type="submit" class="btn btn-primary" (click)="modelDetailsUpdate()"
                              [style.display]="isVisiblemodelDetailsUpdate ? 'block' : 'none'"

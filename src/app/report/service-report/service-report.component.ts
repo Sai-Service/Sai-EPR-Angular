@@ -387,6 +387,17 @@ isVisiblepanelfromtoOuId:boolean=false;
       this.panelamcHistrory=false;
       this.isVisiblepanelfromtoOuId=false;
     }
+    else if (reportName=='receiptOtherDetails'){
+      this.reportName='21. Receipt-Other Details Report';
+      this.isVisiblegstsaiDebtors=false;
+      this.isVisiblepanelfromtolocation=true;
+      this.isVisiblefromtolocationdepartment=false;
+      this.isVisiblepaneltolocation=false;
+      this.isVisiblecustomerLedger=false;
+      this.isVisibleGSTSaleRegister=false;
+      this.panelamcHistrory=false;
+      this.isVisiblepanelfromtoOuId=false;
+    }
   }
 
 
@@ -853,6 +864,28 @@ isVisiblepanelfromtoOuId:boolean=false;
         this.closeResetButton = true;
         this.dataDisplay = ''
       })
+    }
+  }
+  else if (reportName==='21. Receipt-Other Details Report'){
+    const fileName = 'Receipt-Other Details Report-' + sessionStorage.getItem('locName').trim() + '-' + '-TO-' + '.xls';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    if (Number(sessionStorage.getItem('deptId')) === 4) {
+      this.reportService.receiptOtherDetails(fromDate,toDate,sessionStorage.getItem('ouId'),locId)
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.dataDisplay = ''
+          this.closeResetButton = true;
+          this.isDisabled1 = false;
+        })
+    }
+    else if (Number(sessionStorage.getItem('deptId')) != 4) {
+      this.reportService.receiptOtherDetails(fromDate,toDate,sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'))
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.dataDisplay = ''
+          this.closeResetButton = true;
+          this.isDisabled1 = false;
+        })
     }
   }
   }

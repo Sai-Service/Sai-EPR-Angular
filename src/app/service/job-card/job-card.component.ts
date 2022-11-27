@@ -1669,7 +1669,7 @@ export class JobCardComponent implements OnInit {
            
             this.estTotal=data.obj.estMaterial+data.obj.estLabor;
             this.fscCoupon=data.obj.fscCoupon;
-          } else { alert (jcNum + " Job Card Not Found...");return;}
+          } else { alert (jcNum + " Error In Job Card Search.."+ data.message);return;}
 
           // let mToday =this.pipe.transform(new Date(), 'yyyy-MM-dd');
           // let jobDate=this.pipe.transform(this.jobCardDate, 'yyyy-MM-dd');

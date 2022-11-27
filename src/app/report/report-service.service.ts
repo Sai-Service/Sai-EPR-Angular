@@ -951,6 +951,17 @@ ChetakPendingBookingLastYear(orgId){
   });
 }
 
+
+receiptOtherDetails(fromDate,toDate,ouId,locId){
+  // http://localhost:8081/SalesReports/ChetakPendingBooking
+  const REQUEST_URI = this.ServerUrl +`/AccountsReports/RcptOthDtlsRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
+  return this.http.get(REQUEST_URI, {
+    // params: REQUEST_PARAMS,
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
+}
+
 ///////////////////////////////  accounts report ///////////////
 
 

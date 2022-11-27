@@ -326,11 +326,10 @@
             </div>
             <!-- <div [style.display]="isVisibleTemplateDownload ? 'block' : 'none'"> -->
               <li><a class="dropdown-submenu" [routerLink]="['/admin/Report/templateDownload']">Template Download</a></li>
-              <!-- </div> -->
-
-          <!-- <div>
-            <li><a class="dropdown-item" [routerLink]="['/admin/Report/ServerReport']">Server Report</a></li>
-          </div> -->
+              <div [style.display]="isVisibleShellReport ? 'block' : 'none'">
+                <li><a class="dropdown-submenu" [routerLink]="['/admin/Report/ShellReport']">Accessories Reports</a></li>
+                </div>
+              
         
       </ul>
       

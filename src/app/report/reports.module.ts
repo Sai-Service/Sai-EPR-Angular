@@ -11,11 +11,12 @@ import { AccessoriesReportComponent } from './accessories-report/accessories-rep
 import { ServerReportComponent } from './server-report/server-report.component';
 import { PaintReportsComponent } from './paint-reports/paint-reports.component';
 import { TemplateDownloadComponent } from './template-download/template-download.component';
+import { ShellReportComponent } from './shell-report/shell-report.component';
 
 
 
 @NgModule({
-  declarations: [ServiceReportComponent, SalesReportsComponent, AccountsReportComponent, SparesReportsComponent, AccessoriesReportComponent,ServerReportComponent, PaintReportsComponent, TemplateDownloadComponent],
+  declarations: [ServiceReportComponent, SalesReportsComponent, AccountsReportComponent, SparesReportsComponent, AccessoriesReportComponent,ServerReportComponent, PaintReportsComponent, TemplateDownloadComponent, ShellReportComponent],
   imports: [
     CommonModule,
     ReportsRoutingModule,
