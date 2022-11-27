@@ -715,6 +715,11 @@ export class OrderManagementService {
   // }
 
 
+  gatePassPendList(date1,locId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/orderHeader/InvNotDelv?inputDate=${date1}&locId=${locId}`);
+    // http://localhost:8081/orderHeader/InvNotDelv?inputDate=25-NOV-2022&locId=2209
+  }
+
   getGatepassSearch(orderNumber): Observable<any> {
     return this.http.get(this.ServerUrl + `/salesGatePass/omOrderInfo/${orderNumber}`);
   }
