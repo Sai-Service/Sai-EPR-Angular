@@ -1472,7 +1472,7 @@ export class SalesOrderFormComponent implements OnInit {
       } else {
         if (res.code === 400) {
           this.isDisabled = true;
-          alert(res.message);
+          alert(res.message+' '+ res.obj);
           this.dataDisplay = 'Order Creation Failed...!'
           this.closeResetButton = true;
           // this.SalesOrderBookingForm.reset();
