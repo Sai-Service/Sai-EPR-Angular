@@ -658,7 +658,7 @@ export class SupplierMasterComponent implements OnInit {
         // this.supplierMasterForm.reset();
       } else {
         if (res.code === 400) {
-          alert('Supplier Master Details Validation Error. Please Enter Validate Data !!!');
+          alert('Supplier Master Details Validation Error. Please Enter Validate Data !!!'+' '+res.message+' '+res.obj);
           // this.supplierMasterForm.reset();
         }
       }
