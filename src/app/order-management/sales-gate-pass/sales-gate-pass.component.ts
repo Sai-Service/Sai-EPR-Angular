@@ -25,8 +25,14 @@ const MIME_TYPES = {
 export class SalesGatePassComponent implements OnInit {
   SalesGatepassForm: FormGroup;
 
+  pipe = new DatePipe('en-US');
+  now = Date.now();
+  gpDate1 = this.pipe.transform( Date.now(), 'y-MM-dd');
+
   public insNameList: Array<string>[];
   public insSiteList: Array<string>[];
+  lstPendingGatepass: any[];
+
   isDisabled = false;
   gatepassNo: number;
   dateOfDelv: Date;
@@ -60,7 +66,6 @@ export class SalesGatePassComponent implements OnInit {
   shipToLoc: number;
   public BillShipList: Array<string> = [];
   regDate: Date;
-  pipe = new DatePipe('en-US');
   isVisiblegatePassDetails: boolean = false;
   isVisiblegatePassVehicleDetails:boolean=false;
 
@@ -144,6 +149,15 @@ export class SalesGatePassComponent implements OnInit {
         this.insNameList = data;
         console.log(this.insNameList);
       } );
+
+        var mDate = this.pipe.transform(this.gpDate1, 'dd-MMM-y');
+        this.orderManagementService.gatePassPendList(mDate,sessionStorage.getItem('locId'))
+          .subscribe(
+            data => {
+              this.lstPendingGatepass = data;
+              console.log(this.lstPendingGatepass);
+        })
+
   }
 
   gatePassOrderNo(orderNumber) {
@@ -187,15 +201,27 @@ export class SalesGatePassComponent implements OnInit {
             this.isVisiblegatePassVehicleDetails=false;
 
           }
-          else if (this.lstcomments.gatePassNo === 0 && this.lstcomments.vehicleNo ==='NA') {
+          else if (this.lstcomments.gatePassNo === 0 && this.lstcomments.vehicleNo ==='NA'  ) {
             this.isVisiblegatePassDetails = false;
             this.isVisiblegatePassVehicleDetails=true;
 
           }
-          else if (this.lstcomments.gatePassNo === 0 && this.lstcomments.vehicleNo !='NA' ){
+          else if (this.lstcomments.gatePassNo === 0 && this.lstcomments.vehicleNo !='NA'  ){
             this.isVisiblegatePassDetails = true;
             this.isVisiblegatePassVehicleDetails=false;
           }
+
+        if(this.lstcomments.policyNo==undefined || this.lstcomments.policyNo==null || this.lstcomments.policyNo.trim()==''){ 
+          this.isVisiblegatePassDetails = false;
+          this.isVisiblegatePassVehicleDetails=true;
+        }
+            
+        if(this.lstcomments.insuDate==undefined|| this.lstcomments.insuDate==null || this.lstcomments.insuDate.trim()==''){ 
+          this.isVisiblegatePassDetails = false;
+          this.isVisiblegatePassVehicleDetails=true;
+        }
+             
+
         }
 
       );
@@ -419,6 +445,11 @@ export class SalesGatePassComponent implements OnInit {
       this.SalesGatepassForm.patchValue({insuPeriod:0});
      }
       
+
+    }
+
+    SelectOrdNum(ordNumber){
+      alert ("Order Number Seleted :" + ordNumber);
 
     }
 
