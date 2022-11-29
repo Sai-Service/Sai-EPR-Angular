@@ -304,14 +304,14 @@
       </a>
      
       <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <div [style.display]="isVisible30 ? 'block' : 'none'">
+            <div [style.display]="isVisibleSparesReport ? 'block' : 'none'">
             <!-- <li><a class="dropdown-submenu" [routerLink]="['/admin/Report/SparesReports']">Spares Reports</a></li> -->
-            <li><a class="dropdown-submenu" [routerLink]="['/admin/Report/SparesReportsNew']">Spares Reports-New</a></li>
+            <li><a class="dropdown-submenu" [routerLink]="['/admin/Report/SparesReportsNew']">Spares Reports</a></li>
           </div>
-          <div [style.display]="isVisible35 ? 'block' : 'none'">
+          <div [style.display]="isVisibleServiceReport ? 'block' : 'none'">
           <li><a class="dropdown-submenu" [routerLink]="['/admin/Report/ServiceReport']">Service Reports</a></li>
         </div>
-        <div [style.display]="isVisible36 ? 'block' : 'none'">
+        <div [style.display]="isVisibleSalesReport ? 'block' : 'none'">
         <li><a class="dropdown-submenu" [routerLink]="['/admin/Report/SalesReports']">Sales Reports</a></li>
         </div> 
         <div [style.display]="isVisibleAccountsRepor ? 'block' : 'none'">
@@ -327,7 +327,7 @@
             <!-- <div [style.display]="isVisibleTemplateDownload ? 'block' : 'none'"> -->
               <li><a class="dropdown-submenu" [routerLink]="['/admin/Report/templateDownload']">Template Download</a></li>
               <div [style.display]="isVisibleShellReport ? 'block' : 'none'">
-                <li><a class="dropdown-submenu" [routerLink]="['/admin/Report/ShellReport']">Accessories Reports</a></li>
+                <li><a class="dropdown-submenu" [routerLink]="['/admin/Report/ShellReport']">Shell Reports</a></li>
                 </div>
               
         
