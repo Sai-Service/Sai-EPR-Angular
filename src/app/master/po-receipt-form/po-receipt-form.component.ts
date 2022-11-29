@@ -69,6 +69,7 @@ interface IPODateWise {
   frmDate: Date,
   toDate: Date,
   billToLocId: number;
+  disAmt:number;
 }
 
 @Component({
@@ -81,6 +82,7 @@ export class PoReceiptFormComponent implements OnInit {
   ouName: string;
   poNumber: string;
   docSeqValue: string;
+  disAmt:number;
   isVisible: boolean = true;
   public minDate = new Date();
   recdate1: Date;
@@ -240,6 +242,7 @@ export class PoReceiptFormComponent implements OnInit {
       shipmentNumber: [],
       ouId: [''],
       totalAmt: [''],
+      disAmt:[''],
       divisionName: [''],
       supplierName: [''],
       baseAmount: [''],
@@ -297,6 +300,7 @@ export class PoReceiptFormComponent implements OnInit {
       shipHeaderId: [],
       itemType: [],
       itemName: [],
+      disAmt:[],
       taxCategoryName: [],
       ctgDescription: [],
       itemDesc: [],
