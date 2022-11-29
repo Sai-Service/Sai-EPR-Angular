@@ -1394,7 +1394,9 @@ if(this.deptId==2){
             }
 
             // -------------------------------------------- Other Rcpt Details-----
-            this.othLineArray().clear();
+            // this.othLineArray().clear();
+               this.othLineArray().reset();
+
                console.log(this.lstRcptOtherDetails);
                this.lstRcptOtherDetails=data.obj.oePayList[0].rcptOthDet;
 
@@ -1540,7 +1542,8 @@ if(this.deptId==2){
               //  for (let i = 0; i < this.lineDetailsArray.length; i++) {
               //   this.lineDetailsArray().removeAt(i);
               // }
-              this.othLineArray().clear();
+              // this.othLineArray().clear();
+              this.othLineArray().reset();
 
                console.log(this.lstRcptOtherDetails);
                this.lstRcptOtherDetails=data.obj.oePayList[0].rcptOthDet;
