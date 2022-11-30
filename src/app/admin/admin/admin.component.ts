@@ -81,13 +81,13 @@ export class AdminComponent implements OnInit {
   isVisible27:boolean=true;
   isVisible28:boolean=true;
   isVisible29:boolean=true;
-  isVisible30:boolean=true;
+  isVisibleSparesReport:boolean=true;
   isVisible31:boolean=true;
   isVisible32:boolean=true;
   isVisible33:boolean=true;
   isVisible34:boolean=true;
-  isVisible35:boolean=true;
-  isVisible36:boolean=true;
+  isVisibleServiceReport:boolean=true;
+  isVisibleSalesReport:boolean=true;
   isVisible37:boolean=true;
   isVisibleServerReport:boolean=true;
   isVisibleAccessories:boolean=true;
@@ -280,16 +280,16 @@ export class AdminComponent implements OnInit {
       this.isVisible27=false;
       this.isVisible28=false;
       this.isVisible29=false;
-      this.isVisible30=false;
+      this.isVisibleSparesReport=false;
       this.isVisible31=false;
       this.isVisible32=false;
-      this.isVisible35=false;
-      this.isVisible36=false;
+      this.isVisibleServiceReport=false;
+      this.isVisibleSalesReport=false;
       this.isVisible37=false;
       this.isVisibleAccountsRepor=false;
       this.isVisibleAccessories=false;
       this.isVisibilePaintSystem=true
-      this.isVisibleShellReport=false;
+      // this.isVisibleShellReport=false;
     }
 
     if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId'))===3 && sessionStorage.getItem('deptName')==='Sales'){
@@ -314,11 +314,11 @@ export class AdminComponent implements OnInit {
       this.isVisible27=true;
       this.isVisible28=true;
       this.isVisible29=true;
-      this.isVisible30=false;
+      this.isVisibleSparesReport=false;
       this.isVisible31=true;
       this.isVisible32=true;
-      this.isVisible35=false;
-      this.isVisible36=true;
+      this.isVisibleServiceReport=false;
+      this.isVisibleSalesReport=true;
       this.isVisible37=true;
       this.isVisibleAccountsRepor=false;
       this.isVisibleAccessories=false;
@@ -351,11 +351,11 @@ export class AdminComponent implements OnInit {
       this.isVisible27=false;
       this.isVisible28=false;
       this.isVisible29=true;
-      this.isVisible30=true;
+      this.isVisibleSparesReport=true;
       this.isVisible31=false;
       this.isVisible32=false;
-      this.isVisible35=true;
-      this.isVisible36=true;
+      this.isVisibleServiceReport=true;
+      this.isVisibleSalesReport=true;
       this.isVisible37=false;
       this.isVisibleAccountsRepor=true;
       this.isVisibleAccessories=false;
@@ -388,11 +388,11 @@ export class AdminComponent implements OnInit {
       this.isVisible27=true;
       this.isVisible28=false;
       this.isVisible29=true;
-      this.isVisible30=false;
+      this.isVisibleSparesReport=false;
       this.isVisible31=false;
       this.isVisible32=true;
-      this.isVisible35=true;
-      this.isVisible36=false;
+      this.isVisibleServiceReport=true;
+      this.isVisibleSalesReport=false;
       this.isVisibleAccountsRepor=false;
       this.isVisibleAccessories=false;
       this.isVisibilePaintSystem=false;
@@ -424,15 +424,25 @@ export class AdminComponent implements OnInit {
       this.isVisible27=true;
       this.isVisible28=true;
       this.isVisible29=true;
-      this.isVisible30=true;
+      this.isVisibleSparesReport=true;
       this.isVisible31=true;
       this.isVisible32=false;
-      this.isVisible35=false;
-      this.isVisible36=false;
+      this.isVisibleServiceReport=false;
+      this.isVisibleSalesReport=false;
       this.isVisibleAccountsRepor=false;
       this.isVisibleAccessories=true;
       this.isVisibilePaintSystem=false;
-      this.isVisibleShellReport=false;
+      // this.isVisibleShellReport=false;
+      alert((sessionStorage.getItem('deptName')))
+      if ((sessionStorage.getItem('deptName'))==='Shell'){
+        this.isVisibleShellReport=true;
+        this.isVisibleSparesReport=false;
+        this.isVisibleServiceReport=false;
+       this.isVisibleSalesReport=false;
+       this.isVisibleAccountsRepor=false;
+        this.isVisibleAccessories=false;
+        this.isVisibleServerReport=false;
+      }
     }
 
     if (Number(sessionStorage.getItem('divisionId')) === 2 && sessionStorage.getItem('deptName')==='Spares' && Number(sessionStorage.getItem('roleId'))===4){
@@ -459,11 +469,11 @@ export class AdminComponent implements OnInit {
       this.isVisible27=true;
       this.isVisible28=true;
       this.isVisible29=true;
-      this.isVisible30=true;
+      this.isVisibleSparesReport=true;
       this.isVisible31=true;
       this.isVisible32=false;
-      this.isVisible35=false;
-      this.isVisible36=false;
+      this.isVisibleServiceReport=false;
+      this.isVisibleSalesReport=false;
       this.isVisibleAccountsRepor=false;
       this.isVisibleAccessories=false;
       this.isVisibilePaintSystem=false;
@@ -494,11 +504,11 @@ export class AdminComponent implements OnInit {
       this.isVisible27=true;
       this.isVisible28=true;
       this.isVisible29=true;
-      this.isVisible30=true;
+      this.isVisibleSparesReport=true;
       this.isVisible31=true;
       this.isVisible32=false;
-      this.isVisible35=false;
-      this.isVisible36=false;
+      this.isVisibleServiceReport=false;
+      this.isVisibleSalesReport=false;
       this.isVisibleAccountsRepor=false;
       this.isVisibleAccessories=true;
       this.isVisibilePaintSystem=false;
@@ -531,11 +541,11 @@ export class AdminComponent implements OnInit {
       this.isVisible27=true;
       this.isVisible28=true;
       this.isVisible29=true;
-      this.isVisible30=true;
+      this.isVisibleSparesReport=true;
       this.isVisible31=true;
       this.isVisible32=false;
-      this.isVisible35=false;
-      this.isVisible36=false;
+      this.isVisibleServiceReport=false;
+      this.isVisibleSalesReport=false;
       this.isVisibleAccountsRepor=false;
       this.isVisibleAccessories=true;
       this.isVisibilePaintSystem=false;
@@ -545,6 +555,48 @@ export class AdminComponent implements OnInit {
       this.isVisibleAccountsRepor=true;
       // this.isVisibleAccessories=true;
     }
+
+
+
+    if (Number(sessionStorage.getItem('divisionId')) === 2 && sessionStorage.getItem('deptName')==='Shell' && Number(sessionStorage.getItem('roleId'))===1){
+      // alert('roleId  1' + this.isVisible20)
+      this.isVisible11=true;
+      this.isVisible12=false;
+      this.isVisible37=true;
+      this.isVisibleSubInventoryTransfer=false;
+      this.isVisible13=false;
+      this.isVisibleWsVehicleMaster=false;
+      this.isVisible14=true;
+      this.isVisible15=true;
+      this.isVisible16=true;
+      this.isVisible17=true;
+      this.isVisible18=true;
+      this.isVisible19=true;
+      this.isVisible20=true;
+      this.isVisible21=false;
+      this.isVisible22=false;
+      this.isVisible23=false;
+      this.isVisible24=true;
+      this.isVisible25=true;
+      this.isVisible26=true;
+      this.isVisible27=true;
+      this.isVisible28=true;
+      this.isVisible29=true;
+      this.isVisibleSparesReport=false;
+      this.isVisible31=true;
+      this.isVisible32=false;
+      this.isVisibleServiceReport=false;
+      this.isVisibleSalesReport=false;
+      this.isVisibleAccountsRepor=false;
+      this.isVisibleServerReport=false;
+      this.isVisibleAccessories=false;
+      this.isVisibilePaintSystem=false;
+      // this.isVisibleShellReport=false;
+        this.isVisibleShellReport=true;
+    }
+
+
+
 
     if (
       sessionStorage.getItem('ticketNo') === undefined ||

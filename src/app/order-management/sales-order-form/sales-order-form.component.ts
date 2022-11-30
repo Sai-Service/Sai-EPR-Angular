@@ -1653,7 +1653,9 @@ export class SalesOrderFormComponent implements OnInit {
                 }
                 if (this.lstgetOrderLineDetails[i].flowStatusCode === 'CANCELLED' || this.lstgetOrderLineDetails[i].flowStatusCode === 'DE-ALLOTED') {
                   this.isDisabledtaxbtn[i] = true;
-                  this.isVisible4 = false;
+                  if (this.lstgetOrderLineDetails[i].flowStatusCode === 'INVOICED'){
+                  this.isVisible4 = true;
+                }
                   this.isVisible3 = false;
                   this.displayLineflowStatusCode[i] = true;
                   this.displayRemoveRow[i] = false;
@@ -1707,7 +1709,7 @@ export class SalesOrderFormComponent implements OnInit {
                   console.log(lineLevelOrderStatusListVehicle1);
                   this.lineLevelOrderStatusList = lineLevelOrderStatusListVehicle1;
                 }
-                if (this.lstgetOrderLineDetails[i].flowStatusCode === 'INVOICED') {
+                if (this.lstgetOrderLineDetails[i].flowStatusCode === 'INVOICED'  ) {
                   this.isVisible4 = true;
                   this.isVisible3 = false;
                   // this.isVisiblemodelDetailsUpdate = false;

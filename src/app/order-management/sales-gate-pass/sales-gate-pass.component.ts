@@ -89,7 +89,7 @@ export class SalesGatePassComponent implements OnInit {
       segment: [],
       vin: [],
       itemId: [],
-      regNo: [],
+      regNo: ['',[Validators.required,]],
       regDate: [],
       modelVarClr: [],
       deliveryLoc: [],
@@ -272,6 +272,8 @@ export class SalesGatePassComponent implements OnInit {
     var srvLoc =this.SalesGatepassForm.get('shipToLoc').value;
 
     if(srvLoc==undefined || srvLoc==null || srvLoc<=0) { alert ("Please Select Service Location.");return;}
+var mreg= this.SalesGatepassForm.get('regNo').value;
+  
 
     this.orderManagementService.SalesGatePassGenSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
@@ -348,8 +350,9 @@ export class SalesGatePassComponent implements OnInit {
       alert('Please Enter All required Details...!')
       return;
     }
-
+alert(regNo)
     if(regNo==undefined|| regNo==null || regNo.trim()==''){ alert("Reg No should not be null..");return;}
+    alert(regNo.trim()=='')
    
     var policuNum=this.SalesGatepassForm.get('policyNo').value;
     var policyDate=this.SalesGatepassForm.get('insuDate').value;
