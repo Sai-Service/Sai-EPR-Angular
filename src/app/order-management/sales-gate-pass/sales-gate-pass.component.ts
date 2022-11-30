@@ -211,12 +211,12 @@ export class SalesGatePassComponent implements OnInit {
             this.isVisiblegatePassVehicleDetails=false;
           }
 
-        if(this.lstcomments.policyNo==undefined || this.lstcomments.policyNo==null || this.lstcomments.policyNo.trim()==''){ 
+        if(this.lstcomments.gatePassNo === 0 && (this.lstcomments.policyNo==undefined || this.lstcomments.policyNo==null || this.lstcomments.policyNo.trim()=='')){ 
           this.isVisiblegatePassDetails = false;
           this.isVisiblegatePassVehicleDetails=true;
         }
             
-        if(this.lstcomments.insuDate==undefined|| this.lstcomments.insuDate==null || this.lstcomments.insuDate.trim()==''){ 
+        if(this.lstcomments.gatePassNo === 0 && (this.lstcomments.insuDate==undefined|| this.lstcomments.insuDate==null || this.lstcomments.insuDate.trim()=='')){ 
           this.isVisiblegatePassDetails = false;
           this.isVisiblegatePassVehicleDetails=true;
         }
