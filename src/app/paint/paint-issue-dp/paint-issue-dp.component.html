@@ -104,7 +104,7 @@
          
           <td>
             <select class="form-control" formControlName="reason" [(ngModel)]="reason" (ngModelChange)="onSelectReason($event)">
-              <option>--Select--</option>
+              <option></option>
               <option *ngFor="let reason of reasonlist" >{{reason.reasonName}}-{{reason.costCode}}-{{reason.description}}</option>
               </select>
               <span
@@ -157,12 +157,8 @@
         </td>
       </tr>
       <tr>
-          <td style="width: 15%" class="LabelFontStyle">
-              Panel Count:
-            </td>
-            <td>
-              <input readonly type="text" class="form-control" formControlName="description"[(ngModel)]="description">
-            </td>
+          <td style="width: 15%" class="LabelFontStyle">Panel Qty:</td>
+          <td><input readonly type="text" class="form-control" formControlName="description"[(ngModel)]="description"></td>
   
         <td style="width: 15%" class="LabelFontStyle">
           Made By:
@@ -170,19 +166,17 @@
          <td>
            <input disabled type="text" class="form-control" formControlName="approvedBy" [(ngModel)]="approvedBy">
         </td>
-        <td style="width: 15%" class="LabelFontStyle">
-          Repair Order:
-         </td>
-         <td>
-           <!-- <select  class="form-control" formControlName="attribute1">
-            <option>--Select--</option>
-            <option *ngFor="let repairNo of workshopIssue">{{repairNo.jobCardNum}}--{{repairNo.regNo}}</option>
-          </select> -->
-          <input type="text" formControlName="attribute1" (keyup)="getUserIdsFirstWay($event)" id="userIdFirstWay" list="dynmicUserIds" class="form-control" (change)="calculatewarranty($event)">
-      <datalist id="dynmicUserIds">
-        <option *ngFor="let repairNo of workshopIssue">{{repairNo.jobCardNum}}--{{repairNo.regNo}}</option>
-      </datalist>
-          </td>
+        <td style="width: 15%" class="LabelFontStyle">Repair Order:</td>
+      
+        <td><input  type="text" class="form-control" formControlName="attribute1" [(ngModel)]="attribute1" style="background-color: yellow;"></td>
+
+        <!-- <td>
+          <input type="text" formControlName="attribute1" (keyup)="getUserIdsFirstWay($event)" id="userIdFirstWay" list="dynmicUserIds" class="form-control" (change)="calculatewarranty($event)" style="background-color: yellow;">
+          <datalist id="dynmicUserIds">
+          <option *ngFor="let repairNo of workshopIssue">{{repairNo.jobCardNum}}--{{repairNo.regNo}}</option>
+          </datalist>
+        </td> -->
+
            <td>
        <input hidden type="text" formControlName="locId" [(ngModel)]="locId">
        <input hidden formControlName="name"  [(ngModel)]="name">
@@ -199,12 +193,28 @@
         <button type="button"  class="btn btn-primary" 
         data-toggle="modal" data-target="#paintPanelList"  (click)="LoadPanelList()" style="width:fit-content;color: black;">
         &nbsp;Select Panel Details</button>
-    </td>
+       </td>
 
         <!-- <td style="width: 15%" class="LabelFontStyle">Panels# :</td> -->
-        <td>
-        <input  hidden disabled type="number" class="form-control" formControlName="panelQty" [(ngModel)]="panelQty">
-      </td>
+        
+    <input  hidden disabled type="number" class="form-control" formControlName="panelQty" [(ngModel)]="panelQty">
+      
+
+      <td style="width: 15%" class="LabelFontStyle">Panel Type:</td>
+     
+      <td>
+        <select  formControlName="attribute3"  id ="attribute3"  [(ngModel)]="attribute3"  class="form-control" style="background-color: yellow;" > 
+          <!-- (ngModelChange)='OnApplyTypeSelected($event)'  > -->
+            <!-- <option>--Select--</option> -->
+            <option value="New">New</option>
+            <option value="Old">Old</option>
+        </select>
+        </td>
+
+      <td style="width: 15%" class="LabelFontStyle">Vehicle No:</td>
+      <td><input  type="text" class="form-control" formControlName="attribute4"[(ngModel)]="attribute4" style="background-color: yellow;"></td>
+
+
          <!-- <td colspan="3">
            <select  multiple  aria-expanded="true" class="form-control selectBox" formControlName="panelCode" [(ngModel)]="panelCode" (ngModelChange)="onSelectPanel(0)" style="background-color: yellow;">
               <option disabled>--Select--</option>
