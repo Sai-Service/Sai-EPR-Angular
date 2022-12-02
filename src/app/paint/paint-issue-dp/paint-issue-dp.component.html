@@ -183,18 +183,12 @@
          </td>
       </tr>
       <tr>
-        <td></td>
 
         <!-- <td>
           <button type="button" class="btn btn-primary" (click)="LoadPanelList()" style="width:fit-content ;" >Select Panel Details</button>
        </td> -->
 
-       <td >
-        <button type="button"  class="btn btn-primary" 
-        data-toggle="modal" data-target="#paintPanelList"  (click)="LoadPanelList()" style="width:fit-content;color: black;">
-        &nbsp;Select Panel Details</button>
-       </td>
-
+      
         <!-- <td style="width: 15%" class="LabelFontStyle">Panels# :</td> -->
         
     <input  hidden disabled type="number" class="form-control" formControlName="panelQty" [(ngModel)]="panelQty">
@@ -213,6 +207,14 @@
 
       <td style="width: 15%" class="LabelFontStyle">Vehicle No:</td>
       <td><input  type="text" class="form-control" formControlName="attribute4"[(ngModel)]="attribute4" style="background-color: yellow;"></td>
+
+      <td></td>
+
+      <td >
+        <button type="button"  class="btn btn-primary" 
+        data-toggle="modal" data-target="#paintPanelList"  (click)="LoadPanelList()" style="width:fit-content;color: black;">
+        &nbsp;Select Panel Details</button>
+       </td>
 
 
          <!-- <td colspan="3">
@@ -239,6 +241,11 @@
             </div>
           </div>
        </td> -->
+
+      </tr>
+      <tr>
+        <td style="width: 15%" class="LabelFontStyle">Description:</td>
+        <td colspan="3"><input style="width:100%" type="text" class="form-control" formControlName="description"[(ngModel)]="description"></td>
 
       </tr>
     </table>
