@@ -55,6 +55,9 @@ export class ReceiptWriteoffComponent implements OnInit {
    wirteOffButton =false;
    spinIcon = false;
    dataDisplay: any;
+   writeOffReceipt=true;
+
+
    get f() {return this.receiptWriteOffForm.controls;}
 
    receiptWriteOff(receiptWriteOffForm: any){}
@@ -158,6 +161,7 @@ export class ReceiptWriteoffComponent implements OnInit {
       this.spinIcon = true;
 
       if (wType==='RECEIPT'){
+        this.writeOffReceipt=true;
       this.service.getWriteOffListReceipt(this.locId,d1,d2,wAmt)
       .subscribe(
         data => {
@@ -177,6 +181,8 @@ export class ReceiptWriteoffComponent implements OnInit {
           }
 
           if (wType==='INVOICE'){
+            this.writeOffReceipt=false;
+
             this.service.getWriteOffListInvoice(this.locId,d1,d2,wAmt)
             .subscribe(
               data => {
@@ -229,20 +235,33 @@ export class ReceiptWriteoffComponent implements OnInit {
       var tktNum=(sessionStorage.getItem('ticketNo'));
       var wType =this.receiptWriteOffForm.get('writeOffType').value;
 
-
-
-      this.service.ReceiptWriteOffSubmit(lcId,d1,d2,wAmt,tktNum).subscribe((res: any) => {
-        if (res.code === 200) {
-          // alert('RECORD UPDATED SUCCESSFUILY');
-          alert(res.message);
-           this.receiptWriteOffForm.disable();
-        } else {
-          if (res.code === 400) {
-            alert('Error occured while updateing data.');
-            
+      if (wType==='RECEIPT'){
+        this.service.ReceiptWriteOffSubmit(lcId,d1,d2,wAmt,tktNum).subscribe((res: any) => {
+          if (res.code === 200) {
+            alert(res.message);
+            this.receiptWriteOffForm.disable();
+          } else {
+            if (res.code === 400) {
+              alert('Error occured while updateing data.');
+              
+            }
           }
-        }
-      });
+        });
+      }
+
+      if (wType==='INVOICE'){
+        this.service.InvoiceWriteOffSubmit(lcId,d1,d2,wAmt,tktNum).subscribe((res: any) => {
+          if (res.code === 200) {
+            alert(res.message);
+            this.receiptWriteOffForm.disable();
+          } else {
+            if (res.code === 400) {
+              alert('Error occured while updateing data.');
+              
+            }
+          }
+        });
+      }
 
     } else { alert ("Write Off Not Done...");}
   }
@@ -261,7 +280,7 @@ export class ReceiptWriteoffComponent implements OnInit {
        
     onSelectWriteOffType(event) {
       if(event===null || event===undefined || event.trim()==='')  { return;}
-      alert ("Write off Type Selected : "+event);
+      // alert ("Write off Type Selected : "+event);
 
     this.service.getEmpWriteOffLimit(sessionStorage.getItem('ouId'),sessionStorage.getItem('ticketNo'))
     .subscribe(

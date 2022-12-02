@@ -246,36 +246,32 @@
                           </td>
                           <input hidden formControlName="compileId" [(ngModel)]="compileId">
                           <input hidden formControlName="compileLineId">
-                          <td>
-                            <!-- <input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"
-                               list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 100px;"
-                               (ngModelChange)="onOptiongetItem($event,trxLineIndex)" #Item/>
-                  <datalist id="dynmicUserIds1">
-                    <option *ngFor="let item of ItemIdList" [ngValue]="item.invItemId">{{item.SEGMENT}}
-                      </option>
-                     </datalist>-->
-                      <div *ngIf ="compileType==4">
+
+
+                      <td>
+                     <!-- <div *ngIf ="compileType==4">
                         <input type="text" list="dynmicUserIds1" (keyup)="filterRecord( $event,trxLineIndex)"
                         formControlName="segment" id="invItemIdFirstWay" class="form-control"
                         style="height: 20px;width:120px;" name="segment{{trxLineIndex}}" />
-                      <!-- (ngModelChange)="onOptiongetItem($event,trxLineIndex)" -->
                       <datalist id="dynmicUserIds1">
                         <option *ngFor="let item of ItemIdList" [value]="item.SEGMENT">{{item.SEGMENT}}</option>
-                      </datalist></div>
-                      <div *ngIf ="compileType==13">
+                      </datalist></div> -->
+
+                          <div *ngIf ="compileType==13">
                              <input type="text" list="dynmicUserIds1" (keyup)="filterRecord( $event,trxLineIndex)"
                               formControlName="segment" id="invItemIdFirstWay" class="form-control"
                               style="height: 20px;width:120px;"  name="segment{{trxLineIndex}}" />
-                            <!-- (ngModelChange)="onOptiongetItem($event,trxLineIndex)" -->
                             <datalist id="dynmicUserIds1">
                               <option *ngFor="let item of ItemIdList" [value]="item.SEGMENT">{{item.SEGMENT}}</option>
                             </datalist>
-                            </div>
+                          </div>
+
                             <span
                               *ngIf="getGroupControllinewise(trxLineIndex,'segment').touched && getGroupControllinewise(trxLineIndex,'segment').invalid"
                               class="error">Valid Item
                             </span>
                           </td>
+
                           <input hidden type="number" formControlName="itemId">
                           <input hidden type="number" formControlName="invItemId">
   
@@ -291,6 +287,17 @@
                               class="error">Valid Item
                             </span>
                           </td>
+
+                          <!-- <td><input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 100px;" (ngModelChange)="onOptiongetItem($event,trxLineIndex)" />
+                            <datalist id="dynmicUserIds1">
+                              <option *ngFor="let item of ItemIdList" [ngValue]="item.invItemId">{{item.SEGMENT}}
+                                </option>
+                               </datalist>
+                               <span
+                               *ngIf="getGroupControllinewise(trxLineIndex,'segment').touched && getGroupControllinewise(trxLineIndex,'segment').invalid" class="error">Valid Item
+                              </span>
+                          </td> -->
+
                           <!-- </td> -->
                           <td><input disabled type="text" class="form-control" style="height: 20px;"
                               formControlName="description" #desc></td>

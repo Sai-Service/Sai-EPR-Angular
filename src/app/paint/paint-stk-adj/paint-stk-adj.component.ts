@@ -674,11 +674,7 @@ export class PaintStkAdjComponent implements OnInit {
             // alert('inside if--');
             this.service
               .ItemIdListDeptByCode(
-                this.deptId,
-                Number(sessionStorage.getItem('locId')),
-                this.subInvCode.subInventoryId,
-                itemCode
-              )
+                this.deptId,Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId,itemCode)
               .subscribe((data) => {
                 this.ItemIdList = data;
                 this.onOptiongetItem(itemCode, i);
@@ -700,7 +696,7 @@ export class PaintStkAdjComponent implements OnInit {
       } else if (itemCode.length >= 4) {
         // alert(trxType);
         if (trxType === 4) {
-          // alert('inside if');
+          // alert('inside if >=4');
           this.service
             .ItemIdListDeptByCode(
               this.deptId,
@@ -712,13 +708,13 @@ export class PaintStkAdjComponent implements OnInit {
               this.ItemIdList = data;
             });
         } else {
-          this.service
-            .searchByItemSegmentDiv(this.divisionId, itemCode.toUpperCase())
-            .subscribe((data) => {
-              this.ItemIdList = data;
-              // this.Select(data[0].itemId);
-              //  this.onOptiongetItem(itemCode, i);
-            });
+
+          // this.service
+          //   .searchByItemSegmentDiv(this.divisionId, itemCode.toUpperCase())
+          //   .subscribe((data) => {
+          //     this.ItemIdList = data;
+          //   });
+            this.onOptiongetItem(itemCode, i);
         }
       } else {
         alert('Please Enter 4 characters of item number!!');
@@ -759,16 +755,20 @@ export class PaintStkAdjComponent implements OnInit {
  
 
   onOptiongetItem(event: any, i) {
+    // alert ("onOptiongetItem >> "+event +","+i);
+
     if (this.currentOp === 'SEARCH') {
       return;
     }
+
     // alert('onOptiongetItem' + event);
     var trxLnArr1 = this.miscellaneousForm.get('cycleLinesList') as FormArray;
     var trxLnArr = this.miscellaneousForm.get('cycleLinesList').value;
     // trxLnArr1.controls[i].get('LocatorSegment').disable();
     var trxType = this.miscellaneousForm.get('compileType').value;
     let select1 = null;
-    if (trxType === 4) {
+
+    if (trxType === 13) {
       select1 = this.ItemIdList.find((d) => d.SEGMENT === event);
     } else {
       select1 = this.ItemIdList.find((d) => d.segment === event);
@@ -1529,6 +1529,10 @@ export class PaintStkAdjComponent implements OnInit {
       }
     });
   }
+
+
+
+  
 
 }
 

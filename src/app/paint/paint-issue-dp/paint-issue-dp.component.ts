@@ -61,6 +61,7 @@ interface IPaintIssue {
   attribute2: Date;
   attribute3:string;
   attribute4:string;
+  attribute9:number;
   panelCode:string;
   panelQty:number;
 }
@@ -83,6 +84,7 @@ export class PaintIssueDpComponent implements OnInit {
   public subInvCode: any;
   public panelList :any[];
 
+  attribute9:number;  // panel qty
   attribute3:string;  // Panel Type Lov : Old Panel;New Panel
   attribute4:string;  // Vehicle Registration No
   panelCode:string;
@@ -272,6 +274,8 @@ export class PaintIssueDpComponent implements OnInit {
 
       attribute3:[],
       attribute4:[],
+      attribute9:[],
+
 
       cycleLinesList: this.fb.array([]),
 
@@ -656,6 +660,8 @@ export class PaintIssueDpComponent implements OnInit {
     }
 
   }
+
+
   AvailQty(event: any, i) {
 
     // alert(event.target.value);
@@ -1143,15 +1149,14 @@ export class PaintIssueDpComponent implements OnInit {
 
     
     
-    if (formValue.panelQty === undefined || formValue.panelQty === null || formValue.panelQty<=0) {
+    if (formValue.attribute9 === undefined || formValue.attribute9 === null || formValue.attribute9<=0 || formValue.attribute9>22) {
       this.headerValidation1 = false;
-      msg1 = "PANEL QTY: Should not be null Or Zero....";
+      msg1 = "PANEL QTY: Should not be null Or Zero.\nMaximum panels allowed is 22 Nos";
       alert(msg1);
       return;
     }
 
-    if(this.panelQty >22)  {alert ("Panel Count Should not exceed 22. Please Check");return; }
-
+   
     this.headerValidation1 = true;
   }
 
@@ -1430,7 +1435,7 @@ onSelectPanel(e,index){
       this.panelQty=this.panelQty-Number(this.panelList[index].attribute1);
   }
    if(this.panelQty >22) { alert ("Maximum Panels should not exceed 22. Please check")}
-   this.description=this.panelQty.toString();
+   this.attribute9=this.panelQty;
   // var totPanelCount=0;
   // for (let i = 0; i < this.panelList.length; i++) {
   //   if(this.panelList[index].panelFlag==true) {

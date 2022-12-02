@@ -4315,5 +4315,16 @@ TransactionTypemiscpPaint(): Observable<any> {
 
   }
 
+  public InvoiceWriteOffSubmit(locId, frmDt, toDt, wAmt, tktNum) {
+    const options = {
+      headers: this.headers
+    };
+    const url = this.ServerUrl + `/arInv/raInvoiceWriteOff?locId=${locId}&fromDate=${frmDt}&toDate=${toDt}&toAmt=${wAmt}&ticketNo=${tktNum}`;
+    return this.http.post(url, options);
+    // http://localhost:8081/arInv/raInvoiceWriteOff?locId=2209&fromDate=26-MAY-2022&toDate=26-MAY-2022&toAmt=5&ticketNo=P06659
+
+  }
+
+
 
 }

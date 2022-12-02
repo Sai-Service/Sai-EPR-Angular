@@ -158,7 +158,7 @@
       </tr>
       <tr>
           <td style="width: 15%" class="LabelFontStyle">Panel Qty:</td>
-          <td><input readonly type="text" class="form-control" formControlName="description"[(ngModel)]="description"></td>
+          <td><input readonly type="number" class="form-control" formControlName="attribute9"[(ngModel)]="attribute9"></td>
   
         <td style="width: 15%" class="LabelFontStyle">
           Made By:
@@ -286,7 +286,8 @@
                </td>
                <input hidden formControlName="compileId" [(ngModel)]="compileId">
                <input hidden formControlName="compileLineId"> 
-                         <td><input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 100px;" (ngModelChange)="onOptiongetItem($event,trxLineIndex)" />
+
+                <td><input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 100px;" (ngModelChange)="onOptiongetItem($event,trxLineIndex)" />
                 <datalist id="dynmicUserIds1">
                   <option *ngFor="let item of ItemIdList" [ngValue]="item.invItemId">{{item.SEGMENT}}
                     </option>

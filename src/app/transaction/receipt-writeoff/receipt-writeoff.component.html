@@ -110,29 +110,58 @@
 
 <div class="grid_scroll">
     <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ct100_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
-    <tbody>
-        <tr class="GridHeader">
-            <th scope="col" style="width: 4rem;">Sr. No.</th>
-            <th scope="col" style="width: 10rem;">Receipt Number</th>
-            <th scope="col" style="width: 10rem;">Receipt Date</th> 
-            <th scope="col" style="width: 20rem;">Customer Name</th>
-            <th scope="col" style="width: 12rem;">Receipt Type</th> 
-            <th scope="col" style="width: 8rem; ">Receipt Amt</th>               
-            <th scope="col" style="width: 8rem;">Balance Amt</th>                
-        </tr>
-        </tbody>
-        <tr *ngFor="let com of writeOffList let k = index" class="ItemStyle" style="text-decoration:none;font-size:small;">
-            <td style="width: 4rem; text-align:center ;">{{k+1}}</td>
-            <td style="width: 10rem; text-align:left ;">{{com.receiptNumber }}</td> 
-            <td style="width: 10rem; text-align:center ;">{{com.receiptDate |date:'dd-MM-y'}}</td>
-            <td style="width: 20rem;">{{com.custAccountNo}}-{{com.custName}}</td> 
-            <td style="width: 12rem; text-align:left ;">{{com.receiptMethodName}}</td>
-            <td style="width: 8rem; text-align:right;padding-right: 10px ;">{{com.amount |number:'1.2-2'}}</td>
-            <td style="width: 8rem; text-align:right;padding-right: 10px ;">{{com.balanceAmount | number:'1.2-2'}}</td>
+      
+        <div *ngIf ="writeOffReceipt;then RYES;else RNO"></div>
 
-            <!-- <td style="text-align: center;"><button class="btn btn-info Saibtn-secondary" (click)="Select(com.relatedItemId)">Select</button></td> -->
-        </tr>
+        <ng-template #RYES>
+                <tbody>
+                <tr class="GridHeader">
+                    <th scope="col" style="width: 4rem;">Sr. No.</th>
+                    <th scope="col" style="width: 10rem;">Receipt Number</th>
+                    <th scope="col" style="width: 10rem;">Receipt Date</th> 
+                    <th scope="col" style="width: 20rem;">Customer Name</th>
+                    <th scope="col" style="width: 12rem;">Receipt Type</th> 
+                    <th scope="col" style="width: 8rem; ">Receipt Amt</th>               
+                    <th scope="col" style="width: 8rem;">Balance Amt</th>                
+                </tr>
+                </tbody>
+                <tr *ngFor="let com of writeOffList let k = index" class="ItemStyle" style="text-decoration:none;font-size:small;">
+                    <td style="width: 4rem; text-align:center ;">{{k+1}}</td>
+                    <td style="width: 10rem; text-align:left ;">{{com.receiptNumber }}</td> 
+                    <td style="width: 10rem; text-align:center ;">{{com.receiptDate |date:'dd-MM-y'}}</td>
+                    <td style="width: 20rem;">{{com.custAccountNo}}-{{com.custName}}</td> 
+                    <td style="width: 12rem; text-align:left ;">{{com.receiptMethodName}}</td>
+                    <td style="width: 8rem; text-align:right;padding-right: 10px ;">{{com.amount |number:'1.2-2'}}</td>
+                    <td style="width: 8rem; text-align:right;padding-right: 10px ;">{{com.balanceAmount | number:'1.2-2'}}</td>
+
+                    <!-- <td style="text-align: center;"><button class="btn btn-info Saibtn-secondary" (click)="Select(com.relatedItemId)">Select</button></td> -->
+                </tr>
+        </ng-template>
+        <ng-template #RNO>
+            <tbody>
+                <tr class="GridHeader">
+                    <th scope="col" style="width: 4rem;">Sr. No.</th>
+                    <th scope="col" style="width: 10rem;">Invoice Number</th>
+                    <th scope="col" style="width: 10rem;">Invoice Date</th> 
+                    <th scope="col" style="width: 20rem;">Customer Name</th>
+                    <th scope="col" style="width: 12rem;">Trans Type</th> 
+                    <th scope="col" style="width: 8rem; ">Invoice Amt</th>               
+                    <th scope="col" style="width: 8rem;">Balance Amt</th>                
+                </tr>
+                </tbody>
+                <tr *ngFor="let com of writeOffList let k = index" class="ItemStyle" style="text-decoration:none;font-size:small;">
+                    <td style="width: 4rem; text-align:center ;">{{k+1}}</td>
+                    <td style="width: 10rem; text-align:left ;">{{com.trxNumber }}</td> 
+                    <td style="width: 10rem; text-align:center ;">{{com.trxDate |date:'dd-MM-y'}}</td>
+                    <td style="width: 20rem;">{{com.custAccountNo}}-{{com.custName}}</td> 
+                    <td style="width: 12rem; text-align:left ;">{{com.custTrxTypeName}}</td>
+                    <td style="width: 8rem; text-align:right;padding-right: 10px ;">{{com.invoiceAmount |number:'1.2-2'}}</td>
+                    <td style="width: 8rem; text-align:right;padding-right: 10px ;">{{com.balance | number:'1.2-2'}}</td>
+               </tr>
+        </ng-template>
+
     </table>
+    
     </div>
 
     <table class="center">
