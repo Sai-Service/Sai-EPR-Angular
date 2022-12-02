@@ -1255,6 +1255,7 @@ export class PaintIssueDpComponent implements OnInit {
         console.log(data);
       }
     );
+    
     this.service.ItemIdListDept(this.deptId, Number(sessionStorage.getItem('locId')), this.subInvCode.subInventoryId).subscribe(
       data => {
         this.ItemIdList = data;

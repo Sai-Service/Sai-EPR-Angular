@@ -3,7 +3,7 @@
 <div class="center">
     <table style="width: 100%;background-color: white;">
         <tr>
-            <td class="PageHeader"> &nbsp;AR-Receipt&nbsp;Write-Off</td>
+            <td class="PageHeader"> &nbsp;Write-Off&nbsp;</td>
         </tr>
     </table>
 
@@ -49,9 +49,19 @@
               
             </tr> -->
             <tr>
-                <td style="width: 15%" class="LabelFontStyle">Write Off Limit:</td>
-                <td><input disabled type="number" class="form-control" formControlName="writeoffLimit" [(ngModel)]="writeoffLimit" style="font-weight:bold ;" ></td>
-         
+
+                <td style="width: 15%" class="LabelFontStyle">WriteOff Type:</td>
+     
+                <td>
+                  <select  formControlName="writeOffType"  id ="writeOffType"  [(ngModel)]="writeOffType"  class="form-control" (ngModelChange)="onSelectWriteOffType($event)" style="background-color: yellow;" > 
+                    <!-- (ngModelChange)='OnApplyTypeSelected($event)'  > -->
+                      <!-- <option>--Select--</option> -->
+                      <option value="RECEIPT">RECEIPT</option>
+                      <option value="INVOICE">INVOICE</option>
+                  </select>
+                  </td>
+
+               
              
                 <td style="width: 15%" class="LabelFontStyle">Date From:</td>
                 <td><input type="date" class="form-control" formControlName="fromDate" [(ngModel)]="fromDate" max="{{minDate | date:'yyyy-MM-dd'}}" style="background-color:yellow ;"  ></td>
@@ -63,6 +73,9 @@
                </tr>
               
                 <tr>
+                    <td style="width: 15%" class="LabelFontStyle">Write Off Limit:</td>
+                    <td><input disabled type="number" class="form-control" formControlName="writeoffLimit" [(ngModel)]="writeoffLimit" style="font-weight:bold ;" ></td>
+             
                     <td style="width: 15%" class="LabelFontStyle">Write Off Total:</td>
                     <td><input disabled type="number" class="form-control" formControlName="writeOffTotal" [(ngModel)]="writeOffTotal"></td>
                 </tr>

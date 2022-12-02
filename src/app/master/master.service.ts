@@ -3536,6 +3536,11 @@ public shortLandedClaimSave(rtvRecord) {
     return this.http.get(this.ServerUrl + '/jaiApTdsHdr');
 
   }
+// //////////////////   PAINT Miscell Transaction //////////////////////////
+
+TransactionTypemiscpPaint(): Observable<any> {
+  return this.http.get(this.ServerUrl + `/mtlTrxTypes/stockAdj/9`);
+}
 
   // //////////////////   Miscell Transaction //////////////////////////
 
@@ -4289,9 +4294,14 @@ public shortLandedClaimSave(rtvRecord) {
 
   }
 
-  getWriteOffList(locId, frmDate, tDate, wAmt): Observable<any> {
+  getWriteOffListReceipt(locId, frmDate, tDate, wAmt): Observable<any> {
     return this.http.get(this.ServerUrl + `/arCashReceipts/receiptWriteOff?locId=${locId}&frmDt=${frmDate}&toDate1=${tDate}&toAmt=${wAmt}`);
     //http://localhost:8081/arCashReceipts/receiptWriteOff?locId=2101&frmDt=01-MAY-2022&toDate1=31-MAY-2022&toAmt=10
+  }
+
+  getWriteOffListInvoice(locId, frmDate, tDate, wAmt): Observable<any> {
+    return this.http.get(this.ServerUrl + `/arInv/invoiceWriteOff?locId=${locId}&fromDate=${frmDate}&toDate=${tDate}&toAmt=${wAmt}`);
+    // http://localhost:8081/arInv/invoiceWriteOff?locId=2209&fromDate=01-APR-2022&toDate=26-NOV-2022&toAmt=5
   }
 
 

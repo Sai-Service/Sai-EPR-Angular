@@ -2,12 +2,10 @@
   <form [formGroup]="miscellaneousForm" (ngSubmit)="miscellaneous(miscellaneousForm.value)" #stkAdjForm>
     <table style="width: 100%;background-color: white;">
       <tr>
-        <td class="PageHeader">
-          &nbsp;&nbsp;Stock&nbsp;&nbsp; Adjustment &nbsp;
-        </td>
+        <td class="PageHeader">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Stock&nbsp;&nbsp;Adjustment &nbsp;</td>
         <table style="width: 100%; background-color: #a4d3e9;">
           <tr>
-            <td style="width: 15%" class="LabelFontStyle">Stock Adjustment&nbsp;&nbsp;Number&nbsp;:</td>
+            <td style="width: 15%" class="LabelFontStyle">Stock&nbsp;Adj&nbsp;No&nbsp;:</td>
             <td>
               <input type="text" class="form-control" formControlName="compNo" [(ngModel)]="compNo" name="compNo">
             </td>
@@ -53,13 +51,13 @@
         </ng-template>
         <ng-template #elsestock1>
           <td style="width: 15%" class="LabelFontStyle">
-            Stock Adjustment No:
+            Stock Adj No:
           </td>
           <td>
             <input disabled type="text" class="form-control" formControlName="compileName" [(ngModel)]="compileName">
           </td>
           <td style="width: 15%" class="LabelFontStyle">
-            Stock Adjustment Date:
+            Stock Adj Date:
           </td>
           <td>
             <input disabled type="text" class="form-control" formControlName="compileDate" [(ngModel)]="compileDate">

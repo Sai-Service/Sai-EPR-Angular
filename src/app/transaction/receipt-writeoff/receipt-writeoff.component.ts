@@ -41,6 +41,7 @@ export class ReceiptWriteoffComponent implements OnInit {
   divisionId : number;
   divisionName:string;
 
+  writeOffType :string;
   ticketNo: string;
   fullName : string;
   writeoffLimit:number;
@@ -71,6 +72,7 @@ export class ReceiptWriteoffComponent implements OnInit {
       divisionId :[''],
       divisionName:[''],
 
+      writeOffType:[],
       ticketNo: [],
       fullName : [],
       writeoffLimit:[],
@@ -114,18 +116,20 @@ export class ReceiptWriteoffComponent implements OnInit {
     );
 
 
-    this.service.getEmpWriteOffLimit(sessionStorage.getItem('ouId'),sessionStorage.getItem('ticketNo'))
-    .subscribe(
-      data => {
-        this.empWriteOffLimit = data.obj;
-        console.log(this.empWriteOffLimit);
-        this.receiptWriteOffForm.patchValue({writeoffLimit:this.empWriteOffLimit.writeOffLimit})
+    // this.service.getEmpWriteOffLimit(sessionStorage.getItem('ouId'),sessionStorage.getItem('ticketNo'))
+    // .subscribe(
+    //   data => {
+    //     this.empWriteOffLimit = data.obj;
+    //     console.log(this.empWriteOffLimit);
+    //     this.receiptWriteOffForm.patchValue({writeoffLimit:this.empWriteOffLimit.writeOffLimit})
 
-      }
-    );
+    //   }
+    // );
 
 
   }
+
+ 
 
 
   FindList(){
@@ -136,6 +140,7 @@ export class ReceiptWriteoffComponent implements OnInit {
     this.writeOffList=null;
     this.dataDisplay = 'Searching Records....Please dont refresh the Page';
     // alert ("spin  -" +this.spinIcon  + " msg : "+this.dataDisplay);
+    var wType =this.receiptWriteOffForm.get('writeOffType').value;
     var fDate =this.receiptWriteOffForm.get('fromDate').value;
     var tDate =this.receiptWriteOffForm.get('toDate').value;
     var wAmt =this.receiptWriteOffForm.get('writeoffLimit').value;
@@ -146,12 +151,14 @@ export class ReceiptWriteoffComponent implements OnInit {
     // alert("DATE1,DATE2: "+ d1 +","+ d2 );
    
     if(lcId <=0) { alert ("LOCATION : Select Location ...");return;}
-    if (fDate>tDate ) { alert ("DATE : Select Proper Date Range ...");return;}
+    if(fDate>tDate ) { alert ("DATE : Select Proper Date Range ...");return;}
+    if(wAmt <=0) { alert ("WRITE OFF LIMIT : should be above zero ...");return;}
 
 
       this.spinIcon = true;
 
-      this.service.getWriteOffList(this.locId,d1,d2,wAmt)
+      if (wType==='RECEIPT'){
+      this.service.getWriteOffListReceipt(this.locId,d1,d2,wAmt)
       .subscribe(
         data => {
           this.writeOffList = data.obj;
@@ -167,7 +174,29 @@ export class ReceiptWriteoffComponent implements OnInit {
            }
              this.receiptWriteOffForm.patchValue({writeOffTotal:ttl});
            })
+          }
+
+          if (wType==='INVOICE'){
+            this.service.getWriteOffListInvoice(this.locId,d1,d2,wAmt)
+            .subscribe(
+              data => {
+                this.writeOffList = data.obj;
+                if(data.obj.length >0) { this.wirteOffButton=true;}
+                 else { this.wirteOffButton=false;  alert ("No Record Found..."); 
+                this.spinIcon=false; this.dataDisplay=null; }
+                 console.log(this.writeOffList);
+                 this.spinIcon=false; this.dataDisplay=null;
+      
+                 var ttl=0;
+                 for (let i = 0; i < this.writeOffList.length; i++) {
+                   ttl = ttl + Number(this.writeOffList[i].balanceAmount);
+                 }
+                   this.receiptWriteOffForm.patchValue({writeOffTotal:ttl});
+                 })
+            }
+
         } 
+
          
       ConfirmAlertFunction0() {
           var txt;
@@ -198,6 +227,8 @@ export class ReceiptWriteoffComponent implements OnInit {
       var d2 = this.pipe.transform(tDate, 'dd-MMM-y');
       var lcId =this.receiptWriteOffForm.get("locId").value;
       var tktNum=(sessionStorage.getItem('ticketNo'));
+      var wType =this.receiptWriteOffForm.get('writeOffType').value;
+
 
 
       this.service.ReceiptWriteOffSubmit(lcId,d1,d2,wAmt,tktNum).subscribe((res: any) => {
@@ -225,5 +256,20 @@ export class ReceiptWriteoffComponent implements OnInit {
       closeMast() {
         this.router.navigate(['admin']);
       }
+
+
+       
+    onSelectWriteOffType(event) {
+      if(event===null || event===undefined || event.trim()==='')  { return;}
+      alert ("Write off Type Selected : "+event);
+
+    this.service.getEmpWriteOffLimit(sessionStorage.getItem('ouId'),sessionStorage.getItem('ticketNo'))
+    .subscribe(
+      data => {
+        this.empWriteOffLimit = data.obj;
+        console.log(this.empWriteOffLimit);
+        this.receiptWriteOffForm.patchValue({writeoffLimit:this.empWriteOffLimit.writeOffLimit})
+      } );
+    }
 
 }
