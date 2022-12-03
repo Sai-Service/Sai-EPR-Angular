@@ -83,6 +83,8 @@ export class ReportServiceService {
       responseType: 'arraybuffer',
       headers: this.headers,
     });
+
+    // http://saihorizon.com:8051/ErpReplica/SparesReports/SprStkTrfRecdSummary?fromDate=01-Sep-2022&toDate=01-Dec-2022&shipToLoc=2201&shipFromLoc=&subInvCode=SP
   }
 
 
@@ -272,8 +274,16 @@ export class ReportServiceService {
       responseType: 'arraybuffer',
       headers: this.headers,
     });
+  }
+
+  actBillHandoverReport(fromDate,toDate,ouId,locId,deptId){
+    const REQUEST_URI = this.ServerUrl +`/AccountsReports/AcctBillFormat?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&deptId=${deptId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
   
-    // http://localhost:8081/AccountsReports/RTVRegister?fromDate=01-APR-2022&toDate=19-SEP-2022&ouId=21&locId=2101&deptId=1
+    // http://localhost:8081/AccountsReports/AcctBillFormat?fromDate=01-AUG-2022&toDate=02-DEC-2022&ouId=22&locId=2201&deptId=5
   
   }
 

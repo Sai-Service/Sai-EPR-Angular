@@ -500,17 +500,12 @@ export class PaintStkAdjComponent implements OnInit {
         }
       }
     });
-
-   
-
-   
-
-
+  
     this.service.ReasonList().subscribe((data) => {
       this.reasonlist = data;
       let selreasonlist: any = [];
       for (let i = 0; i < this.reasonlist.length; i++) {
-        if (this.reasonlist[i].reasonName.includes('SA')) {
+        if (this.reasonlist[i].reasonName.includes('SAPN')) {
           selreasonlist.push(this.reasonlist[i]);
         }
       }
@@ -518,6 +513,7 @@ export class PaintStkAdjComponent implements OnInit {
       //  let currReason = this.reasonlist.filter((reasonName:string) => (reasonName.includes('IC')));
       // this.selCustomer = currCustomer[0];
     });
+
     this.service.TypeList().subscribe((data) => {
       this.TypeList = data;
     });
