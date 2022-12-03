@@ -814,6 +814,27 @@ reportName:string;
     this.isVisiblepanelfromtolocation=false;
     this.isVisibleGSTSaleRegister=true;
   }
+  else if (reportName=='billHandedoverToActReport'){
+    this.reportName='Account Bill Handover Report';
+    this.isVisibleGSTSaleRegister=false;
+    this.isVisibleGSTPurchaseRegister=true;
+    this.isVisibleSparesdebtors=false;
+    this.isVisibleLocation=false;
+    this.isVisibleLocation1=false;
+    this.isVisiblepanelaccountName=false;
+    this.isVisiblepanelcashName=false;
+    this.isVisiblespInvAgging=false;
+    this.isVisiblepanelgltrialBalance=false;
+    this.panelCashBank=false;
+    this.isVisiblepanelAPGLUnpainAging=false;
+    this.isVisiblepanelprePayment=false;
+    this.ispanelTolocationOu=false;
+    this.isVisiblepanelfromtolocation=false;
+    this.isVisibleVendorLedgerReport=false;
+    this.isVisiblecustomerLedger=false;
+    this.isVisiblegstsaiDebtors=false;
+  }
+
   }
 
 
@@ -1273,7 +1294,7 @@ reportName:string;
         });
       }
     }
-    else if (reportName ==='23. Employee Ledger Report'){
+    else if (reportName ==='Employee Ledger Report'){
       const fileName = '23. Employee Ledger Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       this.reportService.empLedgerReport(fromDate,toDate,sessionStorage.getItem('ouId'))
@@ -1284,7 +1305,7 @@ reportName:string;
           this.isDisabled1=false;
         })     
      }
-     else if (reportName ==='24. Spares Debtor Report'){
+     else if (reportName ==='Spares Debtor Report'){
      
       var custAccNo1 = this.reportForm.get('custAccNo').value;
 
@@ -1333,7 +1354,7 @@ reportName:string;
       }
 
      }
-     else if (reportName ==='25. Receipt-Other Details Report'){
+     else if (reportName ==='Receipt-Other Details Report'){
       alert(reportName)
       this.isDisabled1=true;
       const fileName = 'Receipt-Other Details Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
@@ -1347,6 +1368,21 @@ reportName:string;
         this.isDisabled1 = false;
      })
       }
+      else if (reportName=='Account Bill Handover Report'){
+        var sourceName=this.reportForm.get('source').value;
+        const fileName = 'Account Bill Handover Report -' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+        const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+        // if(deptName==='NULL'){
+        //   deptName='';
+        // }
+        this.reportService.actBillHandoverReport(fromDate,toDate,sessionStorage.getItem('ouId'),locId,deptId)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+            this.isDisabled1=false;
+          })
+       }
 
   }
   fromToDateValidation(fDate,tDate){

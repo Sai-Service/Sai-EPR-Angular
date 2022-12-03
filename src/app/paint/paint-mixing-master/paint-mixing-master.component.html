@@ -16,8 +16,8 @@
           
                 <tr>
   
-                <input type="number" formControlName="itemId" [(ngModel)]="itemId" hidden>
-                <input type="number" formControlName="relatedItemId" [(ngModel)]="relatedItemId" hidden>
+                <input hidden type="number" formControlName="itemId" [(ngModel)]="itemId" >
+                <input hidden type="number" formControlName="relatedItemId" [(ngModel)]="relatedItemId" >
                
                 <td style="width: 15%" class="LabelFontStyle">Main&nbsp;Colour&nbsp;Code:</td>
                 <td><input type="text" class="form-control" formControlName="itemCode" [(ngModel)]="itemCode" (change)="Validateitem(itemCode)"   ></td>

@@ -3582,6 +3582,8 @@ if(this.deptId==2){
   
           }
 
+          
+
           othDetSave(){
 
             this.othSaveButton=false;

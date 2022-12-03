@@ -2,7 +2,7 @@
     <form [formGroup]="paintCreationForm" (ngSubmit)="paintCreation(paintCreationForm.value)">
     <table style="width: 100%;background-color: white;">
       <tr>
-        <td class="PageHeader">&nbsp;Main&nbsp;Colour&nbsp;Creation&nbsp;
+        <td class="PageHeader">&nbsp;Paint&nbsp;Mixing&nbsp;Issue
         </td>
         <table style="width: 100%; background-color: #a4d3e9;">
           <tr>
@@ -105,7 +105,7 @@
           </td>
           <td>
             <select class="form-control" formControlName="reason" [(ngModel)]="reason" (ngModelChange)="onSelectReason($event)">
-              <option>--Select--</option>
+              <option></option>
               <option *ngFor="let reason of reasonlist" >{{reason.reasonName}}-{{reason.costCode}}-{{reason.description}}</option>
               </select>
               <span

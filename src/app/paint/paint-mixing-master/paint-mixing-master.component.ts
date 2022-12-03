@@ -357,7 +357,7 @@ onOptionsSelected(event: any) {
     if (formValue.relatedItemId===undefined || formValue.relatedItemId===null  || formValue.relatedItemId <=0)
     {
       this.checkValidation=false; 
-      alert ("RELATED ITEM CODE : Please check Related Item Code");
+      alert ("BASE COLOUR CODE : Please check Related Item Code");
       return;
     } 
 
