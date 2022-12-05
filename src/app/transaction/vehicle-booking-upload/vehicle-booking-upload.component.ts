@@ -15,7 +15,7 @@ export class VehicleBookingUploadComponent implements OnInit {
   VehBookUploadForm: FormGroup;
   files:string;
   dataDisplay: any;
-  itemUploadedList:any;
+  itemUploadedList:any=[];
   @ViewChild('fileInput') fileInput;
   displaydata: boolean;
 
@@ -45,7 +45,7 @@ export class VehicleBookingUploadComponent implements OnInit {
         if (res.code === 200) {
           alert(res.message);
           this.itemUploadedList=res.obj;  
-          this.dataDisplay ='File Uploaded Sucessfully....'
+          // this.dataDisplay ='File Uploaded Sucessfully....'
           this.displaydata=false;
           // this.closeResetButton=true;
          this.VehBookUploadForm.get('files').reset();
