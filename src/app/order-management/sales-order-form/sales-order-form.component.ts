@@ -1576,6 +1576,9 @@ export class SalesOrderFormComponent implements OnInit {
                   }
                 );
             }
+            if(data.obj.msRefNo!=''){
+              this.SalesOrderBookingForm.get('msRefNo').disable();
+            }
             let control = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
             if (this.lstgetOrderLineDetails.length === 0 && this.lstgetOrderTaxDetails.length === 0) {
               this.orderlineDetailsArray().push(this.orderlineDetailsGroup());
