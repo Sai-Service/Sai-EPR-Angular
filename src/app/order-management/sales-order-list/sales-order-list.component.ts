@@ -127,6 +127,7 @@ export class SalesOrderListComponent implements OnInit {
    var endDt = this.pipe.transform(endDt1, 'dd-MMM-yyyy');
    if (Number(sessionStorage.getItem('deptId')) !=4){
     this.service.getSalesOrderByUser(Number(sessionStorage.getItem('locId')), stDate, endDt,sessionStorage.getItem('deptId')).subscribe((res: any) => {
+      (document.getElementById('search') as HTMLInputElement).disabled = true;
       if (res.code === 200) {
         this.orderListDetails = res.obj;
         this.storeAllOrderData =res.obj;
@@ -138,9 +139,11 @@ export class SalesOrderListComponent implements OnInit {
           this.totInvAmt = Math.round(((this.totInvAmt += (this.orderListDetails[x].orAmt)) + Number.EPSILON) * 100) / 100;
           console.log(this.totInvAmt);
       }
+      (document.getElementById('search') as HTMLInputElement).disabled = false;
       }
       else {
         if (res.code === 400) {
+          (document.getElementById('search') as HTMLInputElement).disabled = false;
           alert(res.message);
         }
       }

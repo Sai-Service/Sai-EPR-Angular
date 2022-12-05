@@ -70,6 +70,7 @@ export class AllOrderListComponent implements OnInit {
     // endDt1.setDate(endDt1.getDate() + 1);
    var endDt = this.pipe.transform(endDt1, 'dd-MMM-yyyy');
     this.service.getOrderByUser(Number(sessionStorage.getItem('locId')), stDate, endDt,sessionStorage.getItem('deptId')).subscribe((res: any) => {
+      (document.getElementById('search') as HTMLInputElement).disabled = true;
       if (res.code === 200) {
         this.orderListDetails = res.obj;
         this.storeAllOrderData =res.obj;
@@ -80,10 +81,13 @@ export class AllOrderListComponent implements OnInit {
           this.totInvAmt = Math.round(((this.totInvAmt += (this.orderListDetails[x].orAmt)) + Number.EPSILON) * 100) / 100;
           console.log(this.totInvAmt);
       }
+      (document.getElementById('search') as HTMLInputElement).disabled = false;
       }
       else {
         if (res.code === 400) {
+
           alert(res.message);
+          (document.getElementById('search') as HTMLInputElement).disabled = false;
         }
       }
     })
