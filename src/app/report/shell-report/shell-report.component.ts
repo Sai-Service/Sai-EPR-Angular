@@ -122,8 +122,8 @@ export class ShellReportComponent implements OnInit {
 
   ngOnInit(): void {   this.sparesReportForm.patchValue({ OUCode: sessionStorage.getItem('ouId') + '-' + sessionStorage.getItem('ouName') })
   this.sparesReportForm.patchValue({ locCode: sessionStorage.getItem('locId') + '-' + sessionStorage.getItem('locName') })
-  this.sparesReportForm.patchValue({ department: 'Spares' });
-  this.sparesReportForm.patchValue({ deptId: 5 })
+  this.sparesReportForm.patchValue({ department: 'Shell' });
+  this.sparesReportForm.patchValue({ deptId: 12 })
   // Prevent closing from click inside dropdown
   $(document).on('click', '.dropdown-menu', function (e) {
     e.stopPropagation();
