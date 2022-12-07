@@ -41,7 +41,7 @@
     </table>
     </fieldset>
     <fieldset class="RFS">
-        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Details</legend>
+    <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Details</legend>
   <table class="center" style="width: 100%;">
     <tr>
         <input  hidden formControlName="emplId"  [(ngModel)]='emplId'  class="form-control" >
@@ -99,8 +99,8 @@
     </tr>
 
     <!-- <div *ngIf="isVisiblegatePassDetails; then Block1; else Block2"></div> -->
+    
     <div *ngIf="isVisiblegatePassVehicleDetails; then Block1; else Block2"></div>
-   
     <ng-template #Block1>
     <tr>
         <td style="width: 15%" class="LabelFontStyle">Insurance&nbsp;Type&nbsp;:&nbsp;</td>
@@ -108,13 +108,12 @@
         <td style="width: 15%" class="LabelFontStyle"> Policy&nbsp;Number&nbsp;: </td>
         <td><input   type="text" formControlName="policyNo" [(ngModel)]="policyNo " id="policyNo"   class="form-control" style="height: 20px;width: 160px;background-color:yellow ;"  placeholder="Insurance Policy no"></td>
         <td style="width: 15%" class="LabelFontStyle"> Policy&nbsp;Date&nbsp;:</td>
-        <td><input type="date" formControlName="insuDate"  id="insuDate" value="insuDate" [(ngModel)]="insuDate"   class="form-control" style="height: 20px;width: 160px;" ></td>
+        <td><input type="date" formControlName="insuDate"  id="insuDate" value="insuDate" [(ngModel)]="insuDate"   class="form-control" style="height: 20px;width: 160px;" max="{{minDate | date:'yyyy-MM-dd'}}" ></td>
         <!-- (change)="validatePolicyDate(insuDate)"  -->
         <td style="width: 15%" class="LabelFontStyle"> Policy&nbsp;Term&nbsp;: </td>
         <td><input  type="number" formControlName="insuPeriod" [(ngModel)]="insuPeriod" id="insuPeriod"  (change)="validatePolicyTerm(insuPeriod)"  class="form-control" style="height: 20px;width: 160px;"  placeholder="Policy Term"></td>
            
     </tr>
-
     <tr>
         <td style="width: 12%" class="LabelFontStyle">Ins&nbsp;Company:&nbsp;</td>
          <td colspan="3">
@@ -127,17 +126,18 @@
              </select>
          </td>
        
-             <td style="width: 12%" class="LabelFontStyle">Ins&nbsp;Site:&nbsp;</td>
-             <td colspan="3">
-             <select  formControlName="insurerSiteId" id="insurerSiteId" [(ngModel)]="insurerSiteId" class="form-control" style="width: 100%;">
-             <option></option>
-             <option *ngFor="let sc of insSiteList"
-                 [ngValue]="sc.customerSiteId">
-                 {{sc.address1}}{{sc.address2}}-{{sc.address3}}-{{sc.location}}-{{sc.city}}-{{sc.pinCd}}-{{sc.state}}
-             </option>
-             </select>
-            </td>
-      </tr>
+        <td style="width: 12%" class="LabelFontStyle">Ins&nbsp;Site:&nbsp;</td>
+        <td colspan="3">
+        <select  formControlName="insurerSiteId" id="insurerSiteId" [(ngModel)]="insurerSiteId" class="form-control" style="width: 100%;">
+        <option></option>
+        <option *ngFor="let sc of insSiteList"
+            [ngValue]="sc.customerSiteId">
+            {{sc.address1}}{{sc.address2}}-{{sc.address3}}-{{sc.location}}-{{sc.city}}-{{sc.pinCd}}-{{sc.state}}
+        </option>
+        </select>
+    </td>
+    </tr>
+
     </ng-template>
     <ng-template #Block2>
         <tr>
@@ -147,6 +147,8 @@
             <td><input disabled  type="text" formControlName="policyNo" [(ngModel)]="policyNo" id="policyNo"   class="form-control" style="height: 20px;width: 160px;"  placeholder="Insurance Policy no"></td>
             <td style="width: 15%" class="LabelFontStyle"> Policy&nbsp;Date&nbsp;:</td>
             <td><input disabled type="date" formControlName="insuDate"  id="insuDate"  [(ngModel)]="insuDate"  class="form-control" style="height: 20px;width: 160px;" ></td>
+            
+           
             <td style="width: 15%" class="LabelFontStyle"> Policy&nbsp;Term&nbsp;: </td>
             <td><input disabled  type="number" formControlName="insuPeriod" [(ngModel)]="insuPeriod" id="insuPeriod"  (change)="validatePolicyTerm(insuPeriod)"  class="form-control" style="height: 20px;width: 160px;"  placeholder="Policy Term"></td>
         </tr>
@@ -175,46 +177,25 @@
                </td>
          </tr>
         </ng-template>
-
-
-
 </table>
     </fieldset>
     <div [style.display]="isVisiblegatePassVehicleDetails ? 'block' : 'none'">
     <fieldset class="RFS">
-        <!-- <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;"> -->
-           <!-- Vehicle Details Updation</legend> -->
-           <table class="center" style="width: 100%;">
+            <table class="center" style="width: 100%;">
             <tr>
                 <input disabled hidden type="number" class="form-control" formControlName="itemId" [(ngModel)]="itemId" style="border:solid 1px black" >
-
-                <!-- <td style="font-weight: bold;" class="LabelFontStyle1"> Vehicle&nbsp;Item&nbsp;:&nbsp;  </td>
-                <td><input disabled  class="form-control" formControlName="segment" style="border:solid 1px black" [(ngModel)]="segment"> </td>
-                 -->
-                <!-- </td>&nbsp;&nbsp;  -->
-
                 <td style="font-weight: bold;" class="LabelFontStyle1"> Vehicle&nbsp;No&nbsp;:&nbsp;  </td>
-                <td><input  class="form-control" formControlName="regNo" style="border:solid 1px black;background-color: yellow;" [(ngModel)]="regNo" placeholder="Enter Vehicle Registration No"> </td>
+                <td><input  class="form-control" formControlName="regNo" style="border:solid 1px black;background-color: yellow;text-transform: uppercase;" [(ngModel)]="regNo" placeholder="Enter Vehicle Reg No" > </td>
                 <td style="font-weight: bold;" class="LabelFontStyle1"> Vehicle&nbsp;Date&nbsp;:&nbsp;  </td>
-                <td><input type="date"  class="form-control" formControlName="regDate" style="border:solid 1px black" [(ngModel)]="regDate"> </td>
+                <td><input type="date"  class="form-control" formControlName="regDate" max="{{minDate | date:'yyyy-MM-dd'}}" style="border:solid 1px black" [(ngModel)]="regDate"> </td>
               
               <td><button type="submit" class="btn btn-primary" id="register" (click)="vehiclePolicyupdate(itemId,regNo,regDate)" style="width: fit-content;">Update Policy Details</button>  </td>
               <td><button type="submit" class="btn btn-primary" id="register" (click)="vehicleNoupdate(itemId,regNo,regDate)" style="width: fit-content;">Update Registration No</button>  </td>
-
-            
             </tr>   
-
-            <!-- <tr>
-                <td style="width: 15%" class="LabelFontStyle"> Policy&nbsp;Number&nbsp;: </td>
-                <td><input  type="text" formControlName="insPolicyNo" [ngModel]="insPolicyNo" id="insPolicyNo" value="insPolicyNo"  class="form-control"  placeholder="Enter Insurance Policy no"></td>
-                <td style="width: 15%" class="LabelFontStyle"> Policy&nbsp;Date&nbsp;:</td>
-                <td><input  type="date" formControlName="insPolicyDate"  id="insPolicyDate" value="insPolicyDate" [(ngModel)]="insPolicyDate" class="form-control" ></td>
-                <td></td>
-                          
-            </tr> -->
            </table>
     </fieldset>
 </div>
+
 <div [style.display]="isVisiblegatePassDetails ? 'block' : 'none'">
     <fieldset class="RFS">
         <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
@@ -257,9 +238,12 @@
                 <td>
                     <button type="submit" class="btn btn-primary" id="register" (click)="Close()">Close</button> 
                 </td>
+
                 <td>
-                    <button type="submit" class="btn btn-primary" id="register" (click)="downloadGatePass()" style="width: fit-content;">Download Gatepass</button> 
+                    <button [disabled]="isDisabled2" type="button" class="btn btn-primary" id="register" (click)="downloadGatePass()" style="width: fit-content;">Download Gatepass</button> 
                 </td>
+
+
             </tr>
         </table>
     </fieldset>

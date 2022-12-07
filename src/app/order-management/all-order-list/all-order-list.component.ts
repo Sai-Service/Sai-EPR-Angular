@@ -18,9 +18,11 @@ export class AllOrderListComponent implements OnInit {
   storeAllOrderData:any = [];
   totInvAmt=0;
   today = new Date();
-  startDt = this.pipe.transform(this.today, 'dd-MMM-yyyy');
   minDate = new Date();
+
+  startDt = this.pipe.transform(this.today, 'dd-MMM-yyyy');
   endDt = this.pipe.transform(this.today, 'dd-MMM-yyyy');
+
   isPending : Array<boolean> = [];
   status:string;
 
