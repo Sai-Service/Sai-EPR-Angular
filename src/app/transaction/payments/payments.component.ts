@@ -1187,12 +1187,15 @@ export class PaymentsComponent implements OnInit {
     var recAmt = this.PaymentReturnArr[0].payAmount;
     var methodId = this.selreeceiptmethod
     // }
+    // alert(arraybaseNew1[0].paymentMethodId)
     // else
     for (let i = 0; i < arraybaseNew1.length; i++) {
+      // debugger;
       // var invNumber = arraybaseNew1[i].docNo;
       var sourceType = arraybaseNew1[i].source;
+      var payMethodId= arraybaseNew1[i].paymentMethodId;
       // var methodId = arraybaseNew1[i].receiptMethodId;
-      if (sourceType === 'REFUND') {
+      if (sourceType === 'REFUND'|| payMethodId===1905) {
         // alert(invNumber+'In If'+methodId);
 
         this.router.navigate(['/admin/transaction/PaymentAr'], { queryParams: { invNumber: invNumber, methodId: methodId, recAmt: recAmt } });
