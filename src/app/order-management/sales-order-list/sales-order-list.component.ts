@@ -23,9 +23,12 @@ export class SalesOrderListComponent implements OnInit {
   storeAllOrderData:any = [];
   totInvAmt=0;
   today = new Date();
-  startDt = this.pipe.transform(this.today, 'dd-MMM-yyyy');
   minDate = new Date();
-  endDt = this.pipe.transform(this.today, 'dd-MMM-yyyy');
+  // startDt = this.pipe.transform(this.today, 'dd-MMM-yyyy');
+  // endDt = this.pipe.transform(this.today, 'dd-MMM-yyyy');
+  startDt = this.pipe.transform(Date.now(), 'y-MM-dd');
+  endDt = this.pipe.transform(Date.now(), 'y-MM-dd');
+
   isPending : Array<boolean> = [];
   status:string;
   custName:string;
@@ -63,9 +66,15 @@ export class SalesOrderListComponent implements OnInit {
 
   ngOnInit(): void {
     $("#wrapper").toggleClass("toggled");
-    var endDt1 = new Date(this.today);
-    endDt1.setDate(endDt1.getDate() + 1);
-    this.endDt = this.pipe.transform(endDt1, 'dd-MMM-yyyy');
+    // var endDt1 = new Date(this.today);
+    // endDt1.setDate(endDt1.getDate() + 1);
+    // this.endDt = this.pipe.transform(endDt1, 'dd-MMM-yyyy');
+    // this.endDt = this.pipe.transform(endDt1, 'y-MM-dd');
+
+    var startDt1 = new Date(this.today);
+    startDt1.setDate(startDt1.getDate() - 15);
+    this.startDt = this.pipe.transform(startDt1, 'y-MM-dd');
+
     if (Number(sessionStorage.getItem('deptId'))!=4){
       this.service.getSalesOrderByUser(Number(sessionStorage.getItem('locId')), this.startDt, this.endDt,sessionStorage.getItem('deptId')).subscribe((res: any) => {
         if (res.code === 200) {
@@ -114,9 +123,19 @@ export class SalesOrderListComponent implements OnInit {
       );
   }
 
-
+  diffDays(dt1,dt2) {
+    return Math.floor((Date.UTC(dt2.getFullYear(), dt2.getMonth(), dt2.getDate()) - Date.UTC(dt1.getFullYear(), dt1.getMonth(), dt1.getDate())) / (1000 * 60 * 60 * 24));
+  }
 
   getPO() {
+
+    // -------------------------------rk 7.12.2022 --------------------------------------
+    var dt1=new Date(this.startDt)
+    var dt2= new Date(this.endDt)
+    if(dt1>dt2) {alert ("Please Enter Proper Start Date and End Date...");return;}
+    var mDays = this.diffDays(dt1,dt2);
+    if (mDays >15) { alert ("Date Range Cannot Exceed 15 Days...");return;}
+    // ------------------------------------------------------------------------------------
     var stDt = this.orderListForm.get('startDt').value;
    // this.startDt = this.pipe.transform(stDt, 'dd-MMM-yyyy');
     var stDate = this.pipe.transform(stDt, 'dd-MMM-yyyy');

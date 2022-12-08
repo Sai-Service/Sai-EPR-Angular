@@ -775,13 +775,14 @@ export class OrderManagementService {
   //   });
   // }
 
-  public vehicleNoupdateFn_old(itemId, regNo, regDate, customerId) {
+  public vehicleNoupdateFn(itemId, regNo, regDate, customerId) {
     const options = {
       headers: this.headers
     };
     const url = this.ServerUrl + `/VehAddInfo/updateVHSales?itemId=${itemId}&regNo=${regNo}&regDate=${regDate}&customerId=${customerId}`;
     return this.http.put(url, options);
   }
+
 
   public vehicleNoInsuranceupdateFn(gpInsuranceRecord) {
     const options = {

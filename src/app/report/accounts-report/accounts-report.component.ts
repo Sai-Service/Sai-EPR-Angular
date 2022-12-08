@@ -656,6 +656,7 @@ reportName:string;
     this.isVisibleVendorLedgerReport=true;
     this.isVisiblegstsaiDebtors=false;
     this.isVisiblepanelfromtolocation=false;
+
   } else if (reportName=='jvRegister'){
     this.reportName='JV Register';
     this.isVisibleGSTSaleRegister=false;
@@ -833,6 +834,27 @@ reportName:string;
     this.isVisibleVendorLedgerReport=false;
     this.isVisiblecustomerLedger=false;
     this.isVisiblegstsaiDebtors=false;
+  }
+
+  else if (reportName=='actDistributionMatDistReport'){
+    this.reportName='Account Distribution Material Distrubution Report';
+    this.isVisibleGSTSaleRegister=false;
+    this.isVisibleGSTPurchaseRegister=false;
+    this.isVisibleSparesdebtors=false;
+    this.isVisibleLocation=false;
+    this.isVisibleLocation1=false;
+    this.isVisiblepanelaccountName=false;
+    this.isVisiblepanelcashName=false;
+    this.isVisiblespInvAgging=false;
+    this.isVisiblepanelgltrialBalance=false;
+    this.panelCashBank=false;
+    this.isVisiblepanelAPGLUnpainAging=false;
+    this.isVisiblepanelprePayment=false;
+    this.ispanelTolocationOu=true;
+    this.isVisibleVendorLedgerReport=false;
+    this.isVisiblecustomerLedger=false;
+    this.isVisiblegstsaiDebtors=false;
+    this.isVisiblepanelfromtolocation=false;
   }
 
   }
@@ -1383,8 +1405,21 @@ reportName:string;
             this.isDisabled1=false;
           })
        }
+       else if (reportName ==='Account Distribution Material Distrubution Report'){
+        const fileName = 'Account Dist Mat Reg Register-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+        const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+        this.reportService.actMatDistReport(fromDate,toDate,sessionStorage.getItem('ouId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+            this.isDisabled1=false;
+          })     
+       }
 
   }
+
+
   fromToDateValidation(fDate,tDate){
     this.rptValidation=true;
    

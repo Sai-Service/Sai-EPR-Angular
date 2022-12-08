@@ -49,13 +49,13 @@
                                <tr>
                                 <td>From&nbsp;Date&nbsp;</td>&nbsp;
                                 <td>
-                                    <input type="date" class="form-control" formControlName="startDt" 
+                                    <input type="date" class="form-control" formControlName="startDt"  [(ngModel)]="startDt"
                                     value={{startDt}}  max="{{minDate | date:'yyyy-MM-dd'}}">
                                 </td>
     
                                 <td>To&nbsp;Date&nbsp;</td>&nbsp;
                                 <td>
-                                    <input type="date" class="form-control" formControlName="endDt" 
+                                    <input type="date" class="form-control" formControlName="endDt" [(ngModel)]="endDt"
                                     value={{endDt}} max="{{minDate | date:'yyyy-MM-dd'}}">
                                 </td>
                                 <td>
