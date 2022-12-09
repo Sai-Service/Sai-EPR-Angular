@@ -2177,7 +2177,7 @@ export class SalesOrderFormComponent implements OnInit {
     // var orderLines = orderLines1.getRawValue();
     var orderLinesNew = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     var orderLinesNew1 = orderLinesNew.getRawValue();
-    let jsonData = this.SalesOrderBookingForm.value;
+    let jsonData = this.SalesOrderBookingForm.getRawValue();
     let salesObj = Object.assign(new SalesOrderobj(), jsonData);
     salesObj.setoeOrderLinesAllList(orderLines);
     var taxStr = [];
