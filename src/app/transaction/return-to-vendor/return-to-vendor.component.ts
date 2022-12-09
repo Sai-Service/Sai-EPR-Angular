@@ -905,10 +905,10 @@ export class ReturnToVendorComponent implements OnInit {
 
 
   rtvSave(){
-      var rtnLineArr = this.returntoVendorForm.get('rcvLines').value;
 
-      var len1=rtnLineArr.length;
     
+      var rtnLineArr = this.returntoVendorForm.get('rcvLines').value;
+      var len1=rtnLineArr.length;
        for (let i = 0; i < len1 ; i++)  {
         this.CheckRtnLineValidations(i)
        }
