@@ -2779,7 +2779,8 @@ export class PayableInvoiceNewComponent implements OnInit {
     this.runningTotalCr = null;
     this.runningTotalDr = null;
     var invoiceNum = this.lineDetailsArray().controls[this.selectedLine].get('invoiceNum').value;
-    this.service.viewAPAccounting(invoiceNum).subscribe((res: any) => {
+    var suppId = this.lineDetailsArray().controls[this.selectedLine].get('suppId').value;
+    this.service.viewAPAccounting(invoiceNum,suppId).subscribe((res: any) => {
       if (res.code === 200) {
         this.viewAccounting2 = res.obj;
         // this.description = res.obj.description;
@@ -2809,7 +2810,8 @@ export class PayableInvoiceNewComponent implements OnInit {
     // alert ("View Act Line ..."+index);
     this.showViewActLine = true;
     var invoiceNum = this.lineDetailsArray().controls[this.selectedLine].get('invoiceNum').value;
-    this.service.viewAPAccounting(invoiceNum).subscribe((res: any) => {
+    var suppId = this.lineDetailsArray().controls[this.selectedLine].get('suppId').value;
+    this.service.viewAPAccounting(invoiceNum,suppId).subscribe((res: any) => {
       if (res.code === 200) {
         this.viewAccountingLines = res.obj[index].glLines;
         console.log(this.viewAccountingLines);

@@ -2365,9 +2365,15 @@ public shortLandedClaimSave(rtvRecord) {
     return this.http.get(this.ServerUrl + `/glHeader/receiptNoWise/${receiptNo}`);
   }
 
-  viewAPAccounting(invoiceNum): Observable<any> {
-    return this.http.get(this.ServerUrl + `/glHeader/apInv?invoiceNum=${invoiceNum}`);
+  // viewAPAccounting(invoiceNum): Observable<any> {
+  //   return this.http.get(this.ServerUrl + `/glHeader/apInv?invoiceNum=${invoiceNum}`);
+  // }
+
+   viewAPAccounting(invoiceNum,suppId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/glHeader/apInv?invoiceNum=${invoiceNum}&suppId=${suppId}`);
   }
+
+
 
   viewPayAccounting(invoiceNum): Observable<any> {
     return this.http.get(this.ServerUrl + `/glHeader/docSequenceValue/${invoiceNum}`);
