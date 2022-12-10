@@ -918,8 +918,11 @@ export class ShortLandedGrrComponent implements OnInit {
    
 
     shortClaimSave(){
-      var rtnLineArr = this.shortLandGrrForm.get('rcvLines').value;
 
+      if(this.remarks==undefined || this.remarks==null || this.remarks.trim()=='' )
+      {alert ("Please update Reason/Remark column");return;   }
+
+      var rtnLineArr = this.shortLandGrrForm.get('rcvLines').value;
       var len1=rtnLineArr.length;
     
        for (let i = 0; i < len1 ; i++)  {
