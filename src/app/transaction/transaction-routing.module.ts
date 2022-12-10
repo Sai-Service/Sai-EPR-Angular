@@ -62,7 +62,7 @@ const routes: Routes = [
   {path:'miscTransaction/:refNum',component:MiscellaneousTransactionComponent},
   {path:'TdsInvoice',component:TdsInvoiceComponent},
   {path:'Payment',component:PaymentsComponent},
-  {path:'Payment/:invNumber',component:PaymentsComponent},
+  {path:'Payment/:invNumber/:suppNo',component:PaymentsComponent},
   // {path:'payableInvoice/:invNumber',component:PayableInvoiceNewComponent},comment by vinita
   {path:'ARInvoice', component:ARInvoiceComponent},
   {path:'ARInvoice/:invoiceNumber', component:ARInvoiceComponent},

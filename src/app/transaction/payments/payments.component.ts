@@ -314,8 +314,10 @@ export class PaymentsComponent implements OnInit {
 
     this.sub = this.router1.params.subscribe(params => {
       this.INVNO = params['invNumber'];
+      var suppNo = params['suppNo'];
+      // alert(suppNo+'----suppNo')
       var searchObj: InvSearchNew = new InvSearchNew();
-      { searchObj.invoiceNum = this.INVNO }
+      { searchObj.invoiceNum = this.INVNO,searchObj.suppNo = suppNo }
       if (this.INVNO != undefined) {
         this.displaysiteName = true;
         this.displaysiteAddress = true;
@@ -774,7 +776,7 @@ export class PaymentsComponent implements OnInit {
         if (arrobj[this.selectPayment].paymentTypeFlag === 'QuickPay') {
           if (arrayControle[i].invoiceAmt < 0) {
             calApplAmt = calApplAmt + arrayControle[i].invoiceAmt;
-            alert(calApplAmt + 'calApplAmt');
+            // alert(calApplAmt + 'calApplAmt');
             // debugger;
             this.appAmt = calApplAmt;
           }else{
