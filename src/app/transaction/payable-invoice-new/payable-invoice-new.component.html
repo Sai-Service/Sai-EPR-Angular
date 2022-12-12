@@ -981,7 +981,7 @@
                                                         [formGroupName]="k" class="auto-style5">
 
                                                         <tr class="ItemStyle" style="text-decoration:none;">
-                                                            <input  type="number" formControlName="suppNo">
+                                                            <input hidden type="number" formControlName="suppNo">
                                                             <td>
                                                                 <div *ngIf="displayViewTaxDetails; then thenViewTaxDetails; else elseViewTaxDetails"></div>
                                                                 <ng-template #thenViewTaxDetails>
