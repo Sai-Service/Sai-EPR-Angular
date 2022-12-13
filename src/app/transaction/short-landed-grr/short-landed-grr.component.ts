@@ -806,6 +806,7 @@ export class ShortLandedGrrComponent implements OnInit {
           this.rtnLineValidation=true;
     
       }
+      
 
       CheckForitemRepeat(mItem,index) {
         var patch = this.shortLandGrrForm.get('rcvLines') as FormArray;
