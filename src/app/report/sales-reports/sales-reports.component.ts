@@ -994,8 +994,28 @@ export class SalesReportsComponent implements OnInit {
       this.inVisiblepanelSaleSaiDebtors=false;
       this.isVisiblepanelfromtolocation1=true;
     }
-    
-
+    else if (reportName === 'saleSOALinewiseReport') {
+      this.reportName = 'Sales SOA LineWise Report';
+      this.isVisibleVehicleSaleRegister = false;
+      this.isVisibleSaleIND = false;
+      this.ispanelTolocationOu=false;
+      this.isSaleClosingStock = false;
+      this.isVisiblefromtolocationdepartment = true;
+      this.isVisiblestockTransfer=false;
+      this.isVisiblefromtoloccustaccno=false;
+      this.isVisibleSalesInventoryAging=false;
+      this.isVisiblepanelreceiptNo=false;
+      this.isVisiblepanelSalesAddonReconciliation=false;
+      this.isVisiblefromtosubinventory=false;
+      this.panelamcHistrory=false;
+      this.ispanelTolocationOu=false;
+      this.isVisiblepaneltolocation=false;
+      this.inVisiblepanelSaleSaiDebtors=false;
+      this.isVisiblepanelfromtolocation1=false;
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.isVisibleDepartmentList = true;
+      }
+    }
   }
 
 
@@ -1629,6 +1649,7 @@ export class SalesReportsComponent implements OnInit {
             })
         }
       }
+
       else if (reportName == 'Purchase Register Details'){
         const fileName = 'Purchase Register Details-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
         const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
@@ -1826,6 +1847,30 @@ export class SalesReportsComponent implements OnInit {
             })
         }
       }
+
+      else if (reportName === 'Sales SOA LineWise Report') {
+        //  alert(deptId);
+          const fileName = 'Sales SOA LineWise Report-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
+          const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+          if (Number(sessionStorage.getItem('deptId')) === 4) {
+            this.reportService.saleSOALinewiseReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
+              .subscribe(data => {
+                saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+                this.isDisabled1 = false;
+                this.closeResetButton = true;
+                this.dataDisplay = ''
+              })
+          }
+          else if (Number(sessionStorage.getItem('deptId')) != 4) {
+            this.reportService.saleSOALinewiseReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
+              .subscribe(data => {
+                saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+                this.isDisabled1 = false;
+                this.closeResetButton = true;
+                this.dataDisplay = ''
+              })
+          }
+        }
   }
 
  
