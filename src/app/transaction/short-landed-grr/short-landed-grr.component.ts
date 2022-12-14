@@ -995,6 +995,7 @@ export class ShortLandedGrrComponent implements OnInit {
      this.debitNoteNo=select.receiptNo;
      this.APdebitNote=select.debitNoteNo;
      this.claimNo=select.claimNo;
+     this.remarks=select.remark;
      this.shortLandGrrForm.get('claimNo').disable();
     //  this.rtnDocDate=select.receiptDate;
      this.debitNoteDate=this.pipe.transform(select.receiptDate, 'dd-MM-yyyy');
