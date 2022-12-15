@@ -432,26 +432,25 @@ export class PaymentsComponent implements OnInit {
   selPayStatus: any;
   // sel
   paymentdispSearch(docNo, i) {
-
-    // alert(docNo);
-
     var arr = this.paymentForm.get('obj1').value;
+    var arraybaseNew = this.paymentForm.get('obj1') as FormArray;
+    var arraybaseNew1 = arraybaseNew.getRawValue();
     console.log(arr);
     var docNo1 = arr[i].docNo;
     this.selreeceiptmethod = arr[i].receiptMethodId;
     this.selstatus = arr[i].refundStatus;
     this.selPayStatus = arr[i].statusLookupCode;
     this.selectPayment = i;
-
+    // alert('-----'+ arraybaseNew1[i].source)
     this.transactionService.paymentDocSearch(docNo1).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
         this.PaymentReturnArr = res.obj;
+        // alert(this.selstatus)
         if (this.selstatus == 'Y') {
-
           this.isarPayment = false;
         }
-        else {
+        else if (arraybaseNew1[i].source!='MANUAL') {
           this.isarPayment = true;
         }
         if (this.selPayStatus === 'VOIDED') {
@@ -472,8 +471,19 @@ export class PaymentsComponent implements OnInit {
         }
       }
     });
-
-
+    // var arraybaseNew = this.paymentForm.get('obj1') as FormArray;
+    // var arraybaseNew1 = arraybaseNew.getRawValue();
+    // for (let i = 0; i < arraybaseNew1.length; i++) {
+    //   var sourceType = arraybaseNew1[i].source;
+    //   alert(sourceType);
+    //   var payMethodId= arraybaseNew1[i].paymentMethodId;
+    //   if ( (arraybaseNew1[i].sourceType!='MANUAL')&&  this.selstatus==='N') {
+    //   this.isarPayment=true;
+    //   }
+    //   else {
+    //     this.isarPayment=false;
+    //   }
+    // }
   }
 
   selectPayment: number = 0;
@@ -1191,15 +1201,16 @@ export class PaymentsComponent implements OnInit {
     // }
     // alert(arraybaseNew1[0].paymentMethodId)
     // else
+    // alert(arraybaseNew1.length)
     for (let i = 0; i < arraybaseNew1.length; i++) {
       // debugger;
       // var invNumber = arraybaseNew1[i].docNo;
       var sourceType = arraybaseNew1[i].source;
       var payMethodId= arraybaseNew1[i].paymentMethodId;
+        alert(sourceType +'----'+ payMethodId)
       // var methodId = arraybaseNew1[i].receiptMethodId;
       if (sourceType === 'REFUND'|| payMethodId===1905) {
         // alert(invNumber+'In If'+methodId);
-
         this.router.navigate(['/admin/transaction/PaymentAr'], { queryParams: { invNumber: invNumber, methodId: methodId, recAmt: recAmt } });
       }
     }
