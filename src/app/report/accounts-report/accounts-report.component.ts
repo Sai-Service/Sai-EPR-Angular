@@ -760,7 +760,7 @@ reportName:string;
   }
 
   else if (reportName==='empLedgerReport'){
-    this.reportName='23. Employee Ledger Report';
+    this.reportName='Employee Ledger Report';
     this.isVisibleGSTSaleRegister=false;
     this.isVisibleGSTPurchaseRegister=false;
     this.isVisiblegstsaiDebtors=false;
@@ -1317,7 +1317,7 @@ reportName:string;
       }
     }
     else if (reportName ==='Employee Ledger Report'){
-      const fileName = '23. Employee Ledger Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+      const fileName = 'Employee Ledger Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       this.reportService.empLedgerReport(fromDate,toDate,sessionStorage.getItem('ouId'))
         .subscribe(data => {
