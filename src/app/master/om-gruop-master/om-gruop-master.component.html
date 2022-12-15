@@ -15,32 +15,24 @@
             </table>
         </tr>
     </table>
+
     <div class="center" style="width: 100%;">
+
         <div class="form-bg">
             
                 <table class="center">
                     <tr>
-                        <td style="width: 10%" class="LabelFontStyle">
-                            Division&nbsp;:
-                        </td>
-                        <td>
-                            <input type="text" disabled formControlName="loginArray" class="form-control" [(ngModel)]="loginArray" placeholder="">
-                        </td>
-                        <td style="width: 15%" class="LabelFontStyle1">
-                            Operating Unit&nbsp;:
-                        </td>
+                        <td style="width: 10%" class="LabelFontStyle">Division&nbsp;: </td>
+                        <td><input type="text" disabled formControlName="loginArray" class="form-control" [(ngModel)]="loginArray" placeholder=""> </td>
+                        <td style="width: 15%" class="LabelFontStyle1"> Operating Unit&nbsp;: </td>
                         <td>
                             <input type="text" disabled formControlName="ouName" class="form-control" [(ngModel)]="ouName" placeholder="">
                         </td>
-                        <td style="width: 10%" class="LabelFontStyle1">
-                            Location&nbsp;: 
-                        </td>
+                        <td style="width: 10%" class="LabelFontStyle1">Location&nbsp;: </td>
                         <td>
                             <input type="text" disabled formControlName="locCode" class="form-control" [(ngModel)]="locCode" placeholder="">
                         </td>
-                        <td style="width: 10%" class="LabelFontStyle1">
-                            Dept&nbsp;:
-                        </td>
+                        <td style="width: 10%" class="LabelFontStyle1"> Dept&nbsp;: </td>
                         <td>
                             <input type="text" disabled formControlName="deptName" class="form-control" [(ngModel)]="deptName" placeholder="">
                         </td>
@@ -57,38 +49,22 @@
                             </option>
                         </select>
                     </td>   -->
-                    <td style="width: 10%" class="LabelFontStyle1">
-                        Team&nbsp;Desc&nbsp;:
+                 
+                    <td style="width: 10%" class="LabelFontStyle1">TL&nbsp;No&nbsp;: </td>
+                    <td>
+                        <!-- (ngModelChange)='onOptionsSelectedDescription($event)' -->
+                        <select formControlName="leadTicketNo"  class="form-control" [ngModel]="leadTicketNo" (ngModelChange)='onOptionsSelectedDescription($event)'>
+                            <!-- <option>--Select--</option> -->
+                            <option *ngFor="let sc of  leadTicketNoList" [ngValue]="sc.ticketNo">
+                                {{sc.ticketNo}}
+                            </option>
+                        </select>
                     </td>
-    
-                    <td><input type="text" formControlName="teamDesc" class="form-control"></td>
-                        <td style="width: 10%" class="LabelFontStyle1">
-                            Team&nbsp;Name&nbsp;:
-                        </td>
-                        <td>
-                            <input  formControlName="teamName" [(ngModel)]="teamName" value={{teamName}}  class="form-control">
-                        </td>
-                        
-                        <td style="width: 10%" class="LabelFontStyle1">
-                            <!-- Ticket&nbsp;No&nbsp;: -->
-                            TL&nbsp;No&nbsp;:
-                        </td>
-                        <td>
-                            <!-- (ngModelChange)='onOptionsSelectedDescription($event)' -->
-                            <select formControlName="leadTicketNo"  class="form-control" [ngModel]="leadTicketNo" (ngModelChange)='onOptionsSelectedDescription($event)'>
-                                <option>--Select--</option>
-                                <option *ngFor="let sc of  leadTicketNoList" [ngValue]="sc.ticketNo">
-                                    {{sc.ticketNo}}
-                                </option>
-                            </select>
-                        </td>
-                        <td style="width: 12%" class="LabelFontStyle1">
-                            <!-- Emp&nbsp;Full&nbsp;Name&nbsp;: -->
-                            TL&nbsp;Name&nbsp;:
-                        </td>
-                        <td>
-                            <input type="text" disabled formControlName="description" value="description" [(ngModel)]='description'  class="form-control">
-                        </td>
+                    <td style="width: 12%" class="LabelFontStyle1">TL&nbsp;Name&nbsp;:</td>
+                    <td colspan="3"><input type="text" disabled formControlName="description" value="description" [(ngModel)]='description'  class="form-control" style="width:100% ;"></td>
+                    <td style="width: 10%" class="LabelFontStyle1">Team&nbsp;Name&nbsp;:</td>
+                    <td><input  formControlName="teamName" [(ngModel)]="teamName" value={{teamName}}  class="form-control"></td>
+                 
                     </tr>
                     <!-- <tr>
                         <td style="width: 5%" class="LabelFontStyle1">
@@ -115,7 +91,7 @@
                         </td>
                     </tr> -->
                     <tr>
-                        <td style="width: 5%" class="LabelFontStyle1">
+                          <td style="width: 5%" class="LabelFontStyle1">
                             Status&nbsp;:
                         </td>
                         <!-- <td>
@@ -123,7 +99,7 @@
                         </td>   -->
                         <td> <select formControlName="status" id="status" class="form-control"
                             [ngModel]="status" (ngModelChange)='onOptionsSelected($event)'>
-                                <option>--Select--</option>
+                                <!-- <option>--Select--</option> -->
                                 <option *ngFor="let sc of  statusList">
                                     {{sc.codeDesc}}
                                 </option> 
@@ -159,11 +135,11 @@
                     </tr>
                 </table>
                 <div class="center" formArrayName="teamDetails">
-                    <div class="center">
+                    <!-- <div class="center">
                         <button type="submit" class="btn btn-primary"
                     (click)="addRow()" (keydown.shift.arrowdown)="addRow()" 
                     style="width: fit-content;  text-align: center;">Add Row</button>
-                    </div>
+                    </div> -->
                     <div class="grid_scroll">
                         <table  class="center" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:fit-content;border-collapse:collapse;">
                         <!-- <table style="width: 100%; border: solid 1px Gray" class="auto-style4"
@@ -175,6 +151,9 @@
                                     <th scope="col">Employee Name</th> 
                                     <th scope="col">Start Date</th> 
                                     <th scope="col">End Date</th>
+                                    <th scope="col">Add</th>
+                                    <th scope="col">Del</th>
+
                                 </tr>
                             </thead>
                             <ng-container *ngFor="let group of lineDetailsArray.controls; let i= index"
@@ -194,13 +173,14 @@
                                              </option> 
                                          </select>
                                         </td>
-                                        <td> <input type="text" disabled  style=" height: 22px" formControlName="memberName"
-                                             class="form-control" ></td>
-                                            <td> <input type="date" style=" height: 22px" formControlName="startDate"
-                                                class="form-control"  min="{{minDate | date:'yyyy-MM-dd'}}" ></td>
-                                                <td> <input type="date" style=" height: 22px" formControlName="endDate"
-                                                     class="form-control" ></td>
-                                </tr>
+                                        <td> <input type="text" disabled  style=" height: 22px;width:300px" formControlName="memberName"  class="form-control" ></td>
+                                        <td> <input type="date" style=" height: 22px" formControlName="startDate" class="form-control"  min="{{minDate | date:'yyyy-MM-dd'}}" ></td>
+                                        <td> <input type="date" style=" height: 22px" formControlName="endDate"  class="form-control" ></td>
+                                        <td> <button type="submit" class="btn btn-primary" (click)="addRow1(i)" (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i class="fa fa-plus"></i></button></td>
+                                        <td> <button type="submit" class="btn btn-primary" (click)="RemoveRow1(i)" style="width: min-content;"><i class="fa fa-trash"></i></button>  </td>
+                                 
+                               
+                                    </tr>
                                 </ng-container>
                         </table>
                     </div>

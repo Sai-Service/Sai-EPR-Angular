@@ -341,6 +341,16 @@ export class ReportServiceService {
     });
   }
 
+  saleSOALinewiseReport(fromDate, toDate, ouId, locId, deptId){
+    const REQUEST_URI = this.ServerUrl +`/SalesReports/SalesSOARep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&deptId=${deptId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+    // http://localhost:8081/SalesReports/SalesSOARep?fromDate=01-Nov-2022&toDate=10-Dec-2022&ouId=22&locId=2203&deptId=1
+
+  }
+
   creditNoteReg(fromDate, toDate,ouId, locId){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/SprCreditNoteRegister?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
     return this.http.get(REQUEST_URI, {

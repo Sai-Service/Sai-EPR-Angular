@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { MasterService } from '../master.service';
 import { FormArray } from '@angular/forms';
-import { data } from 'jquery';
+import { data, trim } from 'jquery';
 
 interface IGroupMaster {
   teamName:string;
@@ -54,6 +54,7 @@ export class OmGruopMasterComponent implements OnInit {
   public statusList: Array<string> = [];
   public memberTicketNoList :any;
   public teamRoleList : Array<string>=[];
+  lineValidation=true;
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) { 
   this.GroupMasterForm = fb.group({
     teamName1:[],
@@ -270,6 +271,52 @@ get f() { return this.GroupMasterForm.controls; }
     }
     else if (this.Status1 === 'Active') {
       this.GroupMasterForm.get('teamEndDate').reset();
+    }
+  }
+
+  addRow1(index) 
+  {
+    var patch = this.GroupMasterForm.get('teamDetails') as FormArray;
+    this.checkLineValidations(index);
+    if (this.lineValidation==true) {this.lineDetailsArray.push(this.lineDetailsGroup());
+    for(let i=0; i<this.lineDetailsArray.length; i++){
+      (patch.controls[i]).patchValue(
+        { lineNO: i+1, }
+      )}
+      }
+    }
+  
+  RemoveRow1(index) {
+    if (index===0){
+    }
+    else {this.lineDetailsArray.removeAt(index);
+    }
+   }
+
+
+  checkLineValidations(index) {
+    var patch = this.GroupMasterForm.get('teamDetails') as FormArray;
+    var LineArr = this.GroupMasterForm.get('teamDetails').value;
+    var len1=LineArr.length;
+
+    var tktNo =LineArr[index].ticketNo;
+    var empName =LineArr[index].memberName;
+    var stDate=LineArr[index].startDate;
+    this.lineValidation=true;
+
+    if(tktNo ===null ||tktNo ===undefined || tktNo.trim()=='' ) {
+      alert("Line-"+(index+1)+ " : TICKET NO :  Should not be null");
+      this.lineValidation=false;return;
+    }
+
+    if(empName ===null ||empName ===undefined || empName.trim()=='' ) {
+      alert("Line-"+(index+1)+ " : EMPLOYEE NAME :  Should not be null");
+      this.lineValidation=false;return;
+    }
+
+    if(stDate ===null || stDate ===undefined || stDate.trim()=='' ) {
+      alert("Line-"+(index+1)+ " : START DATE :  Should not be null");
+      this.lineValidation=false;return;
     }
   }
 
