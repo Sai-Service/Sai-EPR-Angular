@@ -1539,6 +1539,9 @@ export class SalesOrderFormComponent implements OnInit {
                   }
                 );
             }
+            if (data.obj.orderStatus==='CANCELLED' || data.obj.orderStatus==='CLOSED'){
+              this.isVisible6=false;
+            }
             if (data.obj.orderStatus === 'INVOICED') {
               if (Number(sessionStorage.getItem('deptId')) != 4) {
                 this.isVisible2 = true;
@@ -1932,7 +1935,9 @@ export class SalesOrderFormComponent implements OnInit {
                 this.isVisible2 = true;
               }
             }
-        
+            if (data.obj.orderStatus==='CANCELLED' || data.obj.orderStatus==='CLOSED'){
+              this.isVisible6=false;
+            }
             if (Number(sessionStorage.getItem('deptId')) == 4) {
               if (data.obj.orderStatus != 'INVOICED'&& data.obj.flowStatusCode !='CANCELLED')
                 {
