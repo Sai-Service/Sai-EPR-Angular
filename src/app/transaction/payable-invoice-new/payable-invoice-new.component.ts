@@ -412,6 +412,9 @@ export class PayableInvoiceNewComponent implements OnInit {
   supname:string;
   balData: any;
   payData: any;
+  closeResetButton = true;
+  dataDisplay: any;
+  progress = 0;
 
   constructor(private fb: FormBuilder, private router1: ActivatedRoute, private orderManagementService: OrderManagementService, private transactionService: TransactionService, private service: MasterService, private router: Router) {
     this.poInvoiceForm = fb.group({
@@ -1064,6 +1067,9 @@ export class PayableInvoiceNewComponent implements OnInit {
     this.TdsDetailsArray().clear();
     this.lineDistributionArray().clear();
     this.tdsTaxDetailsArray().clear();
+    this.closeResetButton = false;
+    this.progress = 0;
+    this.dataDisplay = 'Data Loading in progress....Do not refresh the Page'
     this.displayHeaderData = false;
     this.isVisibleSelectButton = true;
     let jsonData = this.poInvoiceForm.value;
@@ -1074,6 +1080,9 @@ export class PayableInvoiceNewComponent implements OnInit {
     if (this.poInvoiceForm.get('invoiceNum').value != null) { searchObj.invoiceNum = this.poInvoiceForm.get('invoiceNum').value }
     this.transactionService.getsearchByApINV(JSON.stringify(searchObj)).subscribe((res: any) => {
       if (res.code === 200) {
+        this.closeResetButton = true;
+        // this.progress = 0;
+        this.dataDisplay = 'Data Display Sucessfully..'
         this.isDisabled = true;
         this.isVisibleAddonType = false;
         this.isVisibleSave = false;
@@ -1085,6 +1094,7 @@ export class PayableInvoiceNewComponent implements OnInit {
           this.poInvoiceForm.reset();
         }
         else if (res.obj.length != 0) {
+         
           // ;
           this.lstsearchapinv = res.obj;
           this.lstsearchapinv.forEach(f => {
@@ -1221,6 +1231,9 @@ export class PayableInvoiceNewComponent implements OnInit {
 
   selectINVLineDtl(index) {
     // alert(index+'----'+suppNo);
+    this.closeResetButton = false;
+    this.progress = 0;
+    this.dataDisplay = 'Data Loading in progress....Do not refresh the Page'
     this.tdsTaxDetailsArray().clear();
     this.lineDistributionArray().clear();
     this.invLineDetailsArray().clear();
@@ -1253,7 +1266,9 @@ export class PayableInvoiceNewComponent implements OnInit {
         .subscribe(
           data => {
             console.log(data);
-
+            this.closeResetButton = true;
+            // this.progress = 0;
+            this.dataDisplay = 'Data Display Sucessfully....'
             // alert('data.invoiceStatus'+data.invoiceStatus);
             this.isSearchPatch = true;
             this.displayitemName = true;
@@ -1494,7 +1509,9 @@ export class PayableInvoiceNewComponent implements OnInit {
         .subscribe(
           data => {
             console.log(data);
-
+            this.closeResetButton = true;
+            // this.progress = 0;
+            this.dataDisplay = 'Data Display Sucessfully....'
             // alert('data.invoiceStatus'+data.invoiceStatus);
             this.isSearchPatch = true;
             this.displayitemName = true;
@@ -3580,7 +3597,9 @@ export class PayableInvoiceNewComponent implements OnInit {
 
   roundOffAP() {
     var invoiceNum = this.lineDetailsArray().controls[this.selectedLine].get('invoiceNum').value;
-    this.transactionService.roundOffAP(invoiceNum).subscribe((res: any) => {
+    var suppNo = this.lineDetailsArray().controls[this.selectedLine].get('suppNo').value;
+    // alert(suppNo);
+    this.transactionService.roundOffAP(invoiceNum,suppNo).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
         this.apInvFind(res.obj.invoiceNum);
