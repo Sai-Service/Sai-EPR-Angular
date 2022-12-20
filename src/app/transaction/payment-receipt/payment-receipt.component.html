@@ -252,7 +252,7 @@
                                 </td>
                                 <td style="width: 15%" class="LabelFontStyle">Remark&nbsp;:</td>
                                 <td colspan="2">
-                                    <input type="text" formControlName="comment"  id="comment"  [(ngModel)] ="comment" class="form-control"
+                                    <input type="text" formControlName="comments"  id="comments"  [(ngModel)] ="comments" class="form-control"
                                         placeholder="Enter Remarks if any..." style="width: 100%;">
                                 </td>
                             </tr>
@@ -502,13 +502,16 @@
    <tbody>
         <tr class="GridHeader">
             <th style="width:10rem" scope="col">Order No</th>
-            <th style="width:6rem" scope="col">SR No</th>
+            <!-- <th style="width:6rem" scope="col">SR No</th> -->
             <th style="width:6rem" scope="col">Receipt No</th>
             <th style="width:6rem" scope="col">Receipt Date</th>
             <th style="width:10rem" scope="col">Payment Type</th>
             <th style="width:10rem" scope="col">Cust No</th>
             <th style="width:10rem" scope="col">Payment Amt</th>
             <th style="width:10rem" scope="col">Receipt Method</th>
+            <th style="width:10rem" scope="col">Remark</th>
+            <th style="width:10rem" scope="col">Status</th>
+            
             <!-- <th style="width:10rem" scope="col">Payment For</th> -->
         <th style="width:6rem" scope="col">Select</th>
         <th style="width:6rem" scope="col">View Receipt</th>
@@ -518,7 +521,7 @@
                 <!-- <td>{{com.oePayList.srlno}}</td> -->
 
                 <td>{{orderNumber}}</td>
-                <td>{{com.srlNo}}</td>
+                <!-- <td>{{com.srlNo}}</td> -->
                 <td>{{com.receiptNumber}}</td>
                 <td>{{com.receiptDate}}</td>
                 <td>{{com.payType}}</td>  
@@ -526,7 +529,8 @@
                 <td>{{custName}}</td>
                 <td>{{com.paymentAmt}}</td>
                 <td> {{com.receiptMethodName}}</td>
-                
+                <td> {{com.comments}}</td>
+                <td> {{com.status}}</td>
                 <td><button class="btn btn-secondary" (click)="Select(com.receiptNumber)">Select</button></td>
                 <td><button class="btn btn-secondary" (click)="receiptView(com.receiptNumber)" style="width: fit-content;">View</button></td>   
             </tr>
