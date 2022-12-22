@@ -1461,7 +1461,7 @@ export class MasterService {
     const option = {
       headers: this.headers
     };
-    const url = this.ServerUrl + `/arInv/invComplete/${invoiceno}`;
+    const url = this.ServerUrl + `/arInv/invComplete?invNum=${invoiceno}`;
     return this.http.put(url, option);
   }
 
