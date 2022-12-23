@@ -2108,8 +2108,11 @@ export class MasterService {
   tdsTaxCategoryList(): Observable<any> {
     // return this.http.get(this.ServerUrl +'/JaiTaxCatg');
     return this.http.get(this.ServerUrl + '/JaiTaxCatg/taxCate/TDS');
+  }
 
-
+  tdsTaxCategoryList1(): Observable<any> {
+    // return this.http.get(this.ServerUrl +'/JaiTaxCatg');
+    return this.http.get(this.ServerUrl + '/JaiTaxCatg/taxCate/TDS');
   }
 
 
