@@ -3130,7 +3130,7 @@ export class PayableInvoiceNewComponent implements OnInit {
         totalOfInvLineAmout = Math.round(((arrayControl1[i].amount) + Number.EPSILON) * 100) / 100;
       }
       else {
-        if (desc1.includes('Adhoc Disc')) {
+        if (desc1.includes('Adhoc Disc')|| desc1.includes('Subsidy')) {
           totalOfInvLineAmout = Math.round(((totalOfInvLineAmout - arrayControl1[i].amount) + Number.EPSILON) * 100) / 100;
         } else {
           totalOfInvLineAmout = Math.round(((totalOfInvLineAmout + arrayControl1[i].amount) + Number.EPSILON) * 100) / 100;
