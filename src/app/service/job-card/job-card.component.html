@@ -187,7 +187,7 @@
                                                                             <tr> -->
 
                                                                                <td>
-                                                                                <input type="text" style="background-color: yellow;text-transform: uppercase;"
+                                                                                <!-- <input type="text" style="background-color: yellow;text-transform: uppercase;"
                                                                                 formControlName="regNo"   [(ngModel)]="regNo" (change)="serchByRegNo(regNo)"  
                                                                                 (keyup)="getUserIdsFirstWay($event)" id="userIdFirstWay" list="dynmicUserIds" class="form-control" />
                                                                                 <datalist id="dynmicUserIds">
@@ -195,7 +195,9 @@
                                                                                         *ngFor="let item of RegNoList1"  [ngValue]="item.regNo">
                                                                                         {{item.regNo}}
                                                                                     </option>
-                                                                                </datalist>
+                                                                                </datalist> -->
+                                                                                <input type="text" style="background-color: yellow;text-transform: uppercase;"
+                                                                                formControlName="regNo"   [(ngModel)]="regNo" (change)="serchByRegNo(regNo)" class="form-control" >
                                                                                
                                                                                 <input type="text"   hidden  formControlName="itemId">
                                                                                 <input type="text"   hidden formControlName="customerSiteId">
