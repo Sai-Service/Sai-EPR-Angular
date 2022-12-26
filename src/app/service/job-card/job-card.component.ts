@@ -990,13 +990,14 @@ export class JobCardComponent implements OnInit {
           console.log(this.groupIdList);
         }
       );
-    this.serviceService.RegNoListDividionwiseFN(this.divisionId)
-      .subscribe(
-        data1 => {
-          this.RegNoList1 = data1;
-          console.log(this.RegNoList1);
-        }
-      );
+    // this.serviceService.RegNoListDividionwiseFN(this.divisionId)
+    //   .subscribe(
+    //     data1 => {
+    //       this.RegNoList1 = data1;
+    //       console.log(this.RegNoList1);
+    //     }
+    //   );
+   
     // this.serviceService.billableTyIdListFN()
     //   .subscribe(
     //     data1 => {

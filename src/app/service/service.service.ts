@@ -86,12 +86,12 @@ srvAdvisorListFN(locId,jcTyp) : Observable<any> {
 groupIdListFN(locId,deptId) : Observable<any> {
   return this.http.get(this.ServerUrl +`/teamMaster/srvGroup?locId=${locId}&deptId=${deptId}`);
 } 
-RegNoListFN() : Observable<any> {
-  return this.http.get(this.ServerUrl +`/itemMst/regList`);
-} 
-RegNoListDividionwiseFN(divisionId) : Observable<any> {
-  return this.http.get(this.ServerUrl +`/itemMst/regList/${divisionId}`);
-} 
+// RegNoListFN() : Observable<any> {
+//   return this.http.get(this.ServerUrl +`/itemMst/regList`);
+// } 
+// RegNoListDividionwiseFN(divisionId) : Observable<any> {
+//   return this.http.get(this.ServerUrl +`/itemMst/regList/${divisionId}`);
+// } comment by vinita on 26dec22
 billableTyIdListFN() : Observable<any> {
   return this.http.get(this.ServerUrl +`/billableTy`);
 } 
