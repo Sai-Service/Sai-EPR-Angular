@@ -637,13 +637,13 @@ if(this.deptId==2){
 
     //  alert ("this.fromJc :" +this.fromJc);
 
-    this.service.RegNoListFN()
-      .subscribe(
-        data1 => {
-          this.VehRegNoList = data1;
-          console.log(this.VehRegNoList);
-        }
-      );
+    // this.service.RegNoListFN()
+    //   .subscribe(
+    //     data1 => {
+    //       this.VehRegNoList = data1;
+    //       console.log(this.VehRegNoList);
+    //     }
+    //   );comment by vinita on 27dec22
 
 
     // this.service.OUIdList()
