@@ -716,7 +716,8 @@ export class PayableInvoiceNewComponent implements OnInit {
       }
     );
     this.isVisibleAddonType = true;
-    this.poInvoiceForm.patchValue({ invoiceStatus: 'Not Validated' })
+    // this.poInvoiceForm.patchValue({ invoiceStatus: 'Not Validated' })comment by vinita on 28dec22
+    this.poInvoiceForm.patchValue({ invoiceStatus: '' })
     this.isVisiblelineDetialsDeleteButton = true;
     this.paymentMethod1 = 69;
     this.ouId = Number(sessionStorage.getItem('ouId'));
@@ -1650,7 +1651,7 @@ export class PayableInvoiceNewComponent implements OnInit {
               // this.isVisibleRoundOffButton=true;
             }
             if (data.invoiceStatus != undefined) {
-              if (data.invoiceStatus.includes('Validate') || data.invoiceStatus === 'Unpaid') {
+              if (data.invoiceStatus.includes('Validate') || data.invoiceStatus === 'Unpaid'|| data.invoiceStatus === 'Paid') {
                 this.poInvoiceForm.disable();
                 this.displayAddNewLine = false;
                 this.invoiceStatus = data.invoiceStatus;
