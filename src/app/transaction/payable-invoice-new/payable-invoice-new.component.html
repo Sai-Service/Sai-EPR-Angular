@@ -55,6 +55,7 @@
                                         <th scope="col">Supp No</th>
                                         <th scope="col">Supp Site</th>
                                         <th scope="col">TDS Status</th>
+                                        <th scope="col">Invoice Status</th>
                                         <th scope="col">Invoice Date</th>
                                         <th scope="col">Invoice No</th>
                                         <th scope="col">Document No</th>
@@ -189,6 +190,11 @@
                                                     <td>
                                                         <input type="text" disabled 
                                                         formControlName="supTdsYN" class="form-control"
+                                                        style="width:50px;height: 25px;font-size: 11px;font-weight: bold;">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" disabled 
+                                                        formControlName="invoiceStatus" class="form-control"
                                                         style="width:50px;height: 25px;font-size: 11px;font-weight: bold;">
                                                     </td>
                                                     <td>
@@ -445,6 +451,11 @@
                                                     <td>
                                                         <input type="text" disabled 
                                                         formControlName="supTdsYN" class="form-control"
+                                                        style="width:50px;height: 25px;font-size: 11px;font-weight: bold;">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" disabled 
+                                                        formControlName="invoiceStatus" class="form-control"
                                                         style="width:50px;height: 25px;font-size: 11px;font-weight: bold;">
                                                     </td>
                                                     <td>
@@ -1555,7 +1566,7 @@
 
                                                             <td>
                                                                 <input formControlName="taxAmount" class="form-control"
-                                                                   disabled style="width: 100px;height: 25px;text-align: right;">
+                                                                    style="width: 100px;height: 25px;text-align: right;">
                                                             </td>
 
                                                             <td>
@@ -2241,7 +2252,7 @@
                                     [style.display]="isVisibleUpdateBtn ? 'block' : 'none'">Update</button>
                             </td>
                             <td>
-                                <button type="button" class="btn btn-primary" (click)="Validate()"
+                                <button type="button" class="btn btn-primary" (click)="Validated()"
                                     [style.display]="isVisibleValidate ? 'block' : 'none'">Validate</button>
                             </td>
                             <!-- <td>

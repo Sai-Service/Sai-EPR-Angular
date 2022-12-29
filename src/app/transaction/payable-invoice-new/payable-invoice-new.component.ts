@@ -1429,8 +1429,8 @@ export class PayableInvoiceNewComponent implements OnInit {
               // if(data.invoiceStatus.includes('Validated')){
               //   this.isVisiblepayDetail=true;
               // }
-              if (data.invoiceStatus.includes('Validate') || data.invoiceStatus === 'Unpaid') {
-                // alert('In Validate')
+              if (data.invoiceStatus.includes('Validated') || data.invoiceStatus === 'Unpaid') {
+                // alert('In Validated')
                 this.poInvoiceForm.disable();
                 this.displayAddNewLine = false;
                 this.invoiceStatus = data.invoiceStatus;
@@ -1503,7 +1503,7 @@ export class PayableInvoiceNewComponent implements OnInit {
               this.poInvoiceForm.disable();
             }
             // if (data.invoiceStatus != undefined){
-            if (arraybaseNew1[index].invTypeLookupCode === 'Prepayment' && data.invoiceStatus.includes('Validate') || data.invoiceStatus === 'Unpaid') {
+            if (arraybaseNew1[index].invTypeLookupCode === 'Prepayment' && data.invoiceStatus.includes('Validated') || data.invoiceStatus === 'Unpaid') {
               if (arraybaseNew1[index].invTypeLookupCode != 'CREDIT' || arraybaseNew1[index].invTypeLookupCode != 'STANDARD') {
                 this.isVisiblePayment = true;
               }
@@ -1511,7 +1511,7 @@ export class PayableInvoiceNewComponent implements OnInit {
             }
             else if (arraybaseNew1[index].invTypeLookupCode === 'Standard Invoice' && data.invoiceStatus != undefined) {
               // alert(data.invoiceStatus)
-              if (data.invoiceStatus.includes('Validate') || data.invoiceStatus === 'Unpaid') {
+              if (data.invoiceStatus.includes('Validated') || data.invoiceStatus === 'Unpaid') {
                 this.isVisiblePayment = true;
               }
             }
@@ -1677,7 +1677,7 @@ export class PayableInvoiceNewComponent implements OnInit {
               // this.isVisibleRoundOffButton=true;
             }
             if (data.invoiceStatus != undefined) {
-              if (data.invoiceStatus.includes('Validate') || data.invoiceStatus === 'Unpaid'|| data.invoiceStatus === 'Paid') {
+              if (data.invoiceStatus.includes('Validated') || data.invoiceStatus === 'Unpaid'|| data.invoiceStatus === 'Paid') {
                 this.poInvoiceForm.disable();
                 this.displayAddNewLine = false;
                 this.invoiceStatus = data.invoiceStatus;
@@ -1745,7 +1745,7 @@ export class PayableInvoiceNewComponent implements OnInit {
               // this.poInvoiceForm.disable();
             }
             // if (data.invoiceStatus != undefined){
-            if (arraybaseNew1[index].invTypeLookupCode === 'Prepayment' && data.invoiceStatus.includes('Validate') || data.invoiceStatus === 'Unpaid') {
+            if (arraybaseNew1[index].invTypeLookupCode === 'Prepayment' && data.invoiceStatus.includes('Validated') || data.invoiceStatus === 'Unpaid') {
               if (arraybaseNew1[index].invTypeLookupCode != 'CREDIT' || arraybaseNew1[index].invTypeLookupCode != 'STANDARD') {
                 this.isVisiblePayment = true;
               }
@@ -1753,7 +1753,7 @@ export class PayableInvoiceNewComponent implements OnInit {
             }
             else if (arraybaseNew1[index].invTypeLookupCode === 'Standard Invoice' && data.invoiceStatus != undefined) {
               // alert(data.invoiceStatus)
-              if (data.invoiceStatus.includes('Validate') || data.invoiceStatus === 'Unpaid') {
+              if (data.invoiceStatus.includes('Validated') || data.invoiceStatus === 'Unpaid') {
                 this.isVisiblePayment = true;
                 this.isVisibleCancel=true;
               }
@@ -3154,7 +3154,7 @@ export class PayableInvoiceNewComponent implements OnInit {
 
 
 
-  Validate() {
+  Validated() {
     var arrayControl = this.poInvoiceForm.get('obj').value;
     // var arrayControl1 = this.poInvoiceForm.get('invLines').value;
     var arrayControl2 = this.poInvoiceForm.get('invLines') as FormArray;
@@ -3203,7 +3203,7 @@ export class PayableInvoiceNewComponent implements OnInit {
           alert(res.message);
           this.apInvFindAfterSave(res.obj.name)
           this.poInvoiceForm.disable();
-          this.poInvoiceForm.patchValue({ invoiceStatus: 'Validate' })
+          this.poInvoiceForm.patchValue({ invoiceStatus: 'Validated' })
           this.isVisible = false;
           this.isVisibleUpdateBtn = false;
           this.isVisibleRoundOffButton = false;
