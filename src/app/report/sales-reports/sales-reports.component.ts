@@ -1151,7 +1151,7 @@ export class SalesReportsComponent implements OnInit {
       const fileName = 'Vehicle Closing StockNew-' + sessionStorage.getItem('locName').trim() + '-' + '-TO-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.vehicleClosingStockReport(sessionStorage.getItem('ouId'))
+        this.reportService.vehicleClosingStockReportNew(sessionStorage.getItem('ouId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.dataDisplay = ''

@@ -2901,6 +2901,17 @@ public shortLandedClaimSave(rtvRecord) {
   }
   ////////////////////////////// Back order File upload /////////
 
+
+
+  orderCancellationUpload(formData: FormData, emplId,receiptMethodName) {
+    // alert ("Org Id :"+mouId + "  BankAccountId :"+bnkAcccountId);
+    let headers1 = new HttpHeaders();
+    formData.append('emplId', emplId);
+    formData.append('bankAc', receiptMethodName);
+    return this.http.post(this.ServerUrl + `/Proforma/cancel/bookings`, formData)
+    // http://localhost:8081/fileImport/uploadBankStmt/
+  }
+
   public orderGenBajaj(ordeGenRecord, mLocId, mths, dlrCd, plHd, ordNum) {
     // alert (  "MS>> Loc Id :" +mLocId + " ," +mths);
     const options = {
