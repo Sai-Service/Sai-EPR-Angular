@@ -322,7 +322,7 @@ export class ShortLandedGrrComponent implements OnInit {
           this.searchButton=false;
           this.shortLandGrrForm.get("receiptNo").disable();
       
-          if(this.lstReceiptHeader.originalReceiptNo===null) 
+          if(this.lstReceiptHeader.originalReceiptNo ===null) 
           {
             this.headerFound=true;
             this.showLineLov(this.lstReceiptHeader.segment1,mRcptNumber);
@@ -341,9 +341,17 @@ export class ShortLandedGrrComponent implements OnInit {
           this.poDate=this.lstReceiptHeader.poDate;
           this.receiptNo=this.lstReceiptHeader.receiptNo;
           this.receiptDate=this.lstReceiptHeader.receiptDate;
-          this.poRcptBaseAmt=this.lstReceiptHeader.baseAmount.toFixed(2);
-          this.poRcptTaxAmt=this.lstReceiptHeader.totalTax.toFixed(2);
-          this.PoRctTotalAmt=this.lstReceiptHeader.totalAmt.toFixed(2);
+
+          if(this.lstReceiptHeader.baseAmount !=null){
+            this.poRcptBaseAmt=this.lstReceiptHeader.baseAmount.toFixed(2);
+          }
+          if(this.lstReceiptHeader.totalTax !=null){
+            this.poRcptTaxAmt=this.lstReceiptHeader.totalTax.toFixed(2);
+          }
+          if(this.lstReceiptHeader.totalAmt !=null){
+           this.PoRctTotalAmt=this.lstReceiptHeader.totalAmt.toFixed(2);
+          }
+
           this.suppNo=this.lstReceiptHeader.suppNo;
           this.suppInvNo=this.lstReceiptHeader.suppInvNo;
           this.suppInvDate=this.lstReceiptHeader.suppInvDate;
@@ -362,8 +370,8 @@ export class ShortLandedGrrComponent implements OnInit {
         } 
         
         else{
-          (document.getElementById('findBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
-           this.message = "PO Reeceipt Number : "+mRcptNumber +" Not Found in this Location\nOr Return process already done for this Receipt No."
+          (document.getElementById('findBtn')as HTMLInputElement).setAttribute('data-target','#confirmAlert');
+           this.message="PO Reeceipt Number : "+mRcptNumber +" Not Found in this Location\nOr Return process already done for this Receipt No."
            return;
           
           this.headerFound=false;
