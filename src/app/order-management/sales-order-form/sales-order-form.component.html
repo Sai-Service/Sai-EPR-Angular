@@ -23,6 +23,52 @@
                     (click)="OrderFind(orderNumber)"><i class="fa fa-search" aria-hidden="true"></i></button>
             </td>
         </tr>
+       
+    </table>
+    <table class="center" style="width: 30%;background-color: #FFE4B5;">
+        <div *ngIf="isVisibledeptAndLocation; then thenaccountParameter; else elseaccountParameter"></div>
+        <ng-template #thenaccountParameter>
+        <tr  style="background-color: #FFE4B5;">
+            <td style="width: 15%;background-color: #FFE4B5;" class="LabelFontStyle">
+                &nbsp;Location&nbsp;Code&nbsp;:&nbsp;
+            </td>
+            <td style="background-color: #FFE4B5;">
+                <select formControlName="locCode" id="locCode" class="form-control"
+                (ngModelChange)='onOptionsLocation($event)'>
+                <option>--Select--</option>
+                <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
+                    {{sc.locCode}}
+                </option>
+            </select>
+            <input  disabled hidden type="number" class="form-control" formControlName="locId">
+            </td>
+            <td style="background-color: #FFE4B5;width: 15%" class="LabelFontStyle" >
+                &nbsp;Department&nbsp;List&nbsp;:&nbsp;
+            </td>
+            <td style="background-color: #FFE4B5;">
+                  <select formControlName="deptId" id="deptId" class="form-control">
+                <option>--Select--</option>
+                <option *ngFor="let sc of  DepartmentList" [value]="sc.cmnTypeId">
+                    {{sc.code}}
+                </option>
+            </select>
+            </td>
+        </tr>
+        </ng-template>
+        <ng-template #elseaccountParameter></ng-template>
+        <tr style="background-color: #FFE4B5;">
+            <td style="width: 15%;background-color: #FFE4B5;" class="LabelFontStyle">
+                CDMS&nbsp;Ref&nbsp;Numbe&nbsp;:&nbsp;
+            </td>
+            <td style="background-color: #FFE4B5;">
+                <input class="form-control" formControlName="msRefNo" [(ngModel)]='msRefNo'
+                    value={{msRefNo}}>
+            </td>
+            <td style="background-color: #FFE4B5;">
+                <button type="button" class="btn-primary" [disabled]="isDisabledOrderFind"
+                    (click)="OrdermsRefNoFind(msRefNo)"><i class="fa fa-search" aria-hidden="true"></i></button>
+            </td>
+        </tr>
     </table>
     <div class="center" style="width: 100%;">
         <div class="form-bg">

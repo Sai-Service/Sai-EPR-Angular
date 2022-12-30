@@ -853,6 +853,9 @@ export class ARInvoiceComponent implements OnInit {
               data1 => {
                 this.accountNoSearch = data1.obj[0];
                 this.accountNoSite = data1.obj;
+                // 12510--------6029
+                console.log(data1.obj);
+                
                 console.log(this.accountNoSearch);
                 let selectedValue = this.paymentTermList.find(v => v.lookupValue === this.accountNoSearch.paymentType);
                 this.arInvoiceForm.patchValue({
@@ -879,10 +882,13 @@ export class ARInvoiceComponent implements OnInit {
                   //   }
                   // }
                     // debugger;
+                    // alert('-------'+ data.obj.billToCustNo)
                   if (data.obj.billToCustNo != undefined || data.obj.billToCustNo != null) {
+                    // alert(this.accountNoSearch.billToLocId+'--------'+ data.obj.billToSiteId)
                     if (this.accountNoSearch.billToLocId === data.obj.billToSiteId) {
                       // this.onOptionsSelectedcustSiteName(this.accountNoSite[i].siteName);
                       this.custTax = this.accountNoSite[i].taxCategoryName;
+                      // alert(this.custTax)
                     }
                   }
                 } 
@@ -990,7 +996,7 @@ export class ARInvoiceComponent implements OnInit {
               var patch = this.arInvoiceForm.get('invLines') as FormArray;
               var taxPerln = data.obj.invLines[i].taxCategoryName.gstPercentage;
 
-              alert(this.custTax);
+              // alert(this.custTax);
               
               this.orderManagementService.getTaxCategoriesForSales(this.custTax, taxPerln)
                 .subscribe(

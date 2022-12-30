@@ -1461,7 +1461,7 @@ export class MasterService {
     const option = {
       headers: this.headers
     };
-    const url = this.ServerUrl + `/arInv/invComplete/${invoiceno}`;
+    const url = this.ServerUrl + `/arInv/invComplete?invNum=${invoiceno}`;
     return this.http.put(url, option);
   }
 
@@ -2108,8 +2108,11 @@ export class MasterService {
   tdsTaxCategoryList(): Observable<any> {
     // return this.http.get(this.ServerUrl +'/JaiTaxCatg');
     return this.http.get(this.ServerUrl + '/JaiTaxCatg/taxCate/TDS');
+  }
 
-
+  tdsTaxCategoryList1(): Observable<any> {
+    // return this.http.get(this.ServerUrl +'/JaiTaxCatg');
+    return this.http.get(this.ServerUrl + '/JaiTaxCatg/taxCate/TDS');
   }
 
 
@@ -2897,6 +2900,17 @@ public shortLandedClaimSave(rtvRecord) {
     // http://localhost:8081/fileImport/uploadbkord
   }
   ////////////////////////////// Back order File upload /////////
+
+
+
+  orderCancellationUpload(formData: FormData, emplId,receiptMethodName) {
+    // alert ("Org Id :"+mouId + "  BankAccountId :"+bnkAcccountId);
+    let headers1 = new HttpHeaders();
+    formData.append('emplId', emplId);
+    formData.append('bankAc', receiptMethodName);
+    return this.http.post(this.ServerUrl + `/Proforma/cancel/bookings`, formData)
+    // http://localhost:8081/fileImport/uploadBankStmt/
+  }
 
   public orderGenBajaj(ordeGenRecord, mLocId, mths, dlrCd, plHd, ordNum) {
     // alert (  "MS>> Loc Id :" +mLocId + " ," +mths);

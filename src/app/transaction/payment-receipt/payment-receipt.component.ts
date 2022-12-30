@@ -86,7 +86,7 @@ export class PaymentReceiptComponent implements OnInit {
   checkDate: Date;
   cancelDate = null;
 
-  comment: string
+  comments: string
 
   searchBy: string
   searchValue: string;
@@ -147,7 +147,7 @@ export class PaymentReceiptComponent implements OnInit {
       searchValue: [],
       searchBy: [],
       balancePay: [],
-      comment: ['', [Validators.required]],
+      comments: ['', [Validators.required]],
       cancelReason: [],
       cancelDate: [],
       custGst: [],
@@ -395,6 +395,7 @@ export class PaymentReceiptComponent implements OnInit {
     if (select) {
       this.paymentReceiptForm.patchValue(select);
       this.receiptNumber = select.receiptNumber;
+      this.comments=select.comments;
       // alert(select.receiptMethodName);
       // let recValue =this.ReceiptMethodList.find(d => d.methodName === select.receiptMethodName);
       // console.log(recValue);

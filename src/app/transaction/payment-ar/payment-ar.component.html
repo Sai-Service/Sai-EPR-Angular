@@ -169,26 +169,28 @@
                         <div *ngIf="fromJc ,then jc1; else jc2")></div>
                         <ng-template #jc1>
                             <td>
-                            <input disabled type="text" autofocus   formControlName="vehNo" [(ngModel)]="vehNo" (change)="serchByRegNo(vehNo)"
+                            <!-- <input disabled type="text" autofocus   formControlName="vehNo" [(ngModel)]="vehNo" (change)="serchByRegNo(vehNo)"
                                 (keyup)="getUserIdsFirstWay($event)"  id="userIdFirstWay"  list="dynmicUserIds" class="form-control" />
                                 <datalist id="dynmicUserIds">
                                     <option *ngFor="let item of VehRegNoList" [ngValue]="item.regNo">
                                         {{item.regNo}}
                                     </option>
-                                </datalist>
-
+                                </datalist> -->
+                                <input disabled type="text" autofocus   formControlName="vehNo" [(ngModel)]="vehNo" (change)="serchByRegNo(vehNo)"
+                                 class="form-control" />
                             </td> 
                         </ng-template>
                         <ng-template #jc2>
                             <td>
-                            <input type="text" autofocus   formControlName="vehNo" [(ngModel)]="vehNo" (change)="serchByRegNo(vehNo)"
+                            <!-- <input type="text" autofocus   formControlName="vehNo" [(ngModel)]="vehNo" (change)="serchByRegNo(vehNo)"
                                 (keyup)="getUserIdsFirstWay($event)"  id="userIdFirstWay"  list="dynmicUserIds" class="form-control" />
                                 <datalist id="dynmicUserIds">
                                     <option *ngFor="let item of VehRegNoList" [ngValue]="item.regNo">
                                         {{item.regNo}}
                                     </option>
-                                </datalist>
-
+                                </datalist> -->
+                                <input type="text" autofocus   formControlName="vehNo" [(ngModel)]="vehNo" (change)="serchByRegNo(vehNo)"
+                                class="form-control" />
                             </td> 
                         </ng-template>
 

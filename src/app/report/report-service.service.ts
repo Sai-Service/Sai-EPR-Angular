@@ -869,6 +869,14 @@ gstSaleRegisterReport(fromDate,toDate,ouId,locId){
     headers: this.headers,
   });
 }
+empLedgerControlReport(toDate,ouId){
+  const REQUEST_URI = this.ServerUrl +`/AccountsReports/EmplLedgerControl?toDate=${toDate}&ouId=${ouId}`;
+  return this.http.get(REQUEST_URI, {
+    // params: REQUEST_PARAMS,
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
+}
 
 laborChargeSummary(fromDate,toDate,ouId,locId){
   const REQUEST_URI = this.ServerUrl +`/ServiceReports/LabSummaryRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}`;

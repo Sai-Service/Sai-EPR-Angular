@@ -419,9 +419,9 @@ export class SupplierMasterComponent implements OnInit {
   }
   currentAcctTyp: string;
   openCodeCombination(accountType: string) {
-    alert(accountType);
+    // alert(accountType);
     let SegmentName1 = this.supplierMasterForm.get(accountType).value;
-    alert(SegmentName1); 
+    // alert(SegmentName1); 
     this.currentAcctTyp = accountType;
     if (SegmentName1 === null) {
       this.supplierMasterForm.get('segment11').reset();
@@ -463,7 +463,7 @@ export class SupplierMasterComponent implements OnInit {
         data => {
 
           this.segmentNameList = data.obj;
-          alert(this.currentAcctTyp+'type')
+          // alert(this.currentAcctTyp+'type')
           if (data.code === 200) {
             // this.AccountEnquiryForm.patchValue({codeCombinationId:this.segmentNameList.obj.codeCombinationId});
             if (data.obj.length == 0) {
@@ -961,7 +961,7 @@ export class SupplierMasterComponent implements OnInit {
         screateDebitMemoFlag: select.createDebitMemoFlag
       });
       // ticketNo not in  json
-      alert("---" + select.prepayCodeCombId);
+      // alert("---" + select.prepayCodeCombId);
       // this.displayButton = false;
       // this.displaysite=true;
       // this

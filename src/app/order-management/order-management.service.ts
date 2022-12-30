@@ -22,6 +22,10 @@ export class OrderManagementService {
     return this.http.get(this.ServerUrl + `/orderHeader/${orderNumber}`);
   }
 
+  getsearchBymsRefNo(deptId,locId,msRefNo): Observable<any> {
+    return this.http.get(this.ServerUrl + `/orderHeader/${deptId}/${locId}/${msRefNo}`);
+  }
+
   getsearchByOrderNoToUpdate(orderNumber): Observable<any> {
     return this.http.get(this.ServerUrl + `/orderHeader/OrderToUpdate/${orderNumber}`);
     // http://localhost:8081/orderHeader/OrderToUpdate/222220910400113
