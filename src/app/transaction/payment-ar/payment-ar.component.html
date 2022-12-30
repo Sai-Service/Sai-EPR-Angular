@@ -1089,6 +1089,9 @@
                                         <td> 
                                             <table>
                                             <tr>
+
+                                        <div *ngIf="accountsLogin ,then refundYes; else refundNo")></div>
+                                        <ng-template #refundYes>
                                             <td>
                                             <select  formControlName="applyTo"  id ="applyTo"  [(ngModel)]="applyTo"  class="form-control" (ngModelChange)='OnApplyTypeSelected($event)'  >
                                                 <!-- <option>--Select--</option> -->
@@ -1097,12 +1100,23 @@
                                                 <option value="REFUND">REFUND</option>
                                             </select>
                                             </td>
-                                              
+                                        </ng-template>
+
+                                        <ng-template #refundNo>
                                             <td>
-                                                <button style="width: 8em;" type="button" class="btn btn-info" (click)="SearchInvoices(custAccountNo,billToSiteId,applyTo,receiptNumber)"  >Run</button>
+                                            <select  formControlName="applyTo"  id ="applyTo"  [(ngModel)]="applyTo"  class="form-control" (ngModelChange)='OnApplyTypeSelected($event)'  >
+                                                <!-- <option>--Select--</option> -->
+                                                <option value="INVOICE">INVOICE</option>
+                                                <!-- <option value="ON ACCOUNT">ON ACCOUNT</option> -->
+                                                <!-- <option value="REFUND">REFUND</option> -->
+                                            </select>
                                             </td>
-                                            </tr>    
-                                            </table>
+                                        </ng-template>
+                                        <td>
+                                            <button style="width: 8em;" type="button" class="btn btn-info" (click)="SearchInvoices(custAccountNo,billToSiteId,applyTo,receiptNumber)"  >Run</button>
+                                        </td>
+                                        </tr>    
+                                        </table>
                                        
                                         </td>
                                     
