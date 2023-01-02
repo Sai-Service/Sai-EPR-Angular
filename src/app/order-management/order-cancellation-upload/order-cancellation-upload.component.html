@@ -24,7 +24,8 @@
                                         {{sc.methodName}} 
                                     </option>
                                 </select> -->
-                                <select  formControlName="receiptMethodName" [(ngModel)]='receiptMethodName' value={{receiptMethodName}} (ngModelChange)='onmethodNameSelected($event)'  class="form-control">
+                                <select  formControlName="receiptMethodName" [(ngModel)]='receiptMethodName' value={{receiptMethodName}}   class="form-control">
+                                    <!-- (ngModelChange)='onmethodNameSelected($event)' -->
                                     <option>--Select--</option>
                                     <option value="RTGS/NEFT"></option>
                                 </select>
