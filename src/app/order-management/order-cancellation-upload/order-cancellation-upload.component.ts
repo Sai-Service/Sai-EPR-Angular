@@ -42,6 +42,7 @@ export class OrderCancellationUploadComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // alert('Hiii')
     this.orderManagementService.PaymentModeList()
     .subscribe(
       data => {
