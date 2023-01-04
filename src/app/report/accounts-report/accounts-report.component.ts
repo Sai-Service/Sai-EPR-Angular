@@ -907,7 +907,27 @@ reportName:string;
     this.isVisiblepanelfromtolocation=false;
     this.panelTodateAndOU=true;
   }
-
+  else if (reportName=='shortLandedClaim'){
+    this.reportName='Short Landed Claim Report';
+    this.isVisibleGSTPurchaseRegister=true;
+    this.isVisibleGSTSaleRegister=false;
+    this.isVisibleSparesdebtors=false;
+    this.isVisibleLocation=false;
+    this.isVisibleLocation1=false;
+    this.isVisiblepanelaccountName=false;
+    this.isVisiblepanelcashName=false;
+    this.isVisiblespInvAgging=false;
+    this.isVisiblepanelgltrialBalance=false;
+    this.panelCashBank=false;
+    this.isVisiblepanelAPGLUnpainAging=false;
+    this.isVisiblepanelprePayment=false;
+    this.ispanelTolocationOu=false;
+    this.isVisibleVendorLedgerReport=false;
+    this.isVisiblecustomerLedger=false;
+    this.isVisiblegstsaiDebtors=false;
+    this.isVisiblepanelfromtolocation=false;
+    this.panelTodateAndOU=false;
+  }
   }
 
 
@@ -1469,7 +1489,8 @@ reportName:string;
             this.isDisabled1=false;
           })
        }
-       else if (reportName ==='Account Distribution Material Distrubution Report'){
+       else if (reportName ==='Account Distribution Material Distrubution Report')
+       {
         const fileName = 'Account Dist Mat Reg Register-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
         const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
         this.reportService.actMatDistReport(fromDate,toDate,sessionStorage.getItem('ouId'))
@@ -1480,7 +1501,18 @@ reportName:string;
             this.isDisabled1=false;
           })     
        }
-
+       else if (reportName ==='Short Landed Claim Report')
+       {
+        const fileName = 'Short Landed Claim Report' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+        const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+        this.reportService.shortLandedClaimReport(fromDate,toDate,sessionStorage.getItem('ouId'),locId,deptId)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+            this.isDisabled1=false;
+          })     
+       }
   }
 
 

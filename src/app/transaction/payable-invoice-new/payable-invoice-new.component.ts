@@ -105,6 +105,7 @@ export class PayableInvoiceNewComponent implements OnInit {
   locId: number;
   locCode: string;
   source: string;
+  taxAmount:number;
   tdsTotAmt:number;
   tdsBasicAmt:number;
   tottdsAmt:number;
@@ -1133,6 +1134,7 @@ export class PayableInvoiceNewComponent implements OnInit {
             var glDateNew1 = (res.obj[i].glDate)
             var glDateNew = this.pipe.transform(glDateNew1, 'y-MM-dd');
             var invoiceDateNew = this.pipe.transform(res.obj[i].invoiceDate, 'y-MM-dd');
+            var invoiceAmt1 = Math.abs(res.obj[i].nvoiceAmt)
             this.isVisibleinvoiceDateText = false;
             this.isVisibleinvoiceDateDate = true;
             // this.invoiceDate = invoiceDateNew;
@@ -1140,6 +1142,7 @@ export class PayableInvoiceNewComponent implements OnInit {
             patch.controls[i].patchValue({ payGroup: res.obj[i].payGroup })
             patch.controls[i].patchValue({ invoiceDate: invoiceDateNew })
             patch.controls[i].patchValue({ glDate: glDateNew })
+            // patch.controls[i].patchValue({invoiceAmt:invoiceAmt1})
             if (res.obj[i].paymentMethod === undefined || res.obj[i].paymentMethod === null) {
               (patch.controls[i]).patchValue(
                 {
@@ -1284,6 +1287,7 @@ export class PayableInvoiceNewComponent implements OnInit {
     this.invLineDetailsArray().clear();
 
     if (source === 'REFUND') {
+      // alert('---If Part----')
       this.transactionService.getApInvLineDetails(invoiceNum)
         .subscribe(
           data => {
@@ -1399,8 +1403,8 @@ export class PayableInvoiceNewComponent implements OnInit {
               (tdscontroltax.controls[i]).patchValue({ taxTypeName: data.invTdsLines[i].taxType });
               (tdscontroltax.controls[i]).patchValue({ precedence1: data.invTdsLines[i].precedence1 });
               // (tdscontrolInv.controls[i]).patchValue({ totTaxPer: data.invDisLines[i].description });
-              (tdscontroltax.controls[i]).patchValue({ totTaxAmt: data.invTdsLines[i].taxAmount });
-
+              (tdscontroltax.controls[i]).patchValue({ totTaxAmt: Math.abs(data.invTdsLines[i].taxAmount) });
+              (tdscontroltax.controls[i]).patchValue({ taxAmount: Math.abs(data.invTdsLines[i].taxAmount) });
             }
             // ;
             for (let j = 0; j < data.invDisLines.length; j++) {
@@ -1541,9 +1545,11 @@ export class PayableInvoiceNewComponent implements OnInit {
             this.displayitemName = true;
             this.displayTaxCategory = false;
             if (data.invTdsLines.length === 0) {
+              // alert(data.invTdsLines.length+'------lenght zero')
               this.isVisibleSaveTDS = true;
             }
             else if (data.invTdsLines.length != 0) {
+              // alert(data.invTdsLines.length+'------lenght not zero')
               this.isVisibleSaveTDS = false;
               this.TdsDetailsArray().disable();
               this.tdsTaxDetailsArray().disable()
@@ -1629,32 +1635,39 @@ export class PayableInvoiceNewComponent implements OnInit {
             // alert(arraybaseNew1[this.selectedLine].payGroup)
             let j = 0;
             // alert(data.invTdsLines.length)
+            // debugger;
             if (data.invTdsLines.length != 0) {
               for (let i = 0; i < data.invDisLines.length; i++) {
                 var description = data.invDisLines[i].description.toUpperCase();
                 if (data.invDisLines[i].lineTypeLookupCode != 'MISCELLANEOUS' || data.invDisLines[i].description.includes('Adhoc Disc')&& description.includes('ROUNDING') == false) {
-                  // alert(invId+'----'+ data.invDisLines[i].description);
+                 
                   (tdscontrolInv.controls[j]).patchValue({ invoiceId: invId });
                   (tdscontrolInv.controls[j]).patchValue({ invoiceLineNum: data.invDisLines[i].invoiceLineNum });
                   (tdscontrolInv.controls[j]).patchValue({ invoiceDistId: data.invDisLines[i].invDistributionId });
                   (tdscontrolInv.controls[j]).patchValue({ distCodeCombSeg: data.invDisLines[i].distCodeCombSeg });
-                  (tdscontrolInv.controls[j]).patchValue({ baseAmount: data.invDisLines[i].baseAmount });
+                  (tdscontrolInv.controls[j]).patchValue({ baseAmount: Math.abs(data.invDisLines[i].baseAmount) });
                   (tdscontrolInv.controls[j]).patchValue({ description: data.invDisLines[i].description });
+                  // debugger;
+                  // (tdscontrolInv.controls[j]).patchValue({ taxAmount: Math.abs(data.invTdsLines[i].taxAmount) });
                   (tdscontrolInv.controls[j].patchValue({actualSectionCode: arraybaseNew1[this.selectedLine].payGroup}))
                   j = j + 1;     
                   this.TdsDetailsArray().disable();
+                  
                 }
               }
             }
             let tdscontroltax = this.poInvoiceForm.get('tdsTaxLines') as FormArray;
-            for (let i = 0; i < data.invTdsLines.length; i++) {
+
+            for (let i = 0; i < data.invTdsLines.length; i++) {  
               (tdscontroltax.controls[i]).patchValue({ lineNumber: data.invTdsLines[i].distLineNumber });
               // (tdscontrolInv.controls[i]).patchValue({ taxRateName: data.invDisLines[i].invDistributionId });
               (tdscontroltax.controls[i]).patchValue({ taxTypeName: data.invTdsLines[i].taxType });
               (tdscontroltax.controls[i]).patchValue({ precedence1: data.invTdsLines[i].precedence1 });
               // (tdscontrolInv.controls[i]).patchValue({ totTaxPer: data.invDisLines[i].description });
-              (tdscontroltax.controls[i]).patchValue({ totTaxAmt: data.invTdsLines[i].taxAmount });
-
+              (tdscontroltax.controls[i]).patchValue({ totTaxAmt: Math.abs(data.invTdsLines[i].taxAmount) });
+              (tdscontroltax.controls[i]).patchValue({ taxAmount: Math.abs(data.invTdsLines[i].taxAmount) });
+            // alert(Math.abs(data.invTdsLines[i].taxAmount))
+            // alert('taxAmt----****'+ Math.abs(data.invTdsLines[i].taxAmount))
             }
             // ;
             for (let j = 0; j < data.invDisLines.length; j++) {
@@ -2405,7 +2418,7 @@ export class PayableInvoiceNewComponent implements OnInit {
             console.log(this.lstInvLineDeatails1);
             for (let i = 0; i < this.lstInvLineDeatails1.taxLines.length; i++) {
               if (this.lstInvLineDeatails1.taxLines[i].totTaxPer != 0) {
-                sum = sum + this.lstInvLineDeatails1.taxLines[i].totTaxAmt;
+                sum = sum + Math.abs(this.lstInvLineDeatails1.taxLines[i].totTaxAmt);
               }
 
             }
@@ -2588,7 +2601,7 @@ export class PayableInvoiceNewComponent implements OnInit {
     var patchheaderArray = this.poInvoiceForm.get('obj').value;
     var invAmt = patchheaderArray[0].invoiceAmt;
     var patch = this.poInvoiceForm.get('obj') as FormArray;
-    (patch.controls[0]).patchValue({ invoiceAmt: (basicAmt + taxAmt1).toFixed(2) });
+    (patch.controls[0]).patchValue({ invoiceAmt: Math.abs(basicAmt + taxAmt1).toFixed(2) });
     (patch.controls[0]).patchValue({ taxAmt: (taxAmt1).toFixed(2) });
   }
 
@@ -2775,7 +2788,7 @@ export class PayableInvoiceNewComponent implements OnInit {
       console.log('in patch' + taxCalforItem);
       console.log(x.taxRateName);
       control.push(this.fb.group({
-        totTaxAmt: x.totTaxAmt,
+        totTaxAmt: Math.abs(x.totTaxAmt),
         lineNumber: x.lineNumber,
         taxRateName: x.taxRateName,
         taxTypeName: x.taxTypeName,
@@ -3169,7 +3182,7 @@ export class PayableInvoiceNewComponent implements OnInit {
       }
       else {
         if (desc1.includes('Adhoc Disc') || desc1.includes('Subsidy')) {
-          alert(arrayControl1[i].amount)
+          // alert(arrayControl1[i].amount)
           totalOfInvLineAmout = Math.round(((totalOfInvLineAmout - arrayControl1[i].amount) + Number.EPSILON) * 100) / 100;
         } else {
           totalOfInvLineAmout = Math.round(((totalOfInvLineAmout + arrayControl1[i].amount) + Number.EPSILON) * 100) / 100;
@@ -3301,9 +3314,9 @@ export class PayableInvoiceNewComponent implements OnInit {
             this.tdsTaxDetailsArray().push(tdsTaxLnGrp);
             this.poInvoiceForm.get('tdsTaxLines').patchValue(this.lstTdsTaxLineDetails);
             var tdsTaxArr = this.poInvoiceForm.get('tdsTaxLines').value;
-            var tdsTaxAmt1 = tdsTaxArr[0].totTaxAmt;
+            var tdsTaxAmt1 = Math.abs(tdsTaxArr[0].totTaxAmt);
             var patch = this.poInvoiceForm.get('tdsLines') as FormArray;
-            patch.controls[j].patchValue({ taxAmount: tdsTaxAmt1 })
+            patch.controls[j].patchValue({ taxAmount: Math.abs(tdsTaxAmt1) })
             this.updateTDSTotAmtPerline1()
           }
         );
@@ -3312,7 +3325,7 @@ export class PayableInvoiceNewComponent implements OnInit {
 
 
     updateTDSTotAmtPerline1() {
-      // alert(lineIndex);
+      // alert('lineIndex');
       var formArr = this.poInvoiceForm.get('tdsLines') as FormArray;
       var formVal = formArr.getRawValue();
       console.log(formVal);
@@ -3328,7 +3341,6 @@ export class PayableInvoiceNewComponent implements OnInit {
             disAmt = disAmt + Number(formVal[i].baseAmount);
           }
         }
-    
         else {
           if (formVal[i].baseAmount == undefined || formVal[i].baseAmount == null || formVal[i].baseAmount == '') {
   
@@ -3338,12 +3350,13 @@ export class PayableInvoiceNewComponent implements OnInit {
           }
         }
       }
+      // *********************tds discount**************
+      // debugger;
       for (let k = 0; k < formVal.length; k++) {
         if (formVal[k].description.includes('Adhoc Disc')) {
           if (formVal[k].taxAmount == undefined || formVal[k].taxAmount == null || formVal[k].taxAmount == '') {
           } else {
-            disctaxAmount = disctaxAmount + Number(formVal[k].taxAmount);
-            // alert('***disctaxAmount***'+disctaxAmount)
+            disctaxAmount = disctaxAmount +(formVal[k].taxAmount);
           }
         }
         else if ((formVal[k].description.includes('Adhoc Disc'))==false) {
@@ -3355,27 +3368,26 @@ export class PayableInvoiceNewComponent implements OnInit {
           }
         }
       }
-      // alert(taxAmt1);
+      // alert(disctaxAmount+'disctaxAmount'+'*******taxAmount'+taxAmount);
      
       var headerArray = this.poInvoiceForm.get('obj').value;
-      var invAmt = headerArray[0].invoiceAmt;
+     
       // alert(disAmt+'---discAmt'+totAmt+'----totAmt')
-
      var disAmt1 = Math.round(((disAmt) + Number.EPSILON) * 100) / 100;
-      this.poInvoiceForm.patchValue({tdsTotDiscAmt:disAmt1});
+      this.poInvoiceForm.patchValue({tdsTotDiscAmt:(disAmt1)});
       var totAmt1 = Math.round(((totAmt) + Number.EPSILON) * 100) / 100;
       this.poInvoiceForm.patchValue({tdsBasicAmt:totAmt1});
      var tdsTotAmt1=(totAmt1-disAmt1);
      var tdsTotAmt2 = Math.round(((tdsTotAmt1) + Number.EPSILON) * 100) / 100;
       this.poInvoiceForm.patchValue({tdsTotAmt:tdsTotAmt2});
-      var taxAmount1 = Math.round(((taxAmount) + Number.EPSILON) * 100) / 100;
-
-      var disctaxAmount1 = Math.round(((disctaxAmount) + Number.EPSILON) * 100) / 100;
+      var taxAmount1 = Math.round(((taxAmount) + Number.EPSILON) * 100) / 100
+      var disctaxAmount1 = ((Math.round(((disctaxAmount) + Number.EPSILON) * 100) / 100));
       // alert('taxAmount1TDS---'+taxAmount1+'---disctaxAmount1TDS---***'+disctaxAmount1)
-      var tottdsAmt1= (taxAmount1-disctaxAmount1)
+      var disctaxAmount2 = Math.abs(disctaxAmount1)
+      // alert(disctaxAmount2+'disctaxAmount2*')
+      var tottdsAmt1= (taxAmount1-disctaxAmount2)
       var tottdsAmt2 = Math.round(((tottdsAmt1) + Number.EPSILON) * 100) / 100;
-      // alert(tottdsAmt2)
-      this.poInvoiceForm.patchValue({tottdsAmt:tottdsAmt2})
+      this.poInvoiceForm.patchValue({tottdsAmt:Math.abs(tottdsAmt2)})
     }
 
 
@@ -3458,7 +3470,7 @@ export class PayableInvoiceNewComponent implements OnInit {
     // alert('addrow index '+i);
     this.tdsLineValidation = true;
     var tdsLineArr1 = this.poInvoiceForm.get('tdsLines').value;
-    var tdsTaxAmt = tdsLineArr1[i].taxAmount;
+    var tdsTaxAmt = Math.abs(tdsLineArr1[i].taxAmount);
     var taxCatId = tdsLineArr1[i].taxCategoryId;
     var tdsSectionCd = tdsLineArr1[i].actualSectionCode;
 
@@ -3715,9 +3727,9 @@ export class PayableInvoiceNewComponent implements OnInit {
           this.tdsTaxDetailsArray().push(tdsTaxLnGrp);
           this.poInvoiceForm.get('tdsTaxLines').patchValue(this.lstTdsTaxLineDetails);
           var tdsTaxArr = this.poInvoiceForm.get('tdsTaxLines').value;
-          var tdsTaxAmt1 = tdsTaxArr[0].totTaxAmt;
+          var tdsTaxAmt1 = Math.abs(tdsTaxArr[0].totTaxAmt);
           var patch = this.poInvoiceForm.get('tdsLines') as FormArray;
-          patch.controls[j].patchValue({ taxAmount: tdsTaxAmt1 })
+          patch.controls[j].patchValue({ taxAmount: Math.abs(tdsTaxAmt1) })
 
         }
       );
@@ -3941,6 +3953,23 @@ export class PayableInvoiceNewComponent implements OnInit {
               this.lineDetailsArray().controls[i].get('ouName').disable();
               this.lineDetailsArray().controls[i].get('invoiceAmt').enable();
               this.lineDetailsArray().controls[i].get('taxAmt').enable();
+            }
+            if (res.obj[i].invoiceStatus.includes('Validated')) {
+              this.lineDetailsArray().controls[i].get('locationId').disable();
+              this.lineDetailsArray().controls[i].get('invTypeLookupCode').disable();
+              this.lineDetailsArray().controls[i].get('segment1').disable();
+              this.lineDetailsArray().controls[i].get('name').disable();
+              this.lineDetailsArray().controls[i].get('suppNo').disable();
+              this.lineDetailsArray().controls[i].get('siteName').disable();
+              this.lineDetailsArray().controls[i].get('invoiceDate').disable();
+              this.lineDetailsArray().controls[i].get('invoiceNum').disable();
+              this.lineDetailsArray().controls[i].get('internalSeqNum').disable();
+              this.lineDetailsArray().controls[i].get('glDate').disable();
+              this.lineDetailsArray().controls[i].get('currency').disable();
+              this.lineDetailsArray().controls[i].get('paymentRateDate').disable();
+              this.lineDetailsArray().controls[i].get('ouName').disable();
+              this.lineDetailsArray().controls[i].get('invoiceAmt').disable();
+              this.lineDetailsArray().controls[i].get('taxAmt').disable();
             }
             // alert(res.obj[i].segment1)
             if (res.obj[i].segment1 != null) {

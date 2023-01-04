@@ -7,28 +7,22 @@
                 <td style="width: 15%" class="LabelFontStyle">Payment&nbsp;Mode:&nbsp;</td>
 
                             <td>  
-                                <select formControlName="payType" id="payType" [(ngModel)]="payType" class="form-control" (change)='onPayTypeSelected($event,"Active")' >
+                                <select  formControlName="payType" [(ngModel)]='payType' value={{payType}} (change)='onPayTypeSelected($event,"Active")'   class="form-control">
                                     <option>--Select--</option>
-                                    <option *ngFor="let sc of  PaymentModeList" [value]="sc.lookupValue"  >
-                                        {{sc.lookupValue}} 
-                                    </option>
+                                    <option value="RTGS/NEFT">RTGS/NEFT</option>
                                 </select>
                             </td>
 
                             <td style="width: 15%" class="LabelFontStyle">Payment&nbsp;Method:&nbsp;</td>
                             <td>  
                                 
-                                <!-- <select  formControlName="receiptMethodName" [(ngModel)]='receiptMethodName' value={{receiptMethodName}} (ngModelChange)='onmethodNameSelected($event)'  class="form-control">
+                                <select  formControlName="receiptMethodName" [(ngModel)]='receiptMethodName' value={{receiptMethodName}}   class="form-control">
                                     <option>--Select--</option>
                                     <option *ngFor="let sc of  ReceiptMethodList ">
                                         {{sc.methodName}} 
                                     </option>
-                                </select> -->
-                                <select  formControlName="receiptMethodName" [(ngModel)]='receiptMethodName' value={{receiptMethodName}}   class="form-control">
-                                    <!-- (ngModelChange)='onmethodNameSelected($event)' -->
-                                    <option>--Select--</option>
-                                    <option value="RTGS/NEFT"></option>
                                 </select>
+                               
                                
                             </td>
             </tr>
