@@ -30,6 +30,7 @@ import { SalesOrderProformaChetakComponent } from './sales-order-proforma-chetak
 import { OrderDetailsUpdationComponent } from './order-details-updation/order-details-updation.component';
 import { VehicleAndAddonPriceUploadComponent } from './vehicle-and-addon-price-upload/vehicle-and-addon-price-upload.component';
 import { OrderCancellationUploadComponent } from './order-cancellation-upload/order-cancellation-upload.component';
+// import { SalesSuperUserGatePassComponent } from './sales-super-user-gate-pass/sales-super-user-gate-pass.component';
 
 
 const routes: Routes = [
@@ -66,6 +67,7 @@ const routes: Routes = [
   {path:'OrderDetailsUpdation',component:OrderDetailsUpdationComponent},
   {path:'VehicleAndAddonPriceUpload',component:VehicleAndAddonPriceUploadComponent},
   {path:'orderCancellationUpload',component:OrderCancellationUploadComponent},
+  // {path:'SuperUserGatePass',component:SalesSuperUserGatePassComponent},
   {path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];
 

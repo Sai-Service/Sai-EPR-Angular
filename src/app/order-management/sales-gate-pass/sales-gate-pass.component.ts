@@ -37,10 +37,14 @@ export class SalesGatePassComponent implements OnInit {
   isDisabled2 = true;
   gatepassNo: number;
   dateOfDelv: Date;
-  itemId: number;
+  itemId: number; 
   segment: String;
   regNo: string;
   vin: String;
+  // password:String='Super@2022';
+  // userName:String='SuperUser';
+  password:string;
+  userName:string;
   modelVarClr: String;
   deliveryLoc: String;
   vehicleNo: String;
@@ -110,7 +114,8 @@ export class SalesGatePassComponent implements OnInit {
       salesExeName: [],
       balOutstandAmt: [],
       excessAmt: [],
-
+      userName:[],
+      password:[],
       insType :[],
       policyNo:[],
       insuDate:[],
@@ -480,5 +485,12 @@ export class SalesGatePassComponent implements OnInit {
       alert ("Order Number Seleted :" + ordNumber);
 
     }
-
+    login(){
+      alert(this.userName+'------****'+this.password);
+      // password:String='Super@2022';
+  // userName:String='SuperUser';
+      if (this.userName==='SuperUser'&& this.password==='Super@2022'){
+        alert('Login Successfully..!')
+      }
+    }
 }

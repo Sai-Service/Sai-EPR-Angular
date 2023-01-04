@@ -221,6 +221,56 @@
                         <button type="button" style="width:fit-content ;" [disabled]="isDisabled" class="btn btn-secondary" data-dismiss="modal" (click)="SalesGatePassPost()">Generate&nbsp;Gatepass</button>
 
                     </td>
+                    <!-- <td>
+                       
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="width: fit-content;">
+    Super Usrt Gate Pass
+  </button>
+  
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">User Details</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+         <table class="center">
+            <tr>
+                <td style="font-weight: bold;" class="LabelFontStyle1"> User&nbsp;Name&nbsp;:&nbsp;  </td>
+                    <td><input  class="form-control" formControlName="userName" style="border:solid 1px black" [(ngModel)]="userName"> </td>&nbsp;&nbsp;
+            </tr>
+            <tr>
+                <td style="font-weight: bold;" class="LabelFontStyle1"> Password&nbsp;:&nbsp;  </td>
+                    <td><input  class="form-control" formControlName="password" style="border:solid 1px black" [(ngModel)]="password"> </td>&nbsp;&nbsp;
+            </tr>
+         </table>
+         <table class="center">
+            <tr>
+                <td>
+                    <button type="button" class="btn btn-primary" (click)="login()">Login</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                     <button type="button" style="width:fit-content ;" class="btn btn-secondary" data-dismiss="modal" (click)="orderNumberPost(orderNumber,shipToLoc)">Generate&nbsp;Gatepass</button>
+                    <button type="button" style="width:fit-content ;" [disabled]="isDisabled" class="btn btn-secondary" data-dismiss="modal" (click)="SalesGatePassPost()">Generate&nbsp;Gatepass</button>
+
+                </td>
+            </tr>
+         </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+                    </td> -->
         
                   </tr>
               </table>
