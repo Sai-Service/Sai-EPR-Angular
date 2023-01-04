@@ -83,6 +83,10 @@ export class ShortLandedGrrComponent implements OnInit {
       apInvNum:string;
       apInvDate:Date;
 
+      // baseAmtTotal :number;
+      // taxAmtTotal:number;
+      // NetAmtTotal :number;
+
       poDate:Date;
       suppInvNo:string;
       suppInvDate:Date;
@@ -202,6 +206,10 @@ export class ShortLandedGrrComponent implements OnInit {
       PoRctTotalAmt:[],
       apInvNum:[],
       apInvDate:[],
+
+      // baseAmtTotal:[],
+      // taxAmtTotal:[],
+      // NetAmtTotal :[],
 
       poDate:[],
       suppInvNo:[],
@@ -642,6 +650,10 @@ export class ShortLandedGrrComponent implements OnInit {
               this.taxAmt=Number(tAmt);
               this.totalAmt=Number(nAmt);
               this.debitNoteAmt=Number(nAmt);
+
+              // this.baseAmtTotal=totBaseAmt
+              // this.taxAmtTotal=totTaxAmt
+              // this.NetAmtTotal=netTotalAmt
       }
 
 
@@ -714,6 +726,8 @@ export class ShortLandedGrrComponent implements OnInit {
                 this.taxAmt=Number(tAmt);
                 this.totalAmt=Number(nAmt);
                 this.debitNoteAmt=Number(nAmt);
+
+
       }
 
       findPoReceiptItem(index){
