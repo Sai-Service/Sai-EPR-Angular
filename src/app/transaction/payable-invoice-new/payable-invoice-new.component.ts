@@ -3131,12 +3131,14 @@ export class PayableInvoiceNewComponent implements OnInit {
         totalOfInvLineAmout = Math.round(((arrayControl1[i].amount) + Number.EPSILON) * 100) / 100;
       }
       else {
-        if (desc1.includes('Adhoc Disc')) {
+        if (desc1.includes('Adhoc Disc') || desc1.includes('Subsidy')) {
+          alert(arrayControl1[i].amount)
           totalOfInvLineAmout = Math.round(((totalOfInvLineAmout - arrayControl1[i].amount) + Number.EPSILON) * 100) / 100;
         } else {
           totalOfInvLineAmout = Math.round(((totalOfInvLineAmout + arrayControl1[i].amount) + Number.EPSILON) * 100) / 100;
         }
       }
+      
     }
     var totalOfDistributionAmout: number = 0;
     // ;
@@ -3147,7 +3149,7 @@ export class PayableInvoiceNewComponent implements OnInit {
 
       }
       else {
-        if (desc1.includes('Adhoc Disc')) {
+        if (desc1.includes('Adhoc Disc')|| desc1.includes('Subsidy')) {
           totalOfDistributionAmout = Math.round(((totalOfDistributionAmout - Number(arrayCaontrolOfDistribution[j].amount)) + Number.EPSILON) * 100) / 100;
         } else {
           totalOfDistributionAmout = Math.round(((totalOfDistributionAmout + Number(arrayCaontrolOfDistribution[j].amount)) + Number.EPSILON) * 100) / 100;
