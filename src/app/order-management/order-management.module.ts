@@ -31,6 +31,8 @@ import { ReserveQtyClearComponent } from './reserve-qty-clear/reserve-qty-clear.
 import { SalesOrderProformaChetakComponent } from './sales-order-proforma-chetak/sales-order-proforma-chetak.component';
 import { OrderDetailsUpdationComponent } from './order-details-updation/order-details-updation.component';
 import { VehicleAndAddonPriceUploadComponent } from './vehicle-and-addon-price-upload/vehicle-and-addon-price-upload.component';
+import { OrderCancellationUploadComponent } from './order-cancellation-upload/order-cancellation-upload.component';
+// import { SalesSuperUserGatePassComponent } from './sales-super-user-gate-pass/sales-super-user-gate-pass.component';
 
 
 @NgModule({
@@ -62,6 +64,8 @@ import { VehicleAndAddonPriceUploadComponent } from './vehicle-and-addon-price-u
      SalesOrderProformaChetakComponent,
      OrderDetailsUpdationComponent,
      VehicleAndAddonPriceUploadComponent,
+     OrderCancellationUploadComponent,
+    //  SalesSuperUserGatePassComponent,
       ],
   imports: [
     CommonModule,

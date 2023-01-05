@@ -996,7 +996,7 @@ export class ARInvoiceComponent implements OnInit {
               var patch = this.arInvoiceForm.get('invLines') as FormArray;
               var taxPerln = data.obj.invLines[i].taxCategoryName.gstPercentage;
 
-              alert(this.custTax);
+              // alert(this.custTax);
               
               this.orderManagementService.getTaxCategoriesForSales(this.custTax, taxPerln)
                 .subscribe(

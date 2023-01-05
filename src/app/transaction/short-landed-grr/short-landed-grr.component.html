@@ -126,27 +126,39 @@
                         <!-- <td style="width: 15%" class="LabelFontStyle">&nbsp;Debit&nbsp;Note&nbsp;Amt:&nbsp;</td>  
                         <td><input  type ="number" disabled formControlName="debitNoteAmt" [(ngModel)]='debitNoteAmt' value={{debitNoteAmt}} class="form-control" placeholder="" ></td>    -->
 
-                        <td style="width: 15%" class="LabelFontStyle">&nbsp;Total&nbsp;Amt:&nbsp;</td>  
-                        <td><input  type ="number" disabled formControlName="totalAmt" [(ngModel)]='totalAmt' value={{totalAmt}} class="form-control" placeholder="" ></td>   
-
-
+                     
+                        <td style="width: 15%" class="LabelFontStyle">AP&nbsp;Debit&nbsp;Note&nbsp;:&nbsp;</td>  
+                        <td><input  type ="text" disabled formControlName="APdebitNote" [(ngModel)]='APdebitNote' value={{APdebitNote}} class="form-control" placeholder="" ></td>   
 
                         </tr>
 
-                       
-
                         <tr>
-                            <td style="width: 15%" class="LabelFontStyle">AP&nbsp;Debit&nbsp;Note&nbsp;:&nbsp;</td>  
-                            <td><input  type ="text" disabled formControlName="APdebitNote" [(ngModel)]='APdebitNote' value={{APdebitNote}} class="form-control" placeholder="" ></td>   
-
+                          
                             <td style="width: 15%" class="LabelFontStyle">Claim&nbsp;No&nbsp;:&nbsp;</td>  
                             <td><input  type ="text"  formControlName="claimNo" [(ngModel)]='claimNo' value={{claimNo}} class="form-control" placeholder="" ></td>   
 
+                            <td style="width: 15%" class="LabelFontStyle">&nbsp;Base&nbsp;Total:&nbsp;</td>  
+                            <td><input  type ="number" disabled formControlName="baseAmount" [(ngModel)]='baseAmount' value={{baseAmount}} class="form-control" placeholder="" ></td>   
+                        
+                            <td style="width: 15%" class="LabelFontStyle">&nbsp;Tax&nbsp;Total:&nbsp;</td>  
+                            <td><input  type ="number" disabled formControlName="taxAmt" [(ngModel)]='taxAmt' value={{taxAmt}} class="form-control" placeholder="" ></td>   
+    
+                            <td style="width: 15%" class="LabelFontStyle">&nbsp;Total&nbsp;Amt:&nbsp;</td>  
+                            <td><input  type ="number" disabled formControlName="totalAmt" [(ngModel)]='totalAmt' value={{totalAmt}} class="form-control" placeholder="" ></td>   
+    
+                        </tr>
+
+                        <tr>
+
                             <td style="width: 15%" class="LabelFontStyle"> Remarks&nbsp;&nbsp;&nbsp;:&nbsp;</td>
-                            <td colspan="7">
+                            <td colspan="5">
                                 <input  formControlName="remarks" [(ngModel)]="remarks" value={{remarks}} 
                                     class="form-control" style="text-align: left; width: 100%;background-color: yellow;" >
                             </td>
+
+                          
+                         
+                         
                         </tr>
                     </table>
                     </fieldset>
@@ -818,7 +830,7 @@
         <tbody>
                 <tr class="GridHeader">
                 <th style="width:5rem"  scope="col">Srl&nbsp;No&nbsp;</th> 
-                <th style="width:5rem"  scope="col">Claim&nbsp;No&nbsp;</th>
+                <th style="width:5rem"  scope="col">Claim Rcpt&nbsp;No&nbsp;</th>
                 <th style="width:10rem" scope="col">Claim&nbsp;Date</th>
                 <th style="width:5rem"  scope="col">DebitNote&nbsp;No&nbsp;</th>
                 <th style="width:10rem" scope="col">DebitNote&nbsp;Date</th>
