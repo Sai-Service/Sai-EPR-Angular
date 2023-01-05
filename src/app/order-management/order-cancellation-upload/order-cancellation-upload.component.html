@@ -61,6 +61,14 @@
               <td class="LabelFontStyle" style="color: blue;">&nbsp;{{dataDisplay }}&nbsp; </td>
             </tr>
            </table>
+           <table>
+            <tr>
+                <th>Status</th>
+            </tr>
+            <tr *ngFor="let com of objDetails ; let i= index" class="ItemStyle" style="text-decoration:none;font-size: 11px;">
+           <td>{{objDetails}}</td>
+            </tr>
+           </table>
            <table class="center">
             <tr>
                 <td>
