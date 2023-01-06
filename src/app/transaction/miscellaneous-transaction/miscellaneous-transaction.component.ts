@@ -703,6 +703,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
             )
             .subscribe((data) => {
               this.ItemIdList = data;
+              this.onOptiongetItem(itemCode, i);
             });
         } else {
           this.service
@@ -710,7 +711,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
             .subscribe((data) => {
               this.ItemIdList = data;
               // this.Select(data[0].itemId);
-              //  this.onOptiongetItem(itemCode, i);
+               this.onOptiongetItem(itemCode, i);
             });
         }
       } else {
@@ -780,7 +781,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
       this.displayheader = false;
       this.service.getItemDetail(select1.itemId).subscribe((data) => {
         this.getItemDetail = data;
-        // alert("this.getItemDetail.description" + this.getItemDetail.description);
+        alert("this.getItemDetail.description" + this.getItemDetail.description);
         if (this.getItemDetail.description != undefined) {
           trxLnArr1.controls[i].patchValue({
             description: this.getItemDetail.description,
