@@ -224,7 +224,7 @@
                      <td>
                        
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="width: fit-content;">
-    Super Usrt Gate Pass
+    Super User Gate Pass
   </button>
   
 
@@ -249,18 +249,23 @@
             </tr>
          </table>
          <table class="center">
+            <div *ngIf="disSuperUserGateButton; then thenSuperUserGateButton; else elseSuperUserGateButton"> </div>
+         <ng-template #thenSuperUserGateButton>
             <tr>
                 <td>
                     <button type="button" class="btn btn-primary" (click)="login()">Login</button>
                 </td>
             </tr>
+         </ng-template>
+         <ng-template #elseSuperUserGateButton>
             <tr>
                 <td>
-                     <button type="button" style="width:fit-content ;" class="btn btn-secondary" data-dismiss="modal" (click)="orderNumberPost(orderNumber,shipToLoc)">Generate&nbsp;Gatepass</button>
-                    <button type="button" style="width:fit-content ;" [disabled]="isDisabled" class="btn btn-secondary" data-dismiss="modal" (click)="SalesGatePassPost()">Generate&nbsp;Gatepass</button>
+                     <button type="button" style="width:fit-content ;" [disabled]="isGatePassDisabled"  class="btn btn-secondary" data-dismiss="modal" (click)="orderSuperNumberPost(orderNumber,shipToLoc)">Super&nbsp;User&nbsp;Gatepass</button>
+                    <!-- <button type="button" style="width:fit-content ;" [disabled]="isDisabled" class="btn btn-secondary" data-dismiss="modal" (click)="SalesGatePassPost()">Generate&nbsp;Gatepass</button> -->
 
                 </td>
             </tr>
+         </ng-template>
          </table>
         </div>
         <div class="modal-footer">
