@@ -1022,7 +1022,7 @@ if(this.deptId==2){
       .subscribe(
         data => {
             if (data.code === 400) {
-            alert("Entered Order Number doesnot exist.");this.referenceNo=''; return;
+            alert("Entered Order Number doesnot exist...");this.referenceNo=''; return;
           }
         });
 
@@ -1030,7 +1030,7 @@ if(this.deptId==2){
       .subscribe(
         data => {
             if (data.code === 200) {
-            alert("Gate Pass Already Done for this Order...Cannot Proceed")
+            alert("Gate Pass Already Done for this Order...Cannot Proceed...")
             this.resetMast()
           }
 
