@@ -1004,13 +1004,43 @@ if(this.deptId==2){
 
   onRefTypeSelected(mRefType) {
     // alert ("Reference Type : "+ mRefType);
+    this.referenceNo='';
     if (mRefType === 'Advance' || mRefType === undefined) { this.showRefYellow = false; }
     else { this.showRefYellow = true; }
 
     if(mRefType==='ReIns-Renewal') { this.reInsurance=true;this.showRefYellow = true;} else{this.reInsurance=false;}
 
+    // if(mRefType==='Sales-Order') {alert ("Sale order Selected..")}
 
   }
+
+  validateSaleOrder(soNumber){
+
+    var refTp = this.paymentArForm.get('refType').value;
+    if(refTp==='Sales-Order') {
+      this.orderManagementService.getsearchByOrderNo(soNumber)
+      .subscribe(
+        data => {
+            if (data.code === 400) {
+            alert("Entered Order Number doesnot exist.");this.referenceNo=''; return;
+          }
+        });
+
+      this.service.gatePassStatusCheck(soNumber)
+      .subscribe(
+        data => {
+            if (data.code === 200) {
+            alert("Gate Pass Already Done for this Order...Cannot Proceed")
+            this.resetMast()
+          }
+
+          // if (data.code === 400) {
+          //   alert("Gate Pass Not Done for this Order... Proceed");
+          // }
+        });
+      }
+    }
+
 
   onPayTypeSelected(payType: any, rmStatus: any) {
     // alert('paytype =' +payType  + " LocId :"+ this.locId + " Ou Id :"+this.ouId + " Deptid : "+ this.deptId + " Status :"+rmStatus);
