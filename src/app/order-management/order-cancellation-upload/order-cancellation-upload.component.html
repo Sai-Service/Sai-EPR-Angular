@@ -61,12 +61,25 @@
               <td class="LabelFontStyle" style="color: blue;">&nbsp;{{dataDisplay }}&nbsp; </td>
             </tr>
            </table>
-           <table>
-            <tr>
-                <th>Status</th>
+           <table class="GridFont"  style="border-color:#494949;border-collapse:collapse;width: 100%;">
+            <tr class="GridHeader" style="font-size: 11px;">
+                <th >Reference No</th>
+                <!-- <th >Cust No</th> -->
+                <th >Cust Name</th>
+                <th >Receipt No</th>
+                <th >Voucher No</th>
+               
+                <th >Date</th>
+                <th >Remark</th>
             </tr>
             <tr *ngFor="let com of objDetails ; let i= index" class="ItemStyle" style="text-decoration:none;font-size: 11px;">
-           <td>{{objDetails}}</td>
+           <td>{{com.msRefNo}}</td>
+           <td>{{com.custNo}}</td>
+           <td>{{com.custName}}</td>
+           <td>{{com.receiptNo}}</td>
+           <td>{{com.payVouNo}}</td>
+           <td>{{com.remark}}</td>
+           <td>{{com.trxDate}}</td>
             </tr>
            </table>
            <table class="center">

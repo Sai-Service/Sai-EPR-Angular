@@ -3232,7 +3232,8 @@ export class PayableInvoiceNewComponent implements OnInit {
           }
         }
       });
-    } else {
+    } 
+    else {
       alert('Amount Missmach kindly check');
     }
 
