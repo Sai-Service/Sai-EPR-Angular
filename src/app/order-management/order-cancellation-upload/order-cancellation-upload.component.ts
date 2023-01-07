@@ -32,6 +32,7 @@ export class OrderCancellationUploadComponent implements OnInit {
   receiptMethodName:string;
   @ViewChild('fileInput') fileInput;
   ReceiptMethodList: any = [];
+  objDetails: any=[];
   constructor(private fb: FormBuilder, private router: Router, private orderManagementService: OrderManagementService,private location1: Location,private router1: ActivatedRoute, private service: MasterService) { 
     this.orderCancellationUploadForm = this.fb.group({
       fileName:['',Validators.required],
@@ -97,8 +98,9 @@ export class OrderCancellationUploadComponent implements OnInit {
        this.service.orderCancellationUpload(formData,sessionStorage.getItem('emplId'),receiptMethodName).subscribe((res: any) => {
    
         if (res.code === 200) {
-            res.message+",  Code : "+res.code;;
+            res.message+",  Code : "+res.code+'---'+res.obj;
           //  this.lstMessage=res.obj.priceListDetailList;
+          this.objDetails=res.obj;
             this.dataDisplay ='File Uploaded Sucessfully....'
            this.closeResetButton=true;
              

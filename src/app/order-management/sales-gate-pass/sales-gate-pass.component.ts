@@ -34,6 +34,8 @@ export class SalesGatePassComponent implements OnInit {
   lstPendingGatepass: any[];
 
   isDisabled = false;
+  isGatePassDisabled=false;
+  disSuperUserGateButton=true;
   isDisabled2 = true;
   gatepassNo: number;
   dateOfDelv: Date;
@@ -383,7 +385,7 @@ export class SalesGatePassComponent implements OnInit {
     // this.regNo=regNo1
     this.SalesGatepassForm.patchValue({regNo:regNo1});
 
-    alert("Registration No:"+this.regNo+","+regNo1.length);  
+    // alert("Registration No:"+this.regNo+","+regNo1.length);  
     var policuNum=this.SalesGatepassForm.get('policyNo').value;
     var policyDate=this.SalesGatepassForm.get('insuDate').value;
        
@@ -486,11 +488,44 @@ export class SalesGatePassComponent implements OnInit {
 
     }
     login(){
-      alert(this.userName+'------****'+this.password);
+      // alert(this.userName+'------****'+this.password);
       // password:String='Super@2022';
   // userName:String='SuperUser';
       if (this.userName==='SuperUser'&& this.password==='Super@2022'){
         alert('Login Successfully..!')
+        this.disSuperUserGateButton=false;
+        // this.orderSuperNumberPost(this.orderNumber,this.shipToLoc)
+   
       }
+      else{
+        this.disSuperUserGateButton=true;
+      }
+    }
+
+
+
+    orderSuperNumberPost(orderNumber, locId) {
+      // alert(orderNumber+'-----'+locId)
+      if (locId===undefined || locId===null||locId===''){
+        alert('Please Select Service Location.!');
+        return;
+      }
+      this.orderManagementService.orderNoPost(orderNumber, this.emplId, locId).subscribe((res: any) => {
+        if (res.code === 200) {
+          alert(res.message);
+          this.gatePassOrderNo(this.orderNumber);
+          //window.location.reload();
+          this.gatepassNo = res.obj;
+          this.isGatePassDisabled=true;
+        } else {
+          if (res.code === 400) {
+            alert(res.message + '---' + res.obj);
+            this.isGatePassDisabled=false;
+            this.SalesGatepassForm.get('userName').reset();
+            this.SalesGatepassForm.get('password').reset();
+            // window.location.reload();
+          }
+        }
+      });
     }
 }

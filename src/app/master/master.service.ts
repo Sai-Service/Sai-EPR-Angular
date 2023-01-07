@@ -2913,9 +2913,10 @@ public shortLandedClaimSave(rtvRecord) {
 
 
   orderCancellationUpload(formData: FormData, emplId,receiptMethodName) {
+    alert(emplId);
     // alert ("Org Id :"+mouId + "  BankAccountId :"+bnkAcccountId);
     let headers1 = new HttpHeaders();
-    formData.append('emplId', emplId);
+    formData.append('empId', emplId);
     formData.append('bankAc', receiptMethodName);
     return this.http.post(this.ServerUrl + `/Proforma/cancel/bookings`, formData)
     // http://localhost:8081/fileImport/uploadBankStmt/
