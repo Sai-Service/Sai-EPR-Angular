@@ -435,7 +435,7 @@
 
                                             <div *ngIf="showRefYellow; then thenBlockRef1; else elseBlockRef1"></div>
                                             <ng-template #thenBlockRef1>
-                                                <td> <input   type="text" formControlName="referenceNo"  id="referenceNo"  [(ngModel)]="referenceNo" class="form-control"  style="background-color: yellow;">  </td>
+                                                <td> <input   type="text" formControlName="referenceNo"  id="referenceNo"  [(ngModel)]="referenceNo" class="form-control" (change)="validateSaleOrder(referenceNo)" style="background-color: yellow;">  </td>
                                             </ng-template>
                                             <ng-template #elseBlockRef1>
                                                 <td><input   type="text" formControlName="referenceNo"  id="referenceNo"  [(ngModel)]="referenceNo" class="form-control"  placeholder=" ">   </td>

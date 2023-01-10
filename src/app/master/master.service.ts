@@ -2766,6 +2766,15 @@ public shortLandedClaimSave(rtvRecord) {
 
   }
 
+
+  gatePassStatusCheck(soNumber): Observable<any> {
+      return this.http.get(this.ServerUrl + `/orderHeader/getSaleOrder/${soNumber}`);
+     // http://localhost:8081/orderHeader/getSaleOrder/222220910400034
+  }
+
+  
+
+
   getArReceiptSearchByRcptNoByloc(rcptNumber, ouId, locId, deptId): Observable<any> {
     // alert ("MS >> dept Id : " +deptId)
     if (rcptNumber != undefined || rcptNumber != null) {
