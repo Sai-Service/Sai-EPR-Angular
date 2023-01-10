@@ -287,7 +287,7 @@ export class SalesGatePassComponent implements OnInit {
   //    }
 
   // -------------------New GatePass Fn ---by rk 27/8/22
-  SalesGatePassPost(){
+  SalesGatePassPost(orderNumber,srvLoc){
 
     if(this.policyNo==undefined|| this.policyNo==null || this.policyNo.trim()==''){ alert("Policy No should not be null..");return;}
     if(this.insuDate==undefined|| this.insuDate===null || this.insuDate.trim()==''){ alert("Policy Date should not be null..");return;}
@@ -295,13 +295,13 @@ export class SalesGatePassComponent implements OnInit {
     this.isDisabled = true;
     const formValue =this.SalesGatepassForm.value;
 
-    var srvLoc =this.SalesGatepassForm.get('shipToLoc').value;
+    // var srvLoc =this.SalesGatepassForm.get('shipToLoc').value;
 
     if(srvLoc==undefined || srvLoc==null || srvLoc<=0) { alert ("Please Select Service Location.");return;}
     var mreg= this.SalesGatepassForm.get('regNo').value;
   
 
-    this.orderManagementService.SalesGatePassGenSubmit(formValue).subscribe((res: any) => {
+    this.orderManagementService.SalesGatePassGenSubmit(orderNumber,this.emplId,srvLoc).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
         this.gatePassOrderNo(this.orderNumber);

@@ -749,22 +749,34 @@ export class OrderManagementService {
     const REQUEST_PARAMS = new HttpParams().set('orderNumber', orderNumber)
       .set('emplId', emplId)
       .set('servLocId', locId)
-    const REQUEST_URI = this.ServerUrl + `/salesGatePass/postSlGatepass?orderNumber=${orderNumber}&emplId=${emplId}&servLocId=${locId}`;
+    const REQUEST_URI = this.ServerUrl + `/salesGatePass/postSlGatepassSuperUser?orderNumber=${orderNumber}&emplId=${emplId}&servLocId=${locId}`;
     return this.http.post(REQUEST_URI, {
       params: REQUEST_PARAMS,
 
     });
   }
 
-  public SalesGatePassGenSubmit(gatePassRecord) {
-    const options = {
-      headers: this.headers
-    };
-    const url = this.ServerUrl + '/salesGatePass';
-    return this.http.post(url, gatePassRecord, options);
-    // http://localhost:8081/salesGatePass
-  }
+  // public SalesGatePassGenSubmit(gatePassRecord) {
+  //   const options = {
+  //     headers: this.headers
+  //   };
+  //   const url = this.ServerUrl + '/salesGatePass/postSlGatepass?orderNumber';
+  //   return this.http.post(url, gatePassRecord, options);
+  //   // http://localhost:8081/salesGatePass
+  // }
 
+
+
+  SalesGatePassGenSubmit(orderNumber, emplId, locId) {
+    const REQUEST_PARAMS = new HttpParams().set('orderNumber', orderNumber)
+      .set('emplId', emplId)
+      .set('servLocId', locId)
+    const REQUEST_URI = this.ServerUrl + `/salesGatePass/postSlGatepass?orderNumber=${orderNumber}&emplId=${emplId}&servLocId=${locId}`;
+    return this.http.post(REQUEST_URI, {
+      params: REQUEST_PARAMS,
+
+    });
+  }
 
   // vehicleNoupdateFn(itemId, regNo, regDate) {
   //   const REQUEST_PARAMS = new HttpParams()
