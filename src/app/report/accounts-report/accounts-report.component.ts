@@ -928,6 +928,27 @@ reportName:string;
     this.isVisiblepanelfromtolocation=false;
     this.panelTodateAndOU=false;
   }
+  else if (reportName=='invReceiptWriteOffReport'){
+    this.reportName='Invoice Receipt Write off Report';
+    this.isVisibleGSTPurchaseRegister=false;
+    this.isVisibleSparesdebtors=false;
+    this.isVisibleLocation=false;
+    this.isVisibleLocation1=false;
+    this.isVisibleGSTSaleRegister=true;
+    this.isVisiblepanelaccountName=false;
+    this.isVisiblepanelcashName=false;
+    this.isVisiblespInvAgging=false;
+    this.isVisiblepanelgltrialBalance=false;
+    this.panelCashBank=false;
+    this.isVisiblepanelAPGLUnpainAging=false;
+    this.isVisiblepanelprePayment=false;
+    this.ispanelTolocationOu=false;
+    this.isVisibleVendorLedgerReport=false;
+    this.isVisiblecustomerLedger=false;
+    this.isVisiblegstsaiDebtors=false;
+    this.isVisiblepanelfromtolocation=false;
+    this.panelTodateAndOU=false;
+  }
   }
 
 
@@ -1506,6 +1527,18 @@ reportName:string;
         const fileName = 'Short Landed Claim Report' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
         const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
         this.reportService.shortLandedClaimReport(fromDate,toDate,sessionStorage.getItem('ouId'),locId,deptId)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+            this.isDisabled1=false;
+          })     
+       }
+       else if (reportName ==='Invoice Receipt Write off Report')
+       {
+        const fileName = 'Invoice Receipt Write off Report' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+        const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+        this.reportService.invReceiptWriteOffReport(fromDate,toDate,sessionStorage.getItem('ouId'),locId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.closeResetButton = true;

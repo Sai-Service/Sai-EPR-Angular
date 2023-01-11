@@ -261,6 +261,14 @@ export class ReportServiceService {
     });
   }
 
+  invReceiptWriteOffReport(fromDate,toDate,ouId,locaId){
+    const REQUEST_URI = this.ServerUrl +`/AccountsReports/InvRcptWriteOffRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locaId=${locaId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
   tdsRegister(fromDate,toDate,ouId){
     const REQUEST_URI = this.ServerUrl +`/AccountsReports/TDSRegister?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}`;
     return this.http.get(REQUEST_URI, {
