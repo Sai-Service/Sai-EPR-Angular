@@ -61,27 +61,37 @@
               <td class="LabelFontStyle" style="color: blue;">&nbsp;{{dataDisplay }}&nbsp; </td>
             </tr>
            </table>
-           <table class="GridFont"  style="border-color:#494949;border-collapse:collapse;width: 100%;">
+           <div class="col-md-12 table-responsive" #epltable>
+            <div style="padding-bottom: 10px;padding-top: 10px;">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <button (click)="exportToExcel()" class="btn btn-success" style="width: fit-content;">Export To Excel</button>
+                    </div>
+                </div>
+            </div>
+           <table class="GridFont"  style="border-color:#494949;border-collapse:collapse;width: 100%;font-size: 16px;">
             <tr class="GridHeader" style="font-size: 11px;">
                 <th >Reference No</th>
-                <!-- <th >Cust No</th> -->
+                <th >&nbsp;&nbsp;Cust&nbsp;No&nbsp;&nbsp;</th>
                 <th >Cust Name</th>
                 <th >Receipt No</th>
                 <th >Voucher No</th>
                
-                <th >Date</th>
+                <!-- <th >Date</th> -->
                 <th >Remark</th>
             </tr>
-            <tr *ngFor="let com of objDetails ; let i= index" class="ItemStyle" style="text-decoration:none;font-size: 11px;">
+            <tr *ngFor="let com of objDetails ; let i= index" class="ItemStyle" style="text-decoration:none;font-size: 14px;">
            <td>{{com.msRefNo}}</td>
            <td>{{com.custNo}}</td>
            <td>{{com.custName}}</td>
            <td>{{com.receiptNo}}</td>
            <td>{{com.payVouNo}}</td>
+          
+           <!-- <td>{{com.trxDate}}</td> -->
            <td>{{com.remark}}</td>
-           <td>{{com.trxDate}}</td>
             </tr>
            </table>
+           </div>
            <table class="center">
             <tr>
                 <td>

@@ -33,6 +33,7 @@ export class OrderCancellationUploadComponent implements OnInit {
   @ViewChild('fileInput') fileInput;
   ReceiptMethodList: any = [];
   objDetails: any=[];
+  @ViewChild('epltable', { static: false }) epltable: ElementRef;
   constructor(private fb: FormBuilder, private router: Router, private orderManagementService: OrderManagementService,private location1: Location,private router1: ActivatedRoute, private service: MasterService) { 
     this.orderCancellationUploadForm = this.fb.group({
       fileName:['',Validators.required],
@@ -172,6 +173,13 @@ export class OrderCancellationUploadComponent implements OnInit {
 
 
   
-  
+    exportToExcel() {
+      const ws: xlsx.WorkSheet =
+        xlsx.utils.table_to_sheet(this.epltable.nativeElement);
+        // xlsx.utils.json_to_sheet(this.storeAllOrderData);
+      const wb: xlsx.WorkBook = xlsx.utils.book_new();
+      xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
+      xlsx.writeFile(wb, 'CounterSaleOrderList.xlsx');
+    } 
 
 }
