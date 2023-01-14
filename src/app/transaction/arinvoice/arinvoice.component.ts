@@ -1515,8 +1515,9 @@ export class ARInvoiceComponent implements OnInit {
     for (var i = 0; i < arrayControl.length; i++) {
       this.basicAmt = this.basicAmt + arrayControl[i].basicAmt;
       this.taxRecoverable = this.taxRecoverable + arrayControl[i].taxRecoverable;
+      this.extendedAmount=this.extendedAmount+arrayControl[i].extendedAmount;
     }
-    this.extendedAmount = (this.basicAmt + this.taxRecoverable);
+    // this.extendedAmount = (this.basicAmt + this.taxRecoverable);
     this.arInvoiceForm.patchValue({ invoiceAmount: this.extendedAmount })
     jsonData.invoiceAmount = this.extendedAmount;
     jsonData.taxAmount = this.taxRecoverable;
@@ -1617,6 +1618,7 @@ export class ARInvoiceComponent implements OnInit {
   invDisLinesInTax: any = [];
   onOptionTaxCatSelected(i, taxcatid, taxCategoryName, basicAmt, activeTab) {
     // alert(taxCategoryName.taxCategoryName);
+    this.selectedLine=i;
     var len1 = this.TaxDetailsArray().length;
     this.invLineNo = i + 1;
     if (this.taxUistatus === false) {
@@ -1946,6 +1948,7 @@ export class ARInvoiceComponent implements OnInit {
     this.service.taxCalforItem(invItemId, this.taxCat1, diss, baseAmount)
       .subscribe(
         (data: any[]) => {
+          
           debugger;
           this.taxCalforItem = data;
           // this.patchResultList(this.poLineTax, this.taxCalforItem);
@@ -1982,7 +1985,7 @@ export class ARInvoiceComponent implements OnInit {
           // var taxln= this.taxarr.get(lineNo);
           // let j=2;
           // for (let i = 0; i < taxln.length; i++) {
-
+          alert(lnNum+'LN'+tolAmoutLine);
           controlinv.controls[lnNum].patchValue({ 'taxRecoverable': sum });
           controlinv.controls[lnNum].patchValue({ 'extendedAmount': tolAmoutLine });
           var control1 = this.arInvoiceForm.get('invDisLines') as FormArray;
