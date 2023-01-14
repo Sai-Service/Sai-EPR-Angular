@@ -423,7 +423,7 @@ glTbReport2(){
   var periodName =this.glTrialBalanceForm.get("periodName").value;
   // alert(opuCode +","+periodName);
 
- const fileName = 'GL Trial Balance-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+ const fileName = 'GL Trial Balance-' +  '.xls';
  const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
  this.reportService.gltrialBalanceReport(opuCode,periodName)
    .subscribe(data => {

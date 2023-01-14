@@ -465,7 +465,7 @@ export class ServiceReportComponent implements OnInit {
       return;
     }
     if (reportName === 'Job Card Summary') {
-      const fileName = 'Job-Card-Summary-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+      const fileName = 'Job-Card-Summary-' +  fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.jobSummaryReport(fromDate, toDate, locId)
@@ -487,7 +487,7 @@ export class ServiceReportComponent implements OnInit {
       }
     }
     else if (reportName === 'Service Invoice Not Delivered') {
-      const fileName = 'Invoice-Not-Delivery-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+      const fileName = 'Invoice-Not-Delivery-' +  fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.servindToDtReport(toDate, locId)
@@ -509,7 +509,7 @@ export class ServiceReportComponent implements OnInit {
       }
     }
     else if (reportName === 'Service Pending Vehicle Report') {
-      const fileName = 'Service Pending Vehicle Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+      const fileName = 'Service Pending Vehicle Report-' +  fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.serPendingVehicleReport(toDate, locId)
@@ -558,7 +558,7 @@ export class ServiceReportComponent implements OnInit {
       if (custAccNo === undefined || custAccNo === null) {
         custAccNo = '';
       }
-      const fileName = 'SP-Debtors-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+      const fileName = 'SP-Debtors-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.SPDebtorReport(toDate, sessionStorage.getItem('ouId'), locId, custAccNo, deptId, 0, 0, 0, 0)
@@ -580,7 +580,7 @@ export class ServiceReportComponent implements OnInit {
       }
     }
     else if (reportName === 'Service Delivery Summary') {
-      const fileName = 'Service Delivery Summary-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+      const fileName = 'Service Delivery Summary-' +  fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.seviceDeliverySummaryReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId)
@@ -602,7 +602,7 @@ export class ServiceReportComponent implements OnInit {
       }
     }
     else if (reportName === 'Sales Register') {
-      const fileName = 'Sales Register-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+      const fileName = 'Sales Register-' +  fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.vhslRegisterReport(fromDate, toDate, locId)
@@ -654,7 +654,7 @@ export class ServiceReportComponent implements OnInit {
     }
 
     else if (reportName === 'GST Sales Register') {
-      const fileName = 'GST Sales Register-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+      const fileName = 'GST Sales Register-' +  fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.gstSaleRegisterReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId)
@@ -676,7 +676,7 @@ export class ServiceReportComponent implements OnInit {
       }
     }
     else if (reportName === 'Labour Charge Summary Report') {
-      const fileName = 'Labour Charge Summary Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+      const fileName = 'Labour Charge Summary Report-' +  fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.laborChargeSummary(fromDate, toDate, sessionStorage.getItem('ouId'), locId)
@@ -698,7 +698,7 @@ export class ServiceReportComponent implements OnInit {
       }
     }
     else if (reportName === 'Technician  Summary Report') {
-      const fileName = 'Technician  Summary Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+      const fileName = 'Technician  Summary Report-' +  fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.technicianSummary(fromDate, toDate, sessionStorage.getItem('ouId'), locId)
@@ -720,7 +720,7 @@ export class ServiceReportComponent implements OnInit {
       }
     }
     else if (reportName === 'AMC Sales Register') {
-      const fileName = 'AMC Sales Register-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+      const fileName = 'AMC Sales Register-' +  fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.amcSaleRegister(fromDate, toDate, sessionStorage.getItem('ouId'), locId)
@@ -742,7 +742,7 @@ export class ServiceReportComponent implements OnInit {
       }
     }
     else if (reportName === 'EW Sales Register') {
-      const fileName = 'EW Sales Register-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+      const fileName = 'EW Sales Register-' +  fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.EWSaleRegister(fromDate, toDate, sessionStorage.getItem('ouId'), locId)
@@ -764,7 +764,7 @@ export class ServiceReportComponent implements OnInit {
       }
     }
     else if (reportName === 'Credit Note Register') {
-      const fileName = 'Credit Note Register-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+      const fileName = 'Credit Note Register-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.creditNoteReg(fromDate, toDate, sessionStorage.getItem('ouId'), locId)
@@ -786,7 +786,7 @@ export class ServiceReportComponent implements OnInit {
       }
     }
     else if (reportName === 'Job Issue Details Report') {
-      const fileName = 'Job Issue Details Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+      const fileName = 'Job Issue Details Report-' +  fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.jobIssueDetails(fromDate, toDate, locId)
@@ -808,7 +808,7 @@ export class ServiceReportComponent implements OnInit {
       }
     }
     else if (reportName === 'IRN Generation Report') {
-      const fileName = 'IRN Generation Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+      const fileName = 'IRN Generation Report-' +  '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         var deptId = this.serviceReportForm.get('deptId').value;
@@ -831,7 +831,7 @@ export class ServiceReportComponent implements OnInit {
       }
     }
     else if (reportName == 'Invoice Summary Report') {
-      const fileName = 'Invoice Summary Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+      const fileName = 'Invoice Summary Report-' +  '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.invoiceSummaryReport(fromDate, toDate, locId)
@@ -869,7 +869,7 @@ export class ServiceReportComponent implements OnInit {
         })
     }
     else if (reportName == 'AMC Utilisation Report') {
-      const fileName = 'AMC Utilisation Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+      const fileName = 'AMC Utilisation Report-' +  '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       // if (Number(sessionStorage.getItem('deptId')) === 4) {
       this.reportService.amcUtilisation(fromDate, toDate, sessionStorage.getItem('ouId'))
@@ -882,7 +882,7 @@ export class ServiceReportComponent implements OnInit {
       // }
     }
     else if (reportName == 'Amc Control Report') {
-      const fileName = 'Amc Control Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+      const fileName = 'Amc Control Report-' +  '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       this.reportService.amcControlReport(fromDate, toDate, sessionStorage.getItem('ouId'))
         .subscribe(data => {
@@ -893,7 +893,7 @@ export class ServiceReportComponent implements OnInit {
         })
     }
     else if (reportName == 'FSC Coupon Data Report') {
-      const fileName = 'FSC Coupon Data Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+      const fileName = 'FSC Coupon Data Report-' +  '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) == 4) {
         this.reportService.fscCouponData(fromDate, toDate, locId)
@@ -915,7 +915,7 @@ export class ServiceReportComponent implements OnInit {
       }
     }
     else if (reportName === '21. Receipt-Other Details Report') {
-      const fileName = 'Receipt-Other Details Report-' + sessionStorage.getItem('locName').trim() + '-' + '-TO-' + '.xls';
+      const fileName = 'Receipt-Other Details Report-' +  '-TO-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.receiptOtherDetails(fromDate, toDate, sessionStorage.getItem('ouId'), locId)
@@ -978,7 +978,7 @@ export class ServiceReportComponent implements OnInit {
 
       if (this.rptValidation == false) { this.closeResetButton = true; this.dataDisplay = 'Please check Aging Values.'; return; }
       this.isDisabled1 = true;
-      const fileName = 'Service-Debtors-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+      const fileName = 'Service-Debtors-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
 
       if (Number(sessionStorage.getItem('deptId')) === 4) {
@@ -1004,7 +1004,7 @@ export class ServiceReportComponent implements OnInit {
 
 
   spPurRegDownLoad() {
-    const fileName = 'Purchase-Register-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+    const fileName = 'Purchase-Register-' +  '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.spPurRegDownLoadReport(sessionStorage.getItem('ouId'))
       .subscribe(data => {

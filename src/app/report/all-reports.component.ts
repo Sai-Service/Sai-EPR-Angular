@@ -304,7 +304,7 @@ export class AllReportsComponent implements OnInit {
     var fromDate = this.pipe.transform(purStDt, 'dd-MMM-yyyy');
     var spreceipttoDate2 = this.reportForm.get('purRegToDt').value;
     var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
-    const fileName = 'Purchase-Register-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+    const fileName = 'Purchase-Register-' +  fromDate + '-TO-' + toDate + '.xls';
 
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.sppurRegidetailReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
@@ -318,7 +318,7 @@ export class AllReportsComponent implements OnInit {
 
 
   spPurRegDownLoad() {
-    const fileName = 'Purchase-Register-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+    const fileName = 'Purchase-Register-' +  '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.spPurRegDownLoadReport(sessionStorage.getItem('ouId'))
       .subscribe(data => {
@@ -375,7 +375,7 @@ export class AllReportsComponent implements OnInit {
     var fromDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
     var invcDt3 = this.reportForm.get('sidtoDate').value;
     var toDate = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');
-    const fileName = 'SP-Issue-Details' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+    const fileName = 'SP-Issue-Details' +  fromDate + '-TO-' + toDate + '.xls';
 
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.spIssueDetailsReport(fromDate, toDate, sessionStorage.getItem('locId'))
@@ -397,7 +397,7 @@ export class AllReportsComponent implements OnInit {
     var fromDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
     var invcDt3 = this.reportForm.get('spIssueSummtoDate').value;
     var toDate = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');
-    const fileName = 'SP-Issue-Summary-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+    const fileName = 'SP-Issue-Summary-' +  fromDate + '-TO-' + toDate + '.xls';
 
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.spIssueSummaryReport(fromDate, toDate, sessionStorage.getItem('locId'))
@@ -438,7 +438,7 @@ export class AllReportsComponent implements OnInit {
     var fromDate = this.pipe.transform(spreceiptfromDate2, 'dd-MMM-yyyy');
     var spreceipttoDate2 = this.reportForm.get('spreceipttoDate').value;
     var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
-    const fileName = 'SP-Receipt-Register-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+    const fileName = 'SP-Receipt-Register-' +  fromDate + '-TO-' + toDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.spReceiptRegisterReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
       .subscribe(data => {
@@ -460,7 +460,7 @@ export class AllReportsComponent implements OnInit {
     var invcDt2 = this.reportForm.get('invcDt1').value;
     var fromDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
     //const fileName = 'download.pdf';
-    const fileName = 'SP-Debtors-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+    const fileName = 'SP-Debtors-' +  fromDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.SPDebtorReport(fromDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'),sessionStorage.getItem('locId'),sessionStorage.getItem('locId'),0,0,0,0)
       .subscribe(data => {
@@ -592,7 +592,7 @@ export class AllReportsComponent implements OnInit {
     var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
     var toLicId = this.reportForm.get('stockMadeToFromLoc').value;
     //  alert(toLicId)
-    const fileName = 'Stock-Made-Details-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+    const fileName = 'Stock-Made-Details-' +  fromDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.stockMadeDetailsReport(fromDate, toDate, sessionStorage.getItem('locId'), toLicId, this.subInvCode.subInventoryCode,sessionStorage.getItem('deptId'))
       .subscribe(data => {
@@ -616,7 +616,7 @@ export class AllReportsComponent implements OnInit {
     var invcDt3 = this.reportForm.get('spstktrfMdSumtoDate').value;
     var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');
     var fromlocId = this.reportForm.get('spstktrfMdSumToLoc').value;
-    const fileName = 'Stock-Made-Summary-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+    const fileName = 'Stock-Made-Summary-' +  fromDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.spstktrfMdSummaryReport(fromDate, invcDt4, sessionStorage.getItem('locId'), fromlocId, this.subInvCode.subInventoryCode)
       .subscribe(data => {
@@ -639,7 +639,7 @@ export class AllReportsComponent implements OnInit {
     var invcDt3 = this.reportForm.get('SprStkTrfRecdDtlstoDate').value;
     var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');
     var fromlocId = this.reportForm.get('SprStkTrfRecdDtlsFromLoc').value;
-    const fileName = 'Stock-Received-Detail-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+    const fileName = 'Stock-Received-Detail-' +  fromDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.SprStkTrfRecdDtlsReport(fromDate, invcDt4, sessionStorage.getItem('locId'), fromlocId, this.subInvCode.subInventoryCode,sessionStorage.getItem('deptId'))
       .subscribe(data => {
@@ -663,7 +663,7 @@ export class AllReportsComponent implements OnInit {
     var invcDt3 = this.reportForm.get('SprStkTrfRecdSummarytoDate').value;
     var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');
     var fromlocId = this.reportForm.get('SprStkTrfRecdSummaryFromLoc').value;
-    const fileName = 'Stock-Received-Summary-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+    const fileName = 'Stock-Received-Summary-' +  fromDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.SprStkTrfRecdSummaryReport(fromDate, invcDt4, sessionStorage.getItem('locId'), fromlocId, this.subInvCode.subInventoryCode)
       .subscribe(data => {
@@ -686,7 +686,7 @@ export class AllReportsComponent implements OnInit {
     var fromDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
     var invcDt3 = this.reportForm.get('SprcusttakestattoDate').value;
     var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');
-    const fileName = 'Spares-Customer-Off-Take-Statement-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+    const fileName = 'Spares-Customer-Off-Take-Statement-' +  fromDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.SprcusttakestatReport(fromDate, invcDt4, sessionStorage.getItem('locId'))
       .subscribe(data => {
@@ -706,7 +706,7 @@ export class AllReportsComponent implements OnInit {
     var fromDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
     var invcDt3 = this.reportForm.get('spmiscissRectoDate').value;
     var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');
-    const fileName = 'Spares Misc Issue Receipt Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+    const fileName = 'Spares Misc Issue Receipt Report-' +  fromDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.spSparesMiscIssueReceiptReport(fromDate, invcDt4, sessionStorage.getItem('locId'))
       .subscribe(data => {
@@ -736,7 +736,7 @@ export class AllReportsComponent implements OnInit {
     if (orderNumber === undefined || orderNumber === null) {
       orderNumber = ''
     }
-    const fileName = 'Spares Back Order Qty Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+    const fileName = 'Spares Back Order Qty Report-' +  fromDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.spbackOrderQtyReport(fromDate, invcDt4, sessionStorage.getItem('locId'), spbackOrderQtyCustAccNo, orderNumber)
       .subscribe(data => {
@@ -790,7 +790,7 @@ export class AllReportsComponent implements OnInit {
     var fromDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
     var invcDt3 = this.reportForm.get('spslReturnRegistertoDate').value;
     var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');
-    const fileName = 'Spares Sales Return Register-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+    const fileName = 'Spares Sales Return Register-' +  fromDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.spslReturnRegisterReport(fromDate, invcDt4, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
       .subscribe(data => {
@@ -825,7 +825,7 @@ export class AllReportsComponent implements OnInit {
       this.dataDisplay = 'Please check Aging.';
       return;
     }
-    const fileName = 'Spares Inventory Aging Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+    const fileName = 'Spares Inventory Aging Report-' +  '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.sspInvAgingReport(spInvAging1, spInvAging2, spInvAging3, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'),this.subInvCode,"")
       .subscribe(data => {
@@ -849,7 +849,7 @@ export class AllReportsComponent implements OnInit {
     var fromDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
     var invcDt3 = this.reportForm.get('spIncomeStatementtoDate').value;
     var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');
-    const fileName = 'Spares Income Statement-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+    const fileName = 'Spares Income Statement-' +  fromDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.spIncomeStatement(fromDate, invcDt4, sessionStorage.getItem('locId'))
       .subscribe(data => {
@@ -869,7 +869,7 @@ export class AllReportsComponent implements OnInit {
     this.dataDisplay = 'Report Is Running....Do not refresh the Page';
     var invcDt2 = this.reportForm.get('sprClsAsonDttoDate').value;
     var toDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
-    const fileName = 'Spares Income Statement-' + sessionStorage.getItem('locName').trim() + '-' + toDate + '.xls';
+    const fileName = 'Spares Income Statement-' +  toDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.sprClsAsonDtReport(toDate, sessionStorage.getItem('locId'),'SP')
       .subscribe(data => {
@@ -889,7 +889,7 @@ export class AllReportsComponent implements OnInit {
     var fromDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
     var invcDt3 = this.reportForm.get('spProforDttoDate').value;
     var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');
-    const fileName = 'Spares Proforma Details Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+    const fileName = 'Spares Proforma Details Report-' +  fromDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.spProforDtReport(fromDate, invcDt4, sessionStorage.getItem('locId'))
       .subscribe(data => {
@@ -910,7 +910,7 @@ export class AllReportsComponent implements OnInit {
     var fromDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
     var invcDt3 = this.reportForm.get('chequebouncetoDate').value;
     var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');
-    const fileName = 'Cheque Bounce Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+    const fileName = 'Cheque Bounce Report-' +  fromDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.chequebounceReport(fromDate, invcDt4, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
       .subscribe(data => {
