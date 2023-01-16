@@ -531,12 +531,14 @@ export class CustomerMasterComponent implements OnInit {
   }
   onOptionSiteStateSeleted(event: any) {
 
-
+// alert(event+'--'+this.customerSiteId)
     // this.lstcomments2 = this.lstcomments.customerSiteMasterList;
     // console.log(this.lstcomments2);
     // let select = this.lstcomments2.find(d => d.customerSiteId === customerSiteId);
 
-    if (event != undefined && this.customerSiteId === undefined) {
+    // if (event != undefined && this.customerSiteId === undefined)comment by vinita on 16jan23
+    if (event != undefined)
+     {
       this.service.taxCategoryList1(this.locId, event)
         .subscribe(
           data => {

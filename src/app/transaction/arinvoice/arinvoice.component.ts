@@ -1915,7 +1915,7 @@ export class ARInvoiceComponent implements OnInit {
   addDiscount(lnNum) {
     // const formValue: IpostPO = this.poMasterDtoForm.value;
     // formValue.polineNum = this.poLineTax;
-    debugger;
+    // debugger;
     const aa = this.poLineTax;
     // alert(aa);
     var invLine = this.arInvoiceForm.get('invLines').value
@@ -1949,7 +1949,7 @@ export class ARInvoiceComponent implements OnInit {
       .subscribe(
         (data: any[]) => {
           
-          debugger;
+          // debugger;
           this.taxCalforItem = data;
           // this.patchResultList(this.poLineTax, this.taxCalforItem);
           var sum = 0;
