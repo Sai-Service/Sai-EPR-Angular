@@ -2298,6 +2298,16 @@ export class MasterService {
     });
   }
 
+  printShortLandClaimdocument(mRtnNumber) {
+    const REQUEST_URI = this.ServerUrl + `/rcvShipment/RTVPrint/${mRtnNumber}`;
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+
+    // http://localhost:8081/rcvShipment/RTVPrint/22221024400558
+  }
 
   getsearchByReceiptNo1(segment1, mLocId): Observable<any> {
     // return this.http.get(this.ServerUrl + `/rcvShipment/receiptNoWise/${segment1}`);

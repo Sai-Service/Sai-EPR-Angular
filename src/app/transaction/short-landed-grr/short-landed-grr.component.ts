@@ -710,13 +710,11 @@ export class ShortLandedGrrComponent implements OnInit {
 
 
               for (let i = 0; i < len1 ; i++)  {
-
-         
+        
                 totBaseAmt =totBaseAmt+rtnLineArr[i].baseAmount;
                 totTaxAmt =totTaxAmt+rtnLineArr[i].taxAmount;
                 netTotalAmt =netTotalAmt+rtnLineArr[i].totAmount;
-               
-
+          
               }
                 var bAmt=totBaseAmt.toFixed(2);
                 var tAmt=totTaxAmt.toFixed(2);
@@ -988,23 +986,7 @@ export class ShortLandedGrrComponent implements OnInit {
   }
 
 
-  printDocShortClaim(){
-
-    alert ("Not Implemented ... Wip");
-
-    return;
-    var mRtnRcptNumber=this.shortLandGrrForm.get('debitNoteNo').value
-    const fileName = 'download.pdf';
-    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.service.printRTVdocument(mRtnRcptNumber)
-      .subscribe(data => {
-        var blob = new Blob([data], { type: 'application/pdf' });
-        var url = URL.createObjectURL(blob);
-        var printWindow = window.open(url, '', 'width=800,height=500');
-        printWindow.open
-        
-      });
-  }
+  
 
   Select(mrtnNo){
     // alert("PO / Receipt Number :"+this.segment1 +","+this.receiptNo);
@@ -1024,17 +1006,55 @@ export class ShortLandedGrrComponent implements OnInit {
     //  this.totalAmt=select.totalAmt;
       var totalAmt1=Math.round((select.totalAmt + Number.EPSILON) * 100) / 100
       this.totalAmt=totalAmt1;
-    
+      // var baseAmt1=Math.round((select.baseAmount + Number.EPSILON) * 100) / 100
+      // this.baseAmount=baseAmt1;
+      // var taxAmt1=Math.round((select.taxAmount + Number.EPSILON) * 100) / 100
+      // this.taxAmt=taxAmt1;
+
      this.service.getsearchByReceiptNoLine(this.segment1,mrtnNo)
      .subscribe(
        data => {
          if(data.obj !=null) {
           this.lstRtnDetails = data.obj;
-          console.log(this.lstRtnDetails);
+
+          var len1= this.lstRtnDetails.length;
+          var totBaseAmt =0;
+          var totTaxAmt =0;
+          for (let i = 0; i < len1 ; i++)  {
+            totBaseAmt =totBaseAmt+this.lstRtnDetails[i].baseAmount;
+            totTaxAmt =totTaxAmt+this.lstRtnDetails[i].taxAmount;
+           }
+            var bAmt=totBaseAmt.toFixed(2);
+            var tAmt=totTaxAmt.toFixed(2);
+            this.baseAmount=Number(bAmt); 
+            this.taxAmt=Number(tAmt);
+            console.log(this.lstRtnDetails);
+
+
             } else {alert ("No Line Items Found in this PO Receipt.");}
             
         } );    
         
+      }
+
+     
+
+
+      printDocShortClaim(){
+
+        // alert ("Not Implemented ... Wip");
+           
+        var mRtnRcptNumber=this.shortLandGrrForm.get('debitNoteNo').value
+        const fileName = 'download.pdf';
+        const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+        this.service.printShortLandClaimdocument(mRtnRcptNumber)
+          .subscribe(data => {
+            var blob = new Blob([data], { type: 'application/pdf' });
+            var url = URL.createObjectURL(blob);
+            var printWindow = window.open(url, '', 'width=800,height=500');
+            printWindow.open
+            
+          });
       }
 
 
