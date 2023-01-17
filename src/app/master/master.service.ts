@@ -2923,7 +2923,7 @@ public shortLandedClaimSave(rtvRecord) {
 
 
   orderCancellationUpload(formData: FormData, emplId,receiptMethodName) {
-    alert(emplId);
+    // alert(emplId);
     // alert ("Org Id :"+mouId + "  BankAccountId :"+bnkAcccountId);
     let headers1 = new HttpHeaders();
     formData.append('empId', emplId);

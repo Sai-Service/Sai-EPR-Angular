@@ -928,6 +928,27 @@ reportName:string;
     this.isVisiblepanelfromtolocation=false;
     this.panelTodateAndOU=false;
   }
+  else if (reportName=='invReceiptWriteOffReport'){
+    this.reportName='Invoice Receipt Write off Report';
+    this.isVisibleGSTPurchaseRegister=false;
+    this.isVisibleSparesdebtors=false;
+    this.isVisibleLocation=false;
+    this.isVisibleLocation1=false;
+    this.isVisibleGSTSaleRegister=true;
+    this.isVisiblepanelaccountName=false;
+    this.isVisiblepanelcashName=false;
+    this.isVisiblespInvAgging=false;
+    this.isVisiblepanelgltrialBalance=false;
+    this.panelCashBank=false;
+    this.isVisiblepanelAPGLUnpainAging=false;
+    this.isVisiblepanelprePayment=false;
+    this.ispanelTolocationOu=false;
+    this.isVisibleVendorLedgerReport=false;
+    this.isVisiblecustomerLedger=false;
+    this.isVisiblegstsaiDebtors=false;
+    this.isVisiblepanelfromtolocation=false;
+    this.panelTodateAndOU=false;
+  }
   }
 
 
@@ -952,7 +973,7 @@ reportName:string;
     var tDate =this.reportForm.get('toDate').value;
 
     if (reportName==='GST Purchase Register'){
-    const fileName = 'GST Purchase Register-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+    const fileName = 'GST Purchase Register-' +  fromDate + '-TO-' + toDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.gstPurchaeReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId,deptId)
       .subscribe(data => {
@@ -963,7 +984,7 @@ reportName:string;
       })
     }
     else if (reportName==='Cheque Bounce Report'){
-      const fileName = 'Cheque Bounce Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+      const fileName = 'Cheque Bounce Report-' +  fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       this.reportService.chequebounceReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId)
         .subscribe(data => {
@@ -974,7 +995,7 @@ reportName:string;
         })
     }
     else if (reportName==='Purchase Register Summary'){
-      const fileName = 'Purchase Register Summary-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+      const fileName = 'Purchase Register Summary-' +  fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       this.reportService.purchaseRegisterSummary(fromDate, toDate, sessionStorage.getItem('ouId'), locId,deptId)
         .subscribe(data => {
@@ -993,7 +1014,7 @@ reportName:string;
         custAccNo = '';
       }
       // alert(deptId);
-      const fileName = 'Sai Debtors-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+      const fileName = 'Sai Debtors-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         if (deptId===null || deptId == undefined || deptId ==''){
@@ -1014,7 +1035,7 @@ reportName:string;
       }
     }
     else if (reportName==='Receipt Register Report'){
-      const fileName = 'Receipt Register Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+      const fileName = 'Receipt Register Report-' +  fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       this.reportService.spReceiptRegisterReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId,deptId)
         .subscribe(data => {
@@ -1026,7 +1047,7 @@ reportName:string;
     }
 
     else if (reportName==='Employee Ledger Control Report'){
-      const fileName = 'Employee Ledger Control Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+      const fileName = 'Employee Ledger Control Report-' +  fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       this.reportService.empLedgerControlReport(toDate, sessionStorage.getItem('ouId'))
         .subscribe(data => {
@@ -1039,7 +1060,7 @@ reportName:string;
 
     
     else if (reportName==='GST Sales Register'){
-      const fileName = 'GST Sales Register-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+      const fileName = 'GST Sales Register-' +  fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       this.reportService.gstSaleRegisterReport(fromDate, toDate, sessionStorage.getItem('ouId'),locId)
         .subscribe(data => {
@@ -1091,7 +1112,7 @@ reportName:string;
       this.isDisabled1=true;
 
 
-      const fileName = 'SP-Debtors-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+      const fileName = 'SP-Debtors-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
      
       if (Number(sessionStorage.getItem('deptId')) === 4) {
@@ -1133,7 +1154,7 @@ reportName:string;
         this.dataDisplay = 'Please check Aging.';
         return;
       }
-    const fileName = 'Spares Inventory Aging Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+    const fileName = 'Spares Inventory Aging Report-' +  '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.sspInvAgingReport(spInvAging1,spInvAging2,spInvAging3,sessionStorage.getItem('ouId'),locId,subInventory,userName)
       .subscribe(data => {
@@ -1148,7 +1169,7 @@ reportName:string;
      var ouCode= ouName.substring(0,4)
       // var periodName= this.reportForm.get('periodName').value;
       var glYearName= this.reportForm.get('glPeriodYear').value;
-      const fileName = 'GL Trial Balance-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+      const fileName = 'GL Trial Balance-' +  '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       this.reportService.gltrialBalanceReport(ouCode,glYearName)
       .subscribe(data => {
@@ -1170,7 +1191,7 @@ reportName:string;
        this.dataDisplay = 'Please Select Natural Account....Do not refresh the Page';
        return;
       }
-       const fileName = 'Cash Bank Reports-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+       const fileName = 'Cash Bank Reports-' +  '.xls';
      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     //  alert(fromDate+'---'+toDate+'---'+sessionStorage.getItem('ouId')+'----'+locId+'---'+accountName)
      this.reportService.cashBankReport(fromDate,toDate,sessionStorage.getItem('ouId'),locId,accountName,naturalAccct,userName)
@@ -1192,7 +1213,7 @@ reportName:string;
        this.dataDisplay = 'Please Select Natural Account....Do not refresh the Page';
        return;
       }
-       const fileName = 'Bank Book Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+       const fileName = 'Bank Book Report-' +  '.xls';
      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     //  alert(fromDate+'---'+toDate+'---'+sessionStorage.getItem('ouId')+'----'+locId+'---'+accountName)
      this.reportService.cashBankReport(fromDate,toDate,sessionStorage.getItem('ouId'),locId,accountName,naturalAccct,userName)
@@ -1209,7 +1230,7 @@ reportName:string;
       if (suppNo ===undefined || suppNo===null|| suppNo===''){
         alert('Please Select Supplier.!')
       }
-      const fileName = 'AP To GL Unpaid Aging Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+      const fileName = 'AP To GL Unpaid Aging Report-' +  '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.aPGLUnpainAging(sessionStorage.getItem('ouId'),suppNo)
       .subscribe(data => {
@@ -1220,7 +1241,7 @@ reportName:string;
       })             
      }
      else if (reportName==='Prepayment Status Report'){
-      const fileName = 'Prepayment Status Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+      const fileName = 'Prepayment Status Report-' +  '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       this.reportService.prePayment(sessionStorage.getItem('ouId'))
         .subscribe(data => {
@@ -1245,7 +1266,7 @@ reportName:string;
        })      
      }
      else if (reportName ==='TDS Register'){
-      const fileName = 'TDS Register-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+      const fileName = 'TDS Register-' +  '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       this.reportService.tdsRegister(fromDate,toDate,sessionStorage.getItem('ouId'))
         .subscribe(data => {
@@ -1257,7 +1278,7 @@ reportName:string;
      }
      else if (reportName=='TCS Reports'){
       var sourceName=this.reportForm.get('source').value;
-      const fileName = 'TCS Register-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+      const fileName = 'TCS Register-' +  '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       this.reportService.tcsRegister(fromDate,toDate,sessionStorage.getItem('ouId'),locId)
         .subscribe(data => {
@@ -1270,7 +1291,7 @@ reportName:string;
 
      else if (reportName=='Manual Invoice Report'){
       var sourceName=this.reportForm.get('source').value;
-      const fileName = 'Manual Invoice Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+      const fileName = 'Manual Invoice Report-' +  '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       this.reportService.manualInvoice(fromDate,toDate,sessionStorage.getItem('ouId'),locId)
         .subscribe(data => {
@@ -1285,7 +1306,7 @@ reportName:string;
       // var supId=this.reportForm.get('source').value;
       var suppNo=this.reportForm.get('supNo').value;
       var supSite =this.reportForm.get('supSiteName').value;
-      const fileName = 'Vendor Ledger Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+      const fileName = 'Vendor Ledger Report-' +  '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       this.reportService.vendorLedgerRpt(fromDate,toDate,sessionStorage.getItem('ouId'),locId,suppNo,supSite)
         .subscribe(data => {
@@ -1296,7 +1317,7 @@ reportName:string;
         })
      }
      else if (reportName ==='JV Register'){
-      const fileName = 'JV Register-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+      const fileName = 'JV Register-' +  '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       this.reportService.jvRegister(fromDate,toDate,sessionStorage.getItem('ouId'))
         .subscribe(data => {
@@ -1308,7 +1329,7 @@ reportName:string;
      }
      else if (reportName=='Refund Register'){
       var sourceName=this.reportForm.get('source').value;
-      const fileName = 'Refund Register-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+      const fileName = 'Refund Register-' +  '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       // if(deptName==='NULL'){
       //   deptName='';
@@ -1324,7 +1345,7 @@ reportName:string;
 
      else if (reportName=='Return To Vendor Register'){
       var sourceName=this.reportForm.get('source').value;
-      const fileName = 'RTV Register-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+      const fileName = 'RTV Register-' +  '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       // if(deptName==='NULL'){
       //   deptName='';
@@ -1344,7 +1365,7 @@ reportName:string;
        // var periodName= this.reportForm.get('periodName').value;
        var glYearName= this.reportForm.get('glPeriodYear').value;
        var glPrdName= this.reportForm.get('periodName').value;
-       const fileName = 'GL Trial Balance YTD-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+       const fileName = 'GL Trial Balance YTD-' +  '.xls';
        const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
        this.reportService.gltrialBalanceReportYtd(ouCode,glPrdName)
        .subscribe(data => {
@@ -1361,12 +1382,12 @@ reportName:string;
        // var periodName= this.reportForm.get('periodName').value;
        var glYearName= this.reportForm.get('glPeriodYear').value;
        var glPrdName= this.reportForm.get('periodName').value;
-       const fileName = 'GL Trial Balance YTD-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+       const fileName = 'GL Trial Balance YTD-' +  '.xls';
        const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
        this.reportService.gltrialBalanceReportPtd(ouCode,glYearName)
        .subscribe(data => {
          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-         this.closeResetButton = true;
+         this.closeResetButton = false;
          this.dataDisplay = ''
          this.isDisabled1=false;
        })      
@@ -1383,25 +1404,30 @@ reportName:string;
 
       if (custAccNo1 <=0 || custAccNo1==undefined || custAccNo1==null ) {
         custAccNo='';
+        // alert(custAccNo)
           }
 
-      const fileName = 'Customer Ledger Report-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
+      const fileName = 'Customer Ledger Report-' +  fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {     
-        this.reportService.customerLedger(fromDate,toDate,custAccNo1,sessionStorage.getItem('ouId'),deptId)
+        this.reportService.customerLedger(fromDate,toDate,custAccNo,sessionStorage.getItem('ouId'),deptId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.closeResetButton=true;
+         this.dataDisplay = ''
           });
       }
       else if ((Number(sessionStorage.getItem('deptId'))!=4)){
-        this.reportService.customerLedger(fromDate,toDate,custAccNo1,sessionStorage.getItem('ouId'),sessionStorage.getItem('deptId'))
+        this.reportService.customerLedger(fromDate,toDate,custAccNo,sessionStorage.getItem('ouId'),sessionStorage.getItem('deptId'))
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.closeResetButton=false;
+         this.dataDisplay = ''
         });
       }
     }
     else if (reportName ==='Employee Ledger Report'){
-      const fileName = 'Employee Ledger Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+      const fileName = 'Employee Ledger Report-' +  '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       this.reportService.empLedgerReport(fromDate,toDate,sessionStorage.getItem('ouId'))
         .subscribe(data => {
@@ -1446,7 +1472,7 @@ reportName:string;
 
     if(this.rptValidation ==false) {this.closeResetButton=true;this.dataDisplay = 'Please check Aging Values.';  return; }
       this.isDisabled1=true;
-      const fileName = 'SP-Debtors-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+      const fileName = 'SP-Debtors-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
      
       if (Number(sessionStorage.getItem('deptId')) === 4) {
@@ -1463,7 +1489,7 @@ reportName:string;
      else if (reportName ==='Receipt-Other Details Report'){
       alert(reportName)
       this.isDisabled1=true;
-      const fileName = 'Receipt-Other Details Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+      const fileName = 'Receipt-Other Details Report-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
      
       this.reportService.receiptOtherDetails(fromDate,toDate,sessionStorage.getItem('ouId'),locId)
@@ -1476,7 +1502,7 @@ reportName:string;
       }
       else if (reportName=='Account Bill Handover Report'){
         var sourceName=this.reportForm.get('source').value;
-        const fileName = 'Account Bill Handover Report -' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+        const fileName = 'Account Bill Handover Report -' +  '.xls';
         const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
         // if(deptName==='NULL'){
         //   deptName='';
@@ -1491,7 +1517,7 @@ reportName:string;
        }
        else if (reportName ==='Account Distribution Material Distrubution Report')
        {
-        const fileName = 'Account Dist Mat Reg Register-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+        const fileName = 'Account Dist Mat Reg Register-' +  '.xls';
         const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
         this.reportService.actMatDistReport(fromDate,toDate,sessionStorage.getItem('ouId'))
           .subscribe(data => {
@@ -1503,9 +1529,21 @@ reportName:string;
        }
        else if (reportName ==='Short Landed Claim Report')
        {
-        const fileName = 'Short Landed Claim Report' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+        const fileName = 'Short Landed Claim Report' +  '.xls';
         const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
         this.reportService.shortLandedClaimReport(fromDate,toDate,sessionStorage.getItem('ouId'),locId,deptId)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+            this.isDisabled1=false;
+          })     
+       }
+       else if (reportName ==='Invoice Receipt Write off Report')
+       {
+        const fileName = 'Invoice Receipt Write off Report' +  '.xls';
+        const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+        this.reportService.invReceiptWriteOffReport(fromDate,toDate,sessionStorage.getItem('ouId'),locId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.closeResetButton = true;
@@ -1628,7 +1666,7 @@ reportName:string;
     var invcDt2 = this.reportForm.get('invcDt1').value;
     var fromDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
     //const fileName = 'download.pdf';
-    const fileName = 'SP-Debtors-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+    const fileName = 'SP-Debtors-' +  fromDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.SPDebtorReport(fromDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'), sessionStorage.getItem('deptId'),0,0,0,0)
       .subscribe(data => {
@@ -1639,7 +1677,7 @@ reportName:string;
       })
   }
   spPurRegDownLoad() {
-    const fileName = 'Purchase-Register-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+    const fileName = 'Purchase-Register-' +  '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.spPurRegDownLoadReport(sessionStorage.getItem('ouId'))
       .subscribe(data => {

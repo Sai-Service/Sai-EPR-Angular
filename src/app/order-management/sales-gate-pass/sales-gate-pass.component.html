@@ -218,7 +218,7 @@
                     </td>&nbsp;&nbsp;
                     <td>
                         <!-- <button type="button" style="width:fit-content ;" class="btn btn-secondary" data-dismiss="modal" (click)="orderNumberPost(orderNumber,shipToLoc)">Generate&nbsp;Gatepass</button> -->
-                        <button type="button" style="width:fit-content ;" [disabled]="isDisabled" class="btn btn-secondary" data-dismiss="modal" (click)="SalesGatePassPost()">Generate&nbsp;Gatepass</button>
+                        <button type="button" style="width:fit-content ;" [disabled]="isDisabled" class="btn btn-secondary" data-dismiss="modal" (click)="SalesGatePassPost(orderNumber,shipToLoc)">Generate&nbsp;Gatepass</button>
 
                     </td>
                      <td>
@@ -241,11 +241,11 @@
          <table class="center">
             <tr>
                 <td style="font-weight: bold;" class="LabelFontStyle1"> User&nbsp;Name&nbsp;:&nbsp;  </td>
-                    <td><input  class="form-control" formControlName="userName" style="border:solid 1px black" [(ngModel)]="userName"> </td>&nbsp;&nbsp;
+                    <td><input type="text" class="form-control" formControlName="userName" style="border:solid 1px black" [(ngModel)]="userName"> </td>&nbsp;&nbsp;
             </tr>
-            <tr>
+            <tr> 
                 <td style="font-weight: bold;" class="LabelFontStyle1"> Password&nbsp;:&nbsp;  </td>
-                    <td><input  class="form-control" formControlName="password" style="border:solid 1px black" [(ngModel)]="password"> </td>&nbsp;&nbsp;
+                    <td><input type="password" class="form-control" formControlName="password" style="border:solid 1px black" [(ngModel)]="password"> </td>&nbsp;&nbsp;
             </tr>
          </table>
          <table class="center">

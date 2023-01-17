@@ -1433,6 +1433,7 @@ export class PayableInvoiceNewComponent implements OnInit {
               // if(data.invoiceStatus.includes('Validated')){
               //   this.isVisiblepayDetail=true;
               // }
+              // alert(data.invoiceStatus )
               if (data.invoiceStatus.includes('Validated') || data.invoiceStatus === 'Unpaid') {
                 // alert('In Validated')
                 this.poInvoiceForm.disable();
@@ -1444,7 +1445,7 @@ export class PayableInvoiceNewComponent implements OnInit {
                 this.isVisibleSaveTDS = false;
                 this.isVisibleRoundOffButton = false;
                 this.isVisibleviewAccounting = true;
-                this.isVisibleCancel=true;
+                // this.isVisibleCancel=true;
                 this.TaxDetailsArray().disable();
                 this.TdsDetailsArray().disable();
                 this.lineDetailsArray().disable();
@@ -1460,9 +1461,9 @@ export class PayableInvoiceNewComponent implements OnInit {
                 // this.isVisiblepayDetail=true;
 
               }
-              // if (data.invoiceStatus==='Not Validated' ) {
-              //   this.isVisibleCancel=true;
-              // }
+              if (data.invoiceStatus==='Unpaid' ) {
+                this.isVisibleCancel=true;
+              }
             }
             // alert(data.invoiceStatus)
             // alert('index'+index)
@@ -1578,6 +1579,7 @@ export class PayableInvoiceNewComponent implements OnInit {
               if (data.invDisLines[i].description != undefined) {
                 var description = data.invDisLines[i].description.toUpperCase();
                 // alert(description);
+                // debugger;
                 if (data.invDisLines[i].lineTypeLookupCode != 'MISCELLANEOUS' || data.invDisLines[i].description.includes('Adhoc Disc') && description.includes('ROUNDING') == false) {
                   var invLnGrp: FormGroup = this.tdsLineDetails();
                   this.TdsDetailsArray().push(invLnGrp);
@@ -1681,6 +1683,7 @@ export class PayableInvoiceNewComponent implements OnInit {
               this.showTdsLines(data.invoiceId, data.payGroup);
             }
             // alert('data.invoiceStatus' + data.invoiceStatus);
+            // debugger;
             if (data.invoiceStatus === '' || data.invoiceStatus === null || data.invoiceStatus === undefined) {
               // alert(data.invoiceStatus);
               this.isVisibleSave = false;
@@ -1689,8 +1692,10 @@ export class PayableInvoiceNewComponent implements OnInit {
               this.isVisibleCancel=true;
               // this.isVisibleRoundOffButton=true;
             }
+            // 
+            // debugger;
             if (data.invoiceStatus != undefined) {
-              if (data.invoiceStatus.includes('Validated') || data.invoiceStatus === 'Unpaid'|| data.invoiceStatus === 'Paid') {
+              if (data.invoiceStatus.includes('Validated')|| data.invoiceStatus === 'Unpaid' || data.invoiceStatus === 'Paid') {
                 this.poInvoiceForm.disable();
                 this.displayAddNewLine = false;
                 this.invoiceStatus = data.invoiceStatus;
@@ -1708,11 +1713,13 @@ export class PayableInvoiceNewComponent implements OnInit {
                 this.tdsTaxDetailsArray().disable();
                 this.tdsTaxDetailsGroup().disable();
                 this.tdsLineDetails().disable();
-                this.displayapInvCancelled = false;
                 this.disDeleteButton = false;
                 this.isVisiblelineDetialsDeleteButton = false;
                 this.isVisibleSaveTDS = false;
 
+              }
+              else if (data.invoiceStatus === 'Unpaid'){
+                this.isVisibleCancel=true;
               }
             }
             // alert(data.invoiceStatus)
@@ -1758,18 +1765,25 @@ export class PayableInvoiceNewComponent implements OnInit {
               // this.poInvoiceForm.disable();
             }
             // if (data.invoiceStatus != undefined){
+              // alert(arraybaseNew1[index].invTypeLookupCode );
+              // debugger;
+              if (data.invoiceStatus === 'Unpaid' || data.invoiceStatus === 'Validated'){
+                this.isVisibleCancel=true;
+              }
+              else{
+                this.isVisibleCancel=false;
+              }
             if (arraybaseNew1[index].invTypeLookupCode === 'Prepayment' && data.invoiceStatus.includes('Validated') || data.invoiceStatus === 'Unpaid') {
               if (arraybaseNew1[index].invTypeLookupCode != 'CREDIT' || arraybaseNew1[index].invTypeLookupCode != 'STANDARD') {
                 this.isVisiblePayment = true;
               }
               // }
-            }
+            }    
             else if (arraybaseNew1[index].invTypeLookupCode === 'Standard Invoice' && data.invoiceStatus != undefined) {
-              // alert(data.invoiceStatus)
-              if (data.invoiceStatus.includes('Validated') || data.invoiceStatus === 'Unpaid') {
-                this.isVisiblePayment = true;
-                this.isVisibleCancel=true;
-              }
+              // alert(data.invoiceStatus+'   ' +'----else if'+this.selectedLine)
+              if (data.invoiceStatus.includes('Validated') ) {
+                this.isVisiblePayment = true;  
+              }  
             }
             else {
               this.isVisible = true;
@@ -3232,7 +3246,8 @@ export class PayableInvoiceNewComponent implements OnInit {
           }
         }
       });
-    } else {
+    } 
+    else {
       alert('Amount Missmach kindly check');
     }
 

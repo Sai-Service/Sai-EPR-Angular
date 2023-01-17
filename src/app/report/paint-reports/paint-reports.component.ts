@@ -367,7 +367,7 @@ export class PaintReportsComponent implements OnInit {
 
   spPurRegDownLoad() {
     
-    const fileName = 'Purchase-Register-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+    const fileName = 'Purchase-Register-' +  '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.spPurRegDownLoadReport(sessionStorage.getItem('ouId'))
       .subscribe(data => {
@@ -410,7 +410,7 @@ export class PaintReportsComponent implements OnInit {
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        const fileName = 'Paint Purchase Register Details-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+        const fileName = 'Paint Purchase Register Details-' +  fromDate + '-TO-' + toDate + '.xls';
         const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
         this.reportService.sppurRegidetailReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
           .subscribe(data => {
@@ -421,7 +421,7 @@ export class PaintReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        const fileName = 'Paint Purchase Register Details-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '-TO-' + toDate + '.xls';
+        const fileName = 'Paint Purchase Register Details-' +  fromDate + '-TO-' + toDate + '.xls';
         const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
         this.reportService.sppurRegidetailReportSpares(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
           .subscribe(data => {
@@ -504,7 +504,7 @@ export class PaintReportsComponent implements OnInit {
      
       this.isDisabled1=true;
 
-      const fileName = 'Paint Inventory Aging Report-' + sessionStorage.getItem('locName').trim() + '-' + '.xls';
+      const fileName = 'Paint Inventory Aging Report-' +  '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.sspInvAgingReport(spInvAging1, spInvAging2, spInvAging3, sessionStorage.getItem('ouId'), locId ,subInventory,userName)
@@ -530,7 +530,7 @@ export class PaintReportsComponent implements OnInit {
     // else if (reportName === 'Paint Closing Stock Report') {
     //   this.toDateValidation(tDate);if(this.rptValidation==false){return;}
 
-    //   const fileName = 'Paint Closing Stock Report-' + sessionStorage.getItem('locName').trim() + '-' + toDate + '.xls';
+    //   const fileName = 'Paint Closing Stock Report-' +  toDate + '.xls';
     //   const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     //   if (Number(sessionStorage.getItem('deptId')) === 4) {
     //     this.reportService.sprClsAsonDtReport(toDate, locId,subInventory)
@@ -580,7 +580,7 @@ export class PaintReportsComponent implements OnInit {
     else if (reportName==='Consumption Report'){
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
-      const fileName = 'Consumption Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+      const fileName = 'Consumption Report-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if ((Number(sessionStorage.getItem('deptId'))===4)){
         this.reportService.internalConsuptionReport(fromDate,toDate, locId, subInventory)
@@ -605,7 +605,7 @@ export class PaintReportsComponent implements OnInit {
     else if (reportName === 'Paint Misc Issue Receipt Report') {
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
-      const fileName = 'Paint Misc Issue Receipt Report-' + sessionStorage.getItem('locName').trim() + '-' + fromDate + '.xls';
+      const fileName = 'Paint Misc Issue Receipt Report-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.spSparesMiscIssueReceiptReport(fromDate, toDate, locId)
