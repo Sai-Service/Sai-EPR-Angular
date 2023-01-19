@@ -1331,7 +1331,7 @@ export class PayableInvoiceNewComponent implements OnInit {
               if (data.invDisLines[i].description != undefined) {
                 var description = data.invDisLines[i].description.toUpperCase();
                 // alert(description);
-                if (data.invDisLines[i].lineTypeLookupCode != 'MISCELLANEOUS' && description.includes('ROUNDING') == false) {
+                if ((data.invDisLines[i].lineTypeLookupCode != 'MISCELLANEOUS' || data.invDisLines[i].lineTypeLookupCode.includes('Adhoc Disc') )  && description.includes('ROUNDING') == false) {
                   var invLnGrp: FormGroup = this.tdsLineDetails();
                   this.TdsDetailsArray().push(invLnGrp);
                 }
@@ -1382,10 +1382,11 @@ export class PayableInvoiceNewComponent implements OnInit {
             let j = 0;
             // alert(data.invTdsLines.length)
             if (data.invTdsLines.length != 0) {
+              alert(data.invTdsLines.lenght);
               for (let i = 0; i < data.invDisLines.length; i++) {
                 var description = data.invDisLines[i].description.toUpperCase();
-                if (data.invDisLines[i].lineTypeLookupCode != 'MISCELLANEOUS' && description.includes('ROUNDING') == false) {
-                  // alert(invId+'----'+ data.invDisLines[i].lineTypeLookupCode);
+                if ((data.invDisLines[i].lineTypeLookupCode != 'MISCELLANEOUS' || data.invDisLines[i].lineTypeLookupCode.includes('Adhoc Disc')) && description.includes('ROUNDING') == false) {
+                  alert(invId+'----'+ data.invDisLines[i].lineTypeLookupCode +'----'+ data.invDisLines.lenght);
                   (tdscontrolInv.controls[j]).patchValue({ invoiceId: invId });
                   (tdscontrolInv.controls[j]).patchValue({ invoiceLineNum: data.invDisLines[i].invoiceLineNum });
                   (tdscontrolInv.controls[j]).patchValue({ invoiceDistId: data.invDisLines[i].invDistributionId });
@@ -1650,7 +1651,7 @@ export class PayableInvoiceNewComponent implements OnInit {
                   (tdscontrolInv.controls[j]).patchValue({ baseAmount: Math.abs(data.invDisLines[i].baseAmount) });
                   (tdscontrolInv.controls[j]).patchValue({ description: data.invDisLines[i].description });
                   // debugger;
-                  // (tdscontrolInv.controls[j]).patchValue({ taxAmount: Math.abs(data.invTdsLines[i].taxAmount) });
+                  (tdscontrolInv.controls[j]).patchValue({ taxAmount: Math.abs(data.invTdsLines[i].taxAmount) });
                   (tdscontrolInv.controls[j].patchValue({actualSectionCode: arraybaseNew1[this.selectedLine].payGroup}))
                   j = j + 1;     
                   this.TdsDetailsArray().disable();
@@ -3371,14 +3372,14 @@ export class PayableInvoiceNewComponent implements OnInit {
         if (formVal[k].description.includes('Adhoc Disc')) {
           if (formVal[k].taxAmount == undefined || formVal[k].taxAmount == null || formVal[k].taxAmount == '') {
           } else {
-            disctaxAmount = disctaxAmount +(formVal[k].taxAmount);
+            disctaxAmount = Math.abs(disctaxAmount) +(Math.abs(formVal[k].taxAmount));
           }
         }
         else if ((formVal[k].description.includes('Adhoc Disc'))==false) {
           if (formVal[k].taxAmount == undefined || formVal[k].taxAmount == null || formVal[k].taxAmount == '') {
           } else {
            
-            taxAmount = taxAmount + Number(formVal[k].taxAmount);
+            taxAmount = Math.abs(taxAmount) + Math.abs(Number(formVal[k].taxAmount));
           
           }
         }
@@ -3400,7 +3401,7 @@ export class PayableInvoiceNewComponent implements OnInit {
       // alert('taxAmount1TDS---'+taxAmount1+'---disctaxAmount1TDS---***'+disctaxAmount1)
       var disctaxAmount2 = Math.abs(disctaxAmount1)
       // alert(disctaxAmount2+'disctaxAmount2*')
-      var tottdsAmt1= (taxAmount1-disctaxAmount2)
+      var tottdsAmt1= (Math.abs(taxAmount1)-disctaxAmount2)
       var tottdsAmt2 = Math.round(((tottdsAmt1) + Number.EPSILON) * 100) / 100;
       this.poInvoiceForm.patchValue({tottdsAmt:Math.abs(tottdsAmt2)})
     }
