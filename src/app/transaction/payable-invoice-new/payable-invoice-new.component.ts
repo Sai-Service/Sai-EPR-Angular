@@ -1651,7 +1651,7 @@ export class PayableInvoiceNewComponent implements OnInit {
                   (tdscontrolInv.controls[j]).patchValue({ baseAmount: Math.abs(data.invDisLines[i].baseAmount) });
                   (tdscontrolInv.controls[j]).patchValue({ description: data.invDisLines[i].description });
                   // debugger;
-                  (tdscontrolInv.controls[j]).patchValue({ taxAmount: Math.abs(data.invTdsLines[i].taxAmount) });
+                  // (tdscontrolInv.controls[j]).patchValue({ taxAmount: Math.abs(data.invTdsLines[i].taxAmount) });
                   (tdscontrolInv.controls[j].patchValue({actualSectionCode: arraybaseNew1[this.selectedLine].payGroup}))
                   j = j + 1;     
                   this.TdsDetailsArray().disable();
@@ -4079,4 +4079,3 @@ ShowBalData(supname){
 }
 
 }
-
