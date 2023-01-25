@@ -3745,6 +3745,25 @@ TransactionTypemiscpPaint(): Observable<any> {
 
   }
 
+  distributionLinesIn(invoiceNumber,suppNo,invoiceStatus): Observable<any> {
+    const options = {
+      headers: this.headers
+    };
+    const url = (this.ServerUrl + `/apInv/distLinesBySuppNo?invNum=${invoiceNumber}&suppNo=${suppNo}&invoiceStatus=${invoiceStatus}`);
+    return this.http.get(url, options);
+
+  }
+
+
+  openTDSTabFn(invNum,suppNo,status): Observable<any> {
+    const options = {
+      headers: this.headers
+    };
+    const url = (this.ServerUrl + `/apInv/tdsLines?invNum=${invNum}&suppNo=${suppNo}&invoiceStatus=${status}`);
+    return this.http.get(url, options);
+
+  }
+
   getTdsTaxDetails(mItemId, mBaseAmt, mTaxCatId): Observable<any> {
     return this.http.get(this.ServerUrl + `/poHdr/potaxcal?itemId=${mItemId}&baseAmt=${mBaseAmt}&taxCateId=${mTaxCatId}`);
     // http://localhost:8081/poHdr/potaxcal?itemId=1&baseAmt=1000&taxCateId=14071

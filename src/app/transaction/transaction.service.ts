@@ -72,8 +72,11 @@ apInvoiceCancellation(invoiceNum,emplId): Observable<any> {
   getApInvLineDetailsSupwise(invoiceNum,suppNo): Observable<any> {
     return this.http.get(this.ServerUrl + `/apInv/invDtlsBySuppNo?invNum=${invoiceNum}&suppNo=${suppNo}`);
   }
+  // getApInvLnStatusDetailsSupwise(invoiceNum,suppNo,status): Observable<any> {
+  //   return this.http.get(this.ServerUrl + `/apInv/invDtlsBySuppNo?invNum=${invoiceNum}&suppNo=${suppNo}&invoiceStatus=${status}`);
+  // }
   getApInvLnStatusDetailsSupwise(invoiceNum,suppNo,status): Observable<any> {
-    return this.http.get(this.ServerUrl + `/apInv/invDtlsBySuppNo?invNum=${invoiceNum}&suppNo=${suppNo}&invoiceStatus=${status}`);
+    return this.http.get(this.ServerUrl + `/apInv/linesBySuppNo?invNum=${invoiceNum}&suppNo=${suppNo}&invoiceStatus=${status}`);
   }
 
   distLinesDeatailsfa(invoiceId,lineNumber): Observable<any> {
