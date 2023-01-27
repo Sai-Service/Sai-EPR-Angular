@@ -228,6 +228,7 @@ export class PayableInvoiceNewComponent implements OnInit {
   taxCategoryName: string;
   hsnSacCodeList: any = [];
   displayTaxCategory = true;
+  displayManualAP = false;
   // glDate:Date;
   //  glDate=this.pipe.transform(this.now, 'd-M-y h:mm:ss');
   // glDate = new Date();
@@ -1270,6 +1271,7 @@ export class PayableInvoiceNewComponent implements OnInit {
     this.displayViewTaxDetails = false;
     this.selectedLine = index;
     this.displaydescription = false;
+    this.displayManualAP = false;
 
     var arraybaseNew = this.poInvoiceForm.get('obj') as FormArray;
     var arraybaseNew1 = arraybaseNew.getRawValue();
@@ -1807,7 +1809,7 @@ export class PayableInvoiceNewComponent implements OnInit {
 
 
   distributionLines() {
-    
+
     var invoiceNumber = this.lineDetailsArray().controls[this.selectedLine].get('invoiceNum').value;
     var suppNo = this.lineDetailsArray().controls[this.selectedLine].get('suppNo').value;
     var invoiceStatus = this.lineDetailsArray().controls[this.selectedLine].get('invoiceStatus').value;
@@ -1820,38 +1822,37 @@ export class PayableInvoiceNewComponent implements OnInit {
     var arraybase2 = arraybase1.getRawValue();
     let distLineArray = this.poInvoiceForm.get('distribution') as FormArray;
     let distLineArray1 = distLineArray.getRawValue();
-    if (distLineArray1.length === 0) {
-      alert('Please Select Distribustion Tab And Then Select TDS Tab.!');
-      return;
-    }
+    // var accDate = arraybase2[this.selectedLine].glDate;
+    // alert(arraybase2[this.selectedLine].glDate)
+    // var accDate1 = this.pipe.transform(accDate, 'dd-MMM-yyyy');
+    // alert(accDate1)
     if (arraybase2.length === 0) {
       alert('Please Select Lines Tab And Then Select TDS Tab.!');
       return;
     }
     if (distribustionArray1.length === 0) {
       this.closeResetButton = false;
-    this.progress = 0;
-    this.dataDisplay = 'Data Loading in progress....Do not refresh the Page'
+      this.progress = 0;
+      this.dataDisplay = 'Data Loading in progress....Do not refresh the Page'
       this.service.distributionLinesIn(invoiceNumber, suppNo, invoiceStatus)
         .subscribe(
           data => {
             this.closeResetButton = true;
-            // this.progress = 0;
+            this.dispaccountingDate = false;
             this.dataDisplay = 'Data Display Sucessfully....'
-            // if (data.code == 200) {
-            // alert(data.message);
-            // debugger;
             for (let i = 0; i < data.invDisLines.length; i++) {
               var invLnGrp: FormGroup = this.distLineDetails();
               this.lineDistributionArray().push(invLnGrp);
             }
 
             this.poInvoiceForm.get('distribution').patchValue(data.invDisLines);
+            // let distLineArray = this.poInvoiceForm.get('distribution') as FormArray;
+            // let distLineArray1 = distLineArray.getRawValue();
+            // for (let j = 0; j < data.invDisLines.length; j++) {
+            //   (distLineArray1[j].controls).patchValue({ accountingDate: arraybase2[this.selectedLine].glDate });
+            // }
             this.lineDistributionArray().disable();
-            // }
-            // else if (data.code === 400) {
-            //   alert(data.message)
-            // }
+
           }
         );
     }
@@ -1871,13 +1872,13 @@ export class PayableInvoiceNewComponent implements OnInit {
     var invoiceNum = this.lineDetailsArray().controls[this.selectedLine].get('invoiceNum').value;
     var suppNo = this.lineDetailsArray().controls[this.selectedLine].get('suppNo').value;
     var invStatus = this.lineDetailsArray().controls[this.selectedLine].get('invoiceStatus').value;
-   
+
     let distLineArray = this.poInvoiceForm.get('distribution') as FormArray;
     let distLineArray1 = distLineArray.getRawValue();
     let j = 0;
-   
+
     var disctaxAmount = 0;
-   
+
     if (distLineArray1.length === 0) {
       alert('Please Select Distribustion Tab And Then Select TDS Tab.!');
       return;
@@ -1886,20 +1887,21 @@ export class PayableInvoiceNewComponent implements OnInit {
       alert('Please Select Lines Tab And Then Select TDS Tab.!');
       return;
     }
-    this.closeResetButton = false;
-    this.progress = 0;
-    this.dataDisplay = 'Data Loading in progress....Do not refresh the Page'
+
     if (tdsLinesArray1.length === 0) {
-      this.displayapInvCancelled = false;
-      this.isVisibleUpdateBtn = false;
-      this.isVisibleValidate = false;
+      this.closeResetButton = false;
+      this.progress = 0;
+      this.dataDisplay = 'Data Loading in progress....Do not refresh the Page'
+      // this.displayapInvCancelled = false;
+      // this.isVisibleUpdateBtn = false;
+      // this.isVisibleValidate = false;
       this.isVisibleSaveTDS = false;
       this.service.openTDSTabFn(invoiceNum, suppNo, invStatus)
         .subscribe(
           data => {
             this.closeResetButton = true;
-            this.progress = 0;
-            this.dataDisplay = 'Data Loading Successfully....Do not refresh the Page'
+            // this.progress = 0;
+            this.dataDisplay = 'Data Display Sucessfully..'
             for (let i = 0; i < data.invTdsLines.length; i++) {
               var invLnGrp: FormGroup = this.tdsLineDetails();
               this.TdsDetailsArray().push(invLnGrp);
@@ -1922,11 +1924,11 @@ export class PayableInvoiceNewComponent implements OnInit {
                 this.TdsDetailsArray().disable();
 
               }
-              
+
             }
 
             this.updateTDSTotAmtPerline1()
-          
+
           });
 
     }
@@ -2077,6 +2079,7 @@ export class PayableInvoiceNewComponent implements OnInit {
     var itemtyp = this.invLineDetailsArray().controls[k].get('lineTypeLookupCode').value;
     var amount = this.invLineDetailsArray().controls[k].get('amount').value;
     var description = this.invLineDetailsArray().controls[k].get('description').value;
+    // alert(description)
     var distributionArray = this.poInvoiceForm.get('distribution') as FormArray;
     var distributionArrVal = this.poInvoiceForm.get('distribution').value;
     console.log(distributionArray);
@@ -2085,11 +2088,13 @@ export class PayableInvoiceNewComponent implements OnInit {
     var accDate = objarray[0].glDate;
     // var accDate1 = this.pipe.transform(accDate, 'dd-MM-yyyy');
     var gleDateNew = this.pipe.transform(objarray[0].glDate, 'y-MM-dd');
+    var description1 = description.toUpperCase()
+
     if (amount === '' || amount == undefined || amount == null) {
       alert('Please enter amount.!');
       return;
     }
-    else {
+    else if (description1.includes('ROUNDING') === false) {
       if (this.invoiceId == null) {
         this.updateTotAmtPerline(k);
         alert('Distribution Line Added. Please Enter Code Combination Value in Ditribution Tab.!');
@@ -2149,8 +2154,49 @@ export class PayableInvoiceNewComponent implements OnInit {
           );
       }
     }
+    // alert(description1)
+    // debugger;
+    if (description1.includes('ROUNDING') === true) {
+      this.displayManualAP = true;
 
+    }
   }
+
+
+  roundOffManualAP() {
+    var invoiceNum = this.lineDetailsArray().controls[this.selectedLine].get('invoiceNum').value;
+    var suppNo = this.lineDetailsArray().controls[this.selectedLine].get('suppNo').value;
+    var arrayControl2 = this.poInvoiceForm.get('invLines') as FormArray;
+    var arrayControl3 = arrayControl2.getRawValue();
+    let amt = 0;
+    // var description = this.invLineDetailsArray().controls[k].get('description').value;
+    for (let k = 0; k < arrayControl3.length; k++) {
+      var description1 = arrayControl3[k].description.toUpperCase();
+      if (description1.includes('ROUNDING')) {
+        // var amt = this.invLineDetailsArray().controls[k].get('amount').value;
+        amt = arrayControl3[k].amount;
+      }
+    }
+    // alert(amt);
+    // return;
+    this.transactionService.roundOffAPManu(invoiceNum, suppNo, amt).subscribe((res: any) => {
+      if (res.code === 200) {
+        alert(res.message);
+        this.apInvFindAfterSave(res.obj.invoiceNum);
+        this.TaxDetailsArray().clear();
+        this.TdsDetailsArray().clear();
+        this.lineDetailsArray().clear();
+        this.tdsTaxDetailsArray().clear();
+        this.invLineDetailsArray().clear();
+      } else {
+        if (res.code === 400) {
+          alert(res.message);
+
+        }
+      }
+    });
+  }
+
 
   setFocus(name) {
     const ele = this.aForm.nativeElement[name];
@@ -3322,6 +3368,10 @@ export class PayableInvoiceNewComponent implements OnInit {
     var arrayCaontrolOfDistribution = this.poInvoiceForm.get('distribution').value;
     var amount: number = this.lineDetailsArray().controls[this.selectedLine].get('invoiceAmt').value;
     var totalOfInvLineAmout: number = 0;
+    if (arrayCaontrolOfDistribution.length === 0) {
+      alert('Please Select Distribution Tab.!');
+      return;
+    }
     for (let i = 0; i < this.invLineDetailsArray().length; i++) {
       var desc1: string = arrayControl1[i].description;
       if (desc1 === 'null' || desc1 === null) {
@@ -3368,6 +3418,7 @@ export class PayableInvoiceNewComponent implements OnInit {
           this.isVisibleUpdateBtn = false;
           this.isVisibleRoundOffButton = false;
           this.isVisibleValidate = false;
+          this.displayManualAP = false;
           this.TaxDetailsArray().clear();
           this.TdsDetailsArray().clear();
           this.lineDetailsArray().clear();
@@ -3971,7 +4022,7 @@ export class PayableInvoiceNewComponent implements OnInit {
     this.transactionService.roundOffAP(invoiceNum, suppNo).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
-        this.apInvFind(res.obj.invoiceNum);
+        this.apInvFindAfterSave(res.obj.invoiceNum);
         this.TaxDetailsArray().clear();
         this.TdsDetailsArray().clear();
         this.lineDetailsArray().clear();
