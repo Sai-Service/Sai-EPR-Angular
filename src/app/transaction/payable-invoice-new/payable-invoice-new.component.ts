@@ -306,6 +306,7 @@ export class PayableInvoiceNewComponent implements OnInit {
   dispAccountCode = true;
   displayAddNewLine = true;
   displayViewTaxDetails = true;
+  disTdsTaxCategoryName=true;
   viewAccounting2: any[];
   viewAccounting1: any[];
   periodName: string;
@@ -1329,18 +1330,7 @@ export class PayableInvoiceNewComponent implements OnInit {
               var invLnGrp: FormGroup = this.distLineDetails();
               this.lineDistributionArray().push(invLnGrp);
             }
-            // for (let i = 0; i < data.invDisLines.length; i++) {
-            //   // ;
-            //   // alert(data.invDisLines[i].description.includes('ROUNDING')+'-------'+ data.invDisLines[i].description)
-            //   if (data.invDisLines[i].description != undefined) {
-            //     var description = data.invDisLines[i].description.toUpperCase();
-            //     // alert(description);
-            //     if (data.invDisLines[i].lineTypeLookupCode != 'MISCELLANEOUS' && description.includes('ROUNDING') == false) {
-            //       var invLnGrp: FormGroup = this.tdsLineDetails();
-            //       this.TdsDetailsArray().push(invLnGrp);
-            //     }
-            //   }
-            // }
+           
             for (let i = 0; i < data.taxLines.length; i++) {
               var invLnGrp: FormGroup = this.TaxDetailsGroup();
               this.TaxDetailsArray().push(invLnGrp);
@@ -1378,28 +1368,7 @@ export class PayableInvoiceNewComponent implements OnInit {
             var arraybaseNew = this.poInvoiceForm.get('obj') as FormArray;
             var arraybaseNew1 = arraybaseNew.getRawValue()
             var invId = arraybaseNew1[0].invoiceId;
-            // alert(invId)
-            // let tdscontrolInv = this.poInvoiceForm.get('tdsLines') as FormArray;
-            // let distLineArray = this.poInvoiceForm.get('distribution') as FormArray;
-            // // alert(data.invTdsLines.length);
-
-            // let j = 0;
-            // // alert(data.invTdsLines.length)
-            // if (data.invTdsLines.length != 0) {
-            //   for (let i = 0; i < data.invDisLines.length; i++) {
-            //     var description = data.invDisLines[i].description.toUpperCase();
-            //     if (data.invDisLines[i].lineTypeLookupCode != 'MISCELLANEOUS' && description.includes('ROUNDING') == false) {
-            //       // alert(invId+'----'+ data.invDisLines[i].lineTypeLookupCode);
-            //       (tdscontrolInv.controls[j]).patchValue({ invoiceId: invId });
-            //       (tdscontrolInv.controls[j]).patchValue({ invoiceLineNum: data.invDisLines[i].invoiceLineNum });
-            //       (tdscontrolInv.controls[j]).patchValue({ invoiceDistId: data.invDisLines[i].invDistributionId });
-            //       (tdscontrolInv.controls[j]).patchValue({ distCodeCombSeg: data.invDisLines[i].distCodeCombSeg });
-            //       (tdscontrolInv.controls[j]).patchValue({ baseAmount: data.invDisLines[i].baseAmount });
-            //       (tdscontrolInv.controls[j]).patchValue({ description: data.invDisLines[i].description });
-            //       j = j + 1;
-            //     }
-            //   }
-            // }
+            
             let tdscontroltax = this.poInvoiceForm.get('tdsTaxLines') as FormArray;
             for (let i = 0; i < data.invTdsLines.length; i++) {
               (tdscontroltax.controls[i]).patchValue({ lineNumber: data.invTdsLines[i].distLineNumber });
@@ -1926,7 +1895,7 @@ export class PayableInvoiceNewComponent implements OnInit {
               }
 
             }
-
+            this.disTdsTaxCategoryName=false;
             this.updateTDSTotAmtPerline1()
 
           });
@@ -3403,6 +3372,7 @@ export class PayableInvoiceNewComponent implements OnInit {
         }
       }
     }
+   
     // alert('Header Amt---' + amount + '---Total Line Amt---' + totalOfInvLineAmout + '----total Distribution Amt---' + totalOfDistributionAmout);
     if (amount == totalOfInvLineAmout && amount == totalOfDistributionAmout) {
       var arrayControl = this.poInvoiceForm.get('obj').value;
@@ -3432,7 +3402,9 @@ export class PayableInvoiceNewComponent implements OnInit {
       });
     }
     else {
-      alert('Amount Missmach kindly check');
+      alert('Amount Missmatch kindly check');
+      alert('Total Header Amount And Total Line Amount and Distribution Amount missmatch.!'+'  '
+      + 'Total Header Amount'+amount+'    Total Line Amount '+totalOfInvLineAmout+'   Total Distribution Amount '+totalOfDistributionAmout)
     }
 
   }

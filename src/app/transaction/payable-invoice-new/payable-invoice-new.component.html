@@ -1530,6 +1530,8 @@ a<div class="center">
                                                         style="width: 200px;height: 25px;text-align: left;">
                                                 </td>
                                                 <!-- (ngModelChange)='onTaxCatgSelected($event,k)' -->
+                                                <div *ngIf="disTdsTaxCategoryName; then thenTdsTaxCategoryName; else elseTdsTaxCategoryName"></div>
+                                                 <ng-template #thenTdsTaxCategoryName>
                                                 <td>
 
                                                     <select style="width: 210px;height: 25px;"
@@ -1541,7 +1543,11 @@ a<div class="center">
                                                             {{ts.taxCategoryName}}
                                                         </option>
                                                     </select>
-                                                </td>&nbsp;
+                                                </td>
+                                                 </ng-template>
+                                                 <ng-template #elseTdsTaxCategoryName>
+                                                 </ng-template>
+                                                &nbsp;
                                                 <td style="font-size: 12px;">Total&nbsp;Disc&nbsp;Amt</td>&nbsp;
                                                 <td>
                                                     <input disabled type="number" formControlName="tdsTotDiscAmt"
