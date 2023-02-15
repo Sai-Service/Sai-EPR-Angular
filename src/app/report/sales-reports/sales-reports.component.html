@@ -1805,7 +1805,7 @@
                             max="{{minDate | date:'yyyy-MM-dd'}}">
                     </td>
                 </tr>
-                <tr>
+                <!-- <tr>
                     <td style="width: 15%" class="LabelFontStyle">
                         Branch&nbsp;:
                     </td>
@@ -1867,12 +1867,12 @@
                     </td>
                     <td>
 
-                        <input type="text" (keyup)="getNaturalAccount($event)" formControlName="segment4"
+                        <input type="text" formControlName="segment4"
                             id="NaturalAccountFirstWay" list="dynmicUserIds3" class="form-control"
                             (ngModelChange)="onOptionsSelectedNatural($event)" />
                         <datalist id="dynmicUserIds3">
-                            <!-- <option>--Select--</option> -->
-                            <option *ngFor="let sc of  NaturalAccountList" [value]="sc.naturalaccount">
+                           
+                            <option *ngFor="let sc of  NaturalAccountList" [Value]="sc.naturalaccount">
                                 {{sc.naturalaccount}}--{{sc.description}}
                             </option>
                         </datalist>
@@ -1889,8 +1889,7 @@
 
                     </td>
                     <td>
-                        <select formControlName="segment5" id="segment5" class="form-control"
-                            (ngModelChange)="onOptionsSelectedBranchNew($event)">
+                        <select formControlName="segment5" id="segment5" class="form-control">
                             <option>--Select--</option>
                             <option *ngFor="let sc of  InterBrancList">
                                 {{sc.lookupValue}}
@@ -1901,14 +1900,117 @@
                         <input type="text" style="width: 150px; background-color: white; border: none;"
                             formControlName="lookupValueDesc5" [(ngModel)]="lookupValueDesc5" class="form-control">
                     </td>
-                </tr>
+                </tr> -->
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            Branch&nbsp;:
+                        </td>
+                        <td>
+                            <select formControlName="segment1" id="segment1"
+                                class="form-control"
+                                (ngModelChange)="onOptionsSelectedBranch($event,'SS_Branch')">
+                                <option>--Select--</option>
+                                <option *ngFor="let sc of  BranchList">
+                                    {{sc.lookupValue}}
+                                </option>
+                            </select>
+                        </td>
+                        <td>
+                            <input type="text" disabled
+                                style="width: 150px; background-color: white; border: none;"
+                                formControlName="lookupValueDesc1"
+                                [(ngModel)]="lookupValueDesc1" class="form-control">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            &nbsp;Location&nbsp;:
+                        </td>
+                        <td>
+                            <select formControlName="segment2" id="segment2"
+                                class="form-control"
+                                (ngModelChange)="onOptionsSelectedBranch($event,'SS_Location')">
+                                <option>--Select--</option>
+                                <option *ngFor="let sc of  locIdList1">
+                                    {{sc.lookupValue}}
+                                </option>
+                            </select>
+                        </td>
+                        <td>
+                            <input type="text" disabled [(ngModel)]="lookupValueDesc2"
+                                style="width: 150px; background-color: white; border: none;"
+                                formControlName="lookupValueDesc2" class="form-control">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            Cost&nbsp;Center&nbsp;:
+                        </td>
+                        <td>
+                            <select formControlName="segment3" id="segment3"
+                                class="form-control"
+                                (ngModelChange)="onOptionsSelectedBranch($event,'CostCentre')">
+                                <option>--Select--</option>
+                                <option *ngFor="let sc of  CostCenterList">
+                                    {{sc.lookupValue}}
+                                </option>
+                            </select>
+                        </td>
+                        <td>
+                            <input type="text" disabled [(ngModel)]="lookupValueDesc3"
+                                style="width: 150px; background-color: white; border: none;"
+                                formControlName="lookupValueDesc3" class="form-control">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            Natural&nbsp;Account&nbsp;:
+                        </td>
+                        <td>
+                           
+                            <input type="text" formControlName="segment4"
+                                id="NaturalAccountFirstWay" list="dynmicUserIds3"
+                                class="form-control"
+                                (ngModelChange)="onOptionsSelectedNatural($event)" />
+                            <datalist id="dynmicUserIds3">
+                                <option>--Select--</option>
+                                <option *ngFor="let sc of  NaturalAccountList" [value]="sc">
+                                    {{sc}}
+                                </option>
+                            </datalist>
+                        </td>
+                        <td>
+                            <input type="text" disabled [(ngModel)]="lookupValueDesc4"
+                                style="width: 150px; background-color: white; border: none;color: black;"
+                                formControlName="lookupValueDesc4" class="form-control">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            Inter&nbsp;Branch&nbsp;:
+
+                        </td>
+                        <td>
+                            <select formControlName="segment5" id="segment5"
+                                class="form-control" [(ngModel)]="segment5"
+                                (ngModelChange)="onOptionsSelectedBranch($event,'SS_Interbranch')">
+                                <option>--Select--</option>
+                                <option *ngFor="let sc of  InterBrancList"
+                                    [ngValue]="sc.lookupValue">
+                                    {{sc.lookupValue}}
+                                </option>
+                            </select>
+                        </td>
+                        <td>
+                            <input type="text"
+                                style="width: 150px; background-color: white; border: none;"
+                                formControlName="lookupValueDesc5"
+                                [(ngModel)]="lookupValueDesc5" class="form-control">
+                        </td>
+                    </tr>
+                
             </table>
 
-            <!-- <tr>
-                            <td colspan="4">
-                                <table class="center">
-                                    <tr>
-                                        <td colspan="4"> -->
             <table class="center" style="width: 100%;">
                 <tr>
                     <div *ngIf="closeResetButton; then hList1; else hList2"></div>

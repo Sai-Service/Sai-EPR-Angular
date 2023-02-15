@@ -230,14 +230,32 @@ export class SalesReportsComponent implements OnInit {
         }
       );
 
+    // this.service.getInterBranchNatural()
+    //   .subscribe(
+    //     data => {
+    //       this.NaturalAccountList = data.obj;
+    //       console.log(data.obj);
+    //       console.log(this.NaturalAccountList);
+    //     }
+    //   );
+
+    // this.service.NaturalAccountList1()
+    // .subscribe(
+    //   data=> {
+    //     this.NaturalAccountList = data.obj;
+    //     console.log(this.NaturalAccountList);
+    //   }
+    // );
+
     this.service.getInterBranchNatural()
-      .subscribe(
-        data => {
-          this.NaturalAccountList = data.obj;
-          console.log(data.obj);
-          console.log(this.NaturalAccountList);
+    .subscribe(
+      data => {
+        for (let j = 0; j < data.obj.length; j++) {
+          var str = data.obj[j].naturalaccount + '-' + data.obj[j].description;
+          this.NaturalAccountList.push(str);
         }
-      );
+      }
+    );
 
     this.service.subInvCode2(sessionStorage.getItem('deptId'), sessionStorage.getItem('divisionId')).subscribe(
       data => {
@@ -1568,11 +1586,12 @@ export class SalesReportsComponent implements OnInit {
       // alert(segment1)
       var segment2 = this.salesReportForm.get('segment2').value;
       var segment3 = this.salesReportForm.get('segment3').value;
-      var segment4 = this.salesReportForm.get('segment4').value;
+      // var segment4 = this.salesReportForm.get('segment4').value;
+      var segment4 = (this.salesReportForm.get('segment4').value).split('-')
       var segment5 = this.salesReportForm.get('segment5').value;
       const fileName = 'Sales Addon Reconciliation -' +  fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      this.reportService.salesAddonReconciliation(fromDate, toDate, segment1, segment2, segment3, segment4, segment5)
+      this.reportService.salesAddonReconciliation(fromDate, toDate, segment1, segment2, segment3, segment4[0], segment5)
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
           this.dataDisplay = ''
@@ -2166,6 +2185,45 @@ export class SalesReportsComponent implements OnInit {
 
 
 
+  // onOptionsSelectedBranch(segment: any, lType: string) {
+  //   // alert(segment+'----'+lType);
+  //   this.service.getInterBranch(segment, lType).subscribe(
+  //     data => {
+  //       this.branch = data;
+  //       console.log(this.branch);
+  //       if (this.branch != null) {
+  //         if (lType === 'SS_Interbranch') {
+  //           this.lookupValueDesc5 = this.branch.lookupValueDesc;
+  //         }
+  //         if (lType === 'CostCentre') {
+  //           this.lookupValueDesc3 = this.branch.lookupValueDesc;
+  //         }
+  //         if (lType === 'SS_Location') {
+  //           this.lookupValueDesc2 = this.branch.lookupValueDesc;
+  //         }
+  //         if (lType === 'SS_Branch') {
+  //           // this.lookupValueDesc1 = this.branch.lookupValueDesc;
+  //           this.lookupValueDesc1 = this.branch.lookupValueDesc;
+  //           var sellBr = this.BranchList.find(d => d.lookupValue === segment);
+  //           // console.log(sellBr);       
+  //           this.locIdList1 = this.locIdList1.filter((br => br.lookupValue.includes(sellBr.parentValue) || br.lookupValue === "000"));
+  //         }
+  //       }
+  //     }
+  //   );
+
+  // }
+
+  getNaturalAccount($event) {
+    let userId = (<HTMLInputElement>document.getElementById('NaturalAccountFirstWay')).value;
+    this.userList3 = [];
+    if (userId.length > 2) {
+      if ($event.timeStamp - this.lastkeydown3 > 200) {
+        this.userList3 = this.searchFromArray2(this.NaturalAccountList, userId);
+      }
+    }
+  }
+
   onOptionsSelectedBranch(segment: any, lType: string) {
     // alert(segment+'----'+lType);
     this.service.getInterBranch(segment, lType).subscribe(
@@ -2175,6 +2233,11 @@ export class SalesReportsComponent implements OnInit {
         if (this.branch != null) {
           if (lType === 'SS_Interbranch') {
             this.lookupValueDesc5 = this.branch.lookupValueDesc;
+          }
+          if (lType === 'NaturalAccount') {
+            this.lookupValueDesc4 = this.branch.lookupValueDesc;
+            //   // this.GlCodeCombinaionForm.patchValue(this.branch);
+            //  this.accountType=this.branch.accountType;
           }
           if (lType === 'CostCentre') {
             this.lookupValueDesc3 = this.branch.lookupValueDesc;
@@ -2196,15 +2259,29 @@ export class SalesReportsComponent implements OnInit {
   }
 
 
-  getNaturalAccount($event) {
-    let userId = (<HTMLInputElement>document.getElementById('NaturalAccountFirstWay')).value;
-    this.userList3 = [];
-    if (userId.length > 2) {
-      if ($event.timeStamp - this.lastkeydown3 > 200) {
-        this.userList3 = this.searchFromArray2(this.NaturalAccountList, userId);
+
+  onOptionsSelectedNatural(event) {
+    if (event != undefined || event != null) {
+      var naArr = event.split('-');
+      this.lookupValueDesc4 = naArr[1];
+      if (naArr[0].length > 4) {
+        this.service.getInterBranchNewApi(naArr[0]).subscribe(
+          data => {
+            this.InterBrancList = data.obj;
+          })
       }
     }
   }
+
+  // getNaturalAccount($event) {
+  //   let userId = (<HTMLInputElement>document.getElementById('NaturalAccountFirstWay')).value;
+  //   this.userList3 = [];
+  //   if (userId.length > 2) {
+  //     if ($event.timeStamp - this.lastkeydown3 > 200) {
+  //       this.userList3 = this.searchFromArray2(this.NaturalAccountList, userId);
+  //     }
+  //   }
+  // }
 
 
   searchFromArray2(arr, regex) {
@@ -2218,27 +2295,28 @@ export class SalesReportsComponent implements OnInit {
     return matches;
   };
 
-  onOptionsSelectedBranchNew(event) {
-    if (event != undefined) {
-      let selectinterbranch = this.InterBrancList.find(v => v.lookupValue == event);
-      console.log(selectinterbranch);
-      this.lookupValueDesc5 = selectinterbranch.lookupValueDesc;
-    }
-  }
+  // onOptionsSelectedBranchNew(event) {
+  //   if (event != undefined) {
+  //     let selectinterbranch = this.InterBrancList.find(v => v.lookupValue == event);
+  //     console.log(selectinterbranch);
+  //     this.lookupValueDesc5 = selectinterbranch.lookupValueDesc;
+  //   }
+  // }
 
-  onOptionsSelectedNatural(event) {
-    if (event != undefined) {
-      let selectnaturalaccount = this.NaturalAccountList.find(v => v.naturalaccount == event);
-      console.log(selectnaturalaccount);
-      this.lookupValueDesc4 = selectnaturalaccount.description;
-      this.service.getInterBranchNewApi(event).subscribe(
-        data => {
-          this.InterBrancList = data.obj
-        })
-    }
+  // onOptionsSelectedNatural(event) {
+  //   alert(event)
+  //   if (event != undefined) {
+  //     let selectnaturalaccount = this.NaturalAccountList.find(v => v.naturalaccount == event);
+  //     console.log(selectnaturalaccount);
+  //     this.lookupValueDesc4 = selectnaturalaccount.description;
+  //     this.service.getInterBranchNewApi(event).subscribe(
+  //       data => {
+  //         this.InterBrancList = data.obj
+  //       })
+  //   }
 
 
-  }
+  // }
 
 
   onOptionsDepartmentList(event: string) {
