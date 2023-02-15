@@ -992,18 +992,21 @@ a<div class="center">
                                                     </td>
                                                     <div *ngIf="displayManualAP; then thenManualAP; else elseManualAP">
                                                     </div>
-                                                    <ng-template #thenManualAP>
+                                                    
                                                         <td>
+                                                            <ng-template #thenManualAP>
                                                             <button type="submit" class="btn btn-primary"
                                                                 style="width: fit-content;"
                                                                 (click)="roundOffManualAP()">Manual RoundOff</button>
+                                                            </ng-template>
+                                                            <ng-template #elseManualAP>
+                                                            </ng-template>
                                                         </td>
-                                                    </ng-template>
-                                                    <ng-template #elseManualAP>
+                                                   
                                                         <!-- <td>
-                                                            testing
+                                                            <input disabled type="number" formControlName="rounAmt" class="form-control">
                                                         </td> -->
-                                                    </ng-template>
+                                                   
                                                 </tr>
                                             </table>
                                         </ng-template>
@@ -1024,16 +1027,20 @@ a<div class="center">
                                                     </td>
                                                     <div *ngIf="displayManualAP; then thenManualAP; else elseManualAP">
                                                     </div>
-                                                    <ng-template #thenManualAP>
+                                                    
                                                         <td>
+                                                            <ng-template #thenManualAP>
                                                             <button type="submit" class="btn btn-primary"
                                                                 style="width: fit-content;"
                                                                 (click)="roundOffManualAP()">Manual RoundOff</button>
+                                                            </ng-template>
+                                                            <ng-template #elseManualAP>
+                                                            </ng-template>
                                                         </td>
-                                                    </ng-template>
-                                                    <ng-template #elseManualAP>
-                                                        <!-- <td>testing</td> -->
-                                                    </ng-template>
+                                                    
+                                                    <!-- <td>
+                                                        <input disabled type="number" formControlName="rounAmt" class="form-control">
+                                                    </td> -->
                                                 </tr>
                                             </table>
                                         </ng-template>

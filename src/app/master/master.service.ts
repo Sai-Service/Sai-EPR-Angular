@@ -2422,7 +2422,7 @@ public shortLandedClaimSave(rtvRecord) {
   downloadgrrPrint(receiptNo): Observable<any> {
     //  const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica//rcvShipment/POReceipt/${receiptNo}`;
     // local
-    const REQUEST_URI = this.ServerUrl + `//rcvShipment/POReceipt/${receiptNo}`;
+    const REQUEST_URI = this.ServerUrl + `/rcvShipment/POReceipt/${receiptNo}`;
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
