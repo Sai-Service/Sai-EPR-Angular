@@ -304,6 +304,7 @@ export class SalesOrderFormComponent implements OnInit {
   public lineLevelOrderStatusList: any = [];
   lineLevelOrderStatusVehicleList: any = [];
   invItemList1: any[];
+  rtoTypeNameList:any=[];
   public taxCalforItem: any;
   categoryList: any[];
   accountNoSearch: any[];
@@ -638,6 +639,15 @@ export class SalesOrderFormComponent implements OnInit {
           console.log(this.lineLevelOrderStatusList);
         }
       );
+
+      this.orderManagementService.rtoList()
+      .subscribe(
+        data1 => {
+          this.rtoTypeNameList = data1;    
+          console.log(this.rtoTypeNameList);
+        }
+      );
+
 
     this.orderManagementService.lineLevelOrderStatus()
       .subscribe(
