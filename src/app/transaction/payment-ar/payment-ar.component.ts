@@ -853,7 +853,6 @@ if(this.deptId==2){
       this.checkDate = this.pipe.transform(this.now, 'y-MM-dd');
     }
 
-
   }
 
   glPrdValidate(glDt: any) {
