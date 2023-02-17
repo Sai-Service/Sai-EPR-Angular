@@ -1207,7 +1207,7 @@ export class PaymentsComponent implements OnInit {
       // var invNumber = arraybaseNew1[i].docNo;
       var sourceType = arraybaseNew1[i].source;
       var payMethodId= arraybaseNew1[i].paymentMethodId;
-        alert(sourceType +'----'+ payMethodId)
+        // alert(sourceType +'----'+ payMethodId)
       // var methodId = arraybaseNew1[i].receiptMethodId;
       if (sourceType === 'REFUND'|| payMethodId===1905) {
         // alert(invNumber+'In If'+methodId);
