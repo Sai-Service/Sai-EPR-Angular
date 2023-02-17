@@ -740,6 +740,10 @@ export class OrderManagementService {
   }
 
 
+  rtoList(): Observable<any> {
+    return this.http.get(this.ServerUrl + `/cmnLookup/CmnType/rtoType`);
+  }
+
   deallotmentReasonType(): Observable<any> {
     return this.http.get(this.ServerUrl + `/cmnLookup/CmnType/DeallotReason`);
   }

@@ -304,6 +304,7 @@ export class SalesOrderFormComponent implements OnInit {
   public lineLevelOrderStatusList: any = [];
   lineLevelOrderStatusVehicleList: any = [];
   invItemList1: any[];
+  rtoTypeNameList:any=[];
   public taxCalforItem: any;
   categoryList: any[];
   accountNoSearch: any[];
@@ -639,6 +640,15 @@ export class SalesOrderFormComponent implements OnInit {
         }
       );
 
+      this.orderManagementService.rtoList()
+      .subscribe(
+        data1 => {
+          this.rtoTypeNameList = data1;    
+          console.log(this.rtoTypeNameList);
+        }
+      );
+
+
     this.orderManagementService.lineLevelOrderStatus()
       .subscribe(
         data1 => {
@@ -827,6 +837,9 @@ export class SalesOrderFormComponent implements OnInit {
       if (controlinvext1[i].segment == segment && controlinvext1[i].pricingQty != 0) {
         alert('Already Selected this Item. Please Confirm.!');
         return;
+      }
+      if (controlinvext1[i].segment.includes('SUBSIDY')){
+        this.displayLineflowStatusCode.push(true);
       }
     }
     console.log(this.invItemList1);
@@ -1618,8 +1631,10 @@ export class SalesOrderFormComponent implements OnInit {
                   }
                 );
               this.isVisiblemodelDetailsUpdate = true;
+              
             }
             else {
+              // alert('else part')
               for (let i = 0; i < this.lstgetOrderLineDetails.length; i++) {
                 var oeOrderLinesAllList1: FormGroup = this.orderlineDetailsGroup();
                 control.push(oeOrderLinesAllList1);
@@ -1637,6 +1652,8 @@ export class SalesOrderFormComponent implements OnInit {
 
 
                 }
+               
+        
                 if (this.lstgetOrderLineDetails[i].flowStatusCode === 'BOOKED' || this.lstgetOrderLineDetails[i].flowStatusCode === 'ALLOTED') {
                   this.displaytaxCategoryName[i] = true;
                   this.displayLineflowStatusCode[i] = false;
@@ -1654,6 +1671,8 @@ export class SalesOrderFormComponent implements OnInit {
                   if (this.lstgetOrderLineDetails[i].flowStatusCode === 'INVOICED'){
                   this.isVisible4 = true;
                 }
+                // alert(this.lstgetOrderLineDetails[i].segment)
+              
                   this.isVisible3 = false;
                   this.displayLineflowStatusCode[i] = true;
                   this.displayRemoveRow[i] = false;
@@ -1853,6 +1872,14 @@ export class SalesOrderFormComponent implements OnInit {
             // this.SalesOrderBookingForm.get('msRefCustNo').disable();
             // this.SalesOrderBookingForm.get('msRefNo').disable();
             // this.SalesOrderBookingForm.get('msRefType').disable();
+            for (let i =0; i<this.lstgetOrderLineDetails.length;i++){
+           
+            if (this.lstgetOrderLineDetails[i].segment.includes('SUBSIDY')===true){
+              // alert(this.displayLineflowStatusCode)
+              // this.displayLineflowStatusCode.push(true);
+              this.displayLineflowStatusCode[i] = true;
+            }
+          }
           }
         })
 
@@ -2855,16 +2882,19 @@ export class SalesOrderFormComponent implements OnInit {
     // alert(event)
     console.log(event);
     var taxObj = event.target.value;
+    // alert(taxObj)
+    var itemtaxCategoryName= taxObj.substr(taxObj.indexOf(':') + 1, taxObj.length);
+    var itemtaxCategoryName1= itemtaxCategoryName.substr(itemtaxCategoryName.indexOf(' ') + 1, taxObj.length);
+    // alert(itemtaxCategoryName1)
     this.indexVal = i;
     var arrayControl = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value;
     let controlinv = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
     let controlinv2 = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     var baseAmt = arrayControl[i].baseAmt;
     var itemId = arrayControl[i].itemId;
-    let select = this.taxCategoryList[i].find(d => d.taxCategoryName === taxObj);
+    // debugger;
+    let select = this.taxCategoryList[i].find(d => d.taxCategoryName===itemtaxCategoryName1 );
     console.log(this.taxCategoryList[i]);
-
-
     console.log(select);
 
     var taxCategoryId = select.taxCategoryId;
@@ -2876,37 +2906,86 @@ export class SalesOrderFormComponent implements OnInit {
     });
     var diss = 0;
     var sum = 0;
+    var patch = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+    var lineTotAmt = 0;
     if (baseAmt != undefined) {
+      // this.service.taxCalforItem(itemId, taxCategoryId, diss, baseAmt)
+      //   .subscribe(
+      //     (data: any[]) => {
+      //       this.lstgetOrderTaxDetails = data;
+      //       console.log(this.lstgetOrderTaxDetails);
+      //       let controlinv1 = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
+      //       this.TaxDetailsArray().clear();
+      //       // alert(data.length);
+      //       for (let j = 0; j < data.length; j++) {
+      //         var invLnGrp: FormGroup = this.TaxDetailsGroup();
+      //         controlinv1.push(invLnGrp);
+      //         controlinv1.controls[j].patchValue({
+      //           invLineNo: Number(i + 1),
+      //         })
+      //         this.lstgetOrderTaxDetails[j].invLineNo = Number(i + 1);
+      //       }
+      //       //  = Math.round(((baseAmt + sum - disAmt1) + Number.EPSILON) * 100) / 100;
+      //       (controlinv1.controls[i]).patchValue({
+      //         baseAmt: Math.round((baseAmt + Number.EPSILON) * 100) / 100,
+      //         taxAmt: Math.round((sum + Number.EPSILON) * 100) / 100,
+      //         totAmt: Math.round(((baseAmt + sum - diss) + Number.EPSILON) * 100) / 100,
+      //       });
+      //       this.SalesOrderBookingForm.get('taxAmounts').patchValue(data);
+      //       this.invLineNo = Number(i + 1);
+      //       let taxMapData = this.SalesOrderBookingForm.get('taxAmounts').value;
+      //       this.taxMap.set(String(i), this.lstgetOrderTaxDetails);
+      //       //alert('Added to map key '+String(i));
+      //       //this.openTaxDetails(i)
+      //     }
+      //   )
+
       this.service.taxCalforItem(itemId, taxCategoryId, diss, baseAmt)
-        .subscribe(
-          (data: any[]) => {
-            this.lstgetOrderTaxDetails = data;
-            console.log(this.lstgetOrderTaxDetails);
-            let controlinv1 = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
-            this.TaxDetailsArray().clear();
-            // alert(data.length);
-            for (let j = 0; j < data.length; j++) {
-              var invLnGrp: FormGroup = this.TaxDetailsGroup();
-              controlinv1.push(invLnGrp);
-              controlinv1.controls[j].patchValue({
-                invLineNo: Number(i + 1),
-              })
-              this.lstgetOrderTaxDetails[j].invLineNo = Number(i + 1);
+      .subscribe(
+        (data: any[]) => {
+          this.taxCalforItem = data;
+          console.log(this.taxCalforItem);
+
+          for (let i = 0; i < this.taxCalforItem.length; i++) {
+
+            if (this.taxCalforItem[i].totTaxPer != 0) {
+              sum = sum + this.taxCalforItem[i].totTaxAmt
             }
-            //  = Math.round(((baseAmt + sum - disAmt1) + Number.EPSILON) * 100) / 100;
-            (controlinv1.controls[i]).patchValue({
-              baseAmt: Math.round((baseAmt + Number.EPSILON) * 100) / 100,
-              taxAmt: Math.round((sum + Number.EPSILON) * 100) / 100,
-              totAmt: Math.round(((baseAmt + sum - diss) + Number.EPSILON) * 100) / 100,
-            });
-            this.SalesOrderBookingForm.get('taxAmounts').patchValue(data);
-            this.invLineNo = Number(i + 1);
-            let taxMapData = this.SalesOrderBookingForm.get('taxAmounts').value;
-            this.taxMap.set(String(i), this.lstgetOrderTaxDetails);
-            //alert('Added to map key '+String(i));
-            //this.openTaxDetails(i)
           }
-        )
+
+          lineTotAmt = Math.round(((baseAmt + sum - diss) + Number.EPSILON) * 100) / 100;
+          (patch.controls[i]).patchValue({
+            baseAmt: Math.round((baseAmt + Number.EPSILON) * 100) / 100,
+            taxAmt: Math.round((sum + Number.EPSILON) * 100) / 100,
+            totAmt: Math.round(((baseAmt + sum - diss) + Number.EPSILON) * 100) / 100,
+          });
+          let controlinv1 = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
+          let distAmtArray = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+          console.log(controlinv1);
+          this.TaxDetailsArray().clear();
+          for (let i = 0; i < data.length; i++) {
+            var invLnGrp: FormGroup = this.TaxDetailsGroup();
+            controlinv1.push(invLnGrp);
+            (controlinv1.controls[i]).patchValue({
+              invLineNo: Number(i + 1),
+            });
+          }
+          this.SalesOrderBookingForm.get('taxAmounts').patchValue(data);
+          var disValue = data[0].totTaxAmt;
+          if (disValue > 0 && data[0].taxTypeName.includes('Discount')) {
+            patch.controls[i].patchValue({ disAmt: data[0].totTaxAmt });
+          }
+          else {
+            patch.controls[i].patchValue({ disAmt: 0 });
+          }
+          let taxMapData = this.SalesOrderBookingForm.get('taxAmounts').value;
+          var ln: string = String(i);
+          this.taxMap.set(ln, taxMapData);
+          console.log(this.taxMap.get(ln));
+          this.updateTotAmtPerline(i);
+          // this.updateTotAmtPerline(index);
+
+        });
     }
     // }
   }
@@ -2951,6 +3030,9 @@ export class SalesOrderFormComponent implements OnInit {
           return;
         }
       }
+      // debugger;
+
+
       // for (let n=0; n < orderLinesNew1.length; n++){
       // if (orderLinesNew1[n].invType != 'SS_VEHICLE' || orderLinesNew1[n].flowStatusCode != 'INVOICED') {
       //   alert('hiii')
@@ -3625,7 +3707,7 @@ export class SalesOrderFormComponent implements OnInit {
   }
 
 
-  updateLineOnCancel(i) {
+  updateLineOnCancel(i,flowStatusCode) {
     var trxArrVal = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value;
     var trxArr = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     var taxArrVal = this.SalesOrderBookingForm.get('taxAmounts').value;
@@ -3643,6 +3725,14 @@ export class SalesOrderFormComponent implements OnInit {
       }
     }
     this.updateTotAmtPerline(i)
+    // debugger;
+    if (trxArrVal[i].flowStatusCode==='READY FOR INVOICE' && trxArrVal[i].invType === 'SS_VEHICLE'){
+    for (let k=0; k<trxArrVal.length;k++){
+       if (trxArrVal[k].segment.includes('SUBSIDY')){
+         trxArr.controls[k].patchValue({ flowStatusCode: 'READY FOR INVOICE'});
+           }
+     }
+    }
   }
 
   modelDetailsUpdate() {

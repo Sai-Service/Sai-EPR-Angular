@@ -330,12 +330,14 @@ assetAddition(AssetAdditionForm:any){}
         this.suppList=data;
       }
     )
+    
   this.service.NaturalAccountList()
     .subscribe(
       data => {
         this.NaturalAccountList = data;
         console.log(this.NaturalAccountList);
       }
+
     ); this.service.InterBrancList()
       .subscribe(
         data => {

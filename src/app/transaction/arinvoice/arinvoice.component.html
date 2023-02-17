@@ -82,8 +82,10 @@
 <table class="center">
     <fieldset class="RFS">
         <legend id="FormsPH_LGAadhaar" class="RFSL"
-            style="font-size: 10px;color: rgb(238, 101, 101);">&nbsp;
+            style="font-size: 10px;color: rgb(238, 101, 101);">&nbsp;Header&nbsp;
         </legend>
+
+       
     <tr>
         <input hidden type="text" [(ngModel)]="ouId" formControlName="ouId">
         <td style="width: 15%" class="LabelFontStyle1">&nbsp;Source&nbsp;:&nbsp;</td>
@@ -133,12 +135,20 @@
             <!-- <input disabled type="text" formControlName="invoiceDate" class="form-control" [(ngModel)]="invoiceDate"> -->
             <div *ngIf="displayglDate; then thenglDate; else elseglDate"></div>
             <ng-template #thenglDate>
-            <input type="date"  formControlName="invoiceDate" class="form-control"  style="background-color: yellow;"  >
-            </ng-template> 
+            <!-- <input type="date"  formControlName="invoiceDate" class="form-control"  style="background-color: yellow;"  > -->
+            <input type="date"  formControlName="invoiceDate" [(ngModel)]="invoiceDate" class="form-control"  style="background-color: yellow;"  
+            max="{{minDate | date:'yyyy-MM-dd'}}"  (change)="validateDate(invoiceDate,'INV')" >
+        </ng-template> 
             <ng-template #elseglDate>
-                <input  formControlName="invoiceDate" class="form-control" [(ngModel)]="invoiceDate" value="{{invoiceDate | date:'dd-MM-yyyy'}}" style="background-color: yellow;"  >
+                <input  formControlName="invoiceDate" class="form-control" [(ngModel)]="invoiceDate" value="{{invoiceDate | date:'dd-MM-yyyy'}}" style="background-color: yellow;"  
+                max="{{minDate | date:'yyyy-MM-dd'}}" (change)="validateDate(invoiceDate,'INV')" >
             </ng-template>   
         </td>
+
+        <!-- <input   type="date"  formControlName="glDate"  id="glDate" [(ngModel)]="glDate" class="form-control" 
+        max="{{minDate | date:'yyyy-MM-dd'}}" (change)="glPrdValidate(glDate)" > -->
+
+
         <td style="width: 15%" class="LabelFontStyle">&nbsp;Tax&nbsp;:&nbsp;</td>
         <td>
             <input disabled type="text" formControlName="taxAmount" class="form-control">
@@ -158,10 +168,12 @@
                 <!-- glDate open for kiran Sir requirement---Jyotik  value="{{glDate | date:'dd-MM-yyyy'}}"-->
                 <div *ngIf="displayglDate1; then thenglDate1; else elseglDate1"></div>
                 <ng-template #thenglDate1>
-                <input type="date"  formControlName="glDate" class="form-control"  style="background-color: yellow;"  >
+                <input type="date"  formControlName="glDate" [(ngModel)]="glDate" class="form-control"  style="background-color: yellow;" 
+                        max="{{minDate | date:'yyyy-MM-dd'}}" (change)="validateDate(glDate,'GLD')" >
                 </ng-template> 
                 <ng-template #elseglDate1>
-                    <input  formControlName="glDate" class="form-control" [(ngModel)]="glDate" value="{{glDate | date:'dd-MM-yyyy'}}" style="background-color: yellow;"  >
+                    <input  formControlName="glDate" class="form-control" [(ngModel)]="glDate" value="{{glDate | date:'dd-MM-yyyy'}}" style="background-color: yellow;" 
+                       max="{{minDate | date:'yyyy-MM-dd'}}" (change)="validateDate(glDate,'GLD')" >
                 </ng-template>           
             </td>
             <td style="width: 15%" class="LabelFontStyle1">&nbsp;IRN (Y/N)&nbsp;:&nbsp;</td>

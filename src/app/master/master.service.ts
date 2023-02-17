@@ -2298,6 +2298,16 @@ export class MasterService {
     });
   }
 
+  printShortLandClaimdocument(mRtnNumber) {
+    const REQUEST_URI = this.ServerUrl + `/rcvShipment/RTVPrint/${mRtnNumber}`;
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+
+    // http://localhost:8081/rcvShipment/RTVPrint/22221024400558
+  }
 
   getsearchByReceiptNo1(segment1, mLocId): Observable<any> {
     // return this.http.get(this.ServerUrl + `/rcvShipment/receiptNoWise/${segment1}`);
@@ -2412,7 +2422,7 @@ public shortLandedClaimSave(rtvRecord) {
   downloadgrrPrint(receiptNo): Observable<any> {
     //  const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica//rcvShipment/POReceipt/${receiptNo}`;
     // local
-    const REQUEST_URI = this.ServerUrl + `//rcvShipment/POReceipt/${receiptNo}`;
+    const REQUEST_URI = this.ServerUrl + `/rcvShipment/POReceipt/${receiptNo}`;
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
@@ -3732,6 +3742,25 @@ TransactionTypemiscpPaint(): Observable<any> {
     };
     const url = (this.ServerUrl + `/apInv/apInvCancel?invNum=${mInvoiceId}&emplId=${mEmplId}`);
     return this.http.put(url, options);
+
+  }
+
+  distributionLinesIn(invoiceNumber,suppNo,invoiceStatus): Observable<any> {
+    const options = {
+      headers: this.headers
+    };
+    const url = (this.ServerUrl + `/apInv/distLinesBySuppNo?invNum=${invoiceNumber}&suppNo=${suppNo}&invoiceStatus=${invoiceStatus}`);
+    return this.http.get(url, options);
+
+  }
+
+
+  openTDSTabFn(invNum,suppNo,status): Observable<any> {
+    const options = {
+      headers: this.headers
+    };
+    const url = (this.ServerUrl + `/apInv/tdsLines?invNum=${invNum}&suppNo=${suppNo}&invoiceStatus=${status}`);
+    return this.http.get(url, options);
 
   }
 

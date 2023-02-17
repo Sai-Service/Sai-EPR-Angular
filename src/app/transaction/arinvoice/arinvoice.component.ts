@@ -114,6 +114,7 @@ export class ARInvoiceComponent implements OnInit {
   // now = Date.now();
   // new=new Date();
   // public minDate = new Date();
+  public minDate = new Date();
   now = new Date();
   private sub: any;
   // glDate = this.pipe.transform(this.now, 'dd-MM-yyyy')
@@ -2892,6 +2893,23 @@ export class ARInvoiceComponent implements OnInit {
         var printWindow = window.open(url, '', 'width=800,height=500');
         printWindow.open
       })
+  }
+
+  validateDate(date1 ,dType) {
+    var currDate = new Date();
+    var date2 = new Date(date1);
+    if (date2 > currDate) {
+        if(dType==='INV'){
+          alert("INVOICE DATE:" + "Should not be above Today's Date");
+          this.invoiceDate = this.pipe.transform(this.now, 'y-MM-dd');
+        }
+        if(dType==='GLD'){
+          alert("GL DATE:" + "Should not be above Today's Date");
+          this.glDate = this.pipe.transform(this.now, 'y-MM-dd');
+        }
+      
+    }
+
   }
 
 }

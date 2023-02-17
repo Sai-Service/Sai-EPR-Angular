@@ -520,20 +520,22 @@ viewAccounting(event:any){
     if(selPer!=undefined){
    (document.getElementById('postedDatefrm') as HTMLInputElement).setAttribute('min',selPer.startDate);
    (document.getElementById('postedDatefrm') as HTMLInputElement).setAttribute('max',selPer.endDate);
+   this.postedDatefrm=selPer.startDate;
    
   //  (document.getElementById('postedDateto') as HTMLInputElement).setAttribute('min',selPer.startDate);
   //  (document.getElementById('postedDateto') as HTMLInputElement).setAttribute('max',selPer.endDate);
  }
   }
+
   onOptiontoPeriod(event){
 
     var selPer=this.PeriodName.find(d=>d.periodName===event);
-    console.log(selPer.startDate)
+    console.log(selPer.endDate)
     if(selPer!=undefined){
       // alert(selPer.startDate+'---'+selPer.endDate);
    (document.getElementById('postedDateto') as HTMLInputElement).setAttribute('min',selPer.startDate);
    (document.getElementById('postedDateto') as HTMLInputElement).setAttribute('max',selPer.endDate);
-   
+   this.postedDateto=selPer.endDate;
   //  (document.getElementById('postedDateto') as HTMLInputElement).setAttribute('min',selPer.startDate);
   //  (document.getElementById('postedDateto') as HTMLInputElement).setAttribute('max',selPer.endDate);
  }
