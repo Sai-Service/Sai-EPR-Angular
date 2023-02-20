@@ -390,6 +390,7 @@ export class PaymentsComponent implements OnInit {
         invoiceAmt: select.invoiceAmt,
         unPaidAmt: select.invoiceAmt,
         invoiceId: select.invoiceId,
+        invoiceDate :select.invoiceDate,
       });
   }
 
@@ -514,7 +515,8 @@ export class PaymentsComponent implements OnInit {
           dataobj1.controls[i].patchValue({
             'invoiceNum': this.lstsearchpayminvNew[i].invoiceNum,
             'invoiceAmt': this.lstsearchpayminvNew[i].invoiceAmt,
-            'invoiceId': this.lstsearchpayminvNew[i].invoiceId
+            'invoiceId': this.lstsearchpayminvNew[i].invoiceId,
+            'invoiceDate': this.lstsearchpayminvNew[i].invoiceDate
           });
           dataobj1.controls[i].get('invoiceAmt').disable();
         }
