@@ -427,8 +427,8 @@ export class PayableInvoiceNewComponent implements OnInit {
   dataDisplay: any;
   progress = 0;
   taxCategoryId1: number;
-  rounAmt:number;
-
+  rounAmt=0;
+  
   constructor(private fb: FormBuilder, private router1: ActivatedRoute, private orderManagementService: OrderManagementService, private transactionService: TransactionService, private service: MasterService, private router: Router) {
     this.poInvoiceForm = fb.group({
       emplId: [],
@@ -1258,6 +1258,7 @@ export class PayableInvoiceNewComponent implements OnInit {
       );
   }
 
+  
 
   selectINVLineDtl(index) {
     // alert(index+'----'+suppNo);
@@ -1597,8 +1598,9 @@ export class PayableInvoiceNewComponent implements OnInit {
             }
             // alert('data.invoiceStatus' + data.invoiceStatus);
             // debugger;
+            // alert(data.invoiceStatus)
             if (data.invoiceStatus === '' || data.invoiceStatus === null || data.invoiceStatus === undefined) {
-              // alert(data.invoiceStatus);
+              // alert(data.invoiceStatus+'----if');
               this.isVisibleSave = false;
               this.isVisibleUpdateBtn = true;
               this.isVisibleValidate = true;
@@ -1674,8 +1676,8 @@ export class PayableInvoiceNewComponent implements OnInit {
             if (arraybaseNew1[index].segment1 != undefined || arraybaseNew1[index].segment1 != null || arraybaseNew1[index].segment1 != '') {
               // this.poInvoiceForm.disable();
             }
-           
-            if (data.invoiceStatus === 'Unpaid' || data.invoiceStatus === 'Validated') {
+          //  alert(data.invoiceStatus+'----Unpaind')
+            if (data.invoiceStatus === 'Unpaid' || data.invoiceStatus === 'Validated' || data.invoiceStatus===undefined) {
               this.isVisibleCancel = true;
             }
             else {
@@ -1700,13 +1702,17 @@ export class PayableInvoiceNewComponent implements OnInit {
             if (arraybaseNew1[index].segment != null || arraybaseNew1[index].segment != undefined || arraybaseNew1[index].segment != '') {
               // this.poInvoiceForm.disable();
             }
-            // for (let l=0;l<data.invLines.length;l++){
-            //   var desc= data.invLines[l].description.toUpperCase();;
-            //   // 
-            //   if (desc.includes('ROUNDING') == false){
-            //   rounAmt =Math.round(((rounAmt + data.invLines[l].amount) + Number.EPSILON) * 100) / 100;
-            // }
-            // }
+            for (let l=0;l<data.invLines.length;l++){
+              var desc= data.invLines[l].description.toUpperCase();;
+              // alert(desc)
+              // debugger;
+              if (desc.includes('ROUNDING') == false){
+              this.rounAmt =Math.round(((this.rounAmt + data.invLines[l].amount) + Number.EPSILON) * 100) / 100;
+              this.rounAmt=this.rounAmt;
+              // alert(this.rounAmt)
+            }
+           
+            }
             this.updateTDSTotAmtPerline1();
           
           }
@@ -3975,7 +3981,9 @@ export class PayableInvoiceNewComponent implements OnInit {
 
   distrbutionGlDate(event) {
     // alert(event.target.value);
+    
     var headerGlDate = event.target.value;
+    this.validateDate(headerGlDate,'GLD')
     var patch = this.poInvoiceForm.get('invLines') as FormArray;
     (patch.controls[0]).patchValue(
       {
@@ -4191,6 +4199,27 @@ export class PayableInvoiceNewComponent implements OnInit {
       data => {
         this.balData = data;
       })
+  }
+
+
+  validateDate(date1 ,dType) {
+    alert(date1)
+    var currDate = new Date();
+    var date2 = new Date(date1);
+    if (date2 > currDate) {
+        if(dType==='INV'){
+          alert("INVOICE DATE:" + "Should not be above Today's Date");
+          this.invoiceDate = this.pipe.transform(this.now, 'y-MM-dd');
+          return;
+        }
+        if(dType==='GLD'){
+          alert("GL DATE:" + "Should not be above Today's Date");
+          this.glDate = this.pipe.transform(this.now, 'y-MM-dd');
+          return;
+        }
+      
+    }
+
   }
 
 }
