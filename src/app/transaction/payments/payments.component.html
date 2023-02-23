@@ -456,14 +456,15 @@
                                 style="width:30%;border-collapse:collapse;">
                                 <thead>
                                     <tr class="GridHeader">
-                                        <th scope="col">Select</th>
-                                        <th scope="col">Invoice Number</th>
+                                        <th style="width:50px"   scope="col">Select</th>
+                                        <th style="width:200px"  scope="col">Invoice&nbsp;Number</th>
                                         <!-- <th scope="col">Invoice Amount</th> -->
-                                        <th scope="col">Payment Amount</th>
+                                        <th style="width:150px"  scope="col">Payment&nbsp;Amount</th>
                                         <!-- <th scope="col">Discount Amount</th> -->
-                                        <th scope="col">Unpaid Amount</th>
+                                        <th style="width:150px"  scope="col">Unpaid&nbsp;Amount</th>
                                         <!-- <th scope="col">Save</th> -->
                                         <!-- <th scope="col">Discount Available</th> -->
+                                        <th style="width:150px"  scope="col">Invoice&nbsp;Date</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -484,7 +485,7 @@
                                                     <input disabled type="text" class="form-control"
                                                         formControlName="invoiceNum" value={{invoiceNum}}
                                                         (change)="changeAmount()"
-                                                        style="width: 100px;height: 25px;font-size: 10px;">
+                                                        style="width: 150px;height: 25px;font-size: 10px;">
                                                 </td>
                                                 <!-- <td>
                             {{group.invoiceAmt}} -->
@@ -493,13 +494,19 @@
                                                 <td>
                                                     <input type="text" class="form-control" formControlName="invoiceAmt"
                                                         value={{invoiceAmt}} (change)="changeAmount(k)"
-                                                        style="width: 100px;height: 25px;font-size: 10px;text-align: right;">
+                                                        style="width: 150px;height: 25px;font-size: 10px;text-align: right;">
                                                 </td>
 
                                                 <td>
                                                     <input disabled type="text" class="form-control"
                                                         formControlName="unPaidAmt" value={{unPaidAmt}}
-                                                        style="width: 100px;height: 25px;font-size: 10px;text-align: right;">
+                                                        style="width: 150px;height: 25px;font-size: 10px;text-align: right;">
+                                                </td>
+
+                                                <td>
+                                                    <input disabled type="text" class="form-control"
+                                                        formControlName="invoiceDate" value={{invoiceDate}}
+                                                        style="width: 150px;height: 25px;font-size: 10px;text-align: right;">
                                                 </td>
                                                 <!-- <td>
                             <button class="btn-primary"><i class="fas fa-save"></i></button>
