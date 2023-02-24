@@ -148,6 +148,7 @@ export class IFinanaceExchangeForm {
   financerName: string;
   financeAmt: number;
   emi: number;
+  rsnCode:string;
   tenure: number;
   csdDate: Date;
   csdIndexNo: number;
@@ -405,6 +406,7 @@ export class SalesOrderFormComponent implements OnInit {
   DepartmentListNew:any=[];
   public BillShipToList: Array<string> = [];
   isVisibledeptAndLocation:boolean=false;
+  OrderCancelledList:any = [];
 
   constructor(private fb: FormBuilder, private router1: ActivatedRoute, private location: Location, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService) {
     this.SalesOrderBookingForm = fb.group({
@@ -426,6 +428,8 @@ export class SalesOrderFormComponent implements OnInit {
       exchangeYN: ['', [Validators.required]],
       priceListHeaderId: [''],
       taxiYN: [''],
+      rsnCode:[],
+      deptId:[],
       basicValue: [''],
       weddingDate: [''],
       attribute17: ['', [Validators.required]],
@@ -3797,8 +3801,7 @@ export class SalesOrderFormComponent implements OnInit {
 
     if(resp==true) {
     
-    var rsnCode = this.SalesOrderBookingForm.get('orderCancelrsnCode').value;
-
+    var rsnCode = this.SalesOrderBookingForm.get('rsnCode').value;
     if(rsnCode==null || rsnCode==undefined || rsnCode.trim()=='') {
       alert ("REASON CODE : Please enter Order Cancellation Reaseon...");
     return;
@@ -3816,5 +3819,13 @@ export class SalesOrderFormComponent implements OnInit {
       });
     }
   }
-
+  cancelledSalesOrderBtn(){
+    // alert('hi')
+    this.orderManagementService.OrderCanceList()
+    .subscribe(
+      data => {
+        this.OrderCancelledList = data;
+      }
+    );    
+  }
 }

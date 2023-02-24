@@ -1898,6 +1898,7 @@ export class PayableInvoiceNewComponent implements OnInit {
         data => {
           if (data.code == 200) {
             alert(data.message);
+            window.location.reload();
             this.isVisibleCancel = false;
           }
           else if (data.code === 400) {

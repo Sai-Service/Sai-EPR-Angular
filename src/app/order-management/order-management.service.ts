@@ -563,6 +563,12 @@ export class OrderManagementService {
     return this.http.put(url, options);
   }
 
+
+  OrderCanceList(): Observable<any> {
+    return this.http.get(this.ServerUrl + '/cmnLookup/CmnType/SalesOrderCancelledReason');
+  }
+
+
   // ////////////////************Order Payment Receipt **************//////////////////
   PaymentModeList(): Observable<any> {
     return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/PayType');
