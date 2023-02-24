@@ -4203,7 +4203,7 @@ export class PayableInvoiceNewComponent implements OnInit {
 
 
   validateDate(date1 ,dType) {
-    alert(date1)
+    // alert(date1)
     var currDate = new Date();
     var date2 = new Date(date1);
     if (date2 > currDate) {
