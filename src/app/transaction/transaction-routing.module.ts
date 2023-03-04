@@ -98,6 +98,7 @@ const routes: Routes = [
  {path:'ReturnToVendor',component:ReturnToVendorComponent},
  {path:'InterState',component:InterStateComponent},
  {path:'CashBankTransfer',component:CashBankTransferComponent},
+ {path:'CashBankTransfer/:mDocNo',component:CashBankTransferComponent},
  {path:'SubInventoryTransfer',component:SubinventoryTransferComponent},
  {path:'BulkUploadWithCsv',component:BulkUploadWithCsvComponent},
  {path:'BulkItemUploadCSV',component:BulkItemUploadCSVComponent},

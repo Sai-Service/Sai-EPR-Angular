@@ -486,7 +486,7 @@
                                 <tr>
                                     <td style="width: 15%" class="LabelFontStyle1">RTO&nbsp;Location&nbsp;</td>
                                     <td>
-                                        <!-- <select formControlName="attribute17" id="attribute17" class="form-control"
+                                         <!-- <select formControlName="attribute17" id="attribute17" class="form-control"
                                             style="width: 170px;">
                                             <option>--Select--</option>
                                             <option value="PMC">PMC</option>
@@ -494,7 +494,7 @@
                                             <option value="LOWER PAREL">LOWER PAREL</option>
                                             <option value="CRTM">CRTM</option>
                                             <option value="VASHI">VASHI</option>
-                                        </select> -->
+                                        </select>  -->
                                         <select formControlName="attribute17" id="attribute17" class="form-control" style="width: 170px;">
                                         <option>--Select--</option>
                                         <option *ngFor="let rt of rtoTypeNameList">
@@ -1596,7 +1596,7 @@
                     <fieldset class="RFS" style="height: 300px;">
                         <table>
                             <tr>
-                                <td style="width: 15%" class="LabelFontStyle">
+                                <!-- <td style="width: 15%" class="LabelFontStyle">
                                     TCS&nbsp;:&nbsp;
                                 </td>
                                 <td>
@@ -1605,8 +1605,12 @@
                                         <option value="true">Yes</option>
                                         <option value="false">No</option>
                                     </select>
+                                </td> -->
+                                <td colspan="4">
+                                    <input disabled type="text" formControlName="tcs"
+                                    [(ngModel)]='tcs' value={{tcs}} class="form-control"
+                                    style="width: 100%;color: blue;font-weight: bolder;">
                                 </td>
-                            
                                 <td style="width: 15%" class="LabelFontStyle"> </td>
                                 <td style="width: 15%" class="LabelFontStyle"> </td>
                                 <td style="width: 15%" class="LabelFontStyle"> </td>

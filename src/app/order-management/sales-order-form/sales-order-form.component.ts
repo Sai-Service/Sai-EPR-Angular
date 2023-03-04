@@ -148,7 +148,7 @@ export class IFinanaceExchangeForm {
   financerName: string;
   financeAmt: number;
   emi: number;
-  rsnCode:string;
+  rsnCode: string;
   tenure: number;
   csdDate: Date;
   csdIndexNo: number;
@@ -204,14 +204,15 @@ export class SalesOrderFormComponent implements OnInit {
   offerPrice: string;
   custOuId: number;
   loginOuId1: number;
-  tcs = false;
+  // tcs = false;
+  tcs: string;
   selectedLine = 0;
   invLineItemId: number;
   lstInvLineDeatails1: any[];
   indexVal: number;
   allDatastore: any;
   activeLineNo: number = 1;
-  pfOrderNo:string;
+  pfOrderNo: string;
   divisionName: string;
   dept: number;
   poLineTax: number;
@@ -305,11 +306,11 @@ export class SalesOrderFormComponent implements OnInit {
   public lineLevelOrderStatusList: any = [];
   lineLevelOrderStatusVehicleList: any = [];
   invItemList1: any[];
-  rtoTypeNameList:any=[];
+  rtoTypeNameList: any = [];
   public taxCalforItem: any;
   categoryList: any[];
   accountNoSearch: any[];
-  orderList:any[];
+  orderList: any[];
   public addonDescList: any[];
   lstgetOrderLineDetails: any[];
   lstgetOrderTaxDetails: any[];
@@ -317,7 +318,7 @@ export class SalesOrderFormComponent implements OnInit {
   displayaccountNo = true;
   displayAllButtons = true;
   displaycustAccountNo = true;
-  displaypfOrderNo=true;
+  displaypfOrderNo = true;
   currentOpration: string;
   displayVehicleDetails = true;
   displayCreateOrderButton = false;
@@ -388,7 +389,7 @@ export class SalesOrderFormComponent implements OnInit {
   isVisibleCSDDetails: boolean = false;
   isVisiblecancelledSalesOrder: boolean = false;
 
-  mdlDtlUpdButton=false;
+  mdlDtlUpdButton = false;
   closeResetButton = true;
   dataDisplay: any;
   progress = 0;
@@ -401,12 +402,12 @@ export class SalesOrderFormComponent implements OnInit {
   pipe = new DatePipe('en-US');
   now = Date.now();
   csdDate = this.pipe.transform(Date.now(), 'y-MM-dd');
-  orderCancelrsnCode :string;
+  orderCancelrsnCode: string;
   public DepartmentList: any = [];
-  DepartmentListNew:any=[];
+  DepartmentListNew: any = [];
   public BillShipToList: Array<string> = [];
-  isVisibledeptAndLocation:boolean=false;
-  OrderCancelledList:any = [];
+  isVisibledeptAndLocation: boolean = false;
+  OrderCancelledList: any = [];
 
   constructor(private fb: FormBuilder, private router1: ActivatedRoute, private location: Location, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService) {
     this.SalesOrderBookingForm = fb.group({
@@ -420,7 +421,7 @@ export class SalesOrderFormComponent implements OnInit {
       csdIndexNo: [''],
       csdDate: [''],
       csdPoNo: [''],
-      pfOrderNo:[''],
+      pfOrderNo: [''],
       lesseeContactNo: [''],
       exShowRoomPrice: [0],
       totalPaidAmt: [0],
@@ -428,8 +429,8 @@ export class SalesOrderFormComponent implements OnInit {
       exchangeYN: ['', [Validators.required]],
       priceListHeaderId: [''],
       taxiYN: [''],
-      rsnCode:[],
-      deptId:[],
+      rsnCode: [],
+      deptId: [],
       basicValue: [''],
       weddingDate: [''],
       attribute17: ['', [Validators.required]],
@@ -500,7 +501,7 @@ export class SalesOrderFormComponent implements OnInit {
       gstNo: [''],
       panNo: [''],
       tcs: [''],
-      orderCancelrsnCode:[],
+      orderCancelrsnCode: [],
       oeOrderLinesAllList: this.fb.array([this.orderlineDetailsGroup()]),
       taxAmounts: this.fb.array([this.TaxDetailsGroup()])
     })
@@ -644,10 +645,10 @@ export class SalesOrderFormComponent implements OnInit {
         }
       );
 
-      this.orderManagementService.rtoList()
+    this.orderManagementService.rtoList()
       .subscribe(
         data1 => {
-          this.rtoTypeNameList = data1;    
+          this.rtoTypeNameList = data1;
           console.log(this.rtoTypeNameList);
         }
       );
@@ -776,35 +777,35 @@ export class SalesOrderFormComponent implements OnInit {
 
 
 
-      if (Number(sessionStorage.getItem('deptId'))===4){
-        this.isVisibledeptAndLocation=true;
-        this.service.getLocationSearch1(sessionStorage.getItem('ouId'))
-      .subscribe(
-        data => {
-          this.BillShipToList = data;
-        }
-      );
+    if (Number(sessionStorage.getItem('deptId')) === 4) {
+      this.isVisibledeptAndLocation = true;
+      this.service.getLocationSearch1(sessionStorage.getItem('ouId'))
+        .subscribe(
+          data => {
+            this.BillShipToList = data;
+          }
+        );
 
       this.service.DepartmentListNew()
-      .subscribe(
-        data => {
-          this.DepartmentListNew = data;
-          let createOrderList = this.DepartmentListNew.filter((dept) => (dept.divisionId==2));
-          console.log(createOrderList);
-          let createOrderListSales = this.DepartmentListNew.filter((dept) => (dept.code=='Sales'));
-          console.log(createOrderListSales);   
-         this.DepartmentList= createOrderListSales;       
-        }
-      );
-      }
-      else{
-        this.isVisibledeptAndLocation=false;
-      }
+        .subscribe(
+          data => {
+            this.DepartmentListNew = data;
+            let createOrderList = this.DepartmentListNew.filter((dept) => (dept.divisionId == 2));
+            console.log(createOrderList);
+            let createOrderListSales = this.DepartmentListNew.filter((dept) => (dept.code == 'Sales'));
+            console.log(createOrderListSales);
+            this.DepartmentList = createOrderListSales;
+          }
+        );
+    }
+    else {
+      this.isVisibledeptAndLocation = false;
+    }
 
   }
 
 
- 
+
   // this.lstgetOrderLineDetails[i].segment,,this.allDatastore.taxCategoryName,this.allDatastore.priceListId,i
   onGstPersantage(custtaxCategoryName, taxPercentage, itemtaxCategotyName, k) {
     // alert(itemtaxCategotyName)
@@ -842,7 +843,7 @@ export class SalesOrderFormComponent implements OnInit {
         alert('Already Selected this Item. Please Confirm.!');
         return;
       }
-      if (controlinvext1[i].segment.includes('SUBSIDY')){
+      if (controlinvext1[i].segment.includes('SUBSIDY')) {
         this.displayLineflowStatusCode.push(true);
       }
     }
@@ -1021,7 +1022,7 @@ export class SalesOrderFormComponent implements OnInit {
   onOptionsSelectedCategory(orderType: string, lnNo: number) {
     this.invType = orderType;
 
-   
+
 
 
     // this.flowStatusCode='BOOKED';
@@ -1038,8 +1039,8 @@ export class SalesOrderFormComponent implements OnInit {
     let controlinv = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     var variant = this.SalesOrderBookingForm.get('variant').value;
 
-    if (orderType ==='SS_ADDON_EW') {
-      alert("Invoice Type : " +orderType + " Not allowed here..");
+    if (orderType === 'SS_ADDON_EW') {
+      alert("Invoice Type : " + orderType + " Not allowed here..");
       (controlinv.controls[lnNo]).patchValue({ 'invType': '--Select--' });
       return;
     }
@@ -1088,7 +1089,7 @@ export class SalesOrderFormComponent implements OnInit {
     if (Number(sessionStorage.getItem('divisionId')) === 2) {
       var model = this.SalesOrderBookingForm.get('model').value;
       var variant = this.SalesOrderBookingForm.get('variant').value;
-      var custAcctNo=this.SalesOrderBookingForm.get('accountNo').value;
+      var custAcctNo = this.SalesOrderBookingForm.get('accountNo').value;
       this.orderManagementService.dealerShipBaseAmtNew(model, variant, color, sessionStorage.getItem('ouId'))
         .subscribe(
           data => {
@@ -1100,11 +1101,11 @@ export class SalesOrderFormComponent implements OnInit {
             }
           }
         );
-          // alert(this.accountNo);
-        this.orderManagementService.proformaList(color,model,variant,custAcctNo)
+      // alert(this.accountNo);
+      this.orderManagementService.proformaList(color, model, variant, custAcctNo)
         .subscribe(
           data => {
-            this.orderList=data;
+            this.orderList = data;
           }
         );
     }
@@ -1128,11 +1129,11 @@ export class SalesOrderFormComponent implements OnInit {
   onOptionsSelectedVariant(mainModel) {
     // if (this.currentOpration != 'orderSearch') {
     // alert('mainModel')
-    this.VariantSearch=null;
-    this.ColourSearch=null;
+    this.VariantSearch = null;
+    this.ColourSearch = null;
     this.SalesOrderBookingForm.get('variant').reset();
     this.SalesOrderBookingForm.get('color').reset();
-   
+
     this.orderManagementService.VariantSearchFn(mainModel)
       .subscribe(
         data => {
@@ -1481,7 +1482,7 @@ export class SalesOrderFormComponent implements OnInit {
       } else {
         if (res.code === 400) {
           this.isDisabled = true;
-          alert(res.message+' '+ res.obj);
+          alert(res.message + ' ' + res.obj);
           this.dataDisplay = 'Order Creation Failed...!'
           this.closeResetButton = true;
           // this.SalesOrderBookingForm.reset();
@@ -1505,7 +1506,7 @@ export class SalesOrderFormComponent implements OnInit {
     this.isDisabled3 = true;
     this.isDisabled4 = true;
     this.isDisabled8 = false;
-    this.displaypfOrderNo=false;
+    this.displaypfOrderNo = false;
     // this.isDisabledOrderFind=false;
     this.isDisabledlesseeCustName = true;
     this.currentOpration = 'orderSearch';
@@ -1556,18 +1557,17 @@ export class SalesOrderFormComponent implements OnInit {
                   }
                 );
             }
-            if (data.obj.orderStatus==='CANCELLED' || data.obj.orderStatus==='CLOSED'){
-              this.isVisible6=false;
+            if (data.obj.orderStatus === 'CANCELLED' || data.obj.orderStatus === 'CLOSED') {
+              this.isVisible6 = false;
             }
             if (data.obj.orderStatus === 'INVOICED') {
               if (Number(sessionStorage.getItem('deptId')) != 4) {
                 this.isVisible2 = true;
               }
             }
-        
+
             if (Number(sessionStorage.getItem('deptId')) == 4) {
-              if (data.obj.orderStatus != 'INVOICED'&& data.obj.flowStatusCode !='CANCELLED')
-                {
+              if (data.obj.orderStatus != 'INVOICED' && data.obj.flowStatusCode != 'CANCELLED') {
                 this.isVisiblecancelledSalesOrder = true;
               }
 
@@ -1588,7 +1588,7 @@ export class SalesOrderFormComponent implements OnInit {
                   }
                 );
             }
-            if(data.obj.msRefNo!=''){
+            if (data.obj.msRefNo != '') {
               this.SalesOrderBookingForm.get('msRefNo').disable();
             }
             let control = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
@@ -1635,7 +1635,7 @@ export class SalesOrderFormComponent implements OnInit {
                   }
                 );
               this.isVisiblemodelDetailsUpdate = true;
-              
+
             }
             else {
               // alert('else part')
@@ -1656,8 +1656,8 @@ export class SalesOrderFormComponent implements OnInit {
 
 
                 }
-               
-        
+
+
                 if (this.lstgetOrderLineDetails[i].flowStatusCode === 'BOOKED' || this.lstgetOrderLineDetails[i].flowStatusCode === 'ALLOTED') {
                   this.displaytaxCategoryName[i] = true;
                   this.displayLineflowStatusCode[i] = false;
@@ -1672,11 +1672,11 @@ export class SalesOrderFormComponent implements OnInit {
                 }
                 if (this.lstgetOrderLineDetails[i].flowStatusCode === 'CANCELLED' || this.lstgetOrderLineDetails[i].flowStatusCode === 'DE-ALLOTED') {
                   this.isDisabledtaxbtn[i] = true;
-                  if (this.lstgetOrderLineDetails[i].flowStatusCode === 'INVOICED'){
-                  this.isVisible4 = true;
-                }
-                // alert(this.lstgetOrderLineDetails[i].segment)
-              
+                  if (this.lstgetOrderLineDetails[i].flowStatusCode === 'INVOICED') {
+                    this.isVisible4 = true;
+                  }
+                  // alert(this.lstgetOrderLineDetails[i].segment)
+
                   this.isVisible3 = false;
                   this.displayLineflowStatusCode[i] = true;
                   this.displayRemoveRow[i] = false;
@@ -1730,7 +1730,7 @@ export class SalesOrderFormComponent implements OnInit {
                   console.log(lineLevelOrderStatusListVehicle1);
                   this.lineLevelOrderStatusList = lineLevelOrderStatusListVehicle1;
                 }
-                if (this.lstgetOrderLineDetails[i].flowStatusCode === 'INVOICED'  ) {
+                if (this.lstgetOrderLineDetails[i].flowStatusCode === 'INVOICED') {
                   this.isVisible4 = true;
                   this.isVisible3 = false;
                   // this.isVisiblemodelDetailsUpdate = false;
@@ -1876,14 +1876,14 @@ export class SalesOrderFormComponent implements OnInit {
             // this.SalesOrderBookingForm.get('msRefCustNo').disable();
             // this.SalesOrderBookingForm.get('msRefNo').disable();
             // this.SalesOrderBookingForm.get('msRefType').disable();
-            for (let i =0; i<this.lstgetOrderLineDetails.length;i++){
-           
-            if (this.lstgetOrderLineDetails[i].segment.includes('SUBSIDY')===true){
-              // alert(this.displayLineflowStatusCode)
-              // this.displayLineflowStatusCode.push(true);
-              this.displayLineflowStatusCode[i] = true;
+            for (let i = 0; i < this.lstgetOrderLineDetails.length; i++) {
+
+              if (this.lstgetOrderLineDetails[i].segment.includes('SUBSIDY') === true) {
+                // alert(this.displayLineflowStatusCode)
+                // this.displayLineflowStatusCode.push(true);
+                this.displayLineflowStatusCode[i] = true;
+              }
             }
-          }
           }
         })
 
@@ -1900,7 +1900,7 @@ export class SalesOrderFormComponent implements OnInit {
   }
 
 
-  OrdermsRefNoFind(msRefNo){
+  OrdermsRefNoFind(msRefNo) {
     // alert(msRefNo);
     this.displaySalesLines = false;
     this.displayAllButtons = false;
@@ -1909,7 +1909,7 @@ export class SalesOrderFormComponent implements OnInit {
     this.isDisabled3 = true;
     this.isDisabled4 = true;
     this.isDisabled8 = false;
-    this.displaypfOrderNo=false;
+    this.displaypfOrderNo = false;
     // this.isDisabledOrderFind=false;
     this.isDisabledlesseeCustName = true;
     this.currentOpration = 'orderSearch';
@@ -1918,725 +1918,723 @@ export class SalesOrderFormComponent implements OnInit {
     this.emplId = Number(sessionStorage.getItem('emplId'))
     this.orderlineDetailsArray().clear();
     this.TaxDetailsArray().clear();
-    if (Number(sessionStorage.getItem('deptId'))!=4){
-    this.orderManagementService.getsearchBymsRefNo(Number(sessionStorage.getItem('deptId')),Number(sessionStorage.getItem('locId')),msRefNo)
-      .subscribe(
-        data => {
-          if (data != null) {
-            this.lstgetOrderLineDetails = data.obj.oeOrderLinesAllList;
-            this.lstgetOrderTaxDetails = data.obj.taxAmounts;
-            this.allDatastore = data.obj;
-            var colorCode = data.obj.color;
-            this.SalesOrderBookingForm.patchValue({ billToAddress: data.obj.custAddress });
-            this.SalesOrderBookingForm.patchValue({ shipToAddress: data.obj.custAddress });
-            this.SalesOrderBookingForm.patchValue({ priceListHeaderId: data.obj.priceListId });
-            this.SalesOrderBookingForm.patchValue({ custTaxCat: data.obj.taxCategoryName });
-            this.SalesOrderBookingForm.patchValue({ fuelType: data.obj.fuelType });
-            this.SalesOrderBookingForm.patchValue({ name: data.obj.billLocName });
-            var balPay = Math.round(((data.obj.balancePay) + Number.EPSILON) * 100) / 100;
-            this.SalesOrderBookingForm.patchValue({ balancePay: balPay });
-            this.panNo = data.obj.custPan;
-            this.gstNo = data.obj.custGst;
-            // this.SalesOrderBookingForm.get('custPoDate').disable();
-            //   if (Number(sessionStorage.getItem('deptId'))!=4){
-            //   this.isVisible6 = true;
-            // }
-            this.isVisible6 = true;
-            if (data.obj.financeType != 'None') {
-              this.DisplayfinanceSelectionYes = false;
-              this.DisplayfinanceSelectionYes1 = false;
-              // this.SalesOrderBookingForm.patchValue({ financerName: data.obj.financerName });
-              this.SalesOrderBookingForm.patchValue({ financeAmt: data.obj.financeAmt });
-              this.SalesOrderBookingForm.patchValue({ tenure: data.obj.tenure });
-              this.SalesOrderBookingForm.patchValue({ emi: data.obj.emi });
-              this.SalesOrderBookingForm.patchValue({ downPayment: data.obj.emi });
-              this.orderManagementService.finananceList(data.obj.financeType, sessionStorage.getItem('divisionId'))
-                .subscribe(
-                  (res: any = []) => {
-                    this.financerNameList = res;
-                    console.log(this.financerNameList);
-                    let selectColo = this.financerNameList.find(d => d.codeDesc === data.obj.financerName);
-                    console.log(selectColo.codeDesc);
-                    this.SalesOrderBookingForm.patchValue({ financerName: selectColo.codeDesc })
-                  }
-                );
-            }
-            if (data.obj.orderStatus === 'INVOICED') {
-              if (Number(sessionStorage.getItem('deptId')) != 4) {
-                this.isVisible2 = true;
+    if (Number(sessionStorage.getItem('deptId')) != 4) {
+      this.orderManagementService.getsearchBymsRefNo(Number(sessionStorage.getItem('deptId')), Number(sessionStorage.getItem('locId')), msRefNo)
+        .subscribe(
+          data => {
+            if (data != null) {
+              this.lstgetOrderLineDetails = data.obj.oeOrderLinesAllList;
+              this.lstgetOrderTaxDetails = data.obj.taxAmounts;
+              this.allDatastore = data.obj;
+              var colorCode = data.obj.color;
+              this.SalesOrderBookingForm.patchValue({ billToAddress: data.obj.custAddress });
+              this.SalesOrderBookingForm.patchValue({ shipToAddress: data.obj.custAddress });
+              this.SalesOrderBookingForm.patchValue({ priceListHeaderId: data.obj.priceListId });
+              this.SalesOrderBookingForm.patchValue({ custTaxCat: data.obj.taxCategoryName });
+              this.SalesOrderBookingForm.patchValue({ fuelType: data.obj.fuelType });
+              this.SalesOrderBookingForm.patchValue({ name: data.obj.billLocName });
+              var balPay = Math.round(((data.obj.balancePay) + Number.EPSILON) * 100) / 100;
+              this.SalesOrderBookingForm.patchValue({ balancePay: balPay });
+              this.panNo = data.obj.custPan;
+              this.gstNo = data.obj.custGst;
+              // this.SalesOrderBookingForm.get('custPoDate').disable();
+              //   if (Number(sessionStorage.getItem('deptId'))!=4){
+              //   this.isVisible6 = true;
+              // }
+              this.isVisible6 = true;
+              if (data.obj.financeType != 'None') {
+                this.DisplayfinanceSelectionYes = false;
+                this.DisplayfinanceSelectionYes1 = false;
+                // this.SalesOrderBookingForm.patchValue({ financerName: data.obj.financerName });
+                this.SalesOrderBookingForm.patchValue({ financeAmt: data.obj.financeAmt });
+                this.SalesOrderBookingForm.patchValue({ tenure: data.obj.tenure });
+                this.SalesOrderBookingForm.patchValue({ emi: data.obj.emi });
+                this.SalesOrderBookingForm.patchValue({ downPayment: data.obj.emi });
+                this.orderManagementService.finananceList(data.obj.financeType, sessionStorage.getItem('divisionId'))
+                  .subscribe(
+                    (res: any = []) => {
+                      this.financerNameList = res;
+                      console.log(this.financerNameList);
+                      let selectColo = this.financerNameList.find(d => d.codeDesc === data.obj.financerName);
+                      console.log(selectColo.codeDesc);
+                      this.SalesOrderBookingForm.patchValue({ financerName: selectColo.codeDesc })
+                    }
+                  );
               }
-            }
-            if (data.obj.orderStatus==='CANCELLED' || data.obj.orderStatus==='CLOSED'){
-              this.isVisible6=false;
-            }
-            if (Number(sessionStorage.getItem('deptId')) == 4) {
-              if (data.obj.orderStatus != 'INVOICED'&& data.obj.flowStatusCode !='CANCELLED')
-                {
-                this.isVisiblecancelledSalesOrder = true;
-              }
-
-            }
-            if (data.obj.flowStatusCode === 'CLOSED') {
-              this.isVisible2 = false;
-              this.isVisible6 = false;
-              this.isDisabled6 = true;
-            }
-            if (data.obj.exchangeYN === 'Y') {
-              this.Displayexchange = false;
-              this.Displayexchange1 = false;
-              this.service.truValueListFn()
-                .subscribe(
-                  data1 => {
-                    this.truValueList = data1;
-                    console.log(this.truValueList);
-                  }
-                );
-            }
-            if(data.obj.msRefNo!=''){
-              this.SalesOrderBookingForm.get('msRefNo').disable();
-            }
-            let control = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
-            if (this.lstgetOrderLineDetails.length === 0 && this.lstgetOrderTaxDetails.length === 0) {
-              this.orderlineDetailsArray().push(this.orderlineDetailsGroup());
-              this.TaxDetailsArray().push(this.TaxDetailsGroup());
-              this.displayLineTaxDetails = true;
-              this.displaysegmentInvType[0] = true;
-              if (data.obj.flowStatusCode === 'BOOKED') {
-                this.op = 'insert';
-                this.displayLineTaxDetails = false;
-                this.orderlineDetailsGroup();
-                var patch = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray
-                (patch.controls[0]).patchValue(
-                  {
-                    lineNumber: 1,
-                  }
-                );
+              if (data.obj.orderStatus === 'INVOICED') {
                 if (Number(sessionStorage.getItem('deptId')) != 4) {
                   this.isVisible2 = true;
-                  this.isVisiblemodelDetailsUpdate = true;
-                  this.isVisiblefinexchangeUpdate = true;
-                }
-                this.isVisible3 = false;
-
-              }
-              if (data.obj.flowStatusCode === 'ENTERED') {
-                this.isVisible3 = false;
-                if (Number(sessionStorage.getItem('deptId')) != 4) {
-                  this.isVisiblefinexchangeUpdate = true;
                 }
               }
-              this.displayVehicleDetails = true;
-              var variantNew = data.obj.variant;
-              this.SalesOrderBookingForm.get('model').enable();
-              this.SalesOrderBookingForm.patchValue({ color: data.obj.color });
-              this.orderManagementService.ColourSearchFn(variantNew)
-                .subscribe(
-                  data => {
-                    this.ColourSearch = data;
-                    console.log(this.ColourSearch);
-                    let selectColo = this.ColourSearch.find(d => d.ColorCode === colorCode);
-                    this.SalesOrderBookingForm.patchValue({ color: selectColo.ColorCode })
-                  }
-                );
-              this.isVisiblemodelDetailsUpdate = true;
-            }
-            else {
-              for (let i = 0; i < this.lstgetOrderLineDetails.length; i++) {
-                var oeOrderLinesAllList1: FormGroup = this.orderlineDetailsGroup();
-                control.push(oeOrderLinesAllList1);
-                this.op = 'Search';
-                this.displayLineTaxDetails = false;
-                this.displaysegmentInvType[i] = false;
-                this.displayCounterSaleLine.push(false);
-                if (data.obj.flowStatusCode === 'ENTERED') {
-                  if (Number(sessionStorage.getItem('deptId')) != 4) {
-                    this.isVisible2 = true;
-                    this.isVisible3 = true;
-                    this.isVisiblefinexchangeUpdate = true;
-                  }
-                  // this.isVisible3 = true;
-
-
-                }
-                if (this.lstgetOrderLineDetails[i].flowStatusCode === 'BOOKED' || this.lstgetOrderLineDetails[i].flowStatusCode === 'ALLOTED') {
-                  this.displaytaxCategoryName[i] = true;
-                  this.displayLineflowStatusCode[i] = false;
-                  if (Number(sessionStorage.getItem('deptId')) != 4) {
-                    this.isVisible2 = true;
-                  }
-                }
-                if (this.lstgetOrderLineDetails[i].flowStatusCode === 'BOOKED') {
-                  if (Number(sessionStorage.getItem('deptId')) != 4) {
-                    this.isVisible2 = true;
-                  }
-                }
-                if (this.lstgetOrderLineDetails[i].flowStatusCode === 'CANCELLED' || this.lstgetOrderLineDetails[i].flowStatusCode === 'DE-ALLOTED') {
-                  this.isDisabledtaxbtn[i] = true;
-                  if (this.lstgetOrderLineDetails[i].flowStatusCode === 'INVOICED'){
-                  this.isVisible4 = true;
-                }
-                  this.isVisible3 = false;
-                  this.displayLineflowStatusCode[i] = true;
-                  this.displayRemoveRow[i] = false;
-                  this.displaytaxCategoryName[i] = false;
-                }
-                if (this.lstgetOrderLineDetails[i].invType.includes('VEHICLE')) {
-                  // alert(this.lstgetOrderLineDetails[i].flowStatusCode)
-                  if (this.lstgetOrderLineDetails[i].flowStatusCode === 'DE-ALLOTED') {
-                    this.isVisiblefinexchangeUpdate = true;
-                    this.displayVehicleDetails = true;
-                    var variantNew = data.obj.variant;
-                    this.SalesOrderBookingForm.get('model').enable();
-                    this.SalesOrderBookingForm.patchValue({ color: data.obj.color });
-                    this.orderManagementService.ColourSearchFn(variantNew)
-                      .subscribe(
-                        data => {
-                          this.ColourSearch = data;
-                          console.log(this.ColourSearch);
-                          let selectColo = this.ColourSearch.find(d => d.ColorCode === colorCode);
-                          this.SalesOrderBookingForm.patchValue({ color: selectColo.ColorCode })
-                        }
-                      );
-                    this.isVisiblemodelDetailsUpdate = true;
-                  }
-                }
-                if (this.lstgetOrderLineDetails[i].invType.includes('VEHICLE') || this.lstgetOrderLineDetails[i].flowStatusCode === 'ALLOTED' || this.lstgetOrderLineDetails[i].flowStatusCode === 'READY FOR INVOICE') {
-                  this.SalesOrderBookingForm.get('financeType').enable();
-                  this.SalesOrderBookingForm.get('financerName').enable();
-                  this.SalesOrderBookingForm.get('financeAmt').enable();
-                  this.SalesOrderBookingForm.get('emi').enable();
-                  this.SalesOrderBookingForm.get('tenure').enable();
-                  this.SalesOrderBookingForm.get('downPayment').enable();
-                  this.SalesOrderBookingForm.get('exchangeYN').enable();
-                  this.SalesOrderBookingForm.get('loyaltyBonus').enable();
-                  this.SalesOrderBookingForm.get('exRegNo').enable();
-                  this.SalesOrderBookingForm.get('insCharges').enable();
-                  this.SalesOrderBookingForm.get('offerPrice').enable();
-                  this.isVisiblemodelDetailsUpdate = false;
-                }
-                if (this.lstgetOrderLineDetails[i].invType.includes('VEHICLE') && this.lstgetOrderLineDetails[i].flowStatusCode === 'ALLOTED') {
-                  this.displayLineflowStatusCodeVehicle[i] = true;
-                  console.log(this.lineLevelOrderStatusVehicleList);
-                  let lineLevelOrderStatusListVehicle = this.lineLevelOrderStatusVehicleList.filter((customer) => ((customer.code.includes('ALLOTED') == true) || (customer.code.includes('READY FOR INVOIC') == true)));
-                  console.log(lineLevelOrderStatusListVehicle);
-                  this.lineLevelOrderStatusVehicleList = lineLevelOrderStatusListVehicle;
-                }
-                if (this.lstgetOrderLineDetails[i].invType.includes('VEHICLE') == false && this.lstgetOrderLineDetails[i].flowStatusCode != 'ALLOTED') {
-                  this.displayLineflowStatusCodeVehicle[i] = false;
-                  console.log(this.lineLevelOrderStatusList);
-                  let lineLevelOrderStatusListVehicle1 = this.lineLevelOrderStatusList.filter((customer) => (customer.code.includes('BOOKED') == true || customer.code.includes('READY FOR INVOICE') == true || customer.code.includes('CANCELLED') == true));
-                  console.log(lineLevelOrderStatusListVehicle1);
-                  this.lineLevelOrderStatusList = lineLevelOrderStatusListVehicle1;
-                }
-                if (this.lstgetOrderLineDetails[i].flowStatusCode === 'INVOICED'  ) {
-                  this.isVisible4 = true;
-                  this.isVisible3 = false;
-                  // this.isVisiblemodelDetailsUpdate = false;
-                  this.displayLineflowStatusCode[i] = true;
-                  this.displayRemoveRow[i] = false;
-                  this.displaytaxCategoryName[i] = false;
-                  this.isDisabledtaxbtn[i] = false;
-                  this.isVisibleform21 = true;
-                  this.SalesOrderBookingForm.get('financeType').disable();
-                  this.SalesOrderBookingForm.get('financerName').disable();
-                  this.SalesOrderBookingForm.get('financeAmt').disable();
-                  this.SalesOrderBookingForm.get('emi').disable();
-                  this.SalesOrderBookingForm.get('tenure').disable();
-                  this.SalesOrderBookingForm.get('downPayment').disable();
-                  this.SalesOrderBookingForm.get('exchangeYN').disable();
-                  this.SalesOrderBookingForm.get('loyaltyBonus').disable();
-                  this.SalesOrderBookingForm.get('exRegNo').disable();
-                  this.SalesOrderBookingForm.get('insCharges').disable();
-                  this.SalesOrderBookingForm.get('offerPrice').disable();
-                  this.SalesOrderBookingForm.get('custPoNumber').disable();
-                  this.SalesOrderBookingForm.get('msRefCustNo').disable();
-                  this.SalesOrderBookingForm.get('msRefNo').disable();
-                  this.SalesOrderBookingForm.get('msRefType').disable();
-                  this.SalesOrderBookingForm.get('custPoDate').disable();
-                }
-                if (this.lstgetOrderLineDetails[i].invType.includes('VEHICLE')) {
-                  if (this.lstgetOrderLineDetails[i].flowStatusCode === 'INVOICED') {
-                    this.isVisiblefinexchangeUpdate = false;
-                    this.isVisiblemodelDetailsUpdate = false;
-                  }
-                }
-                else {
-                  this.displayRemoveRow[i] = false;
-                  this.displayCounterSaleLine[i] = false;
-                  this.isDisabledtaxbtn[i] = false;
-                  // this.isVisiblefinexchangeUpdate = true;
-                }
-                if (this.lstgetOrderLineDetails[i].invType.includes('VEHICLE') === false && this.lstgetOrderLineDetails[i].isTaxable === 'Y' || this.lstgetOrderLineDetails[i].isTaxable === 'N') {
-                  this.displaytaxCategoryName[i] = false;
-                }
+              if (data.obj.orderStatus === 'CANCELLED' || data.obj.orderStatus === 'CLOSED') {
+                this.isVisible6 = false;
               }
-            }
-            let control1 = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
-            for (let x = 0; x < this.lstgetOrderTaxDetails.length; x++) {
-              var invLnNo = (this.lstgetOrderTaxDetails[x].invLineNo);
-              var invLn = Number(invLnNo - 1);
-              if (this.lstgetOrderLineDetails[invLn].flowStatusCode != 'DE-ALLOTED' || this.lstgetOrderLineDetails[invLn].flowStatusCode != 'CANCELLED') {
-                control1.push(this.TaxDetailsGroup());
-                var lenNo = x + 1;
-                let taxes = this.lstgetOrderTaxDetails.filter((customer) => (customer.invLineNo === lenNo));
-                this.taxMap.set(String(x), taxes);
-              }
-            }
-            this.SalesOrderBookingForm.patchValue(data.obj);
-            for (let k = 0; k < this.lstgetOrderLineDetails.length; k++) {
-              if (this.lstgetOrderLineDetails[k].flowStatusCode === 'READY FOR INVOICE') {
-                this.displaytaxCategoryName[k] = false;
-                this.displayLineflowStatusCode[k] = true;
-                if (Number(sessionStorage.getItem('deptId')) != 4) {
-                  this.isVisible3 = true;
-                  this.isVisiblefinexchangeUpdate = true;
+              if (Number(sessionStorage.getItem('deptId')) == 4) {
+                if (data.obj.orderStatus != 'INVOICED' && data.obj.flowStatusCode != 'CANCELLED') {
+                  this.isVisiblecancelledSalesOrder = true;
                 }
 
               }
-              if (this.lstgetOrderLineDetails[k].invType != 'SS_VEHICLE') {
-                // alert(this.lstgetOrderLineDetails[k].flowStatusCode);
-                if (this.lstgetOrderLineDetails[k].flowStatusCode != 'READY FOR INVOICE') {
-                  if (this.lstgetOrderLineDetails[k].invType.includes('SS_ADDON') === true && this.lstgetOrderLineDetails[k].flowStatusCode === 'CANCELLED') {
-                    this.displayVehicleDetails = true;
-                    this.SalesOrderBookingForm.get('model').enable();
-                    var variantNew = data.obj.variant;
-                    this.SalesOrderBookingForm.patchValue({ color: data.obj.color })
-                    this.orderManagementService.ColourSearchFn(variantNew)
-                      .subscribe(
-                        data => {
-                          this.ColourSearch = data;
-                          console.log(this.ColourSearch);
-                          let selectColo = this.ColourSearch.find(d => d.ColorCode === colorCode);
-                          this.SalesOrderBookingForm.patchValue({ color: selectColo.ColorCode })
-                        }
-                      );
-                  }
-                }
+              if (data.obj.flowStatusCode === 'CLOSED') {
+                this.isVisible2 = false;
+                this.isVisible6 = false;
+                this.isDisabled6 = true;
               }
-              for (let l = 0; l < this.lstgetOrderLineDetails.length; l++) {
-                if (this.lstgetOrderLineDetails[l].invType != 'SS_VEHICLE') {
-                  // alert('hiiii')
-                  if (this.lstgetOrderLineDetails[l].invType.includes('SS_ADDON') === true && (this.lstgetOrderLineDetails[l].flowStatusCode === 'BOOKED' || this.lstgetOrderLineDetails[l].flowStatusCode === 'READY FOR INVOICE')) {
-                    this.displayVehicleDetails = false;
-                    this.isVisiblemodelDetailsUpdate = false;
-                    this.SalesOrderBookingForm.get('model').disable();
-                  }
-                }
+              if (data.obj.exchangeYN === 'Y') {
+                this.Displayexchange = false;
+                this.Displayexchange1 = false;
+                this.service.truValueListFn()
+                  .subscribe(
+                    data1 => {
+                      this.truValueList = data1;
+                      console.log(this.truValueList);
+                    }
+                  );
               }
-              for (let m = 0; m < this.lstgetOrderLineDetails.length; m++) {
-                if (this.lstgetOrderLineDetails[m].invType === 'SS_VEHICLE') {
-                  if (this.lstgetOrderLineDetails[m].flowStatusCode === 'READY FOR INVOICE' || this.lstgetOrderLineDetails[m].flowStatusCode === 'INVOICED' || this.lstgetOrderLineDetails[m].flowStatusCode === 'ALLOTED' || this.lstgetOrderLineDetails[m].flowStatusCode != 'BOOKED' || this.lstgetOrderLineDetails[m].flowStatusCode != 'CANCELLED') {
-                    this.SalesOrderBookingForm.patchValue({ colorCode: data.obj.colorDesc })
-                    this.displayVehicleDetails = false;
-                  }
-                }
+              if (data.obj.msRefNo != '') {
+                this.SalesOrderBookingForm.get('msRefNo').disable();
               }
-              for (let x = 0; x < this.lstgetOrderLineDetails.length; x++) {
-                if (this.lstgetOrderLineDetails[x].flowStatusCode === 'INVOICED' && data.obj.gatepassYN === 'N') {
-                  if (Number(sessionStorage.getItem('deptId')) != 4) {
-                    this.isVisible7 = true;
-                    this.isVisibleAutoApplyInvoice = true;
-                  }
-                  this.isVisibleform21 = true;
-
-                }
-                if (this.lstgetOrderLineDetails[x].flowStatusCode === 'ALLOTED' && this.lstgetOrderLineDetails[x].invType === 'SS_VEHICLE') {
-                  //  this.onOptionsSelectedDescription(this.lstgetOrderLineDetails[i].segment,i)
-                  this.onGstPersantage(this.allDatastore.taxCategoryName, this.lstgetOrderLineDetails[x].gstPercentage, this.lstgetOrderLineDetails[x].taxCategoryName, x)
-                }
-              }
-
-              this.salesRepName = data.obj.salesRepName;
-            }
-            if (data.obj.transactionTypeName.includes('CSD')) {
-              this.isVisibleCSDDetails = true;
-              this.SalesOrderBookingForm.get('lesseeAccNo').disable();
-              this.SalesOrderBookingForm.get('lesseeCustName').disable();
-              this.SalesOrderBookingForm.get('lesseeContactNo').disable();
-              this.SalesOrderBookingForm.get('custPoNumber').disable();
-              this.SalesOrderBookingForm.get('custPoDate').disable();
-              this.SalesOrderBookingForm.get('refCustNo').disable();
-              this.SalesOrderBookingForm.get('msRefNo').disable();
-              this.SalesOrderBookingForm.get('msRefType').disable();
-              this.SalesOrderBookingForm.get('msRefCustNo').disable();
-              this.SalesOrderBookingForm.get('csdPoNo').disable();
-              this.SalesOrderBookingForm.get('csdDate').disable();
-              this.SalesOrderBookingForm.get('csdIndexNo').disable();
-              var csdDate1 = (data.obj.csdDate)
-              var csdDateNew = this.pipe.transform(csdDate1, 'y-MM-dd');
-              this.csdDate = csdDateNew;
-              // alert(this.csdDate)
-            }
-            var custPoDate1 = (data.obj.custPoDate)
-            var custPoDateNew = this.pipe.transform(custPoDate1, 'y-MM-dd');
-            this.SalesOrderBookingForm.patchValue({ custPoDate: custPoDateNew });
-            // this.SalesOrderBookingForm.get('custPoNumber').disable();
-            // this.SalesOrderBookingForm.get('msRefCustNo').disable();
-            // this.SalesOrderBookingForm.get('msRefNo').disable();
-            // this.SalesOrderBookingForm.get('msRefType').disable();
-          }
-        })
-      }
-      else if (Number(sessionStorage.getItem('deptId'))===4){
-        var deptId =this.SalesOrderBookingForm.get('deptId').value;
-    // alert(deptId)
-    var locId=this.SalesOrderBookingForm.get('locId').value;
-        this.orderManagementService.getsearchBymsRefNo(deptId,locId,msRefNo)
-          .subscribe(
-            data => {
-              if (data != null) {
-                this.lstgetOrderLineDetails = data.obj.oeOrderLinesAllList;
-                this.lstgetOrderTaxDetails = data.obj.taxAmounts;
-                this.allDatastore = data.obj;
-                var colorCode = data.obj.color;
-                this.SalesOrderBookingForm.patchValue({ billToAddress: data.obj.custAddress });
-                this.SalesOrderBookingForm.patchValue({ shipToAddress: data.obj.custAddress });
-                this.SalesOrderBookingForm.patchValue({ priceListHeaderId: data.obj.priceListId });
-                this.SalesOrderBookingForm.patchValue({ custTaxCat: data.obj.taxCategoryName });
-                this.SalesOrderBookingForm.patchValue({ fuelType: data.obj.fuelType });
-                this.SalesOrderBookingForm.patchValue({ name: data.obj.billLocName });
-                var balPay = Math.round(((data.obj.balancePay) + Number.EPSILON) * 100) / 100;
-                this.SalesOrderBookingForm.patchValue({ balancePay: balPay });
-                this.panNo = data.obj.custPan;
-                this.gstNo = data.obj.custGst;
-                // this.SalesOrderBookingForm.get('custPoDate').disable();
-                //   if (Number(sessionStorage.getItem('deptId'))!=4){
-                //   this.isVisible6 = true;
-                // }
-                this.isVisible6 = true;
-                if (data.obj.financeType != 'None') {
-                  this.DisplayfinanceSelectionYes = false;
-                  this.DisplayfinanceSelectionYes1 = false;
-                  // this.SalesOrderBookingForm.patchValue({ financerName: data.obj.financerName });
-                  this.SalesOrderBookingForm.patchValue({ financeAmt: data.obj.financeAmt });
-                  this.SalesOrderBookingForm.patchValue({ tenure: data.obj.tenure });
-                  this.SalesOrderBookingForm.patchValue({ emi: data.obj.emi });
-                  this.SalesOrderBookingForm.patchValue({ downPayment: data.obj.emi });
-                  this.orderManagementService.finananceList(data.obj.financeType, sessionStorage.getItem('divisionId'))
-                    .subscribe(
-                      (res: any = []) => {
-                        this.financerNameList = res;
-                        console.log(this.financerNameList);
-                        let selectColo = this.financerNameList.find(d => d.codeDesc === data.obj.financerName);
-                        console.log(selectColo.codeDesc);
-                        this.SalesOrderBookingForm.patchValue({ financerName: selectColo.codeDesc })
-                      }
-                    );
-                }
-                if (data.obj.orderStatus === 'INVOICED') {
-                  if (Number(sessionStorage.getItem('deptId')) != 4) {
-                    this.isVisible2 = true;
-                  }
-                }
-            
-                if (Number(sessionStorage.getItem('deptId')) == 4) {
-                  if (data.obj.orderStatus != 'INVOICED'&& data.obj.flowStatusCode !='CANCELLED')
+              let control = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+              if (this.lstgetOrderLineDetails.length === 0 && this.lstgetOrderTaxDetails.length === 0) {
+                this.orderlineDetailsArray().push(this.orderlineDetailsGroup());
+                this.TaxDetailsArray().push(this.TaxDetailsGroup());
+                this.displayLineTaxDetails = true;
+                this.displaysegmentInvType[0] = true;
+                if (data.obj.flowStatusCode === 'BOOKED') {
+                  this.op = 'insert';
+                  this.displayLineTaxDetails = false;
+                  this.orderlineDetailsGroup();
+                  var patch = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray
+                  (patch.controls[0]).patchValue(
                     {
-                    this.isVisiblecancelledSalesOrder = true;
+                      lineNumber: 1,
+                    }
+                  );
+                  if (Number(sessionStorage.getItem('deptId')) != 4) {
+                    this.isVisible2 = true;
+                    this.isVisiblemodelDetailsUpdate = true;
+                    this.isVisiblefinexchangeUpdate = true;
                   }
-    
+                  this.isVisible3 = false;
+
                 }
-                if (data.obj.flowStatusCode === 'CLOSED') {
-                  this.isVisible2 = false;
-                  this.isVisible6 = false;
-                  this.isDisabled6 = true;
+                if (data.obj.flowStatusCode === 'ENTERED') {
+                  this.isVisible3 = false;
+                  if (Number(sessionStorage.getItem('deptId')) != 4) {
+                    this.isVisiblefinexchangeUpdate = true;
+                  }
                 }
-                if (data.obj.exchangeYN === 'Y') {
-                  this.Displayexchange = false;
-                  this.Displayexchange1 = false;
-                  this.service.truValueListFn()
-                    .subscribe(
-                      data1 => {
-                        this.truValueList = data1;
-                        console.log(this.truValueList);
-                      }
-                    );
-                }
-                if(data.obj.msRefNo!=''){
-                  this.SalesOrderBookingForm.get('msRefNo').disable();
-                }
-                let control = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
-                if (this.lstgetOrderLineDetails.length === 0 && this.lstgetOrderTaxDetails.length === 0) {
-                  this.orderlineDetailsArray().push(this.orderlineDetailsGroup());
-                  this.TaxDetailsArray().push(this.TaxDetailsGroup());
-                  this.displayLineTaxDetails = true;
-                  this.displaysegmentInvType[0] = true;
-                  if (data.obj.flowStatusCode === 'BOOKED') {
-                    this.op = 'insert';
-                    this.displayLineTaxDetails = false;
-                    this.orderlineDetailsGroup();
-                    var patch = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray
-                    (patch.controls[0]).patchValue(
-                      {
-                        lineNumber: 1,
-                      }
-                    );
+                this.displayVehicleDetails = true;
+                var variantNew = data.obj.variant;
+                this.SalesOrderBookingForm.get('model').enable();
+                this.SalesOrderBookingForm.patchValue({ color: data.obj.color });
+                this.orderManagementService.ColourSearchFn(variantNew)
+                  .subscribe(
+                    data => {
+                      this.ColourSearch = data;
+                      console.log(this.ColourSearch);
+                      let selectColo = this.ColourSearch.find(d => d.ColorCode === colorCode);
+                      this.SalesOrderBookingForm.patchValue({ color: selectColo.ColorCode })
+                    }
+                  );
+                this.isVisiblemodelDetailsUpdate = true;
+              }
+              else {
+                for (let i = 0; i < this.lstgetOrderLineDetails.length; i++) {
+                  var oeOrderLinesAllList1: FormGroup = this.orderlineDetailsGroup();
+                  control.push(oeOrderLinesAllList1);
+                  this.op = 'Search';
+                  this.displayLineTaxDetails = false;
+                  this.displaysegmentInvType[i] = false;
+                  this.displayCounterSaleLine.push(false);
+                  if (data.obj.flowStatusCode === 'ENTERED') {
                     if (Number(sessionStorage.getItem('deptId')) != 4) {
                       this.isVisible2 = true;
-                      this.isVisiblemodelDetailsUpdate = true;
-                      this.isVisiblefinexchangeUpdate = true;
-                    }
-                    this.isVisible3 = false;
-    
-                  }
-                  if (data.obj.flowStatusCode === 'ENTERED') {
-                    this.isVisible3 = false;
-                    if (Number(sessionStorage.getItem('deptId')) != 4) {
-                      this.isVisiblefinexchangeUpdate = true;
-                    }
-                  }
-                  this.displayVehicleDetails = true;
-                  var variantNew = data.obj.variant;
-                  this.SalesOrderBookingForm.get('model').enable();
-                  this.SalesOrderBookingForm.patchValue({ color: data.obj.color });
-                  this.orderManagementService.ColourSearchFn(variantNew)
-                    .subscribe(
-                      data => {
-                        this.ColourSearch = data;
-                        console.log(this.ColourSearch);
-                        let selectColo = this.ColourSearch.find(d => d.ColorCode === colorCode);
-                        this.SalesOrderBookingForm.patchValue({ color: selectColo.ColorCode })
-                      }
-                    );
-                  this.isVisiblemodelDetailsUpdate = true;
-                }
-                else {
-                  for (let i = 0; i < this.lstgetOrderLineDetails.length; i++) {
-                    var oeOrderLinesAllList1: FormGroup = this.orderlineDetailsGroup();
-                    control.push(oeOrderLinesAllList1);
-                    this.op = 'Search';
-                    this.displayLineTaxDetails = false;
-                    this.displaysegmentInvType[i] = false;
-                    this.displayCounterSaleLine.push(false);
-                    if (data.obj.flowStatusCode === 'ENTERED') {
-                      if (Number(sessionStorage.getItem('deptId')) != 4) {
-                        this.isVisible2 = true;
-                        this.isVisible3 = true;
-                        this.isVisiblefinexchangeUpdate = true;
-                      }
-                      // this.isVisible3 = true;
-    
-    
-                    }
-                    if (this.lstgetOrderLineDetails[i].flowStatusCode === 'BOOKED' || this.lstgetOrderLineDetails[i].flowStatusCode === 'ALLOTED') {
-                      this.displaytaxCategoryName[i] = true;
-                      this.displayLineflowStatusCode[i] = false;
-                      if (Number(sessionStorage.getItem('deptId')) != 4) {
-                        this.isVisible2 = true;
-                      }
-                    }
-                    if (this.lstgetOrderLineDetails[i].flowStatusCode === 'BOOKED') {
-                      if (Number(sessionStorage.getItem('deptId')) != 4) {
-                        this.isVisible2 = true;
-                      }
-                    }
-                    if (this.lstgetOrderLineDetails[i].flowStatusCode === 'CANCELLED' || this.lstgetOrderLineDetails[i].flowStatusCode === 'DE-ALLOTED') {
-                      this.isDisabledtaxbtn[i] = true;
-                      if (this.lstgetOrderLineDetails[i].flowStatusCode === 'INVOICED'){
-                      this.isVisible4 = true;
-                    }
-                      this.isVisible3 = false;
-                      this.displayLineflowStatusCode[i] = true;
-                      this.displayRemoveRow[i] = false;
-                      this.displaytaxCategoryName[i] = false;
-                    }
-                    if (this.lstgetOrderLineDetails[i].invType.includes('VEHICLE')) {
-                      // alert(this.lstgetOrderLineDetails[i].flowStatusCode)
-                      if (this.lstgetOrderLineDetails[i].flowStatusCode === 'DE-ALLOTED') {
-                        this.isVisiblefinexchangeUpdate = true;
-                        this.displayVehicleDetails = true;
-                        var variantNew = data.obj.variant;
-                        this.SalesOrderBookingForm.get('model').enable();
-                        this.SalesOrderBookingForm.patchValue({ color: data.obj.color });
-                        this.orderManagementService.ColourSearchFn(variantNew)
-                          .subscribe(
-                            data => {
-                              this.ColourSearch = data;
-                              console.log(this.ColourSearch);
-                              let selectColo = this.ColourSearch.find(d => d.ColorCode === colorCode);
-                              this.SalesOrderBookingForm.patchValue({ color: selectColo.ColorCode })
-                            }
-                          );
-                        this.isVisiblemodelDetailsUpdate = true;
-                      }
-                    }
-                    if (this.lstgetOrderLineDetails[i].invType.includes('VEHICLE') || this.lstgetOrderLineDetails[i].flowStatusCode === 'ALLOTED' || this.lstgetOrderLineDetails[i].flowStatusCode === 'READY FOR INVOICE') {
-                      this.SalesOrderBookingForm.get('financeType').enable();
-                      this.SalesOrderBookingForm.get('financerName').enable();
-                      this.SalesOrderBookingForm.get('financeAmt').enable();
-                      this.SalesOrderBookingForm.get('emi').enable();
-                      this.SalesOrderBookingForm.get('tenure').enable();
-                      this.SalesOrderBookingForm.get('downPayment').enable();
-                      this.SalesOrderBookingForm.get('exchangeYN').enable();
-                      this.SalesOrderBookingForm.get('loyaltyBonus').enable();
-                      this.SalesOrderBookingForm.get('exRegNo').enable();
-                      this.SalesOrderBookingForm.get('insCharges').enable();
-                      this.SalesOrderBookingForm.get('offerPrice').enable();
-                      this.isVisiblemodelDetailsUpdate = false;
-                    }
-                    if (this.lstgetOrderLineDetails[i].invType.includes('VEHICLE') && this.lstgetOrderLineDetails[i].flowStatusCode === 'ALLOTED') {
-                      this.displayLineflowStatusCodeVehicle[i] = true;
-                      console.log(this.lineLevelOrderStatusVehicleList);
-                      let lineLevelOrderStatusListVehicle = this.lineLevelOrderStatusVehicleList.filter((customer) => ((customer.code.includes('ALLOTED') == true) || (customer.code.includes('READY FOR INVOIC') == true)));
-                      console.log(lineLevelOrderStatusListVehicle);
-                      this.lineLevelOrderStatusVehicleList = lineLevelOrderStatusListVehicle;
-                    }
-                    if (this.lstgetOrderLineDetails[i].invType.includes('VEHICLE') == false && this.lstgetOrderLineDetails[i].flowStatusCode != 'ALLOTED') {
-                      this.displayLineflowStatusCodeVehicle[i] = false;
-                      console.log(this.lineLevelOrderStatusList);
-                      let lineLevelOrderStatusListVehicle1 = this.lineLevelOrderStatusList.filter((customer) => (customer.code.includes('BOOKED') == true || customer.code.includes('READY FOR INVOICE') == true || customer.code.includes('CANCELLED') == true));
-                      console.log(lineLevelOrderStatusListVehicle1);
-                      this.lineLevelOrderStatusList = lineLevelOrderStatusListVehicle1;
-                    }
-                    if (this.lstgetOrderLineDetails[i].flowStatusCode === 'INVOICED'  ) {
-                      this.isVisible4 = true;
-                      this.isVisible3 = false;
-                      // this.isVisiblemodelDetailsUpdate = false;
-                      this.displayLineflowStatusCode[i] = true;
-                      this.displayRemoveRow[i] = false;
-                      this.displaytaxCategoryName[i] = false;
-                      this.isDisabledtaxbtn[i] = false;
-                      this.isVisibleform21 = true;
-                      this.SalesOrderBookingForm.get('financeType').disable();
-                      this.SalesOrderBookingForm.get('financerName').disable();
-                      this.SalesOrderBookingForm.get('financeAmt').disable();
-                      this.SalesOrderBookingForm.get('emi').disable();
-                      this.SalesOrderBookingForm.get('tenure').disable();
-                      this.SalesOrderBookingForm.get('downPayment').disable();
-                      this.SalesOrderBookingForm.get('exchangeYN').disable();
-                      this.SalesOrderBookingForm.get('loyaltyBonus').disable();
-                      this.SalesOrderBookingForm.get('exRegNo').disable();
-                      this.SalesOrderBookingForm.get('insCharges').disable();
-                      this.SalesOrderBookingForm.get('offerPrice').disable();
-                      this.SalesOrderBookingForm.get('custPoNumber').disable();
-                      this.SalesOrderBookingForm.get('msRefCustNo').disable();
-                      this.SalesOrderBookingForm.get('msRefNo').disable();
-                      this.SalesOrderBookingForm.get('msRefType').disable();
-                      this.SalesOrderBookingForm.get('custPoDate').disable();
-                    }
-                    if (this.lstgetOrderLineDetails[i].invType.includes('VEHICLE')) {
-                      if (this.lstgetOrderLineDetails[i].flowStatusCode === 'INVOICED') {
-                        this.isVisiblefinexchangeUpdate = false;
-                        this.isVisiblemodelDetailsUpdate = false;
-                      }
-                    }
-                    else {
-                      this.displayRemoveRow[i] = false;
-                      this.displayCounterSaleLine[i] = false;
-                      this.isDisabledtaxbtn[i] = false;
-                      // this.isVisiblefinexchangeUpdate = true;
-                    }
-                    if (this.lstgetOrderLineDetails[i].invType.includes('VEHICLE') === false && this.lstgetOrderLineDetails[i].isTaxable === 'Y' || this.lstgetOrderLineDetails[i].isTaxable === 'N') {
-                      this.displaytaxCategoryName[i] = false;
-                    }
-                  }
-                }
-                let control1 = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
-                for (let x = 0; x < this.lstgetOrderTaxDetails.length; x++) {
-                  var invLnNo = (this.lstgetOrderTaxDetails[x].invLineNo);
-                  var invLn = Number(invLnNo - 1);
-                  if (this.lstgetOrderLineDetails[invLn].flowStatusCode != 'DE-ALLOTED' || this.lstgetOrderLineDetails[invLn].flowStatusCode != 'CANCELLED') {
-                    control1.push(this.TaxDetailsGroup());
-                    var lenNo = x + 1;
-                    let taxes = this.lstgetOrderTaxDetails.filter((customer) => (customer.invLineNo === lenNo));
-                    this.taxMap.set(String(x), taxes);
-                  }
-                }
-                this.SalesOrderBookingForm.patchValue(data.obj);
-                for (let k = 0; k < this.lstgetOrderLineDetails.length; k++) {
-                  if (this.lstgetOrderLineDetails[k].flowStatusCode === 'READY FOR INVOICE') {
-                    this.displaytaxCategoryName[k] = false;
-                    this.displayLineflowStatusCode[k] = true;
-                    if (Number(sessionStorage.getItem('deptId')) != 4) {
                       this.isVisible3 = true;
                       this.isVisiblefinexchangeUpdate = true;
                     }
-    
+                    // this.isVisible3 = true;
+
+
                   }
-                  if (this.lstgetOrderLineDetails[k].invType != 'SS_VEHICLE') {
-                    // alert(this.lstgetOrderLineDetails[k].flowStatusCode);
-                    if (this.lstgetOrderLineDetails[k].flowStatusCode != 'READY FOR INVOICE') {
-                      if (this.lstgetOrderLineDetails[k].invType.includes('SS_ADDON') === true && this.lstgetOrderLineDetails[k].flowStatusCode === 'CANCELLED') {
-                        this.displayVehicleDetails = true;
-                        this.SalesOrderBookingForm.get('model').enable();
-                        var variantNew = data.obj.variant;
-                        this.SalesOrderBookingForm.patchValue({ color: data.obj.color })
-                        this.orderManagementService.ColourSearchFn(variantNew)
-                          .subscribe(
-                            data => {
-                              this.ColourSearch = data;
-                              console.log(this.ColourSearch);
-                              let selectColo = this.ColourSearch.find(d => d.ColorCode === colorCode);
-                              this.SalesOrderBookingForm.patchValue({ color: selectColo.ColorCode })
-                            }
-                          );
-                      }
+                  if (this.lstgetOrderLineDetails[i].flowStatusCode === 'BOOKED' || this.lstgetOrderLineDetails[i].flowStatusCode === 'ALLOTED') {
+                    this.displaytaxCategoryName[i] = true;
+                    this.displayLineflowStatusCode[i] = false;
+                    if (Number(sessionStorage.getItem('deptId')) != 4) {
+                      this.isVisible2 = true;
                     }
                   }
-                  for (let l = 0; l < this.lstgetOrderLineDetails.length; l++) {
-                    if (this.lstgetOrderLineDetails[l].invType != 'SS_VEHICLE') {
-                      // alert('hiiii')
-                      if (this.lstgetOrderLineDetails[l].invType.includes('SS_ADDON') === true && (this.lstgetOrderLineDetails[l].flowStatusCode === 'BOOKED' || this.lstgetOrderLineDetails[l].flowStatusCode === 'READY FOR INVOICE')) {
-                        this.displayVehicleDetails = false;
-                        this.isVisiblemodelDetailsUpdate = false;
-                        this.SalesOrderBookingForm.get('model').disable();
-                      }
+                  if (this.lstgetOrderLineDetails[i].flowStatusCode === 'BOOKED') {
+                    if (Number(sessionStorage.getItem('deptId')) != 4) {
+                      this.isVisible2 = true;
                     }
                   }
-                  for (let m = 0; m < this.lstgetOrderLineDetails.length; m++) {
-                    if (this.lstgetOrderLineDetails[m].invType === 'SS_VEHICLE') {
-                      if (this.lstgetOrderLineDetails[m].flowStatusCode === 'READY FOR INVOICE' || this.lstgetOrderLineDetails[m].flowStatusCode === 'INVOICED' || this.lstgetOrderLineDetails[m].flowStatusCode === 'ALLOTED' || this.lstgetOrderLineDetails[m].flowStatusCode != 'BOOKED' || this.lstgetOrderLineDetails[m].flowStatusCode != 'CANCELLED') {
-                        this.SalesOrderBookingForm.patchValue({ colorCode: data.obj.colorDesc })
-                        this.displayVehicleDetails = false;
-                      }
+                  if (this.lstgetOrderLineDetails[i].flowStatusCode === 'CANCELLED' || this.lstgetOrderLineDetails[i].flowStatusCode === 'DE-ALLOTED') {
+                    this.isDisabledtaxbtn[i] = true;
+                    if (this.lstgetOrderLineDetails[i].flowStatusCode === 'INVOICED') {
+                      this.isVisible4 = true;
+                    }
+                    this.isVisible3 = false;
+                    this.displayLineflowStatusCode[i] = true;
+                    this.displayRemoveRow[i] = false;
+                    this.displaytaxCategoryName[i] = false;
+                  }
+                  if (this.lstgetOrderLineDetails[i].invType.includes('VEHICLE')) {
+                    // alert(this.lstgetOrderLineDetails[i].flowStatusCode)
+                    if (this.lstgetOrderLineDetails[i].flowStatusCode === 'DE-ALLOTED') {
+                      this.isVisiblefinexchangeUpdate = true;
+                      this.displayVehicleDetails = true;
+                      var variantNew = data.obj.variant;
+                      this.SalesOrderBookingForm.get('model').enable();
+                      this.SalesOrderBookingForm.patchValue({ color: data.obj.color });
+                      this.orderManagementService.ColourSearchFn(variantNew)
+                        .subscribe(
+                          data => {
+                            this.ColourSearch = data;
+                            console.log(this.ColourSearch);
+                            let selectColo = this.ColourSearch.find(d => d.ColorCode === colorCode);
+                            this.SalesOrderBookingForm.patchValue({ color: selectColo.ColorCode })
+                          }
+                        );
+                      this.isVisiblemodelDetailsUpdate = true;
                     }
                   }
-                  for (let x = 0; x < this.lstgetOrderLineDetails.length; x++) {
-                    if (this.lstgetOrderLineDetails[x].flowStatusCode === 'INVOICED' && data.obj.gatepassYN === 'N') {
-                      if (Number(sessionStorage.getItem('deptId')) != 4) {
-                        this.isVisible7 = true;
-                        this.isVisibleAutoApplyInvoice = true;
-                      }
-                      this.isVisibleform21 = true;
-    
-                    }
-                    if (this.lstgetOrderLineDetails[x].flowStatusCode === 'ALLOTED' && this.lstgetOrderLineDetails[x].invType === 'SS_VEHICLE') {
-                      //  this.onOptionsSelectedDescription(this.lstgetOrderLineDetails[i].segment,i)
-                      this.onGstPersantage(this.allDatastore.taxCategoryName, this.lstgetOrderLineDetails[x].gstPercentage, this.lstgetOrderLineDetails[x].taxCategoryName, x)
+                  if (this.lstgetOrderLineDetails[i].invType.includes('VEHICLE') || this.lstgetOrderLineDetails[i].flowStatusCode === 'ALLOTED' || this.lstgetOrderLineDetails[i].flowStatusCode === 'READY FOR INVOICE') {
+                    this.SalesOrderBookingForm.get('financeType').enable();
+                    this.SalesOrderBookingForm.get('financerName').enable();
+                    this.SalesOrderBookingForm.get('financeAmt').enable();
+                    this.SalesOrderBookingForm.get('emi').enable();
+                    this.SalesOrderBookingForm.get('tenure').enable();
+                    this.SalesOrderBookingForm.get('downPayment').enable();
+                    this.SalesOrderBookingForm.get('exchangeYN').enable();
+                    this.SalesOrderBookingForm.get('loyaltyBonus').enable();
+                    this.SalesOrderBookingForm.get('exRegNo').enable();
+                    this.SalesOrderBookingForm.get('insCharges').enable();
+                    this.SalesOrderBookingForm.get('offerPrice').enable();
+                    this.isVisiblemodelDetailsUpdate = false;
+                  }
+                  if (this.lstgetOrderLineDetails[i].invType.includes('VEHICLE') && this.lstgetOrderLineDetails[i].flowStatusCode === 'ALLOTED') {
+                    this.displayLineflowStatusCodeVehicle[i] = true;
+                    console.log(this.lineLevelOrderStatusVehicleList);
+                    let lineLevelOrderStatusListVehicle = this.lineLevelOrderStatusVehicleList.filter((customer) => ((customer.code.includes('ALLOTED') == true) || (customer.code.includes('READY FOR INVOIC') == true)));
+                    console.log(lineLevelOrderStatusListVehicle);
+                    this.lineLevelOrderStatusVehicleList = lineLevelOrderStatusListVehicle;
+                  }
+                  if (this.lstgetOrderLineDetails[i].invType.includes('VEHICLE') == false && this.lstgetOrderLineDetails[i].flowStatusCode != 'ALLOTED') {
+                    this.displayLineflowStatusCodeVehicle[i] = false;
+                    console.log(this.lineLevelOrderStatusList);
+                    let lineLevelOrderStatusListVehicle1 = this.lineLevelOrderStatusList.filter((customer) => (customer.code.includes('BOOKED') == true || customer.code.includes('READY FOR INVOICE') == true || customer.code.includes('CANCELLED') == true));
+                    console.log(lineLevelOrderStatusListVehicle1);
+                    this.lineLevelOrderStatusList = lineLevelOrderStatusListVehicle1;
+                  }
+                  if (this.lstgetOrderLineDetails[i].flowStatusCode === 'INVOICED') {
+                    this.isVisible4 = true;
+                    this.isVisible3 = false;
+                    // this.isVisiblemodelDetailsUpdate = false;
+                    this.displayLineflowStatusCode[i] = true;
+                    this.displayRemoveRow[i] = false;
+                    this.displaytaxCategoryName[i] = false;
+                    this.isDisabledtaxbtn[i] = false;
+                    this.isVisibleform21 = true;
+                    this.SalesOrderBookingForm.get('financeType').disable();
+                    this.SalesOrderBookingForm.get('financerName').disable();
+                    this.SalesOrderBookingForm.get('financeAmt').disable();
+                    this.SalesOrderBookingForm.get('emi').disable();
+                    this.SalesOrderBookingForm.get('tenure').disable();
+                    this.SalesOrderBookingForm.get('downPayment').disable();
+                    this.SalesOrderBookingForm.get('exchangeYN').disable();
+                    this.SalesOrderBookingForm.get('loyaltyBonus').disable();
+                    this.SalesOrderBookingForm.get('exRegNo').disable();
+                    this.SalesOrderBookingForm.get('insCharges').disable();
+                    this.SalesOrderBookingForm.get('offerPrice').disable();
+                    this.SalesOrderBookingForm.get('custPoNumber').disable();
+                    this.SalesOrderBookingForm.get('msRefCustNo').disable();
+                    this.SalesOrderBookingForm.get('msRefNo').disable();
+                    this.SalesOrderBookingForm.get('msRefType').disable();
+                    this.SalesOrderBookingForm.get('custPoDate').disable();
+                  }
+                  if (this.lstgetOrderLineDetails[i].invType.includes('VEHICLE')) {
+                    if (this.lstgetOrderLineDetails[i].flowStatusCode === 'INVOICED') {
+                      this.isVisiblefinexchangeUpdate = false;
+                      this.isVisiblemodelDetailsUpdate = false;
                     }
                   }
-    
-                  this.salesRepName = data.obj.salesRepName;
+                  else {
+                    this.displayRemoveRow[i] = false;
+                    this.displayCounterSaleLine[i] = false;
+                    this.isDisabledtaxbtn[i] = false;
+                    // this.isVisiblefinexchangeUpdate = true;
+                  }
+                  if (this.lstgetOrderLineDetails[i].invType.includes('VEHICLE') === false && this.lstgetOrderLineDetails[i].isTaxable === 'Y' || this.lstgetOrderLineDetails[i].isTaxable === 'N') {
+                    this.displaytaxCategoryName[i] = false;
+                  }
                 }
-                if (data.obj.transactionTypeName.includes('CSD')) {
-                  this.isVisibleCSDDetails = true;
-                  this.SalesOrderBookingForm.get('lesseeAccNo').disable();
-                  this.SalesOrderBookingForm.get('lesseeCustName').disable();
-                  this.SalesOrderBookingForm.get('lesseeContactNo').disable();
-                  this.SalesOrderBookingForm.get('custPoNumber').disable();
-                  this.SalesOrderBookingForm.get('custPoDate').disable();
-                  this.SalesOrderBookingForm.get('refCustNo').disable();
-                  this.SalesOrderBookingForm.get('msRefNo').disable();
-                  this.SalesOrderBookingForm.get('msRefType').disable();
-                  this.SalesOrderBookingForm.get('msRefCustNo').disable();
-                  this.SalesOrderBookingForm.get('csdPoNo').disable();
-                  this.SalesOrderBookingForm.get('csdDate').disable();
-                  this.SalesOrderBookingForm.get('csdIndexNo').disable();
-                  var csdDate1 = (data.obj.csdDate)
-                  var csdDateNew = this.pipe.transform(csdDate1, 'y-MM-dd');
-                  this.csdDate = csdDateNew;
-                  // alert(this.csdDate)
-                }
-                var custPoDate1 = (data.obj.custPoDate)
-                var custPoDateNew = this.pipe.transform(custPoDate1, 'y-MM-dd');
-                this.SalesOrderBookingForm.patchValue({ custPoDate: custPoDateNew });
-                // this.SalesOrderBookingForm.get('custPoNumber').disable();
-                // this.SalesOrderBookingForm.get('msRefCustNo').disable();
-                // this.SalesOrderBookingForm.get('msRefNo').disable();
-                // this.SalesOrderBookingForm.get('msRefType').disable();
               }
-            })
-          }
+              let control1 = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
+              for (let x = 0; x < this.lstgetOrderTaxDetails.length; x++) {
+                var invLnNo = (this.lstgetOrderTaxDetails[x].invLineNo);
+                var invLn = Number(invLnNo - 1);
+                if (this.lstgetOrderLineDetails[invLn].flowStatusCode != 'DE-ALLOTED' || this.lstgetOrderLineDetails[invLn].flowStatusCode != 'CANCELLED') {
+                  control1.push(this.TaxDetailsGroup());
+                  var lenNo = x + 1;
+                  let taxes = this.lstgetOrderTaxDetails.filter((customer) => (customer.invLineNo === lenNo));
+                  this.taxMap.set(String(x), taxes);
+                }
+              }
+              this.SalesOrderBookingForm.patchValue(data.obj);
+              for (let k = 0; k < this.lstgetOrderLineDetails.length; k++) {
+                if (this.lstgetOrderLineDetails[k].flowStatusCode === 'READY FOR INVOICE') {
+                  this.displaytaxCategoryName[k] = false;
+                  this.displayLineflowStatusCode[k] = true;
+                  if (Number(sessionStorage.getItem('deptId')) != 4) {
+                    this.isVisible3 = true;
+                    this.isVisiblefinexchangeUpdate = true;
+                  }
+
+                }
+                if (this.lstgetOrderLineDetails[k].invType != 'SS_VEHICLE') {
+                  // alert(this.lstgetOrderLineDetails[k].flowStatusCode);
+                  if (this.lstgetOrderLineDetails[k].flowStatusCode != 'READY FOR INVOICE') {
+                    if (this.lstgetOrderLineDetails[k].invType.includes('SS_ADDON') === true && this.lstgetOrderLineDetails[k].flowStatusCode === 'CANCELLED') {
+                      this.displayVehicleDetails = true;
+                      this.SalesOrderBookingForm.get('model').enable();
+                      var variantNew = data.obj.variant;
+                      this.SalesOrderBookingForm.patchValue({ color: data.obj.color })
+                      this.orderManagementService.ColourSearchFn(variantNew)
+                        .subscribe(
+                          data => {
+                            this.ColourSearch = data;
+                            console.log(this.ColourSearch);
+                            let selectColo = this.ColourSearch.find(d => d.ColorCode === colorCode);
+                            this.SalesOrderBookingForm.patchValue({ color: selectColo.ColorCode })
+                          }
+                        );
+                    }
+                  }
+                }
+                for (let l = 0; l < this.lstgetOrderLineDetails.length; l++) {
+                  if (this.lstgetOrderLineDetails[l].invType != 'SS_VEHICLE') {
+                    // alert('hiiii')
+                    if (this.lstgetOrderLineDetails[l].invType.includes('SS_ADDON') === true && (this.lstgetOrderLineDetails[l].flowStatusCode === 'BOOKED' || this.lstgetOrderLineDetails[l].flowStatusCode === 'READY FOR INVOICE')) {
+                      this.displayVehicleDetails = false;
+                      this.isVisiblemodelDetailsUpdate = false;
+                      this.SalesOrderBookingForm.get('model').disable();
+                    }
+                  }
+                }
+                for (let m = 0; m < this.lstgetOrderLineDetails.length; m++) {
+                  if (this.lstgetOrderLineDetails[m].invType === 'SS_VEHICLE') {
+                    if (this.lstgetOrderLineDetails[m].flowStatusCode === 'READY FOR INVOICE' || this.lstgetOrderLineDetails[m].flowStatusCode === 'INVOICED' || this.lstgetOrderLineDetails[m].flowStatusCode === 'ALLOTED' || this.lstgetOrderLineDetails[m].flowStatusCode != 'BOOKED' || this.lstgetOrderLineDetails[m].flowStatusCode != 'CANCELLED') {
+                      this.SalesOrderBookingForm.patchValue({ colorCode: data.obj.colorDesc })
+                      this.displayVehicleDetails = false;
+                    }
+                  }
+                }
+                for (let x = 0; x < this.lstgetOrderLineDetails.length; x++) {
+                  if (this.lstgetOrderLineDetails[x].flowStatusCode === 'INVOICED' && data.obj.gatepassYN === 'N') {
+                    if (Number(sessionStorage.getItem('deptId')) != 4) {
+                      this.isVisible7 = true;
+                      this.isVisibleAutoApplyInvoice = true;
+                    }
+                    this.isVisibleform21 = true;
+
+                  }
+                  if (this.lstgetOrderLineDetails[x].flowStatusCode === 'ALLOTED' && this.lstgetOrderLineDetails[x].invType === 'SS_VEHICLE') {
+                    //  this.onOptionsSelectedDescription(this.lstgetOrderLineDetails[i].segment,i)
+                    this.onGstPersantage(this.allDatastore.taxCategoryName, this.lstgetOrderLineDetails[x].gstPercentage, this.lstgetOrderLineDetails[x].taxCategoryName, x)
+                  }
+                }
+
+                this.salesRepName = data.obj.salesRepName;
+              }
+              if (data.obj.transactionTypeName.includes('CSD')) {
+                this.isVisibleCSDDetails = true;
+                this.SalesOrderBookingForm.get('lesseeAccNo').disable();
+                this.SalesOrderBookingForm.get('lesseeCustName').disable();
+                this.SalesOrderBookingForm.get('lesseeContactNo').disable();
+                this.SalesOrderBookingForm.get('custPoNumber').disable();
+                this.SalesOrderBookingForm.get('custPoDate').disable();
+                this.SalesOrderBookingForm.get('refCustNo').disable();
+                this.SalesOrderBookingForm.get('msRefNo').disable();
+                this.SalesOrderBookingForm.get('msRefType').disable();
+                this.SalesOrderBookingForm.get('msRefCustNo').disable();
+                this.SalesOrderBookingForm.get('csdPoNo').disable();
+                this.SalesOrderBookingForm.get('csdDate').disable();
+                this.SalesOrderBookingForm.get('csdIndexNo').disable();
+                var csdDate1 = (data.obj.csdDate)
+                var csdDateNew = this.pipe.transform(csdDate1, 'y-MM-dd');
+                this.csdDate = csdDateNew;
+                // alert(this.csdDate)
+              }
+              var custPoDate1 = (data.obj.custPoDate)
+              var custPoDateNew = this.pipe.transform(custPoDate1, 'y-MM-dd');
+              this.SalesOrderBookingForm.patchValue({ custPoDate: custPoDateNew });
+              // this.SalesOrderBookingForm.get('custPoNumber').disable();
+              // this.SalesOrderBookingForm.get('msRefCustNo').disable();
+              // this.SalesOrderBookingForm.get('msRefNo').disable();
+              // this.SalesOrderBookingForm.get('msRefType').disable();
+            }
+          })
+    }
+    else if (Number(sessionStorage.getItem('deptId')) === 4) {
+      var deptId = this.SalesOrderBookingForm.get('deptId').value;
+      // alert(deptId)
+      var locId = this.SalesOrderBookingForm.get('locId').value;
+      this.orderManagementService.getsearchBymsRefNo(deptId, locId, msRefNo)
+        .subscribe(
+          data => {
+            if (data != null) {
+              this.lstgetOrderLineDetails = data.obj.oeOrderLinesAllList;
+              this.lstgetOrderTaxDetails = data.obj.taxAmounts;
+              this.allDatastore = data.obj;
+              var colorCode = data.obj.color;
+              this.SalesOrderBookingForm.patchValue({ billToAddress: data.obj.custAddress });
+              this.SalesOrderBookingForm.patchValue({ shipToAddress: data.obj.custAddress });
+              this.SalesOrderBookingForm.patchValue({ priceListHeaderId: data.obj.priceListId });
+              this.SalesOrderBookingForm.patchValue({ custTaxCat: data.obj.taxCategoryName });
+              this.SalesOrderBookingForm.patchValue({ fuelType: data.obj.fuelType });
+              this.SalesOrderBookingForm.patchValue({ name: data.obj.billLocName });
+              var balPay = Math.round(((data.obj.balancePay) + Number.EPSILON) * 100) / 100;
+              this.SalesOrderBookingForm.patchValue({ balancePay: balPay });
+              this.panNo = data.obj.custPan;
+              this.gstNo = data.obj.custGst;
+              // this.SalesOrderBookingForm.get('custPoDate').disable();
+              //   if (Number(sessionStorage.getItem('deptId'))!=4){
+              //   this.isVisible6 = true;
+              // }
+              this.isVisible6 = true;
+              if (data.obj.financeType != 'None') {
+                this.DisplayfinanceSelectionYes = false;
+                this.DisplayfinanceSelectionYes1 = false;
+                // this.SalesOrderBookingForm.patchValue({ financerName: data.obj.financerName });
+                this.SalesOrderBookingForm.patchValue({ financeAmt: data.obj.financeAmt });
+                this.SalesOrderBookingForm.patchValue({ tenure: data.obj.tenure });
+                this.SalesOrderBookingForm.patchValue({ emi: data.obj.emi });
+                this.SalesOrderBookingForm.patchValue({ downPayment: data.obj.emi });
+                this.orderManagementService.finananceList(data.obj.financeType, sessionStorage.getItem('divisionId'))
+                  .subscribe(
+                    (res: any = []) => {
+                      this.financerNameList = res;
+                      console.log(this.financerNameList);
+                      let selectColo = this.financerNameList.find(d => d.codeDesc === data.obj.financerName);
+                      console.log(selectColo.codeDesc);
+                      this.SalesOrderBookingForm.patchValue({ financerName: selectColo.codeDesc })
+                    }
+                  );
+              }
+              if (data.obj.orderStatus === 'INVOICED') {
+                if (Number(sessionStorage.getItem('deptId')) != 4) {
+                  this.isVisible2 = true;
+                }
+              }
+
+              if (Number(sessionStorage.getItem('deptId')) == 4) {
+                if (data.obj.orderStatus != 'INVOICED' && data.obj.flowStatusCode != 'CANCELLED') {
+                  this.isVisiblecancelledSalesOrder = true;
+                }
+
+              }
+              if (data.obj.flowStatusCode === 'CLOSED') {
+                this.isVisible2 = false;
+                this.isVisible6 = false;
+                this.isDisabled6 = true;
+              }
+              if (data.obj.exchangeYN === 'Y') {
+                this.Displayexchange = false;
+                this.Displayexchange1 = false;
+                this.service.truValueListFn()
+                  .subscribe(
+                    data1 => {
+                      this.truValueList = data1;
+                      console.log(this.truValueList);
+                    }
+                  );
+              }
+              if (data.obj.msRefNo != '') {
+                this.SalesOrderBookingForm.get('msRefNo').disable();
+              }
+              let control = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+              if (this.lstgetOrderLineDetails.length === 0 && this.lstgetOrderTaxDetails.length === 0) {
+                this.orderlineDetailsArray().push(this.orderlineDetailsGroup());
+                this.TaxDetailsArray().push(this.TaxDetailsGroup());
+                this.displayLineTaxDetails = true;
+                this.displaysegmentInvType[0] = true;
+                if (data.obj.flowStatusCode === 'BOOKED') {
+                  this.op = 'insert';
+                  this.displayLineTaxDetails = false;
+                  this.orderlineDetailsGroup();
+                  var patch = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray
+                  (patch.controls[0]).patchValue(
+                    {
+                      lineNumber: 1,
+                    }
+                  );
+                  if (Number(sessionStorage.getItem('deptId')) != 4) {
+                    this.isVisible2 = true;
+                    this.isVisiblemodelDetailsUpdate = true;
+                    this.isVisiblefinexchangeUpdate = true;
+                  }
+                  this.isVisible3 = false;
+
+                }
+                if (data.obj.flowStatusCode === 'ENTERED') {
+                  this.isVisible3 = false;
+                  if (Number(sessionStorage.getItem('deptId')) != 4) {
+                    this.isVisiblefinexchangeUpdate = true;
+                  }
+                }
+                this.displayVehicleDetails = true;
+                var variantNew = data.obj.variant;
+                this.SalesOrderBookingForm.get('model').enable();
+                this.SalesOrderBookingForm.patchValue({ color: data.obj.color });
+                this.orderManagementService.ColourSearchFn(variantNew)
+                  .subscribe(
+                    data => {
+                      this.ColourSearch = data;
+                      console.log(this.ColourSearch);
+                      let selectColo = this.ColourSearch.find(d => d.ColorCode === colorCode);
+                      this.SalesOrderBookingForm.patchValue({ color: selectColo.ColorCode })
+                    }
+                  );
+                this.isVisiblemodelDetailsUpdate = true;
+              }
+              else {
+                for (let i = 0; i < this.lstgetOrderLineDetails.length; i++) {
+                  var oeOrderLinesAllList1: FormGroup = this.orderlineDetailsGroup();
+                  control.push(oeOrderLinesAllList1);
+                  this.op = 'Search';
+                  this.displayLineTaxDetails = false;
+                  this.displaysegmentInvType[i] = false;
+                  this.displayCounterSaleLine.push(false);
+                  if (data.obj.flowStatusCode === 'ENTERED') {
+                    if (Number(sessionStorage.getItem('deptId')) != 4) {
+                      this.isVisible2 = true;
+                      this.isVisible3 = true;
+                      this.isVisiblefinexchangeUpdate = true;
+                    }
+                    // this.isVisible3 = true;
+
+
+                  }
+                  if (this.lstgetOrderLineDetails[i].flowStatusCode === 'BOOKED' || this.lstgetOrderLineDetails[i].flowStatusCode === 'ALLOTED') {
+                    this.displaytaxCategoryName[i] = true;
+                    this.displayLineflowStatusCode[i] = false;
+                    if (Number(sessionStorage.getItem('deptId')) != 4) {
+                      this.isVisible2 = true;
+                    }
+                  }
+                  if (this.lstgetOrderLineDetails[i].flowStatusCode === 'BOOKED') {
+                    if (Number(sessionStorage.getItem('deptId')) != 4) {
+                      this.isVisible2 = true;
+                    }
+                  }
+                  if (this.lstgetOrderLineDetails[i].flowStatusCode === 'CANCELLED' || this.lstgetOrderLineDetails[i].flowStatusCode === 'DE-ALLOTED') {
+                    this.isDisabledtaxbtn[i] = true;
+                    if (this.lstgetOrderLineDetails[i].flowStatusCode === 'INVOICED') {
+                      this.isVisible4 = true;
+                    }
+                    this.isVisible3 = false;
+                    this.displayLineflowStatusCode[i] = true;
+                    this.displayRemoveRow[i] = false;
+                    this.displaytaxCategoryName[i] = false;
+                  }
+                  if (this.lstgetOrderLineDetails[i].invType.includes('VEHICLE')) {
+                    // alert(this.lstgetOrderLineDetails[i].flowStatusCode)
+                    if (this.lstgetOrderLineDetails[i].flowStatusCode === 'DE-ALLOTED') {
+                      this.isVisiblefinexchangeUpdate = true;
+                      this.displayVehicleDetails = true;
+                      var variantNew = data.obj.variant;
+                      this.SalesOrderBookingForm.get('model').enable();
+                      this.SalesOrderBookingForm.patchValue({ color: data.obj.color });
+                      this.orderManagementService.ColourSearchFn(variantNew)
+                        .subscribe(
+                          data => {
+                            this.ColourSearch = data;
+                            console.log(this.ColourSearch);
+                            let selectColo = this.ColourSearch.find(d => d.ColorCode === colorCode);
+                            this.SalesOrderBookingForm.patchValue({ color: selectColo.ColorCode })
+                          }
+                        );
+                      this.isVisiblemodelDetailsUpdate = true;
+                    }
+                  }
+                  if (this.lstgetOrderLineDetails[i].invType.includes('VEHICLE') || this.lstgetOrderLineDetails[i].flowStatusCode === 'ALLOTED' || this.lstgetOrderLineDetails[i].flowStatusCode === 'READY FOR INVOICE') {
+                    this.SalesOrderBookingForm.get('financeType').enable();
+                    this.SalesOrderBookingForm.get('financerName').enable();
+                    this.SalesOrderBookingForm.get('financeAmt').enable();
+                    this.SalesOrderBookingForm.get('emi').enable();
+                    this.SalesOrderBookingForm.get('tenure').enable();
+                    this.SalesOrderBookingForm.get('downPayment').enable();
+                    this.SalesOrderBookingForm.get('exchangeYN').enable();
+                    this.SalesOrderBookingForm.get('loyaltyBonus').enable();
+                    this.SalesOrderBookingForm.get('exRegNo').enable();
+                    this.SalesOrderBookingForm.get('insCharges').enable();
+                    this.SalesOrderBookingForm.get('offerPrice').enable();
+                    this.isVisiblemodelDetailsUpdate = false;
+                  }
+                  if (this.lstgetOrderLineDetails[i].invType.includes('VEHICLE') && this.lstgetOrderLineDetails[i].flowStatusCode === 'ALLOTED') {
+                    this.displayLineflowStatusCodeVehicle[i] = true;
+                    console.log(this.lineLevelOrderStatusVehicleList);
+                    let lineLevelOrderStatusListVehicle = this.lineLevelOrderStatusVehicleList.filter((customer) => ((customer.code.includes('ALLOTED') == true) || (customer.code.includes('READY FOR INVOIC') == true)));
+                    console.log(lineLevelOrderStatusListVehicle);
+                    this.lineLevelOrderStatusVehicleList = lineLevelOrderStatusListVehicle;
+                  }
+                  if (this.lstgetOrderLineDetails[i].invType.includes('VEHICLE') == false && this.lstgetOrderLineDetails[i].flowStatusCode != 'ALLOTED') {
+                    this.displayLineflowStatusCodeVehicle[i] = false;
+                    console.log(this.lineLevelOrderStatusList);
+                    let lineLevelOrderStatusListVehicle1 = this.lineLevelOrderStatusList.filter((customer) => (customer.code.includes('BOOKED') == true || customer.code.includes('READY FOR INVOICE') == true || customer.code.includes('CANCELLED') == true));
+                    console.log(lineLevelOrderStatusListVehicle1);
+                    this.lineLevelOrderStatusList = lineLevelOrderStatusListVehicle1;
+                  }
+                  if (this.lstgetOrderLineDetails[i].flowStatusCode === 'INVOICED') {
+                    this.isVisible4 = true;
+                    this.isVisible3 = false;
+                    // this.isVisiblemodelDetailsUpdate = false;
+                    this.displayLineflowStatusCode[i] = true;
+                    this.displayRemoveRow[i] = false;
+                    this.displaytaxCategoryName[i] = false;
+                    this.isDisabledtaxbtn[i] = false;
+                    this.isVisibleform21 = true;
+                    this.SalesOrderBookingForm.get('financeType').disable();
+                    this.SalesOrderBookingForm.get('financerName').disable();
+                    this.SalesOrderBookingForm.get('financeAmt').disable();
+                    this.SalesOrderBookingForm.get('emi').disable();
+                    this.SalesOrderBookingForm.get('tenure').disable();
+                    this.SalesOrderBookingForm.get('downPayment').disable();
+                    this.SalesOrderBookingForm.get('exchangeYN').disable();
+                    this.SalesOrderBookingForm.get('loyaltyBonus').disable();
+                    this.SalesOrderBookingForm.get('exRegNo').disable();
+                    this.SalesOrderBookingForm.get('insCharges').disable();
+                    this.SalesOrderBookingForm.get('offerPrice').disable();
+                    this.SalesOrderBookingForm.get('custPoNumber').disable();
+                    this.SalesOrderBookingForm.get('msRefCustNo').disable();
+                    this.SalesOrderBookingForm.get('msRefNo').disable();
+                    this.SalesOrderBookingForm.get('msRefType').disable();
+                    this.SalesOrderBookingForm.get('custPoDate').disable();
+                  }
+                  if (this.lstgetOrderLineDetails[i].invType.includes('VEHICLE')) {
+                    if (this.lstgetOrderLineDetails[i].flowStatusCode === 'INVOICED') {
+                      this.isVisiblefinexchangeUpdate = false;
+                      this.isVisiblemodelDetailsUpdate = false;
+                    }
+                  }
+                  else {
+                    this.displayRemoveRow[i] = false;
+                    this.displayCounterSaleLine[i] = false;
+                    this.isDisabledtaxbtn[i] = false;
+                    // this.isVisiblefinexchangeUpdate = true;
+                  }
+                  if (this.lstgetOrderLineDetails[i].invType.includes('VEHICLE') === false && this.lstgetOrderLineDetails[i].isTaxable === 'Y' || this.lstgetOrderLineDetails[i].isTaxable === 'N') {
+                    this.displaytaxCategoryName[i] = false;
+                  }
+                }
+              }
+              let control1 = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
+              for (let x = 0; x < this.lstgetOrderTaxDetails.length; x++) {
+                var invLnNo = (this.lstgetOrderTaxDetails[x].invLineNo);
+                var invLn = Number(invLnNo - 1);
+                if (this.lstgetOrderLineDetails[invLn].flowStatusCode != 'DE-ALLOTED' || this.lstgetOrderLineDetails[invLn].flowStatusCode != 'CANCELLED') {
+                  control1.push(this.TaxDetailsGroup());
+                  var lenNo = x + 1;
+                  let taxes = this.lstgetOrderTaxDetails.filter((customer) => (customer.invLineNo === lenNo));
+                  this.taxMap.set(String(x), taxes);
+                }
+              }
+              this.SalesOrderBookingForm.patchValue(data.obj);
+              for (let k = 0; k < this.lstgetOrderLineDetails.length; k++) {
+                if (this.lstgetOrderLineDetails[k].flowStatusCode === 'READY FOR INVOICE') {
+                  this.displaytaxCategoryName[k] = false;
+                  this.displayLineflowStatusCode[k] = true;
+                  if (Number(sessionStorage.getItem('deptId')) != 4) {
+                    this.isVisible3 = true;
+                    this.isVisiblefinexchangeUpdate = true;
+                  }
+
+                }
+                if (this.lstgetOrderLineDetails[k].invType != 'SS_VEHICLE') {
+                  // alert(this.lstgetOrderLineDetails[k].flowStatusCode);
+                  if (this.lstgetOrderLineDetails[k].flowStatusCode != 'READY FOR INVOICE') {
+                    if (this.lstgetOrderLineDetails[k].invType.includes('SS_ADDON') === true && this.lstgetOrderLineDetails[k].flowStatusCode === 'CANCELLED') {
+                      this.displayVehicleDetails = true;
+                      this.SalesOrderBookingForm.get('model').enable();
+                      var variantNew = data.obj.variant;
+                      this.SalesOrderBookingForm.patchValue({ color: data.obj.color })
+                      this.orderManagementService.ColourSearchFn(variantNew)
+                        .subscribe(
+                          data => {
+                            this.ColourSearch = data;
+                            console.log(this.ColourSearch);
+                            let selectColo = this.ColourSearch.find(d => d.ColorCode === colorCode);
+                            this.SalesOrderBookingForm.patchValue({ color: selectColo.ColorCode })
+                          }
+                        );
+                    }
+                  }
+                }
+                for (let l = 0; l < this.lstgetOrderLineDetails.length; l++) {
+                  if (this.lstgetOrderLineDetails[l].invType != 'SS_VEHICLE') {
+                    // alert('hiiii')
+                    if (this.lstgetOrderLineDetails[l].invType.includes('SS_ADDON') === true && (this.lstgetOrderLineDetails[l].flowStatusCode === 'BOOKED' || this.lstgetOrderLineDetails[l].flowStatusCode === 'READY FOR INVOICE')) {
+                      this.displayVehicleDetails = false;
+                      this.isVisiblemodelDetailsUpdate = false;
+                      this.SalesOrderBookingForm.get('model').disable();
+                    }
+                  }
+                }
+                for (let m = 0; m < this.lstgetOrderLineDetails.length; m++) {
+                  if (this.lstgetOrderLineDetails[m].invType === 'SS_VEHICLE') {
+                    if (this.lstgetOrderLineDetails[m].flowStatusCode === 'READY FOR INVOICE' || this.lstgetOrderLineDetails[m].flowStatusCode === 'INVOICED' || this.lstgetOrderLineDetails[m].flowStatusCode === 'ALLOTED' || this.lstgetOrderLineDetails[m].flowStatusCode != 'BOOKED' || this.lstgetOrderLineDetails[m].flowStatusCode != 'CANCELLED') {
+                      this.SalesOrderBookingForm.patchValue({ colorCode: data.obj.colorDesc })
+                      this.displayVehicleDetails = false;
+                    }
+                  }
+                }
+                for (let x = 0; x < this.lstgetOrderLineDetails.length; x++) {
+                  if (this.lstgetOrderLineDetails[x].flowStatusCode === 'INVOICED' && data.obj.gatepassYN === 'N') {
+                    if (Number(sessionStorage.getItem('deptId')) != 4) {
+                      this.isVisible7 = true;
+                      this.isVisibleAutoApplyInvoice = true;
+                    }
+                    this.isVisibleform21 = true;
+
+                  }
+                  if (this.lstgetOrderLineDetails[x].flowStatusCode === 'ALLOTED' && this.lstgetOrderLineDetails[x].invType === 'SS_VEHICLE') {
+                    //  this.onOptionsSelectedDescription(this.lstgetOrderLineDetails[i].segment,i)
+                    this.onGstPersantage(this.allDatastore.taxCategoryName, this.lstgetOrderLineDetails[x].gstPercentage, this.lstgetOrderLineDetails[x].taxCategoryName, x)
+                  }
+                }
+
+                this.salesRepName = data.obj.salesRepName;
+              }
+              if (data.obj.transactionTypeName.includes('CSD')) {
+                this.isVisibleCSDDetails = true;
+                this.SalesOrderBookingForm.get('lesseeAccNo').disable();
+                this.SalesOrderBookingForm.get('lesseeCustName').disable();
+                this.SalesOrderBookingForm.get('lesseeContactNo').disable();
+                this.SalesOrderBookingForm.get('custPoNumber').disable();
+                this.SalesOrderBookingForm.get('custPoDate').disable();
+                this.SalesOrderBookingForm.get('refCustNo').disable();
+                this.SalesOrderBookingForm.get('msRefNo').disable();
+                this.SalesOrderBookingForm.get('msRefType').disable();
+                this.SalesOrderBookingForm.get('msRefCustNo').disable();
+                this.SalesOrderBookingForm.get('csdPoNo').disable();
+                this.SalesOrderBookingForm.get('csdDate').disable();
+                this.SalesOrderBookingForm.get('csdIndexNo').disable();
+                var csdDate1 = (data.obj.csdDate)
+                var csdDateNew = this.pipe.transform(csdDate1, 'y-MM-dd');
+                this.csdDate = csdDateNew;
+                // alert(this.csdDate)
+              }
+              var custPoDate1 = (data.obj.custPoDate)
+              var custPoDateNew = this.pipe.transform(custPoDate1, 'y-MM-dd');
+              this.SalesOrderBookingForm.patchValue({ custPoDate: custPoDateNew });
+              // this.SalesOrderBookingForm.get('custPoNumber').disable();
+              // this.SalesOrderBookingForm.get('msRefCustNo').disable();
+              // this.SalesOrderBookingForm.get('msRefNo').disable();
+              // this.SalesOrderBookingForm.get('msRefType').disable();
+            }
+          })
+    }
     this.SalesOrderBookingForm.get('accountNo').disable();
     this.SalesOrderBookingForm.get('attribute17').disable();
     this.displayorderDetails = false;
@@ -2887,8 +2885,8 @@ export class SalesOrderFormComponent implements OnInit {
     console.log(event);
     var taxObj = event.target.value;
     // alert(taxObj)
-    var itemtaxCategoryName= taxObj.substr(taxObj.indexOf(':') + 1, taxObj.length);
-    var itemtaxCategoryName1= itemtaxCategoryName.substr(itemtaxCategoryName.indexOf(' ') + 1, taxObj.length);
+    var itemtaxCategoryName = taxObj.substr(taxObj.indexOf(':') + 1, taxObj.length);
+    var itemtaxCategoryName1 = itemtaxCategoryName.substr(itemtaxCategoryName.indexOf(' ') + 1, taxObj.length);
     // alert(itemtaxCategoryName1)
     this.indexVal = i;
     var arrayControl = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value;
@@ -2897,7 +2895,7 @@ export class SalesOrderFormComponent implements OnInit {
     var baseAmt = arrayControl[i].baseAmt;
     var itemId = arrayControl[i].itemId;
     // debugger;
-    let select = this.taxCategoryList[i].find(d => d.taxCategoryName===itemtaxCategoryName1 );
+    let select = this.taxCategoryList[i].find(d => d.taxCategoryName === itemtaxCategoryName1);
     console.log(this.taxCategoryList[i]);
     console.log(select);
 
@@ -2945,51 +2943,51 @@ export class SalesOrderFormComponent implements OnInit {
       //   )
 
       this.service.taxCalforItem(itemId, taxCategoryId, diss, baseAmt)
-      .subscribe(
-        (data: any[]) => {
-          this.taxCalforItem = data;
-          console.log(this.taxCalforItem);
+        .subscribe(
+          (data: any[]) => {
+            this.taxCalforItem = data;
+            console.log(this.taxCalforItem);
 
-          for (let i = 0; i < this.taxCalforItem.length; i++) {
+            for (let i = 0; i < this.taxCalforItem.length; i++) {
 
-            if (this.taxCalforItem[i].totTaxPer != 0) {
-              sum = sum + this.taxCalforItem[i].totTaxAmt
+              if (this.taxCalforItem[i].totTaxPer != 0) {
+                sum = sum + this.taxCalforItem[i].totTaxAmt
+              }
             }
-          }
 
-          lineTotAmt = Math.round(((baseAmt + sum - diss) + Number.EPSILON) * 100) / 100;
-          (patch.controls[i]).patchValue({
-            baseAmt: Math.round((baseAmt + Number.EPSILON) * 100) / 100,
-            taxAmt: Math.round((sum + Number.EPSILON) * 100) / 100,
-            totAmt: Math.round(((baseAmt + sum - diss) + Number.EPSILON) * 100) / 100,
-          });
-          let controlinv1 = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
-          let distAmtArray = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
-          console.log(controlinv1);
-          this.TaxDetailsArray().clear();
-          for (let i = 0; i < data.length; i++) {
-            var invLnGrp: FormGroup = this.TaxDetailsGroup();
-            controlinv1.push(invLnGrp);
-            (controlinv1.controls[i]).patchValue({
-              invLineNo: Number(i + 1),
+            lineTotAmt = Math.round(((baseAmt + sum - diss) + Number.EPSILON) * 100) / 100;
+            (patch.controls[i]).patchValue({
+              baseAmt: Math.round((baseAmt + Number.EPSILON) * 100) / 100,
+              taxAmt: Math.round((sum + Number.EPSILON) * 100) / 100,
+              totAmt: Math.round(((baseAmt + sum - diss) + Number.EPSILON) * 100) / 100,
             });
-          }
-          this.SalesOrderBookingForm.get('taxAmounts').patchValue(data);
-          var disValue = data[0].totTaxAmt;
-          if (disValue > 0 && data[0].taxTypeName.includes('Discount')) {
-            patch.controls[i].patchValue({ disAmt: data[0].totTaxAmt });
-          }
-          else {
-            patch.controls[i].patchValue({ disAmt: 0 });
-          }
-          let taxMapData = this.SalesOrderBookingForm.get('taxAmounts').value;
-          var ln: string = String(i);
-          this.taxMap.set(ln, taxMapData);
-          console.log(this.taxMap.get(ln));
-          this.updateTotAmtPerline(i);
-          // this.updateTotAmtPerline(index);
+            let controlinv1 = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
+            let distAmtArray = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+            console.log(controlinv1);
+            this.TaxDetailsArray().clear();
+            for (let i = 0; i < data.length; i++) {
+              var invLnGrp: FormGroup = this.TaxDetailsGroup();
+              controlinv1.push(invLnGrp);
+              (controlinv1.controls[i]).patchValue({
+                invLineNo: Number(i + 1),
+              });
+            }
+            this.SalesOrderBookingForm.get('taxAmounts').patchValue(data);
+            var disValue = data[0].totTaxAmt;
+            if (disValue > 0 && data[0].taxTypeName.includes('Discount')) {
+              patch.controls[i].patchValue({ disAmt: data[0].totTaxAmt });
+            }
+            else {
+              patch.controls[i].patchValue({ disAmt: 0 });
+            }
+            let taxMapData = this.SalesOrderBookingForm.get('taxAmounts').value;
+            var ln: string = String(i);
+            this.taxMap.set(ln, taxMapData);
+            console.log(this.taxMap.get(ln));
+            this.updateTotAmtPerline(i);
+            // this.updateTotAmtPerline(index);
 
-        });
+          });
     }
     // }
   }
@@ -3020,6 +3018,8 @@ export class SalesOrderFormComponent implements OnInit {
     var exRegNo = this.SalesOrderBookingForm.get('exRegNo').value;
     var insCharges = this.SalesOrderBookingForm.get('insCharges').value;
     var offerPrice = this.SalesOrderBookingForm.get('offerPrice').value;
+    var custTaxCat = this.SalesOrderBookingForm.get('custTaxCat').value;
+    // alert(custTaxCat);
     this.isDisabled11 = true;
     for (let k = 0; k < orderLines.length; k++) {
       if (orderLines[k].isTaxable === 'Y') {
@@ -3081,6 +3081,33 @@ export class SalesOrderFormComponent implements OnInit {
             this.closeResetButton = true;
             return;
           }
+        }
+      }
+
+
+    }
+    for (let k = 0; k < orderLinesNew1.length; k++) {
+      // debugger;
+      if (orderLinesNew1[k].flowStatusCode === 'READY FOR INVOICE') {
+
+        if (orderLinesNew1[k].taxCategoryName != null) {
+
+          // alert(orderLinesNew1[k].taxCategoryName)
+          if (custTaxCat.includes('S&CGST') && orderLinesNew1[k].taxCategoryName.includes('Sale-I-GST')) {
+            // alert('Tax Category Is Mismatch..Please Confirm.!');
+            this.closeResetButton = true;
+            this.progress = 0;
+            this.dataDisplay = 'Tax Category Is Mismatch..Please Confirm.!'
+            return;
+          }
+          else if (custTaxCat.includes('IGST') && orderLinesNew1[k].taxCategoryName.includes('S&C-GST')) {
+            alert('Tax Category Is Mismatch..Please Confirm.!');
+            this.closeResetButton = true;
+            this.progress = 0;
+            this.dataDisplay = 'Tax Category Is Mismatch..Please Confirm.!'
+            return
+          }
+
         }
       }
     }
@@ -3308,13 +3335,8 @@ export class SalesOrderFormComponent implements OnInit {
     this.isDisabled8 = true;
     var financeType = this.SalesOrderBookingForm.get('financeType').value;
     var financerName = this.SalesOrderBookingForm.get('financerName').value;
-    // var emi = this.SalesOrderBookingForm.get('emi').value;
-    // var tenure = this.SalesOrderBookingForm.get('tenure').value;
-    // var  downPayment = this.SalesOrderBookingForm.get('downPayment').value;
     var exchange = this.SalesOrderBookingForm.get('exchangeYN').value;
-    // var loyaltyBonus = this.SalesOrderBookingForm.get('loyaltyBonus').value;
     var exRegNo = this.SalesOrderBookingForm.get('exRegNo').value;
-    // var insCharges = this.SalesOrderBookingForm.get('insCharges').value;
     var offerPrice = this.SalesOrderBookingForm.get('offerPrice').value;
     var formArr = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     if (financeType != 'None') {
@@ -3335,6 +3357,10 @@ export class SalesOrderFormComponent implements OnInit {
         return;
       }
     }
+    var state = this.SalesOrderBookingForm.get('custAddress').value;
+    var custTaxCat = this.SalesOrderBookingForm.get('custTaxCat').value;
+    // alert(custTaxCat+'-----'+state)
+
     this.orderManagementService.createInvoiceAll(this.orderNumber, (sessionStorage.getItem('emplId'))).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
@@ -3465,7 +3491,7 @@ export class SalesOrderFormComponent implements OnInit {
   onOptionsSelectedcustSiteName(siteName) {
     //  alert(siteName);
     //  alert(sessionStorage.getItem('ouId'));
-    console.log( this.custSiteList);
+    console.log(this.custSiteList);
     let selSite = this.custSiteList.find(d => d.siteName === siteName);
     console.log(selSite);
     // alert(selSite.ouId);
@@ -3510,7 +3536,7 @@ export class SalesOrderFormComponent implements OnInit {
   onOptionsSelectedcustSiteNameNew(siteName) {
     //  alert(siteName.target.value);
     //  alert(sessionStorage.getItem('ouId'));
-    console.log( this.custSiteList);
+    console.log(this.custSiteList);
     let selSite = this.custSiteList.find(d => d.siteName === siteName.target.value);
     console.log(selSite);
     // alert(selSite.ouId);
@@ -3598,11 +3624,11 @@ export class SalesOrderFormComponent implements OnInit {
     if (event.target.value != 'None') {
       this.DisplayfinanceSelectionYes = false;
       this.DisplayfinanceSelectionYes1 = false;
-     
+
       // this.orderManagementService.finananceList(event.target.value, sessionStorage.getItem('divisionId'))
       // new API -- Changes done by rk 02/07/22
       this.orderManagementService.finananceListNew(sessionStorage.getItem('divisionId'))
-      .subscribe(
+        .subscribe(
           data => {
             this.financerNameList = data;
             console.log(this.financerNameList);
@@ -3711,7 +3737,7 @@ export class SalesOrderFormComponent implements OnInit {
   }
 
 
-  updateLineOnCancel(i,flowStatusCode) {
+  updateLineOnCancel(i, flowStatusCode) {
     var trxArrVal = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value;
     var trxArr = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     var taxArrVal = this.SalesOrderBookingForm.get('taxAmounts').value;
@@ -3730,12 +3756,12 @@ export class SalesOrderFormComponent implements OnInit {
     }
     this.updateTotAmtPerline(i)
     // debugger;
-    if (trxArrVal[i].flowStatusCode==='READY FOR INVOICE' && trxArrVal[i].invType === 'SS_VEHICLE'){
-    for (let k=0; k<trxArrVal.length;k++){
-       if (trxArrVal[k].segment.includes('SUBSIDY')){
-         trxArr.controls[k].patchValue({ flowStatusCode: 'READY FOR INVOICE'});
-           }
-     }
+    if (trxArrVal[i].flowStatusCode === 'READY FOR INVOICE' && trxArrVal[i].invType === 'SS_VEHICLE') {
+      for (let k = 0; k < trxArrVal.length; k++) {
+        if (trxArrVal[k].segment.includes('SUBSIDY')) {
+          trxArr.controls[k].patchValue({ flowStatusCode: 'READY FOR INVOICE' });
+        }
+      }
     }
   }
 
@@ -3748,10 +3774,10 @@ export class SalesOrderFormComponent implements OnInit {
 
     //  alert(model+'---'+variant+'----'+color+'---'+fuelType+'---'+basicValue);
 
-    if(model===undefined || model===null)     { alert ("Model: should not be Null.") ;return;}
-    if(variant===undefined || variant===null) { alert("Variant: should not be Null.");return;}
-    if(color===undefined || color===null)     { alert("Color: should not be Null.");return;}
-    if(basicValue===undefined || basicValue===null || basicValue<=0)     { alert("Basic Price: Invalid Basic Amount.");return;}
+    if (model === undefined || model === null) { alert("Model: should not be Null."); return; }
+    if (variant === undefined || variant === null) { alert("Variant: should not be Null."); return; }
+    if (color === undefined || color === null) { alert("Color: should not be Null."); return; }
+    if (basicValue === undefined || basicValue === null || basicValue <= 0) { alert("Basic Price: Invalid Basic Amount."); return; }
 
     this.orderManagementService.variantDetailsUpdate(this.orderNumber, model, variant, color, basicValue)
       .subscribe((res: any) => {
@@ -3797,35 +3823,35 @@ export class SalesOrderFormComponent implements OnInit {
   }
   cancelledSalesOrder() {
 
-    var  resp=confirm("Do You Want to Cancel This Sale Order ???");
+    var resp = confirm("Do You Want to Cancel This Sale Order ???");
 
-    if(resp==true) {
-    
-    var rsnCode = this.SalesOrderBookingForm.get('rsnCode').value;
-    if(rsnCode==null || rsnCode==undefined || rsnCode.trim()=='') {
-      alert ("REASON CODE : Please enter Order Cancellation Reaseon...");
-    return;
-    }
+    if (resp == true) {
+
+      var rsnCode = this.SalesOrderBookingForm.get('rsnCode').value;
+      if (rsnCode == null || rsnCode == undefined || rsnCode.trim() == '') {
+        alert("REASON CODE : Please enter Order Cancellation Reaseon...");
+        return;
+      }
 
 
-    this.orderManagementService.cancelledSalesOrderFn(this.orderNumber,rsnCode)
-      .subscribe((res: any) => {
-        if (res.code === 200) {
-          alert(res.message)
-        }
-        else if (res.code === 400) {
-          alert(res.message+"\n"+res.obj)
-        }
-      });
+      this.orderManagementService.cancelledSalesOrderFn(this.orderNumber, rsnCode)
+        .subscribe((res: any) => {
+          if (res.code === 200) {
+            alert(res.message)
+          }
+          else if (res.code === 400) {
+            alert(res.message + "\n" + res.obj)
+          }
+        });
     }
   }
-  cancelledSalesOrderBtn(){
+  cancelledSalesOrderBtn() {
     // alert('hi')
     this.orderManagementService.OrderCanceList()
-    .subscribe(
-      data => {
-        this.OrderCancelledList = data;
-      }
-    );    
+      .subscribe(
+        data => {
+          this.OrderCancelledList = data;
+        }
+      );
   }
 }

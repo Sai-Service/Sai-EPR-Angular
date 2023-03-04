@@ -299,7 +299,12 @@ SelectTbAct2(trxNum,refNum,catg,source){
     // this.router.navigate(['/admin/transaction/PaymentAr',trxNum]);
     alert ("Source - Purchasing , Category - "+catg +" ..Wip...")
   } 
-
+  else if(source==='Manual' && catg==='AcctTrf' ){
+   
+    this.router.navigate(['/admin/transaction/CashBankTransfer',trxNum] );
+   
+   
+  } 
   else {alert ("Work In Progress")}
   
 }

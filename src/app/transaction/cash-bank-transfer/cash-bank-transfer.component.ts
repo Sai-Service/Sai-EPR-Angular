@@ -12,6 +12,7 @@ import { OrderManagementService } from 'src/app/order-management/order-managemen
 import { mapToMapExpression } from '@angular/compiler/src/render3/util';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import * as xlsx from 'xlsx';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 // import * as converter from 'number-to-words';
 
 interface ICashBankTransfer {
@@ -69,7 +70,7 @@ interface ICashBankTransfer {
 })
 export class CashBankTransferComponent implements OnInit {
   cashBankTransferForm : FormGroup;
-
+  private sub: any;
       @ViewChild('aForm') aForm: ElementRef;
 
       @ViewChild('epltable', { static: false }) epltable: ElementRef;
@@ -191,7 +192,7 @@ export class CashBankTransferComponent implements OnInit {
 
       cashBankTransfer(cashBankTransferForm:any) {  }
 
-      constructor(private service: MasterService,private orderManagementService:OrderManagementService,private  fb: FormBuilder, private router: Router) {
+      constructor(private service: MasterService,private router1: ActivatedRoute,private orderManagementService:OrderManagementService,private  fb: FormBuilder, private router: Router) {
         this.cashBankTransferForm = fb.group({ 
 
           loginArray:[''],
@@ -375,6 +376,16 @@ export class CashBankTransferComponent implements OnInit {
             }
           );
        
+
+        
+            this.sub = this.router1.params.subscribe(params => {
+               var  mDocNo = params['mDocNo'];
+              //  alert(mDocNo)
+              if (mDocNo != undefined){
+              this.SearchByDocNo(mDocNo);
+            }
+          });
+        
 
         }
 
