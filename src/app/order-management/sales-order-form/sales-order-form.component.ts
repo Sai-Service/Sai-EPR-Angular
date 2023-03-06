@@ -749,6 +749,8 @@ export class SalesOrderFormComponent implements OnInit {
 
     this.sub = this.router1.params.subscribe(params => {
       this.orderNumber = params['orderNumber'];
+      this.locId = params['locId'];
+      // alert(locId)
       // alert(this.orderNumber)
       if (this.orderNumber != undefined) {
         this.OrderFind(this.orderNumber);
@@ -1515,7 +1517,16 @@ export class SalesOrderFormComponent implements OnInit {
     this.emplId = Number(sessionStorage.getItem('emplId'))
     this.orderlineDetailsArray().clear();
     this.TaxDetailsArray().clear();
-    this.orderManagementService.getsearchByOrderNo(orderNumber)
+    if (Number(sessionStorage.getItem('deptId'))!=4){
+    this.locId=Number(sessionStorage.getItem('locId'))
+    }
+    else  if (Number(sessionStorage.getItem('deptId'))===4){
+      this.locId=this.locId;
+      // alert(this.locId);
+    }
+
+  
+    this.orderManagementService.getsearchByOrderNo1(orderNumber,this.locId)
       .subscribe(
         data => {
           if (data != null) {
@@ -1881,12 +1892,13 @@ export class SalesOrderFormComponent implements OnInit {
               if (this.lstgetOrderLineDetails[i].segment.includes('SUBSIDY') === true) {
                 // alert(this.displayLineflowStatusCode)
                 // this.displayLineflowStatusCode.push(true);
-                this.displayLineflowStatusCode[i] = true;
+                // this.displayLineflowStatusCode[i] = true;
               }
             }
           }
         })
-
+      
+     
     this.SalesOrderBookingForm.get('accountNo').disable();
     this.SalesOrderBookingForm.get('attribute17').disable();
     this.displayorderDetails = false;

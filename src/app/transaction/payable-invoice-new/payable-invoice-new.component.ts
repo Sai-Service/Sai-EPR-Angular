@@ -1285,7 +1285,6 @@ export class PayableInvoiceNewComponent implements OnInit {
 
     var arraybaseNew = this.poInvoiceForm.get('obj') as FormArray;
     var arraybaseNew1 = arraybaseNew.getRawValue();
-
     // alert(suppNo+'----suppNo')
     var invoiceAmt = this.lineDetailsArray().controls[index].get('invoiceAmt').value;
     var source = this.lineDetailsArray().controls[index].get('source').value;
@@ -1713,8 +1712,8 @@ export class PayableInvoiceNewComponent implements OnInit {
                 // }
               }
               else if (arraybaseNew1[index].invTypeLookupCode === 'Standard Invoice' && data.obj.invoiceStatus != undefined) {
-
-                if (data.invoiceStatus.includes('Validated')) {
+                // alert(data.obj.invoiceStatus)
+                if (data.obj.invoiceStatus.includes('Validated')) {
                   this.isVisiblePayment = true;
                 }
               }
