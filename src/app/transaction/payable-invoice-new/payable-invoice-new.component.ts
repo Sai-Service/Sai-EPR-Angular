@@ -1496,15 +1496,35 @@ export class PayableInvoiceNewComponent implements OnInit {
               this.poInvoiceForm.disable();
             }
             // if (data.invoiceStatus != undefined){
-            if (arraybaseNew1[index].invTypeLookupCode === 'Prepayment' && data.invoiceStatus.includes('Validated') || data.obj.invoiceStatus === 'Unpaid') {
+              // alert(data.invoiceStatus)
+              // debugger;
+            // if (arraybaseNew1[index].invTypeLookupCode === 'Prepayment' && data.invoiceStatus.includes('Validated') || data.obj.invoiceStatus === 'Unpaid') {
+            //   if (arraybaseNew1[index].invTypeLookupCode != 'CREDIT' || arraybaseNew1[index].invTypeLookupCode != 'STANDARD') {
+            //     this.isVisiblePayment = true;
+            //   }
+            //   // }
+            // }
+           
+            // else if (arraybaseNew1[index].invTypeLookupCode === 'Standard Invoice' && data.invoiceStatus != undefined) {
+            //   alert(data.invoiceStatus)
+            //   if (data.invoiceStatus.includes('Validated') || data.invoiceStatus === 'Unpaid') {
+            //     this.isVisiblePayment = true;
+            //   }
+            // }
+            // else {
+            //   this.isVisible = true;
+            //   this.displayapInvCancelled = false;
+            // }
+
+            if (arraybaseNew1[index].invTypeLookupCode === 'Prepayment' && data.invoiceStatus.includes('Validated') || data.invoiceStatus === 'Unpaid') {
               if (arraybaseNew1[index].invTypeLookupCode != 'CREDIT' || arraybaseNew1[index].invTypeLookupCode != 'STANDARD') {
                 this.isVisiblePayment = true;
               }
               // }
             }
             else if (arraybaseNew1[index].invTypeLookupCode === 'Standard Invoice' && data.invoiceStatus != undefined) {
-              // alert(data.invoiceStatus)
-              if (data.invoiceStatus.includes('Validated') || data.invoiceStatus === 'Unpaid') {
+              // alert(data.obj.invoiceStatus)
+              if (data.invoiceStatus.includes('Validated')) {
                 this.isVisiblePayment = true;
               }
             }
