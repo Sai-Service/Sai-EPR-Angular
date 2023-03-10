@@ -607,11 +607,15 @@ export class CashBankTransferComponent implements OnInit {
             alert("Data Validation Sucessfull....\nPosting data..")
           var  mEmplId=Number(sessionStorage.getItem('emplId'));
           var  dTrfNo=this.cashBankTransferForm.get("docTrfNo").value
-          
+          var  reversalPeriod=this.cashBankTransferForm.get("reversalPeriod").value
+          var  reversalDate=this.cashBankTransferForm.get("reversalDate").value
+          var reversalDate1 = this.pipe.transform(reversalDate, 'dd-MMM-yyyy');
           const formValue: ICashBankTransfer =this.transeData(this.cashBankTransferForm.value);
-          this.service.CashBankTrfReversalSubmit(formValue,mEmplId,dTrfNo).subscribe((res: any) => {
+          // formValue,mEmplId,dTrfNo
+          // alert(reversalPeriod+'----'+reversalDate1)
+          this.service.CashBankTrfReversalSubmit(dTrfNo,mEmplId,reversalPeriod,reversalDate1).subscribe((res: any) => {
             if (res.code === 200) {
-              alert('RECORD INSERTED SUCCESSFUILY');
+              alert(res.message);
               this.reversalDocNo=res.obj;
               this.cashBankTransferForm.disable();
               this.statusSave=false;
@@ -728,7 +732,7 @@ export class CashBankTransferComponent implements OnInit {
               this.displayButton = false;
               var stat1=this.cashBankTransferForm.get("status").value;
               var revStat1=this.cashBankTransferForm.get("reversalStatus").value;
-             
+            //  alert(stat1+'---'+revStat1)
               if(stat1=='Save') {
                 this.statusPost=true;
                 this.statusSave=false;

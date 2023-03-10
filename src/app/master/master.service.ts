@@ -4009,13 +4009,34 @@ TransactionTypemiscpPaint(): Observable<any> {
 
 
 
-  public CashBankTrfReversalSubmit(CashBankTrfRecord, mEmplId, docTrfNo) {
+  // public CashBankTrfReversalSubmit(CashBankTrfRecord, mEmplId, docTrfNo) {
+  //   const options = {
+  //     headers: this.headers
+  //   };
+  //   const url = this.ServerUrl + `/AccountTrf/Reversed?docTrfNo=${docTrfNo}&emplId=${mEmplId}`;
+  //   return this.http.post(url, CashBankTrfRecord, options);
+
+  // }
+
+
+  // CashBankTrfReversalSubmit(formData, docTrfNo, mEmplId,reversalPeriod,reversalDate) {
+  //   let headers1 = new HttpHeaders();
+  //   formData.append('docTrfNo', docTrfNo);
+  //   formData.append('mEmplId', mEmplId);
+  //   formData.append('reversalPeriod', reversalPeriod);
+  //   formData.append('reversalDate', reversalDate);
+  //   return this.http.post(this.ServerUrl + `/AccountTrf/Reversed?`, formData)
+  // }
+
+
+  public CashBankTrfReversalSubmit(docTrfNo, mEmplId,reversalPeriod,reversalDate) {
     const options = {
       headers: this.headers
     };
-    const url = this.ServerUrl + `/AccountTrf/Reversed?docTrfNo=${docTrfNo}&emplId=${mEmplId}`;
-    return this.http.post(url, CashBankTrfRecord, options);
+    const url = this.ServerUrl + `/AccountTrf/Reversed?docTrfNo=${docTrfNo}&emplId=${mEmplId}&reversalPeriod=${reversalPeriod}&reversalDate=${reversalDate}`;
+    return this.http.post(url, options);
 
+    // http://localhost:8081/DedStock?ouId=21&months=10
   }
 
   getBnkTrfSearchByDocNum(docNo, ouId): Observable<any> {
