@@ -506,7 +506,7 @@ export class SalesOrderBookingComponent implements OnInit {
     // this.displayorderedItem = false;
     // this.displayPrice = false;
     this.displaypriceListName = false;
-    this.orderManagementService.getsearchByOrderNo(orderNumber)
+    this.orderManagementService.getsearchByOrderNo1(orderNumber,sessionStorage.getItem('locId'))
       .subscribe(
         data => {
           this.lstgetOrderLineDetails = data.obj.oeOrderLinesAllList;

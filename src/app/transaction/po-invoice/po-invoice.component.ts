@@ -1214,6 +1214,8 @@ docSeqValue:number;
     this.selectedLine = i;
     var arrayControl = this.poInvoiceForm.get('obj').value;
     var invStatus = arrayControl[this.selectedLine].INVStatus;
+    var partyId = this.lineDetailsArray().controls[i].get('partyId').value;
+    var suppId = this.lineDetailsArray().controls[i].get('suppId').value;
     // if (arrayControl[this.selectedLine].INVStatus==='Validated'){
 
     // }
@@ -1223,7 +1225,7 @@ docSeqValue:number;
     var invoiceNum = this.lineDetailsArray().controls[i].get('invoiceNum').value;
     // alert(invoiceNum);
     this.invLineDetailsArray().clear();
-    this.transactionService.getApInvLineDetails(invoiceNum)
+    this.transactionService.getApInvLineDetails(invoiceNum,partyId,suppId)
       .subscribe(
         data => {
           console.log(data);

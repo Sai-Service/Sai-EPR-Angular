@@ -138,9 +138,9 @@ export class PaymentsComponent implements OnInit {
   ledgerId: string;
   docSeqValue: string;
   // payStatus:string;
-  displaysiteName = false;
   displayname = false;
   displayDetail = true;
+  displaysiteName = false;
   payAddress: string;
   emplId: number;
   private sub: any;
@@ -160,6 +160,7 @@ export class PaymentsComponent implements OnInit {
   showViewActLine = false;
   isVisibleviewAccounting: boolean = false;
   // viewAccounting1: any[];
+  invoiceDate:Date;
 
   constructor(private fb: FormBuilder, private router1: ActivatedRoute, private router2: ActivatedRoute, private transactionService: TransactionService, private location: Location, private service: MasterService, private router: Router) {
     this.paymentForm = fb.group({
@@ -207,6 +208,7 @@ export class PaymentsComponent implements OnInit {
       unPaidAmt: [],
       docNo: [],
       payStatus: [],
+      invoiceDate:[],
       // appAmt:[],
     })
   }

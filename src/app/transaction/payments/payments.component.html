@@ -43,15 +43,14 @@
                     <td colspan="8" style="text-align: left; width: 40%;">
                         <button type="button" (click)="searchPayment(searchBySuppName,searchByFrmDate,searchByToDate)"
                             class="btn btn-primary"><i class="fa fa-search"></i></button>
-                            <td style="width: 15%" class="LabelFontStyle">Payment&nbsp;No:&nbsp;</td>
-                            <td>
-                                <input type="number" formControlName="paymentNo" [(ngModel)]="paymentNo"
-                                    class="form-control">
-                            </td>
-        
-                            <td colspan="8" style="text-align: left; width: 40%;">
-                                <button type="button" (click)="searchByPaymentNo(paymentNo)"
-                                    class="btn btn-primary"><i class="fa fa-search"></i></button>
+                    <td style="width: 15%" class="LabelFontStyle">Payment&nbsp;No:&nbsp;</td>
+                    <td>
+                        <input type="number" formControlName="paymentNo" [(ngModel)]="paymentNo" class="form-control">
+                    </td>
+
+                    <td colspan="8" style="text-align: left; width: 40%;">
+                        <button type="button" (click)="searchByPaymentNo(paymentNo)" class="btn btn-primary"><i
+                                class="fa fa-search"></i></button>
                 </tr>
             </table>
             <br>
@@ -67,7 +66,7 @@
                             <th scope="col">Type</th>
                             <th scope="col">Invoice Type</th>
                             <th scope="col">Operating Unit</th>
-                            <th scope="col">Location</th>                      
+                            <th scope="col">Location</th>
                             <th scope="col">Supplier Name</th>
                             <th scope="col">Supplier Number</th>
                             <th scope="col">Supplier Site</th>
@@ -96,9 +95,9 @@
                                     <td>
                                         <div *ngIf="displayselButton[i]; then thenenable; else elseDisable"> </div>
                                         <ng-template #thenenable>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal"
-                                            data-target="#myModal" (click)="paymentInvoiceFind(suppNo,ouId,i)"
-                                            id="btnSelect">Select</button>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                data-target="#myModal" (click)="paymentInvoiceFind(suppNo,ouId,i)"
+                                                id="btnSelect">Select</button>
                                         </ng-template>
                                         <ng-template #elseDisable></ng-template>
                                     </td>
@@ -154,14 +153,13 @@
                                         </ng-template>
                                     </td>
                                     <td>
-                                        <select  type="text" class="form-control" formControlName="locId"
-                                        value={{locId}} 
-                                        style="width: 100px;height: 25px;font-size: 10px;">
-                                        <option>--Select--</option>
-                                        <option *ngFor="let sc of  locIdList" [value]="sc.locId" >
-                                            {{sc.locId}}-{{sc.locCode}}
+                                        <select type="text" class="form-control" formControlName="locId" value={{locId}}
+                                            style="width: 100px;height: 25px;font-size: 10px;">
+                                            <option>--Select--</option>
+                                            <option *ngFor="let sc of  locIdList" [value]="sc.locId">
+                                                {{sc.locId}}-{{sc.locCode}}
                                             </option>
-                                            </select>
+                                        </select>
                                     </td>
                                     <td>
                                         <div *ngIf="displayname; then thenname; else elsename"></div>
@@ -178,14 +176,14 @@
                                                     {{item.name}}
                                                 </option>
                                             </select> -->
-                                            <input type="text" formControlName="name"
-                                            list="dynmicUserIds1" class="form-control"  style="width: 160px;height: 25px;font-size: 10px;"
-                                            (ngModelChange)='onOptionsSelectedsuppName($event)'>
-                                        <datalist id="dynmicUserIds1">
-                                            <option *ngFor="let item of  supplierCodeList"
-                                            [value]="item.name">{{item.name}}
-                                            </option>
-                                        </datalist>
+                                            <input type="text" formControlName="name" list="dynmicUserIds1"
+                                                class="form-control" style="width: 160px;height: 25px;font-size: 10px;"
+                                                (ngModelChange)='onOptionsSelectedsuppName($event)'>
+                                            <datalist id="dynmicUserIds1">
+                                                <option *ngFor="let item of  supplierCodeList" [value]="item.name">
+                                                    {{item.name}}
+                                                </option>
+                                            </datalist>
                                         </ng-template>
                                         <input hidden formControlName="partyId" value={{partyId}}>
                                     </td>
@@ -201,7 +199,7 @@
                                         </ng-template>
                                         <input hidden type="text" class="form-control" formControlName="suppId"
                                             value={{suppId}} style="width: 60px;height: 25px;font-size: 10px;">
-                                            <input hidden type="text" class="form-control" formControlName="source"
+                                        <input hidden type="text" class="form-control" formControlName="source"
                                             value={{source}} style="width: 60px;height: 25px;font-size: 10px;">
                                     </td>
                                     <td>
@@ -227,8 +225,9 @@
                                         </div>
                                         <ng-template #thensiteAddress>
                                             <input hidden formControlName="suppSiteId">
-                                            <input disabled type="text" class="form-control" formControlName="payAddress"
-                                                value={{payAddress}} style="width: 160px;height: 25px;font-size: 10px;">
+                                            <input disabled type="text" class="form-control"
+                                                formControlName="payAddress" value={{payAddress}}
+                                                style="width: 160px;height: 25px;font-size: 10px;">
                                         </ng-template>
                                         <ng-template #elsesiteAddress>
                                             <select formControlName="supplierSiteId" id="supplierSiteId" #myinput
@@ -250,13 +249,14 @@
                                     <td>
                                         <!-- <input type="date" formControlName="payDate" value="{{payDate | date:'dd-MM-yyyy'}}" [(ngModel)]='payDate' class="form-control"
                                             style="width: 100px;height: 25px;font-size: 10px;background-color: yellow;">  value="{{payDate | date:'dd-MM-yyyy'}}"-->
-                                            <input type="date" class="form-control"
-                                            formControlName="payDate" [(ngModel)]='payDate'  
+                                        <input type="date" class="form-control" formControlName="payDate"
+                                            [(ngModel)]='payDate'
                                             style="width: 120px;height: 25px;font-size: 10px;background-color: yellow;">
-                                        </td>
+                                    </td>
                                     <td>
                                         <select formControlName="paymentMethodId" id="paymentMethodId"
-                                            class="form-control" style="width: 120px;height: 25px;font-size: 10px;" (change)="onOptionMethod($event,i)">
+                                            class="form-control" style="width: 120px;height: 25px;font-size: 10px;"
+                                            (change)="onOptionMethod($event,i)">
                                             <option>--Select--</option>
                                             <option *ngFor="let paymentDoc of  paymentIdListList"
                                                 [value]="paymentDoc.lookupValueId">
@@ -266,7 +266,7 @@
                                         <!-- [ngValue]="paymentDoc.lookupValueId" -->
                                     </td>
                                     <td>
-                                        <input type="number" class="form-control" formControlName="payAmount" 
+                                        <input type="number" class="form-control" formControlName="payAmount"
                                             style="width: 100px;height: 25px;font-size: 10px;">
                                     </td>
                                     <td>
@@ -276,63 +276,62 @@
                                     <div *ngIf="displayDetail; then thenDetail; else elseDetail"></div>
                                     <!-- [(ngModel)]="paymentTypeFlag" -->
                                     <ng-template #thenDetail>
-                                    <td>
-                                        <!-- (ngModelChange)='onOptionsSelected($event)'  [ngModel]="bankAccountNo"  -->
-                                        <!-- <input type="text" class="form-control" formControlName="bankAccountNum" value={{bankAccountNum}}  style="width: 100px;height: 25px;font-size: 10px;">   -->
-                                        <select formControlName="bankAccountNo" id="bankAccountNo" class="form-control"
-                                            (change)='onOptionsSelected($event, i)' 
-                                            style="width: 140px;height: 25px;font-size: 10px;">
-                                            <option>--Select--</option>
-                                            <option *ngFor="let sc of  bankAccountNumList">
-                                                <!-- {{sc.bankAccountNo}}/{{sc.bankAccountName}}/{{sc.branchName}}/{{sc.branchNo}} -->
-                                                {{sc.bankAccountNo}}/{{sc.branchName}}
-                                            </option>
-                                        </select>
-                                    </td>
+                                        <td>
+                                            <!-- (ngModelChange)='onOptionsSelected($event)'  [ngModel]="bankAccountNo"  -->
+                                            <!-- <input type="text" class="form-control" formControlName="bankAccountNum" value={{bankAccountNum}}  style="width: 100px;height: 25px;font-size: 10px;">   -->
+                                            <select formControlName="bankAccountNo" id="bankAccountNo"
+                                                class="form-control" (change)='onOptionsSelected($event, i)'
+                                                style="width: 140px;height: 25px;font-size: 10px;">
+                                                <option>--Select--</option>
+                                                <option *ngFor="let sc of  bankAccountNumList">
+                                                    <!-- {{sc.bankAccountNo}}/{{sc.bankAccountName}}/{{sc.branchName}}/{{sc.branchNo}} -->
+                                                    {{sc.bankAccountNo}}/{{sc.branchName}}
+                                                </option>
+                                            </select>
+                                        </td>
 
-                                    <input hidden formControlName="receiptMethodId" >
-                                    <input hidden formControlName="refundStatus">
-                                    <td>
-                                        <!-- [ngModel]="docCategoryCode"  -->
-                                        <select formControlName="docCategoryCode" id="docCategoryCode"
-                                            class="form-control" (change)='onOptionsSelectedDocCat($event)'
-                                            style="width: 140px;height: 25px;font-size: 10px;">
-                                            <option>--Select--</option>
-                                            <option *ngFor="let docCateCode of  docCategoryCodeList">
-                                                {{docCateCode.docCategoryCode}}
-                                            </option>
-                                        </select>
-                                        <!-- /{{docCateCode.paymentDocName}}/{{docCateCode.formatCode}} -->
-                                    </td>
-                                    <td>
-                                        <!-- [ngModel]="paymentDocName" -->
-                                        <select formControlName="paymentDocName" id="paymentDocName"
-                                            class="form-control" style="width: 140px;height: 25px;font-size: 10px;">
-                                            <option>--Select--</option>
-                                            <option *ngFor="let paymentDoc of  paymentDocNameList">
-                                                {{paymentDoc.paymentDocName}}
-                                            </option>
-                                        </select>
-                                        <!-- <input class="form-control" formControlName="paymentDocName" value={{paymentDocName}} style="width: 60px;height: 25px;font-size: 10px;"> -->
-                                    </td>
+                                        <input hidden formControlName="receiptMethodId">
+                                        <input hidden formControlName="refundStatus">
+                                        <td>
+                                            <!-- [ngModel]="docCategoryCode"  -->
+                                            <select formControlName="docCategoryCode" id="docCategoryCode"
+                                                class="form-control" (change)='onOptionsSelectedDocCat($event)'
+                                                style="width: 140px;height: 25px;font-size: 10px;">
+                                                <option>--Select--</option>
+                                                <option *ngFor="let docCateCode of  docCategoryCodeList">
+                                                    {{docCateCode.docCategoryCode}}
+                                                </option>
+                                            </select>
+                                            <!-- /{{docCateCode.paymentDocName}}/{{docCateCode.formatCode}} -->
+                                        </td>
+                                        <td>
+                                            <!-- [ngModel]="paymentDocName" -->
+                                            <select formControlName="paymentDocName" id="paymentDocName"
+                                                class="form-control" style="width: 140px;height: 25px;font-size: 10px;">
+                                                <option>--Select--</option>
+                                                <option *ngFor="let paymentDoc of  paymentDocNameList">
+                                                    {{paymentDoc.paymentDocName}}
+                                                </option>
+                                            </select>
+                                            <!-- <input class="form-control" formControlName="paymentDocName" value={{paymentDocName}} style="width: 60px;height: 25px;font-size: 10px;"> -->
+                                        </td>
                                     </ng-template>
                                     <ng-template #elseDetail>
                                         <td>
-                                            <input formControlName="bankAccountNo" id="bankAccountNo" class="form-control"
-                                                style="width: 140px;height: 25px;font-size: 10px;">
+                                            <input formControlName="bankAccountNo" id="bankAccountNo"
+                                                class="form-control" style="width: 140px;height: 25px;font-size: 10px;">
                                         </td>
                                         <td>
                                             <!-- [ngModel]="docCategoryCode"  -->
                                             <input formControlName="docCategoryCode" id="docCategoryCode"
-                                                class="form-control"
-                                                style="width: 140px;height: 25px;font-size: 10px;">
-                                       </td>
+                                                class="form-control" style="width: 140px;height: 25px;font-size: 10px;">
+                                        </td>
                                         <td>
                                             <input formControlName="paymentDocName" id="paymentDocName"
                                                 class="form-control" style="width: 140px;height: 25px;font-size: 10px;">
-                                                   </td>
-                                        </ng-template>
-                               <td>
+                                        </td>
+                                    </ng-template>
+                                    <td>
                                         <input class="form-control" formControlName="payAddress"
                                             style="width: 200px;height: 25px;font-size: 10px;">
                                     </td>
@@ -347,9 +346,9 @@
                                     <td>
                                         <!-- <div *ngIf="displaystatus; then thenstatus; else elsestatus"></div>
                                         <ng-template #thenstatus> -->
-                                            <input type="text" class="form-control" formControlName="statusLookupCode"
-                                                value={{statusLookupCode}} id="statusLookupCode" 
-                                                style="width: 100px;height: 25px;font-size: 10px;">
+                                        <input type="text" class="form-control" formControlName="statusLookupCode"
+                                            value={{statusLookupCode}} id="statusLookupCode"
+                                            style="width: 100px;height: 25px;font-size: 10px;">
                                         <!-- </ng-template> -->
                                         <!-- <ng-template #elsestatus>
                                             <select formControlName="statusLookupCode" id="statusLookupCode"
@@ -361,7 +360,7 @@
                                                 </option>
                                             </select>
                                              <select formControlName="statusLookupCode"  id="statusLookupCode" class="form-control" style="width: 120px;height: 25px;font-size: 10px;"> -->
-                                <!-- <option>--Select--</option>
+                                        <!-- <option>--Select--</option>
                                 <option value="Negotiable">Negotiable</option>
                                 <option value="Reconciled">Reconciled</option>
                             </select> -->
@@ -456,15 +455,15 @@
                                 style="width:30%;border-collapse:collapse;">
                                 <thead>
                                     <tr class="GridHeader">
-                                        <th style="width:50px"   scope="col">Select</th>
-                                        <th style="width:200px"  scope="col">Invoice&nbsp;Number</th>
+                                        <th style="width:50px" scope="col">Select</th>
+                                        <th style="width:200px" scope="col">Invoice&nbsp;Number</th>
                                         <!-- <th scope="col">Invoice Amount</th> -->
-                                        <th style="width:150px"  scope="col">Payment&nbsp;Amount</th>
+                                        <th style="width:150px" scope="col">Payment&nbsp;Amount</th>
                                         <!-- <th scope="col">Discount Amount</th> -->
-                                        <th style="width:150px"  scope="col">Unpaid&nbsp;Amount</th>
+                                        <th style="width:150px" scope="col">Unpaid&nbsp;Amount</th>
                                         <!-- <th scope="col">Save</th> -->
                                         <!-- <th scope="col">Discount Available</th> -->
-                                        <th style="width:150px"  scope="col">Invoice&nbsp;Date</th>
+                                        <th style="width:150px" scope="col">Invoice&nbsp;Date</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -504,7 +503,7 @@
                                                 </td>
 
                                                 <td>
-                                                    <input disabled type="text" class="form-control"
+                                                    <input disabled type="date" class="form-control"
                                                         formControlName="invoiceDate" value={{invoiceDate}}
                                                         style="width: 150px;height: 25px;font-size: 10px;text-align: right;">
                                                 </td>
@@ -574,7 +573,7 @@
                                 View Accounting
                             </button>
                         </td> -->
-                    </tr> 
+                    </tr>
                 </tbody>
             </table>
             <table class="center">
@@ -583,22 +582,26 @@
                         <button type="button" (click)="close()" class="btn btn-primary">Close</button>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-primary" id="register" (click)="refresh()"> 
+                        <button type="button" class="btn btn-primary" id="register" (click)="refresh()">
                             Clear
                         </button>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-primary" id="register" (click)="cancelPayment()"  [style.display]="ispayCancel ? 'block' : 'none'">
+                        <button type="button" class="btn btn-primary" id="register" (click)="cancelPayment()"
+                            [style.display]="ispayCancel ? 'block' : 'none'">
                             Cancel
                         </button>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-primary" id="arPayment"   [style.display]="isarPayment ? 'block' : 'none'"  (click)="ArPaymentNavigation()" style="text-align: justify;">
+                        <button type="button" class="btn btn-primary" id="arPayment"
+                            [style.display]="isarPayment ? 'block' : 'none'" (click)="ArPaymentNavigation()"
+                            style="text-align: justify;">
                             AR Receipt
                         </button>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-primary"   (click)="paymentAdvice()"  [style.display]="ispayAdvise ? 'block' : 'none'">
+                        <button type="button" class="btn btn-primary" (click)="paymentAdvice()"
+                            [style.display]="ispayAdvise ? 'block' : 'none'">
                             Payment Advice
                         </button>
                     </td>
@@ -610,7 +613,7 @@
                         </button>
                     </td>
                 </tr>
-            </table>l   
+            </table>l
 
             <!-- Modal footer -->
             <!-- <div class="modal-footer">
@@ -622,8 +625,8 @@
     </div>
   </div> -->
             <br>
- 
-       
+
+
             <!-- =====================================================Search for all filed wise========================= -->
             <!-- Modal Start Here  -->
             <div class="modal fade" id="myModel" role="dialog" aria-hidden="true" style="width: 100%;margin-left: 0;">
@@ -673,113 +676,127 @@
                 <br><br>
 
             </div>
-           
-             <!-- ******************************** View Accounting Model ************************ -->
-             <div class="modal fade" id="viewAccountingModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+
+            <!-- ******************************** View Accounting Model ************************ -->
+            <div class="modal fade" id="viewAccountingModel" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-xl" role="document">
                     <!-- modal-dialog-scrollable -->
-                  <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle" style="margin-left: 40%;">Accounting Effect</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-        
-                           <div class="grid_scroll2">
-                            <table class="auto-style4" class="GridFont"   style="border-color:#959595;width:100%;">
-                                <thead>
-                                  <tr class="GridHeader">
-                                  <th>Line</th>
-                                  <th>Doc.Seq.No</th>
-                                  <th>Description</th>
-                                  <th>Name</th>
-                                  <th>Category</th>
-                                  <th>Source</th>
-                                  <th>Period</th>
-                                  <th>Debit(INR)</th>
-                                  <th>Credit(INR)</th>
-                                  <th>Select</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let com of viewAccounting2 let i=index" class="ItemStyle" style="text-decoration:none;position: initial;font-size: small;">
-                                        <td >{{i+1}}</td>
-                                        <td >{{com.docSeqValue}}</td>
-                                        <td >{{com.description}}</td>
-                                        <td>{{com.name}}</td>
-                                        <td>{{com.jeCategory}}</td>
-                                        <td>{{com.jeSource}}</td>
-                                        <td>{{com.periodName}}</td>
-                                        <td style="text-align: right;padding-right: 100px;">{{com.runningTotalDr | number:'1.2-2'}}</td>
-                                        <td style="text-align: right;padding-right: 100px;">{{com.runningTotalCr | number:'1.2-2'}}</td>
-                                        <td><button class="btn btn-secondary" (click)="ViewActSelect(i)">Details</button></td>   
-                                      </tr>
-        
-                                  </tbody>
-                              
-                                  </table>
-                               
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle" style="margin-left: 40%;">Accounting
+                                Effect</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
-        
+                        <div class="modal-body">
+
+                            <div class="grid_scroll2">
+                                <table class="auto-style4" class="GridFont" style="border-color:#959595;width:100%;">
+                                    <thead>
+                                        <tr class="GridHeader">
+                                            <th>Line</th>
+                                            <th>Doc.Seq.No</th>
+                                            <th>Description</th>
+                                            <th>Name</th>
+                                            <th>Category</th>
+                                            <th>Source</th>
+                                            <th>Period</th>
+                                            <th>Debit(INR)</th>
+                                            <th>Credit(INR)</th>
+                                            <th>Select</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let com of viewAccounting2 let i=index" class="ItemStyle"
+                                            style="text-decoration:none;position: initial;font-size: small;">
+                                            <td>{{i+1}}</td>
+                                            <td>{{com.docSeqValue}}</td>
+                                            <td>{{com.description}}</td>
+                                            <td>{{com.name}}</td>
+                                            <td>{{com.jeCategory}}</td>
+                                            <td>{{com.jeSource}}</td>
+                                            <td>{{com.periodName}}</td>
+                                            <td style="text-align: right;padding-right: 100px;">{{com.runningTotalDr |
+                                                number:'1.2-2'}}</td>
+                                            <td style="text-align: right;padding-right: 100px;">{{com.runningTotalCr |
+                                                number:'1.2-2'}}</td>
+                                            <td><button class="btn btn-secondary"
+                                                    (click)="ViewActSelect(i)">Details</button></td>
+                                        </tr>
+
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+
+                        </div>
+
+
+                        <div *ngIf="showViewActLine ,then showLineYes; else showLineNo" )></div>
+                        <ng-template #showLineYes>
+
+                            <div class="modal-body">
+
+                                <div class="grid_scroll2">
+                                    <table class="auto-style4" class="GridFont"
+                                        style="border-color:#959595;width:100%;">
+                                        <thead>
+                                            <tr class="GridHeader">
+                                                <th>Line</th>
+                                                <th>Account</th>
+                                                <th>Debit(INR)</th>
+                                                <th>Credit(INR)</th>
+                                                <th>Description</th>
+                                                <th>Account Description</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let com of viewAccountingLines" class="ItemStyle"
+                                                style="text-decoration:none;position: initial;font-size: small;">
+                                                <td>{{com.jeLineNum}}</td>
+                                                <td style="width: 200px;">{{com.segmentName}}</td>
+                                                <td style="text-align: right;padding-right: 5px; width:150px ;">
+                                                    {{com.enteredDr | number:'1.2-2'}}</td>
+                                                <td style="text-align: right;padding-right: 5px; width:150px">
+                                                    {{com.enteredCr | number:'1.2-2'}}</td>
+                                                <td>{{com.description}}</td>
+                                                <td>{{com.accountDesc}}</td>
+                                            </tr>
+                                        </tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td style="font-size: small;">Total:&nbsp;</td>
+                                            <!-- <td></td> <td></td> <td></td><td></td> -->
+                                            <td>
+                                                <input disabled formControlName="runningTotalDr" id="runningTotalDr"
+                                                    [(ngModel)]="runningTotalDr" class="form-control"
+                                                    style="text-align: right;height: 22px;width: 150px;font-weight:bold;">
+                                            </td>
+                                            <td>
+                                                <input disabled formControlName="runningTotalCr" id="runningTotalCr"
+                                                    [(ngModel)]="runningTotalDr" class="form-control"
+                                                    style="text-align: right;height: 22px;width: 150px;font-weight: bold;">
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                </div>
+
+                            </div>
+
+
+                        </ng-template>
+                        <ng-template #showLineNo></ng-template>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
                     </div>
-        
-                    
-                    <div *ngIf="showViewActLine ,then showLineYes; else showLineNo")></div>
-                    <ng-template #showLineYes>
-        
-                    <div class="modal-body">
-        
-                        <div class="grid_scroll2">
-                         <table class="auto-style4" class="GridFont"   style="border-color:#959595;width:100%;">
-                             <thead>
-                               <tr class="GridHeader">
-                               <th>Line</th>
-                               <th>Account</th>
-                               <th>Debit(INR)</th>
-                               <th>Credit(INR)</th>
-                               <th>Description</th>
-                               <th>Account Description</th>
-                              </tr>
-                             </thead>
-                             <tbody>
-                                <tr *ngFor="let com of viewAccountingLines"  class="ItemStyle" style="text-decoration:none;position: initial;font-size: small;">
-                                  <td>{{com.jeLineNum}}</td>
-                                  <td style="width: 200px;">{{com.segmentName}}</td>
-                                  <td style="text-align: right;padding-right: 5px; width:150px ;" >{{com.enteredDr | number:'1.2-2'}}</td>
-                                  <td style="text-align: right;padding-right: 5px; width:150px">{{com.enteredCr | number:'1.2-2'}}</td>
-                                  <td >{{com.description}}</td>
-                                  <td >{{com.accountDesc}}</td>
-                                </tr>
-                            </tbody>
-                               <tr>
-                                <td></td>
-                                    <td style="font-size: small;">Total:&nbsp;</td>
-                                     <!-- <td></td> <td></td> <td></td><td></td> -->
-                                    <td >
-                                        <input disabled formControlName="runningTotalDr" id="runningTotalDr" [(ngModel)]="runningTotalDr" class="form-control"  style="text-align: right;height: 22px;width: 150px;font-weight:bold;">
-                                    </td>
-                                    <td >
-                                        <input disabled   formControlName="runningTotalCr" id="runningTotalCr" [(ngModel)]="runningTotalDr" class="form-control"  style="text-align: right;height: 22px;width: 150px;font-weight: bold;">
-                                    </td>
-                                </tr>
-                               </table>
-                            
-                     </div>
-        
-                 </div>
-        
-                 
-                </ng-template>
-                <ng-template #showLineNo></ng-template>
-                    
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                  </div>
                 </div>
-              </div>
+            </div>
         </form>
     </div>
 

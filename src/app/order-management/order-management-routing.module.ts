@@ -36,7 +36,7 @@ import { OrderCancellationUploadComponent } from './order-cancellation-upload/or
 const routes: Routes = [
   {path:'salesOrderBooking', component:SalesOrderBookingComponent},
   {path:'SalesOrderForm',component:SalesOrderFormComponent},
-  {path:'SalesOrderForm/:orderNumber',component:SalesOrderFormComponent},
+  {path:'SalesOrderForm/:orderNumber/:locId',component:SalesOrderFormComponent},
   // {path:'OMpaymentReceipt',component:PaymentReceiptComponent},
   // {path:'OMpaymentReceipt/:orderNumber',component:PaymentReceiptComponent},
   {path:'allotment',component:AllotmentComponent},

@@ -147,6 +147,7 @@ a<div class="center">
                                                     </td>
                                                     <td>
                                                         <input hidden type="text" formControlName="suppId">
+                                                        <input hidden type="number" formControlName="partyId">
                                                         <!-- <select formControlName="name" id="name" class="form-control"
                                                             (ngModelChange)='onOptionsSelectedsuppName($event,i)'
                                                             style="width: 160px;height: 25px;font-size: 10px;">
@@ -201,11 +202,11 @@ a<div class="center">
                                                             style="width:50px;height: 25px;font-size: 11px;font-weight: bold;">
                                                     </td>
                                                     <td>
-                                                        <input type="text" formControlName="invoiceDate"
+                                                        <input type="text" formControlName="invoiceDate" (change)="validateDate(invoiceDate,'INV')" 
                                                             [style.display]="isVisibleinvoiceDateText ? 'block' : 'none'"
                                                             class="form-control"
                                                             style="width: 150px;height: 25px;font-size: 11px;">
-                                                        <input type="date" formControlName="invoiceDate"
+                                                        <input type="date" formControlName="invoiceDate" max="{{minDate | date:'yyyy-MM-dd'}}" [(ngModel)]="invoiceDate"  (change)="validateDate(invoiceDate,'INV')" 
                                                             [style.display]="isVisibleinvoiceDateDate ? 'block' : 'none'"
                                                             class="form-control"
                                                             style="width: 150px;height: 25px;font-size: 11px;background-color: yellow;">
@@ -468,7 +469,7 @@ a<div class="center">
                                                     </td>
                                                     <td>
                                                         <input type="date" formControlName="invoiceDate"
-                                                            class="form-control"
+                                                            class="form-control" (change)="validateDate(invoiceDate,'INV')" 
                                                             style="width: 150px;height: 25px;font-size: 11px; background-color: yellow;">
                                                     </td>
                                                     <td>
@@ -1003,9 +1004,9 @@ a<div class="center">
                                                             </ng-template>
                                                         </td>
                                                    
-                                                        <!-- <td>
-                                                            <input disabled type="number" formControlName="rounAmt" class="form-control">
-                                                        </td> -->
+                                                         <td>
+                                                            <input disabled type="number" formControlName="rounAmt" [(ngModel)]="rounAmt" style="width: 50%;" class="form-control">
+                                                        </td> 
                                                    
                                                 </tr>
                                             </table>
@@ -1038,9 +1039,9 @@ a<div class="center">
                                                             </ng-template>
                                                         </td>
                                                     
-                                                    <!-- <td>
-                                                        <input disabled type="number" formControlName="rounAmt" class="form-control">
-                                                    </td> -->
+                                                        <td>
+                                                            <input disabled type="number" formControlName="rounAmt" [(ngModel)]="rounAmt" style="width: 50%;" class="form-control">
+                                                        </td> 
                                                 </tr>
                                             </table>
                                         </ng-template>

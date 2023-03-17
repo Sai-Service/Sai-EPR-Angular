@@ -22,6 +22,12 @@ export class OrderManagementService {
     return this.http.get(this.ServerUrl + `/orderHeader/${orderNumber}`);
   }
 
+
+
+  getsearchByOrderNo1(orderNumber,locId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/orderHeader/orderLocWise?orderNumber=${orderNumber}&locationId=${locId}`);
+  }
+
   getsearchBymsRefNo(deptId,locId,msRefNo): Observable<any> {
     return this.http.get(this.ServerUrl + `/orderHeader/${deptId}/${locId}/${msRefNo}`);
   }
@@ -562,6 +568,12 @@ export class OrderManagementService {
     const url = this.ServerUrl + `/orderHeader/cancelSaleOrder?orderNumber=${orderNumber}&reasonCode=${rsnCode}`;
     return this.http.put(url, options);
   }
+
+
+  OrderCanceList(): Observable<any> {
+    return this.http.get(this.ServerUrl + '/cmnLookup/CmnType/SalesOrderCancelledReason');
+  }
+
 
   // ////////////////************Order Payment Receipt **************//////////////////
   PaymentModeList(): Observable<any> {

@@ -63,9 +63,14 @@ export class TransactionService {
     return this.http.put(url, invoiceNum, options);
   }
 
-  getApInvLineDetails(invoiceNum): Observable<any> {
-    return this.http.get(this.ServerUrl + `/apInv/invDtls?invNum=${invoiceNum}`);
-  }
+  // getApInvLineDetails(invoiceNum): Observable<any> {
+  //   return this.http.get(this.ServerUrl + `/apInv/invDtls?invNum=${invoiceNum}`);
+  // }
+  getApInvLineDetails(invoiceNum,partyId,suppId): Observable<any> {
+      return this.http.get(this.ServerUrl + `/apInv/invDtls?invNum=${invoiceNum}&partyId=${partyId}&suppId=${suppId}`);
+    }
+
+  
   getApPaymentDetails(suppNo, invoiceNum): Observable<any> {
     return this.http.get(this.ServerUrl + `/apInv/payDetailInvNowise?suppNo=${suppNo}&invoiceNum=${invoiceNum}`);
   }

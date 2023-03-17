@@ -1291,6 +1291,7 @@ export class CustomerMasterComponent implements OnInit {
     console.log(select.status);
     this.customerMasterForm.get('siteName').disable();
     this.customerMasterForm.get('souId').disable();
+    this.customerMasterForm.get('sstate').disable();
   }
 
   onOptionsSelectedCity(city: any) {

@@ -515,7 +515,7 @@ invLineItemId:number;
     this.emplId = Number(sessionStorage.getItem('emplId'))
     this.orderlineDetailsArray().clear();
     this.TaxDetailsArray().clear();
-    this.orderManagementService.getsearchByOrderNo(orderNumber)
+    this.orderManagementService.getsearchByOrderNo1(orderNumber,sessionStorage.getItem('locId'))
     .subscribe(
       data => {
         this.lstgetOrderLineDetails = data.obj.oeOrderLinesAllList;

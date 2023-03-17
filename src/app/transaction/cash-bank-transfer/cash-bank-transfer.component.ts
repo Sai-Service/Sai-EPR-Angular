@@ -12,6 +12,7 @@ import { OrderManagementService } from 'src/app/order-management/order-managemen
 import { mapToMapExpression } from '@angular/compiler/src/render3/util';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import * as xlsx from 'xlsx';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 // import * as converter from 'number-to-words';
 
 interface ICashBankTransfer {
@@ -69,7 +70,7 @@ interface ICashBankTransfer {
 })
 export class CashBankTransferComponent implements OnInit {
   cashBankTransferForm : FormGroup;
-
+  private sub: any;
       @ViewChild('aForm') aForm: ElementRef;
 
       @ViewChild('epltable', { static: false }) epltable: ElementRef;
@@ -191,7 +192,7 @@ export class CashBankTransferComponent implements OnInit {
 
       cashBankTransfer(cashBankTransferForm:any) {  }
 
-      constructor(private service: MasterService,private orderManagementService:OrderManagementService,private  fb: FormBuilder, private router: Router) {
+      constructor(private service: MasterService,private router1: ActivatedRoute,private orderManagementService:OrderManagementService,private  fb: FormBuilder, private router: Router) {
         this.cashBankTransferForm = fb.group({ 
 
           loginArray:[''],
@@ -375,6 +376,16 @@ export class CashBankTransferComponent implements OnInit {
             }
           );
        
+
+        
+            this.sub = this.router1.params.subscribe(params => {
+               var  mDocNo = params['mDocNo'];
+              //  alert(mDocNo)
+              if (mDocNo != undefined){
+              this.SearchByDocNo(mDocNo);
+            }
+          });
+        
 
         }
 
@@ -596,11 +607,15 @@ export class CashBankTransferComponent implements OnInit {
             alert("Data Validation Sucessfull....\nPosting data..")
           var  mEmplId=Number(sessionStorage.getItem('emplId'));
           var  dTrfNo=this.cashBankTransferForm.get("docTrfNo").value
-          
+          var  reversalPeriod=this.cashBankTransferForm.get("reversalPeriod").value
+          var  reversalDate=this.cashBankTransferForm.get("reversalDate").value
+          var reversalDate1 = this.pipe.transform(reversalDate, 'dd-MMM-yyyy');
           const formValue: ICashBankTransfer =this.transeData(this.cashBankTransferForm.value);
-          this.service.CashBankTrfReversalSubmit(formValue,mEmplId,dTrfNo).subscribe((res: any) => {
+          // formValue,mEmplId,dTrfNo
+          // alert(reversalPeriod+'----'+reversalDate1)
+          this.service.CashBankTrfReversalSubmit(dTrfNo,mEmplId,reversalPeriod,reversalDate1).subscribe((res: any) => {
             if (res.code === 200) {
-              alert('RECORD INSERTED SUCCESSFUILY');
+              alert(res.message);
               this.reversalDocNo=res.obj;
               this.cashBankTransferForm.disable();
               this.statusSave=false;
@@ -717,7 +732,7 @@ export class CashBankTransferComponent implements OnInit {
               this.displayButton = false;
               var stat1=this.cashBankTransferForm.get("status").value;
               var revStat1=this.cashBankTransferForm.get("reversalStatus").value;
-             
+            //  alert(stat1+'---'+revStat1)
               if(stat1=='Save') {
                 this.statusPost=true;
                 this.statusSave=false;
