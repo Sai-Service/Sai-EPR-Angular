@@ -1473,8 +1473,9 @@ if(this.deptId==2){
               this.othSaveButton=false;
               this.othAddRemoveButton=true;
               this.paymentArForm.disable();
-              return;
-            }
+              // return;
+            // }
+
             if (data.obj.oePayList[0].reversalReasonCode != null) {
               if (data.obj.oePayList[0].reversalReasonCode === 'ChqBounce') { this.chqBounceStatus = true; }
               this.printButton = false;
@@ -1494,6 +1495,7 @@ if(this.deptId==2){
               return;
 
             }
+          }
 
 
             var rcptdt = data.obj.oePayList[0].receiptDate

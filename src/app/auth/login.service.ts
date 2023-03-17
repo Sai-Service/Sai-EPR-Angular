@@ -29,9 +29,7 @@ export class LoginService {
     // const url= "http://saierp.horizon.org:8080/ErpReplica/loginpage"; 
     console.log(body);
     return this.httpclient.post(url, body, options)
-
   }
-
 
   public resetPassword(userName: string, password: string,nPassword : string,cPassword : string) {
     const body = {
@@ -49,7 +47,6 @@ export class LoginService {
     // const url= "http://saierp.horizon.org:8080/ErpReplica/resetpassword"; 
     console.log(body);
     return this.httpclient.put(url, body, options)
-
   }
 
 }
