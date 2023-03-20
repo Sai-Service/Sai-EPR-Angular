@@ -41,6 +41,8 @@ interface ICashBankTransfer {
       reversalDate:string;
       reversalDocNo:string;
       reversalDocDt:string;
+      
+      reversalReason:string;
       toReceiptId:number;
       fromReceiptId:number;
     
@@ -149,6 +151,7 @@ export class CashBankTransferComponent implements OnInit {
      reversalDate:string;
      reversalDocNo:string=null;
       reversalDocDt:string=null;
+      reversalReason:string;
       toReceiptId:number=null;
       fromReceiptId:number=null;
 
@@ -239,6 +242,7 @@ export class CashBankTransferComponent implements OnInit {
 
           reversalDocNo:[],
           reversalDocDt:[],
+          reversalReason:[],
           toReceiptId:[],
           fromReceiptId:[],
 
@@ -285,6 +289,7 @@ export class CashBankTransferComponent implements OnInit {
       }
 
         ngOnInit(): void {
+          $("#wrapper").toggleClass("toggled");
 
           this.name=  sessionStorage.getItem('name');
           this.loginArray=sessionStorage.getItem('divisionName');
@@ -420,13 +425,15 @@ export class CashBankTransferComponent implements OnInit {
         // alert ("Status :"+status1);
         if(status1=='Y') {
            this.statusReversal=true;
-            this.reversalDate = this.pipe.transform(Date.now(), 'y-MM-dd');
-            this.reversalDocDt =this.reversalDate;
+            // this.reversalDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+            // this.reversalDocDt =this.reversalDate;
          }
         if(status1=='N') {
           this.statusReversal=false;
           this.reversalDate =null;
           this.reversalDocDt=null;
+          this.reversalReason=null;
+          this.reversalDocNo=null;
        } }
 
 
@@ -638,6 +645,7 @@ export class CashBankTransferComponent implements OnInit {
 
     SearchByDocNo(mDocNo){
       // alert ("Document Num :" +mDocNo);
+      if(mDocNo==null|| mDocNo==''|| mDocNo==undefined) {alert ("Please Enter Document Number..");}
       this.service.getBnkTrfSearchByDocNum(mDocNo,sessionStorage.getItem('ouId'))
         .subscribe(
           data => {
@@ -652,15 +660,20 @@ export class CashBankTransferComponent implements OnInit {
             this.trfAmount=this.lstcomments.trfAmount;
             var inWords =this.number2text(this.lstcomments.trfAmount);
             this.amtInWords=inWords;
+            // this.reversalDocDt =this.lstcomments.reversalDocDt;
+            // this.reversalDocDt =this.lstcomments.reversalDocDt;
+            this.cashBankTransferForm.patchValue({reversalDocDt: this.lstcomments.reversalDocDt});
+
             this.displayButton = false;
             this.buttonStatus();
-            // alert ("Chq list :" +this.showChqListModal);
         } ); 
 
         }
 
 
         SearchByDate() {
+          this.searchDocNo=null;
+          this.cashBankTransferForm.get('searchDocNo').disable();
           var frmDt=this.cashBankTransferForm.get('fromDate').value;
           var toDt=this.cashBankTransferForm.get('toDate').value;
             //  alert("SearchByRcptNo-Receipt date : "+ frmDt+","+toDt  );
@@ -678,13 +691,16 @@ export class CashBankTransferComponent implements OnInit {
 
 
 
+
             Select(trnId: number) {
                  this.selectdisp=true;
                 // this.statusSave=false;
                 // this.cashBankTransferForm.reset();
                 // this.fromDate=this.pipe.transform(Date.now(), 'y-MM-dd');  
                 // this.toDate=this.pipe.transform(Date.now(), 'y-MM-dd');  
-              let select = this.lstcomments.find(d => d.tranId === trnId);
+                this.searchDocNo=null;
+                this.cashBankTransferForm.get('searchDocNo').disable();
+                let select = this.lstcomments.find(d => d.tranId === trnId);
              
               if (select) {
                 this.cashBankTransferForm.patchValue(select);
@@ -732,8 +748,19 @@ export class CashBankTransferComponent implements OnInit {
               this.displayButton = false;
               var stat1=this.cashBankTransferForm.get("status").value;
               var revStat1=this.cashBankTransferForm.get("reversalStatus").value;
-            //  alert(stat1+'---'+revStat1)
-              if(stat1=='Save') {
+
+              if(revStat1=='Y') {
+                // alert ("in Rev Y");
+                this.statusPost=false;
+                this.statusSave=false;
+                this.revButton=false;
+                this.copyButton=false;
+                this.showChqListModal=false;
+                this.updateButton=false;
+               }
+
+
+              if(stat1=='Save' && revStat1=='N') {
                 this.statusPost=true;
                 this.statusSave=false;
                 this.revButton=false;
@@ -743,7 +770,10 @@ export class CashBankTransferComponent implements OnInit {
                 // this.showChqListModal=false;
                
                }
-              if(stat1=='Post') {
+
+              if(stat1=='Post' && revStat1=='N') {
+                // alert ("in post button");
+
                 this.statusPost=false;
                 this.statusSave=false;
                 this.revButton=true;
@@ -753,14 +783,8 @@ export class CashBankTransferComponent implements OnInit {
                 this.updateButton=false;
                }
 
-               if(revStat1=='Y') {
-                this.statusPost=false;
-                this.statusSave=false;
-                this.revButton=false;
-                this.copyButton=false;
-                this.showChqListModal=false;
-                this.updateButton=false;
-               }
+              //  alert('revButton ,copyButton ---'+this.revButton+ ","+this.copyButton);
+
 
             }
 
@@ -924,13 +948,14 @@ export class CashBankTransferComponent implements OnInit {
 
 
           clearSearch() {
-           
+            this.searchDocNo=null;
+            this.cashBankTransferForm.get('searchDocNo').disable();
             this.cashBankTransferForm.get('fromDate').enable();
             this.cashBankTransferForm.get('toDate').enable();
-            this.cashBankTransferForm.get('searchDocNo').enable();
+            // this.cashBankTransferForm.get('searchDocNo').enable();
             this.fromDate=this.pipe.transform(Date.now(), 'y-MM-dd');  
             this.toDate=this.pipe.transform(Date.now(), 'y-MM-dd');  
-            this.cashBankTransferForm.get('searchDocNo').reset();
+            // this.cashBankTransferForm.get('searchDocNo').reset();
             this.lstcomments = null;
           }
 
