@@ -245,12 +245,11 @@
                                         <input type="text" disabled class="form-control" formControlName="country"
                                             value={{country}} style="width: 100px;height: 25px;font-size: 10px;">
                                     </td> -->
-                                    <!-- [ngModel]="payDate | date:'dd-MM-yyyy'" -->
+                                    <!-- [ngModel]="payDate | date:'dd-MM-yyyy'"   [(ngModel)]='payDate' -->
                                     <td>
                                         <!-- <input type="date" formControlName="payDate" value="{{payDate | date:'dd-MM-yyyy'}}" [(ngModel)]='payDate' class="form-control"
                                             style="width: 100px;height: 25px;font-size: 10px;background-color: yellow;">  value="{{payDate | date:'dd-MM-yyyy'}}"-->
                                         <input type="date" class="form-control" formControlName="payDate"
-                                            [(ngModel)]='payDate'
                                             style="width: 120px;height: 25px;font-size: 10px;background-color: yellow;">
                                     </td>
                                     <td>

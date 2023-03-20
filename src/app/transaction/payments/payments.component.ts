@@ -1101,46 +1101,40 @@ export class PaymentsComponent implements OnInit {
       .subscribe((res: any) => {
         if (res.code === 200) {
           alert(res.message);
-          this.paymentDocdata = res.obj;
+          this.paymentData = res.obj;
           this.displayDetail = false;
           this.displaystatus = true;
           // alert(this.paymentData.length+'----this.paymentData.length')
-          for (let i = 0; i < this.paymentDocdata.length; i++) {
-            var payLnGrp1: FormGroup = this.payHeaderLineDtl();
-            this.payHeaderLineDtlArray().push(payLnGrp1);
+          for (let i = 0; i < this.paymentData.length; i++) {
+            var payLnGrp: FormGroup = this.payHeaderLineDtl();
+            this.payHeaderLineDtlArray().push(payLnGrp);
 
           }
           // alert(this.payHeaderLineDtlArray().length+'len');
           for (let j = 0; j < this.payHeaderLineDtlArray().length; j++) {
-            // debugger;
             var patch = this.paymentForm.get('obj1') as FormArray;
             //   // var selPay=this.suppIdList.find(d=>d.suppSiteId===res.obj[j])
-            patch.controls[j].patchValue(this.paymentDocdata);
+            patch.controls[j].patchValue(this.paymentData);
             var payDateNew1New = this.pipe.transform(res.obj[j].payDate, 'y-MM-dd');
             this.payDate = payDateNew1New;
-            // alert(this.paymentDocdata[j].statusLookupCode)
-            // debugger;
-            if (this.paymentDocdata[j].statusLookupCode === 'CLEARED' || this.paymentData[j].statusLookupCode === 'VOIDED') {
+            if (this.paymentData[j].statusLookupCode === 'CLEARED' || this.paymentData[j].statusLookupCode === 'VOIDED') {
               this.displayselButton[j] = false;
             }
             else {
               this.displayselButton[j] = true;
             }
-            if (this.paymentDocdata[j].statusLookupCode === 'UNCLEARED' && this.paymentDocdata[j].invTypeLookupCode === 'Prepayment') {
-              this.displayselButton[j] = true;
-            }
-            if (this.paymentDocdata[j].statusLookupCode === 'VOIDED') {
-              this.payHeaderLineDtlArray().disable();
-            }
+
           }
-          this.paymentForm.get('obj1').patchValue(this.paymentDocdata);
-          // this.paymentForm.patchValue(this.paymentData);
-          console.log(this.paymentData);
+          this.paymentForm.get('obj1').patchValue(this.paymentData);
+          var patch = this.paymentForm.get('obj1') as FormArray;
+
           for (let k = 0; k < this.payHeaderLineDtlArray().length; k++) {
-            var selloc = this.locIdList.find(d => d.locId === this.paymentDocdata[k].locId)
+            var selloc = this.locIdList.find(d => d.locId === this.paymentData[k].locId)
             // debugger;
             patch.controls[k].patchValue({ locId: selloc.locId });
           }
+          // this.paymentForm.patchValue(this.paymentData);
+          console.log(this.paymentData);
 
         } else {
           if (res.code === 400) {
