@@ -119,7 +119,7 @@
                              </tr>
 
 
-                            <tr>
+                            <!-- <tr>
 
                                 <td style="width: 15%" class="LabelFontStyle">Rev&nbsp;Status&nbsp;:&nbsp;</td>
                                 
@@ -153,14 +153,14 @@
                                 </td>
 
                                 <td style="width: 15%" class="LabelFontStyle">&nbsp;Rev&nbsp;Date:&nbsp;</td>
+                              
+                                <input  hidden  type="date"  formControlName="reversalDate"  id="reversalDate" [(ngModel)]="reversalDate" class="form-control" style="background-color: yellow;" >
                                 <td>
-                                    <input    type="date"  formControlName="reversalDate"  id="reversalDate" [(ngModel)]="reversalDate" class="form-control" style="background-color: yellow;" >
+                                    <input    type="date"  formControlName="reversalDocDt"  id="reversalDocDt" [(ngModel)]="reversalDocDt" class="form-control" style="background-color: yellow;" >
                                 </td>
 
-                                <input   hidden type="date"  formControlName="reversalDocDt"  id="reversalDocDt" [(ngModel)]="reversalDocDt" class="form-control" style="background-color: yellow;" >
-                            
-
                             </ng-template>
+
                             <ng-template #revNo1> 
                                 <td style="width: 15%" class="LabelFontStyle">&nbsp;Rev&nbsp;Period:&nbsp;</td>
                         
@@ -173,14 +173,19 @@
                                     </select>
                                 </td>
                                 <td style="width: 15%" class="LabelFontStyle">&nbsp;Reversal&nbsp;Date:&nbsp;</td>
-                                <td>
-                                    <input disabled   type="date"  formControlName="reversalDate"  id="reversalDate" [(ngModel)]="reversalDate" class="form-control"  >
-                                </td>
+                                <input disabled hidden   type="date"  formControlName="reversalDate"  id="reversalDate" [(ngModel)]="reversalDate" class="form-control"  >
+
+                               <td>
+                                    <input disabled   type="date"  formControlName="reversalDocDt"  id="reversalDocDt" [(ngModel)]="reversalDocDt" class="form-control" style="background-color: yellow;" >
+                              </td>
+
+
+
                             </ng-template>
 
 
 
-                            </tr>
+                            </tr> -->
                             <tr>
 
                             <td style="width: 15%" class="LabelFontStyle">Header&nbsp;:&nbsp;</td>
@@ -386,14 +391,88 @@
                              
     
                             </tr>
-                         
+
+                            <tr>
+
+                                <td style="width: 15%" class="LabelFontStyle">Rev&nbsp;Status&nbsp;:&nbsp;</td>
                                 
-                         
+                                <div *ngIf="displayButton; then d1; else d2"></div>
+                                <ng-template #d2> 
+                                <td>
+                                    <select formControlName="reversalStatus" id="reversalStatus" class="form-control"  [(ngModel)]="reversalStatus" 
+                                    (ngModelChange)="onSelectionRevStatus($event)" style="background-color: yellow;">
+                                     <option value="N">N</option>
+                                     <option value="Y">Y</option>
+                                </select>
+                                </td>
+                                </ng-template>
+                                <ng-template #d1> 
+                                    <td> <input  disabled  type="text"  formControlName="reversalStatus"  id="reversalStatus" [(ngModel)]="reversalStatus" class="form-control" ></td>
+                                </ng-template>
 
 
-                            
+                           
 
-                            
+                           <div *ngIf="statusReversal; then revYes1; else revNo1"></div>
+                            <ng-template #revYes1> 
+                                <td style="width: 15%" class="LabelFontStyle">&nbsp;Rev&nbsp;Period:&nbsp;</td>
+                                 <td>  
+                                    <select  formControlName="reversalPeriod" id="reversalPeriod" [(ngModel)]="reversalPeriod"  class="form-control" style="background-color: yellow;"  >       
+                                    <option disabled>--Select--</option>
+                                    <option *ngFor="let sc of  PeriodList" [ngValue]="sc.periodName">
+                                    {{sc.periodName}}
+                                    </option>
+                                    </select>
+                                </td>
+
+                                <td style="width: 15%" class="LabelFontStyle">&nbsp;Rev&nbsp;Date:&nbsp;</td>
+                              
+                                <input  hidden  type="date"  formControlName="reversalDate"  id="reversalDate" [(ngModel)]="reversalDate" class="form-control" style="background-color: yellow;" >
+                                <td>
+                                    <input    type="date"  formControlName="reversalDocDt"  id="reversalDocDt" [(ngModel)]="reversalDocDt" class="form-control" style="background-color: yellow;" >
+                                    <!-- reversalDocDt -->
+                                </td>
+
+                            </ng-template>
+
+                            <ng-template #revNo1> 
+                                <td style="width: 15%" class="LabelFontStyle">&nbsp;Rev&nbsp;Period:&nbsp;</td>
+                        
+                                <td>  
+                                    <select  disabled formControlName="reversalPeriod" id="reversalPeriod" [(ngModel)]="reversalPeriod"  class="form-control"  >       
+                                    <option disabled>--Select--</option>
+                                    <option *ngFor="let sc of  PeriodList" [ngValue]="sc.periodName">
+                                    {{sc.periodName}}
+                                    </option>
+                                    </select>
+                                </td>
+                                <td style="width: 15%" class="LabelFontStyle">&nbsp;Reversal&nbsp;Date:&nbsp;</td>
+                                <input disabled hidden   type="date"  formControlName="reversalDate"  id="reversalDate" [(ngModel)]="reversalDate" class="form-control"  >
+
+                               <td>
+                                    <input disabled   type="date"  formControlName="reversalDocDt"  id="reversalDocDt" [(ngModel)]="reversalDocDt" class="form-control" style="background-color: yellow;" >
+                              </td>
+
+
+
+                            </ng-template>
+
+
+
+                            </tr>
+
+                            <tr>
+                                <td style="width: 15%" class="LabelFontStyle">&nbsp;Rev&nbsp;Doc Number:&nbsp;</td>
+                                <td><input disabled   type="text"  formControlName="reversalDocNo"  id="reversalDocNo" [(ngModel)]="reversalDocNo" class="form-control"  ></td>
+                                <!-- <div *ngIf="statusReversal; then revRsnYes1; else revRsnNo1"></div>
+                                <ng-template #revRsnYes1> 
+                                <td style="width: 15%" class="LabelFontStyle">&nbsp;Rev&nbsp;Reason:&nbsp;</td>
+                                <td colspan="3">
+                                    <input   style="width: 100%;"   type="text"  formControlName="reversalReason"  id="reversalReason" [(ngModel)]="reversalReason" class="form-control" ></td>
+                                </ng-template>
+                                <ng-template #revRsnNo1> </ng-template> -->
+                            </tr>
+                                                
                            </table>
                     </fieldset>
 
@@ -435,13 +514,16 @@
                                         <td> <button  type="button" class="btn btn-info" (click)="cashBnkTrfReversal()" >Reversal</button></td>
                                         </ng-template>
                                         <ng-template #Block31> 
+                                        <!-- <td> <button  disabled type="button" class="btn btn-info" (click)="cashBnkTrfReversal()" >Reversal</button></td> -->
                                          </ng-template>
 
                                         <div *ngIf="copyButton; then Block4; else Block41"></div>
                                         <ng-template #Block4> 
                                             <td> <button  type="button" class="btn btn-info" (click)="cashBnkTrfCopy()" >Copy</button></td>
                                         </ng-template>
-                                        <ng-template #Block41></ng-template>
+                                        <ng-template #Block41>
+                                            <!-- <td> <button  disabled type="button" class="btn btn-info" (click)="cashBnkTrfCopy()" >Copy</button></td> -->
+                                        </ng-template>
 
 
                                         <div *ngIf="viewAct; then act1; else act2"></div>
@@ -456,7 +538,6 @@
                                     <!-- <td>
                                         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#ChqListModal" (click)="LoadRcptList()">List</button>
                                     </td> -->
-                                    
                                                             
                                 <td>
                                     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button>
@@ -577,12 +658,8 @@
                     </tr>
                 </table>
                 </fieldset>
-
-
                     
-                    
-                    
-                    <!-- ==================================================== -->
+            <!-- ==================================================== -->
 
                     
 <!-- -----------------------------------------Receipt List Cheques -->
