@@ -1931,7 +1931,7 @@ export class PayableInvoiceNewComponent implements OnInit {
       // }
     }
     else if (sourceType === 'REFUND') {
-      this.router.navigate(['/admin/transaction/Payment', invNumber]);
+      this.router.navigate(['/admin/transaction/Payment', invNumber ]);
     }
     else if (internalSeqNum != null) {
       this.router.navigate(['/admin/transaction/Payment']);

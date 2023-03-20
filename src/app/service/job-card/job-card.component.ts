@@ -1650,7 +1650,7 @@ export class JobCardComponent implements OnInit {
     if(lenMat>1) {for (let i = lenMat - 1; i > 0; i--) { this.lineDistributionArray().removeAt(i); }}
 
     this.jobCardNum1=jcNum;
-   
+  //  alert(this.jobCardNum1)
     this.serviceService.getJonCardNoSearch(jcNum)
       .subscribe(
         data => {
