@@ -1468,14 +1468,18 @@ if(this.deptId==2){
               // this.paymentArForm.disable();
               return;
             }
+
             if (data.obj.oePayList[0].status === 'REVERSED') {
               this.isVisibleUnApplyReceipt=false;
               this.othSaveButton=false;
               this.othAddRemoveButton=true;
               this.paymentArForm.disable();
-              return;
-            }
+              // return;
+            // }
+
             if (data.obj.oePayList[0].reversalReasonCode != null) {
+              // if (data.obj.oePayList[0].reversalReasonCode.length>0 ) {
+              // alert ("Reversal Reason :" +data.obj.oePayList[0].reversalReasonCode);
               if (data.obj.oePayList[0].reversalReasonCode === 'ChqBounce') { this.chqBounceStatus = true; }
               this.printButton = false;
               this.showModalForm = false;
@@ -1494,6 +1498,7 @@ if(this.deptId==2){
               return;
 
             }
+          }
 
 
             var rcptdt = data.obj.oePayList[0].receiptDate
@@ -1607,10 +1612,11 @@ if(this.deptId==2){
               this.showRefundHist = true;
               return;
             }
-            if (data.obj.oePayList[0].status === 'REVERSED') {
-              this.isVisibleUnApplyReceipt=false;
-              return;
-            }
+
+            // if (data.obj.oePayList[0].status === 'REVERSED') {
+            //   this.isVisibleUnApplyReceipt=false;
+            //   return;
+            // }
 
             // alert(data.obj.oePayList[0].status);
             // if (data.obj.oePayList[0].status=='APPLIED'){
@@ -1619,6 +1625,11 @@ if(this.deptId==2){
               this.isVisibleUnApplyReceipt=true;
             }
             }
+
+            if (data.obj.oePayList[0].status === 'REVERSED') {
+              this.isVisibleUnApplyReceipt=false;
+            //   return;
+            // }
 
             if (data.obj.oePayList[0].reversalReasonCode != null) {
               if (data.obj.oePayList[0].reversalReasonCode === 'ChqBounce') { this.chqBounceStatus = true; }
@@ -1639,6 +1650,7 @@ if(this.deptId==2){
               return;
 
             }
+          }
 
 
             var rcptdt = data.obj.oePayList[0].receiptDate
