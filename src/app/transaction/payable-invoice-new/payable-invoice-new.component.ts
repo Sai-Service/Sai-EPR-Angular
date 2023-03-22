@@ -1748,13 +1748,16 @@ export class PayableInvoiceNewComponent implements OnInit {
                 var desc = data.obj.invLines[l].description.toUpperCase();
                 var desc1 = data.obj.invLines[l].description
 
-                if (desc.includes('ROUNDING') == false && desc1.includes('Adhoc Disc') == false) {
+                if (desc.includes('ROUNDING') == false && desc1.includes('Adhoc Disc') == false ) {
+                  if (desc1.includes('C-GST') == false && desc1.includes('S-GST') == false){
+                  alert (desc +'---Line No'+ data.obj.invLines[l].lineNumber)
                   this.rounAmt = Math.round(((this.rounAmt + data.obj.invLines[l].amount) + Number.EPSILON) * 100) / 100;
                   this.rounAmt = this.rounAmt;
+                }
                   // alert(this.rounAmt)
                 }
               }
-              this.rounAmt = this.rounAmt - this.disAmt;
+             //this.rounAmt = this.rounAmt - this.disAmt;
               this.updateTDSTotAmtPerline1();
 
             }
