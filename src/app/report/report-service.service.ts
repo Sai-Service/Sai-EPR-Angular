@@ -308,9 +308,14 @@ export class ReportServiceService {
       responseType: 'arraybuffer',
       headers: this.headers,
     });
-  
-    // http://localhost:8081/AccountsReports/AcctBillFormat?fromDate=01-AUG-2022&toDate=02-DEC-2022&ouId=22&locId=2201&deptId=5
-  
+  }
+
+  spDebtorOSLetterFn(toDate,ouId,locId,custAcctNo,deptId,age1,age2,age3,age4){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprDbtLetter?toDate=${toDate}&ouId=${ouId}&locId=${locId}&custAcctNo=${custAcctNo}&deptId=${deptId}&age1=${age1}&age2=${age2}&age3=${age3}&age4=${age4}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
   }
 
   manualInvoice(fromDate,toDate,ouId,locId){

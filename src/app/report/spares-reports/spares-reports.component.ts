@@ -1076,6 +1076,25 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblepanelStockTaking=false;
       this.panelspDebtAgByExicutiveSummary=false;
     }
+    else if (reportName==='spDebtorOSLetter'){
+      this.reportName = 'Spares Debtor O/S Letter';
+      this.isVisiblegstsaiDebtors=true;
+      this.isVisibleGSTPurchaseRegister = false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblestockTransfer = false;
+      this.isVisiblestockTransferRecd=false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
+      this.isVisibleEwayBill=false;
+      this.isVisiblepanelStockTaking=false;
+      this.panelspDebtAgByExicutiveSummary=false;
+    }
   }
 
   
@@ -2348,6 +2367,63 @@ export class SparesReportsComponent implements OnInit {
       this.isDisabled1=false;
     })
   }
+  }
+  else if (reportName === 'Spares Debtor O/S Letter') {
+
+    this.isDisabled1=false;
+    this.toDateValidation(tDate);if(this.rptValidation==false){return;}
+    var custAccNo = this.sparesReportForm.get('custAccNo').value;
+
+    if (custAccNo<=0 || custAccNo==undefined || custAccNo==null ) {
+      custAccNo='';
+        }
+
+
+    var d1= this.sparesReportForm.get('toDate').value;   
+    var tDate1 = this.pipe.transform(d1, 'dd-MMM-y');
+    var locId= this.sparesReportForm.get('locId').value;
+    
+    var spDbAg1= this.sparesReportForm.get('spDbAging1').value;
+    var spDbAg2= this.sparesReportForm.get('spDbAging2').value;
+    var spDbAg3= this.sparesReportForm.get('spDbAging3').value;
+    var spDbAg4= this.sparesReportForm.get('spDbAging4').value;
+
+    if(spDbAg1<0 || spDbAg1==null || spDbAg1==undefined) {this.rptValidation=false;}
+    if(spDbAg2<0 || spDbAg2==null || spDbAg2==undefined) {this.rptValidation=false;}
+    if(spDbAg3<0 || spDbAg3==null || spDbAg3==undefined) {this.rptValidation=false;}
+    if(spDbAg4<0 || spDbAg4==null || spDbAg4==undefined) {this.rptValidation=false;}
+
+    if (spDbAg1 > spDbAg2) {this.rptValidation=false;}
+    else if (spDbAg1 >spDbAg3){this.rptValidation=false;}
+    else if (spDbAg1 > spDbAg4){this.rptValidation=false;}
+    else if (spDbAg2 > spDbAg3){this.rptValidation=false;}
+    else if (spDbAg2 > spDbAg4){this.rptValidation=false;}
+    else if (spDbAg3 > spDbAg4){this.rptValidation=false;}
+
+
+  if(this.rptValidation ==false) {this.closeResetButton=true;this.dataDisplay = 'Please check Aging Values.';  return; }
+    this.isDisabled1=true;
+    const fileName = 'Spares Debtor O/S Letter' +  fromDate + '.pdf';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+   
+    if (Number(sessionStorage.getItem('deptId')) === 4) {
+      this.reportService.spDebtorOSLetterFn(tDate1, sessionStorage.getItem('ouId'), locId,custAccNo,deptId,spDbAg1,spDbAg2,spDbAg3,spDbAg4)
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.isDisabled1 = false;
+          this.closeResetButton = true;
+          this.dataDisplay = ''
+        });
+    }
+    else if (Number(sessionStorage.getItem('deptId')) != 4) {
+      this.reportService.spDebtorOSLetterFn(tDate1, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'),custAccNo,deptId,spDbAg1,spDbAg2,spDbAg3,spDbAg4)
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.isDisabled1 = false;
+          this.closeResetButton = true;
+          this.dataDisplay = ''
+        })
+    }
   }
   }
 

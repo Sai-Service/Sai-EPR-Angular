@@ -1744,20 +1744,52 @@ export class PayableInvoiceNewComponent implements OnInit {
               if (arraybaseNew1[index].segment != null || arraybaseNew1[index].segment != undefined || arraybaseNew1[index].segment != '') {
                 // this.poInvoiceForm.disable();
               }
+              // for (let l = 0; l < data.obj.invLines.length; l++) {
+              //   var desc = data.obj.invLines[l].description.toUpperCase();
+              //   var desc1 = data.obj.invLines[l].description
+
+              //   if (desc.includes('ROUNDING') == false && desc1.includes('Adhoc Disc') == false ) {
+              //     if (desc1.includes('C-GST') == false && desc1.includes('S-GST') == false){
+              //     alert (desc +'---Line No'+ data.obj.invLines[l].lineNumber)
+              //     this.rounAmt = Math.round(((this.rounAmt + data.obj.invLines[l].amount) + Number.EPSILON) * 100) / 100;
+              //     this.rounAmt = this.rounAmt;
+              //   }
+                 
+              //   }
+              // }
+              var basicAmt = 0;
+              var totAmt = 0;
+              var disAmt = 0;
+              var taxAmount = 0;
+              var disctaxAmount = 0;
               for (let l = 0; l < data.obj.invLines.length; l++) {
                 var desc = data.obj.invLines[l].description.toUpperCase();
-                var desc1 = data.obj.invLines[l].description
-
-                if (desc.includes('ROUNDING') == false && desc1.includes('Adhoc Disc') == false ) {
-                  if (desc1.includes('C-GST') == false && desc1.includes('S-GST') == false){
-                  alert (desc +'---Line No'+ data.obj.invLines[l].lineNumber)
-                  this.rounAmt = Math.round(((this.rounAmt + data.obj.invLines[l].amount) + Number.EPSILON) * 100) / 100;
-                  this.rounAmt = this.rounAmt;
+                  var desc1 = data.obj.invLines[l].description
+                if  (desc.includes('ROUNDING') == false){
+                if (data.obj.invLines[l].description.includes('Adhoc Disc')) {
+                  if (data.obj.invLines[l].amount == undefined || data.obj.invLines[l].amount == null || data.obj.invLines[l].amount == '') {
+                  } else {
+                    disAmt = disAmt + Number(data.obj.invLines[l].amount);
+                  }
                 }
-                  // alert(this.rounAmt)
+                else {
+                  if (data.obj.invLines[l].amount == undefined || data.obj.invLines[l].amount == null || data.obj.invLines[l].amount == '') {
+          
+                  } else {
+                    totAmt = totAmt + Number(data.obj.invLines[l].amount);
+                    // alert(totAmt)
+                  }
                 }
               }
-             //this.rounAmt = this.rounAmt - this.disAmt;
+              }
+              // alert('totAmt------'+totAmt+'----disAmt---'+disAmt)
+           
+              var disAmt1 = Math.round(((disAmt) + Number.EPSILON) * 100) / 100;
+              // this.poInvoiceForm.patchValue({ tdsTotDiscAmt: (disAmt1) });
+              var totAmt1 = Math.round(((totAmt) + Number.EPSILON) * 100) / 100;
+              var rounAmt = (totAmt1 - disAmt1);
+              this.poInvoiceForm.patchValue({rounAmt:rounAmt})
+              // alert(rounAmt)
               this.updateTDSTotAmtPerline1();
 
             }
