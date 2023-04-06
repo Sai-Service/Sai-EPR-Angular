@@ -1237,8 +1237,8 @@
                                             <td style="width: 15%" class="LabelFontStyle">
                                                 Cost&nbsp;Center&nbsp;:&nbsp;
                                             </td>
-                                            <td>
-                                                <select formControlName="segment3" id="segment3" class="form-control"
+                                            <!-- <td> -->
+                                                <!-- <select formControlName="segment3" id="segment3" class="form-control"
                                                     [(ngModel)]="segment3"
                                                     (ngModelChange)="onOptionsSelectedBranch($event,'CostCentre')">
                                                     <option>--Select--</option>
@@ -1250,21 +1250,45 @@
                                             <td>
                                                 <input type="text" style="width: 150px; background-color: white; border: none;"
                                                     formControlName="lookupValueDesc3" [(ngModel)]="lookupValueDesc3"
-                                                    class="form-control" disabled>
-                                                <!-- <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc3" [(ngModel)]="lookupValueDesc3" style="border:none;"> -->
-                                            </td>
+                                                    class="form-control" disabled> -->
+                                                    <td>
+                                                        <select formControlName="segment3" id="segment3"
+                                                            class="form-control"
+                                                            (ngModelChange)="onOptionsSelectedBranch($event,'CostCentre')">
+                                                            <option>--Select--</option>
+                                                            <option *ngFor="let sc of  CostCenterList">
+                                                                {{sc.lookupValue}}
+                                                            </option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" disabled [(ngModel)]="lookupValueDesc3"
+                                                            style="width: 150px; background-color: white; border: none;"
+                                                            formControlName="lookupValueDesc3" class="form-control">
+                                                    </td>
+                                                 
                                         </tr>
                                         <tr>
                                             <td style="width: 15%" class="LabelFontStyle">
                                                 Natural&nbsp;Account&nbsp;:&nbsp;
                                             </td> 
                                             <td>
-                                                 <input type="text" (keyup)="getNaturalAccount($event)" formControlName="segment4" id="NaturalAccountFirstWay" list="dynmicUserIds3" class="form-control"   (ngModelChange)="onOptionsSelectedBranch($event,'NaturalAccount')"/>
+                                                 <!-- <input type="text" (keyup)="getNaturalAccount($event)" formControlName="segment4" id="NaturalAccountFirstWay" list="dynmicUserIds3" class="form-control"  
+                                                     (ngModelChange)="onOptionsSelectedBranch($event,'NaturalAccount')"/>
                                                     <datalist id="dynmicUserIds3">
-                                                         <!-- <option>--Select--</option> -->
                                                        <option *ngFor="let sc of  NaturalAccountList" >
                                                            {{sc.naturalaccount}}--{{sc.description}}
                                                        </option>
+                                                    </datalist> -->
+                                                    <input type="text" formControlName="segment4"
+                                                        id="NaturalAccountFirstWay" list="dynmicUserIds3"
+                                                        class="form-control"
+                                                        (change)="onOptionsSelectedNatural($event)" />
+                                                    <datalist id="dynmicUserIds3">
+                                                        <option>--Select--</option>
+                                                        <option *ngFor="let sc of  NaturalAccountList">
+                                                            {{sc}}
+                                                        </option>
                                                     </datalist>
                                             </td>
                                             <td>

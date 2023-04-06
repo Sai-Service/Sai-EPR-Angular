@@ -875,6 +875,7 @@ export class PayableInvoiceNewComponent implements OnInit {
           for (let j = 0; j < data.obj.length; j++) {
             var str = data.obj[j].naturalaccount + '-' + data.obj[j].description;
             this.NaturalAccountList.push(str);
+            
           }
         }
       );

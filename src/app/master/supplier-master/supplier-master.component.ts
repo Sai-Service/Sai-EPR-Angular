@@ -943,6 +943,9 @@ export class SupplierMasterComponent implements OnInit {
       this.gstNo = select.gstNo
       this.smobile1 = select.mobile1
       this.smobile2 = select.mobile2
+      this.sbankName = select.bankName
+      this.sacctNo = select.accountNo
+      this.sifscCode = select.ifscCode
       // this.spanNo=select.panNo
       this.taxCategoryName = select.taxCategoryDesc
 
@@ -1042,7 +1045,8 @@ export class SupplierMasterComponent implements OnInit {
               taxCategoryName: this.lstcomments.supplierSiteMasterList[0].taxCategoryName,
               createDebitMemoFlag: this.lstcomments.supplierSiteMasterList[0].createDebitMemoFlag,
               contactPerson: this.lstcomments.supplierSiteMasterList[0].contactPerson,
-              contactNo: this.lstcomments.supplierSiteMasterList[0].contactNo
+              contactNo: this.lstcomments.supplierSiteMasterList[0].contactNo,
+              
             });
 
             // contactPerson:this.lstcomments.customerSiteMasterList[0].contactPerson,
