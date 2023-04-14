@@ -1309,9 +1309,9 @@ export class SparesReportsComponent implements OnInit {
       var dt2= new Date(tDate)
       if(dt1>dt2) {alert ("Please Enter Proper Start Date and End Date...");return;}
       var mDays = this.diffDays(dt1,dt2);
-      if (mDays >15) { 
-        alert ("Date Range Cannot Exceed 15 Days...");
-        this.dataDisplay = 'Date Range Cannot Exceed 15 Days...';
+      if (mDays >7) { 
+        alert ("Date Range Cannot Exceed 7 Days...");
+        this.dataDisplay = 'Date Range Cannot Exceed 7 Days...';
         this.isDisabled1 = false;
       return;
     }
@@ -2507,6 +2507,6 @@ export class SparesReportsComponent implements OnInit {
 
 
   diffDays(dt1,dt2) {
-    return Math.floor((Date.UTC(dt2.getFullYear(), dt2.getMonth(), dt2.getDate()) - Date.UTC(dt1.getFullYear(), dt1.getMonth(), dt1.getDate())) / (1000 * 60 * 60 * 24));
+    return Math.floor((Date.UTC(dt2.getFullYear(), dt2.getMonth(), dt2.getDate()) - Date.UTC(dt1.getFullYear(), dt1.getMonth(), dt1.getDate())) / (800 * 60 * 60 * 24));
   }
 }

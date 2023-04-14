@@ -886,7 +886,7 @@ export class ARInvoiceComponent implements OnInit {
   arInvoice(arInvoiceForm) { }
 
   searchByInvoiceNo(trxNumber1) {
-    alert('call from account login.!')
+    // alert('call from account login.!')
     this.displaySaveButton = false;
     this.displayCustomerSite = false;
     this.TaxDetailsArray().clear();
