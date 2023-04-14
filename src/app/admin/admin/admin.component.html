@@ -176,8 +176,7 @@
                 <li><a class="dropdown-item" [routerLink]="['/admin/transaction/WorkshopReturn']">Workshop Return</a>
                 </li>
                 </div>
-                <li><a class="dropdown-item" [routerLink]="['/admin/transaction/miscTransaction']">Stock Adjustment</a>
-                </li>
+                <li><a class="dropdown-item" [routerLink]="['/admin/transaction/miscTransaction']">Stock Adjustment</a> </li>
                 <li><a class="dropdown-item" [routerLink]="['/admin/transaction/InterState']">InterState Adjustment</a>
                 </li>
                 <li><a class="dropdown-item" [routerLink]="['/admin/transaction/InternalConsumption']">Internal Consumption</a></li>
@@ -205,6 +204,12 @@
       </li> 
     </div>
 
+    <div [style.display]="isVisibleSaleStockAdju ? 'block' : 'none'">
+    <li class="nav-item dropdown">
+      <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+      aria-haspopup="true" [routerLink]="['/admin/transaction/miscTransaction']" aria-expanded="false">Stock Adjustment</a> 
+    </li>
+    </div>
     <div [style.display]="isVisible32 ? 'block' : 'none'">
     <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"

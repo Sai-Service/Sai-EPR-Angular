@@ -1305,7 +1305,16 @@ export class SparesReportsComponent implements OnInit {
     }
     else if (reportName === 'Spares Issue Details Report') {
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
-
+      var dt1=new Date(fDate)
+      var dt2= new Date(tDate)
+      if(dt1>dt2) {alert ("Please Enter Proper Start Date and End Date...");return;}
+      var mDays = this.diffDays(dt1,dt2);
+      if (mDays >15) { 
+        alert ("Date Range Cannot Exceed 15 Days...");
+        this.dataDisplay = 'Date Range Cannot Exceed 15 Days...';
+        this.isDisabled1 = false;
+      return;
+    }
       const fileName = 'Spares Issue Details Report-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
@@ -2496,4 +2505,8 @@ export class SparesReportsComponent implements OnInit {
     this.isDisabled1=false; }
   }
 
+
+  diffDays(dt1,dt2) {
+    return Math.floor((Date.UTC(dt2.getFullYear(), dt2.getMonth(), dt2.getDate()) - Date.UTC(dt1.getFullYear(), dt1.getMonth(), dt1.getDate())) / (1000 * 60 * 60 * 24));
+  }
 }

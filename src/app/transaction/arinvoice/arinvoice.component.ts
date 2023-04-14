@@ -886,7 +886,7 @@ export class ARInvoiceComponent implements OnInit {
   arInvoice(arInvoiceForm) { }
 
   searchByInvoiceNo(trxNumber1) {
-    // alert('call from account login.!')
+    alert('call from account login.!')
     this.displaySaveButton = false;
     this.displayCustomerSite = false;
     this.TaxDetailsArray().clear();
@@ -1034,6 +1034,12 @@ export class ARInvoiceComponent implements OnInit {
             if (data.obj.class == 'Credit Memo') {
               this.isVisibleApply = true;
               // this.displayinvItem=false;
+            }
+            // alert(data.obj.status)
+            if (data.obj.status == 'Closed') {
+              this.isVisibleApply = true;
+              this.disabledComplete=false;
+              this.arInvoiceForm.disable();
             }
             if (data.obj.referenceNo != '') {
               this.displayinvItem = false;

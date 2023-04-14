@@ -89,6 +89,7 @@ export class AdminComponent implements OnInit {
   isVisibleServiceReport:boolean=true;
   isVisibleSalesReport:boolean=true;
   isVisible37:boolean=true;
+  isVisibleSaleStockAdju:boolean=true;
   isVisibleServerReport:boolean=true;
   isVisibleAccessories:boolean=true;
   isVisibleShellReport:boolean=true;
@@ -286,6 +287,7 @@ export class AdminComponent implements OnInit {
       this.isVisibleServiceReport=false;
       this.isVisibleSalesReport=false;
       this.isVisible37=false;
+      this.isVisibleSaleStockAdju=false;
       this.isVisibleAccountsRepor=false;
       this.isVisibleAccessories=false;
       this.isVisibilePaintSystem=true
@@ -320,6 +322,7 @@ export class AdminComponent implements OnInit {
       this.isVisibleServiceReport=false;
       this.isVisibleSalesReport=true;
       this.isVisible37=true;
+      this.isVisibleSaleStockAdju=true;
       this.isVisibleAccountsRepor=false;
       this.isVisibleAccessories=false;
       this.isVisibilePaintSystem=false;
@@ -357,6 +360,7 @@ export class AdminComponent implements OnInit {
       this.isVisibleServiceReport=true;
       this.isVisibleSalesReport=true;
       this.isVisible37=false;
+      this.isVisibleSaleStockAdju=false;
       this.isVisibleAccountsRepor=true;
       this.isVisibleAccessories=false;
       this.isVisibleMaster=false;
@@ -372,6 +376,7 @@ export class AdminComponent implements OnInit {
       this.isVisible13=true; 
       this.isVisible14=false;
       this.isVisible37=false;
+      this.isVisibleSaleStockAdju=false;
       this.isVisible15=false;
       this.isVisible16=true;
       this.isVisible17=false;
@@ -405,6 +410,7 @@ export class AdminComponent implements OnInit {
       this.isVisible11=true;
       this.isVisible12=false;
       this.isVisible37=true;
+      this.isVisibleSaleStockAdju=false;
       this.isVisibleSubInventoryTransfer=false;
       this.isVisible13=false;
       this.isVisibleWsVehicleMaster=false;
@@ -461,6 +467,7 @@ export class AdminComponent implements OnInit {
       this.isVisible20=false;
       this.isVisible21=false;
       this.isVisible37=true;
+      this.isVisibleSaleStockAdju=false;
       this.isVisible22=false;
       this.isVisible23=false;
       this.isVisible24=true;
@@ -496,6 +503,7 @@ export class AdminComponent implements OnInit {
       this.isVisible20=false;
       this.isVisible21=false;
       this.isVisible37=true;
+      this.isVisibleSaleStockAdju=false;
       this.isVisible22=false;
       this.isVisible23=false;
       this.isVisible24=true;
@@ -522,6 +530,7 @@ export class AdminComponent implements OnInit {
       this.isVisible11=true;
       this.isVisible12=false;
       this.isVisible37=true;
+      this.isVisibleSaleStockAdju=false;
       this.isVisibleWsVehicleMaster=false;
       this.isVisibleSubInventoryTransfer=false;
       this.isVisible13=false;
@@ -563,6 +572,7 @@ export class AdminComponent implements OnInit {
       this.isVisible11=true;
       this.isVisible12=false;
       this.isVisible37=true;
+      this.isVisibleSaleStockAdju=false;
       this.isVisibleSubInventoryTransfer=false;
       this.isVisible13=false;
       this.isVisibleWsVehicleMaster=false;
