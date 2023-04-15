@@ -896,16 +896,16 @@ export class ARInvoiceComponent implements OnInit {
       .subscribe(
         data => {
           if (data.code === 200) {
-            // debu
+          
             this.lstcomments = data.obj;
-            // this.accountNoSearchfn(data.obj.billToCustNo, data.obj.billToSiteId)
+           
             this.orderManagementService.accountNoSearchFn(data.obj.billToCustNo, this.ouId, this.divisionId)
-            // this.service.searchCustomerByAccount(accountNo)
+           
             .subscribe(
               data1 => {
                 this.accountNoSearch = data1.obj[0];
                 this.accountNoSite = data1.obj;
-                // 12510--------6029
+              
                 console.log(data1.obj);
                 
                 console.log(this.accountNoSearch);
@@ -920,21 +920,7 @@ export class ARInvoiceComponent implements OnInit {
                 });
       
                 for (let i = 0; i < this.accountNoSite.length; i++) {
-                  // // alert(this.custSiteList.length + '----' + this.custSiteList[i].ouId + '-----' + sessionStorage.getItem('ouId'));
-                  // // && Number(this.accountNoSite[i].ouId) === Number(sessionStorage.getItem('ouId'))
-                  // if (this.accountNoSite.length === 1) {
-                  //   this.arInvoiceForm.patchValue({ siteName: this.accountNoSite[0].siteName });
-                  //   // this.onOptionsSelectedcustSiteName(this.accountNoSite[0].siteName);
-                  //   this.custTax = this.accountNoSite[i].taxCategoryName;
-                  // }
-                  // if (this.accountNoSite.length > 1) {
-                  //   if (Number(this.accountNoSite[i].ouId) === Number(sessionStorage.getItem('ouId'))) {
-                  //     this.arInvoiceForm.patchValue({ siteName: this.accountNoSite[i].siteName });
-                  //     //  this.onOptionsSelectedcustSiteName(this.custSiteList[i].siteName);
-                  //   }
-                  // }
-                    // debugger;
-                    // alert('-------'+ data.obj.billToCustNo)
+                
                   if (data.obj.billToCustNo != undefined || data.obj.billToCustNo != null) {
                     // alert(this.accountNoSearch.billToLocId+'--------'+ data.obj.billToSiteId)
                     if (this.accountNoSearch.billToLocId === data.obj.billToSiteId) {
@@ -958,45 +944,31 @@ export class ARInvoiceComponent implements OnInit {
               this.lineDetailsArray.push(invLnGrp);
 
               var patch = this.arInvoiceForm.get('invLines') as FormArray;
-              // patch.controls[i].patchValue({ taxPer: data.obj.invLines[i].taxCategoryName.gstPercentage})
-              // var seltrxtyp = this.taxCategoryList[i].find(d => d.taxCategoryId == data.obj[i].invLines.taxCategoryId)
-              // console.log(seltrxtyp);
-              // var patch=this.arInvoiceForm.get('invLines')as FormArray;
-              // patch.controls[i].patchValue({taxPer:seltrxtyp.taxCategoryName});
+              
 
             }
             for (let i = 0; i < data.obj.invDisLines.length; i++) {
               var invLnGrp: FormGroup = this.distLineDetails();
               this.lineDistributionArray().push(invLnGrp);
             }
-            // for (let i = 0; i < data.taxLines.length - len; i++) {
+          
             for (let i = 0; i < data.obj.taxLines.length; i++) {
               var invLnGrp: FormGroup = this.TaxDetailsGroup();
               this.TaxDetailsArray().push(invLnGrp);
             }
             this.arInvoiceForm.get('taxLines').patchValue(data.obj.taxLines);
-            // alert('second emit call')
+          
             var arinvLnDtlArray = this.arInvoiceForm.get('invDisLines') as FormArray;
-            // alert(data.obj.invDisLines.length)
-            //   for (let index=0;index< data.invDisLines.length;index ++){
-            //     alert(data.invDisLines[index].glDate);
-            //   arinvLnDtlArray.controls[index].patchValue({
-            //     glDate:data.invDisLines[index].glDate,
-            //   })
-            // }
+          
             this.arInvoiceForm.patchValue(data.obj);
-            ;
-
-
-            // alert(data.obj.glDate);
+    
             this.glDate = data.obj.glDate;
             this.invoiceDate = data.obj.invoiceDate;
             if (Number(sessionStorage.getItem('deptId')) == 4) {
               this.displayglDate = false;
               this.displayglDate1 = false;
             }
-            // alert(this.invTypeList.length);
-            // debugger;
+          
             if (this.invTypeList.length < 1) {
               this.service.arInvoiceList(data.obj.class).subscribe(
                 data1 => {
@@ -1008,16 +980,15 @@ export class ARInvoiceComponent implements OnInit {
                   this.arInvoiceForm.patchValue({ custTrxTypeId: seltrxtyp.custTrxTypeId });
 
                 });
-
-
-              // this.taxUistatus = false;
             }
             else {
               var seltrxtyp = this.invTypeList.find(d => d.name == data.obj.invType)
               this.arInvoiceForm.patchValue({ custTrxTypeId: seltrxtyp.custTrxTypeId });
             }
             this.disabledViewAccounting = true;
-            this.disabledComplete = true;
+             this.disabledComplete = true;
+            // alert(data.obj.invStatus + '----'+ this.disabledComplete)
+            //  debugger;
             if (data.obj.invStatus == 'Complete') {
               this.displayaddRow = false;
               this.displayRemoveRow = false;
@@ -1026,20 +997,24 @@ export class ARInvoiceComponent implements OnInit {
               this.displaytaxName = false;
               this.displayinvItem = false;
               this.arInvoiceForm.disable();
+              this.isVisibleApply=true;
+              this.isVisibleInvoice = true;
             }
             if (data.obj.invStatus == 'Complete') {
               this.isVisibleInvoice = true;
-              this.displayinvItem = false;
+              this.disabledComplete=false;
             }
             if (data.obj.class == 'Credit Memo') {
               this.isVisibleApply = true;
-              // this.displayinvItem=false;
             }
-            // alert(data.obj.status)
             if (data.obj.status == 'Closed') {
               this.isVisibleApply = true;
               this.disabledComplete=false;
               this.arInvoiceForm.disable();
+            }
+            if (data.obj.invStatus ==  'InComplete'){
+              this.isVisibleApply=false;
+              this.disabledComplete=true;
             }
             if (data.obj.referenceNo != '') {
               this.displayinvItem = false;
@@ -1047,26 +1022,17 @@ export class ARInvoiceComponent implements OnInit {
             if (data.obj.balance == 0) {
               this.isVisibleApply = false;
             }
-
-
             for (let i = 0; i < data.obj.invLines.length; i++) {
-
               var patch = this.arInvoiceForm.get('invLines') as FormArray;
               var taxPerln = data.obj.invLines[i].taxCategoryName.gstPercentage;
-
-              // alert(this.custTax);
-              
               this.orderManagementService.getTaxCategoriesForSales(this.custTax, taxPerln)
                 .subscribe(
                   data1 => {
-                    // debugger;
                     this.allTaxCategoryList = data1;
                     this.taxCategoryList[i] = data1;
                     console.log(this.taxCategoryList[i]);
-                  
                     if (this.taxCategoryList[i] != undefined) {
                       var taxCatArr = this.taxCategoryList[i];
-
                       for (let x = 0; x < taxCatArr.length; x++) {
                         if (taxCatArr[x].taxCategoryId === data.obj.invLines[i].taxCategoryName.taxCategoryId) {
                           (patch.controls[i]).patchValue({
@@ -1079,11 +1045,6 @@ export class ARInvoiceComponent implements OnInit {
                   });
                 
               patch.controls[i].patchValue({ taxPer: data.obj.invLines[i].taxCategoryName.gstPercentage });
-
-
-
-              //  this.taxCategoryList[i].push(data.obj.invLines[i].taxCategoryName);
-              // patch.controls[i].patchValue({taxCategoryName:data.obj.invLines[i].taxCategoryName});
             }
           });
           
