@@ -118,6 +118,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   CounterSaleOrderBookingForm: FormGroup;
   lnflowStatusCode: 'BOOKED';
   refCustNo: string;
+  isDisabledDisPer=false;
   // classCodeType:string;
   issueCodeType1: string;
   issueCode: string;
@@ -219,6 +220,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
   displayCustomerSite = true;
   displaysegmentInvType: Array<boolean> = [];
+  displayDiscPer:Array<boolean>=[];
   displayRemoveRow: Array<boolean> = [];
   displayLineflowStatusCode: Array<boolean> = [];
   // displaysegmentInvType=true;
@@ -793,7 +795,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
     this.orderlineDetailsArray().controls[0].patchValue({ flowStatusCode: 'BOOKED' });
 
-
+    
 
     this.custSiteList.push({ 'siteName': '--Select--' });
   }
@@ -1370,11 +1372,21 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       this.setFocus('itemSeg' + lnNo);
       return;
     }
-
+   
     let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     var itemType = (controlinv.controls[lnNo]).get('invType').value;
     (controlinv.controls[lnNo]).patchValue({ 'segment': '' });
-
+    var disPer = (controlinv.controls[lnNo]).get('disPer').value;
+    alert(disPer)
+    if (Number(sessionStorage.getItem('deptId'))!=12){
+      controlinv.controls[lnNo].get('disPer').disable();
+      controlinv.controls[lnNo].get('disAmt').disable();
+    }
+    else if (Number(sessionStorage.getItem('deptId'))===12){
+      controlinv.controls[lnNo].get('disPer').enable();
+      controlinv.controls[lnNo].get('disAmt').enable();
+      
+    }
     let controlinvArray = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     console.log(controlinvArray);
     for (let j = 0; j < controlinvArray.length; j++) {
@@ -1387,6 +1399,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       this.itemMap2.set(lnNo, this.itemMap.get(itemDesc));
     } else {
     }
+    // alert(this.isDisabledDisPer)
     this.invItemList1 = this.itemMap.get(itemDesc);
     this.orderManagementService.searchByItemSegmentDiv(this.divisionId, itemDesc)
       .subscribe(
@@ -1515,6 +1528,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
               this.CounterSaleOrderBookingForm.patchValue({ remarks: '22 - Export Order' });
               this.CounterSaleOrderBookingForm.get('remarks').disable();
             }
+           
           }
           else {
             if (data.code === 400) {

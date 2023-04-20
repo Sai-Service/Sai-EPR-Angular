@@ -1126,13 +1126,14 @@
                                                             style="height: 20px;width: 80px;">
                                                     </td>
                                                     <td>
-                                                        <input disabled type="number" formControlName="disPer"
-                                                            value="{{disPer}}" class="form-control" (change)="onKey(i)"
+                                                        
+                                                        <input  type="number" formControlName="disPer" 
+                                                            value="{{disPer}}" class="form-control" (change)="onKey(i,'usprc')"
                                                             style="height: 20px;width: 50px;" min="0.00">
                                                     </td>
                                                     <td>
-                                                        <input disabled type="number" formControlName="disAmt"
-                                                            class="form-control" min="0.00" (keydown.tab)="onKey(i)"
+                                                        <input  type="number" formControlName="disAmt" 
+                                                            class="form-control" min="0.00" (keydown.tab)="onKey(i,'usprc')"
                                                             style="height: 20px;width: 80px;">
                                                     </td>
                                                     <td>
@@ -1244,6 +1245,7 @@
                                                             style="height: 20px;width: 80px;">
                                                     </td>
                                                     <td>
+                                                     
                                                         <input disabled type="number" formControlName="disPer"
                                                             class="form-control" style="height: 20px;width: 50px;">
                                                     </td>

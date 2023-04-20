@@ -1109,13 +1109,32 @@
 
   </section>
 <!-- </div> -->
+<fieldset class="RFS">
+    <table class="center">
+        <tr>
+            <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+            <ng-template #hList2>
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="sr-only" id="loading"></span>
+
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template #hList1> </ng-template>
+            <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">
+                &nbsp;{{dataDisplay }}&nbsp; </td>
+        </tr>
+    </table>
+</fieldset>
+
                 <table class="center">
                     <tr>
 
                         <!-- <td> <button type="butt on" class="btn btn-primary" (click)="Save()" style="width: 8rem;">Save</button></td> -->
                         <div *ngIf="displaySaveButton; then thenBlock1; else elseBlock1"></div>
                         <ng-template #thenBlock1>
-                            <td> <button type="button" class="btn btn-primary" (click)="Save()" style="width: 8rem;">Save</button></td>
+                            <td> <button type="button" class="btn btn-primary" (click)="Save()" [disabled]="isDisabledSave" style="width: 8rem;">Save</button></td>
 
                             <!-- <td>
                                 <button disabled type="button"  class="btn btn-primary"
@@ -1550,7 +1569,7 @@
                                 </tr>
                                 <br>
                                 </table>
-                                <div class="grid_scroll2">
+                                <div class="grid_scroll2" style="background-color: rgb(172, 218, 236);">
                                 <table class="auto-style4" class="GridFont"   style="border-color:#959595;width:100%;">
                                     <thead>
                                       <tr class="GridHeader">
