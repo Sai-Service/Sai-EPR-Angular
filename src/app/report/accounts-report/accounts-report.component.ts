@@ -1396,7 +1396,7 @@ reportName:string;
       this.fromToDateValidation(fDate,tDate); 
       if(this.rptValidation==false){return;}
       var custAccNo1 = this.reportForm.get('custAccNo').value;
-
+      // alert(custAccNo1);
       // if (custAccNo<=0 || custAccNo==undefined || custAccNo==null ) {
       //   this.closeResetButton=true;
       //   // this.dataDisplay = 'Please check Customer No.'
@@ -1410,7 +1410,7 @@ reportName:string;
       const fileName = 'Customer Ledger Report-' +  fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {     
-        this.reportService.customerLedger(fromDate,toDate,custAccNo,sessionStorage.getItem('ouId'),deptId)
+        this.reportService.customerLedger(fromDate,toDate,custAccNo1,sessionStorage.getItem('ouId'),deptId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.closeResetButton=true;
@@ -1418,7 +1418,7 @@ reportName:string;
           });
       }
       else if ((Number(sessionStorage.getItem('deptId'))!=4)){
-        this.reportService.customerLedger(fromDate,toDate,custAccNo,sessionStorage.getItem('ouId'),sessionStorage.getItem('deptId'))
+        this.reportService.customerLedger(fromDate,toDate,custAccNo1,sessionStorage.getItem('ouId'),sessionStorage.getItem('deptId'))
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
           this.closeResetButton=false;
