@@ -135,6 +135,7 @@ export class ARInvoiceComponent implements OnInit {
 
   public distributioArr: any;
   public paymentTermList: any[];
+  viewApplyHistAr:any[];
   public locIdList: Array<string> = [];
   public locIdListModel: Array<string> = [];
   public sourceList: Array<string> = [];
@@ -973,7 +974,8 @@ export class ARInvoiceComponent implements OnInit {
                     this.displayglDate = false;
                     this.displayglDate1 = false;
                   }
-
+                  // alert (this.invTypeList.length+'----data.obj.class'+ data.obj.class)
+                  // debugger;
                   if (this.invTypeList.length < 1) {
                     this.service.arInvoiceList(data.obj.class).subscribe(
                       data1 => {
@@ -2868,6 +2870,16 @@ export class ARInvoiceComponent implements OnInit {
     });
 
   }
+
+  viewApplyHistory(trxNumber){
+    // alert(trxNumber);
+    this.service.viewApplyHistoryAR(trxNumber)
+    .subscribe((res: any) => {
+      this.viewApplyHistAr = res;
+    }
+    )
+  }
+
 
   viewAccountingold(trxNumber) {
     // var tranNo=this.arInvoiceForm.get('transactionNo').value;

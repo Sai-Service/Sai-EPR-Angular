@@ -1216,6 +1216,12 @@ export class MasterService {
   public viewAccountingAR(tranNo): Observable<any> {
     return this.http.get(this.ServerUrl + `/glHeader/arInv/${tranNo}`);
   }
+
+
+  viewApplyHistoryAR(tranNo): Observable<any> {
+    return this.http.get(this.ServerUrl + `/arInv/trxNumber/${tranNo}`);
+  }
+
   ///Stock transfer////
   public viewAccountingST(tranNo): Observable<any> {
     return this.http.get(this.ServerUrl + `/glHeader/Invntory/${tranNo}`);

@@ -1377,7 +1377,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     var itemType = (controlinv.controls[lnNo]).get('invType').value;
     (controlinv.controls[lnNo]).patchValue({ 'segment': '' });
     var disPer = (controlinv.controls[lnNo]).get('disPer').value;
-    alert(disPer)
+    // alert(disPer)
     if (Number(sessionStorage.getItem('deptId'))!=12){
       controlinv.controls[lnNo].get('disPer').disable();
       controlinv.controls[lnNo].get('disAmt').disable();
