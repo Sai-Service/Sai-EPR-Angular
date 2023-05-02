@@ -587,7 +587,8 @@
                         </button>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-primary" id="register" (click)="cancelPayment()"
+                        <!-- (click)="cancelPayment()" -->
+                        <button type="button" class="btn btn-primary" id="register" data-toggle="modal" data-target="#confirmAlert"   (click)="getMessage('Cancel')" 
                             [style.display]="ispayCancel ? 'block' : 'none'">
                             Cancel
                         </button>
@@ -802,3 +803,36 @@
 
 </div>
 <!-- </div> -->
+
+
+
+
+<!-- Confirmation Message -->
+<div class="modal" id="confirmAlert" tabindex="-1" role="dialog" [ngStyle]="{'display':display}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmation!</h5>
+            </div>
+            <div class="modal-body">
+                <label
+                    style="font-size: small; color: black; font-weight: bold; text-align: left; vertical-align: middle; margin-left: 35%">
+                    {{message}}
+                </label>
+            </div>
+            <div class="modal-footer">
+                <table class="center" style="width: 50%;">
+                    <tr>
+                        <td>
+                            <button type="button" class="btn btn-info" data-dismiss="modal" id="register"
+                                (click)="executeAction()">Yes</button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-info" data-dismiss="modal" (click)="closeModalDialog()">No</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

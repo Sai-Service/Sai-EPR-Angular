@@ -1427,7 +1427,7 @@
                                           <input formControlName="sdisPer" value={{sdisPer}} [(ngModel)]='sdisPer' type="number"
                                               class="form-control" min="0.00" max='99'
                                               [ngClass]="{ 'is-invalid': submitted && f.sdisPer.errors }"
-                                              placeholder="Enter discount Percentage" oninput="this.value = Math.abs(this.value)">
+                                              placeholder="Enter discount Percentage" >
                                           <div *ngIf="submitted && f.sdisPer.errors" class="invalid-feedback">
                                               <div *ngIf="f.sdisPer.errors.required">Enter discount Percentage </div>
                                               <div *ngIf="f.sdisPer.errors.maxlength">Enter discount Percentage

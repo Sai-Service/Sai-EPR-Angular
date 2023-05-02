@@ -1,5 +1,5 @@
 // import { asLiteral } from '@angular/compiler/src/render3/view/util';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild ,ElementRef} from '@angular/core';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 // import * as moment from 'moment';
@@ -161,6 +161,10 @@ export class PaymentsComponent implements OnInit {
   isVisibleviewAccounting: boolean = false;
   // viewAccounting1: any[];
   invoiceDate:Date;
+
+  display = 'none';
+  @ViewChild("myinput") myInputField: ElementRef;
+
 
   constructor(private fb: FormBuilder, private router1: ActivatedRoute, private router2: ActivatedRoute, private transactionService: TransactionService, private location: Location, private service: MasterService, private router: Router) {
     this.paymentForm = fb.group({
@@ -1002,6 +1006,31 @@ export class PaymentsComponent implements OnInit {
     window.location.reload();
 
   }
+
+
+  message: string = "Please Fix the Errors!";
+  cnfMsgType: string = "Cancel";
+
+  getMessage(msgType: string) {
+    this.cnfMsgType = msgType;
+    if (msgType.includes("Cancel")) { this.message = "Do you want to Cancel the Payment.(Yes/No)?" }
+    return;
+  }
+
+  executeAction() {
+    if (this.cnfMsgType.includes("Cancel")) {
+      this.cancelPayment();
+    }
+    //     if(this.msgType.includes("Navigate")) {
+    //       this.router.navigate(['/admin/master/customerMaster'])
+    //  }
+  }
+
+  closeModalDialog() {
+    this.display = 'none'; //set none css after close dialog
+    this.myInputField.nativeElement.focus();
+  }
+
   cancelPayment() {
     var arr = this.paymentForm.get('obj1').value;
     // alert(this.PaymentReturnArr[0].documentNo);
@@ -1012,9 +1041,9 @@ export class PaymentsComponent implements OnInit {
     console.log(this.selectedPayment);
     this.transactionService.paymentCancel(this.selectedPayment).subscribe((res: any) => {
       if (res.code === 200) {
-        alert(res.code.message);
-        // alert(res.obj);
+        alert(res.message);
         console.log(res.obj);
+        this.ispayCancel=false;
       } else {
         if (res.code === 400) {
           alert(res.msg);

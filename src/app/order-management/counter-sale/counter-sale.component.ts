@@ -550,7 +550,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       frmLocatorId: ['', [Validators.required]],
       onHandQty: [],
       discType: [],
-      disPer: ['0'],
+      disPer: [0],
       disAmt: [0],
       uom: [],
       lnflowStatusCode: [''],
@@ -1338,6 +1338,8 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   }
 
   onOptionsSelectedTL(createOrderType) {
+    // alert(createOrderType1.target.value);
+    // var createOrderType=createOrderType1.target.value
     // alert(createOrderType);
     if (createOrderType === 'Pick Ticket' || createOrderType === 'Direct Invoice') {
       // Sales Order
@@ -1372,7 +1374,11 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       this.setFocus('itemSeg' + lnNo);
       return;
     }
-   
+   var otherRefNo = this.CounterSaleOrderBookingForm.get('othRefNo').value;
+  //  alert(otherRefNo)
+  //  debugger;
+   this.CounterSaleOrderBookingForm.patchValue({othRefNo:otherRefNo});
+   this.othRefNo=otherRefNo;
     let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     var itemType = (controlinv.controls[lnNo]).get('invType').value;
     (controlinv.controls[lnNo]).patchValue({ 'segment': '' });
@@ -1712,6 +1718,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     this.salesRepName = orderNumberDetails.salesRepName1;
     this.tlName = orderNumberDetails.tlName1;
     this.paymentType = orderNumberDetails.paymentType1;
+    this.CounterSaleOrderBookingForm.patchValue({othRefNo:orderNumber})
   }
 
 
@@ -1731,7 +1738,8 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                 return;
               }
               else {
-                this.othRefNo = data.obj[i].orderNumber1;
+                // this.othRefNo = data.obj[i].orderNumber1;
+                this.CounterSaleOrderBookingForm.patchValue({othRefNo:data.obj[i].orderNumber1})
               }
             }
           }
@@ -2015,6 +2023,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
 
   onOptionsSelectedDescription(segment: string, k) {
+    // debugger;
     if (segment != undefined && segment != "") {
       this.displayorderHedaerDetails = false;
       this.displaysalesRepName = true;
@@ -2625,6 +2634,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       }
     }
     salesObj.settaxAmounts(taxStr);
+    console.log(salesObj);
     this.orderManagementService.SaveCounterSaleOrder(JSON.stringify(salesObj)).subscribe((res: any) => {
       if (res.code === 200) {
         this.orderNumber = res.obj;
