@@ -76,6 +76,7 @@ const routes: Routes = [
   {path:'PaymentAr',component:PaymentArComponent},
   {path:'PaymentAr/:docSequenceValue/:locId',component:PaymentArComponent},
   {path: 'payableInvoice/:invNo',component:PayableInvoiceNewComponent},
+  {path: 'payableInvoice/:invNo/:cate',component:PayableInvoiceNewComponent},
   {path:'PaymentAr/:orderNumber',component:PaymentArComponent},
   {path:'PaymentAr/:trxNum',component:PaymentArComponent},
   {path:'PaymentAr/:trxNum/:catg',component:PaymentArComponent},

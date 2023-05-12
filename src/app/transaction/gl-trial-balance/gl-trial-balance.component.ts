@@ -249,6 +249,7 @@ if(sessionStorage.getItem('GLPeriod')!=null || sessionStorage.getItem('GLPeriod'
 
 
 SelectTbAct2(trxNum,refNum,catg,source){
+  // alert('Cate---'+catg +'---sor'+ source+'---refNum---'+refNum)
   alert ("Trans Number :" + trxNum + "\nReference Number : " +refNum + "\nCategory : "+catg +"\nSource : "+source);
   // Receivable
   if(source==='Receivable'){
@@ -260,6 +261,12 @@ SelectTbAct2(trxNum,refNum,catg,source){
     // alert(invNo);
     this.router.navigate(['/admin/transaction/payableInvoice', invNo]);
   }  
+  else if(source==='Payables' && catg==='AP Invoice Cancelation'){
+    // var invNo1=refNum.split('-');
+    // var invNo=invNo1[0];
+    // alert(refNum);
+    this.router.navigate(['/admin/transaction/payableInvoice',refNum,catg] );
+  } 
   else if(source==='Purchasing' && catg==='Po_Receipt'){
     this.router.navigate(['/admin/master/PoReceiptForm'],{ queryParams: { trxNum: trxNum,catg:catg }});
     alert ("Source - Purchasing , Category - "+catg +" ..Wip...")

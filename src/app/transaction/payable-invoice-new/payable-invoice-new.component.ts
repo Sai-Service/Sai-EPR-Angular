@@ -89,6 +89,11 @@ interface ISearch {
   ouId: number;
 }
 
+
+interface glSearch{
+  invoiceNum:string;
+}
+
 @Component({
   selector: 'app-payable-invoice-new',
   templateUrl: './payable-invoice-new.component.html',
@@ -932,9 +937,15 @@ export class PayableInvoiceNewComponent implements OnInit {
 
     this.sub = this.router1.params.subscribe(params => {
       var docNo = params['invNo'];
-      // alert(docNo)
+      var cate = params['cate'];
+      // alert(docNo+'----'+cate)
       if (docNo != undefined) {
+        if (cate==undefined){
         this.InvDocFind(docNo)
+      }
+      else if (cate=='AP Invoice Cancelation'){
+        this.apInvFindAfterSave(docNo);
+      } 
       }
     }
     )
@@ -4099,6 +4110,7 @@ export class PayableInvoiceNewComponent implements OnInit {
     })
   }
   InvDocFind(docNo) {
+    // alert(docNo)
     this.currentOP = 'Search';
     this.lineDetailsArray().clear();
     this.TaxDetailsArray().clear();
@@ -4110,6 +4122,7 @@ export class PayableInvoiceNewComponent implements OnInit {
     let jsonData = this.poInvoiceForm.value;
     let invSearch: ISearch = Object.assign({}, jsonData);
     var searchObj: InvoiceSearchNew = new InvoiceSearchNew();
+    // debugger;
     this.transactionService.getsearchByApDoc(docNo).subscribe((res: any) => {
       if (res.code === 200) {
         this.isDisabled = true;
