@@ -23,7 +23,7 @@ interface ICashBankTransfer {
       transferDate:string;
       clearingDate:string;
       status:string;
-
+      reversalLocId:number;
       fromAcctDescp:string;
       toAcctDescp:string;
       receiptMethodId:number;
@@ -425,8 +425,15 @@ export class CashBankTransferComponent implements OnInit {
         // alert ("Status :"+status1);
         if(status1=='Y') {
            this.statusReversal=true;
+           var openPeriod = this.cashBankTransferForm.get('openPeriod').value;
+           var transferDate = this.cashBankTransferForm.get('transferDate').value;
+          //  alert(openPeriod+'-----transferDate------'+ transferDate)
+           this.cashBankTransferForm.patchValue({reversalDate:transferDate})
+           this.cashBankTransferForm.patchValue({reversalPeriod:openPeriod});
+           this.cashBankTransferForm.patchValue({reversalDocDt:(this.pipe.transform(Date.now(), 'y-MM-dd'))})
             // this.reversalDate = this.pipe.transform(Date.now(), 'y-MM-dd');
             // this.reversalDocDt =this.reversalDate;
+            this.cashBankTransferForm.disable();
          }
         if(status1=='N') {
           this.statusReversal=false;
@@ -618,9 +625,14 @@ export class CashBankTransferComponent implements OnInit {
           var  reversalDate=this.cashBankTransferForm.get("reversalDate").value
           var reversalDate1 = this.pipe.transform(reversalDate, 'dd-MMM-yyyy');
           const formValue: ICashBankTransfer =this.transeData(this.cashBankTransferForm.value);
+          // alert(this.cashBankTransferForm.get('locId').value)
+        
+          formValue.reversalLocId=this.cashBankTransferForm.get('locId').value;
           // formValue,mEmplId,dTrfNo
           // alert(reversalPeriod+'----'+reversalDate1)
-          this.service.CashBankTrfReversalSubmit(dTrfNo,mEmplId,reversalPeriod,reversalDate1).subscribe((res: any) => {
+          console.log(formValue);
+          // return;
+          this.service.CashBankTrfReversalSubmit(dTrfNo,mEmplId,reversalPeriod,reversalDate1, formValue.reversalLocId).subscribe((res: any) => {
             if (res.code === 200) {
               alert(res.message);
               this.reversalDocNo=res.obj;
@@ -975,7 +987,7 @@ export class CashBankTransferComponent implements OnInit {
               return;
            } 
 
-          
+          // alert(formValue.reversalDate)
               if (formValue.reversalDate===undefined || formValue.reversalDate===null)
               {
                   this.checkValidation=false;

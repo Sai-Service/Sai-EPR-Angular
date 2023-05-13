@@ -417,19 +417,20 @@
                             <ng-template #revYes1> 
                                 <td style="width: 15%" class="LabelFontStyle">&nbsp;Rev&nbsp;Period:&nbsp;</td>
                                  <td>  
-                                    <select  formControlName="reversalPeriod" id="reversalPeriod" [(ngModel)]="reversalPeriod"  class="form-control" style="background-color: yellow;"  >       
+                                    <!-- <select  formControlName="reversalPeriod" id="reversalPeriod" [(ngModel)]="reversalPeriod"  class="form-control" style="background-color: yellow;"  >       
                                     <option disabled>--Select--</option>
                                     <option *ngFor="let sc of  PeriodList" [ngValue]="sc.periodName">
                                     {{sc.periodName}}
                                     </option>
-                                    </select>
+                                    </select> -->
+                                    <input disabled  style="width: 100%;"   type="text"  formControlName="reversalPeriod"  id="reversalPeriod" [(ngModel)]="reversalPeriod" class="form-control" >
                                 </td>
 
                                 <td style="width: 15%" class="LabelFontStyle">&nbsp;Rev&nbsp;Date:&nbsp;</td>
                               
-                                <input  hidden  type="date"  formControlName="reversalDate"  id="reversalDate" [(ngModel)]="reversalDate" class="form-control" style="background-color: yellow;" >
+                                <input    type="date"  formControlName="reversalDate"  id="reversalDate" [(ngModel)]="reversalDate" class="form-control" style="background-color: yellow;" >
                                 <td>
-                                    <input    type="date"  formControlName="reversalDocDt"  id="reversalDocDt" [(ngModel)]="reversalDocDt" class="form-control" style="background-color: yellow;" >
+                                    <input  disabled  type="date"  formControlName="reversalDocDt"  id="reversalDocDt" [(ngModel)]="reversalDocDt" class="form-control" style="background-color: yellow;" >
                                     <!-- reversalDocDt -->
                                 </td>
 

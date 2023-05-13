@@ -4035,11 +4035,11 @@ TransactionTypemiscpPaint(): Observable<any> {
   // }
 
 
-  public CashBankTrfReversalSubmit(docTrfNo, mEmplId,reversalPeriod,reversalDate) {
+  public CashBankTrfReversalSubmit(docTrfNo, mEmplId,reversalPeriod,reversalDate,reversalLocId) {
     const options = {
       headers: this.headers
     };
-    const url = this.ServerUrl + `/AccountTrf/Reversed?docTrfNo=${docTrfNo}&emplId=${mEmplId}&reversalPeriod=${reversalPeriod}&reversalDate=${reversalDate}`;
+    const url = this.ServerUrl + `/AccountTrf/Reversed?docTrfNo=${docTrfNo}&emplId=${mEmplId}&reversalPeriod=${reversalPeriod}&reversalDate=${reversalDate}&reversalLocId=${reversalLocId}`;
     return this.http.post(url, options);
 
     // http://localhost:8081/DedStock?ouId=21&months=10
