@@ -1060,6 +1060,26 @@ export class SalesReportsComponent implements OnInit {
         this.isVisibleDepartmentList = true;
       }
     }
+    else if (reportName ==='saleQtyChartForVehicle'){
+      this.reportName = 'Sales Qty Chart for Vehicle';
+      this.isVisiblefromtolocationdepartment = false;
+      this.isVisibleVehicleSaleRegister = true;
+      this.isVisibleSaleIND = false;
+      this.isSaleClosingStock = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisiblefromtoloccustaccno = false;
+      this.isVisibleSalesInventoryAging = false;
+      this.isVisiblepanelfromtolocation = false;
+      this.isVisiblepanelreceiptNo = false;
+      this.isVisiblepanelSalesAddonReconciliation = false;
+      this.isVisiblefromtosubinventory = false;
+      this.panelamcHistrory = false;
+      this.ispanelTolocationOu = false;
+      this.isVisiblepaneltolocation = false;
+      this.isVisiblepanelfromtolocation1 = false;
+      this.inVisiblepanelSaleSaiDebtors = false;
+    }
   }
 
 
@@ -1996,7 +2016,30 @@ export class SalesReportsComponent implements OnInit {
           });
       }
     }
+    else if (reportName === 'Sales Qty Chart for Vehicle'){
+      const fileName = 'Sales Qty Chart for Vehicle Report-' +  fromDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.saleqtyChartForVh(fromDate, toDate, locId)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.saleqtyChartForVh(fromDate, toDate, sessionStorage.getItem('locId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+    }
   }
+
 
 
   department(department) {

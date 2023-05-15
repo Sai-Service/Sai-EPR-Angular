@@ -104,6 +104,13 @@ export class ReportServiceService {
     });
   }
 
+  saleqtyChartForVh(fromDate, toDate, locId){
+    const REQUEST_URI = this.ServerUrl +`/SalesReports/SalesQtyChartRep?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
 
   SprcusttakestatReport(invcDt1,invcDt4,locId){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/CustomerOffTake?fromDate=${invcDt1}&toDate=${invcDt4}&locId=${locId}`;

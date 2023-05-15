@@ -3408,6 +3408,7 @@ export class PayableInvoiceNewComponent implements OnInit {
       alert('Please Select Distribution Tab.!');
       return;
     }
+
     for (let i = 0; i < this.invLineDetailsArray().length; i++) {
       var desc1: string = arrayControl1[i].description;
       if (desc1 === 'null' || desc1 === null) {
@@ -3415,7 +3416,7 @@ export class PayableInvoiceNewComponent implements OnInit {
       }
       else {
         if (desc1.includes('Adhoc Disc') || desc1.includes('Subsidy')) {
-          // alert(arrayControl1[i].amount)
+          alert(arrayControl1[i].amount)
           totalOfInvLineAmout = Math.round(((totalOfInvLineAmout - arrayControl1[i].amount) + Number.EPSILON) * 100) / 100;
         } else {
           totalOfInvLineAmout = Math.round(((totalOfInvLineAmout + arrayControl1[i].amount) + Number.EPSILON) * 100) / 100;
@@ -3423,6 +3424,7 @@ export class PayableInvoiceNewComponent implements OnInit {
       }
 
     }
+
     var totalOfDistributionAmout: number = 0;
     // ;
     for (let j = 0; j < this.lineDistributionArray().length; j++) {
