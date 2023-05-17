@@ -427,6 +427,15 @@ export class ReportServiceService {
     });
   }
 
+
+  saleAddonRegisterNew(fromDate,toDate,ouId,locId,requestor){
+    const REQUEST_URI = this.ServerUrl +`/SalesReports/SalesAddonRegDS?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&requestor=${requestor}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
   spbackOrderQtyReport(invcDt1,invcDt4,locId,custNo,ordNo){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/SprBackOrder?fromDate=${invcDt1}&toDate=${invcDt4}&locId=${locId}&custNo=${custNo}&ordNo=${ordNo}`;
     return this.http.get(REQUEST_URI, {
