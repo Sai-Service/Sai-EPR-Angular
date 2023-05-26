@@ -551,16 +551,24 @@ export class ReturnToVendorComponent implements OnInit {
           .subscribe(
             data => {
 
-              if(data.code===400) {alert (data.message) ;this.spinIcon=true;this.dataDisplay='';return; }
+              if(data.code===400)
+               {alert (data.message) ;
+                this.spinIcon=true;this.dataDisplay='';
+               return; 
+              }
               
               this.lstReceiptHeader = data.obj;
               this.lstReceiptItemLines=data.obj.rcvLines;
               this.lstDebtiNotes=data.obj.rtvLines;
-              
+                // alert(data.obj.invoiceStatus)
               console.log(this.lstReceiptHeader);
-
-             if(data.code===200){
-              
+              if (data.obj.invoiceStatus == null || data.obj.invoiceStatus==undefined || data.obj.invoiceStatus==''){
+                alert('Invoice Status Is not Validated... Please Do the AP Validation Process And then to do the Return to vendor Process..');
+                this.dataDisplay='Invoice Status Is not Validated...'
+                return;
+            }
+            else if (data.obj.invoiceStatus.includes('Validated')){
+              if(data.code===200){       
                 this.dispReceiptLines=true;
                 this.searchButton=false;
                 this.returntoVendorForm.get("receiptNo").disable();
@@ -578,7 +586,7 @@ export class ReturnToVendorComponent implements OnInit {
                   this.returnReceipt=true;
                   this.displayButton=false;
                   this.returntoVendorForm.disable();
-
+  
                 }
                 this.originalReceiptNo=this.lstReceiptHeader.originalReceiptNo;
                 this.segment1=this.lstReceiptHeader.segment1;
@@ -606,19 +614,20 @@ export class ReturnToVendorComponent implements OnInit {
                 // this.shipHeaderId=null;
                 this.spinIcon=true;this.dataDisplay='';
               } 
-              
-              else{
-                // alert ("PO Reeceipt Number : "+mRcptNumber +" Not Found in this Location\nOr Return process already done for this Receipt No.");
-                (document.getElementById('findBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
-                 this.message = "PO Reeceipt Number : "+mRcptNumber +" Not Found in this Location\nOr Return process already done for this Receipt No."
-                 return;
+                else{
+                  // alert ("PO Reeceipt Number : "+mRcptNumber +" Not Found in this Location\nOr Return process already done for this Receipt No.");
+                  (document.getElementById('findBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
+                   this.message = "PO Reeceipt Number : "+mRcptNumber +" Not Found in this Location\nOr Return process already done for this Receipt No."
+                   return;
+                  
+                  this.headerFound=false;
+                  this.resetMast();
+                  // this.returntoVendorForm.get("showAllItem").disable();
+                  // this.returntoVendorForm.get("rcvLines").disable();
                 
-                this.headerFound=false;
-                this.resetMast();
-                // this.returntoVendorForm.get("showAllItem").disable();
-                // this.returntoVendorForm.get("rcvLines").disable();
-              
+              }
             }
+         
           } );  
           // this.spinIcon=true;this.dataDisplay='';
          

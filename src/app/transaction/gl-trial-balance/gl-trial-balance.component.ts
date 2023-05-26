@@ -249,7 +249,7 @@ if(sessionStorage.getItem('GLPeriod')!=null || sessionStorage.getItem('GLPeriod'
 
 
 SelectTbAct2(trxNum,refNum,catg,source){
-  // alert('Cate---'+catg +'---sor'+ source+'---refNum---'+refNum)
+  // alert('Cate---'+catg +'---source-----'+ source+'---trxNum---'+trxNum)
   alert ("Trans Number :" + trxNum + "\nReference Number : " +refNum + "\nCategory : "+catg +"\nSource : "+source);
   // Receivable
   if(source==='Receivable'){
@@ -271,6 +271,10 @@ SelectTbAct2(trxNum,refNum,catg,source){
     this.router.navigate(['/admin/master/PoReceiptForm'],{ queryParams: { trxNum: trxNum,catg:catg }});
     alert ("Source - Purchasing , Category - "+catg +" ..Wip...")
   } 
+  else if(source==='Inventory' && catg==='STKTRF_Receipt'){
+    this.router.navigate(['/admin/master/PoReceiptForm'],{ queryParams: { trxNum: trxNum,catg:catg }});
+    alert ("Source - Purchasing , Category - "+catg +" ..Wip...")
+  } 
   else if(source==='Payables' && catg==='Payments' ){
     // this.router.navigate(['/admin/transaction/Payment', trxNum]);
     this.router.navigate(['/admin/transaction/Payment'], { queryParams: { trxNum: trxNum,catg:catg } } );
@@ -283,9 +287,11 @@ SelectTbAct2(trxNum,refNum,catg,source){
     alert ("Source - Purchasing , Category - "+catg +" ..Wip...")
   } 
    else if(source==='Inventory' && catg==='Inventory' ){
-    // this.router.navigate(['/admin/transaction/Payment', trxNum]);
     this.router.navigate(['/admin/transaction/stockTransfer',refNum] );
-    // this.router.navigate(['/admin/transaction/PaymentAr',trxNum]);
+    alert ("Source - Purchasing , Category - "+catg +" ..Wip...")
+  } 
+  else if(source==='Inventory' && catg==='Intransit Shipment' ){
+    this.router.navigate(['/admin/transaction/stockTransfer',refNum] );
     alert ("Source - Purchasing , Category - "+catg +" ..Wip...")
   } 
   else if(source==='Inventory' && catg==='Stock Taking' ){

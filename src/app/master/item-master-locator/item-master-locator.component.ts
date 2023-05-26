@@ -13,7 +13,7 @@ import * as xlsx from 'xlsx';
 interface IItemLocatorMaster {
   locatorId: number;
   locId: number;
-  subinventoryId: string;
+  subinventoryId: Number;
   segment1: string;
   segment2: string;
   segment3: string;
@@ -47,7 +47,8 @@ export class ItemMasterLocatorComponent implements OnInit {
   submitted = false;
   locatorId: number;
   locId: number;
-  subinventoryId: string;
+  subInventoryId1:Number;
+  subinventoryId: Number;
   segment1: string;
   segment2: string;
   segment3: string;
@@ -119,6 +120,7 @@ export class ItemMasterLocatorComponent implements OnInit {
   Row:[],
   RowNo:[],
   segment:[],
+  subInventoryId1:['',[Validators.required]],
   itemId:[],
   description:[],
   locationId:[],
@@ -220,7 +222,8 @@ export class ItemMasterLocatorComponent implements OnInit {
   {
   //  var subInventoryId=this.ItemlocatorMasterForm.get('subId').value;
      var formValue=this.ItemlocatorMasterForm.value;
-     formValue.subInventoryId=this.ItemlocatorMasterForm.get('subId').value;
+     formValue.subInventoryId=this.ItemlocatorMasterForm.get('subInventoryId').value;
+    // alert(formValue.subInventoryId)
 
     // alert(subInventoryId)
     this.LocatorSegment=this.ItemlocatorMasterForm.get('Floor').value.toUpperCase()+'.'+
@@ -235,7 +238,7 @@ export class ItemMasterLocatorComponent implements OnInit {
     (data =>{
        this.LocatorList = data
        if(this.LocatorList.code===200) {
-         alert(this.LocatorList.obj.locatorId)
+        //  alert(this.LocatorList.obj.locatorId)
         this.ItemlocatorMasterForm.patchValue({ locatorId: this.LocatorList.obj.locatorId })
        if(this.LocatorList.lengh==0) {
          alert('Invalid Code Combination');
@@ -349,8 +352,20 @@ export class ItemMasterLocatorComponent implements OnInit {
     }
   }
 
+
+  onOptiongetSubId(id){
+    // alert(id.target.value);
+    var subId = id.target.value.substr(3,4)
+    // alert(subId)
+    this.ItemlocatorMasterForm.patchValue({subInventoryId:subId})
+  }
+
   newMast() {
     const formValue: IItemLocatorMaster = this.ItemlocatorMasterForm.getRawValue();
+    console.log(formValue);
+    // alert(this.ItemlocatorMasterForm.get('subInventoryId1').value)
+    formValue.subInventoryId= Number(this.ItemlocatorMasterForm.get('subInventoryId1').value);
+    
     // var subId= this.subinventoryIdList.find(d => d.sub === locatorId);
     this.service.ItemLocatorMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {

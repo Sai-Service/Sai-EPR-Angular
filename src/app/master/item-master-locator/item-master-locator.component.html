@@ -46,20 +46,20 @@
                               </table>
                           </td>
                           <td>
-                              <select formControlName="subInventoryId" id="subInventoryId" class="form-control"
-                                [ngClass]="{'is-invalid': submitted && f.subInventoryId.errors}">
-                                  <option></option>
+                              <select formControlName="subInventoryId1" id="subInventoryId1" class="form-control"
+                                [ngClass]="{'is-invalid': submitted && f.subInventoryId.errors}" (change)="onOptiongetSubId($event)">
                                   <option *ngFor="let sc of subinventoryIdList" [ngValue]="sc.subInventoryId"  >
                                      {{sc.subInventoryId}}-{{sc.subInventoryCode}}
                                   </option>
                               </select>
-                              <div *ngIf="submitted && f.subInventoryId.errors" class="invalid-feedback">
-                                  <div *ngIf="f.subInventoryId.errors.required">Subinventory is required</div>
+                              <div *ngIf="submitted && f.subInventoryId1.errors" class="invalid-feedback">
+                                  <div *ngIf="f.subInventoryId1.errors.required">Subinventory is required</div>
 
                                   <!-- <span
                                       *ngIf="!locatorMasterForm.get('subinventoryId').valid && locatorMasterForm.get('subinventoryId').touched">Please
                                       Enter Subinventory </span> -->
                               </div>
+                              <input hidden type="number"  class="form-control" formControlName="subInventoryId" [(ngModel)]='subInventoryId' name="subInventoryId">
                           </td>
                           </tr>
                           <tr>
@@ -355,7 +355,7 @@
                                     <tr>
                                         <td style="width: 15%" class="LabelFontStyle"> SubInventory&nbsp;Code&nbsp;:&nbsp;</td>
                                         <td>
-                                        <select formControlName="subId" id="subId" class="form-control">
+                                        <select formControlName="subId" id="subId" class="form-control" (change)="onOptiongetSubId($event)" >
                                           <option></option>
                                           <option *ngFor="let sc of subinventoryIdList" [ngValue]="sc.subInventoryId"  >
                                              {{sc.subInventoryId}}-{{sc.subInventoryCode}}

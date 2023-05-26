@@ -552,14 +552,19 @@ export class PoReceiptFormComponent implements OnInit {
         );
     });
 
-
+   
     this.sub3 = this.router3.params.subscribe(params => {
       var recNo = this.router3.snapshot.queryParamMap.get('trxNum');
+      // alert(recNo)
       var categ = (this.router3.snapshot.queryParamMap.get('catg'));
+      // alert(categ)
+      // debugger;
       if ( recNo != undefined){
         this.glReceiptFind(recNo);
         }
-      
+      // if (recNo != undefined && categ=='STKTRF_Receipt'){
+      //   this.glReceiptFind(recNo);
+      // }
       });
   }
 
@@ -1441,11 +1446,13 @@ export class PoReceiptFormComponent implements OnInit {
     return;
   }
   glReceiptFind(receiptno){
-    
+    // alert(receiptno)
+    this.lineDetailsGroup().reset();
       this.service.getsearchByGlReceiptNo(receiptno)
         .subscribe(
           data => {
             if (data.code === 200) {
+              // this.lstcompolines.reload();
               this.lstcompolines = data.obj;
               // alert(data.obj.receiptNo);
               if (data.obj.shipmentNumber != null) {
@@ -1458,7 +1465,8 @@ export class PoReceiptFormComponent implements OnInit {
               var recDate1 = (data.obj.recDate, 'dd-MM-yyyy');
               this.poReceiptForm.patchValue(({ recDate: (data.obj.recDate, 'dd-MM-yyyy') }));
               let control = this.poReceiptForm.get('poLines') as FormArray;
-              for (var i = 0; i < this.lstcompolines.rcvLines.length; i++) {
+              // debugger;
+              for (var i = 0; i < this.lstcompolines.rcvLines.length-1; i++) {
                 var poLines: FormGroup = this.lineDetailsGroup();
                 control.push(poLines);
               }
