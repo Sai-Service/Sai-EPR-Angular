@@ -904,6 +904,7 @@ export class ARInvoiceComponent implements OnInit {
           if (data.code === 200) {
 
             this.lstcomments = data.obj;
+            // alert(data.obj.class)
 
             this.orderManagementService.accountNoSearchFn(data.obj.billToCustNo, this.ouId, this.divisionId)
 
@@ -1004,7 +1005,9 @@ export class ARInvoiceComponent implements OnInit {
                     this.displaytaxName = false;
                     this.displayinvItem = false;
                     this.arInvoiceForm.disable();
+                    if (data.obj.class !='Invoice'){
                     this.isVisibleApply = true;
+                  }
                     this.isVisibleInvoice = true;
                   }
                   if (data.obj.invStatus == 'Complete') {
@@ -1053,8 +1056,10 @@ export class ARInvoiceComponent implements OnInit {
 
                     patch.controls[i].patchValue({ taxPer: data.obj.invLines[i].taxCategoryName.gstPercentage });
                   }
+                 
                 });
-
+                
+             
           }
           else {
             if (data.code === 400) {
