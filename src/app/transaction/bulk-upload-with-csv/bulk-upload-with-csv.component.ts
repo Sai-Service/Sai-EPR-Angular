@@ -63,6 +63,7 @@ export class BulkUploadWithCsvComponent implements OnInit {
   lastkeydown1: number = 0;
   public supplierCodeList: any[];
   public pricelIstList : any=[];
+  salesErrorList: any=[];
   public suppIdList: any;
   private sub: any;
   segment1: string;
@@ -197,9 +198,19 @@ export class BulkUploadWithCsvComponent implements OnInit {
         } else {
           if (res.code === 400) {
             alert('Error In File : \n' + res.message+'---'+ res.obj[0].description);
+            this.salesErrorList=res.obj;
+            // for (let i=0;i<res.obj;i++){
+            //   alert(res.obj[i].description);
+            // }
             this.dataDisplay ='File Uploading Failed....'
             this.closeResetButton=true;
-            this.displaySalesErrorList=false
+            for (let i=0;i<res.obj.length ; i++){
+              // alert(res.obj[i].description)
+              if (res.obj[i].description !=null || res.obj[i].description){
+                this.displaySalesErrorList=false;
+              }
+            }
+            
           }
         }
       });
