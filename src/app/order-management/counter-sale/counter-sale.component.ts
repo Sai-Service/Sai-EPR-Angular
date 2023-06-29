@@ -1466,6 +1466,10 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
         data => {
           if (data.code === 200) {
             this.selCustomer = data.obj;
+            // alert(data.obj.customerSiteMasterList.length)
+           
+           
+
             this.custSiteList = data.obj.customerSiteMasterList;
             if (data.obj.tcsYN === 'Y') {
               this.CounterSaleOrderBookingForm.patchValue(data.obj);
@@ -1489,6 +1493,10 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
             for (let i = 0; i < this.custSiteList.length; i++) {
               // alert(this.custSiteList.length + '----' + this.custSiteList[i].ouId + '-----' + sessionStorage.getItem('ouId'));
               if (this.custSiteList.length === 1 && Number(this.custSiteList[i].ouId) === Number(sessionStorage.getItem('ouId'))) {
+                if (data.obj.customerSiteMasterList[0].taxCategoryName=='Sales-IGST' && data.obj.customerSiteMasterList[0].state=='MAHARASHTRA'){
+                  alert('State name & attached customer tax category is diiferent.. Please co-ordinate with IT Team');
+                  return;
+                }
                 this.CounterSaleOrderBookingForm.patchValue({ name: this.custSiteList[0].siteName });
                 this.onOptionsSelectedcustSiteName(this.custSiteList[0].siteName);
               }
@@ -1599,9 +1607,14 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     // siteName= siteName.target.value;
     //  alert(sessionStorage.getItem('ouId'));
     let selSite = this.custSiteList.find(d => d.siteName === siteName);
+    // alert(selSite.taxCategoryName)
     console.log(selSite);
     console.log(this.custSiteList);
-
+    if (selSite.taxCategoryName=='Sales-IGST' && selSite.state=='MAHARASHTRA'){
+      alert('State name & attached customer tax category is diiferent.. Please co-ordinate with IT Team');
+      this.CounterSaleOrderBookingForm.patchValue({mobile1:' ',custAddress:' ',taxCategoryName:' '})
+      return;
+    }
     // alert(selSite.ouId +'-----' + sessionStorage.getItem('ouId'));
 
     if (selSite.ouId != (sessionStorage.getItem('ouId'))) {
@@ -1623,7 +1636,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
         + this.selCustomer.state);
       this.birthDate = this.selCustomer.birthDate;
       this.weddingDate = this.selCustomer.weddingDate;
-      this.taxCategoryName = this.selCustomer.taxCategoryName;
+      this.taxCategoryName = selSite.taxCategoryName;
       this.CounterSaleOrderBookingForm.patchValue({ creditAmt: selSite.creditAmt });
       if (selSite.disPer != null) {
         // alert(selSite.disPer)
@@ -2518,6 +2531,15 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     this.progress = 0;
     this.dataDisplay = 'Order Save in progress....Do not refresh the Page';
     this.isDisabled = true;
+    var cusTaxcat = this.CounterSaleOrderBookingForm.get('taxCategoryName').value;
+    // alert(cusTaxcat)
+    // debugger;
+    if (cusTaxcat.includes('IGST') && this.state=='MAHARASHTRA'){
+      alert('State name & attached customer tax category is diiferent.. Please co-ordinate with IT Team');
+      this.dataDisplay = 'State name & attached customer tax category is diiferent.. Please co-ordinate with IT Team';
+      return;
+    }
+    else{
     var orderLines1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     var orderLines = orderLines1.getRawValue();
     var custName = this.CounterSaleOrderBookingForm.get('custName').value;
@@ -2656,6 +2678,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
         }
       }
     });
+  }
   }
 
   addRow(i) {

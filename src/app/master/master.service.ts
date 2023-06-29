@@ -1217,6 +1217,10 @@ export class MasterService {
     return this.http.get(this.ServerUrl + `/glHeader/arInv/${tranNo}`);
   }
 
+  viewAccountingMCP(tranNo): Observable<any> {
+    return this.http.get(this.ServerUrl + `/glHeader/viewAccount/${tranNo}`);
+  }
+
 
   viewApplyHistoryAR(tranNo): Observable<any> {
     return this.http.get(this.ServerUrl + `/arInv/trxNumber/${tranNo}`);
@@ -2852,7 +2856,7 @@ public shortLandedClaimSave(rtvRecord) {
 
   ////////////////////////// CREDIT MEMO APPLICATION /////////////////////
   public CreditMemmoApplySubmit(creditMemoApplyRecord, mCrmNo) {
-    alert("MS >> " + mCrmNo);
+    // alert("MS >> " + mCrmNo);
     const options = {
       headers: this.headers
     };

@@ -1424,6 +1424,19 @@ export class SalesOrderFormComponent implements OnInit {
     this.progress = 0;
     this.dataDisplay = 'Order Creation is progress....Do not refresh the Page'
     this.ouId = Number(sessionStorage.getItem('ouId'))
+    var cusTaxcat = this.SalesOrderBookingForm.get('custTaxCat').value;
+    // alert(cusTaxcat+'-----'+this.state)
+    // debugger;
+    if (cusTaxcat.includes('IGST') && this.state=='MAHARASHTRA'){
+      alert('State name & attached customer tax category is diiferent.. Please co-ordinate with IT Team');
+      this.dataDisplay = 'State name & attached customer tax category is diiferent.. Please co-ordinate with IT Team';
+      return;
+    }
+    else if ((cusTaxcat==' '|| cusTaxcat==null || cusTaxcat==undefined) && this.state=='MAHARASHTRA' ){
+      alert('State name & attached customer tax category is diiferent.. Please co-ordinate with IT Team');
+      this.dataDisplay = 'State name & attached customer tax category is diiferent.. Please co-ordinate with IT Team';
+      return;
+    }
     const formValue: ISalesBookingForm = this.transData(this.SalesOrderBookingForm.getRawValue());
     formValue.flowStatusCode = 'BOOKED';
     formValue.accountNo = this.SalesOrderBookingForm.get('accountNo').value;
@@ -3834,6 +3847,10 @@ if (Number(sessionStorage.getItem('deptId'))!=4){
             this.SalesOrderBookingForm.get('custName').disable();
             this.SalesOrderBookingForm.get('mobile1').disable();
             for (let i = 0; i < this.custSiteList.length; i++) {
+              if (data.obj.customerSiteMasterList[0].taxCategoryName=='Sales-IGST' && data.obj.customerSiteMasterList[0].state=='MAHARASHTRA'){
+                alert('State name & attached customer tax category is diiferent.. Please co-ordinate with IT Team');
+                return;
+              }
               // alert(this.custSiteList.length + '----' + this.custSiteList[i].ouId + '-----' + sessionStorage.getItem('ouId'));
               if (this.custSiteList.length === 1 && Number(this.custSiteList[i].ouId) === Number(sessionStorage.getItem('ouId'))) {
                 this.SalesOrderBookingForm.patchValue({ name: this.custSiteList[0].siteName });
@@ -3875,6 +3892,11 @@ if (Number(sessionStorage.getItem('deptId'))!=4){
     console.log(this.custSiteList);
     let selSite = this.custSiteList.find(d => d.siteName === siteName);
     console.log(selSite);
+    if (selSite.taxCategoryName=='Sales-IGST' && selSite.state=='MAHARASHTRA'){
+      alert('State name & attached customer tax category is diiferent.. Please co-ordinate with IT Team');
+      this.SalesOrderBookingForm.patchValue({mobile1:' ',billToAddress:' ',custTaxCat:' ',shipToAddress:' '})
+      return;
+    }
     // alert(selSite.ouId);
     if (selSite.ouId != (sessionStorage.getItem('ouId'))) {
       alert('First Create OU wise Site to continue process!')
@@ -3889,6 +3911,7 @@ if (Number(sessionStorage.getItem('deptId'))!=4){
         + selSite.city + ', '
         + selSite.pinCd + ', '
         + selSite.state).toUpperCase();
+        this.state=selSite.state;
       this.shipToAddress = this.billToAddress;
       this.birthDate = this.selCustomer.birthDate;
       this.weddingDate = this.selCustomer.weddingDate;

@@ -20,12 +20,17 @@ interface IMcpCancel {
   refundApprovedBy:string;
   refundIncludeGst:string;
   segmentName:string;
+  segmentName1:string;
   segment1:string;
   segment2:string;
   segment3:string;
   segment4:string;
   segment5:string;
-  
+  segment18:string;
+  segment19:string;
+  segment20:string;
+  segment21:string;
+  segment22:string;
 }
 
 @Component({
@@ -208,11 +213,17 @@ public statusList:Array<string>=[];
           //////////////////////////////////
 
           segmentName:string;
+          segmentName1:string;
           segment1:string;
           segment2:string;
           segment3:string;
           segment4:string;
           segment5:string;
+          segment18:string;
+          segment19:string;
+          segment20:string;
+          segment21:string;
+          segment22:string;
           lookupValueDesc4:string;
           lookupValueDesc1:string;
           lookupValueDesc2:string;
@@ -222,6 +233,18 @@ public statusList:Array<string>=[];
           branch:any;
 
           amcMcpStatus: string;
+          viewAccounting1: any[];
+          viewAccounting2: any[];
+          jeCategory: string;
+          postedDate: Date;
+          periodName: string;
+          runningTotalDr: number;
+          runningTotalCr: number;
+          docSeqValue: string;
+          name1: number;
+          ledgerId: number;
+          description: string;
+        
   
 
   get f() { return this.mcpCancellationForm.controls; }
@@ -348,11 +371,17 @@ public statusList:Array<string>=[];
 
 
             segmentName:['',[Validators.required]],
+            segmentName1:['',[Validators.required]],
             segment1:['',[Validators.required]],
             segment2:['',[Validators.required]],
             segment3:['',[Validators.required]],
             segment4:['',[Validators.required]],
             segment5:['',[Validators.required]],
+            segment18:['',[Validators.required]],
+            segment19:['',[Validators.required]],
+            segment20:['',[Validators.required]],
+            segment21:['',[Validators.required]],
+            segment22:['',[Validators.required]],
                   
             lookupValueDesc1:[],
             lookupValueDesc2:[],
@@ -363,7 +392,16 @@ public statusList:Array<string>=[];
 
             amcMcpStatus:[],
 
-
+            docSeqValue: [],
+          name1: [],
+          ledgerId: [],
+          description: [],
+          jeCategory: [],
+          postedDate: [],
+          periodName: [],
+          runningTotalDr: [],
+          runningTotalCr: [],
+          dmsCustNo:[],
             enqDtls: this.fb.array([this.invLineDetails()]),
 
           });
@@ -1035,7 +1073,7 @@ public statusList:Array<string>=[];
                     return;
                    }
 
-                   if(formValue.segment1==='Select' || formValue.segment2==='Select' || formValue.segment3==='Select' ||formValue.segment4==='Select' || formValue.segment5==='Select'){
+                   if(formValue.segment18==='Select' || formValue.segment19==='Select' || formValue.segment20==='Select' ||formValue.segment21==='Select' || formValue.segment22==='Select'){
                     this.checkValidation=false;  
                     alert ("ACCOUNT CODE : Invalid GL Code combination... Please check");
                     return;
@@ -1048,20 +1086,13 @@ public statusList:Array<string>=[];
                        alert ("ACCOUNT: Should not be null");
                        return;
                    } 
-
-
                    
-                    
-
-
-
-                      // if (formValue.cancelRemarks===undefined || formValue.cancelRemarks===null || formValue.cancelRemarks.trim()==='')
-                      // {
-                      //     this.checkValidation=false; 
-                      //     alert ("REMARKS : Should not be null....");
-                      //     return;
-                      //   } 
-                     
+                   if ( formValue.segmentName1===undefined || formValue.segmentName1===null || formValue.segmentName1.trim()=='' )
+                   {
+                       this.checkValidation=false;  
+                       alert ("ACCOUNT: Should not be null");
+                       return;
+                   }
                     this.checkValidation=true
       
                 }
@@ -1073,6 +1104,22 @@ public statusList:Array<string>=[];
                   const combination=segment1+'.'+segment2+'.'+segment3+'.'+segment4+'.'+segment5;
                   this.segmentName=combination;
                   this.service.getnaturalaccount(segment4).subscribe(
+                    data=>{this.naturalaccount=data;
+                      console.log(this.naturalaccount);
+                      this.mcpCancellationForm.patchValue(this.naturalaccount);
+                    this.accountType=this.naturalaccount.accountType;
+                    }
+                  );
+                }
+
+                GlCodeCombination1(segment18,segment19,segment20,segment21,segment22)
+                {
+                  alert(segment18+'-----'+segment19+'-----'+segment20+'----'+segment21+'----'+segment22);
+                  
+                  const combination=segment18+'.'+segment19+'.'+segment20+'.'+segment21+'.'+segment22;
+                  this.segmentName1=combination;
+                  alert(segment21)
+                  this.service.getnaturalaccount(segment21).subscribe(
                     data=>{this.naturalaccount=data;
                       console.log(this.naturalaccount);
                       this.mcpCancellationForm.patchValue(this.naturalaccount);
@@ -1113,7 +1160,36 @@ public statusList:Array<string>=[];
                 } }); 
               }
 
-               
+     
+              
+
+
+              viewAccounting(searchEnrollNo: any) {
+                // alert(receiptNo);
+                this.service.viewAccountingMCP(searchEnrollNo).subscribe((res: any) => {
+                  if (res.code === 200) {
+                    this.viewAccounting2 = res.obj;
+                    this.description = res.obj.description;
+                    this.periodName = res.obj.periodName;
+                    this.postedDate = res.obj.postedDate;
+                    this.jeCategory = res.obj.jeCategory;
+                    this.name1 = res.obj.name;
+                    this.ledgerId = res.obj.ledgerId;
+                    this.runningTotalDr = res.obj.runningTotalDr;
+                    this.runningTotalCr = res.obj.runningTotalCr;
+                    this.docSeqValue = res.obj.docSeqValue;
+                    console.log(this.description);
+                    this.viewAccounting1 = res.obj.glLines;
+                    console.log(this.viewAccounting1);
+                    // alert(res.message);
+                  } else {
+                    if (res.code === 400) {
+                      alert(res.message);
+                    }
+                  }
+                });
+              }
+
 
 }
 

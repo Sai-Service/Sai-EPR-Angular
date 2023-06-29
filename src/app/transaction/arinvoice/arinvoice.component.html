@@ -1417,7 +1417,11 @@
                                      <td> <input disabled type="number" class="form-control" formControlName="tUapplAmt"  [(ngModel)]="tUapplAmt"></td>
 
                                  </tr>
-
+                                 <tr>
+                                    <td>
+                                        <button style="width: 8em;" type="button" class="btn btn-info" (click)="refundInv()">Refund</button>
+                                    </td>
+                                 </tr>
 
                             </table>
 
@@ -1452,25 +1456,38 @@
                                     <ng-container   *ngFor="let group of invLineArray().controls; let k= index" [formGroupName]="k" class="auto-style5">
                                             <!-- <tr *ngFor="let com of lstinvoices let i=index" class="ItemStyle" style="text-decoration:none;"> -->
                                                <tr>
-                                                <td style="text-align: right;">{{k+1}}</td>
+                                                <td style="text-align: right;">
+                                                    {{k+1}}</td>
+                                                    <!-- [(ngModel)]="applyTo"  -->
                                                 <td><input  type="checkbox"  style="text-align: center;width: 3rem;"  formControlName="applyrcptFlag" (change)="applyReceiptFlag($event,k)"></td>
-                                                <td><input style="width: 100px;height: 25px;text-align: center;"      disabled  type="text" formControlName="applyTo" [(ngModel)]="applyTo" class="form-control" placeholder="Appl Type"  > </td>
-                                                <td><input style="width: 140px;height: 25px;" type="text"             disabled formControlName="trxNumber" class="form-control"></td>
-                                                <td><input style="width: 130px;height: 25px;text-align: center;"       disabled type="text" formControlName="trxDate" class="form-control"></td>
+                                                <td><input style="width: 100px;height: 25px;text-align: center;"  disabled  type="text" formControlName="applyTo" class="form-control" placeholder="Appl Type"  > </td>
+                                                <td><input style="width: 140px;height: 25px;" type="text"   disabled formControlName="trxNumber"  class="form-control"></td>
+                                                <div  *ngIf="displaytrxDate[k]; then thentrxDate; else elsetrxDate">  </div>
+                                                <ng-template #thentrxDate>
+                                                <td><input style="width: 130px;height: 25px;text-align: center;"   disabled  formControlName="trxDate"  class="form-control"></td>
+                                                </ng-template>
+                                                <ng-template #elsetrxDate>
+                                                    <td><input style="width: 130px;height: 25px;text-align: center;"    type="date" formControlName="trxDate"  class="form-control"></td>
+                                                </ng-template>
+                                                <!-- disabled -->
                                                 <!-- <td>{{trxDate | date:'dd-MM-y'}}</td>  -->
-                                                <td><input style="width: 120px;height: 25px;text-align: right;" disabled  type="text" formControlName="invoiceAmount" class="form-control"></td>
-
-                                                <td><input style="width: 120px;height: 25px;text-align:right;"  disabled  type="text" formControlName="applAmt"  class="form-control"  > </td>
+                                                <td><input style="width: 120px;height: 25px;text-align: right;"   type="text" formControlName="invoiceAmount" class="form-control"></td>
+                                                <!-- disabled -->
+                                                <td><input style="width: 120px;height: 25px;text-align:right;"    type="text" formControlName="applAmt"  class="form-control"  > </td>
+                                                <!-- disabled -->
                                                 <td><input style="width: 145px;height: 25px;text-align: center;" disabled  type="date" formControlName="applDate" [(ngModel)]="applDate" class="form-control"></td>
                                                 <td><input disabled style="width: 150px;height: 25px;text-align: right;background-color:yellow;"    type="date" formControlName="glDateLine"  class="form-control"  (change)="glPrdValidateLine(k)"></td>
 
                                                 <td><input disabled style="width: 120px;height: 25px;text-align: right;background-color: yellow;"   type="number" min="0" formControlName="applAmtNew"  class="form-control" placeholder="" (change)="validateLineApplAmt(k)" > </td>
 
                                                 <td><input style="width: 120px;height: 25px;text-align: right;"     disabled    type="text" formControlName="balDueAmt" class="form-control" placeholder="" > </td>
-                                                <input style="width: 100px;height: 25px;text-align: right;"   hidden disabled  type="text" formControlName="balance1" class="form-control" placeholder="balance" >
+                                                <input style="width: 100px;height: 25px;text-align: right;"    disabled  type="text" formControlName="balance1" class="form-control" placeholder="balance" >
                                                 <input style="width: 100px;height: 25px;text-align: right;"   hidden disabled  type="text" formControlName="billToCustId" class="form-control" placeholder="custid" >
                                                 <input style="width: 100px;height: 25px;text-align: right;"   hidden disabled   type="text" formControlName="billToSiteId" class="form-control" placeholder="siteid" >
                                                 <!-- <td>  <button  class="btn btn-secondary" (click)="ApplyRcpt(com.trxNumber,receiptNumber)">Apply</button></td>   -->
+                                                <!-- <td>
+                                                    <button style="width: 8em;" type="button" class="btn btn-info" (click)="refundInv(k)">Refund</button>
+                                                </td> -->
                                             </tr>
                                             </ng-container>
                                             </ng-container>

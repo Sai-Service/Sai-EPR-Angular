@@ -472,7 +472,7 @@
                                     <input disabled style="text-align: right;font-weight: bold;"  type="text"  formControlName="cancRsnId"  id="cancRsnId" [(ngModel)]="cancRsnId" class="form-control"  >
                                 </td> -->
 
-                                <td colspan="3">  
+                                <td>  
                                     <select   formControlName="cancelRsnId" id="cancelRsnId" [(ngModel)]="cancelRsnId" class="form-control" style="background-color: yellow;width:100%" >
                                         <!-- (ngModelChange)="onOptionsSelectedModel($event)">   -->
                                         <option>--Select--</option>
@@ -482,17 +482,33 @@
                                     </select>
                                 </td>
 
-                                                         
+                                <td style="width: 15%" class="LabelFontStyle">Cancel&nbsp;Date:&nbsp;</td>
+                                <td>
+                                    <input  disabled  style="height:25px ;"  type="date"  formControlName="mcpCancelDate"  id="mcpCancelDate" [(ngModel)]="mcpCancelDate" class="form-control"  >
+                                </td>                       
                                
 
                             </tr>
 
                             <tr>
+                                <td style="width: 20%;" class="LabelFontStyle1" >Debit&nbsp;Account&nbsp;:</td>
+                                <td>
+                                <table>
+                                <tr>
+                                <td>
+                                    <input readonly type="text" formControlName="segmentName1" class="form-control" id="segmentName" style="background-color: yellow;"
+                                    [(ngModel)]='segmentName1' value={{segmentName1}} data-target="#debitAccount" placeholder="GL Code Combination"></td>
 
-                                    <td style="width: 15%" class="LabelFontStyle">Cancel&nbsp;Date:&nbsp;</td>
-                                    <td>
-                                        <input  disabled  style="height:25px ;"  type="date"  formControlName="mcpCancelDate"  id="mcpCancelDate" [(ngModel)]="mcpCancelDate" class="form-control"  >
-                                    </td>
+                                <td>
+                                    <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#segmentName" style="width:1rem ; text-align: right;">... </button> -->
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#debitAccountModel">
+                                        ..
+                                      </button>
+                                </td>
+                                </tr>
+                                </table>
+                                </td>
+                                   
 
                                     <td style="width: 15%;" class="LabelFontStyle">&nbsp;Part&nbsp;Refund:</td>
 
@@ -517,7 +533,7 @@
                                 <tr>
                                     <!-- <td></td><td></td> -->
 
-                                    <td style="width: 20%;" class="LabelFontStyle1" >Account&nbsp;:</td>
+                                    <td style="width: 20%;" class="LabelFontStyle1" >Credit&nbsp;Account&nbsp;:</td>
                                     <td>
                                     <table>
                                     <tr>
@@ -588,6 +604,7 @@
                             <div *ngIf="showCancelButton; then Block101; else Block102"></div>
                             <ng-template #Block101>
                                 <td><button  type="button" class="btn btn-info" (click)="newMast()" >Cancel</button></td>
+                               
                                 <td><button type="button" class="btn btn-info" (click)="searchMast()">Search</button></td>
                                     <!-- ====================Reset Dialog ======================== -->
 
@@ -655,7 +672,10 @@
                                        <td><button  disabled type="button" class="btn btn-info" (click)="newMast()" >Cancel</button></td>
 
                                        <td><button type="button" class="btn btn-info" (click)="searchMast()">Search</button></td>
-            
+                                       <td>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#viewAccountingModel"  style="width: 8rem;" (click)="viewAccounting(searchEnrollNo)" >
+                                            View Accounting</button>
+                                    </td>
                                     <!-- ====================Reset Dialog ======================== -->
 
                                     <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button></td>
@@ -919,6 +939,224 @@
     </div>
   </div>   
 
- 
+<!-- ============================== debit account code =============-->
+
+
+<div class="modal fade" id="debitAccountModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width:600px;">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+            <label style="text-align: center;font-size: small;font-family: Verdana, Geneva, Tahoma, sans-serif;
+            color: black;margin-left: 40%;">
+           Code&nbsp;Combination&nbsp;
+           </label>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <table style="width: 100%;" class="center">
+                <tr>
+                    <td style="width: 30%;" class="LabelFontStyle1">Branch&nbsp;:</td>
+                    <td>
+                        <select class="form-control"  formControlName="segment18" id="segment18" [(ngModel)]='segment18' value={{segment18}} placeholder="Please enter branch code" (ngModelChange)='onOptionsSelectedBranch($event,"SS_Branch")' style="width: 140px;">
+                            <option >Select</option>
+                            <option *ngFor="let branch of branchList">
+                                {{branch.lookupValue}}
+                                <!-- -{{branch.lookupValueDesc}}    -->
+                            </option>
+                        </select>
+
+                    </td>
+                    <input readonly type="text"  class="form-control" formControlName="lookupValueDesc1" id="lookupValueDesc1" [(ngModel)]='lookupValueDesc1' value={{lookupValueDesc1}} style="border:none;width: 200px;background-color: white;">
+
+                
+                </tr>
+                <tr>
+                    <td style="width: 30%;" class="LabelFontStyle1">Location&nbsp;:</td>
+                    <td>
+                        <select class="form-control"  formControlName="segment19" id="segment19" [(ngModel)]='segment19' value={{segment19}} placeholder="Please enter Location code" (ngModelChange)='onOptionsSelectedBranch($event,"SS_Location")' style="width: 140px;">
+                            <option >Select</option>
+                            <option *ngFor= "let Location of locationList">
+                                {{Location.lookupValue}}
+                                <!-- -{{Location.lookupValueDesc}}    -->
+                            </option>
+                        </select>
+
+                    </td>
+                    <input readonly type="text"  class="form-control" formControlName="lookupValueDesc2" id="lookupValueDesc2" [(ngModel)]='lookupValueDesc2' value={{lookupValueDesc2}} style="border:none;width: 200px;background-color: white;">
+
+                   
+                </tr>
+                <tr>
+                    <td style="width: 30%;" class="LabelFontStyle1">Cost&nbsp;Centre&nbsp;:</td>
+                    <td>
+                        <select class="form-control"  formControlName="segment20" id="segment20" [(ngModel)]='segment20' value={{segment20}} placeholder="Please enter cost centre code" (ngModelChange)='onOptionsSelectedBranch($event,"CostCentre")' style="width: 140px;">
+                            <option >Select</option>
+                            <option *ngFor="let costcentre of costCentre">
+                                {{costcentre.lookupValue}}
+                                <!-- -{{costcentre.lookupValueDesc}}    -->
+                            </option>
+                        </select>
+
+                    </td>
+                    <input readonly type="text"  class="form-control" formControlName="lookupValueDesc3" id="lookupValueDesc3" [(ngModel)]='lookupValueDesc3' value={{lookupValueDesc3}} style="border:none;width: 200px;background-color: white;">
+
+                    
+                </tr>
+                <tr>
+                    <td style="width: 30%;" class="LabelFontStyle1">Naural&nbsp;Account&nbsp;:</td>
+                    <td>
+                        <select class="form-control"  formControlName="segment21" id="segment21" [(ngModel)]='segment21' value={{segment21}} (ngModelChange)='onOptionsSelectedBranch($event,"NaturalAccount")' placeholder="Please enter natural account code" style="width: 140px;">
+                            <option >Select</option>
+                            <option *ngFor="let naturalaccount of naturalAccount">
+                                {{naturalaccount.lookupValue}}
+                                <!-- -{{naturalaccount.lookupValueDesc}}                                                      -->
+                            </option>
+                        </select>
+
+                    </td>
+                    <input readonly type="text"  class="form-control" formControlName="lookupValueDesc4" id="lookupValueDesc4" [(ngModel)]='lookupValueDesc4' value={{lookupValueDesc4}} style="border:none;width: 200px;background-color: white;">
+
+                   
+                </tr>
+                <tr>
+                    <td style="width: 30%;" class="LabelFontStyle1">Inter&nbsp;Branch&nbsp;:</td>
+                    <td>
+                        <select class="form-control"  formControlName="segment22" id="segment22" [(ngModel)]='segment22' value={{segment22}} placeholder="Please enter Inter branch code" (ngModelChange)='onOptionsSelectedBranch($event,"SS_Interbranch")' style="width: 140px;">
+                            <option >Select</option>
+                            <option *ngFor="let interbranch of interBranch">
+                                {{interbranch.lookupValue}}
+                                <!-- -{{interbranch.lookupValueDesc}}    -->
+                            </option>
+                        </select>
+
+                    </td>
+                    <input readonly type="text"  class="form-control" formControlName="lookupValueDesc5" id="lookupValueDesc5" [(ngModel)]='lookupValueDesc5' value={{lookupValueDesc5}} style="border:none;width: 200px;background-color: white;">
+
+                   
+                </tr>
+               </table>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-info" 
+            data-dismiss="modal" (click)="GlCodeCombination1(segment18,segment19,segment20,segment21,segment22)">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+<!-- ========================== View Accounting  ========================-->
+
+
+
+
+
+<div class="grid_scroll2">
+                 
+    <div class="modal fade" id="viewAccountingModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-xl" role="document">
+          <!-- modal-dialog-scrollable -->
+        <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle" style="margin-left: 40%;">Accounting Effect</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <table class="center">
+                  <tr>
+                      <td style="width: 18%" class="LabelFontStyle">
+                          Invoice&nbsp;No&nbsp;:&nbsp;
+                      </td> 
+                      <td>
+                          <input disabled  formControlName="name1" id="name1" class="form-control" [(ngModel)]="name1" style="width: fit-content;">
+                      </td>
+                      <td style="width: 18%" class="LabelFontStyle">
+                          Doc&nbsp;Srl&nbsp;No&nbsp;:&nbsp;
+                      </td>
+                      <td>
+                          <input disabled formControlName="docSeqValue" class="form-control" [ngModel]="docSeqValue" >
+                      </td>
+                      
+                      <td style="width: 18%" class="LabelFontStyle">
+                          Ledger&nbsp;:&nbsp;
+                      </td>
+                      <td>
+                          <input disabled formControlName="description" class="form-control" [ngModel]="description" >
+                      </td>
+                  </tr>
+                  <tr>
+                      <td style="width: 18%" class="LabelFontStyle">
+                          Category&nbsp;:&nbsp;
+                      </td> 
+                      <td>
+                          <input disabled formControlName="jeCategory" id="jeCategory" class="form-control" [ngModel]="jeCategory" >
+                      </td>
+                      <td style="width: 18%" class="LabelFontStyle">
+                          Date&nbsp;:&nbsp;
+                      </td> 
+                      <td>
+                          <input disabled formControlName="postedDate" id="postedDate" class="form-control" [ngModel]="postedDate" >
+                      </td>
+                      <td style="width: 18%" class="LabelFontStyle">
+                          Period&nbsp;:&nbsp;
+                      </td> 
+                      <td>
+                          <input disabled  formControlName="periodName" id="periodName" class="form-control" [ngModel]="periodName" >
+                      </td>
+                  </tr>
+                  <br>
+                  </table>
+                  <div class="grid_scroll2" style="background-color: rgb(172, 218, 236);">
+                  <table class="auto-style4" class="GridFont"   style="border-color:#959595;width:100%;">
+                      <thead>
+                        <tr class="GridHeader">
+                        <th>Line</th>
+                        <th>Account</th>
+                        <th>Debit(INR)</th>
+                        <th>Credit(INR)</th>
+                        <th>Description</th>
+                        <th>Account Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let com of viewAccounting1" class="ItemStyle" style="text-decoration:none;position: initial;">
+                            <td>{{com.jeLineNum}}</td>
+                            <td >{{com.segmentName}}</td>
+                            <td style="text-align: right;padding-right: 5px;" >{{com.enteredDr}}</td>
+                            <td style="text-align: right;padding-right: 5px;">{{com.enteredCr}}</td>
+                            <td >{{com.description}}</td>
+                            <td >{{com.accountDesc}}</td>
+                          </tr>
+                      </tbody>
+                      <tr>
+                          <td></td>
+                          <td>Total:&nbsp;</td>
+                          <td >
+                              <input disabled  formControlName="runningTotalDr" id="runningTotalDr" class="form-control" [ngModel]="runningTotalDr" style="text-align: right;height: 22px;width: 100px;font-weight: bold;">
+                          </td>
+                          <td >
+                              <input disabled  formControlName="runningTotalCr" id="runningTotalCr" class="form-control" [ngModel]="runningTotalCr" style="text-align: right;height: 22px;width: 100px;font-weight: bold;">
+                          </td>
+                      </tr>
+                        </table>
+                     
+                      </div>
+          </div>
+          
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> 
 
 </form>
