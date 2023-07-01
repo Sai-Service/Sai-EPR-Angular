@@ -42,8 +42,8 @@ export class LoginService {
       headers: this.headers
     };
     //  const url = 'http://localhost:8081/resetpassword';
-    // const url='http://saihorizon.com:8051/ErpReplica/resetpassword';
-     const url= "http://saierp.horizon.org:8080/ErpReplica/resetpassword"; 
+    const url='http://saihorizon.com:8051/ErpReplica/resetpassword';
+    //  const url= "http://saierp.horizon.org:8080/ErpReplica/resetpassword"; 
     console.log(body);
     return this.httpclient.put(url, body, options)
   }

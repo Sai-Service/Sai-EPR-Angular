@@ -239,6 +239,7 @@ export class ARInvoiceComponent implements OnInit {
   isVisibleArInvoiceLine: boolean = false;
   isVisibleArDist: boolean = false;
   isVisibleUpdate: boolean = false;
+  isVisiblerefundInv:boolean=false;
   displayDepartmentList: boolean = false;
   isDisabledName = false;
   isDisabledSave = false;
@@ -2403,11 +2404,30 @@ export class ARInvoiceComponent implements OnInit {
     // alert(custAcno+'---'+this.ouId+'---'+creditMemoNum)
     this.applySaveButton = false;
     this.invLineArray().clear();
-
+    var mcpTypeId = this.arInvoiceForm.get('custTrxTypeId').value;
+    // alert(mcpTypeId);
+    if (mcpTypeId===242){
+      this.isVisiblerefundInv=true;
+    }
     this.service.getCreditMemoSearchByInvoiceNo(custAcno, this.ouId, creditMemoNum)
       .subscribe(
         data => {
           this.lstinvoices = data.obj.invLine;
+          if (mcpTypeId===242){
+          this.totAppliedtAmount = Math.abs(data.obj.totAppliedtAmount);
+          this.totUnAppliedtAmount = Math.abs(data.obj.totUnAppliedtAmount);
+          this.balanceAmount = Math.abs(data.obj.balanceAmount);
+          this.creditNoteAmount = Math.abs(data.obj.creditNoteAmount);
+
+          this.customerId = data.obj.customerId;
+          this.customerSiteId = data.obj.customerSiteId;
+          this.custAccountNo = data.obj.custAccountNo;
+          this.custName = data.obj.custName;
+
+          this.tUapplAmt = this.totUnAppliedtAmount;
+          this.tApplAmt = this.totAppliedtAmount;
+          this.validateStatus = true;
+        }
           this.invLineArray().clear();
           console.log(this.lstinvoices);
           var len = this.invLineArray().length;
@@ -2477,8 +2497,10 @@ export class ARInvoiceComponent implements OnInit {
             }
           } else {
             alert("No Pending Bills Found against this customer.");
+            if (mcpTypeId !=242){
             this.arInvoiceForm.get('selectAllflag1').disable();
             this.validateStatus = false;
+            }
           }
 
         });

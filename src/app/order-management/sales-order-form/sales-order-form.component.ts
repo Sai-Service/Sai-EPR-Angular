@@ -148,6 +148,7 @@ export class IFinanaceExchangeForm {
   financerName: string;
   financeAmt: number;
   emi: number;
+  custTaxCat:string;
   rsnCode: string;
   tenure: number;
   csdDate: Date;
@@ -3915,7 +3916,7 @@ if (Number(sessionStorage.getItem('deptId'))!=4){
       this.shipToAddress = this.billToAddress;
       this.birthDate = this.selCustomer.birthDate;
       this.weddingDate = this.selCustomer.weddingDate;
-      // this.taxCategoryName = this.selCustomer.taxCategoryName;
+      this.SalesOrderBookingForm.patchValue({ custTaxCat: selSite.taxCategoryName })
       if (selSite.disPer != null) {
         // alert(selSite.disPer)
         this.SalesOrderBookingForm.patchValue({ discType: 'Header Level Discount' })

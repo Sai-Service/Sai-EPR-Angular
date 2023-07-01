@@ -114,7 +114,10 @@ export class CompanyMasterComponent implements OnInit {
 
   }
   transData(val) {
-    delete val.compId;
+    delete val.RegNo;
+    delete val.RegNo1;
+    delete val.RegNo2;
+    delete val.mcpId;
     return val;
   }
 
