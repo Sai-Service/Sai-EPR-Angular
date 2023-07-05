@@ -2433,36 +2433,19 @@ export class ARInvoiceComponent implements OnInit {
           var len = this.invLineArray().length;
           // alert("this.lstinvoices.length :"+this.lstinvoices.length +","+len);
           var y = 0;
-
-          // this.invLineArray().clear();
-          //  if (this.lstinvoices.length > 0) {
-          //    alert ("in if....");
-          //     this.validateStatus = true;
-          //     this.arInvoiceForm.get('selectAllflag1').disable();
-          //   } else {   alert ("in else....");
-          //     this.arInvoiceForm.get('selectAllflag1').disable();
-          //     this.validateStatus = false; return;
-          //   }
-
-          // alert ("testing....");
           var invCount = this.lstinvoices.length;
-          // alert(invCount);
           if (invCount > 0) {
           this.isVisibleApply=true;
             this.invLineArray().clear();
             this.validateStatus = true;
-            // this.arInvoiceForm.get('selectAllflag1').disable();
-
             this.totAppliedtAmount = Math.abs(data.obj.totAppliedtAmount);
             this.totUnAppliedtAmount = Math.abs(data.obj.totUnAppliedtAmount);
             this.balanceAmount = Math.abs(data.obj.balanceAmount);
             this.creditNoteAmount = Math.abs(data.obj.creditNoteAmount);
-
             this.customerId = data.obj.customerId;
             this.customerSiteId = data.obj.customerSiteId;
             this.custAccountNo = data.obj.custAccountNo;
             this.custName = data.obj.custName;
-
             this.tUapplAmt = this.totUnAppliedtAmount;
             this.tApplAmt = this.totAppliedtAmount;
             // debugger;
@@ -2667,6 +2650,7 @@ export class ARInvoiceComponent implements OnInit {
       else {
 
         var appAmt = Number(totUnAppAmt.toFixed(2));
+        // alert(appAmt)
         patch.controls[index].patchValue({ applAmtNew: appAmt })
         LineApplAmount = Number(invLineArr[index].applAmtNew);
 
@@ -2778,11 +2762,13 @@ export class ARInvoiceComponent implements OnInit {
     // alert('addrow index '+i);
 
     var applLineArr = this.arInvoiceForm.get('invApplyList').value;
-    var lineValue1 = applLineArr[i].applAmt;
+    var applLineArrNew = this.arInvoiceForm.get('invApplyList') as FormArray;
+    var applLineArrNew1=applLineArrNew.getRawValue();
+    var lineValue1 = applLineArrNew1[i].applAmt;
     var tglDate = new Date(applLineArr[i].glDate);
     var chkFlag = applLineArr[i].applyrcptFlag;
     var j = i + 1;
-
+    // alert(lineValue1)
     if (lineValue1 === undefined || lineValue1 === null || lineValue1 <= 0) {
       alert("Line-" + j + " APPL AMT :  Should  be grater than Zero");
       this.applLineValidation = false;
