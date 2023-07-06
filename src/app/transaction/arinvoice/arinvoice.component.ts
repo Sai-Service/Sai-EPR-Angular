@@ -185,6 +185,8 @@ export class ARInvoiceComponent implements OnInit {
   emplId: number;
   activeTab = 'home-md';
   displaytrxDate: Array<boolean> = [];
+  displayamcRefund:Array<boolean>=[];
+  displayAMC:Array<boolean>=[];
   displaySaveButton = true;
   applySaveButton = false;
   validateStatus = false;
@@ -2452,6 +2454,7 @@ export class ARInvoiceComponent implements OnInit {
             for (let i = 0; i < this.lstinvoices.length - len; i++) {
               var invLnGrp: FormGroup = this.invLineDetails();
               this.invLineArray().push(invLnGrp);
+              
             }
 
             this.arInvoiceForm.get('invApplyList').patchValue(this.lstinvoices);
@@ -2467,6 +2470,7 @@ export class ARInvoiceComponent implements OnInit {
               patch.controls[i].patchValue({ applAmt: x })
               patch.controls[i].patchValue({ applyTo:  invLineArr[i].applyTo});
               this.displaytrxDate[i] = true;
+              this.displayamcRefund[i]=true;
               // patch.controls[i].patchValue({ applyTo: 'INVOICE' }) --- JyotiK
 
               // var z1 = this.pipe.transform(this.now, 'y-MM-dd');
@@ -2474,9 +2478,9 @@ export class ARInvoiceComponent implements OnInit {
 
               var invAmt = invLineArr[i].invoiceAmount.toFixed(2);
               patch.controls[i].patchValue({ invoiceAmount: invAmt });
-              patch.controls[i].get('trxDate').disable();
-              patch.controls[i].get('invoiceAmount').disable();
-              patch.controls[i].get('applAmt').disable();
+              // patch.controls[i].get('trxDate').disable();
+              // patch.controls[i].get('invoiceAmount').disable();
+              // patch.controls[i].get('applAmt').disable();
             }
           } else {
             alert("No Pending Bills Found against this customer.");
@@ -2834,11 +2838,15 @@ export class ARInvoiceComponent implements OnInit {
     // this.CalculateRcptBalances();
     this.applySaveButton = false;
 
-
+// debugger;
     const formValue: IArInvoice = this.transeData1(this.arInvoiceForm.value);
 
-
     let variants = <FormArray>this.invLineArray();
+    // let variants1 = <FormArray>this.lineDetailsGroup().value;
+    console.log(variants);
+    
+    // alert(this.invLineArray().length)
+    console.log(variants);
     var crnNumber = this.arInvoiceForm.get('trxNumber').value;
     var crnDate = this.arInvoiceForm.get('invoiceDate').value;
     var customerId = this.arInvoiceForm.get('customerId').value;
@@ -2848,7 +2856,7 @@ export class ARInvoiceComponent implements OnInit {
 
     for (let i = 0; i < this.invLineArray().length; i++) {
       //  let variants = <FormArray>this.invLineArray();
-
+      // alert(variants[i].applAmt);
       let variantFormGroup = <FormGroup>variants.controls[i];
       // variantFormGroup.addControl('crnNumber', new FormControl(invoiceNumber, Validators.required));
       // variantFormGroup.addControl('crnDate', new FormControl(invoiceDate, Validators.required));
@@ -3117,8 +3125,11 @@ export class ARInvoiceComponent implements OnInit {
     var invLineArr = this.arInvoiceForm.get('invApplyList').value;
     console.log(patch);
     this.displaytrxDate[len-1] = false;
+    this.displayamcRefund[len-1] = false;
     this.invLineArray().controls[len-1].patchValue({applyTo: 'AR-REFUND',balance1:this.balanceAmount,balDueAmt:this.balanceAmount});
-
+    this.invLineArray[len-1].get('trxDate').enable();
+    this.invLineArray[len-1].get('invoiceAmount').enable();
+    this.invLineArray[len-1].get('applAmt').enable();
   }
 
 }

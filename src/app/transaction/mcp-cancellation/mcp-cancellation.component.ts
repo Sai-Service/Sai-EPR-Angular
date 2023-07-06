@@ -1114,11 +1114,11 @@ public statusList:Array<string>=[];
 
                 GlCodeCombination1(segment18,segment19,segment20,segment21,segment22)
                 {
-                  alert(segment18+'-----'+segment19+'-----'+segment20+'----'+segment21+'----'+segment22);
+                  // alert(segment18+'-----'+segment19+'-----'+segment20+'----'+segment21+'----'+segment22);
                   
                   const combination=segment18+'.'+segment19+'.'+segment20+'.'+segment21+'.'+segment22;
                   this.segmentName1=combination;
-                  alert(segment21)
+                  // alert(segment21)
                   this.service.getnaturalaccount(segment21).subscribe(
                     data=>{this.naturalaccount=data;
                       console.log(this.naturalaccount);

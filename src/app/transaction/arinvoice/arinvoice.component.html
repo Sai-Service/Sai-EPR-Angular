@@ -1469,19 +1469,24 @@
                                                 <ng-template #elsetrxDate>
                                                     <td><input style="width: 130px;height: 25px;text-align: center;"    type="date" formControlName="trxDate"  class="form-control"></td>
                                                 </ng-template>
-                                                <!-- disabled -->
-                                                <!-- <td>{{trxDate | date:'dd-MM-y'}}</td>  -->
-                                                <td><input style="width: 120px;height: 25px;text-align: right;"   type="text" formControlName="invoiceAmount" class="form-control"></td>
-                                                <!-- disabled -->
+                                                <div  *ngIf="displayamcRefund[k]; then thenamcRefund; else elseamcRefund">  </div>
+                                                <ng-template #thenamcRefund>
+                                                <td><input style="width: 120px;height: 25px;text-align: right;" disabled  type="text" formControlName="invoiceAmount" class="form-control"></td>
+                                          
+                                                <td><input style="width: 120px;height: 25px;text-align:right;"  disabled  type="text" formControlName="applAmt"  class="form-control"  > </td>
+                                                </ng-template> 
+                                                <ng-template #elseamcRefund>
+                                                    <td><input style="width: 120px;height: 25px;text-align: right;"   type="text" formControlName="invoiceAmount" class="form-control"></td>
+                                          
                                                 <td><input style="width: 120px;height: 25px;text-align:right;"    type="text" formControlName="applAmt"  class="form-control"  > </td>
-                                                <!-- disabled -->
+                                                </ng-template>
                                                 <td><input style="width: 145px;height: 25px;text-align: center;" disabled  type="date" formControlName="applDate" [(ngModel)]="applDate" class="form-control"></td>
                                                 <td><input disabled style="width: 150px;height: 25px;text-align: right;background-color:yellow;"    type="date" formControlName="glDateLine"  class="form-control"  (change)="glPrdValidateLine(k)"></td>
 
                                                 <td><input disabled style="width: 120px;height: 25px;text-align: right;background-color: yellow;"   type="number" min="0" formControlName="applAmtNew"  class="form-control" placeholder="" (change)="validateLineApplAmt(k)" > </td>
 
                                                 <td><input style="width: 120px;height: 25px;text-align: right;"     disabled    type="text" formControlName="balDueAmt" class="form-control" placeholder="" > </td>
-                                                <input style="width: 100px;height: 25px;text-align: right;"    disabled  type="text" formControlName="balance1" class="form-control" placeholder="balance" >
+                                                <input style="width: 100px;height: 25px;text-align: right;"  hidden  disabled  type="text" formControlName="balance1" class="form-control" placeholder="balance" >
                                                 <input style="width: 100px;height: 25px;text-align: right;"   hidden disabled  type="text" formControlName="billToCustId" class="form-control" placeholder="custid" >
                                                 <input style="width: 100px;height: 25px;text-align: right;"   hidden disabled   type="text" formControlName="billToSiteId" class="form-control" placeholder="siteid" >
                                                 <!-- <td>  <button  class="btn btn-secondary" (click)="ApplyRcpt(com.trxNumber,receiptNumber)">Apply</button></td>   -->
