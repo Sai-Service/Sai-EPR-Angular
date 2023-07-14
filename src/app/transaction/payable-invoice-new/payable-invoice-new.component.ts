@@ -2813,7 +2813,13 @@ export class PayableInvoiceNewComponent implements OnInit {
     var patchheaderArray = this.poInvoiceForm.get('obj').value;
     var invAmt = patchheaderArray[0].invoiceAmt;
     var patch = this.poInvoiceForm.get('obj') as FormArray;
+    // alert(patchheaderArray[0].invTypeLookupCode)
+    if (patchheaderArray[0].invTypeLookupCode !='Credit Memo'){
     (patch.controls[0]).patchValue({ invoiceAmt: Math.abs(basicAmt + taxAmt1).toFixed(2) });
+  }
+  else if (patchheaderArray[0].invTypeLookupCode ==='Credit Memo'){
+    (patch.controls[0]).patchValue({ invoiceAmt: (basicAmt + taxAmt1).toFixed(2) });
+  }
     (patch.controls[0]).patchValue({ taxAmt: (taxAmt1).toFixed(2) });
   }
 

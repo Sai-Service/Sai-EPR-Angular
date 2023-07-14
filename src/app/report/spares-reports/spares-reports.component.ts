@@ -176,8 +176,9 @@ export class SparesReportsComponent implements OnInit {
         }
       );
 
-
-    this.sparesReportForm.patchValue({ userName: sessionStorage.getItem('ticketNo') })
+        // alert(sessionStorage.getItem('ticketNo') )
+    this.sparesReportForm.patchValue({ userName: sessionStorage.getItem('ticketNo') });
+    this.userName=sessionStorage.getItem('ticketNo');
 
     if (Number(sessionStorage.getItem('deptId')) === 4) {
       this.isVisiblelocationLOV = true;

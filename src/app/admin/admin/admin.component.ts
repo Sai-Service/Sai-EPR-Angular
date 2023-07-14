@@ -439,7 +439,7 @@ export class AdminComponent implements OnInit {
       this.isVisibleAccessories=true;
       this.isVisibilePaintSystem=false;
       // this.isVisibleShellReport=false;
-      alert((sessionStorage.getItem('deptName')))
+      // alert((sessionStorage.getItem('deptName')))
       if ((sessionStorage.getItem('deptName'))==='Shell'){
         this.isVisibleShellReport=true;
         this.isVisibleSparesReport=false;
