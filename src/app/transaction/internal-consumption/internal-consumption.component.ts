@@ -79,13 +79,13 @@ export class InternalConsumptionComponent implements OnInit {
   public subInvCode: any;
   compNo: string;
   onHandQty: number;
-  JobNo:string;
+  JobNo: string;
   id: number;
   public transType: any = [];
   invItemId: number;
   userList2: any[] = [];
   lastkeydown1: number = 0;
-  
+
   segmentName: string;
   adjustmentQty: number;
   physicalQty: number;
@@ -180,7 +180,7 @@ export class InternalConsumptionComponent implements OnInit {
   attribute1: number;
   attribute2: Date;
 
-  jobData:any=[];
+  jobData: any = [];
 
   type1: string;
   dispheader: boolean = false;
@@ -191,7 +191,7 @@ export class InternalConsumptionComponent implements OnInit {
   currentOp: string;
   dispRow: boolean = true;
   displayRemoveRow: Array<boolean> = [];
-  name:string;
+  name: string;
 
   public itemMap = new Map<string, IcTrans>();
 
@@ -209,6 +209,11 @@ export class InternalConsumptionComponent implements OnInit {
   ngAfterViewInit() {
     this.myinput.nativeElement.focus();
   }
+
+
+  closeResetButton = true;
+  dataDisplay: any;
+  progress = 0;
 
   constructor(private fb: FormBuilder, private router: Router, private route1: ActivatedRoute, private service: MasterService) {
     this.InternalConsumptionForm = fb.group({
@@ -230,7 +235,7 @@ export class InternalConsumptionComponent implements OnInit {
       trans: [''],
       lookupValueDesc5: [''],
       codeCombinationId: [''],
-      JobNo:[],
+      JobNo: [],
       compileType: ['', Validators.required],
       reason: ['', Validators.required],
       compileStatus: [''],
@@ -251,7 +256,7 @@ export class InternalConsumptionComponent implements OnInit {
       RowNo: [''],
       attribute1: [],
       attribute2: [],
-      name:[],
+      name: [],
       cycleLinesList: this.fb.array([]),
 
     })
@@ -518,37 +523,49 @@ export class InternalConsumptionComponent implements OnInit {
             trxLnArr1.controls[i].patchValue({ locId: Number(sessionStorage.getItem('locId')) })
           }
         });
-        var reasonArr1 =this.InternalConsumptionForm.get('reason').value;
-        var valOp =this.InternalConsumptionForm.get('name').value;
-        if(valOp!=undefined){
-        var reasonArray=reasonArr1.split('-');
-        var op=valOp.split('-');
-        var value1=op[1];
-        
+      var reasonArr1 = this.InternalConsumptionForm.get('reason').value;
+      var valOp = this.InternalConsumptionForm.get('name').value;
+      if (valOp != undefined) {
+        var reasonArray = reasonArr1.split('-');
+        var op = valOp.split('-');
+        var value1 = op[1];
+
         // alert(reasonArray[2]);
         // if(reasonArray[2]!=undefined){
-        if(reasonArray[2].includes('OEM') && value1=='MRP'){
+        if (reasonArray[2].includes('OEM') && value1 == 'MRP') {
           this.service.getCostDetailforWarranty(Number(sessionStorage.getItem('locId')), select1.itemId).subscribe
-          (data => {
-            this.CostDetail = data;
-            trxLnArr1.controls[i].patchValue({ itemUnitCost: this.CostDetail.rate });
-            if (this.CostDetail.rate === 0.0) {
-              alert(this.CostDetail.segment);
-            }
-          });
+            (data => {
+              this.CostDetail = data;
+              trxLnArr1.controls[i].patchValue({ itemUnitCost: this.CostDetail.rate });
+              if (this.CostDetail.rate === 0.0) {
+                alert(this.CostDetail.segment);
+              }
+            });
         }
-        else if(reasonArray[2].includes('OEM') && value1=='NDP'){
+        else if (reasonArray[2].includes('OEM') && value1 == 'NDP') {
           this.service.getCostDetail(Number(sessionStorage.getItem('locId')), select1.itemId).subscribe
-        (data => {
-          this.CostDetail = data;
-          trxLnArr1.controls[i].patchValue({ itemUnitCost: this.CostDetail.rate });
-          if (this.CostDetail.rate === 0.0) {
-            alert(this.CostDetail.segment);
-          }
-        });
+            (data => {
+              this.CostDetail = data;
+              trxLnArr1.controls[i].patchValue({ itemUnitCost: this.CostDetail.rate });
+              if (this.CostDetail.rate === 0.0) {
+                alert(this.CostDetail.segment);
+              }
+            });
         }
-        else if(reasonArray[2].includes('EW')){
+        else if (reasonArray[2].includes('EW')) {
           this.service.getCostDetailforWarranty(Number(sessionStorage.getItem('locId')), select1.itemId).subscribe
+            (data => {
+              this.CostDetail = data;
+              trxLnArr1.controls[i].patchValue({ itemUnitCost: this.CostDetail.rate });
+              if (this.CostDetail.rate === 0.0) {
+                alert(this.CostDetail.segment);
+              }
+            });
+        }
+      }
+      // }
+      else {
+        this.service.getCostDetail(Number(sessionStorage.getItem('locId')), select1.itemId).subscribe
           (data => {
             this.CostDetail = data;
             trxLnArr1.controls[i].patchValue({ itemUnitCost: this.CostDetail.rate });
@@ -556,19 +573,8 @@ export class InternalConsumptionComponent implements OnInit {
               alert(this.CostDetail.segment);
             }
           });
-        }}
-      // }
-        else{
-      this.service.getCostDetail(Number(sessionStorage.getItem('locId')), select1.itemId).subscribe
-        (data => {
-          this.CostDetail = data;
-          trxLnArr1.controls[i].patchValue({ itemUnitCost: this.CostDetail.rate });
-          if (this.CostDetail.rate === 0.0) {
-            alert(this.CostDetail.segment);
-          }
-        });
       }
-    
+
       this.service.getreserqty(Number(sessionStorage.getItem('locId')), select1.itemId).subscribe
         (data => {
           this.resrveqty = data;
@@ -1015,6 +1021,22 @@ export class InternalConsumptionComponent implements OnInit {
     if (this.InternalConsumptionForm.valid) {
       // this.displayButton=true;
       // this.displayaddButton=true;
+      var reason = this.InternalConsumptionForm.get('reason').value;
+      // alert(reason);
+      var attribute1 = this.InternalConsumptionForm.get('attribute1').value;
+      // alert(attribute1)
+      var reason1 = reason.split('-');
+      // console.log(reason1);
+      if (reason1[2] == 'OEM Warranty') {
+        if (attribute1 == null || attribute1 == undefined || attribute1 == '') {
+          alert('Please Enter Repair Order Number.!');
+          // (<any>this.InternalConsumptionForm.get('reason')).nativeElement.focus();
+          this.closeResetButton = true;
+          this.progress = 0;
+          this.dataDisplay = 'Please Enter Repair Order Number.!'
+          return;
+        }
+      };
       const formValue: InternalConsumption = this.InternalConsumptionForm.getRawValue();
       formValue.attribute2 = this.InternalConsumptionForm.get('compileDate').value;
       formValue.compileType = this.InternalConsumptionForm.get('compileId').value;
@@ -1023,10 +1045,10 @@ export class InternalConsumptionComponent implements OnInit {
       // alert(itemCode+'after')
       // debugger;
       if (itemCode != null || itemCode != undefined) {
-        var itemCode1=itemCode.split('--');
+        var itemCode1 = itemCode.split('--');
         formValue.attribute1 = itemCode1[0];
       }
-    
+      // return;
       this.service.miscSubmit(formValue).subscribe
         ((res: any) => {
           if (res.code === 200) {
@@ -1067,6 +1089,7 @@ export class InternalConsumptionComponent implements OnInit {
   onSelectReason(event) {
     var reasonArr = event.split('-');
     // alert(reasonArr)
+
     this.service.reasonaccCode(this.locId, reasonArr[0], reasonArr[1]).subscribe(
 
       data => {
@@ -1088,7 +1111,9 @@ export class InternalConsumptionComponent implements OnInit {
         this.ItemIdList = data;
         // console.log(this.invItemId);
       });
-
+    if ((reasonArr[2]) == 'OEM Warranty') {
+      alert('Plesae enter Repair Order No.!')
+    }
   }
   keytab(event, maxLength, nxtEle) {
     console.log(event);
@@ -1179,73 +1204,74 @@ export class InternalConsumptionComponent implements OnInit {
 
 
   userList1: any[] = [];
- lastkeydown2: number = 0;
+  lastkeydown2: number = 0;
 
- getUserIdsFirstWay($event) {
-  let userId = (<HTMLInputElement>document.getElementById('userIdFirstWay')).value;
-  this.userList1 = [];
+  getUserIdsFirstWay($event) {
+    let userId = (<HTMLInputElement>document.getElementById('userIdFirstWay')).value;
+    this.userList1 = [];
 
-  if (userId.length > 2) {
-    if ($event.timeStamp - this.lastkeydown2 > 200) {
-      this.userList1 = this.searchFromArray(this.workshopIssue, userId);
+    if (userId.length > 2) {
+      if ($event.timeStamp - this.lastkeydown2 > 200) {
+        this.userList1 = this.searchFromArray(this.workshopIssue, userId);
+      }
     }
   }
-}
 
-searchFromArray(arr, regex) {
-  let matches = [], i;
-  for (i = 0; i < arr.length; i++) {
-    if (arr[i].match(regex)) {
-      matches.push(arr[i]);
+  searchFromArray(arr, regex) {
+    let matches = [], i;
+    for (i = 0; i < arr.length; i++) {
+      if (arr[i].match(regex)) {
+        matches.push(arr[i]);
+      }
     }
-  }
-  return matches;
-};
+    return matches;
+  };
 
 
-searchByJobNo(){
-   alert(this.JobNo);
-  //  var jobno=(this.InternalConsumptionForm.get('JobNo').value);
-  if(this.JobNo==null || this.JobNo==undefined || this.JobNo.trim()=='') {
-   alert ("Enter a Valid Job Card No."); return;}
-   this.JobNo=this.JobNo.toUpperCase();
+  searchByJobNo() {
+    alert(this.JobNo);
+    //  var jobno=(this.InternalConsumptionForm.get('JobNo').value);
+    if (this.JobNo == null || this.JobNo == undefined || this.JobNo.trim() == '') {
+      alert("Enter a Valid Job Card No."); return;
+    }
+    this.JobNo = this.JobNo.toUpperCase();
 
-  this.service.getsearchByIC(this.JobNo).subscribe(
-    data=>{
-      // if (data.code==200){
-         this.jobData=data;
-         console.log(this.jobData);
-         
+    this.service.getsearchByIC(this.JobNo).subscribe(
+      data => {
+        // if (data.code==200){
+        this.jobData = data;
+        console.log(this.jobData);
+
         // } 
         // else if (data.code==400){
         //   alert(data.message)
         // }  
-    }
-  )
-}
-
-calculatewarranty(event){
-  alert(event.target.value+'warr');
-  var value=event.target.value.split('--');
-  var jobNo=value[0]
-var wIregNum=this.workshopIssue.find(d=>d.jobCardNum===jobNo);
-console.log(wIregNum);
-var regNum=wIregNum.regNo;
-this.service.getVehRegDetail(regNum).subscribe(
-  data=>{
-    this.getVehRegDetails = data;
-    // debugger;
-     this.name=this.getVehRegDetails.name
-     alert(this.name);
-     if(this.name.includes('Invalid')){
-      // this.removenewcycleLinesList(-1);
-      var trxLnArr1 = this.InternalConsumptionForm.get('cycleLinesList') as FormArray;
-      trxLnArr1.controls[0].disable();
-      this.displayButton=false;
-      // return;
-     }
+      }
+    )
   }
-);
-}
+
+  calculatewarranty(event) {
+    alert(event.target.value + 'warr');
+    var value = event.target.value.split('--');
+    var jobNo = value[0]
+    var wIregNum = this.workshopIssue.find(d => d.jobCardNum === jobNo);
+    console.log(wIregNum);
+    var regNum = wIregNum.regNo;
+    this.service.getVehRegDetail(regNum).subscribe(
+      data => {
+        this.getVehRegDetails = data;
+        // debugger;
+        this.name = this.getVehRegDetails.name
+        alert(this.name);
+        if (this.name.includes('Invalid')) {
+          // this.removenewcycleLinesList(-1);
+          var trxLnArr1 = this.InternalConsumptionForm.get('cycleLinesList') as FormArray;
+          trxLnArr1.controls[0].disable();
+          this.displayButton = false;
+          // return;
+        }
+      }
+    );
+  }
 
 }

@@ -396,7 +396,7 @@ var segment = temp1[0];}
           if (this.segmentNameList.code === 200) {
             this.JournalVoucherForm.patchValue({codeCombinationId:this.segmentNameList.obj.codeCombinationId});
             this.codeCombinationId=this.segmentNameList.obj.codeCombinationId;
-            alert(this.codeCombinationId +'inside fnca');
+            // alert(this.codeCombinationId +'inside fnca');
             this.CheckForDuplicateLineItem(this.codeCombinationId,i);
             if(this.duplicateLineItem ==false) {
 
@@ -508,7 +508,7 @@ var segment = temp1[0];}
 
     creditTotalCal()
     {
-      debugger;
+      // debugger;
       var arrayControl : any[]=this.JournalVoucherForm.get('glLines').value
       // this.JournalVoucherForm.get('runningTotalCr').value
       // alert(totalcr);
@@ -517,10 +517,12 @@ var segment = temp1[0];}
       for(var i=0;i<arrayControl.length;i++)
       {
        if(arrayControl[i].enteredCr != undefined || arrayControl[i].enteredCr != null){
-        this.runningTotalCr=this.runningTotalCr + Number(arrayControl[i].enteredCr);
+        this.runningTotalCr=this.runningTotalCr +  (Math.round((Number(arrayControl[i].enteredCr) + Number.EPSILON) * 100) / 100)
        }
       }
-      this.JournalVoucherForm.patchValue({'runningTotalCr':this.runningTotalCr});
+     
+
+      this.JournalVoucherForm.patchValue({'runningTotalCr':(Math.round(((this.runningTotalCr) + Number.EPSILON) * 100) / 100)});
 
     }
     debitTotalCal()
@@ -534,8 +536,8 @@ var segment = temp1[0];}
        this.runningTotalDr=this.runningTotalDr+Number(arrayControl[i].enteredDr);
       }
     }
-      this.JournalVoucherForm.patchValue({'runningTotalDr':this.runningTotalDr});
-
+      this.JournalVoucherForm.patchValue({'runningTotalDr':(Math.round(((this.runningTotalDr) + Number.EPSILON) * 100) / 100)});
+    
     }
 
     postGl()

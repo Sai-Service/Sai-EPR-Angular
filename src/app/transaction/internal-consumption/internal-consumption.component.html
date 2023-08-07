@@ -90,9 +90,7 @@
           <option>--Select--</option>
           <option *ngFor="let subinv of subInvCode">{{subinv.subInventoryCode}}</option> -->
           <!-- </select>  -->
-          <span
-          *ngIf="getGroupControl('subInventory').touched && getGroupControl('subInventory').invalid">Valid Transaction Type
-         </span>
+          <span  *ngIf="getGroupControl('subInventory').touched && getGroupControl('subInventory').invalid">Valid Transaction Type </span>
       </td>
       <td style="width: 15%" class="LabelFontStyle">
           Reason:
@@ -326,6 +324,24 @@
 
     </tr>
   </table>
+  <fieldset class="RFS">
+    <table class="center">
+        <tr>
+            <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+            <ng-template #hList2>
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="sr-only" id="loading"></span>
+
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template #hList1> </ng-template>
+            <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">
+                &nbsp;{{dataDisplay }}&nbsp; </td>
+        </tr>
+    </table>
+</fieldset>
   <div class="modal fade" id="myModal1" role="dialog" [style.display]="showModal" tabindex="-1" aria-hidden="true" >
     <div class="modal-dialog">
       <div class="modal-content">
