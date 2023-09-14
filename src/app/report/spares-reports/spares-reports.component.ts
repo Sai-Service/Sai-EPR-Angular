@@ -1096,7 +1096,31 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblepanelStockTaking=false;
       this.panelspDebtAgByExicutiveSummary=false;
     }
+    else if (reportName==='shortLandedClaim'){
+      this.reportName = 'Short Landed Claim Report';
+      this.isVisiblegstsaiDebtors=false;
+      this.isVisibleGSTPurchaseRegister = true;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblestockTransfer = false;
+      this.isVisiblestockTransferRecd=false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
+      this.isVisibleEwayBill=false;
+      this.isVisiblepanelStockTaking=false;
+      this.panelspDebtAgByExicutiveSummary=false;
+    }
+  
+    
+  
   }
+
+
 
   
 
@@ -2434,6 +2458,29 @@ export class SparesReportsComponent implements OnInit {
           this.dataDisplay = ''
         })
     }
+  }
+  else if (reportName ==='Short Landed Claim Report')
+  {
+   const fileName = 'Short Landed Claim Report' +  '.xls';
+   const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+   if (Number(sessionStorage.getItem('deptId')) === 4) {
+   this.reportService.shortLandedClaimReport(fromDate,toDate,sessionStorage.getItem('ouId'),locId,deptId)
+     .subscribe(data => {
+       saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+       this.closeResetButton = true;
+       this.dataDisplay = ''
+       this.isDisabled1=false;
+     })  
+    }  
+    else if (Number(sessionStorage.getItem('deptId')) != 4) {
+      this.reportService.shortLandedClaimReport(fromDate,toDate,sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'),sessionStorage.getItem('deptId'))
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.closeResetButton = true;
+        this.dataDisplay = ''
+        this.isDisabled1=false;
+      })  
+    } 
   }
   }
 

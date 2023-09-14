@@ -880,8 +880,8 @@ export class PaymentsComponent implements OnInit {
 
         invPayment.push({
           invoiceId: arrayControle[i].invoiceId,
-          // amount: arrayControle[i].invoiceAmt,
-          amount:Math.round(((arrayControle[i].invoiceAmt) + Number.EPSILON) * 100) / 100 
+          amount: arrayControle[i].invoiceAmt,
+          // amount:Math.round(((arrayControle[i].invoiceAmt) + Number.EPSILON) * 100) / 100 
         })
       }
     }
