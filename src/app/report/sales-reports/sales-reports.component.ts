@@ -1080,6 +1080,26 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepanelfromtolocation1 = false;
       this.inVisiblepanelSaleSaiDebtors = false;
     }
+    else if(reportName=='salesInvoiceCan'){
+      this.reportName = 'Sales Invoice Cancellation Report';
+      this.isVisiblefromtolocationdepartment = false;
+      this.isVisibleVehicleSaleRegister = false;
+      this.isVisibleSaleIND = false;
+      this.isSaleClosingStock = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisiblefromtoloccustaccno = false;
+      this.isVisibleSalesInventoryAging = false;
+      this.isVisiblepanelfromtolocation = false;
+      this.isVisiblepanelreceiptNo = false;
+      this.isVisiblepanelSalesAddonReconciliation = false;
+      this.isVisiblefromtosubinventory = false;
+      this.panelamcHistrory = false;
+      this.ispanelTolocationOu = false;
+      this.isVisiblepaneltolocation = false;
+      this.isVisiblepanelfromtolocation1 = true;
+      this.inVisiblepanelSaleSaiDebtors = false;
+    }
   }
 
 
@@ -2030,6 +2050,29 @@ export class SalesReportsComponent implements OnInit {
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
         this.reportService.saleqtyChartForVh(fromDate, toDate, sessionStorage.getItem('locId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+    }
+    else if (reportName === 'Sales Invoice Cancellation Report') {
+      //  alert(deptId);
+      const fileName = 'Sales Invoice Cancellation Report-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.salesInvoiceCanFn(fromDate, toDate, sessionStorage.getItem('ouId'), locId)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.salesInvoiceCanFn(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;

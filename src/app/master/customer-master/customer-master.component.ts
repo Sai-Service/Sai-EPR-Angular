@@ -880,6 +880,8 @@ export class CustomerMasterComponent implements OnInit {
     return val;
   }
   newOnlySiteMast() {
+    
+   
     this.submitted = true;
     if (this.customerMasterForm.invalid) {
       // alert ('new site click validation error');
@@ -1326,6 +1328,8 @@ export class CustomerMasterComponent implements OnInit {
         if (res.code === 200) {
           // alert(res.message);
           this.limitData = res.obj
+          console.log(res.obj);
+          
           this.customerMasterForm.patchValue({ 'screditAmt': this.limitData.creditAmt, 'shighAmt': this.limitData.highAmt, 'sdisPer': this.limitData.disPer });
           this.customerMasterForm.patchValue({ spanNo: this.customerMasterForm.get('panNo').value });
           this.customerMasterForm.patchValue({ sGstNo: this.customerMasterForm.get('gstNo').value });

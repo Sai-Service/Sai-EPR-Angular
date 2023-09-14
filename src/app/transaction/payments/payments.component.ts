@@ -1,5 +1,5 @@
 // import { asLiteral } from '@angular/compiler/src/render3/view/util';
-import { Component, OnInit,ViewChild ,ElementRef} from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 // import * as moment from 'moment';
@@ -160,7 +160,7 @@ export class PaymentsComponent implements OnInit {
   showViewActLine = false;
   isVisibleviewAccounting: boolean = false;
   // viewAccounting1: any[];
-  invoiceDate:Date;
+  invoiceDate: Date;
 
   display = 'none';
   @ViewChild("myinput") myInputField: ElementRef;
@@ -212,7 +212,7 @@ export class PaymentsComponent implements OnInit {
       unPaidAmt: [],
       docNo: [],
       payStatus: [],
-      invoiceDate:[],
+      invoiceDate: [],
       // appAmt:[],
     })
   }
@@ -323,7 +323,7 @@ export class PaymentsComponent implements OnInit {
       var suppNo = params['suppNo'];
       // alert(suppNo+'----suppNo')
       var searchObj: InvSearchNew = new InvSearchNew();
-      { searchObj.invoiceNum = this.INVNO,searchObj.suppNo = suppNo }
+      { searchObj.invoiceNum = this.INVNO, searchObj.suppNo = suppNo }
       if (this.INVNO != undefined) {
         this.displaysiteName = true;
         this.displaysiteAddress = true;
@@ -346,7 +346,8 @@ export class PaymentsComponent implements OnInit {
               var arrcontrol = this.payHeaderLineDtlArray() as FormArray;
               arrcontrol.controls[x].patchValue(this.lstsearchpayminvNew[x]);
               arrcontrol.controls[x].patchValue({ paymentTypeFlag: 'Quick', statusLookupCode: 'NEGOTIABLE' });
-              arrcontrol.controls[x].patchValue({ payAmount: this.lstsearchpayminvNew[x].invoiceAmt });
+              // arrcontrol.controls[x].patchValue({ payAmount: this.lstsearchpayminvNew[x].invoiceAmt });
+              arrcontrol.controls[x].patchValue({ payAmount: Math.round(((this.lstsearchpayminvNew[x].invoiceAmt ) + Number.EPSILON) * 100) / 100});
               arrcontrol.controls[x].patchValue({ supplierSiteId: this.lstsearchpayminvNew[x].suppSiteId });
               arrcontrol.controls[x].patchValue({ partyId: this.lstsearchpayminvNew[x].partyId });
               this.partyId = this.lstsearchpayminvNew[x].partyId;
@@ -385,7 +386,8 @@ export class PaymentsComponent implements OnInit {
     var pyLine: FormGroup = this.payInvoiceLineDtl();
     // for (let i = 0; i <= select.length - lenC; i++) {
     control.push(pyLine);
-    this.totAmt = select.invoiceAmt;
+    var totInvAmt = Math.round(((select.invoiceAmt) + Number.EPSILON) * 100) / 100;
+    this.totAmt = totInvAmt;
     // }
     // this.paymentForm.get('obj').patchValue(select);
     // var patch = this.poMasterDtoForm.get('poLines') as FormArray;
@@ -393,10 +395,11 @@ export class PaymentsComponent implements OnInit {
       {
         // totAmt : 0,
         invoiceNum: select.invoiceNum,
-        invoiceAmt: select.invoiceAmt,
+        // invoiceAmt: select.invoiceAmt,
+        invoiceAmt:  (Math.round(((select.invoiceAmt) + Number.EPSILON) * 100) / 100),
         unPaidAmt: select.invoiceAmt,
         invoiceId: select.invoiceId,
-        invoiceDate :select.invoiceDate,
+        invoiceDate: select.invoiceDate,
       });
   }
 
@@ -457,7 +460,7 @@ export class PaymentsComponent implements OnInit {
         if (this.selstatus == 'Y') {
           this.isarPayment = false;
         }
-        else if (arraybaseNew1[i].source!='MANUAL') {
+        else if (arraybaseNew1[i].source != 'MANUAL') {
           this.isarPayment = true;
         }
         if (this.selPayStatus === 'VOIDED') {
@@ -496,6 +499,7 @@ export class PaymentsComponent implements OnInit {
   selectPayment: number = 0;
   paymentInvoiceFind(suppNo: number, ouId: number, index) {
     this.selectPayment = index;
+    // debugger;
     // alert(this.selectPayment+'this.selectPayment')
     var suppNo1 = this.paymentForm.get('obj1').value;
     console.log(suppNo1);
@@ -520,7 +524,8 @@ export class PaymentsComponent implements OnInit {
         if (this.lstsearchpayminvNew[i].source != 'TDS Invoice') {
           dataobj1.controls[i].patchValue({
             'invoiceNum': this.lstsearchpayminvNew[i].invoiceNum,
-            'invoiceAmt': this.lstsearchpayminvNew[i].invoiceAmt,
+            // 'invoiceAmt': this.lstsearchpayminvNew[i].invoiceAmt,
+            'invoiceAmt': (Math.round(((this.lstsearchpayminvNew[i].invoiceAmt) + Number.EPSILON) * 100) / 100),
             'invoiceId': this.lstsearchpayminvNew[i].invoiceId,
             'invoiceDate': this.lstsearchpayminvNew[i].invoiceDate
           });
@@ -536,11 +541,13 @@ export class PaymentsComponent implements OnInit {
           this.lstinvoiceDetls = res.obj;
           var sum = 0;
           for (let i = 0; i < this.lstinvoiceDetls.length; i++) {
-            sum = sum + this.lstinvoiceDetls[i].invoiceAmt;
+            // sum = sum + this.lstinvoiceDetls[i].invoiceAmt;
+            sum = sum + (Math.round(((this.lstinvoiceDetls[i].invoiceAmt) + Number.EPSILON) * 100) / 100)
             // this.invAmtArr.push(this.lstinvoiceDetls[i].invoiceAmt);
           }
           //  alert(sum);
-          this.totAmt = sum;
+          // this.totAmt = sum;
+          this.totAmt = (Math.round(((sum) + Number.EPSILON) * 100) / 100)
           this.lstinvoiceDetls.forEach(f => {
             var payInvGrp: FormGroup = this.payInvoiceLineDtl();
             this.payInvoiceLineDtlArray().push(payInvGrp);
@@ -566,11 +573,13 @@ export class PaymentsComponent implements OnInit {
           this.lstinvoiceDetls = res.obj;
           var sum = 0;
           for (let i = 0; i < this.lstinvoiceDetls.length; i++) {
-            sum = sum + this.lstinvoiceDetls[i].invoiceAmt;
+            // sum = sum + this.lstinvoiceDetls[i].invoiceAmt;
+            sum = sum + Math.round(((this.lstinvoiceDetls[i].invoiceAmt) + Number.EPSILON) * 100) / 100;
             // this.invAmtArr.push(this.lstinvoiceDetls[i].invoiceAmt);
           }
           //  alert(sum);
-          this.totAmt = sum;
+          this.totAmt = Math.round(((sum) + Number.EPSILON) * 100) / 100;
+          // alert(this.totAmt+'this.totAmt')
           this.lstinvoiceDetls.forEach(f => {
             var payInvGrp: FormGroup = this.payInvoiceLineDtl();
             this.payInvoiceLineDtlArray().push(payInvGrp);
@@ -595,7 +604,8 @@ export class PaymentsComponent implements OnInit {
       //  alert(totlCalControls[i].invoiceAmt);
     }
     // alert(totlCalControls[i].unPaidAmt);
-    this.totAmt = sum;
+    // this.totAmt = sum;
+    this.totAmt = Math.round(((sum) + Number.EPSILON) * 100) / 100;
     var unPaidAmt1 = Number(totlCalControls[i].unPaidAmt) - Number(totlCalControls[i].invoiceAmt)
     // alert('unPaidAmt1 '+ unPaidAmt1)
     var patch = this.paymentForm.get('obj') as FormArray;
@@ -746,6 +756,7 @@ export class PaymentsComponent implements OnInit {
   selectFlag1(e, k) {
     // alert(k);
     // alert(e + '----checkbox')
+    // debugger;
     if (e.target.checked === true) {
       this.selectFlag = 'Y'
     }
@@ -764,8 +775,10 @@ export class PaymentsComponent implements OnInit {
       var arrobj = objVal.obj1;
       // .get('obj1').value;
       var patch = this.paymentForm.get('obj') as FormArray;
-      var invAmt = arrcon[k].invoiceAmt;
-      var unAmt = arrcon[k].unPaidAmt;
+      // var invAmt = arrcon[k].invoiceAmt;
+      // var unAmt = arrcon[k].unPaidAmt;
+      var invAmt = Math.round(((Number(arrcon[k].invoiceAmt)) + Number.EPSILON) * 100) / 100;
+      var unAmt = Math.round(((Number(arrcon[k].unPaidAmt)) + Number.EPSILON) * 100) / 100;
       var calApplAmt = 0;
 
       // alert(arrobj[this.selectPayment].invTypeLookupCode+'----this.selectPayment---'+this.selectPayment)
@@ -786,25 +799,27 @@ export class PaymentsComponent implements OnInit {
     for (let i = 0; i < this.payInvoiceLineDtlArray().length; i++) {
       // alert(arrayControle[i].selectFlag+'SelectFlag');
       if (arrayControle[i].selectFlag == true) {
-        // alert('yyyy '+arrayControle[i].invoiceAmt)
 
-        //  alert(this.appAmt);
-        // invPayment.push(id)
-        //
         if (arrobj[this.selectPayment].paymentTypeFlag === 'QuickPay') {
           if (arrayControle[i].invoiceAmt < 0) {
-            calApplAmt = calApplAmt + arrayControle[i].invoiceAmt;
+            // calApplAmt = calApplAmt + arrayControle[i].invoiceAmt;
+            calApplAmt = calApplAmt + Math.round(((arrayControle[i].invoiceAmt) + Number.EPSILON) * 100) / 100
+            var callApplAmt = Math.round(((calApplAmt) + Number.EPSILON) * 100) / 100;
             // alert(calApplAmt + 'calApplAmt');
             // debugger;
-            this.appAmt = calApplAmt;
-          }else{
+            // this.appAmt = callApplAmt;
+            this.appAmt = Math.round(((callApplAmt) + Number.EPSILON) * 100) / 100;
+           this.appAmt= Math.round(((this.appAmt) + Number.EPSILON) * 100) / 100;
+          } else {
 
           }
-        
-      } else {
-        this.appAmt = this.appAmt + Number(arrayControle[i].invoiceAmt);
+
+        } else {
+          this.appAmt = ((Math.round(((Number(this.appAmt)) + Number.EPSILON) * 100) / 100) + Math.round(((Number(arrayControle[i].invoiceAmt)) + Number.EPSILON) * 100) / 100);
+          this.appAmt= Math.round(((this.appAmt) + Number.EPSILON) * 100) / 100;
+          // alert( this.appAmt )
+        }
       }
-    }
     }
     const totlPayHeaderControls = this.paymentForm.get('obj1').value;
     // if(this.appAmt>totlPayHeaderControls[0].payAmount || this.appAmt<totlPayHeaderControls[0].payAmount)
@@ -848,7 +863,8 @@ export class PaymentsComponent implements OnInit {
       // alert(arrayControle[i].selectFlag);
       if (arrayControle[i].selectFlag == true) {
         //  alert('yyyy '+arrayControle[i].invoiceAmt)
-        this.totAmount = this.totAmount + Number(arrayControle[i].invoiceAmt);
+        // this.totAmount = this.totAmount + Number(arrayControle[i].invoiceAmt);
+        this.totAmount = (Math.round(((this.totAmount) + Number.EPSILON) * 100) / 100 )+Math.round(((Number(arrayControle[i].invoiceAmt)) + Number.EPSILON) * 100) / 100
         // alert(this.totAmount);
         var id = { "invoiceId": arrayControle[i].invoiceId }
         var id2 = { "amount": arrayControle[i].invoiceAmt }
@@ -864,13 +880,15 @@ export class PaymentsComponent implements OnInit {
 
         invPayment.push({
           invoiceId: arrayControle[i].invoiceId,
-          amount: arrayControle[i].invoiceAmt,
+          // amount: arrayControle[i].invoiceAmt,
+          amount:Math.round(((arrayControle[i].invoiceAmt) + Number.EPSILON) * 100) / 100 
         })
       }
     }
 
     if (arrcon[this.selectPayment].invTypeLookupCode === 'Prepayment' && arrcon[this.selectPayment].docNo === null) {
-      this.paymentForm.patchValue({ appAmt: arrcon[this.selectPayment].payAmount })
+      // this.paymentForm.patchValue({ appAmt: arrcon[this.selectPayment].payAmount })
+      this.paymentForm.patchValue({ appAmt: Math.round(((arrcon[this.selectPayment].payAmount) + Number.EPSILON) * 100) / 100 })
       // this.totAmount=arrcon[this.selectPayment].payAmount
       patch.controls[this.selectPayment].patchValue({ payAmount: this.totAmount });
     }
@@ -919,6 +937,7 @@ export class PaymentsComponent implements OnInit {
     // let paymentObject=Object.assign(new PaymentObj(),jsonData);
     // paymentObject.setInvPayment(this.paymentForm.value.)
     console.log(jsonData);
+    // return;
     if (jsonData.paymentTypeFlag === 'QuickPay') {
       this.transactionService.paymentSaveQuickSubmit(JSON.stringify(jsonData)).subscribe((res: any) => {
         if (res.code === 200) {
@@ -1035,15 +1054,15 @@ export class PaymentsComponent implements OnInit {
     var arr = this.paymentForm.get('obj1').value;
     // alert(this.PaymentReturnArr[0].documentNo);
     console.log(this.paymentData);
-  
+
     this.selectedPayment = this.paymentData.find(d => Number(d.docNo) === this.PaymentReturnArr[0].documentNo);
-    this.selectedPayment.emplId=(Number(sessionStorage.getItem('emplId')));
+    this.selectedPayment.emplId = (Number(sessionStorage.getItem('emplId')));
     console.log(this.selectedPayment);
     this.transactionService.paymentCancel(this.selectedPayment).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
         console.log(res.obj);
-        this.ispayCancel=false;
+        this.ispayCancel = false;
       } else {
         if (res.code === 400) {
           alert(res.msg);
@@ -1058,7 +1077,7 @@ export class PaymentsComponent implements OnInit {
   searchPayment(searchBySuppName, searchByFrmDate, searchByToDate) {
     // alert('searchPayment----'+searchBySuppName);
     console.log(this.supplierCodeList)
-    var suppData=searchBySuppName.split('--');
+    var suppData = searchBySuppName.split('--');
     // let selectgstPercentage = this.hsnSacCodeList.find(v => v.hsnsaccode == gstPer[0]);
     // frmDate = this.pipe.transform(searchByFrmDate, 'dd-MMM-yyyy');
     // toDate = this.pipe.transform(searchByToDate, 'dd-MMM-yyyy');
@@ -1233,10 +1252,10 @@ export class PaymentsComponent implements OnInit {
       // debugger;
       // var invNumber = arraybaseNew1[i].docNo;
       var sourceType = arraybaseNew1[i].source;
-      var payMethodId= arraybaseNew1[i].paymentMethodId;
-        // alert(sourceType +'----'+ payMethodId)
+      var payMethodId = arraybaseNew1[i].paymentMethodId;
+      // alert(sourceType +'----'+ payMethodId)
       // var methodId = arraybaseNew1[i].receiptMethodId;
-      if (sourceType === 'REFUND'|| payMethodId===1905) {
+      if (sourceType === 'REFUND' || payMethodId === 1905) {
         // alert(invNumber+'In If'+methodId);
         this.router.navigate(['/admin/transaction/PaymentAr'], { queryParams: { invNumber: invNumber, methodId: methodId, recAmt: recAmt } });
       }

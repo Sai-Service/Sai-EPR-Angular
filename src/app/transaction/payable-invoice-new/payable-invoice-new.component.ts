@@ -1255,6 +1255,7 @@ export class PayableInvoiceNewComponent implements OnInit {
     //   );
 
     // let selectedValue = this.supplierCodeList.find(v => v.suppNo == name);
+    alert(name)
     let selectedValue = this.supplierCodeList.find(v => v.name == name);
     console.log(selectedValue);
     this.suppNo = selectedValue.suppNo;
