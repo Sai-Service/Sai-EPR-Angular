@@ -270,7 +270,7 @@ export class ReportServiceService {
   }
 
   shortLandedClaimReport(fromDate,toDate,ouId,locaId,deptId){
-    const REQUEST_URI = this.ServerUrl +`/AccountsReports/ShortLandedRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locaId=${locaId}&deptId=${deptId}`;
+    const REQUEST_URI = this.ServerUrl +`/AccountsReports/ShortLandedRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locaId}&deptId=${deptId}`;
     return this.http.get(REQUEST_URI, {
       responseType: 'arraybuffer',
       headers: this.headers,
