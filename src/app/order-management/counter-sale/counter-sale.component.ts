@@ -2213,12 +2213,12 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                             }
                           );
 
-                        if (this.CounterSaleOrderBookingForm.get('issueCodeType').value.includes('Only Oil Part') && data.obj[i].uom === 'LTR' && Number(sessionStorage.getItem('divisionId')) === 2) {
-                          (controlinv.controls[k]).patchValue({
-                            disPer: 0,
-                            disAmt: 0
-                          })
-                        }
+                        // if (this.CounterSaleOrderBookingForm.get('issueCodeType').value.includes('Only Oil Part') && data.obj[i].uom === 'LTR' && Number(sessionStorage.getItem('divisionId')) === 2) {
+                        //   (controlinv.controls[k]).patchValue({
+                        //     disPer: 0,
+                        //     disAmt: 0
+                        //   })
+                        // }
                       }
                     }
                     if (select.itemId != null) {

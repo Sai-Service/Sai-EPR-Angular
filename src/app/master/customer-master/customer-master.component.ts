@@ -321,11 +321,11 @@ export class CustomerMasterComponent implements OnInit {
       slocation: ['', [Validators.minLength(3), Validators.maxLength(100), Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
       creditAmt: [],
       highAmt: [],
-      screditAmt: [],
-      shighAmt: [],
+      screditAmt: [0],
+      shighAmt: [0],
       disPer: [],
       tdsPer: [],
-      sdisPer: [],
+      sdisPer: [0],
       termId: [],
       dealerCode: [],
       dealerType: [],
@@ -880,11 +880,10 @@ export class CustomerMasterComponent implements OnInit {
     return val;
   }
   newOnlySiteMast() {
-    
-   
+    // debugger;
     this.submitted = true;
     if (this.customerMasterForm.invalid) {
-      // alert ('new site click validation error');
+      alert ('new site click validation error');
       return;
     }
     const formValue: IcustomerMaster = this.transDataForSite(this.customerMasterForm.value);
@@ -1329,10 +1328,15 @@ export class CustomerMasterComponent implements OnInit {
           // alert(res.message);
           this.limitData = res.obj
           console.log(res.obj);
-          
+          // alert(res.obj)
+          if (res.obj != null){
           this.customerMasterForm.patchValue({ 'screditAmt': this.limitData.creditAmt, 'shighAmt': this.limitData.highAmt, 'sdisPer': this.limitData.disPer });
           this.customerMasterForm.patchValue({ spanNo: this.customerMasterForm.get('panNo').value });
           this.customerMasterForm.patchValue({ sGstNo: this.customerMasterForm.get('gstNo').value });
+        }
+        if (res.obj == null){
+          this.customerMasterForm.patchValue({ 'screditAmt': 0, 'shighAmt': 0, 'sdisPer': 0 });
+        }
         }
         else {
           if (res.code === 400) {
@@ -1393,12 +1397,11 @@ export class CustomerMasterComponent implements OnInit {
 
   public validation(): boolean {
     var validdata: boolean;
+    // debugger;
     const formValue: IcustomerMaster = this.customerMasterForm.value;
     if (formValue.custType === 'Person') {
-      // if (formValue.birthDate === undefined) {
-      //   alert('Please enter Birth Date');
-      //   validdata = false;
-      // }
+      
+      alert(formValue.title)
       if (formValue.title === undefined) {
         alert('Please select Title');
         validdata = false;
@@ -1432,7 +1435,7 @@ export class CustomerMasterComponent implements OnInit {
     }
 
     if (formValue.panNo != '') {
-
+      if (formValue.panNo != 'Applied For'){
       var regex: string = "[A-Z]{5}[0-9]{4}[A-Z]{1}";
       var p = new PatternValidator();
       var patt = new RegExp('[A-Z]{5}[0-9]{4}[A-Z]{1}');
@@ -1441,7 +1444,7 @@ export class CustomerMasterComponent implements OnInit {
         alert('Please enter valid PAN Number');
       }
       return validdata;
-
+    }
     } else {
       alert('Please enter valid PAN Number');
       return false;
