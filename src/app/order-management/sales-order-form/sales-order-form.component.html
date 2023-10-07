@@ -1037,7 +1037,7 @@
                             <td>
                                 <select formControlName="color" id="color" class="form-control" style="width: 170px;"
                                     (ngModelChange)="onOptionsSelectedBasicPrice($event)">
-                                    <option disabled>--Select--</option>
+                                    <option>--Select--</option>
                                     <option *ngFor="let cc of ColourSearch" [ngValue]="cc.ColorCode">
                                         {{cc.ColorCode}}--{{cc.colorDesc}}
                                     </option>

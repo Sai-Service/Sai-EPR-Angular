@@ -298,7 +298,8 @@ export class SalesOrderFormComponent implements OnInit {
   public ticketNoSearch: any;
   priceListNameList: Array<string>[];
   public mainModelList: Array<string>[];
-  public VariantSearch: Array<string>[];
+  // public VariantSearch: Array<string>[];
+  VariantSearch:any=[];
   public allTaxCategoryList: any = [];
   public ColourSearch: any;
   insTypeList: any = [];
@@ -4183,7 +4184,21 @@ if (Number(sessionStorage.getItem('deptId'))!=4){
     if (variant === undefined || variant === null) { alert("Variant: should not be Null."); return; }
     if (color === undefined || color === null) { alert("Color: should not be Null."); return; }
     if (basicValue === undefined || basicValue === null || basicValue <= 0) { alert("Basic Price: Invalid Basic Amount."); return; }
-
+    console.log(this.allDatastore);
+    console.log(this.ColourSearch);
+    // debugger;
+    if (this.allDatastore.variant !=variant){
+      for (let i=0;i<this.ColourSearch.length;i++){
+        let ColourSearch = this.ColourSearch.find(d => d.ColorCode === color);
+        console.log(ColourSearch);
+        if (ColourSearch===undefined){
+          alert('Present Color Not In Master Please confirm.!  '+color);
+          return;
+        }
+        
+    }
+  
+    }
     this.orderManagementService.variantDetailsUpdate(this.orderNumber, model, variant, color, basicValue)
       .subscribe((res: any) => {
         if (res.code === 200) {
