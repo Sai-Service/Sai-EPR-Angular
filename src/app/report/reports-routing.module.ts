@@ -24,8 +24,7 @@ const routes: Routes = [
   {path:'PaintReports',component:PaintReportsComponent},
   {path:'templateDownload',component:TemplateDownloadComponent},
   {path:'ShellReport',component:ShellReportComponent},
-  { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
-];
+  { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

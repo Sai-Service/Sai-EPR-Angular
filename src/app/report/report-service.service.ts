@@ -481,8 +481,8 @@ export class ReportServiceService {
   }
 
 
-  spIssueSummaryReport(invcDt1,invcDt4,locId){
-    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprIssueSummary?fromDate=${invcDt1}&toDate=${invcDt4}&locId=${locId}`;
+  spIssueSummaryReport(invcDt1,invcDt4,locId,custAccNo){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprIssueSummary?fromDate=${invcDt1}&toDate=${invcDt4}&locId=${locId}&customerId=${custAccNo}`;
     return this.http.get(REQUEST_URI, {
       responseType: 'arraybuffer',
       headers: this.headers,

@@ -237,17 +237,7 @@
         <table class="center"   style="margin-left: 10%;"
             [style.display]="isVisibleGSTPurchaseRegister ? 'block' : 'none'" class="collapse"
             id="panelGSTPurchaseRegister">
-            <!-- <tr>
-                <td>
-                    <table class="center">  
-                        <tr>
-                            <td colspan="4" class="LabelFontStyle" style="width: 100%;">
-                                {{reportName}}
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr> -->
+           
 
             <table class="center">
                 <tr>
@@ -256,8 +246,7 @@
             </table>
             <br>
 
-            <!-- <tr>
-                <td> -->
+          
                     <table class="center">
                         <tr>
                             <td style="width: 15%" class="LabelFontStyle">
@@ -296,56 +285,28 @@
                             </td>
 
                             <td style="width: 15%" class="LabelFontStyle" >&nbsp;Dept&nbsp;:&nbsp;</td>
-                            <input type="text" disabled class="form-control" formControlName="department">
+                          <td>  <input type="text" disabled class="form-control" formControlName="department"></td>
                             <input hidden type="number" class="form-control" formControlName="deptId">
                    
                         
-                            <!-- <td colspan="4">
-                                <table [style.display]="isVisibleDepartmentList ? 'block' : 'none'" >
-                                    <tr>
-                                        <td style="width: 15%" class="LabelFontStyle" >&nbsp;Dept&nbsp;:&nbsp;</td>
-                                        <td>
-                                           
-                                        <input type="text" disabled class="form-control" formControlName="department">
-                                        <input hidden type="number" class="form-control" formControlName="deptId">
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td> -->
-
-                                        <!-- <select formControlName="deptId" id="deptId" class="form-control">
-                                            <option>--Select--</option>
-                                            <option *ngFor="let sc of  DepartmentList" [value]="sc.cmnTypeId">
-                                                {{sc.code}}
-                                            </option>
-                                        </select> -->
-                           
                         </tr>
+                        <div *ngIf="displayCustAccountNo; then thenCustAccountNo; else elseCustAccountNo"></div>
+                        <ng-template #thenCustAccountNo> 
+                        <tr>
+                           
+                            <td style="width: 15%" class="LabelFontStyle" >
+                                &nbsp;Cust&nbsp;Account&nbsp;No&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                <input  type="number" class="form-control"  formControlName="custAccNo" [(ngModel)]="custAccNo">
+                            </td>
+
+                        </tr>
+                        </ng-template>
+                        <ng-template #elseCustAccountNo> 
+                        </ng-template>
                     </table>
-                        <!-- <tr>
-                            <td colspan="4">
-                              <table class="center">
-                                <tr>
-                                  <td colspan="4"> -->
-                                    <!-- <table class="center" style="width: 100%;">
-                                      <tr>
-                                        <div *ngIf="closeResetButton; then hList1; else hList2"></div>
-                                        <ng-template #hList2>
-                                          <div class="d-flex justify-content-center">
-                                            <div class="spinner-border text-primary" role="status">
-                                              <span class="sr-only" id="loading"></span>
-                                            </div>
-                                          </div>
-                                        </ng-template>
-                                        <ng-template #hList1> </ng-template>
-                                        <td class="LabelFontStyle" style="color: blue;width: fit-content;" >
-                                          &nbsp;{{dataDisplay}}&nbsp; </td>
-
-
-                                      </tr>
-                                    </table> -->
-
-
+                 
                                     <table class="center">
                                         <tr>
                                             <td>

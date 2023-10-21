@@ -202,6 +202,21 @@
                             </td>
                            
                         </tr>
+                        <div *ngIf="displayCustAccountNo; then thenCustAccountNo; else elseCustAccountNo"></div>
+                        <ng-template #thenCustAccountNo> 
+                        <tr>
+                           
+                            <td style="width: 15%" class="LabelFontStyle" >
+                                &nbsp;Cust&nbsp;Account&nbsp;No&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                <input  type="number" class="form-control"  formControlName="custAccNo" [(ngModel)]="custAccNo">
+                            </td>
+
+                        </tr>
+                        </ng-template>
+                        <ng-template #elseCustAccountNo> 
+                        </ng-template>
                         <tr>
                             <td colspan="4">
                               <table class="center">

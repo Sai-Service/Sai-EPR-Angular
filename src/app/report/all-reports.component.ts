@@ -398,9 +398,9 @@ export class AllReportsComponent implements OnInit {
     var invcDt3 = this.reportForm.get('spIssueSummtoDate').value;
     var toDate = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');
     const fileName = 'SP-Issue-Summary-' +  fromDate + '-TO-' + toDate + '.xls';
-
+   var custAccNo= this.reportForm.get('custAccNo').value;
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.spIssueSummaryReport(fromDate, toDate, sessionStorage.getItem('locId'))
+    this.reportService.spIssueSummaryReport(fromDate, toDate, sessionStorage.getItem('locId'),custAccNo)
       .subscribe(data => {
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
         this.isDisabled3 = false;

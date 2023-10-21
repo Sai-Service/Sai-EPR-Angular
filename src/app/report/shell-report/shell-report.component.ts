@@ -83,6 +83,7 @@ export class ShellReportComponent implements OnInit {
   userName1:string;
   dispLocation:boolean=true;
   rptValidation=true;
+  displayCustAccountNo=false;
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) {
     this.sparesReportForm = this.fb.group({
       fromDate: [''],
@@ -284,6 +285,7 @@ reportDetails(reportName) {
     this.isVisibleGSTPurchaseRegister = true;
     this.isVisibleonlyLocationCode = false;
     this.isVisiblegstsaiDebtors = false;
+    this.displayCustAccountNo=true;
     this.isVisiblespClosingStockAsOndate=false;
     this.isVisibleStockLedger = false;
     this.isVisiblestockTransfer = false;
@@ -1244,12 +1246,15 @@ reportParameter(reportName) {
     }
   }
   else if (reportName === 'Spares Issue Summary') {
+    if (custAccNo === null || custAccNo === undefined || custAccNo === ''){
+      custAccNo='';
+    }
     this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
     const fileName = 'Spares Issue Summary Report-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     if (Number(sessionStorage.getItem('deptId')) === 4) {
-      this.reportService.spIssueSummaryReport(fromDate, toDate, locId)
+      this.reportService.spIssueSummaryReport(fromDate, toDate, locId,custAccNo)
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
           this.isDisabled1 = false;
@@ -1258,7 +1263,7 @@ reportParameter(reportName) {
         })
     }
     else if (Number(sessionStorage.getItem('deptId')) != 4) {
-      this.reportService.spIssueSummaryReport(fromDate, toDate, sessionStorage.getItem('locId'))
+      this.reportService.spIssueSummaryReport(fromDate, toDate, sessionStorage.getItem('locId'),custAccNo)
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
           this.isDisabled1 = false;
