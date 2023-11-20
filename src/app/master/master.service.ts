@@ -1500,8 +1500,8 @@ export class MasterService {
 
 
 
-  downloadSubGatePassFn(shipmentNumber) {
-    const REQUEST_URI = this.ServerUrl + `/rcvShipment/ssSubInvTrf/${shipmentNumber}`;
+  downloadSubGatePassFn(shipNo) {
+    const REQUEST_URI = this.ServerUrl + `/SparesReports/SubInvTrfSpToAcc?shipNo=${shipNo}`;
     return this.http.get(REQUEST_URI, {
       responseType: 'arraybuffer',
       headers: this.headers,
