@@ -1498,7 +1498,13 @@ export class MasterService {
     return this.http.get(this.ServerUrl + `/subInvMst/subIssue?deptId=${deptId}&divisionId=${divId}`)
   }
 
-
+  downloadSubGatePassSaslesFn(shipNo) {
+    const REQUEST_URI = this.ServerUrl + `/rcvShipment/ssSubInvTrf/${shipNo}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
 
   downloadSubGatePassFn(shipNo) {
     const REQUEST_URI = this.ServerUrl + `/SparesReports/SubInvTrfSpToAcc?shipNo=${shipNo}`;

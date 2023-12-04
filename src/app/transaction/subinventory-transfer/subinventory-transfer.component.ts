@@ -915,14 +915,25 @@ export class SubinventoryTransferComponent implements OnInit {
   downloadSubGatePass() {
     const fileName = 'download.pdf';
    var shipmentNumber = this.SubinventoryTransferForm.get('shipmentNumber').value;
-    alert(shipmentNumber)
-      this.service.downloadSubGatePassFn(shipmentNumber)
+    // alert(shipmentNumber)
+    if (Number(sessionStorage.getItem('deptId'))===1){
+      this.service.downloadSubGatePassSaslesFn(shipmentNumber)
         .subscribe(data => {
           var blob = new Blob([data], { type: 'application/pdf' });
           var url = URL.createObjectURL(blob);
           var printWindow = window.open(url, '', 'width=800,height=500');
           printWindow.open
         });
+      }
+      else{
+        this.service.downloadSubGatePassFn(shipmentNumber)
+        .subscribe(data => {
+          var blob = new Blob([data], { type: 'application/pdf' });
+          var url = URL.createObjectURL(blob);
+          var printWindow = window.open(url, '', 'width=800,height=500');
+          printWindow.open
+        });
+      } 
       }
 
 }
