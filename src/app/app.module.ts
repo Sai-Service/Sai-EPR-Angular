@@ -14,6 +14,7 @@ import { OrderManagementModule} from './order-management/order-management.module
 import { ServiceModule } from './service/service.module';
 import { faMasterModule} from './fixed-asset/famaster.module';
 import { PaintModule} from './paint/paint.module';
+import { PumpModule} from './pump/pump.module';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -43,6 +44,7 @@ import { AllReportsComponent } from './report/all-reports.component';
     PoReceiptFormComponent,
     FaCommanMasterComponent,
     AllReportsComponent,
+    
     
    
   
@@ -74,6 +76,7 @@ import { AllReportsComponent } from './report/all-reports.component';
     ServiceModule,
     faMasterModule,
     PaintModule,
+    PumpModule,
     // NgxSpinnerModule
   ],
   providers: [

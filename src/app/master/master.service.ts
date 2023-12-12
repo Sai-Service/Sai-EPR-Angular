@@ -4421,6 +4421,55 @@ TransactionTypemiscpPaint(): Observable<any> {
 
   }
 
+  ////////////////////////////////////////Petrol Pump//////////////////////////////////////////////////
+  TankList(): Observable<any> {
+    return this.http.get(this.ServerUrl + '/TankMaster');
+  }
+
+  IslandList(): Observable<any> {
+    return this.http.get(this.ServerUrl + '/ppIslandMaster');
+  }
+
+  NozzleList(): Observable<any> {
+    return this.http.get(this.ServerUrl + '/NozzelMaster');
+  }
+
+  FuelTypeList(fueltype,divId): Observable<any> {
+    // alert ("Ftype:"+fueltype + " , div :"+divId);
+    return this.http.get(this.ServerUrl + `/itemMst/ByItemCategory?itemCatType=${fueltype}&divId=${divId}`);
+  }
+
+  ShiftList(): Observable<any> {
+    // return this.http.get(this.ServerUrl + `/itemMst/ByItemCategory?itemCatType=${fueltype}&divId=${divId}`);
+    return this.http.get(this.ServerUrl + '/cmnLookup/CmnType/ShiftType');
+
+  }
+
+  PPEmplIdList(locId, divisionId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/empMst/EmpLocDiv?locId=${locId}&divisionId=${divisionId}`)
+  
+    // http://localhost:8081/empMst/EmpLocDiv?locId=2501&divisionId=3
+  }
+
+
+
+  NozzleIslandPick(mNozzle): Observable<any> {
+    // alert(mNozzle );
+    return this.http.get(this.ServerUrl + `/ppIslandMaster/ByNozleId/${mNozzle}`);
+  }
+
+
+  public PumpSaleAddSubmit(PumpSaleRecord) {
+    const options = {
+      headers: this.headers
+    };
+    const url = this.ServerUrl + '/ShiftEntry';
+    return this.http.post(url, PumpSaleRecord, options);
+    // http://localhost:8081/ShiftEntry
+  }
+
+
+
 
 
 }

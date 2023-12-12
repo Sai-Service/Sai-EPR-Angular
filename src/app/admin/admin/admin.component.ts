@@ -103,6 +103,7 @@ export class AdminComponent implements OnInit {
   isVisibleSubInventoryTransfer:boolean=false;
   isVisibleWsVehicleMaster:boolean=false; 
   isVisibilePaintSystem:boolean=false;
+  isVisibilePetrolPumpSystem:boolean=false;
   fullName: string;
   deptName: string;
   locCode: string;
@@ -291,6 +292,7 @@ export class AdminComponent implements OnInit {
       this.isVisibleAccountsRepor=false;
       this.isVisibleAccessories=false;
       this.isVisibilePaintSystem=true
+      this.isVisibilePetrolPumpSystem=true;
       // this.isVisibleShellReport=false;
     }
 

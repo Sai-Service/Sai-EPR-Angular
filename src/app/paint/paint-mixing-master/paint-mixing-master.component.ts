@@ -31,6 +31,8 @@ interface IPaintMixingMaster {
   templateUrl: './paint-mixing-master.component.html',
   styleUrls: ['./paint-mixing-master.component.css']
 })
+
+
 export class PaintMixingMasterComponent implements OnInit {
   paintMixingMasterForm: FormGroup;
 

@@ -1,0 +1,328 @@
+<form [formGroup]="pumpNozzleMasterForm" (ngSubmit)="pumpNozzleMaster(pumpNozzleMasterForm.value)" id="form_1" >
+
+    <div class="center">
+        <table style="width: 100%;background-color: white;">
+            <tr>
+                <td colspan="4" class="PageHeader" style="width: 100%;" >
+                    &nbsp;&nbsp;Island&nbsp;Nozzle&nbsp;Master
+                </td>
+            </tr>
+        </table>
+        <div class="center" style="width: 100%;">
+            <div class="form-bg">
+                   <table class="center">
+                 
+                    <input hidden    type="number"  formControlName="emplId" class="form-control" [(ngModel)]="emplId">
+                    <input hidden    type="number"  formControlName="cmnId" class="form-control" [(ngModel)]="cmnId">
+    
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">Division&nbsp;:&nbsp;</td>
+                        <td>
+                            <select disabled formControlName="divisionId" id="divisionId" [(ngModel)]="divisionId" class="form-control">
+                                <!-- <option>--Select--</option> -->
+                                <option *ngFor="let sc of  DivisionIDList"  [value]="sc.divisionId">
+                                    {{sc.divisionName}}
+                                </option>
+                            </select>
+                        </td>
+
+                    </tr>
+                    <tr>
+    
+                        <div *ngIf="displayButton; then saveYes1; else saveYes2"></div>
+                        <ng-template #saveYes1>  
+                            <td style="width: 15%;" class="LabelFontStyle">Nozzle&nbsp;Code&nbsp;:&nbsp;</td>
+                            <td> <input formControlName="nozzleCode" [(ngModel)]='nozzleCode' value={{nozzleCode}} class="form-control"   style="background-color: yellow;text-transform: uppercase;" > </td>
+                            <td style="width: 15%;" class="LabelFontStyle">Nozzle&nbsp;Name:&nbsp;</td>
+                            <td> <input formControlName="nozzleDesc" [(ngModel)]='nozzleDesc' value={{nozzleDesc}} class="form-control" placeholder="Nozzle Descreption" style="background-color: yellow;text-transform: uppercase;" > </td>
+                            <td style="width: 15%;" class="LabelFontStyle">Fuel Type&nbsp;:&nbsp;</td>
+                            <td>
+                                <select  formControlName="fuelCode" id="fuelCode" [(ngModel)]="fuelCode" class="form-control" style="background-color: yellow;">
+                                    <!-- <option>--Select--</option> -->
+                                    <option *ngFor="let sc of  fuelTypeList"  [value]="sc.segment">
+                                        {{sc.segment}}
+                                    </option>
+                                </select>
+                            </td>                        
+                        
+                        
+                        </ng-template>
+    
+                        <ng-template #saveYes2>  
+                            <td style="width: 15%;" class="LabelFontStyle">Nozzle&nbsp;Code&nbsp;:&nbsp;</td>
+                            <td> <input disabled formControlName="nozzleCode" [(ngModel)]='nozzleCode' value={{nozzleCode}} class="form-control"   style="background-color: yellow;text-transform: uppercase;" > </td>
+                            <td style="width: 15%;" class="LabelFontStyle">Nozzle&nbsp;Name:&nbsp;</td>
+                            <td> <input disabled formControlName="nozzleDesc" [(ngModel)]='nozzleDesc' value={{nozzleDesc}} class="form-control" placeholder="Nozzle Descreption" style="background-color: yellow;text-transform: uppercase;" > </td>
+                            <td style="width: 15%;" class="LabelFontStyle">Fuel Type&nbsp;:&nbsp;</td>
+                            <td> <input disabled formControlName="fuelCode" [(ngModel)]='fuelCode' value={{fuelCode}} class="form-control"   style="background-color: yellow;text-transform: uppercase;" > </td>
+                            
+                                     
+                        </ng-template>
+                    </tr>
+    
+    
+                    <tr>
+                        <div *ngIf="displayButton; then upd1; else upd2"></div>
+                        <ng-template #upd1>  
+                      
+                            <td style="width: 15%;" class="LabelFontStyle">Tank&nbsp;Code&nbsp;:&nbsp;</td>
+                            <!-- <td ><input formControlName="nz_tank_code" [(ngModel)]='nz_tank_code'  class="form-control" placeholder="" style="width:100%;background-color: yellow;text-transform: uppercase;"></td> -->
+    
+                            <td>
+                                <select  formControlName="tankId" id="tankId" [(ngModel)]="tankId" class="form-control" style="background-color: yellow;">
+                                    <!-- <option>--Select--</option> -->
+                                    <option *ngFor="let sc of  tankList"  [value]="sc.tankId">
+                                        {{sc.tankName}}
+                                    </option>
+                                </select>
+                            </td>
+
+                            <td style="width: 15%;" class="LabelFontStyle">Island&nbsp;Code&nbsp;:&nbsp;</td>
+                            <td>
+                                <select  formControlName="islandId" id="islandId" [(ngModel)]="islandId" class="form-control" style="background-color: yellow;">
+                                    <!-- <option>--Select--</option> -->
+                                    <option *ngFor="let sc of  islandList"  [value]="sc.islandId">
+                                        {{sc.islandCode}}-{{sc.description}}
+                                    </option>
+                                </select>
+                            </td>
+                            
+                            
+                            
+                            <!-- <td> <input  formControlName="nz_island_code" [(ngModel)]='nz_island_code' value={{nz_island_code}} class="form-control"  placeholder=""  style="width:100%;background-color: yellow;text-transform: uppercase;"> </td> -->
+                                      
+                        </ng-template>
+    
+                        <ng-template #upd2>  
+                            <td style="width: 15%;" class="LabelFontStyle">Tank&nbsp;Code&nbsp;:&nbsp;</td>
+                            <td><input disabled  formControlName="nz_tank_code" [(ngModel)]='nz_tank_code'  class="form-control" placeholder="" style="width:100%;background-color: yellow;text-transform: uppercase;"></td>
+    
+                            <td style="width: 15%;" class="LabelFontStyle">Island&nbsp;Code&nbsp;:&nbsp;</td>
+                            <td> <input disabled formControlName="nz_island_code" [(ngModel)]='nz_island_code' value={{nz_island_code}} class="form-control"  placeholder=""  style="width:100%;background-color: yellow;text-transform: uppercase;"> </td>
+                  
+                              
+                        </ng-template>
+    
+                    </tr>
+
+                  
+                   
+                  
+                    <tr>
+    
+                        <td style="width: 15%" class="LabelFontStyle">Status&nbsp;&nbsp;:</td>
+    
+                        <div *ngIf="displayButton; then upd11; else upd21"></div>
+                        <ng-template #upd21>  
+                            <td> <input disabled formControlName="status" [(ngModel)]='status' value={{status}} class="form-control"  > </td>
+                        </ng-template>
+    
+                        <ng-template #upd11>  
+                           <td>
+                                <select  formControlName="status" id="status" class="form-control"  [(ngModel)]="status" (ngModelChange)='onOptionsSelected($event)'>
+                                <option *ngFor="let sc of  statusList" [ngValue] ="sc.code">
+                                    {{sc.code}}
+                                </option>
+                               </select>
+                          </td>
+                        </ng-template>
+    
+                        <td style="width: 15%" class="LabelFontStyle"> Start&nbsp;Date&nbsp;:</td>
+                        <td><input disabled  type="date"   id="startDate"  formControlName="startDate"  [ngModel]="startDate" class="form-control"  max="{{minDate | date:'yyyy-MM-dd'}}" style="height: 25px;"></td>
+                            
+                        <div *ngIf="displayInactive; then Block1; else Block2"></div>
+                        <ng-template #Block1>  </ng-template>
+                        <ng-template #Block2>
+                            <td style="width: 18%" class="LabelFontStyle">Inactive&nbsp;Date:&nbsp;</td>
+                            <td><input disabled  type="date"   id="endDate"  formControlName="endDate"  [ngModel]="endDate" class="form-control"  max="{{minDate | date:'yyyy-MM-dd'}}" style="height: 25px;"></td>
+                        </ng-template>
+                    </tr>
+                    </table>
+    
+                    <br>
+    
+                    <table class="center">
+                        <tr >
+                            <div *ngIf="displayButton; then Save1; else Save2"></div>
+                            <ng-template #Save1>
+    
+                                <div *ngIf="saveButton; then S1; else S2"></div>
+                                 <ng-template #S1>
+                                 <td><button type="button" class="btn btn-info" id="register"  (click)="saveComnMast()">Save</button></td>
+                                 </ng-template><ng-template #S2></ng-template>
+    
+                                </ng-template>
+                            <ng-template #Save2>
+                                <div *ngIf="updButton; then U1; else U2"></div>
+                                <ng-template #U1>
+                                     <td><button type="button" class="btn btn-info" id="register"  (click)="updateComnMast()">Update</button></td>
+                                </ng-template> <ng-template #U2></ng-template>
+    
+                            </ng-template>
+                           <td><button type="button" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>
+                            <td><button type="button" class="btn btn-info" (click)="closeMast()" >Close</button></td>
+                            <td ><button type="button" class="btn btn-info" id="register" (click)="searchCmnMst()">Search</button></td> 
+
+                        </tr>
+                    </table>
+                    <br>
+                    <!-- <table style="width: 100%; background-color: #FFE4B5;">
+                        <tr>
+                            <td style="width: 15%;" class="LabelFontStyle">Select&nbsp;Type&nbsp;:&nbsp;</td>
+                            <td >
+                                <select formControlName="cmnType" id="cmnType" [(ngModel)]="cmnType"  class="form-control">
+                                    <option>--Select--</option>
+                                    <option *ngFor="let sc of  cmnTypeList" [ngValue] ="sc.CMNTYPE">
+                                        {{sc.CMNDESC}}
+                                    </option>
+                                </select>
+                            </td>
+                            <td style="width:100% ;" colspan="8" ><button type="button" class="btn btn-info" id="register" (click)="searchCmnMst()">Search</button></td> 
+                        </tr>
+                    </table> -->
+                    <br>
+    
+    
+    
+                    <!-- <div class="container1">
+                    <div class="grid_scroll_3">
+                    <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
+                        <tbody>
+                         <tr class="GridHeader">
+                             <th scope="col">Code</th>
+                             <th scope="col">Meaning</th>
+                             <th scope="col">Description</th> 
+                             <th scope="col">Active Date</th>
+                             <th scope="col">Inactive Date</th>
+                             <th scope="col">Select</th>
+                         </tr>   
+                        </tbody>
+    
+                        <ng-container  class="center" formArrayName="LineDetails">
+                        <ng-container   *ngFor="let group of cmnLineArray().controls; let k= index" [formGroupName]="k" class="auto-style5">  
+                        <tr>
+                        <td> <input formControlName="code" [(ngModel)]='code' value={{code}} class="form-control"  placeholder="Enter code" style="height: 22px;"> </td>
+                         <td><input formControlName="codeDesc" [(ngModel)]='codeDesc' value={{codeDesc}} class="form-control" placeholder="Enter code Description " style="height: 22px;"></td>
+                         <td><input formControlName="codeDesc" [(ngModel)]='codeDesc' value={{codeDesc}} class="form-control" placeholder="Enter code Description " style="height: 22px;"></td>
+                         <td><input type="date" formControlName="startDate" class="form-control"  placeholder="Enter start Date" min="{{minDate | date:'yyyy-MM-dd'}}" style="height: 22px;" ></td>
+                         <td><input type="date" formControlName="endDate" class="form-control"    placeholder="Enter End Date" min="{{minDate | date:'yyyy-MM-dd'}}" style="height: 22px;"></td>
+                        </tr>
+                        </ng-container>
+                        </ng-container>  
+    
+                    <td>    
+                     <button  type="button" class="btn-primary" data-toggle="modal" data-target="#myModal" style="width: 3rem;">...</button>
+                    </td>
+                      </tr>    
+                    </table> -->
+                        
+                         <!-- <ng-container *ngIf="commonMasterForm.controls.itemRows!=null"> 
+                             <div class="container1" *ngFor="let itemRows of commonMasterForm.controls.itemRows.controls;let i=index" [commonMasterForm]='1'>                       
+                             </div>  
+                         </ng-container>  
+                        <button type="button"  [disabled]="commonMasterForm.invalid" (click)="addRow()" class="btn btn-primary">
+                            Add Row
+                        </button> -->
+                    <!-- </div>
+                    </div> -->
+            </div>
+        </div>
+    </div>
+    </form>
+    
+    
+    <div class="container1">
+        <div class="grid_scroll">
+        <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+       <tbody>
+            <tr class="GridHeader">
+                <th style="width:5rem" scope="col">Srl&nbsp;No&nbsp;</th>
+                <!-- <th style="width:6rem" scope="col">Regime Id</th> -->
+                <th style="width:10rem;text-align: center;" scope="col">Panel Code</th>
+                <th style="width:20rem;text-align: left;" scope="col">Panel Description</th>
+                <th style="width:10rem;text-align: center;" scope="col">Type</th>
+                <th style="width:10rem;text-align: center;" scope="col">Panel#</th>
+                <th style="width:10rem;text-align: center;" scope="col">Start Date</th>
+                <th style="width:10rem;text-align: center;" scope="col">End Date</th>
+                <th style="width:10rem;text-align: center;" scope="col">Status</th>
+            <th style="width:6rem" scope="col">Select</th>
+        </tr>
+       </tbody>
+       <tr *ngFor="let com of lstcomments let i=index" class="ItemStyle" style="text-decoration:none;font-size: small;">
+        
+        <td style="text-align: center;">{{i+1}}</td>
+        <!-- <td>{{com.regimeId}}</td> -->
+        <td style="text-align:center">{{com.code}}</td>
+        <td>{{com.codeDesc}}</td> 
+        <td style="text-align:center">{{com.cmnDesc}}</td>
+        <td style="text-align:center">{{com.attribute1}}</td>
+        <td style="text-align:center">{{com.startDate |date:'dd-MM-y'}}</td>
+        <td style="text-align:center">{{com.endDate |date:'dd-MM-y'}}</td>
+        <td style="text-align:center">{{com.status}}</td>
+        <td><button class="btn btn-secondary" (click)="Select(com.cmnId)">Select</button></td>   
+       </tr>
+        </table>
+    </div>
+    </div>
+         
+    
+      
+    <!-- <div class="container1">
+    </div> -->
+    
+    
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+        <label style="text-align: center;font-size: small;font-family: Verdana, Geneva, Tahoma, sans-serif;
+        color: black;">
+        Additional Information
+        </label>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <div class="modal-body">
+        <table>
+        <tr>
+        <td>
+        <label>
+        Service&nbsp;Vehicle&nbsp;Code&nbsp;:&nbsp;
+        </label>
+        </td>
+        <td>
+        <input type="text" class="form-control">
+        </td>
+        </tr>
+        <tr>
+        <td>
+        <label>
+        Service&nbsp;Sub&nbsp;Code&nbsp;:&nbsp;
+        </label>
+        </td>
+        <td>
+        <input type="text" class="form-control">
+        </td>
+        </tr>
+        <tr>
+        <td>
+        <label>
+        Credit&nbsp;Note&nbsp;Item&nbsp;:&nbsp;
+        </label>
+        </td>
+        <td>
+        <input type="text" class="form-control">
+        </td>
+        </tr>
+        </table>
+        </div>
+        
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" >Ok</button>
+        </div>
+        
+        </div>
+        </div>
+        </div>     
+    
+       
