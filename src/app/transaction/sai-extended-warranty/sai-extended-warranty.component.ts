@@ -1175,7 +1175,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
                 var ewSalDate=new Date(this.ewSaleDate);
 
               if(regnDate ==null || regnDate ==undefined) {
-               alert("Vehicle Registtration Date not Available....EW Enrollment not allowed") ;return;
+               alert("Vehicle Registration Date not Available....EW Enrollment not allowed") ;return;
               } else {
               this.getDiffDays(regnDate,ewSalDate,0); }
 

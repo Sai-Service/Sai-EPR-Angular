@@ -35,9 +35,15 @@ const routes: Routes = [
         path: 'Report',
         loadChildren: () => import('../report/reports.module').then(mod => mod.ReportsModule)
       },
+
       {
         path: 'paint',
         loadChildren: () => import('../paint/paint.module').then(mod => mod.PaintModule)
+      },
+
+      {
+        path: 'pump',
+        loadChildren: () => import('../pump/pump.module').then(mod => mod.PumpModule)
       },
 
       
