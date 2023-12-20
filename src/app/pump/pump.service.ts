@@ -22,8 +22,24 @@ export class PumpService {
    }
 
 
+   
+   segmentListFn(): Observable<any> {
+    return this.http.get(this.ServerUrl + `/itemMst/ByItemCategory?itemCatType=PP.FUEL&divId=3`);
+  }
 
   
+  
 
+  public savePetrolPump(orderSave) {
+    const options = {
+      headers: this.headers
+    };
+    const url = this.ServerUrl + '/ShiftEntry';
+    return this.http.post(url, orderSave, options);
+  }
+
+  getSearchShiftNo(shiftNo): Observable<any> {
+    return this.http.get(this.ServerUrl + `/ShiftEntry/${shiftNo}`);
+  }
 
 }

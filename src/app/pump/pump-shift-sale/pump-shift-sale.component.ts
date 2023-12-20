@@ -4,6 +4,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MasterService } from 'src/app/master/master.service';
+import { PumpService } from 'src/app/pump/pump.service';
 
 
 interface IPumpShiftSale{
@@ -15,7 +16,7 @@ interface IPumpShiftSale{
   employeeId:number;
 
   shiftCode :string;
-  nozzleId :number;
+  nozzleid :number;
   islandCode :string;
   openMRS:number;
   closeMRS:number;
@@ -64,7 +65,7 @@ export class PumpShiftSaleComponent implements OnInit {
   public nozzleList :any[];
   IslandDetails:any;
   shiftCode :string;
-  nozzleId :number;
+  nozzleid :number;
   islandCode:string;
   openMRS:number;
   closeMRS:number;
@@ -85,6 +86,7 @@ export class PumpShiftSaleComponent implements OnInit {
   userList2: any[] = [];
   lastkeydown1: number = 0;
   showItemSearch=false;
+  segmentList:any=[];
 
   
 
@@ -98,9 +100,10 @@ export class PumpShiftSaleComponent implements OnInit {
   display1=true;
   display = true;
   displayButton = true;
-
+  PaymentModeList: any;
+  accountNoSearch:any=[];
   
-  constructor(private service: MasterService,private   fb: FormBuilder, private router: Router) {
+  constructor(private service: MasterService,private   fb: FormBuilder, private router: Router,private PumpService1: PumpService) {
     this.pumpShiftSalesForm = fb.group({
 
       loginArray:[''],
@@ -119,8 +122,7 @@ export class PumpShiftSaleComponent implements OnInit {
       ShiftType:[],
       employeeId:[],
       shiftCode:[],
-      nozzleId:[],
-
+      nozzleid:[],
       totalSale :[],
       totalCashSale:[],
       totalCreditSale:[],
@@ -129,9 +131,9 @@ export class PumpShiftSaleComponent implements OnInit {
       CashSubmitted:[],
       CashDifference:[],
 
-      nozzleDtlsList: this.fb.array([this.lineDetailsGroup()]),
-      nozzleLineDtlsList: this.fb.array([this.nozzlelineDetailsGroup()]),
-      shiftVoucherList: this.fb.array([this.voucherDetailsGroup()]),
+      ppShiftNozzleDetailList: this.fb.array([this.lineDetailsGroup()]),
+      
+      ppShiftVoucherList: this.fb.array([this.voucherDetailsGroup()]),
 
 
     });
@@ -139,43 +141,58 @@ export class PumpShiftSaleComponent implements OnInit {
   lineDetailsGroup() {
     return this.fb.group({
       ShiftEntryId:[''],
-      NozzlidId :[''],
+      nozzleid :[''],
+      NozzlidId:[],
       nozzFuelType:[''],
       nozzIsland :[''],
-      OpeningReading:[],
-      SystemClosingReading:[],
-      ManualClosingReading:[],
-      TotalSaleReading:[],
-      Difference:[],
+      OpeningReading:[0],
+      SystemClosingReading:[0],
+      ManualClosingReading:[0],
+      TotalSaleReading:[0],
+      Difference:[0],
+      locId:[],
       Remarks:[],
       locid:[],
+      ppShiftNozleLinesList: this.fb.array([]),
      });
   }
 
+ 
+
+
   nozzlelineDetailsGroup() {
     return this.fb.group({
-      ShiftEntryId:[''],
+     
       NozzlidId :[''],
-      nozzFuelType:[''],
-      nozzIsland :[''],
-      OpeningReading:[],
-      SystemClosingReading:[],
-      ManualClosingReading:[],
-      TotalSaleReading:[],
-      Difference:[],
-      Remarks:[],
+    
+      shiftnozzlelinesid:[],
+      shiftnozzleid:[],
+      nozzle:[],
+      shiftentryid:[],
+      nozzleid:[''],
+      itemid:[],
+      segment:[],
+      qty:[0],
+      rate:[0],
+      saletypeid:[],
+      customerid:[],
+      customercode:[],
+      vehicleno:[],
+      creditslipno:[],
       locid:[],
+      lineAmt:[],
+      payType:[]
      });
   }
 
   voucherDetailsGroup() {
     return this.fb.group({
-      ShiftEntryId:[],
-      ShiftVoucherNo:[],
+      shiftvoucherid:[],
+      shiftentryid:[],
+      shiftvoucherno:[],
       locid:[],
-      Description:[],
-      Amount:[],
-      
+      description:[],
+      amount:[],
      });
   }
 
@@ -184,15 +201,16 @@ export class PumpShiftSaleComponent implements OnInit {
 
 
  lineDetailsArray() :FormArray{
-    return <FormArray>this.pumpShiftSalesForm .get('nozzleDtlsList')
+    return <FormArray>this.pumpShiftSalesForm .get('ppShiftNozzleDetailList')
   }
 
-  nozzlelineDetailsArray() :FormArray{
-    return <FormArray>this.pumpShiftSalesForm .get('nozzleLineDtlsList')
+  nozzlelineDetailsArray(i:number) :FormArray{
+    // return <FormArray>this.lineDetailsArray().at(i).get('ppShiftNozleLinesList') as FormArray;
+    return this.lineDetailsArray().at(i).get("ppShiftNozleLinesList") as FormArray
   }
 
   voucherDetailsArray() :FormArray{
-    return <FormArray>this.pumpShiftSalesForm .get('shiftVoucherList')
+    return <FormArray>this.pumpShiftSalesForm .get('ppShiftVoucherList')
   }
  
 
@@ -220,11 +238,18 @@ export class PumpShiftSaleComponent implements OnInit {
 
 
  
-this.service.ShiftList()
-.subscribe(
+this.service.ShiftList().subscribe(
   data => {
     this.shiftList = data;
     console.log(this.shiftList);
+  }
+);
+
+this.service.PaymentModeList()
+.subscribe(
+  data => {
+    this.PaymentModeList = data;
+    console.log(this.PaymentModeList);
   }
 );
 
@@ -243,34 +268,58 @@ this.service.NozzleList()
     console.log(this.nozzleList);
   });
 
+  this.PumpService1.segmentListFn()
+.subscribe(
+  data => {
+    this.segmentList = data;
+    console.log(this.segmentList);
+  });
+
+  
+
   }
 
   search(shiftno){
     alert ("Shift no:"+shiftno);
+    
   }
 
+
+ 
+
   
-  saveSale1(){}
+  saveSale1(){
+    let jsonData = this.pumpShiftSalesForm.getRawValue();
+    this.PumpService1.savePetrolPump(JSON.stringify(jsonData)).subscribe((res: any) => {
+      if (res.code === 200) {}
+    })
+  }
 
   closeSale(){}
 
   resetSale(){}
 
   onSelectedNozzle(index){
-    var patch = this.pumpShiftSalesForm.get('nozzleDtlsList') as FormArray;
-    var qtyLineArr = this.pumpShiftSalesForm.get('nozzleDtlsList').value;
+    alert(index)
+    var patch = this.pumpShiftSalesForm.get('ppShiftNozzleDetailList') as FormArray;
+    var qtyLineArr = this.pumpShiftSalesForm.get('ppShiftNozzleDetailList').value;
     var nozId =qtyLineArr[index].NozzlidId
-    // alert ("nozzle id :"+ nozId + " index : "+index);
+    alert ("nozzle id :"+ nozId + " index : "+index);
 
     this.service.NozzleIslandPick(nozId)
     .subscribe(
       data => {
         this.IslandDetails = data
         console.log(this.IslandDetails);
+        alert( this.IslandDetails.islandCode);
+        (patch.controls[index]).patchValue({
+          nozzFuelType: data.description,
+          nozzIsland: data.islandCode,
+        })
       });
-      // alert( this.IslandDetails.islandCode);
-      (patch.controls[index]).patchValue({ nozzIsland: this.IslandDetails.islandCode +"-"+this.IslandDetails.description});
-      this.pumpShiftSalesForm.patchValue(this.IslandDetails);
+     
+      // (patch.controls[index]).patchValue({ nozzIsland: this.IslandDetails.islandCode +"-"+this.IslandDetails.description});
+      // this.pumpShiftSalesForm.patchValue(this.IslandDetails);
  
   }
 
@@ -331,4 +380,100 @@ this.service.NozzleList()
     }
   
   }
+
+  calculationFn(i){
+    // alert(i);
+    // debugger;
+    var arrayControlNew = this.pumpShiftSalesForm.get('ppShiftNozzleDetailList') as FormArray;
+      var arrayControl = arrayControlNew.getRawValue();
+      var openQtySys = arrayControl[i].OpeningReading;
+      var closeQtyMan = arrayControl[i].ManualClosingReading;
+      var SystemClosingReading = arrayControl[i].SystemClosingReading;
+      // alert(pricingQty)
+      if (openQtySys === null || openQtySys === undefined || openQtySys === '') {
+        return;
+      }
+      if (openQtySys <= 0) {
+        alert("Please enter quantity more than zero");
+        return;
+      }
+     
+
+    var totaQty = closeQtyMan-openQtySys;
+    var diffQty= closeQtyMan-SystemClosingReading;
+    var patch = this.pumpShiftSalesForm.get('ppShiftNozzleDetailList') as FormArray;
+    patch.controls[i].patchValue({ TotalSaleReading: totaQty,Difference:diffQty });
+  }
+
+  public mapProducts = new Map<string, any[]>();
+  openSunDetailsFn(i){
+    // alert(i)
+    console.log(this.nozzleList);
+    
+    var arrayControlNew = this.pumpShiftSalesForm.get('ppShiftNozzleDetailList') as FormArray;
+    var arrayControl = arrayControlNew.getRawValue();
+    var nozId= arrayControl[i].NozzlidId;
+    // alert(nozId);
+    var selectNozzle = this.nozzleList.find((nozList)=>nozList.nozzleId=nozId);
+    console.log(selectNozzle);
+        this.nozzlelineDetailsArray(i).push(this.nozzlelineDetailsGroup());
+    this.nozzlelineDetailsArray(i).controls[i].patchValue({nozzle: selectNozzle.nozzleCode});
+    console.log(this.pumpShiftSalesForm.controls.ppShiftNozleLinesList);
+    const courseControl = this.pumpShiftSalesForm.get('ppShiftNozleLinesList') as FormArray;
+    const course = courseControl.at(i).get('segment').value;
+    console.log(course);
+    const products = this.mapProducts.get(course);
+    alert(products)
+    console.log(products);
+  }
+
+
+  onSelectSegment(i,event){
+   
+var seg = event.target.value;
+    var value = seg.substr(seg.indexOf(':') + 1, seg.length).trim();
+    var selectitemList = this.segmentList.find((segList)=>segList.segment=value);
+    console.log(selectitemList);
+    
+    var patch = this.pumpShiftSalesForm.get('ppShiftNozleLinesList') as FormArray;
+    // patch.controls[i].patchValue({ itemid: selectitemList.itemId });
+    this.nozzlelineDetailsArray(i).controls[i].patchValue({itemid: selectitemList.itemId })
+  }
+
+  lineCalculationFn(i){
+    alert(i+'--------')
+    var arrayControlNew = this.pumpShiftSalesForm.get('ppShiftNozleLinesList') as FormArray;
+    var arrayControl = arrayControlNew.getRawValue();
+    // var arrayControl= this.lineDetailsArray().at(i).get("ppShiftNozleLinesList") as FormArray;
+    console.log(arrayControl);
+    
+    var qty = arrayControl[i].qty;
+    // alert(qty)
+    var rate = arrayControl[i].rate;
+    var totAmt = qty*rate;
+    var patch = this.pumpShiftSalesForm.get('ppShiftNozleLinesList') as FormArray;
+    // patch.controls[i].patchValue({ lineAmt: totAmt });
+    this.nozzlelineDetailsArray(i).controls[i].patchValue({lineAmt: totAmt})
+  }
+
+
+  CustAccountNoSearch(i,event){
+    alert(i+'---------'+event.target.value)
+    var accountNo=event.target.value;
+    this.service.custAccountNoSearch(accountNo, sessionStorage.getItem('ouId'), sessionStorage.getItem('divisionId'))
+    .subscribe(
+      data => {
+        this.accountNoSearch = data.obj;
+        var patch = this.pumpShiftSalesForm.get('ppShiftNozleLinesList') as FormArray;
+        // patch.controls[i].patchValue({ customerid: data.obj[0].customerId });
+        this.nozzlelineDetailsArray(i).controls[i].patchValue({customerid: data.obj[0].customerId })
+      }
+    )
+
+  }
+
+  voucherDetails(){
+
+  }
+
 }

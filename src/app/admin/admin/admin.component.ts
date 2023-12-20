@@ -296,6 +296,44 @@ export class AdminComponent implements OnInit {
       // this.isVisibleShellReport=false;
     }
 
+    if (Number(sessionStorage.getItem('divisionId')) === 3 && Number(sessionStorage.getItem('roleId'))===1  && sessionStorage.getItem('ticketNo') ==='P5678')
+
+    {
+      this.isVisible11=false;
+      this.isVisible12=false;
+      this.isVisible13=false
+      this.isVisibleWsVehicleMaster=false;
+      this.isVisible14=false;
+      this.isVisible15=false;
+      this.isVisible16=false;
+      this.isVisible17=false;
+      this.isVisible18=false;
+      this.isVisible19=false;
+      this.isVisible20=false;
+      this.isVisible21=false;
+      this.isVisible22=false;
+      this.isVisible23=false;
+      this.isVisible24=false;
+      this.isVisible25=false;
+      this.isVisible26=false;
+      this.isVisibleSubInventoryTransfer=false;
+      this.isVisible27=false;
+      this.isVisible28=false;
+      this.isVisible29=false;
+      this.isVisibleSparesReport=false;
+      this.isVisible31=false;
+      this.isVisible32=false;
+      this.isVisibleServiceReport=false;
+      this.isVisibleSalesReport=false;
+      this.isVisible37=false;
+      this.isVisibleSaleStockAdju=false;
+      this.isVisibleAccountsRepor=false;
+      this.isVisibleAccessories=false;
+      this.isVisibilePaintSystem=true
+      this.isVisibilePetrolPumpSystem=true;
+      // this.isVisibleShellReport=false;
+    }
+
     if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId'))===3 && sessionStorage.getItem('deptName')==='Sales'){
       this.isVisible11=false;
       this.isVisible12=true;

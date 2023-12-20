@@ -6,14 +6,15 @@ import { PumpIslandMasterComponent } from './pump-island-master/pump-island-mast
 import { PumpNozzleMasterComponent } from './pump-nozzle-master/pump-nozzle-master.component';
 // import { PumpSalesEntryComponent } from './pump-sales-entry/pump-sales-entry.component';
 import { PumpShiftSaleComponent } from './pump-shift-sale/pump-shift-sale.component';
-
+import { PumpShiftPumpNewComponent } from './pump-shift-pump-new/pump-shift-pump-new.component';
 const routes: Routes = [
   {path:'PumpTankMaster', component: PumpTankMasterComponent},
   {path:'PumpIslandMaster', component: PumpIslandMasterComponent},
   {path:'PumpNozzleMaster', component: PumpNozzleMasterComponent},
   // {path:'PumpSalesEntry', component: PumpSalesEntryComponent},
   {path:'PumpShiftSale', component: PumpShiftSaleComponent},
-
+  {path:'PumpShiftSaleNew',component:PumpShiftPumpNewComponent},
+ 
 
   {path : '' ,redirectTo: 'Dashboard', pathMatch: 'full'}
 ];
