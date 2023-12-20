@@ -12,24 +12,25 @@ import { DatePipe } from '@angular/common';
 
 interface IIsland {
   divisionId: number;
-  cmnId:number;
-  cmnTypeId:number;
-  cmnType: string;
-  cmnDesc: string;
+  // cmnId:number;
+  // cmnTypeId:number;
+  // cmnType: string;
+  // cmnDesc: string;
 
+  islandId:number;
   islandCode:string;
-  islandName:string;
+  description:string;
   islandPhyLoc: string;
 
-  nozzle1: string;
-  nozzle2: string;
-  nozzle3: string;
-  nozzle4: string;
+  nozle1id: number;
+  nozle2id: number;
+  nozle3id: number;
+  nozle4id: number;
 
-  tank1: string;
-  tank2: string;
-  tank3: string;
-  tank4: string;
+  tank1id: number;
+  tank2id: number;
+  tank3id: number;
+  tank4id: number;
 
   startDate:string;
   endDate:string,
@@ -62,10 +63,10 @@ export class PumpIslandMasterComponent implements OnInit {
   public nozzleList: Array<string> = [];
    cmnTypeList: any;
 
-  cmnId:number;
-  cmnTypeId:number;
-  cmnType: string;
-  cmnDesc: string;
+  // cmnId:number;
+  // cmnTypeId:number;
+  // cmnType: string;
+  // cmnDesc: string;
 
   loginName:string;
   loginArray:string;
@@ -80,19 +81,20 @@ export class PumpIslandMasterComponent implements OnInit {
   deptId:number; 
   emplId :number;
 
+  islandId:number;
   islandCode:string;
-  islandName:string;
+  description:string;
   islandPhyLoc: string;
 
-  nozzle1: string;
-  nozzle2: string;
-  nozzle3: string;
-  nozzle4: string;
+  nozle1id: number;
+  nozle2id: number;
+  nozle3id: number;
+  nozle4id: number;
 
-  tank1: string;
-  tank2: string;
-  tank3: string;
-  tank4: string;
+  tank1id: number;
+  tank2id: number;
+  tank3id: number;
+  tank4id: number;
 
   
 
@@ -109,24 +111,25 @@ export class PumpIslandMasterComponent implements OnInit {
     this.pumpIslandMasterForm = fb.group({
       // itemRows: this.fb.array([this.inItemRows()]),
 
-      cmnId:[],
-      cmnTypeId:[],
-      cmnType: ['', [Validators.required]],
-      cmnDesc: ['', [Validators.required]],
+      // cmnId:[],
+      // cmnTypeId:[],
+      // cmnType: ['', [Validators.required]],
+      // cmnDesc: ['', [Validators.required]],
 
+      islandId:[],
       islandCode:[],
-      islandName:[],
+      description:[],
       islandPhyLoc: [],
       
-      nozzle1: [],
-      nozzle2: [],
-      nozzle3: [],
-      nozzle4: [],
-
-      tank1: [],
-      tank2: [],
-      tank3: [],
-      tank4: [],
+      nozle1id: [],
+      nozle2id: [],
+      nozle3id: [],
+      nozle4id: [],
+    
+      tank1id: [],
+      tank2id: [],
+      tank3id: [],
+      tank4id: [],
     
       startDate:[],
       endDate:[],
@@ -232,57 +235,7 @@ export class PumpIslandMasterComponent implements OnInit {
   pumpIslandMaster(pumpIslandMasterForm: any) {
 
   }
-
-  saveComnMast() {
-
-    this.CheckDataValidations()
-    
-    if (this.checkValidation===true) {
-       alert("Data Validation Sucessfull....") 
-
-    const formValue: IIsland = this.pumpIslandMasterForm.value;
-    this.service.commonMasterSubmit(formValue).subscribe((res: any) => {
-      if (res.code === 200) {
-        alert('RECORD SAVED SUCCESSFULLY');
-        this.saveButton=false;
-        this.pumpIslandMasterForm.disable();
-        
-      } else {
-        if (res.code === 400) {
-          alert('ERROR : RECORD NOT SAVED.' + res.message);
-          this.saveButton=true;
-        }
-      }
-    });
-  } else { alert ("Data Validation Failed....Save not done.")}
-  }
-
-  // updateComnMast(){alert ("Update ....WIP")}
-
-
-  updateComnMast() {
-
-    // this.CheckDataValidations();
-    // if (this.checkValidation===true) {
-    //     alert("Data Validation Sucessfull....\nPutting data to TAX REGIME MASTER  TABLE")
-    // alert ("Cmn Id = "+this.cmnId)
-
-        const formValue: IIsland = this.pumpIslandMasterForm.value;
-        this.service.UpdateCommonMasterSubmit(formValue, this.cmnId).subscribe((res: any) => {
-          if (res.code === 200) {
-            alert('RECORD UPDATED SUCCESSFULLY');
-            this.updButton=false;
-          } else {
-            if (res.code === 400) {
-              alert('ERROR OCCOURED IN PROCEESS');
-              this.updButton=true;
-              // this.jaiRegimeMasterForm.reset();
-            }
-          }
-          
-        });
-      // }else{ alert("Data Validation Not Sucessfull....\nData not Saved...")  }
-  }
+ 
 
   onOptionsSelected(event: any) {
     this.Status1 = this.pumpIslandMasterForm.get('status').value;
@@ -300,38 +253,6 @@ export class PumpIslandMasterComponent implements OnInit {
 
 
 
-  searchCmnMst(){
-
-    // var searchText=this.paintPanelMasterForm.get('cmnType').value;
-    var searchText='Panel'
-    this.service.getCommonLookupSearchNew(searchText,sessionStorage.getItem('divisionId'))
-    .subscribe(
-      data => {
-        this.lstcomments = data;
-        console.log(this.lstcomments);
-        // this.displayButton=false;
-        }
-    );
-  }
-
-
-
-
-Select(cmId: number) {
-  // alert ('cmnId='+cmId)
-  let select = this.lstcomments.find(d => d.cmnId === cmId);
-  if (select) {
-    this.pumpIslandMasterForm.patchValue(select);
-    this.cmnId=select.cmnId;
-    this.displayButton = false;
-    // this.updButton=true;
-    // this.paintPanelMasterForm.disable();
-    this.pumpIslandMasterForm.get('status').enable();
-
-    this.display = false;
-  }
-}
-
 onSelectType(cmnTp){
   let select = this.cmnTypeList.find(d => d.CMNTYPE === cmnTp);
   if (select) {
@@ -340,6 +261,86 @@ onSelectType(cmnTp){
     this.pumpIslandMasterForm.patchValue({cmnDesc:select.CMNDESC ,cmnTypeId :cmnTypeId1 ,application :'ALL'})
   }
 }
+
+
+searchMast() {
+  this.service.getIslandList()
+    .subscribe(
+      data => {
+        this.lstcomments = data;
+        console.log(this.lstcomments);
+      }
+    );
+   }
+
+
+Select(islandId: number) {
+
+    this.pumpIslandMasterForm.reset();
+    this.divisionId =3;
+
+    let select = this.lstcomments.find(d => d.islandId === islandId);
+    if (select) {
+      this.pumpIslandMasterForm.patchValue(select);
+      this.islandId = select.islandId;
+      this.displayButton = false;
+    
+   }
+   
+  }
+
+  saveIslandMast() {
+
+    this.CheckDataValidations()
+    
+    if (this.checkValidation===true) {
+       alert("Data Validation Sucessfull....") 
+
+    const formValue: IIsland = this.transeData(this.pumpIslandMasterForm.value);
+    this.service.islandMasterSubmit(formValue).subscribe((res: any) => {
+     
+      if (res.code === 200) {
+        alert('RECORD SAVED SUCCESSFULLY');
+        this.saveButton=false;
+        this.pumpIslandMasterForm.disable();
+        
+      } else {
+        if (res.code === 400) {
+          alert('ERROR : RECORD NOT SAVED.' + res.message +", "+res.obj);
+          this.saveButton=true;
+        }
+      }
+
+
+    });
+  } else { alert ("Data Validation Failed....Save not done.")}
+  }
+
+
+
+  updateComnMast() {
+
+    // this.CheckDataValidations();
+    // if (this.checkValidation===true) {
+    //     alert("Data Validation Sucessfull....\nPutting data to TAX REGIME MASTER  TABLE")
+    // alert ("Cmn Id = "+this.cmnId)
+
+        const formValue: IIsland = this.pumpIslandMasterForm.value;
+        this.service.UpdateCommonMasterSubmit(formValue, this.islandId).subscribe((res: any) => {
+          if (res.code === 200) {
+            alert('RECORD UPDATED SUCCESSFULLY');
+            this.updButton=false;
+          } else {
+            if (res.code === 400) {
+              alert('ERROR OCCOURED IN PROCEESS');
+              this.updButton=true;
+              // this.jaiRegimeMasterForm.reset();
+            }
+          }
+          
+        });
+      // }else{ alert("Data Validation Not Sucessfull....\nData not Saved...")  }
+  }
 
 resetMast() {
   window.location.reload();
@@ -350,12 +351,26 @@ closeMast() {
 }
 
 
+transeData(val) {
+  delete val.divisionId;
+  delete val.loginArray;
+  delete val.loginName;
+  delete val.locName;
+  delete val.ouName;
+  delete val.locationId;
+  // delete val.locId;
+  // delete val.ouId;
+  delete val.deptId;
+  delete val.orgId;
+  return val;
+}
+
 CheckDataValidations(){
 
   const formValue: IIsland = this.pumpIslandMasterForm.value;
 
   formValue.islandCode =this.islandCode.toUpperCase();
-  formValue.islandName=this.islandName.toUpperCase();
+  formValue.description=this.description.toUpperCase();
 
   // formValue.attribute1=this.attribute1.charAt(0).toUpperCase();
   // alert ("code, desc ,attribute1: "+this.code + " , "+this.codeDesc+ " , "+this.attribute1);
@@ -367,12 +382,7 @@ CheckDataValidations(){
     return;
   } 
 
-  if (formValue.cmnType===undefined || formValue.cmnType===null || formValue.cmnType.trim()==='')
-  {
-    this.checkValidation=false; 
-    alert ("TYPE NAME : Should not be null....");
-    return;
-  } 
+ 
 
   if (formValue.islandCode===undefined || formValue.islandCode===null || formValue.islandCode.trim()==='' )
   {
@@ -381,7 +391,7 @@ CheckDataValidations(){
     return;
   } 
 
-  if (formValue.islandName===undefined || formValue.islandName===null || formValue.islandName.trim()==='' )
+  if (formValue.description===undefined || formValue.description===null || formValue.description.trim()==='' )
   {
     this.checkValidation=false; 
     alert ("CODE DESCRIPTION : Should not be null....");

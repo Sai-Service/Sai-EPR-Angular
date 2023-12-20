@@ -4421,8 +4421,8 @@ TransactionTypemiscpPaint(): Observable<any> {
 
   }
 
-  ////////////////////////////////////////Petrol Pump//////////////////////////////////////////////////
-  TankList(): Observable<any> {
+   ////////////////////////////////////////Petrol Pump//////////////////////////////////////////////////
+   TankList(): Observable<any> {
     return this.http.get(this.ServerUrl + '/TankMaster');
   }
 
@@ -4458,6 +4458,11 @@ TransactionTypemiscpPaint(): Observable<any> {
     return this.http.get(this.ServerUrl + `/ppIslandMaster/ByNozleId/${mNozzle}`);
   }
 
+  NozzleFuelTypePick(mNozzleCd): Observable<any> {
+    // http://localhost:8081/NozzelMaster/NZ01
+    return this.http.get(this.ServerUrl + `/NozzelMaster/${mNozzleCd}`);
+  }
+
 
   public PumpSaleAddSubmit(PumpSaleRecord) {
     const options = {
@@ -4469,7 +4474,54 @@ TransactionTypemiscpPaint(): Observable<any> {
   }
 
 
+  getTankList(): Observable<any> {
+    return this.http.get(this.ServerUrl + `/TankMaster`);
+
+    // http://localhost:8081/TankMaster
+  }
+
+  getIslandList(): Observable<any> {
+    return this.http.get(this.ServerUrl + `/ppIslandMaster`);
+
+    // http://localhost:8081/TankMaster
+  }
+
+  getNozzleList(): Observable<any> {
+    return this.http.get(this.ServerUrl + `/NozzelMaster`);
+
+    // http://localhost:8081/TankMaster
+  }
+
+
+  public tankMasterSubmit(tankMasterRecord) {
+    const options = {
+      headers: this.headers
+    };
+    const url = this.ServerUrl + '/TankMaster';
+    return this.http.post(url, tankMasterRecord, options);
+  }
+
+  public islandMasterSubmit(islandMasterRecord) {
+    const options = {
+      headers: this.headers
+    };
+    const url = this.ServerUrl + '/ppIslandMaster';
+    return this.http.post(url, islandMasterRecord, options);
+  }
+
+  public nozzleMasterSubmit(nozzleMasterRecord) {
+    const options = {
+      headers: this.headers
+    };
+    const url = this.ServerUrl + '/NozzelMaster';
+    return this.http.post(url, nozzleMasterRecord, options);
+  }
 
 
 
 }
+
+
+
+
+

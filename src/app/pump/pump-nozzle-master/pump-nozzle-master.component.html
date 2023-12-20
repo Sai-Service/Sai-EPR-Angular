@@ -13,20 +13,21 @@
                    <table class="center">
                  
                     <input hidden    type="number"  formControlName="emplId" class="form-control" [(ngModel)]="emplId">
-                    <input hidden    type="number"  formControlName="cmnId" class="form-control" [(ngModel)]="cmnId">
-    
-                    <tr>
+                    <input hidden    type="number"  formControlName="ouId" class="form-control" [(ngModel)]="ouId">
+                    <input hidden    type="number"  formControlName="divisionId" class="form-control" [(ngModel)]="divisionId">
+                    <input hidden    type="number"  formControlName="locId" class="form-control" [(ngModel)]="locId">
+           
+                    <!-- <tr>
                         <td style="width: 15%" class="LabelFontStyle">Division&nbsp;:&nbsp;</td>
                         <td>
                             <select disabled formControlName="divisionId" id="divisionId" [(ngModel)]="divisionId" class="form-control">
-                                <!-- <option>--Select--</option> -->
                                 <option *ngFor="let sc of  DivisionIDList"  [value]="sc.divisionId">
                                     {{sc.divisionName}}
                                 </option>
                             </select>
                         </td>
 
-                    </tr>
+                    </tr> -->
                     <tr>
     
                         <div *ngIf="displayButton; then saveYes1; else saveYes2"></div>
@@ -39,7 +40,7 @@
                             <td>
                                 <select  formControlName="fuelCode" id="fuelCode" [(ngModel)]="fuelCode" class="form-control" style="background-color: yellow;">
                                     <!-- <option>--Select--</option> -->
-                                    <option *ngFor="let sc of  fuelTypeList"  [value]="sc.segment">
+                                    <option *ngFor="let sc of  fuelTypeList"  [value]="sc.itemId">
                                         {{sc.segment}}
                                     </option>
                                 </select>
@@ -79,7 +80,7 @@
 
                             <td style="width: 15%;" class="LabelFontStyle">Island&nbsp;Code&nbsp;:&nbsp;</td>
                             <td>
-                                <select  formControlName="islandId" id="islandId" [(ngModel)]="islandId" class="form-control" style="background-color: yellow;">
+                                <select  formControlName="pumpName" id="pumpName" [(ngModel)]="pumpName" class="form-control" style="background-color: yellow;">
                                     <!-- <option>--Select--</option> -->
                                     <option *ngFor="let sc of  islandList"  [value]="sc.islandId">
                                         {{sc.islandCode}}-{{sc.description}}
@@ -95,8 +96,16 @@
     
                         <ng-template #upd2>  
                             <td style="width: 15%;" class="LabelFontStyle">Tank&nbsp;Code&nbsp;:&nbsp;</td>
-                            <td><input disabled  formControlName="nz_tank_code" [(ngModel)]='nz_tank_code'  class="form-control" placeholder="" style="width:100%;background-color: yellow;text-transform: uppercase;"></td>
-    
+
+                            
+                            <td>
+                                <select  formControlName="tankId" id="tankId" [(ngModel)]="tankId" class="form-control" style="background-color: yellow;">
+                                    <option *ngFor="let sc of  tankList"  [value]="sc.tankId">
+                                        {{sc.tankName}}
+                                    </option>
+                                </select>
+                            </td>
+
                             <td style="width: 15%;" class="LabelFontStyle">Island&nbsp;Code&nbsp;:&nbsp;</td>
                             <td> <input disabled formControlName="nz_island_code" [(ngModel)]='nz_island_code' value={{nz_island_code}} class="form-control"  placeholder=""  style="width:100%;background-color: yellow;text-transform: uppercase;"> </td>
                   
@@ -148,20 +157,20 @@
     
                                 <div *ngIf="saveButton; then S1; else S2"></div>
                                  <ng-template #S1>
-                                 <td><button type="button" class="btn btn-info" id="register"  (click)="saveComnMast()">Save</button></td>
+                                 <td><button type="button" class="btn btn-info" id="register"  (click)="saveNozzleMast()">Save</button></td>
                                  </ng-template><ng-template #S2></ng-template>
     
                                 </ng-template>
                             <ng-template #Save2>
                                 <div *ngIf="updButton; then U1; else U2"></div>
                                 <ng-template #U1>
-                                     <td><button type="button" class="btn btn-info" id="register"  (click)="updateComnMast()">Update</button></td>
+                                     <td><button disabled type="button" class="btn btn-info" id="register"  (click)="updateNozzleMast()">Update</button></td>
                                 </ng-template> <ng-template #U2></ng-template>
     
                             </ng-template>
                            <td><button type="button" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>
                             <td><button type="button" class="btn btn-info" (click)="closeMast()" >Close</button></td>
-                            <td ><button type="button" class="btn btn-info" id="register" (click)="searchCmnMst()">Search</button></td> 
+                            <td ><button type="button" class="btn btn-info" id="register" (click)="searchMast()">Search</button></td> 
 
                         </tr>
                     </table>
@@ -237,11 +246,11 @@
        <tbody>
             <tr class="GridHeader">
                 <th style="width:5rem" scope="col">Srl&nbsp;No&nbsp;</th>
-                <!-- <th style="width:6rem" scope="col">Regime Id</th> -->
-                <th style="width:10rem;text-align: center;" scope="col">Panel Code</th>
-                <th style="width:20rem;text-align: left;" scope="col">Panel Description</th>
-                <th style="width:10rem;text-align: center;" scope="col">Type</th>
-                <th style="width:10rem;text-align: center;" scope="col">Panel#</th>
+                <th style="width:10rem;text-align: center;" scope="col">Nozzle Id</th>
+                <th style="width:10rem;text-align: center;" scope="col">Nozzle Code</th>
+                <th style="width:20rem;text-align: left;" scope="col">  Island Name</th>
+                <th style="width:10rem;text-align: center;" scope="col">Fuel Type</th>
+                <th style="width:10rem;text-align: center;" scope="col">Tank Code</th>
                 <th style="width:10rem;text-align: center;" scope="col">Start Date</th>
                 <th style="width:10rem;text-align: center;" scope="col">End Date</th>
                 <th style="width:10rem;text-align: center;" scope="col">Status</th>
@@ -251,15 +260,15 @@
        <tr *ngFor="let com of lstcomments let i=index" class="ItemStyle" style="text-decoration:none;font-size: small;">
         
         <td style="text-align: center;">{{i+1}}</td>
-        <!-- <td>{{com.regimeId}}</td> -->
-        <td style="text-align:center">{{com.code}}</td>
-        <td>{{com.codeDesc}}</td> 
-        <td style="text-align:center">{{com.cmnDesc}}</td>
-        <td style="text-align:center">{{com.attribute1}}</td>
+        <td style="text-align:center">{{com.nozzleId}}</td>
+        <td style="text-align:center">{{com.nozzleCode}}</td>
+        <td style="text-align:center">{{com.pumpName}}</td>
+        <td style="text-align:center">{{com.fuelCode}}</td>
+        <td style="text-align:center">{{com.tankId}}</td>
         <td style="text-align:center">{{com.startDate |date:'dd-MM-y'}}</td>
         <td style="text-align:center">{{com.endDate |date:'dd-MM-y'}}</td>
         <td style="text-align:center">{{com.status}}</td>
-        <td><button class="btn btn-secondary" (click)="Select(com.cmnId)">Select</button></td>   
+        <td><button class="btn btn-secondary" (click)="Select(com.nozzleId)">Select</button></td>   
        </tr>
         </table>
     </div>

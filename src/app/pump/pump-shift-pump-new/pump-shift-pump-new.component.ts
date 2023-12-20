@@ -301,8 +301,7 @@ this.service.NozzleList()
          creationdate:this.pipe.transform(this.now, 'yyyy-MM-dd hh:mm:ss'),lasstupdatedby:sessionStorage.getItem('emplId'),
         lastupdatedate:this.pipe.transform(this.now, 'yyyy-MM-dd hh:mm:ss'),  locid:sessionStorage.getItem('locId'),
          nozzleid:nozzleid,nozzle:segmentList1.nozzleCode});
-   
-  }
+     }
 
   onSelectSegment(index,event){
    

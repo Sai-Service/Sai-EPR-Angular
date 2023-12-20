@@ -12,14 +12,16 @@ import { DatePipe } from '@angular/common';
 
 interface INozzle {
   divisionId: number;
-  cmnId:number;
-  cmnTypeId:number;
-  cmnType: string;
-  cmnDesc: string;
+  
+  // cmnTypeId:number;
+  // cmnType: string;
+  // cmnDesc: string;
 
+  nozzleId:number;
   nozzleCode:string;
   nozzleDesc: string;
-  nozzleFueltype: string;
+  fuelCode: number;
+  pumpName:string;
 
   tankId:number;
   islandId: number;
@@ -59,10 +61,10 @@ export class PumpNozzleMasterComponent implements OnInit {
   
    cmnTypeList: any;
 
-  cmnId:number;
-  cmnTypeId:number;
-  cmnType: string;
-  cmnDesc: string;
+  // cmnId:number;
+  // cmnTypeId:number;
+  // cmnType: string;
+  // cmnDesc: string;
 
   loginName:string;
   loginArray:string;
@@ -77,9 +79,11 @@ export class PumpNozzleMasterComponent implements OnInit {
   deptId:number; 
   emplId :number;
 
+  nozzleId:number;
   nozzleCode:string;
   nozzleDesc: string;
-  fuelCode: string;
+  fuelCode: number;
+  pumpName:string;
 
   tankId:number;
   islandId: number;
@@ -99,17 +103,19 @@ export class PumpNozzleMasterComponent implements OnInit {
     this.pumpNozzleMasterForm = fb.group({
       // itemRows: this.fb.array([this.inItemRows()]),
 
-      cmnId:[],
-      cmnTypeId:[],
-      cmnType: ['', [Validators.required]],
-      cmnDesc: ['', [Validators.required]],
+      // cmnId:[],
+      // cmnTypeId:[],
+      // cmnType: ['', [Validators.required]],
+      // cmnDesc: ['', [Validators.required]],
 
+      nozzleId:[],
       nozzleCode:[],
       nozzleDesc: [],
       fuelCode: [],
     
       tankId:[],
       islandId: [],
+      pumpName:[],
     
     
       startDate:[],
@@ -226,56 +232,73 @@ export class PumpNozzleMasterComponent implements OnInit {
 
   }
 
-  saveComnMast() {
 
-    this.CheckDataValidations()
-    
-    if (this.checkValidation===true) {
-       alert("Data Validation Sucessfull....") 
+  saveNozzleMast() {
 
-    const formValue: INozzle = this.pumpNozzleMasterForm.value;
-    this.service.commonMasterSubmit(formValue).subscribe((res: any) => {
-      if (res.code === 200) {
-        alert('RECORD SAVED SUCCESSFULLY');
-        this.saveButton=false;
-        this.pumpNozzleMasterForm.disable();
-        
-      } else {
-        if (res.code === 400) {
-          alert('ERROR : RECORD NOT SAVED.' + res.message);
-          this.saveButton=true;
-        }
-      }
-    });
-  } else { alert ("Data Validation Failed....Save not done.")}
-  }
-
-  // updateComnMast(){alert ("Update ....WIP")}
-
-
-  updateComnMast() {
-
-    // this.CheckDataValidations();
-    // if (this.checkValidation===true) {
-    //     alert("Data Validation Sucessfull....\nPutting data to TAX REGIME MASTER  TABLE")
-    // alert ("Cmn Id = "+this.cmnId)
-
-        const formValue: INozzle = this.pumpNozzleMasterForm.value;
-        this.service.UpdateCommonMasterSubmit(formValue, this.cmnId).subscribe((res: any) => {
-          if (res.code === 200) {
-            alert('RECORD UPDATED SUCCESSFULLY');
-            this.updButton=false;
-          } else {
-            if (res.code === 400) {
-              alert('ERROR OCCOURED IN PROCEESS');
-              this.updButton=true;
-              // this.jaiRegimeMasterForm.reset();
-            }
-          }
+      this.CheckDataValidations()
+      
+      if (this.checkValidation===true) {
+         alert("Data Validation Sucessfull....") 
+  
+      const formValue: INozzle = this.transeData(this.pumpNozzleMasterForm.value);
+      this.service.nozzleMasterSubmit(formValue).subscribe((res: any) => {
+       
+        if (res.code === 200) {
+          alert('RECORD SAVED SUCCESSFULLY');
+          this.saveButton=false;
+          this.pumpNozzleMasterForm.disable();
           
-        });
-      // }else{ alert("Data Validation Not Sucessfull....\nData not Saved...")  }
-  }
+        } else {
+          if (res.code === 400) {
+            alert('ERROR : RECORD NOT SAVED.' + res.message +", "+res.obj);
+            this.saveButton=true;
+          }
+        }
+  
+  
+      });
+    } else { alert ("Data Validation Failed....Save not done.")}
+    }
+  
+  
+  
+    updateNozzleMast() {
+  
+      // this.CheckDataValidations();
+      // if (this.checkValidation===true) {
+      //     alert("Data Validation Sucessfull....\nPutting data to TAX REGIME MASTER  TABLE")
+      // alert ("Cmn Id = "+this.cmnId)
+  
+          const formValue: INozzle = this.pumpNozzleMasterForm.value;
+          this.service.UpdateCommonMasterSubmit(formValue, this.nozzleId).subscribe((res: any) => {
+            if (res.code === 200) {
+              alert('RECORD UPDATED SUCCESSFULLY');
+              this.updButton=false;
+            } else {
+              if (res.code === 400) {
+                alert('ERROR OCCOURED IN PROCEESS');
+                this.updButton=true;
+                // this.jaiRegimeMasterForm.reset();
+              }
+            }
+            
+          });
+        // }else{ alert("Data Validation Not Sucessfull....\nData not Saved...")  }
+    }
+
+    transeData(val) {
+      delete val.divisionId;
+      delete val.loginArray;
+      delete val.loginName;
+      delete val.locName;
+      delete val.ouName;
+      delete val.locationId;
+      // delete val.locId;
+      // delete val.ouId;
+      delete val.deptId;
+      delete val.orgId;
+      return val;
+    }
 
   onOptionsSelected(event: any) {
     this.Status1 = this.pumpNozzleMasterForm.get('status').value;
@@ -292,47 +315,44 @@ export class PumpNozzleMasterComponent implements OnInit {
   }
 
 
-
-  searchCmnMst(){
-
-    // var searchText=this.paintPanelMasterForm.get('cmnType').value;
-    var searchText='Panel'
-    this.service.getCommonLookupSearchNew(searchText,sessionStorage.getItem('divisionId'))
-    .subscribe(
-      data => {
-        this.lstcomments = data;
-        console.log(this.lstcomments);
-        // this.displayButton=false;
+  searchMast() {
+    this.service.getNozzleList()
+      .subscribe(
+        data => {
+          this.lstcomments = data;
+          console.log(this.lstcomments);
         }
-    );
-  }
+      );
+     }
+  
+  
+  Select(nozzleId: number) {
+  
+      this.pumpNozzleMasterForm.reset();
+      this.divisionId =3;
+  
+      let select = this.lstcomments.find(d => d.nozzleId === nozzleId);
+      if (select) {
+        this.pumpNozzleMasterForm.patchValue(select);
+        this.nozzleId = select.nozzleId;
+        // alert ("tankid :" + select.tankId)
+        this.pumpNozzleMasterForm.patchValue({tankId:select.tankId});
 
+        this.displayButton = false;
+      
+     }
+     
+    }
 
+ 
 
-
-Select(cmId: number) {
-  // alert ('cmnId='+cmId)
-  let select = this.lstcomments.find(d => d.cmnId === cmId);
-  if (select) {
-    this.pumpNozzleMasterForm.patchValue(select);
-    this.cmnId=select.cmnId;
-    this.displayButton = false;
-    // this.updButton=true;
-    // this.paintPanelMasterForm.disable();
-    this.pumpNozzleMasterForm.get('status').enable();
-
-    this.display = false;
-  }
-}
-
-onSelectType(cmnTp){
-  let select = this.cmnTypeList.find(d => d.CMNTYPE === cmnTp);
-  if (select) {
-     var cmnTypeId1=  select.CMNTYPEID+1;
-    //  alert ("Desc :" +select.CMNDESC + " , id : "+select.CMNTYPEID + "," +cmnTypeId1);
-    this.pumpNozzleMasterForm.patchValue({cmnDesc:select.CMNDESC ,cmnTypeId :cmnTypeId1 ,application :'ALL'})
-  }
-}
+// onSelectType(cmnTp){
+//   let select = this.cmnTypeList.find(d => d.CMNTYPE === cmnTp);
+//   if (select) {
+//      var cmnTypeId1=  select.CMNTYPEID+1;
+//     this.pumpNozzleMasterForm.patchValue({cmnDesc:select.CMNDESC ,cmnTypeId :cmnTypeId1 ,application :'ALL'})
+//   }
+// }
 
 resetMast() {
   window.location.reload();
@@ -360,12 +380,12 @@ CheckDataValidations(){
     return;
   } 
 
-  if (formValue.cmnType===undefined || formValue.cmnType===null || formValue.cmnType.trim()==='')
-  {
-    this.checkValidation=false; 
-    alert ("TYPE NAME : Should not be null....");
-    return;
-  } 
+  // if (formValue.nozzleId===undefined || formValue.nozzleId===null )
+  // {
+  //   this.checkValidation=false; 
+  //   alert (" NAME : Should not be null....");
+  //   return;
+  // } 
 
   if (formValue.nozzleCode===undefined || formValue.nozzleCode===null || formValue.nozzleCode.trim()==='' )
   {
@@ -374,12 +394,12 @@ CheckDataValidations(){
     return;
   } 
 
-  if (formValue.nozzleDesc===undefined || formValue.nozzleDesc===null || formValue.nozzleDesc.trim()==='' )
-  {
-    this.checkValidation=false; 
-    alert ("CODE DESCRIPTION : Should not be null....");
-    return;
-  } 
+  // if (formValue.nozzleDesc===undefined || formValue.nozzleDesc===null || formValue.nozzleDesc.trim()==='' )
+  // {
+  //   this.checkValidation=false; 
+  //   alert ("CODE DESCRIPTION : Should not be null....");
+  //   return;
+  // } 
 
   if (formValue.status===undefined || formValue.status===null || formValue.status.trim()==='' )
   {
