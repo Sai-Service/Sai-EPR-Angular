@@ -269,7 +269,7 @@ this.service.NozzleList()
     alert(index)
     this.nozzlelineDetailsArray(index).push(this.nozzlelineDetailsGroup());
     var arrline = this.nozzlelineDetailsArray(index)
-    alert(arrline.length+'----Len')
+    // alert(arrline.length+'----Len')
     var hedaerDet = this.pumpShiftSalesForm.get('ppShiftNozzleDetailList') as FormArray;
     var hedaerDet1=hedaerDet.getRawValue();
     var nozzleid = hedaerDet1[index].nozzleid;
