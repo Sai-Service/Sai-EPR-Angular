@@ -4,7 +4,6 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MasterService } from 'src/app/master/master.service';
-import { PumpService } from 'src/app/pump/pump.service';
 
 
 interface IPumpShiftSale{
@@ -16,7 +15,7 @@ interface IPumpShiftSale{
   employeeId:number;
 
   shiftCode :string;
-  nozzleid :number;
+  nozzleId :number;
   islandCode :string;
   openMRS:number;
   closeMRS:number;
@@ -64,8 +63,10 @@ export class PumpShiftSaleComponent implements OnInit {
   public salesPersonList :any[];
   public nozzleList :any[];
   IslandDetails:any;
+  NozFuelTpDetails:any;
+
   shiftCode :string;
-  nozzleid :number;
+  nozzleId :number;
   islandCode:string;
   openMRS:number;
   closeMRS:number;
@@ -86,11 +87,11 @@ export class PumpShiftSaleComponent implements OnInit {
   userList2: any[] = [];
   lastkeydown1: number = 0;
   showItemSearch=false;
-  segmentList:any=[];
 
   
 
   //////////////////////////////////
+  vchModal=true;
   headerValidation=false;
   lineValidation=false;
   duplicateLineItem=false;
@@ -100,10 +101,9 @@ export class PumpShiftSaleComponent implements OnInit {
   display1=true;
   display = true;
   displayButton = true;
-  PaymentModeList: any;
-  accountNoSearch:any=[];
+
   
-  constructor(private service: MasterService,private   fb: FormBuilder, private router: Router,private PumpService1: PumpService) {
+  constructor(private service: MasterService,private   fb: FormBuilder, private router: Router) {
     this.pumpShiftSalesForm = fb.group({
 
       loginArray:[''],
@@ -122,7 +122,8 @@ export class PumpShiftSaleComponent implements OnInit {
       ShiftType:[],
       employeeId:[],
       shiftCode:[],
-      nozzleid:[],
+      nozzleId:[],
+
       totalSale :[],
       totalCashSale:[],
       totalCreditSale:[],
@@ -131,9 +132,9 @@ export class PumpShiftSaleComponent implements OnInit {
       CashSubmitted:[],
       CashDifference:[],
 
-      ppShiftNozzleDetailList: this.fb.array([this.lineDetailsGroup()]),
-      
-      ppShiftVoucherList: this.fb.array([this.voucherDetailsGroup()]),
+      nozzleDtlsList: this.fb.array([this.lineDetailsGroup()]),
+      nozzleLineDtlsList: this.fb.array([this.nozzlelineDetailsGroup()]),
+      shiftVoucherList: this.fb.array([this.voucherDetailsGroup()]),
 
 
     });
@@ -141,58 +142,43 @@ export class PumpShiftSaleComponent implements OnInit {
   lineDetailsGroup() {
     return this.fb.group({
       ShiftEntryId:[''],
-      nozzleid :[''],
-      NozzlidId:[],
+      NozzlidId :[''],
       nozzFuelType:[''],
       nozzIsland :[''],
-      OpeningReading:[0],
-      SystemClosingReading:[0],
-      ManualClosingReading:[0],
-      TotalSaleReading:[0],
-      Difference:[0],
-      locId:[],
+      OpeningReading:[],
+      SystemClosingReading:[],
+      ManualClosingReading:[],
+      TotalSaleReading:[],
+      Difference:[],
       Remarks:[],
       locid:[],
-      ppShiftNozleLinesList: this.fb.array([]),
      });
   }
 
- 
-
-
   nozzlelineDetailsGroup() {
     return this.fb.group({
-     
+      ShiftEntryId:[''],
       NozzlidId :[''],
-    
-      shiftnozzlelinesid:[],
-      shiftnozzleid:[],
-      nozzle:[],
-      shiftentryid:[],
-      nozzleid:[''],
-      itemid:[],
-      segment:[],
-      qty:[0],
-      rate:[0],
-      saletypeid:[],
-      customerid:[],
-      customercode:[],
-      vehicleno:[],
-      creditslipno:[],
+      nozzFuelType:[''],
+      nozzIsland :[''],
+      OpeningReading:[],
+      SystemClosingReading:[],
+      ManualClosingReading:[],
+      TotalSaleReading:[],
+      Difference:[],
+      Remarks:[],
       locid:[],
-      lineAmt:[],
-      payType:[]
      });
   }
 
   voucherDetailsGroup() {
     return this.fb.group({
-      shiftvoucherid:[],
-      shiftentryid:[],
-      shiftvoucherno:[],
+      ShiftEntryId:[],
+      ShiftVoucherNo:[],
       locid:[],
-      description:[],
-      amount:[],
+      Description:[],
+      Amount:[],
+      
      });
   }
 
@@ -201,16 +187,15 @@ export class PumpShiftSaleComponent implements OnInit {
 
 
  lineDetailsArray() :FormArray{
-    return <FormArray>this.pumpShiftSalesForm .get('ppShiftNozzleDetailList')
+    return <FormArray>this.pumpShiftSalesForm .get('nozzleDtlsList')
   }
 
-  nozzlelineDetailsArray(i:number) :FormArray{
-    // return <FormArray>this.lineDetailsArray().at(i).get('ppShiftNozleLinesList') as FormArray;
-    return this.lineDetailsArray().at(i).get("ppShiftNozleLinesList") as FormArray
+  nozzlelineDetailsArray() :FormArray{
+    return <FormArray>this.pumpShiftSalesForm .get('nozzleLineDtlsList')
   }
 
   voucherDetailsArray() :FormArray{
-    return <FormArray>this.pumpShiftSalesForm .get('ppShiftVoucherList')
+    return <FormArray>this.pumpShiftSalesForm .get('shiftVoucherList')
   }
  
 
@@ -238,18 +223,11 @@ export class PumpShiftSaleComponent implements OnInit {
 
 
  
-this.service.ShiftList().subscribe(
+this.service.ShiftList()
+.subscribe(
   data => {
     this.shiftList = data;
     console.log(this.shiftList);
-  }
-);
-
-this.service.PaymentModeList()
-.subscribe(
-  data => {
-    this.PaymentModeList = data;
-    console.log(this.PaymentModeList);
   }
 );
 
@@ -268,56 +246,76 @@ this.service.NozzleList()
     console.log(this.nozzleList);
   });
 
-  this.PumpService1.segmentListFn()
-.subscribe(
-  data => {
-    this.segmentList = data;
-    console.log(this.segmentList);
-  });
-
-  
-
   }
 
   search(shiftno){
     alert ("Shift no:"+shiftno);
-    
   }
-
-
- 
 
   
-  saveSale1(){
-    let jsonData = this.pumpShiftSalesForm.getRawValue();
-    this.PumpService1.savePetrolPump(JSON.stringify(jsonData)).subscribe((res: any) => {
-      if (res.code === 200) {}
-    })
+  
+
+  voucherFormLoad(){
+    this.checkHeaderValidations();
+    if (this.headerValidation ==false) {
+      alert ("Header Details not Entered.Please check and proceed...");
+     }
   }
 
-  closeSale(){}
+  saveSale1(){}
 
-  resetSale(){}
+
+  closeSale() {
+    this.router.navigate(['admin']);
+  }
+
+  resetSale() {
+    window.location.reload();
+  }
 
   onSelectedNozzle(index){
-    alert(index)
-    var patch = this.pumpShiftSalesForm.get('ppShiftNozzleDetailList') as FormArray;
-    var qtyLineArr = this.pumpShiftSalesForm.get('ppShiftNozzleDetailList').value;
-    var nozId =qtyLineArr[index].NozzlidId
-    alert ("nozzle id :"+ nozId + " index : "+index);
+    var patch = this.pumpShiftSalesForm.get('nozzleDtlsList') as FormArray;
+    var qtyLineArr = this.pumpShiftSalesForm.get('nozzleDtlsList').value;
+    var nozId =qtyLineArr[index].NozzlidId;
+    var nozCode = qtyLineArr[index].nozzleCode;
+
+    (patch.controls[index]).patchValue({ nozzIsland: "" ,nozzFuelType:""});
+
+    // alert ("nozzle id :"+ nozId + " index : "+index);
+
+     let select = this.nozzleList.find(d => d.nozzleId === nozId);
+      this.pumpShiftSalesForm.patchValue(select);
+      if (select != undefined) {
+        console.log(select);
+        // (patch.controls[index]).patchValue({ nozzFuelType: select.pumpName});
+        // alert ("Nozzle Code :" +select.nozzleCode + " noz id :" +nozId);
+        
+      }
+
 
     this.service.NozzleIslandPick(nozId)
     .subscribe(
       data => {
         this.IslandDetails = data
         console.log(this.IslandDetails);
-        alert( this.IslandDetails.islandCode);
-        (patch.controls[index]).patchValue({
-          nozzFuelType: data.description,
-          nozzIsland: data.islandCode,
-        })
+        // alert( this.IslandDetails.islandCode);
+        (patch.controls[index]).patchValue({ nozzIsland: this.IslandDetails.islandCode +"-"+this.IslandDetails.description});
       });
+
+      this.service.NozzleFuelTypePick(select.nozzleCode)
+      .subscribe(
+        data => {
+          this.NozFuelTpDetails = data
+          console.log(this.NozFuelTpDetails);
+          // alert( this.NozFuelTpDetails.pumpName);
+          (patch.controls[index]).patchValue({ nozzFuelType: this.NozFuelTpDetails.pumpName});
+        });
+
+   
      
+
+
+      // alert( this.IslandDetails.islandCode);
       // (patch.controls[index]).patchValue({ nozzIsland: this.IslandDetails.islandCode +"-"+this.IslandDetails.description});
       // this.pumpShiftSalesForm.patchValue(this.IslandDetails);
  
@@ -353,18 +351,18 @@ this.service.NozzleList()
   }
 
   addRowV(index) {
+    var VchLineArr1 = this.pumpShiftSalesForm.get('shiftVoucherList').value;
+    var lineValue1=VchLineArr1[index].ShiftVoucherNo;
+
+    this.CheckForDuplicateLineItem(lineValue1,index)
 
     // alert("Addrow duplicate item status :"+this.duplicateLineItem);
     if(this.duplicateLineItem ===false) {
   
-    // this.CheckLineValidations(index);
-    this.lineValidation=true;
+    this.CheckVoucherLineValidations(index);
     if (this.lineValidation)
-      {
-  
-          this.voucherDetailsArray().push(this.voucherDetailsGroup());
-  
-      }
+      { this.voucherDetailsArray().push(this.voucherDetailsGroup());}
+
     } else {alert("Duplicate Line Item Found : Remove Duplicate line and Proceed..." + this.duplicateLineItem);
   }
   }
@@ -372,108 +370,82 @@ this.service.NozzleList()
   
   
   RemoveRowV(index) {
-    if (index===0){
-  
+    if (index===0){ } else { this.voucherDetailsArray().removeAt(index); }
     }
-    else {
-      this.voucherDetailsArray().removeAt(index);
-    }
+
   
+
+
+  CheckVoucherLineValidations(i) {
+
+     this.checkHeaderValidations();
+     if (this.headerValidation) {
+  
+    var VchLineArr1 = this.pumpShiftSalesForm.get('shiftVoucherList').value;
+    var lineValue1=VchLineArr1[i].ShiftVoucherNo;
+    var lineValue2=VchLineArr1[i].Description;
+    var lineValue3=VchLineArr1[i].Amount;
+     var j=i+1;
+    if(lineValue1===undefined || lineValue1===null || lineValue1==='' ){
+      alert("Line-"+j+ " VOUCHER NO :  Should not be null value");
+      this.lineValidation=false;
+      return; }
+
+    if(lineValue2===undefined || lineValue2===null || lineValue2==='' ){
+      alert("Line-"+j+ " DESCRIPTION:  Should not be null value");
+      this.lineValidation=false;
+      return; }
+
+    if(lineValue3===undefined || lineValue3===null || lineValue3<=0){
+      alert("Line-"+j+ " AMOUNT :  Should  be grater than Zero");
+      this.lineValidation=false;
+      return;}
+
+    if(this.duplicateLineItem===true) {this.lineValidation=false;}else{this.lineValidation=true;}
+    } 
+
+    else { alert ("Header Details not Entered .Please check");}
   }
 
-  calculationFn(i){
-    // alert(i);
-    // debugger;
-    var arrayControlNew = this.pumpShiftSalesForm.get('ppShiftNozzleDetailList') as FormArray;
-      var arrayControl = arrayControlNew.getRawValue();
-      var openQtySys = arrayControl[i].OpeningReading;
-      var closeQtyMan = arrayControl[i].ManualClosingReading;
-      var SystemClosingReading = arrayControl[i].SystemClosingReading;
-      // alert(pricingQty)
-      if (openQtySys === null || openQtySys === undefined || openQtySys === '') {
-        return;
+
+
+    CheckForDuplicateLineItem(mVchNo,mIndex){
+      var vchLineArr = this.pumpShiftSalesForm.get('shiftVoucherList').value;
+      var patch = this.pumpShiftSalesForm.get('shiftVoucherList') as FormArray;
+      var len1=vchLineArr.length;
+
+      for (let i = 0; i < len1 ; i++)
+        {
+          var linevchNo=vchLineArr[i].ShiftVoucherNo;
+           if(mIndex != i) {
+           if (linevchNo===mVchNo) {
+             this.duplicateLineItem=true;
+             alert(linevchNo+" DUPLICATE line item. Please check item in Line - " +(i+1));
+              break;
+            }
+
+            }else{this.duplicateLineItem=false;}
+             this.duplicateLineItem=false; }
       }
-      if (openQtySys <= 0) {
-        alert("Please enter quantity more than zero");
-        return;
+
+      checkHeaderValidations()  {
+        const formValue: IPumpShiftSale = this.pumpShiftSalesForm.value
+
+        if (formValue.ShiftType===undefined || formValue.ShiftType===null )
+        {
+           this.headerValidation=false;
+           alert ("SHIFT TYPE : Should not be null....");
+            return;
+         }
+
+         if (formValue.employeeId===undefined || formValue.employeeId===null )
+         {
+            this.headerValidation=false;
+            alert ("SALES PERSON : Should not be null....");
+             return;
+          }
+            this.headerValidation=true;
       }
-     
 
-    var totaQty = closeQtyMan-openQtySys;
-    var diffQty= closeQtyMan-SystemClosingReading;
-    var patch = this.pumpShiftSalesForm.get('ppShiftNozzleDetailList') as FormArray;
-    patch.controls[i].patchValue({ TotalSaleReading: totaQty,Difference:diffQty });
-  }
-
-  public mapProducts = new Map<string, any[]>();
-  openSunDetailsFn(i){
-    // alert(i)
-    console.log(this.nozzleList);
-    
-    var arrayControlNew = this.pumpShiftSalesForm.get('ppShiftNozzleDetailList') as FormArray;
-    var arrayControl = arrayControlNew.getRawValue();
-    var nozId= arrayControl[i].NozzlidId;
-    // alert(nozId);
-    var selectNozzle = this.nozzleList.find((nozList)=>nozList.nozzleId=nozId);
-    console.log(selectNozzle);
-        this.nozzlelineDetailsArray(i).push(this.nozzlelineDetailsGroup());
-    this.nozzlelineDetailsArray(i).controls[i].patchValue({nozzle: selectNozzle.nozzleCode});
-    console.log(this.pumpShiftSalesForm.controls.ppShiftNozleLinesList);
-    const courseControl = this.pumpShiftSalesForm.get('ppShiftNozleLinesList') as FormArray;
-    const course = courseControl.at(i).get('segment').value;
-    console.log(course);
-    const products = this.mapProducts.get(course);
-    alert(products)
-    console.log(products);
-  }
-
-
-  onSelectSegment(i,event){
-   
-var seg = event.target.value;
-    var value = seg.substr(seg.indexOf(':') + 1, seg.length).trim();
-    var selectitemList = this.segmentList.find((segList)=>segList.segment=value);
-    console.log(selectitemList);
-    
-    var patch = this.pumpShiftSalesForm.get('ppShiftNozleLinesList') as FormArray;
-    // patch.controls[i].patchValue({ itemid: selectitemList.itemId });
-    this.nozzlelineDetailsArray(i).controls[i].patchValue({itemid: selectitemList.itemId })
-  }
-
-  lineCalculationFn(i){
-    alert(i+'--------')
-    var arrayControlNew = this.pumpShiftSalesForm.get('ppShiftNozleLinesList') as FormArray;
-    var arrayControl = arrayControlNew.getRawValue();
-    // var arrayControl= this.lineDetailsArray().at(i).get("ppShiftNozleLinesList") as FormArray;
-    console.log(arrayControl);
-    
-    var qty = arrayControl[i].qty;
-    // alert(qty)
-    var rate = arrayControl[i].rate;
-    var totAmt = qty*rate;
-    var patch = this.pumpShiftSalesForm.get('ppShiftNozleLinesList') as FormArray;
-    // patch.controls[i].patchValue({ lineAmt: totAmt });
-    this.nozzlelineDetailsArray(i).controls[i].patchValue({lineAmt: totAmt})
-  }
-
-
-  CustAccountNoSearch(i,event){
-    alert(i+'---------'+event.target.value)
-    var accountNo=event.target.value;
-    this.service.custAccountNoSearch(accountNo, sessionStorage.getItem('ouId'), sessionStorage.getItem('divisionId'))
-    .subscribe(
-      data => {
-        this.accountNoSearch = data.obj;
-        var patch = this.pumpShiftSalesForm.get('ppShiftNozleLinesList') as FormArray;
-        // patch.controls[i].patchValue({ customerid: data.obj[0].customerId });
-        this.nozzlelineDetailsArray(i).controls[i].patchValue({customerid: data.obj[0].customerId })
-      }
-    )
-
-  }
-
-  voucherDetails(){
-
-  }
 
 }
