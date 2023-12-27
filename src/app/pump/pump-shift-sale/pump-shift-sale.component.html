@@ -1,4 +1,4 @@
-<div class="center">
+<!-- <div class="center"> -->
   <form [formGroup]="pumpShiftSalesForm" (ngSubmit)="pumpShiftSales(pumpShiftSalesForm.value)">
   <table style="width: 100%;background-color: white;">
     <tr>
@@ -20,6 +20,31 @@
   </table>
 
 
+  <div class="classic-tabs">
+    <ul class="nav tabs-white nav-fill" role="tablist" style="padding: 0px;">
+        <li class="nav-item">
+            <a class="nav-link waves-light active" data-toggle="tab" href="#hedaersDetails" role="tab">Headers Details</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link waves-light" data-toggle="tab" href="#nozzleDetails" role="tab">Nozzle Details</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link waves-light" data-toggle="tab" href="#nozzleLineDetails" role="tab">Nozzle Line Details</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link waves-light" data-toggle="tab" href="#voucherDetails" role="tab"  (click)="voucherFormLoad()" >Voucher Details</a>
+    </li>
+
+    </ul>
+
+
+
+ 
+  <div class="tab-content rounded-bottom">
+
+  <div class="tab-pane fade in show active" id="hedaersDetails" role="tabpanel">
+
   <fieldset class="RFS">
       <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;font-weight: bold;color: black;">Header Details</legend>
 
@@ -33,7 +58,6 @@
          
          <td>
           <select  formControlName="ShiftType" id="ShiftType" [(ngModel)]="ShiftType" class="form-control" style="background-color: yellow;">
-              <!-- <option>--Select--</option> -->
               <option *ngFor="let sc of  shiftList"  [(ngValue)]="sc.cmnId">
                   {{sc.code}}-{{sc.codeDesc}}
               </option>
@@ -45,7 +69,6 @@
       <td>
           <select  formControlName="employeeId" id="employeeId" [(ngModel)]="employeeId" class="form-control" style="background-color: yellow;">
               <option *ngFor="let sc of  salesPersonList"  [(ngValue)]="sc.emplId">
-                  <!-- {{sc.emplId}}- -->
                   {{sc.ticketNo}}-{{sc.fullName}}
               </option>
           </select>
@@ -70,11 +93,10 @@
       <td><input         type="number" class="form-control" formControlName="CashSubmitted"  [(ngModel)]="CashSubmitted"   style="background-color: yellow;"></td>
       <td style="width: 15%" class="LabelFontStyle">Cash&nbsp;Diff:</td>
       <td><input disabled type="number" class="form-control" formControlName="CashDifference"  [(ngModel)]="CashDifference"  ></td>
-      <!-- <td></td><td><button  type="button" class="btn btn-info" (click)="saveSale()"  style="width: fit-content; text-align: center;">Voucher Details</button></td> -->
       <td></td>
 
       <td>
-          <button type="button"  class="btn btn-primary" 
+          <button disabled type="button"  class="btn btn-primary" 
           data-toggle="modal" data-target="#ShiftvoucherDetails"  (click)="voucherFormLoad()" style="width: fit-content;color: black;">
           &nbsp;Voucher Details</button>
       </td>
@@ -83,13 +105,18 @@
   </table>
   </fieldset>
 
+  </div>
   
+  
+  
+
+
+
+<div class="tab-pane fade" id="nozzleDetails" role="tabpanel">
   <fieldset class="RFS">
-      <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">NOZZLE DETAILS</legend>
-     
+  <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">NOZZLE DETAILS</legend>
 
   <div class="center">
-      <!-- <br> -->
      <div class="center" formArrayName="nozzleDtlsList">
 
           <div class="grid_scroll">
@@ -146,6 +173,150 @@
   </div>
 
   </fieldset>
+</div>
+
+<div class="tab-pane fade" id="nozzleLineDetails" role="tabpanel">
+  <fieldset class="RFS">
+  <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">NOZZLE LINE DETAILS</legend>
+
+  <div class="center">
+     <div class="center" formArrayName="nozzleLineDtlsList">
+
+          <div class="grid_scroll">
+
+              <table style="width: 100%; border: solid 1px Gray" class="auto-style4"
+                        cellspacing="0" cellpadding="4" rules="all" class="center">
+                        <thead>
+                          <tr class="GridHeader">
+                            <th style="width: fit-content;"scope="col">Srl#</th>
+                            <th style="width: 100px;text-align: center;"scope="col">Nozzle</th>
+                            <th style="width: 100px;text-align: center;"scope="col">Island</th>
+                            <th style="width: 100px;text-align: center;"scope="col">Item</th>
+                            <th style="width: 100px;text-align: center;"scope="col">Qty</th>
+                            <th style="width: 100px;text-align: center;"scope="col">Rate</th>
+                            <th style="width: 100px;text-align: center;"scope="col">Amount</th>
+                            <th style="width: 100px;text-align: center;"scope="col">Type</th>
+                            <th style="width: 100px;text-align: center;"scope="col">Customer Code</th>
+                            <th style="width: 100px;text-align: center;"scope="col">Slip Number</th>
+                            <th style="width: 100px;text-align: center;"scope="col">Vehicle No</th>
+                            <th style="width: 3rem" scope="col">Add+</th>
+                            <th style="width: 3rem" scope="col">Del-</th>
+                        </tr>
+                        </thead>
+
+                      <tr *ngFor="let group of nozzlelineDetailsArray().controls; let J= index" [formGroupName]="J">
+
+                          <input hidden type="text" hidden formControlName="ShiftEntryId">
+                          <input hidden  type="text" formControlName="locId" [(ngModel)]="locId" class="form-control" >
+                         
+                          <td style="text-align: center;width: 2rem;">{{J+1}}</td>
+                        
+                          <td>
+                            <select  formControlName="NozzlidId" id="NozzlidId"  class="form-control" (ngModelChange)="onSelectedNozzle(i)"  (change)="onSelectedNozzle(i)"   style="background-color: yellow;">
+                                <option *ngFor="let sc of  nozzleList"  [(ngValue)]="sc.nozzleId">
+                                  {{sc.nozzleId}}-{{sc.nozzleCode}}
+                                </option>
+                            </select>
+                         </td>
+                         <td><input readonly type="string" class="form-control" formControlName="nozzIsland" ></td>
+                         <td><input readonly type="string" class="form-control" formControlName="nozzFuelType" ></td>
+
+                         <td><input   style="width: 100px;text-align: right;" type="number" formControlName="qty"  class="form-control" (change)="validateLineQty(j)"  placeholder="Qty"  ></td>
+                         <td><input   style="width: 100px;text-align: right;" type="number" formControlName="rate"  class="form-control" (change)="validateLineRate(j)"  placeholder="UnitRate"  ></td>
+                         <td><input   readonly  style="width: 100px;text-align: right;" type="number" formControlName="lineAmt"  class="form-control"  ></td>
+                         <td> <select  formControlName="payType" id="payType" [(ngModel)]="payType" class="form-control"  style="background-color: yellow;">
+                              <option disabled>--Select-- </option>
+                              <option  *ngFor="let sc of  PaymentModeList" [ngValue]="sc.lookupValue">
+                                  {{sc.lookupValue}}
+                              </option>
+                          </select>
+                          </td>
+                        
+                        
+                         <td><input   style="width: 100px;text-align: right;" type="number" formControlName="customerId"  class="form-control"   placeholder=""  ></td>
+                         <td><input   style="width: 100px;text-align: right;" type="text" formControlName="slipNumber"  class="form-control"   placeholder=""  ></td>
+                         <td><input   style="width: 100px;text-align: right;" type="text" formControlName="vehicleNumber"  class="form-control"   placeholder=""  ></td>
+
+                         <!-- <td><button type="button" class="btn btn-info" (click)="closeSale()">Details</button></td> -->
+                         <td><button type="submit" class="btn btn-info" (click)="addRowNL(j)" (keydown.shift.arrowdown)="addRowNL(j)" style="width: min-content;"><i class="fa fa-plus"></i></button></td>
+                         <td><button type="submit" class="btn btn-info" (click)="RemoveRowNL(j)" style="width: min-content;"><i class="fa fa-trash"></i></button></td>
+
+                        </tr>
+              </table>
+          </div>
+     </div>
+  </div>
+
+  </fieldset>
+</div>
+
+
+
+<div class="tab-pane fade" id="voucherDetails" role="tabpanel">
+ 
+  <fieldset class="RFS">
+  <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">VOUCHER DETAILS</legend>
+
+  <div class="center">
+     <!-- <div class="center" formArrayName="shiftVoucherList"> -->
+
+          <div class="grid_scroll">
+
+              <!-- <table style="width: 100%; border: solid 1px Gray" class="auto-style4"
+                        cellspacing="0" cellpadding="4" rules="all" class="center"> -->
+                       
+                        <table class="center">
+                        <tbody>
+                          <tr class="GridHeader">
+                              <th style="width:2rem" scope="col">Srl#</th>
+                              <th style="width:6rem" scope="col">VoucherNo</th>
+                              <th style="width:20rem" scope="col">Descreption</th>
+                              <th style="width:6rem" scope="col">Amount</th>
+                              <th style="width:2rem" scope="col">Add+</th>
+                              <th style="width:2rem" scope="col">Del-</th>
+
+                          </tr>
+                      </tbody>
+
+                      <!-- <tr *ngFor="let group of voucherDetailsArray().controls; let k= index" [formGroupName]="k">
+                        <ng-container *ngFor="let group of voucherDetailsArray().controls; let l= index"
+                        [formGroupName]="l" class="auto-style5"> -->
+
+                        <ng-container class="center" formArrayName="shiftVoucherList">
+                        <ng-container *ngFor="let group of voucherDetailsArray().controls; let k= index"
+                              [formGroupName]="k" class="auto-style5">
+
+                      <tr>
+                        <td style="text-align: center;width: 2rem;">{{k+1}}</td>
+                        <td><input  style="width: 150px;height: 25px;text-align: left;" type="text"    formControlName="ShiftVoucherNo" class="form-control"></td>
+                        <td><input  style="width: 500px;height: 25px;text-align: left;" type="text"    formControlName="Description" class="form-control"></td>
+                        <td><input  style="width: 150px;height: 25px;text-align: right;" type="number"    formControlName="Amount" class="form-control"></td>
+                        
+                        <div *ngIf="headerValidation; then vModalYes; else vModalNo"> </div>
+                        <ng-template #vModalYes>
+                        <td><button type="submit" class="btn btn-info" (click)="addRowV(k)" (keydown.shift.arrowdown)="addRowV(k)" style="width: min-content;"><i class="fa fa-plus"></i></button></td>
+                        <td><button type="submit" class="btn btn-info" (click)="RemoveRowV(k)" style="width: min-content;"><i class="fa fa-trash"></i></button></td>
+                        </ng-template>
+                        <ng-template #vModalNo>
+                          <td><button disabled type="submit" class="btn btn-info" (click)="addRowV(k)" (keydown.shift.arrowdown)="addRowV(k)" style="width: min-content;"><i class="fa fa-plus"></i></button></td>
+                          <td><button disabled type="submit" class="btn btn-info" (click)="RemoveRowV(k)" style="width: min-content;"><i class="fa fa-trash"></i></button></td>
+                        </ng-template>
+                      </tr>
+
+                      </ng-container>
+                      </ng-container>
+                      
+                      </table>
+          </div>
+
+                    </div>
+               
+               </fieldset>
+             </div>
+  </div>
+  </div>
+
+  
 
   <table class="center">
       <tr>
@@ -268,5 +439,5 @@
 </div>
 <!-- ----------------------------------------------------- -->
   </form>
-</div>
+<!-- </div> -->
 

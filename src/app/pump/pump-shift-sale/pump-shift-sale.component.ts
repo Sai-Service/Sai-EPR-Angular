@@ -64,6 +64,8 @@ export class PumpShiftSaleComponent implements OnInit {
   public nozzleList :any[];
   IslandDetails:any;
   NozFuelTpDetails:any;
+  PaymentModeList: any=[];
+
 
   shiftCode :string;
   nozzleId :number;
@@ -159,14 +161,16 @@ export class PumpShiftSaleComponent implements OnInit {
     return this.fb.group({
       ShiftEntryId:[''],
       NozzlidId :[''],
-      nozzFuelType:[''],
       nozzIsland :[''],
-      OpeningReading:[],
-      SystemClosingReading:[],
-      ManualClosingReading:[],
-      TotalSaleReading:[],
-      Difference:[],
-      Remarks:[],
+      nozzFuelType:[''],
+      qty :[''],
+      rate:[],
+      lineAmt:[],
+      payType:[],
+      customerId:[],
+      slipNumber:[],
+      vehicleNumber:[],
+      remarks:[],
       locid:[],
      });
   }
@@ -246,6 +250,14 @@ this.service.NozzleList()
     console.log(this.nozzleList);
   });
 
+  this.service.PaymentModeList()
+  .subscribe(
+    data => {
+      this.PaymentModeList = data;
+      console.log(this.PaymentModeList);
+    }
+  );
+
   }
 
   search(shiftno){
@@ -256,6 +268,7 @@ this.service.NozzleList()
   
 
   voucherFormLoad(){
+    // alert ("Clicked on Voucher Tab");
     this.checkHeaderValidations();
     if (this.headerValidation ==false) {
       alert ("Header Details not Entered.Please check and proceed...");
@@ -278,6 +291,8 @@ this.service.NozzleList()
     var qtyLineArr = this.pumpShiftSalesForm.get('nozzleDtlsList').value;
     var nozId =qtyLineArr[index].NozzlidId;
     var nozCode = qtyLineArr[index].nozzleCode;
+
+    this.CheckForDuplicateLineItemNz(nozId,index);
 
     (patch.controls[index]).patchValue({ nozzIsland: "" ,nozzFuelType:""});
 
@@ -321,7 +336,26 @@ this.service.NozzleList()
  
   }
 
+  addRowNL(index) { 
+    this.nozzlelineDetailsArray().push(this.nozzlelineDetailsGroup());
+  }
+
+  RemoveRowNL(index) {
+    if (index===0){
+  
+    }
+    else {
+      this.nozzlelineDetailsArray().removeAt(index);
+    }
+  
+  }
+
+
   addRow(index) {
+    var NozzLineArr1 = this.pumpShiftSalesForm.get('nozzleDtlsList').value;
+    var lineValue1=NozzLineArr1[index].NozzlidId;
+
+    this.CheckForDuplicateLineItemNz(lineValue1,index)
 
     // alert("Addrow duplicate item status :"+this.duplicateLineItem);
     if(this.duplicateLineItem ===false) {
@@ -334,7 +368,7 @@ this.service.NozzleList()
           this.lineDetailsArray().push(this.lineDetailsGroup());
   
       }
-    } else {alert("Duplicate Line Item Found : Remove Duplicate line and Proceed..." + this.duplicateLineItem);
+    } else {alert("Duplicate Line Item Found : Remove Duplicate line and Proceed...");
   }
   }
   
@@ -407,6 +441,25 @@ this.service.NozzleList()
     else { alert ("Header Details not Entered .Please check");}
   }
 
+  CheckForDuplicateLineItemNz(mNzNo,mIndex){
+    var nzLineArr = this.pumpShiftSalesForm.get('nozzleDtlsList').value;
+    var patch = this.pumpShiftSalesForm.get('nozzleDtlsList') as FormArray;
+    var len1=nzLineArr.length;
+
+    for (let i = 0; i < len1 ; i++)
+      {
+        var linevnzNo=nzLineArr[i].NozzlidId;
+         if(mIndex != i) {
+         if (linevnzNo===mNzNo) {
+           this.duplicateLineItem=true;
+           alert(linevnzNo+" DUPLICATE line item Selected. Please check item in Line - " +(i+1));
+          //  this.RemoveRow(mIndex);
+            break;
+          }
+
+          }else{this.duplicateLineItem=false;}
+           this.duplicateLineItem=false; }
+    }
 
 
     CheckForDuplicateLineItem(mVchNo,mIndex){
@@ -425,8 +478,11 @@ this.service.NozzleList()
             }
 
             }else{this.duplicateLineItem=false;}
-             this.duplicateLineItem=false; }
+             this.duplicateLineItem=false; 
+        }
       }
+
+
 
       checkHeaderValidations()  {
         const formValue: IPumpShiftSale = this.pumpShiftSalesForm.value
@@ -446,6 +502,15 @@ this.service.NozzleList()
           }
             this.headerValidation=true;
       }
+
+
+      validateQtyOpen(){}
+      validateQtyClose(){ }
+
+      validateLineQty(){}
+      validateLineRate(){}
+
+
 
 
 }
