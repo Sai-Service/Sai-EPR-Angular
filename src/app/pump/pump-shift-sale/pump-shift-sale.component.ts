@@ -386,7 +386,7 @@ this.service.NozzleList()
         }
   } });
 
-  // this.pumpShiftSalesForm.disable();
+  this.pumpShiftSalesForm.disable();
 
 }
   closeSale() {
