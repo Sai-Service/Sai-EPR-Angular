@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { NgForm } from '@angular/forms';
@@ -10,39 +11,32 @@ import { MasterService } from 'src/app/master/master.service';
 import { DatePipe } from '@angular/common';
 
 
-interface ITank {
+interface IDispmaster {
   divisionId: number;
-  // cmnId:number;
-  // cmnTypeId:number;
-  // cmnType: string;
-  // cmnDesc: string;
+  cmnId:number;
+  cmnTypeId:number;
+  cmnType: string;
+  cmnDesc: string;
 
-  tankId:number;
-  tankName:string;
-  description: string;
-  fuelType: string;
-  physicalLoc: string;
+  dipCode:string;
+  dipDesc:string;
+  tank1: string;
+ 
 
-  length:number;
-  attribute2: number;
-  width:number;
-  tankDipCode: string;
-
-  startDate:Date;
+  startDate:string;
   endDate:string,
   status:string;
-
   
 }
 
 @Component({
-  selector: 'app-pump-tank-master',
-  templateUrl: './pump-tank-master.component.html',
-  styleUrls: ['./pump-tank-master.component.css']
+  selector: 'app-pump-dip-master',
+  templateUrl: './pump-dip-master.component.html',
+  styleUrls: ['./pump-dip-master.component.css']
 })
+export class PumpDipMasterComponent implements OnInit {
 
-export class PumpTankMasterComponent implements OnInit {
-  pumpTankMasterForm :FormGroup;
+  pumpDipMasterForm :FormGroup;
 
   pipe = new DatePipe('en-US');
   now = Date.now();
@@ -56,14 +50,14 @@ export class PumpTankMasterComponent implements OnInit {
   public applicationList: Array<string> = [];
   public DivisionIDList: Array<string> = [];
   public statusList : Array<string> = [];
-  public fuelTypeList: Array<string> = [];
+  public tankList: Array<string> = [];
+  public nozzleList: Array<string> = [];
+   cmnTypeList: any;
 
-  //  cmnTypeList: any;
-
-  // cmnId:number;
-  // cmnTypeId:number;
-  // cmnType: string;
-  // cmnDesc: string;
+  cmnId:number;
+  cmnTypeId:number;
+  cmnType: string;
+  cmnDesc: string;
 
   loginName:string;
   loginArray:string;
@@ -78,20 +72,11 @@ export class PumpTankMasterComponent implements OnInit {
   deptId:number; 
   emplId :number;
 
-  tankId:number;
-  tankName:string;
-  description: string;
-  fuelType: string;
-  physicalLoc: string;
-
-  length:number;
-  attribute2: number;
-  width:number;
-  tankDipCode: string;
+  dipCode:string;
+  dipDesc:string;
+  tank1: string;
 
   
-
-
   displayInactive = true;
   Status1: any;
   inactiveDate: Date;
@@ -101,25 +86,18 @@ export class PumpTankMasterComponent implements OnInit {
   saveButton=true;
   updButton=true;
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
-    this.pumpTankMasterForm = fb.group({
+    this.pumpDipMasterForm = fb.group({
       // itemRows: this.fb.array([this.inItemRows()]),
 
-      // cmnId:[],
-      // cmnTypeId:[],
-      // cmnType: ['', [Validators.required]],
-      // cmnDesc: ['', [Validators.required]],
+      cmnId:[],
+      cmnTypeId:[],
+      cmnType: ['', [Validators.required]],
+      cmnDesc: ['', [Validators.required]],
 
-      tankId:[],
-      tankName:[],
-      description: [],
-      fuelType: [],
-      physicalLoc: [],
-    
-      length:[],
-      attribute2: [],
-      width:[],
-      tankDipCode: [],
-    
+      dipCode:[],
+      dipDesc:[],
+      tank1: [],
+       
       startDate:[],
       endDate:[],
       status:[],
@@ -143,21 +121,7 @@ export class PumpTankMasterComponent implements OnInit {
  
 
 
-
-  // inItemRows() {
-  //   return this.fb.group({
-  //     cmnType: [''],
-  //     cmnDesc: ['']
-  //   });
-  // }
-
-
-  // addRow() {
-  //   const control = <FormArray>this.paintPanelMasterForm.controls['itemRows'];
-  //   control.push(this.inItemRows());
-  // }
-
-  get f() { return this.pumpTankMasterForm.controls; }
+  get f() { return this.pumpDipMasterForm.controls; }
 
   ngOnInit(): void {
 
@@ -184,19 +148,19 @@ export class PumpTankMasterComponent implements OnInit {
           console.log(this.DivisionIDList);
         });
 
-    // this.service.applicationList()
-    //   .subscribe(
-    //     data => {
-    //       this.applicationList = data;
-    //       console.log(this.applicationList);
-    //     });
+    this.service.applicationList()
+      .subscribe(
+        data => {
+          this.applicationList = data;
+          console.log(this.applicationList);
+        });
 
-    // this.service.cmnTypeListNew(sessionStorage.getItem('divisionId'))
-    //   .subscribe(
-    //     data => {
-    //       this.cmnTypeList = data;
-    //       console.log(this.cmnTypeList);
-    //     });
+    this.service.cmnTypeListNew(sessionStorage.getItem('divisionId'))
+      .subscribe(
+        data => {
+          this.cmnTypeList = data;
+          console.log(this.cmnTypeList);
+        });
 
       this.service.statusList()
       .subscribe(
@@ -205,48 +169,46 @@ export class PumpTankMasterComponent implements OnInit {
           console.log(this.statusList);
         });
 
-        this.service.FuelTypeList('PP.FUEL',3)
+        this.service.TankList()
         .subscribe(
           data => {
-            this.fuelTypeList = data;
-            console.log(this.fuelTypeList);
+            this.tankList = data;
+            console.log(this.tankList);
           });
 
-  }
-
-  pumpTankMaster(pumpTankMasterForm: any) {
+       
 
   }
 
+  pumpDipMaster(pumpDipMasterForm: any) {
 
+  }
 
-  saveTankMast() {
+  saveComnMast() {
 
     this.CheckDataValidations()
     
     if (this.checkValidation===true) {
        alert("Data Validation Sucessfull....") 
 
-    const formValue: ITank = this.transeData(this.pumpTankMasterForm.value);
-    this.service.tankMasterSubmit(formValue).subscribe((res: any) => {
-     
+    const formValue: IDispmaster = this.pumpDipMasterForm.value;
+    this.service.commonMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD SAVED SUCCESSFULLY');
         this.saveButton=false;
-        this.pumpTankMasterForm.disable();
+        this.pumpDipMasterForm.disable();
         
       } else {
         if (res.code === 400) {
-          alert('ERROR : RECORD NOT SAVED.' + res.message +", "+res.obj);
+          alert('ERROR : RECORD NOT SAVED.' + res.message);
           this.saveButton=true;
         }
       }
-
-
     });
   } else { alert ("Data Validation Failed....Save not done.")}
   }
 
+  // updateComnMast(){alert ("Update ....WIP")}
 
 
   updateComnMast() {
@@ -256,8 +218,8 @@ export class PumpTankMasterComponent implements OnInit {
     //     alert("Data Validation Sucessfull....\nPutting data to TAX REGIME MASTER  TABLE")
     // alert ("Cmn Id = "+this.cmnId)
 
-        const formValue: ITank = this.pumpTankMasterForm.value;
-        this.service.UpdateCommonMasterSubmit(formValue, this.tankId).subscribe((res: any) => {
+        const formValue: IDispmaster = this.pumpDipMasterForm.value;
+        this.service.UpdateCommonMasterSubmit(formValue, this.cmnId).subscribe((res: any) => {
           if (res.code === 200) {
             alert('RECORD UPDATED SUCCESSFULLY');
             this.updButton=false;
@@ -274,7 +236,7 @@ export class PumpTankMasterComponent implements OnInit {
   }
 
   onOptionsSelected(event: any) {
-    this.Status1 = this.pumpTankMasterForm.get('status').value;
+    this.Status1 = this.pumpDipMasterForm.get('status').value;
     // alert(this.Status1);
     if (this.Status1 === 'Inactive') {
       this.displayInactive = false;
@@ -282,50 +244,53 @@ export class PumpTankMasterComponent implements OnInit {
       this.endDate = this.pipe.transform(Date.now(), 'y-MM-dd');
     }
     else if (this.Status1 === 'Active') {
-      this.pumpTankMasterForm.get('endDate').reset();
+      this.pumpDipMasterForm.get('endDate').reset();
       this.displayInactive=true;
     }
   }
 
 
 
-searchMast() {
-  this.service.getTankList()
+  searchCmnMst(){
+
+    // var searchText=this.paintPanelMasterForm.get('cmnType').value;
+    var searchText='Panel'
+    this.service.getCommonLookupSearchNew(searchText,sessionStorage.getItem('divisionId'))
     .subscribe(
       data => {
         this.lstcomments = data;
         console.log(this.lstcomments);
-      }
+        // this.displayButton=false;
+        }
     );
-   }
-
-
-Select(tankId: number) {
-
-    this.pumpTankMasterForm.reset();
-    this.divisionId =3;
-
-    let select = this.lstcomments.find(d => d.tankId === tankId);
-    if (select) {
-      this.pumpTankMasterForm.patchValue(select);
-      this.tankId = select.tankId;
-      this.startDate= select.startDate;
-
-      this.displayButton = false;
-    
-   }
-   
   }
 
- 
 
-// onSelectType(cmnTp){
-//   let select = this.cmnTypeList.find(d => d.CMNTYPE === cmnTp);
-//   if (select) {
-//      var cmnTypeId1=  select.CMNTYPEID+1;
-//     this.pumpTankMasterForm.patchValue({cmnDesc:select.CMNDESC ,cmnTypeId :cmnTypeId1 ,application :'ALL'})
-//   }
-// }
+
+
+Select(cmId: number) {
+  // alert ('cmnId='+cmId)
+  let select = this.lstcomments.find(d => d.cmnId === cmId);
+  if (select) {
+    this.pumpDipMasterForm.patchValue(select);
+    this.cmnId=select.cmnId;
+    this.displayButton = false;
+    // this.updButton=true;
+    // this.paintPanelMasterForm.disable();
+    this.pumpDipMasterForm.get('status').enable();
+
+    this.display = false;
+  }
+}
+
+onSelectType(cmnTp){
+  let select = this.cmnTypeList.find(d => d.CMNTYPE === cmnTp);
+  if (select) {
+     var cmnTypeId1=  select.CMNTYPEID+1;
+    //  alert ("Desc :" +select.CMNDESC + " , id : "+select.CMNTYPEID + "," +cmnTypeId1);
+    this.pumpDipMasterForm.patchValue({cmnDesc:select.CMNDESC ,cmnTypeId :cmnTypeId1 ,application :'ALL'})
+  }
+}
 
 resetMast() {
   window.location.reload();
@@ -336,48 +301,38 @@ closeMast() {
 }
 
 
-transeData(val) {
-  delete val.divisionId;
-  delete val.loginArray;
-  delete val.loginName;
-  delete val.locName;
-  delete val.ouName;
-  delete val.locationId;
-  // delete val.locId;
-  // delete val.ouId;
-  delete val.deptId;
-  delete val.orgId;
-  return val;
-}
-
 CheckDataValidations(){
 
-  const formValue: ITank = this.pumpTankMasterForm.value;
+  const formValue: IDispmaster = this.pumpDipMasterForm.value;
 
-  formValue.tankName =this.tankName.toUpperCase();
-  formValue.description=this.description.toUpperCase();
-  formValue.physicalLoc=this.physicalLoc.toUpperCase();
+  formValue.dipCode =this.dipCode.toUpperCase();
+  formValue.dipDesc=this.dipDesc.toUpperCase();
 
   // formValue.attribute1=this.attribute1.charAt(0).toUpperCase();
   // alert ("code, desc ,attribute1: "+this.code + " , "+this.codeDesc+ " , "+this.attribute1);
 
-  // if (formValue.divisionId===undefined || formValue.divisionId===null || formValue.divisionId<0)
-  // {
-  //   this.checkValidation=false; 
-  //   alert ("DIVISION : Should not be null....");
-  //   return;
-  // } 
+  if (formValue.divisionId===undefined || formValue.divisionId===null || formValue.divisionId<0)
+  {
+    this.checkValidation=false; 
+    alert ("DIVISION : Should not be null....");
+    return;
+  } 
 
-  
+  if (formValue.cmnType===undefined || formValue.cmnType===null || formValue.cmnType.trim()==='')
+  {
+    this.checkValidation=false; 
+    alert ("TYPE NAME : Should not be null....");
+    return;
+  } 
 
-  if (formValue.tankName===undefined || formValue.tankName===null || formValue.tankName.trim()==='' )
+  if (formValue.dipCode===undefined || formValue.dipCode===null || formValue.dipCode.trim()==='' )
   {
     this.checkValidation=false; 
     alert ("CODE : Should not be null....");
     return;
   } 
 
-  if (formValue.description===undefined || formValue.description===null || formValue.description.trim()==='' )
+  if (formValue.dipDesc===undefined || formValue.dipDesc===null || formValue.dipDesc.trim()==='' )
   {
     this.checkValidation=false; 
     alert ("CODE DESCRIPTION : Should not be null....");
@@ -391,7 +346,7 @@ CheckDataValidations(){
     return;
   } 
 
-  if (formValue.startDate===undefined || formValue.startDate===null  )
+  if (formValue.startDate===undefined || formValue.startDate===null || formValue.startDate.trim()==='' )
   {
     this.checkValidation=false; 
     alert ("START DATE : Enter Valid Start Date....");
@@ -403,5 +358,7 @@ CheckDataValidations(){
 }
 
 }
+
+
 
 
