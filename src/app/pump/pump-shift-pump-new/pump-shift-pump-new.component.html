@@ -49,7 +49,7 @@
                             <td style="width: 15%" class="LabelFontStyle">Shift:</td>
 
                             <td>
-                                <select formControlName="shifttypeName" id="shifttypeName" class="form-control"
+                                <select formControlName="shifttypeName"  class="form-control"
                                     style="background-color: yellow;" (change)="onSelectShiftTypeId($event)">
                                     <option>--Select--</option>
                                     <option *ngFor="let sc of  shiftList" [Value]="sc.code">
@@ -61,7 +61,7 @@
                             <td style="width: 15%" class="LabelFontStyle">Shift&nbsp;Employee:</td>
 
                             <td>
-                                <select formControlName="emplName" id="emplName" class="form-control"
+                                <select formControlName="emplName"  class="form-control"
                                     style="background-color: yellow;" (change)="onSelectEmplName($event)">
                                     <option>--Select--</option>
                                     <option *ngFor="let sc of  salesPersonList">
@@ -101,9 +101,9 @@
                         </tr>
                         <tr>
                             <td style="width: 15%" class="LabelFontStyle">Final&nbsp;Confirm:</td>
-                            <td><input type="text" class="form-control" formControlName="finalconfirm"></td>
+                            <td><input disabled type="text" class="form-control" formControlName="finalconfirm"></td>
                             <td style="width: 15%" class="LabelFontStyle">Final&nbsp;Confirm&nbsp;Date:</td>
-                            <td><input type="date" class="form-control" formControlName="finalconfirmdate"></td>
+                            <td><input disabled type="date" class="form-control" formControlName="finalconfirmdate"></td>
                             <input type="text" hidden class="form-control" formControlName="createdby">
                             <input type="text" hidden class="form-control" formControlName="creationdate">
                             <input type="text" hidden class="form-control" formControlName="lastupdateby">
@@ -138,7 +138,7 @@
                                     <td><input style="width: 350px;height: 25px;text-align: left;" type="text"
                                             formControlName="description" class="form-control"></td>
                                     <td><input style="width: 150px;height: 25px;text-align: right;" type="number"
-                                            formControlName="description" class="form-control">
+                                            formControlName="amount" class="form-control"  (keydown.tab)="voucherLineAmt(l)">
                                     </td>
 
                                     <td><button type="submit" class="btn btn-info" (click)="addRowV(l)"
@@ -180,20 +180,20 @@
                                 <th style="width:3rem" scope="col">Add+</th>
                                 <th style="width:3rem" scope="col">Del-</th>
                             </tr>
+                            
                             <ng-container class="center" formArrayName="ppShiftNozzleDetailList">
-                                <ng-container *ngFor="let group of lineDetailsArray().controls; let i= index"
-                                    [formGroupName]="i" class="auto-style5">
-
+                                <ng-container *ngFor="let group of lineDetailsArray().controls; let liNo= index"
+                                    [formGroupName]="liNo" class="auto-style5">
                                     <tr>
                                         <input hidden type="number" formControlName="shiftnozzleid"
                                             class="form-control">
                                         <input hidden type="text" formControlName="shiftentryid" class="form-control">
 
-                                        <td style="text-align: center;width: 2rem;">{{i+1}}</td>
+                                        <td style="text-align: center;width: 2rem;">{{liNo+1}}</td>
 
                                         <td>
-                                            <select formControlName="nozzle" id="nozzle" class="form-control"
-                                                (change)="onSelectedNozzle(i,$event)" style="background-color: yellow;">
+                                            <select formControlName="nozzle"  class="form-control"
+                                                (change)="onSelectedNozzle(liNo,$event)" style="background-color: yellow;">
                                                 <option value="--Select--">--Select--</option>
                                                 <option *ngFor="let sc of  nozzleList">
                                                     {{sc.nozzleId}}-{{sc.nozzleCode}}
@@ -208,13 +208,13 @@
                                                 formControlName="nozzIsland"></td>
                                         <td><input style="width: 100px;text-align: right;" type="number"
                                                 formControlName="openingreading" class="form-control"
-                                                (keydown.tab)='calculationFn(i)'></td>
+                                                (keydown.tab)='calculationFn(liNo)'></td>
                                         <td><input style="width: 100px;text-align: right;" type="number"
                                                 formControlName="systemclosingreading" class="form-control"
-                                                (keydown.tab)='calculationFn(i)'></td>
+                                                (keydown.tab)='calculationFn(liNo)'></td>
                                         <td><input style="width: 100px;text-align: right;" type="number"
                                                 formControlName="manualclosingreading" class="form-control"
-                                                (keydown.tab)='calculationFn(i)'></td>
+                                                (keydown.tab)='calculationFn(liNo)'></td>
                                         <td><input disabled style="width: 100px;text-align: right;" type="number"
                                                 formControlName="totalsalereading" class="form-control"></td>
                                         <td><input disabled style="width: 100px;text-align: right;" type="number"
@@ -237,8 +237,8 @@
                                             formControlName="locid" class="form-control">
                                         <td>
 
-                                            <button type="button" class="btn btn-info" data-toggle="modal"
-                                                data-target="#subDetails" (click)="openSunDetailsFn(i)">
+                                            <button type="button" class="btn btn-info" data-toggle="modal" 
+                                                data-target="#subDetails" (click)="openSunDetailsFn(liNo)">
                                                 Details
                                             </button>
                                             <div class="modal fade" id="subDetails" tabindex="-1" role="dialog"
@@ -246,7 +246,8 @@
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-
+                                                            <h5 class="modal-title" id="exampleModalLongTitle">
+                                                                Line-{{selectedLine}}</h5>
                                                             <button type="button" class="close" data-dismiss="modal"
                                                                 aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
@@ -289,9 +290,15 @@
                                                                         <ng-container class="center"
                                                                             formArrayName="ppShiftNozleLinesList">
                                                                             <ng-container
-                                                                                *ngFor="let group of nozzlelineDetailsArray(i).controls; let k= index"
+                                                                                *ngFor="let group of nozzlelineDetailsArray(selectedLine).controls; let k= index"
                                                                                 [formGroupName]="k" class="auto-style5">
                                                                                 <tr>
+                                                                                    {{selectedLine}}---{{k}}---
+                                                                                    <!-- <input  disabled 
+                                                                                    style="width: 100px;text-align: right;"
+                                                                                    type="number"
+                                                                                    formControlName="nozzleDetLineNo"
+                                                                                    class="form-control"> -->
                                                                                     <input hidden disabled
                                                                                         style="width: 100px;text-align: right;"
                                                                                         type="number"
@@ -304,30 +311,31 @@
                                                                                             class="form-control">
                                                                                     </td>
                                                                                     <td>
-                                                                                        <select
+                                                                                       
+                                                                                        <select 
                                                                                             formControlName="segment"
-                                                                                            id="segment"
                                                                                             class="form-control"
-                                                                                            (change)="onSelectSegment(k,$event)"
+                                                                                            (change)="onSelectSegment(liNo,k,$event)"
                                                                                             style="background-color: yellow;">
-                                                                                            <option
-                                                                                                *ngFor="let sc of  segmentList"
-                                                                                                [(ngValue)]="sc.segment">
+                                                                                            <option value="--Select--">--Select--</option>
+                                                                                            <option  *ngFor="let sc of  segmentList">
                                                                                                 {{sc.segment}}
                                                                                             </option>
                                                                                         </select>
-                                                                                        <input hidden disabled
+                                                                                        
+                                                                                        <input  disabled
                                                                                             style="width: 100px;text-align: right;"
-                                                                                            type="number"
+                                                                                            type="text"
                                                                                             formControlName="itemid"
                                                                                             class="form-control">
+                                                                                   
                                                                                     </td>
                                                                                     <td>
                                                                                         <input
                                                                                             style="width: 100px;text-align: right;"
                                                                                             type="number"
                                                                                             formControlName="qty"
-                                                                                            (keydown.tab)='lineCalculationFn(k)'
+                                                                                            (keydown.tab)='lineCalculationFn(liNo,k)'
                                                                                             class="form-control">
                                                                                     </td>
                                                                                     <td>
@@ -335,7 +343,7 @@
                                                                                             style="width: 100px;text-align: right;"
                                                                                             type="number"
                                                                                             formControlName="rate"
-                                                                                            (keydown.tab)='lineCalculationFn(k)'
+                                                                                            (keydown.tab)='lineCalculationFn(liNo,k)'
                                                                                             class="form-control">
                                                                                     </td>
                                                                                     <td>
@@ -349,10 +357,8 @@
 
                                                                                         <select
                                                                                             formControlName="payType"
-                                                                                            id="payType"
-                                                                                            [(ngModel)]="payType"
                                                                                             class="form-control"
-                                                                                            style="background-color: yellow;">
+                                                                                            style="background-color: yellow;" (change)="addlineCalculation(liNo,k,$event)">
                                                                                             <option disabled>--Select--
                                                                                             </option>
                                                                                             <option
@@ -361,6 +367,7 @@
                                                                                                 {{sc.lookupValue}}
                                                                                             </option>
                                                                                         </select>
+                                                                                        <input type="number" formControlName="saletypeid">
                                                                                     </td>
                                                                                     <td>
 
@@ -368,8 +375,7 @@
                                                                                             style=" background-color: yellow; text-align: left;"
                                                                                             type="number"
                                                                                             formControlName="customercode"
-                                                                                            id="customercode"
-                                                                                            (change)="CustAccountNoSearch(k,$event)"
+                                                                                            (change)="CustAccountNoSearch(liNo,$event)"
                                                                                             class="form-control">
                                                                                         <input disabled hidden
                                                                                             style="width: 100px;text-align: right;"
@@ -416,10 +422,9 @@
                                                                                             formControlName="locid"
                                                                                             class="form-control">
                                                                                     </td>
-                                                                                    <td><button type="submit" class="btn btn-info" (click)="addRowPPLineDet(k)"
-                                                                                        (keydown.shift.arrowdown)="addRowPPLineDet(k)" style="width: min-content;"><i
+                                                                                    <td><button type="submit" class="btn btn-info" (click)="addRowPPLineDet(liNo,k)" style="width: min-content;"><i
                                                                                             class="fa fa-plus"></i></button></td>
-                                                                                <td><button type="submit" class="btn btn-info" (click)="RemoveRowPPLineDet(k)"
+                                                                                <td><button type="submit" class="btn btn-info" (click)="RemoveRowPPLineDet(liNo,k)"
                                                                                         style="width: min-content;"><i class="fa fa-trash"></i></button></td>
                                         
                                                                                 </tr>
@@ -433,7 +438,7 @@
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="submit" class="btn btn-secondary"
-                                                                data-dismiss="modal">Ok</button>
+                                                                data-dismiss="modal" (click)="closeModel()">close</button>
 
                                                         </div>
                                                     </div>
@@ -441,10 +446,11 @@
                                             </div>
 
                                         </td>
-                                        <td><button type="submit" class="btn btn-info" (click)="addRow(i)"
-                                                (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i
+                                        <!-- (keydown.shift.arrowdown)="addRow(i)" -->
+                                        <td><button type="submit" class="btn btn-info" (click)="addRow(liNo)"
+                                                style="width: min-content;"><i
                                                     class="fa fa-plus"></i></button></td>
-                                        <td><button type="submit" class="btn btn-info" (click)="RemoveRow(i)"
+                                        <td><button type="submit" class="btn btn-info" (click)="RemoveRow(liNo)"
                                                 style="width: min-content;"><i class="fa fa-trash"></i></button></td>
 
                                     </tr>

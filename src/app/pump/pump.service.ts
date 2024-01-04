@@ -27,7 +27,9 @@ export class PumpService {
     return this.http.get(this.ServerUrl + `/itemMst/ByItemCategory?itemCatType=PP.FUEL&divId=3`);
   }
 
-  
+  segmentListFn1(nozzFuelType): Observable<any> {
+    return this.http.get(this.ServerUrl + `/itemMst/ByPPItem?segment=${nozzFuelType}`);
+  }
   
 
   public savePetrolPump(orderSave) {
@@ -41,5 +43,24 @@ export class PumpService {
   getSearchShiftNo(shiftNo): Observable<any> {
     return this.http.get(this.ServerUrl + `/ShiftEntry/${shiftNo}`);
   }
+
+
+  updatePumDet(UpdatePetrolUpdateRecord) {
+    const options = {
+      headers: this.headers
+    };
+    const url = (this.ServerUrl + `/ShiftEntry/shiftUpdate`);
+    return this.http.post(url, UpdatePetrolUpdateRecord, options);
+  }
+
+
+  shipFinalConfirmFn(UpdatePetrolUpdateRecord) {
+    const options = {
+      headers: this.headers
+    };
+    const url = (this.ServerUrl + `/ShiftEntry/shiftFinalCnfrm`);
+    return this.http.post(url, UpdatePetrolUpdateRecord, options);
+  }
+
 
 }

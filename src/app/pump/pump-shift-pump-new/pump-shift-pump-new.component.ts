@@ -18,6 +18,7 @@ export class PumpShiftPumpNewComponent implements OnInit {
   // shiftentrydate:Date;
   shifttypeName:string;
   shifttyp:number;
+  selectedLine = 0;
   emplName:string;
   employeeid:number;
   totalsale:number;
@@ -42,11 +43,13 @@ export class PumpShiftPumpNewComponent implements OnInit {
   segmentList:any=[];
   PaymentModeList: any=[];
   accountNoSearch: any=[];
-
+ 
 
   lineValidation=false;
   duplicateLineItem=false;
   displayButton = true;
+  displaysegment: Array<boolean> = [];
+
 
   constructor(private service: MasterService,private   fb: FormBuilder, private router: Router,private PumpService1: PumpService) { 
     this.pumpShiftSalesForm = fb.group({
@@ -57,10 +60,10 @@ export class PumpShiftPumpNewComponent implements OnInit {
       shifttyp:[],
       emplName:[],
       employeeid:[],
-      totalothersale:[],
-      totalcreditsale:[],
-      totalcashsale:[],
-      totalsale:[],
+      totalothersale:[0],
+      totalcreditsale:[0],
+      totalcashsale:[0],
+      totalsale:[0],
       finalconfirm:[],
       finalconfirmdate:[],
       lastupdateby:[],
@@ -117,9 +120,26 @@ export class PumpShiftPumpNewComponent implements OnInit {
       locid:[],
       nozzFuelType:[],
       nozzIsland:[],
-      ppShiftNozleLinesList: this.fb.array([this.nozzlelineDetailsGroup()])
-      // ppShiftNozleLinesList: this.fb.array([]),
+      ppShiftNozleLinesList: this.fb.array([])
+      // ppShiftNozleLinesList: this.fb.array([]),this.nozzlelineDetailsGroup()
      });
+  }
+
+  
+
+  lineDetailsArray() :FormArray{
+    return <FormArray>this.pumpShiftSalesForm .get('ppShiftNozzleDetailList')
+  }
+
+  // nozzlelineDetailsArray(i:number) :FormArray{
+  //   // console.log(i+'------ I Value ...');
+  //   return this.lineDetailsArray().at(i).get("ppShiftNozleLinesList") as FormArray;
+  // }
+
+  nozzlelineDetailsArray(i: number): FormArray {
+    console.log(i);
+    // debugger;
+    return this.lineDetailsArray().at(i).get('ppShiftNozleLinesList') as FormArray;    
   }
 
   nozzlelineDetailsGroup() {
@@ -132,8 +152,10 @@ export class PumpShiftPumpNewComponent implements OnInit {
       nozzleid:[''],
       itemid:[],
       segment:[],
+      nozzleDetLineNo:[],
       qty:[0],
       rate:[0],
+      selectedLine:[],
       saletypeid:[],
       customerid:[],
       customercode:[],
@@ -142,20 +164,12 @@ export class PumpShiftPumpNewComponent implements OnInit {
       locid:[],
       lineAmt:[],
       payType:[],
+      // saletypeid:[],
       creationdate:[],
       createdby:[],
       lasstupdatedby:[],
       lastupdatedate:[],
      });
-  }
-
-  lineDetailsArray() :FormArray{
-    return <FormArray>this.pumpShiftSalesForm .get('ppShiftNozzleDetailList')
-  }
-
-  nozzlelineDetailsArray(i:number) :FormArray{
-    // return <FormArray>this.pumpShiftSalesForm .get('ppShiftNozleLinesList')
-    return this.lineDetailsArray().at(i).get("ppShiftNozleLinesList") as FormArray;
   }
 
   // nozzlelineDetailsArray() :FormArray{
@@ -176,7 +190,7 @@ export class PumpShiftPumpNewComponent implements OnInit {
       patch.controls[0].patchValue({ createdby: sessionStorage.getItem('emplId'),
       creationdate:this.pipe.transform(this.now, 'yyyy-MM-dd hh:mm:ss'),lastupdateby:sessionStorage.getItem('emplId'),
       lastupdatedate:this.pipe.transform(this.now, 'yyyy-MM-dd hh:mm:ss'),  locid:sessionStorage.getItem('locId')});
-
+      // this.displaysegment[0]=true;
     this.service.ShiftList().subscribe(
       data => {
         this.shiftList = data;
@@ -265,57 +279,172 @@ this.service.NozzleList()
   }
   }
 
-  addRowPPLineDet(index){
-    alert(index)
-    this.nozzlelineDetailsArray(index).push(this.nozzlelineDetailsGroup());
+  addRowPPLineDet(index,k){
+    alert(index+'-----Main Line Index')
     var arrline = this.nozzlelineDetailsArray(index)
-    // alert(arrline.length+'----Len')
+    console.log(arrline.value);
+    var values = arrline.value;
+    this.nozzlelineDetailsArray(index).push(this.nozzlelineDetailsGroup());
+    var len =this.nozzlelineDetailsArray(index).length;
     var hedaerDet = this.pumpShiftSalesForm.get('ppShiftNozzleDetailList') as FormArray;
     var hedaerDet1=hedaerDet.getRawValue();
     var nozzleid = hedaerDet1[index].nozzleid;
-    alert(nozzleid)
     var segmentList1 = this.nozzleList.find((nozzleList: any) => nozzleList.nozzleId == nozzleid);
-    this.nozzlelineDetailsArray(index).controls[arrline.length-1].patchValue({createdby: sessionStorage.getItem('emplId'),
+    this.nozzlelineDetailsArray(this.selectedLine).controls[k].patchValue({createdby: sessionStorage.getItem('emplId'),
     creationdate:this.pipe.transform(this.now, 'yyyy-MM-dd hh:mm:ss'),lasstupdatedby:sessionStorage.getItem('emplId'),
    lastupdatedate:this.pipe.transform(this.now, 'yyyy-MM-dd hh:mm:ss'),  locid:sessionStorage.getItem('locId'),
-    nozzleid:nozzleid,nozzle:segmentList1.nozzleCode});
+    nozzleid:nozzleid,nozzle:segmentList1.nozzleCode,nozzleDetLineNo:len});
+    this.addlineCalculation(index,k,null)
+      // alert(len+1)
+    // this.displaysegment.push(true);
   }
 
+
+  addlineCalculation(index,k,event){
+    var arrline = this.nozzlelineDetailsArray(index);
+    console.log(arrline);
+    var len =this.nozzlelineDetailsArray(index).length;
+    var paymentType = arrline.value[k].payType;
+    var cashlineAmt = 0;
+    var totalSaleAmt =0;
+    var totalCreditAmt=0;
+    var otherSaleAmt=0;
+    var payType=event.target.value;
+    var payType1= payType.substr(payType.indexOf(':') + 1, payType.length).trim();
+    console.log(this.PaymentModeList);
+    var payTypeList = this.PaymentModeList.find((payTyList)=>payTyList.lookupValue===payType1);
+    console.log(payTypeList);
+    for (let  i=0;i<arrline.length;i++){
+      if (arrline.value[i].payType === 'CASH' ) {
+        if (arrline.value[i].lineAmt == undefined || arrline.value[i].lineAmt == null || arrline.value[i].lineAmt == '') {
+        } else {
+          cashlineAmt = cashlineAmt + Number(arrline.value[i].lineAmt);
+        }
+    }
+    if (arrline.value[i].payType === 'CREDIT CARD' ) {
+      if (arrline.value[i].lineAmt == undefined || arrline.value[i].lineAmt == null || arrline.value[i].lineAmt == '') {
+
+      } else {
+        totalCreditAmt = totalCreditAmt + Number(arrline.value[i].lineAmt);
+      }
+  }
+
+  if (arrline.value[i].payType === 'CHEQUE' || arrline.value[i].payType === 'CHEQUE' ||
+  arrline.value[i].payType === 'CONTROL ACCOUNT' || arrline.value[i].payType === 'DEBIT CARD' || 
+  arrline.value[i].payType === 'OLD PENDING' || arrline.value[i].payType === 'OTHER' ||
+  arrline.value[i].payType === 'RTGS/NEFT'||arrline.value[i].payType === 'WALLET' ) {
+    if (arrline.value[i].lineAmt == undefined || arrline.value[i].lineAmt == null || arrline.value[i].lineAmt == '') {
+
+    } else {
+      otherSaleAmt = otherSaleAmt + Number(arrline.value[i].lineAmt);
+    }
+}
+  }
+  cashlineAmt = Math.round(((cashlineAmt) + Number.EPSILON) * 100) / 100;
+  otherSaleAmt = Math.round(((otherSaleAmt) + Number.EPSILON) * 100) / 100;
+  totalCreditAmt = Math.round(((totalCreditAmt) + Number.EPSILON) * 100) / 100;
+  totalSaleAmt=(cashlineAmt+otherSaleAmt+totalCreditAmt);
+  this.pumpShiftSalesForm.patchValue({ 'totalcashsale': cashlineAmt,'totalsale':totalSaleAmt,'totalcreditsale':totalCreditAmt,
+'totalothersale': otherSaleAmt});
+this.nozzlelineDetailsArray(this.selectedLine).controls[k].patchValue({saletypeid:payTypeList.lookupValueId});
+  }
+
+
+  voucherLineAmt(i){
+    var totalVoucherAmt = 0;
+    var arrline=this.voucherDetailsArray()
+    for (let  i=0;i<arrline.length;i++){
+        if (arrline.value[i].amount == undefined || arrline.value[i].amount == null || arrline.value[i].amount == '') {
+        } else {
+          totalVoucherAmt = totalVoucherAmt + Number(arrline.value[i].amount);
+        }
+  }
+  totalVoucherAmt = Math.round(((totalVoucherAmt) + Number.EPSILON) * 100) / 100;
+  this.pumpShiftSalesForm.patchValue({ 'totalexpenses': totalVoucherAmt});
+  }
+
+
+  RemoveRowPPLineDet(i,k){
+    alert(i+'---'+k)
+    if (k===0){
+      alert('First Line Able To delete. Please confirm.!')
+      return;
+    }
+    else{
+      this.nozzlelineDetailsArray(i).removeAt(k);
+    }
+
+  }
 
   RemoveRowV(index) {
     if (index===0){}
     else { this.voucherDetailsArray().removeAt(index);}
   }
 
+  lineTaxdetails: any = [];
+  selTaxLn = '';
+
   openSunDetailsFn(index){
-    
+      alert(index+'----Selected Line Index')
+     
+      this.nozzlelineDetailsArray(index).clear();
+      this.nozzlelineDetailsArray(index).push(this.nozzlelineDetailsGroup()); 
+      this.selTaxLn = String(index);
+
+    var invLnNo = Number(index + 1);
+    this.lineTaxdetails = this.nozzlelineDetailsArray(invLnNo) as FormArray;
+    this.lineTaxdetails.clear();
+  //     if (index >0){
+  //     var firstFormArrayFormGroup= this.nozzlelineDetailsArray(0).controls[0];
+   
+  // }
+    }
+
+
+
+
+    openSunDetailsFnOld(index){
+      this.selectedLine=index;
+    // var arraNew=  this.nozzlelineDetailsArray(index).value;
+    // arraNew.clear();
+    //   this.nozzlelineDetailsArray(index).push(this.nozzlelineDetailsGroup());
       var hedaerDet = this.pumpShiftSalesForm.get('ppShiftNozzleDetailList') as FormArray;
       var hedaerDet1=hedaerDet.getRawValue();
-    
-            var nozzleid = hedaerDet1[index].nozzleid;
-    
+      var nozzleid = hedaerDet1[this.selectedLine].nozzleid;
       var segmentList1 = this.nozzleList.find((nozzleList: any) => nozzleList.nozzleId == nozzleid);
       console.log(segmentList1);
-      var patch = this.pumpShiftSalesForm.get('ppShiftNozleLinesList') as FormArray;
-      this.nozzlelineDetailsArray(index).controls[index].patchValue({createdby: sessionStorage.getItem('emplId'),
+      var len=this.nozzlelineDetailsArray(this.selectedLine).length;
+    alert('details click I ref-- '+ (this.selectedLine) +'   k ref value- '+ len)
+
+      this.nozzlelineDetailsArray(this.selectedLine).controls[len-1].patchValue({createdby: sessionStorage.getItem('emplId'),
          creationdate:this.pipe.transform(this.now, 'yyyy-MM-dd hh:mm:ss'),lasstupdatedby:sessionStorage.getItem('emplId'),
         lastupdatedate:this.pipe.transform(this.now, 'yyyy-MM-dd hh:mm:ss'),  locid:sessionStorage.getItem('locId'),
-         nozzleid:nozzleid,nozzle:segmentList1.nozzleCode});
-   
+         nozzleid:nozzleid,nozzle:segmentList1.nozzleCode,nozzleDetLineNo:1});
+       
   }
 
-  onSelectSegment(index,event){
-   
-    var seg = event.target.value;
-        var value = seg.substr(seg.indexOf(':') + 1, seg.length).trim();
-        // alert(value)
-        var selectitemList = this.segmentList.find((segList)=>segList.segment=value);
-        console.log(selectitemList);
-        this.nozzlelineDetailsArray(index).controls[index].patchValue({itemid: selectitemList.itemId})
-        // var patch = this.pumpShiftSalesForm.get('ppShiftNozleLinesList') as FormArray;
-        // patch.controls[i].patchValue({ itemid: selectitemList.itemId });
-        // this.nozzlelineDetailsArray(i).controls[i].patchValue({itemid: selectitemList.itemId })
-      }
+    closeModel(){
+      console.log(this.lineDetailsArray());
+      
+    }
+
+
+  onSelectSegment(i,k,event){
+     alert(this.selectedLine+'---'+k+'----'+event)
+      var seg = event.target.value;
+      // alert(seg)
+          var value = seg.substr(seg.indexOf(':') + 1, seg.length).trim();
+          // alert('-----'+value+'------');
+          console.log(this.segmentList);
+          var selectitemList = this.segmentList.find((segList)=>segList.segment===value);
+          console.log(selectitemList);
+          var len =this.nozzlelineDetailsArray(k).length;
+             this.nozzlelineDetailsArray(i).controls[k].patchValue({itemid: selectitemList.itemId});
+  }
+
+ 
+
+ 
 
 
   onSelectedNozzle(i,event){
@@ -372,27 +501,35 @@ this.service.NozzleList()
 
 
 
-  lineCalculationFn(index){
+  lineCalculationFn(index,k){
     // alert(index+'--------')
     var arr1= this.nozzlelineDetailsArray(index);
-    console.log(arr1.value[index].qty);
-    var qty=arr1.value[index].qty;
-    var rate=arr1.value[index].rate;
-    // alert(qty)
-    var totAmt = qty*rate;
-    this.nozzlelineDetailsArray(index).controls[index].patchValue({lineAmt: totAmt})
+    console.log(arr1);
+    var len =this.nozzlelineDetailsArray(index).length;
+    // alert(len)
+    var qty=arr1.value[len-1].qty;
+    var rate1=arr1.value[len-1].rate;
+    // alert('--qty---'+qty+'--rate--'+rate1)
+    var totAmt = qty*rate1;
+  var  totAmt1 = Math.round(((totAmt) + Number.EPSILON) * 100) / 100;
+    this.nozzlelineDetailsArray(index).controls[k].patchValue({lineAmt: totAmt1})
   }
 
 
   addRow(index) {
+    alert(index)
+    // this.selectedLine=index;
     if(this.duplicateLineItem ===false) {
     this.lineValidation=true;
     if (this.lineValidation)
       {
           this.lineDetailsArray().push(this.lineDetailsGroup());
+          this.selectedLine=(index+1);
       }
-    } else {alert("Duplicate Line Item Found : Remove Duplicate line and Proceed..." + this.duplicateLineItem);
-  }
+     } else {alert("Duplicate Line Item Found : Remove Duplicate line and Proceed..." + this.duplicateLineItem);
+   }
+  
+
   }
   
   
@@ -408,7 +545,9 @@ this.service.NozzleList()
   saveSale1(){
     let jsonData = this.pumpShiftSalesForm.getRawValue();
     this.PumpService1.savePetrolPump(JSON.stringify(jsonData)).subscribe((res: any) => {
-      if (res.code === 200) {}
+      if (res.code === 200) {
+        this.pumpShiftSalesForm.patchValue({shiftentryno:res.obj.shiftentryno,shiftentrydate:res.obj.creationdate})
+      }
     })
   }
 
@@ -420,13 +559,14 @@ this.service.NozzleList()
   CustAccountNoSearch(i,event){
     // alert(i+'---------'+event.target.value)
     var accountNo=event.target.value;
+    var len =this.nozzlelineDetailsArray(i).length;
     this.service.custAccountNoSearch(accountNo, sessionStorage.getItem('ouId'), sessionStorage.getItem('divisionId'))
     .subscribe(
       data => {
         this.accountNoSearch = data.obj;
         var patch = this.pumpShiftSalesForm.get('ppShiftNozleLinesList') as FormArray;
         // patch.controls[i].patchValue({ customerid: data.obj[0].customerId });
-        this.nozzlelineDetailsArray(i).controls[i].patchValue({customerid: data.obj[0].customerId })
+        this.nozzlelineDetailsArray(i).controls[len-1].patchValue({customerid: data.obj[0].customerId })
       }
     )
 

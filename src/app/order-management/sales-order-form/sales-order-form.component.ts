@@ -4086,13 +4086,9 @@ if (Number(sessionStorage.getItem('deptId'))!=4){
 
 
   updateTotAmtPerline(lineIndex) {
-    // alert(lineIndex);
-    // var formVal = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     var formArr = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     var formVal = formArr.getRawValue();
     console.log(formVal);
-
-    // var tcsPer = this.SalesOrderBookingForm.get('tcsPer').value;
     var basicAmt = 0;
     var taxAmt1 = 0;
     var totAmt = 0;
