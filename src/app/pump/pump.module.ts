@@ -9,11 +9,11 @@ import { PumpIslandMasterComponent } from './pump-island-master/pump-island-mast
 import { PumpNozzleMasterComponent } from './pump-nozzle-master/pump-nozzle-master.component';
 import { PumpShiftSaleComponent } from './pump-shift-sale/pump-shift-sale.component';
 import { PumpShiftPumpNewComponent } from './pump-shift-pump-new/pump-shift-pump-new.component';
-import { PumpDipMasterComponent } from './pump-dip-master/pump-dip-master.component';
+import { TestingDynamicComponent } from './testing-dynamic/testing-dynamic.component';
 
 
 @NgModule({
-  declarations: [PumpTankMasterComponent, PumpIslandMasterComponent, PumpNozzleMasterComponent,  PumpShiftSaleComponent, PumpShiftPumpNewComponent,PumpDipMasterComponent],
+  declarations: [PumpTankMasterComponent, PumpIslandMasterComponent, PumpNozzleMasterComponent,  PumpShiftSaleComponent, PumpShiftPumpNewComponent, TestingDynamicComponent,],
   imports: [
     CommonModule,
     PumpRoutingModule,

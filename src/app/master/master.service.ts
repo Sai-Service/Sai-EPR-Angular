@@ -4457,12 +4457,9 @@ TransactionTypemiscpPaint(): Observable<any> {
     // alert(mNozzle );
     return this.http.get(this.ServerUrl + `/ppIslandMaster/ByNozleId/${mNozzle}`);
   }
-
-  NozzleFuelTypePick(mNozzleCd): Observable<any> {
-    // http://localhost:8081/NozzelMaster/NZ01
-    return this.http.get(this.ServerUrl + `/NozzelMaster/${mNozzleCd}`);
+  nozzleBalaCheck(segmentList,shiftCode,tDate): Observable<any> {
+    return this.http.get(this.ServerUrl + `/NozzelMaster/assignNozle?nozzleCode=${segmentList}&shiftType=${shiftCode}&shiftDate=${tDate}`);
   }
-
 
   public PumpSaleAddSubmit(PumpSaleRecord) {
     const options = {

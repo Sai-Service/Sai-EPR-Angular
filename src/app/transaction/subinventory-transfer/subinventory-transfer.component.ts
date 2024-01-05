@@ -915,7 +915,7 @@ export class SubinventoryTransferComponent implements OnInit {
   downloadSubGatePass() {
     const fileName = 'download.pdf';
    var shipmentNumber = this.SubinventoryTransferForm.get('shipmentNumber').value;
-    // alert(shipmentNumber)
+    alert(shipmentNumber +'-------'+sessionStorage.getItem('deptId'))
     if (Number(sessionStorage.getItem('deptId'))===1){
       this.service.downloadSubGatePassSaslesFn(shipmentNumber)
         .subscribe(data => {
