@@ -691,7 +691,8 @@
                                 <select type="text" class="form-control" formControlName="soldByEmpId" style="background-color: yellow;">
                                 <option disabled>--Select--</option>
                                 <option *ngFor="let sc of issueByList" [ngValue]="sc.emplId" >
-                                {{sc.emplId}}-{{sc.ticketNo}}-{{sc.fullName}}
+                                <!-- {{sc.emplId}}- -->
+                                {{sc.ticketNo}}-{{sc.fullName}}
                                 </option>
                                 </select>
                             </td>
