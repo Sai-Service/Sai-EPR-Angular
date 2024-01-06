@@ -263,19 +263,44 @@ search(shiftNo){
         // alert(data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList.length+'-----line Length')
         for (let subln=0;subln<data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList.length;subln++){
           this.displayRemoveSubLineDet[subln]=false;
-          this.PumpService1.segmentListFn1(data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].fuelType)
-.subscribe(
-  data => {
-    this.segmentList = data;
-    console.log(this.segmentList);
-  });
-          var letSelectSegmentList = this.segmentList.find((segmentList: any) => segmentList.itemId == data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].itemid);  
-          console.log(letSelectSegmentList);
-          
           var ppShiftNozzleAllList1: FormGroup = this.newSkill();
-        this.employeeSkills(n).push(ppShiftNozzleAllList1);
-        this.employeeSkills(n).controls[subln].patchValue({nozzleid:data.obj.ppShiftNozzleDetailList[n].nozzleid,
-          nozzle:data.obj.ppShiftNozzleDetailList[n].nozzlecode,segment:letSelectSegmentList.segment})
+          this.employeeSkills(n).push(ppShiftNozzleAllList1);
+          this.PumpService1.segmentListFn1(data.obj.ppShiftNozzleDetailList[n].fuelType)
+.subscribe(
+  res => {
+    console.log(res);   
+    this.segmentList = res;
+    console.log(this.segmentList);
+    var letSelectSegmentList = this.segmentList.find((segmentList: any) => segmentList.itemId == data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].itemid);  
+    console.log(letSelectSegmentList);
+    // alert(letSelectSegmentList.segment)
+ 
+  this.employeeSkills(n).controls[subln].patchValue({nozzleid:data.obj.ppShiftNozzleDetailList[n].nozzleid,
+    nozzle:data.obj.ppShiftNozzleDetailList[n].nozzlecode,segment:letSelectSegmentList.segment,
+    customercode:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].customercode, 
+    customerid:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].customerid,
+     payType:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].payType,
+     saletypeid:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].saletypeid,
+     shiftnozzlelinesid:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].shiftnozzlelinesid,
+     shiftnozzleid:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].shiftnozzleid,
+     shiftentryid:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].shiftentryid,
+     itemid:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].itemid,
+     qty:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].qty,
+     rate:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].rate,
+    vehicleno:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].vehicleno,
+    creditslipno:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].creditslipno,
+    locatorid:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].locatorid,
+    lineAmt:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].lineAmt,
+    invoicegen:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].invoicegen,
+    creationdate:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].creationdate,
+    createdby:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].createdby,
+    lasstupdatedby:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].lasstupdatedby,
+    lastupdatedate:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].lastupdatedate,
+    locid:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].locid,
+    locator:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].segmentName,
+    custName:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].customerName})
+  });
+         
       }
         }
         
@@ -359,6 +384,8 @@ newSkill(): FormGroup {
     shiftentryid:[],
     nozzleid:[''],
     itemid:[],
+    locator:[],
+    locatorid:[],
     segment:[],
     nozzleDetLineNo:[],
     qty:[0],
@@ -366,6 +393,7 @@ newSkill(): FormGroup {
     selectedLine:[],
     saletypeid:[],
     customerid:[],
+    custName:[],
     customercode:[],
     vehicleno:[],
     creditslipno:[],
@@ -546,6 +574,22 @@ calculationFn(i){
          console.log(selectitemList);
       
             this.employeeSkills(i).controls[k].patchValue({itemid: selectitemList.itemId});
+            // alert(selectitemList.subInventoryId);
+            this.PumpService1.locatorFn(sessionStorage.getItem('locId'),selectitemList.itemId,selectitemList.subInventoryId)
+            .subscribe(
+              data => {
+                console.log(data);
+                alert(data[0].segmentName)
+                this.employeeSkills(i).controls[k].patchValue({locator: data[0].segmentName,locatorid:data[0].locatorid});
+              });
+          var priceListName = 'Petrol Pump 12PU.2501';
+              this.PumpService1.priceListFn(priceListName,selectitemList.itemId)
+              .subscribe(
+                data => {
+                  console.log(data);
+                  alert(data[0].rate)
+                  this.employeeSkills(i).controls[k].patchValue({rate: data[0].priceValue});
+                })
  }
 
 
@@ -629,6 +673,12 @@ console.log(this.PaymentModeList);
 var payTypeList = this.PaymentModeList.find((payTyList)=>payTyList.lookupValue===payType1);
 console.log(payTypeList);
 this.employeeSkills(index).controls[k].patchValue({saletypeid:payTypeList.lookupValueId});
+if (payType1==='CASH'){
+  this.employeeSkills(index).controls[k].patchValue({customercode:79820,custName:'CASH CUSTOMER',customerid:73620});
+  this.employeeSkills(index).controls[k].get('customercode').disable();
+  this.addEmployeeSkill(index)
+}
+
 }
 }
 
@@ -733,7 +783,7 @@ CustAccountNoSearch(i,k,event){
       this.accountNoSearch = data.obj;
       var patch = this.pumpShiftSalesForm.get('ppShiftNozleLinesList') as FormArray;
       // patch.controls[i].patchValue({ customerid: data.obj[0].customerId });
-      this.employeeSkills(i).controls[k].patchValue({customerid: data.obj[0].customerId })
+      this.employeeSkills(i).controls[k].patchValue({customerid: data.obj[0].customerId ,custName: data.obj[0].custName})
       this.addEmployeeSkill(i)
     }
     else{

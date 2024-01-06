@@ -317,14 +317,14 @@ this.service.NozzleList()
         (patch.controls[index]).patchValue({ nozzIsland: this.IslandDetails.islandCode +"-"+this.IslandDetails.description});
       });
 
-      this.service.NozzleFuelTypePick(select.nozzleCode)
-      .subscribe(
-        data => {
-          this.NozFuelTpDetails = data
-          console.log(this.NozFuelTpDetails);
-          // alert( this.NozFuelTpDetails.pumpName);
-          (patch.controls[index]).patchValue({ nozzFuelType: this.NozFuelTpDetails.pumpName});
-        });
+      // this.service.NozzleFuelTypePick(select.nozzleCode)
+      // .subscribe(
+      //   data => {
+      //     this.NozFuelTpDetails = data
+      //     console.log(this.NozFuelTpDetails);
+      //     // alert( this.NozFuelTpDetails.pumpName);
+      //     (patch.controls[index]).patchValue({ nozzFuelType: this.NozFuelTpDetails.pumpName});
+      //   });
 
    
      

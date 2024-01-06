@@ -27,6 +27,14 @@ export class PumpService {
     return this.http.get(this.ServerUrl + `/itemMst/ByItemCategory?itemCatType=PP.FUEL&divId=3`);
   }
 
+  locatorFn(locId,itemId,subinventoryId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/onhandqty/onhandPP?locId=${locId}&itemId=${itemId}&subInventoryId=${subinventoryId}`);
+  }
+
+  priceListFn(priceListName,itemId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/pricelist/ItmPrcList/?priceListName=Petrol Pump 12PU.2501 - MRP&itemId=${itemId}`);
+  }
+
   segmentListFn1(nozzFuelType): Observable<any> {
     return this.http.get(this.ServerUrl + `/itemMst/ByPPItem?segment=${nozzFuelType}`);
   }

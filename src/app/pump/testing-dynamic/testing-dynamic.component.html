@@ -251,8 +251,10 @@
                                             </td>
                                         </ng-template>
                                         <ng-template #elsesegment>
+                                            <td>
                                             <input disabled type="text" class="form-control"
                                             formControlName="nozzle">
+                                        </td>
                                         </ng-template>
                                             <td><input disabled type="text" class="form-control"
                                                     formControlName="nozzFuelType"></td>
@@ -317,25 +319,18 @@
                                     cellspacing="0" cellpadding="4" rules="all" class="center">
                                     <thead>
                                         <tr class="GridHeader">
-                                            <th style="width: 100px;text-align: center;" scope="col">Nozzle
-                                            </th>
-                                            <th style="width: 100px;text-align: center;" scope="col">Item
-                                            </th>
-                                            <th style="width: 100px;text-align: center;" scope="col">Qty
-                                            </th>
-                                            <th style="width: 100px;text-align: center;" scope="col">Rate
-                                            </th>
-                                            <th style="width: 100px;text-align: center;" scope="col">Amount
-                                            </th>
-                                            <th style="width: 100px;text-align: center;" scope="col">Type
-                                            </th>
-                                            <th style="width: 100px;text-align: center;" scope="col">
-                                                Customer Code</th>
-                                            <th style="width: 100px;text-align: center;" scope="col">Slip
-                                                Number</th>
-                                            <th style="width: 100px;text-align: center;" scope="col">Vehicle
-                                                No</th>
-                                                
+                                            <th style="width: 100px;text-align: center;" scope="col">Nozzle </th>
+                                            <th style="width: 100px;text-align: center;" scope="col">Item </th>
+                                            <th style="width: 100px;text-align: center;" scope="col">Locator </th>
+                                           
+                                            <th style="width: 100px;text-align: center;" scope="col">Rate </th>
+                                            <th style="width: 100px;text-align: center;" scope="col">Qty  </th>
+                                            <th style="width: 100px;text-align: center;" scope="col">Amount  </th>
+                                            <th style="width: 100px;text-align: center;" scope="col">Type  </th>
+                                            <th style="width: 100px;text-align: center;" scope="col">  Customer Code</th>
+                                            <th style="width: 100px;text-align: center;" scope="col">  Customer Name</th>
+                                            <th style="width: 100px;text-align: center;" scope="col">Slip  Number</th>
+                                            <th style="width: 100px;text-align: center;" scope="col">Vehicle No</th>     
                                             <th style="width: 100px;text-align: center;" scope="col">Remove </th>
                                                 
                                         </tr>
@@ -376,7 +371,8 @@
                                                         <input hidden disabled style="width: 100px;text-align: right;"
                                                             type="number" formControlName="nozzleid"
                                                             class="form-control">
-                                                        <td><input disabled style="width: 100px;text-align: right;"
+                                                        <td>
+                                                            <input disabled style="width: 100px;text-align: right;"
                                                                 type="text" formControlName="nozzle"
                                                                 class="form-control">
                                                         </td>
@@ -394,17 +390,26 @@
                                                                 formControlName="itemid" class="form-control">
                                                         </td>
                                                         <td>
-                                                            <input style="width: 100px;text-align: right;" type="number"
-                                                                formControlName="qty"
+                                                            <input  disabled
+                                                            style="width: 100px;text-align: right;" type="text"
+                                                            formControlName="locator" class="form-control">
+                                                            <input  disabled hidden
+                                                                style="width: 100px;text-align: right;" type="text"
+                                                                formControlName="locatorid" class="form-control">
+                                                        </td>
+                                                        <td>
+                                                            <input disabled style="width: 100px;text-align: right;" type="number"
+                                                                formControlName="rate"
                                                                 (keydown.tab)='lineCalculationFn(empIndex,skillIndex)'
                                                                 class="form-control">
                                                         </td>
                                                         <td>
                                                             <input style="width: 100px;text-align: right;" type="number"
-                                                                formControlName="rate"
+                                                                formControlName="qty"
                                                                 (keydown.tab)='lineCalculationFn(empIndex,skillIndex)'
                                                                 class="form-control">
                                                         </td>
+                                                       
                                                         <td>
                                                             <input disabled style="width: 100px;text-align: right;"
                                                                 type="number" formControlName="lineAmt"
@@ -424,13 +429,17 @@
                                                             <input hidden type="number" formControlName="saletypeid">
                                                         </td>
                                                         <td>
-                                                            <input style=" background-color: yellow; text-align: left;"
+                                                            <input style=" background-color: yellow; text-align: left;width: fit-content;"
                                                                 type="number" formControlName="customercode"
                                                                 (change)="CustAccountNoSearch(empIndex,skillIndex,$event)"
                                                                 class="form-control">
                                                             <input disabled hidden
                                                                 style="width: 100px;text-align: right;" type="number"
                                                                 formControlName="customerid" class="form-control">
+                                                        </td>
+                                                        <td>
+                                                            <input disabled style="width: fit-content;" type="text"
+                                                                formControlName="custName" class="form-control">
                                                         </td>
                                                         <td>
                                                             <input style="width: 100px;text-align: right;" type="text"

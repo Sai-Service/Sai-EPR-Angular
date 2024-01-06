@@ -295,15 +295,15 @@ export class AdminComponent implements OnInit {
       this.isVisibilePetrolPumpSystem=true;
       // this.isVisibleShellReport=false;
     }
-
-    if (Number(sessionStorage.getItem('divisionId')) === 3 && Number(sessionStorage.getItem('roleId'))===1  && sessionStorage.getItem('ticketNo') ==='P5678')
+    // && sessionStorage.getItem('ticketNo') ==='P5678'
+    if (Number(sessionStorage.getItem('divisionId')) === 3 && Number(sessionStorage.getItem('roleId'))===1  )
 
     {
       this.isVisible11=false;
       this.isVisible12=false;
       this.isVisible13=false
       this.isVisibleWsVehicleMaster=false;
-      this.isVisible14=false;
+      this.isVisible14=true;
       this.isVisible15=false;
       this.isVisible16=false;
       this.isVisible17=false;
