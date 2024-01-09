@@ -61,6 +61,7 @@ export class TestingDynamicComponent  {
   displayVoucherRemove: Array<boolean> = [];
   isVisibleShiftPretolSave:boolean=true;
   isVisibleShiftPretolUpdate:boolean=false;
+  isVisibleshipFinalConfirm:boolean=false;
   closeResetButton = true;
   dataDisplay: any;
   progress = 0;
@@ -303,11 +304,22 @@ search(shiftNo){
          
       }
         }
-        
-      
-        
-
           this.pumpShiftSalesForm.patchValue(data.obj); 
+          // alert(data.obj.finalconfirm)
+          if (data.obj.finalconfirm=='YES'){
+            this.isVisibleShiftPretolSave=false;
+            this.isVisibleShiftPretolUpdate=false;
+            this.isVisibleshipFinalConfirm=false;
+            this.pumpShiftSalesForm.disable();
+            this.newEmployee().disable();
+            this.voucherDetailsArray().disable();
+          }
+          else{
+            this.isVisibleshipFinalConfirm=true;
+          }
+
+          var shipConDt = this.pipe.transform(data.obj.finalconfirmdate, 'dd-MM-yyyy');
+          this.pumpShiftSalesForm.patchValue({finalconfirmdate:shipConDt})
     }
   })  
     
@@ -659,7 +671,8 @@ lineDetArr[l].payType === 'RTGS/NEFT'||lineDetArr[l].payType === 'WALLET' ) {
 cashlineAmt = Math.round(((cashlineAmt) + Number.EPSILON) * 100) / 100;
 otherSaleAmt = Math.round(((otherSaleAmt) + Number.EPSILON) * 100) / 100;
 totalCreditAmt = Math.round(((totalCreditAmt) + Number.EPSILON) * 100) / 100;
-totalSaleAmt=(cashlineAmt+otherSaleAmt+totalCreditAmt);
+// totalSaleAmt=(cashlineAmt+otherSaleAmt+totalCreditAmt);
+totalSaleAmt= Math.round(((cashlineAmt+otherSaleAmt+totalCreditAmt) + Number.EPSILON) * 100) / 100;
 // var totalExpenAmt =  cashlineAmt-totalExpenceAmt;
 var totalExpenAmt = Math.round(((cashlineAmt-totalExpenceAmt) + Number.EPSILON) * 100) / 100;
 this.pumpShiftSalesForm.patchValue({ 'totalcashsale': cashlineAmt,'totalsale':totalSaleAmt,'totalcreditsale':totalCreditAmt,
@@ -820,6 +833,7 @@ shipFinalConfirm(){
       this.pumpShiftSalesForm.disable();
       this.newEmployee().disable();
       this.voucherDetailsArray().disable();
+      this.search(res.obj.shiftentryno);
       // this.employeeSkills().disable();
     }
     else{

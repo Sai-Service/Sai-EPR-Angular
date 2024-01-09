@@ -112,9 +112,9 @@
                             <td style="width: 15%" class="LabelFontStyle">Final&nbsp;Confirm:</td>
                             <td><input disabled type="text" class="form-control" formControlName="finalconfirm"></td>
                             <td style="width: 15%" class="LabelFontStyle">Final&nbsp;Confirm&nbsp;Date:</td>
-                            <td><input disabled type="date" class="form-control" formControlName="finalconfirmdate">
+                            <td><input disabled type="text" class="form-control" formControlName="finalconfirmdate">
                             </td>
-                            <td>
+                            <td  [style.display]="isVisibleshipFinalConfirm ? 'block' : 'none'">
                                 <button type="button" class="btn btn-info" (click)="shipFinalConfirm()" style="width: fit-content;">Final&nbsp;Confirm</button> 
                             </td>
                             <input type="number" hidden class="form-control" formControlName="createdby">

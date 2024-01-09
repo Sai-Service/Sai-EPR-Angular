@@ -1,0 +1,108 @@
+<form [formGroup]="pumpInvGenForm" (ngSubmit)="pumpInvGen(pumpInvGenForm.value)">
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <td class="PageHeader">
+                &nbsp;&nbsp;Pump&nbsp;Shift&nbsp;Invoice&nbsp;Generation&nbsp;Form
+            </td>
+        </tr>
+    </table>
+    <fieldset class="RFS">
+        <table class="center">
+            <tr>
+                <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                <ng-template #hList2>
+                    <div class="d-flex justify-content-center">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="sr-only" id="loading"></span>
+
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template #hList1> </ng-template>
+                <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">
+                    &nbsp;{{dataDisplay }}&nbsp; </td>
+            </tr>
+        </table>
+    </fieldset>
+    <fieldset class="RFS">
+        <table class="center">
+            <tr>
+                <td style="width: 15%" class="LabelFontStyle">From&nbsp;Date&nbsp;:</td>
+                <td>
+                    <input   type="date" class="form-control" formControlName="startDate">
+                </td>
+                <td style="width: 15%" class="LabelFontStyle">To&nbsp;Date&nbsp;:</td>
+                <td>
+                    <input   type="date" class="form-control" formControlName="endDate">
+                </td>
+                <td>
+                    <button type="button" class="btn btn-info" (click)="invGenetion()" style="width: fit-content;">
+                       Invoice&nbsp;Generation
+                    </button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-info" (click)="close()">Close</button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-info" (click)="refresh()">Reset</button>
+                </td>
+            </tr>
+            </table>
+            </fieldset>
+            <fieldset class="RFS">
+                <table class="center">
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">From&nbsp;Date&nbsp;:</td>
+                <td>
+                    <input   type="date" class="form-control" formControlName="startDate">
+                </td>
+                <td style="width: 15%" class="LabelFontStyle">To&nbsp;Date&nbsp;:</td>
+                <td>
+                    <input   type="date" class="form-control" formControlName="endDate">
+                </td>
+                <td>
+                    <button type="button" class="btn btn-info" style="width: fit-content;" (click)="search()">
+                      Search
+                    </button>
+                </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">From&nbsp;Date&nbsp;:</td>
+                <td>
+                    <input   type="date" class="form-control" formControlName="startDate">
+                </td>
+                <td style="width: 15%" class="LabelFontStyle">To&nbsp;Date&nbsp;:</td>
+                <td>
+                    <input   type="date" class="form-control" formControlName="endDate">
+                </td>
+                <td style="width: 15%" class="LabelFontStyle">Customer&nbsp;Id&nbsp;:</td>
+                <td>
+                    <input   type="text" class="form-control" formControlName="customerId">
+                </td>
+                <td>
+                    <button type="button" class="btn btn-info" style="width: fit-content;" (click)="search()">
+                      Search
+                    </button>
+                </td>
+                    </tr>
+                </table>
+                <table  class="GridFont" cellspacing="0" cellpadding="4"   style="border-color:#959595;border-collapse:collapse;width: 100%; ">
+                    <thead>
+                        <tr class="GridHeader">
+                            <th scope="col" style="border: 1px solid black;">Trx Number</th>
+                            <th scope="col" style="border: 1px solid black;">Trx Date</th>
+                            <th scope="col" style="border: 1px solid black;">Cust Name</th>
+                            <th scope="col" style="border: 1px solid black;">Base Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let com of dataSearchList" class="ItemStyle" style="text-decoration:none;">
+                            <td style="border: 1px solid black;padding-left: 5px;">{{com.TRXNUMBER}}</td>
+                            <td style="border: 1px solid black;padding-left: 5px;">{{com.trxdate | date:'dd-MM-yyyy  hh:mm:ss'}}</td>
+                            <td style="border: 1px solid black;padding-left: 5px;">{{com.CUSTNAME}}</td>
+                            <td style="border: 1px solid black;padding-right: 5px;text-align: right;">{{com.BASEAMOUNT}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </fieldset>
+</form>
