@@ -10,6 +10,7 @@ import { ServerReportComponent } from './server-report/server-report.component';
 import { PaintReportsComponent } from './paint-reports/paint-reports.component';
 import { TemplateDownloadComponent } from './template-download/template-download.component';
 import { ShellReportComponent } from './shell-report/shell-report.component';
+import { PetrolPumpReportComponent } from './petrol-pump-report/petrol-pump-report.component';
 
 
 
@@ -24,6 +25,7 @@ const routes: Routes = [
   {path:'PaintReports',component:PaintReportsComponent},
   {path:'templateDownload',component:TemplateDownloadComponent},
   {path:'ShellReport',component:ShellReportComponent},
+  {path:'petrolPumpReport',component:PetrolPumpReportComponent},
   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }];
 
 @NgModule({

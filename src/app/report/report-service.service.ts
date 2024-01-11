@@ -1079,7 +1079,13 @@ fndRquestDownload(requestId){
   });
 }
 
-
+CashCollectionExcessShortFn(fromDate,ToDate,locId){
+  const REQUEST_URI = this.ServerUrl +`/PetrolPumpReport/CashCollectionRep?fromDate=${fromDate}&toDate=${ToDate}&locId=${locId}`;
+  return this.http.get(REQUEST_URI, {
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
+}
 
 }
 

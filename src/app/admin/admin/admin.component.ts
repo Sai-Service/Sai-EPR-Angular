@@ -305,7 +305,7 @@ export class AdminComponent implements OnInit {
       this.isVisibleWsVehicleMaster=false;
       this.isVisible14=true;
       this.isVisible15=false;
-      this.isVisible16=false;
+      this.isVisible16=true;
       this.isVisible17=false;
       this.isVisible18=false;
       this.isVisible19=false;
@@ -327,9 +327,9 @@ export class AdminComponent implements OnInit {
       this.isVisibleSalesReport=false;
       this.isVisible37=false;
       this.isVisibleSaleStockAdju=false;
-      this.isVisibleAccountsRepor=false;
+      this.isVisibleAccountsRepor=true;
       this.isVisibleAccessories=false;
-      this.isVisibilePaintSystem=true
+      this.isVisibilePaintSystem=false
       this.isVisibilePetrolPumpSystem=true;
       // this.isVisibleShellReport=false;
     }
