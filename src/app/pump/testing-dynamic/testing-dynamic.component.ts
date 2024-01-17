@@ -4,6 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MasterService } from 'src/app/master/master.service';
 import { PumpService } from 'src/app/pump/pump.service';
 import { DatePipe } from '@angular/common';
+import { OrderManagementService } from 'src/app/order-management/order-management.service';
+// src\app\order-management\order-management.service.ts
 
 @Component({
   selector: 'app-testing-dynamic',
@@ -44,7 +46,7 @@ export class TestingDynamicComponent  {
   PaymentModeList: any=[];
   accountNoSearch: any=[];
  
-
+  isDisabled3 = false;
   lineValidation=false;
   duplicateLineItem=false;
   displayButton = true;
@@ -65,9 +67,10 @@ export class TestingDynamicComponent  {
   closeResetButton = true;
   dataDisplay: any;
   progress = 0;
+  display = 'none';
+  customerNameSearch:any=[];
 
-
-   constructor(private fb: FormBuilder,private service: MasterService, private router: Router,private PumpService1: PumpService) {
+   constructor(private fb: FormBuilder,private service: MasterService, private router: Router,private PumpService1: PumpService,private orderManagementService: OrderManagementService) {
     this.pumpShiftSalesForm = fb.group({
       shiftentryno:[],
       shiftentryid:[],
@@ -501,18 +504,19 @@ pumpShiftSales(pumpShiftSalesForm:any) {  }
 
 
 onSelectedNozzle(i,event){
-  // alert(i)
-  
   var segment=event.target.value;
   var segmentList = segment.substr(segment.indexOf('-') + 1, segment.length);
   var shiftCode = this.pumpShiftSalesForm.get('shifttypCode').value;
   // alert(shiftCode)
   var todate = this.now;
   var startDt1 = new Date(this.now);
+  if (shiftCode==='I'){
     startDt1.setDate(startDt1.getDate() - 1);
-    // alert(startDt1)
     var tDate = this.pipe.transform(startDt1, 'dd-MMM-yyyy');
-    // alert(tDate+'----tDate')
+  }
+  else{
+    var tDate = this.pipe.transform(startDt1, 'dd-MMM-yyyy');
+  }
   var segmentList1 = this.nozzleList.find((nozzleList: any) => nozzleList.nozzleCode == segmentList);
   console.log(segmentList1);
   var patch = this.pumpShiftSalesForm.get('ppShiftNozzleDetailList') as FormArray;
@@ -591,7 +595,7 @@ calculationFn(i){
             .subscribe(
               data => {
                 console.log(data);
-                alert(data[0].segmentName)
+                // alert(data[0].segmentName)
                 this.employeeSkills(i).controls[k].patchValue({locator: data[0].segmentName,locatorid:data[0].locatorid});
               });
           var priceListName = 'Petrol Pump 12PU.2501';
@@ -599,7 +603,7 @@ calculationFn(i){
               .subscribe(
                 data => {
                   console.log(data);
-                  alert(data[0].rate)
+                  // alert(data[0].rate)
                   this.employeeSkills(i).controls[k].patchValue({rate: data[0].priceValue});
                 })
  }
@@ -787,7 +791,6 @@ saveSale1(){
 }
 
 CustAccountNoSearch(i,k,event){
-  // alert(i+'---------'+event.target.value)
   var accountNo=event.target.value;
   this.service.custAccountNoSearch(accountNo, sessionStorage.getItem('ouId'), sessionStorage.getItem('divisionId'))
   .subscribe(
@@ -796,7 +799,9 @@ CustAccountNoSearch(i,k,event){
       this.accountNoSearch = data.obj;
       var patch = this.pumpShiftSalesForm.get('ppShiftNozleLinesList') as FormArray;
       // patch.controls[i].patchValue({ customerid: data.obj[0].customerId });
-      this.employeeSkills(i).controls[k].patchValue({customerid: data.obj[0].customerId ,custName: data.obj[0].custName})
+      // alert(this.employeeSkills(i).length)
+      var ln= this.employeeSkills(i).length;
+      this.employeeSkills(i).controls[ln-1].patchValue({customerid: data.obj[0].customerId ,custName: data.obj[0].custName,customercode:data.obj[0].accountNo})
       this.addEmployeeSkill(i)
     }
     else{
@@ -843,4 +848,41 @@ shipFinalConfirm(){
 }
 
 
+
+custNameSearch(index,k) {
+  // var custName=event.target.value;
+  // alert(custName)
+  var arrline = this.ppShiftNozzleDetailList();
+  var lineDetArr = arrline.value[index].ppShiftNozleLinesList;
+  var custName=lineDetArr[k].custName;
+  // alert(custName)
+  this.orderManagementService.custNameSearchFn1(custName, sessionStorage.getItem('divisionId'))
+    .subscribe(
+      data => {
+        if (data.code === 200) {
+          this.customerNameSearch = data.obj;
+        }
+        else {
+          if (data.code === 400) {
+            alert(data.message);
+            this.display = 'block';
+          }
+        }
+      }
+    );
+}
+
+selectAccountNo(index,k,accNo,custId,custName){
+  var ln = this.employeeSkills(index).length;
+  this.employeeSkills(index).controls[ln-1].patchValue({customercode:accNo,customerid:custId,custName:custName});
+  this.addEmployeeSkill(index)
+  
+}
+
+cashSubmiAmt(){
+  var totalcashsale = this.pumpShiftSalesForm.get('totalcashsale').value;
+  var cashsubmitted = this.pumpShiftSalesForm.get('cashsubmitted').value;
+  var cashDiff = totalcashsale-cashsubmitted;
+  this.pumpShiftSalesForm.patchValue({cashdifference:cashDiff})
+}
 }

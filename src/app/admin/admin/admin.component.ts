@@ -104,6 +104,8 @@ export class AdminComponent implements OnInit {
   isVisibleWsVehicleMaster:boolean=false; 
   isVisibilePaintSystem:boolean=false;
   isVisibilePetrolPumpSystem:boolean=false;
+  isVisibleReturnToVendor:boolean=true;
+  isVisibleShortLanded:boolean=true;
   fullName: string;
   deptName: string;
   locCode: string;
@@ -297,10 +299,14 @@ export class AdminComponent implements OnInit {
     }
     // && sessionStorage.getItem('ticketNo') ==='P5678'
     if (Number(sessionStorage.getItem('divisionId')) === 3 && Number(sessionStorage.getItem('roleId'))===1  )
-
     {
       this.isVisible11=false;
+      this.isVisibleCustMaster=false;
       this.isVisible12=false;
+      this.isVisibleMaster=false;
+      this.isVisibleReturnToVendor=false;
+  this.isVisibleShortLanded=false;
+      this.isVisibilePetrolPumpSystem=true;
       this.isVisible13=false
       this.isVisibleWsVehicleMaster=false;
       this.isVisible14=true;
@@ -330,7 +336,7 @@ export class AdminComponent implements OnInit {
       this.isVisibleAccountsRepor=true;
       this.isVisibleAccessories=false;
       this.isVisibilePaintSystem=false
-      this.isVisibilePetrolPumpSystem=true;
+      // this.isVisibilePetrolPumpSystem=true;
       // this.isVisibleShellReport=false;
     }
 

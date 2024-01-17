@@ -126,6 +126,11 @@ export class PetrolPumpReportComponent implements OnInit {
       this.isVisiblegstsaiDebtors=true;
       this.isVisibleCashCollectionExcessShort=false;
     }
+    if (reportName==='cashCardSum'){
+      this.reportName='Cash Card Summary Report';
+      this.isVisibleCashCollectionExcessShort=true;
+      this.isVisiblegstsaiDebtors=false;
+    }
   }
 
   fromToDateValidation(fDate,tDate){
@@ -180,6 +185,18 @@ export class PetrolPumpReportComponent implements OnInit {
       })
     }
    
+else if (reportName === 'Cash Card Summary Report'){
+  this.fromToDateValidation(fromDate,toDate); if(this.rptValidation==false){return;}
+  const fileName = 'Cash Card Summary Report-' +  fromDate + '.xls';
+  const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+  this.reportService.cashCardSumFn(fromDate, toDate, sessionStorage.getItem('locId'))
+  .subscribe(data => {
+    saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+    this.closeResetButton = true;
+    this.dataDisplay = ''
+  })
+}
+
     else if (reportName ==='Debtor Report'){
      
       var custAccNo=' ';
@@ -195,35 +212,27 @@ export class PetrolPumpReportComponent implements OnInit {
       var spDbAg2= this.petrolPumpReportForm.get('age2').value;
       var spDbAg3= this.petrolPumpReportForm.get('age3').value;
       var spDbAg4= this.petrolPumpReportForm.get('age3').value;
-
       if(spDbAg1<0 || spDbAg1==null || spDbAg1==undefined) {this.rptValidation=false;}
       if(spDbAg2<0 || spDbAg2==null || spDbAg2==undefined) {this.rptValidation=false;}
       if(spDbAg3<0 || spDbAg3==null || spDbAg3==undefined) {this.rptValidation=false;}
       if(spDbAg4<0 || spDbAg4==null || spDbAg4==undefined) {this.rptValidation=false;}
-
       if (spDbAg1 > spDbAg2) {this.rptValidation=false;}
       else if (spDbAg1 >spDbAg3){this.rptValidation=false;}
       else if (spDbAg1 > spDbAg4){this.rptValidation=false;}
       else if (spDbAg2 > spDbAg3){this.rptValidation=false;}
       else if (spDbAg2 > spDbAg4){this.rptValidation=false;}
       else if (spDbAg3 > spDbAg4){this.rptValidation=false;}
-
       var deptId=this.petrolPumpReportForm.get('deptId').value;
       if (deptId===null){deptId=''}
     if(this.rptValidation ==false) {this.closeResetButton=true;this.dataDisplay = 'Please check Aging Values.';  return; }
       const fileName = 'SP-Debtors-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-     
-      // if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.SPDebtorReport(tDate1, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'),custAccNo,deptId,spDbAg1,spDbAg2,spDbAg3,spDbAg4)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-            // this.isDisabled1 = false;
             this.closeResetButton = true;
             this.dataDisplay = ''
           });
-      // }
-
      }
   }
 

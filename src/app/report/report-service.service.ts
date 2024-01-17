@@ -1087,5 +1087,13 @@ CashCollectionExcessShortFn(fromDate,ToDate,locId){
   });
 }
 
+cashCardSumFn(fromDate,toDate,locId){
+  const REQUEST_URI = this.ServerUrl +`/PetrolPumpReport/PP_CashCardSummary?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}`;
+  return this.http.get(REQUEST_URI, {
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
+}
+
 }
 
