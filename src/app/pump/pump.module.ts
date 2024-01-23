@@ -11,10 +11,11 @@ import { PumpShiftSaleComponent } from './pump-shift-sale/pump-shift-sale.compon
 import { PumpShiftPumpNewComponent } from './pump-shift-pump-new/pump-shift-pump-new.component';
 import { TestingDynamicComponent } from './testing-dynamic/testing-dynamic.component';
 import { ShiftInvoiceGenComponent } from './shift-invoice-gen/shift-invoice-gen.component';
+import { ShiftEntryListComponent } from './shift-entry-list/shift-entry-list.component';
 
 
 @NgModule({
-  declarations: [PumpTankMasterComponent, PumpIslandMasterComponent, PumpNozzleMasterComponent,  PumpShiftSaleComponent, PumpShiftPumpNewComponent, TestingDynamicComponent, ShiftInvoiceGenComponent,],
+  declarations: [PumpTankMasterComponent, PumpIslandMasterComponent, PumpNozzleMasterComponent,  PumpShiftSaleComponent, PumpShiftPumpNewComponent, TestingDynamicComponent, ShiftInvoiceGenComponent, ShiftEntryListComponent,],
   imports: [
     CommonModule,
     PumpRoutingModule,

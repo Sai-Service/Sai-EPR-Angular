@@ -69,8 +69,9 @@ export class TestingDynamicComponent  {
   progress = 0;
   display = 'none';
   customerNameSearch:any=[];
+  public sub: any;
 
-   constructor(private fb: FormBuilder,private service: MasterService, private router: Router,private PumpService1: PumpService,private orderManagementService: OrderManagementService) {
+   constructor(private fb: FormBuilder,private service: MasterService, private router: Router,private PumpService1: PumpService,private orderManagementService: OrderManagementService,private router1: ActivatedRoute) {
     this.pumpShiftSalesForm = fb.group({
       shiftentryno:[],
       shiftentryid:[],
@@ -103,9 +104,7 @@ export class TestingDynamicComponent  {
 
  ngOnInit() {
   $("#wrapper").toggleClass("toggled");
-  // alert(sessionStorage.getItem('emplId')+'----'+sessionStorage.getItem('locId'))
-  // this.pumpShiftSalesForm.patchValue({createdby:sessionStorage.getItem('emplId')})
-  // debugger;
+ 
   this.isVisibleShiftPretolUpdate=false;
   this.displaylineSubDetadd1[0]=true;
   this.displaylineDetUpdate1[0]=true;
@@ -134,16 +133,6 @@ export class TestingDynamicComponent  {
   }
 );
 
-// this.PumpService1.segmentListFn()
-// .subscribe(
-//   data => {
-//     this.segmentList = data;
-//     console.log(this.segmentList);
-//   });
-
-
-
-
 this.service.NozzleList()
 .subscribe(
   data => {
@@ -164,6 +153,14 @@ this.service.NozzleList()
   creationdate:this.pipe.transform(this.now, 'yyyy-MM-dd hh:mm:ss'),lastupdateby:sessionStorage.getItem('emplId'),
   lastupdatedate:this.pipe.transform(this.now, 'yyyy-MM-dd hh:mm:ss'),  locid:sessionStorage.getItem('locId')});
 
+
+  this.sub = this.router1.params.subscribe(params => {
+    this.shiftentryno = params['shiftEntryNo'];
+    // alert(this.shiftentryno)
+    if (this.shiftentryno != undefined) {
+      this.search(this.shiftentryno);
+    }
+  });
 
  }
 
@@ -470,6 +467,16 @@ onSelectEmplName(event){
 
 
 addRowV(index) {
+  var voucherContr1 = this.pumpShiftSalesForm.get('ppShiftVoucherList').value;
+  // var voucherControl = voucherContr.getRawValue();
+  var shiftvoucherno = voucherContr1[index].shiftvoucherno;
+  var description = voucherContr1[index].description;
+  var amount = voucherContr1[index].amount;
+  alert(shiftvoucherno+'-----'+description+'-----'+amount)
+  if (shiftvoucherno===null && description==null && amount==0){
+    alert('Please Enter Value And Then Add New Line.!');
+    return;
+  }
   if(this.duplicateLineItem ===false) {
   this.lineValidation=true;
   if (this.lineValidation) 

@@ -75,6 +75,12 @@ export class PumpService {
     return this.http.get(this.ServerUrl + `/ShiftEntry/custList?startDate=${startDate}&endDate=${endDate}&locId=${locId}`);
   }
 
+  getEntryListFn(startDate,endDate,locId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/ShiftEntry/shiftList?fromDate=${startDate}&toDate=${endDate}&locId=${locId}`);
+  }
+
+
+
   shipEntryInvGenSaerchFn(startDate,endDate,locId): Observable<any> {
     return this.http.get(this.ServerUrl + `/arInv/petrolInvList?startDate=${startDate}&endDate=${endDate}&locId=${locId}`);
   }
