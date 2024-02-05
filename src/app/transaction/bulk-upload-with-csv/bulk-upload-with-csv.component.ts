@@ -284,6 +284,57 @@ export class BulkUploadWithCsvComponent implements OnInit {
         });
       }
      
+      else if (Number(sessionStorage.getItem('divisionId')) == 3 && sessionStorage.getItem('deptName')=='Petrol') {
+        // let location=this.bulkUploadCSVForm.get('locCode').value;
+        var location = (sessionStorage.getItem('locCode'));
+        var invcNo = this.bulkUploadCSVForm.get('invcNo').value;
+        var priceListName =this.bulkUploadCSVForm.get('priceListName').value;
+        var fileName = this.bulkUploadCSVForm.get('file').value;
+        console.log(fileName);
+        // indexOf
+        var fileNameNew = fileName.substring(fileName.lastIndexOf('\\') + 1, fileName.length);
+        var value = fileNameNew.split('.');
+        var value1 = value[0];
+        // var value2 = value[1];
+        // alert(value1+'---' + value2)
+        var supplierNo = this.bulkUploadCSVForm.get('suppNo').value;
+        var supplierSite = this.bulkUploadCSVForm.get('supplierSite').value;
+        var userName = (sessionStorage.getItem('ticketNo'));
+        var invcDt2 = this.bulkUploadCSVForm.get('invcDt1').value;
+        var invcDt1 = this.pipe.transform(invcDt2, 'dd-MM-yyyy');
+        if (invcNo != value1){
+          alert('Invoice Number & File Name missmatch... Please Confirm..!');
+          this.dataDisplay ='Invoice Number & File Name missmatch....'
+          this.closeResetButton=true;
+          return;
+        }
+        // alert(location+'  '+invcNo+' '+supplierNo+' '+ supplierSite+' '+ userName+' '+ invcDt1)
+        this.service.bulkpouploadPetrol(formData, location, invcNo, supplierNo, supplierSite, userName, invcDt1,priceListName).subscribe((res: any) => {
+          if (res.code === 200) {
+            alert(res.message);
+            this.poDetails[0] = res.obj;
+            console.log(this.poDetails);
+            this.dataDisplay ='File Uploaded Sucessfully....'
+            this.closeResetButton=true;
+          } else {
+            if (res.code === 400) {
+              alert(res.message);
+              this.bulkUploadCSVForm.patchValue({ error: res.message })
+              if (res.message.includes('101')) {
+                this.itemList = res.obj;
+                this.itemButton1 = false;
+                this.dataDisplay ='File Uploading Failed....'
+              this.closeResetButton=true;
+              }
+              else {
+                this.itemButton1 = true;
+                this.dataDisplay ='File Uploading Failed....'
+                this.closeResetButton=true;
+              }
+            }
+          }
+        });
+      }
     }
   }
 
@@ -363,16 +414,16 @@ export class BulkUploadWithCsvComponent implements OnInit {
     let text = [];
     //let files = $event.srcElement.files;
     if (this.isValidCSVFile(this.fileInput.nativeElement.files[0])) {
-      //let input = $event.target;
+    
       let reader = new FileReader();
-      //  reader.readAsText(input.files[0]);
+    
       reader.readAsText(this.fileInput.nativeElement.files[0])
       reader.onload = () => {
         let csvData = reader.result;
         let csvRecordsArray = (<string>csvData).split(/\r\n|\n/);
 
-        let headersRow = this.getHeaderArray(csvRecordsArray);
-        this.records = this.getDataRecordsArrayFromCSVFile(csvRecordsArray, headersRow.length);
+         let headersRow = this.getHeaderArray(csvRecordsArray);
+         this.records = this.getDataRecordsArrayFromCSVFile(csvRecordsArray, headersRow.length);
        this.uploadFile(event);
       };
 
