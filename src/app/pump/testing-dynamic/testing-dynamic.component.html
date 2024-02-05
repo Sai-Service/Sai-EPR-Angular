@@ -72,7 +72,7 @@
                                     <option *ngFor="let sc of  shiftList" [Value]="sc.code">
                                         {{sc.codeDesc}}
                                     </option>
-                                </select>
+                                </select>   
                                 <input disabled hidden type="number" class="form-control" formControlName="shifttype">
                                 <input disabled hidden type="text" class="form-control" formControlName="shifttypCode">
                             </td>
@@ -93,7 +93,7 @@
                                 <option *ngFor="let sc of  salesPersonList">
                                     {{sc.ticketNo}}-{{sc.fullName}}
                             </datalist>
-                                <input disabled hidden type="number" class="form-control" formControlName="employeeid">
+                                <input disabled  type="number" class="form-control" formControlName="employeeid">
                             </td>
                         </tr>
                         <tr>
@@ -247,7 +247,7 @@
                                             <th style="width:10rem" scope="col">NozzleId</th>
                                             <th style="width:10rem" scope="col">Fuel Type</th>
                                             <th style="width:10rem" scope="col">Island Name</th>
-                                            <th style="width:10rem" scope="col">Nozzle Rate</th>
+                                            <th style="width:10rem" scope="col">Nozzle&nbsp;Rate</th>
                                             <th style="width:5rem" scope="col">Open Qty(Sys)</th>
                                             <th style="width:5rem" scope="col">Close Qty(Sys)</th>
                                             <th style="width:5rem" scope="col">Close Qty(Manual)</th>
@@ -294,7 +294,7 @@
                                             <td><input disabled type="text" class="form-control"
                                                     formControlName="nozzIsland"></td>
                                                     <td><input disabled type="number" class="form-control"
-                                                        formControlName="nozzrate" style="width: 80px;"></td>
+                                                        formControlName="nozzrate" style="width:100%;"></td>
                                             <td><input disabled style="width: 100px;text-align: right;" type="number"
                                                     formControlName="openingreading" class="form-control"
                                                     (keydown.tab)='calculationFn(empIndex)'></td>
@@ -522,10 +522,10 @@
                                                                                                                 scope="col">
                                                                                                                 Mobile
                                                                                                             </th>
-                                                                                                            <th
+                                                                                                            <!-- <th
                                                                                                                 scope="col">
                                                                                                                 Select
-                                                                                                            </th>
+                                                                                                            </th> -->
                                                                                                         </tr>
                                                                                                         <tr *ngFor="let com of customerNameSearch"
                                                                                                             class="ItemStyle"
@@ -554,12 +554,12 @@
                                                                                                                 style="width: 195px;">
                                                                                                                 {{com.mobile1}}
                                                                                                             </td>
-                                                                                                            <td><button
+                                                                                                            <!-- <td><button
                                                                                                                     class="btn-primary"
                                                                                                                     style="width: fit-content;"
                                                                                                                     (click)="selectAccountNo(empIndex,skillIndex,com.accountNo,com.customerId,com.custName)"
                                                                                                                     data-dismiss="modal">Select</button>
-                                                                                                            </td>
+                                                                                                            </td> -->
                                                                                                         </tr>
                                                                                                     </tbody>
                                                                                                 </table>
@@ -604,9 +604,7 @@
                                                                 type="text" formControlName="locid"
                                                                 class="form-control">
                                                         </td>
-                                                        <div
-                                                            *ngIf="displayRemoveSubLineDet[skillIndex]; then thenRemoveSubLineDet; else elseRemoveSubLineDet">
-                                                        </div>
+                                                        <div *ngIf="displayRemoveSubLineDet[empIndex][skillIndex]; then thenRemoveSubLineDet; else elseRemoveSubLineDet"> </div>
                                                         <ng-template #thenRemoveSubLineDet>
                                                             <td>
                                                                 <button

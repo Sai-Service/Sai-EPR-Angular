@@ -45,6 +45,7 @@ export class TestingDynamicComponent  {
   segmentList:any=[];
   PaymentModeList: any=[];
   accountNoSearch: any=[];
+  nozzleListData:any=[];
  
   isDisabled3 = false;
   lineValidation=false;
@@ -58,7 +59,8 @@ export class TestingDynamicComponent  {
   displaylineSubDetadd1: Array<boolean> = [];
   displayRemovelineDet: Array<boolean> = [];
   displayRemovelineDet1: Array<boolean> = [];
-  displayRemoveSubLineDet: Array<boolean> = [];
+  // displayRemoveSubLineDet: Array<boolean> = [];
+  displayRemoveSubLineDet: any[][] = [];
   displayRemoveSubLineDet1: Array<boolean> = [];
   displayVoucherRemove: Array<boolean> = [];
   isVisibleShiftPretolSave:boolean=true;
@@ -267,12 +269,16 @@ search(shiftNo){
           lastupdatedate:data.obj.ppShiftNozzleDetailList[n].lastupdatedate,
           locid:data.obj.ppShiftNozzleDetailList[n].locid,
         });
+
         this.nozTotAmt=this.nozTotAmt+data.obj.ppShiftNozzleDetailList[n].totalrate;
         this.nozTotQty=this.nozTotQty+data.obj.ppShiftNozzleDetailList[n].difference;
+        this.displayRemoveSubLineDet[n]=[];
         for (let subln=0;subln<data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList.length;subln++){
-          this.displayRemoveSubLineDet[subln]=false;
           var ppShiftNozzleAllList1: FormGroup = this.newSkill();
           this.employeeSkills(n).push(ppShiftNozzleAllList1);
+          // debugger;
+          console.log(this.displayRemoveSubLineDet+'-----empIndex--'+n+'------empSkill---'+subln);
+          this.displayRemoveSubLineDet[n][subln]=false;
           this.PumpService1.segmentListFn1(data.obj.ppShiftNozzleDetailList[n].fuelType)
 .subscribe(
   res => {
@@ -427,6 +433,8 @@ newSkill(): FormGroup {
 }
 
 addEmployeeSkill(empIndex: number) {
+  // alert(empIndex+'-----mainIndexValue')
+  this.displayRemoveSubLineDet[empIndex]=[];
   this.employeeSkills(empIndex).push(this.newSkill());
   var hedaerDet = this.pumpShiftSalesForm.get('ppShiftNozzleDetailList') as FormArray;
   var hedaerDet1=hedaerDet.getRawValue();
@@ -436,29 +444,31 @@ addEmployeeSkill(empIndex: number) {
   var segmentList1 = this.nozzleList.find((nozzleList: any) => nozzleList.nozzleId == nozzleid);
   console.log(segmentList1);
   var len=this.employeeSkills(empIndex).length;
+  // alert(len)
   this.employeeSkills(empIndex).controls[len-1].patchValue({createdby: sessionStorage.getItem('emplId'),
   creationdate:this.pipe.transform(this.now, 'yyyy-MM-dd hh:mm:ss'),lasstupdatedby:sessionStorage.getItem('emplId'),
  lastupdatedate:this.pipe.transform(this.now, 'yyyy-MM-dd hh:mm:ss'),  locid:sessionStorage.getItem('locId'),
   nozzleid:nozzleid,nozzle:segmentList1.nozzleCode,nozzleDetLineNo:1});
   // this.displayRemoveSubLineDet[len-1]=true;
+  this.displayRemoveSubLineDet[empIndex][len-1]=true;
   this.PumpService1.segmentListFn1(nozzFuelType)
 .subscribe(
   data => {
     this.segmentList = data;
     console.log(this.segmentList);
   });
-  var arrline = this.ppShiftNozzleDetailList();
-  for (let k=0;k<arrline.length;k++){
-    if (arrline.value[empIndex].ppShiftNozleLinesList[k].segment != null || arrline.value[empIndex].ppShiftNozleLinesList[k].segment != undefined || 
-      arrline.value[empIndex].ppShiftNozleLinesList[k].segment != ''){
-        this.displayRemoveSubLineDet[k]=false;
-      }
-  }
-  this.displayRemoveSubLineDet[len-1]=true;
+
+  
+    // alert(empIndex+'-----'+hedaerDet1.length);
+    //   if (hedaerDet1[len-1].segment == null || hedaerDet1[len-1].segment == undefined){
+    //     this.displayRemoveSubLineDet[len-1]=true;
+    //   }
+  
 }
 
 removeEmployeeSkill(empIndex: number, skillIndex: number) {
   this.employeeSkills(empIndex).removeAt(skillIndex);
+  
 }
 
 onSubmit() {
@@ -470,7 +480,10 @@ onSelectEmplName(event){
   var emlName=event.target.value;
   // alert(emlName)
   var emplList = emlName.substr(emlName.indexOf('-') + 1, emlName.length);
-  var emplList1 = this.salesPersonList.find((salesPersonList:any)=>salesPersonList.fullName=emplList);
+  // emlName.indexOf
+  console.log('------'+emplList+'------');
+  var emplList1 = this.salesPersonList.find((salesPersonList:any)=>salesPersonList.fullName==emplList);
+  
   console.log(emplList1);
   // alert(emplList1.emplId)
   this.pumpShiftSalesForm.patchValue({employeeid:emplList1.emplId})
@@ -652,7 +665,7 @@ calculationFn(i){
                 var patch = this.pumpShiftSalesForm.get('ppShiftNozzleDetailList').value;
                
                 var len = (this.employeeSkills(i).controls.length-1);
-                var totreadingQty = (patch[i].manualclosingreading-patch[i].openingreading)
+                var totreadingQty =  Math.round(((patch[i].manualclosingreading-patch[i].openingreading) + Number.EPSILON) * 100) / 100;
                 if (patch[i].nozzFuelType===value){
                   this.employeeSkills(i).controls[0].patchValue({redingAvailQty: totreadingQty});
                 }
@@ -660,7 +673,8 @@ calculationFn(i){
                   if (len >0){
                     var arrline = this.ppShiftNozzleDetailList();
                     var lineDetArr = arrline.value[i].ppShiftNozleLinesList;
-                    var lastLineReadQty = Number(lineDetArr[len-1].redingAvailQty)-Number(lineDetArr[len-1].qty);
+                    var lastLineReadQty =  Math.round(((lineDetArr[len-1].redingAvailQty)-Number(lineDetArr[len-1].qty) + Number.EPSILON) * 100) / 100;
+                    // Number(lineDetArr[len-1].redingAvailQty)-Number(lineDetArr[len-1].qty);
                     this.employeeSkills(i).controls[k].patchValue({redingAvailQty:lastLineReadQty});
                   }
                 }
@@ -671,7 +685,8 @@ calculationFn(i){
                     for (let k=0;k<lineDetArr.length;k++){
                       totQty=totQty+lineDetArr[k].qty;
                     }
-                    var lastLineReadQty = (patch[i].manualclosingreading-patch[i].openingreading)-Number(totQty);
+                    var lastLineReadQty =   Math.round(((patch[i].manualclosingreading-patch[i].openingreading)-Number(totQty) + Number.EPSILON) * 100) / 100;
+                    // (patch[i].manualclosingreading-patch[i].openingreading)-Number(totQty);
                     this.employeeSkills(i).controls[k].patchValue({redingAvailQty:lastLineReadQty});
                   }
                 }
@@ -685,8 +700,8 @@ calculationFn(i){
   for (let i=0;i<arrline.length;i++){
     var lineDetArr = arrline.value[i].ppShiftNozleLinesList;
     for (let l=0;l<lineDetArr.length;l++){
-      totReadValue =   Number(lineDetArr[l].redingAvailQty)-Number(lineDetArr[l].qty);
-     
+      totReadValue =   Math.round(((Number(lineDetArr[l].redingAvailQty)-Number(lineDetArr[l].qty)) + Number.EPSILON) * 100) / 100;
+      //  Number(lineDetArr[l].redingAvailQty)-Number(lineDetArr[l].qty);     
       this.employeeSkills(i).controls[k].patchValue({redingAvailQty:totReadValue});
     }     
   }
@@ -866,13 +881,25 @@ CustAccountNoSearch(i,k,event){
 }
 
 updatePumpDet(){
+  this.closeResetButton = false;
+  this.progress = 0;
+  this.dataDisplay = 'Data Saving is progress....Do not refresh the Page';
+  this.isVisibleShiftPretolUpdate=false;
   let jsonData = this.pumpShiftSalesForm.getRawValue();
   this.PumpService1.updatePumDet(JSON.stringify(jsonData)).subscribe((res: any) => {
     if (res.code === 200) {
-      alert(res.message)
+      alert(res.message);
+      this.closeResetButton = true;
+      this.progress = 0;
+      this.dataDisplay = res.message;
+      this.isVisibleShiftPretolUpdate=false;
     }
     else{
       alert(res.message)
+      this.closeResetButton = false;
+      this.progress = 0;
+      this.dataDisplay = res.message;
+      this.isVisibleShiftPretolUpdate=true;
     }
   })
 
@@ -881,6 +908,9 @@ updatePumpDet(){
 
 
 shipFinalConfirm(){
+  this.closeResetButton = false;
+  this.progress = 0;
+  this.dataDisplay = 'Data Saving is progress....Do not refresh the Page';
   let jsonData = this.pumpShiftSalesForm.getRawValue();
   this.PumpService1.shipFinalConfirmFn(JSON.stringify(jsonData)).subscribe((res: any) => {
     if (res.code === 200) {
@@ -895,6 +925,9 @@ shipFinalConfirm(){
     }
     else{
       alert(res.message)
+      this.closeResetButton = false;
+      this.progress = 0;
+      this.dataDisplay = res.message;
     }
   })
 }
@@ -933,7 +966,7 @@ selectAccountNo(index,k,accNo,custId,custName){
 cashSubmiAmt(){
   var totalcashsale = this.pumpShiftSalesForm.get('totalcashsale').value;
   var cashsubmitted = this.pumpShiftSalesForm.get('cashsubmitted').value;
-  var cashDiff = totalcashsale-cashsubmitted;
+  var cashDiff = Math.round(((totalcashsale-cashsubmitted) + Number.EPSILON) * 100) / 100;
   this.pumpShiftSalesForm.patchValue({cashdifference:cashDiff})
 }
 
@@ -942,11 +975,11 @@ getUserIdsFirstWay($event) {
   let userId = (<HTMLInputElement>document.getElementById('userIdFirstWay')).value;
   this.userList1 = [];
 
-  if (userId.length > 2) {
-    if ($event.timeStamp - this.lastkeydown1 > 200) {
-      this.userList1 = this.searchFromArray(this.salesPersonList, userId);
-    }
-  }
+  // if (userId.length > 2) {
+  //   if ($event.timeStamp - this.lastkeydown1 > 200) {
+  //     this.userList1 = this.searchFromArray(this.salesPersonList, userId);
+  //   }
+  // }
 }
 
 
